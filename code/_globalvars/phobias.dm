@@ -421,7 +421,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 
 	"insects" = typecacheof(list(
-		/obj/item/clothing/mask/animal/rat/bee,
+		/obj/item/clothing/mask/animal/small/bee,
 		/obj/item/clothing/suit/hooded/bee_costume,
 		/obj/item/toy/plush/beeplushie,
 		/obj/item/toy/plush/moth,

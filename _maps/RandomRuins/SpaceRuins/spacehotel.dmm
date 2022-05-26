@@ -91,7 +91,7 @@
 	},
 /obj/machinery/door/airlock/grunge{
 	name = "Hotel Staff Room";
-	req_access_txt = "200"
+	req_access = list("away_general")
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured_half{
@@ -173,7 +173,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering{
 	name = "Utilities";
-	req_access_txt = "200,201"
+	req_one_access = list("away_general","away_maintenance")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -470,14 +470,14 @@
 /turf/open/floor/iron/solarpanel/airless,
 /area/ruin/space/has_grav/hotel)
 "eI" = (
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel)
 "eK" = (
 /obj/structure/chair/wood,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/grimy,
@@ -617,7 +617,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters{
 	id = "hcb1";
-	name = "cargo bay shutters"
+	name = "Cargo Bay Shutters"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/dock)
@@ -885,7 +885,7 @@
 "iq" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/comfy,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
@@ -1052,7 +1052,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -1174,11 +1174,11 @@
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/hotel)
 "kk" = (
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/junglebush/c,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/jungle/c/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/window/fulltile,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/hotel/bar)
@@ -1526,7 +1526,7 @@
 "ne" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/wood/large,
@@ -1535,7 +1535,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
 	name = "Hotel Maintenance";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1571,7 +1571,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "no" = (
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/wood/tile,
@@ -1624,7 +1624,7 @@
 "nP" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Hotel Maintenance";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
@@ -1910,7 +1910,7 @@
 "rP" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Hotel Staff Room";
-	req_access_txt = "200"
+	req_access = list("away_general")
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -1962,7 +1962,7 @@
 "sz" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Hotel Maintenance";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -2092,7 +2092,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering{
 	name = "Utilities";
-	req_access_txt = "200,201"
+	req_one_access = list("away_general","away_maintenance")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -2147,7 +2147,7 @@
 "vm" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Hotel Maintenance";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/dock)
@@ -2183,7 +2183,7 @@
 "vB" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Hotel Kitchen";
-	req_access_txt = "200"
+	req_access = list("away_general")
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/textured_half{
@@ -2393,7 +2393,7 @@
 "wY" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Hotel Maintenance";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -2450,7 +2450,7 @@
 "xs" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Freezer";
-	req_access_txt = "200"
+	req_access = list("away_general")
 	},
 /turf/open/floor/iron/textured_half{
 	dir = 4
@@ -2673,7 +2673,7 @@
 "AS" = (
 /obj/machinery/door/airlock{
 	name = "Custodial Closet";
-	req_access_txt = "200,201"
+	req_one_access = list("away_general","away_maintenance")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
@@ -2930,11 +2930,11 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel/bar)
 "Ez" = (
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/junglebush/c,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/jungle/c/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/window/fulltile,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/hotel)
@@ -2991,7 +2991,7 @@
 "ES" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Hotel Maintenance";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -3377,7 +3377,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "JG" = (
 /obj/machinery/firealarm/directional/east,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/sepia,
@@ -3493,7 +3493,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters{
 	id = "hcb2";
-	name = "cargo bay shutters"
+	name = "Cargo Bay Shutters"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/dock)
@@ -3563,11 +3563,11 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "MJ" = (
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/junglebush/c,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/jungle/c/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/effect/spawner/structure/window,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/hotel)
@@ -4093,7 +4093,7 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "Tm" = (
 /obj/machinery/oven,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /obj/machinery/camera/directional/north{
@@ -4180,7 +4180,7 @@
 "TY" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Hotel Maintenance";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -4262,7 +4262,7 @@
 "UV" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Hotel Maintenance";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -4479,7 +4479,7 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "Xh" = (
-/obj/structure/sign/warning/nosmoking,
+/obj/structure/sign/warning/no_smoking,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel)
 "Xi" = (

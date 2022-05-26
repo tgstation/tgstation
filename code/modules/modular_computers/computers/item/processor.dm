@@ -33,6 +33,7 @@
 	hardware_flag = machinery_computer.hardware_flag
 	max_hardware_size = machinery_computer.max_hardware_size
 	steel_sheet_cost = machinery_computer.steel_sheet_cost
+	max_idle_programs = machinery_computer.max_idle_programs
 	update_integrity(machinery_computer.get_integrity())
 	max_integrity = machinery_computer.max_integrity
 	integrity_failure = machinery_computer.integrity_failure

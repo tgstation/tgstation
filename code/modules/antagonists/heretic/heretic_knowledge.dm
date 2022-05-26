@@ -290,6 +290,8 @@
  * Can be overriden to set or pass in additional vars of the status effect.
  */
 /datum/heretic_knowledge/mark/proc/create_mark(mob/living/source, mob/living/target)
+	if(target.stat == DEAD)
+		return
 	return target.apply_status_effect(mark_type)
 
 /**
@@ -371,7 +373,7 @@
 /datum/heretic_knowledge/curse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
-		fingerprints[requirements.return_fingerprints()] = 1
+		fingerprints[GET_ATOM_FINGERPRINTS(requirements)] = 1
 	list_clear_nulls(fingerprints)
 
 	// No fingerprints? No ritual

@@ -63,6 +63,7 @@
 
 /obj/item/paper/Destroy()
 	stamps = null
+	stamped = null
 	form_fields = null
 	stamped = null
 	. = ..()
@@ -191,13 +192,10 @@
 		return UI_INTERACTIVE
 	return ..()
 
-
-
 /obj/item/paper/can_interact(mob/user)
 	if(in_contents_of(/obj/machinery/door/airlock))
 		return TRUE
 	return ..()
-
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
 	var/ignition_message = I.ignition_effect(src, user)
@@ -269,7 +267,6 @@
 
 	return ..()
 
-
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	if(.)
@@ -311,7 +308,6 @@
 	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color // color might not be set
 	.["paper_state"] = icon_state /// TODO: show the sheet will bloodied or crinkling?
 	.["stamps"] = stamps
-
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
@@ -396,29 +392,6 @@
 	else
 		to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
 		return FALSE
-
-/**
- * is_approved
- *
- * To determine if a paper has the correct stamp. If no department stamp is specified then the
- * regular granted stamp (/obj/item/stamp) is checked
- *
- * Arguments:
- * * department (optional) - The department stamp we are checking for
- */
-/obj/item/paper/proc/is_approved(department_stamp)
-	if(department_stamp)
-		return stamped && (department_stamp in stamped)
-	else
-		return stamped && ("stamp-ok" in stamped)
-
-/**
- * is_denied
- *
- * To determine if a paper has the DENIED stamp
- */
-/obj/item/paper/proc/is_denied()
-	return stamped && ("stamp-deny" in stamped)
 
 /obj/item/paper/ui_act(action, params, datum/tgui/ui)
 	. = ..()

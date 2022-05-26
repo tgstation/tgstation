@@ -1025,7 +1025,7 @@
 	targeted_turfs += target_turf
 	balloon_alert(user, "you aim at [target_turf]...")
 	new /obj/effect/temp_visual/telegraphing/thunderbolt(target_turf)
-	addtimer(CALLBACK(src, .proc/throw_thunderbolt, target_turf, power_boosted), 1.5 SECONDS)
+	addtimer(CALLBACK(src, .proc/throw_thunderbolt, target_turf, power_boosted, user), 1.5 SECONDS)
 	thunder_charges--
 	addtimer(CALLBACK(src, .proc/recharge), thunder_charge_time)
 	log_game("[key_name(user)] fired the staff of storms at [AREACOORD(target_turf)].")
@@ -1034,7 +1034,7 @@
 	thunder_charges = min(thunder_charges + 1, max_thunder_charges)
 	playsound(src, 'sound/magic/charge.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
-/obj/item/storm_staff/proc/throw_thunderbolt(turf/target, boosted)
+/obj/item/storm_staff/proc/throw_thunderbolt(turf/target, boosted, mob/user)
 	targeted_turfs -= target
 	new /obj/effect/temp_visual/thunderbolt(target)
 	var/list/affected_turfs = list(target)
@@ -1049,6 +1049,13 @@
 		for(var/mob/living/hit_mob in turf)
 			to_chat(hit_mob, span_userdanger("You've been struck by lightning!"))
 			hit_mob.electrocute_act(15 * (isanimal(hit_mob) ? 3 : 1) * (turf == target ? 2 : 1) * (boosted ? 2 : 1), src, flags = SHOCK_TESLA|SHOCK_NOSTUN)
+			if(!ishostile(hit_mob))
+				continue
+
+			var/mob/living/simple_animal/hostile/hit_hostile = hit_mob
+			if(hit_hostile.stat == CONSCIOUS && !hit_hostile.target && hit_hostile.AIStatus != AI_OFF && !hit_hostile.client) //Mimicks what would happen on a melee attack
+				hit_hostile.FindTarget(list(user), 1)
+
 		for(var/obj/hit_thing in turf)
 			hit_thing.take_damage(20, BURN, ENERGY, FALSE)
 	playsound(target, 'sound/magic/lightningbolt.ogg', 100, TRUE)

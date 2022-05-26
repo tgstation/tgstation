@@ -392,7 +392,6 @@
 	var/static/list/r_arms
 	var/static/list/l_legs
 	var/static/list/r_legs
-	var/static/list/organs
 
 /obj/item/clothing/suit/armor/reactive/delimbering/Initialize(mapload)
 	. = ..()
@@ -408,8 +407,6 @@
 		l_legs = typesof(/obj/item/bodypart/l_leg)
 	if(!r_legs)
 		r_legs = typesof(/obj/item/bodypart/r_leg)
-	if(!organs)
-		organs = subtypesof(/obj/item/organ)
 
 /obj/item/clothing/suit/armor/reactive/delimbering/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -452,8 +449,5 @@
 		var/obj/item/bodypart/new_part = new picked_part()
 		new_part.replace_limb(nearby, TRUE)
 		qdel(picked_user_part)
-		var/obj/item/organ/picked_organ = pick(organs)
-		var/obj/item/organ/new_organ = new picked_organ
-		new_organ.Insert(nearby, TRUE, FALSE)
 		nearby.update_body(TRUE)
 		balloon_alert(nearby, "something has changed about you")

@@ -49,7 +49,7 @@
 				affected_mob.AdjustSleeping(100)
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, span_userdanger("You feel your mind relax and your thoughts drift!"))
-				affected_mob.set_confusion(min(100, affected_mob.get_confusion() + 8))
+				affected_mob.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, max_duration = 100 SECONDS)
 			if(DT_PROB(5, delta_time))
 				affected_mob.vomit(20)
 			if(DT_PROB(1.5, delta_time))

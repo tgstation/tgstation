@@ -49,7 +49,7 @@
 	if(!length(applicable_jobs))
 		return FALSE
 	var/list/obj/machinery/possible_machines = list()
-	while(length(possible_machines) <= 0)
+	while(length(possible_machines) <= 0 && length(applicable_jobs) > 0)
 		var/target_head = pick(applicable_jobs)
 		var/obj/machinery/machine_to_find = applicable_jobs[target_head]
 		applicable_jobs -= target_head

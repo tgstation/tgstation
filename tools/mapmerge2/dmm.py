@@ -83,6 +83,14 @@ class DMM:
             # reassign the grid entries which used the old key
             self.grid[k] = bad_keys.get(v, v)
 
+    def remove_unused_keys(self, modified_keys = None):
+        unused_keys = modified_keys if modified_keys is not None else self.dictionary.keys()
+        for key in self.grid.values():
+            if key in unused_keys:
+                unused_keys.remove(key)
+        for key in unused_keys:
+            del self.dictionary[key]
+
     def _presave_checks(self):
         # last-second handling of bogus keys to help prevent and fix broken maps
         self._ensure_free_keys(0)

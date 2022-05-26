@@ -12,14 +12,14 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "g" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	req_access = list("cargo")
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
@@ -40,7 +40,7 @@
 "i" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	req_access = list("cargo")
 	},
 /obj/docking_port/mobile/supply,
 /turf/open/floor/plating,
@@ -52,7 +52,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)

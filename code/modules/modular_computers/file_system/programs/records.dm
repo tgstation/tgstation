@@ -9,6 +9,7 @@
 	size = 4
 	usage_flags = PROGRAM_TABLET | PROGRAM_LAPTOP
 	available_on_ntnet = FALSE
+	detomatix_resistance = DETOMATIX_RESIST_MINOR
 
 	var/mode
 
