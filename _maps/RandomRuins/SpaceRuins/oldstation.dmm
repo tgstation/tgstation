@@ -3201,6 +3201,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "jL" = (
@@ -3625,12 +3626,14 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "kY" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Electrical Maintanace"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "kZ" = (
@@ -3802,10 +3805,11 @@
 /obj/machinery/button/door/directional/west{
 	id = "Beta Secure Storage";
 	name = "Engineering Secure Storage";
-	req_access_txt = "200";
 	pixel_x = 25;
-	pixel_y = 23
+	pixel_y = 23;
+	req_access = list("away_general")
 	},
+/obj/item/shard/plasma,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "lJ" = (
@@ -4525,6 +4529,8 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/small/broken/directional/west,
+/obj/item/tank/internals/anesthetic,
+/obj/item/clothing/mask/breath/medical,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "nD" = (
@@ -5138,8 +5144,8 @@
 /obj/item/crowbar,
 /obj/item/stock_parts/cell/high,
 /obj/machinery/door/window/right/directional/east{
-	req_access_txt = "200";
-	dir = 1
+	dir = 1;
+	req_access = list("away_general")
 	},
 /obj/item/paper/fluff/ruins/oldstation/apc_note,
 /turf/open/floor/iron,
@@ -5839,6 +5845,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/ash,
+/obj/structure/cable,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "wa" = (
@@ -5859,10 +5866,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "we" = (
-/obj/effect/decal/cleanable/glass,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "wg" = (
@@ -5880,7 +5885,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/command{
 	name = "Charlie Station Access";
-	req_access_txt = "200"
+	req_access = list("away_general")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
@@ -5926,10 +5931,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/vault,
 /area/ruin/space/ancientstation/delta/biolab)
-"ws" = (
-/obj/structure/grille/broken,
-/turf/open/floor/plating/rust,
-/area/ruin/space/ancientstation/beta/supermatter)
 "wt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/old{
@@ -6042,7 +6043,7 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "xM" = (
 /obj/machinery/door/window/right/directional/east{
-	req_access_txt = "200"
+	req_access = list("away_general")
 	},
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
@@ -6124,7 +6125,6 @@
 /area/ruin/space/ancientstation/beta/gravity)
 "yX" = (
 /obj/machinery/firealarm/directional/south,
-/obj/structure/cable,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
@@ -6514,7 +6514,6 @@
 /area/ruin/space/ancientstation/charlie/kitchen)
 "BP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "BX" = (
@@ -6583,6 +6582,10 @@
 /obj/item/reagent_containers/glass/beaker/oldstation,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
+"CN" = (
+/obj/effect/decal/cleanable/glass/plasma,
+/turf/open/floor/engine/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "CR" = (
 /obj/machinery/power/smes{
 	input_level = 5000;
@@ -6614,7 +6617,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Df" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Dg" = (
@@ -6697,10 +6700,7 @@
 /area/ruin/space/ancientstation/beta/medbay)
 "DR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/modular_computer/console/preset/engineering{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "DW" = (
@@ -7463,7 +7463,6 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Laundry"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
@@ -7474,7 +7473,6 @@
 /area/ruin/space/ancientstation/charlie/kitchen)
 "JL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
@@ -7781,6 +7779,7 @@
 "Ms" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/plasma/spawner/east,
+/obj/structure/cable,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
@@ -7788,6 +7787,7 @@
 "Mu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
+/obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "Mw" = (
@@ -8281,6 +8281,12 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/misc/space/nearstation)
+"QK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/charlie/hall)
 "QO" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/glass/bottle/aluminium{
@@ -8408,6 +8414,12 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
+"RO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/plating/rust,
+/area/ruin/space/ancientstation/charlie/hall)
 "RP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8691,10 +8703,10 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "Un" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/machinery/light_switch/directional/west{
 	pixel_x = -24
 	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Up" = (
@@ -8964,11 +8976,7 @@
 /area/ruin/space/ancientstation/beta/gravity)
 "XZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/east{
-	start_charge = 0
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "Yg" = (
@@ -9009,7 +9017,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "Yl" = (
 /obj/machinery/door/window/right/directional/east{
-	req_access_txt = "200"
+	req_access = list("away_general")
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
@@ -9083,10 +9091,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
-"YN" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
-/turf/open/floor/engine/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
 "YO" = (
 /obj/structure/sign/poster/contraband/lamarr,
 /turf/closed/wall/rust,
@@ -9140,6 +9144,7 @@
 "ZD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/rods,
+/obj/structure/cable,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "ZJ" = (
@@ -9538,7 +9543,7 @@ Cj
 Cj
 fY
 oO
-Tu
+Bz
 Kw
 oT
 oW
@@ -9591,7 +9596,7 @@ Os
 Lm
 wE
 SK
-ws
+Df
 SK
 gJ
 kQ
@@ -9634,7 +9639,7 @@ WJ
 Nh
 Vl
 we
-YN
+Hj
 uG
 uw
 wn
@@ -9732,13 +9737,13 @@ YW
 NU
 Gq
 lI
-Sk
+CN
 DK
 iv
-Hj
+Qi
 ZD
 Hj
-Qi
+Hj
 Ci
 tr
 Sy
@@ -11456,10 +11461,10 @@ ml
 JY
 up
 Bt
-cq
+gW
 kY
-aY
-Yy
+QK
+RO
 Yy
 aY
 la
