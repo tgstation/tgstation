@@ -1,4 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - bugfix: "SMES on the Zoo ruin no longer feeds into itself"

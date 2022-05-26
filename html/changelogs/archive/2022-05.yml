@@ -1080,3 +1080,29 @@
       your station's communications console in order to get some good time in bouncing
       around a ball and making those sneakers squeak against the well-polished floors.
       Enjoy!
+2022-05-26:
+  Ghilker:
+  - imageadd: adds the podpeople photocopy ass
+  Jolly:
+  - bugfix: One of Trams modular maintenance doors had its access removed, in favor
+      of the already existing mapping helper.
+  MidoriWroth:
+  - imageadd: The beef stroganoff now actually looks like food.
+  Mothblocks:
+  - rscadd: Added a disposal bin to the medbay treatment center on Delta.
+  SmArtKar:
+  - rscadd: You can now open taps on fuel and water tanks, making them leak fuel/water
+  Son-of-Space:
+  - bugfix: SMES on the Zoo ruin no longer feeds into itself
+  - bugfix: The showers in the MetaStation Medbay are properly plumbed again
+  Son-of-Space, MrDoomBringer:
+  - bugfix: All airlocks across all maps have been properly titled in upper case
+  - code_imp: A check has been added to look for incorrectly titled airlocks
+  TemporalOroboros:
+  - bugfix: You can no longer forge hrefs to message everyone from any PDA.
+  Timberpoes:
+  - bugfix: The DB query retrieving the feedback thread link for adminwho properly
+      deletes the DB query across all code paths, stopping error spam in admin chat.
+  san7890:
+  - bugfix: On DeltaStation, Nanotrasen has made access from Medbay Maintenance to
+      the Recreation Area unrestricted.
