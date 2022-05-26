@@ -8078,11 +8078,6 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"cZn" = (
-/obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/science/lobby)
 "cZu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53715,6 +53710,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "sWq" = (
@@ -60146,7 +60142,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "vjn" = (
-/obj/machinery/airalarm/directional/south,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -97676,7 +97671,7 @@ wpx
 htd
 tHR
 udN
-cZn
+ghk
 jLV
 fak
 jUh
