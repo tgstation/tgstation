@@ -37,8 +37,7 @@
 		var/datum/weakref/next_airlock = pop(airlocks_to_hit)
 		var/obj/machinery/door/airlock/to_lock = next_airlock?.resolve()
 		if(to_lock)
-			var/obj/effect/hallucination/fake_door_lock/lock = new(to_lock.loc, src, to_lock)
-			lock.lock()
+			var/obj/effect/client_image_holder/hallucination/fake_door_lock/lock = new(to_lock.loc, hallucinator, src, to_lock)
 			LAZYADD(locks, WEAKREF(lock))
 
 		if(!LAZYLEN(airlocks_to_hit))
@@ -48,7 +47,7 @@
 
 	else
 		var/datum/weakref/next_unlock = popleft(locks)
-		var/obj/effect/hallucination/fake_door_lock/to_unlock = next_unlock?.resolve()
+		var/obj/effect/client_image_holder/hallucination/fake_door_lock/to_unlock = next_unlock?.resolve()
 		if(to_unlock)
 			to_unlock.unlock()
 
@@ -63,60 +62,68 @@
 	// Clean up any locks we happen to have remaining on qdel.
 	// Hypothetically this shouldn't delete anything. But just in case.
 	for(var/datum/weakref/leftover_lock_ref as anything in locks)
-		var/obj/effect/hallucination/fake_door_lock/leftover_lock = leftover_lock_ref.resolve()
+		var/obj/effect/client_image_holder/hallucination/fake_door_lock/leftover_lock = leftover_lock_ref.resolve()
 		if(!QDELETED(leftover_lock))
 			qdel(leftover_lock)
 
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
-/obj/effect/hallucination/fake_door_lock
+/obj/effect/client_image_holder/hallucination/fake_door_lock
 	layer = CLOSED_DOOR_LAYER + 1 //for Bump priority
 	plane = GAME_PLANE
+
 	/// The real airlock we're fake bolting down.
 	var/obj/machinery/door/airlock/airlock
 	/// The fake bolt light we put up over the airlock we're situated under
 	var/image/bolt_light
 
-/obj/effect/hallucination/fake_door_lock/Initialize(mapload, datum/hallucination/parent, obj/machinery/door/airlock/airlock)
-	src.airlock= airlock
+/obj/effect/client_image_holder/hallucination/fake_door_lock/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent, obj/machinery/door/airlock/airlock)
 	if(!airlock)
 		stack_trace("[type] was created somewhere without an associated airlock.")
 		return INITIALIZE_HINT_QDEL
 
+	src.airlock = airlock
 	RegisterSignal(airlock, COMSIG_PARENT_QDELETING, .proc/on_airlock_deleted)
+	// We need to grab these for our image before we run our parent's parent initialize
+	src.image_icon = airlock.overlays_file
+	src.image_state = "lights_[AIRLOCK_LIGHT_BOLTS]"
 
 	return ..()
 
-/obj/effect/hallucination/fake_door_lock/Destroy(force)
-	if(bolt_light)
-		parent.hallucinator.client?.images -= bolt_light
-		bolt_light = null
+/obj/effect/client_image_holder/hallucination/fake_door_lock/generate_image()
+	var/image/created = ..()
+	created.layer = airlock.layer + 0.1
+	return created
 
+/obj/effect/client_image_holder/hallucination/fake_door_lock/show_image_to(mob/show_to)
+	. = ..()
+	if(!.)
+		return
+
+	// Make the bolts sound whenever the bolt appearance shows up
+	show_to.playsound_local(get_turf(src), 'sound/machines/boltsdown.ogg', 30, FALSE, 3)
+
+/obj/effect/client_image_holder/hallucination/fake_door_lock/Destroy(force)
 	UnregisterSignal(airlock, COMSIG_PARENT_QDELETING)
 	airlock = null
 	return ..()
 
-/obj/effect/hallucination/fake_door_lock/proc/on_airlock_deleted(datum/source)
+/obj/effect/client_image_holder/hallucination/fake_door_lock/proc/on_airlock_deleted(datum/source)
 	SIGNAL_HANDLER
 
 	qdel(src)
 
-/obj/effect/hallucination/fake_door_lock/proc/lock()
-	bolt_light = image(airlock.overlays_file, airlock, "lights_[AIRLOCK_LIGHT_BOLTS]", layer = airlock.layer + 0.1)
-	parent.hallucinator.client?.images |= bolt_light
-	parent.hallucinator.playsound_local(get_turf(src), 'sound/machines/boltsdown.ogg', 30, FALSE, 3)
-
-/obj/effect/hallucination/fake_door_lock/proc/unlock()
-	if(!QDELETED(airlock))
-		parent.hallucinator.playsound_local(get_turf(src), 'sound/machines/boltsup.ogg', 30, FALSE, 3)
-		parent.hallucinator.client?.images -= bolt_light
-		bolt_light = null
+/// "Unlock" the airlock, making the unbolt sound and self-deleting
+/obj/effect/client_image_holder/hallucination/fake_door_lock/proc/unlock()
+	if(!QDELETED(airlock)) // Don't play the sound if the airlock's gone
+		for(var/mob/seer as anything in who_sees_us)
+			seer.playsound_local(get_turf(src), 'sound/machines/boltsup.ogg', 30, FALSE, 3)
 
 	qdel(src)
 
-/obj/effect/hallucination/fake_door_lock/CanAllowThrough(atom/movable/mover, border_dir)
-	if(mover == parent.hallucinator && airlock.density)
+/obj/effect/client_image_holder/hallucination/fake_door_lock/CanAllowThrough(atom/movable/mover, border_dir)
+	if(mover in who_sees_us && airlock.density)
 		return FALSE
 
 	return ..()

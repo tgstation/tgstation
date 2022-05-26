@@ -259,12 +259,8 @@
 				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!!")]"
 
 	for(var/obj/item/embedded_thing in embedded_objects)
-		if(embedded_thing.isEmbedHarmless())
-			// melbert todo test
-			check_list += "\t <a href='?src=[REF(src)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [embedded_thing] stuck to your [name]!</a>"
-
-		else
-			check_list += "\t <a href='?src=[REF(src)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [embedded_thing] embedded in your [name]!</a>"
+		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
+		check_list += "\t <a href='?src=[REF(src)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [embedded_thing] [stuck_word] in your [name]!</a>"
 
 
 /obj/item/bodypart/blob_act()

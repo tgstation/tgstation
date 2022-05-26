@@ -39,8 +39,8 @@
 	ignore += typesof(/obj/item/poster/wanted)
 	//This expects a seed, we can't pass it
 	ignore += typesof(/obj/item/food/grown)
-	//Nothing to hallucinate if there's nothing to hallicinate
-	ignore += typesof(/obj/effect/hallucination)
+	//Nothing to hallucinate if there's no one to hallicinate
+	ignore += typesof(/obj/effect/client_image_holder)
 	ignore += typesof(/obj/projectile/hallucination)
 	ignore += typesof(/obj/item/hallucinated)
 	//These want fried food to take on the shape of, we can't pass that in
