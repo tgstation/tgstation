@@ -25,9 +25,6 @@
 // Components
 @include meta.load-css('~tgui/styles/components/Button.scss');
 @include meta.load-css('~tgui/styles/components/Input.scss');
-@include meta.load-css('~tgui/styles/components/Stack.scss');
 
-// Layouts
-@include meta.load-css('~tgui/styles/layouts/Layout.scss');
-@include meta.load-css('~tgui/styles/layouts/TitleBar.scss');
-@include meta.load-css('~tgui/styles/layouts/Window.scss');
+// Specific to tgui modal
+@include meta.load-css('./modal.scss');

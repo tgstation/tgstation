@@ -339,3 +339,15 @@ window "statwindow"
 		is-visible = false
 		saved-params = ""
 
+window "tguisay"
+	elem "tguisay"
+		type = MAIN
+		pos = 0,0
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		size = 75x400
+		saved-params = "pos;size"
+		is-visible = false
+		can-resize = false
+		status_bar = false
+		background-color = #000000

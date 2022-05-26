@@ -1,14 +1,16 @@
-import { Section, Input } from 'tgui/components';
-import { Window } from './components';
+import { Input } from 'tgui/components';
 
-export const TguiModal = (props) => {
+export const TguiModal = () => {
   return (
-    <Window>
-      <Window.Content>
-        <Section fill>
-          <Input autoFocus fluid />
-        </Section>
-      </Window.Content>
-    </Window>
+    <div className="window">
+      <Input
+        autoFocus
+        onEscape={() => Byond.sendMessage('close')}
+        onEnter={(_, value) => Byond.sendMessage('entry', value)}
+        className="input"
+        maxLength={255}
+        width="100%"
+      />
+    </div>
   );
 };
