@@ -25,9 +25,9 @@ export const PortablePump = (props, context) => {
           buttons={(
             <Button
               content={
-                direction ?
-                  source_one + ' → ' + source_two :
-                  source_two + ' → ' + source_one
+                direction
+                  ? source_one + ' → ' + source_two
+                  : source_two + ' → ' + source_one
               }
               onClick={() => act('direction')} />
           )}>

@@ -1,7 +1,7 @@
-///The machine pumps from the internal source to the turf
-#define PUMP_OUT "out"
 ///The machine pumps from the turf to the internal tank
-#define PUMP_IN "in"
+#define PUMP_IN 1
+///The machine pumps from the internal source to the turf
+#define PUMP_OUT 0
 ///Maximum settable pressure
 #define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 25)
 ///Minimum settable pressure
