@@ -7,13 +7,15 @@ export const PortablePump = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     into_pump_or_port,
-    source_one,
-    source_two,
+    connected,
+    holding,
     target_pressure,
     default_pressure,
     min_pressure,
     max_pressure,
   } = data;
+  const pump_or_port = connected ? "Port" : "Pump";
+  const area_or_tank = holding ? "Tank" : "Area";
   return (
     <Window
       width={300}
