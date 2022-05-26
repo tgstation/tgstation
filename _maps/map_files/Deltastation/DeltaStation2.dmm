@@ -16139,11 +16139,13 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
 "eyX" = (
-/obj/item/kirbyplants/random,
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/structure/table/reinforced,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron,
 /area/station/security/office)
 "ezd" = (
@@ -30432,8 +30434,7 @@
 "iuQ" = (
 /obj/machinery/door/window/brigdoor/security/cell/right/directional/west{
 	id = "brig1";
-	name = "Cell 1";
-	req_access = list("brig")
+	name = "Cell 1"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50275,8 +50276,7 @@
 "nKk" = (
 /obj/machinery/door/window/brigdoor/security/cell/right/directional/west{
 	id = "brig2";
-	name = "Cell 2";
-	req_access = list("brig")
+	name = "Cell 2"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -54572,9 +54572,7 @@
 /turf/open/floor/iron,
 /area/station/science/lab)
 "oPY" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access = list("bar")
-	},
+/obj/structure/closet/secure_closet/bar,
 /obj/item/storage/photo_album/bar,
 /obj/item/radio/intercom/directional/east,
 /obj/item/storage/dice,
@@ -62543,6 +62541,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/security/office)
 "qZQ" = (
