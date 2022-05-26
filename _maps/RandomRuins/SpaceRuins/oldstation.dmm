@@ -7043,10 +7043,6 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"Jg" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "Jh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -9588,8 +9584,8 @@ CM
 Tx
 Ed
 SK
-Jg
-Jg
+yQ
+yQ
 yQ
 bJ
 jb
@@ -9785,7 +9781,7 @@ Rx
 cg
 SK
 yQ
-Jg
+yQ
 yQ
 aa
 aa
