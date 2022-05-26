@@ -28215,7 +28215,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "hRy" = (
@@ -51039,6 +51039,10 @@
 	dir = 8
 	},
 /obj/machinery/newscaster/directional/north,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "nUu" = (

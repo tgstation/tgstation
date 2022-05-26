@@ -1,5 +1,0 @@
-author: "Son-of-Space, MrDoomBringer"
-delete-after: True
-changes: 
-  - bugfix: "All airlocks across all maps have been properly titled in upper case"
-  - code_imp: "A check has been added to look for incorrectly titled airlocks"
