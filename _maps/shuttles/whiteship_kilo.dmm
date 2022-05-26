@@ -78,7 +78,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
-	name = "Exterior Window Blast door"
+	name = "Exterior Window Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
@@ -199,7 +199,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/door/poddoor{
 	id = "whiteship_port";
-	name = "NTMS-037 Bay Blast door"
+	name = "NTMS-037 Bay Blast Door"
 	},
 /obj/machinery/conveyor{
 	id = "NTMSLoad2";
@@ -225,7 +225,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
-	name = "Exterior Window Blast door"
+	name = "Exterior Window Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -951,7 +951,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge";
-	name = "Cockpit Emergency Blast door"
+	name = "Cockpit Emergency Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bridge)
@@ -1242,7 +1242,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
-	name = "Exterior Window Blast door"
+	name = "Exterior Window Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
@@ -1691,7 +1691,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
-	name = "Exterior Window Blast door"
+	name = "Exterior Window Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
@@ -1707,7 +1707,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/door/poddoor{
 	id = "whiteship_port";
-	name = "NTMS-037 Bay Blast door"
+	name = "NTMS-037 Bay Blast Door"
 	},
 /obj/machinery/conveyor{
 	dir = 1;

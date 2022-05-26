@@ -1,0 +1,17 @@
+author: "MTandi"
+delete-after: True
+changes: 
+  - bugfix: "Gravgen now can't be repaired when not broken."
+  - bugfix: "Airlocks now properly say that they're welded when examined."
+  - qol: "Oldstation some internal windows are not reinforced to allow easier breaking"
+  - qol: "Oldstation computers have random sprites and can be deconstructed, some of them became real computers (atmos monitor attached to sensors, power monitor in solars maint room to see how solars charge the station, and modular console with engineering preset to have an ability to see SM stats)"
+  - refactor: "Oldstation SM tools storage moved into the engine area secure storage"
+  - refactor: "Oldstation engine area now has a deadly trap and cluttered with remains of the pre-impact setup"
+  - rscadd: "Oldstation now has a Biolab in place of the previous SM tools storage"
+  - rscadd: "Oldsation now has navbeacons and a small robot-making hint"
+  - refactor: "Oldstation dead miner is now dead roboticist"
+  - refactor: "Oldstation maintenance areas updated accordingly without loot changes"
+  - rscadd: "Oldstation now has a small laundry"
+  - refactor: "Oldstation solars now use solar panel tiles"
+  - rscadd: "Oldstation medbay has bonsai skillchip in the box to provide a use for all the dead plant pots"
+  - bugfix: "Oldstation minor fixes and visual tweaks like missing switches, etc"

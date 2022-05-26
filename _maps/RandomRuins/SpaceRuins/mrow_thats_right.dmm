@@ -240,7 +240,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -248,10 +248,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /obj/machinery/door/window{
-	name = "kitty door";
+	name = "Kitty Door";
 	req_access = list("away_general")
 	},
 /turf/open/floor/plating,
@@ -377,10 +377,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /obj/machinery/door/window/left/directional/west{
-	name = "kitty door";
+	name = "Kitty Door";
 	req_access = list("away_general")
 	},
 /turf/open/floor/plating,
@@ -611,10 +611,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /obj/machinery/door/window/left/directional/north{
-	name = "kitty door";
+	name = "Kitty Door";
 	req_access = list("away_general")
 	},
 /turf/open/floor/plating,
