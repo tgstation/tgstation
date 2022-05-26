@@ -40193,11 +40193,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"mZn" = (
-/obj/structure/stairs/east,
-/obj/structure/stairs/east,
-/turf/open/floor/iron/white,
-/area/station/science/mixing/hallway)
 "mZv" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -49010,25 +49005,6 @@
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "pNb" = (
-/obj/item/flashlight/lamp/green{
-	on = 0;
-	pixel_x = -6;
-	pixel_y = 16
-	},
-/obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = 8;
-	pixel_y = 3
-	},
-/obj/item/stamp/hos{
-	pixel_x = 10;
-	pixel_y = 6
-	},
-/obj/machinery/recharger{
-	pixel_x = -4;
-	pixel_y = -1
-	},
-/obj/machinery/airalarm/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Security - HoS Office"
 	},
@@ -189527,7 +189503,7 @@ qLl
 ppB
 ppB
 ppB
-mZn
+ppB
 sUL
 nAF
 sNN
