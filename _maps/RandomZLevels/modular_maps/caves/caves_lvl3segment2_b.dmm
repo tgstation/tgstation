@@ -8,107 +8,207 @@
 "aT" = (/turf/open/chasm/lavaland,/area/template_noop)
 "bw" = (/obj/effect/spawner/structure/window/plasma,/turf/open/floor/vault/alien,/area/template_noop)
 "bz" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/asteroid/elite/herald,/turf/open/floor/vault/alien,/area/template_noop)
+"cn" = (/obj/machinery/door/poddoor{id = "exhibitstorage"},/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/template_noop)
+"cp" = (/obj/machinery/door/poddoor{id = "exhibitstorage"},/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/template_noop)
+"cD" = (/obj/machinery/door/airlock/abductor,/obj/effect/turf_decal/siding/purple{dir = 4},/turf/open/floor/vault/alien,/area/template_noop)
 "cL" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/faithless,/turf/open/floor/vault/alien,/area/template_noop)
+"cQ" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table/abductor,/turf/open/floor/plating,/area/template_noop)
+"db" = (/obj/effect/turf_decal/siding/purple/corner{dir = 4},/turf/open/floor/vault/alien,/area/template_noop)
 "dj" = (/obj/machinery/door/airlock/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"dN" = (/obj/machinery/door/airlock/abductor,/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
 "ed" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/multitool/abductor,/obj/item/screwdriver/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"ef" = (/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
 "ei" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/bear/russian,/turf/open/floor/vault/alien,/area/template_noop)
-"eH" = (/obj/structure/table/optable/abductor,/obj/effect/light_emitter,/obj/item/keycard{desc = "A small keycard with a strange symbol marked on it."; name = "strange keycard"; puzzle_id = "number1victoryroyale"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"el" = (/obj/structure/table/optable/abductor,/obj/effect/light_emitter,/obj/item/keycard/hilbert{desc = "A keycard with a strange symbol embedded in the center."; name = "strange keycard"; puzzle_id = "number1victoryroyale"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"fA" = (/obj/machinery/door/puzzle/keycard{open_message = "The door hums ominously and slides open."; puzzle_id = "number1victoryroyale"},/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/purple,/obj/effect/turf_decal/siding/purple{dir = 1},/turf/open/floor/vault/alien,/area/template_noop)
+"gt" = (/obj/structure/chair/office/tactical,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
+"gu" = (/obj/structure/table/abductor,/obj/singularity/academy{name = "Exhibit 0000Sl - BIG SUCK"},/turf/open/floor/vault/alien,/area/template_noop)
+"gv" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/template_noop)
 "gz" = (/obj/structure/table/abductor,/obj/item/veilrender/vealrender{name = "Exhibit 5634Mo - BeefKnife"},/turf/open/floor/vault/alien,/area/template_noop)
-"ha" = (/obj/structure/window/reinforced/plasma/fulltile{max_integrity = 10000},/turf/open/floor/vault/alien,/area/template_noop)
+"gQ" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/template_noop)
+"hc" = (/obj/structure/table/abductor,/obj/effect/turf_decal/siding/purple{dir = 6},/turf/open/floor/vault/alien,/area/template_noop)
+"hr" = (/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/template_noop)
 "hK" = (/obj/structure/table/abductor,/obj/machinery/recharger,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"hQ" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"},/obj/effect/turf_decal/siding/purple{dir = 10},/turf/open/floor/vault/alien,/area/template_noop)
 "hY" = (/obj/structure/table/abductor,/obj/item/melee/baseball_bat{name = "Exhibit 5321nL - Knee Hittur"},/turf/open/floor/vault/alien,/area/template_noop)
+"iq" = (/obj/structure/table/abductor,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
+"iB" = (/obj/effect/decal/cleanable/dirt,/obj/structure/tank_dispenser/oxygen{oxygentanks = 3},/turf/open/floor/plating,/area/template_noop)
+"jl" = (/obj/effect/turf_decal/siding/purple{dir = 10},/turf/open/floor/vault/alien,/area/template_noop)
+"jJ" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/clothing/under/abductor,/obj/item/clothing/shoes/combat,/obj/item/clothing/head/helmet/abductor,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
 "jX" = (/obj/structure/statue/bananium/clown{name = "Exhibit 5635jG - Hunk"},/turf/open/floor/vault/alien,/area/template_noop)
-"kt" = (/obj/structure/chair/office/tactical{dir = 4},/turf/open/floor/vault/alien,/area/template_noop)
 "kz" = (/turf/closed/wall/vault/alien,/area/template_noop)
-"nB" = (/obj/machinery/door/poddoor{id = "exhibitstorage"},/turf/open/floor/vault/alien,/area/template_noop)
+"kM" = (/obj/structure/table/abductor,/obj/structure/fluff{desc = "A highly detailed visualization of a space carp, projected outwards via hologram."; dir = 8; icon = 'icons/mob/carp.dmi'; icon_state = "holocarp"; name = "hologram of a space carp"},/obj/effect/turf_decal/siding/purple,/obj/machinery/light/dim{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/template_noop)
+"la" = (/obj/structure/bed/pod,/obj/item/bedsheet/cosmos,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
+"lN" = (/obj/effect/turf_decal/siding/purple{dir = 4},/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 4},/turf/open/floor/vault/alien,/area/template_noop)
+"lO" = (/obj/effect/turf_decal/siding/purple{dir = 6},/turf/open/floor/vault/alien,/area/template_noop)
+"lR" = (/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/delivery/white,/obj/effect/decal/cleanable/dirt,/obj/machinery/door/poddoor{id = "exhibitstorage"; name = "Exhibit Exit Lockdown"},/turf/open/floor/plating,/area/template_noop)
+"mz" = (/obj/structure/chair/office/tactical{dir = 1},/turf/open/floor/vault/alien,/area/template_noop)
+"mE" = (/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/template_noop)
+"nw" = (/obj/effect/turf_decal/siding/purple,/obj/machinery/light/dim{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/template_noop)
 "oy" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/lizard,/turf/open/floor/vault/alien,/area/template_noop)
+"oT" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"oW" = (/obj/effect/turf_decal/siding/purple/corner{dir = 8},/obj/effect/turf_decal/siding/purple/corner,/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/template_noop)
 "oZ" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/hivebot,/turf/open/floor/vault/alien,/area/template_noop)
-"pS" = (/obj/structure/chair/office/tactical{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
-"qb" = (/turf/open/floor/plating,/area/template_noop)
+"pT" = (/obj/effect/turf_decal/siding/purple/corner{dir = 1},/turf/open/floor/vault/alien,/area/template_noop)
+"pY" = (/obj/structure/flora/ash/tall_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"qo" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 8},/obj/effect/turf_decal/siding/purple{dir = 9},/turf/open/floor/vault/alien,/area/template_noop)
+"qt" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
 "qx" = (/obj/structure/table/abductor,/obj/item/storage/box/alienhandcuffs,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
 "qz" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/russian/ranged/trooper,/turf/open/floor/vault/alien,/area/template_noop)
-"qK" = (/obj/machinery/door/puzzle/keycard{open_message = "The door hums ominously and slides open."; puzzle_id = "number1victoryroyale"},/turf/open/floor/vault/alien,/area/template_noop)
+"qJ" = (/obj/structure/chair/office/tactical{dir = 4},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
 "rG" = (/obj/structure/fluff{desc = "A futuristic looking console. The lock screen is written in a strange font."; icon = 'icons/obj/abductor.dmi'; icon_state = "console"; name = "console"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"rX" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/siding/purple{dir = 1},/turf/open/floor/vault/alien,/area/template_noop)
+"su" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 4},/obj/effect/turf_decal/siding/purple{dir = 6},/turf/open/floor/vault/alien,/area/template_noop)
+"sD" = (/obj/effect/turf_decal/siding/purple{dir = 4},/turf/open/floor/vault/alien,/area/template_noop)
+"sF" = (/obj/effect/turf_decal/siding/purple/corner{dir = 1},/obj/effect/turf_decal/siding/purple/corner{dir = 4},/turf/open/floor/vault/alien,/area/template_noop)
+"sM" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 4},/obj/effect/turf_decal/siding/purple{dir = 4},/turf/open/floor/vault/alien,/area/template_noop)
+"sO" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/machinery/computer/security{name = "exhibit camera console"; network = list("ayylmao")},/turf/open/floor/vault/alien,/area/template_noop)
 "tn" = (/obj/structure/table/abductor,/obj/item/plunger{name = "Exhibit 9456pL - Suckler"},/turf/open/floor/vault/alien,/area/template_noop)
-"um" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/turf/open/floor/vault/alien,/area/template_noop)
+"tN" = (/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
 "uu" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/clothing/head/helmet/abductor,/obj/item/crowbar/abductor,/obj/item/clothing/under/abductor,/obj/item/clothing/suit/armor/abductor/vest,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
 "vD" = (/obj/structure/fluff{desc = "A man-sized tube with various surgical equipment."; icon = 'icons/obj/abductor.dmi'; icon_state = "experiment-open"; name = "experimentation machine"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"vV" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/template_noop)
 "wd" = (/turf/closed/wall/mineral/abductor,/area/template_noop)
+"we" = (/obj/structure/bed/dogbed,/obj/structure/fluff{desc = "You're not sure if walking into this is a great idea..."; icon = 'icons/effects/eldritch.dmi'; icon_state = "pierced_illusion"; name = "fluxating rift"},/obj/effect/step_trigger/teleport_fancy{entersmoke = 1; entersparks = 1; locationx = 78; locationy = 113; uses = 0},/turf/open/floor/vault/alien,/area/template_noop)
 "wo" = (/obj/structure/table/optable/abductor,/obj/effect/light_emitter,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
 "wt" = (/obj/structure/table/abductor,/obj/item/hand_labeler{name = "Exhibit 4523Mn - Namer"},/turf/open/floor/vault/alien,/area/template_noop)
-"wu" = (/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/turf/open/floor/vault/alien,/area/template_noop)
 "wI" = (/obj/structure/table/abductor,/obj/item/oar{name = "Exhibit 4312mJ - Ore"},/turf/open/floor/vault/alien,/area/template_noop)
 "wQ" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/statue,/turf/open/floor/vault/alien,/area/template_noop)
+"xj" = (/obj/structure/chair/office/tactical{dir = 8},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
 "xl" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,/turf/open/floor/vault/alien,/area/template_noop)
 "xD" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/carp/ranged/chaos,/turf/open/floor/vault/alien,/area/template_noop)
+"xF" = (/obj/structure/table/abductor,/obj/item/mmi/syndie{name = "Exhibit 5432sN - Angry Metal Maker"},/turf/open/floor/vault/alien,/area/template_noop)
 "zb" = (/obj/structure/fluff{desc = "A tank filled with replacement organs. There appears to be some sort of lock on it."; icon = 'icons/obj/abductor.dmi'; icon_state = "dispenser"; name = "replacement organ storage"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"zA" = (/obj/effect/turf_decal/siding/purple/corner{dir = 8},/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/template_noop)
+"zI" = (/obj/effect/turf_decal/siding/purple{dir = 5},/turf/open/floor/vault/alien,/area/template_noop)
+"Ah" = (/obj/effect/turf_decal/siding/purple{dir = 9},/obj/structure/table/abductor,/turf/open/floor/vault/alien,/area/template_noop)
 "Cz" = (/obj/structure/fluff{desc = "A strange looking platform used to teleport (un)willing victims."; icon = 'icons/obj/abductor.dmi'; icon_state = "alien-pad-idle"; name = "alien teleport pad"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"CC" = (/obj/machinery/door/airlock/abductor,/turf/open/floor/plating,/area/template_noop)
-"CV" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/skeleton/templar,/turf/open/floor/vault/alien,/area/template_noop)
+"CH" = (/obj/effect/turf_decal/siding/purple/end,/turf/open/floor/vault/alien,/area/template_noop)
+"CL" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "DA" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/stock_parts/cell/infinite/abductor,/obj/item/wrench/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"DD" = (/obj/effect/turf_decal/siding/purple{dir = 8},/obj/machinery/button/door/directional/north{id = "exhibitstorage"; name = "Exhibit Exit Lockdown Toggle"},/turf/open/floor/vault/alien,/area/template_noop)
+"DM" = (/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
 "DS" = (/obj/structure/railing/corner,/obj/structure/railing/corner{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"DZ" = (/obj/structure/table/abductor,/obj/structure/fluff{desc = "A highly detailed visualization of a space carp, projected outwards via hologram."; dir = 4; icon = 'icons/mob/carp.dmi'; icon_state = "holocarp"; name = "hologram of a space carp"},/turf/open/floor/vault/alien,/area/template_noop)
-"Ex" = (/obj/structure/table/abductor,/turf/open/floor/vault/alien,/area/template_noop)
+"DX" = (/obj/effect/turf_decal/siding/purple{dir = 1},/turf/open/floor/vault/alien,/area/template_noop)
+"Ec" = (/obj/machinery/door/airlock/abductor,/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
+"EY" = (/obj/structure/table/abductor,/obj/structure/fluff{desc = "A highly detailed visualization of a space carp, projected outwards via hologram."; dir = 4; icon = 'icons/mob/carp.dmi'; icon_state = "holocarp"; name = "hologram of a space carp"},/obj/effect/turf_decal/siding/purple,/obj/machinery/light/dim{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/template_noop)
+"EZ" = (/obj/machinery/door/airlock/abductor,/obj/effect/turf_decal/siding/purple{dir = 1},/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/template_noop)
+"Fg" = (/obj/structure/table/abductor,/obj/item/toy/plush/awakenedplushie,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
+"Fx" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/template_noop)
+"Fy" = (/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/template_noop)
+"Ga" = (/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/template_noop)
 "Gh" = (/turf/open/floor/vault/alien,/area/template_noop)
+"GG" = (/obj/structure/toilet{dir = 4; name = "Exhibit 4524Aj - ToyLet"},/turf/open/floor/vault/alien,/area/template_noop)
+"GH" = (/obj/effect/turf_decal/delivery/white,/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/turf/open/floor/plating,/area/template_noop)
+"GZ" = (/obj/machinery/door/firedoor,/turf/open/floor/vault/alien,/area/template_noop)
+"He" = (/obj/structure/table/abductor,/obj/structure/fluff{desc = "A highly detailed visualization of a space carp, projected outwards via hologram."; icon = 'icons/mob/carp.dmi'; icon_state = "holocarp"; name = "hologram of a space carp"},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
+"Hk" = (/obj/structure/window/reinforced/plasma/fulltile{max_integrity = 10000},/turf/open/floor/plating,/area/template_noop)
 "Ht" = (/obj/structure/table/abductor,/obj/item/gun/ballistic/automatic/pistol/deagle/gold{name = "Exhibit 4523hJ - Dessert Beagle"},/turf/open/floor/vault/alien,/area/template_noop)
+"If" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
+"Ih" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/purple/corner{dir = 8},/obj/effect/turf_decal/siding/purple/corner{dir = 1},/turf/open/floor/vault/alien,/area/template_noop)
+"IH" = (/obj/effect/decal/cleanable/dirt,/obj/item/toy/plush/rouny,/turf/open/floor/plating,/area/template_noop)
+"IW" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 1},/turf/open/floor/vault/alien,/area/template_noop)
+"Jl" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/template_noop)
 "Jm" = (/obj/modular_map_root/caves{key = "caves_lvl3segment3"; name = "lvl3segment3"},/turf/template_noop,/area/template_noop)
 "Jo" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/wirecutters/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"JA" = (/obj/machinery/door/poddoor{id = "exhibitstorage"},/obj/effect/turf_decal/siding/purple{dir = 1},/obj/effect/turf_decal/siding/purple,/turf/open/floor/plating,/area/template_noop)
+"JM" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/door/airlock/abductor,/turf/open/floor/plating,/area/template_noop)
+"JT" = (/obj/effect/turf_decal/siding/purple/corner,/obj/effect/turf_decal/siding/purple/corner{dir = 4},/turf/open/floor/vault/alien,/area/template_noop)
+"JW" = (/obj/structure/table/abductor,/obj/structure/cursed_slot_machine{name = "Exhibit 0985Je - Chat Reactor"},/turf/open/floor/vault/alien,/area/template_noop)
+"JX" = (/obj/machinery/door/airlock/abductor,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/template_noop)
 "JY" = (/obj/structure/bed/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"Kj" = (/obj/effect/turf_decal/siding/purple,/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/template_noop)
 "KY" = (/obj/structure/table/abductor,/obj/item/hand_labeler_refill{name = "Exhibit 4562kM - Namer Names"},/turf/open/floor/vault/alien,/area/template_noop)
+"Lc" = (/obj/structure/bed/dogbed,/obj/structure/fluff/iced_abductor{name = "Jerry"},/turf/open/floor/vault/alien,/area/template_noop)
+"LD" = (/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/turf_decal/siding/purple/corner{dir = 1},/turf/open/floor/vault/alien,/area/template_noop)
+"LJ" = (/obj/structure/table/abductor,/obj/effect/turf_decal/siding/purple{dir = 5},/turf/open/floor/vault/alien,/area/template_noop)
+"LL" = (/obj/structure/bed/pod{dir = 8},/obj/item/bedsheet/cosmos,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
 "LS" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/tree,/turf/open/floor/vault/alien,/area/template_noop)
 "LW" = (/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"Mj" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/mushroom,/turf/open/floor/vault/alien,/area/template_noop)
-"MX" = (/obj/machinery/door/airlock/abductor,/turf/open/floor/vault/alien,/area/template_noop)
-"Nw" = (/obj/structure/toilet{name = "Exhibit 452Aj - ToyLet"},/turf/open/floor/vault/alien,/area/template_noop)
+"Me" = (/obj/effect/turf_decal/siding/purple,/obj/effect/decal/cleanable/dirt,/obj/machinery/light/dim{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/template_noop)
+"MP" = (/obj/effect/turf_decal/siding/purple/corner,/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
+"Nd" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/purple{dir = 6},/turf/open/floor/vault/alien,/area/template_noop)
+"Nw" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/purple{dir = 5},/turf/open/floor/vault/alien,/area/template_noop)
 "NA" = (/obj/structure/table/abductor,/obj/item/mop/advanced{name = "Exhibit 4999Mp - Fluff Steck"},/turf/open/floor/vault/alien,/area/template_noop)
 "NH" = (/obj/structure/chair/office/tactical,/turf/open/floor/vault/alien,/area/template_noop)
+"NP" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Ol" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/template_noop)
+"Oq" = (/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/template_noop)
+"Oy" = (/obj/structure/table/abductor,/obj/item/melee/skateboard/hoverboard{name = "Exhibit 0003aF - Marty"},/turf/open/floor/vault/alien,/area/template_noop)
+"OT" = (/obj/structure/table/abductor,/obj/effect/turf_decal/siding/purple{dir = 10},/turf/open/floor/vault/alien,/area/template_noop)
 "OV" = (/obj/structure/table/abductor,/obj/item/retractor/alien,/obj/item/hemostat/alien,/obj/item/surgicaldrill/alien,/obj/item/cautery/alien,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"Pb" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 1},/obj/effect/turf_decal/siding/purple{dir = 9},/turf/open/floor/vault/alien,/area/template_noop)
 "PI" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/giant_spider/hunter,/turf/open/floor/vault/alien,/area/template_noop)
+"Qv" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 8},/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
+"QC" = (/obj/effect/turf_decal/siding/purple{dir = 8},/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
 "QI" = (/obj/structure/railing{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"RC" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"RH" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/siding/purple{dir = 4},/turf/open/floor/vault/alien,/area/template_noop)
 "RM" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/gorilla,/turf/open/floor/vault/alien,/area/template_noop)
+"RR" = (/obj/structure/table/abductor,/obj/structure/chess/whiteknight{name = "Exhibit 1223fG - Marble Neigh"},/turf/open/floor/vault/alien,/area/template_noop)
+"Sa" = (/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/template_noop)
+"SK" = (/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/template_noop)
+"SM" = (/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
+"SW" = (/obj/effect/decal/cleanable/dirt,/obj/structure/closet/emcloset,/turf/open/floor/plating,/area/template_noop)
+"Th" = (/obj/effect/turf_decal/siding/purple/corner{dir = 1},/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
+"Tv" = (/obj/structure/bed/pod,/obj/item/bedsheet/cosmos,/obj/structure/sign/poster/contraband/space_cube{pixel_x = 32},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
+"UK" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 1},/obj/machinery/camera/autoname/directional/north{network = list("ayylmao")},/turf/open/floor/vault/alien,/area/template_noop)
 "Ve" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/asteroid/goldgrub,/turf/open/floor/vault/alien,/area/template_noop)
+"Vl" = (/obj/structure/table/abductor,/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/template_noop)
 "VP" = (/obj/structure/table/abductor,/obj/item/hemostat/alien,/obj/item/retractor/alien,/obj/item/circular_saw/alien,/obj/item/scalpel/alien,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"WX" = (/obj/structure/table/abductor,/obj/item/spear/grey_tide{name = "Exhibit 2234As - Gray Sea"},/turf/open/floor/vault/alien,/area/template_noop)
 "Xa" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,/turf/open/floor/vault/alien,/area/template_noop)
+"Xe" = (/obj/effect/turf_decal/siding/purple{dir = 6},/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/template_noop)
+"Xt" = (/obj/effect/spawner/structure/window/plasma,/turf/open/floor/plating,/area/template_noop)
 "XM" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/pirate/melee,/turf/open/floor/vault/alien,/area/template_noop)
 "YD" = (/obj/structure/table/abductor,/obj/item/gun/magic/wand/resurrection{charges = 1; max_charges = 1; name = "Exhibit 452Jf - Heelies Stick"},/turf/open/floor/vault/alien,/area/template_noop)
+"YO" = (/obj/structure/table/abductor,/obj/item/ship_in_a_bottle{name = "Exhibit 5674bO - Lava Log"},/turf/open/floor/vault/alien,/area/template_noop)
 "YW" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 1},/obj/structure/railing,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"YZ" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/machinery/camera/autoname/directional/north{network = list("ayylmao")},/turf/open/floor/vault/alien,/area/template_noop)
+"Zm" = (/obj/effect/turf_decal/siding/purple{dir = 10},/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/template_noop)
+"Zp" = (/obj/structure/table/abductor,/obj/item/wheelchair/gold{name = "Exhibit 9900Wh - AuChair"},/turf/open/floor/vault/alien,/area/template_noop)
+"Zu" = (/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/template_noop)
+"Zz" = (/obj/machinery/door/poddoor{id = "exhibitstorage"; name = "Exhibit Exit Lockdown"},/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/delivery/white,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/template_noop)
+"ZB" = (/obj/structure/bed/pod{dir = 4},/obj/item/bedsheet/cosmos{dir = 4},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/template_noop)
+"ZO" = (/obj/effect/turf_decal/siding/purple,/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/template_noop)
+"ZT" = (/obj/effect/turf_decal/siding/purple{dir = 9},/turf/open/floor/vault/alien,/area/template_noop)
 
 (1,1,1) = {"
 awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaxaxaIaxaxaxawawawawawawawawawawawawawawawawawawawawaw
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzkzaakzkzkzkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzaaaakzaaaaaaaaaaaTaaaaaaaaaaaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzExkzkzExkzaakzExkzkzExkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzGhGhGhkzkzaakzaaaaaaaaaTaTaaaaaaaaaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzbwkzkzbwkzkzkzbwkzkzbwkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhkzkzkzkzaaaxQIaTaTaTaaaaaaaxaxaaaxaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzGhGhGhGhGhGhGhGhGhGhGhkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzjXbwGhGhGhGhGhkzGhGhkzaxaxDSYWYWYWaxaxaxaxaxaaaxaxaxaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhNHNHNHGhGhGhGhGhkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhMXGhGhqKaxaxQIaTaTaTaaaxaaaaaaaaaxaxaaaaaaaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzExbwGhGhGhGhExExDZExExGhGhGhGhbwExkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzNwbwGhGhGhGhGhkzGhGhkzaxaxaaaTaTaTaaaaaaaaaxaxaxaxaaaaaaaaaaaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhktExpSGhGhGhGhGhkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhkzkzkzkzaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhGhGhGhGhGhGhkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzGhGhGhkzkzaakzaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzExbwGhGhGhGhGhGhGhGhGhGhGhbwExkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzMXkzkzaaaakzaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhGhGhGhGhGhGhkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaaaaaaaaaaaxaxaxaxaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzhaMXhakzkzkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzHtbwGhGhGhbwYDkzkzaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaaaaaaaxaxaxaxaxaxaxaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhhaGhGhGhhaGhGhGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaaaaaxaxaxaxaxaxaxaxaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhaAGhnBGhGhGhnBGhoyGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzaaaakzaaaaaaaTaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxwdwdwdwdwdaxaxaxaxaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhhaGhGhGhhaGhGhGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaTaTaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxwdwdzbVPJYwdwdaxaxaxaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzGhGhGhkzkzkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzwtbwGhGhGhbwKYkzkzaaaaaaaaaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdCzLWLWLWuuwdaxaxaxaxaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdrGLWwoLWqxwdaxaxaxaxaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzaaaakzaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdvDLWLWLWJowdaxaxaxaxaxaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzaaaakzkzkzkzkzaaaakzkzkzkzkzGhGhGhkzkzkzkzkzaaaakzkzkzkzkzaaaakzkzkzkzkzaaaakzkzkzkzkzaaaakzkzkzkzkzaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdwdLWLWhKwdwdaxaxaxaxaxaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzGhGhGhkzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaakzNAbwGhGhGhbwhYkzkzaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdwddjwdwdaxaxaxaxaxaxaa
-aaaaaaaaaaaaaaaaaaaakzkzkzaakzkzkzaaaakzGhMjGhkzaaaakzGhbzGhkzaaaakzGhqzGhkzGhGhGhkzGhLSGhkzaaaakzGhxDGhkzaaaakzGheiGhkzaaaakzGhRMGhkzaaaakzGhoZGhkzaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaa
-aaaaaaaaaaaaaaaaaaaakztnkzaakzwIkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzGhGhGhkzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaaaakzkzMXkzkzaaaakzaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaa
-aaaaaaaakzkzkzkzkzkzkzbwkzkzkzbwkzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzGhGhGhkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzkzGhGhGhkzaaaakzaaaaaaaaaaaTaTaTaTaTaTaTaaaaaaaaaaaaaaaaaxaTaTaTaTaTaTaxaxaxaxaxaxaxaxaxaxaa
-aaaaaaaakzExGhExkzGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhkzaaaakzaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaxaxaxwdwdwdwdwdaxaa
-aaaaaaaakzGhGhGhhaGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhkzaaaakzaaaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdwdvDLWCzwdwdaa
-aaaaaaaakzGhGhGhMXGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhkzaaaakzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdLWLWLWLWzbwdaa
-aaaaaaaakzGhGhGhhaGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhkzaaaakzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxdjLWLWeHLWOVwdaa
-aaaaaaaakzGhumGhkzGhGhGhkzkzkzkzkzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzGhGhGhkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzkzkzCCkzkzaaaakzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdhKLWLWLWJYwdaa
-aaaaaaaakzkzkzkzkzGhGhGhkzaaaaaaaaaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzkzbwkzkzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzqbqbqbqbqbqbkzaaaaaakzaaaaaaaTaTaTaTaTaTaTaTaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdwdDAqxedwdwdaa
-aaaaaaaaaaaaaakzkzwuwuwukzkzaaaaaaaaaakzGhXaGhkzaaaakzGhwQGhkzaaaakzGhVeGhkzkzgzkzkzGhXMGhkzaaaakzGhPIGhkzaaaakzGhxlGhkzaaaakzGhCVGhkzaaaakzGhcLGhkzqbkzkzkzqbkzkzkzaaaakzaaaaaaaaaaaaaaaTaTaTaTaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxaxwdwdwdwdwdaxaa
-aaaaaaaaaaaaaakzGhGhGhGhGhkzaaaaaaaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzkzkzkzkzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzqbkzqbqbqbqbqbkzaaaakzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaxaTaTaTaTaTaTaTaTaxaxaxaxaxaxaxaxaaaa
-aaaaaaaaaaaaaakzGhGhGhGhGhkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzaaaaaakzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzqbkzqbqbqbqbqbkzaaaakzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaxaxaTaTaTaTaTaTaxaxaxaxaxaxaxaxaaaaaa
-aaaaaaaaaaaaaakzGhGhGhGhGhqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbkzqbqbqbqbqbkzaaaakzaaaaaaaaaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxaaaaaaaaaaaa
-aaaaaaaaaaaaaakzkznBkznBkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzaaaakzaaaaaaaaaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aNaaaaaaaaaaaaaaaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxoToTaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzkzaakzkzkzkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzaaaaaaaaaaaaaaaaaTaaaaaaaaaaaxaxoTCLoTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzYOkzkzgukzaakzRRkzkzWXkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzZTDXzIkzkzaaaaaaaaaaaaaTaTaaaaaaaaaxaxaxaxoToTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzXtkzkzXtkzkzkzXtkzkzXtkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzqopTGhdbzIkzkzkzkzaaoTQIaTaTaTaaaaaaaxaxaaaxaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzZTIWDXFxgvgvgvIfDXIWzIkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzjXbwefGhGhGhsDkzPbNwkzNPaxDSYWYWYWoToToTaxaxaapYaxpYpYpYaxoTaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzZTpTGhFylOgtgtgtjltNGhdbzIkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzefGhGhGhmEEZIhOlfAaxaxQIaTaTaTaaCLaaaaaaaaaxaxaaaaaaoTCLoTaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzZpXtefGhGhsDiqiqHeiqiqefGhGhsDXtxFkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGGbwefGhGhGhsDkzhQNdkzoTNPaaaTaTaTaaaaaaaaaxpYaxaxaaaaaaaaaaoTaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzjltNGhsDSMqJiqxjSMefGhFylOkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzjltNGhFysukzkzkzkzaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaoTaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzefGhdbzISMSMSMZTpTGhsDkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzGHGHGHkzkzaaaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzJWXtefNHGhdbDXDXDXpTGhNHsDXtYDkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzdNkzkzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzOTEYVlhrhrMPhrhrVlkMhckzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzZTLDzIkzkzkzaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaaaaaaaaaaaxaxRCRCaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzHkdNHkkzkzkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzHtXtefGhsDXtOykzaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxoTCLaaaaaaaxaxaxaxRCRCaxaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhsDHkZTsFzIHkefGhGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzefGhsMkzkzkzaaaaaaaaaaaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxoTaaaaaxaxaxaxaxaxaxaxaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzkzaaaaaaaaaakzGhaAmEJAThGhJTJAThoyGhkzaaaaaaaaaakzkzkzkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzefGhsDkzaaaaaaaaaaaaaTaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxoTaxwdwdwdwdwdaxaxaxaxaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzjJiqFgjJkzaaaaaaaaaakzGhGhsDHkefGhsDHkefGhGhkzaaaaaaaaaakzjJiqiqjJkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzQvGhsDkzkzkzaaaaaaaaaaaTaTaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaoTaxaxaxwdwdzbVPJYwdwdaxaxaxaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzZTDXDXzIkzkzaaaaaaaakzkzkzkzkzefGhsDkzkzkzkzkzaaaaaaaakzkzZTDXDXzIkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzwtXtefGhsDXtKYkzaaaaaaaaaaaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaoTaxaxwdCzLWLWLWuuwdaxaxaxoTaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzZBefGhGhsDTvkzaaaaaaaaaaaaaaaakzefGhsDkzaaaaaaaaaaaaaaaakzZBefGhGhsDlakzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzefGhsMkzkzkzaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaoTaxaxwdrGLWwoLWqxwdaxaxoTCLaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzZBjltNFylOLLkzaaaaaaaaaaaaaaaakzQCGhlNkzaaaaaaaaaaaaaaaakzZBjltNFylOlakzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzefGhsDkzaaaaaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaoTaxaxwdvDLWLWLWJowdaxaxaxoToTaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzefsDkzkzkzkzkzaaaakzkzkzkzkzefGhsDkzkzkzkzkzaaaakzkzkzkzkzefsDkzkzkzkzkzaaaakzkzkzkzkzaaaakzkzkzkzkzaakzkzkzQvGhsDkzkzkzaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdwdLWLWhKwdwdoTaxaxoTaxaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzefsDkzGhGhGhkzaaaakzGhGhGhkzefGhsDkzGhGhGhkzaaaakzGhGhGhkzefsDkzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaakzNAXtefGhsDXthYkzaaaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdwddjwdwdaxoToTaxaxaxaa
+aaaaaaaaaaaaaaaaaaaakzkzkzaakzkzkzaaaakzGhLcGhkzefsDkzGhbzGhkzaaaakzGhqzGhkzefGhsDkzGhLSGhkzaaaakzGhxDGhkzefsDkzGheiGhkzaaaakzGhRMGhkzaaaakzGhoZGhkzaakzkzkzjlMPlOkzkzkzaaaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaCLoToTaxaxaxaxaxaxaxCLoTaxaxaxaa
+aaaaaaaaaaaaaaaaaaaakztnkzaakzwIkzaaaakzhrMPhrkzEccDkzhrMPhrkzaaaakzhrMPhrkzefGhsDkzhrMPhrkzaaaakzhrMPhrkzEccDkzhrMPhrkzaaaakzhrMPhrkzaaaakzhrMPhrkzaaaaaakzkzdNkzkzaaaaaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaoTaxaxaxaxaxaxaxaxaxoToTaxaxaxaa
+aaaaaaaakzkzkzkzkzkzkzXtkzkzkzXtkzkzkzkzHkcnHkkzqtRHkzHkcnHkkzkzkzkzHkcnHkkzqtGZRHkzHkcnHkkzkzkzkzHkcnHkkzqtRHkzHkcnHkkzkzkzkzHkcnHkkzkzkzkzHkcnHkkzkzkzkzkzZTsFzIkzaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaaaaaaaaaaaaaaaaaxaTaTaTaTaTaTaxaxaxaxaxaxaxaxaxaxaa
+aaaaaaaakzAhsOLJkzZTDXDXIWDXDXDXDXDXDXIWDXsFDXYZpTdbIWDXsFDXDXDXYZIWDXsFDXrXpTGhdbrXDXsFDXUKDXDXDXDXsFDXIWpTdbYZDXsFDXIWDXDXDXDXsFDXUKDXDXDXDXsFDXIWYZDXDXDXpTGhsDkzaaaaaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaxaxaxwdwdwdwdwdaxaa
+aaaaaaaakzDDmzsDHkefGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGZGhGhGhGZGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhsDkzaaaaaaaaaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdwdvDLWCzwdwdaa
+aaaaaaaakzQCGhmEEZThGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGZGhGhGhGZGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhgQsDkzaaaaaaaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdLWLWLWLWzbwdaa
+aaaaaaaakzSKhrDMHkefGhFyhrhrhrhrnwhrhrhrhrzAhrnwhrhrhrhrzAhrnwhrhrhrhrzAhrvVtNGhFyvVhrzAhrhrhrhrnwhrzAhrhrhrhrnwhrzAhrhrhrhrnwhrzAhrhrhrhrnwhrzAhrhrhrhrhrnwZOgQXekzaaaaaaaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxdjLWLWelLWOVwdaa
+aaaaaaaakzCHjJCHkzQCGhlNkzkzkzkzkzkzkzkzHkcpHkkzkzkzkzHkcpHkkzkzkzkzHkcpHkkzjlhrlOkzHkcpHkkzkzkzkzHkcpHkkzkzkzkzHkcpHkkzkzkzkzHkcpHkkzkzkzkzHkcpHkkzkzkzkzkzkzJXkzkzaaaaaaaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdhKLWLWLWJYwdaa
+aaaaaaaakzkzkzkzkzqtGZRHkzaaaaaaaaaaaakzDXLDDXkzaaaakzDXLDDXkzaaaakzDXLDDXkzkzXtkzkzDXLDDXkzaaaakzDXLDDXkzaaaakzDXLDDXkzaaaakzDXLDDXkzaaaakzDXLDDXkzJlJlJlJlJlJlkzaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdwdDAqxedwdwdaa
+aaaaaaaaaaaaaakzkzZuGaSakzkzaaaaaaaaaakzGhXaGhkzaaaakzGhwQGhkzaaaakzGhVeGhkzkzgzkzkzGhXMGhkzaaaakzGhPIGhkzaaaakzGhxlGhkzaaaakzGhweGhkzaaaakzGhcLGhkzJlkzkzkzJMkzkzkzaaaaaaaaaaaaaaaaaaaaaTaTaTaTaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxaxwdwdwdwdwdaxaa
+aaaaaaaaaaaaaakzZTpTgQdbzIkzaaaaaaaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzkzkzkzkzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzJlkzJlJlJlJlJlkzaaaaaaaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaxaTaTaTaTaTaTaTaTaxaxaxaxaxaxaxaxaaaa
+aaaaaaaaaaaaaakzefgQgQgQOqkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkziBIHSWkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzJlkzJlJlJlJlJlkzaaaaaaaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaxaxaTaTaTaTaTaTaxaxoTaxaxaxaxaxaaaaaa
+aaaaaaaaaaaaaakzZmoWMeoWKjJMJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlJlkzJlcQcQcQJlkzaaaaaaaaaaaaaaaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxoToToTaxaaaaaaaaaaaa
+aaaaaaaaaaaaaakzkzlRkzZzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzaaaaaaaaaaaaaaaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aNaaaaaaaaaaaaaaaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aRaRaRaRaRaRaRaRaRaRJmaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaR
 "}
