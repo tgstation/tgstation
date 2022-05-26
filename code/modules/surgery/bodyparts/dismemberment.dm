@@ -197,16 +197,18 @@
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
 
-//when a limb is dropped, the internal organs are removed from the mob and put into the limb
+///Transfers the organ to the limb, and to the limb's owner, if it has one. This is done on drop_limb().
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
 	Remove(bodypart_owner)
 	add_to_limb(bodypart)
 
+///Adds the organ to a bodypart, used in transfer_to_limb()
 /obj/item/organ/proc/add_to_limb(obj/item/bodypart/bodypart)
 	forceMove(bodypart)
 
+///Removes the organ from the limb, placing it into nullspace.
 /obj/item/organ/proc/remove_from_limb()
-	return
+	moveToNullspace()
 
 /obj/item/organ/internal/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
 	Remove(head_owner) //Changeling brain concerns are now handled in Remove
@@ -321,16 +323,6 @@
 	. = attach_limb(limb_owner, special)
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
 		old_limb.attach_limb(limb_owner, TRUE)
-
-/*/obj/item/bodypart/head/replace_limb(mob/living/carbon/head_owner, special)
-	if(!istype(head_owner))
-		return
-	var/obj/item/bodypart/head/head = head_owner.get_bodypart(body_zone)
-	if(!attach_limb(head_owner, special))
-		return
-	if(head)
-		head.drop_limb(1)
-*/
 
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/new_limb_owner, special)
 	if(SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)

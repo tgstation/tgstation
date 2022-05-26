@@ -35,7 +35,7 @@
 	///Is there a sprite difference between male and female?
 	var/is_dimorphic = FALSE
 	///The actual color a limb is drawn as, set by /proc/update_limb()
-	var/draw_color //NEVER. EVER. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB. I WILL FIND YOU.
+	var/draw_color //NEVER. EVER. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB. I WILL FIND YOU. It ruins the limb icon pipeline.
 
 	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/body_zone
@@ -987,15 +987,7 @@
 		QDEL_NULL(current_gauze)
 		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
 
-
-///Proc to turn bodypart into another.
-/obj/item/bodypart/proc/change_bodypart(obj/item/bodypart/new_type)
-	RETURN_TYPE(/obj/item/bodypart)
-
-	var/mob/living/carbon/our_owner = owner //dropping nulls the limb
-	var/obj/item/bodypart/new_part = new new_type()
-	new_part.replace_limb(our_owner, TRUE)
-
+///Loops through all of the bodypart's external organs and update's their color.
 /obj/item/bodypart/proc/recolor_external_organs()
 	for(var/obj/item/organ/external/ext_organ as anything in external_organs)
 		ext_organ.inherit_color(force = TRUE)

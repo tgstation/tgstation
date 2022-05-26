@@ -2,11 +2,14 @@
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
-	var/mob/living/carbon/owner = null
-	var/status = ORGAN_ORGANIC
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
+	///The mob that owns this organ.
+	var/mob/living/carbon/owner = null
+	var/status = ORGAN_ORGANIC
+	///The body zone this organ is supposed to inhabit.
 	var/zone = BODY_ZONE_CHEST
+	///The organ slot this organ is supposed to inhabit. This should be unique by type. (Lungs, Appendix, Stomach, etc)
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
 	var/organ_flags = ORGAN_EDIBLE

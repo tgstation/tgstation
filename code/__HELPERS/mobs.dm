@@ -793,6 +793,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return zone
 
+///Takes a zone and returns it's "parent" zone, if it has one.
 /proc/deprecise_zone(precise_zone)
 	switch(precise_zone)
 		if(BODY_ZONE_PRECISE_GROIN)

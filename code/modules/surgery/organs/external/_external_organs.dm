@@ -113,21 +113,18 @@
 	else
 		add_to_limb(bodypart)
 
-///Use transfer_to_limb() instead of this.
 /obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
-	forceMove(bodypart, check_dest = FALSE)
 	ownerlimb = bodypart
-	ownerlimb.contents |= src
 	ownerlimb.external_organs |= src
 	inherit_color()
+	return ..()
 
-///Removes the organ from the limb. This proc assumes the organ_owner is null.
 /obj/item/organ/external/remove_from_limb()
 	ownerlimb.external_organs -= src
 	if(ownerlimb.owner && external_bodytypes)
 		ownerlimb.synchronize_bodytypes(ownerlimb.owner)
 	ownerlimb = null
-	moveToNullspace()
+	return ..()
 
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
 /obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, physique)
