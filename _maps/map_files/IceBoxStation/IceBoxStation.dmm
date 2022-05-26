@@ -8758,6 +8758,24 @@
 /obj/machinery/mecha_part_fabricator,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
+"cOF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissaryshutter";
+	name = "Vacant Commissary Shutter"
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
 "cOP" = (
 /obj/structure/chair{
 	dir = 1;
@@ -12539,12 +12557,19 @@
 	req_access = list("science")
 	},
 /obj/item/paper_bin{
-	pixel_x = -3;
+	pixel_x = -9;
 	pixel_y = 7
 	},
-/obj/item/folder,
-/obj/item/pen,
+/obj/item/folder{
+	pixel_x = -6
+	},
+/obj/item/pen{
+	pixel_x = -6
+	},
 /obj/machinery/door/firedoor,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/starboard)
 "dYn" = (
@@ -16899,6 +16924,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/light/directional/south,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "fvk" = (
@@ -49319,6 +49347,9 @@
 	name = "Robotics Lab Shutters"
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
 /turf/open/floor/plating,
 /area/station/science/robotics/lab)
 "pTB" = (
@@ -61022,13 +61053,19 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin{
-	pixel_x = -3;
+	pixel_x = -6;
 	pixel_y = 7
 	},
-/obj/item/pen,
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 5
+	},
 /obj/machinery/door/poddoor/preopen{
 	id = "Engineering";
 	name = "Engineering Security Door"
+	},
+/obj/structure/desk_bell{
+	pixel_x = 6
 	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
@@ -230380,7 +230417,7 @@ wde
 gst
 gst
 eYs
-eYs
+cOF
 gst
 jWU
 oiK
