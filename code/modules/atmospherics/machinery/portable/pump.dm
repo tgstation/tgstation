@@ -60,12 +60,13 @@
 	var/turf/local_turf = get_turf(src)
 	var/datum/gas_mixture/sending
 	var/datum/gas_mixture/receiving
-	if(direction == PUMP_OUT) // Hook up the internal pump.
-		sending = (holding ? holding.return_air() : air_contents)
-		receiving = (holding ? air_contents : local_turf.return_air())
+
+	if (holding) //Work with tank when inserted, otherwise - with area
+		sending = (direction == PUMP_IN ? air_contents : holding.return_air())
+		receiving = (direction == PUMP_IN ? holding.return_air() : air_contents)
 	else
-		sending = (holding ? air_contents : local_turf.return_air())
-		receiving = (holding ? holding.return_air() : air_contents)
+		sending = (direction == PUMP_IN ? local_turf.return_air() : air_contents)
+		receiving = (direction == PUMP_IN ? air_contents : local_turf.return_air())
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
 		air_update_turf(FALSE, FALSE) // Update the environment if needed.
@@ -109,6 +110,8 @@
 	data["on"] = on
 	data["direction"] = direction == PUMP_IN ? TRUE : FALSE
 	data["connected"] = connected_port ? TRUE : FALSE
+	data["source_one"] = connected_port ? "Port" : "Pump"
+	data["source_two"] = holding ? "Tank" : "Area"
 	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["target_pressure"] = round(target_pressure ? target_pressure : 0)
 	data["default_pressure"] = round(PUMP_DEFAULT_PRESSURE)
