@@ -195,7 +195,7 @@
 "ba" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "labor";
-	name = "labor camp blast door"
+	name = "Labor Camp Blast Door"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -2824,12 +2824,12 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "zo" = (
-/obj/machinery/computer/prisoner,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/structure/cable,
+/obj/machinery/computer/prisoner/management,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "zA" = (

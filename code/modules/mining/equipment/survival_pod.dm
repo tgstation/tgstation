@@ -107,7 +107,7 @@
 
 //Door
 /obj/machinery/door/airlock/survival_pod
-	name = "airlock"
+	name = "Airlock"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
