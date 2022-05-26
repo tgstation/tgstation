@@ -233,3 +233,6 @@
 
 /// The number of cells in a taxicab circle (rasterized diamond) of radius X.
 #define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))
+
+/// Exponential distribution CDF.
+#define EXPONENTIAL_CUMULATIVE(x, a) (1 - NUM_E ** -((a) * (x)))

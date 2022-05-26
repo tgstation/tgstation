@@ -105,7 +105,7 @@ Then the player gets the profit from selling his own wasted time.
 	var/amount = get_amount(O)
 	if(apply_elastic)
 		if(k_elasticity!=0)
-			return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount))) //anti-derivative of the marginal cost function
+			return round((cost / k_elasticity) * EXPONENTIAL_CUMULATIVE(amount, k_elasticity)) //Anti-derivative of the marginal cost function.
 		else
 			return round(cost * amount) //alternative form derived from L'Hopital to avoid division by 0
 	else

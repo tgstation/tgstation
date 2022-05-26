@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(radiation)
 			intensity = -log(1 - pulse_information.chance / 100) * (1 + pulse_information.max_range / 2) ** 2
 			perceived_intensity = intensity * INVERSE((1 + get_dist_euclidian(source, target)) ** 2) // Diminishes over range.
 			perceived_intensity *= (current_insulation - pulse_information.threshold) * INVERSE(1 - pulse_information.threshold) // Perceived intensity decreases as objects that absorb radiation block its trajectory.
-			perceived_chance = 100 * (1 - NUM_E ** -perceived_intensity)
+			perceived_chance = 100 * EXPONENTIAL_CUMULATIVE(perceived_intensity, 1)
 		else
 			perceived_chance = 100
 
