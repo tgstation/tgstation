@@ -1267,10 +1267,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard)
 "apK" = (
-/obj/machinery/computer/prisoner{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "apL" = (
@@ -86956,6 +86954,12 @@
 	dir = 8
 	},
 /area/station/hallway/primary/port)
+"xsm" = (
+/obj/machinery/computer/prisoner/management{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/misc/space)
 "xsp" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -138706,7 +138710,7 @@ aad
 aaa
 aaa
 aaa
-aaa
+xsm
 aaa
 aaa
 aaa

@@ -21793,12 +21793,12 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "hah" = (
-/obj/machinery/computer/prisoner,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/structure/cable,
+/obj/machinery/computer/prisoner/management,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "han" = (
