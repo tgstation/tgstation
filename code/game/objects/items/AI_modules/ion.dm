@@ -4,23 +4,6 @@ CONTAINS:
 /obj/item/ai_module/toy_ai
 */
 
-/********** I'm pretty sure this is deprecated code and can be deleted -TimT
-
-/obj/item/ai_module/ion/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	for(var/templaw in laws)
-		if(law_datum.owner)
-			if(!overflow)
-				law_datum.owner.add_ion_law(templaw)
-			else
-				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED,LAW_ION))
-		else
-			if(!overflow)
-				law_datum.add_ion_law(templaw)
-			else
-				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED,LAW_ION))
-
-***********/
-
 /obj/item/ai_module/core/full/damaged
 		name = "damaged Core AI Module"
 		desc = "An AI Module for programming laws to an AI. It looks slightly damaged."
