@@ -339,8 +339,8 @@ window "statwindow"
 		is-visible = false
 		saved-params = ""
 
-window "tgui_input"
-	elem "tgui_input"
+window "tgui_modal"
+	elem "tgui_modal"
 		type = MAIN
 		pos = 694,602
 		size = 333x64
@@ -351,7 +351,7 @@ window "tgui_input"
 		statusbar = false
 		can-minimize = false
 		can-resize = false
-	elem "tgui_browser"
+	elem "tgui_modal_browser"
 		type = BROWSER
 		pos = 0,0
 		size = 333x64

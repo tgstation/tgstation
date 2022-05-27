@@ -176,6 +176,7 @@
 #include "code\__DEFINES\tgs.config.dm"
 #include "code\__DEFINES\tgs.dm"
 #include "code\__DEFINES\tgui.dm"
+#include "code\__DEFINES\tgui_input.dm"
 #include "code\__DEFINES\time.dm"
 #include "code\__DEFINES\tools.dm"
 #include "code\__DEFINES\toys.dm"

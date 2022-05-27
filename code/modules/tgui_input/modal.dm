@@ -1,11 +1,12 @@
 /**
  * Opens a small tgui window that takes input and returns the user response.
+ * Like the traditional say, it does not html_encode the user input.
  *
  * Arguments:
- ** title - String displayed at the top of the window.
+ ** channel - Channel to broadcast the message.
  ** max_length - Cuts the user off after this amount of characters.
  */
-/proc/tgui_modal(mob/user, title = "Modal", max_length = MAX_MESSAGE_LEN)
+/proc/tgui_modal(mob/user, channel = SAY_CHAN, max_length = MAX_MESSAGE_LEN)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -14,7 +15,7 @@
 			user = client.mob
 		else
 			return null
-	var/datum/tgui_modal/modal = new(user, title, max_length)
+	var/datum/tgui_modal/modal = new(user, channel, max_length)
 	modal.open(user)
 	modal.wait()
 	if(modal)
@@ -22,26 +23,27 @@
 		qdel(modal)
 
 /datum/tgui_modal
-	/// Boolean field describing if the tgui_modal was closed by the user.
+	/// The channel to broadcast in
+	var/channel
+	/// Boolean for whether the tgui_modal was closed by the user.
 	var/closed
 	/// The typed user input
 	var/entry
 	/// Max message length
 	var/max_length
-	/// The title of the TGUI window
-	var/title
+
 	/// The modal window
 	var/datum/tgui_window/window
 
-/datum/tgui_modal/New(user, title, max_length)
-	src.title = title
+/datum/tgui_modal/New(user, channel, max_length)
+	src.channel = channel
 	src.max_length = max_length
 
 /**
- * Opens the window for the tgui modal and inlines the bundle.
+ * Opens the window for the tgui input and inlines the bundle.
  */
 /datum/tgui_modal/proc/open(mob/user)
-	window = new(user.client, "tgui_input", FALSE)
+	window = new(user.client, "tgui_modal", FALSE)
 	window.initialize(
 			fancy = TRUE,
 			inline_css = file2text("tgui/public/tgui-modal.bundle.css"),
@@ -74,18 +76,7 @@
 		close()
 		if(!payload)
 			return TRUE
-		if(length(payload) > 255)
+		if(length(payload) > max_length)
 			CRASH("[usr] has entered more characters than allowed")
-		if(length(html_encode(payload)) > 255)
-			to_chat(usr, span_notice("Your message has been clipped due to special characters."))
-		set_entry(payload)
+		src.entry = entry
 	return TRUE
-
-/**
- * Sets the input after html encoding it.
- */
-/datum/tgui_modal/proc/set_entry(entry)
-	if(!entry)
-		return FALSE
-	src.entry = html_encode(trim(entry, 255))
-

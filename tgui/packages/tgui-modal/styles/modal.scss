@@ -7,12 +7,13 @@ $input-text-inactive: #7881a1;
   0% {
     background-position: 0 0;
   }
+
   100% {
     background-position: 100% 0;
   }
 }
 
-.tginput-window {
+.tguimodal-window {
   background: $input-background;
   border-left: thin solid $input-text-inactive;
   border-right: thin solid $input-text-inactive;
@@ -23,16 +24,15 @@ $input-text-inactive: #7881a1;
   padding: 1.4rem 0 1.4rem 1.4rem;
   position: relative;
   width: 100%;
+
   &:after {
     animation: gradient 10s linear infinite;
-    background: linear-gradient(
-      to right,
-      #0a1931,
-      #185adb,
-      #efefef,
-      #185adb,
-      #0a1931
-    );
+    background: linear-gradient(to right,
+        #0a1931,
+        #185adb,
+        #efefef,
+        #185adb,
+        #0a1931);
     background-position: 0% 0%;
     background-size: 500% auto;
     bottom: 0px;
@@ -45,7 +45,7 @@ $input-text-inactive: #7881a1;
   }
 }
 
-.tginput-input {
+.tguimodal-input {
   background-color: $input-background;
   border: none;
   color: $input-text-active;
@@ -55,15 +55,17 @@ $input-text-inactive: #7881a1;
   width: 100%;
 }
 
-.tginput-channel {
+.tguimodal-button {
   color: $input-text-inactive;
   font-family: 'tgfont', monospace;
   font-weight: bold;
   font-size: 2.2rem;
   margin-right: 1rem;
+
   &:hover {
     color: $input-text-active;
   }
+
   transition: color 0.25s;
   vertical-align: middle;
 }
