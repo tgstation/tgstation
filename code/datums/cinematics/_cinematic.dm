@@ -115,7 +115,7 @@
 		watching_mob.notransform = TRUE
 
 	// Only show the actual cinematic to cliented mobs.
-	if(!watching_client || watching_client in watching)
+	if(!watching_client || (watching_client in watching))
 		return
 
 	watching += watching_client
@@ -158,7 +158,7 @@
 	SIGNAL_HANDLER
 
 	if(!(no_longer_watching in watching))
-		return
+		CRASH("cinematic remove_watcher was passed a client which wasn't watching.")
 
 	UnregisterSignal(no_longer_watching, COMSIG_PARENT_QDELETING)
 	if(no_longer_watching.mob)
