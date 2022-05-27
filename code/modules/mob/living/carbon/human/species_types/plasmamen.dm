@@ -64,7 +64,7 @@
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	var/atmos_sealed = TRUE
-	if(!HAS_TRAIT(H, TRAIT_NOFIRE))
+	if(HAS_TRAIT(H, TRAIT_NOFIRE))
 		atmos_sealed = FALSE
 	else if(!isclothing(H.wear_suit) || !(H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE))
 		atmos_sealed = FALSE

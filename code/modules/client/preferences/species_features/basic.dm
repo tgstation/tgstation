@@ -48,6 +48,7 @@
 	if (!initial(eyes_organ.eye_color_right))
 		eyes_organ.eye_color_right = value
 	eyes_organ.old_eye_color_right = value
+	eyes_organ.refresh()
 
 /datum/preference/color/eye_color/create_default_value()
 	return random_eye_color()
