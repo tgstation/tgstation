@@ -28,7 +28,7 @@
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
 	desc = "Opens up the path of blades to you. \
-		Allows you to transmute a knife with a bar of silver to create a Darkened Blade. \
+		Allows you to transmute a knife with two bars of silver to create a Darkened Blade. \
 		You can create up to five at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the even of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
