@@ -1,14 +1,14 @@
 /datum/traitor_objective_category/steal_item
 	name = "Steal Item"
 	objectives = list(
-		/datum/traitor_objective/steal_item/low_risk = 1,
-		/datum/traitor_objective/destroy_item/low_risk = 1,
-		/datum/traitor_objective/steal_item/low_risk_cap = 2,
-		/datum/traitor_objective/destroy_item/very_risky = 2,
-		/datum/traitor_objective/steal_item/risky = 2,
-		/datum/traitor_objective/steal_item/somewhat_risky = 4,
-		/datum/traitor_objective/steal_item/very_risky = 4,
-		/datum/traitor_objective/steal_item/most_risky = 4,
+		/datum/traitor_objective/steal_item/low_risk = 5,
+		/datum/traitor_objective/destroy_item/low_risk = 5,
+		/datum/traitor_objective/steal_item/low_risk_cap = 10,
+		/datum/traitor_objective/destroy_item/very_risky = 10,
+		/datum/traitor_objective/steal_item/risky = 10,
+		/datum/traitor_objective/steal_item/somewhat_risky = 20,
+		/datum/traitor_objective/steal_item/very_risky = 20,
+		/datum/traitor_objective/steal_item/most_risky = 20,
 	)
 
 GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
