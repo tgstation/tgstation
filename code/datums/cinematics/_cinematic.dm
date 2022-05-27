@@ -71,15 +71,17 @@
 		ooc_toggled = TRUE
 		toggle_ooc(FALSE)
 
-	// Place the /atom/movable/screen/cinematic into everyone's screens, prevent them from moving
+	// Place the /atom/movable/screen/cinematic into everyone's screens, and prevent movement.
 	for(var/mob/watching_mob in watchers)
 		show_to(watching_mob, GET_CLIENT(watching_mob))
 		RegisterSignal(watching_mob, COMSIG_MOB_CLIENT_LOGIN, .proc/show_to)
-		//Close watcher ui's
+		// Close watcher ui's, too, so they can watch it.
 		SStgui.close_user_uis(watching_mob)
 
-	//Actually play it
+	// Actually plays the animation. This will sleep, likely.
 	play_cinematic()
+
+	// Cleans up after it's done playing.
 	addtimer(CALLBACK(src, .proc/clean_up_cinematic, ooc_toggled), cleanup_time)
 
 /// Cleans up the cinematic after a set timer of it sticking on the end screen.
@@ -113,7 +115,7 @@
 		watching_mob.notransform = TRUE
 
 	// Only show the actual cinematic to cliented mobs.
-	if(!watching_client)
+	if(!watching_client || watching_client in watching)
 		return
 
 	watching += watching_client
@@ -155,10 +157,16 @@
 /datum/cinematic/proc/remove_watcher(client/no_longer_watching)
 	SIGNAL_HANDLER
 
+	if(!(no_longer_watching in watching))
+		return
+
 	UnregisterSignal(no_longer_watching, COMSIG_PARENT_QDELETING)
-	// We'll clear the cinematic if they have a mob which has one,
-	// but we won't remove notransform. Wait for the cinematic end to do that.
-	no_longer_watching.mob?.clear_fullscreen("cinematic")
+	if(no_longer_watching.mob)
+		UnregisterSignal(no_longer_watching.mob, COMSIG_MOB_CLIENT_LOGIN)
+		// We'll clear the cinematic if they have a mob which has one,
+		// but we won't remove notransform. Wait for the cinematic end to do that.
+		no_longer_watching.mob.clear_fullscreen("cinematic")
+
 	no_longer_watching.screen -= screen
 
 	watching -= no_longer_watching
