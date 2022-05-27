@@ -92,14 +92,14 @@
 
 /// Ring the bell
 /obj/structure/desk_bell/proc/ring_bell(mob/living/user)
-	if(!broken_ringer)
-		check_clapper(user)
-		// The lack of varying is intentional. The only variance occurs on the strike the bell breaks.
-		playsound(src, ring_sound, 70, vary = broken_ringer, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-		flick("desk_bell_ring", src)
-		times_rang++
-		return TRUE
-	return FALSE
+	if(broken_ringer)
+		return FALSE
+	check_clapper(user)
+	// The lack of varying is intentional. The only variance occurs on the strike the bell breaks.
+	playsound(src, ring_sound, 70, vary = broken_ringer, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	flick("desk_bell_ring", src)
+	times_rang++
+	return TRUE
 
 // A warning to all who enter; the ringing sound STACKS. It won't be deafening because it only goes every decisecond,
 // but I did feel like my ears were going to start bleeding when I tested it with my autoclicker.
