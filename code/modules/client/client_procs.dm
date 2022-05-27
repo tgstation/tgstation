@@ -100,6 +100,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
+	if (href_list["player_ticket_panel"])
+		view_latest_ticket()
+		return
 	// TGUIless adminhelp
 	if(href_list["tguiless_adminhelp"])
 		no_tgui_adminhelp(input(src, "Enter your ahelp", "Ahelp") as null|message)
@@ -341,9 +344,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// Initialize stat panel
 	stat_panel.initialize(
-		inline_html = file2text('html/statbrowser.html'),
-		inline_js = file2text('html/statbrowser.js'),
-		inline_css = file2text('html/statbrowser.css'),
+		inline_html = file("html/statbrowser.html"),
+		inline_js = file("html/statbrowser.js"),
+		inline_css = file("html/statbrowser.css"),
 	)
 	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
 

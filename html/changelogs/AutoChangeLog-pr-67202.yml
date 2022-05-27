@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - rscadd: "Bug-based food items have been given their own foodtype. Lizards, Slimes, and Felinids love bugs! Humans, Moths, and Podpeople don't."

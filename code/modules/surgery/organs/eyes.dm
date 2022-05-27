@@ -43,11 +43,11 @@
 		var/mob/living/carbon/human/human_owner = eye_owner
 		old_eye_color_left = human_owner.eye_color_left
 		old_eye_color_right = human_owner.eye_color_right
-		if(eye_color_left)
+		if(initial(eye_color_left))
 			human_owner.eye_color_left = eye_color_left
 		else
 			eye_color_left = human_owner.eye_color_left
-		if(eye_color_right)
+		if(initial(eye_color_right))
 			human_owner.eye_color_right = eye_color_right
 		else
 			eye_color_right = human_owner.eye_color_right
@@ -58,16 +58,16 @@
 	if(eye_owner.has_dna() && ishuman(eye_owner))
 		eye_owner.dna.species.handle_body(eye_owner) //updates eye icon
 
-/obj/item/organ/eyes/proc/refresh()
+/obj/item/organ/eyes/proc/refresh(call_update = TRUE)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/affected_human = owner
 		old_eye_color_left = affected_human.eye_color_left
 		old_eye_color_right = affected_human.eye_color_right
-		if(eye_color_left)
+		if(initial(eye_color_left))
 			affected_human.eye_color_left = eye_color_left
 		else
 			eye_color_left = affected_human.eye_color_left
-		if(eye_color_right)
+		if(initial(eye_color_right))
 			affected_human.eye_color_right = eye_color_right
 		else
 			eye_color_right = affected_human.eye_color_right
@@ -75,7 +75,7 @@
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 	owner.update_tint()
 	owner.update_sight()
-	if(owner.has_dna() && ishuman(owner))
+	if(call_update && owner.has_dna() && ishuman(owner))
 		var/mob/living/carbon/human/affected_human = owner
 		affected_human.dna.species.handle_body(affected_human) //updates eye icon
 
@@ -84,9 +84,9 @@
 	..()
 	if(ishuman(eye_owner))
 		var/mob/living/carbon/human/human_owner = eye_owner
-		if(eye_color_left)
+		if(initial(eye_color_left))
 			human_owner.eye_color_left = old_eye_color_left
-		if(eye_color_right)
+		if(initial(eye_color_right))
 			human_owner.eye_color_right = old_eye_color_right
 		human_owner.update_body()
 	eye_owner.cure_blind(EYE_DAMAGE)

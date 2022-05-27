@@ -638,12 +638,11 @@
 	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
-/datum/uplink_item/suits/energy_shield
-	name = "MODsuit Energy Shield Module"
-	desc = "An energy shield module for a MODsuit. The shields can handle up to three impacts \
-			within a short duration and will rapidly recharge while not under fire."
-	item = /obj/item/mod/module/energy_shield
-	cost = 15
+/datum/uplink_item/suits/emp_shield
+	name = "MODsuit Advanced EMP Shield Module"
+	desc = "An advanced EMP shield module for a MODsuit. It protects your entire body from electromagnetic pulses."
+	item = /obj/item/mod/module/emp_shield/advanced
+	cost = 5
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/suits/injector

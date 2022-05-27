@@ -818,7 +818,7 @@
 	id = "fire_facility_car";
 	name = "Garage Door Button";
 	pixel_y = 22;
-	req_access_txt = "47"
+	req_access = list("research")
 	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)

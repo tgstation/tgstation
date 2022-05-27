@@ -590,7 +590,7 @@
 "cr" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Power Storage";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /obj/structure/barricade/wooden,
 /obj/structure/cable,
@@ -612,7 +612,7 @@
 /obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/poddoor{
 	id = "bigderelictcheckpoint";
-	name = "checkpoint security doors"
+	name = "Checkpoint Security Doors"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -1415,7 +1415,7 @@
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "innerbrig";
 	name = "Security Checkpoint";
-	req_access_txt = "63"
+	req_access = list("security")
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,

@@ -37,7 +37,7 @@
 		ITEM_SLOT_SUITSTORE,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
-	liked_food = MEAT | FRUIT
+	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
 	damage_overlay_type = "monkey"
 	sexes = FALSE
