@@ -154,7 +154,6 @@
 /obj/item/gun/ballistic/shotgun/automatic/meltra/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
-	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
 /obj/item/gun/ballistic/shotgun/automatic/meltra/get_cell()
