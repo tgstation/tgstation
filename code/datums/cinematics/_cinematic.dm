@@ -150,6 +150,7 @@
 		if(QDELETED(locked_mob))
 			continue
 		locked_mob.notransform = FALSE
+		UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
 
 	qdel(src)
 
@@ -161,12 +162,9 @@
 		CRASH("cinematic remove_watcher was passed a client which wasn't watching.")
 
 	UnregisterSignal(no_longer_watching, COMSIG_PARENT_QDELETING)
-	if(no_longer_watching.mob)
-		UnregisterSignal(no_longer_watching.mob, COMSIG_MOB_CLIENT_LOGIN)
-		// We'll clear the cinematic if they have a mob which has one,
-		// but we won't remove notransform. Wait for the cinematic end to do that.
-		no_longer_watching.mob.clear_fullscreen("cinematic")
-
+	// We'll clear the cinematic if they have a mob which has one,
+	// but we won't remove notransform. Wait for the cinematic end to do that.
+	no_longer_watching.mob?.clear_fullscreen("cinematic")
 	no_longer_watching.screen -= screen
 
 	watching -= no_longer_watching
