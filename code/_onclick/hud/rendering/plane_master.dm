@@ -9,8 +9,8 @@
 	/// Plaintext and basic html are fine to use here.
 	/// I'll bonk you if I find you putting "lmao stuff" in here, make this useful.
 	var/documentation = ""
-	var/show_alpha = 255
-	var/hide_alpha = 0
+	var/true_alpha = 0
+	var/alpha_enabled = TRUE
 
 	var/offset
 	var/real_plane
@@ -49,11 +49,19 @@
 	if(initial(render_target))
 		render_target = OFFSET_RENDER_TARGET(initial(render_target), offset)
 
-/atom/movable/screen/plane_master/proc/Show(override)
-	alpha = override || show_alpha
+/atom/movable/screen/plane_master/proc/set_alpha(new_alpha)
+	true_alpha = new_alpha
+	if(!alpha_enabled)
+		return
+	alpha = new_alpha
 
-/atom/movable/screen/plane_master/proc/Hide(override)
-	alpha = override || hide_alpha
+/atom/movable/screen/plane_master/proc/disable_alpha()
+	alpha_enabled = FALSE
+	alpha = 0
+
+/atom/movable/screen/plane_master/proc/enable_alpha()
+	alpha_enabled = TRUE
+	alpha = true_alpha
 
 /// Shows a plane master to the passed in mob
 /// Override this to apply unique effects and such
@@ -206,8 +214,6 @@
 	plane = LIGHTING_PLANE
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	var/alpha_enabled = TRUE
-	var/true_alpha = 255
 
 /atom/movable/screen/plane_master/lighting/show_to(mob/mymob)
 	. = ..()
@@ -235,20 +241,6 @@
 		disable_alpha()
 	else
 		enable_alpha()
-
-/atom/movable/screen/plane_master/lighting/proc/set_alpha(new_alpha)
-	true_alpha = new_alpha
-	if(!alpha_enabled)
-		return
-	alpha = new_alpha
-
-/atom/movable/screen/plane_master/lighting/proc/disable_alpha()
-	alpha_enabled = FALSE
-	alpha = 0
-
-/atom/movable/screen/plane_master/lighting/proc/enable_alpha()
-	alpha_enabled = TRUE
-	alpha = true_alpha
 
 /*!
  * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
@@ -355,7 +347,6 @@
 	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_MULTIPLY
-	blend_mode_override = BLEND_MULTIPLY
 
 /atom/movable/screen/plane_master/runechat
 	name = "Runechat"
@@ -379,7 +370,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = GRAVITY_PULSE_PLANE
 	blend_mode = BLEND_ADD
-	blend_mode_override = BLEND_ADD
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_planes = list()
 
