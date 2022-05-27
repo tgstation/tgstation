@@ -38,3 +38,14 @@
 	bare_wound_bonus = 80
 	embedding = list(embed_chance=100, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 	wound_falloff_tile = -5
+
+// Hardlight (The Deltra)
+/obj/projectile/bullet/hardlight
+	name = "hardlight bullet"
+	icon_state = "hardlight"
+	damage = 20
+	sharpness = NONE //You're being hit by a blunt bolt of energy, not a pointy bullet with normal kinetics
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	embedding = null
+	shrapnel_type = null
+	wound_bonus = -10

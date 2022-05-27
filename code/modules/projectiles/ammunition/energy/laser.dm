@@ -119,3 +119,9 @@
 /obj/item/ammo_casing/energy/nanite/cryo
 	projectile_type = /obj/projectile/energy/cryo
 	select_name = "cryo"
+
+/obj/item/ammo_casing/energy/deltra
+	projectile_type = /obj/projectile/bullet/hardlight
+	select_name = "hardlight"
+	e_cost = 34
+	fire_sound = 'sound/weapons/thermalpistol.ogg'

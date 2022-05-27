@@ -118,6 +118,97 @@
 		return
 	rack()
 
+//The Meltra
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra
+	name = "\improper Meltra accelerator shotgun"
+	desc = "The Meltra utilizes bluespace rifling to reduce friction and drag significantly, propelling bullets at much faster speeds than conventional shots. This requires some ramp up, increasing power per shot. On the first shot, or without battery charge, the gun is much weaker than most shotguns of a similar class."
+	icon_state = "meltra"
+	inhand_icon_state = "meltra"
+	worn_icon_state = "meltra"
+	fire_delay = 8
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
+	projectile_damage_multiplier = 0.50
+
+	///Our cell for keeping our shotgun charged
+	var/obj/item/stock_parts/cell/cell
+	var/cell_type = /obj/item/stock_parts/cell
+
+	///Vars for tracking power expenditure
+	var/charged_shot = FALSE //This is TRUE on a successful shot, so that when our gun is racked automatically afer firing, it reduces charge in the cell on subsequent shots. No charge, and our gun stops empowering shots.
+	var/shot_cell_cost = 100 //Essentially 10 shots before the gun stops being able to fire empowered shots.
+	//Our damage multipliers, which replace the projectile_damage_multiplier var.
+	var/max_damage_multiplier = 1.5 //maximum multiplier, max in four shots.
+	var/damage_multiplier_increment = 0.25 //how much our multiplier increases per shot
+	var/min_damage_multiplier = 0.5 //minimum multiplier
+	var/cooldown_reset_time = 10 SECONDS
+	COOLDOWN_DECLARE(charge_reset)
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/Initialize(mapload)
+	. = ..()
+	if(cell_type)
+		cell = new cell_type(src)
+	else
+		cell = new(src)
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/Destroy()
+	if(cell)
+		QDEL_NULL(cell)
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/get_cell()
+	return cell
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/examine(mob/user)
+	. = ..()
+	if(cell)
+		. += span_notice("\The [src] is [round(cell.percent())]% charged.")
+	. += span_notice("\The [src] has a fire power strength of [round(100*projectile_damage_multiplier)]%.")
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/process(delta_time)
+	. = ..()
+	if(COOLDOWN_FINISHED(src, charge_reset))
+		handle_reset()
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
+	. = ..()
+	if(!.)
+		return
+	if(reduce_cell_charge(shot_cell_cost))
+		charged_shot = TRUE
+		COOLDOWN_START(src, charge_reset, cooldown_reset_time)
+		START_PROCESSING(SSobj, src)
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/rack(mob/user)
+	. = ..()
+	if(charged_shot)
+		handle_increment()
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/proc/handle_increment()
+	if(projectile_damage_multiplier < max_damage_multiplier)
+		projectile_damage_multiplier = max(min_damage_multiplier + damage_multiplier_increment, max_damage_multiplier)
+	charged_shot = FALSE
+	COOLDOWN_RESET(src, charge_reset)
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/proc/handle_reset()
+	projectile_damage_multiplier = min_damage_multiplier
+	charged_shot = FALSE
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/proc/reduce_cell_charge(cell_deduction)
+	if(!cell)
+		return
+	. = cell.use(cell_deduction)
+
+/obj/item/gun/ballistic/shotgun/automatic/meltra/emp_act(severity)
+	. = ..()
+	if (!cell)
+		return
+	if (!(. & EMP_PROTECT_SELF))
+		reduce_cell_charge(1000 / severity)
+		handle_reset()
+
 // Bulldog shotgun //
 
 /obj/item/gun/ballistic/shotgun/bulldog
