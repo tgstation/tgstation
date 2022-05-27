@@ -330,7 +330,7 @@
 		return COMPONENT_NO_AFTERATTACK
 	return NONE
 
-/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/plasma, mob/user)
+/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/ore/plasma/plasma, mob/user)
 	if(!istype(plasma))
 		return FALSE
 	var/uses_needed = min(plasma.amount, round((max_charge_amount() - charge_amount()) / charge_given))
