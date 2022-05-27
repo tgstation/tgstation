@@ -105,12 +105,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	hand_slots = list()
 
-	for(var/mytype in subtypesof(/atom/movable/screen/plane_master)- /atom/movable/screen/plane_master/rendering_plate)
-		for(var/plane_offset in 0 to SSmapping.max_plane_offset)
-			var/atom/movable/screen/plane_master/instance = new mytype(plane_offset)
-			plane_masters["[instance.plane]"] = instance
-			instance.set_hud(src)
-			instance.backdrop(mymob)
+	build_plane_masters(0, SSmapping.max_plane_offset)
 
 	var/datum/preferences/preferences = owner?.client?.prefs
 	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
@@ -193,11 +188,15 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/on_plane_increase(datum/source, old_max_offset, new_max_offset)
 	SIGNAL_HANDLER
+	build_plane_masters(old_max_offset + 1, new_max_offset)
+
+/datum/hud/proc/build_plane_masters(starting_offset, ending_offset)
 	for(var/mytype in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate)
-		for(var/plane_offset in old_max_offset + 1 to new_max_offset)
+		for(var/plane_offset in starting_offset to ending_offset)
 			var/atom/movable/screen/plane_master/instance = new mytype(plane_offset)
 			plane_masters["[instance.plane]"] = instance
-			instance.backdrop(mymob)
+			instance.set_hud(src)
+			instance.show_to(mymob)
 
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
@@ -298,7 +297,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// Plane masters are always shown to OUR mob, never to observers
 	for(var/thing in plane_masters)
 		var/atom/movable/screen/plane_master/PM = plane_masters[thing]
-		PM.backdrop(mymob)
+		PM.show_to(mymob)
 		mymob.client.screen += PM
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)

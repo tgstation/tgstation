@@ -62,12 +62,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/color_matrix_proxy_view)
 	else
 		current_color = color_matrix_identity()
 	proxy_view = new
+	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "colors")
 	if(_target)
 		target = WEAKREF(_target)
-		proxy_view.appearance = image(_target)
-	else
-		proxy_view.appearance = image('icons/misc/colortest.dmi', "colors")
+		if(!(_target.appearance_flags & PLANE_MASTER))
+			view = image(_target)
 
+	proxy_view.appearance = view
 	proxy_view.color = current_color
 	proxy_view.register_to_client(owner)
 

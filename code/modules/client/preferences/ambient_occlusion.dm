@@ -10,4 +10,4 @@
 	if (!plane_master)
 		return
 
-	plane_master.backdrop(client.mob)
+	plane_master.show_to(client.mob)

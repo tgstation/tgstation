@@ -139,7 +139,7 @@
 	var/should_pre_qdel = TRUE
 	if(choice == "No")
 		should_pre_qdel = FALSE
-		
+
 	choice = alert("Ok one last thing, do you want to yield to the game? or do it all at once. These are hard deletes remember.", "Jesus christ man", "Yield", "Ignore the server")
 	var/should_check_tick = TRUE
 	if(choice == "Ignore the server")
@@ -636,6 +636,15 @@
 	if(!holder)
 		return
 	holder.color_test.ui_interact(mob)
+
+/client/proc/debug_plane_masters()
+	set category = "Debug"
+	set name = "Edit/Debug Planes"
+	set desc = "Edit and visualize plane masters and their connections (relays)"
+
+	if(!holder)
+		return
+	holder.plane_debug.ui_interact(mob)
 
 /client/proc/debug_huds(i as num)
 	set category = "Debug"
