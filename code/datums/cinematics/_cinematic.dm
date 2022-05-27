@@ -104,9 +104,8 @@
 /datum/cinematic/proc/show_to(mob/watching_mob, client/watching_client)
 	SIGNAL_HANDLER
 
-	if(!watching_mob.notransform)
-		locked += WEAKREF(watching_mob)
-		watching_mob.notransform = TRUE
+	locked += WEAKREF(watching_mob)
+	watching_mob.notransform = TRUE
 
 	if(!watching_client)
 		return
@@ -114,6 +113,7 @@
 	watching += watching_client
 	watching_mob.overlay_fullscreen("cinematic", /atom/movable/screen/fullscreen/cinematic_backdrop)
 	watching_client.screen += screen
+	RegisterSignal(watching_client, COMSIG_PARENT_QDELETING, .proc/remove_watcher)
 
 /// Simple helper for playing sounds from the cinematic.
 /datum/cinematic/proc/play_cinematic_sound(sound_to_play)
@@ -135,10 +135,7 @@
 /// Stops the cinematic and removes it from all the viewers.
 /datum/cinematic/proc/stop_cinematic()
 	for(var/client/viewing_client as anything in watching)
-		// byond client volatility strikes back.
-		// We really don't wanna runtime here or else everyone'll be stuck with a cinematic in the way.
-		viewing_client?.mob?.clear_fullscreen("cinematic")
-		viewing_client?.screen -= screen
+		remove_watcher(viewing_client)
 
 	for(var/datum/weakref/locked_ref as anything in locked)
 		var/mob/locked_mob = locked_ref.resolve()
@@ -147,3 +144,15 @@
 		locked_mob.notransform = FALSE
 
 	qdel(src)
+
+/// Removes the passed client from our watching list.
+/datum/cinematic/proc/remove_watcher(client/no_longer_watching)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(no_longer_watching, COMSIG_PARENT_QDELETING)
+	// We'll clear the cinematic if they have a mob which has one,
+	// but we won't remove notransform. Wait for the cinematic end to do that.
+	no_longer_watching.mob?.clear_fullscreen("cinematic")
+	no_longer_watching.screen -= screen
+
+	watching -= no_longer_watching
