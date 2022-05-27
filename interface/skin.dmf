@@ -339,15 +339,25 @@ window "statwindow"
 		is-visible = false
 		saved-params = ""
 
-window "tguisay"
-	elem "tguisay"
+window "tgui_input"
+	elem "tgui_input"
 		type = MAIN
-		pos = 0,0
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		size = 75x400
-		saved-params = "pos;size"
+		pos = 694,602
+		size = 300x75
+		anchor1 = 50,50
+		anchor2 = 50,50
+		background-color = none
 		is-visible = false
+		saved-params = ""
+		statusbar = false
+		can-minimize = false
 		can-resize = false
-		status_bar = false
-		background-color = #000000
+	elem "tgui_browser"
+		type = BROWSER
+		pos = 0,0
+		size = 301x75
+		anchor1 = 0,0
+		anchor2 = 0,0
+		saved-params = ""
+		statusbar = false
+

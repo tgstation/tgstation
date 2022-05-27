@@ -41,8 +41,7 @@
  * Opens the window for the tgui modal and inlines the bundle.
  */
 /datum/tgui_modal/proc/open(mob/user)
-	window = new(user.client, "modal", FALSE)
-	winset(user, "modal", "background-color=#ffffff")
+	window = new(user.client, "tgui_input", FALSE)
 	window.initialize(
 			fancy = TRUE,
 			inline_css = file2text("tgui/public/tgui-modal.bundle.css"),
