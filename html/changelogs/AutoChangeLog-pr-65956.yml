@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "Added a missing air alarm in Tramstation's cargo office"

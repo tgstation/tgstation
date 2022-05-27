@@ -180,7 +180,7 @@
 		set_batoned(target, user, cooldown)
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
-	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE)
+	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE)
 	if(iscyborg(target))
 		if(!affect_cyborg)
 			return FALSE
@@ -272,7 +272,7 @@
 	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "uk"
-	custom_price = PAYCHECK_HARD * 4.5
+	custom_price = PAYCHECK_COMMAND * 4.5
 
 /obj/item/melee/baton/telescopic
 	name = "telescopic baton"
@@ -370,8 +370,8 @@
 	return span_danger("The baton is still charging!")
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Jitter(20)
-	target.stuttering += 20
+	target.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
 
 /obj/item/melee/baton/security
 	name = "stun baton"
@@ -562,16 +562,16 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Jitter(20)
-	target.set_confusion(max(10, target.get_confusion()))
-	target.stuttering = max(8, target.stuttering)
+	target.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	target.set_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+	target.set_timed_status_effect(16 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 2 SECONDS)
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
-	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(!target.IsKnockdown())
 		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 

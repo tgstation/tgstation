@@ -22,8 +22,8 @@
 	)
 
 	refill_canister = /obj/item/vending_refill/sustenance
-	default_price = PAYCHECK_PRISONER
-	extra_price = PAYCHECK_PRISONER * 0.6
+	default_price = PAYCHECK_LOWER
+	extra_price = PAYCHECK_LOWER * 0.6
 	payment_department = NO_FREEBIES
 
 /obj/item/vending_refill/sustenance

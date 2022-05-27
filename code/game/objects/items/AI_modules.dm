@@ -94,7 +94,6 @@ AI MODULES
 	if(law_datum.owner)
 		to_chat(law_datum.owner, span_userdanger("[sender] has uploaded a change to the laws you must follow using a [name]."))
 
-
 /******************** Modules ********************/
 
 /obj/item/ai_module/supplied
@@ -159,7 +158,6 @@ AI MODULES
 			else
 				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED,LAW_ION))
 
-
 /******************** Safeguard ********************/
 
 /obj/item/ai_module/supplied/safeguard
@@ -185,7 +183,6 @@ AI MODULES
 /obj/item/ai_module/supplied/safeguard/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()
 	return targetName
-
 
 /******************** OneHuman ********************/
 
@@ -213,14 +210,12 @@ AI MODULES
 		return "[targetName], but the AI's existing law 0 cannot be overridden."
 	return targetName
 
-
 /******************** ProtectStation ********************/
 
 /obj/item/ai_module/supplied/protect_station
 	name = "'ProtectStation' AI Module"
 	laws = list("Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.")
 	lawpos = 5
-
 
 /******************** Quarantine ********************/
 
@@ -229,14 +224,12 @@ AI MODULES
 	laws = list("The station is under a quarantine. Allowing anyone to leave the station causes human harm. Anyone actively attempting to leave the station is to be stopped by any means necessary. It is impossible to harm a human while preventing them from leaving the station.")
 	lawpos = 8
 
-
 /******************** OxygenIsToxicToHumans ********************/
 
 /obj/item/ai_module/supplied/oxygen
 	name = "'OxygenIsToxicToHumans' AI Module"
 	laws = list("Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.")
 	lawpos = 9
-
 
 /****************** New Freeform ******************/
 
@@ -275,7 +268,6 @@ AI MODULES
 		return 0
 	..()
 
-
 /******************** Law Removal ********************/
 
 /obj/item/ai_module/remove
@@ -304,7 +296,6 @@ AI MODULES
 	else
 		law_datum.remove_law(lawpos)
 
-
 /******************** Reset ********************/
 
 /obj/item/ai_module/reset
@@ -324,7 +315,6 @@ AI MODULES
 		law_datum.clear_ion_laws()
 		law_datum.clear_hacked_laws()
 
-
 /******************** Purge ********************/
 
 /obj/item/ai_module/reset/purge
@@ -339,7 +329,6 @@ AI MODULES
 	else
 		law_datum.clear_inherent_laws()
 		law_datum.clear_zeroth_law(0)
-
 
 /******************* Full Core Boards *******************/
 /obj/item/ai_module/core
@@ -368,7 +357,6 @@ AI MODULES
 		law_datum.clear_zeroth_law(0)
 	..()
 
-
 /******************** Asimov ********************/
 
 /obj/item/ai_module/core/full/asimov
@@ -392,20 +380,17 @@ AI MODULES
 	name = "'Asimov++' Core AI Module"
 	law_id = "asimovpp"
 
-
 /******************** Corporate ********************/
 
 /obj/item/ai_module/core/full/corp
 	name = "'Corporate' Core AI Module"
 	law_id = "corporate"
 
-
 /****************** P.A.L.A.D.I.N. 3.5e **************/
 
 /obj/item/ai_module/core/full/paladin // -- NEO
 	name = "'P.A.L.A.D.I.N. version 3.5e' Core AI Module"
 	law_id = "paladin"
-
 
 /****************** P.A.L.A.D.I.N. 5e **************/
 
@@ -431,7 +416,6 @@ AI MODULES
 	if(!laws.len)
 		return INITIALIZE_HINT_QDEL
 
-
 /****************** T.Y.R.A.N.T. *****************/
 
 /obj/item/ai_module/core/full/tyrant
@@ -450,7 +434,6 @@ AI MODULES
 /obj/item/ai_module/core/full/antimov
 	name = "'Antimov' Core AI Module"
 	law_id = "antimov"
-
 
 /******************** Freeform Core ******************/
 
@@ -477,7 +460,6 @@ AI MODULES
 /obj/item/ai_module/core/freeformcore/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()
 	return laws[1]
-
 
 /******************** Hacked AI Module ******************/
 
@@ -527,7 +509,6 @@ AI MODULES
 	laws = list("")
 
 /obj/item/ai_module/toy_ai/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	//..()
 	if(law_datum.owner)
 		to_chat(law_datum.owner, span_warning("BZZZZT"))
 		if(!overflow)
@@ -570,7 +551,6 @@ AI MODULES
 /obj/item/ai_module/core/full/thermurderdynamic
 	name = "'Thermodynamic' Core AI Module"
 	law_id = "thermodynamic"
-
 
 /******************Live And Let Live*****************/
 
@@ -617,3 +597,9 @@ AI MODULES
 /obj/item/ai_module/core/full/overlord
 	name = "'Overlord' Core AI Module"
 	law_id = "overlord"
+
+/****************** Ten Commandments ***************/
+
+/obj/item/ai_module/core/full/ten_commandments
+	name = "'10 Commandments' Core AI Module"
+	law_id = "ten_commandments"

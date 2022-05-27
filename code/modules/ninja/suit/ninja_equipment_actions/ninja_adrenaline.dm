@@ -25,7 +25,7 @@
 	ninja.SetImmobilized(0)
 	ninja.SetParalyzed(0)
 	ninja.adjustStaminaLoss(-200)
-	ninja.stuttering = 0
+	ninja.remove_status_effect(/datum/status_effect/speech/stutter)
 	ninja.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
 	ninja.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
 	a_boost = FALSE

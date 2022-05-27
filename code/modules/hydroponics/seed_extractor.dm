@@ -89,6 +89,7 @@
 	return NONE
 
 /obj/machinery/seed_extractor/RefreshParts()
+	. = ..()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_seeds = initial(max_seeds) * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -135,7 +136,6 @@
 	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
 			to_chat(user, span_notice("You add [O] to [src.name]."))
-			updateUsrDialog()
 		return
 	else if(!user.combat_mode)
 		to_chat(user, span_warning("You can't extract any seeds from \the [O.name]!"))

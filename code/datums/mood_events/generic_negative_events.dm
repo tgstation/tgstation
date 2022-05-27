@@ -371,6 +371,11 @@
 	mood_change = -10
 	timeout = 10 MINUTES
 
+/datum/mood_event/lost_52_card_pickup
+	description = "This is really embarrassing! I'm ashamed to pick up all these cards off the floor..."
+	mood_change = -3
+	timeout = 3 MINUTES
+
 /datum/mood_event/russian_roulette_lose
 	description = "I gambled my life and lost! I guess this is the end..."
 	mood_change = -20

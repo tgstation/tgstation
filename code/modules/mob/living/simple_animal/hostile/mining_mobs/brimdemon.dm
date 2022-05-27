@@ -44,6 +44,10 @@
 	/// A list of all the beam parts.
 	var/list/beamparts = list()
 
+/mob/living/simple_animal/hostile/asteroid/brimdemon/Destroy()
+	QDEL_LIST(beamparts)
+	return ..()
+
 /mob/living/simple_animal/hostile/asteroid/brimdemon/Login()
 	ranged = TRUE
 	return ..()

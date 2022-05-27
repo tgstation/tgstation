@@ -340,7 +340,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/obj/item/food/grown/chili
+		/obj/item/food/grown/chili = 1
 	)
 	result = /obj/item/food/donkpocket/spicy
 	subcategory = CAT_PASTRY

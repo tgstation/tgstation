@@ -11,7 +11,7 @@
 
 	icon = 'icons/obj/card.dmi'
 	icon_state = "data_3"
-	custom_price = PAYCHECK_MEDIUM * 3
+	custom_price = PAYCHECK_CREW * 3
 	w_class = WEIGHT_CLASS_SMALL
 
 	/// Traits automatically granted by this chip, optional. Lazylist.
@@ -440,6 +440,15 @@
 	skill_icon = "lungs"
 	activate_message = "<span class='notice'>You feel that you know a lot about interpreting organs.</span>"
 	deactivate_message = "<span class='notice'>Knowledge of liver damage, heart strain and lung scars fades from your mind.</span>"
+
+/obj/item/skillchip/appraiser
+	name = "GENUINE ID Appraisal Now! skillchip"
+	auto_traits = list(TRAIT_ID_APPRAISER)
+	skill_name = "ID Appraisal"
+	skill_description = "Appraise an ID and see if it's issued from centcom, or just a cruddy station-printed one."
+	skill_icon = "magnifying-glass"
+	activate_message = span_notice("You feel that you can recognize special, minute details on ID cards.")
+	deactivate_message = span_notice("Was there something special about certain IDs?")
 
 /obj/item/skillchip/brainwashing
 	name = "suspicious skillchip"

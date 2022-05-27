@@ -28,7 +28,7 @@ export class Window extends Component {
     if (suspended) {
       return;
     }
-    Byond.winset(window.__windowId__, {
+    Byond.winset(Byond.windowId, {
       'can-close': Boolean(canClose),
     });
     logger.log('mounting');

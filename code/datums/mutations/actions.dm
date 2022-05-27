@@ -53,7 +53,7 @@
 	if(sniffed)
 		var/old_target = tracking_target
 		possible = list()
-		var/list/prints = sniffed.return_fingerprints()
+		var/list/prints = GET_ATOM_FINGERPRINTS(sniffed)
 		if(prints)
 			for(var/mob/living/carbon/C in GLOB.carbon_list)
 				if(prints[md5(C.dna.unique_identity)])
@@ -116,6 +116,7 @@
 		our_spell.cone_levels += 2 // Cone fwooshes further, and...
 		our_spell.self_throw_range += 1 // the breath throws the user back more
 
+
 /obj/effect/proc_holder/spell/cone/staggered/firebreath
 	name = "Fire Breath"
 	desc = "You breathe a cone of fire directly in front of you."
@@ -131,6 +132,7 @@
 	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
 	respect_density = TRUE
 	cone_levels = 3
+	antimagic_flags = NONE // cannot be restricted or blocked by antimagic
 	/// The range our user is thrown backwards after casting the spell
 	var/self_throw_range = 1
 
@@ -144,7 +146,7 @@
 		return
 
 	our_lizard.adjust_fire_stacks(cone_levels)
-	our_lizard.IgniteMob()
+	our_lizard.ignite_mob()
 	to_chat(our_lizard, span_warning("Something in front of your mouth catches fire!"))
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/cast(list/targets, mob/user)
@@ -169,7 +171,7 @@
 	// The actual burn damage application is not blocked by fireproofing, like space dragons.
 	target_mob.apply_damage(max(10, 40 - (5 * level)), BURN, spread_damage = TRUE)
 	target_mob.adjust_fire_stacks(max(2, 5 - level))
-	target_mob.IgniteMob()
+	target_mob.ignite_mob()
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/do_obj_cone_effect(obj/target_obj, level)
 	// Further out objects experience less exposed_temperature and exposed_volume

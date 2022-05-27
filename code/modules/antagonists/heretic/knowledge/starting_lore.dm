@@ -21,15 +21,13 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	desc = "Starts your journey into the Mansus. \
 		Grants you the Mansus Grasp, a powerful and upgradable \
 		disabling spell that can be cast regardless of having a focus."
-	next_knowledge = list(
-		/datum/heretic_knowledge/limited_amount/base_rust,
-		/datum/heretic_knowledge/limited_amount/base_ash,
-		/datum/heretic_knowledge/limited_amount/base_flesh,
-		/datum/heretic_knowledge/limited_amount/base_void,
-		)
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
 	cost = 0
 	route = PATH_START
+
+/datum/heretic_knowledge/spell/basic/New()
+	. = ..()
+	next_knowledge = subtypesof(/datum/heretic_knowledge/limited_amount/starting)
 
 /**
  * The Living Heart heretic knowledge.

@@ -39,6 +39,7 @@ jobs:
           bash tools/ci/check_changelogs.sh
           bash tools/ci/check_grep.sh
           bash tools/ci/check_misc.sh
+          tools/bootstrap/python tools/validate_dme.py <tgstation.dme
           tools/build/build --ci lint tgui-test
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
@@ -66,10 +67,31 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
 
+  find_all_maps:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Find Maps to Test
+    runs-on: ubuntu-20.04
+    outputs:
+      maps: ${{ steps.map_finder.outputs.maps }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Find Maps
+        id: map_finder
+        run: |
+          echo "$(ls -mw0 _maps/*.json)" > maps_output.txt
+          sed -i -e s+_maps/+\"+g -e s+.json+\"+g maps_output.txt
+          echo "Maps: $(cat maps_output.txt)"
+          echo "::set-output name=maps::{\"paths\":[$(cat maps_output.txt)]}"
+
   run_all_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Integration Tests
     runs-on: ubuntu-20.04
+    needs: [find_all_maps]
+    strategy:
+      fail-fast: false
+      matrix:
+        map: ${{ fromJSON(needs.find_all_maps.outputs.maps).paths }}
     services:
       mysql:
         image: mysql:latest
@@ -78,6 +100,9 @@ jobs:
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    concurrency:
+      group: ci-${{ github.ref }}-${{ matrix.map }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
       - name: Restore BYOND cache
@@ -98,12 +123,15 @@ jobs:
           sudo apt update || true
           sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
           bash tools/ci/install_rust_g.sh
-      - name: Compile and run tests
+      - name: Compile Tests
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING
-          bash tools/ci/run_server.sh
+          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS
+      - name: Run Tests
+        run: |
+          source $HOME/BYOND/byond/bin/byondsetup
+          bash tools/ci/run_server.sh ${{ matrix.map }}
 
   test_windows:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"

@@ -211,7 +211,7 @@
 
 		if(chambered)
 			var/obj/item/ammo_casing/AC = chambered
-			if(AC.fire_casing(user, user))
+			if(AC.fire_casing(user, user, params, distro = 0, quiet = 0, zone_override = null, spread = 0, fired_from = src))
 				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 				if(is_target_face)
 					shoot_self(user, affecting)

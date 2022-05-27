@@ -309,7 +309,7 @@
 		/obj/machinery/mecha_part_fabricator = 1,
 		/obj/machinery/microwave = 1,
 		/obj/machinery/rnd/experimentor = 1,
-		/obj/machinery/atmospherics/components/binary/thermomachine/freezer = 2,
+		/obj/machinery/atmospherics/components/unary/thermomachine/freezer = 2,
 		/obj/machinery/power/emitter = 2,
 		/obj/machinery/chem_heater = 2,
 		/obj/machinery/chem_mass_spec = 3

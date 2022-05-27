@@ -21,6 +21,7 @@ type UplinkItem = {
   restricted_roles: string,
   restricted_species: string,
   progression_minimum: number,
+  cost_override_string: string
   ref?: string,
 }
 
@@ -194,7 +195,7 @@ export class Uplink extends Component<{}, UplinkState> {
         ),
         cost: (
           <Box>
-            {item.cost} TC
+            {item.cost_override_string || `${item.cost} TC`}
             {has_progression
               ? (
                 <>

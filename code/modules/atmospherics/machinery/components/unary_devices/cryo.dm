@@ -70,13 +70,17 @@
 	icon_state = "pod-off"
 	density = TRUE
 	max_integrity = 350
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 30, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 30, ACID = 30)
 	layer = MOB_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 	processing_flags = NONE
+
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.75
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.5
 
 	showpipe = FALSE
 
@@ -132,6 +136,7 @@
 	..(dir, dir)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
+	. = ..()
 	var/C
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		C += M.rating
@@ -179,7 +184,6 @@
 	..()
 	if(A == beaker)
 		beaker = null
-		updateUsrDialog()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
 	if(beaker)
@@ -194,8 +198,8 @@
 	. = ..()
 	plane = initial(plane)
 
-GLOBAL_VAR_INIT(cryo_overlay_cover_on, mutable_appearance('icons/obj/cryogenics.dmi', "cover-on", layer = MOB_LAYER + 0.02))
-GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics.dmi', "cover-off", layer = MOB_LAYER + 0.02))
+GLOBAL_VAR_INIT(cryo_overlay_cover_on, mutable_appearance('icons/obj/cryogenics.dmi', "cover-on", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE))
+GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics.dmi', "cover-off", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE))
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_overlays()
 	. = ..()
@@ -215,6 +219,10 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, active)
 	. = on
 	on = active
+	if(on)
+		update_use_power(ACTIVE_POWER_USE)
+	else
+		update_use_power(IDLE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
@@ -440,19 +448,22 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		data["occupant"]["name"] = mob_occupant.name
-		switch(mob_occupant.stat)
-			if(CONSCIOUS)
-				data["occupant"]["stat"] = "Conscious"
-				data["occupant"]["statstate"] = "good"
-			if(SOFT_CRIT)
-				data["occupant"]["stat"] = "Conscious"
-				data["occupant"]["statstate"] = "average"
-			if(UNCONSCIOUS, HARD_CRIT)
-				data["occupant"]["stat"] = "Unconscious"
-				data["occupant"]["statstate"] = "average"
-			if(DEAD)
-				data["occupant"]["stat"] = "Dead"
-				data["occupant"]["statstate"] = "bad"
+		if(mob_occupant.stat == DEAD)
+			data["occupant"]["stat"] = "Dead"
+			data["occupant"]["statstate"] = "bad"
+		else if (HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
+			data["occupant"]["stat"] = "Unconscious"
+			data["occupant"]["statstate"] = "good"
+		else 
+			data["occupant"]["stat"] = "Conscious"
+			data["occupant"]["statstate"] = "bad"
+			
+		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
+		if(mob_occupant.bodytemperature < T0C) // Green if the mob can actually be healed by cryoxadone.
+			data["occupant"]["temperaturestatus"] = "good"
+		else
+			data["occupant"]["temperaturestatus"] = "bad"
+
 		data["occupant"]["health"] = round(mob_occupant.health, 1)
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
 		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
@@ -460,13 +471,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		data["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
 		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
 		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
-		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
-		if(mob_occupant.bodytemperature < TCRYO)
-			data["occupant"]["temperaturestatus"] = "good"
-		else if(mob_occupant.bodytemperature < T0C)
-			data["occupant"]["temperaturestatus"] = "average"
-		else
-			data["occupant"]["temperaturestatus"] = "bad"
 
 	var/datum/gas_mixture/air1 = airs[1]
 	data["cellTemperature"] = round(air1.temperature, 1)
@@ -556,6 +560,9 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			node.atmos_init()
 			node.add_member(src)
 		SSair.add_to_rebuild_queue(src)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_layer()
+	return
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR

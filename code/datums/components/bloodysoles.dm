@@ -71,7 +71,7 @@
 	if(HAS_TRAIT(parent_atom, TRAIT_LIGHT_STEP)) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
 		return TRUE
 
-	parent_atom.add_blood_DNA(pool.return_blood_DNA())
+	parent_atom.add_blood_DNA(GET_ATOM_BLOOD_DNA(pool))
 	update_icon()
 
 /**
@@ -156,7 +156,7 @@
 				oldLocFP.exited_dirs |= wielder.dir
 				add_parent_to_footprint(oldLocFP)
 				oldLocFP.bloodiness = half_our_blood
-				oldLocFP.add_blood_DNA(parent_atom.return_blood_DNA())
+				oldLocFP.add_blood_DNA(GET_ATOM_BLOOD_DNA(parent_atom))
 				oldLocFP.update_appearance()
 
 			half_our_blood = bloody_shoes[last_blood_state] / 2
@@ -176,7 +176,7 @@
 			FP.entered_dirs |= wielder.dir
 			add_parent_to_footprint(FP)
 			FP.bloodiness = half_our_blood
-			FP.add_blood_DNA(parent_atom.return_blood_DNA())
+			FP.add_blood_DNA(GET_ATOM_BLOOD_DNA(parent_atom))
 			FP.update_appearance()
 
 

@@ -10,5 +10,5 @@
 /datum/round_event/wisdomcow/start()
 	var/turf/targetloc = get_safe_random_station_turf()
 	new /mob/living/basic/cow/wisdom(targetloc)
-	do_smoke(1, targetloc)
+	do_smoke(DIAMOND_AREA(1), targetloc)
 

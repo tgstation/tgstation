@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/animalhide/carp
 	name = "carp scales"
 	desc = "The scaly skin of a space carp. It looks quite beatiful when detached from the foul creature who once wore it."
-	singular_name = "carp scales"
+	singular_name = "carp scale"
 	icon_state = "sheet-carp"
 	inhand_icon_state = "sheet-carp"
 	merge_type = /obj/item/stack/sheet/animalhide/carp

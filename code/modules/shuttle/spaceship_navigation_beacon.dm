@@ -10,8 +10,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "core"
 	base_icon_state = "core"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 0
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/spaceship_navigation_beacon
 

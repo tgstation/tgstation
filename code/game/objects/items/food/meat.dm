@@ -68,7 +68,6 @@
 /obj/item/food/fishmeat/donkfish
 	name = "donkfillet"
 	desc = "The dreaded donkfish fillet. No sane spaceman would eat this, and it does not get better when cooked."
-	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "donkfillet"
 	food_reagents = list(/datum/reagent/yuck = 3)
 
@@ -99,6 +98,57 @@
 	food_reagents = list (/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("fish" = 1, "pan seared vegtables" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/fishtaco
+	name = "fish taco"
+	desc = "A taco with fish, cheese, and cabbage."
+	icon_state = "fishtaco"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("taco" = 4, "fish" = 2, "cheese" = 2, "cabbage" = 1)
+	foodtypes = SEAFOOD | DAIRY | GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/vegetariansushiroll
+	name = "vegetarian sushi roll"
+	desc = "A roll of simple vegetarian sushi with rice, carrots, and potatoes. Sliceable into pieces!"
+	icon_state = "vegetariansushiroll"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/vegetariansushiroll/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/vegetariansushislice, 4, 20)
+
+/obj/item/food/vegetariansushislice
+	name = "vegetarian sushi slice"
+	desc = "A slice of simple vegetarian sushi with rice, carrots, and potatoes."
+	icon_state = "vegetariansushislice"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/spicyfiletsushiroll
+	name = "spicy filet sushi roll"
+	desc = "A roll of tasty, spicy sushi made with fish and vegetables. Sliceable into pieces!"
+	icon_state = "spicyfiletroll"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/capsaicin = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("boiled rice" = 4, "fish" = 2, "spicyness" = 2)
+	foodtypes = VEGETABLES | SEAFOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/spicyfiletsushiroll/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spicyfiletsushislice, 4, 20)
+
+/obj/item/food/spicyfiletsushislice
+	name = "spicy filet sushi slice"
+	desc = "A slice of tasty, spicy sushi made with fish and vegetables. Don't eat it too fast!."
+	icon_state = "spicyfiletslice"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("boiled rice" = 4, "fish" = 2, "spicyness" = 2)
+	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
@@ -165,7 +215,8 @@
 	AddComponent(/datum/component/grillable, meatball_type, rand(30 SECONDS, 40 SECONDS), TRUE)
 
 /obj/item/food/raw_meatball/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, 20)
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, 20, table_required = TRUE)
+
 /obj/item/food/raw_meatball/human
 	name = "strange raw meatball"
 	meatball_type = /obj/item/food/meatball/human
@@ -317,8 +368,8 @@
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/sausage/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 30)
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 30, table_required = TRUE)
 
 /obj/item/food/sausage/american
 	name = "american sausage"
@@ -486,7 +537,7 @@
 	icon_state = "sashimi"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/capsaicin = 9, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("fish" = 1, "hot peppers" = 1)
-	foodtypes = SEAFOOD 
+	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_TINY
 	//total price of this dish is 20 and a small amount more for soy sauce, all of which are available at the orders console
 	venue_value = FOOD_PRICE_CHEAP
@@ -638,7 +689,7 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/slab/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain, 3, 30, table_required = TRUE)
 
 ///////////////////////////////////// HUMAN MEATS //////////////////////////////////////////////////////
 
@@ -652,7 +703,7 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/slab/human/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain/human, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain/human, 3, 30, table_required = TRUE)
 
 /obj/item/food/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
@@ -807,7 +858,7 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/killertomato, rand(70 SECONDS, 85 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/killertomato/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/killertomato, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/killertomato, 3, 30, table_required = TRUE)
 
 /obj/item/food/meat/slab/bear
 	name = "bear meat"
@@ -818,7 +869,7 @@
 	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/bear/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/bear, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/bear, 3, 30, table_required = TRUE)
 
 /obj/item/food/meat/slab/bear/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/bear, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
@@ -837,7 +888,7 @@
 	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/xeno/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/xeno, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/xeno, 3, 30, table_required = TRUE)
 
 /obj/item/food/meat/slab/xeno/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/xeno, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
@@ -851,7 +902,7 @@
 	foodtypes = RAW | MEAT | TOXIC
 
 /obj/item/food/meat/slab/spider/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/spider, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/spider, 3, 30, table_required = TRUE)
 
 /obj/item/food/meat/slab/spider/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/spider, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
@@ -912,7 +963,7 @@
 	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/gondola/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 30, table_required = TRUE)
 
 /obj/item/food/meat/slab/gondola/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/gondola, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
@@ -927,12 +978,12 @@
 
 /obj/item/food/meat/slab/penguin/MakeProcessable()
 	. = ..()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/penguin, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/penguin, 3, 30, table_required = TRUE)
 
 /obj/item/food/meat/slab/penguin/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/penguin, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
-/obj/item/food/meat/rawcrab
+/obj/item/food/meat/slab/rawcrab
 	name = "raw crab meat"
 	desc = "A pile of raw crab meat."
 	icon_state = "crabmeatraw"
@@ -961,7 +1012,7 @@
 	tastes = list("chicken" = 1)
 
 /obj/item/food/meat/slab/chicken/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 30, table_required = TRUE)
 
 /obj/item/food/meat/slab/chicken/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/chicken, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe? (no this is chicken)
@@ -1278,7 +1329,7 @@
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/beef_wellington/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 30, table_required = TRUE)
 
 /obj/item/food/beef_wellington_slice
 	name = "beef wellington slice"

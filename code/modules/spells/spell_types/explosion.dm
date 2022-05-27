@@ -15,7 +15,7 @@
 
 /obj/effect/proc_holder/spell/targeted/explosion/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
-		if(target.anti_magic_check())
+		if(target.can_block_magic())
 			continue
 		explosion(target, devastation_range = ex_severe, heavy_impact_range = ex_heavy, light_impact_range = ex_light, flash_range = ex_flash, explosion_cause = src)
 

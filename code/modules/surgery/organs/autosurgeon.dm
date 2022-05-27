@@ -76,7 +76,10 @@
 
 /obj/item/autosurgeon/organ/attack(mob/living/target, mob/living/user, params)
 	add_fingerprint(user)
-	user.balloon_alert_to_viewers("Prepares to use [src] on [target].", "You begin to prepare to use [src] on [target].")
+	user.visible_message(
+		"[user] prepares to use [src] on [target].",
+		"You begin to prepare to use [src] on [target]."
+	)
 	if(!do_after(user, (8 SECONDS * surgery_speed), target))
 		return
 	user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise."), span_notice("You press a button on [src] as it plunges into [target]'s body."))

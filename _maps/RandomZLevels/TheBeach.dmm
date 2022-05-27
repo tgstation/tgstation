@@ -89,11 +89,11 @@
 /turf/open/misc/beach/coastline_b,
 /area/awaymission/beach)
 "as" = (
-/obj/structure/flora/rock{
+/obj/structure/flora/rock/style_random{
 	desc = "A volcanic rock.";
 	name = "coastal rock"
 	},
-/obj/structure/flora/ausbushes/stalkybush{
+/obj/structure/flora/bush/stalky/style_random{
 	desc = "It can't be smoked.";
 	name = "sea weed"
 	},
@@ -106,7 +106,7 @@
 	},
 /area/awaymission/beach)
 "at" = (
-/obj/structure/flora/rock{
+/obj/structure/flora/rock/style_random{
 	desc = "A volcanic rock.";
 	name = "coastal rock"
 	},
@@ -371,14 +371,14 @@
 "bs" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "changlinhut2";
-	name = "changing room"
+	name = "Changing Room"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bt" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "changlinhut1";
-	name = "changing room"
+	name = "Changing Room"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -601,7 +601,7 @@
 "bX" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "toilet1";
-	name = "restroom stall"
+	name = "Restroom Stall"
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/white,
@@ -609,7 +609,7 @@
 "bY" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "toilet2";
-	name = "restroom stall"
+	name = "Restroom Stall"
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/white,
@@ -709,7 +709,7 @@
 /area/awaymission/beach)
 "cr" = (
 /obj/structure/closet/secure_closet/freezer/kitchen{
-	req_access = list(25)
+	req_access = list("kitchen")
 	},
 /obj/item/storage/fancy/egg_box,
 /obj/item/reagent_containers/food/condiment/milk,

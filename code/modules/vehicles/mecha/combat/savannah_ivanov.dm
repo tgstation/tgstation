@@ -20,6 +20,7 @@
 	icon_state = "savannah_ivanov_0_0"
 	//does not include mmi compatibility
 	mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
+	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn
 	armor = list(MELEE = 45, BULLET = 40, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100)

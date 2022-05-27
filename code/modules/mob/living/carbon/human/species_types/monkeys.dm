@@ -30,8 +30,6 @@
 		TRAIT_GUN_NATURAL,
 	)
 	no_equip = list(
-		ITEM_SLOT_EARS,
-		ITEM_SLOT_EYES,
 		ITEM_SLOT_OCLOTHING,
 		ITEM_SLOT_GLOVES,
 		ITEM_SLOT_FEET,
@@ -56,7 +54,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
-	fire_overlay = "Monkey_burning"
+	fire_overlay = "monkey"
 	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 

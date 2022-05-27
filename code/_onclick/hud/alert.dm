@@ -226,11 +226,6 @@
 		or something covering your eyes."
 	icon_state = ALERT_BLIND
 
-/atom/movable/screen/alert/high
-	name = "High"
-	desc = "Whoa man, you're tripping balls! Careful you don't get addicted... if you aren't already."
-	icon_state = "high"
-
 /atom/movable/screen/alert/hypnosis
 	name = "Hypnosis"
 	desc = "Something's hypnotizing you, but you're not really sure about what."
@@ -248,11 +243,6 @@
 	if(!.)
 		return
 	to_chat(owner, span_mind_control("[command]"))
-
-/atom/movable/screen/alert/drunk
-	name = "Drunk"
-	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
-	icon_state = ALERT_DRUNK
 
 /atom/movable/screen/alert/embeddedobject
 	name = "Embedded Object"
@@ -417,15 +407,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	. = ..()
 	if(!.)
 		return
-
 	var/mob/living/living_owner = owner
-	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Final Words")
-	if (!last_whisper || !CAN_SUCCUMB(living_owner))
+	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
+	if(isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
 		return
-
-	if (length(last_whisper))
+	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
-
 	living_owner.succumb(whispered = length(last_whisper) > 0)
 
 //ALIENS

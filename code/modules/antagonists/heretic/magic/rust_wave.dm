@@ -23,7 +23,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, level)
 	. = ..()
-	if(victim.anti_magic_check() || IS_HERETIC_OR_MONSTER(victim))
+	if(victim.can_block_magic() || IS_HERETIC_OR_MONSTER(victim))
 		return
 	victim.apply_status_effect(/datum/status_effect/amok)
 	victim.apply_status_effect(/datum/status_effect/cloudstruck, (level * 10))

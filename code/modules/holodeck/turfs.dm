@@ -45,6 +45,10 @@
 	name = "white floor"
 	icon_state = "white"
 
+/turf/open/floor/holofloor/pure_white
+	name = "white floor"
+	icon_state = "pure_white"
+
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
 	initial_gas_mix = BURNMIX_ATMOS

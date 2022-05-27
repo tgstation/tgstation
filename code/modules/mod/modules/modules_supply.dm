@@ -50,14 +50,15 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/structure/big_delivery))
+	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/item/delivery/big))
 		var/atom/movable/picked_crate = target
-		if(length(stored_crates) >= max_crates)
-			balloon_alert(mod.wearer, "too many crates!")
+		if(!check_crate_pickup(picked_crate))
 			return
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		if(!do_after(mod.wearer, load_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
+			return
+		if(!check_crate_pickup(picked_crate))
 			return
 		stored_crates += picked_crate
 		picked_crate.forceMove(src)
@@ -80,10 +81,23 @@
 	else
 		balloon_alert(mod.wearer, "invalid target!")
 
-/obj/item/mod/module/clamp/on_suit_deactivation()
+/obj/item/mod/module/clamp/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
 	for(var/atom/movable/crate as anything in stored_crates)
 		crate.forceMove(drop_location())
 		stored_crates -= crate
+
+/obj/item/mod/module/clamp/proc/check_crate_pickup(atom/movable/target)
+	if(length(stored_crates) >= max_crates)
+		balloon_alert(mod.wearer, "too many crates!")
+		return FALSE
+	for(var/mob/living/mob in target.get_all_contents())
+		if(mob.mob_size < MOB_SIZE_HUMAN)
+			continue
+		balloon_alert(mod.wearer, "crate too heavy!")
+		return FALSE
+	return TRUE
 
 /obj/item/mod/module/clamp/loader
 	name = "MOD loader hydraulic clamp module"
@@ -94,6 +108,7 @@
 	overlay_state_active = "module_clamp_loader"
 	load_time = 1 SECONDS
 	max_crates = 5
+	use_mod_colors = TRUE
 
 ///Drill - Lets you dig through rock and basalt.
 /obj/item/mod/module/drill
@@ -114,7 +129,7 @@
 		return
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP, .proc/bump_mine)
 
-/obj/item/mod/module/drill/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/drill/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -204,6 +219,7 @@
 	cooldown_time = 4 SECONDS
 	overlay_state_inactive = "module_hydraulic"
 	overlay_state_active = "module_hydraulic_active"
+	use_mod_colors = TRUE
 	/// Time it takes to launch
 	var/launch_time = 2 SECONDS
 	/// User overlay
@@ -237,12 +253,12 @@
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
 	mod.wearer.throw_at(get_ranged_target_turf_direct(mod.wearer, target, power), \
 		range = power, speed = max(round(0.2*power), 1), thrower = mod.wearer, spin = FALSE, \
-		callback = CALLBACK(src, .proc/on_throw_end, target, -angle))
+		callback = CALLBACK(src, .proc/on_throw_end, mod.wearer, -angle))
 
-/obj/item/mod/module/hydraulic/proc/on_throw_end(atom/target, angle)
-	if(!mod?.wearer)
+/obj/item/mod/module/hydraulic/proc/on_throw_end(mob/user, angle)
+	if(!user)
 		return
-	mod.wearer.transform = mod.wearer.transform.Turn(angle)
+	user.transform = user.transform.Turn(angle)
 
 /obj/item/mod/module/disposal_connector
 	name = "MOD disposal selector module"
@@ -261,7 +277,7 @@
 /obj/item/mod/module/disposal_connector/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
-/obj/item/mod/module/disposal_connector/on_suit_deactivation()
+/obj/item/mod/module/disposal_connector/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING)
 
 /obj/item/mod/module/disposal_connector/get_configuration()
@@ -291,6 +307,7 @@
 	incompatible_modules = list(/obj/item/mod/module/magnet)
 	cooldown_time = 1.5 SECONDS
 	overlay_state_active = "module_magnet"
+	use_mod_colors = TRUE
 
 /obj/item/mod/module/magnet/on_select_use(atom/target)
 	. = ..()
@@ -314,7 +331,7 @@
 	locker.throw_at(mod.wearer, range = 7, speed = 3, force = MOVE_FORCE_WEAK, \
 		callback = CALLBACK(src, .proc/check_locker, locker))
 
-/obj/item/mod/module/magnet/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/magnet/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -344,6 +361,7 @@
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/ash_accretion)
 	overlay_state_inactive = "module_ash"
+	use_mod_colors = TRUE
 	/// How many tiles we can travel to max out the armor.
 	var/max_traveled_tiles = 10
 	/// How many tiles we traveled through.
@@ -352,6 +370,8 @@
 	var/list/armor_values = list(MELEE = 4, BULLET = 1, LASER = 2, ENERGY = 2, BOMB = 4)
 	/// Speed added when you're fully covered in ash.
 	var/speed_added = 0.5
+	/// Speed that we actually added.
+	var/actual_speed_added = 0
 	/// Turfs that let us accrete ash.
 	var/static/list/accretion_turfs
 	/// Turfs that let us keep ash.
@@ -384,7 +404,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
-/obj/item/mod/module/ash_accretion/on_suit_deactivation()
+/obj/item/mod/module/ash_accretion/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_ASHSTORM_IMMUNE, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
@@ -422,7 +442,8 @@
 			mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
 			animate(mod.wearer, 1 SECONDS, color = null, flags = ANIMATION_PARALLEL)
 			playsound(src, 'sound/effects/sparks1.ogg', 100, TRUE)
-			mod.slowdown -= speed_added
+			actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
+			mod.slowdown -= actual_speed_added
 			mod.wearer.update_equipment_speed_mods()
 	else if(is_type_in_typecache(mod.wearer.loc, keep_turfs))
 		return
@@ -430,7 +451,7 @@
 		if(traveled_tiles <= 0)
 			return
 		if(traveled_tiles == max_traveled_tiles)
-			mod.slowdown += speed_added
+			mod.slowdown += actual_speed_added
 			mod.wearer.update_equipment_speed_mods()
 		traveled_tiles--
 		var/list/parts = mod.mod_parts + mod
@@ -463,8 +484,8 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/items/modsuit/ballin.ogg', 100)
-	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/mod.dmi', "ball_mask"), flags = MASK_INVERSE))
+	playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE)
+	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
 	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
 	mod.wearer.add_filter("mod_outline", 3, outline_filter(color = "#000000AA"))
 	mod.wearer.base_pixel_y -= 4
@@ -480,11 +501,12 @@
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, .proc/on_statchange)
 
-/obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/items/modsuit/ballout.ogg', 100)
+	if(!deleting)
+		playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE, frequency = -1)
 	mod.wearer.base_pixel_y = 0
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
 	addtimer(CALLBACK(mod.wearer, /atom.proc/remove_filter, list("mod_ball", "mod_blur", "mod_outline")), animate_time)
@@ -564,8 +586,6 @@
 	var/damage = 15
 	/// Damage multiplier on hostile fauna.
 	var/fauna_boost = 4
-	/// Damage multiplier on objects
-	var/object_boost = 2
 	/// Image overlaid on explosion.
 	var/static/image/explosion_image
 
@@ -590,5 +610,5 @@
 	for(var/mob/living/mob in range(1, src))
 		mob.apply_damage(12 * (ishostile(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
 	for(var/obj/object in range(1, src))
-		object.take_damage(damage * object_boost, BRUTE, BOMB)
+		object.take_damage(damage, BRUTE, BOMB)
 	qdel(src)

@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/reagent_containers/syringe,
 	/obj/item/reagent_containers/food/condiment,
 	/obj/item/storage,
-	/obj/item/small_delivery,
+	/obj/item/delivery,
 	/obj/item/his_grace)))
 
 /obj/machinery/deepfryer
@@ -17,8 +17,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	icon_state = "fryer_off"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/deep_fryer
 	var/obj/item/food/deepfryholder/frying //What's being fried RIGHT NOW?
@@ -47,6 +46,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	return ..()
 
 /obj/machinery/deepfryer/RefreshParts()
+	. = ..()
 	var/oil_efficiency
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		oil_efficiency += M.rating
@@ -108,6 +108,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			frying_burnt = TRUE
 			visible_message(span_warning("[src] emits an acrid smell!"))
 
+		use_power(active_power_usage)
+
 
 /obj/machinery/deepfryer/attack_ai(mob/user)
 	return
@@ -135,7 +137,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		log_combat(user, dunking_target, "dunked", null, "into [src]")
 		user.visible_message(span_danger("[user] dunks [dunking_target]'s face in [src]!"))
 		reagents.expose(dunking_target, TOUCH)
-		var/permeability = 1 - dunking_target.get_permeability_protection(list(HEAD))
+		var/bio_multiplier = dunking_target.getarmor(BODY_ZONE_HEAD, BIO) * 0.01
 		var/target_temp = dunking_target.bodytemperature
 		var/cold_multiplier = 1
 		if(target_temp < TCMB + 10) // a tiny bit of leeway
@@ -145,7 +147,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			return
 		else if(target_temp < T0C)
 			cold_multiplier += round(target_temp * 1.5 / T0C, 0.01)
-		dunking_target.apply_damage(min(30 * permeability * cold_multiplier, reagents.total_volume), BURN, BODY_ZONE_HEAD)
+		dunking_target.apply_damage(min(30 * bio_multiplier * cold_multiplier, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		if(reagents.reagent_list) //This can runtime if reagents has nothing in it.
 			reagents.remove_any((reagents.total_volume/2))
 		dunking_target.Paralyze(60)
