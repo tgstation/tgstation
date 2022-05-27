@@ -31,6 +31,7 @@ export const PortablePump = (props, context) => {
                   ? area_or_tank + ' → ' + pump_or_port
                   : pump_or_port + ' → ' + area_or_tank
               }
+              color={!into_pump_or_port && !holding ? 'caution' : null}
               onClick={() => act('direction')} />
           )}>
           <LabeledList>
