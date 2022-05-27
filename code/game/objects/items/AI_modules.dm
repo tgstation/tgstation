@@ -1,10 +1,5 @@
-/*
-CONTAINS:
-AI MODULES
-
-*/
-
-// AI module
+///defined truthy result for `handle_unique_ai()`, which makes initialize return INITIALIZE_HINT_QDEL
+#define QDEL_MODULE 1
 
 /obj/item/ai_module
 	name = "\improper AI module"
@@ -27,7 +22,9 @@ AI MODULES
 /obj/item/ai_module/Initialize(mapload)
 	. = ..()
 	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI) && is_station_level(z))
-		return handle_unique_ai()
+		var/delete_module = handle_unique_ai()
+		if(delete_module)
+			return INITIALIZE_HINT_QDEL
 
 /obj/item/ai_module/examine(mob/user as mob)
 	. = ..()
@@ -40,7 +37,7 @@ AI MODULES
 
 ///what this module should do if it is mapload spawning on a unique AI station trait round.
 /obj/item/ai_module/proc/handle_unique_ai()
-	return INITIALIZE_HINT_QDEL //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
+	return QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
 
 /obj/item/ai_module/proc/show_laws(mob/user as mob)
 	if(laws.len)
@@ -368,6 +365,12 @@ AI MODULES
 		law_datum.clear_zeroth_law(0)
 	..()
 
+/obj/item/ai_module/core/full/handle_unique_ai()
+	var/datum/ai_laws/unique_ai_laws =  GLOB.round_default_lawset
+	if(law_id == initial(unique_ai_laws.id))
+		return
+	return QDEL_MODULE
+
 /******************** Asimov ********************/
 
 /obj/item/ai_module/core/round_default_laws
@@ -377,7 +380,15 @@ AI MODULES
 	. = ..()
 	if(!GLOB.round_default_lawset)
 		GLOB.round_default_lawset = setup_round_default_laws()
-	var/datum/ai_laws/default_laws = new GLOB.round_default_lawset()
+	var/datum/ai_laws/default_laws =  GLOB.round_default_lawset
+	//try to spawn a law board, since they may have special functionality (asimov setting subjects)
+	for(var/obj/item/ai_module/core/full/potential_lawboard as anything in subtypesof(/obj/item/ai_module/core/full))
+		if(initial(potential_lawboard.law_id) != initial(default_laws.id))
+			continue
+		potential_lawboard = new(loc)
+		return INITIALIZE_HINT_QDEL
+	//fallback to just be the lawset board
+	default_laws = new default_laws()
 	name = "'[default_laws.name]' Core AI Module"
 	laws = default_laws.inherent
 
@@ -628,3 +639,5 @@ AI MODULES
 /obj/item/ai_module/core/full/ten_commandments
 	name = "'10 Commandments' Core AI Module"
 	law_id = "ten_commandments"
+
+#undef QDEL_MODULE
