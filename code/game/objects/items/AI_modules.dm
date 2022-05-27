@@ -371,13 +371,14 @@
 		return
 	return QDEL_MODULE
 
-/******************** Asimov ********************/
+/obj/effect/spawner/round_default_module
+	name = "ai default lawset spawner"
+	icon = 'icons/hud/screen_gen.dmi'
+	icon_state = "x2"
+	color = "#00FF00"
 
-/obj/item/ai_module/core/round_default_laws
-	name = "Default Laws" //gets renamed
-
-/obj/item/ai_module/core/round_default_laws/Initialize(mapload)
-	. = ..()
+/obj/effect/spawner/round_default_module/Initialize(mapload)
+	..()
 	if(!GLOB.round_default_lawset)
 		GLOB.round_default_lawset = setup_round_default_laws()
 	var/datum/ai_laws/default_laws =  GLOB.round_default_lawset
@@ -385,14 +386,23 @@
 	for(var/obj/item/ai_module/core/full/potential_lawboard as anything in subtypesof(/obj/item/ai_module/core/full))
 		if(initial(potential_lawboard.law_id) != initial(default_laws.id))
 			continue
-		potential_lawboard = new(loc)
+		potential_lawboard = new potential_lawboard(loc)
 		return INITIALIZE_HINT_QDEL
-	//fallback to just be the lawset board
-	default_laws = new default_laws()
+	//spawn the fallback instead
+	new /obj/item/ai_module/core/round_default_fallback(loc)
+	return INITIALIZE_HINT_QDEL
+
+///When the default lawset spawner cannot find a module object to spawn, it will spawn this, and this sets itself to the round default.
+///This is so /datum/lawsets can be picked even if they have no module for themselves.
+/obj/item/ai_module/core/round_default_fallback
+
+/obj/item/ai_module/core/round_default_fallback/Initialize(mapload)
+	. = ..()
+	var/datum/ai_laws/default_laws = new GLOB.round_default_lawset()
 	name = "'[default_laws.name]' Core AI Module"
 	laws = default_laws.inherent
 
-/obj/item/ai_module/core/round_default_laws/handle_unique_ai()
+/obj/item/ai_module/core/round_default_fallback/handle_unique_ai()
 	return
 
 /obj/item/ai_module/core/full/asimov
