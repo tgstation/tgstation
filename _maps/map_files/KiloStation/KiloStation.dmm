@@ -10669,7 +10669,7 @@
 	},
 /obj/machinery/button/door/directional/south{
 	id = "kitchenshutters";
-	name = "Kitchen Shutterl Control";
+	name = "Kitchen Shutter Control";
 	pixel_x = -6
 	},
 /obj/machinery/light_switch/directional/south{
