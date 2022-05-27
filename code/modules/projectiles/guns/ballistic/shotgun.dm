@@ -142,7 +142,7 @@
 	var/damage_multiplier_increment = 0.25 //how much our multiplier increases per shot
 	var/min_damage_multiplier = 0.5 //minimum multiplier
 	var/cooldown_reset_time = 10 SECONDS
-	COOLDOWN_DECLARE(charge_reset)
+	var/timerid
 
 /obj/item/gun/ballistic/shotgun/automatic/meltra/Initialize(mapload)
 	. = ..()
@@ -166,19 +166,13 @@
 		. += span_notice("\The [src] is [round(cell.percent())]% charged.")
 	. += span_notice("\The [src] has a fire power strength of [round(100*projectile_damage_multiplier)]%.")
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/process(delta_time)
-	. = ..()
-	if(COOLDOWN_FINISHED(src, charge_reset))
-		handle_reset()
-
 /obj/item/gun/ballistic/shotgun/automatic/meltra/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	. = ..()
 	if(!.)
 		return
 	if(reduce_cell_charge(shot_cell_cost))
 		charged_shot = TRUE
-		COOLDOWN_START(src, charge_reset, cooldown_reset_time)
-		START_PROCESSING(SSobj, src)
+		timerid = addtimer(CALLBACK(src, .proc/handle_reset, FALSE), cooldown_reset_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
 /obj/item/gun/ballistic/shotgun/automatic/meltra/rack(mob/user)
 	. = ..()
@@ -189,17 +183,17 @@
 	if(projectile_damage_multiplier < max_damage_multiplier)
 		projectile_damage_multiplier = max(min_damage_multiplier + damage_multiplier_increment, max_damage_multiplier)
 	charged_shot = FALSE
-	COOLDOWN_RESET(src, charge_reset)
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/proc/handle_reset()
+/obj/item/gun/ballistic/shotgun/automatic/meltra/proc/handle_reset(deltimer)
 	projectile_damage_multiplier = min_damage_multiplier
 	charged_shot = FALSE
-	STOP_PROCESSING(SSobj, src)
+	if(deltimer && timerid)
+		deltimer(timerid)
 
 /obj/item/gun/ballistic/shotgun/automatic/meltra/proc/reduce_cell_charge(cell_deduction)
 	if(!cell)
 		return
-	. = cell.use(cell_deduction)
+	return cell.use(cell_deduction)
 
 /obj/item/gun/ballistic/shotgun/automatic/meltra/emp_act(severity)
 	. = ..()
@@ -207,7 +201,7 @@
 		return
 	if (!(. & EMP_PROTECT_SELF))
 		reduce_cell_charge(1000 / severity)
-		handle_reset()
+		handle_reset(TRUE)
 
 // Bulldog shotgun //
 
