@@ -104,12 +104,12 @@
 			if(!overflow)
 				law_datum.owner.add_inherent_law(templaw)
 			else
-				law_datum.owner.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED))
+				law_datum.owner.replace_random_law(templaw,list(LAW_SUPPLIED))
 		else
 			if(!overflow)
 				law_datum.add_inherent_law(templaw)
 			else
-				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED))
+				law_datum.replace_random_law(templaw,list(LAW_SUPPLIED))
 
 /obj/item/ai_module/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums
