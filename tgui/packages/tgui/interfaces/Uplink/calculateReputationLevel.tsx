@@ -1,7 +1,7 @@
 import { Box, Flex } from '../../components';
 
 export const calculateProgression = (progression_points: number) => {
-  return Math.round(progression_points / 6) / 10;
+  return Math.round(progression_points / 6) / 100;
 };
 
 const badGradient = "reputation-bad";
