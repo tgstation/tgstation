@@ -104,9 +104,15 @@
 /datum/cinematic/proc/show_to(mob/watching_mob, client/watching_client)
 	SIGNAL_HANDLER
 
-	locked += WEAKREF(watching_mob)
-	watching_mob.notransform = TRUE
+	// We could technically rip people out of notransform who shouldn't be,
+	// so we'll only lock down all viewing mobs who don't have it already set.
+	// This does potentially mean some mobs could lose their notrasnform and
+	// not be locked down by cinematics, but that should be very unlikely.
+	if(!watching_mob.notransform)
+		locked += WEAKREF(watching_mob)
+		watching_mob.notransform = TRUE
 
+	// Only show the actual cinematic to cliented mobs.
 	if(!watching_client)
 		return
 
