@@ -1,4 +1,0 @@
-author: "EthanRocks"
-delete-after: True
-changes: 
-  - bugfix: "rare case of being able to spawn off station when returning from shadow realm"

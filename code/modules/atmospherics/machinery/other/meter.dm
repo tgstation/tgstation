@@ -8,7 +8,7 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.03
 	max_integrity = 150
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 40, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 40, ACID = 0)
 	greyscale_config = /datum/greyscale_config/meter
 	greyscale_colors = COLOR_GRAY
 	///The pipe we are attaching to

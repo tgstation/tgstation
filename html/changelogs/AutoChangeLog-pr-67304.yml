@@ -1,0 +1,4 @@
+author: "JoshAdamPowell"
+delete-after: True
+changes: 
+  - spellcheck: "Scrubber clog event will no longer end every area name in 'area', like recreation area area."

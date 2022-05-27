@@ -169,7 +169,7 @@
 
 /obj/item/organ/heart/gland/heal/proc/replace_limb(body_zone, obj/item/bodypart/limb)
 	if(limb)
-		owner.visible_message(span_warning("[owner]'s [limb.name] suddenly detaches from [owner.p_their()] body!"), span_userdanger("Your [limb.name] suddenly detaches from your body!"))
+		owner.visible_message(span_warning("[owner]'s [limb.plaintext_zone] suddenly detaches from [owner.p_their()] body!"), span_userdanger("Your [limb.plaintext_zone] suddenly detaches from your body!"))
 		playsound(owner, SFX_DESECRATION, 50, TRUE, -1)
 		limb.drop_limb()
 	else

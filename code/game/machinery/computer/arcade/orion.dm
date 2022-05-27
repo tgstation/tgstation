@@ -368,7 +368,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			reason = "You ran out of fuel, and drift, slowly, into a star."
 			if(obj_flags & EMAGGED)
 				gamer.adjust_fire_stacks(5)
-				gamer.IgniteMob() //flew into a star, so you're on fire
+				gamer.ignite_mob() //flew into a star, so you're on fire
 				to_chat(gamer, span_userdanger("You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames."))
 
 	if(obj_flags & EMAGGED)

@@ -186,7 +186,7 @@
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
 	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -250,7 +250,7 @@
 /obj/machinery/door/window{
 	dir = 1;
 	name = "Gateway Access";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -355,7 +355,7 @@
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron{
@@ -473,7 +473,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Gateway";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron{
@@ -522,7 +522,7 @@
 /obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
 	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -620,7 +620,7 @@
 	dir = 1;
 	pixel_y = 23;
 	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron{
 	dir = 8;
@@ -650,19 +650,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	temperature = 251
-	},
-/area/awaymission/moonoutpost19/syndicate)
-"cg" = (
-/obj/structure/sign/warning/securearea{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -830,7 +817,7 @@
 "cw" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Power Maintenance";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating{
@@ -965,7 +952,7 @@
 /obj/machinery/power/apc/highcap/ten_k{
 	name = "Worn-out APC";
 	pixel_y = -25;
-	req_access_txt = "150";
+	req_access = list("syndicate");
 	start_charge = 0
 	},
 /obj/effect/turf_decal/tile/red,
@@ -1062,7 +1049,7 @@
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/light/broken/directional/east,
 /obj/effect/turf_decal/tile/red,
@@ -1231,7 +1218,7 @@
 /obj/machinery/airalarm/directional/west{
 	pixel_x = -23;
 	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -1256,7 +1243,7 @@
 /obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/wood{
 	heat_capacity = 1e+006
@@ -1330,7 +1317,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "dr" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
@@ -1355,7 +1342,7 @@
 "dt" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/stack/spacecash/c50,
 /turf/open/floor/wood{
@@ -1368,7 +1355,7 @@
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
-	req_access_txt = "150";
+	req_access = list("syndicate");
 	set_obj_flags = "EMAGGED"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -1458,7 +1445,7 @@
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
-	req_access_txt = "150";
+	req_access = list("syndicate");
 	set_obj_flags = "EMAGGED"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1498,13 +1485,13 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
-	name = "Acid-Proof biohazard containment door"
+	name = "Acid-Proof Biohazard Containment Door"
 	},
 /obj/machinery/door/poddoor{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
 	layer = 2.9;
-	name = "Acid-Proof biohazard containment door"
+	name = "Acid-Proof Biohazard Containment Door"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
@@ -1660,17 +1647,13 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door"
+	name = "Acid-Proof Containment Chamber Blast Door"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
-/area/awaymission/moonoutpost19/research)
-"eA" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall/r_wall,
 /area/awaymission/moonoutpost19/research)
 "eB" = (
 /obj/structure/alien/weeds/node,
@@ -1729,7 +1712,7 @@
 	name = "Containment Chamber Blast Doors";
 	pixel_x = 4;
 	pixel_y = -2;
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/machinery/button/ignition{
 	id = "awayxenobio";
@@ -1845,7 +1828,7 @@
 /area/awaymission/moonoutpost19/research)
 "fc" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -1866,17 +1849,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/structure/cable,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"fe" = (
-/obj/structure/sign/warning/securearea{
-	pixel_x = 32
-	},
-/obj/structure/alien/weeds,
-/obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -2000,7 +1972,7 @@
 	icon_state = "open";
 	name = "Xenobiology Lab";
 	opacity = 0;
-	req_access_txt = "201";
+	req_access = list("away_maintenance");
 	set_obj_flags = "EMAGGED"
 	},
 /obj/structure/cable,
@@ -2067,7 +2039,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door"
+	name = "Acid-Proof Containment Chamber Blast Door"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	desc = "A one meter section of pipe. This one has been applied with an acid-proof coating.";
@@ -2188,7 +2160,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
 	name = "security officer's locker";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/clothing/suit/armor/vest,
 /obj/item/reagent_containers/spray/pepper,
@@ -2286,7 +2258,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door"
+	name = "Acid-Proof Containment Chamber Blast Door"
 	},
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating{
@@ -2345,7 +2317,7 @@
 "gk" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Post";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -2451,7 +2423,7 @@
 /obj/machinery/door/poddoor/preopen{
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaylab";
-	name = "Acid-Proof containment chamber blast door"
+	name = "Acid-Proof Containment Chamber Blast Door"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -2652,7 +2624,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "Awaybiohazard";
 	name = "Biohazard Shutter Control";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -2847,7 +2819,7 @@
 /area/awaymission/moonoutpost19/research)
 "hm" = (
 /obj/machinery/vending/medical{
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /turf/open/floor/iron/white/side{
 	heat_capacity = 1e+006
@@ -2883,19 +2855,10 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "rd";
 	name = "research director's locker";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/storage/backpack/satchel/science,
 /obj/item/clothing/gloves/color/latex,
-/turf/open/floor/iron/cafeteria{
-	dir = 5
-	},
-/area/awaymission/moonoutpost19/research)
-"hr" = (
-/obj/structure/table,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -2923,7 +2886,7 @@
 /obj/machinery/door/poddoor{
 	id = "AwayRD";
 	layer = 2.9;
-	name = "privacy shutter"
+	name = "Privacy Shutter"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
@@ -2983,7 +2946,7 @@
 	icon_state = "open";
 	name = "Research Director's Office";
 	opacity = 0;
-	req_access_txt = "201";
+	req_access = list("away_maintenance");
 	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/iron/cafeteria{
@@ -3014,7 +2977,7 @@
 "hG" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research Storage";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -3053,7 +3016,7 @@
 	desc = "A heavy duty blast door that opens mechanically. This one has been applied with an acid-proof coating.";
 	id = "Awaybiohazard";
 	layer = 2.9;
-	name = "Acid-Proof biohazard containment door"
+	name = "Acid-Proof Biohazard Containment Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron{
@@ -3214,7 +3177,7 @@
 "ie" = (
 /obj/machinery/door/airlock/medical{
 	name = "Research Division";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/white{
@@ -3312,13 +3275,13 @@
 	id = "Awaybiohazard";
 	name = "Biohazard Shutter Control";
 	pixel_y = 8;
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/machinery/button/door{
 	id = "AwayRD";
 	name = "Privacy Shutter Control";
 	pixel_y = -2;
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -3358,21 +3321,6 @@
 /obj/item/paper/crumpled/awaymissions/moonoutpost19/hastey_note,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"iu" = (
-/obj/structure/sign/warning/securearea{
-	pixel_y = 32
-	},
-/obj/machinery/shower{
-	dir = 4;
-	name = "emergency shower"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
 	},
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -4495,7 +4443,7 @@
 "kU" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/clothing/under/suit/navy,
 /turf/open/floor/carpet{
@@ -4720,7 +4668,7 @@
 "lu" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen Cold Room";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006
@@ -4861,7 +4809,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Kitchen";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/arrivals)
@@ -4983,7 +4931,7 @@
 /obj/structure/closet/secure_closet{
 	locked = 0;
 	name = "kitchen Cabinet";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/reagent_containers/food/condiment/flour,
 /obj/item/reagent_containers/food/condiment/flour,
@@ -4998,7 +4946,7 @@
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "meat fridge";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
@@ -5013,7 +4961,7 @@
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "refrigerator";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/reagent_containers/food/condiment/milk,
 /obj/item/reagent_containers/food/condiment/milk,
@@ -5327,7 +5275,7 @@
 "nb" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/clothing/under/misc/assistantformal,
 /turf/open/floor/carpet{
@@ -5522,7 +5470,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "nz" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -5718,7 +5666,7 @@
 "nT" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/clothing/under/suit/burgundy,
 /turf/open/floor/carpet{
@@ -5853,7 +5801,7 @@
 	icon_state = "science";
 	locked = 0;
 	name = "scientist's locker";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/clothing/suit/toggle/labcoat,
 /turf/open/floor/iron{
@@ -5865,7 +5813,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "science";
 	name = "scientist's locker";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/clothing/suit/toggle/labcoat,
 /obj/item/tank/internals/oxygen,
@@ -6139,6 +6087,19 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"zR" = (
+/obj/structure/sign/warning/secure_area{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	temperature = 251
+	},
+/area/awaymission/moonoutpost19/syndicate)
 "zZ" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -6162,6 +6123,15 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/hive)
+"CG" = (
+/obj/structure/table,
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/cafeteria{
+	dir = 5
+	},
+/area/awaymission/moonoutpost19/research)
 "CY" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -6226,6 +6196,17 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
+"HP" = (
+/obj/structure/sign/warning/secure_area{
+	pixel_x = 32
+	},
+/obj/structure/alien/weeds,
+/obj/effect/turf_decal/tile/purple,
+/obj/structure/cable,
+/turf/open/floor/iron/white{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
 "HQ" = (
 /obj/machinery/power/shieldwallgen/unlocked,
 /obj/structure/cable,
@@ -6256,6 +6237,21 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"Jr" = (
+/obj/structure/sign/warning/secure_area{
+	pixel_y = 32
+	},
+/obj/machinery/shower{
+	dir = 4;
+	name = "emergency shower"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
 "Ku" = (
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien,
@@ -6292,7 +6288,7 @@
 "Mm" = (
 /obj/machinery/door/airlock/medical{
 	name = "Research Division";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -6488,6 +6484,10 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
+"Zl" = (
+/obj/structure/sign/warning/electric_shock,
+/turf/closed/wall/r_wall,
+/area/awaymission/moonoutpost19/research)
 "Zs" = (
 /obj/structure/chair{
 	dir = 4
@@ -33911,7 +33911,7 @@ gA
 eJ
 he
 ea
-hr
+CG
 hB
 hC
 hX
@@ -35971,7 +35971,7 @@ fk
 hj
 hN
 ea
-iu
+Jr
 iN
 eI
 jx
@@ -36216,7 +36216,7 @@ eb
 ef
 ev
 eL
-fe
+HP
 fw
 fX
 gm
@@ -39041,13 +39041,13 @@ wq
 wq
 ea
 ea
-eA
+Zl
 eq
 eq
 fF
 gc
 gu
-eA
+Zl
 ea
 ea
 wq
@@ -41841,7 +41841,7 @@ Li
 bD
 bM
 at
-cg
+zR
 cu
 cI
 cU

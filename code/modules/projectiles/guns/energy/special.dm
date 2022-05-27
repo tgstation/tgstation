@@ -139,7 +139,7 @@
 		var/mob/living/user = loc
 		user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
 		user.adjust_fire_stacks(4)
-		user.IgniteMob()
+		user.ignite_mob()
 
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.

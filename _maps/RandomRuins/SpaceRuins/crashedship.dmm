@@ -35,7 +35,7 @@
 "bj" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Checkpoint";
-	req_access_txt = "63"
+	req_access = list("security")
 	},
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
@@ -49,7 +49,7 @@
 /obj/machinery/door/airlock/command{
 	emergency = 1;
 	name = "E.V.A. Storage";
-	req_access_txt = "18"
+	req_access = list("eva")
 	},
 /turf/open/floor/iron/white/corner,
 /area/awaymission/bmpship/midship)
@@ -360,7 +360,7 @@
 "on" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Office";
-	req_access_txt = "20"
+	req_access = list("captain")
 	},
 /turf/open/floor/iron/airless,
 /area/awaymission/bmpship/fore)
@@ -742,7 +742,7 @@
 /obj/machinery/door/airlock/command{
 	emergency = 1;
 	name = "Teleport Access";
-	req_access_txt = "17"
+	req_access = list("teleporter")
 	},
 /turf/open/floor/iron/white/side{
 	dir = 6
@@ -1140,7 +1140,7 @@
 /obj/machinery/door/airlock/command{
 	emergency = 1;
 	name = "Teleport Access";
-	req_access_txt = "17"
+	req_access = list("teleporter")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/airless,

@@ -9,7 +9,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."
 	severity = DISEASE_SEVERITY_HARMFUL
-	permeability_mod = 0.4
+	spreading_modifier = 0.4
 	stage_prob = 1
 	var/restcure = 0
 

@@ -1,4 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "Fixed plasma sheets and it's derivatives exploding you for being shot at."

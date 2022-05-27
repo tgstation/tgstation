@@ -51,14 +51,14 @@
 /// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
 	. = ..()
-	if(user.combat_mode)
+	if(user.combat_mode || !user.can_read(src))
 		return
 
 	return do_plant_stats_scan(target, user)
 
 /// Same as above, but with right click. Right-clicking scans for chemicals.
 /obj/item/plant_analyzer/pre_attack_secondary(atom/target, mob/living/user)
-	if(user.combat_mode)
+	if(user.combat_mode || !user.can_read(src))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 	return do_plant_chem_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
@@ -463,7 +463,7 @@
 		return
 	var/mob/living/carbon/human/H = AM
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
-		H.set_confusion(max(H.get_confusion(), 10))
+		H.set_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \

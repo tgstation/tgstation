@@ -387,6 +387,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/teleport/Destroy()
 	LAZYREMOVE(GLOB.teleport_runes, src)
+	if(inner_portal)
+		QDEL_NULL(inner_portal)
+	if(outer_portal)
+		QDEL_NULL(outer_portal)
 	return ..()
 
 /obj/effect/rune/teleport/invoke(list/invokers)
@@ -485,8 +489,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	addtimer(CALLBACK(src, .proc/close_portal), 600, TIMER_UNIQUE)
 
 /obj/effect/rune/teleport/proc/close_portal()
-	qdel(inner_portal)
-	qdel(outer_portal)
+	QDEL_NULL(inner_portal)
+	QDEL_NULL(outer_portal)
 	desc = initial(desc)
 	set_light_range(0)
 	update_light()
@@ -925,6 +929,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(rune_in_use)
 		return
 	. = ..()
+
 	var/area/place = get_area(src)
 	var/mob/living/user = invokers[1]
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
@@ -935,8 +940,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!(place in summon_objective.summon_spots))
 		to_chat(user, span_cultlarge("The Apocalypse rune will remove a ritual site, where Nar'Sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!"))
 		return
+
 	summon_objective.summon_spots -= place
 	rune_in_use = TRUE
+
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(T)
 	var/intensity = 0
@@ -945,20 +952,23 @@ structure_check() searches for nearby cultist structures required for the invoca
 			intensity++
 	intensity = max(60, 360 - (360*(intensity/length(GLOB.player_list) + 0.3)**2)) //significantly lower intensity for "winning" cults
 	var/duration = intensity*10
+
 	playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE)
 	visible_message(span_warning("A colossal shockwave of energy bursts from the rune, disintegrating it in the process!"))
+
 	for(var/mob/living/target in range(src, 3))
 		target.Paralyze(30)
 	empulse(T, 0.42*(intensity), 1)
+
 	var/list/images = list()
 	var/zmatch = T.z
-	var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	for(var/mob/living/M in GLOB.alive_mob_list)
 		if(M.z != zmatch)
 			continue
 		if(ishuman(M))
 			if(!IS_CULTIST(M))
-				AH.remove_hud_from(M)
+				sec_hud.hide_from(M)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, M), duration)
 			var/image/A = image('icons/mob/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
@@ -1050,5 +1060,5 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	var/obj/O = target.get_item_by_slot(ITEM_SLOT_EYES)
 	if(istype(O, /obj/item/clothing/glasses/hud/security))
-		var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-		AH.add_hud_to(target)
+		var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+		sec_hud.show_to(target)

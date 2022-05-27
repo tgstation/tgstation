@@ -7,5 +7,5 @@
 			continue
 		var/obj/item/toy/crayon/real_crayon = new crayon_path
 		if(!findtext(initial(real_crayon.name),real_crayon.crayon_color))
-			Fail("[real_crayon] does not have its crayon_color ([real_crayon.crayon_color]) in its initial name ([initial(real_crayon.name)]).")
+			TEST_FAIL("[real_crayon] does not have its crayon_color ([real_crayon.crayon_color]) in its initial name ([initial(real_crayon.name)]).")
 		qdel(real_crayon)

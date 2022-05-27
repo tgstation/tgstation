@@ -34,11 +34,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	///Audio for when the gravgen is on
 	var/datum/looping_sound/gravgen/soundloop
 
-/obj/machinery/gravity_generator/main/Initialize(mapload)
+/obj/machinery/gravity_generator/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, TRUE)
 
-/obj/machinery/gravity_generator/main/Destroy()
+/obj/machinery/gravity_generator/Destroy()
 	QDEL_NULL(gravity_field)
 	QDEL_NULL(soundloop)
 	return ..()
@@ -148,6 +148,12 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/broken_state = 0
 	var/setting = 1 //Gravity value when on
 
+///Station generator that spawns with gravity turned off.
+/obj/machinery/gravity_generator/main/station/off
+	on = FALSE
+	breaker = FALSE
+	charge_count = 0
+
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
 	on = FALSE
@@ -208,39 +214,40 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 // Fixing the gravity generator.
 /obj/machinery/gravity_generator/main/attackby(obj/item/I, mob/user, params)
-	switch(broken_state)
-		if(GRAV_NEEDS_SCREWDRIVER)
-			if(I.tool_behaviour == TOOL_SCREWDRIVER)
-				to_chat(user, span_notice("You secure the screws of the framework."))
-				I.play_tool_sound(src)
-				broken_state++
-				update_appearance()
-				return
-		if(GRAV_NEEDS_WELDING)
-			if(I.tool_behaviour == TOOL_WELDER)
-				if(I.use_tool(src, user, 0, volume=50, amount=1))
-					to_chat(user, span_notice("You mend the damaged framework."))
+	if(machine_stat & BROKEN)
+		switch(broken_state)
+			if(GRAV_NEEDS_SCREWDRIVER)
+				if(I.tool_behaviour == TOOL_SCREWDRIVER)
+					to_chat(user, span_notice("You secure the screws of the framework."))
+					I.play_tool_sound(src)
 					broken_state++
 					update_appearance()
-				return
-		if(GRAV_NEEDS_PLASTEEL)
-			if(istype(I, /obj/item/stack/sheet/plasteel))
-				var/obj/item/stack/sheet/plasteel/PS = I
-				if(PS.get_amount() >= 10)
-					PS.use(10)
-					to_chat(user, span_notice("You add the plating to the framework."))
-					playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
-					broken_state++
-					update_appearance()
-				else
-					to_chat(user, span_warning("You need 10 sheets of plasteel!"))
-				return
-		if(GRAV_NEEDS_WRENCH)
-			if(I.tool_behaviour == TOOL_WRENCH)
-				to_chat(user, span_notice("You secure the plating to the framework."))
-				I.play_tool_sound(src)
-				set_fix()
-				return
+					return
+			if(GRAV_NEEDS_WELDING)
+				if(I.tool_behaviour == TOOL_WELDER)
+					if(I.use_tool(src, user, 0, volume=50, amount=1))
+						to_chat(user, span_notice("You mend the damaged framework."))
+						broken_state++
+						update_appearance()
+					return
+			if(GRAV_NEEDS_PLASTEEL)
+				if(istype(I, /obj/item/stack/sheet/plasteel))
+					var/obj/item/stack/sheet/plasteel/PS = I
+					if(PS.get_amount() >= 10)
+						PS.use(10)
+						to_chat(user, span_notice("You add the plating to the framework."))
+						playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
+						broken_state++
+						update_appearance()
+					else
+						to_chat(user, span_warning("You need 10 sheets of plasteel!"))
+					return
+			if(GRAV_NEEDS_WRENCH)
+				if(I.tool_behaviour == TOOL_WRENCH)
+					to_chat(user, span_notice("You secure the plating to the framework."))
+					I.play_tool_sound(src)
+					set_fix()
+					return
 	return ..()
 
 /obj/machinery/gravity_generator/main/ui_interact(mob/user, datum/tgui/ui)

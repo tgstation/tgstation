@@ -192,13 +192,10 @@
 		return UI_INTERACTIVE
 	return ..()
 
-
-
 /obj/item/paper/can_interact(mob/user)
 	if(in_contents_of(/obj/machinery/door/airlock))
 		return TRUE
 	return ..()
-
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
 	var/ignition_message = I.ignition_effect(src, user)
@@ -211,7 +208,7 @@
 		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
 			user.dropItemToGround(I)
 		user.adjust_fire_stacks(1)
-		user.IgniteMob()
+		user.ignite_mob()
 		return
 
 	if(user.is_holding(src)) //no TK shit here.
@@ -270,7 +267,6 @@
 
 	return ..()
 
-
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	if(.)
@@ -312,7 +308,6 @@
 	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color // color might not be set
 	.["paper_state"] = icon_state /// TODO: show the sheet will bloodied or crinkling?
 	.["stamps"] = stamps
-
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()

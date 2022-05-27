@@ -163,12 +163,12 @@
 		s.start()
 
 	if(entersmoke)
-		var/datum/effect_system/smoke_spread/s = new
-		s.set_up(4, 1, src, 0)
+		var/datum/effect_system/fluid_spread/smoke/s = new
+		s.set_up(4, location = src)
 		s.start()
 	if(exitsmoke)
-		var/datum/effect_system/smoke_spread/s = new
-		s.set_up(4, 1, dest, 0)
+		var/datum/effect_system/fluid_spread/smoke/s = new
+		s.set_up(4, location = dest)
 		s.start()
 
 	uses--

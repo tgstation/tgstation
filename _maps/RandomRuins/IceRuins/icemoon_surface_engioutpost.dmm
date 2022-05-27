@@ -89,7 +89,7 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "aA" = (
-/obj/machinery/rnd/production/protolathe/department/engineering,
+/obj/machinery/rnd/production/protolathe/department/engineering/no_tax,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 9
 	},
@@ -179,7 +179,7 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "aX" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "ba" = (
@@ -232,7 +232,7 @@
 "bq" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Production Room";
-	req_access_txt = "204"
+	req_access = list("away_engineering")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -523,7 +523,7 @@
 "cF" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
-	req_access_txt = "204"
+	req_access = list("away_engineering")
 	},
 /turf/open/floor/iron,
 /area/ruin/planetengi)

@@ -37,7 +37,7 @@
 		ITEM_SLOT_SUITSTORE,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
-	liked_food = MEAT | FRUIT
+	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
 	damage_overlay_type = "monkey"
 	sexes = FALSE
@@ -54,7 +54,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
-	fire_overlay = "Monkey_burning"
+	fire_overlay = "monkey"
 	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 

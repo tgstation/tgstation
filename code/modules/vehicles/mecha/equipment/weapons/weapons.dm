@@ -3,6 +3,7 @@
 	range = MECHA_RANGED
 	equipment_slot = MECHA_WEAPON
 	destroy_sound = 'sound/mecha/weapdestr.ogg'
+	mech_flags = EXOSUIT_MODULE_COMBAT
 	var/projectile
 	var/fire_sound
 	var/projectiles_per_shot = 1
@@ -11,7 +12,6 @@
 	var/projectile_delay = 0
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect //the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
-	mech_flags = EXOSUIT_MODULE_COMBAT
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(!..())
@@ -126,6 +126,7 @@
 	projectile = /obj/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/plasma_cutter.ogg'
 	harmful = TRUE
+	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(..()) //combat mech
@@ -144,6 +145,7 @@
 	projectile = /obj/projectile/kinetic/mech
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
 	harmful = TRUE
+	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
 
 //attachable to all mechas, like the plasma cutter
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
@@ -203,7 +205,7 @@
 			M.Stun(200)
 			M.Unconscious(80)
 		else
-			M.Jitter(500)
+			M.set_timed_status_effect(1000 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 
 	log_message("Honked from [src.name]. HONK!", LOG_MECHA)
 	var/turf/T = get_turf(src)

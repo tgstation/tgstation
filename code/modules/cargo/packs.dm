@@ -76,7 +76,7 @@
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
 					/obj/item/clothing/head/soft,
-					/obj/item/clothing/mask/bandana/color/skull/black)//so you can properly #cargoniabikergang
+					/obj/item/clothing/mask/bandana/skull/black)//so you can properly #cargoniabikergang
 	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
 
@@ -450,7 +450,7 @@
 	cost = CARGO_CRATE_VALUE * 2.2
 	contraband = TRUE
 	contains = list(/obj/item/clothing/under/rank/security/constable,
-					/obj/item/clothing/head/helmet/constable,
+					/obj/item/clothing/head/constable,
 					/obj/item/clothing/gloves/color/white,
 					/obj/item/clothing/mask/whistle,
 					/obj/item/conversion_kit)
@@ -531,7 +531,7 @@
 	name = "Incendiary Weapons Crate"
 	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Armory access to open."
 	cost = CARGO_CRATE_VALUE * 7
-	access = ACCESS_HEADS
+	access = ACCESS_COMMAND
 	contains = list(/obj/item/flamethrower/full,
 					/obj/item/tank/internals/plasma,
 					/obj/item/tank/internals/plasma,
@@ -696,7 +696,7 @@
 	name = "Engineering Gear Crate"
 	desc = "Gear up with three toolbelts, high-visibility vests, welding helmets, hardhats, and two pairs of meson goggles!"
 	cost = CARGO_CRATE_VALUE * 4
-	access_view = ACCESS_ENGINE
+	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/item/storage/belt/utility,
 					/obj/item/storage/belt/utility,
 					/obj/item/storage/belt/utility,
@@ -736,7 +736,7 @@
 	name = "P.A.C.M.A.N Generator Crate"
 	desc = "Engineers can't set up the engine? Not an issue for you, once you get your hands on this P.A.C.M.A.N. Generator! Takes in plasma and spits out sweet sweet energy."
 	cost = CARGO_CRATE_VALUE * 5
-	access_view = ACCESS_ENGINE
+	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/machinery/power/port_gen/pacman)
 	crate_name = "\improper PACMAN generator crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
@@ -815,7 +815,7 @@
 	desc = "The pride of Nanotrasen Naval Command. The legendary Bluespace Artillery Cannon is a devastating feat of human engineering and testament to wartime determination. Highly advanced research is required for proper construction. "
 	cost = CARGO_CRATE_VALUE * 30
 	special = TRUE
-	access_view = ACCESS_HEADS
+	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/circuitboard/machine/bsa/front,
 					/obj/item/circuitboard/machine/bsa/middle,
 					/obj/item/circuitboard/machine/bsa/back,
@@ -828,7 +828,7 @@
 	desc = "Secure the longevity of the current state of humanity within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes."
 	cost = CARGO_CRATE_VALUE * 24
 	special = TRUE
-	access_view = ACCESS_HEADS
+	access_view = ACCESS_COMMAND
 	contains = list(
 					/obj/item/circuitboard/machine/dna_vault,
 					/obj/item/dna_probe,
@@ -844,7 +844,7 @@
 	desc = "Contains five DNA probes for use in the DNA vault."
 	cost = CARGO_CRATE_VALUE * 6
 	special = TRUE
-	access_view = ACCESS_HEADS
+	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/dna_probe,
 					/obj/item/dna_probe,
 					/obj/item/dna_probe,
@@ -859,7 +859,7 @@
 	desc = "Protect the very existence of this station with these Anti-Meteor defenses. Contains three Shield Generator Satellites."
 	cost = CARGO_CRATE_VALUE * 6
 	special = TRUE
-	access_view = ACCESS_HEADS
+	access_view = ACCESS_COMMAND
 	contains = list(
 					/obj/machinery/satellite/meteor_shield,
 					/obj/machinery/satellite/meteor_shield,
@@ -873,7 +873,7 @@
 	desc = "A control system for the Shield Generator Satellite system."
 	cost = CARGO_CRATE_VALUE * 10
 	special = TRUE
-	access_view = ACCESS_HEADS
+	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 
@@ -884,7 +884,7 @@
 
 /datum/supply_pack/engine
 	group = "Engine Construction"
-	access_view = ACCESS_ENGINE
+	access_view = ACCESS_ENGINEERING
 	crate_type = /obj/structure/closet/crate/engineering
 
 /datum/supply_pack/engine/emitter
@@ -1086,7 +1086,7 @@
 	name = "Large Fuel Tank Crate"
 	desc = "Contains a high-capacity fuel tank. Keep contents away from open flame."
 	cost = CARGO_CRATE_VALUE * 4
-	access_view = ACCESS_ENGINE
+	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/structure/reagent_dispensers/fueltank/large)
 	crate_name = "high-capacity fuel tank crate"
 	crate_type = /obj/structure/closet/crate/large
@@ -1388,6 +1388,17 @@
 	contains = list(/obj/item/raw_anomaly_core/pyro)
 	crate_name = "raw pyro anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_delimber_anomaly
+	name = "Raw Delimber Anomaly"
+	desc = "The raw core of a delimber anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
+	contains = list(/obj/item/raw_anomaly_core/delimber)
+	crate_name = "raw delimber anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
@@ -2592,8 +2603,8 @@
 /datum/supply_pack/misc/commandkeys
 	name = "Command Encryption Key Crate"
 	desc = "A pack of encryption keys that give access to the command radio network. Nanotrasen reminds unauthorized employees not to eavesdrop in on secure communications channels, or at least to keep heckling of the command staff to a minimum."
-	access_view = ACCESS_HEADS
-	access = ACCESS_HEADS
+	access_view = ACCESS_COMMAND
+	access = ACCESS_COMMAND
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/encryptionkey/headset_com,
 					/obj/item/encryptionkey/headset_com,

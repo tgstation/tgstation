@@ -763,26 +763,31 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(mob.ckey == key)
 			return mob
 
-///Return a string for the specified body zone
+///Return a string for the specified body zone. Should be used for parsing non-instantiated bodyparts, otherwise use [/obj/item/bodypart/var/plaintext_zone]
 /proc/parse_zone(zone)
-	if(zone == BODY_ZONE_PRECISE_R_HAND)
-		return "right hand"
-	else if (zone == BODY_ZONE_PRECISE_L_HAND)
-		return "left hand"
-	else if (zone == BODY_ZONE_L_ARM)
-		return "left arm"
-	else if (zone == BODY_ZONE_R_ARM)
-		return "right arm"
-	else if (zone == BODY_ZONE_L_LEG)
-		return "left leg"
-	else if (zone == BODY_ZONE_R_LEG)
-		return "right leg"
-	else if (zone == BODY_ZONE_PRECISE_L_FOOT)
-		return "left foot"
-	else if (zone == BODY_ZONE_PRECISE_R_FOOT)
-		return "right foot"
-	else
-		return zone
+	switch(zone)
+		if(BODY_ZONE_CHEST)
+			return "chest"
+		if(BODY_ZONE_HEAD)
+			return "head"
+		if(BODY_ZONE_PRECISE_R_HAND)
+			return "right hand"
+		if(BODY_ZONE_PRECISE_L_HAND)
+			return "left hand"
+		if(BODY_ZONE_L_ARM)
+			return "left arm"
+		if(BODY_ZONE_R_ARM)
+			return "right arm"
+		if(BODY_ZONE_L_LEG)
+			return "left leg"
+		if(BODY_ZONE_R_LEG)
+			return "right leg"
+		if(BODY_ZONE_PRECISE_L_FOOT)
+			return "left foot"
+		if(BODY_ZONE_PRECISE_R_FOOT)
+			return "right foot"
+		else
+			return zone
 
 ///Returns the direction that the initiator and the target are facing
 /proc/check_target_facings(mob/living/initiator, mob/living/target)

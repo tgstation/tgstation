@@ -24,6 +24,9 @@
 /// How efficiently humans regenerate blood.
 #define BLOOD_REGEN_FACTOR 0.25
 
+/// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
+#define BLOOD_STOP_TEMP 225
+
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1
@@ -223,7 +226,7 @@
 #define MOOD_LEVEL_SAD3 -15
 #define MOOD_LEVEL_SAD4 -20
 
-//Sanity levels for humans
+//Sanity values for humans
 #define SANITY_MAXIMUM 150
 #define SANITY_GREAT 125
 #define SANITY_NEUTRAL 100
@@ -231,6 +234,14 @@
 #define SANITY_UNSTABLE 50
 #define SANITY_CRAZY 25
 #define SANITY_INSANE 0
+
+//Sanity levels for humans
+#define SANITY_LEVEL_GREAT 1
+#define SANITY_LEVEL_NEUTRAL 2
+#define SANITY_LEVEL_DISTURBED 3
+#define SANITY_LEVEL_UNSTABLE 4
+#define SANITY_LEVEL_CRAZY 5
+#define SANITY_LEVEL_INSANE 6
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -422,7 +433,8 @@
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
-#define HUMAN_FIRE_STACK_ICON_NUM 3
+// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
+#define MOB_BIG_FIRE_STACK_THRESHOLD 3
 
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
@@ -593,7 +605,7 @@
 #define SHOES_LAYER 20
 /// Ears layer (Spessmen have ears? Wow)
 #define EARS_LAYER 19
-/// Suit layer (armor, hardsuits, etc.)
+/// Suit layer (armor, coats, etc.)
 #define SUIT_LAYER 18
 /// Glasses layer
 #define GLASSES_LAYER 17

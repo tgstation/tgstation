@@ -1,5 +1,5 @@
 // Remove these once we have Byond implementation.
-#define ISNAN(a) (!(a==a))
+#define ISNAN(a) (a!=a)
 #define ISINF(a) (!ISNAN(a) && ISNAN(a-a))
 #define IS_INF_OR_NAN(a) (ISNAN(a-a))
 // Aight dont remove the rest
@@ -43,6 +43,9 @@
 
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
+
+/// Increments a value and wraps it if it exceeds some value. Can be used to circularly iterate through a list through `idx = WRAP_UP(idx, length_of_list)`.
+#define WRAP_UP(val, max) (((val) % (max)) + 1)
 
 // Real modulus that handles decimals
 #define MODULUS(x, y) ( (x) - FLOOR(x, y))
@@ -114,7 +117,8 @@
 #define TORADIANS(degrees) ((degrees) * 0.0174532925)
 
 /// Gets shift x that would be required the bitflag (1<<x)
-#define TOBITSHIFT(bit) ( log(2, bit) )
+/// We need the round because log has floating-point inaccuracy, and if we undershoot at all on list indexing we'll get the wrong index.
+#define TOBITSHIFT(bit) ( round(log(2, bit), 1) )
 
 // Will filter out extra rotations and negative rotations
 // E.g: 540 becomes 180. -180 becomes 180.
@@ -226,3 +230,6 @@
 // )
 
 #define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))
+
+/// The number of cells in a taxicab circle (rasterized diamond) of radius X.
+#define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))

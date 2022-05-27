@@ -115,6 +115,14 @@
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
 	projectile_type = /obj/projectile/magic/aoe/lightning
 
+/obj/effect/proc_holder/spell/aimed/lightningbolt/on_gain(mob/living/user)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
+
+/obj/effect/proc_holder/spell/aimed/lightningbolt/on_lose(mob/living/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
+
 /obj/effect/proc_holder/spell/aimed/fireball
 	name = "Fireball"
 	desc = "This spell fires an explosive fireball at a target."
@@ -125,7 +133,7 @@
 	invocation_type = INVOCATION_SHOUT
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
-	projectile_type = /obj/projectile/magic/aoe/fireball
+	projectile_type = /obj/projectile/magic/fireball
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
 	sound = 'sound/magic/fireball.ogg'

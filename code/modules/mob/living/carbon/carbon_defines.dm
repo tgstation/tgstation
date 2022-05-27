@@ -86,8 +86,6 @@
 	var/next_hallucination = 0
 	var/damageoverlaytemp = 0
 
-	///Overall drunkenness
-	var/drunkenness = 0
 	///used to halt stamina regen temporarily
 	var/stam_regen_start_time = 0
 

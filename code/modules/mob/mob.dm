@@ -43,6 +43,10 @@
 	ghostize() //False, since we're deleting it currently
 	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
 		mind.set_current(null)
+
+	if(mock_client)
+		mock_client.mob = null
+
 	return ..()
 
 
@@ -95,22 +99,68 @@
 	tag = "mob_[next_mob_id++]"
 
 /**
+ * set every hud image in the given category active so other people with the given hud can see it.
+ * Arguments:
+ * * hud_category - the index in our active_hud_list corresponding to an image now being shown.
+ * * update_huds - if FALSE we will just put the hud_category into active_hud_list without actually updating the atom_hud datums subscribed to it
+ * * exclusive_hud - if given a reference to an atom_hud, will just update that hud instead of all global ones attached to that category.
+ * This is because some atom_hud subtypes arent supposed to work via global categories, updating normally would affect all of these which we dont want.
+ */
+/atom/proc/set_hud_image_active(hud_category, update_huds = TRUE, datum/atom_hud/exclusive_hud)
+	if(!istext(hud_category) || !hud_list?[hud_category] || active_hud_list?[hud_category])
+		return FALSE
+
+	LAZYSET(active_hud_list, hud_category, hud_list[hud_category])
+
+	if(!update_huds)
+		return TRUE
+
+	if(exclusive_hud)
+		exclusive_hud.add_single_hud_category_on_atom(src, hud_category)
+	else
+		for(var/datum/atom_hud/hud_to_update as anything in GLOB.huds_by_category[hud_category])
+			hud_to_update.add_single_hud_category_on_atom(src, hud_category)
+
+	return TRUE
+
+///sets every hud image in the given category inactive so no one can see it
+/atom/proc/set_hud_image_inactive(hud_category, update_huds = TRUE, datum/atom_hud/exclusive_hud)
+	if(!istext(hud_category))
+		return FALSE
+
+	LAZYREMOVE(active_hud_list, hud_category)
+
+	if(!update_huds)
+		return TRUE
+
+	if(exclusive_hud)
+		exclusive_hud.remove_single_hud_category_on_atom(src, hud_category)
+	else
+		for(var/datum/atom_hud/hud_to_update as anything in GLOB.huds_by_category[hud_category])
+			hud_to_update.remove_single_hud_category_on_atom(src, hud_category)
+
+	return TRUE
+
+/**
  * Prepare the huds for this atom
  *
- * Goes through hud_possible list and adds the images to the hud_list variable (if not already
- * cached)
+ * Goes through hud_possible list and adds the images to the hud_list variable (if not already cached)
  */
 /atom/proc/prepare_huds()
+	if(hud_list) // I choose to be lienient about people calling this proc more then once
+		return
 	hud_list = list()
 	for(var/hud in hud_possible)
 		var/hint = hud_possible[hud]
-		switch(hint)
-			if(HUD_LIST_LIST)
-				hud_list[hud] = list()
-			else
-				var/image/I = image('icons/mob/huds/hud.dmi', src, "")
-				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
-				hud_list[hud] = I
+
+		if(hint == HUD_LIST_LIST)
+			hud_list[hud] = list()
+
+		else
+			var/image/I = image('icons/mob/huds/hud.dmi', src, "")
+			I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+			hud_list[hud] = I
+		set_hud_image_active(hud, update_huds = FALSE) //by default everything is active. but dont add it to huds to keep control.
 
 /**
  * Some kind of debug verb that gives atmosphere environment details
@@ -851,7 +901,7 @@
 			LAZYREMOVE(mob_spell_list, S)
 			qdel(S)
 	if(client)
-		client << output(null, "statbrowser:check_spells")
+		client.stat_panel.send_message("check_spells")
 
 /**
  * Checks to see if the mob can cast normal magic spells.
@@ -1046,9 +1096,7 @@
 			var/obj/item/modular_computer/tablet/pda/PDA = A
 			if(PDA.saved_identification == oldname)
 				PDA.saved_identification = newname
-				var/obj/item/computer_hardware/identifier/display = PDA.all_components[MC_IDENTIFY]
-				if(display)
-					display.UpdateDisplay()
+				PDA.UpdateDisplay()
 				if(!search_id)
 					break
 				search_pda = 0
@@ -1098,6 +1146,10 @@
 /mob/proc/has_nightvision()
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
 
+/// Is this mob affected by nearsight
+/mob/proc/is_nearsighted()
+	return HAS_TRAIT(src, TRAIT_NEARSIGHT)
+
 /// This mob is abile to read books
 /mob/proc/is_literate()
 	return FALSE
@@ -1108,7 +1160,11 @@
 		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 
 	if(!is_literate())
-		to_chat(src, span_warning("You don't know how to write."))
+		to_chat(src, span_warning("You try to write, but don't know how to spell anything!"))
+		return FALSE
+
+	if(!has_light_nearby() && !has_nightvision())
+		to_chat(src, span_warning("It's too dark in here to write anything!"))
 		return FALSE
 
 	var/obj/item/pen/pen = writing_instrument
@@ -1136,12 +1192,12 @@
 	return mob_location.get_lumcount() > light_amount
 
 /// Can this mob read
-/mob/proc/can_read(obj/O)
+/mob/proc/can_read(obj/O, check_for_light = TRUE)
 	if(!is_literate())
 		to_chat(src, span_warning("You try to read [O], but can't comprehend any of it."))
 		return FALSE
 
-	if(!has_light_nearby() && !has_nightvision())
+	if(check_for_light && !has_light_nearby() && !has_nightvision())
 		to_chat(src, span_warning("It's too dark in here to read!"))
 		return FALSE
 
@@ -1288,9 +1344,6 @@
 			. = TRUE
 		if(NAMEOF(src, stat))
 			set_stat(var_value)
-			. = TRUE
-		if(NAMEOF(src, dizziness))
-			set_dizziness(var_value)
 			. = TRUE
 		if(NAMEOF(src, eye_blind))
 			set_blindness(var_value)

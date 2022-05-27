@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		icon_state = icon_living
 		drop_held_item(0)
 
-/mob/living/simple_animal/parrot/Process_Spacemove()
+/mob/living/simple_animal/parrot/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	if(!stat) //Birds can fly, fun fact. No I don't care that space doesn't have air. Space parrots bitch
 		return TRUE
 	return ..()

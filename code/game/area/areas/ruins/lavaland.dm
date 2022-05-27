@@ -2,51 +2,38 @@
 //NOTICE: /unpowered means you never get power. Thanks Fikou
 
 /area/ruin/powered/beach
-	icon_state = "dk_yellow"
 
 /area/ruin/powered/clownplanet
 	name = "\improper Clown Planet"
-	icon_state = "dk_yellow"
 	ambientsounds = list('sound/ambience/clown.ogg')
 
 /area/ruin/unpowered/gaia
 	name = "\improper Patch of Eden"
-	icon_state = "dk_yellow"
 
 /area/ruin/powered/snow_biodome
-	icon_state = "dk_yellow"
 
 /area/ruin/powered/gluttony
-	icon_state = "dk_yellow"
 
 /area/ruin/powered/golem_ship
 	name = "\improper Free Golem Ship"
-	icon_state = "dk_yellow"
 
 /area/ruin/powered/greed
-	icon_state = "dk_yellow"
 
 /area/ruin/unpowered/hierophant
 	name = "\improper Hierophant's Arena"
-	icon_state = "dk_yellow"
 
 /area/ruin/powered/pride
-	icon_state = "dk_yellow"
 
 /area/ruin/powered/seedvault
-	icon_state = "dk_yellow"
 
 /area/ruin/unpowered/elephant_graveyard
 	name = "\improper Elephant Graveyard"
-	icon_state = "dk_yellow"
 
 /area/ruin/powered/graveyard_shuttle
 	name = "\improper Elephant Graveyard"
-	icon_state = "green"
 
 /area/ruin/syndicate_lava_base
 	name = "\improper Secret Base"
-	icon_state = "dk_yellow"
 	ambience_index = AMBIENCE_DANGER
 
 /area/ruin/unpowered/cultaltar
@@ -99,8 +86,6 @@
 	power_light = FALSE
 //ash walker nest
 /area/ruin/unpowered/ash_walkers
-	icon_state = "red"
 
 /area/ruin/unpowered/ratvar
-	icon_state = "dk_yellow"
 	outdoors = TRUE

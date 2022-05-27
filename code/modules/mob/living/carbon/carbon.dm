@@ -260,7 +260,6 @@
 	if(fire_stacks <= 0 && !QDELETED(src))
 		visible_message(span_danger("[src] successfully extinguishes [p_them()]self!"), \
 			span_notice("You extinguish yourself."))
-		extinguish_mob()
 	return
 
 /mob/living/carbon/resist_restraints()
@@ -642,18 +641,6 @@
 	else
 		. += INFINITY
 
-/mob/living/carbon/get_permeability_protection(list/target_zones = list(HANDS,CHEST,GROIN,LEGS,FEET,ARMS,HEAD))
-	var/list/tally = list()
-	for(var/obj/item/I in get_equipped_items())
-		for(var/zone in target_zones)
-			if(I.body_parts_covered & zone)
-				tally["[zone]"] = max(1 - I.permeability_coefficient, target_zones["[zone]"])
-	var/protection = 0
-	for(var/key in tally)
-		protection += tally[key]
-	protection *= INVERSE(target_zones.len)
-	return protection
-
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
 
@@ -957,23 +944,6 @@
 	if(organs_amt)
 		to_chat(user, span_notice("You retrieve some of [src]\'s internal organs!"))
 	remove_all_embedded_objects()
-
-/mob/living/carbon/extinguish_mob()
-	for(var/X in get_equipped_items())
-		var/obj/item/I = X
-		I.wash(CLEAN_TYPE_ACID) //washes off the acid on our clothes
-		I.extinguish() //extinguishes our clothes
-	..()
-
-/mob/living/carbon/fakefire(fire_icon = "Generic_mob_burning")
-	var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
-	new_fire_overlay.appearance_flags = RESET_COLOR
-	overlays_standing[FIRE_LAYER] = new_fire_overlay
-	apply_overlay(FIRE_LAYER)
-
-/mob/living/carbon/fakefireextinguish()
-	remove_overlay(FIRE_LAYER)
-
 
 /mob/living/carbon/proc/create_bodyparts()
 	var/l_arm_index_next = -1
@@ -1420,7 +1390,7 @@
 	if(!isturf(loc))
 		return
 	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
-	our_splatter.add_blood_DNA(return_blood_DNA())
+	our_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	our_splatter.blood_dna_info = get_blood_dna_list()
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)

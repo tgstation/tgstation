@@ -106,6 +106,5 @@
 		admin_disabled_cdn_transport = current_transport
 		CONFIG_SET(string/asset_transport, "simple")
 		SSassets.OnConfigLoad()
-		SSassets.transport.dont_mutate_filenames = TRUE
 		message_admins("[key_name_admin(usr)] disabled the CDN asset transport")
 		log_admin("[key_name(usr)] disabled the CDN asset transport")

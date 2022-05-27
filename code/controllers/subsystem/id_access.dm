@@ -248,18 +248,18 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_SECURITY]"] = "Security"
 	desc_by_access["[ACCESS_BRIG]"] = "Holding Cells"
 	desc_by_access["[ACCESS_COURT]"] = "Courtroom"
-	desc_by_access["[ACCESS_FORENSICS]"] = "Forensics"
+	desc_by_access["[ACCESS_DETECTIVE]"] = "Detective Office"
 	desc_by_access["[ACCESS_MEDICAL]"] = "Medical"
 	desc_by_access["[ACCESS_GENETICS]"] = "Genetics Lab"
 	desc_by_access["[ACCESS_MORGUE]"] = "Morgue"
-	desc_by_access["[ACCESS_RND]"] = "R&D Lab"
+	desc_by_access["[ACCESS_SCIENCE]"] = "R&D Lab"
 	desc_by_access["[ACCESS_ORDNANCE]"] = "Ordnance Lab"
 	desc_by_access["[ACCESS_ORDNANCE_STORAGE]"] = "Ordnance Storage"
-	desc_by_access["[ACCESS_CHEMISTRY]"] = "Chemistry Lab"
+	desc_by_access["[ACCESS_PLUMBING]"] = "Chemistry Lab"
 	desc_by_access["[ACCESS_RD]"] = "RD Office"
 	desc_by_access["[ACCESS_BAR]"] = "Bar"
 	desc_by_access["[ACCESS_JANITOR]"] = "Custodial Closet"
-	desc_by_access["[ACCESS_ENGINE]"] = "Engineering"
+	desc_by_access["[ACCESS_ENGINEERING]"] = "Engineering"
 	desc_by_access["[ACCESS_ENGINE_EQUIP]"] = "Power and Engineering Equipment"
 	desc_by_access["[ACCESS_MAINT_TUNNELS]"] = "Maintenance"
 	desc_by_access["[ACCESS_EXTERNAL_AIRLOCKS]"] = "External Airlocks"
@@ -267,7 +267,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_AI_UPLOAD]"] = "AI Chambers"
 	desc_by_access["[ACCESS_TELEPORTER]"] = "Teleporter"
 	desc_by_access["[ACCESS_EVA]"] = "EVA"
-	desc_by_access["[ACCESS_HEADS]"] = "Bridge"
+	desc_by_access["[ACCESS_COMMAND]"] = "Command"
 	desc_by_access["[ACCESS_CAPTAIN]"] = "Captain"
 	desc_by_access["[ACCESS_ALL_PERSONAL_LOCKERS]"] = "Personal Lockers"
 	desc_by_access["[ACCESS_CHAPEL_OFFICE]"] = "Chapel Office"
@@ -289,7 +289,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_THEATRE]"] = "Theatre"
 	desc_by_access["[ACCESS_RESEARCH]"] = "Science"
 	desc_by_access["[ACCESS_MINING]"] = "Mining"
-	desc_by_access["[ACCESS_MAILSORTING]"] = "Cargo Office"
+	desc_by_access["[ACCESS_MAIL_SORTING]"] = "Cargo Office"
 	desc_by_access["[ACCESS_VAULT]"] = "Main Vault"
 	desc_by_access["[ACCESS_MINING_STATION]"] = "Mining EVA"
 	desc_by_access["[ACCESS_XENOBIOLOGY]"] = "Xenobiology Lab"
@@ -299,7 +299,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_PHARMACY]"] = "Pharmacy"
 	desc_by_access["[ACCESS_RC_ANNOUNCE]"] = "RC Announcements"
 	desc_by_access["[ACCESS_KEYCARD_AUTH]"] = "Keycode Auth."
-	desc_by_access["[ACCESS_TCOMSAT]"] = "Telecommunications"
+	desc_by_access["[ACCESS_TCOMMS]"] = "Telecommunications"
 	desc_by_access["[ACCESS_GATEWAY]"] = "Gateway"
 	desc_by_access["[ACCESS_BRIG_ENTRANCE]"] = "Brig"
 	desc_by_access["[ACCESS_MINERAL_STOREROOM]"] = "Mineral Storage"
@@ -465,6 +465,9 @@ SUBSYSTEM_DEF(id_access)
 
 	id_card.add_access(trim.access, mode = TRY_ADD_ALL_NO_WILDCARD)
 	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
+	if(istype(trim, /datum/id_trim/job))
+		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
+		id_card.registered_account.account_job.paycheck_department = job_trim.job.paycheck_department
 
 /**
  * Tallies up all accesses the card has that have flags greater than or equal to the access_flag supplied.

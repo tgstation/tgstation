@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Fixed hair not blocking emissives, which ended up creating some rather silly visual glitches at times, in darker areas."

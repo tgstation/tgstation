@@ -6,7 +6,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "al" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -36,7 +36,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "as" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/solar_control)
@@ -148,7 +148,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "aX" = (
-/obj/structure/frame/computer,
+/obj/machinery/computer/terminal/derelict/security,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "aZ" = (
@@ -188,7 +188,7 @@
 "bh" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Starboard Solar Access";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -356,7 +356,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "ch" = (
 /turf/closed/wall,
 /area/ruin/unpowered/no_grav)
@@ -501,7 +501,7 @@
 "cV" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
-	req_access_txt = "18"
+	req_access = list("eva")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -509,7 +509,7 @@
 "cW" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Secure Storage";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
@@ -533,7 +533,7 @@
 "da" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/gravity_generator)
@@ -625,17 +625,17 @@
 /turf/closed/wall,
 /area/ruin/space/derelict/bridge)
 "dA" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/singularity_engine)
 "dB" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/singularity_engine)
 "dC" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -643,7 +643,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/gravity_generator)
 "dD" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	name = "ENGINEERING ACCESS"
 	},
 /turf/closed/wall/r_wall,
@@ -836,7 +836,7 @@
 "eB" = (
 /obj/machinery/door/window/left/directional/east{
 	name = "Heads of Staff";
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
@@ -970,8 +970,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "fh" = (
-/obj/structure/table,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/computer/terminal/derelict/bridge{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "fj" = (
@@ -1013,7 +1015,7 @@
 "fp" = (
 /obj/machinery/door/window{
 	name = "Captain's Quarters";
-	req_access_txt = "20"
+	req_access = list("captain")
 	},
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -1155,7 +1157,7 @@
 "fR" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Tech Storage";
-	req_access_txt = "23"
+	req_access = list("tech_storage")
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
@@ -1462,7 +1464,7 @@
 "hu" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access_txt = "6"
+	req_access = list("morgue")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/medical/chapel)
@@ -1521,8 +1523,8 @@
 /area/ruin/space/derelict/medical/chapel)
 "hG" = (
 /obj/machinery/door/morgue{
-	name = "coffin storage";
-	req_access_txt = "22"
+	name = "Coffin Storage";
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/medical/chapel)
@@ -1716,7 +1718,7 @@
 	},
 /obj/machinery/door/window{
 	dir = 4;
-	req_access_txt = "25"
+	req_access = list("bar")
 	},
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/plating,
@@ -1790,7 +1792,7 @@
 "ja" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Med-Sci";
-	req_access_txt = "9"
+	req_access = list("genetics")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/medical)
@@ -1962,7 +1964,7 @@
 "jQ" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
-	req_access_txt = "7"
+	req_access = list("science")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -2029,7 +2031,7 @@
 "kh" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
-	req_access_txt = "7"
+	req_access = list("science")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -2122,7 +2124,7 @@
 "kR" = (
 /obj/machinery/door/airlock/security{
 	name = "Security";
-	req_access_txt = "1"
+	req_access = list("security")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -2176,7 +2178,7 @@
 "lh" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access";
-	req_access_txt = "24"
+	req_access = list("atmospherics")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
@@ -2203,7 +2205,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lp" = (
-/obj/structure/chair/stool/directional/west,
+/obj/structure/chair/stool/directional/east,
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/airless,
@@ -2323,7 +2325,7 @@
 "lP" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access";
-	req_access_txt = "24"
+	req_access = list("atmospherics")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
@@ -2549,7 +2551,7 @@
 "mW" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Aux Storage";
-	req_access_txt = "23"
+	req_access = list("tech_storage")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
@@ -2695,7 +2697,7 @@
 "nC" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Aft Solar Access";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -2846,7 +2848,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "op" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -2856,21 +2858,21 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oq" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oy" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oz" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oE" = (
 /obj/structure/frame/computer{
 	dir = 1
@@ -2891,7 +2893,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "po" = (
 /obj/structure/cable,
 /obj/item/stack/cable_coil/five,
@@ -2942,6 +2944,12 @@
 /obj/item/stack/sheet/mineral/wood/fifty,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
+"rL" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/derelict/arrival)
 "sd" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron/airless,
@@ -2954,6 +2962,12 @@
 /obj/item/wallframe/airalarm,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
+"tv" = (
+/obj/machinery/computer/terminal/derelict/cargo{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/derelict/arrival)
 "tH" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless,
@@ -2975,7 +2989,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "uE" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
@@ -3210,7 +3224,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "El" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/airless,
@@ -3335,6 +3349,10 @@
 "IF" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"IP" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary)
 "IQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 4
@@ -3550,7 +3568,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "QW" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
@@ -3580,7 +3598,7 @@
 "RF" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron,
@@ -3619,6 +3637,10 @@
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
+"Ul" = (
+/obj/structure/chair/office,
+/turf/open/floor/iron,
+/area/ruin/space/derelict/arrival)
 "US" = (
 /obj/structure/bed{
 	dir = 4
@@ -3642,6 +3664,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/atmospherics)
+"Xb" = (
+/obj/structure/table,
+/obj/item/paper/crumpled,
+/obj/item/pen,
+/turf/open/floor/iron,
+/area/ruin/space/derelict/arrival)
 "Xq" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/iron/airless{
@@ -6946,7 +6974,7 @@ lf
 lq
 lI
 lr
-sd
+IP
 go
 fZ
 hD
@@ -7059,7 +7087,7 @@ sd
 lr
 lr
 lr
-sd
+IP
 go
 fZ
 gn
@@ -12368,7 +12396,7 @@ hf
 hP
 hf
 hf
-hf
+Xb
 jJ
 IF
 Gf
@@ -12477,11 +12505,11 @@ hP
 hf
 hf
 gW
-jt
 hf
 hf
 hf
-hf
+Ul
+tv
 jJ
 IF
 aa
@@ -12594,7 +12622,7 @@ kV
 hf
 hP
 hf
-hf
+rL
 jJ
 IF
 aa
