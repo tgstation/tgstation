@@ -821,6 +821,9 @@
 "cK" = (
 /turf/closed/mineral/iron,
 /area/ruin/space/ancientstation/charlie/hall)
+"cL" = (
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "cN" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2293,9 +2296,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
-"gU" = (
-/turf/open/floor/plating/airless,
-/area/misc/space/nearstation)
 "gV" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 5
@@ -2407,6 +2407,10 @@
 /obj/machinery/oven,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"hv" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/space/nearstation)
 "hw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -2490,11 +2494,6 @@
 /obj/structure/sign/departments/science,
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/hall)
-"hN" = (
-/obj/item/stack/rods,
-/obj/structure/lattice,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "hO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
@@ -3200,6 +3199,9 @@
 /obj/structure/closet,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
+"jS" = (
+/turf/closed/mineral/silver,
+/area/space/nearstation)
 "jU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/public/glass{
@@ -5208,6 +5210,14 @@
 	dir = 8
 	},
 /area/ruin/space/ancientstation/delta/biolab)
+"qE" = (
+/obj/structure/transit_tube{
+	dir = 4;
+	anchored = 0
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "qF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2{
 	dir = 4
@@ -5223,24 +5233,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating/rust,
-/area/ruin/space/ancientstation/delta/hall)
-"rb" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/remains/human{
-	pixel_y = -4;
-	pixel_x = -4
-	},
-/obj/item/paper/fluff/ruins/oldstation/survivor_note{
-	pixel_x = 17;
-	pixel_y = 12
-	},
-/obj/item/organ/internal/cyberimp/arm/toolset{
-	pixel_y = 2;
-	pixel_x = 6
-	},
-/turf/open/floor/plating{
-	initial_gas_mix = "co2=6;o2=16;n2=82;TEMP=293.15"
-	},
 /area/ruin/space/ancientstation/delta/hall)
 "rc" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5285,6 +5277,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
+"rw" = (
+/obj/structure/transit_tube{
+	anchored = 0
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "rC" = (
 /obj/effect/decal/cleanable/blood/xtracks{
 	dir = 8
@@ -5467,6 +5466,20 @@
 	},
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"te" = (
+/obj/structure/transit_tube{
+	dir = 4
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/template_noop,
+/area/space/nearstation)
 "tf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -5474,6 +5487,9 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
+"ti" = (
+/turf/closed/mineral/iron,
+/area/space/nearstation)
 "tn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair,
@@ -5504,9 +5520,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
-"tC" = (
-/turf/closed/mineral/gold,
-/area/misc/space/nearstation)
 "tJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -5901,9 +5914,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"wD" = (
-/turf/closed/mineral/uranium,
-/area/misc/space/nearstation)
 "wE" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Supermatter Chamber"
@@ -6195,6 +6205,10 @@
 "zL" = (
 /turf/closed/mineral/random,
 /area/ruin/space/ancientstation/delta/hall)
+"zP" = (
+/obj/structure/lattice,
+/turf/closed/mineral/plasma,
+/area/space/nearstation)
 "zY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
@@ -6228,30 +6242,12 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
-"Al" = (
-/turf/closed/mineral/iron,
-/area/misc/space/nearstation)
 "Ao" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"Ar" = (
-/obj/structure/transit_tube_pod{
-	dir = 4;
-	anchored = 0
-	},
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj/structure/cable,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "Au" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6348,9 +6344,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
-"Bk" = (
-/turf/closed/mineral/silver,
-/area/misc/space/nearstation)
 "Bo" = (
 /obj/effect/spawner/structure/window/hollow/end{
 	dir = 8
@@ -6417,20 +6410,6 @@
 "Bz" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
-"BB" = (
-/obj/structure/transit_tube{
-	anchored = 0
-	},
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj/structure/cable,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "BH" = (
 /obj/item/solar_assembly,
 /obj/structure/cable,
@@ -6458,6 +6437,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
+"Ca" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/template_noop,
+/area/space/nearstation)
 "Cc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow,
@@ -6615,6 +6605,10 @@
 /obj/structure/canister_frame/machine/unfinished_canister_frame,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"DL" = (
+/obj/structure/lattice,
+/turf/closed/mineral/random,
+/area/space/nearstation)
 "DO" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -6654,6 +6648,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
+"Eh" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/mineral/random,
+/area/space/nearstation)
 "El" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/gravity_generator/main/station/off,
@@ -6719,6 +6717,21 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
+"EK" = (
+/obj/structure/transit_tube_pod{
+	dir = 4;
+	anchored = 0
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/template_noop,
+/area/space/nearstation)
 "EL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -6878,20 +6891,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
-"FM" = (
-/obj/structure/transit_tube{
-	dir = 4
-	},
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj/structure/cable,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "FP" = (
 /obj/item/shard/plasma{
 	icon_state = "plasmasmall"
@@ -7120,17 +7119,6 @@
 	dir = 8
 	},
 /area/ruin/space/ancientstation/delta/biolab)
-"HK" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj/structure/cable,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "HN" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
@@ -7147,21 +7135,6 @@
 	dir = 8
 	},
 /area/ruin/space/ancientstation/delta/biolab)
-"HQ" = (
-/obj/structure/transit_tube{
-	dir = 4
-	},
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/duct,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "HT" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
@@ -7173,10 +7146,6 @@
 	dir = 4
 	},
 /area/ruin/space/ancientstation/delta/biolab)
-"HZ" = (
-/obj/structure/lattice,
-/turf/closed/mineral/plasma,
-/area/misc/space/nearstation)
 "Ia" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/l3closet/scientist,
@@ -7283,21 +7252,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
-"Jd" = (
-/obj/structure/transit_tube{
-	anchored = 0
-	},
-/obj/structure/lattice,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "Jf" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"Jg" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/misc/space/nearstation)
+"Jh" = (
+/turf/closed/mineral/gold,
+/area/space/nearstation)
 "Jo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -7503,10 +7464,6 @@
 /obj/structure/sign/warning/test_chamber/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"Kz" = (
-/obj/structure/lattice,
-/turf/closed/mineral/random,
-/area/misc/space/nearstation)
 "KG" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table/reinforced,
@@ -7545,6 +7502,9 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/space/ancientstation/beta/supermatter)
+"KQ" = (
+/turf/closed/mineral/random,
+/area/space/nearstation)
 "KV" = (
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light_switch/directional/west,
@@ -7569,10 +7529,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"Lg" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/random,
-/area/misc/space/nearstation)
 "Lh" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/engine/o2,
@@ -7601,6 +7557,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
+"Lo" = (
+/obj/structure/transit_tube{
+	anchored = 0
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/template_noop,
+/area/space/nearstation)
 "Lr" = (
 /obj/effect/decal/cleanable/glass,
 /obj/structure/closet/firecloset,
@@ -7799,11 +7769,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
-"Nl" = (
-/obj/item/shard,
-/obj/structure/lattice,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "Np" = (
 /obj/effect/decal/cleanable/blood/xtracks{
 	dir = 10
@@ -8147,6 +8112,9 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
+"PK" = (
+/turf/closed/mineral/plasma,
+/area/space/nearstation)
 "PS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8210,13 +8178,6 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
-"QC" = (
-/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
-	dir = 8
-	},
-/obj/structure/lattice,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "QK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -8278,6 +8239,11 @@
 /obj/machinery/power/energy_accumulator/tesla_coil,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"QX" = (
+/obj/item/shard,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "QZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8297,6 +8263,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
+"Rm" = (
+/obj/structure/lattice,
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/space/nearstation)
 "Rn" = (
 /obj/effect/spawner/structure/window/hollow/end,
 /turf/open/floor/plating,
@@ -8316,6 +8287,9 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
+"Ru" = (
+/turf/closed/mineral/bscrystal,
+/area/space/nearstation)
 "RA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -8377,6 +8351,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/mining)
+"RY" = (
+/turf/closed/mineral/uranium,
+/area/space/nearstation)
 "Sb" = (
 /obj/item/stack/rods/twentyfive,
 /obj/effect/decal/cleanable/dirt,
@@ -8436,6 +8413,24 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
+"SD" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/remains/human{
+	pixel_y = -4;
+	pixel_x = -4
+	},
+/obj/item/paper/fluff/ruins/oldstation/survivor_note{
+	pixel_x = 17;
+	pixel_y = 12
+	},
+/obj/item/organ/internal/cyberimp/arm/toolset{
+	pixel_y = 2;
+	pixel_x = 6
+	},
+/turf/open/floor/plating{
+	initial_gas_mix = "co2=6;o2=16;n2=82;TEMP=293.15"
+	},
+/area/ruin/space/ancientstation/delta/hall)
 "SF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -8493,9 +8488,11 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
-"SZ" = (
-/turf/closed/mineral/bscrystal,
-/area/misc/space/nearstation)
+"Tb" = (
+/obj/item/stack/rods,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "Td" = (
 /turf/closed/mineral/random,
 /area/ruin/space/ancientstation/beta/hall)
@@ -8590,6 +8587,10 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
+"TS" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "TX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8651,9 +8652,6 @@
 /obj/item/circuitboard/machine/sleeper,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/medbay)
-"Uu" = (
-/turf/closed/mineral/plasma,
-/area/misc/space/nearstation)
 "UB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -8677,9 +8675,6 @@
 "UJ" = (
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
-"UP" = (
-/turf/closed/mineral/random,
-/area/misc/space/nearstation)
 "UV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8716,6 +8711,13 @@
 	},
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/ancientstation/beta/gravity)
+"Vy" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "VH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/wrench,
@@ -8759,10 +8761,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"Wm" = (
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "Wn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8840,6 +8838,19 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
+"Xm" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/duct,
+/turf/template_noop,
+/area/space/nearstation)
 "Xr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -8849,6 +8860,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/ancientstation/beta/gravity)
+"Xu" = (
+/obj/structure/transit_tube{
+	dir = 4
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/duct,
+/turf/template_noop,
+/area/space/nearstation)
 "Xv" = (
 /obj/effect/spawner/structure/window/hollow/end{
 	dir = 4
@@ -8980,19 +9006,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"Yv" = (
-/obj/structure/transit_tube/crossing/horizontal,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/duct,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "Yy" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/rust,
@@ -9008,11 +9021,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
-"YH" = (
-/obj/structure/lattice,
-/obj/item/stack/rods,
-/turf/template_noop,
-/area/misc/space/nearstation)
 "YJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -9102,14 +9110,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"ZZ" = (
-/obj/structure/transit_tube{
-	dir = 4;
-	anchored = 0
-	},
-/obj/structure/lattice,
-/turf/template_noop,
-/area/misc/space/nearstation)
 
 (1,1,1) = {"
 aa
@@ -9140,8 +9140,8 @@ aa
 aa
 aa
 aa
-UP
-UP
+KQ
+KQ
 aa
 ab
 mH
@@ -9172,8 +9172,8 @@ aa
 aa
 aa
 ab
-UP
-UP
+KQ
+KQ
 Td
 aa
 dF
@@ -9187,10 +9187,10 @@ AK
 aa
 aa
 aa
-UP
-UP
-UP
-UP
+KQ
+KQ
+KQ
+KQ
 kV
 bJ
 mH
@@ -9220,9 +9220,9 @@ aa
 aa
 aa
 aa
-UP
-UP
-UP
+KQ
+KQ
+KQ
 Uj
 nQ
 gO
@@ -9235,11 +9235,11 @@ nC
 Ck
 aa
 aa
-UP
-UP
-Uu
-SZ
-Uu
+KQ
+KQ
+PK
+Ru
+PK
 Yp
 nl
 nt
@@ -9269,9 +9269,9 @@ XY
 XY
 sA
 sA
-UP
-UP
-Lg
+KQ
+KQ
+Eh
 jE
 bH
 hJ
@@ -9282,13 +9282,13 @@ oB
 oF
 oJ
 lW
-YH
-Jg
-Kz
-Kz
-Kz
-HZ
-HZ
+Rm
+TS
+DL
+DL
+DL
+zP
+zP
 Yp
 nm
 nu
@@ -9333,11 +9333,11 @@ nD
 AK
 aa
 aa
-Jg
+TS
 aa
 aa
-UP
-UP
+KQ
+KQ
 Yp
 lY
 nv
@@ -9351,8 +9351,8 @@ pp
 mH
 bJ
 aa
-UP
-UP
+KQ
+KQ
 aa
 aa
 "}
@@ -9398,11 +9398,11 @@ Dp
 Wp
 lf
 mH
-UP
-UP
-wD
-wD
-UP
+KQ
+KQ
+RY
+RY
+KQ
 aa
 "}
 (7,1,1) = {"
@@ -9447,11 +9447,11 @@ zm
 uC
 XA
 bJ
-UP
-Uu
-Uu
-Al
-UP
+KQ
+PK
+PK
+ti
+KQ
 aa
 "}
 (8,1,1) = {"
@@ -9497,9 +9497,9 @@ pv
 OS
 bJ
 aa
-UP
-UP
-UP
+KQ
+KQ
+KQ
 aa
 aa
 "}
@@ -9547,7 +9547,7 @@ Ze
 mH
 nr
 aa
-UP
+KQ
 aa
 nr
 aa
@@ -9556,16 +9556,16 @@ aa
 aa
 aa
 aa
-UP
+KQ
 XY
 UI
 wa
 sA
 sA
 XY
-UP
-UP
-UP
+KQ
+KQ
+KQ
 jE
 zJ
 ck
@@ -9584,9 +9584,9 @@ BP
 Un
 DR
 SK
-Jg
-Jg
-Jg
+TS
+TS
+TS
 bJ
 LP
 LP
@@ -9604,17 +9604,17 @@ aa
 (11,1,1) = {"
 aa
 aa
-UP
-Al
-UP
-UP
-UP
+KQ
+ti
+KQ
+KQ
+KQ
 aa
 aa
 aa
-UP
-UP
-UP
+KQ
+KQ
+KQ
 kQ
 zJ
 mS
@@ -9635,14 +9635,14 @@ yX
 Vl
 Lj
 GR
-Jg
-Jg
+TS
+TS
 aa
 aa
-QC
+Vy
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -9653,17 +9653,17 @@ aa
 (12,1,1) = {"
 aa
 aa
-UP
-UP
-UP
+KQ
+KQ
+KQ
 aa
 aa
 aa
 aa
-UP
-Al
-SZ
-UP
+KQ
+ti
+Ru
+KQ
 jE
 mW
 mV
@@ -9684,11 +9684,11 @@ Hj
 Ci
 tr
 Sy
-Jg
+TS
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -9703,16 +9703,16 @@ aa
 aa
 aa
 aa
-UP
+KQ
 aa
 aa
 aa
 ab
 aa
 aa
-UP
-Al
-UP
+KQ
+ti
+KQ
 kQ
 np
 mV
@@ -9733,12 +9733,12 @@ JL
 Vl
 Lj
 GR
-Jg
+TS
 aa
 aa
 aa
-Jg
-Jg
+TS
+TS
 BH
 dH
 IT
@@ -9759,9 +9759,9 @@ aa
 aa
 aa
 aa
-Jg
-Kz
-Jg
+TS
+DL
+TS
 kQ
 cr
 dM
@@ -9780,18 +9780,18 @@ Pw
 Dx
 vO
 SK
-Jg
-Jg
-Jg
+TS
+TS
+TS
 aa
 aa
 aa
-Jg
-Jg
+TS
+TS
 BH
 dH
 Ua
-Jg
+TS
 Ua
 my
 IT
@@ -9808,9 +9808,9 @@ aa
 aa
 aa
 aa
-Jg
-Jg
-Jg
+TS
+TS
+TS
 kQ
 Cq
 dM
@@ -9829,14 +9829,14 @@ FP
 KP
 Sb
 Df
-Jg
-Jg
-Jg
+TS
+TS
+TS
 aa
 aa
 aa
-Jg
-Jg
+TS
+TS
 Ua
 my
 IT
@@ -9855,8 +9855,8 @@ aa
 aa
 aa
 aa
-hN
-Jg
+Tb
+TS
 aa
 aa
 aa
@@ -9878,21 +9878,21 @@ KI
 pR
 LG
 rm
-Jg
-Jg
+TS
+TS
 aa
 aa
 aa
 aa
-Jg
+TS
 aa
-Jg
+TS
 dH
-Jg
+TS
 aa
-Jg
+TS
 dH
-Jg
+TS
 aa
 "}
 (17,1,1) = {"
@@ -9927,14 +9927,14 @@ MH
 Jf
 rm
 rm
-Jg
-Jg
+TS
+TS
 aa
 aa
 aa
 aa
-Jg
-Jg
+TS
+TS
 Ua
 dH
 Ua
@@ -9975,15 +9975,15 @@ Vl
 Zc
 Zc
 rm
-Jg
-Jg
-Jg
+TS
+TS
+TS
 aa
 aa
 aa
 aa
-Jg
-Jg
+TS
+TS
 IT
 dH
 BH
@@ -10014,7 +10014,7 @@ mw
 aa
 aa
 aa
-Nl
+QX
 aa
 aa
 aa
@@ -10022,17 +10022,17 @@ aa
 aa
 aa
 aa
-Jg
-Jg
-Jg
-Jg
-Jg
+TS
+TS
+TS
+TS
+TS
 aa
 aa
 aa
 aa
-Jg
-Jg
+TS
+TS
 Ua
 dH
 Ua
@@ -10071,24 +10071,24 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
-Jg
+TS
 aa
-Jg
-aa
-aa
+TS
 aa
 aa
-Jg
 aa
-Jg
+aa
+TS
+aa
+TS
 my
-Jg
+TS
 aa
-Jg
+TS
 my
-Jg
+TS
 aa
 "}
 (21,1,1) = {"
@@ -10169,24 +10169,24 @@ aa
 aa
 my
 aa
-Jg
+TS
 aa
-Jg
+TS
 aa
-Jg
-aa
-aa
+TS
 aa
 aa
-Jg
 aa
-Jg
+aa
+TS
+aa
+TS
 dH
-Jg
+TS
 aa
-Jg
+TS
 dH
-Jg
+TS
 aa
 "}
 (23,1,1) = {"
@@ -10218,17 +10218,17 @@ aa
 JB
 JB
 JB
-Jg
+TS
 aa
-Jg
+TS
 aa
-Jg
-aa
-aa
+TS
 aa
 aa
-Jg
-Jg
+aa
+aa
+TS
+TS
 Ua
 dH
 IT
@@ -10267,17 +10267,17 @@ fB
 aa
 aa
 aa
-Jg
+TS
 aa
-Jg
+TS
 aa
-Jg
-aa
-aa
+TS
 aa
 aa
-Jg
-Jg
+aa
+aa
+TS
+TS
 Ua
 dH
 Ua
@@ -10316,17 +10316,17 @@ fC
 aa
 aa
 aa
-Jg
+TS
 aa
-Jg
+TS
 aa
-Jg
-aa
-aa
+TS
 aa
 aa
-Jg
-Jg
+aa
+aa
+TS
+TS
 Ua
 dH
 BH
@@ -10365,24 +10365,24 @@ fC
 aa
 aa
 aa
-Jg
+TS
 aa
-Jg
+TS
 aa
-Jg
-aa
-aa
+TS
 aa
 aa
-Jg
 aa
-Jg
+aa
+TS
+aa
+TS
 dH
-Jg
+TS
 aa
-Jg
+TS
 dH
-Jg
+TS
 aa
 "}
 (27,1,1) = {"
@@ -10416,15 +10416,15 @@ eI
 eI
 eI
 aa
-Jg
+TS
 aa
-Jg
-aa
-aa
+TS
 aa
 aa
-Jg
-Jg
+aa
+aa
+TS
+TS
 Ua
 dH
 Ua
@@ -10465,19 +10465,19 @@ hO
 id
 eI
 aa
-Jg
+TS
 aa
-Jg
-aa
-aa
+TS
 aa
 aa
-Jg
-Jg
+aa
+aa
+TS
+TS
 BH
 dH
 Ua
-Jg
+TS
 Ua
 my
 IT
@@ -10521,8 +10521,8 @@ Ox
 Ox
 aa
 aa
-Jg
-Jg
+TS
+TS
 IT
 dH
 Ua
@@ -10570,7 +10570,7 @@ gH
 Ox
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -10619,7 +10619,7 @@ Tm
 mC
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -10668,7 +10668,7 @@ ie
 Ox
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -10822,7 +10822,7 @@ aa
 aa
 aa
 aa
-UP
+KQ
 aa
 aa
 "}
@@ -10870,9 +10870,9 @@ nk
 nk
 aa
 aa
-Uu
-UP
-UP
+PK
+KQ
+KQ
 aa
 "}
 (37,1,1) = {"
@@ -10919,9 +10919,9 @@ mz
 nk
 aG
 aa
-Uu
-UP
-UP
+PK
+KQ
+KQ
 aa
 "}
 (38,1,1) = {"
@@ -10967,11 +10967,11 @@ pi
 pk
 ns
 aG
-UP
-UP
-SZ
-UP
-UP
+KQ
+KQ
+Ru
+KQ
+KQ
 "}
 (39,1,1) = {"
 aa
@@ -11016,11 +11016,11 @@ bN
 lr
 pm
 mc
-UP
-tC
-Uu
-UP
-UP
+KQ
+Jh
+PK
+KQ
+KQ
 "}
 (40,1,1) = {"
 aa
@@ -11065,10 +11065,10 @@ bN
 pl
 mc
 mc
-UP
-tC
-tC
-UP
+KQ
+Jh
+Jh
+KQ
 aa
 "}
 (41,1,1) = {"
@@ -11114,10 +11114,10 @@ bT
 kp
 pj
 mc
-UP
-Uu
-Uu
-UP
+KQ
+PK
+PK
+KQ
 aa
 "}
 (42,1,1) = {"
@@ -11163,9 +11163,9 @@ pj
 bN
 po
 nk
-UP
-UP
-UP
+KQ
+KQ
+KQ
 aa
 aa
 "}
@@ -11213,7 +11213,7 @@ kp
 pk
 Fh
 aa
-UP
+KQ
 aa
 aa
 aa
@@ -11521,11 +11521,11 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
-Al
+ti
 cK
 cK
 KM
@@ -11550,7 +11550,7 @@ hi
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -11570,11 +11570,11 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
-Al
-Al
+ti
+ti
 cK
 cK
 cs
@@ -11599,7 +11599,7 @@ hi
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -11618,12 +11618,12 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
 nr
 ab
-Al
-Al
+ti
+ti
 bO
 cK
 ci
@@ -11648,7 +11648,7 @@ aT
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -11669,13 +11669,13 @@ aa
 aa
 nr
 aa
-Jg
+TS
 aa
 aa
-Al
-Al
-Al
-FM
+ti
+ti
+ti
+te
 aa
 eJ
 fd
@@ -11691,13 +11691,13 @@ il
 XN
 eJ
 aa
-HQ
+Xu
 aa
 aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -11716,15 +11716,15 @@ aa
 aa
 aa
 aa
-UP
-Al
+KQ
+ti
 aa
 aa
 aa
-Al
-Al
-ZZ
-HK
+ti
+ti
+qE
+Ca
 aa
 aa
 eJ
@@ -11740,13 +11740,13 @@ im
 eJ
 aa
 aa
-HQ
+Xu
 aa
 aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -11764,17 +11764,17 @@ aa
 aa
 aa
 aa
-Al
-Al
-Al
-Al
+ti
+ti
+ti
+ti
 aa
 aa
 aa
 aa
 aa
-Ar
-ZZ
+EK
+qE
 aa
 eJ
 eJ
@@ -11789,13 +11789,13 @@ dv
 eJ
 aa
 aa
-HQ
+Xu
 aa
 aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -11813,42 +11813,42 @@ aa
 aa
 aa
 aa
-Al
-Al
-Al
-Al
+ti
+ti
+ti
+ti
 aa
 aa
 aa
-ZZ
+qE
 aa
-HK
-aa
-aa
-aa
-aa
-aa
-aa
-Jg
-gU
-Jg
-aa
-aa
-Jg
-aa
-aa
-aa
-Yv
+Ca
 aa
 aa
 aa
 aa
 aa
-Jg
+aa
+TS
+cL
+TS
+aa
+aa
+TS
 aa
 aa
 aa
-UP
+Xm
+aa
+aa
+aa
+aa
+aa
+TS
+aa
+aa
+aa
+KQ
 aa
 aa
 aa
@@ -11862,44 +11862,44 @@ aa
 aa
 aa
 aa
-Al
-Al
-Al
+ti
+ti
+ti
 aa
 aa
 aa
 aa
 aa
 aa
-HK
+Ca
 aa
 aa
 aa
-Jd
+rw
 aa
 aa
-Jg
-gU
-Jg
-Jg
-Jg
-Wm
-Jg
-Jg
-Jg
-HQ
-Jg
-Jg
-Jg
-Jg
-Jg
-Wm
+TS
+cL
+TS
+TS
+TS
+hv
+TS
+TS
+TS
+Xu
+TS
+TS
+TS
+TS
+TS
+hv
 aa
 aa
-UP
-UP
-UP
-Al
+KQ
+KQ
+KQ
+ti
 aa
 aa
 aa
@@ -11920,37 +11920,37 @@ aa
 aa
 aa
 aa
-BB
+Lo
 aa
 aa
-UP
-UP
+KQ
+KQ
 aa
 aa
-Jg
-gU
-Jg
+TS
+cL
+TS
 aa
 aa
-Jg
-aa
-aa
-aa
-HQ
+TS
 aa
 aa
 aa
+Xu
 aa
 aa
-Jg
 aa
 aa
-Al
-UP
-Al
-Al
-UP
-UP
+aa
+TS
+aa
+aa
+ti
+KQ
+ti
+ti
+KQ
+KQ
 aa
 "}
 (59,1,1) = {"
@@ -11961,7 +11961,7 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -11969,37 +11969,37 @@ aa
 aa
 aa
 aa
-FM
+te
 aa
 aa
-UP
-SZ
-UP
+KQ
+Ru
+KQ
 aa
-Jg
-gU
-Jg
-aa
-aa
-Jg
+TS
+cL
+TS
 aa
 aa
-aa
-HQ
+TS
 aa
 aa
 aa
+Xu
 aa
 aa
-Jg
 aa
 aa
 aa
-UP
-Bk
-tC
-Al
-Al
+TS
+aa
+aa
+aa
+KQ
+jS
+Jh
+ti
+ti
 aa
 "}
 (60,1,1) = {"
@@ -12012,7 +12012,7 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -12023,7 +12023,7 @@ sg
 bE
 bE
 zL
-UP
+KQ
 bE
 bE
 Cp
@@ -12040,15 +12040,15 @@ bE
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
-UP
-Al
-tC
-Al
-UP
+KQ
+ti
+Jh
+ti
+KQ
 aa
 "}
 (61,1,1) = {"
@@ -12073,7 +12073,7 @@ bE
 Yg
 Fo
 Hr
-rb
+SD
 Gz
 Rt
 bE
@@ -12089,15 +12089,15 @@ bE
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
 aa
-UP
-Al
-Al
-UP
+KQ
+ti
+ti
+KQ
 aa
 "}
 (62,1,1) = {"
@@ -12109,7 +12109,7 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -12138,7 +12138,7 @@ bE
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -12156,8 +12156,8 @@ aa
 aa
 aa
 aa
-Jg
-Jg
+TS
+TS
 aa
 aa
 nr
@@ -12187,7 +12187,7 @@ Gz
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -12236,7 +12236,7 @@ Gz
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -12285,7 +12285,7 @@ Gz
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -12435,7 +12435,7 @@ uj
 ku
 lO
 uj
-Jg
+TS
 aa
 aa
 aa
@@ -12484,9 +12484,9 @@ kI
 SF
 kv
 uj
-Jg
-Jg
-Wm
+TS
+TS
+hv
 aa
 aa
 aa
@@ -12533,7 +12533,7 @@ tf
 UJ
 cE
 li
-Jg
+TS
 aa
 aa
 aa
@@ -12680,7 +12680,7 @@ Pu
 kS
 cE
 li
-Jg
+TS
 aa
 aa
 aa
@@ -12729,9 +12729,9 @@ bV
 Ic
 kx
 uj
-Jg
-Jg
-Wm
+TS
+TS
+hv
 aa
 aa
 aa
@@ -12778,7 +12778,7 @@ uj
 ky
 lP
 uj
-Jg
+TS
 aa
 aa
 aa
@@ -12923,7 +12923,7 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -12972,7 +12972,7 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -13021,7 +13021,7 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -13070,7 +13070,7 @@ aa
 aa
 aa
 aa
-Jg
+TS
 aa
 aa
 aa
@@ -13115,11 +13115,11 @@ jg
 wg
 yx
 bE
-Jg
-Jg
-Jg
-Jg
-Wm
+TS
+TS
+TS
+TS
+hv
 aa
 aa
 aa
