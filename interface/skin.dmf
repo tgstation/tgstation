@@ -343,10 +343,9 @@ window "tgui_input"
 	elem "tgui_input"
 		type = MAIN
 		pos = 694,602
-		size = 300x75
+		size = 333x64
 		anchor1 = 50,50
 		anchor2 = 50,50
-		background-color = none
 		is-visible = false
 		saved-params = ""
 		statusbar = false
@@ -355,7 +354,7 @@ window "tgui_input"
 	elem "tgui_browser"
 		type = BROWSER
 		pos = 0,0
-		size = 301x75
+		size = 333x64
 		anchor1 = 0,0
 		anchor2 = 0,0
 		saved-params = ""

@@ -1,16 +1,69 @@
-.window {
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 60%, rgba(0, 0, 0, 0));
-  border-radius: 10px;
-  border-bottom: 2px groove steelblue;
-  height: 3rem;
-  padding: 0.5rem 2px 0 2px;
-  width: 25rem;
-  display: flex;
-  flex-direction: row;
+$input-background: #131313;
+$input-text-active: #abc6ec;
+$input-text-inactive: #7881a1;
+
+// gradient animation
+@keyframes gradient {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
 }
 
-.input {
-  background: transparent;
+.tginput-window {
+  background: $input-background;
+  border-left: thin solid $input-text-inactive;
+  border-right: thin solid $input-text-inactive;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  max-width: 333px;
+  padding: 1.4rem 0 1.4rem 1.4rem;
+  position: relative;
+  width: 100%;
+  &:after {
+    animation: gradient 10s linear infinite;
+    background: linear-gradient(
+      to right,
+      #0a1931,
+      #185adb,
+      #efefef,
+      #185adb,
+      #0a1931
+    );
+    background-position: 0% 0%;
+    background-size: 500% auto;
+    bottom: 0px;
+    content: '';
+    height: 2px;
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    z-index: 999;
+  }
+}
+
+.tginput-input {
+  background-color: $input-background;
   border: none;
-  font-size: 1.5rem;
+  color: $input-text-active;
+  font-family: 'tgfont', monospace;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  width: 100%;
+}
+
+.tginput-channel {
+  color: $input-text-inactive;
+  font-family: 'tgfont', monospace;
+  font-weight: bold;
+  font-size: 2.2rem;
+  margin-right: 1rem;
+  &:hover {
+    color: $input-text-active;
+  }
+  transition: color 0.25s;
+  vertical-align: middle;
 }

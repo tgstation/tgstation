@@ -76,9 +76,14 @@
 			return TRUE
 		if(length(payload) > 255)
 			CRASH("[usr] has entered more characters than allowed")
+		if(length(html_encode(payload)) > 255)
+			to_chat(usr, span_notice("Your message has been clipped due to special characters."))
 		set_entry(payload)
 	return TRUE
 
+/**
+ * Sets the input after html encoding it.
+ */
 /datum/tgui_modal/proc/set_entry(entry)
 	if(!entry)
 		return FALSE
