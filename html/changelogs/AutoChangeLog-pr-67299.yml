@@ -1,5 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - bugfix: "Detectives can now use the brig on emergency shuttles properly again"
-  - bugfix: "Access helpers were added to more shuttles"
