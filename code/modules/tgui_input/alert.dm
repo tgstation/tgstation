@@ -19,8 +19,10 @@
 			user = client.mob
 		else
 			return
+	// A gentle nudge - you should not be using TGUI alert for anything other than a simple message.
 	if(length(buttons) > 3)
-		CRASH("Error: TGUI Alert initiated with too many buttons. Use a list instead.")
+		log_tgui(user, "Error: TGUI Alert initiated with too many buttons. Use a list.", "TguiAlert")
+		return tgui_input_list(user, message, title, buttons, timeout, autofocus)
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(length(buttons) == 2)
@@ -33,39 +35,6 @@
 	if (alert)
 		. = alert.choice
 		qdel(alert)
-
-/**
- * Creates an asynchronous TGUI alert window with an associated callback.
- *
- * This proc should be used to create alerts that invoke a callback with the user's chosen option.
- * Arguments:
- * * user - The user to show the alert to.
- * * message - The content of the alert, shown in the body of the TGUI window.
- * * title - The of the alert modal, shown on the top of the TGUI window.
- * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
- * * callback - The callback to be invoked when a choice is made.
- * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
- * * autofocus - The bool that controls if this alert should grab window focus.
- */
-/proc/tgui_alert_async(mob/user, message = "", title, list/buttons = list("Ok"), datum/callback/callback, timeout = 0, autofocus = TRUE)
-	if(!user)
-		user = usr
-	if(!istype(user))
-		if(istype(user, /client))
-			var/client/client = user
-			user = client.mob
-		else
-			return
-	if(length(buttons) > 3)
-		CRASH("Error: TGUI Alert initiated with too many buttons")
-	// Client does NOT have tgui_input on: Returns regular input
-	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
-		if(length(buttons) == 2)
-			return alert(user, message, title, buttons[1], buttons[2])
-		if(length(buttons) == 3)
-			return alert(user, message, title, buttons[1], buttons[2], buttons[3])
-	var/datum/tgui_alert/async/alert = new(user, message, title, buttons, callback, timeout, autofocus)
-	alert.ui_interact(user)
 
 /**
  * # tgui_alert
@@ -128,18 +97,20 @@
 	return GLOB.always_state
 
 /datum/tgui_alert/ui_static_data(mob/user)
-	. = list()
-	.["autofocus"] = autofocus
-	.["buttons"] = buttons
-	.["message"] = message
-	.["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
-	.["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
-	.["title"] = title
+	var/list/data = list()
+	data["autofocus"] = autofocus
+	data["buttons"] = buttons
+	data["message"] = message
+	data["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	data["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	data["title"] = title
+	return data
 
 /datum/tgui_alert/ui_data(mob/user)
-	. = list()
+	var/list/data = list()
 	if(timeout)
-		.["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
+		data["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
+	return data
 
 /datum/tgui_alert/ui_act(action, list/params)
 	. = ..()
@@ -149,7 +120,7 @@
 		if("choose")
 			if (!(params["choice"] in buttons))
 				CRASH("[usr] entered a non-existent button choice: [params["choice"]]")
-			set_choice(params["choice"])
+			src.choice = choice
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
@@ -157,31 +128,3 @@
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
-
-/datum/tgui_alert/proc/set_choice(choice)
-	src.choice = choice
-
-/**
- * # async tgui_alert
- *
- * An asynchronous version of tgui_alert to be used with callbacks instead of waiting on user responses.
- */
-/datum/tgui_alert/async
-	/// The callback to be invoked by the tgui_alert upon having a choice made.
-	var/datum/callback/callback
-
-/datum/tgui_alert/async/New(mob/user, message, title, list/buttons, callback, timeout, autofocus)
-	..(user, message, title, buttons, timeout, autofocus)
-	src.callback = callback
-
-/datum/tgui_alert/async/Destroy(force, ...)
-	QDEL_NULL(callback)
-	. = ..()
-
-/datum/tgui_alert/async/set_choice(choice)
-	. = ..()
-	if(!isnull(src.choice))
-		callback?.InvokeAsync(src.choice)
-
-/datum/tgui_alert/async/wait()
-	return

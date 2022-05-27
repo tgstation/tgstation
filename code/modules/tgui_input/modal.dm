@@ -22,6 +22,9 @@
 		. = modal.entry
 		qdel(modal)
 
+/**
+ * The tgui modal instantiation.
+ */
 /datum/tgui_modal
 	/// The channel to broadcast in
 	var/channel

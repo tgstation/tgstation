@@ -1,6 +1,8 @@
 $input-background: #131313;
 $input-text-active: #abc6ec;
 $input-text-inactive: #7881a1;
+$input-button-hover: #2a2a2a;
+$input-button-border: #424242;
 
 // gradient animation
 @keyframes gradient {
@@ -21,7 +23,7 @@ $input-text-inactive: #7881a1;
   flex-direction: row;
   margin: 0 auto;
   max-width: 333px;
-  padding: 1.4rem 0 1.4rem 1.4rem;
+  padding: 1rem 0 1rem 1rem;
   position: relative;
   width: 100%;
   &:after {
@@ -52,20 +54,28 @@ $input-text-inactive: #7881a1;
   color: $input-text-active;
   font-family: 'tgfont', monospace;
   font-size: 1.8rem;
-  letter-spacing: 1px;
+  letter-spacing: thin;
+  margin-top: 4px;
   width: 100%;
 }
 
 .tguimodal-button {
+  background-color: transparent;
+  border: none;
   color: $input-text-inactive;
   font-family: 'tgfont', monospace;
   font-weight: bold;
   font-size: 2.2rem;
-  margin-right: 1rem;
+  height: 40px;
+  padding-top: 2px;
+  text-align: center;
+  transition: color 0.5s;
+  vertical-align: middle;
+  width: 60px;
   &:hover {
+    background-color: $input-button-hover;
+    border: thin solid $input-text-inactive;
+    border-radius: 6px;
     color: $input-text-active;
   }
-
-  transition: color 0.25s;
-  vertical-align: middle;
 }

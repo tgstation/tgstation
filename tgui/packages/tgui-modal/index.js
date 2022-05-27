@@ -1,9 +1,11 @@
 import './styles/main.scss';
 import { createRenderer } from 'tgui/renderer';
-import { TguiModal } from './TguiModal';
+import { TguiModal } from './interfaces/TguiModal';
+
+const TEST = 'say';
 
 const renderApp = createRenderer(() => {
-  return <TguiModal />;
+  return <TguiModal channel={TEST} />;
 });
 
 const setupApp = () => {
