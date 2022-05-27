@@ -4,6 +4,17 @@
 ///Requires config, which isn't loaded at the time global vars init, so setup_round_default_laws is called by the first request to use this global.
 GLOBAL_VAR(round_default_lawset)
 
+//different settings for configged defaults
+
+/// Always make the round default asimov
+#define CONFIG_ASIMOV 0
+/// Set to a custom lawset defined by another config value
+#define CONFIG_CUSTOM 1
+/// Set to a completely random ai law subtype, good, bad, it cares not. Careful with this one
+#define CONFIG_RANDOM 2
+/// Set to a configged weighted list of lawtypes in the config. This lets server owners pick from a pool of sane laws, it is also the same process for ian law rerolls.
+#define CONFIG_WEIGHTED 3
+
 ///first called when something wants round default laws for the first time in a round, considers config
 ///returns a law datum that GLOB.round_default_lawset will be set to.
 /proc/setup_round_default_laws()
@@ -13,11 +24,11 @@ GLOBAL_VAR(round_default_lawset)
 		return pick_weighted_lawset()
 
 	switch(CONFIG_GET(number/default_laws))
-		if(0) //plain ol' asimov
+		if(CONFIG_ASIMOV)
 			return /datum/ai_laws/default/asimov
-		if(1) //custom configged laws
+		if(CONFIG_CUSTOM)
 			return /datum/ai_laws/custom
-		if(2) //random laws
+		if(CONFIG_RANDOM)
 			var/list/randlaws = list()
 			for(var/lpath in subtypesof(/datum/ai_laws))
 				var/datum/ai_laws/L = lpath
@@ -30,8 +41,7 @@ GLOBAL_VAR(round_default_lawset)
 				lawtype = pick(subtypesof(/datum/ai_laws/default))
 
 			return lawtype
-
-		if(3) //random WEIGHTED laws :)
+		if(CONFIG_WEIGHTED)
 			return pick_weighted_lawset()
 
 ///returns a law datum based off of config. will never roll asimov as the weighted datum if the station has a unique AI.
@@ -309,3 +319,7 @@ GLOBAL_VAR(round_default_lawset)
 	return data
 
 #undef AI_LAWS_ASIMOV
+#undef CONFIG_ASIMOV
+#undef CONFIG_CUSTOM
+#undef CONFIG_RANDOM
+#undef CONFIG_WEIGHTED

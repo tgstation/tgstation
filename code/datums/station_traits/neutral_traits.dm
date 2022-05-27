@@ -27,7 +27,7 @@
 
 /datum/station_trait/unique_ai/on_round_start()
 	. = ..()
-	for(var/mob/living/silicon/ai/ai in GLOB.ai_list)
+	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
 		ai.show_laws()
 
 /datum/station_trait/ian_adventure
