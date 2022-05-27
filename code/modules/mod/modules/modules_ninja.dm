@@ -352,8 +352,9 @@
 		if(between_turf.density)
 			balloon_alert(mod.wearer, "not through obstacles!")
 			return
+	if(IS_SPACE_NINJA(mod.wearer))
+		mod.wearer.say("Get over here!", forced = type)
 	mod.wearer.Beam(living_target, "n_beam", time = 1.5 SECONDS)
-	mod.wearer.say("Get over here!", forced = type)
 	var/obj/structure/energy_net/net = new /obj/structure/energy_net(living_target.drop_location())
 	net.affected_mob = living_target
 	mod.wearer.visible_message(span_danger("[mod.wearer] caught [living_target] with an energy net!"), span_notice("You caught [living_target] with an energy net!"))
@@ -390,6 +391,8 @@
 	if(!charged)
 		balloon_alert(mod.wearer, "no charge!")
 		return
+	if(IS_SPACE_NINJA(mod.wearer))
+		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	mod.wearer.SetUnconscious(0)
 	mod.wearer.SetStun(0)
 	mod.wearer.SetKnockdown(0)
@@ -398,7 +401,6 @@
 	mod.wearer.adjustStaminaLoss(-200)
 	mod.wearer.remove_status_effect(/datum/status_effect/speech/stutter)
 	mod.wearer.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
-	mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	charged = FALSE
 	addtimer(CALLBACK(src, .proc/boost_aftereffects, mod.wearer), 7 SECONDS)
 
