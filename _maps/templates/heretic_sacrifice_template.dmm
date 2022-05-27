@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "cd" = (
 /obj/effect/decal/cleanable/ash{
 	pixel_x = -8;
@@ -345,7 +345,7 @@
 /area/centcom/heretic_sacrifice/rust)
 "Fd" = (
 /turf/closed/indestructible/riveted,
-/area/misc/space)
+/area/space)
 "Gl" = (
 /obj/structure/stone_tile/block/burnt{
 	dir = 1

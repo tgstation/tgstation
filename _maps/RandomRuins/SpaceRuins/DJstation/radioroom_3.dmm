@@ -36,12 +36,12 @@
 "x" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "y" = (
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "z" = (
 /obj/structure/chair/office/light{
 	dir = 1

@@ -773,7 +773,7 @@
 	return ..()
 
 /mob/living/carbon/human/is_literate()
-	return TRUE
+	return !HAS_TRAIT(src, TRAIT_ILLITERATE)
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))

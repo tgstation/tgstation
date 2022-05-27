@@ -1030,3 +1030,175 @@
   vincentiusvin:
   - bugfix: fixed lavaland syndiebase atmos distro being unconnected
   - bugfix: gave the lavaland syndie atmos it's atmos control computer back
+2022-05-24:
+  Fikou:
+  - qol: the prototype modsuit is now shockproof
+  - bugfix: herald projectiles no longer have weird healing mechanics
+  Fikou, unit0016:
+  - rscadd: Chrono Legionnaire and Admin MODsuits now have the ability to hold mobs
+      with kinesis.
+  GoldenAlpharex:
+  - bugfix: The PDA Messenger app is now undeletable, unavailable for download and
+      also no longer takes space on the hardware, something something bluespace cloud
+      storage. As a result, everyone should once again be spawning with the programs
+      they were meant to spawn with in the first place.
+  Iamgoofball:
+  - bugfix: Fixes the price on SOUTH. BRONX. PARADIIIISE! Again.
+  Maurukas:
+  - balance: Emagged chem dispenser in the deepstorage ruin is replaced with a regular
+      one.
+  MidoriWroth:
+  - bugfix: Removes a few redundant Icebox botany cables
+  Pepsilawn:
+  - bugfix: Fixed incorrect departmental signs on Delta and Meta, as well as the Caves
+      Gateway mission.
+  timothymtorres, TheBonded:
+  - rscadd: Added illiterate quirk that prevents a mob from reading or writing.  This
+      prevents using books, paper, tablets, computers and some other objects.
+  - rscadd: Ashlizards are given the illiterate quirk as a default species trait.
+  - rscadd: Any mobs that are illiterate and attempt to use the lavaland shuttle console
+      will still be able to bash the keyboard to send the ship.
+  - rscadd: New severe brain trauma - Dyslexia.  It just makes you illiterate until
+      it's fixed.
+2022-05-25:
+  Melbert:
+  - bugfix: Wags-His-Tail and Eats-The-Roaches have wiggled their way back from a
+      deep space expedition to the janitorial closet of Deltastation.
+  MidoriWroth:
+  - imageadd: Beef stroganoff and berry tarts have new sprites
+  - bugfix: Removes an extra table in Meta atmos
+  SmArtKar:
+  - bugfix: Fixes stopping, dropping and rolling not extinguishing your clothing
+  Son-of-Space:
+  - bugfix: Fixed some names on objects across all maps
+  san7890:
+  - bugfix: If you've been paying to the Continuous Integration logs since... the
+      dawn of the creation of the "Create And Destroy" Unit Test, you may be pleased
+      to know that we should now no longer have mapping errors logged as a result
+      of that test running.
+  - rscadd: There's a new shuttle! You can now purchase "Basketballer's Stadium" from
+      your station's communications console in order to get some good time in bouncing
+      around a ball and making those sneakers squeak against the well-polished floors.
+      Enjoy!
+2022-05-26:
+  Ghilker:
+  - imageadd: adds the podpeople photocopy ass
+  Jolly:
+  - bugfix: One of Trams modular maintenance doors had its access removed, in favor
+      of the already existing mapping helper.
+  MidoriWroth:
+  - imageadd: The beef stroganoff now actually looks like food.
+  Mothblocks:
+  - rscadd: Added a disposal bin to the medbay treatment center on Delta.
+  SmArtKar:
+  - rscadd: You can now open taps on fuel and water tanks, making them leak fuel/water
+  Son-of-Space:
+  - bugfix: SMES on the Zoo ruin no longer feeds into itself
+  - bugfix: The showers in the MetaStation Medbay are properly plumbed again
+  Son-of-Space, MrDoomBringer:
+  - bugfix: All airlocks across all maps have been properly titled in upper case
+  - code_imp: A check has been added to look for incorrectly titled airlocks
+  TemporalOroboros:
+  - bugfix: You can no longer forge hrefs to message everyone from any PDA.
+  Timberpoes:
+  - bugfix: The DB query retrieving the feedback thread link for adminwho properly
+      deletes the DB query across all code paths, stopping error spam in admin chat.
+  san7890:
+  - bugfix: On DeltaStation, Nanotrasen has made access from Medbay Maintenance to
+      the Recreation Area unrestricted.
+2022-05-27:
+  ArcaneMusic:
+  - bugfix: Several non-functional prison management computers have been replaced
+      by functional computers.
+  FernandoJ8:
+  - bugfix: Hair dye spray now properly updates your sprite after being used
+  Fikou, Armhulen, InfraredBaron, SmartKar:
+  - balance: Removes shock protection from the security MODsuit
+  - balance: Removes the security MODsuit from the mechfab, still available in the
+      sec techfab
+  - balance: Buffs the carrying capacity of the security and safeguard MODsuits
+  - rscadd: Adds the megaphone (you speak loud) and projectile dampener (similar to
+      peaceborg one) modules to the safeguard suit
+  - rscadd: Adds the mirage grenade dispenser (it dispenses grenades that create holographic
+      copies of you) and criminal capture (dispenses prisoner capture bags, that lock
+      people in a pressurized environment) modules to the security suit
+  - balance: Makes pepper shoulders module 2 complexity
+  - qol: adds the plasma stabilizer and thermal regulator modules to every brig
+  Ghilker:
+  - refactor: sm cascade walls are no longer turfs, but are object, no player facing
+      changes
+  - bugfix: fixed announcement text and removed <bold></bold> texts
+  JohnFulpWillard:
+  - bugfix: The Chief Engineer and Station Engineers no longer spawn with a broken
+      app- AmpCheck. You can still use said app from your Engineering consoles.
+  Jolly:
+  - bugfix: Scientists should now be able to access the mass driver on Kilo once more.
+  - bugfix: Kilo had some of its areas fixed.
+  MTandi:
+  - bugfix: Gravgen now can't be repaired when not broken.
+  - bugfix: Airlocks now properly say that they're welded when examined.
+  - qol: Oldstation some internal windows are not reinforced to allow easier breaking
+  - qol: Oldstation computers have random sprites and can be deconstructed, some of
+      them became real computers (atmos monitor attached to sensors, power monitor
+      in solars maint room to see how solars charge the station, and modular console
+      with engineering preset to have an ability to see SM stats)
+  - refactor: Oldstation SM tools storage moved into the engine area secure storage
+  - refactor: Oldstation engine area now has a deadly trap and cluttered with remains
+      of the pre-impact setup
+  - rscadd: Oldstation now has a Biolab in place of the previous SM tools storage
+  - rscadd: Oldsation now has navbeacons and a small robot-making hint
+  - refactor: Oldstation dead miner is now dead roboticist
+  - refactor: Oldstation maintenance areas updated accordingly without loot changes
+  - rscadd: Oldstation now has a small laundry
+  - refactor: Oldstation solars now use solar panel tiles
+  - rscadd: Oldstation medbay has bonsai skillchip in the box to provide a use for
+      all the dead plant pots
+  - bugfix: Oldstation minor fixes and visual tweaks like missing switches, etc
+  Melbert:
+  - bugfix: Adds some minor sanity to the Lionhunter Rifle.
+  Mooshimi:
+  - rscadd: Lattices over chasms will now actually hold you up.
+  OrionTheFox:
+  - bugfix: added a name to the base jumpsuit type
+  Pandarsenic:
+  - qol: Ice Cream Sandwich bounties now specify in the description that they have
+      to be ice cream sandwiches, hopefully preventing possible confusion about which
+      foods are suitable.
+  SmArtKar:
+  - bugfix: Removed firelock in sci lobby window on Meta
+  - bugfix: Moved meta hallway air alarm so it wont get blocked by firelocks
+  Son-of-Space:
+  - bugfix: Detectives can now use the brig on emergency shuttles properly again
+  - bugfix: Access helpers were added to more shuttles
+  - code_imp: Added checks for several commonly misplaced structures
+  - bugfix: Fixed several overlapping structures on IceBox, Tram, and several CTF
+      maps
+  - code_imp: added access helpers for various off-station content
+  - bugfix: Detectives no longer have access to gear lockers by default across all
+      maps
+  Striders13:
+  - bugfix: fixed service order console not working
+  Sylphet:
+  - bugfix: fixes missing smoothie sprites
+  - imageadd: added smoothie sprites
+  fippefi:
+  - bugfix: All request consoles on Icebox have been fixed to a new standard! No more
+      Unknown request console sitting in the kitchen.
+  - bugfix: Request consoles should more often default to a sane name instead of Unknown.
+  - code_imp: Request console naming and subscription code has been redefined to work
+      better with mapping. Auto-names, too!
+  jlsnow301:
+  - qol: The genetics console is a bit easier to use with scrolling mutations and
+      tabs.
+  - admin: Added an debug data disk to test mutations.
+  san7890:
+  - rscadd: 'Nanotrasen has installed a new holodeck subroutine, cleverly termed:
+      Microwave Paradise. Enjoy those microwaves.'
+  - bugfix: If you haven't been able to see any working space ruins lately, that's
+      our bad. Should be fixed now.
+  - bugfix: To all the Multi-Z Debug Fans, we have now added a ceiling to one of the
+      airlocks. Enjoy that.
+  timothymtorres:
+  - bugfix: Fix transparent floors ignoring blur effects
+  - bugfix: Fix slime potions used on simple mobs to inherit all language abilities
+      from the user

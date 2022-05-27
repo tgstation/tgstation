@@ -21,7 +21,7 @@
 /area/awaymission/snowdin/cave/mountain)
 "ad" = (
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "ae" = (
 /turf/closed/mineral/snowmountain,
 /area/awaymission/snowdin/cave/mountain)
@@ -5109,7 +5109,7 @@
 "nB" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "snowdingarage1";
-	name = "garage door"
+	name = "Garage Door"
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
@@ -8165,7 +8165,7 @@
 "zo" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "snowdingarage2";
-	name = "garage door"
+	name = "Garage Door"
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/minipost)
@@ -9705,7 +9705,7 @@
 "Gl" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "snowdingarageunder";
-	name = "garage door"
+	name = "Garage Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -9713,7 +9713,7 @@
 "Gm" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "snowdingarageunder2";
-	name = "garage door"
+	name = "Garage Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -10197,7 +10197,7 @@
 "Ia" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "snowdingarage3";
-	name = "garage door"
+	name = "Garage Door"
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
@@ -12661,7 +12661,7 @@
 	idDoor = "snowdin_turbine_interior";
 	idSelf = "snowdin_turbine_access";
 	layer = 3.1;
-	name = "Turbine airlock control";
+	name = "Turbine Airlock Control";
 	pixel_x = 8;
 	pixel_y = -24
 	},
@@ -13660,7 +13660,7 @@
 /obj/machinery/door_buttons/access_button{
 	idDoor = "snowdin_turbine_exterior";
 	idSelf = "snowdin_turbine_access";
-	name = "Turbine airlock control";
+	name = "Turbine Airlock Control";
 	pixel_x = -8;
 	pixel_y = 24
 	},

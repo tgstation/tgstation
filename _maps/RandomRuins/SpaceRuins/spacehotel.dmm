@@ -617,7 +617,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters{
 	id = "hcb1";
-	name = "cargo bay shutters"
+	name = "Cargo Bay Shutters"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/dock)
@@ -3493,7 +3493,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters{
 	id = "hcb2";
-	name = "cargo bay shutters"
+	name = "Cargo Bay Shutters"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/dock)

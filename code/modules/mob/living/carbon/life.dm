@@ -656,11 +656,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				if(limb.cremation_progress >= 100)
 					if(IS_ORGANIC_LIMB(limb)) //Non-organic limbs don't burn
 						limb.drop_limb()
-						limb.visible_message(span_warning("[src]'s [limb.name] crumbles into ash!"))
+						limb.visible_message(span_warning("[src]'s [limb.plaintext_zone] crumbles into ash!"))
 						qdel(limb)
 					else
 						limb.drop_limb()
-						limb.visible_message(span_warning("[src]'s [limb.name] detaches from [p_their()] body!"))
+						limb.visible_message(span_warning("[src]'s [limb.plaintext_zone] detaches from [p_their()] body!"))
 	if(still_has_limbs)
 		return
 

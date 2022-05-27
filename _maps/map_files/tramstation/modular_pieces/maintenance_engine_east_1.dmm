@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
-/area/misc/space)
+/area/space)
 "c" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/table,
@@ -41,9 +41,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "Q" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access = list("maint_tunnels")
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
