@@ -80,12 +80,11 @@
 
 	//Actually play it
 	play_cinematic()
+	addtimer(CALLBACK(src, .proc/clean_up_cinematic, ooc_toggled), cleanup_time)
 
-	//Cleanup
-	sleep(cleanup_time)
-
-	//Restore OOC
-	if(ooc_toggled)
+/// Cleans up the cinematic after a set timer of it sticking on the end screen.
+/datum/cinematic/proc/clean_up_cinematic(was_ooc_toggled = FALSE)
+	if(was_ooc_toggled)
 		toggle_ooc(TRUE)
 
 	stop_cinematic()
@@ -136,8 +135,10 @@
 /// Stops the cinematic and removes it from all the viewers.
 /datum/cinematic/proc/stop_cinematic()
 	for(var/client/viewing_client as anything in watching)
-		viewing_client.mob.clear_fullscreen("cinematic")
-		viewing_client.screen -= screen
+		// byond client volatility strikes back.
+		// We really don't wanna runtime here or else everyone'll be stuck with a cinematic in the way.
+		viewing_client?.mob?.clear_fullscreen("cinematic")
+		viewing_client?.screen -= screen
 
 	for(var/datum/weakref/locked_ref as anything in locked)
 		var/mob/locked_mob = locked_ref.resolve()
