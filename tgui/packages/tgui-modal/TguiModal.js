@@ -7,11 +7,11 @@ export const TguiModal = () => {
       <Input
         autoFocus
         className="tguimodal-input"
-        maxLength={255}
+        maxLength={1024}
         monospace
         onEscape={() => Byond.sendMessage('close')}
         onEnter={(_, value) => {
-          if (!value || value.length > max_length) {
+          if (!value || value.length > 1024) {
             Byond.sendMessage('close');
           } else {
             Byond.sendMessage('entry', value);

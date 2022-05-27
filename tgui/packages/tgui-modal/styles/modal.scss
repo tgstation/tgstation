@@ -24,15 +24,16 @@ $input-text-inactive: #7881a1;
   padding: 1.4rem 0 1.4rem 1.4rem;
   position: relative;
   width: 100%;
-
   &:after {
     animation: gradient 10s linear infinite;
-    background: linear-gradient(to right,
-        #0a1931,
-        #185adb,
-        #efefef,
-        #185adb,
-        #0a1931);
+    background: linear-gradient(
+      to right,
+      #0a1931,
+      #185adb,
+      #efefef,
+      #185adb,
+      #0a1931
+    );
     background-position: 0% 0%;
     background-size: 500% auto;
     bottom: 0px;
@@ -61,7 +62,6 @@ $input-text-inactive: #7881a1;
   font-weight: bold;
   font-size: 2.2rem;
   margin-right: 1rem;
-
   &:hover {
     color: $input-text-active;
   }

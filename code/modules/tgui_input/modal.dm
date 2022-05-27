@@ -31,7 +31,6 @@
 	var/entry
 	/// Max message length
 	var/max_length
-
 	/// The modal window
 	var/datum/tgui_window/window
 
@@ -78,5 +77,5 @@
 			return TRUE
 		if(length(payload) > max_length)
 			CRASH("[usr] has entered more characters than allowed")
-		src.entry = entry
+		src.entry = payload
 	return TRUE
