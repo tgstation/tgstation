@@ -15,7 +15,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "mR" = (
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 10
@@ -86,7 +86,7 @@
 /obj/structure/marker_beacon/violet,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "AW" = (
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
@@ -168,10 +168,10 @@
 "PO" = (
 /obj/structure/rack,
 /turf/closed/mineral,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "Qi" = (
 /turf/closed/mineral,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "QG" = (
 /obj/structure/chair/sofa/corp{
 	dir = 4
@@ -218,7 +218,7 @@
 "Yn" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "YB" = (
 /turf/template_noop,
 /area/template_noop)

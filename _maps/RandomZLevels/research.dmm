@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
-/area/misc/space)
+/area/space)
 "ab" = (
 /turf/closed/mineral,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "ad" = (
 /turf/closed/mineral,
 /area/awaymission/research/exterior)
@@ -969,7 +969,7 @@
 "eb" = (
 /obj/machinery/door/poddoor{
 	id = "cryopodg2";
-	name = "cryogenetic genetics blastdoor"
+	name = "Cryogenetic Blast Door"
 	},
 /turf/open/floor/iron/stairs,
 /area/awaymission/research/interior/genetics)
@@ -2021,7 +2021,7 @@
 "hK" = (
 /obj/machinery/door/poddoor{
 	id = "cryopodg1";
-	name = "cryogenetic genetics blastdoor"
+	name = "Cryogenetic Blast Door"
 	},
 /turf/open/floor/iron/stairs{
 	dir = 1
@@ -2992,7 +2992,7 @@
 /area/awaymission/research/interior/dorm)
 "ln" = (
 /turf/open/floor/iron,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "lo" = (
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin,
@@ -3701,7 +3701,7 @@
 "qQ" = (
 /obj/item/clothing/mask/gas/clown_hat,
 /turf/open/misc/asteroid/airless,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "qS" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -3865,7 +3865,7 @@
 "wF" = (
 /obj/item/bikehorn,
 /turf/open/misc/asteroid/airless,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "wM" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
@@ -3897,7 +3897,7 @@
 	amount = 50
 	},
 /turf/open/misc/asteroid/airless,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "xE" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/bulletproof,
@@ -4672,7 +4672,7 @@
 /area/awaymission/research/interior/cryo)
 "Ws" = (
 /turf/open/misc/asteroid/airless,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "WR" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";

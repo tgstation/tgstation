@@ -69,7 +69,6 @@
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
-		/datum/computer_file/program/power_monitor,
 		/datum/computer_file/program/supermatter_monitor,
 	)
 
@@ -144,7 +143,6 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D99A2E#69DBF3#E3DF3D"
 	default_applications = list(
-		/datum/computer_file/program/power_monitor,
 		/datum/computer_file/program/supermatter_monitor,
 	)
 

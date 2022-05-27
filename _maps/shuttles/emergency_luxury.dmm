@@ -40,7 +40,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Cell"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "ag" = (
@@ -908,7 +908,7 @@
 	name = "Escape Shuttle Cell"
 	},
 /obj/machinery/scanner_gate/luxury_shuttle,
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 

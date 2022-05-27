@@ -1,14 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "ab" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "ac" = (
 /turf/open/space,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "ad" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/bridge)
@@ -16,7 +16,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "af" = (
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
@@ -43,12 +43,12 @@
 "an" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "ao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/space,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "ap" = (
 /obj/structure/closet/secure_closet/engineering_electrical{
 	locked = 0
@@ -1136,7 +1136,7 @@
 	width = 9
 	},
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "ec" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -1271,7 +1271,7 @@
 	width = 5
 	},
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "eF" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -1302,7 +1302,7 @@
 	width = 12
 	},
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "eL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
@@ -1393,7 +1393,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "cargounload";
-	name = "supply dock unloading door"
+	name = "Supply Dock Unloading Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -1425,7 +1425,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "cargoload";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -1458,10 +1458,10 @@
 	width = 28
 	},
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "fg" = (
 /turf/open/space,
-/area/misc/space)
+/area/space)
 "fh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -1515,7 +1515,7 @@
 	width = 29
 	},
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "fq" = (
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
@@ -2118,7 +2118,7 @@
 	name = "lavaland"
 	},
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "tV" = (
 /obj/structure/bot,
 /turf/open/floor/iron/dark,
@@ -2234,7 +2234,7 @@
 /obj/structure/cable,
 /obj/machinery/power/rtg/debug,
 /turf/open/floor/plating/airless,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "zo" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
