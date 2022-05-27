@@ -25,22 +25,32 @@
 			gear = equip_by_category[MECHA_R_ARM]
 	if(!gear)
 		return
-	var/brokenstatus = gear.get_integrity()
+	var/component_health = gear.get_integrity()
 	// always leave at least 1 health
-	brokenstatus--
-	var/damage_to_deal = min(brokenstatus, damage)
-	if(!damage_to_deal)
+	var/damage_to_deal = min(component_health - 1, damage)
+	if(damage_to_deal <= 0)
 		return
-	gear.take_damage(damage_to_deal)
 
-/obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	. = ..()
-	if(. && atom_integrity > 0)
-		spark_system.start()
-		try_deal_internal_damage(.)
-		if(. >= 5 || prob(33))
-			to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
-		log_message("Took [.] points of damage. Damage type: [damage_type]", LOG_MECHA)
+	gear.take_damage(damage_to_deal)
+	if(gear.get_integrity() <= 1)
+		to_chat(occupants, "[icon2html(src, occupants)][span_danger("[gear] is critically damaged!")]")
+		playsound(src, gear.destroy_sound, 50)
+
+/obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
+	var/damage_taken = ..()
+	if(damage_taken <= 0)
+		return
+
+	if(atom_integrity < 0)
+		return
+
+	spark_system.start()
+	try_deal_internal_damage(damage_taken)
+	if(damage_taken >= 5 || prob(33))
+		to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
+	log_message("Took [damage_taken] points of damage. Damage type: [damage_type]", LOG_MECHA)
+
+	return damage_taken
 
 /obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penentration)
 	. = ..()
@@ -264,11 +274,26 @@
 		var/obj/item/mecha_parts/P = W
 		P.try_attach_part(user, src, FALSE)
 		return
-	. = ..()
-	log_message("Attacked by [W]. Attacker - [user], Damage - [.]", LOG_MECHA)
-	if(isliving(user))
-		var/mob/living/living_user = user
-		try_damage_component(., living_user.zone_selected)
+
+	return ..()
+
+/obj/vehicle/sealed/mecha/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!attacking_item.force)
+		return
+
+	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1)
+	try_damage_component(damage, user.zone_selected)
+
+	var/hit_verb = length(attacking_item.attack_verb_simple) ? "[pick(attacking_item.attack_verb_simple)]" : "hit"
+	user.visible_message(
+		span_danger("[user] [hit_verb][plural_s(hit_verb)] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"),
+		span_danger("You [hit_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"),
+		span_hear("You hear a [hit_verb]."),
+		COMBAT_MESSAGE_RANGE,
+	)
+
+	log_combat(user, src, "attacked", attacking_item)
+	log_message("Attacked by [user]. Item - [attacking_item], Damage - [damage]", LOG_MECHA)
 
 /obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/I)
 	..()
