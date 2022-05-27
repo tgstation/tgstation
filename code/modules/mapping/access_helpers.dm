@@ -382,6 +382,128 @@
 	access_list += list(ACCESS_CARGO, ACCESS_MAINT_TUNNELS)
 	return access_list
 
+// -------------------- Syndicate access helpers
+/obj/effect/mapping_helpers/airlock/access/any/syndicate
+	icon_state = "access_helper_syn"
+
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_SYNDICATE)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/leader/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_SYNDICATE_LEADER)
+	return access_list
+
+// -------------------- Away access helpers
+/obj/effect/mapping_helpers/airlock/access/any/away
+	icon_state = "access_helper_awy"
+
+/obj/effect/mapping_helpers/airlock/access/any/away/general/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_GENERAL)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/command/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_COMMAND)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/security/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_SEC)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/engineering/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_ENGINEERING)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/medical/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_MEDICAL)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/supply/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_SUPPLY)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/science/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_SCIENCE)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/maintenance/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_MAINTENANCE)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/generic1/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_GENERIC1)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/generic2/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_GENERIC2)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/generic3/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_GENERIC3)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/away/generic4/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_AWAY_GENERIC4)
+	return access_list
+
+// -------------------- Admin access helpers
+/obj/effect/mapping_helpers/airlock/access/any/admin
+	icon_state = "access_helper_adm"
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/general/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_GENERAL)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/thunderdome/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_THUNDER)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/medical/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_MEDICAL)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/living/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_LIVING)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/storage/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_STORAGE)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/teleporter/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_TELEPORTER)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_CAPTAIN)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/bar/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_CAPTAIN)
+	return access_list
+
 // -------------------- Req All (Requires ALL of the given accesses to open)
 // -------------------- Command access helpers
 /obj/effect/mapping_helpers/airlock/access/all/command
@@ -699,4 +821,126 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/vault/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_VAULT
+	return access_list
+
+// -------------------- Syndicate access helpers
+/obj/effect/mapping_helpers/airlock/access/all/syndicate
+	icon_state = "access_helper_syn"
+
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_SYNDICATE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/leader/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_SYNDICATE_LEADER
+	return access_list
+
+// -------------------- Away access helpers
+/obj/effect/mapping_helpers/airlock/access/any/away
+	icon_state = "access_helper_awy"
+
+/obj/effect/mapping_helpers/airlock/access/all/away/general/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_GENERAL
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/command/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_COMMAND
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/security/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_SEC
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/engineering/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_ENGINEERING
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/medical/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_MEDICAL
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/supply/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_SUPPLY
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/science/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_SCIENCE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_MAINTENANCE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/generic1/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_GENERIC1
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/generic2/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_GENERIC2
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_GENERIC3
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_AWAY_GENERIC4
+	return access_list
+
+// -------------------- Admin access helpers
+/obj/effect/mapping_helpers/airlock/access/all/admin
+	icon_state = "access_helper_adm"
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/general/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_GENERAL
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_THUNDER
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/medical/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_MEDICAL
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/living/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_LIVING
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/storage/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_STORAGE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/teleporter/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_TELEPORTER
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/captain/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_CAPTAIN
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/bar/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_BAR
 	return access_list

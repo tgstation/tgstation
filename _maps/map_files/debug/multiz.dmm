@@ -939,7 +939,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "ho" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -950,7 +950,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/openspace/airless,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "hT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -966,7 +966,7 @@
 "iy" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "iH" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/railing/corner{
@@ -1080,7 +1080,7 @@
 "ni" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "nz" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
@@ -1097,7 +1097,7 @@
 "nW" = (
 /obj/structure/grille,
 /turf/open/openspace/airless,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "od" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/spawner/structure/window/reinforced,
@@ -1193,7 +1193,7 @@
 /area/station/hallway/primary/central)
 "uw" = (
 /turf/open/floor/engine/hull,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "vt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1334,7 +1334,7 @@
 /area/station/construction)
 "Cc" = (
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "CA" = (
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1470,7 +1470,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "Kd" = (
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1553,7 +1553,7 @@
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "Og" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
@@ -1619,7 +1619,7 @@
 /area/station/commons/storage/primary)
 "SF" = (
 /turf/open/openspace/airless,
-/area/misc/space)
+/area/space)
 "SN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4

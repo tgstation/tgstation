@@ -59,12 +59,10 @@
 /area/ctf/flag_room : /area/centcom/ctf/flag_room
 /area/ctf/flag_room2 : /area/centcom/ctf/flag_room2
 
-/area/space : /area/misc/space
-/area/space/nearstation : /area/misc/space/nearstation
 /area/start : /area/misc/start
 /area/testroom : /area/misc/testroom
 
-/area/ai_monitored : /area/station/ai_monitored 
+/area/ai_monitored : /area/station/ai_monitored
 /area/ai_monitored/turret_protected : /area/station/ai_monitored/turret_protected
 /area/ai_monitored : /area/station/ai_monitored
 /area/ai_monitored/aisat/exterior : /area/station/ai_monitored/aisat/exterior
