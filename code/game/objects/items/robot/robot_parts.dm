@@ -423,7 +423,7 @@
 				to_chat(user, span_alert("No active AIs detected."))
 				return
 			forced_ai = selected_ai
-			log_silicon("[key_name(user)] set the default AI for a cyborg shell to [key_name(selected_ai)] at [log_name(user)]")
+			log_silicon("[key_name(user)] set the default AI for a cyborg shell to [key_name(selected_ai)] at [loc_name(user)]")
 			return TRUE
 		if("lawsync")
 			lawsync = !lawsync
