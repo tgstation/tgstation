@@ -1259,9 +1259,10 @@
 	},
 /obj/item/pipe_dispenser,
 /obj/item/storage/bag/construction,
-/obj/item/storage/belt/utility/full,
-/obj/item/clothing/head/hardhat/weldhat,
+/obj/item/clothing/suit/hazardvest,
 /obj/item/t_scanner,
+/obj/item/storage/belt/utility,
+/obj/item/clothing/head/hardhat/weldhat,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
 "ec" = (
@@ -2808,10 +2809,6 @@
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/gun/energy/laser/retro/old{
-	pixel_x = 2;
-	pixel_y = 2
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -2828,10 +2825,13 @@
 "iA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/vest/old,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/item/gun/energy/laser/retro/old{
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
@@ -5833,8 +5833,7 @@
 /obj/item/grenade/chem_grenade/incendiary,
 /obj/item/knife/combat,
 /obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
+/obj/item/clothing/suit/armor/vest/old,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "wi" = (
@@ -8057,10 +8056,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
-/obj/item/pen/red{
-	pixel_x = 8;
-	pixel_y = 12
-	},
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
