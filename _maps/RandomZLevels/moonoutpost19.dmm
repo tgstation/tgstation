@@ -249,9 +249,9 @@
 "bs" = (
 /obj/machinery/door/window{
 	dir = 1;
-	name = "Gateway Access"
+	name = "Gateway Access";
+	req_access = list("syndicate")
 	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
