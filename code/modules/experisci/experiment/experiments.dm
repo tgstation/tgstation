@@ -169,7 +169,7 @@
 
 /datum/experiment/scanning/random/plants/wild
 	name = "Wild Biomatter Mutation Sample"
-	description = "Nanotrasen have recently observed a phenomenom of plants mutating upon harvest. They require you to send a scan of a sample for further investigation."
+	description = "Nanotrasen has recently observed a phenomenom of plants mutating upon harvest. They require you to send a scan of a sample for further investigation."
 	performance_hint = "\"Wild\" mutations have been recorded to occur above 30 points of instability, while species mutations occur above 60 points of instability."
 	total_requirement = 1
 
