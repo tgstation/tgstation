@@ -496,6 +496,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view_size.resetFormat()
 	view_size.setZoomMode()
 	Master.UpdateTickRate()
+
+	//Initialize runechat letter cache for this client
+	SSrunechat.preinit_runechat_list(src)
+
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 	fully_created = TRUE
 

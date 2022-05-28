@@ -1,134 +1,120 @@
 TIMER_SUBSYSTEM_DEF(runechat)
 	name = "Runechat"
 	priority = FIRE_PRIORITY_RUNECHAT
-	/// Biggest calculated char width. Used if character is not included in the list bellow. Includes all font sizes.
-	var/list/max_char_width = list(0, 0, 0)
+	/// Each token indicates that a call to client's MeasureText() was made and is pending
+	var/initialize_tokens = list()
+	/// Tracks if current client initializing letter cache still exists
+	var/has_client = FALSE
 	/// List of most characters in the font. Do not varedit it in game.
-	/// Format of it is as follows: character, size when normal, size when small, size when big.
-	var/list/letters = list(
-		//Special case, measuring " " returns 0 since it's empty string
-		" " = list(2, 2, 2),
-		"." = null,
-		"," = null,
-		"?" = null,
-		"!" = null,
-		"\"" = null,
-		"/" = null,
-		"$" = null,
-		"(" = null,
-		")" = null,
-		"@" = null,
-		"=" = null,
-		":" = null,
-		"'" = null,
-		";" = null,
-		"+" = null,
-		"-" = null,
-		"\\" = null,
-		"<" = null,
-		">" = null,
-		"&" = null,
-		"*" = null,
-		"%" = null,
-		"^" = null,
-		"{" = null,
-		"}" = null,
-		"|" = null,
-		"~" = null,
-		"`" = null,
-		"A" = null,
-		"B" = null,
-		"C" = null,
-		"D" = null,
-		"E" = null,
-		"F" = null,
-		"G" = null,
-		"H" = null,
-		"I" = null,
-		"J" = null,
-		"K" = null,
-		"L" = null,
-		"M" = null,
-		"N" = null,
-		"O" = null,
-		"P" = null,
-		"Q" = null,
-		"R" = null,
-		"S" = null,
-		"T" = null,
-		"U" = null,
-		"V" = null,
-		"W" = null,
-		"X" = null,
-		"Y" = null,
-		"Z" = null,
-		"a" = null,
-		"b" = null,
-		"c" = null,
-		"d" = null,
-		"e" = null,
-		"f" = null,
-		"g" = null,
-		"h" = null,
-		"i" = null,
-		"j" = null,
-		"k" = null,
-		"l" = null,
-		"m" = null,
-		"n" = null,
-		"o" = null,
-		"p" = null,
-		"q" = null,
-		"r" = null,
-		"s" = null,
-		"t" = null,
-		"u" = null,
-		"v" = null,
-		"w" = null,
-		"x" = null,
-		"y" = null,
-		"z" = null
-	)
+	/// Format of it is as follows: ckey, characters, size when normal, size when small, size when big.
+	var/list/letters = list()
+	/// Additional letters that will be cached for each new client
+	var/list/additional_letters = list()
 
 /datum/controller/subsystem/timer/runechat/PreInit()
 	. = ..()
-	init_runechat_list()
+	for(var/client/client in GLOB.clients)
+		init_runechat_list(client)
 
-/datum/controller/subsystem/timer/runechat/proc/init_runechat_list()
-	if(!length(GLOB.clients))
-		addtimer(CALLBACK(src, .proc/init_runechat_list), 1 SECONDS, null, src)
+/datum/controller/subsystem/timer/runechat/proc/preinit_runechat_list(client/actor)
+	if(SSrunechat.letters[actor.ckey] == null)
+		init_runechat_list(actor)
+	else
+		init_additional_letters(actor)
+
+/datum/controller/subsystem/timer/runechat/proc/init_runechat_list(client/actor)
+	has_client = TRUE
+
+	RegisterSignal(actor, COMSIG_PARENT_QDELETING, .proc/on_client_del)
+
+	letters[actor.ckey] = EMPTY_CHARACTERS_LIST
+	initialize_tokens[actor.ckey] = 0
+
+	for(var/key in (letters[actor.ckey] | additional_letters))
+		if(key == MAX_CHAR_WIDTH)
+			continue
+		letters[actor.ckey][key] = list(null, null, null)
+		initialize_tokens[actor.ckey] += 3
+		handle_single_letter(key, actor, NORMAL_FONT_INDEX)
+		handle_single_letter(key, actor, SMALL_FONT_INDEX)
+		handle_single_letter(key, actor, BIG_FONT_INDEX)
+
+	while(initialize_tokens[actor.ckey] > 0 && has_client)
+		sleep(world.tick_lag)
+
+	if(!has_client)
+		//something went wrong, we'll try again when he reconnects
+		letters[actor.ckey] = null
+		//We still need to wait for rest of the handles to return
+		while(initialize_tokens[actor.ckey] > 0)
+			sleep(world.tick_lag)
+	else
+		letters[actor.ckey][" "] = list(2, 2, 2)
+
+	UnregisterSignal(actor, COMSIG_PARENT_QDELETING)
+	initialize_tokens[actor.ckey] = null
+	has_client = FALSE
+
+/datum/controller/subsystem/timer/runechat/proc/init_additional_letters(client/actor)
+	var/ckey = actor.ckey
+
+	for(var/key in additional_letters)
+		if(length(letters[ckey][key]) == 3 && !letters[ckey][key].Find(null))
+			continue
+		letters[ckey][key] = list(null, null, null)
+		handle_single_letter(key, actor, NORMAL_FONT_INDEX)
+		handle_single_letter(key, actor, SMALL_FONT_INDEX)
+		handle_single_letter(key, actor, BIG_FONT_INDEX)
+
+/// If the character is not found in precoded list, it'll be calculated for each client and added to their respective list
+/datum/controller/subsystem/timer/runechat/proc/add_new_character_globally(character)
+	if(additional_letters[character] == TRUE)
 		return
 
-	var/client/first_client = GLOB.clients[1]
+	additional_letters[character] = TRUE
+	for(var/client/actor in GLOB.clients)
+		add_new_character_for_client(actor, character)
 
-	for(var/key in letters)
-		if(!first_client)
-			if(!length(GLOB.clients))
-				addtimer(CALLBACK(src, .proc/init_runechat_list), 1 SECONDS, null, src)
-				return
-			first_client = GLOB.clients[1]
-		if(length(letters[key]) == 3 || key == " ")
-			continue
+/datum/controller/subsystem/timer/runechat/proc/add_new_character_for_client(client/actor, character)
+	set waitfor = FALSE
 
-		letters[key] = list()
-		letters[key] += WXH_TO_WIDTH(first_client.MeasureText(MAPTEXT(key)))
-		if(letters[key][NORMAL_FONT_INDEX] > max_char_width[NORMAL_FONT_INDEX])
-			max_char_width[NORMAL_FONT_INDEX] = letters[key][NORMAL_FONT_INDEX]
-		if(!first_client)
-			if(!length(GLOB.clients))
-				addtimer(CALLBACK(src, .proc/init_runechat_list), 1 SECONDS, null, src)
-				return
-			first_client = GLOB.clients[1]
+	//We're already initializing the list for this user
+	if(initialize_tokens[actor.ckey] != null)
+		return
 
-		letters[key] += WXH_TO_WIDTH(first_client.MeasureText("<span class='small'>[key]</span>"))
-		if(letters[key][SMALL_FONT_INDEX] > max_char_width[SMALL_FONT_INDEX])
-			max_char_width[SMALL_FONT_INDEX] = letters[key][SMALL_FONT_INDEX]
-		if(!first_client)
-			if(!length(GLOB.clients))
-				addtimer(CALLBACK(src, .proc/init_runechat_list), 1 SECONDS, null, src)
-				return
-			first_client = GLOB.clients[1]
+	initialize_tokens[actor.ckey] = 3
+	letters[actor.ckey][character] = list(null, null, null)
+	handle_single_letter(character, actor, NORMAL_FONT_INDEX)
+	handle_single_letter(character, actor, SMALL_FONT_INDEX)
+	handle_single_letter(character, actor, BIG_FONT_INDEX)
 
-		letters[key] += WXH_TO_WIDTH(first_client.MeasureText("<span class='big'>[key]</span>"))
-		if(letters[key][BIG_FONT_INDEX] > max_char_width[BIG_FONT_INDEX])
-			max_char_width[BIG_FONT_INDEX] = letters[key][BIG_FONT_INDEX]
+	while(initialize_tokens[actor.ckey] > 0)
+		sleep(world.tick_lag)
+
+	for(var/value in letters[actor.ckey][character])
+		//We failed, client logged out mid measuring
+		if(isnull(value))
+			letters[actor.ckey] = null
+
+	initialize_tokens[actor.ckey] = null
+
+/datum/controller/subsystem/timer/runechat/proc/handle_single_letter(letter, client/measured_client, font_index)
+	set waitfor = FALSE
+	var/font_class
+	if(font_index == NORMAL_FONT_INDEX)
+		font_class = ""
+	else if(font_index == SMALL_FONT_INDEX)
+		font_class = "small"
+	else
+		font_class = "big"
+	if(!measured_client)
+		return FALSE
+	var/response = WXH_TO_WIDTH(measured_client.MeasureText("<span class='[font_class]'>[letter]</span>"))
+	letters[measured_client.ckey][letter][font_index] = response
+	if(response > letters[measured_client.ckey][MAX_CHAR_WIDTH][font_index])
+		letters[measured_client.ckey][MAX_CHAR_WIDTH][font_index] = response
+	initialize_tokens[measured_client.ckey]--
+	return TRUE
+
+/datum/controller/subsystem/timer/runechat/proc/on_client_del()
+	has_client = FALSE
