@@ -52886,13 +52886,13 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "otQ" = (
-/obj/machinery/portable_atmospherics/canister/bz,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "otS" = (
