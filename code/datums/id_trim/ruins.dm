@@ -17,7 +17,7 @@
 
 /// Trim for the oldstation ruin/Charlie station
 /datum/id_trim/away/old/sci
-	access = list(ACCESS_AWAY_GENERAL)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SCIENCE)
 	assignment = "Charlie Station Scientist"
 
 /// Trim for the oldstation ruin/Charlie station

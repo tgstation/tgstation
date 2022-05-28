@@ -411,7 +411,6 @@
 "bx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "by" = (
@@ -1253,13 +1252,15 @@
 	},
 /area/ruin/space/ancientstation/delta/rnd)
 "eb" = (
-/obj/item/pipe_dispenser,
-/obj/item/pipe_dispenser,
-/obj/structure/closet/crate/engineering{
-	name = "radiation suit crate"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/south,
+/obj/structure/closet/crate/secure/engineering{
+	req_access = list("away_engineering")
+	},
+/obj/item/pipe_dispenser,
+/obj/item/storage/belt/utility/full,
+/obj/item/clothing/head/hardhat/weldhat,
+/obj/item/t_scanner,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
 "ec" = (
@@ -5824,12 +5825,15 @@
 "wg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/storage/box/firingpins,
 /obj/structure/closet/crate/secure/weapon{
 	req_access = list("away_sec")
 	},
+/obj/item/gun/ballistic/rifle/boltaction,
+/obj/item/grenade/chem_grenade/incendiary,
+/obj/item/knife/combat,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "wi" = (
@@ -8486,6 +8490,18 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
+"SQ" = (
+/obj/effect/decal/cleanable/shreds,
+/obj/structure/alien/weeds,
+/obj/structure/closet/crate/secure/science{
+	req_access = list("away_science")
+	},
+/obj/item/relic,
+/obj/item/transfer_valve,
+/obj/item/raw_anomaly_core/bluespace,
+/obj/item/raw_anomaly_core/random,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "ST" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -14762,7 +14778,7 @@ ag
 ag
 cG
 cZ
-cZ
+SQ
 ad
 bE
 bE
