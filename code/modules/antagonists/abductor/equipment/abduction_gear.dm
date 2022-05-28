@@ -737,7 +737,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_HEAD)
+	if(slot_flags & slot)
 		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
 	else
 		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)

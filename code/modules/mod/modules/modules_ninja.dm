@@ -300,16 +300,16 @@
 	. = ..()
 	.["statustime"] = station_time_timestamp()
 	.["statusid"] = GLOB.round_id
-	.["statushealth"] = mod.wearer ? mod.wearer.health : 0
-	.["statusmaxhealth"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
-	.["statusbrute"] = mod.wearer ? mod.wearer.getBruteLoss() : 0
-	.["statusburn"] = mod.wearer ? mod.wearer.getFireLoss() : 0
-	.["statustoxin"] = mod.wearer ? mod.wearer.getToxLoss() : 0
-	.["statusoxy"] = mod.wearer ? mod.wearer.getOxyLoss() : 0
-	.["statustemp"] = mod.wearer ? mod.wearer.bodytemperature : 0
-	.["statusnutrition"] = mod.wearer ? mod.wearer.nutrition : 0
+	.["statushealth"] = mod.wearer?.health || 0
+	.["statusmaxhealth"] = mod.wearer?.getMaxHealth() || 0
+	.["statusbrute"] = mod.wearer?.getBruteLoss() || 0
+	.["statusburn"] = mod.wearer?.getFireLoss() || 0
+	.["statustoxin"] = mod.wearer?.getToxLoss() || 0
+	.["statusoxy"] = mod.wearer?.getOxyLoss() || 0
+	.["statustemp"] = mod.wearer?.bodytemperature || 0
+	.["statusnutrition"] = mod.wearer?.nutrition || 0
 	.["statusfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
-	.["statusdna"] = mod.wearer ? mod.wearer.dna.unique_enzymes : null
+	.["statusdna"] = mod.wearer?.dna.unique_enzymes
 	.["statusviruses"] = null
 	if(!length(mod.wearer?.diseases))
 		return
@@ -381,18 +381,22 @@
 	var/reagent_required = /datum/reagent/uranium/radium
 	/// How much of a reagent we need to refill the boost.
 	var/reagent_required_amount = 20
-	/// Do we have a boost charge?
-	var/charged = TRUE
+
+/obj/item/mod/module/adrenaline_boost/Initialize(mapload)
+	. = ..()
+	create_reagents(reagent_required_amount)
+	reagents.add_reagent(reagent_required, reagent_required_amount)
 
 /obj/item/mod/module/adrenaline_boost/on_use()
+	if(!reagents.has_reagent(reagent_required, reagent_required_amount))
+		balloon_alert(mod.wearer, "no charge!")
+		return
 	. = ..()
 	if(!.)
 		return
-	if(!charged)
-		balloon_alert(mod.wearer, "no charge!")
-		return
 	if(IS_SPACE_NINJA(mod.wearer))
 		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
+	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))
 	mod.wearer.SetUnconscious(0)
 	mod.wearer.SetStun(0)
 	mod.wearer.SetKnockdown(0)
@@ -401,7 +405,7 @@
 	mod.wearer.adjustStaminaLoss(-200)
 	mod.wearer.remove_status_effect(/datum/status_effect/speech/stutter)
 	mod.wearer.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
-	charged = FALSE
+	reagents.remove_reagent(reagent_required, reagents.total_volume * 0.75)
 	addtimer(CALLBACK(src, .proc/boost_aftereffects, mod.wearer), 7 SECONDS)
 
 /obj/item/mod/module/adrenaline_boost/on_install()
@@ -423,20 +427,18 @@
 	return NONE
 
 /obj/item/mod/module/adrenaline_boost/proc/charge_boost(obj/item/attacking_item, mob/user)
-	if(!istype(attacking_item, /obj/item/reagent_containers/glass))
+	if(!attacking_item.is_open_container())
 		return FALSE
-	if(!attacking_item.reagents.has_reagent(reagent_required, reagent_required_amount))
-		return FALSE
-	if(charged)
+	if(reagents.has_reagent(reagent_required, reagent_required_amount))
 		balloon_alert(mod.wearer, "already charged!")
 		return FALSE
-	attacking_item.reagents.remove_reagent(/datum/reagent/uranium/radium, reagent_required_amount)
-	charged = TRUE
-	balloon_alert(mod.wearer, "charge reloaded")
+	if(!attacking_item.reagents.trans_id_to(src, reagent_required, reagent_required_amount))
+		return FALSE
+	balloon_alert(mod.wearer, "charge [reagents.has_reagent(reagent_required, reagent_required_amount) ? "fully" : "partially"] reloaded")
 	return TRUE
 
 /obj/item/mod/module/adrenaline_boost/proc/boost_aftereffects(mob/affected_mob)
 	if(!affected_mob)
 		return
-	affected_mob.reagents.add_reagent(reagent_required, reagent_required_amount * 0.25)
+	reagents.trans_to(affected_mob, reagents.total_volume)
 	to_chat(affected_mob, span_danger("You are beginning to feel the after-effect of the injection."))

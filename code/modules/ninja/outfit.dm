@@ -13,7 +13,6 @@
 	implants = list(/obj/item/implant/explosive)
 
 /datum/outfit/ninja/post_equip(mob/living/carbon/human/ninja)
-	. = ..()
 	var/obj/item/grenade/c4/ninja/charge = ninja.l_store
 	if(istype(charge))
 		charge.set_detonation_area(ninja.mind?.has_antag_datum(/datum/antagonist/ninja))
