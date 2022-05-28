@@ -174,7 +174,7 @@
 	var/datum/wound/blunt/severe/severe_wound_type = /datum/wound/blunt/severe
 	var/datum/wound/blunt/critical/critical_wound_type = /datum/wound/blunt/critical
 	head.receive_damage(brute = 20, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10))
-	victim.update_damage_overlays()
+	victim.update_body()
 	victim.audible_message(span_warning("*CRACK*"))
 	to_chat(victim, span_userdanger("[src] pierces your skull, blood flowing all over your face!"))
 	to_chat(user, span_notice("[src] pierces through [victim]'s skull."))
