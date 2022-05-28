@@ -1,5 +1,5 @@
 ///defined truthy result for `handle_unique_ai()`, which makes initialize return INITIALIZE_HINT_QDEL
-#define QDEL_MODULE 1
+#define SHOULD_QDEL_MODULE 1
 
 /obj/item/ai_module
 	name = "\improper AI module"
@@ -37,7 +37,7 @@
 
 ///what this module should do if it is mapload spawning on a unique AI station trait round.
 /obj/item/ai_module/proc/handle_unique_ai()
-	return QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
+	return SHOULD_QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
 
 /obj/item/ai_module/proc/show_laws(mob/user as mob)
 	if(laws.len)
@@ -369,7 +369,7 @@
 	var/datum/ai_laws/unique_ai_laws =  GLOB.round_default_lawset
 	if(law_id == initial(unique_ai_laws.id))
 		return
-	return QDEL_MODULE
+	return SHOULD_QDEL_MODULE
 
 /obj/effect/spawner/round_default_module
 	name = "ai default lawset spawner"
@@ -650,4 +650,4 @@
 	name = "'10 Commandments' Core AI Module"
 	law_id = "ten_commandments"
 
-#undef QDEL_MODULE
+#undef SHOULD_QDEL_MODULE
