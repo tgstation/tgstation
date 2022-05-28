@@ -1297,6 +1297,16 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/wild = 3000)
+	
+/datum/techweb_node/gene_botany
+	id = "gene_botany"
+	display_name = "Botanical Genetic Engineering"
+	description = "Fine-tune your plants on a precise genetical level"
+	prereq_ids = list("botany")
+	design_ids = list(
+		"gene_shears",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -1305,7 +1315,6 @@
 	prereq_ids = list("adv_engi")
 	design_ids = list(
 		"exwelder",
-		"gene_shears",
 		"handdrill",
 		"jawsoflife",
 		"laserscalpel",
