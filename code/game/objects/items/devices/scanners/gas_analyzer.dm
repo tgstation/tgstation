@@ -22,6 +22,10 @@
 	var/barometer_accuracy // 0 is the best accuracy.
 	var/list/last_gasmix_data
 
+/obj/item/analyzer/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), .proc/on_analyze)
+
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
 	. += span_notice("Right-click [src] to open the gas reference.")
@@ -34,46 +38,48 @@
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
 
-	if(user.canUseTopic(src, BE_CLOSE))
-		if(cooldown)
-			to_chat(user, span_warning("[src]'s barometer function is preparing itself."))
+	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src))
+		return
+
+	if(cooldown)
+		to_chat(user, span_warning("[src]'s barometer function is preparing itself."))
+		return
+
+	var/turf/T = get_turf(user)
+	if(!T)
+		return
+
+	playsound(src, 'sound/effects/pop.ogg', 100)
+	var/area/user_area = T.loc
+	var/datum/weather/ongoing_weather = null
+
+	if(!user_area.outdoors)
+		to_chat(user, span_warning("[src]'s barometer function won't work indoors!"))
+		return
+
+	for(var/V in SSweather.processing)
+		var/datum/weather/W = V
+		if(W.barometer_predictable && (T.z in W.impacted_z_levels) && W.area_type == user_area.type && !(W.stage == END_STAGE))
+			ongoing_weather = W
+			break
+
+	if(ongoing_weather)
+		if((ongoing_weather.stage == MAIN_STAGE) || (ongoing_weather.stage == WIND_DOWN_STAGE))
+			to_chat(user, span_warning("[src]'s barometer function can't trace anything while the storm is [ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]"))
 			return
 
-		var/turf/T = get_turf(user)
-		if(!T)
-			return
-
-		playsound(src, 'sound/effects/pop.ogg', 100)
-		var/area/user_area = T.loc
-		var/datum/weather/ongoing_weather = null
-
-		if(!user_area.outdoors)
-			to_chat(user, span_warning("[src]'s barometer function won't work indoors!"))
-			return
-
-		for(var/V in SSweather.processing)
-			var/datum/weather/W = V
-			if(W.barometer_predictable && (T.z in W.impacted_z_levels) && W.area_type == user_area.type && !(W.stage == END_STAGE))
-				ongoing_weather = W
-				break
-
-		if(ongoing_weather)
-			if((ongoing_weather.stage == MAIN_STAGE) || (ongoing_weather.stage == WIND_DOWN_STAGE))
-				to_chat(user, span_warning("[src]'s barometer function can't trace anything while the storm is [ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]"))
-				return
-
-			to_chat(user, span_notice("The next [ongoing_weather] will hit in [butchertime(ongoing_weather.next_hit_time - world.time)]."))
-			if(ongoing_weather.aesthetic)
-				to_chat(user, span_warning("[src]'s barometer function says that the next storm will breeze on by."))
+		to_chat(user, span_notice("The next [ongoing_weather] will hit in [butchertime(ongoing_weather.next_hit_time - world.time)]."))
+		if(ongoing_weather.aesthetic)
+			to_chat(user, span_warning("[src]'s barometer function says that the next storm will breeze on by."))
+	else
+		var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]
+		var/fixed = next_hit ? timeleft(next_hit) : -1
+		if(fixed < 0)
+			to_chat(user, span_warning("[src]'s barometer function was unable to trace any weather patterns."))
 		else
-			var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]
-			var/fixed = next_hit ? timeleft(next_hit) : -1
-			if(fixed < 0)
-				to_chat(user, span_warning("[src]'s barometer function was unable to trace any weather patterns."))
-			else
-				to_chat(user, span_warning("[src]'s barometer function says a storm will land in approximately [butchertime(fixed)]."))
-		cooldown = TRUE
-		addtimer(CALLBACK(src,/obj/item/analyzer/proc/ping), cooldown_time)
+			to_chat(user, span_warning("[src]'s barometer function says a storm will land in approximately [butchertime(fixed)]."))
+	cooldown = TRUE
+	addtimer(CALLBACK(src,/obj/item/analyzer/proc/ping), cooldown_time)
 
 /obj/item/analyzer/proc/ping()
 	if(isliving(loc))
@@ -108,20 +114,30 @@
 	return list("gasmixes" = last_gasmix_data)
 
 /obj/item/analyzer/attack_self(mob/user, modifiers)
-	// Check if it requires visibility and if the user is you know, blind.
-	if (user.stat != CONSCIOUS || user.is_blind())
-		to_chat(user, span_warning("You're unable to see [src]'s results!"))
+	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
-
 	atmos_scan(user=user, target=get_turf(src), tool=src, silent=FALSE)
+	on_analyze(source=src, target=get_turf(src))
 
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
-	// Check if it requires visibility and if the user is you know, blind.
-	if (user.stat != CONSCIOUS || user.is_blind())
-		to_chat(user, span_warning("You're unable to see [src]'s results!"))
+	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
 
 	ui_interact(user)
+
+/// Called when our analyzer is used on something
+/obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
+	var/mixture = target.return_analyzable_air()
+	if(!mixture)
+		return FALSE
+	var/list/airs = islist(mixture) ? mixture : list(mixture)
+	var/list/new_gasmix_data = list()
+	for(var/datum/gas_mixture/air as anything in airs)
+		var/mix_name = capitalize(lowertext(target.name))
+		if(airs.len != 1) //not a unary gas mixture
+			mix_name += " - Node [airs.Find(air)]"
+		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
+	last_gasmix_data = new_gasmix_data
 
 /**
  * Outputs a message to the user describing the target's gasmixes.
@@ -129,7 +145,7 @@
  * Gets called by analyzer_act, which in turn is called by tool_act.
  * Also used in other chat-based gas scans.
  */
-/proc/atmos_scan(mob/user, atom/target, obj/item/analyzer/tool, silent=FALSE)
+/proc/atmos_scan(mob/user, atom/target, obj/tool, silent=FALSE)
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
@@ -139,8 +155,6 @@
 	if(!silent && isliving(user))
 		user.visible_message(span_notice("[user] uses the analyzer on [icon2html(icon, viewers(user))] [target]."), span_notice("You use the analyzer on [icon2html(icon, user)] [target]."))
 	message += span_boldnotice("Results of analysis of [icon2html(icon, user)] [target].")
-
-	var/list/gasmix_data = list()
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	for(var/datum/gas_mixture/air as anything in airs)
@@ -172,11 +186,6 @@
 		else
 			message += airs.len > 1 ? span_notice("This node is empty!") : span_notice("[target] is empty!")
 			message += span_notice("Volume: [volume] L") // don't want to change the order volume appears in, suck it
-		
-		gasmix_data += list(gas_mixture_parser(air, mix_name))
-
-	if(istype(tool))
-		tool.last_gasmix_data = gasmix_data
 
 	// we let the join apply newlines so we do need handholding
 	to_chat(user, jointext(message, "\n"), type = MESSAGE_TYPE_INFO)
