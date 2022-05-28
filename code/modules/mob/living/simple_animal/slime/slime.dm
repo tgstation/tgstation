@@ -236,7 +236,7 @@
 
 	switch(stat)
 		if(HARD_CRIT, UNCONSCIOUS)
-			. += "You are knocked out by high levels of BZ!"
+			. += "You are knocked out by high levels of Nitrous Oxide!"
 		else
 			. += "Power Level: [powerlevel]"
 
