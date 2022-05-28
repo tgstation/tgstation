@@ -147,7 +147,7 @@
 			if(24 to 30)
 				airlock.panel_open = TRUE
 	if(airlock.cutAiWire)
-		wires.cut(WIRE_AI)
+		airlock.aiControlDisabled = AI_WIRE_DISABLED
 	if(airlock.autoname)
 		name = get_area_name(src, TRUE)
 	update_appearance()
