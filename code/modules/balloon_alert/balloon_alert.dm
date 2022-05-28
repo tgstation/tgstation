@@ -12,7 +12,7 @@
 /atom/proc/balloon_alert(mob/viewer, text)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	INVOKE_ASYNC(src, .proc/balloon_alert_perform, viewer, text)
+	balloon_alert_perform(viewer, text)
 
 /// Create balloon alerts (text that floats up) to everything within range.
 /// Will only display to people who can see.
@@ -42,13 +42,15 @@
 		var/atom/movable/movable_source = src
 		bound_width = movable_source.bound_width
 
+	var/approx_lines = CEILING(approx_str_width(text, DEFAULT_FONT_SIZE, FALSE, FALSE, viewer_client.ckey) / BALLOON_TEXT_WIDTH, 1)
+
 	var/image/balloon_alert = image(loc = isturf(src) ? src : get_atom_on_turf(src), layer = ABOVE_MOB_LAYER)
 	balloon_alert.plane = BALLOON_CHAT_PLANE
 	balloon_alert.alpha = 0
 	balloon_alert.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	balloon_alert.maptext = MAPTEXT("<span style='text-align: center; -dm-text-outline: 1px #0005'>[text]</span>")
 	balloon_alert.maptext_x = (BALLOON_TEXT_WIDTH - bound_width) * -0.5
-	balloon_alert.maptext_height = WXH_TO_HEIGHT(viewer_client?.MeasureText(text, null, BALLOON_TEXT_WIDTH))
+	balloon_alert.maptext_height = APPROX_HEIGHT(DEFAULT_FONT_SIZE, approx_lines)
 	balloon_alert.maptext_width = BALLOON_TEXT_WIDTH
 
 	viewer_client?.images += balloon_alert

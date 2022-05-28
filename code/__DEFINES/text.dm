@@ -71,6 +71,16 @@
 /// Index of maximum possible calculated values
 #define MAX_CHAR_WIDTH "max_width"
 
+/// Default font size (defined in skin.dmf), those are 1 size bigger than in skin, to account 1px black outline
+#define DEFAULT_FONT_SIZE 8
+/// Big font size, used by megaphones and such
+#define BIG_FONT_SIZE 9
+/// Small font size, used mostly by whispering
+#define WHISPER_FONT_SIZE 7
+
+/// Approximation of the height
+#define APPROX_HEIGHT(font_size, lines) ((font_size * 1.7 * lines) + 2)
+
 /// Initializes empty list of cache characters for runechat. Space is special case since measuring it returns 0.
 #define EMPTY_CHARACTERS_LIST list(\
 		"." = null,\

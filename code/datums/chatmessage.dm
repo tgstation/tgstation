@@ -26,15 +26,6 @@
 /// The number of z-layer 'slices' usable by the chat message layering
 #define CHAT_LAYER_MAX_Z (CHAT_LAYER_MAX - CHAT_LAYER) / CHAT_LAYER_Z_STEP
 
-/// Approximation of the height
-#define APPROX_HEIGHT(font_size, lines) ((font_size * 1.7 * lines) + 2)
-/// Default font size (defined in skin.dmf), those are 1 size bigger than in skin, to account 1px black outline
-#define DEFAULT_FONT_SIZE 8
-/// Big font size, used by megaphones and such
-#define BIG_FONT_SIZE 9
-/// Small font size, used mostly by whispering
-#define WHISPER_FONT_SIZE 7
-
 /**
  * # Chat Message Overlay
  *
@@ -345,7 +336,7 @@
  * * has_icon - text has an icon, which adds extra 8 pixels
  * * ckey - ckey of hearer we're approximating values for
  */
-/datum/chatmessage/proc/approx_str_width(string, font_size = DEFAULT_FONT_SIZE, is_bold = FALSE, has_icon = FALSE, ckey)
+/proc/approx_str_width(string, font_size = DEFAULT_FONT_SIZE, is_bold = FALSE, has_icon = FALSE, ckey)
 	var/value = 0
 	var/index = NORMAL_FONT_INDEX
 	if(font_size == WHISPER_FONT_SIZE)
@@ -382,7 +373,3 @@
 #undef CHAT_LAYER_Z_STEP
 #undef CHAT_LAYER_MAX_Z
 #undef CHAT_MESSAGE_ICON_SIZE
-#undef APPROX_HEIGHT
-#undef DEFAULT_FONT_SIZE
-#undef BIG_FONT_SIZE
-#undef WHISPER_FONT_SIZE

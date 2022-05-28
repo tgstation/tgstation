@@ -59,7 +59,8 @@ TIMER_SUBSYSTEM_DEF(runechat)
 	var/ckey = actor.ckey
 
 	for(var/key in additional_letters)
-		if(length(letters[ckey][key]) == 3 && !letters[ckey][key].Find(null))
+		var/list/values = letters[ckey][key]
+		if(length(values) == 3 && !values.Find(null))
 			continue
 		letters[ckey][key] = list(null, null, null)
 		handle_single_letter(key, actor, NORMAL_FONT_INDEX)
