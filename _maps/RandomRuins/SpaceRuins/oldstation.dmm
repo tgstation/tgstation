@@ -5829,11 +5829,12 @@
 /obj/structure/closet/crate/secure/weapon{
 	req_access = list("away_sec")
 	},
-/obj/item/gun/ballistic/rifle/boltaction,
-/obj/item/grenade/chem_grenade/incendiary,
-/obj/item/knife/combat,
-/obj/item/ammo_box/a762,
 /obj/item/clothing/suit/armor/vest/old,
+/obj/item/knife/combat/survival,
+/obj/item/gun/ballistic/rifle/boltaction,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/item/grenade/chem_grenade/incendiary,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "wi" = (
