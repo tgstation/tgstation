@@ -1202,3 +1202,48 @@
   - bugfix: Fix transparent floors ignoring blur effects
   - bugfix: Fix slime potions used on simple mobs to inherit all language abilities
       from the user
+2022-05-28:
+  Fikou:
+  - qol: you refill the modsuit plasma core with all your plasma at once
+  Iamgoofball:
+  - bugfix: Fixes an obvious oversight resulting in stacking inventory items to violate
+      the laws of physics. Belts are now Bulky and do not fit in bags.
+  JohnFulpWillard:
+  - bugfix: Tablet lights are now directional, like PDAs used to be.
+  JoshAdamPowell:
+  - spellcheck: Scrubber clog event will no longer end every area name in 'area',
+      like recreation area area.
+  Melbert:
+  - bugfix: Reactive Delimber armor works, for real
+  Mooshimi:
+  - qol: Ghosts will now see the name of who rolled the antagonist instead of the
+      new antagonist name.
+  RandomGamer123:
+  - bugfix: Plasmamen no longer burn in a much larger variety of situations (eg. full
+      atmos firesuit, space-proof suit but without gloves) that they logically shouldn't
+      (and previously didn't) burn in
+  SmArtKar:
+  - bugfix: Fixed most eye color effects not working
+  - bugfix: Fixed foam spreading through public airlocks and windoors
+  Thunder12345:
+  - imageadd: Medals have been resprited and should now look 126% more swag.
+  Wallem:
+  - rscadd: Bug-based food items have been given their own foodtype. Lizards, Slimes,
+      and Felinids love bugs! Humans, Moths, and Podpeople don't.
+  private-tristan:
+  - spellcheck: blade heretic lore for how much silver it takes to make a blade is
+      now correct
+  vincentiusvin:
+  - balance: Made adv engi tech node require bz shells as an experiment, organs no
+      longer need it.
+  - balance: Adv mining no longer requires adv engi.
+  - balance: Removed nitrium and halon shell, implant experiment lock lifted because
+      of the former.
+  - balance: Relocked sec 1 tech node to need pressure bombs, sec 2 no longer needs
+      tritium bomb.
+  - balance: Made advanced pressure bombs easier to do without funny fusion gases.
+  - balance: Added a new mining partner that accepts smaller (even non-atmos/non-ordnance
+      related) bombs
+  - balance: Added more options to purchase nodes in the paper partners. Your point
+      gain stays the same though.
+  - balance: Removed roundstart BZ can from xenobio.
