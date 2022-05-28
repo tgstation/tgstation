@@ -173,13 +173,13 @@
 
 	var/datum/wound/blunt/severe/severe_wound_type = /datum/wound/blunt/severe
 	var/datum/wound/blunt/critical/critical_wound_type = /datum/wound/blunt/critical
-	head.receive_damage(brute = 20, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10))
-	victim.update_body()
+	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10))
 	victim.visible_message(
-		span_userdanger("[src] pierces your skull, blood flowing all over your face!"),
-		span_danger("[src] pierces through [victim]'s skull, ripping their eyes out!"),
-		span_danger("Something penetrates your skull, tearing out your eyes! Holy fuck!")
+		span_danger("[src] pierces through [victim]'s skull, horribly mutilating their eyes!"),
+		span_userdanger("Something penetrates your skull, horribly mutilating your eyes! Holy fuck!"),
+		span_hear("You hear a sickening sound of metal piercing flesh!")
 	)
+	eyeballies.applyOrganDamage(eyeballies.maxHealth)
 	victim.emote("scream")
 	playsound(victim, "sound/effects/wounds/crackandbleed.ogg", 100)
 	log_combat(user, victim, "pierced skull of", src)
