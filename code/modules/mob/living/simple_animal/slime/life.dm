@@ -143,15 +143,15 @@
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SLIME_COLD)
 
 	if(stat != DEAD)
-		var/bz_percentage =0
-		if(environment.gases[/datum/gas/bz])
-			bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
-		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
+		var/nitrous_oxide_percentage =0
+		if(environment.gases[/datum/gas/nitrous_oxide])
+			nitrous_oxide_percentage = environment.gases[/datum/gas/nitrous_oxide][MOLES] / environment.total_moles()
+		var/stasis = (nitrous_oxide_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
 		switch(stat)
 			if(CONSCIOUS)
 				if(stasis)
-					to_chat(src, span_danger("Nerve gas in the air has put you in stasis!"))
+					to_chat(src, span_danger("Sleeping gas in the air has put you in stasis!"))
 					set_stat(UNCONSCIOUS)
 					powerlevel = 0
 					rabid = FALSE
