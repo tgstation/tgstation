@@ -713,7 +713,7 @@
 	for(var/mob/living/carbon/human/viewing_mob in viewers(user, 7))
 		if(viewing_mob.stat || viewing_mob == user)
 			continue
-		viewing_mob.say("Is something wrong? [user.first_name()]... you're sweating.")
+		viewing_mob.say("Is something wrong? [user.first_name()]... you're sweating.", forced = "psycho")
 		break
 
 /obj/item/card/id/examine_more(mob/user)
