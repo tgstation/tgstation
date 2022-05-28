@@ -245,8 +245,8 @@ at the cost of risking a vicious bite.**/
 	icon_state = "steam_vent"
 	anchored = TRUE
 	density = FALSE
-	/// How often does the vent reset the blow_steam callback loop.
-	var/steam_speed = 15 SECONDS
+	/// How often does the vent reset the blow_steam cooldown.
+	var/steam_speed = 20 SECONDS
 	/// Is the steam vent active?
 	var/vent_active = TRUE
 	///The cooldown for toggling the steam vent to prevent infinite steam vent looping.
@@ -256,8 +256,10 @@ at the cost of risking a vicious bite.**/
 	. = ..()
 	if(prob(75))
 		vent_active = FALSE
-	var/timer = (steam_speed - (rand(1,5) SECONDS))
-	addtimer(CALLBACK(src, .proc/blow_steam), timer)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/blow_steam,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	update_icon_state()
 
 /obj/structure/steam_vent/attack_hand(mob/living/user, list/modifiers)
@@ -272,20 +274,37 @@ at the cost of risking a vicious bite.**/
 	else
 		balloon_alert(user, "Vent off.")
 		return
-	addtimer(CALLBACK(src, .proc/blow_steam), 1 SECONDS)
-	COOLDOWN_START(src, steam_vent_interact, 20 SECONDS)
+	blow_steam()
+
+/obj/structure/steam_vent/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(vent_active)
+		balloon_alert(user, "Turn it off first!")
+		return
+	if(tool.use_tool(src, user, 3 SECONDS))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		deconstruct()
+		return TRUE
+
+/obj/structure/steam_vent/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/iron(loc, 1)
+		new /obj/item/stock_parts/water_recycler(loc, 1)
+	qdel(src)
 
 /**
- * Actively looped proc that creates smoke, and determines when the vent needs to block line of sight via reset_opacity.
+ * Creates "steam" smoke, and determines when the vent needs to block line of sight via reset_opacity.
  */
 /obj/structure/steam_vent/proc/blow_steam()
 	if(!vent_active)
 		return
+	if(!COOLDOWN_FINISHED(src, steam_vent_interact))
+		return
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(range = 1, amount = 1, location = src)
 	smoke.start()
-	playsound(src, 'sound/machines/steam_hiss.ogg', 50, TRUE, -3)
-	addtimer(CALLBACK(src, .proc/blow_steam), steam_speed)
+	playsound(src, 'sound/machines/steam_hiss.ogg', 75, TRUE, -2)
+	COOLDOWN_START(src, steam_vent_interact, steam_speed)
 
 /obj/structure/steam_vent/update_icon_state()
 	. = ..()
