@@ -1294,20 +1294,11 @@
 		"hydro_tray",
 		"portaseeder",
 		"seed_extractor",
+		"gene_shears",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/wild = 3000)
-	
-/datum/techweb_node/gene_botany
-	id = "gene_botany"
-	display_name = "Botanical Genetic Engineering"
-	description = "Fine-tune your plants on a precise genetical level"
-	prereq_ids = list("botany")
-	design_ids = list(
-		"gene_shears",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
-	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
+	required_experiments = list(/datum/experiment/scanning/random/plants/traits)
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
