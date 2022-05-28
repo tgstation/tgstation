@@ -38532,10 +38532,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
-"mrC" = (
-/obj/machinery/door/window/right/directional/east,
-/turf/closed/wall,
-/area/station/maintenance/department/chapel)
 "mrF" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/red/half{
@@ -184083,7 +184079,7 @@ xMq
 iDt
 iDt
 iDt
-mrC
+tBs
 baj
 tBs
 iDt
