@@ -172,9 +172,10 @@
 "bN" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering{
-	name = "Utilities";
-	req_one_access = list("away_general","away_maintenance")
+	name = "Utilities"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/away/general,
+/obj/effect/mapping_helpers/airlock/access/any/away/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
@@ -2091,9 +2092,10 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering{
-	name = "Utilities";
-	req_one_access = list("away_general","away_maintenance")
+	name = "Utilities"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/away/general,
+/obj/effect/mapping_helpers/airlock/access/any/away/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
@@ -2672,9 +2674,10 @@
 /area/ruin/space/has_grav/hotel)
 "AS" = (
 /obj/machinery/door/airlock{
-	name = "Custodial Closet";
-	req_one_access = list("away_general","away_maintenance")
+	name = "Custodial Closet"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/away/general,
+/obj/effect/mapping_helpers/airlock/access/any/away/maintenance,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/hotel/custodial)
