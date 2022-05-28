@@ -1,3 +1,5 @@
+#define COOLDOWN_NO_DISPLAY_TIME (180 SECONDS)
+
 /datum/action
 	var/name = "Generic Action"
 	var/desc
@@ -727,34 +729,32 @@
 	return button
 
 /datum/action/cooldown/Destroy()
-	if(!isnull(sequence_actions))
-		sequence_actions.Cut()
 	QDEL_LIST(initialized_actions)
 	return ..()
 
-/datum/action/cooldown/Grant(mob/M)
+/datum/action/cooldown/Grant(mob/granted_to)
 	. = ..()
 	if(!owner)
 		return
 	UpdateButtons()
 	if(next_use_time > world.time)
 		START_PROCESSING(SSfastprocess, src)
-	RegisterSignal(owner, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/handle_melee_attack)
+	RegisterSignal(granted_to, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/handle_melee_attack)
 	for(var/datum/action/cooldown/ability as anything in initialized_actions)
-		ability.Grant(owner)
+		ability.Grant(granted_to)
 
-/datum/action/cooldown/Remove(mob/M)
+/datum/action/cooldown/Remove(mob/removed_from)
 	. = ..()
-	UnregisterSignal(M, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
+	UnregisterSignal(removed_From, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 	for(var/datum/action/cooldown/ability as anything in initialized_actions)
-		ability.Remove(M)
+		ability.Remove(removed_from)
 
 /datum/action/cooldown/IsAvailable()
 	return ..() && (next_use_time <= world.time)
 
 /// Initializes any sequence actions
 /datum/action/cooldown/proc/CreateSequenceActions()
-	if(isnull(sequence_actions) || sequence_actions.len == 0)
+	if(!LAZYLEN(sequence_actions))
 		return
 	// remove existing actions if any
 	QDEL_LIST(initialized_actions)
@@ -842,10 +842,10 @@
 	if(!button)
 		return
 	var/time_left = max(next_use_time - world.time, 0)
-	if(text_cooldown && time_left < 180 SECONDS)
+	if(text_cooldown && time_left < COOLDOWN_NO_DISPLAY_TIME)
 		// don't display cooldown if its very long
 		button.maptext = MAPTEXT("<b>[round(time_left/10, 0.1)]</b>")
-	if(!owner || time_left == 0 || time_left > 180 SECONDS)
+	if(!owner || time_left == 0 || time_left > COOLDOWN_NO_DISPLAY_TIME)
 		button.maptext = ""
 	if(IsAvailable() && owner.click_intercept == src)
 		button.color = COLOR_GREEN

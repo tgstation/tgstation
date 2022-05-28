@@ -324,26 +324,28 @@
 
 	var/make_sequence = input(usr, "Would you like this to be in a sequence?", "Sequence Ability") as anything in list("Yes", "No")
 	if(make_sequence == "Yes")
-		add_ability = new /datum/action/cooldown/mob_cooldown()
-		while(ability_type != null)
+		add_ability = new /datum/action/cooldown/mob_cooldown(marked_mob)
+		while(!isnull(ability_type))
 			var/ability_delay = input(usr, "Enter the abilities delay in seconds", "Delay") as null|num
-			if(ability_delay == null || ability_delay < 0)
+			if(isnull(ability_delay) || ability_delay < 0)
 				ability_delay = 0
 			add_ability.sequence_actions[ability_type] = ability_delay SECONDS
 			ability_type = tgui_input_list(usr, "Choose a new sequence ability", "Sequence Ability", all_mob_actions)
 		var/ability_cooldown = input(usr, "Enter the abilities cooldown in seconds", "Cooldown") as null|num
-		if(ability_cooldown == null || ability_cooldown < 0)
+		if(isnull(ability_cooldown) || ability_cooldown < 0)
 			ability_cooldown = 2
 		add_ability.cooldown_time = ability_cooldown SECONDS
 		var/ability_melee_cooldown = input(usr, "Enter the abilities melee cooldown in seconds", "Melee Cooldown") as null|num
-		if(ability_melee_cooldown == null || ability_melee_cooldown < 0)
+		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
 			ability_melee_cooldown = 2
 		add_ability.melee_cooldown_time = ability_melee_cooldown SECONDS
 		add_ability.name = input(usr, "Choose ability name", "Ability name")
 		add_ability.CreateSequenceActions()
 	else
-		add_ability = new ability_type()
+		add_ability = new ability_type(marked_mob)
 
+	if(isnull(marked_mob))
+		return
 	add_ability.Grant(marked_mob)
 
 	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [marked_mob].")
