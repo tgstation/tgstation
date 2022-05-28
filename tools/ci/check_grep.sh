@@ -69,6 +69,16 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/chair/(?<type>[/\w]*),\n[^)]*?/ob
     echo "ERROR: found multiple identical chairs on the same tile, please remove them."
     st=1
 fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/door/airlock/(?<type>[/\w]*),\n[^)]*?/obj/machinery/door/airlock/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple airlocks on the same tile, please remove them."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/door/firedoor/[^/](?<type>[/\w]*),\n[^/)]*?/obj/machinery/door/firedoor/[^/]\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple firelocks on the same tile, please remove them."
+    st=1
+fi;
 if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/closet/(?<type>[/\w]*),\n[^)]*?/obj/structure/closet/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
 	echo
     echo "ERROR: found multiple identical closets on the same tile, please remove them."
