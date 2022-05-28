@@ -6,7 +6,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "al" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -36,7 +36,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "as" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/solar_control)
@@ -356,7 +356,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "ch" = (
 /turf/closed/wall,
 /area/ruin/unpowered/no_grav)
@@ -1156,7 +1156,7 @@
 /area/ruin/space/derelict/singularity_engine)
 "fR" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "tech_storage";
+	name = "Tech Storage";
 	req_access = list("tech_storage")
 	},
 /turf/open/floor/iron/airless,
@@ -1523,7 +1523,7 @@
 /area/ruin/space/derelict/medical/chapel)
 "hG" = (
 /obj/machinery/door/morgue{
-	name = "coffin storage";
+	name = "Coffin Storage";
 	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
@@ -2848,7 +2848,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "op" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -2858,21 +2858,21 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oq" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oy" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oz" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oE" = (
 /obj/structure/frame/computer{
 	dir = 1
@@ -2893,7 +2893,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "po" = (
 /obj/structure/cable,
 /obj/item/stack/cable_coil/five,
@@ -2989,7 +2989,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "uE" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
@@ -3224,7 +3224,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "El" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/airless,
@@ -3568,7 +3568,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "QW" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
