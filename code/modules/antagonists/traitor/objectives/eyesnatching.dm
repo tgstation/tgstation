@@ -149,22 +149,26 @@
 		return ..()
 
 	var/obj/item/organ/eyes/eyeballies = victim.getorgan(/obj/item/organ/eyes)
+	var/obj/item/bodypart/head/head = victim.get_bodypart(BODY_ZONE_HEAD)
 
 	if(!eyeballies || victim.is_eyes_covered())
 		return ..()
 
+	if((head && head.eyes != eyeballies) || eyeballies.zone != BODY_ZONE_HEAD)
+		to_chat(user, span_warning("You don't know how to apply [src] to the abomination that [victim] is!"))
+		return ..()
+
+	if(!head || !istype(head))
+		return ..()
+
 	user.do_attack_animation(victim, used_item = src)
 	victim.visible_message(span_warning("[user] presses [src] against [victim]'s skull!"), span_userdanger("[user] presses [src] against your skull!"))
-	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, victim)))
+	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, head, victim)))
 		return
 
 	to_chat(victim, span_userdanger("You feel [src] pushing at your skull!"))
 	to_chat(user, span_notice("You apply more pressure to [src]."))
-	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, victim)))
-		return
-
-	var/obj/item/bodypart/head = victim.get_bodypart(BODY_ZONE_HEAD)
-	if(!head) //WUT
+	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, head, victim)))
 		return
 
 	var/datum/wound/blunt/severe/severe_wound_type = /datum/wound/blunt/severe
@@ -178,7 +182,7 @@
 	playsound(victim, "sound/effects/wounds/crackandbleed.ogg", 100)
 	log_combat(user, victim, "pierced skull of", src)
 
-	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, victim)))
+	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, head, victim)))
 		return
 
 	if(!HAS_TRAIT(victim, TRAIT_BLIND))
@@ -194,14 +198,20 @@
 	desc += " It has been used up."
 	update_icon()
 
-/obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/eyes/eyeballies, mob/living/carbon/human/victim)
+/obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/eyes/eyeballies, obj/item/bodypart/head, mob/living/carbon/human/victim)
 	if(!eyeballies || QDELETED(eyeballies))
+		return FALSE
+
+	if(!head || QDELETED(head))
 		return FALSE
 
 	if(!victim || QDELETED(victim))
 		return FALSE
 
 	if(eyeballies.owner != victim)
+		return FALSE
+
+	if(head.owner != victim || head.eyes != eyes)
 		return FALSE
 
 	return TRUE
