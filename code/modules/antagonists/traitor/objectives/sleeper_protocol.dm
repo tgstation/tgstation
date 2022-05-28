@@ -2,6 +2,7 @@
 	name = "Sleeper Protocol"
 	objectives = list(
 		/datum/traitor_objective/sleeper_protocol = 1,
+		/datum/traitor_objective/sleeper_protocol/everybody = 1,
 	)
 
 
@@ -17,11 +18,14 @@
 		JOB_MEDICAL_DOCTOR,
 		JOB_PARAMEDIC,
 		JOB_VIROLOGIST,
+		JOB_ROBOTICIST,
 	)
 
 	var/obj/item/disk/surgery/sleeper_protocol/disk
 
 	var/mob/living/current_registered_mob
+
+	var/inverted_limitation = FALSE
 
 /datum/traitor_objective/sleeper_protocol/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
@@ -46,7 +50,9 @@
 
 /datum/traitor_objective/sleeper_protocol/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/datum/job/job = generating_for.assigned_role
-	if(!(job.title in limited_to))
+	if(!(job.title in limited_to) && !inverted_limitation)
+		return FALSE
+	if((job.title in limited_to) && inverted_limitation)
 		return FALSE
 	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
 		signals = list(COMSIG_MOB_SURGERY_STEP_SUCCESS = .proc/on_surgery_success))
@@ -87,7 +93,7 @@
 
 /datum/surgery_step/brainwash/sleeper_agent
 	time = 25 SECONDS
-	var/list/possible_objectives = list(
+	var/static/list/possible_objectives = list(
 		"You love the Syndicate",
 		"Do not trust Nanotrasen",
 		"The Captain is a lizardperson",
@@ -111,3 +117,11 @@
 	if(!.)
 		return
 	target.gain_trauma(new /datum/brain_trauma/mild/phobia/conspiracies(), TRAUMA_RESILIENCE_LOBOTOMY)
+
+/datum/traitor_objective/sleeper_protocol/everybody //Much harder for non-med and non-robo
+
+	progression_minimum = 30 MINUTES
+	progression_reward = list(15 MINUTES, 20 MINUTES)
+	telecrystal_reward = list(2, 3)
+
+	inverted_limitation = TRUE

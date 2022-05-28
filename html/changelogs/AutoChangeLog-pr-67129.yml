@@ -1,5 +1,0 @@
-author: "Sylphet"
-delete-after: True
-changes: 
-  - bugfix: "fixes missing smoothie sprites"
-  - imageadd: "added smoothie sprites"

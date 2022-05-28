@@ -37,17 +37,18 @@
 	var/obj/item/organ/eyes/eyes_organ = target.getorgan(/obj/item/organ/eyes)
 	if (!eyes_organ || !istype(eyes_organ))
 		return
-	
+
 	if (!initial(eyes_organ.eye_color_left))
 		eyes_organ.eye_color_left = value
 	eyes_organ.old_eye_color_left = value
 
 	if(hetero) // Don't override the snowflakes please
 		return
-	
+
 	if (!initial(eyes_organ.eye_color_right))
 		eyes_organ.eye_color_right = value
 	eyes_organ.old_eye_color_right = value
+	eyes_organ.refresh()
 
 /datum/preference/color/eye_color/create_default_value()
 	return random_eye_color()
