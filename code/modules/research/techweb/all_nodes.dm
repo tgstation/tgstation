@@ -1291,10 +1291,10 @@
 	design_ids = list(
 		"biogenerator",
 		"flora_gun",
+		"gene_shears",
 		"hydro_tray",
 		"portaseeder",
 		"seed_extractor",
-		"gene_shears",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/wild = 3000)
