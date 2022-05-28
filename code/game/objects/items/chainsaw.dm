@@ -51,10 +51,8 @@
 
 	if(on)
 		hitsound = 'sound/weapons/chainsawhit.ogg'
-		//TODO: add a wvrvrvrrwrwrrwrwrwrrrrr noise to signal when its on
 	else
 		hitsound = SFX_SWING_HIT
-		//TODO: deactivate aforementioned 'on' noises
 
 	toolspeed = on ? 0.5 : initial(toolspeed) //Turning it on halves the speed
 	if(src == user.get_active_held_item()) //update inhands
