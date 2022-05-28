@@ -1258,6 +1258,7 @@
 	req_access = list("away_engineering")
 	},
 /obj/item/pipe_dispenser,
+/obj/item/storage/bag/construction,
 /obj/item/storage/belt/utility/full,
 /obj/item/clothing/head/hardhat/weldhat,
 /obj/item/t_scanner,
@@ -7581,7 +7582,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "Lg" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/random,
+/turf/closed/mineral/diamond,
 /area/space/nearstation)
 "Lh" = (
 /obj/structure/window/reinforced,
@@ -7809,11 +7810,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
-"Nl" = (
-/obj/item/shard,
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space/nearstation)
 "Np" = (
 /obj/effect/decal/cleanable/blood/xtracks{
 	dir = 10
@@ -8226,6 +8222,9 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
+"Qs" = (
+/turf/closed/mineral/gibtonite,
+/area/space/nearstation)
 "QC" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 8
@@ -11366,7 +11365,7 @@ KI
 pR
 LG
 rm
-Jg
+UP
 Jg
 aa
 aa
@@ -11432,7 +11431,7 @@ MH
 Jf
 rm
 rm
-Jg
+UP
 Jg
 aa
 aa
@@ -11497,7 +11496,7 @@ Vl
 Zc
 Zc
 rm
-Jg
+rm
 Jg
 Jg
 aa
@@ -11553,7 +11552,7 @@ mw
 aa
 aa
 aa
-Nl
+aa
 aa
 aa
 aa
@@ -15604,7 +15603,7 @@ aa
 aa
 aa
 aa
-aa
+UP
 aa
 aa
 aa
@@ -15670,8 +15669,8 @@ aa
 aa
 ab
 aa
-aa
-aa
+UP
+UP
 aa
 aa
 aa
@@ -15735,9 +15734,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+UP
+UP
+UP
 aa
 aa
 aa
@@ -15800,11 +15799,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+UP
+UP
+Qs
+UP
+UP
 aa
 aa
 aa
@@ -15867,10 +15866,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+UP
+UP
+UP
+UP
 aa
 aa
 aa
@@ -15934,8 +15933,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+UP
+UP
 aa
 aa
 aa
