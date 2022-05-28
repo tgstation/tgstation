@@ -51,7 +51,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 /obj/machinery/light_switch/update_overlays()
 	. = ..()
 	if(machine_stat & NOPOWER)
-	. += emissive_appearance(icon, "[base_icon_state]-emissive[area.lightswitch ? "-on" : "-off"]", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-emissive[area.lightswitch ? "-on" : "-off"]", alpha = src.alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
