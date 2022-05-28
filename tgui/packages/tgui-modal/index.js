@@ -2,6 +2,7 @@ import './styles/main.scss';
 import { createRenderer } from 'tgui/renderer';
 import { TguiModal } from './interfaces/TguiModal';
 
+// Debug artifacts
 const CHANNEL = 'say';
 const MAX_LENGTH = 1024;
 

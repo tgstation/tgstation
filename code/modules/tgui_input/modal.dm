@@ -3,7 +3,7 @@
  * Like the traditional say, it does not html_encode the user input.
  *
  * Arguments:
- ** channel - Channel to broadcast the message.
+ ** channel - Initial speech channel to open the window in.
  ** max_length - Cuts the user off after this amount of characters.
  */
 /proc/tgui_modal(mob/user, channel = SAY_CHAN, max_length = MAX_MESSAGE_LEN)
@@ -19,7 +19,7 @@
 	modal.open(user)
 	modal.wait()
 	if(modal)
-		. = modal.entry
+		. = list(modal.channel, modal.entry)
 		qdel(modal)
 
 /**
@@ -75,10 +75,18 @@
 	if (type == "close")
 		close()
 	if (type == "entry")
-		close()
-		if(!payload)
-			return TRUE
-		if(length(payload) > max_length)
+		if(!payload || !payload["channel"] || !payload["entry"])
+			return FALSE
+		if(length(payload["entry"]) > max_length)
 			CRASH("[usr] has entered more characters than allowed")
-		src.entry = payload
+		set_entry(payload)
+		close()
+	return TRUE
+
+/**
+ * Sets the return values for the tgui_modal proc.
+ */
+/datum/tgui_modal/proc/set_entry(payload)
+	src.channel = payload["channel"]
+	src.entry = payload["entry"]
 	return TRUE
