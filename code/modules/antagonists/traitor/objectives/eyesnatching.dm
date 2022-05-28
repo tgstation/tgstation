@@ -148,7 +148,7 @@
 	if(!istype(victim) || !victim.Adjacent(user)) //No TK use
 		return ..()
 
-	var/obj/item/organ/eyes/eyeballies = victim.getorgan(/obj/item/organ/eyes)
+	var/obj/item/organ/eyes/eyeballies = victim.getorganslot(ORGAN_SLOT_EYES)
 	var/obj/item/bodypart/head/head = victim.get_bodypart(BODY_ZONE_HEAD)
 
 	if(!eyeballies || victim.is_eyes_covered())
