@@ -52892,7 +52892,7 @@
 	dir = 8
 	},
 /obj/machinery/newscaster/directional/south,
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "otS" = (
