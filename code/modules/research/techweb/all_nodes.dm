@@ -169,7 +169,6 @@
 		"mop",
 		"multitool",
 		"normtrash",
-		"petri_dish",
 		"pipe_painter",
 		"plant_analyzer",
 		"plunger",
@@ -180,7 +179,6 @@
 		"shovel",
 		"spade",
 		"spraycan",
-		"swab",
 		"tile_sprayer",
 		"tscanner",
 		"welding_helmet",
@@ -197,6 +195,7 @@
 	description = "Basic medical tools and equipment."
 	design_ids = list(
 		"beaker",
+		"biopsy_tool",
 		"blood_filter",
 		"bonesetter",
 		"cautery",
@@ -210,8 +209,11 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"operating",
+		"petri_dish",
 		"pillbottle",
 		"plumbing_rcd",
+		"plumbing_rcd_sci",
 		"portable_chem_mixer",
 		"retractor",
 		"scalpel",
@@ -219,6 +221,7 @@
 		"surgical_drapes",
 		"surgical_tape",
 		"surgicaldrill",
+		"swab",
 		"syringe",
 		"xlarge_beaker",
 	)
@@ -312,7 +315,6 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"beer_dispenser",
-		"biopsy_tool",
 		"blood_pack",
 		"chem_dispenser",
 		"chem_heater",
@@ -328,9 +330,7 @@
 		"medical_kiosk",
 		"medigel",
 		"medipen_refiller",
-		"operating",
 		"pandemic",
-		"plumbing_rcd_sci",
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
