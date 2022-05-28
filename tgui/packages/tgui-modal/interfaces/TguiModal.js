@@ -1,5 +1,6 @@
 import { Component, createRef } from 'inferno';
 import { Input } from 'tgui/components';
+import { classes } from 'common/react';
 
 const CHANNELS = ['say', 'radio', 'me', 'ooc'];
 
@@ -8,7 +9,7 @@ export class TguiModal extends Component {
     super(props);
     this.inputRef = createRef();
     this.state = {
-      channel: 0,
+      channel: CHANNELS.indexOf(props.channel),
     };
     this.onClick = () => {
       const { channel } = this.state;
@@ -19,7 +20,8 @@ export class TguiModal extends Component {
       }
     };
     this.onEnter = (value) => {
-      if (!value || value.length > 1024) {
+      const { max_length } = this.props;
+      if (!value || value.length > max_length) {
         Byond.sendMessage('close');
       } else {
         Byond.sendMessage('entry', value);
@@ -34,21 +36,25 @@ export class TguiModal extends Component {
   }
 
   render() {
+    const { channel } = this.state;
+    const { max_length } = this.props;
+    const props = this;
+    const { inputRef, onClick, onEnter } = props;
     return (
-      <div className={'tguimodal-window'}>
+      <div className={classes(['window', `gradient-${CHANNELS[channel]}`])}>
         <button
-          className={'tguimodal-button'}
-          onclick={this.onClick}
-          ref={this.inputRef}
+          className={classes(['button', `button-${CHANNELS[channel]}`])}
+          onclick={onClick}
+          ref={inputRef}
           type="submit">
-          {this.state.channel}
+          {`>`}
         </button>
         <Input
           autoFocus
-          className="tguimodal-input"
-          maxLength={1024}
+          className="input"
+          maxLength={max_length}
           onEscape={() => Byond.sendMessage('close')}
-          onEnter={(_, value) => this.onEnter(value)}
+          onEnter={(_, value) => onEnter(value)}
           width="100%"
         />
       </div>

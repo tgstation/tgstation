@@ -4,6 +4,13 @@ $input-text-inactive: #7881a1;
 $input-button-hover: #2a2a2a;
 $input-button-border: #424242;
 
+$color-say: #185adb;
+$color-say-highlight: #4b9eda;
+$color-radio: #1ecc43;
+$color-radio-highlight: #56df74;
+$color-ooc: #ffc947;
+$color-ooc-highlight: #face68;
+
 // gradient animation
 @keyframes gradient {
   0% {
@@ -15,7 +22,7 @@ $input-button-border: #424242;
   }
 }
 
-.tguimodal-window {
+.window {
   background: $input-background;
   border-left: thin solid $input-text-inactive;
   border-right: thin solid $input-text-inactive;
@@ -26,14 +33,17 @@ $input-button-border: #424242;
   padding: 1rem 0 1rem 1rem;
   position: relative;
   width: 100%;
+}
+
+.gradient-say {
   &:after {
     animation: gradient 10s linear infinite;
     background: linear-gradient(
       to right,
       #0a1931,
-      #185adb,
+      $color-say,
       #efefef,
-      #185adb,
+      $color-say,
       #0a1931
     );
     background-position: 0% 0%;
@@ -48,7 +58,76 @@ $input-button-border: #424242;
   }
 }
 
-.tguimodal-input {
+.gradient-radio {
+  &:after {
+    animation: gradient 10s linear infinite;
+    background: linear-gradient(
+      to right,
+      #021005,
+      $color-radio,
+      #7effbf,
+      $color-radio,
+      #021005
+    );
+    background-position: 0% 0%;
+    background-size: 500% auto;
+    bottom: 0px;
+    content: '';
+    height: 2px;
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    z-index: 999;
+  }
+}
+
+.gradient-me {
+  &:after {
+    animation: gradient 10s linear infinite;
+    background: linear-gradient(
+      to right,
+      $input-background,
+      $input-text-inactive,
+      $input-text-active,
+      $input-text-inactive,
+      $input-button-border
+    );
+    background-position: 0% 0%;
+    background-size: 500% auto;
+    bottom: 0px;
+    content: '';
+    height: 2px;
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    z-index: 999;
+  }
+}
+
+.gradient-ooc {
+  &:after {
+    animation: gradient 10s linear infinite;
+    background: linear-gradient(
+      to right,
+      #0c0900,
+      $color-ooc,
+      #feddbe,
+      $color-ooc,
+      #0c0900
+    );
+    background-position: 0% 0%;
+    background-size: 500% auto;
+    bottom: 0px;
+    content: '';
+    height: 2px;
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    z-index: 999;
+  }
+}
+
+.input {
   background-color: $input-background;
   border: none;
   color: $input-text-active;
@@ -59,7 +138,7 @@ $input-button-border: #424242;
   width: 100%;
 }
 
-.tguimodal-button {
+.button {
   background-color: transparent;
   border: none;
   color: $input-text-inactive;
@@ -69,13 +148,36 @@ $input-button-border: #424242;
   height: 40px;
   padding-top: 2px;
   text-align: center;
-  transition: color 0.5s;
   vertical-align: middle;
   width: 60px;
   &:hover {
     background-color: $input-button-hover;
-    border: thin solid $input-text-inactive;
+    border: thin solid;
+    border-color: $input-text-active;
     border-radius: 6px;
     color: $input-text-active;
+  }
+}
+.button-say {
+  color: $color-say;
+  &:hover {
+    border-color: $color-say-highlight;
+    color: $color-say-highlight;
+  }
+}
+
+.button-radio {
+  color: $color-radio;
+  &:hover {
+    border-color: $color-radio-highlight;
+    color: $color-radio-highlight;
+  }
+}
+
+.button-ooc {
+  color: $color-ooc;
+  &:hover {
+    border-color: $color-ooc-highlight;
+    color: $color-ooc-highlight;
   }
 }
