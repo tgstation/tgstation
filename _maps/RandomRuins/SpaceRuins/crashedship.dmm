@@ -36,7 +36,8 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Checkpoint"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general/turf/open/floor/iron,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "ck" = (
 /obj/effect/turf_decal/trimline/neutral/line,
@@ -1140,7 +1141,8 @@
 	emergency = 1;
 	name = "Teleport Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command/teleporter/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/command/teleporter,
+/obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/awaymission/bmpship/midship)
 "LX" = (

@@ -950,7 +950,8 @@
 	aiDisabledIdScanner = 1;
 	name = "Secure Storage D"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/generic1/turf/open/floor/iron/dark,
+/obj/effect/mapping_helpers/airlock/access/all/away/generic1,
+/turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "dY" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -1225,7 +1226,7 @@
 	id_tag = "outerbrig";
 	name = "Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig_entrance,
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -1619,7 +1620,8 @@
 	aiDisabledIdScanner = 1;
 	name = "Power Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/generic1/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/away/generic1,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "gj" = (
@@ -1647,7 +1649,8 @@
 /obj/machinery/door/airlock/research{
 	name = "Secure Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/generic1/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+/obj/effect/mapping_helpers/airlock/access/all/away/generic1,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /obj/structure/cable,
@@ -4276,7 +4279,7 @@
 	id_tag = "outerbrig";
 	name = "Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig_entrance,
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -4465,7 +4468,7 @@
 	id_tag = "outerbrig";
 	name = "Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig_entrance,
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -4604,7 +4607,7 @@
 	id_tag = "outerbrig";
 	name = "Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig_entrance,
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -4669,7 +4672,7 @@
 	id_tag = "outerbrig";
 	name = "Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig_entrance,
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},

@@ -6385,7 +6385,8 @@
 	id_tag = "snowdin_turbine_exterior";
 	name = "Turbine Exterior Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/awaymission/snowdin/post/engineering)

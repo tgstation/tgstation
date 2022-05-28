@@ -2179,7 +2179,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/atmospherics,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "li" = (
@@ -2326,7 +2326,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/atmospherics,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "lQ" = (
