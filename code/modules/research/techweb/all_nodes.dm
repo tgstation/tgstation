@@ -1307,6 +1307,7 @@
 		"gene_shears",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
