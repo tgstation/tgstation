@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes: 
+  - imageadd: "Changed light switch sprite and made it depend on the power availability."
