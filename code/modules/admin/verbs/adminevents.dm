@@ -253,8 +253,8 @@
 		if(!newtime)
 			return
 		N.timer_set = newtime
-	N.set_safety()
-	N.set_active()
+	N.toggle_nuke_safety()
+	N.toggle_nuke_armed()
 
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [AREACOORD(N)].")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(N)].")

@@ -120,11 +120,11 @@ const StockPartsPanel = (props, context) => {
         <Button
           fluid
           bold
-          content={"Enable part replacement"}
+          content={"Toggle part replacement"}
           textAlign="center"
           fontSize="200%"
           lineHeight={1.25}
-          className="Mecha__Button"
+          className="Mecha__ButtonDanger"
           onClick={() => act('togglemaint')} />
       </Stack.Item>
       <Stack.Item>

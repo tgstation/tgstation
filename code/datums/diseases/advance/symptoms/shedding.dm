@@ -1,19 +1,11 @@
-/*
-//////////////////////////////////////
-Alopecia
-
-	Not Noticeable.
-	Increases resistance slightly.
-	Increases stage speed.
-	Transmittable.
-	Intense Level.
-
-BONUS
-	Makes the mob lose hair.
-
-//////////////////////////////////////
+/*Alopecia
+ * No change to stealth
+ * Slight increase to resistance
+ * Increases stage speed
+ * Increases transmissibility
+ * Near critcal level
+ * Bonus: Makes the mob lose hair.
 */
-
 /datum/symptom/shedding
 	name = "Alopecia"
 	desc = "The virus causes rapid shedding of head and body hair."

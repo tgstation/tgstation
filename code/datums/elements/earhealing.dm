@@ -32,5 +32,5 @@
 		if(!ears || HAS_TRAIT_NOT_FROM(user, TRAIT_DEAF, EAR_DAMAGE))
 			continue
 		ears.deaf = max(ears.deaf - 0.25 * delta_time, (ears.damage < ears.maxHealth ? 0 : 1)) // Do not clear deafness if our ears are too damaged
-		ears.damage = max(ears.damage - 0.025 * delta_time, 0)
+		ears.applyOrganDamage(-0.025 * delta_time, 0)
 		CHECK_TICK

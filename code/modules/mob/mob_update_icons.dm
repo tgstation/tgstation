@@ -4,6 +4,9 @@
 /mob/proc/regenerate_icons() //TODO: phase this out completely if possible
 	return
 
+/mob/proc/update_clothing(slot_flags)
+	return
+
 /mob/proc/update_icons()
 	return
 
@@ -44,9 +47,6 @@
 	return
 
 /mob/proc/update_hair()
-	return
-
-/mob/proc/update_fire()
 	return
 
 /mob/proc/update_inv_gloves()

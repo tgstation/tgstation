@@ -255,12 +255,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 				amazed_human.update_hair()
 
 		if(BODY_ZONE_PRECISE_EYES)
-			var/new_eye_color = input(amazed_human, "Choose your eye color", "Eye Color", amazed_human.eye_color) as color|null
+			var/new_eye_color = input(amazed_human, "Choose your eye color", "Eye Color", amazed_human.eye_color_left) as color|null
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return TRUE
 			if(new_eye_color)
-				amazed_human.eye_color = sanitize_hexcolor(new_eye_color)
-				amazed_human.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+				amazed_human.eye_color_left = sanitize_hexcolor(new_eye_color)
+				amazed_human.eye_color_right = sanitize_hexcolor(new_eye_color)
+				amazed_human.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
+				amazed_human.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
 				amazed_human.update_body()
 
 /obj/structure/mirror/magic/lesser/Initialize(mapload)

@@ -125,7 +125,7 @@
 	if(!paper)
 		return
 	paper.add_info(print.value, rgb(text_color_red, text_color_green, text_color_blue), typeface.value, signature.value)
-	log_paper("Printer component writing to paper [paper.name]. [parent.get_creator()].")
+	log_paper("Printer component wrote to [paper.name]: \"[print.value]\", authored by [parent.get_creator()].")
 
 /obj/item/circuit_component/printer/proc/eject_paper(datum/port/input/port, list/return_values)
 	var/obj/item/paper/paper = loaded_papers?[1]

@@ -449,8 +449,12 @@
 /area/shuttle/caravan/freighter1)
 "xG" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/bed,
-/obj/item/bedsheet,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
 	dir = 4;

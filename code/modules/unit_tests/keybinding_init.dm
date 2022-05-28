@@ -3,4 +3,4 @@
 		var/datum/keybinding/KB = i
 		if(initial(KB.keybind_signal) || !initial(KB.name))
 			continue
-		Fail("[KB.name] does not have a keybind signal defined.")
+		TEST_FAIL("[KB.name] does not have a keybind signal defined.")

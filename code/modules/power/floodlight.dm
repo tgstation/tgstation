@@ -61,8 +61,8 @@
 	density = TRUE
 	max_integrity = 100
 	integrity_failure = 0.8
-	idle_power_usage = 100
-	active_power_usage = 1000
+	idle_power_usage = 0
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	anchored = FALSE
 	light_power = 1.75
 	var/list/light_setting_list = list(0, 5, 10, 15)
@@ -107,16 +107,15 @@
 	if(user)
 		to_chat(user, span_notice("You set [src] to [setting_text]."))
 
-/obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
-	if(O.tool_behaviour == TOOL_WRENCH)
-		default_unfasten_wrench(user, O, time = 20)
-		change_setting(1)
-		if(anchored)
-			connect_to_network()
-		else
-			disconnect_from_network()
+/obj/machinery/power/floodlight/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	change_setting(1)
+	if(anchored)
+		connect_to_network()
 	else
-		. = ..()
+		disconnect_from_network()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/floodlight/attack_hand(mob/user, list/modifiers)
 	. = ..()

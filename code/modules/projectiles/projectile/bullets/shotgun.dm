@@ -26,6 +26,11 @@
 	name = "incendiary slug"
 	damage = 20
 
+/obj/projectile/bullet/incendiary/shotgun/no_trail
+	name = "precision incendiary slug"
+	damage = 35
+	leaves_fire_trail = FALSE
+
 /obj/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
 	damage = 5
@@ -34,8 +39,8 @@
 	name = "stunslug"
 	damage = 5
 	paralyze = 100
-	stutter = 5
-	jitter = 20
+	stutter = 10 SECONDS
+	jitter = 40 SECONDS
 	range = 7
 	icon_state = "spark"
 	color = "#FFFF00"

@@ -32,15 +32,16 @@
 	callTime = 250;
 	can_move_docking_ports = 1;
 	dir = 8;
-	dwidth = 11;
-	height = 17;
+	dwidth = 14;
+	height = 23;
 	id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Salvage Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	width = 33
+	width = 16;
+	dheight = 18
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
@@ -77,7 +78,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
-	name = "Exterior Window Blast door"
+	name = "Exterior Window Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
@@ -198,7 +199,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/door/poddoor{
 	id = "whiteship_port";
-	name = "NTMS-037 Bay Blast door"
+	name = "NTMS-037 Bay Blast Door"
 	},
 /obj/machinery/conveyor{
 	id = "NTMSLoad2";
@@ -224,7 +225,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
-	name = "Exterior Window Blast door"
+	name = "Exterior Window Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -392,7 +393,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "aK" = (
-/obj/structure/sign/warning/enginesafety,
+/obj/structure/sign/warning/engine_safety,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "aL" = (
@@ -441,7 +442,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /obj/machinery/airalarm/all_access{
@@ -950,7 +951,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge";
-	name = "Cockpit Emergency Blast door"
+	name = "Cockpit Emergency Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bridge)
@@ -1012,7 +1013,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bar)
 "bX" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
@@ -1020,7 +1023,9 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/item/bedsheet/brown,
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
@@ -1237,7 +1242,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
-	name = "Exterior Window Blast door"
+	name = "Exterior Window Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
@@ -1686,7 +1691,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
-	name = "Exterior Window Blast door"
+	name = "Exterior Window Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
@@ -1702,7 +1707,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/door/poddoor{
 	id = "whiteship_port";
-	name = "NTMS-037 Bay Blast door"
+	name = "NTMS-037 Bay Blast Door"
 	},
 /obj/machinery/conveyor{
 	dir = 1;

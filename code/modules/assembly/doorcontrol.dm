@@ -245,7 +245,15 @@
 		return
 	cooldown = TRUE
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
-	var/obj/structure/industrial_lift/tram/tram_part = GLOB.central_tram
+	var/obj/structure/industrial_lift/tram/tram_part
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return
+	for(var/atom/tram as anything in GLOB.central_trams)
+		if(tram.z != current_turf.z)
+			continue
+		tram_part = tram
+		break
 	if(!tram_part)
 		say("The tram is not responding to call signals. Please send a technician to repair the internals of the tram.")
 		return

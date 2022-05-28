@@ -358,6 +358,48 @@
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/basic/cockroach = 5)
 
+/datum/micro_organism/cell_line/glockroach
+	desc = "Gattodeoid anthropod cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/drug/maint/powder,
+		/datum/reagent/iron)
+
+	supplementary_reagents = list(
+		/datum/reagent/gunpowder = 6,
+		/datum/reagent/drug/maint/tar = 4,
+		/datum/reagent/yuck = 2,
+		/datum/reagent/growthserum = 2)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin/pestkiller = -2,
+		/datum/reagent/consumable/coffee = -3, //a quick google search said roaches don't like coffee grounds, and I needed a different suppressive reagent
+		/datum/reagent/consumable/ethanol/bug_spray = -4)
+
+	virus_suspectibility = 0
+	resulting_atoms = list(/mob/living/basic/cockroach/glockroach = 2)
+
+/datum/micro_organism/cell_line/hauberoach
+	desc = "Hattodeoid anthropod cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/consumable/ethanol/beer,
+		/datum/reagent/iron)
+
+	supplementary_reagents = list(
+		/datum/reagent/gunpowder = 6,
+		/datum/reagent/medicine/pen_acid = 4, //Prussian Blue is an antidote for radioactive thallium poisoning, among other things. The pickelhaube was worn by Prussian/German officers. You can tell I'm running out of ideas here.
+		/datum/reagent/yuck = 2,
+		/datum/reagent/blood = 2)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin/pestkiller = -2,
+		/datum/reagent/consumable/coffee = -3,
+		/datum/reagent/consumable/ethanol/cognac = -4)
+
+	virus_suspectibility = 0
+	resulting_atoms = list(/mob/living/basic/cockroach/hauberoach = 2)
+
 /datum/micro_organism/cell_line/pine
 	desc = "Coniferous plant cells"
 	required_reagents = list(

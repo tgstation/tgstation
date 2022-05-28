@@ -5,12 +5,20 @@
 	school = SCHOOL_CONJURATION
 	charge_max = 600
 	clothes_req = FALSE
-	antimagic_allowed = TRUE
 	invocation = "HO HO HO"
 	invocation_type = INVOCATION_SHOUT
 	range = 3
 	cooldown_min = 50
+	antimagic_flags = NONE
 
 	summon_type = list("/obj/item/a_gift")
 	summon_lifespan = 0
 	summon_amt = 5
+
+/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/santa
+	name = "Santa Teleport"
+
+	invocation = "HO HO HO"
+	clothes_req = FALSE
+	say_destination = FALSE // Santa moves in mysterious ways
+	antimagic_flags = NONE

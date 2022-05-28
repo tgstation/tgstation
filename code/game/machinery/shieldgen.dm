@@ -115,7 +115,7 @@
 	opacity = FALSE
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
-	req_access = list(ACCESS_ENGINE)
+	req_access = list(ACCESS_ENGINEERING)
 	max_integrity = 100
 	var/active = FALSE
 	var/list/deployed_shields
@@ -265,8 +265,6 @@
 	req_access = list(ACCESS_TELEPORTER)
 	flags_1 = CONDUCT_1
 	use_power = NO_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 50
 	max_integrity = 300
 	var/active = FALSE
 	var/locked = TRUE
@@ -393,9 +391,9 @@
 	return ..()
 
 
-/obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	. |= default_unfasten_wrench(user, I, 0)
+	. |= default_unfasten_wrench(user, tool, time = 0)
 	var/turf/T = get_turf(src)
 	update_cable_icons_on_turf(T)
 	if(. == SUCCESSFUL_UNFASTEN && anchored)

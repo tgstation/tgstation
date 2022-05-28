@@ -14,10 +14,10 @@
 	name = "Bluespace Artillery Controls (Computer Board)"
 	build_path = /obj/machinery/computer/bsa_control
 
-//obj/item/circuitboard/computer/shield
-// name = "Shield Control (Computer Board)"
-// greyscale_colors = CIRCUIT_COLOR_COMMAND
-// build_path = /obj/machinery/computer/stationshield
+/obj/item/circuitboard/computer/accounting
+	name = "Account Lookup Console (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_COMMAND
+	build_path = /obj/machinery/computer/accounting
 
 //Engineering
 
@@ -335,6 +335,10 @@
 /obj/item/circuitboard/computer/tram_controls
 	name = "Tram Controls (Computer Board)"
 	build_path = /obj/machinery/computer/tram_controls
+
+/obj/item/circuitboard/computer/terminal
+	name = "Terminal (Computer Board)"
+	build_path = /obj/machinery/computer/terminal
 
 //Medical
 

@@ -106,9 +106,10 @@
 	panel_open = !panel_open
 	update_appearance()
 
-/obj/structure/aquarium/wrench_act(mob/living/user, obj/item/I)
-	if(default_unfasten_wrench(user,I))
-		return TRUE
+/obj/structure/aquarium/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/aquarium/attackby(obj/item/I, mob/living/user, params)
 	if(broken)

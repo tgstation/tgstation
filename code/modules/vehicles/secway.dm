@@ -24,8 +24,8 @@
 		return PROCESS_KILL
 	if(DT_PROB(10, delta_time))
 		return
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(0, src)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(0, location = src)
 	smoke.start()
 
 /obj/vehicle/ridden/secway/welder_act(mob/living/user, obj/item/I)

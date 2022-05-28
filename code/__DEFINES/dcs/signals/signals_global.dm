@@ -6,6 +6,9 @@
 // These are signals which can be listened to by any component on any parent
 // start global signals with "!", this used to be necessary but now it's just a formatting choice
 
+
+/// called after a successful area creation by a mob: (area/created_area, area/old_area, mob/creator)
+#define COMSIG_AREA_CREATED "!mob_created_area"
 ///from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
 #define COMSIG_GLOB_NEW_Z "!new_z"
 /// sent after world.maxx and/or world.maxy are expanded: (has_exapnded_world_maxx, has_expanded_world_maxy)
@@ -62,3 +65,8 @@
 #define COMSIG_GLOB_NUKE_DEVICE_ARMED "!nuclear_device_armed"
 /// global signal sent when a nuclear device is disarmed (/obj/machinery/nuclearbomb/nuke/disarmed_nuke)
 #define COMSIG_GLOB_NUKE_DEVICE_DISARMED "!nuclear_device_disarmed"
+
+/// Global signal sent when a light mechanism is completed (try_id)
+#define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"
+///Global Signal sent when the crew wins the revolution (No arguments).
+#define COMSIG_GLOB_REVOLUTION_TAX_REMOVAL "!revolution_tax_removal"

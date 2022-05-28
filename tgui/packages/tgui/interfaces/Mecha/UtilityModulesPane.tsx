@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Button, LabeledList } from '../../components';
+import { Button, LabeledList, ProgressBar } from '../../components';
 import { OperatorData, MechaUtility } from './data';
 
 export const UtilityModulesPane = (props, context) => {
@@ -36,6 +36,7 @@ export const UtilityModulesPane = (props, context) => {
 };
 
 const MECHA_SNOWFLAKE_ID_EJECTOR = "ejector_snowflake";
+const MECHA_SNOWFLAKE_ID_EXTINGUISHER = "extinguisher_snowflake";
 
 // Handles all the snowflake buttons and whatever
 const Snowflake = (props: {module: MechaUtility}, context) => {
@@ -45,6 +46,8 @@ const Snowflake = (props: {module: MechaUtility}, context) => {
   switch (snowflake["snowflake_id"]) {
     case MECHA_SNOWFLAKE_ID_EJECTOR:
       return <SnowflakeEjector module={props.module} />;
+    case MECHA_SNOWFLAKE_ID_EXTINGUISHER:
+      return <SnowflakeExtinguisher module={props.module} />;
     default:
       return null;
   }
@@ -70,5 +73,52 @@ const SnowflakeEjector = (props: {module: MechaUtility}, context) => {
         </LabeledList.Item>
       ))}
     </LabeledList>
+  );
+};
+
+const SnowflakeExtinguisher = (props: {module: MechaUtility}, context) => {
+  const { act, data } = useBackend<OperatorData>(context);
+  return (
+    <>
+      <ProgressBar
+        value={props.module.snowflake.reagents}
+        minValue={0}
+        maxValue={props.module.snowflake.total_reagents}>
+        {props.module.snowflake.reagents}
+      </ProgressBar>
+      <Button
+        tooltip={"ACTIVATE"}
+        color={"red"}
+        disabled={
+          props.module.snowflake.reagents < props.module.snowflake.minimum_requ
+            ? 1 : 0
+        }
+        icon={"fire-extinguisher"}
+        onClick={() => act('equip_act', {
+          ref: props.module.ref,
+          gear_action: "activate",
+        })} />
+      <Button
+        tooltip={"REFILL"}
+        icon={"fill"}
+        onClick={() => act('equip_act', {
+          ref: props.module.ref,
+          gear_action: "refill",
+        })} />
+      <Button
+        tooltip={"REPAIR"}
+        icon={"wrench"}
+        onClick={() => act('equip_act', {
+          ref: props.module.ref,
+          gear_action: "repair",
+        })} />
+      <Button
+        tooltip={"DETACH"}
+        icon={"arrow-down"}
+        onClick={() => act('equip_act', {
+          ref: props.module.ref,
+          gear_action: "detach",
+        })} />
+    </>
   );
 };

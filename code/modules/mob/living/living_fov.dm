@@ -13,10 +13,10 @@
 	if(fov_view)
 		if(rel_x >= -1 && rel_x <= 1 && rel_y >= -1 && rel_y <= 1) //Cheap way to check inside that 3x3 box around you
 			return TRUE //Also checks if both are 0 to stop division by zero
-	
+
 		// Get the vector length so we can create a good directional vector
 		var/vector_len = sqrt(abs(rel_x) ** 2 + abs(rel_y) ** 2)
-	
+
 		/// Getting a direction vector
 		var/dir_x
 		var/dir_y
@@ -33,10 +33,10 @@
 			if(WEST)
 				dir_x = -vector_len
 				dir_y = 0
-	
+
 		///Calculate angle
 		var/angle = arccos((dir_x * rel_x + dir_y * rel_y) / (sqrt(dir_x**2 + dir_y**2) * sqrt(rel_x**2 + rel_y**2)))
-	
+
 		/// Calculate vision angle and compare
 		var/vision_angle = (360 - fov_view) / 2
 		if(angle < vision_angle)
@@ -45,14 +45,7 @@
 		. = TRUE
 
 	// Handling nearsightnedness
-	if(. && HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		//Checking if our dude really is suffering from nearsightness! (very nice nearsightness code)
-		if(iscarbon(src))
-			var/mob/living/carbon/carbon_me = src
-			if(carbon_me.glasses)
-				var/obj/item/clothing/glasses/glass = carbon_me.glasses
-				if(glass.vision_correction)
-					return
+	if(. && is_nearsighted())					
 		if((rel_x >= NEARSIGHTNESS_FOV_BLINDNESS || rel_x <= -NEARSIGHTNESS_FOV_BLINDNESS) || (rel_y >= NEARSIGHTNESS_FOV_BLINDNESS || rel_y <= -NEARSIGHTNESS_FOV_BLINDNESS))
 			return FALSE
 

@@ -3,20 +3,6 @@
 /obj/item/mecha_parts/mecha_equipment/medical
 	mech_flags = EXOSUIT_MODULE_MEDICAL
 
-/obj/item/mecha_parts/mecha_equipment/medical/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/mecha_parts/mecha_equipment/medical/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/medical/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	. = ..()
-	if(!ismedicalmecha(M))
-		return FALSE
-
-
 /obj/item/mecha_parts/mecha_equipment/medical/attach(obj/vehicle/sealed/mecha/M)
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -37,12 +23,14 @@
 	energy_drain = 20
 	range = MECHA_MELEE
 	equip_cooldown = 20
-	var/mob/living/carbon/patient = null
+	///ref to the patient loaded in the sleeper
+	var/mob/living/carbon/patient
+	/// amount of chems to inject into patient from other hands syringe gun
 	var/inject_amount = 10
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Destroy()
-	for(var/atom/movable/AM in src)
-		AM.forceMove(get_turf(src))
+	for(var/atom/movable/content as anything in src)
+		content.forceMove(get_turf(src))
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/get_snowflake_data()
@@ -69,9 +57,6 @@
 			onclose(usr, "msleeper")
 			return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/Exit(atom/movable/leaving, direction)
-	return FALSE //prevents them from leaving without being forcemoved I guess
-
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/action(mob/source, atom/atomtarget, list/modifiers)
 	if(!action_checks(atomtarget))
 		return
@@ -82,11 +67,9 @@
 		return
 	to_chat(source, "[icon2html(src, source)][span_notice("You start putting [target] into [src]...")]")
 	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
-	if(!do_after(source, equip_cooldown, target=target))
+	if(!do_after(source, equip_cooldown, target, extra_checks=CALLBACK(src, .proc/patient_insertion_check, target, source)))
 		return
 	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
-		return
-	if(!patient_insertion_check(target, source))
 		return
 	target.forceMove(src)
 	patient = target
@@ -232,26 +215,24 @@
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("[src] deactivated - no power.")]")
 		STOP_PROCESSING(SSobj, src)
 		return
-	var/mob/living/carbon/M = patient
-	if(!M)
+	var/mob/living/carbon/ex_patient = patient
+	if(!ex_patient)
 		return
-	if(M.loc != src)
+	if(ex_patient.loc != src)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("[patient] no longer detected. Life support functions diabled.")]")
 		log_message("[patient] no longer detected - Life support functions disabled.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		patient = null
-	if(M.health > 0)
-		M.adjustOxyLoss(-0.5 * delta_time)
-	M.AdjustStun(-40 * delta_time)
-	M.AdjustKnockdown(-40 * delta_time)
-	M.AdjustParalyzed(-40 * delta_time)
-	M.AdjustImmobilized(-40 * delta_time)
-	M.AdjustUnconscious(-40 * delta_time)
-	if(M.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
-		M.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
+	if(ex_patient.health > 0)
+		ex_patient.adjustOxyLoss(-0.5 * delta_time)
+	ex_patient.AdjustStun(-40 * delta_time)
+	ex_patient.AdjustKnockdown(-40 * delta_time)
+	ex_patient.AdjustParalyzed(-40 * delta_time)
+	ex_patient.AdjustImmobilized(-40 * delta_time)
+	ex_patient.AdjustUnconscious(-40 * delta_time)
+	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
+		ex_patient.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
 	chassis.use_power(energy_drain)
-
-
 
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
@@ -527,7 +508,6 @@
 	. = ..()
 	medigun = new(src)
 
-
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Destroy()
 	QDEL_NULL(medigun)
 	return ..()
@@ -540,7 +520,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/action(mob/source, atom/movable/target, list/modifiers)
 	medigun.process_fire(target, loc)
-
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/detach()
 	STOP_PROCESSING(SSobj, src)

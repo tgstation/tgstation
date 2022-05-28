@@ -1,7 +1,7 @@
 //Endgame Results
 /// Nuke was detonated in space on same z-level as station
 #define NUKE_NEAR_MISS 1
-/// Nuke was detonated on another z-level 
+/// Nuke was detonated on another z-level
 #define NUKE_MISS_STATION 2
 /// Nuke was detonated on the syndicate base
 #define NUKE_SYNDICATE_BASE 3
@@ -35,9 +35,11 @@
 #define WIZARD_KILLED 19
 /// The station was destroyed by it's own self-destruct nuclear device
 #define STATION_NUKED 20
+/// The station was destroyed by the supermatter cascade
+#define SUPERMATTER_CASCADE 21
 /// The emergency shuttle was successfully hijacked
 #define SHUTTLE_HIJACK 24
 /// The gangs on the station were thwarted
 #define GANG_DESTROYED 25 // Looks like it was deprecated at some point - Jan 2022
 /// The gangs on the station still exist
-#define GANG_OPERATING 26 
+#define GANG_OPERATING 26

@@ -1,0 +1,6 @@
+author: "axietheaxolotl"
+delete-after: True
+changes: 
+  - rscadd: "Brand new HoP coat!"
+  - imageadd: "New sprites for HoP's uniform, skirt, cap, and the ID Painter."
+  - bugfix: "HoP starts with laceups, not brown sneakers."

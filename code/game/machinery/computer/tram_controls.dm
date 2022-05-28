@@ -6,9 +6,9 @@
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
 	light_color = LIGHT_COLOR_GREEN
-
+	///The ID of the tram we control
+	var/tram_id = "tram_station"
 	///Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
 
@@ -28,7 +28,11 @@
  * Locates tram parts in the lift global list after everything is done.
  */
 /obj/machinery/computer/tram_controls/proc/find_tram()
-	tram_ref = WEAKREF(GLOB.central_tram)
+	for(var/obj/structure/industrial_lift/tram/central/tram as anything in GLOB.central_trams)
+		if(tram.tram_id != tram_id)
+			continue
+		tram_ref = WEAKREF(tram)
+		break
 
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
@@ -43,6 +47,7 @@
 	return ..()
 
 /obj/machinery/computer/tram_controls/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TramControl", name)
@@ -73,6 +78,8 @@
 /obj/machinery/computer/tram_controls/proc/get_destinations()
 	. = list()
 	for(var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks)
+		if(destination.tram_id != tram_id)
+			continue
 		var/list/this_destination = list()
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons
@@ -88,6 +95,8 @@
 		if ("send")
 			var/obj/effect/landmark/tram/to_where
 			for (var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks)
+				if(destination.tram_id != tram_id)
+					continue
 				if(destination.destination_id == params["destination"])
 					to_where = destination
 					break
@@ -160,6 +169,8 @@
 
 	var/destination
 	for(var/obj/effect/landmark/tram/possible_destination as anything in GLOB.tram_landmarks)
+		if(possible_destination.tram_id != computer.tram_id)
+			continue
 		if(possible_destination.name == new_destination.value)
 			destination = possible_destination
 			break
