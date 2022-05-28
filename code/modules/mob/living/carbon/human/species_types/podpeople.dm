@@ -54,7 +54,7 @@
 			H.adjustOxyLoss(-0.5 * delta_time)
 
 	if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL) //don't make podpeople fat because they stood in the sun for too long
-			H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
+		H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(1 * delta_time, 0)
