@@ -42,7 +42,9 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT(potential_rider, TRAIT_CANT_RIDE))
-		return COMPONENT_BLOCK_BUCKLE
+		//Do not prevent buckle, but stop any riding, do not block buckle here
+		//There are things that are supposed to buckle (like slimes) but not ride the creature
+		return NONE
 
 	var/arms_needed = 0
 	if(ride_check_flags & RIDER_NEEDS_ARMS)
