@@ -106,7 +106,7 @@
 	name = "Ant Party pizza slice"
 	reqs = list(
 		/obj/item/food/pizzaslice/margherita = 1,
-		/datum/reagent/ants = 5
+		/datum/reagent/ants = 4
 	)
 	result = /obj/item/food/pizzaslice/ants
 	subcategory = CAT_PIZZA
