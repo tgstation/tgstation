@@ -3756,7 +3756,8 @@
 /obj/machinery/button/door/directional/west{
 	id = "Beta Secure Storage";
 	name = "Engineering Secure Storage";
-	req_access = list("engine_equip")pixel_x = 25;
+	req_access = list("engine_equip");
+	pixel_x = 25;
 	pixel_y = 23
 	},
 /obj/item/shard/plasma,
