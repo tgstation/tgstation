@@ -27,7 +27,7 @@
 	if(handler.get_completion_progression(/datum/traitor_objective) < progression_objectives_minimum)
 		return FALSE
 
-	if(SStraitor.taken_objectives_by_type[type])
+	if(SStraitor.taken_objectives_by_type[/datum/traitor_objective/locate_weakpoint])
 		for(var/datum/traitor_objective/locate_weakpoint/weakpoint_objective in SStraitor.taken_objectives_by_type[type])
 			if(weakpoint_objective.objective_state == OBJECTIVE_STATE_COMPLETED)
 				return FALSE
