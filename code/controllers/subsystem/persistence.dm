@@ -25,13 +25,13 @@ SUBSYSTEM_DEF(persistence)
 	var/rounds_since_engine_exploded = 0
 
 /datum/controller/subsystem/persistence/Initialize()
-	LoadPoly()
+	load_poly()
 	load_wall_engravings()
 	load_prisoner_tattoos()
 	load_trophies()
-	LoadRecentMaps()
-	LoadPhotoPersistence()
-	LoadRandomizedRecipes()
+	load_recent_maps()
+	load_photo_persistence()
+	load_randomized_recipes()
 	load_custom_outfits()
 	load_delamination_counter()
 
@@ -42,14 +42,14 @@ SUBSYSTEM_DEF(persistence)
 	save_wall_engravings()
 	save_prisoner_tattoos()
 	collect_trophies()
-	CollectMaps()
-	SavePhotoPersistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
-	SaveRandomizedRecipes()
-	SaveScars()
+	collect_maps()
+	save_photo_persistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
+	save_randomized_recipes()
+	save_scars()
 	save_custom_outfits()
 	save_delamination_counter()
 
-/datum/controller/subsystem/persistence/proc/LoadPoly()
+/datum/controller/subsystem/persistence/proc/load_poly()
 	for(var/mob/living/simple_animal/parrot/poly/P in GLOB.alive_mob_list)
 		twitterize(P.speech_buffer, "polytalk")
 		break //Who's been duping the bird?!
@@ -208,7 +208,7 @@ SUBSYSTEM_DEF(persistence)
 		saved_trophies = json["data"]
 	SetUpTrophies(saved_trophies.Copy())
 
-/datum/controller/subsystem/persistence/proc/LoadRecentMaps()
+/datum/controller/subsystem/persistence/proc/load_recent_maps()
 	var/map_sav = FILE_RECENT_MAPS
 	if(!fexists(FILE_RECENT_MAPS))
 		return
@@ -279,7 +279,7 @@ SUBSYSTEM_DEF(persistence)
 	fdel(frame_path)
 	WRITE_FILE(frame_path, frame_json)
 
-/datum/controller/subsystem/persistence/proc/LoadPhotoPersistence()
+/datum/controller/subsystem/persistence/proc/load_photo_persistence()
 	var/album_path = file("data/photo_albums.json")
 	var/frame_path = file("data/photo_frames.json")
 	if(fexists(album_path))
@@ -302,7 +302,7 @@ SUBSYSTEM_DEF(persistence)
 				if(json[PF.persistence_id])
 					PF.load_from_id(json[PF.persistence_id])
 
-/datum/controller/subsystem/persistence/proc/SavePhotoPersistence()
+/datum/controller/subsystem/persistence/proc/save_photo_persistence()
 	var/album_path = file("data/photo_albums.json")
 	var/frame_path = file("data/photo_frames.json")
 
@@ -367,7 +367,7 @@ SUBSYSTEM_DEF(persistence)
 		data["placer_key"] = T.placer_key
 		saved_trophies += list(data)
 
-/datum/controller/subsystem/persistence/proc/CollectMaps()
+/datum/controller/subsystem/persistence/proc/collect_maps()
 	if(length(saved_maps) > KEEP_ROUNDS_MAP) //Get rid of extras from old configs.
 		saved_maps.Cut(KEEP_ROUNDS_MAP+1)
 	var/mapstosave = min(length(saved_maps)+1, KEEP_ROUNDS_MAP)
@@ -382,7 +382,7 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/datum/controller/subsystem/persistence/proc/LoadRandomizedRecipes()
+/datum/controller/subsystem/persistence/proc/load_randomized_recipes()
 	var/json_file = file("data/RandomizedChemRecipes.json")
 	var/json
 	if(fexists(json_file))
@@ -406,7 +406,7 @@ SUBSYSTEM_DEF(persistence)
 		else
 			log_game("Randomized recipe [randomized_type] resulted in conflicting recipes.")
 
-/datum/controller/subsystem/persistence/proc/SaveRandomizedRecipes()
+/datum/controller/subsystem/persistence/proc/save_randomized_recipes()
 	var/json_file = file("data/RandomizedChemRecipes.json")
 	var/list/file_data = list()
 
@@ -420,7 +420,7 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/datum/controller/subsystem/persistence/proc/SaveScars()
+/datum/controller/subsystem/persistence/proc/save_scars()
 	for(var/i in GLOB.joined_player_list)
 		var/mob/living/carbon/human/ending_human = get_mob_by_ckey(i)
 		if(!istype(ending_human) || !ending_human.mind?.original_character_slot_index || !ending_human.client?.prefs.read_preference(/datum/preference/toggle/persistent_scars))
