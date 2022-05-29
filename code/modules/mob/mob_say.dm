@@ -1,13 +1,18 @@
 //Speech verbs.
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
-/mob/verb/say_verb(message as text)
+/mob/verb/say_verb(message = "" as text)
 	set name = "Say"
 	set category = "IC"
 	set instant = TRUE
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		return
+
+	if(message == "")
+		message = tgui_modal(usr, SAY_CHAN)
+	if(!message || QDELETED(src))
 		return
 
 	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
@@ -33,12 +38,17 @@
 	say(message, language = language)
 
 ///The me emote verb
-/mob/verb/me_verb(message as text)
+/mob/verb/me_verb(message = "" as text)
 	set name = "Me"
 	set category = "IC"
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		return
+
+	if(message == "")
+		message = tgui_modal(usr, ME_CHAN)
+	if(!message || QDELETED(src))
 		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
