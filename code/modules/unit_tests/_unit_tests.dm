@@ -65,6 +65,7 @@
 
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
+#include "unit_test.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
