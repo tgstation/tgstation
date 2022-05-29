@@ -153,7 +153,7 @@
 	effect_str[corner] = .
 
 
-/datum/light_source/proc/update_corners()
+/datum/light_source/proc/update_corners(debug)
 	var/update = FALSE
 	var/atom/source_atom = src.source_atom
 

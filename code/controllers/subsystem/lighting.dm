@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(lighting)
 	for (i in 1 to length(queue))
 		var/datum/light_source/L = queue[i]
 
-		L.update_corners()
+		L.update_corners(L.source_atom)
 
 		L.needs_update = LIGHTING_NO_UPDATE
 
