@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - qol: "access helpers have been added for the rest of our shuttles that needed them"
+  - bugfix: "Our away missions and ruins now use access helpers instead of varedits"
