@@ -409,6 +409,15 @@
 	admin_notes = "ONLY NINETIES KIDS REMEMBER. Uses the fun balloon and drone from the Emergency Bar."
 	credit_cost = CARGO_CRATE_VALUE * 5
 
+/datum/map_template/shuttle/emergency/basketball
+	suffix = "bballhooper"
+	name = "Basketballer's Stadium"
+	description = "Hoop, man, hoop! Get your shooting game on with this sleek new basketball stadium! Do keep in mind that several other features \
+	that you may expect to find common-place on other shuttles aren't present to give you this sleek stadium at an affordable cost. \
+	It also wasn't manufactured to deal with the form-factor of some of your stations... good luck with that."
+	admin_notes = "A larger shuttle built around a basketball stadium: entirely impractical but just a complete blast!"
+	credit_cost = CARGO_CRATE_VALUE * 10
+
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
 	name = "NT Lepton Violet"
