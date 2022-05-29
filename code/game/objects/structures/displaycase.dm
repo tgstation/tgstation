@@ -307,9 +307,32 @@
 			visible_message(span_danger("The [showpiece] fizzles and vanishes!"))
 			do_sparks(1, FALSE, src)
 			QDEL_NULL(showpiece)
+			trophy_message = null
 			added_roundstart = FALSE
 		else
-			return ..()
+			. = ..()
+
+/obj/structure/displaycase/trophy/toggle_lock(mob/user)
+	..()
+	SStgui.close_uis(src)
+
+/obj/structure/displaycase/trophy/ui_data(mob/user)
+	var/list/data = list()
+	if(showpiece)
+		data["showpiece_name"] = capitalize(showpiece.name)
+		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
+		data["showpiece_icon"] = base64
+		data["showpiece_description"] = trophy_message ? trophy_message : showpiece?.desc
+	return data
+
+/obj/structure/displaycase/trophy/ui_interact(mob/user, datum/tgui/ui)
+	if(open)
+		return
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Trophycase", name)
+		ui.set_autoupdate(FALSE)
+		ui.open()
 
 /obj/item/key/displaycase
 	name = "display case key"
