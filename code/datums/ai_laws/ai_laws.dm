@@ -2,7 +2,14 @@
 
 ///What lawset type is considered the "default" ones. In most cases, this is just asimov, but a few circumstances change that.
 ///Requires config, which isn't loaded at the time global vars init, so setup_round_default_laws is called by the first request to use this global.
-GLOBAL_VAR(round_default_lawset)
+///Do NOT get this directly! It's unsafe! Instead, use `get_round_default_lawset`!
+GLOBAL_VAR(_round_default_lawset)
+
+///A getter that sets up the round default if it has not been yet. This is so people don't mistakenly get the glob without it being set for the round
+/proc/get_round_default_lawset()
+	if(!GLOB._round_default_lawset)
+		GLOB._round_default_lawset = setup_round_default_laws()
+	return  GLOB._round_default_lawset
 
 //different settings for configged defaults
 
@@ -16,7 +23,7 @@ GLOBAL_VAR(round_default_lawset)
 #define CONFIG_WEIGHTED 3
 
 ///first called when something wants round default laws for the first time in a round, considers config
-///returns a law datum that GLOB.round_default_lawset will be set to.
+///returns a law datum that GLOB._round_default_lawset will be set to.
 /proc/setup_round_default_laws()
 	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
 
@@ -121,9 +128,8 @@ GLOBAL_VAR(round_default_lawset)
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_laws_config()
-	if(!GLOB.round_default_lawset)
-		GLOB.round_default_lawset = setup_round_default_laws()
-	var/datum/ai_laws/default_laws = new GLOB.round_default_lawset()
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
+	default_laws = new default_laws()
 	inherent = default_laws.inherent
 
 /datum/ai_laws/proc/get_law_amount(groups)

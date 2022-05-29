@@ -366,8 +366,8 @@
 	..()
 
 /obj/item/ai_module/core/full/handle_unique_ai()
-	var/datum/ai_laws/unique_ai_laws =  GLOB.round_default_lawset
-	if(law_id == initial(unique_ai_laws.id))
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
+	if(law_id == initial(default_laws.id))
 		return
 	return SHOULD_QDEL_MODULE
 
@@ -379,9 +379,7 @@
 
 /obj/effect/spawner/round_default_module/Initialize(mapload)
 	..()
-	if(!GLOB.round_default_lawset)
-		GLOB.round_default_lawset = setup_round_default_laws()
-	var/datum/ai_laws/default_laws =  GLOB.round_default_lawset
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
 	//try to spawn a law board, since they may have special functionality (asimov setting subjects)
 	for(var/obj/item/ai_module/core/full/potential_lawboard as anything in subtypesof(/obj/item/ai_module/core/full))
 		if(initial(potential_lawboard.law_id) != initial(default_laws.id))
@@ -398,7 +396,8 @@
 
 /obj/item/ai_module/core/round_default_fallback/Initialize(mapload)
 	. = ..()
-	var/datum/ai_laws/default_laws = new GLOB.round_default_lawset()
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
+	default_laws = new default_laws()
 	name = "'[default_laws.name]' Core AI Module"
 	laws = default_laws.inherent
 
