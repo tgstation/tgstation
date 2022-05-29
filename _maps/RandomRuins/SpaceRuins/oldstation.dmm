@@ -3756,10 +3756,9 @@
 /obj/machinery/button/door/directional/west{
 	id = "Beta Secure Storage";
 	name = "Engineering Secure Storage";
-	pixel_x = 25;
+	req_access = list("engine_equip")pixel_x = 25;
 	pixel_y = 23
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/engine_equipment,
 /obj/item/shard/plasma,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)

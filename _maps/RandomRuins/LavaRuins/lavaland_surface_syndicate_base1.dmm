@@ -2271,6 +2271,7 @@
 /area/ruin/syndicate_lava_base/engineering)
 "mS" = (
 /obj/machinery/door/airlock/external/ruin,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
