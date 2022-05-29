@@ -1,15 +1,18 @@
 #define AI_LAWS_ASIMOV "asimov"
 
-///What lawset type is considered the "default" ones. In most cases, this is just asimov, but a few circumstances change that.
-///Requires config, which isn't loaded at the time global vars init, so setup_round_default_laws is called by the first request to use this global.
-///Do NOT get this directly! It's unsafe! Instead, use `get_round_default_lawset`!
-GLOBAL_VAR(_round_default_lawset)
-
-///A getter that sets up the round default if it has not been yet. This is so people don't mistakenly get the glob without it being set for the round
+/**
+ * A getter that sets up the round default if it has not been yet.
+ *
+ * round_default_lawset is what is considered the default for the round. Aka, new AI and other silicons would get this.
+ * You might recognize the fact that 99% of the time it is asimov.
+ *
+ * This requires config, so it is generated at the first request to use this var.
+ */
 /proc/get_round_default_lawset()
-	if(!GLOB._round_default_lawset)
-		GLOB._round_default_lawset = setup_round_default_laws()
-	return  GLOB._round_default_lawset
+	var/static/round_default_lawset
+	if(!round_default_lawset)
+		round_default_lawset = setup_round_default_laws()
+	return  round_default_lawset
 
 //different settings for configged defaults
 
