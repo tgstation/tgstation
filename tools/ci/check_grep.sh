@@ -74,7 +74,7 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/door/airlock[/\w]*?,\n[^)]*?/obj/
     echo "ERROR: found multiple airlocks on the same tile, please remove them."
     st=1
 fi;
-if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/door/firedoor/[^/](?<type>[/\w]*),\n[^/)]*?/obj/machinery/door/firedoor/[^/]\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/door/firedoor[/\w]*?,\n[^)]*?/obj/machinery/door/firedoor[/\w]*?,\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
 	echo
     echo "ERROR: found multiple firelocks on the same tile, please remove them."
     st=1
