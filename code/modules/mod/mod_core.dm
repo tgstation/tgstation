@@ -330,11 +330,12 @@
 		return COMPONENT_NO_AFTERATTACK
 	return NONE
 
-/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/attacking_item, mob/user)
-	if(!istype(attacking_item, /obj/item/stack/ore/plasma))
+/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/ore/plasma/plasma, mob/user)
+	if(!istype(plasma))
 		return FALSE
-	if(!attacking_item.use(1))
+	var/uses_needed = min(plasma.amount, round((max_charge_amount() - charge_amount()) / charge_given))
+	if(!plasma.use(uses_needed))
 		return FALSE
-	add_charge(charge_given)
+	add_charge(uses_needed*charge_given)
 	balloon_alert(user, "core refueled")
 	return TRUE

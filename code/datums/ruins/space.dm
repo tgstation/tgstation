@@ -325,3 +325,9 @@
 	suffix = "space_billboard.dmm"
 	name = "Space Billboard"
 	description = "Frequently found alongside well-traversed sublight routes, space billboards have fallen out of favour in recent years as advertisers finally realised that people are incapable of reading billboards going by at over 2/3rds the speed of light."
+
+/datum/map_template/ruin/space/spinwardsmoothies
+	id = "spinwardsmoothies"
+	suffix = "spinwardsmoothies.dmm"
+	name = "Spinward Smoothies"
+	description = "A branch of the beloved Spinward Smoothies chain of smoothie bars."

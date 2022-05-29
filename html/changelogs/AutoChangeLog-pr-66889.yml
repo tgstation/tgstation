@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - balance: "Sending PDA's to all is now configured by the WireCarp app, rather than being tied to Law office access."
