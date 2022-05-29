@@ -22,7 +22,7 @@
 
 /obj/effect/particle_effect/fluid/smoke/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
-	create_reagents(1000)
+	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 	setDir(pick(GLOB.cardinals))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	SSsmoke.start_processing(src)
