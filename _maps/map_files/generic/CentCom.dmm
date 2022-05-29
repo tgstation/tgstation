@@ -61,18 +61,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
-"as" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome Administration"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome,
-/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome,
-/turf/open/floor/iron,
-/area/centcom/tdome/administration)
 "at" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Backstage"
@@ -66192,7 +66180,7 @@ Bp
 Tt
 Bj
 Bp
-as
+oI
 Bp
 Sz
 Sz
