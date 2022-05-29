@@ -170,9 +170,6 @@ GLOBAL_PROTECT(href_token)
 
 /// Returns the feedback forum thread for the admin holder's owner, as according to DB.
 /datum/admins/proc/feedback_link()
-	if (!SSdbcore.IsConnected())
-		return FALSE
-
 	// This intentionally does not follow the 10-second maximum TTL rule,
 	// as this can be reloaded through the Reload-Admins verb.
 	if (cached_feedback_link == NO_FEEDBACK_LINK)
@@ -180,6 +177,9 @@ GLOBAL_PROTECT(href_token)
 
 	if (!isnull(cached_feedback_link))
 		return cached_feedback_link
+
+	if (!SSdbcore.IsConnected())
+		return FALSE
 
 	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
 
