@@ -1,0 +1,4 @@
+author: "Mooshimi"
+delete-after: True
+changes: 
+  - bugfix: "Random windoor inside a wall in chapel maintenance on icebox is now gone."
