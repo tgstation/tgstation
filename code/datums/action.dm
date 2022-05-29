@@ -726,7 +726,7 @@
 
 /datum/action/cooldown/Remove(mob/removed_from)
 	. = ..()
-	UnregisterSignal(removed_From, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
+	UnregisterSignal(removed_from, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 	for(var/datum/action/cooldown/ability as anything in initialized_actions)
 		ability.Remove(removed_from)
 
