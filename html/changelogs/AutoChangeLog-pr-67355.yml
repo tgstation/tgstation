@@ -1,0 +1,4 @@
+author: "Mooshimi"
+delete-after: True
+changes: 
+  - bugfix: "There is now only one firelock in lower ordinance, instead of two in the same door."
