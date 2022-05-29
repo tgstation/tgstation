@@ -142,9 +142,9 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
 	var/list/test_results = list()
 
-	for(var/unit_path in tests_to_run)
-		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
-		RunUnitTest(unit_path, test_results)
+	//for(var/unit_path in tests_to_run)
+	//	CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
+	//	RunUnitTest(unit_path, test_results)
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)
