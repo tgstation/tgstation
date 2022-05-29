@@ -43,6 +43,9 @@
 	var/hands_chance = 35/2
 	var/feet_chance = 15/2
 
+	if(infecting_human.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) && prob(33))
+		return
+
 	if(prob(15/disease.spreading_modifier))
 		return
 
@@ -92,6 +95,8 @@
 		disease.try_infect(src)
 
 /mob/living/proc/AirborneContractDisease(datum/disease/disease, force_spread)
+	if(infecting_human.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) && prob(33))
+		return
 	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*disease.spreading_modifier) - 1))
 		ForceContractDisease(disease)
 
