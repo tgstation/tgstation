@@ -162,6 +162,9 @@
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
 	var/datum/forensics/forensics
 
+	// tsu storage testing
+	var/datum/storage/atom_storage
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -326,6 +329,9 @@
 		SSicon_smooth.remove_from_queues(src)
 
 	return ..()
+
+/atom/proc/create_storage(max_slots, max_specific_storage, max_total_storage)
+	atom_storage = new(src, max_slots, max_specific_storage, max_total_storage)
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/turf/p_turf = get_turf(ricocheting_projectile)

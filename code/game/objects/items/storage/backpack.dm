@@ -32,6 +32,16 @@
  * Backpack Types
  */
 
+/obj/item/storage/backpack/tsu
+	name = "\improper Tsu's backpack"
+
+/obj/item/storage/backpack/tsu/ComponentInitialize()
+	return
+
+/obj/item/storage/backpack/tsu/Initialize(mapload)
+	. = ..()
+	create_storage(16, WEIGHT_CLASS_NORMAL, 30)
+
 /obj/item/storage/backpack/old/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
