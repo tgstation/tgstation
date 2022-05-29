@@ -1993,7 +1993,6 @@
 	name = "Backup Emergency Escape Shuttle"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome,
 /turf/open/floor/iron,
 /area/centcom/tdome/administration)
 "fG" = (
@@ -2146,7 +2145,6 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
 "gh" = (
-/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome,
 /turf/closed/indestructible/fakedoor{
 	name = "Thunderdome Admin"
 	},
@@ -4623,7 +4621,6 @@
 	},
 /obj/machinery/door/puzzle/keycard/syndicate_bio,
 /obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
@@ -6056,6 +6053,7 @@
 /obj/machinery/door/airlock/hatch{
 	name = "Gangway"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "rm" = (
@@ -6423,16 +6421,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
-"sy" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome Administration"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome,
-/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome,
-/turf/open/floor/iron,
-/area/centcom/tdome/administration)
 "sz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/west,
@@ -9774,6 +9762,13 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"Cj" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/airlock/centcom{
+	name = "Thunderdome Administration"
+	},
+/turf/open/floor/plating,
+/area/centcom/tdome/administration)
 "Ck" = (
 /obj/machinery/door/airlock/maintenance/external{
 	name = "Bunk Room 1"
@@ -10597,7 +10592,6 @@
 	},
 /obj/machinery/door/puzzle/keycard/syndicate_bomb,
 /obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
@@ -11228,6 +11222,7 @@
 	name = "Gangway"
 	},
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "Gr" = (
@@ -11696,7 +11691,6 @@
 	},
 /obj/machinery/door/puzzle/keycard/syndicate_chem,
 /obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
@@ -12075,7 +12069,6 @@
 	},
 /obj/effect/turf_decal/siding/wideplating,
 /obj/machinery/door/puzzle/keycard/syndicate_fridge,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
@@ -16861,7 +16854,6 @@
 	pixel_x = -8;
 	pixel_y = 38
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
@@ -66195,7 +66187,7 @@ QC
 ei
 Ah
 pI
-sy
+tH
 Bp
 Tt
 Bj
@@ -66710,7 +66702,7 @@ pO
 HE
 Sl
 SU
-Wn
+Cj
 Vl
 bM
 Wn
