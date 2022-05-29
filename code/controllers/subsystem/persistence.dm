@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadPoly()
 	load_wall_engravings()
 	load_prisoner_tattoos()
-	LoadTrophies()
+	load_trophies()
 	LoadRecentMaps()
 	LoadPhotoPersistence()
 	LoadRandomizedRecipes()
@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/collect_data()
 	save_wall_engravings()
 	save_prisoner_tattoos()
-	CollectTrophies()
+	collect_trophies()
 	CollectMaps()
 	SavePhotoPersistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	SaveRandomizedRecipes()
@@ -189,7 +189,7 @@ SUBSYSTEM_DEF(persistence)
 	return json
 
 
-/datum/controller/subsystem/persistence/proc/LoadTrophies()
+/datum/controller/subsystem/persistence/proc/load_trophies()
 	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/TrophyItems.sav")
 		var/saved_json
@@ -234,7 +234,6 @@ SUBSYSTEM_DEF(persistence)
 		var/obj/structure/displaycase/trophy/T = A
 		if (T.showpiece)
 			continue
-		T.added_roundstart = TRUE
 
 		var/trophy_data = pick_n_take(trophy_items)
 
@@ -253,6 +252,8 @@ SUBSYSTEM_DEF(persistence)
 		T.showpiece = new /obj/item/showpiece_dummy(T, path)
 		T.trophy_message = chosen_trophy["message"]
 		T.placer_key = chosen_trophy["placer_key"]
+		T.added_roundstart = TRUE
+		T.set_light(2)
 		T.update_appearance()
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
@@ -337,7 +338,10 @@ SUBSYSTEM_DEF(persistence)
 
 	WRITE_FILE(frame_path, frame_json)
 
-/datum/controller/subsystem/persistence/proc/CollectTrophies()
+/datum/controller/subsystem/persistence/proc/collect_trophies()
+	for(var/trophy_case in GLOB.trophy_cases)
+		save_trophy(trophy_case)
+
 	var/json_file = file("data/npc_saves/TrophyItems.json")
 	var/list/file_data = list()
 	file_data["data"] = remove_duplicate_trophies(saved_trophies)
@@ -355,7 +359,7 @@ SUBSYSTEM_DEF(persistence)
 			. += list(trophy)
 			ukeys[tkey] = TRUE
 
-/datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
+/datum/controller/subsystem/persistence/proc/save_trophy(obj/structure/displaycase/trophy/T)
 	if(!T.added_roundstart && T.showpiece)
 		var/list/data = list()
 		data["path"] = T.showpiece.type

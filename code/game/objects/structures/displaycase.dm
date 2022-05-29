@@ -13,7 +13,6 @@
 	var/obj/item/showpiece_type = null //This allows for showpieces that can only hold items if they're the same istype as this.
 	var/alert = TRUE
 	var/open = FALSE
-	var/openable = TRUE
 	var/custom_glass_overlay = FALSE ///If we have a custom glass overlay to use.
 	var/obj/item/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
@@ -125,7 +124,7 @@
 		return
 
 /obj/structure/displaycase/attackby(obj/item/W, mob/living/user, params)
-	if(W.GetID() && !broken && openable)
+	if(W.GetID() && !broken)
 		if(allowed(user))
 			to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
 			toggle_lock(user)
@@ -144,7 +143,7 @@
 		else
 			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
-	else if(!alert && W.tool_behaviour == TOOL_CROWBAR && openable) //Only applies to the lab cage and player made display cases
+	else if(!alert && W.tool_behaviour == TOOL_CROWBAR) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, span_warning("Remove the displayed object first!"))
@@ -291,10 +290,8 @@
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
 	var/placer_key = ""
-	var/added_roundstart = TRUE
-	var/is_locked = TRUE
+	var/added_roundstart = FALSE
 	integrity_failure = 0
-	openable = FALSE
 
 /obj/structure/displaycase/trophy/Initialize(mapload)
 	. = ..()
@@ -304,77 +301,13 @@
 	GLOB.trophy_cases -= src
 	return ..()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
-
-	if(!user.Adjacent(src)) //no TK museology
-		return
-	if(user.combat_mode)
-		return ..()
-	if(W.tool_behaviour == TOOL_WELDER && !broken)
-		return ..()
-
-	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
-		if(added_roundstart)
-			is_locked = !is_locked
-			to_chat(user, span_notice("You [!is_locked ? "un" : ""]lock the case."))
-		else
-			to_chat(user, span_warning("The lock is stuck shut!"))
-		return
-
-	if(is_locked)
-		to_chat(user, span_warning("The case is shut tight with an old-fashioned physical lock. Maybe you should ask the curator for the key?"))
-		return
-
-	if(!added_roundstart)
-		to_chat(user, span_warning("You've already put something new in this case!"))
-		return
-
-	if(is_type_in_typecache(W, GLOB.blacklisted_cargo_types))
-		to_chat(user, span_warning("The case rejects the [W]!"))
-		return
-
-	for(var/a in W.get_all_contents())
-		if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
-			to_chat(user, span_warning("The case rejects the [W]!"))
-			return
-
-	if(user.transferItemToLoc(W, src))
-
-		if(showpiece)
-			to_chat(user, span_notice("You press a button, and [showpiece] descends into the floor of the case."))
-			QDEL_NULL(showpiece)
-
-		to_chat(user, span_notice("You insert [W] into the case."))
-		showpiece = W
-		added_roundstart = FALSE
-		update_appearance()
-
-		placer_key = user.ckey
-
-		trophy_message = W.desc //default value
-
-		var/chosen_plaque = tgui_input_text(user, "What would you like the plaque to say? Default value is item's description.", "Trophy Plaque", trophy_message)
-		if(chosen_plaque)
-			if(user.Adjacent(src))
-				trophy_message = chosen_plaque
-				to_chat(user, span_notice("You set the plaque's text."))
-			else
-				to_chat(user, span_warning("You are too far to set the plaque's text!"))
-
-		SSpersistence.SaveTrophy(src)
-		return TRUE
-
-	else
-		to_chat(user, span_warning("\The [W] is stuck to your hand, you can't put it in the [src.name]!"))
-
-	return
-
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
 		if(added_roundstart)
-			visible_message(span_danger("The [showpiece] crumbles to dust!"))
-			new /obj/effect/decal/cleanable/ash(loc)
+			visible_message(span_danger("The [showpiece] fizzles and vanishes!"))
+			do_sparks(1, FALSE, src)
 			QDEL_NULL(showpiece)
+			added_roundstart = FALSE
 		else
 			return ..()
 
@@ -383,7 +316,7 @@
 	desc = "The key to the curator's display cases."
 
 /obj/item/showpiece_dummy
-	name = "Cheap replica"
+	name = "Holographic replica"
 
 /obj/item/showpiece_dummy/Initialize(mapload, path)
 	. = ..()
