@@ -17,7 +17,7 @@ export const Trophycase = (props, context) => {
           fontSize="18px"
           align="center"
           height="20%">
-          <b>{showpiece_name ? showpiece_name : "Empty"}</b>
+          <b>{showpiece_name ? showpiece_name : "Under construction."}</b>
         </Section>
         <Section fill
           height="40%">
@@ -26,7 +26,7 @@ export const Trophycase = (props, context) => {
         <Section
           align="center"
           height="40%">
-          <b>{showpiece_description ? showpiece_description : "This exhibit is under construction. History awaits your contribution!"}</b>
+          <b>{showpiece_description ? showpiece_description : "This exhibit under construction. History awaits your contribution!"}</b>
         </Section>
       </Window.Content>
     </Window>
