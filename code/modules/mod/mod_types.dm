@@ -109,8 +109,6 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/pepper_shoulders,
-		/obj/item/mod/module/criminalcapture,
-		/obj/item/mod/module/dispenser/mirage,
 	)
 
 /obj/item/mod/control/pre_equipped/safeguard
@@ -121,8 +119,6 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/megaphone,
-		/obj/item/mod/module/projectile_dampener,
 		/obj/item/mod/module/pepper_shoulders,
 	)
 
@@ -150,7 +146,6 @@
 	applied_cell = /obj/item/stock_parts/cell/super
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/pathfinder,
@@ -176,7 +171,6 @@
 	req_access = list(ACCESS_SYNDICATE)
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/flashlight,
@@ -211,7 +205,7 @@
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/energy_shield/wizard,
-		/obj/item/mod/module/emp_shield/advanced,
+		/obj/item/mod/module/emp_shield,
 	)
 
 /obj/item/mod/control/pre_equipped/prototype
@@ -248,11 +242,11 @@
 
 /obj/item/mod/control/pre_equipped/responsory/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
-	additional_module = /obj/item/mod/module/power_kick
+	additional_module = /obj/item/mod/module/noslip
 
 /obj/item/mod/control/pre_equipped/responsory/security
 	insignia_type = /obj/item/mod/module/insignia/security
-	additional_module = /obj/item/mod/module/pepper_shoulders
+	additional_module = /obj/item/mod/module/gps
 
 /obj/item/mod/control/pre_equipped/responsory/engineer
 	insignia_type = /obj/item/mod/module/insignia/engineer
@@ -287,11 +281,11 @@
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
-	additional_module = /obj/item/mod/module/power_kick
+	additional_module = /obj/item/mod/module/noslip
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/security
 	insignia_type = /obj/item/mod/module/insignia/security
-	additional_module = /obj/item/mod/module/pepper_shoulders
+	additional_module = /obj/item/mod/module/gps
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
@@ -308,7 +302,7 @@
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/welding,
-		/obj/item/mod/module/emp_shield/advanced,
+		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
 	)
@@ -321,7 +315,6 @@
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/hat_stabilizer,
 		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/emp_shield/advanced,
 	)
 
 /obj/item/mod/control/pre_equipped/chrono
@@ -334,7 +327,6 @@
 		/obj/item/mod/module/timestopper,
 		/obj/item/mod/module/rewinder,
 		/obj/item/mod/module/tem,
-		/obj/item/mod/module/anomaly_locked/kinesis/plus,
 	)
 
 /obj/item/mod/control/pre_equipped/debug
@@ -355,13 +347,11 @@
 	applied_core = /obj/item/mod/core/infinite
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
-		/obj/item/mod/module/emp_shield/advanced,
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/quick_carry/advanced,
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/anomaly_locked/kinesis/plus,
 	)
 
 //these exist for the prefs menu

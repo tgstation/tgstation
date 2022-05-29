@@ -155,7 +155,7 @@
 "zY" = (
 /obj/machinery/door/poddoor{
 	id = "oldship_ruin_gun";
-	name = "Pod Bay Door"
+	name = "pod bay door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)

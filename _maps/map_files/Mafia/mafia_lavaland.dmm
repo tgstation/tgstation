@@ -1,38 +1,38 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted,
-/area/centcom/mafia)
+/area/mafia)
 "c" = (
 /turf/closed/wall/rust,
-/area/centcom/mafia)
+/area/mafia)
 "d" = (
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
 "e" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/centcom/mafia)
+/area/mafia)
 "f" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/centcom/mafia)
+/area/mafia)
 "g" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/centcom/mafia)
+/area/mafia)
 "h" = (
 /obj/structure/grille/indestructable,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
 "i" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/centcom/mafia)
+/area/mafia)
 "j" = (
 /obj/machinery/door/airlock/external/ruin{
 	max_integrity = 99999;
@@ -40,11 +40,11 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
 "k" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
-/area/centcom/mafia)
+/area/mafia)
 "l" = (
 /obj/structure/closet{
 	desc = "It's a storage unit. For mining stuff. Y'know.";
@@ -53,11 +53,11 @@
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/grass/fakebasalt,
-/area/centcom/mafia)
+/area/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/grass/fakebasalt,
-/area/centcom/mafia)
+/area/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -65,7 +65,7 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "o" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
@@ -77,7 +77,7 @@
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -86,10 +86,10 @@
 	name = "Station Night Shutters"
 	},
 /turf/closed/indestructible/fakeglass,
-/area/centcom/mafia)
+/area/mafia)
 "q" = (
 /turf/open/floor/grass/fakebasalt,
-/area/centcom/mafia)
+/area/mafia)
 "r" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
@@ -101,53 +101,53 @@
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "s" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "t" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/centcom/mafia)
+/area/mafia)
 "u" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
-/area/centcom/mafia)
+/area/mafia)
 "v" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/centcom/mafia)
+/area/mafia)
 "w" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "x" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "y" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "z" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
@@ -159,20 +159,20 @@
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "A" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "B" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "C" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -181,7 +181,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "D" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
@@ -190,7 +190,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "E" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -199,20 +199,20 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "F" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "G" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "H" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
@@ -224,7 +224,7 @@
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "I" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
@@ -236,7 +236,7 @@
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "J" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -246,7 +246,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "K" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 8
@@ -258,27 +258,27 @@
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "L" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "M" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "N" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "O" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
@@ -287,50 +287,50 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "P" = (
 /obj/effect/turf_decal/trimline/brown/filled/end,
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "Q" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "R" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
-/area/centcom/mafia)
+/area/mafia)
 "S" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "T" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "U" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "V" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
+/area/mafia)
 "W" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -339,7 +339,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/centcom/mafia)
+/area/mafia)
 "X" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -348,10 +348,10 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/centcom/mafia)
+/area/mafia)
 "Y" = (
 /turf/closed/indestructible/reinforced,
-/area/centcom/mafia)
+/area/mafia)
 
 (1,1,1) = {"
 a

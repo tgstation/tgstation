@@ -248,7 +248,7 @@ type BackendState<TData> = {
   shared: Record<string, any>,
   suspending: boolean,
   suspended: boolean,
-};
+}
 
 /**
  * Selects a backend-related slice of Redux state
@@ -258,9 +258,12 @@ export const selectBackend = <TData>(state: any): BackendState<TData> => (
 );
 
 /**
- * Get data from tgui backend.
+ * A React hook (sort of) for getting tgui state and related functions.
  *
- * Includes the `act` function for performing DM actions.
+ * This is supposed to be replaced with a real React Hook, which can only
+ * be used in functional components.
+ *
+ * You can make
  */
 export const useBackend = <TData>(context: any) => {
   const { store } = context;

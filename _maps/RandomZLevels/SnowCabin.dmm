@@ -278,7 +278,7 @@
 /area/awaymission/cabin)
 "aR" = (
 /obj/machinery/door/window/right/directional/west{
-	name = "Fireplace"
+	name = "fireplace"
 	},
 /obj/structure/fireplace,
 /obj/effect/decal/cleanable/dirt,
@@ -299,7 +299,7 @@
 /area/awaymission/cabin)
 "aT" = (
 /obj/machinery/door/window/left/directional/east{
-	name = "Fireplace"
+	name = "fireplace"
 	},
 /obj/structure/fireplace,
 /obj/effect/decal/cleanable/dirt,
@@ -308,7 +308,7 @@
 "aU" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/right/directional/west{
-	name = "Fireplace"
+	name = "fireplace"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -320,7 +320,7 @@
 "aW" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/left/directional/east{
-	name = "Fireplace"
+	name = "fireplace"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -372,7 +372,7 @@
 /area/awaymission/cabin)
 "bg" = (
 /obj/machinery/door/window/left/directional/west{
-	name = "Manager's Desk"
+	name = "manager's desk"
 	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -1242,7 +1242,7 @@
 "eq" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "garage_cabin";
-	name = "Garage Door"
+	name = "garage door"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating/snowed/snow_cabin,
@@ -2122,7 +2122,7 @@
 /area/awaymission/cabin)
 "hg" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Janitor Closet"
+	name = "janitor closet"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -2238,7 +2238,7 @@
 /area/awaymission/cabin)
 "hy" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Heater Storage"
+	name = "heater storage"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,

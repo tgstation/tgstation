@@ -44,7 +44,7 @@
 "aD" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Bio Containment";
-	req_access = list("research")
+	req_one_access_txt = "47"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
@@ -140,22 +140,18 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "be" = (
-/obj/structure/frame/machine,
+/obj/structure/reagent_dispensers/fueltank,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bf" = (
 /obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bh" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/structure/cable,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bi" = (
@@ -313,11 +309,6 @@
 "bX" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
-"eY" = (
-/obj/effect/turf_decal/tile/green/fourcorners,
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/abandonedzoo)
 "gE" = (
 /mob/living/simple_animal/hostile/bee,
 /turf/open/floor/grass,
@@ -444,6 +435,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
+"wi" = (
+/obj/machinery/power/terminal,
+/obj/effect/turf_decal/tile/green/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/abandonedzoo)
 "Ap" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid,
@@ -464,9 +461,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "GX" = (
+/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light/directional/south,
 /obj/structure/cable,
-/obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "Ig" = (
@@ -673,7 +670,7 @@ ac
 at
 LD
 oS
-Ni
+oS
 be
 at
 ac
@@ -693,8 +690,8 @@ ac
 qX
 at
 aT
-oS
 Ni
+wi
 bf
 at
 qX
@@ -714,8 +711,8 @@ at
 at
 at
 uA
-oS
 Ni
+oS
 GX
 at
 at
@@ -735,7 +732,7 @@ OR
 aG
 aN
 aV
-oS
+Ni
 oS
 bh
 bm
@@ -752,12 +749,12 @@ aa
 aa
 aa
 ag
-eY
+Ni
 Ni
 YJ
 Ni
-oS
 Ni
+oS
 Ni
 Ni
 Ni
@@ -777,8 +774,8 @@ Ni
 Ni
 Ni
 Ni
-oS
 Ni
+oS
 Ni
 Ni
 Ni
@@ -798,8 +795,8 @@ Ct
 aI
 aP
 aW
-oS
 Ni
+oS
 bi
 bn
 br
@@ -819,8 +816,8 @@ at
 at
 at
 bQ
-oS
 Ni
+oS
 ZP
 at
 at
@@ -840,8 +837,8 @@ ac
 qX
 at
 aY
-oS
 Ni
+oS
 bk
 at
 sT
@@ -861,8 +858,8 @@ aA
 ac
 at
 aZ
-oS
 Ni
+oS
 bl
 at
 ac
@@ -882,8 +879,8 @@ PF
 ac
 at
 at
-iX
 Ti
+iX
 at
 at
 ac

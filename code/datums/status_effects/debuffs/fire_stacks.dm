@@ -234,12 +234,6 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
 	cache_stacks()
 	update_overlay()
-	if(!iscarbon(owner))
-		return
-
-	for(var/obj/item/equipped in owner.get_equipped_items())
-		equipped.wash(CLEAN_TYPE_ACID)
-		equipped.extinguish()
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)

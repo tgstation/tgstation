@@ -5,7 +5,7 @@
 	prevent_roundtype_conversion = FALSE
 	suicide_cry = "FOR MY LOVE!!"
 	var/datum/mind/date
-	count_against_dynamic_roll_chance = FALSE
+	soft_antag = TRUE
 
 /datum/antagonist/valentine/proc/forge_objectives()
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect

@@ -58,12 +58,12 @@
 	icon_state = "explorerplasma"
 	inhand_icon_state = "explorerplasma"
 
-/obj/item/clothing/gloves/color/plasmaman/botanic_leather
+/obj/item/clothing/gloves/botanic_leather/plasmaman
 	name = "botany envirogloves"
-	desc = "These leather gloves protect your boney hands against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
+	desc = "Covers up those scandalous boney hands."
 	icon_state = "botanyplasma"
 	inhand_icon_state = "botanyplasma"
-	clothing_traits = list(TRAIT_PLANT_SAFE)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 95, ACID = 95)
 
 /obj/item/clothing/gloves/color/plasmaman/prototype
 	name = "prototype envirogloves"

@@ -345,11 +345,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	return
 
 /datum/hud/proc/position_action(atom/movable/screen/movable/action_button/button, position)
-	// This is kinda a hack, I'm sorry.
-	// Basically, FLOATING is never a valid position to pass into this proc. It exists as a generic marker for manually positioned buttons
-	// Not as a position to target
-	if(position == SCRN_OBJ_FLOATING)
-		return
 	if(button.location != SCRN_OBJ_DEFAULT)
 		hide_action(button)
 	switch(position)
@@ -438,8 +433,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/atom/movable/screen/movable/action_button/button = action.viewers[src]
 		if(!button)
 			action.ShowTo(mymob)
-		else
-			position_action(button, button.location)
+			button = action.viewers[src]
+		position_action(button, button.location)
 
 /datum/action_group
 	/// The hud we're owned by

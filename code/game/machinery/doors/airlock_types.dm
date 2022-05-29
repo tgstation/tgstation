@@ -538,7 +538,7 @@
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-	name = "Airlock"
+	name = "airlock"
 	desc = "It opens and closes."
 	stealthy = TRUE
 	update_appearance()
@@ -596,7 +596,7 @@
 	Material Airlocks
 */
 /obj/machinery/door/airlock/material
-	name = "Airlock"
+	name = "airlock"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
 	greyscale_config = /datum/greyscale_config/material_airlock
 	assemblytype = /obj/structure/door_assembly/door_assembly_material

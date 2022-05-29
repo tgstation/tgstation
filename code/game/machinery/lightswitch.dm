@@ -2,16 +2,14 @@
 /obj/machinery/light_switch
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
-	icon_state = "light-nopower"
+	icon_state = "light1"
 	base_icon_state = "light"
 	desc = "Make dark."
 	power_channel = AREA_USAGE_LIGHT
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	use_power = NO_POWER_USE
 	/// Set this to a string, path, or area instance to control that area
 	/// instead of the switch's location.
 	var/area/area = null
-	///Range of the light emitted when powered, but off
-	var/light_on_range = 1
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()
@@ -40,23 +38,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	luminosity = (machine_stat & NOPOWER) ? 0 : 1
 
 /obj/machinery/light_switch/update_icon_state()
-	set_light(area.lightswitch ? 0 : light_on_range)
-	icon_state = "[base_icon_state]"
 	if(machine_stat & NOPOWER)
-		icon_state += "-nopower"
+		icon_state = "[base_icon_state]-p"
 		return ..()
-	icon_state += "[area.lightswitch ? "-on" : "-off"]"
+	icon_state = "[base_icon_state][area.lightswitch ? 1 : 0]"
 	return ..()
 
 /obj/machinery/light_switch/update_overlays()
 	. = ..()
-	if(machine_stat & NOPOWER)
-		return ..()
-	. += emissive_appearance(icon, "[base_icon_state]-emissive[area.lightswitch ? "-on" : "-off"]", alpha = src.alpha)
+	if(!(machine_stat & NOPOWER))
+		. += emissive_appearance(icon, "[base_icon_state]-glow", alpha = src.alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
-	. += "It is [(machine_stat & NOPOWER) ? "unpowered" : (area.lightswitch ? "on" : "off")]."
+	. += "It is [area.lightswitch ? "on" : "off"]."
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()

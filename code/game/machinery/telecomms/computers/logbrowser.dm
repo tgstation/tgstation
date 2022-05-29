@@ -20,7 +20,7 @@
 	/// Can the monitor translate languages?
 	var/universal_translate = FALSE
 	/// Access required to delete messages
-	req_access = list(ACCESS_TCOMMS)
+	req_access = list(ACCESS_TCOMSAT)
 	circuit = /obj/item/circuitboard/computer/comm_server
 
 /obj/machinery/computer/telecomms/server/ui_data(mob/user)

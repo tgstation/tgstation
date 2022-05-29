@@ -426,7 +426,7 @@
 "sf" = (
 /obj/machinery/door/airlock/vault{
 	color = "#825427";
-	name = "Ye Olde Strong Door"
+	name = "ye olde strong door"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/wood/airless,

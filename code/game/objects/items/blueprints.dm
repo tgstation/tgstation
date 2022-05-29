@@ -156,11 +156,11 @@
 	var/list/SPECIALS = list(
 		/area/shuttle,
 		/area/centcom,
-		/area/centcom/asteroid,
-		/area/centcom/tdome,
-		/area/centcom/wizard_station,
-		/area/misc/hilbertshotel,
-		/area/misc/hilbertshotelstorage
+		/area/asteroid,
+		/area/tdome,
+		/area/wizard_station,
+		/area/hilbertshotel,
+		/area/hilbertshotelstorage
 	)
 	for (var/type in SPECIALS)
 		if ( istype(A,type) )

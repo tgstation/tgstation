@@ -33,8 +33,10 @@
 	return(TOXLOSS)
 
 /obj/item/newspaper/attack_self(mob/user)
-	if(!istype(user) || !user.can_read(src))
+	if(!ishuman(user))
+		to_chat(user, span_warning("The paper is full of unintelligible symbols!"))
 		return
+	var/mob/living/carbon/human/human_user = user
 	var/dat
 	pages = 0
 	switch(screen)
@@ -59,7 +61,7 @@
 				dat+="</ul>"
 			if(scribble_page==curr_page)
 				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-			dat+= "<HR><DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=[REF(user)];mach_close=newspaper_main'>Done reading</A></DIV>"
+			dat+= "<HR><DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=[REF(human_user)];mach_close=newspaper_main'>Done reading</A></DIV>"
 		if(1) // X channel pages inbetween.
 			for(var/datum/feed_channel/NP in news_content)
 				pages++
@@ -108,8 +110,8 @@
 				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 			dat+= "<HR><DIV STYLE='float:left;'><A href='?src=[REF(src)];prev_page=1'>Previous Page</A></DIV>"
 	dat+="<BR><HR><div align='center'>[curr_page+1]</div>"
-	user << browse(dat, "window=newspaper_main;size=300x400")
-	onclose(user, "newspaper_main")
+	human_user << browse(dat, "window=newspaper_main;size=300x400")
+	onclose(human_user, "newspaper_main")
 
 /obj/item/newspaper/proc/notContent(list/L)
 	if(!L.len)
@@ -158,7 +160,8 @@
 		return
 
 	if(istype(W, /obj/item/pen))
-		if(!user.can_write(W))
+		if(!user.is_literate())
+			to_chat(user, span_notice("You scribble illegibly on [src]!"))
 			return
 		if(scribble_page == curr_page)
 			to_chat(user, span_warning("There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?"))

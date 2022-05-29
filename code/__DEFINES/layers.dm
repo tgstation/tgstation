@@ -126,6 +126,8 @@
 #define GHOST_PLANE 80
 #define POINT_PLANE 90
 
+#define RAD_TEXT_PLANE 90
+
 //---------- LIGHTING -------------
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 100

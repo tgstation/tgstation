@@ -68,8 +68,8 @@
 	if(!allowed_areas)
 		///Places that shouldn't explode
 		var/static/list/safe_area_types = typecacheof(list(
-		/area/station/ai_monitored/turret_protected/ai,
-		/area/station/ai_monitored/turret_protected/ai_upload,
+		/area/ai_monitored/turret_protected/ai,
+		/area/ai_monitored/turret_protected/ai_upload,
 		/area/station/engineering,
 		/area/shuttle,
 	))

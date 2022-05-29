@@ -64,6 +64,7 @@
 
 /obj/item/computer_hardware/hard_drive/portable/command/ce/install_default_programs()
 	. = ..()
+	store_file(new /datum/computer_file/program/power_monitor(src))
 	store_file(new /datum/computer_file/program/supermatter_monitor(src))
 	store_file(new /datum/computer_file/program/atmosscan(src))
 	store_file(new /datum/computer_file/program/alarm_monitor(src))
@@ -138,6 +139,7 @@
 
 /obj/item/computer_hardware/hard_drive/portable/engineering/install_default_programs()
 	. = ..()
+	store_file(new /datum/computer_file/program/power_monitor(src))
 	store_file(new /datum/computer_file/program/supermatter_monitor(src))
 
 /obj/item/computer_hardware/hard_drive/portable/atmos

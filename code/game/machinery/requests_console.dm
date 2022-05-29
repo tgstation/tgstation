@@ -31,12 +31,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	icon_state = "req_comp_off"
 	base_icon_state = "req_comp"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
-	var/area/area // Reference to our area
-	var/areastring = null // Mapper helper to tie an apc to another area
-	var/auto_name = FALSE // Autonaming by area on?
-	var/department = "" //Department name (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
-	var/list/messages = list() // List of all messages
-	var/departmentType = 0 // bitflag, DEPRECATED. If maps no longer contain this var, delete it. Use the flags. -fippe
+	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
+	var/list/messages = list() //List of all messages
+	var/departmentType = 0 //bitflag
 		// 0 = none (not listed, can only replied to)
 		// assistance = 1
 		// supplies = 2
@@ -70,12 +67,11 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/priority = REQ_NO_NEW_MESSAGE //Priority of the message being sent
 	var/obj/item/radio/Radio
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
-	var/receive_ore_updates = FALSE // If ore redemption machines will send an update when it receives new ores.
-	var/assistance_requestable = FALSE // Can others request assistance from this terminal?
-	var/supplies_requestable = FALSE // Can others request supplies from this terminal?
-	var/anon_tips_receiver = FALSE // Can you relay information to this console?
+	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
 	max_integrity = 300
 	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 
 /obj/machinery/requests_console/update_appearance(updates=ALL)
 	. = ..()
@@ -113,46 +109,21 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 /obj/machinery/requests_console/Initialize(mapload)
 	. = ..()
-
-	// Init by checking our area, stolen from APC code
-	area = get_area(loc)
-
-	// Naming and department sets
-	if(auto_name) // If autonaming, just pick department and name from the area code.
-		department = "[get_area_name(area, TRUE)]"
-		name = "\improper [department] requests console"
-	else
-		if(!(department) && (name != "requests console")) // if we have a map-set name, let's default that for the department.
-			department = name
-		else if(!(department)) // if we have no department and no name, we'll have to be Unknown.
-			department = "Unknown"
-			name = "\improper [department] requests console"
-		else
-			name = "\improper [department] requests console" // and if we have a 'department', our name should reflect that.
-
+	name = "\improper [department] requests console"
 	GLOB.allConsoles += src
 
-	if(departmentType) // Do we have department type flags? Old, deletable once all req consoles are cleaned
+	if(departmentType)
+
 		if((departmentType & REQ_DEP_TYPE_ASSISTANCE) && !(department in GLOB.req_console_assistance))
-			assistance_requestable = TRUE
+			GLOB.req_console_assistance += department
 
 		if((departmentType & REQ_DEP_TYPE_SUPPLIES) && !(department in GLOB.req_console_supplies))
-			supplies_requestable = TRUE
+			GLOB.req_console_supplies += department
 
 		if((departmentType & REQ_DEP_TYPE_INFORMATION) && !(department in GLOB.req_console_information))
-			anon_tips_receiver = TRUE
-	// once all request consoles on every map are cleaned, this section above can be deleted
+			GLOB.req_console_information += department
 
-	if((assistance_requestable) && !(department in GLOB.req_console_assistance)) // adding to assistance list if not already present
-		GLOB.req_console_assistance += department
-
-	if((supplies_requestable) && !(department in GLOB.req_console_supplies)) // supplier list
-		GLOB.req_console_supplies += department
-
-	if((anon_tips_receiver) && !(department in GLOB.req_console_information)) // tips lists
-		GLOB.req_console_information += department
-
-	GLOB.req_console_ckey_departments[ckey(department)] = department // and then we set ourselves a listed name
+	GLOB.req_console_ckey_departments[ckey(department)] = department
 
 	Radio = new /obj/item/radio(src)
 	Radio.set_listening(FALSE)
@@ -253,7 +224,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 		if(!dat)
 			CRASH("No UI for src. Screen var is: [screen]")
-		var/datum/browser/popup = new(user, "req_console", "[name]", 450, 440)
+		var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
 		popup.set_content(dat)
 		popup.open()
 	return
@@ -492,12 +463,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			updateUsrDialog()
 		return
 	return ..()
-
-/obj/machinery/requests_console/auto_name // Register an autoname variant and then make the directional helpers before undefing all the magic bits
-	auto_name = TRUE
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 
 #undef REQ_EMERGENCY_SECURITY
 #undef REQ_EMERGENCY_ENGINEERING

@@ -12,7 +12,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	integrity_failure = 0.5
 	max_integrity = 100
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
 	var/bypass_state = FALSE // bypassing the set icon state
 
@@ -67,12 +66,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
 	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
-
-	/// How far the computer's light can reach, is not editable by players.
-	var/comp_light_luminosity = 3
-	/// The built-in light's color, editable by players.
-	var/comp_light_color = "#FFFFFF"
-
+	var/comp_light_luminosity = 3 //The brightness of that light
+	var/comp_light_color //The color of that light
 	var/invisible = FALSE // whether or not the tablet is invisible in messenger and other apps
 
 	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
@@ -88,8 +83,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src
-	set_light_color(comp_light_color)
-	set_light_range(comp_light_luminosity)
+	comp_light_color = "#FFFFFF"
 	idle_threads = list()
 	if(looping_sound)
 		soundloop = new(src, enabled)
@@ -568,8 +562,13 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!has_light)
 		return FALSE
 	set_light_on(!light_on)
+	if(light_on)
+		set_light(comp_light_luminosity, 1, comp_light_color)
+	else
+		set_light(0)
 	update_appearance()
-	update_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
+	if(light_butt)
+		update_action_buttons(force = TRUE) // must force if just the overlays changed.
 	return TRUE
 
 /**
@@ -585,6 +584,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return FALSE
 	comp_light_color = color
 	set_light_color(color)
+	update_light()
 	return TRUE
 
 /obj/item/modular_computer/proc/UpdateDisplay()
@@ -619,24 +619,24 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	return
 
 
-/obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/modular_computer/attackby(obj/item/W as obj, mob/user as mob)
 	// Check for ID first
-	if(istype(attacking_item, /obj/item/card/id) && InsertID(attacking_item))
+	if(istype(W, /obj/item/card/id) && InsertID(W))
 		return
 
 	// Insert a PAI.
-	if(istype(attacking_item, /obj/item/paicard) && !inserted_pai)
-		if(!user.transferItemToLoc(attacking_item, src))
+	if(istype(W, /obj/item/paicard) && !inserted_pai)
+		if(!user.transferItemToLoc(W, src))
 			return
-		inserted_pai = attacking_item
+		inserted_pai = W
 		inserted_pai.slotted = TRUE
-		to_chat(user, span_notice("You slot \the [attacking_item] into [src]."))
+		to_chat(user, span_notice("You slot \the [W] into [src]."))
 		return
 
 	// Scan a photo.
-	if(istype(attacking_item, /obj/item/photo))
+	if(istype(W, /obj/item/photo))
 		var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-		var/obj/item/photo/pic = attacking_item
+		var/obj/item/photo/pic = W
 		if(hdd)
 			for(var/datum/computer_file/program/messenger/messenger in hdd.stored_files)
 				saved_image = pic.picture
@@ -646,36 +646,36 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	// Insert items into the components
 	for(var/h in all_components)
 		var/obj/item/computer_hardware/H = all_components[h]
-		if(H.try_insert(attacking_item, user))
+		if(H.try_insert(W, user))
 			return
 
 	// Insert new hardware
-	if(istype(attacking_item, /obj/item/computer_hardware) && upgradable)
-		if(install_component(attacking_item, user))
+	if(istype(W, /obj/item/computer_hardware) && upgradable)
+		if(install_component(W, user))
 			playsound(src, 'sound/machines/card_slide.ogg', 50)
 			return
 
-	if(attacking_item.tool_behaviour == TOOL_WRENCH)
+	if(W.tool_behaviour == TOOL_WRENCH)
 		if(length(all_components))
 			balloon_alert(user, "remove the other components!")
 			return
-		attacking_item.play_tool_sound(src, user, 20, volume=20)
+		W.play_tool_sound(src, user, 20, volume=20)
 		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )
 		user.balloon_alert(user,"disassembled")
 		relay_qdel()
 		qdel(src)
 		return
 
-	if(attacking_item.tool_behaviour == TOOL_WELDER)
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(atom_integrity == max_integrity)
 			to_chat(user, span_warning("\The [src] does not require repairs."))
 			return
 
-		if(!attacking_item.tool_start_check(user, amount=1))
+		if(!W.tool_start_check(user, amount=1))
 			return
 
 		to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
-		if(attacking_item.use_tool(src, user, 20, volume=50, amount=1))
+		if(W.use_tool(src, user, 20, volume=50, amount=1))
 			atom_integrity = max_integrity
 			to_chat(user, span_notice("You repair \the [src]."))
 			update_appearance()
@@ -683,9 +683,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	// Check to see if we have an ID inside, and a valid input for money
-	if(card_slot?.GetID() && iscash(attacking_item))
+	if(card_slot?.GetID() && iscash(W))
 		var/obj/item/card/id/id = card_slot.GetID()
-		id.attackby(attacking_item, user) // If we do, try and put that attacking object in
+		id.attackby(W, user) // If we do, try and put that attacking object in
 		return
 	..()
 

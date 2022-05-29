@@ -369,8 +369,7 @@
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 
-// Please don't spacedrift thanks
-/obj/effect/resin_container/newtonian_move(direction, instant = FALSE, start_delay = 0)
+/obj/effect/resin_container/newtonian_move(direction, instant = FALSE) // Please don't spacedrift thanks
 	return TRUE
 
 #undef EXTINGUISHER

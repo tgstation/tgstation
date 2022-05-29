@@ -490,7 +490,7 @@
 /area/shuttle/escape)
 "wF" = (
 /obj/machinery/door/window/left/directional/west{
-	name = "Bar Door"
+	name = "bar door"
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)

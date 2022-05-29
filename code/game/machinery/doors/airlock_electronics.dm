@@ -64,7 +64,7 @@
 			one_access = !one_access
 			. = TRUE
 		if("set")
-			var/access = params["access"]
+			var/access = text2num(params["access"])
 			if (!(access in accesses))
 				accesses += access
 			else

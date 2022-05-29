@@ -171,7 +171,7 @@
 
 /datum/design/apc_board
 	name = "APC Module"
-	id = "power_control"
+	id = "power control"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/electronics/apc

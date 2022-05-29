@@ -7,9 +7,9 @@
 	program_icon_state = "power_monitor"
 	extended_desc = "This program connects to sensors around the station to provide information about electrical systems"
 	ui_header = "power_norm.gif"
-	transfer_access = list(ACCESS_ENGINEERING)
+	transfer_access = list(ACCESS_ENGINE)
 	usage_flags = PROGRAM_CONSOLE
-	requires_ntnet = FALSE
+	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosPowerMonitor"
 	program_icon = "plug"

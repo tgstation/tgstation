@@ -1120,7 +1120,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fL" = (
-/obj/structure/sign/departments/exam_room{
+/obj/structure/sign/departments/maint{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,

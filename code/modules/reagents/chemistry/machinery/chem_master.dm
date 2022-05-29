@@ -445,17 +445,18 @@
 		return FALSE
 
 	if(action == "analyze")
-		var/datum/reagent/analyzed_reagent = GLOB.name2reagent[params["id"]]
-		if(analyzed_reagent)
+		var/datum/reagent/R = GLOB.name2reagent[params["id"]]
+		if(R)
 			var/state = "Unknown"
-			if(initial(analyzed_reagent.reagent_state) == SOLID)
+			if(initial(R.reagent_state) == 1)
 				state = "Solid"
-			else if(initial(analyzed_reagent.reagent_state) == LIQUID)
+			else if(initial(R.reagent_state) == 2)
 				state = "Liquid"
-			else if(initial(analyzed_reagent.reagent_state) == GAS)
+			else if(initial(R.reagent_state) == 3)
 				state = "Gas"
-			var/metabolization_rate = initial(analyzed_reagent.metabolization_rate) * (60 / SSMOBS_DT)
-			analyze_vars = list("name" = initial(analyzed_reagent.name), "state" = state, "color" = initial(analyzed_reagent.color), "description" = initial(analyzed_reagent.description), "metaRate" = metabolization_rate, "overD" = initial(analyzed_reagent.overdose_threshold), "pH" = initial(analyzed_reagent.ph))
+			var/const/P = 3 //The number of seconds between life ticks
+			var/T = initial(R.metabolization_rate) * (60 / P)
+			analyze_vars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "pH" = initial(R.ph))
 			screen = "analyze"
 			return TRUE
 

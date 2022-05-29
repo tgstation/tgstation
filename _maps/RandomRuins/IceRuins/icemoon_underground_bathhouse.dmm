@@ -47,7 +47,7 @@
 /area/ruin/powered/bathhouse)
 "i" = (
 /obj/machinery/door/airlock/freezer{
-	name = "Bath House Airlock"
+	name = "bath house airlock"
 	},
 /turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)

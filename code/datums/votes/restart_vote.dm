@@ -44,7 +44,7 @@
 		return
 
 	if(winning_option == CHOICE_RESTART)
-		for(var/client/online_admin as anything in GLOB.admins)
+		for(var/client/online_admin as anything in GLOB.admins | GLOB.deadmins)
 			if(online_admin.is_afk() || !check_rights_for(online_admin, R_SERVER))
 				continue
 
