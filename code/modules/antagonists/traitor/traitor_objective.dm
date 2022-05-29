@@ -30,7 +30,7 @@
 	var/skipped = FALSE
 
 	/// Determines how influential global progression will affect this objective. Set to 0 to disable.
-	var/global_progression_influence_intensity = 0.5
+	var/global_progression_influence_intensity = 0
 	/// Determines how great the deviance has to be before progression starts to get reduced.
 	var/global_progression_deviance_required = 0.5
 	/// Determines the minimum and maximum progression this objective can be worth as a result of being influenced by global progression
