@@ -284,10 +284,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "bh" = (
-/obj/machinery/computer{
-	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
-	dir = 4;
-	name = "Broken Computer"
+/obj/machinery/computer/old{
+	dir = 4
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -5302,7 +5300,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/glass,
 /obj/item/reagent_containers/glass/bottle{
-	pixel_x = 8;
+	pixel_x = 4;
 	list_reagents = list(/datum/reagent/growthserum = 30);
 	name = "Experimental solution";
 	renamedByPlayer = 1;
@@ -5829,12 +5827,11 @@
 /obj/structure/closet/crate/secure/weapon{
 	req_access = list("away_sec")
 	},
+/obj/item/knife/combat,
 /obj/item/clothing/suit/armor/vest/old,
-/obj/item/knife/combat/survival,
 /obj/item/gun/ballistic/rifle/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
-/obj/item/grenade/chem_grenade/incendiary,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "wi" = (
@@ -7294,6 +7291,22 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"Jb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/tank/internals/plasma/full{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/assembly/timer{
+	pixel_y = -1;
+	pixel_x = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/hall)
 "Jd" = (
 /obj/structure/transit_tube{
 	anchored = 0
@@ -15654,7 +15667,7 @@ vy
 rp
 Ij
 dh
-dh
+Jb
 bE
 aa
 aa

@@ -30,9 +30,9 @@
 	access = list(ACCESS_ENGINEERING, ACCESS_ENGINE_EQUIP)
 	assignment = "Engineering Equipment Access"
 
-/// Trim for the oldstation ruin/Charlie station to access robots
+/// Trim for the oldstation ruin/Charlie station to access robots, and downloading of paper publishing software for experiments
 /datum/id_trim/away/old/robo
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_ROBOTICS)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_ROBOTICS, ACCESS_ORDNANCE)
 
 /// Trim for the cat surgeon ruin.
 /datum/id_trim/away/cat_surgeon
