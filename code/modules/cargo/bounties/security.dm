@@ -58,7 +58,6 @@
 		/area/station/hallway/primary,\
 		/area/station/security/office,\
 		/area/station/security/prison,\
-		/area/station/security/range,\
 		/area/station/security/checkpoint,\
 		/area/station/security/interrogation)
 	demanded_area = pick(possible_areas)
