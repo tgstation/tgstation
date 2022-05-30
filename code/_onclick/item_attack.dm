@@ -244,10 +244,11 @@
 
 /mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
 	send_item_attack_message(attacking_item, user)
+<<<<<<< HEAD
 	if(!(attacking_item.force))
 		return FALSE
 	var/damage = attacking_item.force
-	if(mob_biotypes == MOB_ROBOTIC)
+	if(mob_biotypes & MOB_ROBOTIC)
 		damage = (damage * attacking_item.demolition_mod)
 	apply_damage(damage, attacking_item.damtype)
 	if(attacking_item.damtype == BRUTE)
