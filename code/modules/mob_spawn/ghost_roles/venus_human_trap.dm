@@ -21,14 +21,14 @@
 	return
 
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/equip(mob/living/simple_animal/hostile/venus_human_trap/spawned_human_trap)
-	if(spawned_mob && flower_bud)
+	if(spawned_human_trap && flower_bud)
 		if(flower_bud.trait_flags & SPACEVINE_HEAT_RESISTANT)
 			spawned_human_trap.unsuitable_heat_damage = 0
 		if(flower_bud.trait_flags & SPACEVINE_COLD_RESISTANT)
 			spawned_human_trap.unsuitable_cold_damage = 0
 
 /// Called when the attached flower bud has borne fruit (ie. is ready)
-/obj/effect/mob_spawn/ghost_role/venus_human_trap/bear_fruit()
+/obj/effect/mob_spawn/ghost_role/venus_human_trap/proc/bear_fruit()
 	ready = TRUE
 	notify_ghosts("[src] has borne fruit!", null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = src, action = NOTIFY_ORBIT, ignore_key = POLL_IGNORE_VENUSHUMANTRAP)
 
