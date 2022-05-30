@@ -2,8 +2,6 @@
  * Unit test to ensure that mechs take the correct amount of damage
  * based on armor, and that their equipment is properly damaged as well.
  */
-TEST_FOCUS(/datum/unit_test/mecha_damage)
-
 /datum/unit_test/mecha_damage
 
 /datum/unit_test/mecha_damage/Run()
