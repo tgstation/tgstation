@@ -1,71 +1,45 @@
 /**
- * Opens a small tgui window that takes input and returns the user response.
- * Like the traditional say, it does not html_encode the user input.
- *
- * Arguments:
- ** channel - Initial speech channel to open the window in.
- ** max_length - Cuts the user off after this amount of characters.
- */
-/proc/tgui_modal(mob/user, channel = SAY_CHAN, max_length = MAX_MESSAGE_LEN)
-	if (!user)
-		user = usr
-	if (!istype(user))
-		if (istype(user, /client))
-			var/client/client = user
-			user = client.mob
-		else
-			return null
-	var/datum/tgui_modal/modal = new(user, channel, max_length)
-	modal.open(user)
-	modal.wait()
-	if(modal)
-		. = list(modal.channel, modal.entry)
-		qdel(modal)
-
-/**
- * The tgui modal instantiation.
+ * The tgui speech modal. This initializes an input window which hides until
+ * the user presses one of the speech hotkeys. Once an entry is set, it will
+ * delegate the speech to the speech manager.
  */
 /datum/tgui_modal
 	/// The channel to broadcast in
-	var/channel
+	var/channel = "say"
+	/// The user who opened the window
+	var/client/client
 	/// Boolean for whether the tgui_modal was closed by the user.
 	var/closed
 	/// The typed user input
 	var/entry
 	/// Max message length
-	var/max_length
+	var/max_length = MAX_MESSAGE_LEN
 	/// The modal window
 	var/datum/tgui_window/window
 
-/datum/tgui_modal/New(user, channel, max_length)
-	src.channel = channel
-	src.max_length = max_length
+/** Creates the new input window to exist in the background. */
+/datum/tgui_modal/New(client/client)
+	src.client = client
+	window = new(client, "tgui_modal")
+	window.subscribe(src, .proc/on_message)
 
 /**
- * Opens the window for the tgui input and inlines the bundle.
+ * Injects the scripts and styling into the window
  */
-/datum/tgui_modal/proc/open(mob/user)
-	window = new(user.client, "tgui_modal", FALSE)
+/datum/tgui_modal/proc/initialize()
 	window.initialize(
 			fancy = TRUE,
 			inline_css = file2text("tgui/public/tgui-modal.bundle.css"),
 			inline_js = file2text("tgui/public/tgui-modal.bundle.js"),
-		)
-	window.subscribe(src, .proc/on_message)
+	)
+	close()
 
 /**
- * Closes the window and marks it for deletion.
+ * Closes the window and hides it from view.
  */
-/datum/tgui_modal/proc/close(mob/user)
-	window.close()
+/datum/tgui_modal/proc/close()
+	winset(client, "tgui_modal", "is-visible=false")
 	closed = TRUE
-
-/**
- * Pauses the interface while waiting for user input.
- */
-/datum/tgui_modal/proc/wait()
-	while(!entry && !closed && !QDELETED(src))
-		stoplag(1)
 
 /**
  * The equivalent of ui_act, this waits on messages from the window

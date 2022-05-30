@@ -27,8 +27,10 @@ export class TguiModal extends Component {
         CHANNELS.indexOf(props.channel) < 0
           ? 0
           : CHANNELS.indexOf(props.channel),
+      input: '',
     };
   }
+
   /** Mouse leaves the button */
   handleBlur = () => {
     this.hovering = false;
@@ -42,6 +44,7 @@ export class TguiModal extends Component {
   handleEnter = (_, value) => {
     const { channel } = this.state;
     const { max_length } = this.max_length;
+    this.setInput('');
     if (!value || value.length > max_length) {
       Byond.sendMessage('close');
     } else {
@@ -53,6 +56,7 @@ export class TguiModal extends Component {
   };
   /** User presses escape, closes the window */
   handleEscape = () => {
+    this.setInput('');
     Byond.sendMessage('close');
   };
   /** Mouse over button. Changes button to channel name. */
@@ -79,7 +83,7 @@ export class TguiModal extends Component {
       this.setChannel(channel + 1);
     }
   }
-  /** Updates the state. */
+  /** Sets the current channel. */
   setChannel(channel) {
     const { hovering } = this.hovering;
     this.setState({ channel });
@@ -89,12 +93,18 @@ export class TguiModal extends Component {
       });
     }
   }
+  /** Sets the current input value. */
+  setInput = (input) => {
+    if (!input) {
+      input = '';
+    }
+    this.setState({ input });
+  };
   componentShouldUpdate(_, nextState) {
     return nextState.channel !== this.state.channel;
   }
 
   render() {
-    const { max_length } = this.max_length;
     const props = this;
     const {
       handleBlur,
@@ -103,8 +113,9 @@ export class TguiModal extends Component {
       handleEscape,
       handleFocus,
       handleKeyDown,
+      max_length,
     } = props;
-    const { buttonContent, channel } = this.state;
+    const { buttonContent, channel, input } = this.state;
     return (
       <div className={getCss('window', channel)}>
         <button
@@ -123,6 +134,7 @@ export class TguiModal extends Component {
           onEscape={handleEscape}
           onEnter={handleEnter}
           onKeyDown={handleKeyDown}
+          selfClear
         />
       </div>
     );
