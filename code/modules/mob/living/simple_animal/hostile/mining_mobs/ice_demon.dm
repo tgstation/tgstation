@@ -76,7 +76,6 @@
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-0.0125 * maxHealth * delta_time)
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/spawn_crusher_loot()
 	loot += crusher_loot

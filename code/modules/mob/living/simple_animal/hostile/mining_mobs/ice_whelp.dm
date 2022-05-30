@@ -50,7 +50,6 @@
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-0.0125 * maxHealth * delta_time)
 
 /mob/living/simple_animal/hostile/asteroid/ice_whelp/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT
