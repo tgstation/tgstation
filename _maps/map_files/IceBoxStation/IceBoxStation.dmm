@@ -37276,6 +37276,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"lTk" = (
+/obj/structure/sign/departments/maint/directional/west,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "lTs" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -54045,6 +54049,12 @@
 /obj/structure/girder,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"rxC" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/machinery/light/small/directional/north,
+/obj/structure/sign/departments/maint/directional/north,
+/turf/open/floor/plating/snowed/icemoon,
+/area/mine/eva)
 "rxG" = (
 /obj/machinery/light_switch/directional/south,
 /obj/structure/closet/secure_closet/security/cargo,
@@ -161218,7 +161228,7 @@ tjo
 tjo
 scw
 scw
-scw
+lTk
 iDt
 gjq
 gjq
@@ -162794,7 +162804,7 @@ rsY
 qjV
 qjV
 rsY
-tVj
+rxC
 iDt
 iDt
 iDt
