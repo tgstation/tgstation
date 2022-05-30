@@ -1,3 +1,6 @@
+#define UNSUCCESSFUL_EXP 5
+#define SUCCESSFUL_DUNK_EXP 20
+
 //Basketball items and structures
 
 /obj/item/toy/basketball
@@ -26,21 +29,19 @@
 * ball_exp is how much exp you get for a dunk, ball_skill is balling skill level modifier
 * dunking has a 60% chance of failure which decreases based on balling skill
 *			unsuccessful: 5 exp; 50 stamina damage; ball goes in a random direction one step away
-*			sucessful: 20 exp; 40-10 stamina damage (based on ball_skill); ball goes in net
+*			successful: 20 exp; 40-10 stamina damage (based on ball_skill); ball goes in net
 */
 /obj/structure/hoop/attackby(obj/item/dunk_object, mob/user, params)
 	if(get_dist(src,user)>=2) //can only dunk when close
 		return
 
 	var/ball_skill = user.mind?.get_skill_modifier(/datum/skill/balling, SKILL_PROBS_MODIFIER)
-	var/ball_exp = 0
 
 	if(prob(60 - ball_skill)) //60% base chance to fail a dunk
 		if(isliving(user))
 			var/mob/living/living_baller = user
 			living_baller.apply_damage(50, STAMINA) //failing a dunk is universally taxing
-		ball_exp = 5
-		user?.mind.adjust_experience(/datum/skill/balling, ball_exp)
+		user?.mind.adjust_experience(/datum/skill/balling, UNSUCCESSFUL_EXP)
 		playsound(src, 'sound/weapons/gun/general/grenade_launch.ogg', 50, TRUE)
 		visible_message(span_warning("[user] fumbles the dunk!"))
 		user.dropItemToGround(dunk_object)
@@ -52,8 +53,7 @@
 		if(isliving(user))
 			var/mob/living/living_baller = user
 			living_baller.apply_damage(stam_cost, STAMINA)
-		ball_exp = 20
-		user?.mind.adjust_experience(/datum/skill/balling, ball_exp)
+		user?.mind.adjust_experience(/datum/skill/balling, SUCCESSFUL_DUNK_EXP)
 		playsound(src, 'sound/weapons/thudswoosh.ogg', 130, TRUE)
 		visible_message(span_boldnicegreen("[user] dunks [dunk_object] into \the [src]!"))
 
@@ -98,10 +98,13 @@
 
 	if(prob(shot_difficulty*10)) //chance of missing the shot
 		visible_message(span_warning("[thrownitem] bounces off of [src]'s rim!"))
-		baller?.mind.adjust_experience(/datum/skill/balling, 5)
+		baller?.mind.adjust_experience(/datum/skill/balling, UNSUCCESSFUL_EXP)
 		return ..()
 
 	thrownitem.forceMove(get_turf(src))
 	playsound(src, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 2)
 	baller?.mind.adjust_experience(/datum/skill/balling, ball_exp)
 	visible_message(span_nicegreen("Swish! [thrownitem] lands in [src]."))
+
+#undef UNSUCCESSFUL_EXP
+#undef SUCCESSFUL_DUNK_EXP
