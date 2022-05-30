@@ -4,9 +4,13 @@
  * An internal datum containing info on items in the asset cache. Mainly used to cache md5 info for speed.
  */
 /datum/asset_cache_item
+	/// the name of this asset item, becomes the key in SSassets.cache list
 	var/name
+	/// md5() of the file this asset item represents.
 	var/hash
+	/// the file this asset represents
 	var/resource
+	/// our file extension e.g. .png, .gif, etc
 	var/ext = ""
 	/// Should this file also be sent via the legacy browse_rsc system
 	/// when cdn transports are enabled?
