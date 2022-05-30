@@ -96,7 +96,6 @@
 	l_hand = /obj/item/gun/energy/pulse/carbine/loyalpin
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/storage/belt/security/full = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)

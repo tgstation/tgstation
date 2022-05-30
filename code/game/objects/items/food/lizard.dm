@@ -181,7 +181,7 @@
 	icon_state = "nectar_larvae"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/korta_nectar = 2, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("meat" = 1, "sweet" = 1, "heat" = 1)
-	foodtypes = GROSS | MEAT
+	foodtypes = GROSS | MEAT | BUGS
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/mushroomy_stirfry
@@ -601,5 +601,5 @@
 	icon_state = "canned_larvae"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/honey = 2)
 	tastes = list("sweet bugs" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT | GROSS | BUGS
 	w_class = WEIGHT_CLASS_SMALL

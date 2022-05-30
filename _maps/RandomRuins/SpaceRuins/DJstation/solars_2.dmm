@@ -3,7 +3,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "E" = (
 /turf/template_noop,
 /area/template_noop)
@@ -20,7 +20,7 @@
 "U" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "V" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,

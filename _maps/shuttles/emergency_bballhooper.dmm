@@ -321,7 +321,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "TIMEOUT BOX"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "td" = (
@@ -512,7 +512,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "TIMEOUT BOX"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)

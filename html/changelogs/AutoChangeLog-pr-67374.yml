@@ -1,0 +1,5 @@
+author: "Son-of-Space, Pepsilawn"
+delete-after: True
+changes: 
+  - code_imp: "Adds checks for double firelocks or airlocks"
+  - bugfix: "fixes several double firelocks and airlocks across our maps"
