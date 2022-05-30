@@ -2443,6 +2443,7 @@
 "aQp" = (
 /obj/structure/table,
 /obj/effect/spawner/random/trash/food_packaging,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "aQF" = (
@@ -15804,6 +15805,7 @@
 "fcz" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/light/small/directional/south,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "fcC" = (
@@ -49668,7 +49670,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light_switch/directional/west,
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 1
 	},
@@ -59016,6 +59017,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/iron/smooth,
 /area/mine/eva/lower)
+"tae" = (
+/turf/closed/wall,
+/area/station/science/breakroom)
 "taf" = (
 /obj/effect/landmark/start/quartermaster,
 /obj/structure/chair/office{
@@ -59717,12 +59721,12 @@
 /turf/open/floor/iron/dark,
 /area/mine/eva/lower)
 "tmL" = (
-/obj/item/radio/intercom/directional/west,
 /obj/structure/chair/sofa/corp/right{
 	dir = 4;
 	pixel_x = -4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "tmN" = (
@@ -68616,6 +68620,7 @@
 /area/station/service/chapel/office)
 "wgx" = (
 /obj/effect/spawner/random/vending/snackvend,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "wgE" = (
@@ -254847,10 +254852,10 @@ sMZ
 mEJ
 mEJ
 krY
-krY
+tae
 pGp
 lIk
-krY
+tae
 krY
 iqt
 iqt
