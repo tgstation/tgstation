@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "Fixed 217-D Plasma Cutter and Exosuit PKA being uninstallable on ripley/clarke"

@@ -362,7 +362,7 @@
 	icon_state = "antpizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/ants = 25, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "insects" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | GROSS
+	foodtypes = GRAIN | VEGETABLES | DAIRY | BUGS
 	slice_type = /obj/item/food/pizzaslice/ants
 	boxtag = "Anthill Deluxe"
 
@@ -371,4 +371,4 @@
 	desc = "The key to a perfect slice of pizza is not to overdo it with the ants."
 	icon_state = "antpizzaslice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "insects" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | GROSS
+	foodtypes = GRAIN | VEGETABLES | DAIRY | BUGS

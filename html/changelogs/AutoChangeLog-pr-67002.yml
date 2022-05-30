@@ -1,6 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - refactor: "Compartmentalized defines for access IDs and converts them from integers to strings"
-  - bugfix: "Standardizes some access reqs on varedited objects like windoors and shutter buttons"
-  - bugfix: "Some missed doors with access reqs instead of mapping helpers were fixed"

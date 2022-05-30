@@ -153,8 +153,14 @@
 	if(iseffect(AM)) //and no accidentally wasting your moment of glory on graffiti
 		return
 	user.say("[war_cry]", forced="spear warcry")
-	explosive.forceMove(AM)
-	explosive.detonate(lanced_by=user)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		living_user.set_resting(new_resting = TRUE, silent = TRUE, instant = TRUE)
+		living_user.Move(get_turf(AM))
+		explosive.forceMove(get_turf(living_user))
+		explosive.detonate(lanced_by=user)
+		if(!QDELETED(living_user))
+			living_user.set_resting(new_resting = FALSE, silent = TRUE, instant = TRUE)
 	qdel(src)
 
 //GREY TIDE

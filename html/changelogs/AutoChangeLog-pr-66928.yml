@@ -1,5 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - refactor: "Refactored how the analyzer's last gasmix ui thing works. No gameplay changes expected."
-  - code_imp: "Reorganized tool usage code a bit. Also no gameplay changes expected."

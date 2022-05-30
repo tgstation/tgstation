@@ -724,7 +724,7 @@
 		if(dumb_mob.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
 			to_chat(dumb_mob, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
 		to_chat(user, span_notice("[dumb_mob] accepts [src] and suddenly becomes attentive and aware. It worked!"))
-		dumb_mob.copy_languages(user)
+		dumb_mob.copy_languages(user, LANGUAGE_MASTER)
 		after_success(user, dumb_mob)
 		qdel(src)
 	else
@@ -791,6 +791,7 @@
 
 	user.mind.transfer_to(switchy_mob)
 	switchy_mob.faction = user.faction.Copy()
+	switchy_mob.copy_languages(user, LANGUAGE_MIND)
 	user.death()
 	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))
 	to_chat(switchy_mob, span_warning("You are now [switchy_mob]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!"))
