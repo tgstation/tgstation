@@ -3756,9 +3756,9 @@
 /obj/machinery/button/door/directional/west{
 	id = "Beta Secure Storage";
 	name = "Engineering Secure Storage";
+	req_access = list("engine_equip");
 	pixel_x = 25;
-	pixel_y = 23;
-	req_access = list("engine_equip")
+	pixel_y = 23
 	},
 /obj/item/shard/plasma,
 /turf/open/floor/engine/airless,
@@ -5835,9 +5835,9 @@
 "wi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/command{
-	name = "Charlie Station Access";
-	req_access = list("away_general")
+	name = "Charlie Station Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -6685,9 +6685,9 @@
 /area/ruin/space/ancientstation/delta/hall)
 "EF" = (
 /obj/machinery/door/airlock/command{
-	name = "Charlie Station Access";
-	req_access = list("away_general")
+	name = "Charlie Station Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -7065,9 +7065,9 @@
 "Hl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Prototype Laboratory";
-	req_access = list("away_general")
+	name = "Prototype Laboratory"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7213,9 +7213,9 @@
 "Iu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Prototype Laboratory";
-	req_access = list("away_general")
+	name = "Prototype Laboratory"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white/side,
@@ -8066,9 +8066,9 @@
 /area/ruin/space/ancientstation/delta/hall)
 "Ps" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Chemical Storage";
-	req_access = list("away_general")
+	name = "Chemical Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
