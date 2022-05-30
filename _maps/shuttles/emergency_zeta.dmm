@@ -45,7 +45,7 @@
 /obj/machinery/door/airlock/abductor{
 	name = "Holding Facility"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape/brig)
 "jJ" = (

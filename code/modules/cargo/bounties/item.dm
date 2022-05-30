@@ -32,5 +32,5 @@
 		shipped_count += 1
 
 /// If the user can actually get this bounty as a selection.
-/datum/bounty/item/proc/can_get()
+/datum/bounty/proc/can_get()
 	return TRUE

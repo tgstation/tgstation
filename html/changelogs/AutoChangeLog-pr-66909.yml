@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - config: "adds config to allow for name links in adminwho"

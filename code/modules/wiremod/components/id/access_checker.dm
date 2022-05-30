@@ -110,7 +110,7 @@
 		if("set")
 			var/list/required_accesses_list = required_accesses.value
 			var/list/new_accesses_value = LAZYCOPY(required_accesses_list)
-			var/access = text2num(params["access"])
+			var/access = params["access"]
 			if (!(access in new_accesses_value))
 				new_accesses_value += access
 			else

@@ -1,4 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes: 
-  - bugfix: "Experiments now work on non-station z-levels"

@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - balance: "Armor can now only block up to 90% of damage from projectiles, same as for melee attacks"
+  - bugfix: "Pellet cloud attacks like buckshot and frag grenades now respect armor damage reduction when rolling for wounds"

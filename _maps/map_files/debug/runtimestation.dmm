@@ -797,11 +797,11 @@
 /area/station/medical/medbay)
 "cN" = (
 /turf/closed/wall/r_wall,
-/area/construction)
+/area/station/construction)
 "cP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/construction)
+/area/station/construction)
 "cS" = (
 /turf/closed/wall/r_wall,
 /area/station/commons/storage/primary)
@@ -823,7 +823,7 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "cX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -831,17 +831,17 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "cY" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "cZ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "da" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -905,17 +905,17 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "dn" = (
 /turf/open/floor/plating,
-/area/construction)
+/area/station/construction)
 "do" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "dp" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/plating,
@@ -971,13 +971,13 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "dz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "dA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -1032,19 +1032,19 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "dL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "dM" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "dN" = (
 /obj/structure/table,
 /turf/open/floor/iron,
@@ -1100,7 +1100,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera/directional/north,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "dX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1108,7 +1108,7 @@
 /obj/machinery/camera/autoname/directional/west,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "dY" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/entry)
@@ -1118,7 +1118,7 @@
 	},
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "ea" = (
 /obj/structure/table,
 /obj/machinery/camera/autoname/directional/south,
@@ -1156,7 +1156,7 @@
 "ef" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "eg" = (
 /obj/machinery/door/airlock,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1393,7 +1393,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "cargounload";
-	name = "supply dock unloading door"
+	name = "Supply Dock Unloading Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -1425,7 +1425,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "cargoload";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -1880,7 +1880,7 @@
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "gz" = (
 /obj/structure/table,
 /obj/item/card/id/advanced/gold/captains_spare,
@@ -1931,7 +1931,7 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "gH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -1970,7 +1970,7 @@
 	},
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "jb" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -2102,7 +2102,7 @@
 "sr" = (
 /obj/machinery/door/airlock/shell,
 /turf/open/floor/iron/dark,
-/area/construction)
+/area/station/construction)
 "sH" = (
 /obj/structure/table,
 /obj/item/storage/box/shipping,
@@ -2111,7 +2111,7 @@
 "tE" = (
 /obj/machinery/door/airlock/research,
 /turf/open/floor/iron/dark,
-/area/construction)
+/area/station/construction)
 "tG" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland";
@@ -2312,7 +2312,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "EB" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
@@ -2323,7 +2323,7 @@
 	},
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "EI" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -2525,7 +2525,7 @@
 /obj/machinery/door/airlock,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/construction)
+/area/station/construction)
 "Ut" = (
 /obj/structure/closet/secure_closet/medical3{
 	locked = 0

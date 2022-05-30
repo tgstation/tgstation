@@ -82,16 +82,16 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aq" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Misc Supplies";
-	req_access_txt = "201"
+	name = "Misc Supplies"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "ar" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Custodial Supplies";
-	req_access_txt = "201"
+	name = "Custodial Supplies"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "as" = (
@@ -240,7 +240,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -248,11 +248,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /obj/machinery/door/window{
-	name = "kitty door";
-	req_access_txt = "200"
+	name = "Kitty Door";
+	req_access = list("away_general")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -377,11 +377,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /obj/machinery/door/window/left/directional/west{
-	name = "kitty door";
-	req_access_txt = "200"
+	name = "Kitty Door";
+	req_access = list("away_general")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -611,11 +611,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "meow";
-	name = "kitty protection door"
+	name = "Kitty Protection Door"
 	},
 /obj/machinery/door/window/left/directional/north{
-	name = "kitty door";
-	req_access_txt = "200"
+	name = "Kitty Door";
+	req_access = list("away_general")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -691,9 +691,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bY" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "201"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bZ" = (
@@ -741,9 +740,9 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "cg" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Portable Atmos Equipment";
-	req_access_txt = "201"
+	name = "Portable Atmos Equipment"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/cat_man)
 "ch" = (
@@ -795,9 +794,9 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "cp" = (
 /obj/machinery/door/airlock{
-	name = "Limb Storage";
-	req_access_txt = "200"
+	name = "Limb Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cq" = (
