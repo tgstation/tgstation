@@ -69142,7 +69142,7 @@
 /obj/structure/sign/plaques/kiddie{
 	pixel_y = -32
 	},
-/obj/item/ai_module/core/full/asimov,
+/obj/effect/spawner/round_default_module,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xwX" = (
