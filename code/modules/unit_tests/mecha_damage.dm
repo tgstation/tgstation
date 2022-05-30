@@ -74,9 +74,10 @@
 
 	// Additional check: The right arm of the mech should have taken no damage by this point.
 	var/obj/item/mecha_parts/mecha_equipment/right_arm_equipment = demo_mech.equip_by_category[MECHA_R_ARM]
-	TEST_ASSERT_NOTNULL(left_arm_equipment, "[demo_mech] spawned without any equipment in their right arm slot.")
+	TEST_ASSERT_NOTNULL(right_arm_equipment, "[demo_mech] spawned without any equipment in their right arm slot.")
 	TEST_ASSERT_EQUAL(right_arm_equipment.get_integrity(), right_arm_equipment.max_integrity, "[demo_mech] somehow took damage to its right arm, despite not being targeted.")
 
+/// Simple helper to check if the integrity of an atom involved has taken damage, and if they took the amount of damage it should have.
 /datum/unit_test/mecha_damage/proc/check_integrity(atom/checking, pre_integrity, expected_damage, hit_by_phrase)
 	var/post_hit_health = checking.get_integrity()
 	TEST_ASSERT(post_hit_health < pre_integrity, "[checking] was [hit_by_phrase], but didn't take any damage.")
