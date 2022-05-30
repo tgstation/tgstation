@@ -34,12 +34,12 @@
 	var/obj/projectile/beam/laser_fired = initial(laser_ammo.projectile_type)
 	var/expected_laser_damage = round(dummy_laser.projectile_damage_multiplier * initial(laser_fired.damage) * (1 - expected_laser_armor / 100), DAMAGE_PRECISION)
 
-	// Get a sample laser weapon.
+	// Get a sample ballistic weapon.
 	// The syndicate .357 here is chosen because it does a lot of damage.
 	var/obj/item/gun/ballistic/dummy_gun = allocate(/obj/item/gun/ballistic/revolver)
 	var/obj/item/ammo_casing/ballistic_ammo = dummy_gun.magazine.ammo_type
 	var/obj/projectile/bullet_fired = initial(ballistic_ammo.projectile_type)
-	var/expected_ballistic_damage = round(dummy_gun.projectile_damage_multiplier * initial(bullet_fired.damage) * (1 - expected_bullet_armor / 100), DAMAGE_PRECISION)
+	var/expected_bullet_damage = round(dummy_gun.projectile_damage_multiplier * initial(bullet_fired.damage) * (1 - expected_bullet_armor / 100), DAMAGE_PRECISION)
 
 	var/obj/item/mecha_parts/mecha_equipment/left_arm_equipment = demo_mech.equip_by_category[MECHA_L_ARM]
 	TEST_ASSERT_NOTNULL(left_arm_equipment, "[demo_mech] spawned without any equipment in their left arm slot.")
@@ -69,8 +69,8 @@
 	var/pre_bullet_arm_integrity = left_arm_equipment.get_integrity()
 	dummy_gun.fire_gun(demo_mech, dummy, FALSE)
 
-	check_integrity(demo_mech, pre_bullet_integrity, expected_ballistic_damage, "shot with a bullet")
-	check_integrity(left_arm_equipment, pre_bullet_arm_integrity, expected_ballistic_damage, "shot with a bullet")
+	check_integrity(demo_mech, pre_bullet_integrity, expected_bullet_damage, "shot with a bullet")
+	check_integrity(left_arm_equipment, pre_bullet_arm_integrity, expected_bullet_damage, "shot with a bullet")
 
 	// Additional check: The right arm of the mech should have taken no damage by this point.
 	var/obj/item/mecha_parts/mecha_equipment/right_arm_equipment = demo_mech.equip_by_category[MECHA_R_ARM]
