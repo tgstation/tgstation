@@ -116,6 +116,7 @@
 // special cargo buckshot-lite for NT, less pellets & damage, weak against armor, greater wounding power and slightly longer ranged
 /obj/projectile/bullet/pellet/shotgun_voidshot
 	name = "voidshot pellet"
+	icon_state = "voidshot"
 	damage = 8 // * 5 pellets = 40 brute
 	wound_bonus = 6
 	bare_wound_bonus = 10

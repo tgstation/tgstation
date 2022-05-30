@@ -85,7 +85,7 @@
 /obj/item/ammo_casing/shotgun/voidshot
 	name = "voidshot shell"
 	desc = "A lethal 12 gauge shotshell, more likely to maim its target than kill outright."
-	icon_state = "mgshell"
+	icon_state = "vshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_voidshot
 	pellets = 5
 	variance = 20
