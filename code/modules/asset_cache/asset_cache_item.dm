@@ -21,11 +21,15 @@
 	/// TRUE for keeping local asset names when browse_rsc backend is used
 	var/keep_local_name = FALSE
 
-/datum/asset_cache_item/New(name, file)
+/datum/asset_cache_item/New(name, file, file_hash, dmi_file_path)
 	if (!isfile(file))
 		file = fcopy_rsc(file)
-		
-	hash = md5asfile(file) //icons sent to the rsc sometimes md5 incorrectly
+
+	//the given file is directly from a dmi file and is thus in the rsc already, we know that its file_hash
+	if(dmi_file_path)
+		hash = file_hash || md5(file)
+	else
+		hash = md5asfile(file) //icons sent to the rsc md5 incorrectly when theyre given incorrect data
 	if (!hash)
 		CRASH("invalid asset sent to asset cache")
 	src.name = name

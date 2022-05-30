@@ -31,9 +31,10 @@
 /// returns a /datum/asset_cache_item.
 /// mutiple calls to register the same asset under the same asset_name return the same datum
 /datum/asset_transport/proc/register_asset(asset_name, asset)
+/datum/asset_transport/proc/register_asset(asset_name, asset, file_hash, dmi_file_path)
 	var/datum/asset_cache_item/ACI = asset
 	if (!istype(ACI))
-		ACI = new(asset_name, asset)
+		ACI = new(asset_name, asset, file_hash, dmi_file_path)
 		if (!ACI || !ACI.hash)
 			CRASH("ERROR: Invalid asset: [asset_name]:[asset]:[ACI]")
 	if (SSassets.cache[asset_name])
