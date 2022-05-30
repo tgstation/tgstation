@@ -79,6 +79,9 @@
 		return
 	addtimer(CALLBACK(src, .proc/progress_growth), growth_time/4)
 
+/obj/structure/alien/resin/flower_bud/attack_ghost(mob/user)
+	spawner.attack_ghost(user)
+
 /obj/effect/ebeam/vine
 	name = "thick vine"
 	mouse_opacity = MOUSE_OPACITY_ICON
