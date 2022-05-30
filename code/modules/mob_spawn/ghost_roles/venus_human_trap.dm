@@ -21,7 +21,7 @@
 		if(!QDELETED(flower_bud))
 			qdel(flower_bud)
 		flower_bud = null
-	return
+	return ..()
 
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/equip(mob/living/simple_animal/hostile/venus_human_trap/spawned_human_trap)
 	if(spawned_human_trap && flower_bud)
