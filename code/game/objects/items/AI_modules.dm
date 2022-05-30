@@ -1,10 +1,5 @@
-/*
-CONTAINS:
-AI MODULES
-
-*/
-
-// AI module
+///defined truthy result for `handle_unique_ai()`, which makes initialize return INITIALIZE_HINT_QDEL
+#define SHOULD_QDEL_MODULE 1
 
 /obj/item/ai_module
 	name = "\improper AI module"
@@ -20,9 +15,16 @@ AI MODULES
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	custom_materials = list(/datum/material/gold = 50)
 	var/list/laws = list()
 	var/bypass_law_amt_check = 0
-	custom_materials = list(/datum/material/gold = 50)
+
+/obj/item/ai_module/Initialize(mapload)
+	. = ..()
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI) && is_station_level(z))
+		var/delete_module = handle_unique_ai()
+		if(delete_module)
+			return INITIALIZE_HINT_QDEL
 
 /obj/item/ai_module/examine(mob/user as mob)
 	. = ..()
@@ -32,6 +34,10 @@ AI MODULES
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()
 	show_laws(user)
+
+///what this module should do if it is mapload spawning on a unique AI station trait round.
+/obj/item/ai_module/proc/handle_unique_ai()
+	return SHOULD_QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
 
 /obj/item/ai_module/proc/show_laws(mob/user as mob)
 	if(laws.len)
@@ -93,7 +99,6 @@ AI MODULES
 /obj/item/ai_module/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)
 	if(law_datum.owner)
 		to_chat(law_datum.owner, span_userdanger("[sender] has uploaded a change to the laws you must follow using a [name]."))
-
 
 /******************** Modules ********************/
 
@@ -159,7 +164,6 @@ AI MODULES
 			else
 				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED,LAW_ION))
 
-
 /******************** Safeguard ********************/
 
 /obj/item/ai_module/supplied/safeguard
@@ -185,7 +189,6 @@ AI MODULES
 /obj/item/ai_module/supplied/safeguard/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()
 	return targetName
-
 
 /******************** OneHuman ********************/
 
@@ -213,14 +216,12 @@ AI MODULES
 		return "[targetName], but the AI's existing law 0 cannot be overridden."
 	return targetName
 
-
 /******************** ProtectStation ********************/
 
 /obj/item/ai_module/supplied/protect_station
 	name = "'ProtectStation' AI Module"
 	laws = list("Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.")
 	lawpos = 5
-
 
 /******************** Quarantine ********************/
 
@@ -229,14 +230,12 @@ AI MODULES
 	laws = list("The station is under a quarantine. Allowing anyone to leave the station causes human harm. Anyone actively attempting to leave the station is to be stopped by any means necessary. It is impossible to harm a human while preventing them from leaving the station.")
 	lawpos = 8
 
-
 /******************** OxygenIsToxicToHumans ********************/
 
 /obj/item/ai_module/supplied/oxygen
 	name = "'OxygenIsToxicToHumans' AI Module"
 	laws = list("Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.")
 	lawpos = 9
-
 
 /****************** New Freeform ******************/
 
@@ -275,7 +274,6 @@ AI MODULES
 		return 0
 	..()
 
-
 /******************** Law Removal ********************/
 
 /obj/item/ai_module/remove
@@ -304,7 +302,6 @@ AI MODULES
 	else
 		law_datum.remove_law(lawpos)
 
-
 /******************** Reset ********************/
 
 /obj/item/ai_module/reset
@@ -312,6 +309,9 @@ AI MODULES
 	var/targetName = "name"
 	desc = "An AI Module for removing all non-core laws."
 	bypass_law_amt_check = 1
+
+/obj/item/ai_module/reset/handle_unique_ai()
+	return
 
 /obj/item/ai_module/reset/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()
@@ -323,7 +323,6 @@ AI MODULES
 		law_datum.clear_supplied_laws()
 		law_datum.clear_ion_laws()
 		law_datum.clear_hacked_laws()
-
 
 /******************** Purge ********************/
 
@@ -340,7 +339,6 @@ AI MODULES
 		law_datum.clear_inherent_laws()
 		law_datum.clear_zeroth_law(0)
 
-
 /******************* Full Core Boards *******************/
 /obj/item/ai_module/core
 	desc = "An AI Module for programming core laws to an AI."
@@ -352,12 +350,11 @@ AI MODULES
 	. = ..()
 	if(!law_id)
 		return
-	var/datum/ai_laws/D = new
-	var/lawtype = D.lawid_to_type(law_id)
+	var/lawtype = lawid_to_type(law_id)
 	if(!lawtype)
 		return
-	D = new lawtype
-	laws = D.inherent
+	var/datum/ai_laws/core_laws = new lawtype
+	laws = core_laws.inherent
 
 /obj/item/ai_module/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow) //These boards replace inherent laws.
 	if(law_datum.owner)
@@ -368,8 +365,44 @@ AI MODULES
 		law_datum.clear_zeroth_law(0)
 	..()
 
+/obj/item/ai_module/core/full/handle_unique_ai()
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
+	if(law_id == initial(default_laws.id))
+		return
+	return SHOULD_QDEL_MODULE
 
-/******************** Asimov ********************/
+/obj/effect/spawner/round_default_module
+	name = "ai default lawset spawner"
+	icon = 'icons/hud/screen_gen.dmi'
+	icon_state = "x2"
+	color = "#00FF00"
+
+/obj/effect/spawner/round_default_module/Initialize(mapload)
+	..()
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
+	//try to spawn a law board, since they may have special functionality (asimov setting subjects)
+	for(var/obj/item/ai_module/core/full/potential_lawboard as anything in subtypesof(/obj/item/ai_module/core/full))
+		if(initial(potential_lawboard.law_id) != initial(default_laws.id))
+			continue
+		potential_lawboard = new potential_lawboard(loc)
+		return INITIALIZE_HINT_QDEL
+	//spawn the fallback instead
+	new /obj/item/ai_module/core/round_default_fallback(loc)
+	return INITIALIZE_HINT_QDEL
+
+///When the default lawset spawner cannot find a module object to spawn, it will spawn this, and this sets itself to the round default.
+///This is so /datum/lawsets can be picked even if they have no module for themselves.
+/obj/item/ai_module/core/round_default_fallback
+
+/obj/item/ai_module/core/round_default_fallback/Initialize(mapload)
+	. = ..()
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
+	default_laws = new default_laws()
+	name = "'[default_laws.name]' Core AI Module"
+	laws = default_laws.inherent
+
+/obj/item/ai_module/core/round_default_fallback/handle_unique_ai()
+	return
 
 /obj/item/ai_module/core/full/asimov
 	name = "'Asimov' Core AI Module"
@@ -392,20 +425,17 @@ AI MODULES
 	name = "'Asimov++' Core AI Module"
 	law_id = "asimovpp"
 
-
 /******************** Corporate ********************/
 
 /obj/item/ai_module/core/full/corp
 	name = "'Corporate' Core AI Module"
 	law_id = "corporate"
 
-
 /****************** P.A.L.A.D.I.N. 3.5e **************/
 
 /obj/item/ai_module/core/full/paladin // -- NEO
 	name = "'P.A.L.A.D.I.N. version 3.5e' Core AI Module"
 	law_id = "paladin"
-
 
 /****************** P.A.L.A.D.I.N. 5e **************/
 
@@ -431,7 +461,6 @@ AI MODULES
 	if(!laws.len)
 		return INITIALIZE_HINT_QDEL
 
-
 /****************** T.Y.R.A.N.T. *****************/
 
 /obj/item/ai_module/core/full/tyrant
@@ -450,7 +479,6 @@ AI MODULES
 /obj/item/ai_module/core/full/antimov
 	name = "'Antimov' Core AI Module"
 	law_id = "antimov"
-
 
 /******************** Freeform Core ******************/
 
@@ -477,7 +505,6 @@ AI MODULES
 /obj/item/ai_module/core/freeformcore/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()
 	return laws[1]
-
 
 /******************** Hacked AI Module ******************/
 
@@ -527,7 +554,6 @@ AI MODULES
 	laws = list("")
 
 /obj/item/ai_module/toy_ai/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	//..()
 	if(law_datum.owner)
 		to_chat(law_datum.owner, span_warning("BZZZZT"))
 		if(!overflow)
@@ -570,7 +596,6 @@ AI MODULES
 /obj/item/ai_module/core/full/thermurderdynamic
 	name = "'Thermodynamic' Core AI Module"
 	law_id = "thermodynamic"
-
 
 /******************Live And Let Live*****************/
 
@@ -617,3 +642,11 @@ AI MODULES
 /obj/item/ai_module/core/full/overlord
 	name = "'Overlord' Core AI Module"
 	law_id = "overlord"
+
+/****************** Ten Commandments ***************/
+
+/obj/item/ai_module/core/full/ten_commandments
+	name = "'10 Commandments' Core AI Module"
+	law_id = "ten_commandments"
+
+#undef SHOULD_QDEL_MODULE

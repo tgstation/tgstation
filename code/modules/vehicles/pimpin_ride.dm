@@ -16,10 +16,12 @@
 	. = ..()
 	update_appearance()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
+	GLOB.janitor_devices += src
 	if (installed_upgrade)
 		installed_upgrade.install(src)
 
 /obj/vehicle/ridden/janicart/Destroy()
+	GLOB.janitor_devices -= src
 	if (trash_bag)
 		QDEL_NULL(trash_bag)
 	if (installed_upgrade)

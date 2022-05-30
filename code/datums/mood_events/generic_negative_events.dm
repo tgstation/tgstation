@@ -370,3 +370,8 @@
 	description = "If I'm not good at video games, can I truly call myself a gamer?"
 	mood_change = -10
 	timeout = 10 MINUTES
+
+/datum/mood_event/lost_52_card_pickup
+	description = "This is really embarrassing! I'm ashamed to pick up all these cards off the floor..."
+	mood_change = -3
+	timeout = 3 MINUTES

@@ -33,6 +33,7 @@
 	antag_hud_name = "brainwashed"
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
+	count_against_dynamic_roll_chance = FALSE
 	ui_name = "AntagInfoBrainwashed"
 	suicide_cry = "FOR... SOMEONE!!"
 

@@ -241,18 +241,14 @@
 /datum/crafting_recipe/ebow
 	name = "Energy Crossbow"
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	result = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
-	reqs = list(/obj/item/gun/energy/kinetic_accelerator = 1,
+	result = /obj/item/gun/energy/recharge/ebow/large
+	reqs = list(/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
 				/obj/item/stack/cable_coil = 5,
 				/obj/item/weaponcrafting/gunkit/ebow = 1,
 				/datum/reagent/uranium/radium = 15)
 	time = 200
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
-
-/datum/crafting_recipe/ebow/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/kinetic_accelerator)
 
 /datum/crafting_recipe/xraylaser
 	name = "X-ray Laser Gun"
@@ -446,6 +442,18 @@
 				/obj/item/assembly/prox_sensor = 1)
 	tool_behaviors = list(TOOL_WELDER)
 	time = 40
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vim
+	name = "Vim"
+	result = /obj/vehicle/sealed/car/vim
+	reqs = list(/obj/item/clothing/head/helmet/space/eva = 1,
+				/obj/item/bodypart/l_leg/robot = 1,
+				/obj/item/bodypart/r_leg/robot = 1,
+				/obj/item/flashlight = 1,
+				/obj/item/assembly/voice = 1)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 6 SECONDS //Has a four second do_after when building manually
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
@@ -773,6 +781,13 @@
 	reqs = list(/datum/reagent/water = 50, /obj/item/stack/sheet/mineral/wood = 1)
 	tool_paths = list(/obj/item/hatchet)
 	result = /obj/item/paper_bin/bundlenatural
+	category = CAT_MISC
+
+/datum/crafting_recipe/sillycup
+	name = "Paper Cup"
+	result =  /obj/item/reagent_containers/food/drinks/sillycup
+	time = 1 SECONDS
+	reqs = list(/obj/item/paper = 2)
 	category = CAT_MISC
 
 /datum/crafting_recipe/toysword
@@ -1106,14 +1121,14 @@
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
 /datum/crafting_recipe/rib
-	name = "Collosal Rib"
+	name = "Colossal Rib"
 	always_available = FALSE
 	reqs = list(
 		/obj/item/stack/sheet/bone = 10,
 		/datum/reagent/fuel/oil = 5,
 	)
 	result = /obj/structure/statue/bone/rib
-	subcategory = CAT_PRIMAL
+	category = CAT_PRIMAL
 
 /datum/crafting_recipe/skull
 	name = "Skull Carving"

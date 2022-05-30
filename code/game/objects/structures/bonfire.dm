@@ -145,7 +145,7 @@
 		else if(isliving(burn_target))
 			var/mob/living/burn_victim = burn_target
 			burn_victim.adjust_fire_stacks(BONFIRE_FIRE_STACK_STRENGTH * 0.5 * delta_time)
-			burn_victim.IgniteMob()
+			burn_victim.ignite_mob()
 		else if(isobj(burn_target))
 			var/obj/burned_object = burn_target
 			if(grill && isitem(burned_object))

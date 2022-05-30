@@ -80,11 +80,11 @@
 	last_radiation_pulse = null
 	return ..()
 
-/datum/looping_sound/geiger/get_sound(starttime)
+/datum/looping_sound/geiger/get_sound()
 	if (isnull(last_radiation_pulse))
 		return null
 
-	return ..(starttime, mid_sounds[get_perceived_radiation_danger(last_radiation_pulse, last_insulation_to_target)])
+	return ..(mid_sounds[get_perceived_radiation_danger(last_radiation_pulse, last_insulation_to_target)])
 
 /datum/looping_sound/geiger/stop()
 	. = ..()

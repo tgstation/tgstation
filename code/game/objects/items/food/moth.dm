@@ -141,7 +141,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/green_lasagne/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 30, table_required = TRUE)
 
 /obj/item/food/green_lasagne_slice
 	name = "green lasagne al forno slice"
@@ -178,7 +178,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/big_baked_rice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 30, table_required = TRUE)
 
 /obj/item/food/lil_baked_rice
 	name = "lil baked rice"
@@ -762,7 +762,7 @@
 	name = "\improper Activin 12 Hour medicated gum packet"
 	desc = "Stay awake during long shifts in the maintenance tunnels with Activin! The approval seal of the Mothic Nomad Fleet is emblazoned on the packaging, alongside a litany of health and safety disclaimers in both Mothic and Galactic Common."
 	icon_state = "bubblegum_wake_up"
-	custom_premium_price = PAYCHECK_EASY * 1.5
+	custom_premium_price = PAYCHECK_CREW * 1.5
 
 /obj/item/storage/box/gum/wake_up/examine_more(mob/user)
 	. = ..()

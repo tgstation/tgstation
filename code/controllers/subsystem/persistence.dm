@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(persistence)
 
 	var/successfully_loaded_engravings = 0
 
-	var/list/viable_turfs = get_area_turfs(/area/maintenance) + get_area_turfs(/area/security/prison)
+	var/list/viable_turfs = get_area_turfs(/area/station/maintenance, subtypes = TRUE) + get_area_turfs(/area/station/security/prison, subtypes = TRUE)
 	var/list/turfs_to_pick_from = list()
 
 	for(var/turf/T as anything in viable_turfs)

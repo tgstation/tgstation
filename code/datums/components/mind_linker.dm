@@ -101,7 +101,7 @@
 		return FALSE
 	if(HAS_TRAIT(to_link, TRAIT_MINDSHIELD)) // Mindshield implant - no dice
 		return FALSE
-	if(to_link.anti_magic_check(FALSE, FALSE, TRUE, 0))
+	if(to_link.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 		return FALSE
 	if(linked_mobs[to_link])
 		return FALSE

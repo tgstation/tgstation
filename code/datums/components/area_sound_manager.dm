@@ -50,7 +50,7 @@
 	var/time_remaining = 0
 
 	if(our_loop)
-		var/our_id = our_loop.timerid || timerid
+		var/our_id = our_loop.timer_id || timerid
 		if(our_id)
 			time_remaining = timeleft(our_id, SSsound_loops) || 0
 			//Time left will sometimes return negative values, just ignore them and start a new sound loop now

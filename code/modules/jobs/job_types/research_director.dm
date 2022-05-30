@@ -28,7 +28,7 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SCI
 
-	liver_traits = list(TRAIT_ROYAL_METABOLISM)
+	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_BALLMER_SCIENTIST)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
 	bounty_types = CIV_JOB_SCI
@@ -60,9 +60,8 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
 		)
-	belt = /obj/item/pda/heads/rd
+	belt = /obj/item/modular_computer/tablet/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_pocket = /obj/item/laser_pointer

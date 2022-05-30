@@ -46,7 +46,7 @@
 				span_notice("Blood pools around the incision in [target_human]'s heart."),
 				"")
 			var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
-			target_bodypart.generic_bleedstacks += 10
+			target_bodypart.adjustBleedStacks(10)
 			target_human.adjustBruteLoss(10)
 	return ..()
 
@@ -57,7 +57,7 @@
 			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
 			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"))
 		var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
-		target_bodypart.generic_bleedstacks += 10
+		target_bodypart.adjustBleedStacks(10)
 		target_human.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
 		target_human.adjustBruteLoss(10)
 
@@ -100,5 +100,5 @@
 		display_pain(target, "Your chest burns; you feel like you're going insane!")
 		target_human.adjustOrganLoss(ORGAN_SLOT_HEART, 20)
 		var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
-		target_bodypart.generic_bleedstacks += 30
+		target_bodypart.adjustBleedStacks(30)
 	return FALSE

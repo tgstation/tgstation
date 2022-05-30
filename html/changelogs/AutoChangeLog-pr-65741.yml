@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - rscadd: "Adds the Navigate verb, creates a holographic path to an area of your choosing."
-  - rscdel: "Removed wayfinding pinpointers."

@@ -166,7 +166,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	clothes_req = FALSE
 	nonabstract_req = TRUE
 	phase_allowed = TRUE
-	antimagic_allowed = TRUE
+	antimagic_flags = NONE
 	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/self/special_equipment_fallback/cast(list/targets, mob/user)
@@ -652,7 +652,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
 	var/captured_amount = 0
-	var/area/centcom/holding/A = GLOB.areas_by_type[/area/centcom/holding]
+	var/area/centcom/central_command_areas/holding/A = GLOB.areas_by_type[/area/centcom/central_command_areas/holding]
 	for(var/mob/living/carbon/human/M in A)//Humans.
 		if(ismonkey(M))
 			captured_amount+=0.1

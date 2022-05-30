@@ -21,15 +21,15 @@
 		/obj/item/book/granter/crafting_recipe/cooking_sweets_101 = 2,
 		/obj/item/plate/small = 5,
 		/obj/item/plate = 10,
-		/obj/item/plate/large = 5
+		/obj/item/plate/large = 5,
 	)
 	contraband = list(
 		/obj/item/kitchen/rollingpin = 2,
 		/obj/item/knife/butcher = 2,
 	)
 	refill_canister = /obj/item/vending_refill/dinnerware
-	default_price = PAYCHECK_ASSISTANT * 0.8
-	extra_price = PAYCHECK_HARD
+	default_price = PAYCHECK_CREW * 0.8
+	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask = "dinnerware-light-mask"
 

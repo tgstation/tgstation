@@ -37,6 +37,10 @@
 	if(has_latches)
 		. += latches
 
+/obj/item/storage/toolbox/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/toolbox/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -96,6 +100,11 @@
 	desc = "It's seen better days."
 	force = 5
 	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/toolbox/mechanical/old/heirloom/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return

@@ -6,6 +6,16 @@
 	nodamage = TRUE
 	armour_penetration = 100
 	armor_flag = NONE
+	/// determines what type of antimagic can block the spell projectile
+	var/antimagic_flags = MAGIC_RESISTANCE
+	/// determines the drain cost on the antimagic item
+	var/antimagic_charge_cost = 1
+
+/obj/projectile/magic/prehit_pierce(mob/living/target)
+	. = ..()
+	if(istype(target) && target.can_block_magic(antimagic_flags, antimagic_charge_cost))
+		visible_message(span_warning("[src] fizzles on contact with [target]!"))
+		return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/projectile/magic/death
 	name = "bolt of death"
@@ -13,12 +23,8 @@
 
 /obj/projectile/magic/death/on_hit(mob/living/target)
 	. = ..()
-	if(!istype(target))
+	if(!isliving(target))
 		return
-
-	if(target.anti_magic_check())
-		target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-		return BULLET_ACT_BLOCK
 
 	if(target.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
 		if(target.revive(full_heal = TRUE, admin_revive = TRUE))
@@ -37,20 +43,20 @@
 	damage_type = OXY
 	nodamage = TRUE
 
-/obj/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
+/obj/projectile/magic/resurrection/on_hit(mob/living/target)
 	. = ..()
-	if(isliving(target))
-		if(target.anti_magic_check())
-			target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-			target.death(0)
-		else
-			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
-				target.grab_ghost(force = TRUE) // even suicides
-				to_chat(target, span_notice("You rise with a start, you're alive!!!"))
-			else if(target.stat != DEAD)
-				to_chat(target, span_notice("You feel great!"))
+	if(!isliving(target))
+		return
+
+	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+		target.death()
+		return
+
+	if(target.revive(full_heal = TRUE, admin_revive = TRUE))
+		target.grab_ghost(force = TRUE) // even suicides
+		to_chat(target, span_notice("You rise with a start, you're alive!!!"))
+	else if(target.stat != DEAD)
+		to_chat(target, span_notice("You feel great!"))
 
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -63,11 +69,6 @@
 
 /obj/projectile/magic/teleport/on_hit(mob/target)
 	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] fizzles on contact with [target]!"))
-			return BULLET_ACT_BLOCK
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -76,8 +77,9 @@
 		if(!stuff.anchored && stuff.loc && !isobserver(stuff))
 			if(do_teleport(stuff, stuff, 10, channel = TELEPORT_CHANNEL_MAGIC))
 				teleammount++
-				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+				var/smoke_range = max(round(4 - teleammount), 0)
+				var/datum/effect_system/fluid_spread/smoke/smoke = new
+				smoke.set_up(smoke_range, location = stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 				smoke.start()
 
 /obj/projectile/magic/safety
@@ -89,11 +91,6 @@
 
 /obj/projectile/magic/safety/on_hit(atom/target)
 	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] fizzles on contact with [target]!"))
-			return BULLET_ACT_BLOCK
 	if(isturf(target))
 		return BULLET_ACT_HIT
 
@@ -102,8 +99,8 @@
 
 	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin_turf, destination_turf))
-			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(0, t)
+			var/datum/effect_system/fluid_spread/smoke/smoke = new
+			smoke.set_up(0, location = t)
 			smoke.start()
 
 /obj/projectile/magic/door
@@ -142,16 +139,10 @@
 	damage_type = BURN
 	nodamage = TRUE
 
-/obj/projectile/magic/change/on_hit(atom/change)
+/obj/projectile/magic/change/on_hit(mob/living/target)
 	. = ..()
-	if(isliving(change))
-		var/mob/living/M = change
-		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] fizzles on contact with [M]!"))
-			qdel(src)
-			return BULLET_ACT_BLOCK
-		M.wabbajack()
-	qdel(src)
+	if(isliving(target))
+		target.wabbajack()
 
 /obj/projectile/magic/animate
 	name = "bolt of animation"
@@ -161,8 +152,8 @@
 	nodamage = TRUE
 
 /obj/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
+	. = ..()
 	target.animate_atom_living(firer)
-	..()
 
 /atom/proc/animate_atom_living(mob/living/owner = null)
 	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.mimic_blacklist))
@@ -206,15 +197,6 @@
 	dismemberment = 50
 	nodamage = FALSE
 
-/obj/projectile/magic/spellblade/on_hit(target)
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			qdel(src)
-			return BULLET_ACT_BLOCK
-	. = ..()
-
 /obj/projectile/magic/arcane_barrage
 	name = "arcane bolt"
 	icon_state = "arcane_barrage"
@@ -222,16 +204,6 @@
 	damage_type = BURN
 	nodamage = FALSE
 	hitsound = 'sound/weapons/barragespellhit.ogg'
-
-/obj/projectile/magic/arcane_barrage/on_hit(target)
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			qdel(src)
-			return BULLET_ACT_BLOCK
-	. = ..()
-
 
 /obj/projectile/magic/locker
 	name = "locker bolt"
@@ -249,15 +221,17 @@
 
 /obj/projectile/magic/locker/prehit_pierce(atom/A)
 	. = ..()
-	if(isliving(A) && locker_suck)
-		var/mob/living/M = A
-		if(M.anti_magic_check()) // no this doesn't check if ..() returned to phase through do I care no it's magic ain't gotta explain shit
-			M.visible_message(span_warning("[src] vanishes on contact with [A]!"))
-			return PROJECTILE_DELETE_WITHOUT_HITTING
+	if(. == PROJECTILE_DELETE_WITHOUT_HITTING)
 		var/obj/structure/closet/decay/locker_temp_instance = locker_ref.resolve()
-		if(!locker_temp_instance?.insertion_allowed(M))
+		qdel(locker_temp_instance)
+		return PROJECTILE_DELETE_WITHOUT_HITTING
+
+	if(isliving(A) && locker_suck)
+		var/mob/living/target = A
+		var/obj/structure/closet/decay/locker_temp_instance = locker_ref.resolve()
+		if(!locker_temp_instance?.insertion_allowed(target))
 			return
-		M.forceMove(src)
+		target.forceMove(src)
 		return PROJECTILE_PIERCE_PHASE
 
 /obj/projectile/magic/locker/on_hit(target)
@@ -322,87 +296,66 @@
 	name = "bolt of flying"
 	icon_state = "flight"
 
-/obj/projectile/magic/flying/on_hit(target)
+/obj/projectile/magic/flying/on_hit(mob/living/target)
 	. = ..()
 	if(isliving(target))
-		var/mob/living/L = target
-		if(L.anti_magic_check())
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		var/atom/throw_target = get_edge_target_turf(L, angle2dir(Angle))
-		L.throw_at(throw_target, 200, 4)
+		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+		target.throw_at(throw_target, 200, 4)
 
 /obj/projectile/magic/bounty
 	name = "bolt of bounty"
 	icon_state = "bounty"
 
-/obj/projectile/magic/bounty/on_hit(target)
+/obj/projectile/magic/bounty/on_hit(mob/living/target)
 	. = ..()
 	if(isliving(target))
-		var/mob/living/L = target
-		if(L.anti_magic_check() || !firer)
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		L.apply_status_effect(/datum/status_effect/bounty, firer)
+		target.apply_status_effect(/datum/status_effect/bounty, firer)
 
 /obj/projectile/magic/antimagic
 	name = "bolt of antimagic"
 	icon_state = "antimagic"
 
-/obj/projectile/magic/antimagic/on_hit(target)
+/obj/projectile/magic/antimagic/on_hit(mob/living/target)
 	. = ..()
 	if(isliving(target))
-		var/mob/living/L = target
-		if(L.anti_magic_check())
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		L.apply_status_effect(/datum/status_effect/antimagic )
+		target.apply_status_effect(/datum/status_effect/song/antimagic)
 
 /obj/projectile/magic/fetch
 	name = "bolt of fetching"
 	icon_state = "fetch"
 
-/obj/projectile/magic/fetch/on_hit(target)
+/obj/projectile/magic/fetch/on_hit(mob/living/target)
 	. = ..()
 	if(isliving(target))
-		var/mob/living/L = target
-		if(L.anti_magic_check() || !firer)
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		var/atom/throw_target = get_edge_target_turf(L, get_dir(L, firer))
-		L.throw_at(throw_target, 200, 4)
+		var/atom/throw_target = get_edge_target_turf(target, get_dir(target, firer))
+		target.throw_at(throw_target, 200, 4)
 
 /obj/projectile/magic/sapping
 	name = "bolt of sapping"
 	icon_state = "sapping"
 
-/obj/projectile/magic/sapping/on_hit(target)
+/obj/projectile/magic/sapping/on_hit(mob/living/target)
 	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/sapped)
+	if(isliving(target))
+		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/sapped)
 
 /obj/projectile/magic/necropotence
 	name = "bolt of necropotence"
 	icon_state = "necropotence"
 
-/obj/projectile/magic/necropotence/on_hit(target)
+/obj/projectile/magic/necropotence/on_hit(mob/living/target)
 	. = ..()
 	if(isliving(target))
-		var/mob/living/L = target
-		if(L.anti_magic_check() || !L.mind)
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		to_chat(L, span_danger("Your body feels drained and there is a burning pain in your chest."))
-		L.maxHealth -= 20
-		L.health = min(L.health, L.maxHealth)
-		if(L.maxHealth <= 0)
-			to_chat(L, span_userdanger("Your weakened soul is completely consumed by the [src]!"))
+		if(!target.mind)
 			return
-		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
+
+		to_chat(target, span_danger("Your body feels drained and there is a burning pain in your chest."))
+		target.maxHealth -= 20
+		target.health = min(target.health, target.maxHealth)
+		if(target.maxHealth <= 0)
+			to_chat(target, span_userdanger("Your weakened soul is completely consumed by the [src]!"))
+			return
+		for(var/obj/effect/proc_holder/spell/spell in target.mind.spell_list)
 			spell.charge_counter = spell.charge_max
 			spell.recharging = FALSE
 			spell.update_appearance()
@@ -411,60 +364,54 @@
 	name = "bolt of possession"
 	icon_state = "wipe"
 
-/obj/projectile/magic/wipe/on_hit(target)
+/obj/projectile/magic/wipe/on_hit(mob/living/carbon/target)
 	. = ..()
 	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		if(M.anti_magic_check())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		for(var/x in M.get_traumas())//checks to see if the victim is already going through possession
+		for(var/x in target.get_traumas())//checks to see if the victim is already going through possession
 			if(istype(x, /datum/brain_trauma/special/imaginary_friend/trapped_owner))
-				M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+				target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 				return BULLET_ACT_BLOCK
-		to_chat(M, span_warning("Your mind has been opened to possession!"))
-		possession_test(M)
+		to_chat(target, span_warning("Your mind has been opened to possession!"))
+		possession_test(target)
 		return BULLET_ACT_HIT
 
-/obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/M)
-	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = M.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
-	var/poll_message = "Do you want to play as [M.real_name]?"
-	if(M.mind)
-		poll_message = "[poll_message] Job:[M.mind.assigned_role.title]."
-	if(M.mind && M.mind.special_role)
-		poll_message = "[poll_message] Status:[M.mind.special_role]."
-	else if(M.mind)
-		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
+/obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/target)
+	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = target.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
+	var/poll_message = "Do you want to play as [target.real_name]?"
+	if(target.mind)
+		poll_message = "[poll_message] Job:[target.mind.assigned_role.title]."
+	if(target.mind && target.mind.special_role)
+		poll_message = "[poll_message] Status:[target.mind.special_role]."
+	else if(target.mind)
+		var/datum/antagonist/A = target.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
 			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
-	if(M.stat == DEAD)//boo.
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, target)
+	if(target.stat == DEAD)//boo.
 		return
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		to_chat(M, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
-		var/oldkey = M.key
-		M.ghostize(0)
-		M.key = C.key
+		var/mob/dead/observer/ghost = pick(candidates)
+		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
+		var/oldkey = target.key
+		target.ghostize(FALSE)
+		target.key = ghost.key
 		trauma.friend.key = oldkey
 		trauma.friend.reset_perspective(null)
 		trauma.friend.Show()
 		trauma.friend_initialized = TRUE
 	else
-		to_chat(M, span_notice("Your mind has managed to go unnoticed in the spirit world."))
+		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))
 		qdel(trauma)
 
+/// Gives magic projectiles a 3x3 Area of Effect range that will bump into any nearby mobs
 /obj/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
-	damage = 0
-	var/proxdet = TRUE
 
 /obj/projectile/magic/aoe/Range()
-	if(proxdet)
-		for(var/mob/living/L in range(1, get_turf(src)))
-			if(L.stat != DEAD && L != firer && !L.anti_magic_check())
-				return Bump(L)
+	for(var/mob/living/target in range(1, get_turf(src)))
+		if(target.stat != DEAD && target != firer)
+			return Bump(target)
 	..()
 
 
@@ -489,14 +436,7 @@
 
 /obj/projectile/magic/aoe/lightning/on_hit(target)
 	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
-			qdel(src)
-			return BULLET_ACT_BLOCK
 	tesla_zap(src, zap_range, zap_power, zap_flags)
-	qdel(src)
 
 /obj/projectile/magic/aoe/lightning/no_zap
 	zap_power = 10000
@@ -507,7 +447,7 @@
 	qdel(chain)
 	. = ..()
 
-/obj/projectile/magic/aoe/fireball
+/obj/projectile/magic/fireball
 	name = "bolt of fireball"
 	icon_state = "fireball"
 	damage = 10
@@ -520,17 +460,14 @@
 	var/exp_flash = 3
 	var/exp_fire = 2
 
-/obj/projectile/magic/aoe/fireball/on_hit(target)
+/obj/projectile/magic/fireball/on_hit(mob/living/target)
 	. = ..()
 	if(ismob(target))
-		var/mob/living/M = target
-		if(M.anti_magic_check())
-			visible_message(span_warning("[src] vanishes into smoke on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
+		//between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
+		target.take_overall_damage(0, 10)
+
 	var/turf/T = get_turf(target)
 	explosion(T, devastation_range = -1, heavy_impact_range = exp_heavy, light_impact_range = exp_light, flame_range = exp_fire, flash_range = exp_flash, adminlog = FALSE, explosion_cause = src)
-
 
 //still magic related, but a different path
 
@@ -545,3 +482,12 @@
 
 /obj/projectile/magic/nothing
 	name = "bolt of nothing"
+
+/obj/projectile/magic/spellcard
+	name = "enchanted card"
+	desc = "A piece of paper enchanted to give it extreme durability and stiffness, along with a very hot burn to anyone unfortunate enough to get hit by a charged one."
+	icon_state = "spellcard"
+	damage_type = BURN
+	damage = 2
+	nodamage = FALSE
+	antimagic_charge_cost = 0 // since the cards gets spammed like a shotgun

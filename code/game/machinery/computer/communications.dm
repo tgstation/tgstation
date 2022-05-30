@@ -13,7 +13,7 @@
 	desc = "A console used for high-priority announcements and emergencies."
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"
-	req_access = list(ACCESS_HEADS)
+	req_access = list(ACCESS_COMMAND)
 	circuit = /obj/item/circuitboard/computer/communications
 	light_color = LIGHT_COLOR_BLUE
 
@@ -602,6 +602,7 @@
 	return data
 
 /obj/machinery/computer/communications/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "CommunicationsConsole")
@@ -895,7 +896,6 @@
 
 #undef IMPORTANT_ACTION_COOLDOWN
 #undef EMERGENCY_ACCESS_COOLDOWN
-#undef MAX_STATUS_LINE_LENGTH
 #undef STATE_BUYING_SHUTTLE
 #undef STATE_CHANGING_STATUS
 #undef STATE_MAIN

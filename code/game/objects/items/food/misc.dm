@@ -35,7 +35,7 @@
 	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/wheel/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 30, table_required = TRUE)
 
 /obj/item/food/cheese/wheel/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -189,7 +189,7 @@
 	name = "poutine"
 	desc = "Fries covered in cheese curds and gravy."
 	icon_state = "poutine"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/medicine/antihol = 4)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7)
 	tastes = list("potato" = 3, "gravy" = 1, "squeaky cheese" = 1)
 	foodtypes = VEGETABLES | FRIED | MEAT
 	w_class = WEIGHT_CLASS_SMALL
@@ -239,7 +239,7 @@
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
 
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/oculine = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -274,7 +274,7 @@
 	icon_state = "spidereggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin = 2)
 	tastes = list("cobwebs" = 1)
-	foodtypes = MEAT | TOXIC
+	foodtypes = MEAT | TOXIC | BUGS
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/spidereggs/processed
@@ -283,7 +283,7 @@
 	icon_state = "spidereggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
 	tastes = list("cobwebs" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT | BUGS
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/spiderling
@@ -292,7 +292,7 @@
 	icon_state = "spiderling"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/toxin = 4)
 	tastes = list("cobwebs" = 1, "guts" = 2)
-	foodtypes = MEAT | TOXIC
+	foodtypes = MEAT | TOXIC | BUGS
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/spiderlollipop
@@ -302,7 +302,7 @@
 	worn_icon_state = "lollipop_stick"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/toxin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //lollipop, but vitamins = toxins
 	tastes = list("cobwebs" = 1, "sugar" = 2)
-	foodtypes = JUNKFOOD | SUGAR
+	foodtypes = JUNKFOOD | SUGAR | BUGS
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
 
@@ -367,7 +367,6 @@
 	name = "roast parsnip"
 	desc = "Sweet and crunchy."
 	icon_state = "roastparsnip"
-
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("parsnip" = 1)
 	foodtypes = VEGETABLES
@@ -753,7 +752,7 @@
 	icon_state = "ant_pop"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/sugar = 5, /datum/reagent/ants = 3)
 	tastes = list("candy" = 1, "insects" = 1)
-	foodtypes = JUNKFOOD | SUGAR | GROSS
+	foodtypes = JUNKFOOD | SUGAR | BUGS
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 
@@ -964,3 +963,30 @@
 	icon_state = "ready_donk_warm_mex"
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+/obj/item/food/pierogi
+	name = "pierogi"
+	desc = "A dumpling made by wrapping unleavened dough around a savoury or sweet filling and cooking in boiling water. This one is filled with a potato and onion mixture."
+	icon_state = "pierogi"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("potato" = 1, "onions" = 1)
+	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/stuffed_cabbage
+	name = "stuffed cabbage"
+	desc = "A savoury mixture of ground meat and rice wrapped in cooked cabbage leaves and topped with a tomato sauce. To die for."
+	icon_state = "stuffed_cabbage"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("juicy meat" = 1, "rice" = 1, "cabbage" = 1)
+	foodtypes = MEAT | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/seaweedsheet
+	name = "seaweed sheet"
+	desc = "A dried sheet of seaweed used for making sushi."
+	icon_state = "seaweedsheet"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("seaweed" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL

@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - balance: "Unique AI trait now gets rid of the station's DIFFERENT lawset modules, and increases the research cost to unlocking them."
+  - qol: "AI is given a printout of their new laws"

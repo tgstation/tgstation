@@ -55,6 +55,14 @@
 	icon_state = "tile_full"
 	name = "blue full"
 
+/obj/effect/turf_decal/tile/blue/diagonal_centre
+	icon_state = "diagonal_centre"
+	name = "blue diagonal centre"
+
+/obj/effect/turf_decal/tile/blue/diagonal_edge
+	icon_state = "diagonal_edge"
+	name = "blue diagonal edge"
+
 /// Green tiles
 
 /obj/effect/turf_decal/tile/green
@@ -89,6 +97,14 @@
 	icon_state = "tile_full"
 	name = "green full"
 
+/obj/effect/turf_decal/tile/green/diagonal_centre
+	icon_state = "diagonal_centre"
+	name = "green diagonal centre"
+
+/obj/effect/turf_decal/tile/green/diagonal_edge
+	icon_state = "diagonal_edge"
+	name = "green diagonal edge"
+
 /// Yellow tiles
 
 /obj/effect/turf_decal/tile/yellow
@@ -115,7 +131,6 @@
 	icon_state = "tile_anticorner_contrasted"
 	name = "contrasted yellow anticorner"
 
-
 /obj/effect/turf_decal/tile/yellow/fourcorners
 	icon_state = "tile_fourcorners"
 	name = "yellow fourcorners"
@@ -123,6 +138,14 @@
 /obj/effect/turf_decal/tile/yellow/full
 	icon_state = "tile_full"
 	name = "yellow full"
+
+/obj/effect/turf_decal/tile/yellow/diagonal_centre
+	icon_state = "diagonal_centre"
+	name = "yellow diagonal centre"
+
+/obj/effect/turf_decal/tile/yellow/diagonal_edge
+	icon_state = "diagonal_edge"
+	name = "yellow diagonal edge"
 
 /// Red tiles
 
@@ -157,6 +180,14 @@
 /obj/effect/turf_decal/tile/red/full
 	icon_state = "tile_full"
 	name = "red full"
+
+/obj/effect/turf_decal/tile/red/diagonal_centre
+	icon_state = "diagonal_centre"
+	name = "red diagonal centre"
+
+/obj/effect/turf_decal/tile/red/diagonal_edge
+	icon_state = "diagonal_edge"
+	name = "red diagonal edge"
 
 /// Bar tiles
 
@@ -193,6 +224,14 @@
 	icon_state = "tile_full"
 	name = "bar full"
 
+/obj/effect/turf_decal/tile/bar/diagonal_centre
+	icon_state = "diagonal_centre"
+	name = "bar diagonal centre"
+
+/obj/effect/turf_decal/tile/bar/diagonal_edge
+	icon_state = "diagonal_edge"
+	name = "bar diagonal edge"
+
 /// Purple tiles
 
 /obj/effect/turf_decal/tile/purple
@@ -227,6 +266,14 @@
 	icon_state = "tile_full"
 	name = "purple full"
 
+/obj/effect/turf_decal/tile/purple/diagonal_centre
+	icon_state = "diagonal_centre"
+	name = "purple diagonal centre"
+
+/obj/effect/turf_decal/tile/purple/diagonal_edge
+	icon_state = "diagonal_edge"
+	name = "bar diagonal edge"
+
 /// Brown tiles
 
 /obj/effect/turf_decal/tile/brown
@@ -259,6 +306,14 @@
 /obj/effect/turf_decal/tile/brown/full
 	icon_state = "tile_full"
 	name = "brown full"
+
+/obj/effect/turf_decal/tile/brown/diagonal_centre
+	icon_state = "diagonal_centre"
+	name = "brown diagonal centre"
+
+/obj/effect/turf_decal/tile/brown/diagonal_edge
+	icon_state = "diagonal_edge"
+	name = "brown diagonal edge"
 
 /// Neutral tiles
 
@@ -295,6 +350,14 @@
 	icon_state = "tile_full"
 	name = "neutral full"
 
+/obj/effect/turf_decal/tile/neutral/diagonal_centre
+	icon_state = "diagonal_centre"
+	name = "neutral diagonal centre"
+
+/obj/effect/turf_decal/tile/neutral/diagonal_edge
+	icon_state = "diagonal_edge"
+	name = "neutral diagonal edge"
+
 /// Dark tiles
 
 /obj/effect/turf_decal/tile/dark
@@ -329,6 +392,14 @@
 	icon_state = "tile_full"
 	name = "dark full"
 
+/obj/effect/turf_decal/tile/dark/diagonal_centre
+	icon_state = "diagonal_centre"
+	name = "dark diagonal centre"
+
+/obj/effect/turf_decal/tile/dark/diagonal_edge
+	icon_state = "diagonal_edge"
+	name = "dark diagonal edge"
+
 /// Random tiles
 
 /obj/effect/turf_decal/tile/random // so many colors
@@ -362,6 +433,14 @@
 /obj/effect/turf_decal/tile/random/full
 	icon_state = "tile_full"
 	name = "colorful full"
+
+/obj/effect/turf_decal/tile/random/diagonal_centre
+	icon_state = "diagonal_centre"
+	name = "colorful diagonal centre"
+
+/obj/effect/turf_decal/tile/random/diagonal_edge
+	icon_state = "diagonal_edge"
+	name = "colorful diagonal edge"
 
 /obj/effect/turf_decal/tile/random/Initialize(mapload)
 	color = "#[random_short_color()]"

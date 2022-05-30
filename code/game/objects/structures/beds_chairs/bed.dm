@@ -22,6 +22,10 @@
 	var/buildstackamount = 2
 	var/bolts = TRUE
 
+/obj/structure/bed/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/soft_landing)
+
 /obj/structure/bed/examine(mob/user)
 	. = ..()
 	if(bolts)

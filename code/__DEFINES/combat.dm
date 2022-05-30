@@ -54,11 +54,8 @@
 #define EFFECT_UNCONSCIOUS "unconscious"
 #define EFFECT_PARALYZE "paralyze"
 #define EFFECT_IMMOBILIZE "immobilize"
-#define EFFECT_STUTTER "stutter"
-#define EFFECT_SLUR "slur"
 #define EFFECT_EYE_BLUR "eye_blur"
 #define EFFECT_DROWSY "drowsy"
-#define EFFECT_JITTER "jitter"
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN (1<<0)
@@ -304,6 +301,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// IF an object is weak against armor, this is the value that any present armor is multiplied by
 #define ARMOR_WEAKENED_MULTIPLIER 2
+/// Armor can't block more than this as a percentage
+#define ARMOR_MAX_BLOCK 90
 
 /// Return values used in item/melee/baton/baton_attack.
 /// Does a normal item attack.

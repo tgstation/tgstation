@@ -12,7 +12,7 @@
 	power_channel = AREA_USAGE_ENVIRON
 	pass_flags_self = PASSDOORS
 	max_integrity = 350
-	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 0, FIRE = 80, ACID = 70)
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
 	receive_ricochet_chance_mod = 0.8
@@ -20,6 +20,9 @@
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
 
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 	var/shockedby
@@ -183,7 +186,7 @@
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating || !can_open_with_hands)
 		return
-		
+
 	add_fingerprint(user)
 	if(!density || (obj_flags & EMAGGED))
 		return
@@ -343,6 +346,7 @@
 	if(operating)
 		return
 	operating = TRUE
+	use_power(active_power_usage)
 	do_animate("opening")
 	set_opacity(0)
 	sleep(5)

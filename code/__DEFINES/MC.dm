@@ -22,8 +22,12 @@
 #define START_PROCESSING(Processor, Datum) if (!(Datum.datum_flags & DF_ISPROCESSING)) {Datum.datum_flags |= DF_ISPROCESSING;Processor.processing += Datum}
 #define STOP_PROCESSING(Processor, Datum) Datum.datum_flags &= ~DF_ISPROCESSING;Processor.processing -= Datum;Processor.currentrun -= Datum
 
-/// Used to trigger object removal from a processing list
-#define PROCESS_KILL 26
+/// Returns true if the MC is initialized and running.
+/// Optional argument init_stage controls what stage the mc must have initializted to count as initialized. Defaults to INITSTAGE_MAX if not specified.
+#define MC_RUNNING(INIT_STAGE...) (Master && Master.processing > 0 && Master.current_runlevel && Master.init_stage_completed == (max(min(INITSTAGE_MAX, ##INIT_STAGE), 1)))
+
+#define MC_LOOP_RTN_NEWSTAGES 1
+#define MC_LOOP_RTN_GRACEFUL_EXIT 2
 
 //! SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 
@@ -63,6 +67,11 @@
 #define SS_SLEEPING 4 /// fire() slept.
 #define SS_PAUSING 5 /// in the middle of pausing
 
+// Subsystem init stages
+#define INITSTAGE_EARLY 1 //! Early init stuff that doesn't need to wait for mapload
+#define INITSTAGE_MAIN 2 //! Main init stage
+#define INITSTAGE_MAX 2 //! Highest initstage.
+
 #define SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/##X);\
 /datum/controller/subsystem/##X/New(){\
 	NEW_SS_GLOBAL(SS##X);\
@@ -75,6 +84,7 @@
 	NEW_SS_GLOBAL(SS##X);\
 	PreInit();\
 }\
+/datum/controller/subsystem/timer/##X/fire() {..() /*just so it shows up on the profiler*/} \
 /datum/controller/subsystem/timer/##X
 
 #define MOVEMENT_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/movement/##X);\
@@ -82,6 +92,7 @@
 	NEW_SS_GLOBAL(SS##X);\
 	PreInit();\
 }\
+/datum/controller/subsystem/movement/##X/fire() {..() /*just so it shows up on the profiler*/} \
 /datum/controller/subsystem/movement/##X
 
 #define PROCESSING_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/processing/##X);\
@@ -89,4 +100,13 @@
 	NEW_SS_GLOBAL(SS##X);\
 	PreInit();\
 }\
+/datum/controller/subsystem/processing/##X/fire() {..() /*just so it shows up on the profiler*/} \
 /datum/controller/subsystem/processing/##X
+
+#define FLUID_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/fluids/##X);\
+/datum/controller/subsystem/fluids/##X/New(){\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
+}\
+/datum/controller/subsystem/fluids/##X/fire() {..() /*just so it shows up on the profiler*/} \
+/datum/controller/subsystem/fluids/##X

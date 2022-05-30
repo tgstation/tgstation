@@ -163,13 +163,13 @@
 
 /obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/M, attach_right)
 	. = ..()
-	chassis.armor.modifyRating(arglist(armor_mod))
+	chassis.armor = chassis.armor.modifyRating(arglist(armor_mod))
 
 /obj/item/mecha_parts/mecha_equipment/armor/detach(atom/moveto)
 	var/list/removed_armor = armor_mod.Copy()
 	for(var/armor_type in removed_armor)
 		removed_armor[armor_type] = -removed_armor[armor_type]
-	chassis.armor.modifyRating(arglist(removed_armor))
+	chassis.armor = chassis.armor.modifyRating(arglist(removed_armor))
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
@@ -178,7 +178,7 @@
 	icon_state = "mecha_abooster_ccw"
 	iconstate_name = "melee"
 	protect_name = "Melee Armor"
-	armor = list(MELEE = 15, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_mod = list(MELEE = 15, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
 	name = "armor booster module (Ranged Weaponry)"
@@ -186,7 +186,7 @@
 	icon_state = "mecha_abooster_proj"
 	iconstate_name = "range"
 	protect_name = "Ranged Armor"
-	armor = list(MELEE = 0, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor_mod = list(MELEE = 0, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
@@ -204,7 +204,6 @@
 	var/health_boost = 0.5
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
-	selectable = 0
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -371,7 +370,6 @@
 	name = "generic exosuit thrusters" //parent object, in-game sources will be a child object
 	desc = "A generic set of thrusters, from an unknown source. Uses not-understood methods to propel exosuits seemingly for free."
 	icon_state = "thrusters"
-	selectable = FALSE
 	equipment_slot = MECHA_UTILITY
 	var/effect_type = /obj/effect/particle_effect/sparks
 
@@ -436,7 +434,7 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas
 	name = "RCS thruster package"
 	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments, by expelling gas from the internal life support tank."
-	effect_type = /obj/effect/particle_effect/smoke
+	effect_type = /obj/effect/particle_effect/fluid/smoke
 	var/move_cost = 20 //moles per step
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)

@@ -10,8 +10,6 @@
 	can_buckle = TRUE
 	buckle_lying = 90
 	circuit = /obj/item/circuitboard/machine/stasis
-	idle_power_usage = 40
-	active_power_usage = 340
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 	var/stasis_enabled = TRUE

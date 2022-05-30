@@ -43,6 +43,9 @@
 /obj/effect/singularity_act()
 	qdel(src)
 
+///The abstract effect ignores even more effects and is often typechecked for atoms that should truly not be fucked with.
+/obj/effect/abstract
+
 /obj/effect/abstract/singularity_pull()
 	return
 

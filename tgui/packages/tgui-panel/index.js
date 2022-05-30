@@ -68,20 +68,11 @@ const setupApp = () => {
   setupPanelFocusHacks();
   captureExternalLinks();
 
-  // Subscribe for Redux state updates
+  // Re-render UI on store updates
   store.subscribe(renderApp);
 
-  // Subscribe for bankend updates
-  window.update = msg => store.dispatch(Byond.parseJson(msg));
-
-  // Process the early update queue
-  while (true) {
-    const msg = window.__updateQueue__.shift();
-    if (!msg) {
-      break;
-    }
-    window.update(msg);
-  }
+  // Dispatch incoming messages as store actions
+  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
   // Unhide the panel
   Byond.winset('output', {

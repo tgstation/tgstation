@@ -32,9 +32,7 @@ const log = (level, ns, ...args) => {
       .filter(value => value)
       .join(' ')
       + '\nUser Agent: ' + navigator.userAgent;
-    Byond.topic({
-      tgui: 1,
-      window_id: window.__windowId__,
+    Byond.sendMessage({
       type: 'log',
       ns,
       message: logEntry,

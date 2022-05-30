@@ -76,8 +76,6 @@ to understand what this is about.
 - Lower case names are native browser events and should be used sparingly,
 for example when you need an explicit IE8 support. **DO NOT** use
 lowercase event handlers unless you really know what you are doing.
-- [Button](#button) component does not support the lowercase `onclick` event.
-Use the camel case `onClick` instead.
 
 ## `tgui/components`
 

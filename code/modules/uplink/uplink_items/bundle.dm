@@ -13,6 +13,7 @@
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't decided on a strategy yet."
 	item = /obj/effect/gibspawner/generic // non-tangible item because techwebs use this path to determine illegal tech
 	cost = 0
+	cost_override_string = "Varies"
 
 /datum/uplink_item/bundles_tc/random/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/list/possible_items = list()

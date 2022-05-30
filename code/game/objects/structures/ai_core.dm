@@ -95,9 +95,12 @@
 		return
 	return ..()
 
+/obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/structure/ai_core/attackby(obj/item/P, mob/user, params)
-	if(P.tool_behaviour == TOOL_WRENCH)
-		return default_unfasten_wrench(user, P, 20)
 	if(!anchored)
 		if(P.tool_behaviour == TOOL_WELDER && can_deconstruct)
 			if(state != EMPTY_CORE)

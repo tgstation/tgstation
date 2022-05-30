@@ -152,12 +152,13 @@
 		else if(human.satiety < 0)
 			human.satiety++
 			if(DT_PROB(round(-human.satiety/77), delta_time))
-				human.Jitter(5)
+				human.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			hunger_rate = 3 * HUNGER_FACTOR
 		hunger_rate *= human.physiology.hunger_mod
 		human.adjust_nutrition(-hunger_rate * delta_time)
 
-	if(human.nutrition > NUTRITION_LEVEL_FULL)
+	var/nutrition = human.nutrition
+	if(nutrition > NUTRITION_LEVEL_FULL)
 		if(human.overeatduration < 20 MINUTES) //capped so people don't take forever to unfat
 			human.overeatduration = min(human.overeatduration + (1 SECONDS * delta_time), 20 MINUTES)
 	else
@@ -165,13 +166,13 @@
 			human.overeatduration = max(human.overeatduration - (2 SECONDS * delta_time), 0) //doubled the unfat rate
 
 	//metabolism change
-	if(human.nutrition > NUTRITION_LEVEL_FAT)
+	if(nutrition > NUTRITION_LEVEL_FAT)
 		human.metabolism_efficiency = 1
-	else if(human.nutrition > NUTRITION_LEVEL_FED && human.satiety > 80)
+	else if(nutrition > NUTRITION_LEVEL_FED && human.satiety > 80)
 		if(human.metabolism_efficiency != 1.25)
 			to_chat(human, span_notice("You feel vigorous."))
 			human.metabolism_efficiency = 1.25
-	else if(human.nutrition < NUTRITION_LEVEL_STARVING + 50)
+	else if(nutrition < NUTRITION_LEVEL_STARVING + 50)
 		if(human.metabolism_efficiency != 0.8)
 			to_chat(human, span_notice("You feel sluggish."))
 		human.metabolism_efficiency = 0.8
@@ -184,7 +185,9 @@
 	if(CONFIG_GET(flag/disable_human_mood))
 		handle_hunger_slowdown(human)
 
-	switch(human.nutrition)
+	// If we did anything more then just set and throw alerts here I would add bracketing
+	// But well, it is all we do, so there's not much point bothering with it you get me?
+	switch(nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/fat)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
@@ -206,27 +209,38 @@
 	return !(NOSTOMACH in owner_species.inherent_traits)
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
-	if(disgusted.disgust)
-		var/pukeprob = 2.5 + (0.025 * disgusted.disgust)
-		if(disgusted.disgust >= DISGUST_LEVEL_GROSS)
+	var/old_disgust = disgusted.old_disgust
+	var/disgust = disgusted.disgust
+
+	if(disgust)
+		var/pukeprob = 2.5 + (0.025 * disgust)
+		if(disgust >= DISGUST_LEVEL_GROSS)
 			if(DT_PROB(5, delta_time))
-				disgusted.stuttering += 1
-				disgusted.add_confusion(2)
+				disgusted.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/speech/stutter)
+				disgusted.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/confusion)
 			if(DT_PROB(5, delta_time) && !disgusted.stat)
 				to_chat(disgusted, span_warning("You feel kind of iffy..."))
-			disgusted.jitteriness = max(disgusted.jitteriness - 3, 0)
-		if(disgusted.disgust >= DISGUST_LEVEL_VERYGROSS)
+			disgusted.adjust_timed_status_effect(-6 SECONDS, /datum/status_effect/jitter)
+		if(disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
-				disgusted.add_confusion(2.5)
-				disgusted.stuttering += 1
-				disgusted.vomit(10, 0, 1, 0, 1, 0)
-			disgusted.Dizzy(5)
-		if(disgusted.disgust >= DISGUST_LEVEL_DISGUSTED)
+				disgusted.adjust_timed_status_effect(2.5 SECONDS, /datum/status_effect/confusion)
+				disgusted.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/speech/stutter)
+				disgusted.vomit(10, distance = 0, vomit_type = NONE)
+			disgusted.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(DT_PROB(13, delta_time))
 				disgusted.blur_eyes(3) //We need to add more shit down here
 
 		disgusted.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
-	switch(disgusted.disgust)
+
+	// I would consider breaking this up into steps matching the disgust levels
+	// But disgust is used so rarely it wouldn't save a significant amount of time, and it makes the code just way worse
+	// We're in the same state as the last time we processed, so don't bother
+	if(old_disgust == disgust)
+		return
+
+	disgusted.old_disgust = disgust
+	switch(disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
 			disgusted.clear_alert(ALERT_DISGUST)
 			SEND_SIGNAL(disgusted, COMSIG_CLEAR_MOOD_EVENT, "disgust")

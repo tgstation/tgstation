@@ -26,9 +26,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/inventory_shown = FALSE //Equipped item inventory
 	var/hotkey_ui_hidden = FALSE //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
-	var/atom/movable/screen/ling/chems/lingchemdisplay
-	var/atom/movable/screen/ling/sting/lingstingdisplay
-
 	var/atom/movable/screen/blobpwrdisplay
 
 	var/atom/movable/screen/alien_plasma_display
@@ -120,6 +117,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
 
+	AddComponent(/datum/component/zparallax, owner.client)
+
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
 		mymob.hud_used = null
@@ -150,8 +149,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	wanted_lvl = null
 	internals = null
 	spacesuit = null
-	lingchemdisplay = null
-	lingstingdisplay = null
 	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
@@ -348,6 +345,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	return
 
 /datum/hud/proc/position_action(atom/movable/screen/movable/action_button/button, position)
+	// This is kinda a hack, I'm sorry.
+	// Basically, FLOATING is never a valid position to pass into this proc. It exists as a generic marker for manually positioned buttons
+	// Not as a position to target
+	if(position == SCRN_OBJ_FLOATING)
+		return
 	if(button.location != SCRN_OBJ_DEFAULT)
 		hide_action(button)
 	switch(position)
@@ -436,8 +438,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/atom/movable/screen/movable/action_button/button = action.viewers[src]
 		if(!button)
 			action.ShowTo(mymob)
-			button = action.viewers[src]
-		position_action(button, button.location)
+		else
+			position_action(button, button.location)
 
 /datum/action_group
 	/// The hud we're owned by

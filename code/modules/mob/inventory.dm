@@ -331,6 +331,7 @@
 				I.forceMove(newloc)
 		I.dropped(src, silent)
 	SEND_SIGNAL(I, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
+	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, I, force, newloc, no_move, invdrop, silent)
 	return TRUE
 
 /**
@@ -479,7 +480,6 @@
 				path = /obj/item/bodypart/r_arm
 
 			var/obj/item/bodypart/BP = new path ()
-			BP.owner = src
 			BP.held_index = i
 			add_bodypart(BP)
 			hand_bodyparts[i] = BP

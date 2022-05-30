@@ -22,7 +22,7 @@
 	status_flags = CANSTUN|CANPUSH
 	combat_mode = TRUE //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	hud_type = /datum/hud/ai
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
@@ -107,6 +107,8 @@
 	var/atom/lastloc
 	interaction_range = null
 
+	var/atom/movable/screen/ai/modpc/interfaceButton
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -158,10 +160,7 @@
 
 	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
 
-	aiPDA = new/obj/item/pda/ai(src)
-	aiPDA.owner = real_name
-	aiPDA.ownjob = "AI"
-	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
+	create_modularInterface()
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -242,9 +241,8 @@
 			if(istype(A, initial(AM.power_type)))
 				qdel(A)
 
-/mob/living/silicon/ai/IgniteMob()
-	fire_stacks = 0
-	. = ..()
+/mob/living/silicon/ai/ignite_mob()
+	return FALSE
 
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
 	if(client && !C)
@@ -832,15 +830,11 @@
 	if(oldname != real_name)
 		if(eyeobj)
 			eyeobj.name = "[newname] (AI Eye)"
+			modularInterface.saved_identification = real_name
 
 		// Notify Cyborgs
 		for(var/mob/living/silicon/robot/Slave in connected_robots)
 			Slave.show_laws()
-
-/mob/living/silicon/ai/replace_identification_name(oldname,newname)
-	if(aiPDA)
-		aiPDA.owner = newname
-		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
 
 /datum/action/innate/choose_modules
 	name = "Malfunction Modules"

@@ -4,3 +4,4 @@
 	invocation = ""
 	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
+	antimagic_flags = MAGIC_RESISTANCE_MIND

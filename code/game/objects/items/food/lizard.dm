@@ -51,7 +51,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/headcheese/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 30, table_required = TRUE)
 
 /obj/item/food/headcheese_slice
 	name = "headcheese slice"
@@ -181,7 +181,7 @@
 	icon_state = "nectar_larvae"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/korta_nectar = 2, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("meat" = 1, "sweet" = 1, "heat" = 1)
-	foodtypes = GROSS | MEAT
+	foodtypes = GROSS | MEAT | BUGS
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/mushroomy_stirfry
@@ -289,7 +289,7 @@
 	AddComponent(/datum/component/bakeable, /obj/item/food/bread/root, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 /obj/item/food/rootdough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatrootdough, 1, 30)
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatrootdough, 1, 30, table_required = TRUE)
 
 /obj/item/food/flatrootdough
 	name = "flat rootdough"
@@ -301,7 +301,7 @@
 	foodtypes = VEGETABLES | NUTS
 
 /obj/item/food/flatrootdough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rootdoughslice, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rootdoughslice, 3, 30, table_required = TRUE)
 
 /obj/item/food/flatrootdough/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/root_flatbread, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
@@ -317,7 +317,7 @@
 	foodtypes = VEGETABLES | NUTS
 
 /obj/item/food/rootdoughslice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 30, table_required = TRUE)
 
 /obj/item/food/rootdoughslice/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/rootroll, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -362,7 +362,7 @@
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/bread/root/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/root, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/root, 5, 30, table_required = TRUE)
 
 /obj/item/food/breadslice/root
 	name = "rootbread slice"
@@ -514,7 +514,7 @@
 	foodtypes = NUTS | SUGAR
 
 /obj/item/food/cake/korta_brittle/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/korta_brittle, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/korta_brittle, 5, 30, table_required = TRUE)
 
 /obj/item/food/cakeslice/korta_brittle
 	name = "korta brittle slice"
@@ -601,5 +601,5 @@
 	icon_state = "canned_larvae"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/honey = 2)
 	tastes = list("sweet bugs" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT | GROSS | BUGS
 	w_class = WEIGHT_CLASS_SMALL

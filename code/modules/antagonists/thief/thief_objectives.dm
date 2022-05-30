@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 		owner.balloon_alert(owner, "not while incapacitated!")
 		return
 	var/area/owner_area = get_area(owner)
-	if(!istype(owner_area, /area/maintenance))
+	if(!istype(owner_area, /area/station/maintenance))
 		owner.balloon_alert(owner, "hoard must be in maintenance!")
 		return
 	var/datum/objective/hoarder/objective = weak_objective.resolve()
@@ -91,7 +91,8 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 		owner.client.images |= hoarder_marker
 	qdel(src)
 
-/datum/objective/chronicle //exactly what it sounds like, steal someone's heirloom.
+///exactly what it sounds like, steal someone's heirloom.
+/datum/objective/chronicle
 	name = "chronicle"
 	explanation_text = "Steal any family heirloom, for chronicling of course."
 
@@ -109,3 +110,33 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 			if(found && !(found.owner in owners))
 				return TRUE
 	return FALSE
+
+///steal a shit ton of unique ids, escape with them. The part that makes this not "hold a box of blank ids" is the fact they need a registered bank account
+/datum/objective/all_access
+	name = "all access"
+	explanation_text = "Steal ID cards from other registered crewmembers!"
+	///how many we want for greentext
+	var/amount = 8
+
+/datum/objective/all_access/find_target(dupe_search_range, blacklist)
+	amount = rand(amount - 2, amount + 2)
+
+/datum/objective/all_access/check_completion()
+	. = ..()
+	if(.)
+		return TRUE
+	var/stolen_amount = 0
+	var/list/owners = get_owners()
+	for(var/datum/mind/owner in owners)
+		if(!isliving(owner.current))
+			continue
+		var/list/all_items = owner.current.get_all_contents() //this should get things in cheesewheels, books, etc.
+		for(var/obj/item/card/id/possible_id in all_items)
+			//checks if it was the first id card they got, aka the one from joining the round. should prevent "i stole a box of empty ids tee hee :3"
+			if(!HAS_TRAIT(possible_id, TRAIT_JOB_FIRST_ID_CARD))
+				continue
+			stolen_amount++
+	return stolen_amount >= amount
+
+/datum/objective/all_access/update_explanation_text()
+	explanation_text = "Steal at least [amount] unique ID cards from other registered crewmembers. It's not enough to swipe replacement ID cards that were created and assigned while on the station, you need to swipe IDs that other crewmembers were initially issued!"

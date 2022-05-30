@@ -20,7 +20,7 @@
 
 GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/energy/lasercannon,
-	/obj/item/gun/energy/kinetic_accelerator/crossbow/large,
+	/obj/item/gun/energy/recharge/ebow/large,
 	/obj/item/gun/energy/e_gun,
 	/obj/item/gun/energy/e_gun/advtaser,
 	/obj/item/gun/energy/e_gun/nuclear,

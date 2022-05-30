@@ -8,9 +8,10 @@
 	plane = GAME_PLANE_UPPER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 20
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
+	always_area_sensitive = TRUE
 	///What overlay the light should use
 	var/overlay_icon = 'icons/obj/lighting_overlay.dmi'
 	///base description and icon_state
@@ -76,8 +77,8 @@
 	. = ..()
 
 	if(!mapload) //sync up nightshift lighting for player made lights
-		var/area/local_area = get_area(src)
-		var/obj/machinery/power/apc/temp_apc = local_area.apc
+		var/area/our_area = get_area(src)
+		var/obj/machinery/power/apc/temp_apc = our_area.apc
 		nightshift_enabled = temp_apc?.nightshift_lights
 
 	if(start_with_cell && !no_emergency)
@@ -135,6 +136,28 @@
 		return
 	. += mutable_appearance(overlay_icon, base_state)
 
+// Area sensitivity is traditionally tied directly to power use, as an optimization
+// But since we want it for fire reacting, we disregard that
+/obj/machinery/light/setup_area_power_relationship()
+	. = ..()
+	if(!.)
+		return
+	var/area/our_area = get_area(src)
+	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
+
+/obj/machinery/light/on_enter_area(datum/source, area/area_to_register)
+	..()
+	RegisterSignal(area_to_register, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
+	handle_fire(area_to_register, area_to_register.fire)
+
+/obj/machinery/light/on_exit_area(datum/source, area/area_to_unregister)
+	..()
+	UnregisterSignal(area_to_unregister, COMSIG_AREA_FIRE_CHANGED)
+
+/obj/machinery/light/proc/handle_fire(area/source, new_fire)
+	SIGNAL_HANDLER
+	update()
+
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
 	switch(status)
@@ -180,7 +203,6 @@
 		set_light(l_range = 0)
 	update_appearance()
 
-	active_power_usage = (brightness * 10)
 	if(on != on_gs)
 		on_gs = on
 		if(on)
@@ -196,7 +218,7 @@
 	update()
 
 /obj/machinery/light/proc/broken_sparks(start_only=FALSE)
-	if(!QDELETED(src) && status == LIGHT_BROKEN && has_power() && Master.current_runlevel)
+	if(!QDELETED(src) && status == LIGHT_BROKEN && has_power() && MC_RUNNING())
 		if(!start_only)
 			do_sparks(3, TRUE, src)
 		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)

@@ -23,42 +23,15 @@
 /obj/effect/holodeck_effect/proc/safety(active)
 	return
 
-
 // Generates a holodeck-tracked card deck
 /obj/effect/holodeck_effect/cards
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "deck_nanotrasen_full"
-	var/obj/item/toy/cards/deck/deck
+	icon = 'icons/obj/playing_cards.dmi'
+	icon_state = "deck_syndicate_full"
 
-/obj/effect/holodeck_effect/cards/activate(obj/machinery/computer/holodeck/HC)
-	deck = new(loc)
-	safety(!(HC.obj_flags & EMAGGED))
-	deck.holo = HC
-	RegisterSignal(deck, COMSIG_PARENT_QDELETING, .proc/handle_card_delete)
+/obj/effect/holodeck_effect/cards/activate(obj/machinery/computer/holodeck/holodeck)
+	var/obj/item/toy/cards/deck/syndicate/holographic/deck = new(loc, holodeck)
+	deck.flags_1 |= HOLOGRAM_1
 	return deck
-
-/obj/effect/holodeck_effect/cards/proc/handle_card_delete(datum/source)
-	SIGNAL_HANDLER
-	deck = null
-
-/obj/effect/holodeck_effect/cards/safety(active)
-	if(!deck)
-		return
-	if(active)
-		deck.card_hitsound = null
-		deck.card_force = 0
-		deck.card_throwforce = 0
-		deck.card_throw_speed = 3
-		deck.card_throw_range = 7
-		deck.card_attack_verb_continuous = string_list(list("attacks"))
-	else
-		deck.card_hitsound = 'sound/weapons/bladeslice.ogg'
-		deck.card_force = 5
-		deck.card_throwforce = 10
-		deck.card_throw_speed = 3
-		deck.card_throw_range = 7
-		deck.card_attack_verb_continuous = string_list(list("attacks", "slices", "dices", "slashes", "cuts"))
-
 
 /obj/effect/holodeck_effect/sparks/activate(obj/machinery/computer/holodeck/HC)
 	var/turf/T = get_turf(src)

@@ -34,7 +34,7 @@
 		build_with_floor_tiles(W, user)
 		return TRUE
 
-/turf/open/misc/plating/asteroid/attack_paw(mob/user, list/modifiers)
+/turf/open/misc/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /turf/open/misc/ex_act(severity, target)

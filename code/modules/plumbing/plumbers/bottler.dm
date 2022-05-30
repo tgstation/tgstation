@@ -7,7 +7,7 @@
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 100
-
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	///how much do we fill
 	var/wanted_amount = 10
 	///where things are sent
@@ -68,7 +68,7 @@
 	wanted_amount = new_amount
 	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))
 
-/obj/machinery/plumbing/bottler/process()
+/obj/machinery/plumbing/bottler/process(delta_time)
 	if(machine_stat & NOPOWER)
 		return
 	// Sanity check the result locations and stop processing if they don't exist
@@ -78,6 +78,7 @@
 
 	///see if machine has enough to fill, is anchored down and has any inputspot objects to pick from
 	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
+		use_power(active_power_usage * delta_time)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
 		if((istype(AM, /obj/item/reagent_containers) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
 			var/obj/item/reagent_containers/B = AM
