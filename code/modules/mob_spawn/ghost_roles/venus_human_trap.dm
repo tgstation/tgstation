@@ -18,7 +18,9 @@
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/Destroy()
 	if(flower_bud) // anti harddel checks
 		flower_bud.spawner = null
-		QDEL_NULL(flower_bud)
+		if(!QDELETED(flower_bud))
+			qdel(flower_bud)
+		flower_bud = null
 	return
 
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/equip(mob/living/simple_animal/hostile/venus_human_trap/spawned_human_trap)

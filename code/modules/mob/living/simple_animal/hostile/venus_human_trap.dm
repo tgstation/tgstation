@@ -64,7 +64,9 @@
 	QDEL_NULL(countdown)
 	if(spawner) // anti harddel checks
 		spawner.flower_bud = null
-		QDEL_NULL(spawner)
+		if(!QDELETED(spawner))
+			qdel(spawner)
+		spawner = null
 	return ..()
 
 /// Tells the spawner that the venus human trap is ready
