@@ -46,6 +46,10 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
+		/obj/item/scalpel/emergency = 1,
+		/obj/item/retractor/emergency = 1,
+		/obj/item/hemostat/emergency = 1,
+		/obj/item/lighter/greyscale/emergency = 1,
 		/obj/item/healthanalyzer/wound = 1,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/suture/emergency = 1,

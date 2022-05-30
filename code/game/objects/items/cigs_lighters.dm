@@ -879,6 +879,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(get_temperature())
 		. = span_notice("After some fiddling, [user] manages to light [A] with [src].")
 
+/obj/item/lighter/greyscale/emergency
+	name = "emergency cautery"
+	desc = "Okay hold the fuck up. Everyone, STOP. This is just a fucking lighter. Are you serious?"
+	lighter_color = COLOR_ASSEMBLY_WHITE
+
+/obj/item/lighter/greyscale/emergency/examine(mob/user)
+	. = ..()
+	if(name == initial(name))
+		name = "emergency cheap lighter"
 
 /obj/item/lighter/slime
 	name = "slime zippo"

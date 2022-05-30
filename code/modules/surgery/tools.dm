@@ -17,6 +17,11 @@
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	toolspeed = 0.5
 
+/obj/item/retractor/emergency
+	name = "emergency retractor"
+	desc = "In times of emergency, sometimes you have to open up to those you would not usually associate with."
+	icon_state = "retractor_emergency"
+	toolspeed = 1.5
 
 /obj/item/hemostat
 	name = "hemostat"
@@ -39,6 +44,11 @@
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	toolspeed = 0.5
 
+/obj/item/hemostat/emergency
+	name = "emergency hemostat"
+	desc = "Generally, the goal here is to stop them from dying. With that considered, it's a pretty good idea to have this if you're fixing someone up."
+	icon_state = "hemostat_emergency"
+	toolspeed = 1.5
 
 /obj/item/cautery
 	name = "cautery"
@@ -181,6 +191,11 @@
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
+/obj/item/scalpel/emergency
+	name = "emergency scalpel"
+	desc = "For getting in there and stitching up your friend in a pinch. \"So anyways, that's how I lost my medical license.\""
+	icon_state = "scalpel_emergency"
+	toolspeed = 1.5
 
 /obj/item/circular_saw
 	name = "circular saw"
