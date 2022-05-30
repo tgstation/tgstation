@@ -164,7 +164,7 @@
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "cP" = (
-/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/flora/bush/stalky/style_random,
 /turf/open/water/beach/biodome,
 /area/ruin/powered/beach)
 "cV" = (
@@ -340,8 +340,8 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "iH" = (
-/obj/structure/flora/ausbushes/stalkybush,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/water/beach/biodome,
 /area/ruin/powered/beach)
 "jc" = (
@@ -381,7 +381,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "ks" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/item/toy/seashell,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
@@ -422,7 +422,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "mG" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "nw" = (
@@ -504,7 +504,7 @@
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "qg" = (
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/bush/large/style_random,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "qt" = (
@@ -583,7 +583,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "cabinet";
 	name = "bartender's closet";
-	req_access = list(25)
+	req_access = list("bar")
 	},
 /obj/item/clothing/shoes/sandal{
 	desc = "A very fashionable pair of flip-flops.";
@@ -723,7 +723,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "yO" = (
-/obj/structure/flora/junglebush,
+/obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "yT" = (
@@ -797,7 +797,7 @@
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "AG" = (
-/obj/structure/flora/rock/jungle,
+/obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "AY" = (
@@ -897,7 +897,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Eu" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/water/beach/biodome,
 /area/ruin/powered/beach)
 "EE" = (
@@ -1026,7 +1026,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "cabinet";
 	name = "booze storage";
-	req_access = list(25)
+	req_access = list("bar")
 	},
 /obj/item/storage/backpack/duffelbag,
 /obj/item/etherealballdeployer,
@@ -1108,8 +1108,8 @@
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "Kn" = (
-/obj/structure/flora/junglebush/large,
-/obj/structure/flora/junglebush,
+/obj/structure/flora/bush/large/style_random,
+/obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "Ky" = (
@@ -1353,7 +1353,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "SY" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "Ti" = (
@@ -1392,7 +1392,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "UT" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "UZ" = (

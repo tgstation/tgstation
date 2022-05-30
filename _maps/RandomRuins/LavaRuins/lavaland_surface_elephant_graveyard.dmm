@@ -109,7 +109,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/shuttle{
-	name = "archaeology shuttle airlock"
+	name = "Archaeology Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/graveyard_shuttle)
@@ -395,7 +395,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/elephant_graveyard)
 "Cn" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "Cu" = (
@@ -490,7 +490,7 @@
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "Mx" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /obj/structure/cable,
 /obj/item/pickaxe{
 	layer = 2.5;

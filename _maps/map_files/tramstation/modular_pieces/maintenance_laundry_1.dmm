@@ -42,11 +42,14 @@
 /area/station/maintenance/port/aft)
 "t" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Storage";
-	req_one_access_txt = "12"
+	name = "Maintenance Storage"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "N" = (
@@ -58,11 +61,11 @@
 /turf/template_noop,
 /area/template_noop)
 "R" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "T" = (

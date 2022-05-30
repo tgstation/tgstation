@@ -62,19 +62,15 @@
 //Modular computer/NTNet defines
 
 //Modular computer part defines
-#define MC_CPU "CPU"
 #define MC_HDD "HDD"
 #define MC_SDD "SDD"
 #define MC_CARD "CARD"
 #define MC_CARD2 "CARD2"
-#define MC_CART "CART"
 #define MC_NET "NET"
 #define MC_PRINT "PRINT"
 #define MC_CELL "CELL"
 #define MC_CHARGE "CHARGE"
 #define MC_AI "AI"
-#define MC_SENSORS "SENSORS"
-#define MC_IDENTIFY "IDENTIFY"
 
 //NTNet stuff, for modular computers
 									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
@@ -130,26 +126,6 @@
 #define HYPERTORUS_DANGER 3 // Integrity < 50%
 #define HYPERTORUS_EMERGENCY 4 // Integrity < 25%
 #define HYPERTORUS_MELTING 5 // Pretty obvious.
-
-//Nuclear bomb stuff
-#define NUKESTATE_INTACT 5
-#define NUKESTATE_UNSCREWED 4
-#define NUKESTATE_PANEL_REMOVED 3
-#define NUKESTATE_WELDED 2
-#define NUKESTATE_CORE_EXPOSED 1
-#define NUKESTATE_CORE_REMOVED 0
-
-#define NUKEUI_AWAIT_DISK 0
-#define NUKEUI_AWAIT_CODE 1
-#define NUKEUI_AWAIT_TIMER 2
-#define NUKEUI_AWAIT_ARM 3
-#define NUKEUI_TIMING 4
-#define NUKEUI_EXPLODED 5
-
-#define NUKE_OFF_LOCKED 0
-#define NUKE_OFF_UNLOCKED 1
-#define NUKE_ON_TIMING 2
-#define NUKE_ON_EXPLODING 3
 
 #define MACHINE_NOT_ELECTRIFIED 0
 #define MACHINE_ELECTRIFIED_PERMANENT -1

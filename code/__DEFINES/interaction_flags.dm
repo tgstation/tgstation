@@ -38,3 +38,5 @@
 #define INTERACT_MACHINE_SET_MACHINE (1<<6)
 /// the user must have vision to interact (blind people need not apply)
 #define INTERACT_MACHINE_REQUIRES_SIGHT (1<<7)
+/// the user must be able to read to interact
+#define INTERACT_MACHINE_REQUIRES_LITERACY (1<<8)

@@ -61,10 +61,6 @@
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
-//Return a string for admin logging uses, should describe the disease in detail
-/datum/disease/proc/admin_details()
-	return "[src.name] : [src.type]"
-
 
 ///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(delta_time, times_fired)

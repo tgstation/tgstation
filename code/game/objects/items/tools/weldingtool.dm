@@ -381,6 +381,7 @@
 	change_icons = FALSE
 	can_off_process = TRUE
 	light_range = 1
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.5
 	var/last_gen = 0
 	var/nextrefueltick = 0

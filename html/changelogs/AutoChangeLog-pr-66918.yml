@@ -1,4 +1,0 @@
-author: "Sylphet"
-delete-after: True
-changes: 
-  - bugfix: "removes extra air alarm in bar maint"

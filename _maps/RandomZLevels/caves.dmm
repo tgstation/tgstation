@@ -1120,7 +1120,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fL" = (
-/obj/structure/sign/departments/maint{
+/obj/structure/sign/departments/exam_room{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -1392,7 +1392,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/northblock)
 "hT" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1634,7 +1634,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "yV" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /obj/item/soulstone/anybody,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
@@ -1647,7 +1647,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "zH" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1908,7 +1908,7 @@
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "Mq" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

@@ -140,6 +140,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_INCAPACITATED "incapacitated"
 /// In some kind of critical condition. Is able to succumb.
 #define TRAIT_CRITICAL_CONDITION "critical-condition"
+#define TRAIT_ILLITERATE "illiterate"
 #define TRAIT_BLIND "blind"
 #define TRAIT_MUTE "mute"
 #define TRAIT_EMOTEMUTE "emotemute"
@@ -534,6 +535,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
 /// Designates a heart as a living heart for a heretic.
 #define TRAIT_LIVING_HEART "living_heart"
+/// Prevents the same person from being chosen multiple times for kidnapping objective
+#define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -577,6 +580,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DRIED "trait_dried"
 /// Trait for customizable reagent holder
 #define TRAIT_CUSTOMIZABLE_REAGENT_HOLDER "customizable_reagent_holder"
+
+/// Used to prevent multiple floating blades from triggering over the same target
+#define TRAIT_BEING_BLADE_SHIELDED "being_blade_shielded"
 
 /* Traits for ventcrawling.
  * Both give access to ventcrawling, but *_NUDE requires the user to be
