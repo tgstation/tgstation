@@ -246,8 +246,8 @@
 	send_item_attack_message(attacking_item, user)
 	if(attacking_item.force)
 		var/damage = attacking_item.force
-		if(mob_biotypes == MOB_ROBOTIC)
-			damage = (damage * attacking_item.demolition_mod)
+		if(mob_biotypes & MOB_ROBOTIC)
+			damage *= attacking_item.demolition_mod
 		apply_damage(damage, attacking_item.damtype)
 		if(attacking_item.damtype == BRUTE)
 			if(prob(33))
