@@ -177,35 +177,35 @@
 /datum/supply_pack/goody/rapid_lighting_device
 	name = "Rapid Lighting Device (RLD)"
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
-	cost = PAYCHECK_CREW * 5
+	cost = PAYCHECK_CREW * 10
 	contains = list(/obj/item/construction/rld)
 
 /datum/supply_pack/goody/moth_encryption_key
 	name = "Moffic radio encryption key"
 	desc = "A hi-tech radio encryption key that allows the wearer to understand moffic when the radio is worn."
-	cost = PAYCHECK_CREW * 8
+	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/moth)
 
 /datum/supply_pack/goody/lizard_encryption_key
 	name = "Draconic radio encryption key"
 	desc = "A hi-tech radio encryption key that allows the wearer to understand draconic when the radio is worn."
-	cost = PAYCHECK_CREW * 8
+	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/tiziran)
 
 /datum/supply_pack/goody/plasmaman_encryption_key
 	name = "Calcic radio encryption key"
 	desc = "A hi-tech radio encryption key that allows the wearer to understand calcic when the radio is worn."
-	cost = PAYCHECK_CREW * 8
+	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/plasmaman)
 
 /datum/supply_pack/goody/ethereal_encryption_key
 	name = "Voltaic radio encryption key"
 	desc = "A hi-tech radio encryption key that allows the wearer to understand voltaic when the radio is worn."
-	cost = PAYCHECK_CREW * 8
+	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/ethereal)
 
 /datum/supply_pack/goody/felinid_encryption_key
 	name = "Felinid radio encryption key"
 	desc = "A hi-tech radio encryption key that allows the wearer to understand nekomimetic when the radio is worn."
-	cost = PAYCHECK_CREW * 8
+	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/felinid)
