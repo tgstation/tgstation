@@ -18432,6 +18432,7 @@
 /obj/item/controller,
 /obj/item/compact_remote,
 /obj/item/compact_remote,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "gqp" = (
@@ -19089,7 +19090,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "gCH" = (
@@ -43367,8 +43367,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/west,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "oIz" = (
@@ -64572,7 +64572,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/structure/table,
 /obj/item/reagent_containers/dropper{
