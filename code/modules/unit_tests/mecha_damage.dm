@@ -27,21 +27,21 @@ TEST_FOCUS(/datum/unit_test/mecha_damage)
 	// Get a sample "melee" weapon.
 	// The energy axe is chosen here due to having a high base force, to make sure we get over the equipment DT.
 	var/obj/item/dummy_melee = allocate(/obj/item/melee/energy/axe)
-	var/expected_melee_damage = dummy_melee.force * (expected_melee_armor / 100)
+	var/expected_melee_damage = round(dummy_melee.force * (1 - expected_melee_armor / 100), DAMAGE_PRECISION)
 
 	// Get a sample laser weapon.
 	// The captain's laser gun here is chosen primarily because it deals more damage than normal lasers.
 	var/obj/item/gun/energy/laser/dummy_laser = allocate(/obj/item/gun/energy/laser/captain)
 	var/obj/item/ammo_casing/laser_ammo = dummy_laser.ammo_type[1]
 	var/obj/projectile/beam/laser_fired = initial(laser_ammo.projectile_type)
-	var/expected_laser_damage = initial(laser_fired.damage) * (expected_laser_armor / 100)
+	var/expected_laser_damage = round(dummy_laser.projectile_damage_multiplier * initial(laser_fired.damage) * (1 - expected_laser_armor / 100), DAMAGE_PRECISION)
 
 	// Get a sample laser weapon.
 	// The syndicate .357 here is chosen because it does a lot of damage.
 	var/obj/item/gun/ballistic/dummy_gun = allocate(/obj/item/gun/ballistic/revolver)
 	var/obj/item/ammo_casing/ballistic_ammo = dummy_gun.magazine.ammo_type
 	var/obj/projectile/bullet_fired = initial(ballistic_ammo.projectile_type)
-	var/expected_ballistic_damage = initial(bullet_fired.damage) * (expected_bullet_armor / 100)
+	var/expected_ballistic_damage = round(dummy_gun.projectile_damage_multiplier * initial(bullet_fired.damage) * (1 - expected_bullet_armor / 100), DAMAGE_PRECISION)
 
 	var/obj/item/mecha_parts/mecha_equipment/left_arm_equipment = demo_mech.equip_by_category[MECHA_L_ARM]
 	TEST_ASSERT_NOTNULL(left_arm_equipment, "[demo_mech] spawned without any equipment in their left arm slot.")
@@ -83,5 +83,5 @@ TEST_FOCUS(/datum/unit_test/mecha_damage)
 	var/post_hit_health = checking.get_integrity()
 	TEST_ASSERT(post_hit_health < pre_integrity, "[checking] was [hit_by_phrase], but didn't take any damage.")
 
-	var/damage_taken = pre_integrity - post_hit_health
+	var/damage_taken = round(pre_integrity - post_hit_health, DAMAGE_PRECISION)
 	TEST_ASSERT_EQUAL(damage_taken, expected_damage, "[checking] didn't take the expected amount of damage when [hit_by_phrase]. (Expected damage: [expected_damage], recieved damage: [damage_taken])")

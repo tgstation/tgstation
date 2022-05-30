@@ -52,7 +52,7 @@
 
 	return damage_taken
 
-/obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penentration)
+/obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration)
 	. = ..()
 	if(attack_dir)
 		var/facing_modifier = get_armour_facing(abs(dir2angle(dir) - dir2angle(attack_dir)))
@@ -128,7 +128,7 @@
 		damage_type = hitting_projectile.damage_type,
 		damage_flag = hitting_projectile.armor_flag,
 		attack_dir = REVERSE_DIR(hitting_projectile.dir),
-		armour_penentration = hitting_projectile.armour_penetration,
+		armour_penetration = hitting_projectile.armour_penetration,
 	), hitting_projectile.def_zone)
 	return ..()
 
