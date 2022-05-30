@@ -313,7 +313,7 @@
 				var/armor_factor = hit_carbon.getarmor(hit_part, initial(P.armor_flag))
 				armor_factor = min(ARMOR_MAX_BLOCK, armor_factor) //cap damage reduction at 90%
 				if(armor_factor > 0)
-					if(P.weak_against_armour && armor_factor >= 0)
+					if(initial(P.weak_against_armour) && armor_factor >= 0)
 						armor_factor *= ARMOR_WEAKENED_MULTIPLIER
 					damage_dealt *= armor_factor
 
