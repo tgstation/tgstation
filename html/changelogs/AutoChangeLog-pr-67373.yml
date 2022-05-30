@@ -1,4 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - bugfix: "access to medical laptops is now consistent across all stations"

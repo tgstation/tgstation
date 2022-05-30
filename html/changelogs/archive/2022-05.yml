@@ -1272,3 +1272,17 @@
   - rscadd: Brand new HoP coat!
   - imageadd: New sprites for HoP's uniform, skirt, cap, and the ID Painter.
   - bugfix: HoP starts with laceups, not brown sneakers.
+2022-05-30:
+  Fikou:
+  - bugfix: fixes airlock ai mapping helpers not working
+  - bugfix: chem master now lists a correct metabolization rate
+  Mooshimi:
+  - bugfix: Random windoor inside a wall in chapel maintenance on icebox is now gone.
+  - bugfix: There is now only one firelock in lower ordinance, instead of two in the
+      same door.
+  Son-of-Space:
+  - qol: access helpers have been added for the rest of our shuttles that needed them
+  - bugfix: Our away missions and ruins now use access helpers instead of varedits
+  - bugfix: access to medical laptops is now consistent across all stations
+  - spellcheck: Fixed the name of a shutter button on KiloStation
+  - code_imp: Reorganized the UpdatePaths folder
