@@ -9528,9 +9528,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "dcj" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "EVA Maintenance"
-	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
