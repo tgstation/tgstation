@@ -8,7 +8,7 @@
 	you_are_text = "You are a venus human trap."
 	flavour_text = "You are a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!"
 	faction = list("hostile","vines","plants")
-	role_ban = ROLE_GHOST_ROLE
+	spawner_job_path = /datum/job/venus_human_trap
 	/// Physical structure housing the spawner
 	var/obj/structure/alien/resin/flower_bud/flower_bud
 	/// Used to determine when to notify ghosts
