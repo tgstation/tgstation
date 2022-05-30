@@ -61,6 +61,7 @@
 
 /obj/structure/alien/resin/flower_bud/Destroy()
 	QDEL_LIST(vines)
+	QDEL_NULL(countdown)
 	if(spawner) // anti harddel checks
 		spawner.flower_bud = null
 		QDEL_NULL(spawner)

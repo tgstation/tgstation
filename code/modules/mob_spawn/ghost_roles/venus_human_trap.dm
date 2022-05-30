@@ -4,7 +4,6 @@
 	desc = "A large pulsating plant..."
 	mob_type = /mob/living/simple_animal/hostile/venus_human_trap
 	prompt_name = "venus human trap"
-	prompt_ghost = FALSE
 	you_are_text = "You are a venus human trap."
 	flavour_text = "You are a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!"
 	faction = list("hostile","vines","plants")
