@@ -244,19 +244,20 @@
 
 /mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
 	send_item_attack_message(attacking_item, user)
-	if(attacking_item.force)
-		var/damage = attacking_item.force
-		if(mob_biotypes == MOB_ROBOTIC)
-			damage = (damage * attacking_item.demolition_mod)
-		apply_damage(damage, attacking_item.damtype)
-		if(attacking_item.damtype == BRUTE)
-			if(prob(33))
-				attacking_item.add_mob_blood(src)
-				var/turf/location = get_turf(src)
-				add_splatter_floor(location)
-				if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
-					user.add_mob_blood(src)
-		return TRUE //successful attack
+	if(!(attacking_item.force))
+		return FALSE
+	var/damage = attacking_item.force
+	if(mob_biotypes == MOB_ROBOTIC)
+		damage = (damage * attacking_item.demolition_mod)
+	apply_damage(damage, attacking_item.damtype)
+	if(attacking_item.damtype == BRUTE)
+		if(prob(33))
+			attacking_item.add_mob_blood(src)
+			var/turf/location = get_turf(src)
+			add_splatter_floor(location)
+			if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
+				user.add_mob_blood(src)
+	return TRUE //successful attack
 
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
 	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
