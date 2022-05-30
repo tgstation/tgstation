@@ -1,0 +1,5 @@
+author: "Urumasi, Meyhazah"
+delete-after: True
+changes: 
+  - imageadd: "The H.E.C.K. suit has a new sprite. (by Meyhazah)"
+  - rscadd: "You can now use a spray can to completely recolor the H.E.C.K. suit."
