@@ -27,17 +27,12 @@
 	var/list/client/all_hearers
 	/// The location in which the message is appearing
 	var/atom/message_loc
-	/// what language the message is spoken in.
-	var/datum/language/message_language
 	/// Contains the approximate amount of lines for height decay for each message image.
 	/// associative list of the form: list(message image = approximate lines for that image)
 	var/list/approx_lines
 
 	/// The current index used for adjusting the layer of each sequential chat message such that recent messages will overlay older ones
 	var/static/current_z_idx = 0
-	/// Contains the hash of our main assigned timer for the end_of_life fading event. by the time this timer executes all clients should have
-	///already seen the end of the maptext animation sequence and cant see their message anymore. so this will remove all message images from all clients
-	var/fadertimer = null
 
 	///concatenated string of parameters given to us at creation
 	var/creation_parameters = ""
@@ -83,7 +78,7 @@
 	src.lifespan = lifespan
 	///how long this datum will actually exist for. its how long the default message animations take + 1 second buffer
 	var/total_existence_time = CHAT_MESSAGE_SPAWN_TIME + lifespan + CHAT_MESSAGE_EOL_FADE + 1 SECONDS
-	fadertimer = addtimer(CALLBACK(src, .proc/end_of_life), total_existence_time, TIMER_STOPPABLE|TIMER_DELETE_ME, SSrunechat)
+	addtimer(CALLBACK(src, .proc/end_of_life), total_existence_time, TIMER_DELETE_ME, SSrunechat)
 
 	//in the case of a hash collision this will drop the older chatmessage datum from this list. this is fine however
 	//since the dropped datum will still properly handle itself including deletion etc.
@@ -107,8 +102,9 @@
 	for(var/client/hearer in all_hearers)
 		LAZYREMOVEASSOC(hearer.seen_messages, message_loc, src)
 
-		if(istype(hearers[hearer], /image))
-			hearer.images -= hearers[hearer]
+		var/image/seen_image = hearers[hearer]
+		hearer.images -= seen_image
+		seen_image.loc = null
 
 	for(var/datum/callback/queued_callback as anything in SSrunechat.message_queue)
 		if(!queued_callback)
@@ -123,32 +119,37 @@
 	if(!dropped_hash)
 		SSrunechat.messages_by_creation_string -= creation_parameters
 
+	UnregisterSignal(message_loc, COMSIG_PARENT_QDELETING)
+
 	message_loc = null
 
 	messages = null
 	hearers = null
 	all_hearers = null
 	approx_lines = null
-	fadertimer = null
+	fade_times_by_image = null
 
-	return ..()
+	. = ..()
 
 /datum/chatmessage/proc/end_of_life()
 	SIGNAL_HANDLER
 	qdel(src)
 
 /datum/chatmessage/proc/on_hearer_qdel(client/hearer)
-	SIGNAL_HANDLER
-	if(!istype(hearer))
-		return
+	if(!hearer)
+		CRASH("completely null hearer passed to on_hearer_qdel()!")
 
 	LAZYREMOVEASSOC(hearer.seen_messages, message_loc, src)
-	if(istype(hearers?[hearer], /image))
-		var/image/seen_image = hearers[hearer]
-		messages -= seen_image
+
+	var/image/seen_image = hearers[hearer]
+	messages -= seen_image
+	hearer.images -= seen_image
 
 	hearers -= hearer
 	all_hearers -= hearer
+
+	if(!length(all_hearers) && !QDELETED(src))
+		qdel(src)
 
 /**
  * generates the spanned text used for the final image and creates a callback in SSrunechat to call generate_image() next tick.
@@ -173,7 +174,6 @@
 		return FALSE
 
 	LAZYSET(all_hearers, owned_by, TRUE)
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_hearer_qdel)
 
 	// Remove spans in the message from things like the recorder
 	var/static/regex/span_check = new(@"<\/?span[^>]*>", "gi")
@@ -197,6 +197,7 @@
 	// Reject whitespace
 	var/static/regex/whitespace = new(@"^\s*$")
 	if (whitespace.Find(text))
+		stack_trace("a message that was just whitespace was passed into prepare_text()")
 		qdel(src)
 		return
 
@@ -237,7 +238,7 @@
 	//fun fact: MeasureText() works by waiting for the client to send back the measurements for the text. meaning it works like a verb.
 	//procs like this are called at the last section of hte tick before it ends, meaning if the other portions used up most of it,
 	//then everything after this point is likely to overtime. queuing the message completion if the server is overloaded fixes this
-	if(!owned_by || QDELETED(src) || QDELETED(message_loc) || !all_hearers?[owned_by])
+	if(QDELETED(owned_by) || QDELETED(src) || QDELETED(message_loc) || !all_hearers?[owned_by])
 		return //we should already have been qdel'd() if this evaluates to TRUE, doing it now would throw an error
 
 	if(TICK_CHECK)
@@ -257,7 +258,7 @@
  */
 /datum/chatmessage/proc/generate_image(atom/target, mob/owner, complete_text, mheight)
 	var/client/owned_by = owner.client
-	if(!owned_by || QDELETED(target) || QDELETED(src))//possible since generate_image() is called via a queue
+	if(QDELETED(owned_by) || QDELETED(target) || QDELETED(src) || QDELETED(message_loc) || !all_hearers?[owned_by])//possible since generate_image() is called via a queue
 		return
 
 	var/our_approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
@@ -357,7 +358,7 @@
 
 
 /datum/chatmessage/proc/handle_new_image_association(image/message_image, client/associated_client, approximate_lines, set_time = TRUE)
-	if(!message_image || !associated_client)
+	if(QDELETED(message_image) || QDELETED(associated_client))
 		return
 
 	associated_client.images |= message_image
