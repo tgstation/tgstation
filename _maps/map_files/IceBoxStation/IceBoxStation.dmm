@@ -11056,10 +11056,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
-"dAE" = (
-/obj/machinery/door/window/right/directional/east,
-/turf/closed/wall,
-/area/station/maintenance/port/greater)
 "dAO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/siding/wood{
@@ -45597,10 +45593,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
-"oKa" = (
-/obj/machinery/door/window/right/directional/east,
-/turf/closed/wall/r_wall,
-/area/mine/eva)
 "oKd" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -160969,7 +160961,7 @@ tjo
 tjo
 tKI
 czV
-dAE
+tKI
 iDt
 scw
 gjq
@@ -162801,7 +162793,7 @@ fWX
 rsY
 qjV
 qjV
-oKa
+rsY
 tVj
 iDt
 iDt
