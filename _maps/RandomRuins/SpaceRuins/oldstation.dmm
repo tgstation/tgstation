@@ -1259,6 +1259,7 @@
 /obj/item/storage/bag/construction,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/t_scanner,
+/obj/item/screwdriver/power,
 /obj/item/storage/belt/utility,
 /obj/item/clothing/head/hardhat/weldhat,
 /turf/open/floor/plating,
