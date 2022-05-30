@@ -249,7 +249,7 @@ at the cost of risking a vicious bite.**/
 	var/steam_speed = 20 SECONDS
 	/// Is the steam vent active?
 	var/vent_active = TRUE
-	///The cooldown for toggling the steam vent to prevent infinite steam vent looping.
+	/// The cooldown for toggling the steam vent to prevent infinite steam vent looping.
 	COOLDOWN_DECLARE(steam_vent_interact)
 
 /obj/structure/steam_vent/Initialize(mapload)
@@ -265,21 +265,21 @@ at the cost of risking a vicious bite.**/
 /obj/structure/steam_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, steam_vent_interact))
-		balloon_alert(user, "Not ready to adjust!")
+		balloon_alert(user, "not ready to adjust!")
 		return
 	vent_active = !vent_active
 	update_icon_state()
 	if(vent_active)
-		balloon_alert(user, "Vent on.")
+		balloon_alert(user, "vent on")
 	else
-		balloon_alert(user, "Vent off.")
+		balloon_alert(user, "vent off")
 		return
 	blow_steam()
 
 /obj/structure/steam_vent/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	if(vent_active)
-		balloon_alert(user, "Turn it off first!")
+		balloon_alert(user, "must be off!")
 		return
 	if(tool.use_tool(src, user, 3 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
