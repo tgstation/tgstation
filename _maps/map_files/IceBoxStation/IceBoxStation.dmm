@@ -37494,14 +37494,12 @@
 /obj/item/target/syndicate,
 /obj/item/target/alien,
 /obj/item/target/clown,
-/obj/structure/closet/crate/secure{
-	desc = "A secure crate containing various materials for building a customised test-site.";
-	name = "Test Site Materials Crate";
-	req_access = list("brig_entrance")
-	},
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/north,
+/obj/structure/closet/crate{
+	name = "Firing Range Supplies Set"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
 "lUw" = (
