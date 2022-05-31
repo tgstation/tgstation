@@ -99,12 +99,14 @@
 	all_hearers = list()
 
 /datum/chatmessage/Destroy()
+	. = ..()
 	for(var/client/hearer in all_hearers)
 		LAZYREMOVEASSOC(hearer.seen_messages, message_loc, src)
 
 		var/image/seen_image = hearers[hearer]
-		hearer.images -= seen_image
-		seen_image.loc = null
+		if(seen_image)
+			hearer.images -= seen_image
+			seen_image.loc = null
 
 	for(var/datum/callback/queued_callback as anything in SSrunechat.message_queue)
 		if(!queued_callback)
@@ -128,8 +130,6 @@
 	all_hearers = null
 	approx_lines = null
 	fade_times_by_image = null
-
-	. = ..()
 
 /datum/chatmessage/proc/end_of_life()
 	SIGNAL_HANDLER
