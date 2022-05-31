@@ -1287,7 +1287,7 @@
 	id = "botany"
 	display_name = "Botanical Engineering"
 	description = "Botanical tools"
-	prereq_ids = list("adv_engi", "biotech")
+	prereq_ids = list("biotech")
 	design_ids = list(
 		"biogenerator",
 		"flora_gun",
