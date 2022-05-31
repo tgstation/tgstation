@@ -62,7 +62,7 @@
 		if(value)
 			. += list(list("key" = new_key, "value" = value))
 		else
-			. += list(list("key" = i, "value" = key))
+			. += list(list("key" = i, "value" = new_key))
 
 /datum/lua_editor/proc/dekvpify_list(list/L)
 	. = list()
@@ -128,7 +128,7 @@
 			var/top_affected_list_depth = LAZYLEN(recursive_indices)-1
 			var/list/target_list
 			if(top_affected_list_depth)
-				var/list/path_list = kvpify_list(arguments, top_affected_list_depth)
+				var/list/path_list = kvpify_list(arguments, top_affected_list_depth-1)
 				while(LAZYLEN(recursive_indices) > 1)
 					var/list/path_element = popleft(recursive_indices)
 					var/list/list_element = path_list[path_element["index"]]
@@ -143,6 +143,7 @@
 					if(!islist(path_list))
 						to_chat(usr, span_warning("invalid path element \[[path_list]] for argument move (expected a list)"))
 						return
+					target_list = path_list
 			else
 				target_list = arguments
 			var/index = popleft(recursive_indices)["index"]
@@ -153,7 +154,7 @@
 			var/top_affected_list_depth = LAZYLEN(recursive_indices)-1
 			var/list/target_list
 			if(top_affected_list_depth)
-				var/list/path_list = kvpify_list(arguments, top_affected_list_depth)
+				var/list/path_list = kvpify_list(arguments, top_affected_list_depth-1)
 				while(LAZYLEN(recursive_indices) > 1)
 					var/list/path_element = popleft(recursive_indices)
 					var/list/list_element = path_list[path_element["index"]]
@@ -168,6 +169,7 @@
 					if(!islist(path_list))
 						to_chat(usr, span_warning("invalid path element \[[path_list]] for argument move (expected a list)"))
 						return
+					target_list = path_list
 			else
 				target_list = arguments
 			var/index = popleft(recursive_indices)["index"]
@@ -178,7 +180,7 @@
 			var/top_affected_list_depth = LAZYLEN(recursive_indices)-1
 			var/list/target_list
 			if(top_affected_list_depth)
-				var/list/path_list = kvpify_list(arguments, top_affected_list_depth)
+				var/list/path_list = kvpify_list(arguments, top_affected_list_depth-1)
 				while(LAZYLEN(recursive_indices) > 1)
 					var/list/path_element = popleft(recursive_indices)
 					var/list/list_element = path_list[path_element["index"]]
@@ -193,6 +195,7 @@
 					if(!islist(path_list))
 						to_chat(usr, span_warning("invalid path element \[[path_list]] for argument removal (expected a list)"))
 						return
+					target_list = path_list
 			else
 				target_list = arguments
 			var/index = popleft(recursive_indices)["index"]
@@ -203,7 +206,7 @@
 			var/top_affected_list_depth = LAZYLEN(recursive_indices)
 			if(top_affected_list_depth)
 				var/list/target_list
-				var/list/path_list = kvpify_list(arguments, top_affected_list_depth)
+				var/list/path_list = kvpify_list(arguments, top_affected_list_depth-1)
 				while(LAZYLEN(recursive_indices))
 					var/list/path_element = popleft(recursive_indices)
 					var/list/list_element = path_list[path_element["index"]]
@@ -218,7 +221,8 @@
 					if(!islist(path_list))
 						to_chat(usr, span_warning("invalid path element \[[path_list]] for argument addition (expected a list)"))
 						return
-					usr?.client?.mod_list_add(target_list, null, "a lua editor", "arguments")
+					target_list = path_list
+				usr?.client?.mod_list_add(target_list, null, "a lua editor", "arguments")
 			else
 				var/list/vv_val = usr?.client?.vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 				var/class = vv_val["class"]
