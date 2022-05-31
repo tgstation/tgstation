@@ -28,12 +28,12 @@ const getCss = (element, channel, size) =>
  *  - maxLength: The maximum length of the message.
  */
 export class TguiModal extends Component {
-  constructor(props) {
-    super(props);
-    this.maxLength = props.maxLength || 1024;
+  constructor() {
+    super();
+    this.maxLength = this.props.maxLength || 1024;
     this.state = {
       buttonContent: '>',
-      channel: CHANNELS.indexOf(props.channel) || 0,
+      channel: CHANNELS.indexOf(this.props.channel) || 0,
       hovering: false,
       size: SIZE.small,
     };

@@ -9,7 +9,7 @@ import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
 import { toInputValue } from './Input';
-import { KEY_ESCAPE } from 'common/keycodes';
+import { KEY_ENTER, KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
 
 export class TextArea extends Component {
   constructor(props, context) {
@@ -54,11 +54,37 @@ export class TextArea extends Component {
     };
     this.handleKeyDown = e => {
       const { editing } = this.state;
-      const { onKeyDown } = this.props;
-      if (e.keyCode === KEY_ESCAPE) {
+      const { onChange, onInput, onEnter, onKeyDown } = this.props;
+      if (e.keyCode === KEY_ENTER) {
         this.setEditing(false);
-        e.target.value = toInputValue(this.props.value);
-        e.target.blur();
+        if (onChange) {
+          onChange(e, e.target.value);
+        }
+        if (onInput) {
+          onInput(e, e.target.value);
+        }
+        if (onEnter) {
+          onEnter(e, e.target.value);
+        }
+        if (this.props.selfClear) {
+          e.target.value = '';
+        } else {
+          e.target.blur();
+        }
+        return;
+      }
+      if (e.keyCode === KEY_ESCAPE) {
+        if (this.props.onEscape) {
+          this.props.onEscape(e);
+
+        }
+        this.setEditing(false);
+        if (this.props.selfClear) {
+          e.target.value = '';
+        } else {
+          e.target.value = toInputValue(this.props.value);
+          e.target.blur();
+        }
         return;
       }
       if (!editing) {
@@ -66,7 +92,7 @@ export class TextArea extends Component {
       }
       if (!dontUseTabForIndent) {
         const keyCode = e.keyCode || e.which;
-        if (keyCode === 9) {
+        if (keyCode === KEY_TAB) {
           e.preventDefault();
           const { value, selectionStart, selectionEnd } = e.target;
           e.target.value = (
