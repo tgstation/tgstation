@@ -1152,6 +1152,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	/obj/machinery/plumbing/liquid_pump = 35,
 	/obj/machinery/plumbing/splitter = 5,
 	/obj/machinery/plumbing/sender = 20,
+	/obj/machinery/plumbing/growing_vat = 20,
 	/obj/machinery/iv_drip/plumbing = 20
 )
 

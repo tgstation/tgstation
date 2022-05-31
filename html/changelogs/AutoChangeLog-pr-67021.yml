@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Plasmamen no longer burn in a much larger variety of situations (eg. full atmos firesuit, space-proof suit but without gloves) that they logically shouldn't (and previously didn't) burn in"
