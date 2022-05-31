@@ -720,7 +720,7 @@
 /obj/item/stack/medical/gauze,
 /obj/item/reagent_containers/food/drinks/bottle/whiskey,
 /obj/item/reagent_containers/glass/bottle/ethanol,
-/obj/item/organ/internal/stomach,
+/obj/item/organ/stomach,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)

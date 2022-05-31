@@ -109,7 +109,7 @@
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/grown/tomato = 2,
-		/obj/item/organ/internal/eyes = 1
+		/obj/item/organ/eyes = 1
 	)
 	result = /obj/item/food/soup/tomato/eyeball
 	subcategory = CAT_SOUP

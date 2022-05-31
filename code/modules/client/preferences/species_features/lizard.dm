@@ -131,14 +131,10 @@
 	savefile_key = "feature_lizard_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_external_organ = /obj/item/organ/external/tail/lizard
+	relevant_mutant_bodypart = "tail_lizard"
 
 /datum/preference/choiced/lizard_tail/init_possible_values()
 	return assoc_to_keys(GLOB.tails_list_lizard)
 
 /datum/preference/choiced/lizard_tail/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["tail_lizard"] = value
-
-/datum/preference/choiced/lizard_tail/create_default_value()
-	var/datum/sprite_accessory/tails/lizard/smooth/tail = /datum/sprite_accessory/tails/lizard/smooth
-	return initial(tail.name)

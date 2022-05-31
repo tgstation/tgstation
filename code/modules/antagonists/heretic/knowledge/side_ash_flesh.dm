@@ -9,7 +9,7 @@
 		/datum/heretic_knowledge/limited_amount/flesh_ghoul,
 	)
 	required_atoms = list(
-		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/eyes = 1,
 		/obj/item/shard = 1,
 		/obj/item/candle = 1,
 	)

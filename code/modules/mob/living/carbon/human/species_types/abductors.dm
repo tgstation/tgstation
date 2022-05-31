@@ -12,7 +12,7 @@
 		TRAIT_NOHUNGER,
 		TRAIT_NOBREATH,
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/abductor
+	mutanttongue = /obj/item/organ/tongue/abductor
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	ass_image = 'icons/ass/assgrey.png'
 

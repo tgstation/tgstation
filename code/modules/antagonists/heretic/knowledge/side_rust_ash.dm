@@ -32,7 +32,7 @@
 	required_atoms = list(
 		/obj/item/wirecutters = 1,
 		/obj/effect/decal/cleanable/vomit = 1,
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/heart = 1,
 	)
 	duration = 2 MINUTES
 	cost = 1

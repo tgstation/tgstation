@@ -220,9 +220,10 @@
 
 	else if(istype(W, /obj/item/bodypart/head/robot))
 		var/obj/item/bodypart/head/robot/HD = W
-		if(locate(/obj/item/organ/internal) in HD)
-			to_chat(user, span_warning("There are organs inside [HD]!"))
-			return
+		for(var/X in HD.contents)
+			if(istype(X, /obj/item/organ))
+				to_chat(user, span_warning("There are organs inside [HD]!"))
+				return
 		if(head)
 			return
 		if(HD.flash2 && HD.flash1)

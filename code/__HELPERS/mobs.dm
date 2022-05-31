@@ -59,12 +59,10 @@
 	return pick(GLOB.backpacklist)
 
 /proc/random_features()
-	if(!GLOB.tails_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/, GLOB.tails_list,  add_blank = TRUE)
 	if(!GLOB.tails_list_human.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human,  add_blank = TRUE)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
 	if(!GLOB.tails_list_lizard.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard, add_blank = TRUE)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard)
 	if(!GLOB.snouts_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, GLOB.snouts_list)
 	if(!GLOB.horns_list.len)
@@ -90,12 +88,12 @@
 	if(!GLOB.pod_hair_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
 
-	//For now we will always return none for tail_human and ears. | "For now" he says.
+	//For now we will always return none for tail_human and ears.
 	return(list(
 		"mcolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
 		"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)],
-		"tail_cat" = "None",
-		"tail_lizard" = "Smooth",
+		"tail_lizard" = pick(GLOB.tails_list_lizard),
+		"tail_human" = "None",
 		"wings" = "None",
 		"snout" = pick(GLOB.snouts_list),
 		"horns" = pick(GLOB.horns_list),
@@ -788,28 +786,8 @@ GLOBAL_LIST_EMPTY(species_list)
 			return "left foot"
 		if(BODY_ZONE_PRECISE_R_FOOT)
 			return "right foot"
-		if(BODY_ZONE_PRECISE_GROIN)
-			return "groin"
 		else
 			return zone
-
-///Takes a zone and returns it's "parent" zone, if it has one.
-/proc/deprecise_zone(precise_zone)
-	switch(precise_zone)
-		if(BODY_ZONE_PRECISE_GROIN)
-			return BODY_ZONE_CHEST
-		if(BODY_ZONE_PRECISE_EYES)
-			return BODY_ZONE_HEAD
-		if(BODY_ZONE_PRECISE_R_HAND)
-			return BODY_ZONE_R_ARM
-		if(BODY_ZONE_PRECISE_L_HAND)
-			return BODY_ZONE_L_ARM
-		if(BODY_ZONE_PRECISE_L_FOOT)
-			return BODY_ZONE_L_LEG
-		if(BODY_ZONE_PRECISE_R_FOOT)
-			return BODY_ZONE_R_LEG
-		else
-			return precise_zone
 
 ///Returns the direction that the initiator and the target are facing
 /proc/check_target_facings(mob/living/initiator, mob/living/target)
@@ -839,7 +817,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		mob_occupant = head.brainmob
 
 	else if(isorgan(occupant))
-		var/obj/item/organ/internal/brain/brain = occupant
+		var/obj/item/organ/brain/brain = occupant
 		mob_occupant = brain.brainmob
 
 	return mob_occupant

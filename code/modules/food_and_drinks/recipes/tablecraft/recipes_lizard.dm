@@ -22,7 +22,7 @@
 /datum/crafting_recipe/food/shredded_lungs
 	name = "Crispy shredded lung stirfry"
 	reqs = list(
-		/obj/item/organ/internal/lungs = 1,
+		/obj/item/organ/lungs = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/chili = 1
@@ -33,10 +33,10 @@
 /datum/crafting_recipe/food/tsatsikh
 	name = "Tsatsikh"
 	reqs = list(
-		/obj/item/organ/internal/heart = 1,
-		/obj/item/organ/internal/liver = 1,
-		/obj/item/organ/internal/lungs = 1,
-		/obj/item/organ/internal/stomach = 1,
+		/obj/item/organ/heart = 1,
+		/obj/item/organ/liver = 1,
+		/obj/item/organ/lungs = 1,
+		/obj/item/organ/stomach = 1,
 		/datum/reagent/consumable/salt = 2,
 		/datum/reagent/consumable/blackpepper = 2
 	)
@@ -46,7 +46,7 @@
 /datum/crafting_recipe/food/liver_pate
 	name = "Liver pate"
 	reqs = list(
-		/obj/item/organ/internal/liver = 1,
+		/obj/item/organ/liver = 1,
 		/obj/item/food/meat/rawcutlet = 1,
 		/obj/item/food/grown/onion = 1
 	)
@@ -97,8 +97,8 @@
 /datum/crafting_recipe/food/brain_pate
 	name = "Eyeball-and-brain pate"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/eyes = 1,
 		/obj/item/food/grown/onion = 1,
 		/datum/reagent/consumable/salt = 3
 	)
