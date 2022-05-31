@@ -7,7 +7,7 @@
 import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
-import { KEY_ESCAPE, KEY_ENTER, KEY_TAB } from 'common/keycodes';
+import { KEY_ESCAPE, KEY_ENTER } from 'common/keycodes';
 
 export const toInputValue = value => (
   typeof value !== 'number' && typeof value !== 'string'
@@ -16,18 +16,15 @@ export const toInputValue = value => (
 );
 
 export class Input extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.inputRef = createRef();
     this.state = {
       editing: false,
     };
-    const {
-      dontUseTabForIndent = false,
-    } = props;
     this.handleInput = e => {
       const { editing } = this.state;
-      const { onInput } = props;
+      const { onInput } = this.props;
       if (!editing) {
         this.setEditing(true);
       }
@@ -43,7 +40,7 @@ export class Input extends Component {
     };
     this.handleBlur = e => {
       const { editing } = this.state;
-      const { onChange } = props;
+      const { onChange } = this.props;
       if (editing) {
         this.setEditing(false);
         if (onChange) {
@@ -52,17 +49,7 @@ export class Input extends Component {
       }
     };
     this.handleKeyDown = e => {
-      const {
-        onInput,
-        onChange,
-        onEscape,
-        onEnter,
-        onKeyDown,
-        selfClear,
-      } = props;
-      if (onKeyDown) {
-        onKeyDown(e);
-      }
+      const { onInput, onChange, onEnter } = this.props;
       if (e.keyCode === KEY_ENTER) {
         this.setEditing(false);
         if (onChange) {
@@ -74,7 +61,7 @@ export class Input extends Component {
         if (onEnter) {
           onEnter(e, e.target.value);
         }
-        if (selfClear) {
+        if (this.props.selfClear) {
           e.target.value = '';
         } else {
           e.target.blur();
@@ -82,29 +69,15 @@ export class Input extends Component {
         return;
       }
       if (e.keyCode === KEY_ESCAPE) {
+        if (this.props.onEscape) {
+          this.props.onEscape(e);
+          return;
+        }
+
         this.setEditing(false);
-        if (onEscape) {
-          onEscape(e);
-        }
-        if (selfClear) {
-          e.target.value = '';
-        } else {
-          e.target.value = toInputValue(props.value);
-          e.target.blur();
-        }
+        e.target.value = toInputValue(this.props.value);
+        e.target.blur();
         return;
-      }
-      if (dontUseTabForIndent) {
-        const keyCode = e.keyCode || e.which;
-        if (keyCode === KEY_TAB) {
-          e.preventDefault();
-          const { value, selectionStart, selectionEnd } = e.target;
-          e.target.value = (
-            value.substring(0, selectionStart) + "\t"
-              + value.substring(selectionEnd)
-          );
-          e.target.selectionEnd = selectionStart + 1;
-        }
       }
     };
   }
@@ -142,21 +115,16 @@ export class Input extends Component {
   }
 
   render() {
-    const {
-      handleInput,
-      handleFocus,
-      handleBlur,
-      handleKeyDown,
-      handleChange,
-      inputRef,
-      props,
-    } = this;
+    const { props } = this;
     // Input only props
     const {
+      selfClear,
+      onInput,
+      onChange,
+      onEnter,
       value,
       maxLength,
       placeholder,
-      scrollable,
       ...boxProps
     } = props;
     // Box props
@@ -178,28 +146,15 @@ export class Input extends Component {
         <div className="Input__baseline">
           .
         </div>
-        {!scrollable ? (
-          <input
-            ref={inputRef}
-            className="Input__input"
-            placeholder={placeholder}
-            onInput={handleInput}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
-            maxLength={maxLength} />
-        ) : (
-          <textarea
-            ref={inputRef}
-            className="TextArea__textarea"
-            placeholder={placeholder}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            onInput={handleInput}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            maxLength={maxLength} />
-        )}
+        <input
+          ref={this.inputRef}
+          className="Input__input"
+          placeholder={placeholder}
+          onInput={this.handleInput}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          onKeyDown={this.handleKeyDown}
+          maxLength={maxLength} />
       </Box>
     );
   }
