@@ -52406,7 +52406,6 @@
 /area/station/maintenance/fore/lesser)
 "qQj" = (
 /obj/structure/table/reinforced,
-/obj/structure/table/reinforced,
 /obj/machinery/light/warm/directional/south,
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/item/gun/energy/laser/practice{
