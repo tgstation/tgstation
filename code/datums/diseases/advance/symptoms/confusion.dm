@@ -69,6 +69,4 @@
 	var/mob/living/carbon/M = A.affected_mob
 	if(A.stage >= 4 && illiterate)
 		ADD_TRAIT(M, TRAIT_ILLITERATE, DISEASE_TRAIT)
-	else
-		REMOVE_TRAIT(M, TRAIT_ILLITERATE, DISEASE_TRAIT)
 	return TRUE
