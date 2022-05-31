@@ -367,11 +367,9 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 
 	"anime" = typecacheof(list(
-		/obj/item/clothing/gloves/space_ninja,
 		/obj/item/clothing/head/kitty/genuine,
-		/obj/item/clothing/mask/gas/space_ninja,
-		/obj/item/clothing/shoes/space_ninja,
-		/obj/item/clothing/suit/space/space_ninja,
+		/obj/item/clothing/mask/gas/ninja,
+		/obj/item/clothing/under/syndicate/ninja,
 		/obj/item/clothing/under/costume/schoolgirl,
 		/obj/item/energy_katana,
 		/obj/item/food/chawanmushi,
@@ -426,27 +424,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/toy/plush/beeplushie,
 		/obj/item/toy/plush/moth,
 		/obj/structure/beebox,
-	)),
-
-	"anime" = typecacheof(list(
-		/obj/item/clothing/gloves/space_ninja,
-		/obj/item/clothing/head/kitty/genuine,
-		/obj/item/clothing/mask/gas/space_ninja,
-		/obj/item/clothing/shoes/space_ninja,
-		/obj/item/clothing/suit/space/space_ninja,
-		/obj/item/clothing/under/costume/schoolgirl,
-		/obj/item/energy_katana,
-		/obj/item/food/chawanmushi,
-		/obj/item/food/sashimi,
-		/obj/item/highfrequencyblade,
-		/obj/item/katana,
-		/obj/item/nullrod/claymore/katana,
-		/obj/item/nullrod/scythe/vibro,
-		/obj/item/reagent_containers/food/drinks/bottle/sake,
-		/obj/item/throwing_star,
-		/obj/item/toy/katana,
-		/obj/structure/mineral_door/paperframe,
-		/obj/structure/window/paperframe,
 	)),
 
 	"blood" = typecacheof(list(
