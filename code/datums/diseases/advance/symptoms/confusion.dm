@@ -19,7 +19,7 @@
 	symptom_delay_min = 10
 	symptom_delay_max = 30
 	threshold_descs = list(
-		"Resistance 10" = "Prevents any form of reading or writing.",
+		"Stage Speed 6" = "Prevents any form of reading or writing.",
 		"Resistance 6" = "Causes brain damage over time.",
 		"Transmission 6" = "Increases confusion duration and strength.",
 		"Stealth 4" = "The symptom remains hidden until active.",
@@ -31,7 +31,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(A.totalResistance() >= 10)
+	if(A.totalStageSpeed() >= 6)
 		illiterate = TRUE
 	if(A.totalResistance() >= 6)
 		brain_damage = TRUE
