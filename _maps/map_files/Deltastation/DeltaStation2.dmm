@@ -5399,7 +5399,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/status_display/evac/directional/south,
-/obj/item/ai_module/core/full/asimov{
+/obj/effect/spawner/round_default_module{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -73458,7 +73458,7 @@
 /obj/machinery/computer/med_data/laptop{
 	dir = 8;
 	pixel_y = 1;
-	req_one_access = list("detective","medical","genetics")
+	
 	},
 /obj/item/toy/figure/geneticist,
 /obj/structure/table/reinforced,

@@ -10669,7 +10669,7 @@
 	},
 /obj/machinery/button/door/directional/south{
 	id = "kitchenshutters";
-	name = "Kitchen Shutterl Control";
+	name = "Kitchen Shutter Control";
 	pixel_x = -6
 	},
 /obj/machinery/light_switch/directional/south{
@@ -32779,7 +32779,7 @@
 	},
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/light/cold/directional/west,
-/obj/item/ai_module/core/full/asimov,
+/obj/effect/spawner/round_default_module,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
