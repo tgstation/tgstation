@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "reinforced windows can be heated up by things that can weld but arent welding tools"

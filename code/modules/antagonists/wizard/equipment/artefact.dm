@@ -293,7 +293,7 @@
 	H.equip_to_slot_or_del(new /obj/item/spear(H), ITEM_SLOT_BACK)
 
 //Provides a decent heal, need to pump every 6 seconds
-/obj/item/organ/heart/cursed/wizard
+/obj/item/organ/internal/heart/cursed/wizard
 	pump_delay = 60
 	heal_brute = 25
 	heal_burn = 25

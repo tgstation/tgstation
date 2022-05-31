@@ -34,6 +34,8 @@
 
 /obj/item/modular_computer/tablet/pda/heads/hop
 	name = "head of personnel PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
+	greyscale_colors = "#374f7e#a52f29#a52f29"
 	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,

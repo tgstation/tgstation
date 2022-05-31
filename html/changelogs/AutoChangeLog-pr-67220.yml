@@ -1,0 +1,5 @@
+author: "Fikou, PositiveEntropy, Nerevar, InfraRedBaron"
+delete-after: True
+changes: 
+  - refactor: "the ninja space suit is now a modsuit"
+  - bugfix: "fixes dash beams not working"

@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "The turbine boards on the derelict have been mysteriously resupplied (spooky!)"

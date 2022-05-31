@@ -123,7 +123,7 @@
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "u" = (
 /obj/item/radio/intercom{
 	dir = 8;
@@ -136,7 +136,7 @@
 "v" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "w" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1

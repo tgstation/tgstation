@@ -64,7 +64,7 @@
 "y" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "z" = (
 /obj/structure/table,
 /obj/item/radio/intercom{
@@ -121,7 +121,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "Y" = (
 /turf/template_noop,
 /area/template_noop)
