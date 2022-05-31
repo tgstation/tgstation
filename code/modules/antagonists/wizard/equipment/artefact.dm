@@ -355,11 +355,12 @@
 /// Check if anything the tornado crosses is the creator.
 /obj/effect/temp_visual/teleporting_tornado/proc/check_teleport(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER
-	if(crossed != whistle.whistler)
+	if(crossed != whistle.whistler || (crossed in pickedup_mobs))
 		return
 
 	pickedup_mobs += crossed
 	buckle_mob(crossed, TRUE, FALSE)
+	ADD_TRAIT(crossed, TRAIT_INCAPACITATED, WARPWHISTLE_TRAIT)
 	animate(src, alpha = 20, pixel_y = 400, time = 3 SECONDS)
 	animate(crossed, pixel_y = 400, time = 3 SECONDS)
 	addtimer(CALLBACK(src, .proc/send_away), 2 SECONDS)
@@ -370,10 +371,10 @@
 		do_teleport(stored_mobs, ending_turfs, channel = TELEPORT_CHANNEL_MAGIC)
 		animate(stored_mobs, pixel_y = null, time = 1 SECONDS)
 		stored_mobs.log_message("warped with [whistle].", LOG_ATTACK, color = "red")
+		REMOVE_TRAIT(stored_mobs, TRAIT_INCAPACITATED, WARPWHISTLE_TRAIT)
 
 /// Destroy the tornado and teleport everyone on it away.
 /obj/effect/temp_visual/teleporting_tornado/Destroy()
 	if(whistle)
-		whistle.whistler = null
 		whistle = null
 	return ..()
