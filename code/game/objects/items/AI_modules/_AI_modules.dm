@@ -1,3 +1,6 @@
+///defined truthy result for `handle_unique_ai()`, which makes initialize return INITIALIZE_HINT_QDEL
+#define SHOULD_QDEL_MODULE 1
+
 /obj/item/ai_module
 	name = "\improper AI module"
 	icon = 'icons/obj/module.dmi'
@@ -18,6 +21,13 @@
 	/// Used to skip laws being checked (for reset & remove boards that have no laws)
 	var/bypass_law_amt_check = FALSE
 
+/obj/item/ai_module/Initialize(mapload)
+	. = ..()
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI) && is_station_level(z))
+		var/delete_module = handle_unique_ai()
+		if(delete_module)
+			return INITIALIZE_HINT_QDEL
+
 /obj/item/ai_module/examine(mob/user as mob)
 	. = ..()
 	if(Adjacent(user))
@@ -26,6 +36,10 @@
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()
 	show_laws(user)
+
+///what this module should do if it is mapload spawning on a unique AI station trait round.
+/obj/item/ai_module/proc/handle_unique_ai()
+	return SHOULD_QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
 
 /obj/item/ai_module/proc/show_laws(mob/user as mob)
 	if(laws.len)
@@ -119,12 +133,11 @@
 	. = ..()
 	if(!law_id)
 		return
-	var/datum/ai_laws/D = new
-	var/lawtype = D.lawid_to_type(law_id)
+	var/lawtype = lawid_to_type(law_id)
 	if(!lawtype)
 		return
-	D = new lawtype
-	laws = D.inherent
+	var/datum/ai_laws/core_laws = new lawtype
+	laws = core_laws.inherent
 
 /obj/item/ai_module/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow) //These boards replace inherent laws.
 	if(law_datum.owner)
@@ -134,3 +147,44 @@
 		law_datum.clear_inherent_laws()
 		law_datum.clear_zeroth_law(0)
 	..()
+
+/obj/item/ai_module/core/full/handle_unique_ai()
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
+	if(law_id == initial(default_laws.id))
+		return
+	return SHOULD_QDEL_MODULE
+
+/obj/effect/spawner/round_default_module
+	name = "ai default lawset spawner"
+	icon = 'icons/hud/screen_gen.dmi'
+	icon_state = "x2"
+	color = "#00FF00"
+
+/obj/effect/spawner/round_default_module/Initialize(mapload)
+	..()
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
+	//try to spawn a law board, since they may have special functionality (asimov setting subjects)
+	for(var/obj/item/ai_module/core/full/potential_lawboard as anything in subtypesof(/obj/item/ai_module/core/full))
+		if(initial(potential_lawboard.law_id) != initial(default_laws.id))
+			continue
+		potential_lawboard = new potential_lawboard(loc)
+		return INITIALIZE_HINT_QDEL
+	//spawn the fallback instead
+	new /obj/item/ai_module/core/round_default_fallback(loc)
+	return INITIALIZE_HINT_QDEL
+
+///When the default lawset spawner cannot find a module object to spawn, it will spawn this, and this sets itself to the round default.
+///This is so /datum/lawsets can be picked even if they have no module for themselves.
+/obj/item/ai_module/core/round_default_fallback
+
+/obj/item/ai_module/core/round_default_fallback/Initialize(mapload)
+	. = ..()
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
+	default_laws = new default_laws()
+	name = "'[default_laws.name]' Core AI Module"
+	laws = default_laws.inherent
+
+/obj/item/ai_module/core/round_default_fallback/handle_unique_ai()
+	return
+
+#undef SHOULD_QDEL_MODULE

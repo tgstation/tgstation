@@ -36,6 +36,9 @@
 	desc = "An AI Module for removing all non-core laws."
 	bypass_law_amt_check = TRUE
 
+/obj/item/ai_module/reset/handle_unique_ai()
+	return
+
 /obj/item/ai_module/reset/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()
 	if(law_datum.owner)
