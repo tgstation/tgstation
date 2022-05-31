@@ -1,8 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - rscadd: "Added eyesnatcher objective which requires you to pull out someone's eyes. You will be given an automatic eye extractor to assit you in that."
-  - rscadd: "Added kidnapping objective which works similarly to old contractors"
-  - rscadd: "Added locate weakpoint objective which will require you to scan two areas(AI will be alerted about the scan) and then detonate a powerful explosive in a third one"
-  - rscadd: "Added \"public\" version of sleeper protocol which has high progression requirement but itsn't job-locked"
-  - balance: "Default version of Sleeper Protocol now can be rolled by roboticists as well(since they have an operating table with a console)"

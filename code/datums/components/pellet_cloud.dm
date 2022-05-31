@@ -306,6 +306,17 @@
 				var/bw_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS]
 				var/wound_type = (initial(P.damage_type) == BRUTE) ? WOUND_BLUNT : WOUND_BURN // sharpness is handled in the wound rolling
 				wound_info_by_part -= hit_part
+
+				// technically this only checks armor worn the moment that all the pellets resolve rather than as each one hits you,
+				// but this isn't important enough to warrant all the extra loops of mostly redundant armor checks
+				var/mob/living/carbon/hit_carbon = target
+				var/armor_factor = hit_carbon.getarmor(hit_part, P.armor_flag)
+				armor_factor = min(ARMOR_MAX_BLOCK, armor_factor) //cap damage reduction at 90%
+				if(armor_factor > 0)
+					if(P.weak_against_armour && armor_factor >= 0)
+						armor_factor *= ARMOR_WEAKENED_MULTIPLIER
+					damage_dealt *= armor_factor
+
 				hit_part.painless_wound_roll(wound_type, damage_dealt, w_bonus, bw_bonus, initial(P.sharpness))
 
 		var/limb_hit_text = ""

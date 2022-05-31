@@ -1,6 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes: 
-  - rscadd: "Added microscope crafting recipe"
-  - balance: "Techweb: Moved cytology tools to a single node from different nodes"
-  - balance: "Techweb: Operating computer now available before the experiment that requires it"

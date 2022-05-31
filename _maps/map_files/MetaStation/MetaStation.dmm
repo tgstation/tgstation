@@ -7258,6 +7258,15 @@
 /obj/structure/table/wood,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
+"cJH" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
 "cJL" = (
 /obj/structure/sign/directions/evac,
 /turf/closed/wall/r_wall,
@@ -13360,7 +13369,7 @@
 /obj/item/nullrod{
 	pixel_x = 4
 	},
-/obj/item/organ/heart,
+/obj/item/organ/internal/heart,
 /obj/item/soulstone/anybody/chaplain,
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
@@ -16519,7 +16528,7 @@
 /obj/machinery/flasher/directional/south{
 	id = "AI"
 	},
-/obj/item/ai_module/core/full/asimov,
+/obj/effect/spawner/round_default_module,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "gfD" = (
@@ -30465,9 +30474,7 @@
 	},
 /obj/machinery/computer/med_data/laptop{
 	dir = 8;
-	pixel_y = 1;
-	req_one_access = null;
-	req_one_access_txt = list("detective","medical","genetics")
+	pixel_y = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -80131,7 +80138,7 @@ rrt
 rrt
 rrt
 rrt
-aUn
+lMJ
 rrt
 rrt
 rrt
@@ -110475,7 +110482,7 @@ rlu
 pTw
 kYG
 sGC
-pqb
+cJH
 sGC
 cFu
 kYG
