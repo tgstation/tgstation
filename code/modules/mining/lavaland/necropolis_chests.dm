@@ -29,7 +29,7 @@
 		if(2)
 			new /obj/item/soulstone/anybody/mining(src)
 		if(3)
-			new /obj/item/organ/cyberimp/arm/katana(src)
+			new /obj/item/organ/internal/cyberimp/arm/katana(src)
 		if(4)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(5)
@@ -50,7 +50,7 @@
 		if(8)
 			new /obj/item/rod_of_asclepius(src)
 		if(9)
-			new /obj/item/organ/heart/cursed/wizard(src)
+			new /obj/item/organ/internal/heart/cursed/wizard(src)
 		if(10)
 			new /obj/item/ship_in_a_bottle(src)
 		if(11)
@@ -139,7 +139,7 @@
 	var/list/choices = subtypesof(/obj/machinery/anomalous_crystal)
 	var/random_crystal = pick(choices)
 	new random_crystal(src)
-	new /obj/item/organ/vocal_cords/colossus(src)
+	new /obj/item/organ/internal/vocal_cords/colossus(src)
 
 /obj/structure/closet/crate/necropolis/colossus/crusher
 	name = "angelic colossus chest"

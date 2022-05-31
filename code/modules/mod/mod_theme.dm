@@ -1012,6 +1012,61 @@
 		),
 	)
 
+/datum/mod_theme/ninja
+	name = "ninja"
+	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
+	extended_desc = "A suit of nano-enhanced armor designed specifically for Spider Clan assassin-saboteurs. \
+		This MODsuit employs the cutting edge of stealth and combat technology, built skin-tight but just as durable as \
+		suits two or three times as thick. The nanomachines making up the outermost layer of armor \
+		are capable of shifting their form into almost-microscopic radiating fins, rendering the suit itself \
+		nigh-immune to even volcanic heat. It's entirely sealed against even the strongest acids, \
+		and the myoelectric artifical muscles of the suit leave it light as a feather during movement."
+	default_skin = "ninja"
+	armor = list(MELEE = 40, BULLET = 30, LASER = 20, ENERGY = 30, BOMB = 30, BIO = 100, FIRE = 100, ACID = 100, WOUND = 10)
+	resistance_flags = LAVA_PROOF|FIRE_PROOF|ACID_PROOF
+	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
+	siemens_coefficient = 0
+	slowdown_inactive = 0.5
+	slowdown_active = 0
+	ui_theme = "hackerman"
+	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/gun,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/melee/baton,
+		/obj/item/restraints/handcuffs,
+	)
+	skins = list(
+		"ninja" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = null,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+	)
+
 /datum/mod_theme/prototype
 	name = "prototype"
 	desc = "A prototype modular suit powered by locomotives. While it is comfortable and has a big capacity, it remains very bulky and power-inefficient."

@@ -379,14 +379,14 @@ Doesn't work on other aliens/AI.*/
 
 /// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
 		return -1
 	return vessel.stored_plasma
 
 /// Adjusts the plasma level of the carbon's plasma vessel if they have one
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
 		return FALSE
 	vessel.stored_plasma = max(vessel.stored_plasma + amount,0)

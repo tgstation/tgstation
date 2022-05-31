@@ -20,7 +20,7 @@
 		/obj/item/shard,
 		/obj/effect/decal/cleanable/ash,
 		/obj/item/clothing/suit/armor,
-		/obj/item/organ/lungs,
+		/obj/item/organ/internal/lungs,
 	)
 	actions_to_add = list(/datum/action/cooldown/spell/jaunt/mirror_walk)
 

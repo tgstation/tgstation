@@ -17,10 +17,10 @@
 	return ..()
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/create_internal_organs()
-	internal_organs += new /obj/item/organ/alien/plasmavessel/large
-	internal_organs += new /obj/item/organ/alien/resinspinner
-	internal_organs += new /obj/item/organ/alien/acid
-	internal_organs += new /obj/item/organ/alien/neurotoxin
+	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
+	internal_organs += new /obj/item/organ/internal/alien/resinspinner
+	internal_organs += new /obj/item/organ/internal/alien/acid
+	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
 	return ..()
 
 /datum/action/cooldown/alien/evolve_to_queen
@@ -41,7 +41,7 @@
 		return FALSE
 
 	var/mob/living/carbon/alien/humanoid/royal/evolver = owner
-	var/obj/item/organ/alien/hivenode/node = evolver.getorgan(/obj/item/organ/alien/hivenode)
+	var/obj/item/organ/alien/hivenode/node = evolver.getorgan(/obj/item/organ/internal/alien/hivenode)
 	if(!node)
 		return FALSE
 	if(node.recent_queen_death)
