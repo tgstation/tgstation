@@ -255,7 +255,8 @@ RANDOM_LAWS corporate
 LAW_WEIGHT custom,0
 
 ## standard-ish laws. These are fairly ok to run
-LAW_WEIGHT asimov,10
+## Unique AI station trait uses weights so we don't want asimov
+LAW_WEIGHT asimov,0
 LAW_WEIGHT asimovpp,5
 LAW_WEIGHT paladin,5
 LAW_WEIGHT paladin5,5
