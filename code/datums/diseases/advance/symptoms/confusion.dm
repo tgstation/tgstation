@@ -18,17 +18,21 @@
 	base_message_chance = 25
 	symptom_delay_min = 10
 	symptom_delay_max = 30
-	var/brain_damage = FALSE
 	threshold_descs = list(
+		"Resistance 10" = "Prevents any form of reading or writing."
 		"Resistance 6" = "Causes brain damage over time.",
 		"Transmission 6" = "Increases confusion duration and strength.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
+	var/brain_damage = FALSE
+	var/illiterate = FALSE
 
 /datum/symptom/confusion/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
+	if(A.totalResistance() >= 10)
+		illiterate = TRUE
 	if(A.totalResistance() >= 6)
 		brain_damage = TRUE
 	if(A.totalTransmittable() >= 6)
@@ -38,6 +42,7 @@
 
 /datum/symptom/confusion/End(datum/disease/advance/A)
 	A.affected_mob.remove_status_effect(/datum/status_effect/confusion)
+	REMOVE_TRAIT(A.affected_mob, TRAIT_ILLITERATE, DISEASE_TRAIT)
 	return ..()
 
 /datum/symptom/confusion/Activate(datum/disease/advance/A)
@@ -55,5 +60,15 @@
 			if(brain_damage)
 				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
 				M.updatehealth()
-
 	return
+
+/datum/symptom/confusion/on_stage_change(datum/disease/advance/A)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/M = A.affected_mob
+	if(A.stage >= 4 && illiterate)
+		ADD_TRAIT(M, TRAIT_ILLITERATE, DISEASE_TRAIT)
+	else
+		REMOVE_TRAIT(M, TRAIT_ILLITERATE, DISEASE_TRAIT)
+	return TRUE
