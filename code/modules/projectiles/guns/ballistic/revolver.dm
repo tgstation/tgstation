@@ -202,9 +202,9 @@
 					DETAIL_PROTAGONIST = user,
 					DETAIL_LOADED_ROUNDS = loaded_rounds,
 					DETAIL_BODYPART = affecting.name,
-					DETAIL_OUTCOME = (chambered ? "won" : "lost")
+					DETAIL_OUTCOME = (chambered ? "lost" : "won")
 				),
-				story_value = STORY_VALUE_AMAZING,
+				story_value = chambered ? STORY_VALUE_SHIT : max(STORY_VALUE_NONE, loaded_rounds), // the more bullets, the greater the story (but losing is always SHIT)
 				memory_flags = MEMORY_CHECK_BLINDNESS,
 				protagonist_memory_flags = NONE
 			)
@@ -222,7 +222,7 @@
 				return
 
 		if(loaded_rounds && is_target_face)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "russian_roulette_win", /datum/mood_event/russian_roulette_win)
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
 
 		user.visible_message(span_danger("*click*"))
 		playsound(src, dry_fire_sound, 30, TRUE)
