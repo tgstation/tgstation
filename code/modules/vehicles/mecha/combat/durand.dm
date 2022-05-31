@@ -21,7 +21,7 @@
 
 /obj/vehicle/sealed/mecha/combat/durand/Initialize(mapload)
 	. = ..()
-	shield = new /obj/durand_shield(loc, src, layer, dir)
+	shield = new /obj/durand_shield(loc, src, plane, layer, dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/relay)
 	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
 
@@ -164,11 +164,11 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	///To keep track of things during the animation
 	var/switching = FALSE
 
-/obj/durand_shield/Initialize(mapload, _chassis, _layer, _dir)
+/obj/durand_shield/Initialize(mapload, _chassis, _plane, _layer, _dir)
 	. = ..()
 	chassis = _chassis
 	layer = _layer
-	plane = chassis.plane
+	plane = _plane
 	setDir(_dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/activate)
 	RegisterSignal(chassis, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/shield_glide_size_update)
