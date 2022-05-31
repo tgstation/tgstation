@@ -7,6 +7,6 @@
 		return
 	if(!iscarbon(owner))
 		return
-	var/mob/living/carbon/C = owner
-	if(target == C.internal)
+	var/mob/living/carbon/carbon_owner = owner
+	if(target == carbon_owner.internal)
 		button.icon_state = "template_active"

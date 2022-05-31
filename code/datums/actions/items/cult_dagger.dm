@@ -8,8 +8,8 @@
 	background_icon_state = "bg_demon"
 	default_button_position = "6:157,4:-2"
 
-/datum/action/item_action/cult_dagger/Grant(mob/M)
-	if(!IS_CULTIST(M))
+/datum/action/item_action/cult_dagger/Grant(mob/grant_to)
+	if(!IS_CULTIST(grant_to))
 		Remove(owner)
 		return
 

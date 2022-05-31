@@ -31,7 +31,7 @@
 	owner.forceMove(box)
 	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
-/datum/action/item_action/agent_box/Grant(mob/M)
+/datum/action/item_action/agent_box/Grant(mob/grant_to)
 	. = ..()
 	if(owner)
 		RegisterSignal(owner, COMSIG_HUMAN_SUICIDE_ACT, .proc/suicide_act)

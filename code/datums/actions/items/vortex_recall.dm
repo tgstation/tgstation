@@ -6,11 +6,10 @@
 
 /datum/action/item_action/vortex_recall/IsAvailable()
 	var/area/current_area = get_area(target)
-	if(current_area.area_flags & NOTELEPORT)
-		to_chat(owner, span_notice("[target] fizzles uselessly."))
-		return
+	if(!current_area || current_area.area_flags & NOTELEPORT)
+		return FALSE
 	if(istype(target, /obj/item/hierophant_club))
-		var/obj/item/hierophant_club/H = target
-		if(H.teleporting)
+		var/obj/item/hierophant_club/teleport_stick = target
+		if(teleport_stick.teleporting)
 			return FALSE
 	return ..()

@@ -5,9 +5,9 @@
 	check_flags = NONE
 
 /datum/action/language_menu/Trigger(trigger_flags)
-	if(!..())
-		return FALSE
-	if(ismob(owner))
-		var/mob/M = owner
-		var/datum/language_holder/H = M.get_language_holder()
-		H.open_language_menu(usr)
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/language_holder/owner_holder = owner.get_language_holder()
+	owner_holder.open_language_menu(usr)

@@ -71,8 +71,10 @@
 	// Try to set us to our original direction after, so we don't end up backwards.
 	living_cast_on.setDir(original_dir)
 
-// Makes the cone shoot out into a 3 wide column of flames.
 /datum/action/cooldown/spell/cone/staggered/fire_breath/calculate_cone_shape(current_level)
+	// This makes the cone shoot out into a 3 wide column of flames.
+	// You may be wondering, "that equation doesn't seem like it'd make a 3 wide column"
+	// well it does, and that's all that matters.
 	return (2 * current_level) - 1
 
 /datum/action/cooldown/spell/cone/staggered/fire_breath/do_turf_cone_effect(turf/target_turf, atom/caster, level)

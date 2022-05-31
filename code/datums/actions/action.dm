@@ -64,16 +64,16 @@
 		qdel(src)
 
 /// Grants the action to the passed mob, making it the owner
-/datum/action/proc/Grant(mob/M)
-	if(!M)
+/datum/action/proc/Grant(mob/grant_to)
+	if(!grant_to)
 		Remove(owner)
 		return
 	if(owner)
-		if(owner == M)
+		if(owner == grant_to)
 			return
 		Remove(owner)
-	SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, M)
-	owner = M
+	SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, grant_to)
+	owner = grant_to
 	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
 	// Register some signals based on our check_flags
@@ -87,8 +87,7 @@
 	if(check_flags & AB_CHECK_LYING)
 		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/update_icon_on_signal)
 
-
-	GiveAction(M)
+	GiveAction(grant_to)
 
 /// Remove the passed mob from being owner of our action
 /datum/action/proc/Remove(mob/remove_from)
@@ -167,11 +166,12 @@
 
 		ApplyIcon(button, force)
 
-	. = IsAvailable()
-	if(.)
+	var/available = IsAvailable()
+	if(available)
 		button.color = rgb(255,255,255,255)
 	else
 		button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+	return available
 
 /// Applies our button icon over top the background icon of the action
 /datum/action/proc/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
@@ -180,7 +180,8 @@
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
-//Give our action button to the player
+/// Gives our action to the passed viewer.
+/// Puts our action in their actions list and shows them the button.
 /datum/action/proc/GiveAction(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
 	if(viewers[our_hud]) // Already have a copy of us? go away
@@ -189,7 +190,7 @@
 	LAZYOR(viewer.actions, src) // Move this in
 	ShowTo(viewer)
 
-//Adds our action button to the screen of a player
+/// Adds our action button to the screen of the passed viewer.
 /datum/action/proc/ShowTo(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
 	if(!our_hud || viewers[our_hud]) // There's no point in this if you have no hud in the first place
@@ -206,7 +207,7 @@
 	button.load_position(viewer)
 	viewer.update_action_buttons()
 
-//Removes our action button from the screen of a player
+/// Removes our action from the passed viewer.
 /datum/action/proc/HideFrom(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
 	var/atom/movable/screen/movable/action_button/button = viewers[our_hud]
@@ -214,6 +215,7 @@
 	if(button)
 		qdel(button)
 
+/// Creates an action button movable for the passed mob, and returns it.
 /datum/action/proc/CreateButton(mob/for_who)
 	var/atom/movable/screen/movable/action_button/button = new()
 	button.linked_action = src
