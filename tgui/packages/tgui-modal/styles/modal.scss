@@ -139,10 +139,10 @@ $color-ooc-highlight: #ffd631;
 ////////////////////////////////////////////////
 // Input box styles
 .input {
-  background-color: $input-background;
+  background-color: transparent;
   border: none;
   font-family: inherit;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   letter-spacing: thin;
   margin-top: 4px;
   width: 100%;
@@ -175,12 +175,12 @@ $color-ooc-highlight: #ffd631;
   border: none;
   font-family: inherit;
   font-weight: bold;
-  font-size: 2.2rem;
-  height: 40px;
+  font-size: 1.8rem;
+  height: 35px;
   padding-top: 2px;
   text-align: center;
   vertical-align: middle;
-  width: 60px;
+  width: 55px;
 
   &:hover {
     background-color: $input-button-hover;

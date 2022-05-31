@@ -90,6 +90,9 @@ export class TextArea extends Component {
       if (!editing) {
         this.setEditing(true);
       }
+      if (onKeyDown) {
+        onKeyDown(e, e.target.value);
+      }
       if (!dontUseTabForIndent) {
         const keyCode = e.keyCode || e.which;
         if (keyCode === KEY_TAB) {
@@ -101,9 +104,6 @@ export class TextArea extends Component {
           );
           e.target.selectionEnd = selectionStart + 1;
         }
-      }
-      if (onKeyDown) {
-        onKeyDown(e, e.target.value);
       }
     };
     this.handleFocus = e => {
