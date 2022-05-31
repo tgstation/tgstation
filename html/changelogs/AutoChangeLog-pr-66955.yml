@@ -1,4 +1,0 @@
-author: "FlamingCheese"
-delete-after: True
-changes: 
-  - bugfix: "Removed that one firelock in icebox xenobio that caused the fire alarm to trigger on roundstart"

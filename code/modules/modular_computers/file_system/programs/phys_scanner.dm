@@ -1,6 +1,3 @@
-#define TABLET_MEDICAL_MODE (1<<0)
-#define TABLET_CHEMISTRY_MODE (1<<1)
-
 /datum/computer_file/program/phys_scanner
 	filename = "phys_scanner"
 	filedesc = "Physical Scanner"
@@ -13,32 +10,32 @@
 	program_icon = "barcode"
 
 	var/current_mode = 0
-	var/available_modes = NONE
+	var/available_modes = 0
 
 	var/last_record = ""
 
 /datum/computer_file/program/phys_scanner/proc/ReadModes()
 	var/reads = list()
 
-	if(available_modes & TABLET_CHEMISTRY_MODE)
+	if(available_modes & DISK_CHEM)
 		reads += "Reagent"
 
-	if(available_modes & TABLET_MEDICAL_MODE)
+	if(available_modes & DISK_MED)
 		reads += "Health"
 
 	return reads
 
 /datum/computer_file/program/phys_scanner/proc/ReadCurrent()
-	if(current_mode & TABLET_CHEMISTRY_MODE)
+	if(current_mode & DISK_CHEM)
 		return "Reagent"
-	if(current_mode & TABLET_MEDICAL_MODE)
+	if(current_mode & DISK_MED)
 		return "Health"
 
 /datum/computer_file/program/phys_scanner/tap(atom/A, mob/living/user, params)
 	. = ..()
 
 	switch(current_mode)
-		if(TABLET_CHEMISTRY_MODE)
+		if(DISK_CHEM)
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
@@ -49,7 +46,7 @@
 					last_record = "No active chemical agents found in [A]."
 			else
 				last_record = "No significant chemical agents found in [A]."
-		if(TABLET_MEDICAL_MODE)
+		if(DISK_MED)
 			var/mob/living/carbon/carbon = A
 			if(istype(carbon))
 				carbon.visible_message(span_notice("[user] analyzes [A]'s vitals."))
@@ -64,9 +61,9 @@
 		if("selectMode")
 			switch(params["newMode"])
 				if("Reagent")
-					current_mode = TABLET_CHEMISTRY_MODE
+					current_mode = DISK_CHEM
 				if("Health")
-					current_mode = TABLET_MEDICAL_MODE
+					current_mode = DISK_MED
 
 	return UI_UPDATE
 
@@ -79,15 +76,3 @@
 	data["available_modes"] = ReadModes()
 
 	return data
-
-/datum/computer_file/program/phys_scanner/medical
-	available_modes = TABLET_MEDICAL_MODE
-
-/datum/computer_file/program/phys_scanner/chemistry
-	available_modes = TABLET_CHEMISTRY_MODE
-
-/datum/computer_file/program/phys_scanner/all
-	available_modes = TABLET_MEDICAL_MODE | TABLET_CHEMISTRY_MODE
-
-#undef TABLET_MEDICAL_MODE
-#undef TABLET_CHEMISTRY_MODE

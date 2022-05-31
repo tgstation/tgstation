@@ -15,4 +15,4 @@
 
 	for(var/obj/item/stack/stack_check as anything in subtypesof(/obj/item/stack) - blacklist)
 		if(!initial(stack_check.singular_name))
-			TEST_FAIL("[stack_check] is missing a singular name!")
+			Fail("[stack_check] is missing a singular name!")

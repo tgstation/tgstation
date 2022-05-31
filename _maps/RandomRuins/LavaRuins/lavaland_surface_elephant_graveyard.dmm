@@ -30,6 +30,10 @@
 /obj/item/clothing/mask/gas/explorer/folded,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
+"aY" = (
+/obj/structure/sign/warning/nosmoking/circle,
+/turf/closed/wall,
+/area/ruin/unpowered/elephant_graveyard)
 "bc" = (
 /obj/structure/sign/poster/ripped,
 /turf/closed/wall,
@@ -37,6 +41,10 @@
 "bf" = (
 /turf/closed/mineral/strong/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
+"bg" = (
+/obj/structure/sign/warning/securearea,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered/graveyard_shuttle)
 "bh" = (
 /obj/effect/decal/cleanable/oil,
 /obj/structure/chair/office/light,
@@ -52,6 +60,10 @@
 "bq" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/mineral/titanium/white,
+/area/ruin/powered/graveyard_shuttle)
+"br" = (
+/obj/structure/sign/warning/nosmoking/circle,
+/turf/closed/wall/mineral/titanium,
 /area/ruin/powered/graveyard_shuttle)
 "bt" = (
 /obj/structure/table,
@@ -83,6 +95,11 @@
 "bK" = (
 /obj/structure/sign/warning/explosives,
 /turf/closed/wall,
+/area/ruin/unpowered/elephant_graveyard)
+"bN" = (
+/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/securearea,
+/turf/closed/mineral/strong/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "bQ" = (
 /obj/structure/filingcabinet/chestdrawer,
@@ -425,6 +442,12 @@
 /obj/item/organ/brain,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
+"EF" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/under/misc/overalls,
+/obj/item/clothing/mask/bandana/color/green,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
 "EI" = (
 /obj/effect/decal/remains/human,
 /obj/item/restraints/handcuffs/cable/zipties/used,
@@ -480,10 +503,6 @@
 "Ks" = (
 /obj/structure/barricade/sandbags,
 /turf/open/misc/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
-"LN" = (
-/obj/structure/sign/warning/no_smoking/circle,
-/turf/closed/wall,
 /area/ruin/unpowered/elephant_graveyard)
 "LR" = (
 /obj/item/paper/fluff/ruins/elephant_graveyard,
@@ -543,10 +562,6 @@
 /obj/item/paper/fluff/ruins/elephant_graveyard,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
-"SR" = (
-/obj/structure/sign/warning/no_smoking/circle,
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/graveyard_shuttle)
 "Td" = (
 /obj/structure/table,
 /obj/structure/cable,
@@ -591,12 +606,6 @@
 /obj/item/paper/fluff/ruins/elephant_graveyard/final_message,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
-"WW" = (
-/obj/effect/decal/remains/human,
-/obj/item/clothing/under/misc/overalls,
-/obj/item/clothing/mask/bandana/green,
-/turf/open/misc/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "WX" = (
 /obj/structure/statue/bone/skull/half,
 /turf/open/misc/asteroid/basalt/wasteland,
@@ -633,10 +642,6 @@
 "YM" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/powered/graveyard_shuttle)
-"ZC" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/mineral/titanium,
 /area/ruin/powered/graveyard_shuttle)
 "ZH" = (
 /obj/structure/stone_tile/surrounding_tile,
@@ -844,9 +849,9 @@ bf
 aA
 bc
 aA
-LN
+aY
 gB
-WW
+EF
 gB
 Xe
 gB
@@ -1436,7 +1441,7 @@ nX
 bf
 bf
 bf
-bf
+bN
 gB
 bf
 bf
@@ -1510,9 +1515,9 @@ AB
 bf
 aH
 aH
-ZC
+bg
 bW
-ZC
+bg
 aH
 aH
 aH
@@ -1659,7 +1664,7 @@ ab
 aH
 aH
 aH
-SR
+br
 aH
 aH
 aH

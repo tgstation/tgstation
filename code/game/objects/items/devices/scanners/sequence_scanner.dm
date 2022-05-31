@@ -6,7 +6,7 @@
 	worn_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Use on a DNA console to update the internal database."
+	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Hold near a DNA console to update the internal database."
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
@@ -15,23 +15,20 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=200)
-
 	var/list/discovered = list() //hit a dna console to update the scanners database
 	var/list/buffer
 	var/ready = TRUE
 	var/cooldown = 200
 
-/obj/item/sequence_scanner/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	//no scanning if its a husk or DNA-less Species
-	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
-		user.visible_message(
-			span_notice("[user] analyzes [target]'s genetic sequence."),
-			span_notice("You analyze [target]'s genetic sequence.")
-			)
-		gene_scan(target, user)
+	if (!HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
+		user.visible_message(span_notice("[user] analyzes [M]'s genetic sequence."), \
+							span_notice("You analyze [M]'s genetic sequence."))
+		gene_scan(M, user)
+
 	else
-		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic sequence."), span_warning("[target] has no readable genetic sequence!"))
+		user.visible_message(span_notice("[user] fails to analyze [M]'s genetic sequence."), span_warning("[M] has no readable genetic sequence!"))
 
 /obj/item/sequence_scanner/attack_self(mob/user)
 	display_sequence(user)
@@ -39,54 +36,44 @@
 /obj/item/sequence_scanner/attack_self_tk(mob/user)
 	return
 
-/obj/item/sequence_scanner/afterattack(obj/object, mob/user, proximity)
+/obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
 	. = ..()
-	if(!istype(object) || !proximity)
+	if(!istype(O) || !proximity)
 		return
 
-	if(istype(object, /obj/machinery/computer/scan_consolenew))
-		var/obj/machinery/computer/scan_consolenew/console = object
-		if(console.stored_research)
+	if(istype(O, /obj/machinery/computer/scan_consolenew))
+		var/obj/machinery/computer/scan_consolenew/C = O
+		if(C.stored_research)
 			to_chat(user, span_notice("[name] linked to central research database."))
-			discovered = console.stored_research.discovered_mutations
+			discovered = C.stored_research.discovered_mutations
 		else
 			to_chat(user,span_warning("No database to update from."))
 
-/obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/target, mob/living/user)
-	if(!iscarbon(target) || !target.has_dna())
+/obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/C, mob/living/user)
+	if(!iscarbon(C) || !C.has_dna())
 		return
+	buffer = C.dna.mutation_index
+	to_chat(user, span_notice("Subject [C.name]'s DNA sequence has been saved to buffer."))
+	if(LAZYLEN(buffer))
+		for(var/A in buffer)
+			to_chat(user, span_notice("[get_display_name(A)]"))
 
-	//add target mutations to list as well as extra mutations.
-	//dupe list as scanner could modify target data
-	buffer = LAZYLISTDUPLICATE(target.dna.mutation_index)
-	var/list/active_mutations = list()
-	for(var/datum/mutation/human/mutation in target.dna.mutations)
-		LAZYOR(buffer, mutation.type)
-		active_mutations.Add(mutation.type)
-
-	to_chat(user, span_notice("Subject [target.name]'s DNA sequence has been saved to buffer."))
-	for(var/mutation in buffer)
-		//highlight activated mutations
-		if(LAZYFIND(active_mutations, mutation))
-			to_chat(user, span_boldnotice("[get_display_name(mutation)]"))
-		else
-			to_chat(user, span_notice("[get_display_name(mutation)]"))	
 
 /obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
 	if(!LAZYLEN(buffer) || !ready)
 		return
 	var/list/options = list()
-	for(var/mutation in buffer)
-		options += get_display_name(mutation)
+	for(var/A in buffer)
+		options += get_display_name(A)
 
 	var/answer = tgui_input_list(user, "Analyze Potential", "Sequence Analyzer", sort_list(options))
 	if(isnull(answer))
 		return
 	if(ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		var/sequence
-		for(var/mutation in buffer) //this physically hurts but i dont know what anything else short of an assoc list
-			if(get_display_name(mutation) == answer)
-				sequence = buffer[mutation]
+		for(var/A in buffer) //this physically hurts but i dont know what anything else short of an assoc list
+			if(get_display_name(A) == answer)
+				sequence = buffer[A]
 				break
 
 		if(sequence)
@@ -107,10 +94,10 @@
 	ready = TRUE
 
 /obj/item/sequence_scanner/proc/get_display_name(mutation)
-	var/datum/mutation/human/human_mutation = GET_INITIALIZED_MUTATION(mutation)
-	if(!human_mutation)
+	var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation)
+	if(!HM)
 		return "ERROR"
 	if(mutation in discovered)
-		return  "[human_mutation.name] ([human_mutation.alias])"
+		return  "[HM.name] ([HM.alias])"
 	else
-		return human_mutation.alias
+		return HM.alias

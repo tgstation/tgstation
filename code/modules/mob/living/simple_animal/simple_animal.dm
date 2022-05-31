@@ -490,7 +490,10 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/ignite_mob()
+/mob/living/simple_animal/handle_fire(delta_time, times_fired)
+	return TRUE
+
+/mob/living/simple_animal/IgniteMob()
 	return FALSE
 
 /mob/living/simple_animal/extinguish_mob()

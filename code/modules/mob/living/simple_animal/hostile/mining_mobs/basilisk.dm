@@ -203,7 +203,7 @@
 		var/mob/living/L = target
 		if (istype(L))
 			L.adjust_fire_stacks(0.1)
-			L.ignite_mob()
+			L.IgniteMob()
 
 /obj/projectile/temp/basilisk/icewing
 	damage = 5

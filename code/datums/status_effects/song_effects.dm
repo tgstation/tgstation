@@ -21,6 +21,7 @@
 	id = "antimagic"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 10 SECONDS
+	examine_text = "<span class='notice'>They seem to be covered in a dull, grey aura.</span>"
 	aura_desc = "dull"
 
 /datum/status_effect/song/antimagic/on_apply()
@@ -30,7 +31,3 @@
 
 /datum/status_effect/song/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-	return ..()
-
-/datum/status_effect/song/antimagic/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to be covered in a dull, grey aura.")

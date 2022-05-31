@@ -97,6 +97,9 @@
 /// log virology data
 /datum/config_entry/flag/log_virus
 
+/// log cloning actions.
+/datum/config_entry/flag/log_cloning
+
 /// log assets
 /datum/config_entry/flag/log_asset
 
@@ -173,8 +176,7 @@
 	integer = FALSE
 	min_val = 0
 
-/// If disabled, no-voters will automatically have their votes added to certain vote options
-/// (For eample: restart votes will default to "no restart", map votes will default to their preferred map / default map)
+/// vote does not default to nochange/norestart.
 /datum/config_entry/flag/default_no_vote
 
 /// Prevents dead people from voting.

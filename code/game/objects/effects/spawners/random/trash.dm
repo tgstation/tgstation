@@ -23,7 +23,6 @@
 		/obj/item/popsicle_stick = 1,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/obj/item/shard/plasma = 1,
 	)
 
 /obj/effect/spawner/random/trash/cigbutt

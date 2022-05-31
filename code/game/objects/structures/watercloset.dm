@@ -437,7 +437,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/sink/proc/begin_reclamation()
 	if(!reclaiming)
 		reclaiming = TRUE
-		START_PROCESSING(SSplumbing, src)
+		START_PROCESSING(SSfluids, src)
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"

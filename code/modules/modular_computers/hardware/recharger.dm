@@ -1,8 +1,8 @@
 /obj/item/computer_hardware/recharger
-	critical = TRUE
-	enabled = TRUE
-	device_type = MC_CHARGE
+	critical = 1
+	enabled = 1
 	var/charge_rate = 100
+	device_type = MC_CHARGE
 
 /obj/item/computer_hardware/recharger/proc/use_power(amount, charging=0)
 	if(charging)

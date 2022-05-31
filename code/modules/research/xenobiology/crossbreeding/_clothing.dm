@@ -13,7 +13,7 @@ Slimecrossing Armor
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	clothing_traits = list(TRAIT_NOBREATH)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	permeability_coefficient = 0.5
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
 

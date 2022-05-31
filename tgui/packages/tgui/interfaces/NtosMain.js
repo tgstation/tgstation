@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, ColorBox, Stack, Section, Table } from '../components';
+import { Button, ColorBox, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosMain = (props, context) => {
@@ -29,37 +29,21 @@ export const NtosMain = (props, context) => {
       width={400}
       height={500}>
       <NtosWindow.Content scrollable>
-        {Boolean(has_light || removable_media.length) && (
+        {!!has_light && (
           <Section>
-            <Stack>
-              {!!has_light && (
-                <Stack.Item grow>
-                  <Button
-                    width="144px"
-                    icon="lightbulb"
-                    selected={light_on}
-                    onClick={() => act('PC_toggle_light')}>
-                    Flashlight: {light_on ? 'ON' : 'OFF'}
-                  </Button>
-                  <Button
-                    ml={1}
-                    onClick={() => act('PC_light_color')}>
-                    Color:
-                    <ColorBox ml={1} color={comp_light_color} />
-                  </Button>
-                </Stack.Item>
-              )}
-              {removable_media.map(device => (
-                <Stack.Item key={device}>
-                  <Button
-                    fluid
-                    icon="eject"
-                    content={device}
-                    onClick={() => act('PC_Eject_Disk', { name: device })}
-                    disabled={!device} />
-                </Stack.Item>
-              ))}
-            </Stack>
+            <Button
+              width="144px"
+              icon="lightbulb"
+              selected={light_on}
+              onClick={() => act('PC_toggle_light')}>
+              Flashlight: {light_on ? 'ON' : 'OFF'}
+            </Button>
+            <Button
+              ml={1}
+              onClick={() => act('PC_light_color')}>
+              Color:
+              <ColorBox ml={1} color={comp_light_color} />
+            </Button>
           </Section>
         )}
         {!!(cardholder && show_imprint) && (
@@ -91,6 +75,25 @@ export const NtosMain = (props, context) => {
               <Table.Row>
                 Assignment: {login.IDJob} ({proposed_login.IDJob})
               </Table.Row>
+            </Table>
+          </Section>
+        )}
+        {!!removable_media.length && (
+          <Section title="Media Eject">
+            <Table>
+              {removable_media.map(device => (
+                <Table.Row key={device}>
+                  <Table.Cell>
+                    <Button
+                      fluid
+                      color="transparent"
+                      icon="eject"
+                      content={device}
+                      onClick={() => act('PC_Eject_Disk', { name: device })}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              ))}
             </Table>
           </Section>
         )}
@@ -166,9 +169,9 @@ export const NtosMain = (props, context) => {
             buttons={(
               <Button
                 icon="eject"
-                content="Eject Disk"
+                content="Eject Job Disk"
                 disabled={!disk_name}
-                onClick={() => act('PC_Eject_Disk', { name: "remove_disk" })} />
+                onClick={() => act('PC_Eject_Disk', { name: "job disk" })} />
             )}>
             <Table>
               {disk_programs.map(program => (

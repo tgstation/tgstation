@@ -63,16 +63,13 @@
 		return
 
 	if(deadchat_mode & ANARCHY_MODE)
-		if(!source || !source.ckey)
-			return
 		var/cooldown = ckey_to_cooldown[source.ckey] - world.time
 		if(cooldown > 0)
-			to_chat(source, span_warning("Your deadchat control inputs are still on cooldown for another [CEILING(cooldown * 0.1, 1)] second\s."))
+			to_chat(source, span_warning("Your deadchat control inputs are still on cooldown for another [cooldown * 0.1] seconds."))
 			return MOB_DEADSAY_SIGNAL_INTERCEPT
-		ckey_to_cooldown[source.ckey] = world.time + input_cooldown
-		addtimer(CALLBACK(src, .proc/end_cooldown, source.ckey), input_cooldown)
 		inputs[message].Invoke()
-		to_chat(source, span_notice("\"[message]\" input accepted. You are now on cooldown for [input_cooldown * 0.1] second\s."))
+		ckey_to_cooldown[source.ckey] = world.time + input_cooldown
+		to_chat(source, span_notice("\"[message]\" input accepted. You are now on cooldown for [input_cooldown * 0.1] seconds."))
 		return MOB_DEADSAY_SIGNAL_INTERCEPT
 
 	if(deadchat_mode & DEMOCRACY_MODE)
@@ -88,7 +85,7 @@
 	if(!isnull(result))
 		inputs[result].Invoke()
 		if(!(deadchat_mode & MUTE_DEMOCRACY_MESSAGES))
-			var/message = "<span class='deadsay italics bold'>[parent] has done action [result]!<br>New vote started. It will end in [input_cooldown * 0.1] second\s.</span>"
+			var/message = "<span class='deadsay italics bold'>[parent] has done action [result]!<br>New vote started. It will end in [input_cooldown * 0.1] seconds.</span>"
 			for(var/M in orbiters)
 				to_chat(M, message)
 	else if(!(deadchat_mode & MUTE_DEMOCRACY_MESSAGES))
@@ -194,9 +191,9 @@
 	examine_list += span_notice("[A.p_theyre(TRUE)] currently under deadchat control using the [(deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy"] ruleset!")
 
 	if(deadchat_mode & DEMOCRACY_MODE)
-		examine_list += span_notice("Type a command into chat to vote on an action. This happens once every [input_cooldown * 0.1] second\s.")
+		examine_list += span_notice("Type a command into chat to vote on an action. This happens once every [input_cooldown * 0.1] seconds.")
 	else if(deadchat_mode & ANARCHY_MODE)
-		examine_list += span_notice("Type a command into chat to perform. You may do this once every [input_cooldown * 0.1] second\s.")
+		examine_list += span_notice("Type a command into chat to perform. You may do this once every [input_cooldown * 0.1] seconds.")
 
 	var/extended_examine = "<span class='notice'>Command list:"
 
@@ -206,14 +203,6 @@
 	extended_examine += ".</span>"
 
 	examine_list += extended_examine
-
-///Removes the ghost from the ckey_to_cooldown list and lets them know they are free to submit a command for the parent again.
-/datum/component/deadchat_control/proc/end_cooldown(ghost_ckey)
-	ckey_to_cooldown -= ghost_ckey
-	var/mob/ghost = get_mob_by_ckey(ghost_ckey)
-	if(!ghost || isliving(ghost))
-		return
-	to_chat(ghost, "[FOLLOW_LINK(ghost, parent)] <span class='nicegreen'>Your deadchat control inputs for [parent] are no longer on cooldown.</span>")
 
 /**
  * Deadchat Moves Things

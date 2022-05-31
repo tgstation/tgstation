@@ -126,8 +126,6 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/datum/admins/proc/toggleAI,
 	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
-	/client/proc/cmd_debug_force_del_all,
-	/client/proc/cmd_debug_hard_del_all,
 	/client/proc/toggle_random_events,
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
@@ -148,8 +146,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
-	/client/proc/cmd_debug_force_del_all,
-	/client/proc/cmd_debug_hard_del_all,
 	/client/proc/restart_controller,
 	/client/proc/enable_mapping_verbs,
 	/client/proc/callproc,
@@ -262,8 +258,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/cmd_debug_make_powernets,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_debug_del_all,
-	/client/proc/cmd_debug_force_del_all,
-	/client/proc/cmd_debug_hard_del_all,
 	/client/proc/enable_mapping_verbs,
 	/proc/possess,
 	/proc/release,
@@ -282,7 +276,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(holder)
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
-		var/rights = holder.rank_flags()
+		var/rights = holder.rank.rights
 		add_verb(src, GLOB.admin_verbs_default)
 		if(rights & R_BUILD)
 			add_verb(src, /client/proc/togglebuildmodeself)
@@ -736,7 +730,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Admin.Events"
-	if (!(holder.rank_flags() & R_BUILD))
+	if (!(holder.rank.rights & R_BUILD))
 		return
 	if(src.mob)
 		togglebuildmode(src.mob)

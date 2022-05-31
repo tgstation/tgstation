@@ -5,7 +5,7 @@
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 90, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 90, ACID = 50)
 	max_integrity = 150
 	integrity_failure = 0.33
 	var/locked = TRUE
@@ -52,13 +52,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 			update_appearance()
 	else if(open || broken)
 		if(istype(I, /obj/item/fireaxe) && !fireaxe)
-			if(HAS_TRAIT(I, TRAIT_WIELDED))
-				to_chat(user, span_warning("Unwield [I] first."))
+			var/obj/item/fireaxe/F = I
+			if(F?.wielded)
+				to_chat(user, span_warning("Unwield the [F.name] first."))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(F, src))
 				return
-			fireaxe = I
-			to_chat(user, span_notice("You place [I] back in [src]."))
+			fireaxe = F
+			to_chat(user, span_notice("You place the [F.name] back in the [name]."))
 			update_appearance()
 			return
 		else if(!broken)
@@ -110,15 +111,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	. = ..()
 	if(.)
 		return
-	if((open || broken) && fireaxe)
-		user.put_in_hands(fireaxe)
-		to_chat(user, span_notice("You take [fireaxe] from [src]."))
-		fireaxe = null
-		src.add_fingerprint(user)
-		update_appearance()
-		return
+	if(open || broken)
+		if(fireaxe)
+			user.put_in_hands(fireaxe)
+			fireaxe = null
+			to_chat(user, span_notice("You take the fire axe from the [name]."))
+			src.add_fingerprint(user)
+			update_appearance()
+			return
 	if(locked)
-		to_chat(user, span_warning("\The [src] won't budge!"))
+		to_chat(user, span_warning("The [name] won't budge!"))
 		return
 	else
 		open = !open

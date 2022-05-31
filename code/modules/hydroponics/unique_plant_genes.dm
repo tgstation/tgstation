@@ -66,15 +66,9 @@
  * our_plant - our plant, that we're attacking with
  * user - the person who is attacking with the plant
  * target - the atom which is attacked by the plant
- *
- * return TRUE if plant attack is acceptable, otherwise FALSE to early return subtypes.
  */
-/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
 	SIGNAL_HANDLER
-
-	if(!proximity_flag)
-		return FALSE
-	return TRUE
 
 /// Novaflower's attack effects (sets people on fire) + degradation on attack
 /datum/plant_gene/trait/attack/novaflower_attack
@@ -83,21 +77,17 @@
 
 /datum/plant_gene/trait/attack/novaflower_attack/on_plant_attack(obj/item/our_plant, mob/living/target, mob/living/user)
 	. = ..()
-	if(!.)
-		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	to_chat(target, "<span class='danger'>You are lit on fire from the intense heat of [our_plant]!</span>")
 	target.adjust_fire_stacks(our_seed.potency / 20)
-	if(target.ignite_mob())
+	if(target.IgniteMob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(target)] on fire with [our_plant] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(target)] on fire with [our_plant] at [AREACOORD(user)]")
 	our_plant.investigate_log("was used by [key_name(user)] to burn [key_name(target)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 
-/datum/plant_gene/trait/attack/novaflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/novaflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
 	. = ..()
-	if(!.)
-		return
 
 	if(!ismovable(target))
 		return
@@ -111,10 +101,8 @@
 /datum/plant_gene/trait/attack/sunflower_attack
 	name = "Bright Petals"
 
-/datum/plant_gene/trait/attack/sunflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/sunflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/living/user)
 	. = ..()
-	if(!.)
-		return
 
 	if(!ismob(target))
 		return
@@ -129,10 +117,8 @@
 	name = "Sharpened Leaves"
 	force_multiplier = 0.2
 
-/datum/plant_gene/trait/attack/nettle_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/nettle_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
 	. = ..()
-	if(!.)
-		return
 
 	if(!ismovable(target))
 		return

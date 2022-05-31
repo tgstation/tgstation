@@ -53,8 +53,11 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/necropolis_gate/Destroy(force)
-	qdel(sight_blocker)
-	return ..()
+	if(force)
+		qdel(sight_blocker, TRUE)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
@@ -89,7 +92,13 @@
 	anchored = TRUE
 
 /obj/structure/opacity_blocker/singularity_pull()
-	return FALSE
+	return 0
+
+/obj/structure/opacity_blocker/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/attack_hand(mob/user, list/modifiers)
@@ -153,9 +162,12 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	GLOB.necropolis_gate = src
 
 /obj/structure/necropolis_gate/legion_gate/Destroy(force)
-	if(GLOB.necropolis_gate == src)
-		GLOB.necropolis_gate = null
-	return ..()
+	if(force)
+		if(GLOB.necropolis_gate == src)
+			GLOB.necropolis_gate = null
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user, list/modifiers)
@@ -229,6 +241,12 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/necropolis_arch/singularity_pull()
 	return 0
 
+/obj/structure/necropolis_arch/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
+
 #define STABLE 0 //The tile is stable and won't collapse/sink when crossed.
 #define COLLAPSE_ON_CROSS 1 //The tile is unstable and will temporary become unusable when crossed.
 #define DESTROY_ON_CROSS 2 //The tile is nearly broken and will permanently become unusable when crossed.
@@ -254,6 +272,12 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/stone_tile/Destroy(force)
+	if(force || fallen)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/structure/stone_tile/singularity_pull()
 	return

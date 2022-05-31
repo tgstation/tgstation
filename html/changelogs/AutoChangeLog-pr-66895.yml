@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes: 
-  - admin: "Attack logs for stripping people and equipping items to them have been reformatted to match all other attack logs, improving readability."

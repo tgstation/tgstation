@@ -48,7 +48,6 @@
 	var/static/g2 = 164
 	var/static/b2 = 149
 	var/obj/effect/dummy/lighting_obj/ethereal_light
-	var/default_color
 
 
 
@@ -100,17 +99,13 @@
 	return randname
 
 
-/datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/ethereal)
+/datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/H)
 	. = ..()
 	if(!ethereal_light)
 		return
-	if(default_color != ethereal.dna.features["ethcolor"])
-		var/new_color = ethereal.dna.features["ethcolor"]
-		r1 = GETREDPART(new_color)
-		g1 = GETGREENPART(new_color)
-		b1 = GETBLUEPART(new_color)
-	if(ethereal.stat != DEAD && !EMPeffect)
-		var/healthpercent = max(ethereal.health, 0) / 100
+
+	if(H.stat != DEAD && !EMPeffect)
+		var/healthpercent = max(H.health, 0) / 100
 		if(!emageffect)
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
 		ethereal_light.set_light_range_power_color(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
@@ -119,7 +114,7 @@
 	else
 		ethereal_light.set_light_on(FALSE)
 		fixed_mut_color = rgb(128,128,128)
-	ethereal.update_body(is_creating = TRUE)
+	H.update_body(is_creating = TRUE)
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
 	SIGNAL_HANDLER

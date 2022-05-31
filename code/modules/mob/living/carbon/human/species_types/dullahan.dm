@@ -1,6 +1,7 @@
 /datum/species/dullahan
 	name = "Dullahan"
 	id = SPECIES_DULLAHAN
+	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
@@ -47,8 +48,7 @@
 
 			// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
 			head.eyes = new /obj/item/organ/eyes(head)
-			head.eyes.eye_color_left = human.eye_color_left
-			head.eyes.eye_color_right = human.eye_color_right
+			head.eyes.eye_color = human.eye_color
 			head.update_icon_dropped()
 
 	human.set_safe_hunger_level()

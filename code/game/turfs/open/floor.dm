@@ -1,5 +1,7 @@
-/// Anything above a lattice should go here.
 /turf/open/floor
+	//NOTE: Floor code has been refactored, many procs were removed and refactored
+	//- you should use istype() if you want to find out whether a floor has a certain type
+	//- floor_tile is now a path, and not a tile obj
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	base_icon_state = "floor"
@@ -22,10 +24,10 @@
 
 	var/broken = FALSE
 	var/burnt = FALSE
-	/// Path of the tile that this floor drops
-	var/floor_tile = null 
+	var/floor_tile = null //tile that this floor drops
 	var/list/broken_states
 	var/list/burnt_states
+
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
@@ -137,7 +139,6 @@
 		icon_state = pick(broken_states)
 	burnt = 1
 
-/// Things seem to rely on this actually returning plating. Override it if you have other baseturfs.
 /turf/open/floor/proc/make_plating(force = FALSE)
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 

@@ -589,7 +589,7 @@
 
 	switch(rand(1,3))
 		if(1)
-			quirk_holder.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			quirk_holder.Jitter(10)
 			msg += "causing you to start fidgeting!"
 		if(2)
 			quirk_holder.set_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
@@ -826,13 +826,12 @@
 	hardcore_value = 1
 
 /datum/quirk/bad_touch/add()
-	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT), .proc/uncomfortable_touch)
+	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED), .proc/uncomfortable_touch)
 
 /datum/quirk/bad_touch/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT))
+	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED))
 
-/// Causes a negative moodlet to our quirk holder on signal
-/datum/quirk/bad_touch/proc/uncomfortable_touch(datum/source)
+/datum/quirk/bad_touch/proc/uncomfortable_touch()
 	SIGNAL_HANDLER
 
 	if(quirk_holder.stat == DEAD)

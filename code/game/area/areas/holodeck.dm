@@ -1,6 +1,5 @@
 /area/holodeck
 	name = "Holodeck"
-	icon = 'icons/area/areas_station.dmi'
 	icon_state = "Holodeck"
 	static_lighting = FALSE
 

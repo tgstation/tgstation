@@ -117,8 +117,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
 
-	AddComponent(/datum/component/zparallax, owner.client)
-
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
 		mymob.hud_used = null

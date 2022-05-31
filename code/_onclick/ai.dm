@@ -20,11 +20,6 @@
 		return
 	next_click = world.time + 1
 
-	var/list/modifiers = params2list(params)
-
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
-		return
-
 	if(!can_interact_with(A))
 		return
 
@@ -56,6 +51,7 @@
 			send2tgs_adminless_only("NOCHEAT", message)
 		return
 
+	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
 			CtrlShiftClickOn(A)

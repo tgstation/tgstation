@@ -21,7 +21,6 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/head_of_personnel
 	departments_list = list(
 		/datum/job_department/service,
-		/datum/job_department/cargo,
 		/datum/job_department/command,
 		)
 

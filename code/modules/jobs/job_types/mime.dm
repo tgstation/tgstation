@@ -77,7 +77,7 @@
 		H.mind.miming = TRUE
 
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.show_to(H)
+	fan.add_hud_to(H)
 
 /obj/item/book/mimery
 	name = "Guide to Dank Mimery"

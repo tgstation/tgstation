@@ -68,11 +68,6 @@
 	access_list += ACCESS_CAPTAIN
 	return access_list
 
-/obj/effect/mapping_helpers/airlock/access/any/command/maintenance/get_access()
-	var/list/access_list = ..()
-	access_list += list(ACCESS_HEADS, ACCESS_MAINT_TUNNELS)
-	return access_list
-
 // -------------------- Engineering access helpers
 /obj/effect/mapping_helpers/airlock/access/any/engineering
 	icon_state = "access_helper_eng"
@@ -100,11 +95,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_MAINT_TUNNELS
-	return access_list
-
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental/get_access()
-	var/list/access_list = ..()
-	access_list += list(ACCESS_ENGINE, ACCESS_MAINT_TUNNELS)
 	return access_list
 
 /obj/effect/mapping_helpers/airlock/access/any/engineering/external/get_access()
@@ -176,11 +166,6 @@
 	access_list += ACCESS_PSYCHOLOGY
 	return access_list
 
-/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance/get_access()
-	var/list/access_list = ..()
-	access_list += list(ACCESS_MEDICAL, ACCESS_MAINT_TUNNELS)
-	return access_list
-
 // -------------------- Science access helpers
 /obj/effect/mapping_helpers/airlock/access/any/science
 	icon_state = "access_helper_sci"
@@ -230,11 +215,6 @@
 	access_list += ACCESS_RD
 	return access_list
 
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance/get_access()
-	var/list/access_list = ..()
-	access_list += list(ACCESS_RND, ACCESS_MAINT_TUNNELS)
-	return access_list
-
 // -------------------- Security access helpers
 /obj/effect/mapping_helpers/airlock/access/any/security
 	icon_state = "access_helper_sec"
@@ -272,11 +252,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/hos/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_HOS
-	return access_list
-
-/obj/effect/mapping_helpers/airlock/access/any/security/maintenance/get_access()
-	var/list/access_list = ..()
-	access_list += list(ACCESS_SECURITY, ACCESS_MAINT_TUNNELS)
 	return access_list
 
 // -------------------- Service access helpers
@@ -333,11 +308,6 @@
 	access_list += ACCESS_LAWYER
 	return access_list
 
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance/get_access()
-	var/list/access_list = ..()
-	access_list += list(ACCESS_SERVICE, ACCESS_MAINT_TUNNELS)
-	return access_list
-
 // -------------------- Supply access helpers
 /obj/effect/mapping_helpers/airlock/access/any/supply
 	icon_state = "access_helper_sup"
@@ -375,11 +345,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/supply/vault/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_VAULT
-	return access_list
-
-/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance/get_access()
-	var/list/access_list = ..()
-	access_list += list(ACCESS_CARGO, ACCESS_MAINT_TUNNELS)
 	return access_list
 
 // -------------------- Req All (Requires ALL of the given accesses to open)

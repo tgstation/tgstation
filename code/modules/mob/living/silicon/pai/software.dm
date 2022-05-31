@@ -119,10 +119,10 @@
 			medHUD = !medHUD
 			if(medHUD)
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
-				med.show_to(src)
+				med.add_hud_to(src)
 			else
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
-				med.hide_from(src)
+				med.remove_hud_from(src)
 		if("newscaster")
 			newscaster.ui_interact(src)
 		if("photography_module")
@@ -147,10 +147,10 @@
 			secHUD = !secHUD
 			if(secHUD)
 				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-				sec.show_to(src)
+				sec.add_hud_to(src)
 			else
 				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-				sec.hide_from(src)
+				sec.remove_hud_from(src)
 		if("universal_translator")
 			if(!languages_granted)
 				grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)

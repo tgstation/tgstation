@@ -179,33 +179,38 @@
 		return
 
 	var/high_stress = (stress > 60) //things get psychosomatic from here on
-	switch(rand(1, 6))
+	switch(rand(1,6))
 		if(1)
-			if(high_stress)
-				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
-			else
+			if(!high_stress)
 				to_chat(owner, span_warning("You feel sick..."))
+			else
+				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
 			addtimer(CALLBACK(owner, /mob/living/carbon.proc/vomit, high_stress), 50) //blood vomit if high stress
 		if(2)
-			if(high_stress)
-				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
-				owner.adjustStaminaLoss(50)
-			else
+			if(!high_stress)
 				to_chat(owner, span_warning("You can't stop shaking..."))
-
-			owner.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
-			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/confusion)
-			owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+				owner.dizziness += 20
+				owner.add_confusion(20)
+				owner.Jitter(20)
+			else
+				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
+				owner.dizziness += 20
+				owner.add_confusion(20)
+				owner.Jitter(20)
+				owner.adjustStaminaLoss(50)
 
 		if(3, 4)
-			if(high_stress)
+			if(!high_stress)
+				to_chat(owner, span_warning("You feel really lonely..."))
+			else
 				to_chat(owner, span_warning("You're going mad with loneliness!"))
 				owner.hallucination += 30
-			else
-				to_chat(owner, span_warning("You feel really lonely..."))
 
 		if(5)
-			if(high_stress)
+			if(!high_stress)
+				to_chat(owner, span_warning("Your heart skips a beat."))
+				owner.adjustOxyLoss(8)
+			else
 				if(prob(15) && ishuman(owner))
 					var/mob/living/carbon/human/H = owner
 					H.set_heartattack(TRUE)
@@ -213,10 +218,6 @@
 				else
 					to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 					owner.adjustOxyLoss(8)
-			else
-				to_chat(owner, span_warning("Your heart skips a beat."))
-				owner.adjustOxyLoss(8)
-
 		else
 			//No effect
 			return

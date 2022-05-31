@@ -10,6 +10,6 @@
 			continue
 
 		if (name in used_names)
-			TEST_FAIL("[used_names[name]] shares a name with [reagent] ([name])")
+			Fail("[used_names[name]] shares a name with [reagent] ([name])")
 		else
 			used_names[name] = reagent

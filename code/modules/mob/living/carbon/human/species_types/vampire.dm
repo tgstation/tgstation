@@ -7,6 +7,7 @@
 /datum/species/vampire
 	name = "Vampire"
 	id = SPECIES_VAMPIRE
+	default_color = "FFFFFF"
 	species_traits = list(
 		EYECOLOR,
 		HAIR,
@@ -63,11 +64,11 @@
 			holder.shape.dust() //vampires do not have batform anymore, but this would still lead to very weird stuff with other shapeshift holders
 		vampire.dust()
 	var/area/A = get_area(vampire)
-	if(istype(A, /area/station/service/chapel))
+	if(istype(A, /area/service/chapel))
 		to_chat(vampire, span_warning("You don't belong here!"))
 		vampire.adjustFireLoss(10 * delta_time)
 		vampire.adjust_fire_stacks(3 * delta_time)
-		vampire.ignite_mob()
+		vampire.IgniteMob()
 
 /datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/nullrod/whip))

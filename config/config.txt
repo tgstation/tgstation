@@ -158,6 +158,9 @@ LOG_PICTURES
 ## log virus and actions
 LOG_VIRUS
 
+## log cloning actions
+LOG_CLONING
+
 ## log shuttle actions
 LOG_SHUTTLE
 

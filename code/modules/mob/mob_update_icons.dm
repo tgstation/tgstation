@@ -49,6 +49,9 @@
 /mob/proc/update_hair()
 	return
 
+/mob/proc/update_fire()
+	return
+
 /mob/proc/update_inv_gloves()
 	return
 

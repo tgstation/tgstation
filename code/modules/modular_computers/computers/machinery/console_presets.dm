@@ -9,6 +9,7 @@
 	. = ..()
 	if(!cpu)
 		return
+	cpu.install_component(new /obj/item/computer_hardware/processor_unit)
 
 	cpu.install_component(new /obj/item/computer_hardware/card_slot)
 	if(_has_second_id_slot)
