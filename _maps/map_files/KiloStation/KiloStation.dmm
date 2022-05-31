@@ -6091,8 +6091,18 @@
 	name = "Cargo Desk";
 	req_access = list("mail_sorting")
 	},
-/obj/item/clipboard,
-/obj/item/folder,
+/obj/item/clipboard{
+	pixel_y = -2;
+	pixel_x = 3
+	},
+/obj/item/folder{
+	pixel_y = -2;
+	pixel_x = 3
+	},
+/obj/structure/desk_bell{
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "bTT" = (
@@ -21980,8 +21990,12 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = -5
+	},
+/obj/item/pen{
+	pixel_x = -5
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -21994,6 +22008,10 @@
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/north,
+/obj/structure/desk_bell{
+	pixel_x = 7;
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "glG" = (
@@ -30659,13 +30677,19 @@
 /area/station/hallway/primary/central)
 "ixv" = (
 /obj/structure/table/wood,
+/obj/structure/desk_bell{
+	pixel_x = -7;
+	pixel_y = 9
+	},
 /obj/item/storage/box/matches{
-	pixel_x = -4;
+	pixel_x = -1;
 	pixel_y = 6
 	},
-/obj/item/lighter,
 /obj/item/lighter{
-	pixel_x = 4;
+	pixel_x = 2
+	},
+/obj/item/lighter{
+	pixel_x = 8;
 	pixel_y = 4
 	},
 /obj/machinery/door/firedoor,
@@ -31612,7 +31636,9 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
-/obj/item/folder/yellow,
+/obj/item/folder/yellow{
+	pixel_x = 3
+	},
 /obj/machinery/door/poddoor/preopen{
 	id = "Engineering";
 	name = "Engineering Blast Doors"
@@ -31620,6 +31646,10 @@
 /obj/machinery/door/window/left/directional/east{
 	name = "Engineering Desk";
 	req_access = list("engineering")
+	},
+/obj/structure/desk_bell{
+	pixel_x = -7;
+	pixel_y = 10
 	},
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
@@ -32003,8 +32033,12 @@
 "iQy" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/delivery,
-/obj/item/folder/yellow,
-/obj/item/pen,
+/obj/item/folder/yellow{
+	pixel_x = -4
+	},
+/obj/item/pen{
+	pixel_x = -4
+	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistry_shutters_2";
 	name = "Chemistry Hall Shutters"
@@ -32014,6 +32048,10 @@
 	dir = 8;
 	name = "Chemistry Desk";
 	req_access = list("pharmacy")
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7;
+	pixel_y = 6
 	},
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
@@ -55475,8 +55513,12 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
-/obj/item/folder,
-/obj/item/pen,
+/obj/item/folder{
+	pixel_x = 6
+	},
+/obj/item/pen{
+	pixel_x = 6
+	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "robotics_shutters";
 	name = "Robotics Privacy Shutters"
@@ -55484,6 +55526,10 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "Robotics Desk";
 	req_access = list("robotics")
+	},
+/obj/structure/desk_bell{
+	pixel_x = -7;
+	pixel_y = 8
 	},
 /turf/open/floor/plating,
 /area/station/science/robotics/lab)
@@ -56017,6 +56063,10 @@
 /obj/machinery/door/window/right/directional/west{
 	name = "Atmospherics Desk";
 	req_access = list("atmospherics")
+	},
+/obj/structure/desk_bell{
+	pixel_x = 8;
+	pixel_y = 10
 	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage/gas)
@@ -59794,14 +59844,22 @@
 "qSr" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
+/obj/item/clipboard{
+	pixel_x = 3
+	},
+/obj/item/folder/yellow{
+	pixel_x = 3
+	},
 /obj/machinery/door/window/left/directional/west{
 	dir = 4;
 	name = "Mailroom Desk";
 	req_access = list("mail_sorting")
 	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/desk_bell{
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "qSC" = (
@@ -68092,6 +68150,10 @@
 /area/station/command/heads_quarters/rd)
 "tjU" = (
 /obj/structure/table/reinforced,
+/obj/structure/desk_bell{
+	pixel_x = -7;
+	pixel_y = 8
+	},
 /obj/item/storage/bag/tray,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -70193,6 +70255,10 @@
 /area/station/service/chapel/dock)
 "tPl" = (
 /obj/structure/table/reinforced,
+/obj/structure/desk_bell{
+	pixel_x = -7;
+	pixel_y = 8
+	},
 /obj/item/food/grown/watermelon,
 /obj/item/food/grown/wheat,
 /obj/item/food/grown/whitebeet,
@@ -78909,10 +78975,15 @@
 	id = "emmd";
 	name = "Emergency Medical Lockdown Shutters"
 	},
-/obj/item/folder/white,
+/obj/item/folder/white{
+	pixel_x = 4
+	},
 /obj/item/clothing/head/soft/paramedic{
-	pixel_x = 3;
+	pixel_x = 7;
 	pixel_y = 6
+	},
+/obj/structure/desk_bell{
+	pixel_x = -7
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
@@ -83620,8 +83691,12 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
-/obj/item/folder,
-/obj/item/pen,
+/obj/item/folder{
+	pixel_x = 3
+	},
+/obj/item/pen{
+	pixel_x = 4
+	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "research_shutters";
 	name = "Research Privacy Shutter"
@@ -83629,6 +83704,10 @@
 /obj/machinery/door/window/right/directional/east{
 	name = "Research Lab Desk";
 	req_access = list("science")
+	},
+/obj/structure/desk_bell{
+	pixel_x = -7;
+	pixel_y = 8
 	},
 /turf/open/floor/plating,
 /area/station/science/lab)
