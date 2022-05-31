@@ -73,7 +73,7 @@
 
 		var/tattoo_story = memory_to_engrave.generate_story(STORY_TATTOO)
 
-		if(tattoo_story)
+		if(!tattoo_story)
 			CRASH("Tried to submit a memory with an invalid story [memory_to_engrave]")
 
 		tattoo_entry["story"] = tattoo_story
