@@ -234,34 +234,34 @@
 	var/charge_modifier = 0.1
 
 /obj/item/mod/core/ethereal/charge_source()
-	var/obj/item/organ/stomach/ethereal/ethereal_stomach = mod.wearer.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/ethereal/ethereal_stomach = mod.wearer.getorganslot(ORGAN_SLOT_STOMACH)
 	if(!istype(ethereal_stomach))
 		return
 	return ethereal_stomach
 
 /obj/item/mod/core/ethereal/charge_amount()
-	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
 	return charge_source?.crystal_charge || ETHEREAL_CHARGE_NONE
 
 /obj/item/mod/core/ethereal/max_charge_amount()
 	return ETHEREAL_CHARGE_FULL
 
 /obj/item/mod/core/ethereal/add_charge(amount)
-	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
 	charge_source.adjust_charge(amount*charge_modifier)
 	return TRUE
 
 /obj/item/mod/core/ethereal/subtract_charge(amount)
-	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
 	charge_source.adjust_charge(-amount*charge_modifier)
 	return TRUE
 
 /obj/item/mod/core/ethereal/update_charge_alert()
-	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
 	if(charge_source)
 		mod.wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 		return
@@ -330,11 +330,12 @@
 		return COMPONENT_NO_AFTERATTACK
 	return NONE
 
-/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/attacking_item, mob/user)
-	if(!istype(attacking_item, /obj/item/stack/ore/plasma))
+/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/ore/plasma/plasma, mob/user)
+	if(!istype(plasma))
 		return FALSE
-	if(!attacking_item.use(1))
+	var/uses_needed = min(plasma.amount, round((max_charge_amount() - charge_amount()) / charge_given))
+	if(!plasma.use(uses_needed))
 		return FALSE
-	add_charge(charge_given)
+	add_charge(uses_needed*charge_given)
 	balloon_alert(user, "core refueled")
 	return TRUE

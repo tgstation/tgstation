@@ -25,9 +25,14 @@
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINEERING)
 	assignment = "Charlie Station Engineer"
 
-/// Trim for the oldstation ruin/Charlie station
+/// Trim for the oldstation ruin/Charlie station to access APCs and other equipment
 /datum/id_trim/away/old/apc
-	access = list(ACCESS_ENGINE_EQUIP)
+	access = list(ACCESS_ENGINEERING, ACCESS_ENGINE_EQUIP)
+	assignment = "Engineering Equipment Access"
+
+/// Trim for the oldstation ruin/Charlie station to access robots
+/datum/id_trim/away/old/robo
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_ROBOTICS)
 
 /// Trim for the cat surgeon ruin.
 /datum/id_trim/away/cat_surgeon

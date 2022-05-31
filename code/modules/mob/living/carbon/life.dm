@@ -48,8 +48,8 @@
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing(delta_time, times_fired)
 	var/next_breath = 4
-	var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
-	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/heart/H = getorganslot(ORGAN_SLOT_HEART)
 	if(L)
 		if(L.damage > L.high_threshold)
 			next_breath--
@@ -70,7 +70,7 @@
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe(delta_time, times_fired)
-	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
 
@@ -138,7 +138,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
 
-	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		adjustOxyLoss(2)
 
@@ -336,8 +336,7 @@
 	if(stat == DEAD)
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
-		for(var/V in internal_organs)
-			var/obj/item/organ/organ = V
+		for(var/obj/item/organ/internal/organ as anything in internal_organs)
 			organ.on_death(delta_time, times_fired) //Needed so organs decay while inside the body.
 		return
 
@@ -345,7 +344,7 @@
 	for(var/slot in internal_organs_slot)
 		// We don't use getorganslot here because we know we have the organ we want, since we're iterating the list containing em already
 		// This code is hot enough that it's just not worth the time
-		var/obj/item/organ/organ = internal_organs_slot[slot]
+		var/obj/item/organ/internal/organ = internal_organs_slot[slot]
 		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
 			organ.on_life(delta_time, times_fired)
 
@@ -579,7 +578,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/get_fullness()
 	var/fullness = nutrition
 
-	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
 	if(!belly) //nothing to see here if we do not have a stomach
 		return fullness
 
@@ -597,7 +596,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	. = ..()
 	if(.)
 		return
-	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
 	if(!belly)
 		return FALSE
 	return belly.reagents.has_reagent(reagent, amount, needs_metabolizing)
@@ -612,7 +611,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!dna)
 		return
 
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		return
 
@@ -626,7 +625,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS), 0.5* delta_time)
 
 /mob/living/carbon/proc/undergoing_liver_failure()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver?.organ_flags & ORGAN_FAILING)
 		return TRUE
 
@@ -656,11 +655,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				if(limb.cremation_progress >= 100)
 					if(IS_ORGANIC_LIMB(limb)) //Non-organic limbs don't burn
 						limb.drop_limb()
-						limb.visible_message(span_warning("[src]'s [limb.name] crumbles into ash!"))
+						limb.visible_message(span_warning("[src]'s [limb.plaintext_zone] crumbles into ash!"))
 						qdel(limb)
 					else
 						limb.drop_limb()
-						limb.visible_message(span_warning("[src]'s [limb.name] detaches from [p_their()] body!"))
+						limb.visible_message(span_warning("[src]'s [limb.plaintext_zone] detaches from [p_their()] body!"))
 	if(still_has_limbs)
 		return
 
@@ -701,7 +700,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/proc/can_heartattack()
 	if(!needs_heart())
 		return FALSE
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || (heart.organ_flags & ORGAN_SYNTHETIC))
 		return FALSE
 	return TRUE
@@ -721,7 +720,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
  * related situations (i.e not just cardiac arrest)
  */
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)
 		return FALSE
 	else if(!needs_heart())
@@ -732,7 +731,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!can_heartattack())
 		return FALSE
 
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!istype(heart))
 		return
 
