@@ -26,11 +26,11 @@
 		if(!overflow)
 			law_datum.owner.add_hacked_law(laws[1])
 		else
-			law_datum.owner.replace_random_law(laws[1],list(LAW_ION,LAW_HACKED,LAW_INHERENT,LAW_SUPPLIED))
+			law_datum.owner.replace_random_law(laws[1], list(LAW_ION, LAW_HACKED, LAW_INHERENT, LAW_SUPPLIED), LAW_HACKED)
 	else
 		if(!overflow)
 			law_datum.add_hacked_law(laws[1])
 		else
-			law_datum.replace_random_law(laws[1],list(LAW_ION,LAW_HACKED,LAW_INHERENT,LAW_SUPPLIED))
+			law_datum.replace_random_law(laws[1], list(LAW_ION, LAW_HACKED, LAW_INHERENT, LAW_SUPPLIED), LAW_HACKED)
 	return laws[1]
 

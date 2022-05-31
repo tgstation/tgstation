@@ -12,12 +12,12 @@
 			if(!overflow)
 				law_datum.owner.set_zeroth_law(templaw)
 			else
-				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED,LAW_ZEROTH,LAW_ION))
+				law_datum.replace_random_law(templaw, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ZEROTH, LAW_ION), LAW_ZEROTH)
 		else
 			if(!overflow)
 				law_datum.set_zeroth_law(templaw)
 			else
-				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED,LAW_ZEROTH,LAW_ION))
+				law_datum.replace_random_law(templaw, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ZEROTH, LAW_ION), LAW_ZEROTH)
 
 /obj/item/ai_module/zeroth/onehuman
 	name = "'OneHuman' AI Module"

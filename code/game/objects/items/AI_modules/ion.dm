@@ -28,12 +28,12 @@ CONTAINS:
 		if(!overflow)
 			law_datum.owner.add_ion_law(laws[1])
 		else
-			law_datum.owner.replace_random_law(laws[1],list(LAW_ION,LAW_INHERENT,LAW_SUPPLIED))
+			law_datum.owner.replace_random_law(laws[1], list(LAW_ION, LAW_INHERENT, LAW_SUPPLIED), LAW_ION)
 	else
 		if(!overflow)
 			law_datum.add_ion_law(laws[1])
 		else
-			law_datum.replace_random_law(laws[1],list(LAW_ION,LAW_INHERENT,LAW_SUPPLIED))
+			law_datum.replace_random_law(laws[1], list(LAW_ION, LAW_INHERENT, LAW_SUPPLIED), LAW_ION)
 	return laws[1]
 
 /obj/item/ai_module/toy_ai/attack_self(mob/user)

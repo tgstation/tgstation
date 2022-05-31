@@ -46,8 +46,9 @@
 		var/included_lawsets = list(law_datum.supplied, law_datum.ion, law_datum.hacked, laws)
 
 		// if the ai module is a core module we don't count inherent laws since they will be replaced
-		if(!istype(src, /obj/item/ai_module/core))
-			included_lawsets += law_datum.inherent
+		// however the freeformcore doesn't replace inherent laws so we check that too
+		if(!istype(src, /obj/item/ai_module/core) || istype(src, /obj/item/ai_module/core/freeformcore))
+			included_lawsets += list(law_datum.inherent)
 
 		for(var/lawlist in included_lawsets)
 			for(var/mylaw in lawlist)
@@ -104,12 +105,12 @@
 			if(!overflow)
 				law_datum.owner.add_inherent_law(templaw)
 			else
-				law_datum.owner.replace_random_law(templaw,list(LAW_SUPPLIED))
+				law_datum.owner.replace_random_law(templaw, list(LAW_INHERENT, LAW_SUPPLIED), LAW_INHERENT)
 		else
 			if(!overflow)
 				law_datum.add_inherent_law(templaw)
 			else
-				law_datum.replace_random_law(templaw,list(LAW_SUPPLIED))
+				law_datum.replace_random_law(templaw, list(LAW_INHERENT, LAW_SUPPLIED), LAW_INHERENT)
 
 /obj/item/ai_module/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums

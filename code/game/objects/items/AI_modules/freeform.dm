@@ -53,7 +53,12 @@
 	..()
 
 /obj/item/ai_module/supplied/freeform/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	..()
+	if(!overflow)
+		..()
+	else if(law_datum.owner)
+		law_datum.owner.replace_random_law(laws[1], list(LAW_SUPPLIED), LAW_SUPPLIED)
+	else
+		law_datum.replace_random_law(laws[1], list(LAW_SUPPLIED), LAW_SUPPLIED)
 	return laws[1]
 
 /obj/item/ai_module/supplied/freeform/install(datum/ai_laws/law_datum, mob/user)
