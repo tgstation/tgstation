@@ -1163,6 +1163,12 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	/// if successful, this looks like "icons/path/to/dmi_file.dmi"
 	var/icon_path = ""
 
+	if(isatom(icon) || istype(icon, /image) || istype(icon, /mutable_appearance))
+		var/atom/atom_icon = icon
+		icon = atom_icon.icon
+		//atom icons compiled in from 'icons/path/to/dmi_file.dmi' are weird and not really icon objects that you generate with icon().
+		//if theyre unchanged dmi's then they're stringifiable to "icons/path/to/dmi_file.dmi"
+
 	if(isicon(icon) && isfile(icon))
 		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and arent really /icon objects,
 		///but they pass both isicon() and isfile() checks. theyre the easiest case since stringifying them gives us the path we want
@@ -1191,14 +1197,6 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		var/rsc_ref_string = "[locate(rsc_ref_ref)]"
 
 		icon_path = rsc_ref_string
-
-	else if(isatom(icon) || istype(icon, /image) || istype(icon, /mutable_appearance))
-		var/atom/atom_icon = icon
-		icon = atom_icon.icon
-		//atom icons compiled in from 'icons/path/to/dmi_file.dmi' are weird and not really icon objects that you generate with icon().
-		//if theyre unchanged dmi's then they're stringifiable to "icons/path/to/dmi_file.dmi"
-
-		return get_icon_dmi_path(icon)
 
 	if(is_valid_dmi_file(icon_path))
 		return icon_path
