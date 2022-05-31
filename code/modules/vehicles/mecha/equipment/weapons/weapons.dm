@@ -16,9 +16,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE)
 	if(!..())
 		return FALSE
-	if(mech.mech_type & EXOSUIT_MODULE_CONCEALED_WEP_BAY)
-		return TRUE
-	if(istype(mech, /obj/vehicle/sealed/mecha/combat))
+	if(mech.mech_type & EXOSUIT_MODULE_COMBAT)
 		return TRUE
 	return FALSE
 
