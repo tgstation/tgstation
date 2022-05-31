@@ -29,6 +29,8 @@
 	var/tool_mine_speed = 4 SECONDS
 	///How long it takes to mine this turf without tools, if it's weak.
 	var/hand_mine_speed = 15 SECONDS
+	///Can you mine this turf with ranged weapons? (i.e plasma cutters or the kinetic accelerator)
+	var/can_mine_with_projectiles = TRUE
 
 /turf/closed/mineral/Initialize(mapload)
 	. = ..()
@@ -443,6 +445,7 @@
 
 /turf/closed/mineral/volcanic/lava_land_surface/hardened
 	tool_mine_speed = 20 SECONDS
+	can_mine_with_projectiles = FALSE
 
 /turf/closed/mineral/ash_rock //wall piece
 	name = "rock"

@@ -187,6 +187,12 @@
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "fokof"
 
+/obj/structure/fluff/sale_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with the words 'sale :)' written in some sort of red paint."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "salesign"
+
 /obj/structure/fluff/big_chain
 	name = "giant chain"
 	desc = "A towering link of chains leading up to the ceiling."

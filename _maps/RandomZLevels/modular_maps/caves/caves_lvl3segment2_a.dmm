@@ -1,49 +1,108 @@
-"a" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"b" = (/obj/modular_map_root/caves{key = "caves_lvl3segment3"; name = "lvl3segment3"},/turf/template_noop,/area/template_noop)
-"n" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"w" = (/turf/closed/indestructible/riveted,/area/template_noop)
-"x" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"I" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"N" = (/turf/closed/indestructible/rock,/area/template_noop)
-"R" = (/turf/template_noop,/area/template_noop)
-"T" = (/turf/open/chasm/lavaland,/area/template_noop)
+"cU" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"de" = (/turf/closed/indestructible/riveted/boss,/area/template_noop)
+"dr" = (/obj/structure/stone_tile/block/cracked{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"eC" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block{dir = 8},/turf/open/indestructible/boss,/area/template_noop)
+"fh" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"fG" = (/obj/structure/flora/ash/seraka,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"gi" = (/obj/structure/spawner/skeleton{desc = "A pit full of bones, and it seems like they have a bone to pick with you."},/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"hh" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"hL" = (/obj/structure/stone_tile/block{dir = 8},/obj/structure/stone_tile/block/burnt{dir = 4},/turf/open/indestructible/boss,/area/template_noop)
+"hQ" = (/turf/open/chasm/lavaland,/area/template_noop)
+"hT" = (/turf/closed/indestructible/riveted,/area/template_noop)
+"if" = (/obj/structure/stone_tile/surrounding_tile{dir = 4},/turf/open/indestructible/boss,/area/template_noop)
+"jC" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"kd" = (/obj/structure/stone_tile/block/cracked{dir = 1},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"lA" = (/turf/closed/indestructible/rock,/area/template_noop)
+"mD" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block/cracked{dir = 8},/turf/open/indestructible/boss,/area/template_noop)
+"nx" = (/obj/structure/flora/ash/stem_shroom,/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"oa" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)},/obj/structure/spider/stickyweb,/turf/open/indestructible/boss,/area/template_noop)
+"ob" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/structure/closet/crate,/turf/open/indestructible/boss,/area/template_noop)
+"oV" = (/obj/structure/flora/ash/tall_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"pd" = (/obj/structure/stone_tile/slab,/obj/structure/table/wood,/turf/open/indestructible/boss,/area/template_noop)
+"pw" = (/obj/structure/stone_tile/block{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"pz" = (/obj/structure/closet/crate/grave,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"qj" = (/obj/effect/decal/cleanable/cobweb,/obj/structure/closet/crate/grave,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"qU" = (/obj/structure/stone_tile/block,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"ru" = (/obj/structure/necropolis_gate,/obj/machinery/door/puzzle/keycard{name = "necropolis gate"; puzzle_id = "justwipedouttomatotown"; open_message = "You slot the blade into the hole and it shudders to life, grinding open."; desc = "A strange gate with runes on it with a slot seemingly for some sort of key, or maybe blade?"},/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block{dir = 8},/turf/open/indestructible/boss,/area/template_noop)
+"tq" = (/obj/structure/stone_tile/block/cracked{dir = 4},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"tM" = (/obj/structure/stone_tile/block{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"tP" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile/block{dir = 1},/obj/structure/mineral_door/transparent,/turf/open/indestructible/boss,/area/template_noop)
+"tS" = (/obj/structure/stone_tile/block{dir = 8},/obj/structure/stone_tile/block/cracked{dir = 4},/turf/open/indestructible/boss,/area/template_noop)
+"uQ" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"uS" = (/obj/structure/stone_tile/block/cracked{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"vM" = (/obj/structure/flora/rock/pile,/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"xo" = (/obj/structure/stone_tile/surrounding,/obj/structure/stone_tile/center,/turf/open/indestructible/boss,/area/template_noop)
+"zq" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/mimic/crate{faction = list("mimic", "skeleton")},/turf/open/indestructible/boss,/area/template_noop)
+"zt" = (/obj/structure/stone_tile/block{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"zA" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile/surrounding_tile{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"zI" = (/obj/modular_map_root/caves{key = "caves_lvl3segment3"; name = "lvl3segment3"},/turf/open/indestructible/boss,/area/template_noop)
+"zJ" = (/turf/template_noop,/area/template_noop)
+"BO" = (/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/structure/closet/crate/grave,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"CP" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)},/turf/open/indestructible/boss,/area/template_noop)
+"DC" = (/obj/structure/stone_tile/slab,/turf/open/indestructible/boss,/area/template_noop)
+"DP" = (/obj/structure/stone_tile/block/cracked{dir = 5},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Ea" = (/obj/structure/flora/ash/seraka,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"Gu" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile/surrounding_tile{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"GP" = (/obj/structure/stone_tile/surrounding_tile{dir = 1},/turf/open/indestructible/boss,/area/template_noop)
+"Ia" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"Ji" = (/obj/structure/stone_tile/block/cracked{dir = 9},/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Kt" = (/turf/open/indestructible/boss,/area/template_noop)
+"KY" = (/obj/structure/stone_tile/slab,/obj/structure/closet/crate,/turf/open/indestructible/boss,/area/template_noop)
+"LN" = (/obj/item/stack/sheet/bone,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"Me" = (/obj/structure/closet/crate/grave,/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"Pw" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Py" = (/obj/structure/stone_tile/slab,/obj/structure/spider/stickyweb,/turf/open/indestructible/boss,/area/template_noop)
+"Qc" = (/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"QC" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/structure/table/wood,/turf/open/indestructible/boss,/area/template_noop)
+"QV" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb/cobweb2,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)},/obj/structure/spider/stickyweb,/turf/open/indestructible/boss,/area/template_noop)
+"RK" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/indestructible/boss,/area/template_noop)
+"RQ" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"SA" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb,/turf/open/indestructible/boss,/area/template_noop)
+"Tk" = (/obj/structure/necropolis_gate,/obj/structure/stone_tile/slab,/turf/open/indestructible/boss,/area/template_noop)
+"TR" = (/obj/modular_map_connector,/turf/closed/indestructible/riveted/boss,/area/template_noop)
+"Vw" = (/obj/structure/stone_tile/slab/cracked,/turf/open/indestructible/boss,/area/template_noop)
+"Ws" = (/obj/effect/decal/remains/human,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"Wv" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block{dir = 8},/obj/structure/mineral_door/transparent,/turf/open/indestructible/boss,/area/template_noop)
+"XX" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/mimic/crate{faction = list("mimic", "skeleton")},/obj/item/keycard/office{puzzle_id = "justwipedouttomatotown"'; icon = 'icons/obj/cult/items_and_weapons.dmi'; icon_state = "render"; name = "ritualistic blade"; desc = "A blade used in various rituals. This one has markings on it that seem to match the surrounding necropolis walls."},/turf/open/indestructible/boss,/area/template_noop)
+"YT" = (/obj/structure/stone_tile/slab,/obj/structure/spider/stickyweb,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)},/turf/open/indestructible/boss,/area/template_noop)
+"ZO" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb,/obj/structure/table/wood,/turf/open/indestructible/boss,/area/template_noop)
 
 (1,1,1) = {"
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxIxxxwwwwwwwwwwwwwwwwwwwww
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxxxxxxaaaaaaaaaaaaaaaaaaaaa
-NaaaaaaaaaaaaaaaaaaaaaaaaaaxxxaaaaaaaaaaaaaaaaaaxxxaaaanaaaanaaanaannaaaaaaaaaaaaaaaaaaaaaaaaaaxxxxxxxaaaaannnnnnaaaanaaaaN
-NaaaaaaaaxxaTaaaxxxxaaaaxxxxxxxaaaaxxxaxaaaxxxxxxTxxnnnnnnannaaannaannaaaaaaaxxxxxxaaaaaaaxxxxxxxxxxxaaaannnnnnnnnnnnnnnanN
-NaaaaaaxxxxxTxxxxxxxxxxxxxaaaaaaxxxxxxxxxxxxxxxxxTxxnnnnnnnnnnannnnanaaxnxxxxxxxxxxxxaaaxxxxxxxxxxxxxxaannnnaaaannnnnnnnnnN
-NaaaxxxxxxxxTxxxxaxxxxxaaaaaaaaaxxxxxaxxxxxxxxxxxTxxxxannnnnnnnnnnnnnaaanaaaanxxxxxxxxxxxxxxxxxxxxxxxxxnnnnnxaaaaanaannnnnN
-NaaxxxxaaaxxTTaaaaxxxxxxxaaaaaxxxxxaaaaaaxxxxxxxTTxxxxxxnnnnnxxnnnnnnnnnnaxxnnxxxxnxxxxxxxxxxxxxxxxxxxxnnnnxxaaaaaaaaaaannN
-NaaxxxxaaaxxTTaaaaaaaxxxxaaaaaxxxxxxxaaaaaaaaaxxTTxxxxxxxxnxxxxnnnnnnnnnnnaaannxxxnnxxxxxxxxxxxxxxxaxxxxnnxxxxxxxxaaaaaannN
-NaxxxxxaaaaxTTTTTaaaaaxxxaaaaxxxxxxxxxxxaaaaaaxTTTaxxxxxxxxxxxxxxnxnnnnnnnnnanaaannnnxxxxxxxxxxxxxxaxxxxxxxxxxxxxxxxxxannnN
-NaxxxxxxaaaaaTTTTTaaaaxxxxaaaaxxxxxxxxxxxxaaaaxTTTaaaxxTTTTTTxxxxxxaannnnnnnnnaannnnnxxxxxxxxxxxxxaaxxxxxxxxxxxxxxxxxxaannN
-NaaxxxxxaaaaaTTTTTaaaaaxxxxaaaaaaxxxxxxxxxaaaxxTTTaaaaxxxTTTTTxxxxxaaaannnnnnnnannnnnnxxxxxxxxxxaaaaaxxxxxxxaxxxxxxxxxaaanN
-NaaxxxxxxaaaaaTTTTTTaaaxxxxaaaaaaaxxxxxxxxxxxxTTTTaaaaxxxxxTTTTTxxxxaaaanannnnnnnnnnnnxxxxaxxxxaaaaaaaxxxxaaaaaxxxxxxxaannN
-NaaxxxxxxaaaaaTTTTTTxaaxxxxxaaaaaaaaaxxxxxxxxTTTTTaaaaaaxxxxxTTTTTxxaaaaaaannnnnnnnnnnxxxxaaxxaaaaaannxxxaaaaaaxxxxxxxaaanN
-NaaaxxxxxaaaaaaxTTTTxxxxxxxxxaaaaaaaaaxxxxxxxTTTTaaaaaaaaxxxxxxTTTxxxaananannnnnnnnnnxxxaaaaxxaaaaaannxxxaaaaaaaxxxxxxxaanN
-NaaaaaxxxxxxxxxxTTTTxxxxxxxxxxxxxaaaaaaaxaxxxTTTTxaaaaaaaaxxxxxTTTTxxaannnnnannnnnnnnxxxaaaaaxaaaaaannnnnaaaaaaaaaaaxxxaaaN
-NaaaaaxxxxxxxxxxTTTTTTaaaaxxxxxxxxxxaaaaaaaaaTTTTxaaaaaaaaaaaxxxxTTxxaaaanaaaaannnnnxxxaaaaaaxaaaaaaannnnnaaaaaaaaaaxxxaaaN
-NaaaaaaxxxxxxxxxaaxTTTaaaaaaaxxxxxxxxaaaaaaaaTTTxxxxaaaaaaaaaaxxxxTxxxaaanaaaaaannnxxxxxaaaaaaaaaaaannnnnnaaaaaaaaaaxxxxxaN
-NaaxaaaaaaaaaaaaaaxTTTTTaaaaaaxxxxxxxaaaaaaaaTTTxxxxaaaaaaaaaaaxxxxxxxxaxaaaaaaaanaxxxxxaaaaaaaaaaaanxxxxxaxxxxxaaaaxxxxxaN
-NaaxaaaaaaaaaaxxxaxxaTTTaaaaaaaaaxxxxxaaaaaaTTTTxxxxxxxxxxxxxaxxxxxxxxxaxaaaaaaannaxxxxxxxxxaaaaaaaaxxxxxxxxxxxxxxaaaaxxxaN
-NaaxaaaaaaaaaxxxxxxxaTTTaaaaaaaaxxxxxxaaaaaaTTTTxxxxxxxaaxxxxaaaxxxxxxxxxxxaaaannnaaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxaaaaaN
-NaaxxaaaaaaaxxxxxxxxaTTTTTaaaaaaxxxxxaaaaaaaTTTxxxxxxxxxaaaxxxaaaaxxxxxxxxxaaaaannaaaxxxxxxxxxxxxxxxaannnaaaaxxxxxxxxaaaaaN
-NaaxxaaaaaxxxxxxxxxxaaaTTTTTTTxxxxxxxaaaaaaaTTTxxaxxxxxxxaaxxxxxaaxxxxxxxxxxxxaaanaaaaxxxaxxaxxxxxxaaaannaaaaaxxxxxxxaaaaaN
-NaaxxaaaaaxxxxxxxxxxaaaTTTTTTTTTTTTTTTTaaaaaaTTxaaaxxxxxxaaaaxxxaaaaaxxxxxxxxxaaaaaaaaxaaaaaaxxxxxaaaaannaaaaaxxxxxxxxaaaaN
-NaaxxaaaaxxxxxxxxnaaaaaaaTTTTTTTTTTTTTTTTTTTTTTxaaaxxxxxxxxaaaxxxaaaaaaaaxxxxxxxaaaaaaxaaaaaaxxxxxaaaannnnnaaaaaaaaxxxaaaaN
-NaaxxaaaaxxxxxxnnnnaaaaaaTTTTTxxxaaaaaaaxxxxxTTxaaaaxxxxxxxxaaaxxxxaaaaaxxxxxxxxxxxxaaxaaaaaaaxxxxaaaannnnnnaaaaaaxxxxaaaaN
-NaaxxaaaxxxxxxnnnnnnnnaaaaaaaaxxxaaaaaaxxxxxxTTxaaaaaxxxxxxxxxaaaaaaaaaaaaaaxxxxxxxxaaaaaaaaaaaaaaaaannnnnnnnaaaaxxxxxaaaaN
-NaaaxxaaxxxxxxnnnnnnnnnnnnnnnxxxxxxxaaaxxxxxTTTaaaaaaxxxxxxxxxaaaaaaaaaaaaaaxxxxxxxxaaaaaaaaaaaaaaaaannnnnnnnaaaaxxxxxaaaaN
-NaaaxxxxxxxxxnnnnnnnnnnnnnnnnnnnxxxxxxxxxxxxTTTaxxxaaaaxxxxxxxxxxxaaaaaaaxxxxxxxxxxxxxaaaaaaaaaaaaaaannnnnnaaaaaaaxxxxaaaaN
-NaaxxxxxxxxxxnnnnnnnnnnnnnannaaaaaxxxxxxxaxxTTTxxxxxxaaaaaxxxxxxxxaaaaaxxxxxaxxxxxxxxaxxaxxaaaaaaaaaaaannnaaaaaaaaxxaaaaaaN
-NaxxxxaaxxxxxnnnnnnaannnaaaaaaaaaaaaaaaaaTTTTTTxxxxxxaaaaaaaaaxxxxaaaaaxxxxaaxxxxxxxxxxxxxxxxaaaaaaaaannnnnnaaaxxxxxxaaaaaN
-NaxxaaaaaxxxxnnnnnnaaaaaaaaaaaaaaaaaaaTTTTTTTTTxxxxxxaaxxxaaaaxxxxaaaaxxxxaaaaaaxxxxaaaxxxxxxxxaaaaxxxxxxxxxxxxxxxxxxaaaaaN
-NaxaaaaaaxxxxnnnnnaaaaaTTTTTTTTTTTTaaaTTTTTaaTTxxxxxxxxxxxxxxxxxxxxaaaxxxaaaaaaaaaaaaaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxaaaaaN
-NaxaaaaaaxxxxnnnnnaaTTTTTTTTTTTTTTTTTTTTTTTaaTTxxxxxxxxxxxxxxxxxxxxaaaxxxaaaaaaaaaaaaaaaaxxxxxxxxxxxxxxxxnnaaaaxxxxaaaaaaaN
-NaxaaaaaxxxxxaaaaaaaaaaaaaaaaaTTTTTTTTaaaaaaaTaaaaaaxxxxxxxxaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaxaaxxxxaaaannnnnnnaaaaaaaaaaaaaN
-NaaaaaaaxxxxxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaannnnnnnnnaaaaaaaaaaaaN
-NaaaaaaaxxxxxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaN
-RRRRRRRRRRbRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+hThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThTdedeDCTRdedededehThThThThThThThThThThThThThThThThThThThT
+IaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIadededededeIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIadededededededededeTkdedededededededededeIaIaIaIaIaIaIaIaIaIaIaIaIaIaIa
+lAIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIacUcUcUIaIaIaIaIaIaIaIaIadeDCzqRKdedeIaIaIaIaIaIaIaIaIaIafhIaIaIaIafhIaIaIafhIaIafhfhIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIadedededededeGPKtifdededededededeIafhfhfhfhfhfhIaIaIaIafhIaIaIaIalA
+lAIaIaIaIaIaIaIaIauQdededededeIacUcUcURQIaIaIaIacUcUcUcUcURQcUIaIaIaIaRQcUcUIadeDCDCDCDCWvpwRQRQhhhQcUcUfhfhfhfhfhfhIafhfhIaIaIafhfhIaIafhfhIaIaIaIaIaIaIacURQRQRQRQcUIaIaIaIaIaIaIaRQcUdededeDCDCxoDCDCdededededefhfhfhfhfhfhfhfhfhfhfhfhfhfhfhIafhlA
+lAIaIaIaIaIaIaRQcUcUdeSADCDCWvpwuQRQRQRQRQhhRQcUcUcUIaIaIaIaIaIacUuQcUuQcUcUcUdedededededecUuQRQRQhQcUcUfhfhfhfhfhfhfhfhfhfhIafhfhfhfhIafhIaIacUfhcUcUcUcUcUcURQhhRQcUcUcUIaIaIacURQhhRQcUcUcUzADCDCDCGucUdedeIafhfhfhfhIaIaIaIafhfhfhfhfhfhfhfhfhfhlA
+lAIaIaIacUcUcUuQcUtMWvDCDCKYdeuQuQIaRQRQRQRQRQIaIaIaIaIaIaIaIaIafGWscUcUfGIacURQRQRQRQcUuQcUdededededecUcUcUIafhfhfhfhfhfhfhfhfhfhfhfhfhfhIaIaIafhIaIaIaIafhcUcURQRQcUcUcURQcUcUcURQRQRQcUcUcUcUzADCGucUcURQRQfhfhfhfhfhcUIaIaIaIaIafhIaIafhfhfhfhfhlA
+lAIaIaRQcUuQRQIaIaIadededededeIaIaIahhRQRQRQcUcUcUIaIaIaIaIaWsQcLNQccUIaIaIaIaIaIahhRQuQcUtMWvDCDCRKdecUuQcURQcUfhfhfhfhfhRQhhfhfhfhfhfhfhfhfhfhfhIacUcUfhfhcUcUcUcUfhcUcUcUcUcUcUcURQcUcUcUcUcUcUqUcUcUcUcUcUfhfhfhfhcUcUIaIaIaIaIaIaIaIaIaIaIafhfhlA
+lAIaIacUcURQhhIaIaIacUcUhQhQIaIaIaIaIaIaIauQcUuQdedededededededeWsEaLNLNWsIaIaIaIaIaIaIaIaIadeDCDCDCWvpwcUcUcUcUcUcUfhcURQRQRQfhfhfhfhfhfhfhfhfhfhfhIaIaIafhfhcUcUcUfhfhcUcUcUcUcUcURQcUcURQRQuQcUcUcUIacUcUcUcUfhfhcUcUcUcURQRQcUcUIaIaIaIaIaIafhfhlA
+lAIacUcUcURQhhIaIaIaIacUhQhQhQhQhQIaIaIaIaIauQtMWvoaDCPyDCPyQVdeEaQcgiQcEacUuQRQIaIaIaIaIaIadededededecUcUuQcUcUcUcUcUcUcUcURQRQcUfhcUfhfhfhfhfhfhfhfhfhIafhIaIaIafhfhfhfhcUcUcUcUcURQcUcURQcUcUcUcUcUIacUcUcUcUcUcUcUcUcUcUcUcUcUcUcURQcUcUIafhfhfhlA
+lAIaRQcUcURQRQRQIaIaIaIaIahQhQhQhQhQIaIaIaIacUuQdePyPyYTDCDCPydeLNWsLNEaWsQcLNRQRQhhIaIaIaIahhhQhQhQIaIaIacUcUhQhQhQhQhQhQcUcUcUcUcUcUIaIafhfhfhfhfhfhfhfhfhIaIafhfhfhfhfhcUcUcUcUcUcUcUcUjCuQztuQcUIaIacUcUcUcUcUcUcUcUcUcUcUcUcUcURQhhRQcUIaIafhfhlA
+lAIaIacUcUcURQcUIaIadedededehQhQhQhQIaIaIaIaIacUdedededePyDCPydeIaWsEaWsQcLNuQuQRQRQIaIaIaRQhhhQhQhQIaIaIaIacUcUcUhQhQhQhQhQcUcUcUcUcUIaIaIaIafhfhfhfhfhfhfhfhIafhfhfhfhfhfhcUcURQcUcUcUjCjCdetPdedeIaIaIacUcUcURQRQcUcUIaRQcUcUcUcURQRQRQcUIaIaIafhlA
+lAIaIacUcUcUcUcUcUIadeZOobdehQhQhQhQhQhQIaIaIacUcUcUcUdeYTDCDCdedeIaQcQcWsQcdededecURQcURQRQhQhQhQhQIaIaIaIacUcUcUcUuQhQhQhQhQhQcUcUcUcUIaIaIaIafhIafhfhfhfhfhfhfhfhfhfhfhfhcUcURQcUIajCjCjCdeDCDCdeIaIaIaIaRQRQhhRQIaIaIaIaIacUcUcUcURQRQcUIaIafhfhlA
+lAIaIaRQRQRQcURQcUIadeDCDCdehQhQhQhQhQhQcUIaIaRQRQcUcUdededeDCRKdeIaIaIaIacUdeMedecUcUcUcUhQhQhQhQhQIaIaIaIaIaIadededededehQhQhQhQhQcUcUIaIaIaIaIaIaIafhfhfhfhfhfhfhfhfhfhfhcURQRQcUIaIadededeDCDCdededefhfhcURQRQIaIaIaIaIaIacUcUcUcURQcUcUIaIaIafhlA
+lAIaIaIahhRQcUcUcUIadetPdedeIacUhQhQhQhQcUcUcURQhhRQcUIaIadeDCoadeIaIaIaIadedetPdedeRQcUcUhQhQhQhQcUIaIaIaIaIaIadeDCDCDCWvpwcUhQhQhQcUcUcUIaIafhIafhIafhfhfhfhfhfhfhfhfhfhcURQhhIaIaIaIadepzWvDCDCWvBOdefhfhcUcUcUIaIaIaIaIaIaIacUcUcUcUcUcUcUIaIafhlA
+lAIaIaIaIaIauQcUcUuQcUqURQcUcURQhQhQhQhQcUcURQRQRQcUIaIaIadePyPydeIaIaIaIadeSADCDCdecUuQdededededeuQcUIaIaIaIaIadeDCDCDCdeRQuQhQhQhQhQcURQIaIafhfhfhdedededefhfhfhfhfhfhfhcURQhhIaIaIaIadededeDCDCdededefhfhfhfhfhIaIaIaIaIaIaIaIaIaIaIacUcUcUIaIaIalA
+lAIaIaIaIaIauQuQztcUuQcUcURQRQRQhQhQhQhQhQhQIaIaIaIaIaIaIadetPdedeIaIaoVIadeDCDCDCdecUcUdeDCDCDCWvpwcUcUcUIaIaIadededededehhRQcUcUhQhQcURQIaIaIaIafhdepdobdeIafhfhfhfhfhcURQRQIaIaIaIaIaIacUdeKYKYdeIaIaIafhfhfhfhfhIaIaIaIaIaIaIaIaIaIacUcUcUIaIaIalA
+lAIaIaIaIaIaIadetPdededecURQhhhhIaIacUhQhQhQIaIaIaIaIaIaIaIaqUuQcUoVIaoVdededetPdedeuQtMWvDCDCKYdecUcUcUcUIaIaIaIaIaIaIaIaIaRQRQcUcUhQRQhhRQIaIadededeDCDCdededefhfhfhcUcUcURQcUIaIaIaIaIaIadedededeIaIafhfhfhfhfhfhIaIaIaIaIaIaIaIaIaIacUcUcUcUcUIalA
+lAIaIajCIaIaIadeDCDCQCdeIaIaIaIaIaIacUhQhQhQhQhQIaIaIaIaIaIaoVcURQRQcUuQdeDCDCDCDCdeIaRQdededededecUuQcUIaIaIaIaIaIaIaIaIaIaIacUcUcUcURQRQRQcUIadepzWvDCDCWvpzdeIafhIacUcUcUcUcUIaIaIaIaIaIaIaIaIaIaIaIafhcUuQcURQcUIacUcUcUcUcUIaIaIaIahhcUcUcUcUIalA
+lAIaIajCIaIaIadeDCDCKYdeIaIaRQhhRQIacUcUIahQhQhQIaIaIaIaIaIaIaRQRQhhRQtMWvDCDCDCKYdeIahhhQhQhQhQcUcUztcUcURQcUcUcURQRQcUcUIacUcUcUcUcURQRQcUcUIadededeDCDCdededefhfhIacUcUcUcUuQcUcURQcUIaIaIaQcWsIaIaIacUcUuQcUcUcUcUcUcUcUcUcUcUcUIaIaIaIacUcUcUIalA
+lAIaIajCIaIadededetPdededecURQRQcUcULNfGIahQhQhQIaIaIaIaIaIaIacURQRQcUuQdeDCDCDCDCdeIaIahQhQhQhQcUdetPdedeuQcUIaIahhRQRQcUIaIaIacUcUcUcUcUcUcUcUcUcUdeDCDCdeIafhfhfhIaIaIacUcUcUcUQcWsQcLNQcQcLNWsQcWsQcWscUcUcUuQuQcUcUcUcUcUcUcUcURQhhRQIaIaIaIaIalA
+lAIaIaRQRQIadeqjWvDCDCDCdecUuQRQfGEaEaWsIahQhQhQhQhQIaIaIaIaIaIaRQuQuQcUdedededededeIaIahQhQhQRQRQdeDCDCdecUcUcUIaIaIaRQcUcUIaIaIaIacUcUcUcUcUcUuQuQdetPdedeIaIafhfhIaIaIacUuQcUuQcUcULNWsQcWsQcEaLNLNQcIaIafhfhfhIanxnxIaRQRQcUcUcURQvMRQIaIaIaIaIalA
+lAIaIaRQhhIadededeDCDCDCWvpwcUfGQcWsgiLNEaIaIahQhQhQhQhQhQhQcUcUuQztoVcUcUIaIaIaIaIaIaIahQhQhQhhRQdeDCDCdecUcUcURQIaIacUcUcUcUcUIaIacUcURQcUcUcUcUcUuQqURQhhIaIaIafhIaIaIaIacURQcUIacUcUIafGQcQcgiWsRQIaIaIaIafhfhIaIaIaIaIaRQRQcUcUcUcURQIaIaIaIaIalA
+lAIaIaRQRQIaIaIadededededeuQRQcUWsLNEaWsWsIaIahQhQhQhQhQhQhQhQhQdetPdededehQhQIaIaIaIaIaIahQhQRQIadeDCDCdecUcUcUcUIaIaIaIacUcUcUIaIaIaIaIacUcUcUcURQcUuQRQRQIaIaIaIaIaIaIaIacUIaIaIaIaIaIaRQWsQcLNQcIaIaIaIaIafhfhIaIaIaIaIahhRQRQRQcUcUcUcUIaIaIaIalA
+lAIaIaRQRQIaIaIaIacURQcUcUcURQcUQcfhQcLNEaIaIaIaIahQhQhQhQhQhQhQdePyPyRKdededehQdededehQdededeRQIadedededeRQcUcUcUcUcUIaIaIacUcUcUIaIaIaIaIaIaIaIaRQjCcUuQRQcUcUIaIaIaIaIaIacUIaIaIaIaIaIafGEaWsQcWsIaIaIaIafhfhfhfhfhIaIaIaIaIaIaIaIacUcUcUIaIaIaIalA
+lAIaIajCRQIaIaIaIacUcUcUcUcUcUfhfhfhWsIaIaIaIaIaIahQhQhQhQhQcUcUdePyPyCPdeqjdeIadepzdecUdeqjdeRQIaIaIaIacURQRQRQcUcUcUcUIaIaIacUcUcUcUIaIaIaIaIaRQhhRQcUcUcUcUcUcUjCRQRQIaIacUIaIaIaIaIaIaIacULNQcfGIaIaIaIafhfhfhfhfhfhIadededededecUcUcUcUIaIaIaIalA
+lAIaIacURQIaIaIacUcUcUcURQRQfhfhfhfhfhfhfhfhIaIaIaIaIaIaIaIacUcUdeDCPyDCdetPdededetPdededetPdedeIaIaIaIaIaRQhhRQcUcUcUcURQRQIaIaIaIaIaIaIaIaIaIaIaIaIaIacUcUcUcUcUcUjCjCIaIaIaIaIaIadedededeIaQcIaIaIaIaIafhfhfhfhfhfhfhfhdeDCDCDCdeuQcUuQcUIaIaIaIalA
+lAIaIaIacUjCIaIacUcUcURQRQhhfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhcUcUcUdeCPDCDCDCDCPyPyYTPyPyDCCPDCDCdeIaIaIaIaIacURQcUcUcUcURQRQhhIaIaIaIaIaIaIaIaIaIaIaIaIaIacUcUcUztcUcURQcUIaIaIaIaIaIadeKYQCdeIaIaIaIaIaIaIafhfhfhfhfhfhfhfhdeDCDCDCWvpwcUcUcUIaIaIaIalA
+lAIaIaIajCcUcURQcUcUuQcURQfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhdeDCDCDCPyYTPyPyPyDCDCDCDCDCDCWvpwPwPwIaIaIaIacUcUcUcUcUcURQcUcUdededededeIaIaIaIacUcUcUcUcUdetPdecUcUcUcUcUIaIaIaIadeDCDCdeIaIaIaIaIaIaIafhfhfhfhfhfhIaIadededededeuQcUcUcUIaIaIaIalA
+lAIaIaRQcURQRQRQuQcURQcUuQfhfhfhfhfhfhfhfhfhfhfhfhfhIafhfhIaIaIadededededetPdedededededededededecUuQPwRQcUIaIaIaIaIacUcUcURQuQcUdeZOzqQCdeIaIacUcUcURQcUIacUdeDCdededecUcUIahhRQIauQdedetPdeIaIaIaIaIaIaIaIaIafhfhfhIaIaIaIaIaIaIaIacUcUIaIaIaIaIaIalA
+lAIahhRQcURQhhRQcUDPztDPcUfhfhfhfhfhfhIaIafhfhfhIaIaIaIaIaIaIaIaIaIadeSADCDCDCDCDCDCdehQhQhQhQcUuQcURQhhRQIaIaIaIaIaIaIaIaIacUtMWvDCDCDCdeIaIaRQcUcUcUIaIacUdeDCDCRKdecURQRQRQRQcUcUcUcUqUIaIaIaIaIaIaIaIaIafhfhfhfhfhfhIaIaIacUcUcUcUcUcUIaIaIaIaIalA
+lAIaRQRQcURQRQuSJihLVweCDPkdfhfhfhfhfhIaIaIaIaIaIaIaIaIaIaIaIaIaIaIadepdKYpdKYpdXXpddehQhQhQhQRQcUuQRQRQRQIaIacUPwcUIaIaIaIacUcUdededededeIacUcUcUcUIaIaIaIadePyDCPydecUIaIaIacUcUcUcUcUcUcUcUIaIaIaIahhRQRQcUcUcUcUcURQcUcUcUcUcUcURQRQcUIaIaIaIaIalA
+lAIaRQIaIauQdrdexotSVwmDxodetqfhfhfhIaIaIaIaIahQhQhQhQhQhQhQhQhQhQhQdededededededededeIaIahQhQRQRQcUcUcURQcUcUcUcUcUcUcUcUcUuQuQcUcURQIaIaIacUcUcUIaIaIaIaIadeDCDCPydeIaIaIaIaRQRQRQRQRQcUcUcUcUcUcURQRQRQcUcUcUcUcUcUcUcUcUcUcUcURQhhRQcUIaIaIaIaIalA
+lAIacUIaIaIadrdedexoeCxodedetqfhfhfhIaIahQhQhQhQhQhQhQhQhQhQhQhQhQhQhQhQhQhQhQhQhQhQhQIaIahQhQhhRQRQPwcUcUcUcUcUcURQRQRQcUPwcUcUcURQRQIaIaIacURQcUIaIaIaIaIadeDCPyPydeIaIaIaIaIaIahhRQRQRQcUcUuQcUcUcUcUcUcUcUcUcUfhfhIaIaIaIacURQRQRQIaIaIaIaIaIaIalA
+lAIacUIaIaIaIadededeeCdededeIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIahQhQhQhQhQhQhQhQIaIaIaIaIaIaIahQIaIaIaIaIaIacUcUcURQRQhhRQcUIaIaIaIaIaIaIaIaIaIaIaRQIaIaIaIaIaIadededededeIaIaIaIaIaIaIaIaRQIaIauQuQuQcUIaIaIaIafhfhfhfhfhfhfhIaIaIaIaIaIaIaIaIaIaIaIaIalA
+lAIaIaIaIaIaIadededeeCdededeIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIahQIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIacUIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIafhfhfhfhfhfhfhfhfhIaIaIaIaIaIaIaIaIaIaIaIalA
+lAIaIaIaIaIadededederudedededeIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIalA
+zJzJzJzJzJzJzJdedeGPzIifdedezJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJzJ
 "}

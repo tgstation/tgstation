@@ -15,6 +15,8 @@
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
+		if(!M.can_mine_with_projectiles)
+			return BULLET_ACT_BLOCK
 		M.gets_drilled(firer, FALSE)
 		if(mine_range)
 			mine_range--

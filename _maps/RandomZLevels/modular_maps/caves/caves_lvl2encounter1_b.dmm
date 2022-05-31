@@ -1,7 +1,7 @@
 "a" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "b" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
 "c" = (/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"f" = (/obj/effect/mob_spawn/corpse/human/damaged{mob_name = "Grabs-The-Fishy"; mob_species = /datum/species/lizard/ashwalker; mob_type = /mob/living/carbon/human; outfit = /datum/outfit/ashwalker},/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"f" = (/obj/effect/mob_spawn/corpse/human/damaged{mob_name = "Grabs-The-Fishy"; mob_species = /datum/species/lizard/ashwalker; outfit = /datum/outfit/ashwalker},/obj/effect/decal/cleanable/blood/old,/obj/item/skeleton_key,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "g" = (/obj/structure/stone_tile/cracked{dir = 1},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
 "j" = (/obj/item/stack/ore/plasma{amount = 12},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "l" = (/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)

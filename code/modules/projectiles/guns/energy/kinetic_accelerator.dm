@@ -140,6 +140,8 @@
 			M.projectile_strike(src, target_turf, target, kinetic_gun)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
+		if(!M.can_mine_with_projectiles)
+			return BULLET_ACT_BLOCK
 		M.gets_drilled(firer, TRUE)
 		if(iscarbon(firer))
 			var/mob/living/carbon/carbon_firer = firer

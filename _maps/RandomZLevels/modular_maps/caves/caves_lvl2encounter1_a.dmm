@@ -43,7 +43,7 @@
 "sI" = (/turf/closed/wall/mineral/wood,/area/template_noop)
 "tx" = (/obj/item/hatchet/wooden,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "ux" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"vr" = (/obj/structure/stone_tile/slab/burnt,/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/wood,/obj/item/stack/sheet/mineral/wood,/obj/item/stack/sheet/mineral/wood,/obj/item/storage/toolbox/syndicate,/obj/item/malf_upgrade,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"vr" = (/obj/structure/stone_tile/slab/burnt,/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/wood,/obj/item/stack/sheet/mineral/wood,/obj/item/stack/sheet/mineral/wood,/obj/item/storage/toolbox/syndicate,/obj/item/malf_upgrade,/obj/item/skeleton_key,/obj/item/skeleton_key,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "ww" = (/obj/structure/stone_tile/block/cracked{dir = 4},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
 "wF" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "yc" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril,/turf/open/indestructible/boss,/area/template_noop)

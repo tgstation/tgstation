@@ -29,10 +29,17 @@
 	if(health < maxHealth*0.5 && !is_in_phase_2)
 		get_angry()
 
-//phase 2 activation of the boss at 50% health, switches to more aggressive abilities instead of defensive/swarm ones
+//TODO: actually make the abilities for his 2nd stage
+/mob/living/simple_animal/hostile/boss/clockmaster/phase_two
+	name = "Justicar of Bronze"
+	desc = "How can you kill a god? What a grand and intoxicating innocence."
+	boss_abilities = list(/datum/action/boss/turret_summon, /datum/action/boss/steam_traps, /datum/action/boss/cogscarab_swarm)
+	is_in_phase_2 = TRUE
+
+//activates at 50% hp, does a cool monologue before killing this mob and spawning the next stage
 /mob/living/simple_animal/hostile/boss/clockmaster/proc/get_angry()
 	is_in_phase_2 = TRUE
-	point_regen_delay = 0
+	point_regen_delay = 0 //prevents dummy from shooting off additional abilities during the monologue
 	ranged = FALSE
 	name = "Awakened Clockwork Priest"
 	desc = "A shell of a man who has gone mad with the promise of great power from a not-so-dead god."
@@ -59,8 +66,8 @@
 	gib()
 
 
-
 //summons a set of ocular warden turrets placed throughout the arena. If no turret slots avaiable, refund boss points.
+//TODO: actually finish this boss action
 /datum/action/boss/turret_summon
 	name = "Raise Ocular Warden"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
@@ -125,6 +132,10 @@
 /obj/structure/steamvent/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs,COMSIG_ACTION_TRIGGER_ID, .proc/OnActionActivation)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/steamvent/proc/OnActionActivation(datum/source,datum/action/boss/steam_traps/boss)
 	SIGNAL_HANDLER
@@ -135,6 +146,8 @@
 		addtimer(CALLBACK(src, .proc/VentDisable), 300)
 
 /obj/structure/steamvent/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	if(active && isliving(AM))
 		var/mob/living/L = AM
 		var/atom/throw_target = get_edge_target_turf(L, pick(GLOB.cardinals))

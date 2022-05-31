@@ -88,6 +88,51 @@
 		say(pick(death_phrases))
 		..()
 
+/mob/living/simple_animal/hostile/retaliate/trader/ashwalker
+	name = "Sells-The-Wares"
+	desc = "An ashwalker who recognizesss a good businessssss opportunity when ssshe ssseesss it."
+	speak_emote = list("hisses")
+	speech_span = SPAN_SANS
+	sell_sound = 'sound/voice/hiss2.ogg'
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
+	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	itemrejectphrase = "...Perhapsss we do not ssshare sssimilar ideasss of.. worth?"
+	itemsellcancelphrase = "What a ssshame, you know where to find me if you happen to... change your mind."
+	itemsellacceptphrase = "Thisss will make a great trinket for the brood mother..."
+	interestedphrase = "You.. I see you have ssshiny. Why not participate in some Nanotrasssen-approved capitalisssm?"
+	buyphrase = "Hss.. Pleasssure doing busssinesss with you."
+	nocashphrase = "Do you take me for a sssimpleton like my fellow walkersss? No casssh, no grasssss."
+
+	products = list(
+		/obj/item/spear/bonespear = 150,
+		/obj/item/skeleton_key = 3000,
+		/obj/item/shovel/serrated = 150
+	)
+	wanted_items = list(
+		/obj/item/stack/sheet/mineral/snow = 150,
+		/obj/item/stack/sheet/bone = 25,
+		/obj/item/food/meat/slab/goliath = 25,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 25,
+	)
+	icon_state = "ashtrader"
+	gender = FEMALE
+	loot = list(/obj/effect/decal/remains/human)
+	lore = list(
+		"My brethern may not take ssso kindly to your presssense, but I for one know a good busssinessss opportunity when I sssee it..",
+		"Ssstrange blue cryssstal beasssts walk thessse cavesss, their trailsss leaving behind an unusssually cold material... If you can bring me sssome of thisss exotic material, I can make it worth your while..",
+		"Where did I get thessse creditsss, you may asssk yourself? Pleassse, keep thossse kindsss of quessstionsss to yourssself.",
+		"Running a busssinesss is hard down here you know? The tribe ssstill expectsss you to chip in your fair ssshare of the daily hunt, but that isss work beneath me. Bring me trophiesss from your victoriesss against the local beassstsss, and I will pay handsssomely..",
+		"A ssshiny machine livesss deep in thessse cavesss, makesss good metal for better toolsss for the tribe. I pay good price for any ssspare ssshiny you come acrosssss..",
+		"I would appreciate you avoiding the needlessss ssslaughter of my kin, but I underssstand sssome of them are more... prone to violent outbreaksss againssst your kind."
+	)
+
+
+//Mob corpse spawns, outfits, and ID cards
+/obj/effect/mob_spawn/corpse/goliath
+	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
+
 /obj/effect/mob_spawn/corpse/human/clockminer
 	name = "Clock Cult Miner"
 	hairstyle = "Bald"
@@ -102,6 +147,81 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/bronze
 	mask = /obj/item/clothing/mask/gas/explorer
+
+/obj/effect/mob_spawn/corpse/human/scientist/caves
+	outfit = /datum/outfit/job/scientist/caves
+
+/datum/outfit/job/scientist/caves
+	id_trim = /datum/id_trim/away/caves/sci
+
+/obj/effect/mob_spawn/corpse/human/engineer/caves
+	outfit = /datum/outfit/job/engineer/gloved/caves
+
+/datum/outfit/job/engineer/gloved/caves
+	id_trim = /datum/id_trim/away/caves/engineer
+
+/obj/effect/mob_spawn/corpse/human/miner/explorer/caves
+	outfit = /datum/outfit/job/miner/equipped/caves
+
+/datum/outfit/job/miner/equipped/caves
+	id_trim = /datum/id_trim/away/caves
+
+//ID Cards
+/obj/item/card/id/away/caves
+	name = "Mining Region Miner Access Card"
+	desc = "An ID with Miner clearance for the lower mines."
+	trim = /datum/id_trim/away
+	icon_state = "retro"
+	registered_age = null
+
+/datum/id_trim/away/caves
+	access = list(ACCESS_AWAY_GENERAL)
+	assignment = "Mining Post Mining Personnel"
+
+/obj/item/card/id/away/caves/sec
+	name = "Mining Region Security Access Card"
+	desc = "An ID with security clearance for the lower mines."
+	trim = /datum/id_trim/away/caves/security
+
+/datum/id_trim/away/caves/security
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINTENANCE, ACCESS_AWAY_SEC)
+	assignment = "Mining Post Security Personnel"
+
+/obj/item/card/id/away/caves/sci
+	name = "Mining Region Science Access Card"
+	desc = "An ID with science clearance for the lower mines."
+	trim = /datum/id_trim/away/caves/sci
+
+/datum/id_trim/away/caves/sci
+	access = list(ACCESS_AWAY_SCIENCE, ACCESS_AWAY_GENERAL)
+	assignment = "Mining Post Research Personnel"
+
+/obj/item/card/id/away/caves/robo
+	name = "Mining Region Mecha Access Card"
+	desc = "An ID with mechabay clearance for the lower mines."
+	trim = /datum/id_trim/away/caves/robo
+
+/datum/id_trim/away/caves/robo
+	access = list(ACCESS_AWAY_SCIENCE, ACCESS_AWAY_GENERAL)
+	assignment = "Mining Post Mechabay Personnel"
+
+/obj/item/card/id/away/caves/site_director
+	name = "Mining Region Site Director"
+	desc = "An ID with Site Director clearance for the lower mines."
+	trim = /datum/id_trim/away/caves/site_director
+
+/datum/id_trim/away/caves/site_director
+	access = list(ACCESS_AWAY_SCIENCE, ACCESS_AWAY_GENERAL, ACCESS_AWAY_COMMAND, ACCESS_AWAY_MAINTENANCE)
+	assignment = "Mining Post Site Director"
+
+/obj/item/card/id/away/caves/engineer
+	name = "Mining Region Engineer"
+	desc = "An ID with engineering clearance for the lower mines."
+	trim = /datum/id_trim/away/caves/engineer
+
+/datum/id_trim/away/caves/engineer
+	access = list(ACCESS_AWAY_ENGINEERING, ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINTENANCE)
+	assignment = "Mining Post Engineering Personnel"
 
 //Areas
 /area/awaymission/caves/bmp_asteroid
@@ -208,35 +328,107 @@
 /area/awaymission/caves/second_outpost/researchcenter/maint
 	name = "Research Outpost Echo Research Center Maintenance"
 
+/area/awaymission/caves/third_outpost
+	name = "Scouting Outpost Charlie"
 
-//Lore Papers n' Stuff
+/area/awaymission/caves/third_outpost/transit
+	name = "Scouting Outpost Charlie Level Transit"
 
-/obj/item/paper/crumpled/awaymissions/caves/unsafe_area
-	info = "<center><b>WARNING</center></b><br><br><center>Majority of this area is considered 'unsafe' past this point. Theres an outpost directly south of here where you can get your bearing and travel further down if needed. Traveling in groups is HIGHLY advised, the shit out there can be extremely deadly if you're alone.</center>"
+/area/awaymission/caves/third_outpost/engineering
+	name = "Scouting Outpost Charlie Life Support"
 
-/obj/item/paper/fluff/awaymissions/caves/omega
-	name = "Subject Omega Notes"
-	info = "<b><center>Testing Notes</b></center><br><br><center>Subject appears unresponsive to most interactions, refusing to move away from the corners or face any scientists. Subject appears to move between the two back corners every observation. A strange humming can be heard from inside the cell, appears to be originating from the subject itself, further testing is necessary to confirm or deny this.</center>"
+/area/awaymission/caves/third_outpost/pod
+	name = "Scouting Outpost Charlie Main Office"
 
-/obj/item/paper/fluff/awaymissions/caves/magma
-	info = "<center> Mining is hell down here, you can feel the heat of the magma no matter how thick the suit is. Conditions are barely manageable as is, restless nights and horrid work conditions. The ore maybe rich down here, but we've already lost a few men to the faults shifting, god knows how much longer till it all just collapses down and consumes everyone with it.</center>"
+/area/awaymission/caves/misc/ashwalker_village
+	name = "Lower Region Tribal Area"
 
-/obj/item/paper/fluff/awaymissions/caves/work_notice
-	name = "work notice"
-	info = "<center><b>Survival Info For Miners</b></center><br><br><center>The caves are an unforgiving place, the only thing you'll have to traverse is the supplies in your locker and your own wit. Travel in packs when mining and try to shut down the monster dens before they overwhelm you. The job is dangerous but the haul is good, so remember this information and hopefully we'll all go home alive.</center>"
+/area/awaymission/caves/misc/ayylmao
+	name = "Strange Exhibit"
 
-/obj/item/paper/fluff/awaymissions/caves/shipment_notice
-	name = "shipment notice"
-	info = "<center>We were supposed to get a shipment of these special laser rifles and a couple 'nades to help combat the wildlife down here, but it's been weeks since we last heard from the caravan carrying the shit down here. At this point we can only assume they fell victim to one of the monster nests or the dumbasses managed to trip into the lava. So much for that shipment, I guess.</center>"
+/area/awaymission/caves/misc/ayylmao/holding_cell
+	name = "Strange Exhibit Cell"
 
-/obj/item/paper/fluff/awaymissions/caves/safety_notice
-	name = "safety notice"
-	info = "<center>Some of the miners have gone to laying some mine traps among the lower levels of the mine to keep the monsters at bay.  This probably isn't the smartest idea in a cavern like this but the boys seem to get a chuckle out of every distant blast they hear go off, so I guess it works </center>"
+/area/awaymission/caves/misc/ayylmao/office
+	name = "Strange Exhibit Central Room"
 
-/obj/item/paper/fluff/awaymissions/caves/shipment_receipt
-	name = "Shipment Receipt"
-	info = "<center><b>CARAVAN SERVICES</b></center><br><center><i>Quality service since 2205</i></center><br><br><center><b>SHIPMENT CONTENTS:</b></center><br><br>4 scattershot rifles<br>6 grenades<br>1 laser rifle<br>1 blowup doll"
+/area/awaymission/caves/misc/syndicate
+	name = "Recon Outpost Tango-Bravo-443"
 
-/obj/item/paper/fluff/awaymissions/caves/mech_notice
-	name = "NOTICE!! paper"
-	info = "<center><b>NOTICE!!</center></b><br><br><center>Although you may seem indestructible in a mech, remember, THIS SHIT ISN'T LAVA PROOF!! The boys have already had to deal with loosing the last two to salvage because the dumbass thought he could just wade through the lower lakes like it was nothing. The fact he even managed to get back without being fused with what was left of the mech is a miracle in itself. They're built to be resistant against extreme heat, not heat PROOF!</center><br><br><i>Robotics Team</i>"
+/area/awaymission/caves/misc/syndicate/genetics
+	name = "Recon Outpost Tango-Bravo-443 Genetics Divison"
+
+/area/awaymission/caves/misc/syndicate/vault
+	name = "Recon Outpost Tango-Bravo-443 Secure Storage"
+
+/area/awaymission/caves/misc/syndicate/gateway
+	name = "Recon Outpost Tango-Bravo-443 Secure Temporal Transportation Lounge"
+
+/area/awaymission/caves/misc/syndicate/barracks
+	name = "Recon Outpost Tango-Bravo-443 Barracks"
+
+
+//Lore/fluff items for detailing
+
+//Lore terminals
+/obj/machinery/computer/terminal/caves/robo
+	content = list("MINER-MAIL - #344 - Site Director Richard Evans -> K. Simmers -- I just finished approving your request for additional access to more combat-orienated mecha-based designs. \
+	With the introduction of the concern with the locals, Central has deemed it neccesary to elevate our security contract and will be sending blueprint schematics with relevant printing diagnostics. \
+	I'll be sending you a material list shortly of what'll be required for manufactoring along with the first few designs our security personnel suggested for the mining crew.")
+
+/obj/machinery/computer/terminal/caves/security
+	content = list("MINER-MAIL - #365 - Security Officer Rachael Cleeves -> R. Evans -- I've been watching the cameras between the posts and I think the miners are up to something. \
+	They've been awfully secluded during off-hours and they get more tight-lipped than usual when I come past for my hourly route. I confiscated a weird chunk of metal one of them brought in without having it checked out first. \
+	Handed it off to Ullman, I think the miners found something valuable and don't want to share with the company..")
+
+/obj/machinery/computer/terminal/caves/research
+	content = list("MINER-MAIL - #445 - Shaft Miner Jim Joffee -> J. Ullman -- Just checking for an update on that last email I sent about the debris I found on the lower levels. I know these caves are inhabited by those cave lizards, \
+	 but them having bronze metal seems really odd. Don't tell me these lizardbrains are entering the bronze age, they might actually start being a problem.")
+
+/obj/machinery/computer/terminal/caves/research2
+	content = list("MINER-MAIL - #456 - Mineral Specialist J. Ullman -> E. Queef -- Do you know if the time clock down by your office was fixed? \
+	 I'm tired of checking in at the office by the ravine and if I get docked another half point for being a minute late from lunch again they're going to make me sign a dumb fucking paper about being 'IrReSpOnSiBlE' with my breaks. I hate management.")
+
+/obj/machinery/computer/terminal/caves/research3
+	content = list("MINER-MAIL - #420 - Greater Outernet Service Gateway -> W. Zach -- Looking to get absolutely ZOINKED this BLAZER season??? \
+	Well, look NO FURTHER than ZERMA'S ZERKIN' EMPORIUM OF KUSH & BUSH. We got strains that'd melt your hydroponic tables! Enter promo code 'ZERKIN20' for 20% off your first intra-space delivery purchase!")
+
+/obj/machinery/computer/terminal/caves/research4
+	content = list("MINER-MAIL - #356 - Site Director Richard Evans -> C. Coffee -- The 3rd quarter is almost over! Please have your self-evaluation sheet submitted to me by the end of the week so we may proper aquire on your strengths and weaknesses in this department. \
+	Please note that your month-end report on the local floral activity is still due at the same time, so please adjust your schedule properly to make sure both reports are submitted within adaquate time.")
+
+/obj/machinery/computer/terminal/caves/research5
+	content = list("INFO-SECURE: Your number one source of encrypted text files! ERROR: Encryption hash not found, file not encrypted! -- NOTES: Cycle 34 - Miners uncovered pieces of scrap bronze from one of the local lizard nests they cleared out recently. \
+	 Ullman is a bit perplexed by this as this hellscape we survey has no natural deposits of neither tin nor copper, let alone humoring the prospects these primals may actually be learning metalworking to some extent due to our prolonged presence here. \
+	 I've asked the QM if anything in previous request logs had anything made of bronze, mostly to see if maybe they're just stealing from our storage bay during off-hours.")
+
+/obj/machinery/computer/terminal/caves/researchbroke1
+	content = list("INFO-SECURE: Your number one source of encrypted text files! ERROR: Terminal set in showcase mode, encryption not available!  -- NOTES: Cycle 20 - Seismic activity in the lower regions has caused fractures to form in the less stable regions of the caves. \
+	These fractures seem to go hundreds of feet down, to a point where its hard to judge the actual drop. The Site Director has had a few crates of jaunters ordered for personnel safety, as we can't be certain if these rifts will be kept to the lower levels or not. ")
+
+/obj/machinery/computer/terminal/caves/researchbroke2
+	content = list("INFO-SECURE: Your number one source of encrypted text files! ERROR: Subscription service ended, your files are no longer encrypted! -- NOTES: Cycle 12 - Miners discovered a local tribe of lizardpeople native to these lands, the miners have nicknamed them 'Ash Walkers' due to their soot-covered garbs. \
+	Initial confrontations ended in hostilities as they threw a few spears at the mining group before fleeing from their kinetic accelerators. The Site Director has contacted central asking for additional defensive measures to keep the locals at bay during our stay down here.")
+
+//Lore papers
+/obj/item/paper/fluff/awaymissions/caves/seismic_log
+	name = "Seismic Activity Report Log 43-2"
+	info = "<b><center>Seismic Activity Chart</b></center><br><br><center>*Various line graphs documenting seismic acitivty of the region over the last several months. \
+			The chart seems to spike around a month ago before going back to the baseline*</center>"
+
+/obj/item/paper/fluff/awaymissions/caves/floralguide
+	name = "Local Flora Guide"
+	info = "<b><center>C. Coffee's Extensive List of Local Wild Flora and What-Not</b></center><br><br><center><b>Leafy Mushrooms</b> are actually native to late Earth, but managed to find its way here. \
+			Harvested for it's leaf canopy, the leaves can be ground into a paste with simple medicinal and relaxant properties.</center><br><br><center><b>Tall Mushrooms</b> \
+			are several separate mushrooms grouped together, usually with the largest in the center with a circular shelf on the shaft. The caps themselves seem to be harvested by the local \
+			lizardkin population for ritualistic purposes, as they have intense hallucigenic properties when ingested.</center><br><br><center><b>Stem Shrooms</b> are small groups of tiny mushrooms that have a bioluminescent property. \
+			Harvested for their glowing stems, nutritious when eaten but the fungal itself seems to adhere and grow on the victim's skin with a minor hallucigenic property. Advised against eating unless neccesary. \
+			</center><br><br><center><b>Ash Cacti</b> are a type of cacti that find itself native to these lands, growing in small bundles. They grow a sweet fruit that is safe to eat and even has \
+			a smaller medicial property to it when used. </center><br><br><center><b>Seraka Mushrooms</b> are a savory mushroom that seems to have a tight cultural connection with the local \
+			lizardkin populace. The caps seem to be made into a fine powder for tea prep by the locals, internal research shows that lizardkin seem to have a restorative/healing property from \
+			ingesting this, not just limited to the natives but other Nanotrasen-hired crew as well. While not as useful for other species, the extract from the caps themselves make a decent blood clotter \
+			in emergency situations with excessive bleeding. Low usage is advised, as its effective coagulating properties can be TOO effective if used in larger doses.</center>"
+
+/obj/item/paper/fluff/awaymissions/caves/researchfluff
+	name = "random research document"
+	info = "<center>*The paper itself dictates various research scribblings ranging from the local populace to rocks. You try to read on, but you stop yourself as your eyes begin to glaze over.*</center>"
