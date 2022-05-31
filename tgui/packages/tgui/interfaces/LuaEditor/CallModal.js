@@ -11,8 +11,8 @@ export const CallModal = (props, context) => {
   return (
     <Modal>
       <Section
-        height="400px"
-        width="300px"
+        height="600px"
+        width="600px"
         scrollable
         title="Call Function/Task"
         buttons={(
