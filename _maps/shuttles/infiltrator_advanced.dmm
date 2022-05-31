@@ -2185,7 +2185,6 @@
 /area/shuttle/syndicate/hallway)
 "AO" = (
 /obj/machinery/door/airlock/hatch,
-/turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/airlock)
 
 (1,1,1) = {"
