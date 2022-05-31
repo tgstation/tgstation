@@ -102,6 +102,8 @@
 #define MEMORY_PLAYING_52_PICKUP "playing_52_pickup"
 /// A memory of playing cards with others
 #define MEMORY_PLAYING_CARDS "playing_cards"
+/// A memory of playing russian roulette
+#define MEMORY_RUSSIAN_ROULETTE "russian_roulette"
 
 
 /**
