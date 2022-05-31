@@ -50839,7 +50839,7 @@
 /turf/closed/wall,
 /area/station/engineering/storage)
 "qtu" = (
-/obj/item/organ/tail/monkey,
+/obj/item/organ/external/tail/monkey,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -67589,7 +67589,7 @@
 	pixel_y = 4
 	},
 /obj/item/bodypart/chest,
-/obj/item/organ/heart,
+/obj/item/organ/internal/heart,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "vQG" = (

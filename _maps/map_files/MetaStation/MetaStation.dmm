@@ -13369,7 +13369,7 @@
 /obj/item/nullrod{
 	pixel_x = 4
 	},
-/obj/item/organ/heart,
+/obj/item/organ/internal/heart,
 /obj/item/soulstone/anybody/chaplain,
 /turf/open/floor/cult,
 /area/station/service/chapel/office)

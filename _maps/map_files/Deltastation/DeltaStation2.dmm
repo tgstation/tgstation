@@ -18778,7 +18778,7 @@
 /obj/structure/table/wood/fancy,
 /obj/item/book/granter/spell/smoke/lesser,
 /obj/item/nullrod,
-/obj/item/organ/heart,
+/obj/item/organ/internal/heart,
 /obj/item/reagent_containers/food/drinks/bottle/holywater,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
