@@ -249,3 +249,10 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define OBJECTIVE_STATE_FAILED 4
 /// If the objective is no longer valid
 #define OBJECTIVE_STATE_INVALID 5
+
+/// Weights for traitor objective categories
+#define OBJECTIVE_WEIGHT_TINY    5
+#define OBJECTIVE_WEIGHT_SMALL 	 7
+#define OBJECTIVE_WEIGHT_DEFAULT 10
+#define OBJECTIVE_WEIGHT_BIG	 15
+#define OBJECTIVE_WEIGHT_HUGE	 20

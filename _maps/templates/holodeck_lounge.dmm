@@ -247,7 +247,6 @@
 /area/template_noop)
 "P" = (
 /obj/structure/table/wood/poker,
-/obj/structure/table/wood/poker,
 /obj/effect/holodeck_effect/cards,
 /turf/open/floor/holofloor{
 	dir = 9;

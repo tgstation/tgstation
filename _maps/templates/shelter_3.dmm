@@ -91,9 +91,9 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/misc/survivalpod)
 "p" = (
-/obj/machinery/door/airlock/survival_pod/glass{
-	req_one_access = list("bar","mining")
-	},
+/obj/machinery/door/airlock/survival_pod/glass,
+/obj/effect/mapping_helpers/airlock/access/any/service/bar,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)

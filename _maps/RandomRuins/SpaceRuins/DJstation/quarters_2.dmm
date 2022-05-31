@@ -60,12 +60,12 @@
 "W" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "Y" = (
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "Z" = (
 /obj/machinery/duct,
 /turf/open/floor/iron/dark/textured,

@@ -583,6 +583,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				no_eyeslay.pixel_x += add_pixel_x
 				no_eyeslay.pixel_y += add_pixel_y
 				standing += no_eyeslay
+			else
+				eye_organ.refresh(call_update = FALSE)
 
 			if(!no_eyeslay)
 				for(var/eye_overlay in eye_organ.generate_body_overlay(species_human))
@@ -1256,7 +1258,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/def_zone = affecting.body_zone
 
 	var/armor_block = H.run_armor_check(affecting, MELEE, span_notice("Your armor has protected your [hit_area]!"), span_warning("Your armor has softened a hit to your [hit_area]!"),I.armour_penetration, weak_against_armour = I.weak_against_armour)
-	armor_block = min(90,armor_block) //cap damage reduction at 90%
+	armor_block = min(ARMOR_MAX_BLOCK, armor_block) //cap damage reduction at 90%
 	var/Iwound_bonus = I.wound_bonus
 
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
