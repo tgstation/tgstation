@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(href_list["reload_tguipanel"])
 		nuke_chat()
 	if(href_list["reload_statbrowser"])
-		src << browse(file('html/statbrowser.html'), "window=statbrowser")
+		stat_panel.reinitialize()
 	// Log all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
@@ -99,6 +99,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// Admin PM
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
+		return
+	if (href_list["player_ticket_panel"])
+		view_latest_ticket()
 		return
 	// TGUIless adminhelp
 	if(href_list["tguiless_adminhelp"])
@@ -209,8 +212,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 
+	// Instantiate stat panel
+	stat_panel = new(src, "statbrowser")
+	stat_panel.subscribe(src, .proc/on_stat_panel_message)
+
 	// Instantiate tgui panel
-	tgui_panel = new(src)
+	tgui_panel = new(src, "browseroutput")
 
 	set_right_click_menu_mode(TRUE)
 
@@ -228,20 +235,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
-			var/datum/admin_rank/autorank
-			for(var/datum/admin_rank/R in GLOB.admin_ranks)
-				if(R.name == CONFIG_GET(string/autoadmin_rank))
-					autorank = R
-					break
-			if(!autorank)
+			var/list/autoadmin_ranks = ranks_from_rank_name(CONFIG_GET(string/autoadmin_rank))
+			if (autoadmin_ranks.len == 0)
 				to_chat(world, "Autoadmin rank not found")
 			else
-				new /datum/admins(autorank, ckey)
+				new /datum/admins(autoadmin_ranks, ckey)
 	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
 		var/localhost_addresses = list("127.0.0.1", "::1")
 		if(isnull(address) || (address in localhost_addresses))
 			var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
-			new /datum/admins(localhost_rank, ckey, 1, 1)
+			new /datum/admins(list(localhost_rank), ckey, 1, 1)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
@@ -339,9 +342,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(SSinput.initialized)
 		set_macros()
 
-	// Initialize tgui panel
-	src << browse(file('html/statbrowser.html'), "window=statbrowser")
+	// Initialize stat panel
+	stat_panel.initialize(
+		inline_html = file("html/statbrowser.html"),
+		inline_js = file("html/statbrowser.js"),
+		inline_css = file("html/statbrowser.css"),
+	)
 	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
+
+	// Initialize tgui panel
 	tgui_panel.initialize()
 
 	if(alert_mob_dupe_login && !holder)
@@ -581,12 +590,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	while (query_get_related_cid.NextRow())
 		related_accounts_cid += "[query_get_related_cid.item[1]], "
 	qdel(query_get_related_cid)
-	var/admin_rank = "Player"
-	if (src.holder && src.holder.rank)
-		admin_rank = src.holder.rank.name
-	else
-		if (!GLOB.deadmins[ckey] && check_randomizer(connectiontopic))
-			return
+	var/admin_rank = holder?.rank_names() || "Player"
+	if (!holder && !GLOB.deadmins[ckey] && check_randomizer(connectiontopic))
+		return
 	var/new_player
 	var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
 		"SELECT 1 FROM [format_table_name("player")] WHERE ckey = :ckey",
@@ -1037,6 +1043,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		CRASH("change_view called without argument.")
 
 	view = new_size
+	SEND_SIGNAL(src, COMSIG_VIEW_SET, new_size)
 	mob.hud_used.screentip_text.update_view()
 	apply_clickcatcher()
 	mob.reload_fullscreen()
@@ -1097,10 +1104,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			continue
 		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
-	src << output("[url_encode(json_encode(panel_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
 
 /client/proc/check_panel_loaded()
-	if(statbrowser_ready)
+	if(stat_panel.is_ready())
 		return
 	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
 
@@ -1132,7 +1139,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		holder.filteriffic = new /datum/filter_editor(in_atom)
 		holder.filteriffic.ui_interact(mob)
 
-
 /client/proc/set_right_click_menu_mode(shift_only)
 	if(shift_only)
 		winset(src, "mapwindow.map", "right-click=true")
@@ -1150,6 +1156,23 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.
 	else
 		SSambience.remove_ambience_client(src)
+
+/**
+ * Handles incoming messages from the stat-panel TGUI.
+ */
+/client/proc/on_stat_panel_message(type, payload)
+	switch(type)
+		if("Update-Verbs")
+			init_verbs()
+		if("Remove-Tabs")
+			panel_tabs -= payload["tab"]
+		if("Send-Tabs")
+			panel_tabs |= payload["tab"]
+		if("Reset-Tabs")
+			panel_tabs = list()
+		if("Set-Tab")
+			stat_tab = payload["tab"]
+			SSstatpanels.immediate_send_stat_data(src)
 
 /// Checks if this client has met the days requirement passed in, or if
 /// they are exempt from it.

@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - refactor: "Electrocuting faunas now causes them to target you, much like hitting them."

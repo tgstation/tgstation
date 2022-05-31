@@ -140,6 +140,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_INCAPACITATED "incapacitated"
 /// In some kind of critical condition. Is able to succumb.
 #define TRAIT_CRITICAL_CONDITION "critical-condition"
+#define TRAIT_ILLITERATE "illiterate"
 #define TRAIT_BLIND "blind"
 #define TRAIT_MUTE "mute"
 #define TRAIT_EMOTEMUTE "emotemute"
@@ -171,7 +172,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_XENO_HOST "xeno_host"
 #define TRAIT_STUNIMMUNE "stun_immunity"
-#define TRAIT_STUNRESISTANCE "stun_resistance"
+#define TRAIT_BATON_RESISTANCE "baton_resistance"
 /// Anti Dual-baton cooldown bypass exploit.
 #define TRAIT_IWASBATONED "iwasbatoned"
 #define TRAIT_SLEEPIMMUNE "sleep_immunity"
@@ -197,8 +198,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NODISMEMBER "dismember_immunity"
 #define TRAIT_NOFIRE "nonflammable"
 #define TRAIT_NOFIRE_SPREAD "no_fire_spreading"
-/// Prevents plasmamen from self-igniting
-#define TRAIT_NOSELFIGNITION "no_selfignition"
+/// Prevents plasmamen from self-igniting if only their helmet is missing
+#define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
 #define TRAIT_NOGUNS "no_guns"
 #define TRAIT_NOHUNGER "no_hunger"
 #define TRAIT_NOMETABOLISM "no_metabolism"
@@ -218,7 +219,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOBREATH "no_breath"
 #define TRAIT_ANTIMAGIC "anti_magic"
 #define TRAIT_HOLY "holy"
-/// Like antimagic, but doesn't block the user from casting
+/// This allows a person who has antimagic to cast spells without getting blocked
 #define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
 #define TRAIT_DEPRESSION "depression"
 #define TRAIT_JOLLY "jolly"
@@ -266,7 +267,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_SURGEON "surgeon"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
-#define TRAIT_MAGIC_CHOKE "magic_choke"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
 #define TRAIT_BOOZE_SLIDER "booze-slider"
 /// We place people into a fireman carry quicker than standard
@@ -380,7 +380,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either
 // through force of will, or equipment. Present on /mob or /datum/mind
-#define TRAIT_SUPERMATTER_MADNESS_IMMUNE "supermatter_madness_immune"
+#define TRAIT_MADNESS_IMMUNE "supermatter_madness_immune"
 
 // You can stare into the abyss, and it turns pink.
 // Being close enough to the supermatter makes it heal at higher temperatures
@@ -416,7 +416,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // example. Through years of training/abuse, their livers have taken
 // a liking to those substances. Steal a sec officer's liver, eat donuts good.
 
-// These traits are applied to /obj/item/organ/liver
+// These traits are applied to /obj/item/organ/internal/liver
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law_enforcement_metabolism"
 #define TRAIT_CULINARY_METABOLISM "culinary_metabolism"
 #define TRAIT_COMEDY_METABOLISM "comedy_metabolism"
@@ -424,6 +424,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
 #define TRAIT_ROYAL_METABOLISM "royal_metabolism"
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
+#define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
 
 /// This mob can strip other mobs.
 #define TRAIT_CAN_STRIP "can_strip"
@@ -534,6 +535,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
 /// Designates a heart as a living heart for a heretic.
 #define TRAIT_LIVING_HEART "living_heart"
+/// Prevents the same person from being chosen multiple times for kidnapping objective
+#define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -577,6 +580,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DRIED "trait_dried"
 /// Trait for customizable reagent holder
 #define TRAIT_CUSTOMIZABLE_REAGENT_HOLDER "customizable_reagent_holder"
+
+/// Used to prevent multiple floating blades from triggering over the same target
+#define TRAIT_BEING_BLADE_SHIELDED "being_blade_shielded"
 
 /* Traits for ventcrawling.
  * Both give access to ventcrawling, but *_NUDE requires the user to be
@@ -804,7 +810,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
-* granted/removed by [/obj/item/organ/tongue]
+* granted/removed by [/obj/item/organ/internal/tongue]
 * Used for ensuring that carbons without tongues cannot taste anything
 * so it is added in Initialize, and then removed when a tongue is inserted
 * and readded when a tongue is removed.
@@ -843,6 +849,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
 /// ID cards with this trait will attempt to forcibly occupy the front-facing ID card slot in wallets.
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
+/// ID cards with this trait have special appraisal text.
+#define TRAIT_TASTEFULLY_THICK_ID_CARD "impressive_very_nice"
+
 /// Traits granted to items due to their chameleon properties.
 #define CHAMELEON_ITEM_TRAIT "chameleon_item_trait"
 

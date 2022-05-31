@@ -19,8 +19,7 @@
 
 	var/list/adjacent_turfs = get_adjacent_open_turfs(engineer)
 
-	if(!length(adjacent_turfs))
-		Fail("RCD Test failed - Lack of adjacent open turfs. This may be an issue with the unit test.")
+	TEST_ASSERT(length(adjacent_turfs), "RCD Test failed - Lack of adjacent open turfs. This may be an issue with the unit test.")
 
 	var/turf/adjacent_turf = adjacent_turfs[1]
 

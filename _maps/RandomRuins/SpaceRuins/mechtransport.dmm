@@ -60,9 +60,9 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "p" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Cockpit";
-	req_access_txt = "101"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "r" = (

@@ -7,6 +7,7 @@
 # MAINTAINERS
 
 # Cobby
+
 /code/modules/reagents/ @ExcessiveUseOfCobblestone
 /code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
 /code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
@@ -25,20 +26,14 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
-# Jordie0608
+# JohnFulpWizard
 
-/SQL/ @Jordie0608
-/code/controllers/subsystem/dbcore.dm @Jordie0608
-/tools/SQLAlertEmail/ @Jordie0608
+/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
 
 # Kylerace
+
 /code/__DEFINES/spatial_gridmap.dm @Kylerace
 /code/controllers/subsystem/spatial_gridmap.dm @Kylerace
-
-# LemonInTheDark
-
-/code/__DEFINES/atmospherics/ @LemonInTheDark
-/code/modules/atmospherics/ @LemonInTheDark
 
 # Mothblocks
 
@@ -73,7 +68,7 @@
 # san7890
 
 /code/game/area/ @san7890
-/icons/turf/areas.dmi @san7890
+/icons/area/ @san7890
 
 # stylemistake
 
@@ -101,14 +96,11 @@
 /code/modules/mining/ @Fikou
 /code/modules/awaymissions/ @Fikou
 
-# Ghilker
+# Jordie0608
 
-/code/__DEFINES/atmospherics/ @Ghilker
-/code/modules/atmospherics/ @Ghilker
-
-# JohnFulpWizard
-
-/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
+/SQL/ @Jordie0608
+/code/controllers/subsystem/dbcore.dm @Jordie0608
+/tools/SQLAlertEmail/ @Jordie0608
 
 # Kapu1178
 
@@ -141,16 +133,21 @@
 
 # MULTIPLE OWNERS
 
+/_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
 /icons/ @Imaginos16 @Krysonism @Twaticus
+/icons/ass/ @Ghilker @tralezab
+
+/code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
+/code/modules/atmospherics/ @Ghilker @LemonInTheDark
 /code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
-/_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
 /tools/build/ @MrStonedOne @stylemistake
 /tools/LinuxOneShot/ @Cyberboss @MrStonedOne
 /tools/tgs4_scripts/ @Cyberboss @MrStonedOne
 
-#SIC SEMPER TYRANNIS
+# SIC SEMPER TYRANNIS
+
 /code/modules/hydroponics/grown/citrus.dm @optimumtact

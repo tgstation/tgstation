@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "Removed an inconsistent camera guarding EVA maints on IceBoxStation"

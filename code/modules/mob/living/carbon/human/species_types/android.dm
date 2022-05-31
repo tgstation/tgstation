@@ -25,7 +25,7 @@
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
 	damage_overlay_type = "synth"
-	mutanttongue = /obj/item/organ/tongue/robot
+	mutanttongue = /obj/item/organ/internal/tongue/robot
 	species_language_holder = /datum/language_holder/synthetic
 	wings_icons = list("Robotic")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -58,7 +58,7 @@
 		limb.skin_tone ||= skintone
 		limb.limb_id = SPECIES_HUMAN
 		limb.should_draw_greyscale = TRUE
-		limb.name = "human [parse_zone(limb.body_zone)]"
+		limb.name = "human [limb.plaintext_zone]"
 		limb.update_limb()
 		limb.brute_reduction = 5
 		limb.burn_reduction = 4

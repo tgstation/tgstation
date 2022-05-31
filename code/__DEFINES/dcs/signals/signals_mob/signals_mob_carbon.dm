@@ -1,7 +1,13 @@
-///When a carbon mob hugs someone, this is called on the carbon that is hugging. (mob/living/hugger, mob/living/hugged)
-#define COMSIG_CARBON_HUG "carbon_hug"
-///When a carbon mob is hugged, this is called on the carbon that is hugged. (mob/living/hugger)
-#define COMSIG_CARBON_HUGGED "carbon_hugged"
+///Called from /mob/living/carbon/help_shake_act, before any hugs have ocurred. (mob/living/helper)
+#define COMSIG_CARBON_PRE_HELP_ACT "carbon_pre_help"
+	/// Stops the rest of help act (hugging, etc) from occuring
+	#define COMPONENT_BLOCK_HELP_ACT (1<<0)
+
+///Called from /mob/living/carbon/help_shake_act on the person being helped, after any hugs have ocurred. (mob/living/helper)
+#define COMSIG_CARBON_HELP_ACT "carbon_help"
+///Called from /mob/living/carbon/help_shake_act on the helper, after any hugs have ocurred. (mob/living/helped)
+#define COMSIG_CARBON_HELPED "carbon_helped_someone"
+
 ///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
 #define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
 	#define COMSIG_CARBON_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
@@ -58,6 +64,9 @@
 #define COMSIG_CARBON_HEALTH_UPDATE "carbon_health_update"
 ///Called when a carbon updates their sanity (source = carbon)
 #define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
+///Called when a carbon breathes, before the breath has actually occured
+#define COMSIG_CARBON_PRE_BREATHE "carbon_pre_breathe"
+
 // /mob/living/carbon/human signals
 
 ///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)

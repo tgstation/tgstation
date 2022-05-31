@@ -6,6 +6,7 @@
 
 <!-- Inlined metadata -->
 <meta id="tgui:windowId" content="[tgui:windowId]">
+<meta id="tgui:strictMode" content="[tgui:strictMode]">
 
 <!-- Early setup -->
 <script type="text/javascript">
@@ -63,6 +64,9 @@
   Byond.IS_LTE_IE9 = Byond.TRIDENT !== null && Byond.TRIDENT <= 5;
   Byond.IS_LTE_IE10 = Byond.TRIDENT !== null && Byond.TRIDENT <= 6;
   Byond.IS_LTE_IE11 = Byond.TRIDENT !== null && Byond.TRIDENT <= 7;
+
+  // Strict mode flag
+  Byond.strictMode = Boolean(Number(parseMetaTag('tgui:strictMode')));
 
   // Callbacks for asynchronous calls
   Byond.__callbacks__ = [];
@@ -220,13 +224,13 @@
   };
 
   Byond.subscribeTo = function (type, listener) {
-    listener = function (_type, payload) {
+    var _listener = function (_type, payload) {
       if (_type === type) {
         listener(payload);
       }
     };
-    window.update.listeners.push(listener);
-    window.update.flushQueue(listener);
+    window.update.flushQueue(_listener);
+    window.update.listeners.push(_listener);
   };
 
   // Asset loaders
@@ -363,6 +367,7 @@
 // ------------------------------------------------------
 
 window.onerror = function (msg, url, line, col, error) {
+  window.onerror.errorCount = (window.onerror.errorCount || 0) + 1;
   // Proper stacktrace
   var stack = error && error.stack;
   // Ghetto stacktrace
@@ -375,39 +380,51 @@ window.onerror = function (msg, url, line, col, error) {
   // Augment the stack
   stack = window.__augmentStack__(stack, error);
   // Print error to the page
-  var errorRoot = document.getElementById('FatalError');
-  var errorStack = document.getElementById('FatalError__stack');
-  if (errorRoot) {
-    errorRoot.className = 'FatalError FatalError--visible';
-    if (window.onerror.__stack__) {
-      window.onerror.__stack__ += '\n\n' + stack;
+  if (Byond.strictMode) {
+    var errorRoot = document.getElementById('FatalError');
+    var errorStack = document.getElementById('FatalError__stack');
+    if (errorRoot) {
+      errorRoot.className = 'FatalError FatalError--visible';
+      if (window.onerror.__stack__) {
+        window.onerror.__stack__ += '\n\n' + stack;
+      }
+      else {
+        window.onerror.__stack__ = stack;
+      }
+      var textProp = Byond.IS_LTE_IE8 ? 'innerText' : 'textContent';
+      errorStack[textProp] = window.onerror.__stack__;
     }
-    else {
-      window.onerror.__stack__ = stack;
-    }
-    var textProp = Byond.IS_LTE_IE8 ? 'innerText' : 'textContent';
-    errorStack[textProp] = window.onerror.__stack__;
+    // Set window geometry
+    var setFatalErrorGeometry = function () {
+      Byond.winset(Byond.windowId, {
+        titlebar: true,
+        'is-visible': true,
+        'can-resize': true,
+      });
+    };
+    setFatalErrorGeometry();
+    setInterval(setFatalErrorGeometry, 1000);
   }
-  // Set window geometry
-  var setFatalErrorGeometry = function () {
-    Byond.winset(Byond.windowId, {
-      titlebar: true,
-      size: '600x600',
-      'is-visible': true,
-      'can-resize': true,
-    });
-  };
-  setFatalErrorGeometry();
-  setInterval(setFatalErrorGeometry, 1000);
   // Send logs to the game server
-  Byond.sendMessage({
-    type: 'log',
-    fatal: 1,
-    message: stack,
-  });
+  if (Byond.strictMode) {
+    Byond.sendMessage({
+      type: 'log',
+      fatal: 1,
+      message: stack,
+    });
+  }
+  else if (window.onerror.errorCount <= 1) {
+    stack += '\nWindow is in non-strict mode, future errors are suppressed.';
+    Byond.sendMessage({
+      type: 'log',
+      message: stack,
+    });
+  }
   // Short-circuit further updates
-  window.__updateQueue__ = [];
-  window.update = function () {};
+  if (Byond.strictMode) {
+    window.update = function () {};
+    window.update.queue = [];
+  }
   // Prevent default action
   return true;
 };
@@ -468,6 +485,26 @@ window.update.flushQueue = function (listener) {
     var message = Byond.parseJson(queue[i]);
     listener(message.type, message.payload);
   }
+};
+
+window.replaceHtml = function (inline_html) {
+  var children = document.body.childNodes;
+
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].nodeValue == " tgui:inline-html-start ") {
+      while (children[i].nodeValue != " tgui:inline-html-end ") {
+        children[i].remove();
+      }
+      children[i].remove();
+    }
+  }
+
+  document.body.insertAdjacentHTML(
+    "afterbegin",
+    "<!-- tgui:inline-html-start -->"
+      + inline_html
+      + "<!-- tgui:inline-html-end -->"
+  );
 };
 
 // Signal tgui that we're ready to receive updates
@@ -577,7 +614,9 @@ blink {
 
 <!-- tgui:inline-polyfill -->
 <!-- tgui:assets -->
+<!-- tgui:inline-html-start -->
 <!-- tgui:inline-html -->
+<!-- tgui:inline-html-end -->
 <!-- tgui:inline-js -->
 
 <!-- Root element for tgui interfaces -->

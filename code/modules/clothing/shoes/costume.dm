@@ -5,7 +5,7 @@
 	inhand_icon_state = "roman"
 	strip_delay = 100
 	equip_delay_other = 100
-	permeability_coefficient = 0.9
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/griffin

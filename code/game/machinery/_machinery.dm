@@ -130,7 +130,7 @@
 	var/subsystem_type = /datum/controller/subsystem/machines
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
-	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
 	var/fair_market_price = 69
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
@@ -143,6 +143,9 @@
 	var/last_used_time = 0
 	/// Mobtype of last user. Typecast to [/mob/living] for initial() usage
 	var/mob/living/last_user_mobtype
+	/// Do we want to hook into on_enter_area and on_exit_area?
+	/// Disables some optimizations
+	var/always_area_sensitive = FALSE
 	///Multiplier for power consumption.
 	var/machine_power_rectifier = 1
 
@@ -190,15 +193,22 @@
  * proc to call when the machine starts to require power after a duration of not requiring power
  * sets up power related connections to its area if it exists and becomes area sensitive
  * does not affect power usage itself
+ *
+ * Returns TRUE if it triggered a full registration, FALSE otherwise
+ * We do this so machinery that want to sidestep the area sensitiveity optimization can
  */
 /obj/machinery/proc/setup_area_power_relationship()
-	become_area_sensitive(INNATE_TRAIT)
-
 	var/area/our_area = get_area(src)
 	if(our_area)
 		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+
+	if(HAS_TRAIT_FROM(src, TRAIT_AREA_SENSITIVE, INNATE_TRAIT)) // If we for some reason have not lost our area sensitivity, there's no reason to set it back up
+		return FALSE
+
+	become_area_sensitive(INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
 	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
+	return TRUE
 
 /**
  * proc to call when the machine stops requiring power after a duration of requiring power
@@ -210,18 +220,27 @@
 	if(our_area)
 		UnregisterSignal(our_area, COMSIG_AREA_POWER_CHANGE)
 
+	if(always_area_sensitive)
+		return
+
 	lose_area_sensitivity(INNATE_TRAIT)
 	UnregisterSignal(src, COMSIG_ENTER_AREA)
 	UnregisterSignal(src, COMSIG_EXIT_AREA)
 
 /obj/machinery/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
+	// If we're always area sensitive, and this is called while we have no power usage, do nothing and return
+	if(always_area_sensitive && use_power == NO_POWER_USE)
+		return
 	update_current_power_usage()
 	power_change()
 	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 
 /obj/machinery/proc/on_exit_area(datum/source, area/area_to_unregister)
 	SIGNAL_HANDLER
+	// If we're always area sensitive, and this is called while we have no power usage, do nothing and return
+	if(always_area_sensitive && use_power == NO_POWER_USE)
+		return
 	unset_static_power()
 	UnregisterSignal(area_to_unregister, COMSIG_AREA_POWER_CHANGE)
 
@@ -540,6 +559,10 @@
 
 	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT) && user.is_blind())
 		to_chat(user, span_warning("This machine requires sight to use."))
+		return FALSE
+
+	// machines have their own lit up display screens and LED buttons so we don't need to check for light
+	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_LITERACY) && !user.can_read(src, check_for_light = FALSE))
 		return FALSE
 
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))

@@ -3,7 +3,6 @@
 	name = "bio hood"
 	icon_state = "bio"
 	desc = "A hood that protects the head and face from biological contaminants."
-	permeability_coefficient = 0.01
 	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 30, ACID = 100)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
@@ -16,7 +15,6 @@
 	icon_state = "bio"
 	inhand_icon_state = "bio_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	permeability_coefficient = 0.01
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 0.5

@@ -6,6 +6,7 @@ import { createSetPreference, Food, Perk, PreferencesMenuData, ServerData, Speci
 import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 
 const FOOD_ICONS = {
+  [Food.Bugs]: "bug",
   [Food.Cloth]: "tshirt",
   [Food.Dairy]: "cheese",
   [Food.Fried]: "bacon",
@@ -23,6 +24,7 @@ const FOOD_ICONS = {
 };
 
 const FOOD_NAMES: Record<keyof typeof FOOD_ICONS, string> = {
+  [Food.Bugs]: "Bugs",
   [Food.Cloth]: "Clothing",
   [Food.Dairy]: "Dairy",
   [Food.Fried]: "Fried food",
@@ -40,6 +42,7 @@ const FOOD_NAMES: Record<keyof typeof FOOD_ICONS, string> = {
 };
 
 const IGNORE_UNLESS_LIKED: Set<Food> = new Set([
+  Food.Bugs,
   Food.Cloth,
   Food.Gross,
   Food.Toxic,

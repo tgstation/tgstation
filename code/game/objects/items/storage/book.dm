@@ -105,13 +105,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 /obj/item/storage/book/bible/proc/check_menu(mob/living/carbon/human/user)
 	if(GLOB.bible_icon_state)
 		return FALSE
-	if(!istype(user))
+	if(!istype(user) || !user.is_holding(src))
 		return FALSE
-	if(!user.is_holding(src))
-		return FALSE
-	if(!user.can_read(src))
-		return FALSE
-	if(user.incapacitated())
+	if(!user.can_read(src) || user.is_blind() || user.incapacitated())
 		return FALSE
 	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
 		return FALSE
@@ -205,7 +201,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(isfloorturf(bible_smacked))
 		if(user.mind && (user.mind.holy_role))
 			var/area/current_area = get_area(bible_smacked)
-			if(!GLOB.chaplain_altars.len && istype(current_area, /area/service/chapel))
+			if(!GLOB.chaplain_altars.len && istype(current_area, /area/station/service/chapel))
 				make_new_altar(bible_smacked, user)
 				return
 			for(var/obj/effect/rune/nearby_runes in orange(2,user))

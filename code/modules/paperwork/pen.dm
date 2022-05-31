@@ -293,15 +293,6 @@
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-///syndicate prototype for smuggling missions
-/obj/item/pen/edagger/prototype
-	name = "odd pen"
-	desc = "It's an abnormal black ink pen, with weird chunks of metal sticking out of it..."
-	hidden_name = "prototype hardlight dagger"
-	hidden_desc = "Waffle Corp R&D's prototype for energy daggers. Hardlight may be inferior \
-	to energy weapons, but it's still surprisingly deadly."
-	hidden_icon = "eprototypedagger"
-
 /obj/item/pen/survival
 	name = "survival pen"
 	desc = "The latest in portable survival technology, this pen was designed as a miniature diamond pickaxe. Watchers find them very desirable for their diamond exterior."

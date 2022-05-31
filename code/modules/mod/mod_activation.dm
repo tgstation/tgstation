@@ -116,7 +116,7 @@
 /obj/item/mod/control/proc/toggle_activate(mob/user, force_deactivate = FALSE)
 	if(!wearer)
 		if(!force_deactivate)
-			balloon_alert(user, "put suit on back!")
+			balloon_alert(user, "equip suit first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(!force_deactivate && (SEND_SIGNAL(src, COMSIG_MOD_ACTIVATE, user) & MOD_CANCEL_ACTIVATE))
@@ -145,7 +145,7 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	for(var/obj/item/mod/module/module as anything in modules)
-		if(!module.active)
+		if(!module.active || module.allowed_inactive)
 			continue
 		module.on_deactivation(display_message = FALSE)
 	activating = TRUE
@@ -226,7 +226,7 @@
 		STOP_PROCESSING(SSobj, src)
 	update_speed()
 	update_icon_state()
-	wearer.update_inv_back()
+	wearer.update_clothing(slot_flags)
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.
 /obj/item/mod/control/proc/quick_activation()

@@ -23,11 +23,13 @@
 #define EXOSUIT_MODULE_HONK (1<<5)
 /// Module is compatible with Phazon Exosuit models
 #define EXOSUIT_MODULE_PHAZON (1<<6)
+/// Module is compatible with Savannah Exosuit models
+#define EXOSUIT_MODULE_SAVANNAH (1<<7)
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE
 /// Module is compatible with "Combat" Exosuit models - Gygax, H.O.N.K, Durand and Phazon
-#define EXOSUIT_MODULE_COMBAT EXOSUIT_MODULE_GYGAX | EXOSUIT_MODULE_HONK | EXOSUIT_MODULE_DURAND | EXOSUIT_MODULE_PHAZON
+#define EXOSUIT_MODULE_COMBAT EXOSUIT_MODULE_GYGAX | EXOSUIT_MODULE_HONK | EXOSUIT_MODULE_DURAND | EXOSUIT_MODULE_PHAZON | EXOSUIT_MODULE_SAVANNAH
 /// Module is compatible with "Medical" Exosuit modelsm - Odysseus
 #define EXOSUIT_MODULE_MEDICAL EXOSUIT_MODULE_ODYSSEUS
 

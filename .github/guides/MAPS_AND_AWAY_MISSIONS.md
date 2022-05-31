@@ -19,6 +19,8 @@ If you are hosting a server, and want randomly picked maps to be played each rou
 
 ## EDITING MAPS
 
+### [Click here for a Quick-Start Guide To Mapping.](https://hackmd.io/@tgstation/SyVma0dS5)
+
 <b>It is absolutely inadvisable to <i>ever</i> use the mapping utility offered by Dream Maker</b>. It is clunky and dated software that will steal your time, patience, and creative desires.
 
 Instead, /tg/station map maintainers will always recommend using one of two modern and actively maintained programs.

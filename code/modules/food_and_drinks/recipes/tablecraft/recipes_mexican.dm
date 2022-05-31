@@ -113,3 +113,14 @@
 	)
 	result = /obj/item/food/stuffedlegion
 	subcategory = CAT_MEXICAN
+
+/datum/crafting_recipe/food/chipsandsalsa
+	name = "Chips and salsa"
+	reqs = list(
+		/obj/item/food/cornchips = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/tomato = 1
+	)
+	result = /obj/item/food/chipsandsalsa
+	subcategory = CAT_MEXICAN

@@ -40,7 +40,7 @@
 		/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/applejack = 5,
 		/obj/item/reagent_containers/food/drinks/bottle = 15,
-		/obj/item/reagent_containers/food/drinks/bottle/small = 15
+		/obj/item/reagent_containers/food/drinks/bottle/small = 15,
 	)
 	contraband = list(
 		/obj/item/reagent_containers/food/drinks/mug/tea = 12,

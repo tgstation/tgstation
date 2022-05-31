@@ -85,22 +85,22 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		if(SEC_DEPT_SUPPLY)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/supply
 			dep_trim = /datum/id_trim/job/security_officer/supply
-			destination = /area/security/checkpoint/supply
+			destination = /area/station/security/checkpoint/supply
 			accessory = /obj/item/clothing/accessory/armband/cargo
 		if(SEC_DEPT_ENGINEERING)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/engi
 			dep_trim = /datum/id_trim/job/security_officer/engineering
-			destination = /area/security/checkpoint/engineering
+			destination = /area/station/security/checkpoint/engineering
 			accessory = /obj/item/clothing/accessory/armband/engine
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/med
 			dep_trim = /datum/id_trim/job/security_officer/medical
-			destination = /area/security/checkpoint/medical
+			destination = /area/station/security/checkpoint/medical
 			accessory = /obj/item/clothing/accessory/armband/medblue
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
 			dep_trim = /datum/id_trim/job/security_officer/science
-			destination = /area/security/checkpoint/science
+			destination = /area/station/security/checkpoint/science
 			accessory = /obj/item/clothing/accessory/armband/science
 
 	if(accessory)

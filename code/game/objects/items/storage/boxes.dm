@@ -550,14 +550,6 @@
 /obj/item/storage/box/pdas/PopulateContents()
 	for(var/i in 1 to 4)
 		new /obj/item/modular_computer/tablet/pda(src)
-	new /obj/item/computer_hardware/hard_drive/role/head(src)
-
-	var/new_disk = pick( /obj/item/computer_hardware/hard_drive/role/engineering,
-						/obj/item/computer_hardware/hard_drive/role/security,
-						/obj/item/computer_hardware/hard_drive/role/medical,
-						/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-						/obj/item/computer_hardware/hard_drive/role/quartermaster)
-	new new_disk(src)
 
 /obj/item/storage/box/silver_ids
 	name = "box of spare silver IDs"
@@ -591,9 +583,8 @@
 	illustration = "pda"
 
 /obj/item/storage/box/seccarts/PopulateContents()
-	new /obj/item/computer_hardware/hard_drive/role/detective(src)
 	for(var/i in 1 to 6)
-		new /obj/item/computer_hardware/hard_drive/role/security(src)
+		new /obj/item/computer_hardware/hard_drive/portable/security(src)
 
 /obj/item/storage/box/firingpins
 	name = "box of standard firing pins"

@@ -16,9 +16,9 @@
 		var/obj/item/food/spawned_food = allocate(food_path)
 
 		if(!spawned_food.reagents)
-			Fail("[food_path] does not have any reagents, making it inedible!")
+			TEST_FAIL("[food_path] does not have any reagents, making it inedible!")
 
 		if(!IS_EDIBLE(spawned_food))
-			Fail("[food_path] does not have the edible component, making it inedible!")
+			TEST_FAIL("[food_path] does not have the edible component, making it inedible!")
 
 		qdel(spawned_food)

@@ -1,5 +1,5 @@
 /*****************************Survival Pod********************************/
-/area/survivalpod
+/area/misc/survivalpod
 	name = "\improper Emergency Shelter"
 	icon_state = "away"
 	static_lighting = TRUE
@@ -64,7 +64,7 @@
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [AREACOORD(T)]")
 
 		playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
-		new /obj/effect/particle_effect/smoke(get_turf(src))
+		new /obj/effect/particle_effect/fluid/smoke(get_turf(src))
 		qdel(src)
 
 //Non-default pods
@@ -107,7 +107,7 @@
 
 //Door
 /obj/machinery/door/airlock/survival_pod
-	name = "airlock"
+	name = "Airlock"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod

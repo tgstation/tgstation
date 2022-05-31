@@ -8,7 +8,7 @@
 	id = "aicore"
 	build_path = /obj/item/circuitboard/aicore
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/safeguard_module
 	name = "Module Design (Safeguard)"
@@ -17,7 +17,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/supplied/safeguard
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/onehuman_module
 	name = "Module Design (OneHuman)"
@@ -26,7 +26,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 6000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/zeroth/onehuman
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/protectstation_module
 	name = "Module Design (ProtectStation)"
@@ -35,7 +35,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/supplied/protect_station
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/quarantine_module
 	name = "Module Design (Quarantine)"
@@ -44,7 +44,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/supplied/quarantine
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/oxygen_module
 	name = "Module Design (OxygenIsToxicToHumans)"
@@ -53,7 +53,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/supplied/oxygen
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/freeform_module
 	name = "Module Design (Freeform)"
@@ -62,7 +62,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 10000, /datum/material/bluespace = 2000)//Custom inputs should be more expensive to get
 	build_path = /obj/item/ai_module/supplied/freeform
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/reset_module
 	name = "Module Design (Reset)"
@@ -71,7 +71,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
 	build_path = /obj/item/ai_module/reset
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/purge_module
 	name = "Module Design (Purge)"
@@ -80,7 +80,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/reset/purge
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/remove_module
 	name = "Module Design (Law Removal)"
@@ -89,7 +89,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/remove
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/freeformcore_module
 	name = "AI Core Module (Freeform)"
@@ -98,7 +98,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 10000, /datum/material/bluespace = 2000)//Ditto
 	build_path = /obj/item/ai_module/core/freeformcore
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/asimov
 	name = "Core Module Design (Asimov)"
@@ -107,7 +107,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/asimov
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/paladin_module
 	name = "Core Module Design (P.A.L.A.D.I.N.)"
@@ -116,7 +116,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/paladin
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/tyrant_module
 	name = "Core Module Design (T.Y.R.A.N.T.)"
@@ -125,7 +125,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/tyrant
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/overlord_module
 	name = "Core Module Design (Overlord)"
@@ -134,7 +134,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/overlord
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/corporate_module
 	name = "Core Module Design (Corporate)"
@@ -143,7 +143,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/corp
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/default_module
 	name = "Core Module Design (Default)"
@@ -152,4 +152,4 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/custom
 	category = list("AI Modules")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

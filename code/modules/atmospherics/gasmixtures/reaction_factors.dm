@@ -116,12 +116,12 @@
 
 /datum/gas_reaction/freonformation/init_factors()
 	factor = list(
-		/datum/gas/plasma = "40 moles of plasma needs to be present for the reaction to occur. Plasma is consumed at 1.5 reaction rate.",
-		/datum/gas/carbon_dioxide = "20 moles of carbon dioxide needs to be present for the reaction to occur. Carbon dioxide is consumed at 0.75 reaction rate.",
-		/datum/gas/bz = "20 moles of BZ needs to be present for the reaction to occur. BZ is consumed at 0.25 reaction rate.",
-		/datum/gas/freon = "Freon is produced at 2.5 reaction rate",
-		"Energy" = "[FREON_FORMATION_ENERGY] joules of energy is absorbed per reaction rate",
-		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100] Kelvin to occur",
+		/datum/gas/plasma = "At least 0.06 moles of plasma needs to be present. Plasma is consumed at 0.6 moles per tile/pipenet",
+		/datum/gas/carbon_dioxide = "At least 0.03 moles of CO2 needs to be present. CO2 is consumed at 0.3 moles per tile/pipenet",
+		/datum/gas/bz = "At least 0.01 moles of BZ needs to be present. BZ is consumed at 0.1 moles per tile/pipenet",
+		/datum/gas/freon = "Freon is produced at 1 mole per tile/pipenet",
+		"Energy" = "Between 100 and 800 joules of energy is absorbed per mole of freon produced",
+		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100] Kelvin to occur, with production peak at 800 K. However at temperatures above 5500 K higher rates are possible maxing out at three times the low temperature rate at over 8500 K.",
 	)
 
 /datum/gas_reaction/nobliumformation/init_factors()

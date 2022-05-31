@@ -759,7 +759,6 @@
 		regenerate_organs()
 	remove_all_embedded_objects()
 	set_heartattack(FALSE)
-	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
@@ -767,8 +766,14 @@
 	heat_exposure_stacks = 0
 	return ..()
 
+/mob/living/carbon/human/is_nearsighted()
+	var/obj/item/clothing/glasses/eyewear = glasses
+	if(istype(eyewear) && eyewear.vision_correction)
+		return FALSE
+	return ..()
+
 /mob/living/carbon/human/is_literate()
-	return TRUE
+	return !HAS_TRAIT(src, TRAIT_ILLITERATE)
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))

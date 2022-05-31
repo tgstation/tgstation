@@ -84,19 +84,19 @@
 		target.balloon_alert(source, "at ghoul limit!")
 		return COMPONENT_BLOCK_CHARGE_USE
 
+	if(HAS_TRAIT(target, TRAIT_HUSK))
+		target.balloon_alert(source, "husked!")
+		return COMPONENT_BLOCK_CHARGE_USE
+
 	if(!IS_VALID_GHOUL_MOB(target))
 		target.balloon_alert(source, "invalid body!")
 		return COMPONENT_BLOCK_CHARGE_USE
 
-	// Get their ghost in here so we can raise them
 	target.grab_ghost()
 
+	// The grab failed, so they're mindless or playerless. We can't continue
 	if(!target.mind || !target.client)
 		target.balloon_alert(source, "no soul!")
-		return COMPONENT_BLOCK_CHARGE_USE
-
-	if(HAS_TRAIT(target, TRAIT_HUSK))
-		target.balloon_alert(source, "husked!")
 		return COMPONENT_BLOCK_CHARGE_USE
 
 	make_ghoul(source, target)
@@ -148,14 +148,18 @@
 		return FALSE
 
 	for(var/mob/living/carbon/human/body in atoms)
-		if(body.stat != DEAD || !IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
-			atoms -= body
+		if(body.stat != DEAD)
+			continue
+		if(!IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
+			to_chat(user, span_hierophant_warning("[body] is not in a valid state to be made into a ghoul."))
+			continue
 
-	if(!(locate(/mob/living/carbon/human) in atoms))
-		loc.balloon_alert(user, "ritual failed, no valid body!")
-		return FALSE
+		// We'll select any valid bodies here. If they're clientless, we'll give them a new one.
+		selected_atoms += body
+		return TRUE
 
-	return TRUE
+	loc.balloon_alert(user, "ritual failed, no valid body!")
+	return FALSE
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/carbon/human/soon_to_be_ghoul = locate() in selected_atoms
@@ -180,6 +184,7 @@
 
 	selected_atoms -= soon_to_be_ghoul
 	make_ghoul(user, soon_to_be_ghoul)
+	return TRUE
 
 /// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
@@ -231,7 +236,7 @@
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
-		/obj/item/organ/eyes = 1,
+		/obj/item/organ/internal/eyes = 1,
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/bodypart/l_arm = 1,
 	)
@@ -268,9 +273,9 @@
 		/datum/heretic_knowledge/spell/cleave,
 	)
 	required_atoms = list(
-		/obj/item/organ/tail = 1,
-		/obj/item/organ/stomach = 1,
-		/obj/item/organ/tongue = 1,
+		/obj/item/organ/external/tail = 1,
+		/obj/item/organ/internal/stomach = 1,
+		/obj/item/organ/internal/tongue = 1,
 		/obj/item/pen = 1,
 		/obj/item/paper = 1,
 	)

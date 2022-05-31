@@ -493,7 +493,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	if(prob(50))
 		spawned_carbon.adjust_timed_status_effect(rand(30 SECONDS, 40 SECONDS), /datum/status_effect/drugginess)
 	else
-		spawned_carbon.drunkenness += rand(15, 25)
+		spawned_carbon.adjust_drunk_effect(rand(15, 25))
 	spawned_carbon.adjust_disgust(rand(5, 55)) //How hungover are you?
 	if(spawned_carbon.head)
 		return

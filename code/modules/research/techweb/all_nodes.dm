@@ -169,7 +169,6 @@
 		"mop",
 		"multitool",
 		"normtrash",
-		"petri_dish",
 		"pipe_painter",
 		"plant_analyzer",
 		"plunger",
@@ -180,7 +179,6 @@
 		"shovel",
 		"spade",
 		"spraycan",
-		"swab",
 		"tile_sprayer",
 		"tscanner",
 		"welding_helmet",
@@ -197,6 +195,7 @@
 	description = "Basic medical tools and equipment."
 	design_ids = list(
 		"beaker",
+		"biopsy_tool",
 		"blood_filter",
 		"bonesetter",
 		"cautery",
@@ -210,8 +209,11 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"operating",
+		"petri_dish",
 		"pillbottle",
 		"plumbing_rcd",
+		"plumbing_rcd_sci",
 		"portable_chem_mixer",
 		"retractor",
 		"scalpel",
@@ -219,6 +221,7 @@
 		"surgical_drapes",
 		"surgical_tape",
 		"surgicaldrill",
+		"swab",
 		"syringe",
 		"xlarge_beaker",
 	)
@@ -312,7 +315,6 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"beer_dispenser",
-		"biopsy_tool",
 		"blood_pack",
 		"chem_dispenser",
 		"chem_heater",
@@ -328,9 +330,7 @@
 		"medical_kiosk",
 		"medigel",
 		"medipen_refiller",
-		"operating",
 		"pandemic",
-		"plumbing_rcd_sci",
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -492,7 +492,6 @@
 		"atmosalerts",
 		"autolathe",
 		"cell_charger",
-		"cell_charger",
 		"crystallizer",
 		"electrolyzer",
 		"emergency_oxygen",
@@ -509,7 +508,7 @@
 		"plasma_tank",
 		"plasmaman_tank_belt",
 		"pneumatic_seal",
-		"power control",
+		"power_control",
 		"powermonitor",
 		"recharger",
 		"recycler",
@@ -550,6 +549,7 @@
 		"weldingmask",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	required_experiments = list(/datum/experiment/ordnance/gaseous/bz)
 	discount_experiments = list(/datum/experiment/scanning/random/material/medium/one = 4000)
 
 /datum/techweb_node/anomaly
@@ -586,7 +586,6 @@
 		"smes",
 		"super_capacitor",
 		"super_cell",
-		"superpacman",
 		"turbine_compressor",
 		"turbine_rotor",
 		"turbine_stator",
@@ -912,6 +911,12 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+//Any kind of point adjustment needs to happen before SSresearch sets up the whole node tree, it gets cached
+/datum/techweb_node/ai/New()
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		research_costs[TECHWEB_POINT_TYPE_GENERIC] *= 3
+
 /////////////////////////EMP tech/////////////////////////
 /datum/techweb_node/emp_basic //EMP tech for some reason
 	id = "emp_basic"
@@ -1016,8 +1021,6 @@
 		"bat_normal",
 		"bat_super",
 		"cardslot",
-		"cpu_normal",
-		"cpu_small",
 		"hdd_advanced",
 		"hdd_basic",
 		"hdd_cluster",
@@ -1026,12 +1029,9 @@
 		"netcard_advanced",
 		"netcard_basic",
 		"netcard_wired",
-		"pcpu_normal",
-		"pcpu_small",
 		"portadrive_advanced",
 		"portadrive_basic",
 		"portadrive_super",
-		"sensorpackage",
 		"ssd_micro",
 		"ssd_small",
 	)
@@ -1075,21 +1075,21 @@
 		"comm_monitor",
 		"comm_server",
 		"ntnet_relay",
-		"s-amplifier",
-		"s-analyzer",
-		"s-ansible",
-		"s-broadcaster",
-		"s-bus",
-		"s-crystal",
-		"s-filter",
-		"s-hub",
-		"s-messaging",
-		"s-processor",
-		"s-receiver",
-		"s-relay",
-		"s-server",
-		"s-transmitter",
-		"s-treatment",
+		"s_amplifier",
+		"s_analyzer",
+		"s_ansible",
+		"s_broadcaster",
+		"s_bus",
+		"s_crystal",
+		"s_filter",
+		"s_hub",
+		"s_messaging",
+		"s_processor",
+		"s_receiver",
+		"s_relay",
+		"s_server",
+		"s_transmitter",
+		"s_treatment",
 	)
 
 /datum/techweb_node/integrated_hud
@@ -1139,7 +1139,7 @@
 	description = "Smart freezing of objects to preserve them!"
 	prereq_ids = list("adv_engi", "biotech")
 	design_ids = list(
-		"cryo_Grenade",
+		"cryo_grenade",
 		"cryotube",
 		"splitbeaker",
 		"stasis",
@@ -1175,6 +1175,7 @@
 		"cybernetic_stomach_tier2",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	
 
 /datum/techweb_node/cyber_organs_upgraded
 	id = "cyber_organs_upgraded"
@@ -1189,7 +1190,6 @@
 		"cybernetic_stomach_tier3",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
-	required_experiments = list(/datum/experiment/ordnance/gaseous/bz)
 
 /datum/techweb_node/cyber_implants
 	id = "cyber_implants"
@@ -1219,7 +1219,6 @@
 		"ci-toolset",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/ordnance/gaseous/nitrium)
 
 /datum/techweb_node/combat_cyber_implants
 	id = "combat_cyber_implants"
@@ -1261,7 +1260,7 @@
 	id = "adv_mining"
 	display_name = "Advanced Mining Technology"
 	description = "Efficiency Level 127" //dumb mc references
-	prereq_ids = list("basic_mining", "adv_engi", "adv_power", "adv_plasma")
+	prereq_ids = list("basic_mining", "adv_power", "adv_plasma")
 	design_ids = list(
 		"drill_diamond",
 		"hypermod",
@@ -1354,7 +1353,9 @@
 	id = "adv_rcd_upgrade"
 	display_name = "Advanced RCD Designs Upgrade"
 	description = "Unlocks new RCD designs."
-	design_ids = list("rcd_upgrade_silo_link")
+	design_ids = list(
+		"rcd_upgrade_silo_link",
+	)
 	prereq_ids = list(
 		"bluespace_travel",
 		"rcd_upgrade",
@@ -1373,6 +1374,7 @@
 		"tele_shield",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	required_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb)
 
 /datum/techweb_node/adv_weaponry
 	id = "adv_weaponry"
@@ -1383,7 +1385,6 @@
 		"pin_loyalty",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	required_experiments = list(/datum/experiment/ordnance/explosive/highyieldbomb)
 
 /datum/techweb_node/electric_weapons
 	id = "electronic_weapons"
@@ -1433,9 +1434,9 @@
 	description = "If the light stuff just won't do it."
 	prereq_ids = list("adv_weaponry")
 	design_ids = list(
-		"adv_Grenade",
-		"large_Grenade",
-		"pyro_Grenade",
+		"adv_grenade",
+		"large_grenade",
+		"pyro_grenade",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1536,6 +1537,7 @@
 		"mod_stealth",
 		"mod_mag_harness",
 		"mod_pathfinder",
+		"mod_holster",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

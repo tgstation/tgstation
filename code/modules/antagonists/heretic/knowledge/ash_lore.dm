@@ -124,7 +124,7 @@
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
-		/obj/item/organ/liver = 1,
+		/obj/item/organ/internal/liver = 1,
 		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
 		/obj/item/clothing/mask = 1,
 		/obj/item/candle = 4,
@@ -146,7 +146,7 @@
 		return
 
 	target.adjust_fire_stacks(1)
-	target.IgniteMob()
+	target.ignite_mob()
 
 /datum/heretic_knowledge/spell/flame_birth
 	name = "Nightwater's Rebirth"
