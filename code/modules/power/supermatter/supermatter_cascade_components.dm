@@ -30,6 +30,7 @@
 	available_dirs -= dir_to_remove
 
 	var/turf/our_turf = get_turf(src)
+
 	if(our_turf)
 		our_turf.opacity = FALSE
 
@@ -53,9 +54,19 @@
 		return
 
 	for(var/atom/movable/checked_atom as anything in next_turf)
-		if(!isliving(checked_atom) && !istype(checked_atom, /obj/cascade_portal))
-			continue
-		qdel(checked_atom)
+		var/datum/component/supermatter_crystal/sm = GetComponent(/datum/component/supermatter_crystal)
+		if(isliving(checked_atom))
+			sm.dust_mob(src, checked_atom, span_danger("\The [src] lunges out on [checked_atom], touching [checked_atom.p_them()]... \
+					[checked_atom.p_their()] body begins to shine with a brilliant light before crystallizing from the inside out and joining \the [src]!"),
+				span_userdanger("The crystal mass lunges on you and hits you in the chest. As your vision is filled with a blinding light, you think to yourself \"Damn it.\""))
+		else if(istype(checked_atom, /obj/cascade_portal))
+			checked_atom.visible_message(span_userdanger("\The [checked_atom] screeches and closes away as it is hit by \a [src]! Too late!"))
+			playsound(get_turf(checked_atom), 'sound/magic/charge.ogg', 50, TRUE)
+			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE)
+			qdel(checked_atom)
+		else if(isitem(checked_atom))
+			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE)
+			qdel(checked_atom)
 
 	new /obj/crystal_mass(next_turf, get_dir(next_turf, src))
 
@@ -80,7 +91,7 @@
 
 /obj/cascade_portal
 	name = "Bluespace Rift"
-	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
+	desc = "Your mind begins to spin as it tries to comprehend what it sees."
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "reality"
 	anchored = TRUE
@@ -97,17 +108,27 @@
 
 /obj/cascade_portal/Bumped(atom/movable/hit_object)
 	if(isliving(hit_object))
-		hit_object.visible_message(span_danger("\The [hit_object] slams into \the [src] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
-			span_userdanger("You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
-			span_hear("You hear an unearthly noise as a wave of heat washes over you."))
+		hit_object.visible_message(span_danger("\The [hit_object] walks into \the [src]... \
+			A blinding light covers [hit_object.p_their()] body before disappearing completely!"),
+			span_userdanger("You walk into \the [src] as your body is washed with a powerful blue light. \
+				You contemplate about this decision before landing face first onto the cold, hard floor."),
+			span_hear("You hear a loud crack as a distortion passes through you."))
 	else if(isobj(hit_object) && !iseffect(hit_object))
-		hit_object.visible_message(span_danger("\The [hit_object] smacks into \the [src] and rapidly flashes to ash."), null,
-			span_hear("You hear a loud crack as you are washed with a wave of heat."))
+		hit_object.visible_message(span_danger("\The [hit_object] smacks into \the [src] and disappears out of sight."), null,
+			span_hear("You hear a loud crack as a small distortion passes through you."))
 	else
 		return
 
-	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 	consume(hit_object)
+
+	new /obj/effect/particle_effect/sparks(loc)
+	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/obj/cascade_portal/Destroy(force)
+	message_admins("[src] deleted at [get_area_name(loc)]. [ADMIN_JMP(loc)]")
+	log_game("[src] was deleted.")
+	investigate_log("was deleted.", INVESTIGATE_ENGINE)
+	. = ..()
 
 /**
  * Proc to consume the objects colliding with the portal
@@ -117,16 +138,18 @@
 /obj/cascade_portal/proc/consume(atom/movable/consumed_object)
 	if(isliving(consumed_object))
 		var/list/arrival_turfs = get_area_turfs(/area/centcom/central_command_areas/evacuation)
-		var/turf/arrival_turf = pick(arrival_turfs)
+		var/turf/arrival_turf
+		do
+			arrival_turf = pick(arrival_turfs)
+		while(!is_safe_turf(arrival_turf))
 		var/mob/living/consumed_mob = consumed_object
-		if(consumed_mob.status_flags & GODMODE)
-			return
 		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_JMP(src)].")
 		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.forceMove(arrival_turf)
 		consumed_mob.Paralyze(100)
 		consumed_mob.adjustBruteLoss(30)
-	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
-		return
+		consumed_mob.flash_act(1, TRUE, TRUE)
+		new /obj/effect/particle_effect/sparks(consumed_object)
+		playsound(consumed_object, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	else if(isobj(consumed_object))
 		qdel(consumed_object)

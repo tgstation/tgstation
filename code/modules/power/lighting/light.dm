@@ -58,6 +58,10 @@
 	var/emergency_mode = FALSE
 	///If true, this light cannot ever have an emergency mode
 	var/no_emergency = FALSE
+	//If true, overrides lights to use emergency lighting (used in cascades)
+	var/emergency_cascade = FALSE
+	//Multiplier for this light's base brightness during a cascade
+	var/bulb_emergency_cascade_brightness_mul = 0.5
 	///Multiplier for this light's base brightness in emergency power mode
 	var/bulb_emergency_brightness_mul = 0.25
 	///Determines the colour of the light while it's in emergency mode
@@ -110,7 +114,7 @@
 	switch(status) // set icon_states
 		if(LIGHT_OK)
 			var/area/local_area = get_area(src)
-			if(emergency_mode || (local_area?.fire))
+			if(emergency_mode || emergency_cascade || (local_area?.fire))
 				icon_state = "[base_state]_emergency"
 			else
 				icon_state = "[base_state]"
@@ -128,7 +132,7 @@
 		return
 
 	var/area/local_area = get_area(src)
-	if(emergency_mode || (local_area?.fire))
+	if(emergency_mode || emergency_cascade || (local_area?.fire))
 		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
 		return
 	if(nightshift_enabled)
@@ -178,6 +182,9 @@
 			power_set = nightshift_light_power
 			if(!color)
 				color_set = nightshift_light_color
+		else if (emergency_cascade)
+			color_set = bulb_emergency_colour
+			brightness_set = brightness * bulb_emergency_cascade_brightness_mul
 		var/matching = light && brightness_set == light.light_range && power_set == light.light_power && color_set == light.light_color
 		if(!matching)
 			switchcount++
@@ -514,6 +521,10 @@
 			return
 	// create a light tube/bulb item and put it in the user's hand
 	drop_light_tube(user)
+
+/obj/machinery/light/proc/set_cascade_light()
+	emergency_cascade = TRUE
+	update()
 
 /obj/machinery/light/proc/drop_light_tube(mob/user)
 	var/obj/item/light/light_object = new light_type()

@@ -313,7 +313,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/Destroy()
 	if(warp)
 		vis_contents -= warp
-		warp = null
+		QDEL_NULL(warp)
 	investigate_log("has been destroyed.", INVESTIGATE_ENGINE)
 	SSair.stop_processing_machine(src)
 	QDEL_NULL(radio)
@@ -334,6 +334,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/immune = HAS_TRAIT(user, TRAIT_MADNESS_IMMUNE) || (user.mind && HAS_TRAIT(user.mind, TRAIT_MADNESS_IMMUNE))
 	if(isliving(user) && !immune && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
 		. += span_danger("You get headaches just from looking at it.")
+	if(cascade_initiated)
+		. += span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!")
 
 // SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
 /obj/machinery/power/supermatter_crystal/ui_interact(mob/user, datum/tgui/ui)
@@ -442,11 +444,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	final_countdown = TRUE
 	update_appearance()
 
-	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated."
+	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure."
+
+	if(check_cascade_requirements(anomaly_event))
+		speaking += " Harmonic frequency limits exceeded. Causality destabilization field could not be engaged."
+	else
+		speaking += " Emergency causality destabilization field has been activated."
+
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
 	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
 		if(damage < explosion_point) // Cutting it a bit close there engineers
-			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
+			if(check_cascade_requirements(anomaly_event))
+				radio.talk_into(src, "[safe_alert] Harmonic frequency restored within bounds. Anti-resonance filter initiated.", common_channel)
+			else
+				radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
 			final_countdown = FALSE
 			update_appearance()
 			return
@@ -454,7 +465,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			sleep(10)
 			continue
 		else if(i > 50)
-			speaking = "[DisplayTimeText(i, TRUE)] remain before causality stabilization."
+			if(check_cascade_requirements(anomaly_event))
+				speaking = "[DisplayTimeText(i, TRUE)] remain before total hyperstructure failure."
+			else
+				speaking = "[DisplayTimeText(i, TRUE)] remain before causality stabilization."
 		else
 			speaking = "[i*0.1]..."
 		radio.talk_into(src, speaking, common_channel)
@@ -486,6 +500,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT && !cascade_initiated && !admin_cascade && can_trigger)
 		return FALSE
 
+	if(admin_cascade)
+		return TRUE
+
 	var/supermatter_cascade = can_trigger
 	var/list/required_gases = list(/datum/gas/hypernoblium, /datum/gas/antinoblium)
 	for(var/gas_path in required_gases)
@@ -494,9 +511,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(gas_comp[gas_path] < 0.4 || environment_total_moles < MOLE_PENALTY_THRESHOLD)
 			supermatter_cascade = FALSE
 			break
-
-	if(admin_cascade)
-		supermatter_cascade = TRUE
 
 	return supermatter_cascade
 
