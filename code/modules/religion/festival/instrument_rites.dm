@@ -24,10 +24,10 @@
  * Perform the song effect.
  *
  * Arguments:
- * * song_player - parent of the smooth_tunes component. This is limited to the compatible items of said component, which currently includes mobs and objects so we'll have to type appropriately.
- * * song_datum - Datum song being played
+ * * listener - A mob, listening to the song
+ * * song_source - parent of the smooth_tunes component. This is limited to the compatible items of said component, which currently includes mobs and objects so we'll have to type appropriately.
  */
-/datum/religion_rites/song_tuner/proc/song_effect(atom/song_player, datum/song/song_datum)
+/datum/religion_rites/song_tuner/proc/song_effect(mob/living/carbon/human/listener, atom/song_source)
 	return
 
 /**
@@ -36,10 +36,10 @@
  * If you want something that ALWAYS goes off regardless of song length, affix it to the Destroy proc. The rite is destroyed when smooth tunes is done.
  *
  * Arguments:
- * * song_player - parent of the smooth_tunes component. This is limited to the compatible items of said component, which currently includes mobs and objects so we'll have to type appropriately.
- * * song_datum - Datum song being played
+ * * listener - A mob, listening to the song
+ * * song_source - parent of the smooth_tunes component. This is limited to the compatible items of said component, which currently includes mobs and objects so we'll have to type appropriately.
  */
-/datum/religion_rites/song_tuner/proc/finish_effect(atom/song_player, datum/song/song_datum)
+/datum/religion_rites/song_tuner/proc/finish_effect(mob/living/carbon/human/listener, atom/song_source)
 	return
 
 /datum/religion_rites/song_tuner/evangelism
@@ -51,21 +51,14 @@
 	glow_color = "#FEFFE0"
 	favor_cost = 0
 
-/datum/religion_rites/song_tuner/evangelism/song_effect(atom/song_player, datum/song/song_datum)
-	if(!song_datum || !GLOB.religious_sect)
+/datum/religion_rites/song_tuner/evangelism/song_effect(mob/living/carbon/human/listener, atom/song_source)
+	// A ckey requirement is good to have for gaining favor, to stop monkey farms and such.
+	if(!GLOB.religious_sect || listener.mind?.holy_role || !listener.ckey)
 		return
-	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		if(listener == song_player || listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
-			continue
-		if(listener.mind?.holy_role)
-			continue
-		if(!listener.ckey) //good requirement to have for favor, trust me
-			continue
-		GLOB.religious_sect.adjust_favor(0.2)
+	GLOB.religious_sect.adjust_favor(0.2)
 
-/datum/religion_rites/song_tuner/evangelism/finish_effect(atom/song_player, datum/song/song_datum)
-	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		SEND_SIGNAL(listener, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+/datum/religion_rites/song_tuner/evangelism/finish_effect(mob/living/carbon/human/listener, atom/song_source)
+	SEND_SIGNAL(listener, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 
 /datum/religion_rites/song_tuner/nullwave
 	name = "Nullwave Vibrato"
@@ -76,13 +69,8 @@
 	glow_color = "#a9a9b8"
 	repeats_okay = FALSE
 
-/datum/religion_rites/song_tuner/nullwave/song_effect(atom/song_player, datum/song/song_datum)
-	if(!song_datum)
-		return
-	for(var/mob/living/listener in song_datum.hearing_mobs)
-		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
-			continue
-		listener.apply_status_effect(/datum/status_effect/song/antimagic)
+/datum/religion_rites/song_tuner/nullwave/song_effect(mob/living/carbon/human/listener, atom/song_source)
+	listener.apply_status_effect(/datum/status_effect/song/antimagic)
 
 /datum/religion_rites/song_tuner/pain
 	name = "Murderous Chord"
@@ -93,23 +81,16 @@
 	glow_color = "#FF4460"
 	repeats_okay = FALSE
 
-/datum/religion_rites/song_tuner/pain/song_effect(atom/song_player, datum/song/song_datum)
-	if(!song_datum)
-		return
-	for(var/mob/living/listener in song_datum.hearing_mobs)
-		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
-			continue
-		var/pain_juice = 1
-		if(listener.mind?.holy_role)
-			pain_juice *= 0.5
-		listener.adjustBruteLoss(pain_juice)
+/datum/religion_rites/song_tuner/pain/song_effect(mob/living/carbon/human/listener, atom/song_source)
+	var/damage_dealt = 1
+	if(listener.mind?.holy_role)
+		damage_dealt *= 0.5
 
-/datum/religion_rites/song_tuner/pain/finish_effect(atom/song_player, datum/song/song_datum)
-	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
-			continue
-		var/obj/item/bodypart/sliced_limb = pick(listener.bodyparts)
-		sliced_limb.force_wound_upwards(/datum/wound/slash/moderate/many_cuts)
+	listener.adjustBruteLoss(damage_dealt)
+
+/datum/religion_rites/song_tuner/pain/finish_effect(mob/living/carbon/human/listener, atom/song_source)
+	var/obj/item/bodypart/sliced_limb = pick(listener.bodyparts)
+	sliced_limb.force_wound_upwards(/datum/wound/slash/moderate/many_cuts)
 
 /datum/religion_rites/song_tuner/lullaby
 	name = "Spiritual Lullaby"
@@ -127,23 +108,21 @@
 	listener_counter.Cut()
 	return ..()
 
-/datum/religion_rites/song_tuner/lullaby/song_effect(atom/song_player, datum/song/song_datum)
-	if(!song_datum)
+/datum/religion_rites/song_tuner/lullaby/song_effect(mob/living/carbon/human/listener, atom/song_source)
+	if(listener.mind?.holy_role)
 		return
-	for(var/mob/living/listener in song_datum.hearing_mobs)
-		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
-			continue
-		if(listener.mind?.holy_role)
-			continue
-		if(prob(20))
-			to_chat(listener, span_warning(pick("The music is putting you to sleep...", "The music makes you nod off for a moment.", "You try to focus on staying awake through the song.")))
-			listener.emote("yawn")
-		listener.blur_eyes(2)
 
-/datum/religion_rites/song_tuner/lullaby/finish_effect(atom/song_player, datum/song/song_datum)
-	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
-			continue
-		to_chat(listener, span_danger("Wow, the ending of that song was... pretty..."))
-		listener.AdjustSleeping(5 SECONDS)
+	var/static/list/sleepy_messages = list(
+		"The music is putting you to sleep...",
+		"The music makes you nod off for a moment.",
+		"You try to focus on staying awake through the song.",
+	)
 
+	if(prob(20))
+		to_chat(listener, span_warning(pick(sleepy_messages)))
+		listener.emote("yawn")
+	listener.blur_eyes(2)
+
+/datum/religion_rites/song_tuner/lullaby/finish_effect(mob/living/carbon/human/listener, atom/song_source)
+	to_chat(listener, span_danger("Wow, the ending of that song was... pretty..."))
+	listener.AdjustSleeping(5 SECONDS)

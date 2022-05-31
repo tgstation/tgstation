@@ -67,9 +67,9 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external/ruin{
-	id_tag = "syndie_listeningpost_external";
-	req_access = list("syndicate")
+	id_tag = "syndie_listeningpost_external"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -87,9 +87,9 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external/ruin{
-	id_tag = "syndie_listeningpost_external";
-	req_access = list("syndicate")
+	id_tag = "syndie_listeningpost_external"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -953,9 +953,9 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/airlock/hatch{
-	name = "Telecommunications";
-	req_access = list("syndicate")
+	name = "Telecommunications"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -968,9 +968,9 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/airlock/hatch{
-	name = "E.V.A. Equipment";
-	req_access = list("syndicate")
+	name = "E.V.A. Equipment"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
