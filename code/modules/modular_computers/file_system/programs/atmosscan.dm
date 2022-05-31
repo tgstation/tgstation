@@ -18,11 +18,14 @@
 
 /// Secondary attack self.
 /datum/computer_file/program/atmosscan/proc/turf_analyze(datum/source, mob/user)
+	SIGNAL_HANDLER
 	atmos_scan(user=user, target=get_turf(computer), silent=FALSE)
-	on_analyze(source=src, target=get_turf(computer))
+	on_analyze(source=source, target=get_turf(computer))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Updates our gasmix data if on click mode.
 /datum/computer_file/program/atmosscan/proc/on_analyze(datum/source, atom/target)
+	SIGNAL_HANDLER
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE

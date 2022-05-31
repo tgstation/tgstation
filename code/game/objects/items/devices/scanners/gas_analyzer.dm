@@ -127,6 +127,7 @@
 
 /// Called when our analyzer is used on something
 /obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
+	SIGNAL_HANDLER
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
