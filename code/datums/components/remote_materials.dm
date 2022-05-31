@@ -106,8 +106,9 @@ handles linking back and forth.
 		if (silo == M.buffer)
 			to_chat(user, span_warning("[parent] is already connected to [silo]!"))
 			return COMPONENT_BLOCK_TOOL_ATTACK
+		var/turf/silo_turf = get_turf(M.buffer)
 		var/turf/user_loc = get_turf(user)
-		if(GLOB.ore_silo_default == M.buffer && !is_station_level(user_loc.z))
+		if(user_loc.z != silo_turf.z)
 			to_chat(user, span_warning("[parent] is too far away to get a connection signal!"))
 			return COMPONENT_BLOCK_TOOL_ATTACK
 		if (silo)
@@ -125,10 +126,11 @@ handles linking back and forth.
 
 /datum/component/remote_materials/proc/check_z_level(datum/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
-
-	if(!silo || !(GLOB.ore_silo_default == silo))
+	if(!silo)
 		return
-	if(!is_station_level(new_turf.z))
+
+	var/turf/silo_turf = get_turf(silo)
+	if(silo_turf.z != new_turf.z)
 		disconnect_from(silo)
 
 /datum/component/remote_materials/proc/on_hold()
