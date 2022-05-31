@@ -168,9 +168,9 @@
 	if(!ninja || !hacking_module)
 		return NONE
 	if(hacking_module.communication_console_hack_success)
-		return
+		return NONE
 	if(machine_stat & (NOPOWER|BROKEN))
-		return
+		return NONE
 	AI_notify_hack()
 	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -196,7 +196,7 @@
 		hacking_module.door_hack_counter++
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
-			return
+			return NONE
 		var/datum/objective/door_jack/objective = locate() in ninja_antag.objectives
 		if(objective && objective.doors_required <= hacking_module.door_hack_counter)
 			objective.completed = TRUE
@@ -308,3 +308,4 @@
 		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		visible_message(span_danger("[ninja] electrocutes [src] with [ninja.p_their()] touch!"), span_userdanger("[ninja] electrocutes you with [ninja.p_their()] touch!"))
 		Knockdown(3 SECONDS)
+	return NONE
