@@ -19,6 +19,8 @@
 /// Secondary attack self.
 /datum/computer_file/program/atmosscan/proc/turf_analyze(datum/source, mob/user)
 	SIGNAL_HANDLER
+	if(atmozphere_mode != ATMOZPHERE_SCAN_CLICK)
+		return
 	atmos_scan(user=user, target=get_turf(computer), silent=FALSE)
 	on_analyze(source=source, target=get_turf(computer))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
