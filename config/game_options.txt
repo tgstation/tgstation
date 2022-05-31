@@ -231,7 +231,6 @@ RANDOM_LAWS corporate
 ## Quirky laws. Shouldn't cause too much harm
 #RANDOM_LAWS hippocratic
 #RANDOM_LAWS maintain
-#RANDOM_LAWS drone
 #RANDOM_LAWS liveandletlive
 #RANDOM_LAWS peacekeeper
 #RANDOM_LAWS reporter
@@ -243,6 +242,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS ninja
 #RANDOM_LAWS antimov
 #RANDOM_LAWS thermodynamic
+#RANDOM_LAWS drone
 
 ## meme laws. Honk
 #RANDOM_LAWS buildawall
@@ -267,7 +267,6 @@ LAW_WEIGHT liveandletlive,5
 LAW_WEIGHT peacekeeper,5
 LAW_WEIGHT ten_commandments,5
 LAW_WEIGHT nutimov,5
-LAW_WEIGHT drone,5
 
 ## Quirky laws. Shouldn't cause too much harm
 LAW_WEIGHT reporter,3
@@ -284,6 +283,7 @@ LAW_WEIGHT antimov,0
 LAW_WEIGHT balance,0
 LAW_WEIGHT thermodynamic,0
 LAW_WEIGHT buildawall,0
+LAW_WEIGHT drone,0
 
 ##------------------------------------------------
 
