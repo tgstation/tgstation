@@ -155,16 +155,17 @@
 	if(isnull(possible_targets))
 		possible_targets = ListTargets()
 
-	for(var/atom/target_sources as anything in possible_targets)
-		if(isitem(target_sources) && ismob(target_sources.loc)) //If source is from an item, check the holder of it.
-			possible_targets += target_sources.loc
-
 	for(var/atom/pos_targ as anything in possible_targets)
 		if(Found(pos_targ)) //Just in case people want to override targetting
 			all_potential_targets = list(pos_targ)
 			break
-		if(CanAttack(pos_targ)) //Can we attack it?
-			all_potential_targets += pos_targ
+
+		if(isitem(pos_targ) && ismob(pos_targ.loc)) //If source is from an item, check the holder of it.
+			if(CanAttack(pos_targ.loc))
+				all_potential_targets += pos_targ.loc
+		else
+			if(CanAttack(pos_targ))
+				all_potential_targets += pos_targ
 
 	var/found_target = PickTarget(all_potential_targets)
 	GiveTarget(found_target)
