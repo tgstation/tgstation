@@ -1,3 +1,8 @@
+/// Scan the turf where the computer is on.
+#define ATMOZPHERE_SCAN_ENV "self"
+/// Scan the objects that the tablet clicks.
+#define ATMOZPHERE_SCAN_CLICK "click"
+
 /datum/computer_file/program/atmosscan
 	filename = "atmosscan"
 	filedesc = "AtmoZphere"
@@ -8,18 +13,61 @@
 	tgui_id = "NtosGasAnalyzer"
 	program_icon = "thermometer-half"
 
+	var/atmozphere_mode = ATMOZPHERE_SCAN_ENV
+	var/list/last_gasmix_data
+
+/// Secondary attack self.
+/datum/computer_file/program/atmosscan/proc/turf_analyze(mob/user)
+	atmos_scan(user=user, target=get_turf(computer), silent=FALSE)
+	on_analyze(source=src, target=get_turf(src))
+
+/// Updates our gasmix data if on click mode.
+/datum/computer_file/program/atmosscan/proc/on_analyze(datum/source, atom/target)
+	var/mixture = target.return_analyzable_air()
+	if(!mixture)
+		return FALSE
+	var/list/airs = islist(mixture) ? mixture : list(mixture)
+	var/list/new_gasmix_data = list()
+	for(var/datum/gas_mixture/air as anything in airs)
+		var/mix_name = capitalize(lowertext(target.name))
+		if(airs.len != 1) //not a unary gas mixture
+			mix_name += " - Node [airs.Find(air)]"
+		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
+	last_gasmix_data = new_gasmix_data
+
 /datum/computer_file/program/atmosscan/ui_static_data(mob/user)
 	return return_atmos_handbooks()
 
 /datum/computer_file/program/atmosscan/ui_data(mob/user)
 	var/list/data = get_header_data()
 	var/turf/turf = get_turf(computer)
-	var/datum/gas_mixture/air = turf?.return_air()
-
-	data["gasmixes"] = list(gas_mixture_parser(air, "Sensor Reading")) //Null air wont cause errors, don't worry.
+	data["atmozphereMode"] = atmozphere_mode
+	switch (atmozphere_mode) //Null air wont cause errors, don't worry.
+		if(ATMOZPHERE_SCAN_ENV)
+			var/datum/gas_mixture/air = turf?.return_air()
+			data["gasmixes"] = list(gas_mixture_parser(air, "Location Reading"))
+		if(ATMOZPHERE_SCAN_CLICK)
+			LAZYINITLIST(last_gasmix_data)
+			data["gasmixes"] = last_gasmix_data
 	return data
 
 /datum/computer_file/program/atmosscan/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
+	switch(action)
+		if("scantoggle")
+			if(atmozphere_mode == ATMOZPHERE_SCAN_CLICK)
+				atmozphere_mode = ATMOZPHERE_SCAN_ENV
+				if(computer.tool_behaviour == TOOL_ANALYZER)
+					computer.tool_behaviour = NONE
+					UnregisterSignal(computer, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_ANALYZER))
+				return TRUE
+			if(computer.hardware_flag != PROGRAM_TABLET)
+				computer.say("Device incompatible for scanning objects!")
+				return FALSE
+			var/turf/turf = get_turf(computer)
+			last_gasmix_data = list(gas_mixture_parser(turf?.return_air(), "Location Reading"))
+			computer.tool_behaviour = TOOL_ANALYZER
+			RegisterSignal(computer, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_ANALYZER), .proc/on_analyze)
+			RegisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY, .proc/turf_analyze)

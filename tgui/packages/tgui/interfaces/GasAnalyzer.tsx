@@ -8,8 +8,12 @@ import {
 import { Window } from '../layouts';
 import { Section } from '../components';
 
+export type GasAnalyzerData = {
+	gasmixes: Gasmix[]
+}
+
 export const GasAnalyzerContent = (props, context) => {
-  const { act, data } = useBackend<{ gasmixes: Gasmix[] }>(context);
+  const { act, data } = useBackend<GasAnalyzerData>(context);
   const { gasmixes } = data;
   const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks(context);
   return (

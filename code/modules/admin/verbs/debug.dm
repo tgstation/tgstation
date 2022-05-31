@@ -23,7 +23,7 @@
 	var/turf/T = get_turf(mob)
 	if(!isturf(T))
 		return
-	atmos_scan(user=usr, target=T, tool=null, silent=TRUE)
+	atmos_scan(user=usr, target=T, silent=TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
