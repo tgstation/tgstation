@@ -1,5 +1,5 @@
 /// Scan the turf where the computer is on.
-#define ATMOZPHERE_SCAN_ENV "self"
+#define ATMOZPHERE_SCAN_ENV "env"
 /// Scan the objects that the tablet clicks.
 #define ATMOZPHERE_SCAN_CLICK "click"
 
@@ -17,9 +17,9 @@
 	var/list/last_gasmix_data
 
 /// Secondary attack self.
-/datum/computer_file/program/atmosscan/proc/turf_analyze(mob/user)
+/datum/computer_file/program/atmosscan/proc/turf_analyze(datum/source, mob/user)
 	atmos_scan(user=user, target=get_turf(computer), silent=FALSE)
-	on_analyze(source=src, target=get_turf(src))
+	on_analyze(source=src, target=get_turf(computer))
 
 /// Updates our gasmix data if on click mode.
 /datum/computer_file/program/atmosscan/proc/on_analyze(datum/source, atom/target)
@@ -63,12 +63,14 @@
 				if(computer.tool_behaviour == TOOL_ANALYZER)
 					computer.tool_behaviour = NONE
 					UnregisterSignal(computer, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_ANALYZER))
+					UnregisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
 				return TRUE
 			if(computer.hardware_flag != PROGRAM_TABLET)
 				computer.say("Device incompatible for scanning objects!")
 				return FALSE
-			var/turf/turf = get_turf(computer)
-			last_gasmix_data = list(gas_mixture_parser(turf?.return_air(), "Location Reading"))
+			atmozphere_mode = ATMOZPHERE_SCAN_CLICK
 			computer.tool_behaviour = TOOL_ANALYZER
 			RegisterSignal(computer, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_ANALYZER), .proc/on_analyze)
 			RegisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY, .proc/turf_analyze)
+			var/turf/turf = get_turf(computer)
+			last_gasmix_data = list(gas_mixture_parser(turf?.return_air(), "Location Reading"))

@@ -15,17 +15,12 @@ export const NtosGasAnalyzer = (props, context) => {
   return (
     <NtosWindow width={500} height={450}>
       <NtosWindow.Content scrollable>
-        {clickAtmozphereCompatible && (
-          <Button
-            title={
-              atmozphereMode === 'click'
-                ? 'Scanning tapped objects. Click to switch.'
-                : 'Scanning current location. Click to switch.'
-            }
-            icon={'sync'}
-            onClick={() => act('scantoggle')}
-            fluid
-          />
+        {!!clickAtmozphereCompatible && (
+          <Button icon={'sync'} onClick={() => act('scantoggle')} fluid textAlign="center">
+            {atmozphereMode === 'click'
+              ? 'Scanning tapped objects. Click to switch.'
+              : 'Scanning current location. Click to switch.'}
+          </Button>
         )}
         <GasAnalyzerContent />
       </NtosWindow.Content>
