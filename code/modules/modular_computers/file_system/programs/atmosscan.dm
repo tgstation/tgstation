@@ -25,6 +25,8 @@
 
 /// Keep this in sync with it's tool based counterpart [/obj/proc/analyzer_act] and [/atom/proc/tool_act]
 /datum/computer_file/program/atmosscan/tap(atom/A, mob/living/user, params)
+	if(atmozphere_mode != ATMOZPHERE_SCAN_CLICK)
+		return FALSE
 	atmos_scan(user=user, target=A, silent=FALSE)
 	on_analyze(source=computer, target=A)
 	return TRUE
