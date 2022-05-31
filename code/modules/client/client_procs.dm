@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// Instantiate tgui panel
 	tgui_panel = new(src, "browseroutput")
 
-	// Instantiate tgui say
+	// Instantiate tgui modal
 	tgui_modal = new(src, "tgui_modal")
 
 	set_right_click_menu_mode(TRUE)

@@ -32,24 +32,28 @@ $color-ooc-highlight: #ffd631;
 // Main window styles
 .window {
   background: $input-background;
-  border-left: thin solid $color-say;
-  border-right: thin solid $color-say;
+  border-left: 2px solid $color-say;
+  border-right: 2px solid $color-say;
   display: flex;
   flex-direction: row;
   font-family: 'Consolas', monospace;
   margin: 0 auto;
   max-width: 333px;
-  padding: 1rem 0 1rem 1rem;
+  padding: 0.8rem 0 1rem 0.8rem;
   position: relative;
   width: 100%;
 }
 
-.window-96 {
-  height: 96px;
+.window-58 {
+  height: 58px;
 }
 
-.window-128 {
-  height: 128px;
+.window-85 {
+  height: 85px;
+}
+
+.window-110 {
+  height: 110px;
 }
 
 .window-say {
@@ -143,8 +147,8 @@ $color-ooc-highlight: #ffd631;
   border: none;
   font-family: inherit;
   font-size: 1.5rem;
-  letter-spacing: thin;
-  margin-top: 4px;
+  letter-spacing: 2px;
+  margin-top: 7px;
   width: 100%;
 }
 
@@ -176,8 +180,7 @@ $color-ooc-highlight: #ffd631;
   font-family: inherit;
   font-weight: bold;
   font-size: 1.8rem;
-  height: 35px;
-  padding-top: 2px;
+  height: 36px;
   text-align: center;
   vertical-align: middle;
   width: 55px;

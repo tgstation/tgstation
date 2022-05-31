@@ -7,18 +7,14 @@ const CHANNELS = ['say', 'radio', 'me', 'ooc'];
 
 /** Window sizes in pixels */
 const SIZE = {
-  small: 64,
-  medium: 96,
-  large: 128,
+  small: 58,
+  medium: 85,
+  large: 110,
 };
 
 /** Returns modular css classes*/
 const getCss = (element, channel, size) =>
-  classes([
-    element,
-    `${element}-${CHANNELS[channel]}`,
-    size > SIZE.small && `${element}-${size}`,
-  ]);
+  classes([element, `${element}-${CHANNELS[channel]}`, `${element}-${size}`]);
 
 /**
  * Primary class for the TGUI modal.
@@ -75,12 +71,12 @@ export class TguiModal extends Component {
     });
   };
   /** Grabs the TAB key to change channels. */
-  handleKeyDown = (event) => {
-    if (event.keyCode === KEY_TAB) {
+  handleKeyDown = (event, value) => {
+    if (e.keyCode === KEY_TAB) {
       this.incrementChannel();
       event.preventDefault();
     }
-    this.setSize(event.target.value);
+    this.setSize(value);
   };
   /**
    * Increments the channel or resets to the beginning of the list.
@@ -90,9 +86,7 @@ export class TguiModal extends Component {
     const { channel, hovering } = this.state;
     if (channel === CHANNELS.length - 1) {
       this.setState({
-        buttonContent: !hovering
-          ? '>'
-          : CHANNELS[0].slice(0, 1).toUpperCase(),
+        buttonContent: !hovering ? '>' : CHANNELS[0].slice(0, 1).toUpperCase(),
         channel: 0,
       });
     } else {
@@ -106,9 +100,9 @@ export class TguiModal extends Component {
   }
   /**  Adjusts window sized based on target value */
   setSize = (value) => {
-    if (value.length > 42) {
+    if (value.length > 56) {
       this.setState({ size: SIZE.large });
-    } else if (value.length > 17) {
+    } else if (value.length > 22) {
       this.setState({ size: SIZE.medium });
     } else {
       this.setState({ size: SIZE.small });
@@ -152,13 +146,13 @@ export class TguiModal extends Component {
         <TextArea
           autoFocus
           className={getCss('input', channel, size)}
+          dontUseTabForIndent
           maxLength={maxLength}
           onEnter={handleEnter}
           onEscape={handleEscape}
           onInput={handleInput}
           onKeyDown={handleKeyDown}
           selfClear
-          scrollable
         />
       </div>
     );

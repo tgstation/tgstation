@@ -5,7 +5,7 @@
  */
 /datum/tgui_modal
 	/// The channel to broadcast in
-	var/channel = "say"
+	var/channel = SAY_CHAN
 	/// The user who opened the window
 	var/client/client
 	/// Boolean for whether the tgui_modal was closed by the user.
@@ -24,7 +24,8 @@
 	window.subscribe(src, .proc/on_message)
 
 /**
- * Injects the scripts and styling into the window
+ * Injects the scripts and styling into the window,
+ * then feeds it props for the chat channel and max message length.
  */
 /datum/tgui_modal/proc/initialize()
 	window.initialize(
@@ -32,6 +33,10 @@
 			inline_css = file2text("tgui/public/tgui-modal.bundle.css"),
 			inline_js = file2text("tgui/public/tgui-modal.bundle.js"),
 	)
+	window.send_message("modal_data", list(
+		channel = "ooc",
+		maxLength = max_length,
+	))
 	close()
 
 /**
