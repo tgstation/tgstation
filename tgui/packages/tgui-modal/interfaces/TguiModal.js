@@ -1,7 +1,7 @@
 import { Component } from 'inferno';
 import { classes } from 'common/react';
 import { KEY_TAB } from 'common/keycodes';
-import { Input } from 'tgui/components';
+import { TextArea } from 'tgui/components';
 
 const CHANNELS = ['say', 'radio', 'me', 'ooc'];
 
@@ -147,13 +147,13 @@ export class TguiModal extends Component {
             {buttonContent}
           </button>
         )}
-        <Input
+        <TextArea
           autoFocus
           className={getCss('input', channel, size)}
           maxLength={maxLength}
-          onInput={handleInput}
-          onEscape={handleEscape}
           onEnter={handleEnter}
+          onEscape={handleEscape}
+          onInput={handleInput}
           onKeyDown={handleKeyDown}
           selfClear
           scrollable
