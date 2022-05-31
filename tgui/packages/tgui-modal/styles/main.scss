@@ -6,5 +6,6 @@
 @include meta.load-css('~tgui/styles/atomic/text.scss');
 // External styles
 @include meta.load-css('~tgui/styles/components/Input.scss');
+@include meta.load-css('~tgui/styles/components/TextArea.scss');
 // Local styles
 @include meta.load-css('./modal.scss');

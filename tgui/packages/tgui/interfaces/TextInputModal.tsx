@@ -2,7 +2,7 @@ import { Loader } from './common/Loader';
 import { InputButtons } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
 import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
-import { Box, Section, Stack, TextArea } from '../components';
+import { Box, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type TextInputData = {
@@ -85,23 +85,18 @@ const InputArea = (props, context) => {
   const { input, onType } = props;
 
   return (
-    <TextArea
+    <Input
       autoFocus
       autoSelect
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
-      onKeyDown={(event) => {
-        const keyCode = window.event ? event.which : event.keyCode;
-        if (keyCode === KEY_ENTER) {
-          act('submit', { entry: input });
-          event.preventDefault();
-        }
-        if (keyCode === KEY_ESCAPE) {
-          act('cancel');
-        }
+      onEnter={(_, value) => {
+        act('submit', { entry: value });
       }}
+      onEscape={() => act('cancel')}
       onInput={(_, value) => onType(value)}
       placeholder="Type something..."
+      scrollable
       value={input}
     />
   );

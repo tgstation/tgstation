@@ -1,36 +1,43 @@
 import { Component } from 'inferno';
-import { Input } from 'tgui/components';
 import { classes } from 'common/react';
-import { KEY_TAB } from '../../common/keycodes';
+import { KEY_TAB } from 'common/keycodes';
+import { Input } from 'tgui/components';
 
 const CHANNELS = ['say', 'radio', 'me', 'ooc'];
 
-/** Returns a modular classname */
-const getCss = (element, channel) =>
-  classes([element, `${element}-${CHANNELS[channel]}`]);
+/** Window sizes in pixels */
+const SIZE = {
+  small: 64,
+  medium: 96,
+  large: 128,
+};
+
+/** Returns modular css classes*/
+const getCss = (element, channel, size) =>
+  classes([
+    element,
+    `${element}-${CHANNELS[channel]}`,
+    size > SIZE.small && `${element}-${size}`,
+  ]);
 
 /**
  * Primary class for the TGUI modal.
  *
  * Props:
  *  - channel: The channel (thereby, color) to display the modal for.
- *  - max_length: The maximum length of the message.
+ *  - maxLength: The maximum length of the message.
  */
 export class TguiModal extends Component {
   constructor(props) {
     super(props);
-    this.max_length = props.max_length || 1024;
-    this.hovering = false;
+    this.maxLength = props.maxLength || 1024;
     this.state = {
       buttonContent: '>',
-      channel:
-        CHANNELS.indexOf(props.channel) < 0
-          ? 0
-          : CHANNELS.indexOf(props.channel),
-      input: '',
+      channel: CHANNELS.indexOf(props.channel) || 0,
+      hovering: false,
+      size: SIZE.small,
     };
   }
-
   /** Mouse leaves the button */
   handleBlur = () => {
     this.hovering = false;
@@ -43,9 +50,9 @@ export class TguiModal extends Component {
   /** User presses enter. Closes if no value. */
   handleEnter = (_, value) => {
     const { channel } = this.state;
-    const { max_length } = this.max_length;
-    this.setInput('');
-    if (!value || value.length > max_length) {
+    const { maxLength } = this.maxLength;
+    this.setSize(0);
+    if (!value || value.length > maxLength) {
       Byond.sendMessage('close');
     } else {
       Byond.sendMessage('entry', {
@@ -56,15 +63,15 @@ export class TguiModal extends Component {
   };
   /** User presses escape, closes the window */
   handleEscape = () => {
-    this.setInput('');
+    this.setSize(0);
     Byond.sendMessage('close');
   };
   /** Mouse over button. Changes button to channel name. */
   handleFocus = () => {
     const { channel } = this.state;
-    this.hovering = true;
     this.setState({
       buttonContent: CHANNELS[channel].slice(0, 1).toUpperCase(),
+      hovering: true,
     });
   };
   /** Grabs the TAB key to change channels. */
@@ -73,68 +80,83 @@ export class TguiModal extends Component {
       this.incrementChannel();
       event.preventDefault();
     }
+    this.setSize(event.target.value);
   };
-  /** Increments the channel or resets to the beginning of the list. */
+  /**
+   * Increments the channel or resets to the beginning of the list.
+   * If a user is hovering over the button, the channel is changed.
+   */
   incrementChannel() {
-    const { channel } = this.state;
+    const { channel, hovering } = this.state;
     if (channel === CHANNELS.length - 1) {
-      this.setChannel(0);
-    } else {
-      this.setChannel(channel + 1);
-    }
-  }
-  /** Sets the current channel. */
-  setChannel(channel) {
-    const { hovering } = this.hovering;
-    this.setState({ channel });
-    if (hovering) {
       this.setState({
-        buttonContent: CHANNELS[channel].slice(0, 1).toUpperCase(),
+        buttonContent: !hovering ? '>' : CHANNELS[0].slice(0, 1).toUpperCase(),
+        channel: 0,
+      });
+    } else {
+      this.setState({
+        buttonContent: !hovering
+          ? '>'
+          : CHANNELS[channel + 1].slice(0, 1).toUpperCase(),
+        channel: channel + 1,
       });
     }
   }
-  /** Sets the current input value. */
-  setInput = (input) => {
-    if (!input) {
-      input = '';
+  /**  Adjusts window sized based on target value */
+  setSize = (value) => {
+    if (value.length > 42) {
+      this.setState({ size: SIZE.large });
+    } else if (value.length > 17) {
+      this.setState({ size: SIZE.medium });
+    } else {
+      this.setState({ size: SIZE.small });
     }
-    this.setState({ input });
+    this.setWindow();
   };
-  componentShouldUpdate(_, nextState) {
-    return nextState.channel !== this.state.channel;
-  }
+  /**
+   * Modifies the window size.
+   * This would be included in setSize but state is async
+   */
+  setWindow = () => {
+    const { size } = this.state;
+    Byond.winset(Byond.windowId, { size: `333x${size}` });
+    Byond.winset('tgui_modal_browser', { size: `333x${size}` });
+  };
 
   render() {
-    const props = this;
     const {
       handleBlur,
       handleClick,
       handleEnter,
       handleEscape,
       handleFocus,
+      handleInput,
       handleKeyDown,
-      max_length,
-    } = props;
-    const { buttonContent, channel, input } = this.state;
+      props: { maxLength },
+    } = this;
+    const { buttonContent, channel, size } = this.state;
     return (
-      <div className={getCss('window', channel)}>
-        <button
-          className={getCss('button', channel)}
-          onclick={handleClick}
-          onmouseenter={handleFocus}
-          onmouseleave={handleBlur}
-          type="submit">
-          {buttonContent}
-        </button>
+      <div className={getCss('window', channel, size)}>
+        {size < SIZE.medium && (
+          <button
+            className={getCss('button', channel)}
+            onclick={handleClick}
+            onmouseenter={handleFocus}
+            onmouseleave={handleBlur}
+            type="submit">
+            {buttonContent}
+          </button>
+        )}
         <Input
           autoFocus
-          className={getCss('input', channel)}
-          fluid
-          maxLength={max_length}
+          className={getCss('input', channel, size)}
+          maxLength={maxLength}
+          onInput={handleInput}
           onEscape={handleEscape}
           onEnter={handleEnter}
           onKeyDown={handleKeyDown}
           selfClear
+          scrollable
         />
       </div>
     );

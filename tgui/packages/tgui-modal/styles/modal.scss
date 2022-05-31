@@ -27,6 +27,7 @@ $color-ooc-highlight: #ffd631;
     background-position: 100% 0;
   }
 }
+
 ////////////////////////////////////////////////
 // Main window styles
 .window {
@@ -35,23 +36,31 @@ $color-ooc-highlight: #ffd631;
   border-right: thin solid $color-say;
   display: flex;
   flex-direction: row;
+  font-family: 'Consolas', monospace;
   margin: 0 auto;
   max-width: 333px;
   padding: 1rem 0 1rem 1rem;
   position: relative;
   width: 100%;
 }
+
+.window-96 {
+  height: 96px;
+}
+
+.window-128 {
+  height: 128px;
+}
+
 .window-say {
   &:after {
     animation: gradient 10s linear infinite;
-    background: linear-gradient(
-      to right,
-      $color-say-dark,
-      $color-say,
-      $color-say-highlight,
-      $color-say,
-      $color-say-dark
-    );
+    background: linear-gradient(to right,
+        $color-say-dark,
+        $color-say,
+        $color-say-highlight,
+        $color-say,
+        $color-say-dark );
     background-position: 0% 0%;
     background-size: 500% auto;
     bottom: 0px;
@@ -63,17 +72,16 @@ $color-ooc-highlight: #ffd631;
     z-index: 999;
   }
 }
+
 .window-radio {
   &:after {
     animation: gradient 10s linear infinite;
-    background: linear-gradient(
-      to right,
-      $color-radio-dark,
-      $color-radio,
-      $color-radio-highlight,
-      $color-radio,
-      $color-radio-dark
-    );
+    background: linear-gradient(to right,
+        $color-radio-dark,
+        $color-radio,
+        $color-radio-highlight,
+        $color-radio,
+        $color-radio-dark );
     background-position: 0% 0%;
     background-size: 500% auto;
     bottom: 0px;
@@ -85,17 +93,16 @@ $color-ooc-highlight: #ffd631;
     z-index: 999;
   }
 }
+
 .window-me {
   &:after {
     animation: gradient 10s linear infinite;
-    background: linear-gradient(
-      to right,
-      $color-me-dark,
-      $color-me,
-      $color-me-highlight,
-      $color-me,
-      $color-me-dark
-    );
+    background: linear-gradient(to right,
+        $color-me-dark,
+        $color-me,
+        $color-me-highlight,
+        $color-me,
+        $color-me-dark );
     background-position: 0% 0%;
     background-size: 500% auto;
     bottom: 0px;
@@ -107,17 +114,16 @@ $color-ooc-highlight: #ffd631;
     z-index: 999;
   }
 }
+
 .window-ooc {
   &:after {
     animation: gradient 10s linear infinite;
-    background: linear-gradient(
-      to right,
-      $color-ooc-dark,
-      $color-ooc,
-      $color-ooc-highlight,
-      $color-ooc,
-      $color-ooc-dark
-    );
+    background: linear-gradient(to right,
+        $color-ooc-dark,
+        $color-ooc,
+        $color-ooc-highlight,
+        $color-ooc,
+        $color-ooc-dark );
     background-position: 0% 0%;
     background-size: 500% auto;
     bottom: 0px;
@@ -131,25 +137,33 @@ $color-ooc-highlight: #ffd631;
 }
 
 ////////////////////////////////////////////////
-// Input button styles
+// Input box styles
 .input {
   background-color: $input-background;
   border: none;
-  font-family: 'tgfont', monospace;
+  font-family: inherit;
   font-size: 1.8rem;
   letter-spacing: thin;
   margin-top: 4px;
   width: 100%;
 }
+
+.input-expanded {
+  height: 100%;
+}
+
 .input-say {
   color: $color-say-highlight;
 }
+
 .input-radio {
   color: $color-radio;
 }
+
 .input-me {
   color: $color-me;
 }
+
 .input-ooc {
   color: $color-ooc;
 }
@@ -159,7 +173,7 @@ $color-ooc-highlight: #ffd631;
 .button {
   background-color: transparent;
   border: none;
-  font-family: 'tgfont', monospace;
+  font-family: inherit;
   font-weight: bold;
   font-size: 2.2rem;
   height: 40px;
@@ -167,35 +181,44 @@ $color-ooc-highlight: #ffd631;
   text-align: center;
   vertical-align: middle;
   width: 60px;
+
   &:hover {
     background-color: $input-button-hover;
     border: thin solid;
     border-radius: 6px;
   }
 }
+
 .button-say {
   color: $color-say;
+
   &:hover {
     border-color: $color-say-highlight;
     color: $color-say-highlight;
   }
 }
+
 .button-radio {
   color: $color-radio;
+
   &:hover {
     border-color: $color-radio-highlight;
     color: $color-radio-highlight;
   }
 }
+
 .button-me {
   color: $color-me;
+
   &:hover {
     border-color: $color-me-highlight;
     color: $color-me-highlight;
   }
 }
+
 .button-ooc {
   color: $color-ooc;
+
   &:hover {
     border-color: $color-ooc-highlight;
     color: $color-ooc-highlight;

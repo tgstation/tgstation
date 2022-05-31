@@ -4,10 +4,10 @@ import { TguiModal } from './interfaces/TguiModal';
 
 // Debug artifacts
 const CHANNEL = 'say';
-const MAX_LENGTH = 1024;
+const MAXLENGTH = 1024;
 
 const renderApp = createRenderer(() => {
-  return <TguiModal channel={CHANNEL} max_length={MAX_LENGTH} />;
+  return <TguiModal channel={CHANNEL} maxLength={MAXLENGTH} />;
 });
 
 const setupApp = () => {
