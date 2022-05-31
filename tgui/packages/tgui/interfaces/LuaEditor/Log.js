@@ -30,15 +30,17 @@ export const Log = (props, context) => {
           message = (
             <>
               <b>{name}</b> yielded.
-              <ListMapper
-                list={param}
-                skipNulls
-                name="Return Value"
-                collapsible
-                vvAct={(path) => act("vvReturnValue", {
-                  entryIndex: i+1,
-                  tableIndices: path,
-                })} />
+              {param.length ? (
+                <ListMapper
+                  list={param}
+                  skipNulls
+                  name="Return Value"
+                  collapsible
+                  vvAct={(path) => act("vvReturnValue", {
+                    entryIndex: i+1,
+                    tableIndices: path,
+                  })} />
+              ) : (<br />)}
             </>
           );
           messageColor = "yellow";
@@ -47,15 +49,17 @@ export const Log = (props, context) => {
           message = (
             <>
               <b>{name}</b> returned.
-              <ListMapper
-                list={param}
-                skipNulls
-                name="Return Value"
-                collapsible
-                vvAct={(path) => act("vvReturnValue", {
-                  entryIndex: i+1,
-                  tableIndices: path,
-                })} />
+              {param.length ? (
+                <ListMapper
+                  list={param}
+                  skipNulls
+                  name="Return Value"
+                  collapsible
+                  vvAct={(path) => act("vvReturnValue", {
+                    entryIndex: i+1,
+                    tableIndices: path,
+                  })} />
+              ) : (<br />)}
             </>
           );
           messageColor = "green";

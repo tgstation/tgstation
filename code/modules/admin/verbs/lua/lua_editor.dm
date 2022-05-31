@@ -74,13 +74,11 @@
 		to_add[key] = value
 		. += to_add
 
-/datum/lua_editor/proc/add_argument(list/target_list)
-	usr.client.mod_list_add(target_list, null, "a lua editor", "arguments")
-	SStgui.update_uis(src)
-
 /datum/lua_editor/ui_static_data(mob/user)
 	var/list/data = list()
-	data["documentation"] = parsemarkdown_basic(file2text("code/modules/admin/verbs/lua/README.md"))
+	var/raw_documentation = file2text("code/modules/admin/verbs/lua/README.md")
+	var/escaped_documentation = replacetext(raw_documentation, "_", "\\_")
+	data["documentation"] = parsemarkdown_basic(escaped_documentation)
 	return data
 
 /datum/lua_editor/ui_data(mob/user)
@@ -203,8 +201,8 @@
 		if("addArg")
 			var/list/recursive_indices = params["path"]
 			var/top_affected_list_depth = LAZYLEN(recursive_indices)
-			var/list/target_list
 			if(top_affected_list_depth)
+				var/list/target_list
 				var/list/path_list = kvpify_list(arguments, top_affected_list_depth)
 				while(LAZYLEN(recursive_indices))
 					var/list/path_element = popleft(recursive_indices)
@@ -220,10 +218,14 @@
 					if(!islist(path_list))
 						to_chat(usr, span_warning("invalid path element \[[path_list]] for argument addition (expected a list)"))
 						return
+					usr?.client?.mod_list_add(target_list, null, "a lua editor", "arguments")
 			else
-				target_list = arguments
-			add_argument(target_list)
-			return
+				var/list/vv_val = usr?.client?.vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
+				var/class = vv_val["class"]
+				if(!class)
+					return
+				LAZYADD(arguments, list(vv_val["value"]))
+			return TRUE
 		if("callFunction")
 			var/list/recursive_indices = params["indices"]
 			var/list/current_list = kvpify_list(current_state.globals)

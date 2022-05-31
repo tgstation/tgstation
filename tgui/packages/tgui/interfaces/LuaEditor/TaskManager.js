@@ -19,7 +19,7 @@ export const TaskManager = (props, context) => {
   const yields = tasks.filter((info) => info.status === 'yield');
   return (
     <Stack fill width="100%" justify="space-around">
-      <Stack.Item>
+      <Stack.Item grow="1" shrink="1">
         <Section title="Sleeps" fill>
           <LabeledList>
             {sleeps.map((info, i) => (
@@ -35,7 +35,7 @@ export const TaskManager = (props, context) => {
           </LabeledList>
         </Section>
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item grow="1" shrink="1">
         <Section title="Yields" fill>
           <LabeledList>
             {yields.map((info, i) => (
@@ -51,7 +51,7 @@ export const TaskManager = (props, context) => {
                   color="red"
                   icon="window-close"
                   onClick={() => {
-                    act("killTask", { taskInfo: info });
+                    act("killTask", { info: info });
                   }}>
                   Kill
                 </Button>

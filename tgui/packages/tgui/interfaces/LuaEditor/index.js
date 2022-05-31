@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from "../../backend";
-import { Box, Button, Flex, Section, Tabs, TextArea, Modal } from "../../components";
+import { Box, Button, Flex, Section, Tabs, TextArea, Modal, Stack } from "../../components";
 import { Window } from "../../layouts";
 import { CallModal } from "./CallModal";
 import { ChunkViewModal } from "./ChunkViewModal";
@@ -44,8 +44,8 @@ export const LuaEditor = (props, context) => {
   }
   return (
     <Window
-      width={800}
-      height={600} >
+      width={1280}
+      height={720} >
       <Window.Content>
         <Button
           icon="file"
@@ -63,52 +63,58 @@ export const LuaEditor = (props, context) => {
             </h1>
           </Flex>
         ) : (
-          <Section fill title="Input" buttons={(
-            <>
-              <Button onClick={() => act("loadCode")} >
-                Import
-              </Button>
-              <Button onClick={() => setModal("documentation")}>
-                Help
-              </Button>
-            </>
-          )} >
-            <TextArea
-              fluid
-              width="750px"
-              height="400px"
-              value={importedCode || input}
-              onInput={(_, value) => setInput(value)} />
-            <Button onClick={() => act("runCode", { code: input })} >
-              Run
-            </Button>
-            <Section width="100%">
-              <Tabs>
-                <Tabs.Tab
-                  selected={activeTab === "globals"}
-                  onClick={() => {
-                    setActiveTab("globals");
-                  }}>
-                  Globals
-                </Tabs.Tab>
-                <Tabs.Tab
-                  selected={activeTab === "tasks"}
-                  onClick={() => setActiveTab("tasks")}>
-                  Tasks
-                </Tabs.Tab>
-                <Tabs.Tab
-                  selected={activeTab === "log"}
-                  onClick={() => {
-                    setActiveTab("log");
-                  }}>
-                  Log
-                </Tabs.Tab>
-              </Tabs>
-              <Section width="100%">
-                {tabContent}
+          <Stack>
+            <Stack.Item>
+              <Section fill title="Input" buttons={(
+                <>
+                  <Button onClick={() => act("loadCode")} >
+                    Import
+                  </Button>
+                  <Button onClick={() => setModal("documentation")}>
+                    Help
+                  </Button>
+                </>
+              )} >
+                <TextArea
+                  fluid
+                  width="700px"
+                  height="590px"
+                  value={importedCode || input}
+                  onInput={(_, value) => setInput(value)} />
+                <Button onClick={() => act("runCode", { code: input })} >
+                  Run
+                </Button>
               </Section>
-            </Section>
-          </Section>
+            </Stack.Item>
+            <Stack.Item grow>
+              <Section fill width="100%">
+                <Tabs>
+                  <Tabs.Tab
+                    selected={activeTab === "globals"}
+                    onClick={() => {
+                      setActiveTab("globals");
+                    }}>
+                    Globals
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    selected={activeTab === "tasks"}
+                    onClick={() => setActiveTab("tasks")}>
+                    Tasks
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    selected={activeTab === "log"}
+                    onClick={() => {
+                      setActiveTab("log");
+                    }}>
+                    Log
+                  </Tabs.Tab>
+                </Tabs>
+                <Section scrollable width="100%">
+                  {tabContent}
+                </Section>
+              </Section>
+            </Stack.Item>
+          </Stack>
         )}
       </Window.Content>
       {modal === "states" && (
@@ -136,7 +142,7 @@ export const LuaEditor = (props, context) => {
             fill
             scrollable>
             <Box
-              dangerouslySetInnerHtml={
+              dangerouslySetInnerHTML={
                 { __html: sanitizeText(documentation) }
               } />
           </Section>

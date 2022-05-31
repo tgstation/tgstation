@@ -70,9 +70,12 @@ The Lua Scripting subsystem manages the execution of tasks for each lua state. A
 - For each queued resume, the corresponding task is resumed.
 
 ### sleep()
-Yields the current thread, scheduling it to be resumed during the next fire of SSlua. Use this function to prevent your lua code from exceeding its allowed execution duration.
+Yields the current thread, scheduling it to be resumed during the next fire of SSlua. Use this function to prevent your lua code from exceeding its allowed execution duration. Under the hood, `sleep` performs the following:
 
-Under the hood, this function sets the internal global flag `__sleep_flag`, calls `coroutine.yield` with no arguments, ignores its return values, then clears `__sleep_flag`.
+- Sets the global flag [`__sleep_flag`](#__sleep_flag)
+- Calls `coroutine.yield()`
+- Clears the sleep flag when determining whether the task slept or yielded
+- Ignores the return values of `coroutine.yield()` once resumed
 
 ---
 
@@ -110,21 +113,21 @@ Unregister a signal previously registered using `SS13.register_signal`.
 Auxlua defines several globals for internal use. These are read-only.
 
 ### __sleep_flag
-This flag is used to designate that a yielding task should be put in the sleep queue instead of the yield table.
+This flag is used to designate that a yielding task should be put in the sleep queue instead of the yield table. Once auxlua determines that a task should sleep, `__sleep_flag` is cleared.
 
-### \_\_set_sleep_flag(value)
+### __set_sleep_flag(value)
 
 A function that sets `__sleep_flag` to `value`. Calling this directly is not recommended, as doing so muddies the distinction between sleeps and yields.
 
-### \_\_sleep_queue
+### __sleep_queue
 
 A sequence of threads, each corresponding to a task that has slept. When calling `/proc/__lua_awaken`, auxlua will dequeue the first thread from the sequence and resume it. Threads in this queue can be resumed from lua code, but doing so is heavily advised against.
 
-### \_\_yield_table
+### __yield_table
 
 A table of threads, each corresponding to a coroutine that has yielded. When calling `/proc/__lua_resume`, auxlua will look for a thread at the index specified in the `index` argument, and resume it with the arguments specified in the `arguments` argument. Threads in this table can be resumed from lua code, but doing so is heavily advised against.
 
-### \_\_task_info
+### __task_info
 
 A table of key-value-pairs, where the keys are threads, and the values are tables consisting of the following fields:
 
