@@ -53,9 +53,9 @@
 	material_flags = NONE
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
-	new /obj/item/crowbar/red(src)
+	new /obj/item/crowbar/large(src)
 	new /obj/item/weldingtool/mini(src)
-	new /obj/item/extinguisher/mini(src)
+	new /obj/item/wrench/large(src)
 	switch(rand(1,3))
 		if(1)
 			new /obj/item/flashlight(src)

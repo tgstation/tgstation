@@ -27,6 +27,17 @@
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
+/obj/item/wrench/large
+	name = "large wrench"
+	desc = "It's a big wrench. It doesn't fit in your pockets, because it's big."
+	force = 12
+	w_class = WEIGHT_CLASS_NORMAL
+	throw_speed = 3
+	throw_range = 3
+	custom_materials = list(/datum/material/iron = 70)
+	icon_state = "wrench_large"
+	toolspeed = 0.7
+
 /obj/item/wrench/abductor
 	name = "alien wrench"
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."

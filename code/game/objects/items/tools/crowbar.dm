@@ -43,7 +43,7 @@
 
 
 /obj/item/crowbar/large
-	name = "crowbar"
+	name = "large crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big."
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
