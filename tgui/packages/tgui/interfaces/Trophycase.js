@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Icon, Box, Section } from '../components';
+import { Icon, Box, Section, Flex } from '../components';
 import { Window } from '../layouts';
 
 export const Trophycase = (props, context) => {
@@ -13,21 +13,23 @@ export const Trophycase = (props, context) => {
       width={300}
       height={270}>
       <Window.Content>
-        <Section
-          fontSize="18px"
-          align="center"
-          height="20%">
-          <b>{showpiece_name ? showpiece_name : "Under construction."}</b>
-        </Section>
-        <Section fill
-          height="40%">
-          <HistoryImage />
-        </Section>
-        <Section
-          align="center"
-          height="40%">
-          <b>{showpiece_description ? showpiece_description : "This exhibit under construction. History awaits your contribution!"}</b>
-        </Section>
+        <Flex direction="column" mb={1}>
+          <Flex.Item mb={1}>
+            <Section align="center">
+              <b>{showpiece_name ? showpiece_name : "Under construction."}</b>
+            </Section>
+          </Flex.Item>
+          <Flex.Item align="center" mb={1}>
+            <Section fill>
+              <HistoryImage />
+            </Section>
+          </Flex.Item>
+          <Flex.Item mb={1}>
+            <Section>
+              <b>{showpiece_description ? showpiece_description : "This exhibit under construction. History awaits your contribution!"}</b>
+            </Section>
+          </Flex.Item>
+        </Flex>
       </Window.Content>
     </Window>
   );

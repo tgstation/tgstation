@@ -206,7 +206,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!json)
 			return
 		saved_trophies = json["data"]
-	SetUpTrophies(saved_trophies.Copy())
+	set_up_trophies(saved_trophies.Copy())
 
 /datum/controller/subsystem/persistence/proc/load_recent_maps()
 	var/map_sav = FILE_RECENT_MAPS
@@ -229,7 +229,7 @@ SUBSYSTEM_DEF(persistence)
 		if(run >= 2) //If run twice in the last KEEP_ROUNDS_MAP + 1 (including current) rounds, disable map for voting and rotation.
 			blocked_maps += VM.map_name
 
-/datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
+/datum/controller/subsystem/persistence/proc/set_up_trophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
 		var/obj/structure/displaycase/trophy/T = A
 		if (T.showpiece)
@@ -250,7 +250,10 @@ SUBSYSTEM_DEF(persistence)
 			continue
 
 		T.showpiece = new /obj/item/showpiece_dummy(T, path)
-		T.trophy_message = chosen_trophy["message"]
+		var/trophy_message = trim(html_encode(chosen_trophy["message"]))
+		if(trophy_message == "")
+			trophy_message = T.showpiece.desc
+		T.trophy_message = trophy_message
 		T.placer_key = chosen_trophy["placer_key"]
 		T.added_roundstart = TRUE
 		T.set_light(2)

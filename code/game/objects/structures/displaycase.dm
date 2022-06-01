@@ -345,6 +345,7 @@
 	. = ..()
 	var/obj/item/I = path
 	name = initial(I.name)
+	desc = initial(I.desc)
 	icon = initial(I.icon)
 	icon_state = initial(I.icon_state)
 
