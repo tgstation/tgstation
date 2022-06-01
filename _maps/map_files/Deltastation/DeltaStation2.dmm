@@ -73514,8 +73514,7 @@
 "tPa" = (
 /obj/machinery/computer/med_data/laptop{
 	dir = 8;
-	pixel_y = 1;
-	
+	pixel_y = 1
 	},
 /obj/item/toy/figure/geneticist,
 /obj/structure/table/reinforced,
@@ -87016,12 +87015,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/port)
-"xsm" = (
-/obj/machinery/computer/prisoner/management{
-	dir = 8
-	},
-/turf/open/space/basic,
-/area/space)
 "xsp" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -138779,7 +138772,7 @@ aad
 aaa
 aaa
 aaa
-xsm
+aaa
 aaa
 aaa
 aaa
