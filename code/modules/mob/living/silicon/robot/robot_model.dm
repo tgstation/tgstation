@@ -340,7 +340,7 @@
 	hat_offset = -4
 	borg_skins = list(
 		"Cyborg Engineer" = list(SKIN_ICON_STATE = "engineer"),
-		"Zoomba Engineer" = list(SKIN_ICON_STATE = "zoomba_engi", SKIN_LIGHT_KEY = "zoomba_engi_l", SKIN_HAT_OFFSET = -7),
+		"Zoomba Engineer" = list(SKIN_ICON_STATE = "zoomba_engi", special_light_key = "zoomba_engi_l", hat_offset = -13),
 	)
 
 /obj/item/robot_model/janitor
@@ -367,7 +367,7 @@
 	hat_offset = -5
 	borg_skins = list(
 		"Default Janitor" = list(SKIN_ICON_STATE = "janitor"),
-		"Zoomba Janitor" = list(SKIN_ICON_STATE = "zoomba_jani", SKIN_LIGHT_KEY = "zoomba_jani_l", SKIN_HAT_OFFSET = -7),
+		"Zoomba Janitor" = list(SKIN_ICON_STATE = "zoomba_jani", special_light_key = "zoomba_jani_l", hat_offset = -13),
 	)
 	/// Weakref to the wash toggle action we own
 	var/datum/weakref/wash_toggle_ref
@@ -481,8 +481,8 @@
 	//This is basically just about adding a shake to the borg, effect should look ilke an engine's running
 	var/base_x = robot_owner.base_pixel_x
 	var/base_y = robot_owner.base_pixel_y
-	robot_owner.pixel_x = base_x + rand(-7, 7)
-	robot_owner.pixel_y = base_y + rand(-7, 7)
+	robot_owner.pixel_x = base_x + rand(-13, 7)
+	robot_owner.pixel_y = base_y + rand(-13, 7)
 	//Larger shake with more changes to start out, feels like "Revving"
 	animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
 	for(var/i in 1 to 100)
@@ -632,7 +632,7 @@
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
-		"Zoomba Doctor" = list(SKIN_ICON_STATE = "zoomba_med", SKIN_LIGHT_KEY = "zoomba_med_l", SKIN_HAT_OFFSET = -7),
+		"Zoomba Doctor" = list(SKIN_ICON_STATE = "zoomba_med", special_light_key = "zoomba_med_l", hat_offset = -13),
 	)
 
 /obj/item/robot_model/miner
@@ -658,7 +658,7 @@
 	borg_skins = list(
 		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
-		"Zoomba Miner" = list(SKIN_ICON_STATE = "zoomba_miner", SKIN_LIGHT_KEY = "zoomba_miner_l", SKIN_HAT_OFFSET = -7),
+		"Zoomba Miner" = list(SKIN_ICON_STATE = "zoomba_miner", special_light_key = "zoomba_miner_l", hat_offset = -13),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
@@ -690,7 +690,7 @@
 	hat_offset = -2
 	borg_skins = list(
 		"Fluffy Peacekeeper" = list(SKIN_ICON_STATE = "peace"),
-		"Zoomba Peacekeeper" = list(SKIN_ICON_STATE = "zoomba_peace", SKIN_LIGHT_KEY = "zoomba_peace_l", SKIN_HAT_OFFSET = -7),
+		"Zoomba Peacekeeper" = list(SKIN_ICON_STATE = "zoomba_peace", special_light_key = "zoomba_peace_l", hat_offset = -13),
 	)
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
@@ -760,10 +760,10 @@
 	borg_skins = list(
 		"Bro" = list(SKIN_ICON_STATE = "brobot"),
 		"Butler" = list(SKIN_ICON_STATE = "service_m"),
-		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
-		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
+		"Kent" = list(SKIN_ICON_STATE = "kent", special_light_key = "medical", hat_offset = 3),
+		"Tophat" = list(SKIN_ICON_STATE = "tophat", special_light_key = NONE, hat_offset = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
-		"Zoomba" = list(SKIN_ICON_STATE = "zoomba_green", SKIN_LIGHT_KEY = "zoomba_green_l", SKIN_HAT_OFFSET = -7),
+		"Zoomba" = list(SKIN_ICON_STATE = "zoomba_green", special_light_key = "zoomba_green_l", hat_offset = -13),
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
