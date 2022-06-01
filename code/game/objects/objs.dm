@@ -93,8 +93,15 @@
 
 	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1)
 
-	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
-		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+	var/damage_verb= "hit"
+
+	if((attacking_item.demolition_mod > 1) && damage)
+		damage_verb = "pulverise"
+	if((attacking_item.demolition_mod < 1))
+		damage_verb = "ineffectively pierce"
+
+	user.visible_message(span_danger("[user] [damage_verb]s [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
+		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
