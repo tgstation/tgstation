@@ -1,9 +1,15 @@
 name: Compare Screenshot Tests
 on:
-  workflow_run:
-    workflows: [CI Suite]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: [CI Suite]
+  #   types:
+  #     - completed
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
 jobs:
   compare_snapshots:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -34,11 +40,11 @@ jobs:
                 archive_format: "zip",
               });
 
-              fs.writeFileSync(`artifacts/${process.env.GITHUB_WORKSPACE}/${artifact.name}.zip`, Buffer.from(download.data));
+              fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/artifacts/${artifact.name}.zip`, Buffer.from(download.data));
             }
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.workflow_run.head_branch }}
-          persist-credentials: false
+        # with:
+        #   ref: ${{ github.event.workflow_run.head_branch }}
+        #   persist-credentials: false
       - name: List artifacts
         run: ls -R artifacts
