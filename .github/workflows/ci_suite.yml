@@ -50,22 +50,22 @@ jobs:
   #       with:
   #         outputFile: output-annotations.txt
 
-  compile_all_maps:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    name: Compile Maps
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Restore BYOND cache
-        uses: actions/cache@v2
-        with:
-          path: ~/BYOND
-          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
-      - name: Compile All Maps
-        run: |
-          bash tools/ci/install_byond.sh
-          source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
+  # compile_all_maps:
+  #   if: "!contains(github.event.head_commit.message, '[ci skip]')"
+  #   name: Compile Maps
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Restore BYOND cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/BYOND
+  #         key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
+  #     - name: Compile All Maps
+  #       run: |
+  #         bash tools/ci/install_byond.sh
+  #         source $HOME/BYOND/byond/bin/byondsetup
+  #         tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
 
   find_all_maps:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
