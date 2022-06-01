@@ -340,7 +340,7 @@
 	hat_offset = -4
 	borg_skins = list(
 		"Cyborg Engineer" = list(SKIN_ICON_STATE = "engineer"),
-		"Zoomba Engineer" = list(SKIN_ICON_STATE = "zoomba_engi", special_light_key = "zoomba_engi_l", hat_offset = -13),
+		"Zoomba Engineer" = list(SKIN_ICON_STATE = "zoomba_engi", special_light_key = "zoomba_engi_l", SKIN_HAT_OFFSET = -13),
 	)
 
 /obj/item/robot_model/janitor
@@ -367,7 +367,7 @@
 	hat_offset = -5
 	borg_skins = list(
 		"Default Janitor" = list(SKIN_ICON_STATE = "janitor"),
-		"Zoomba Janitor" = list(SKIN_ICON_STATE = "zoomba_jani", special_light_key = "zoomba_jani_l", hat_offset = -13),
+		"Zoomba Janitor" = list(SKIN_ICON_STATE = "zoomba_jani", special_light_key = "zoomba_jani_l", SKIN_HAT_OFFSET = -13),
 	)
 	/// Weakref to the wash toggle action we own
 	var/datum/weakref/wash_toggle_ref
@@ -632,7 +632,7 @@
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
-		"Zoomba Doctor" = list(SKIN_ICON_STATE = "zoomba_med", special_light_key = "zoomba_med_l", hat_offset = -13),
+		"Zoomba Doctor" = list(SKIN_ICON_STATE = "zoomba_med", special_light_key = "zoomba_med_l", SKIN_HAT_OFFSET = -13),
 	)
 
 /obj/item/robot_model/miner
@@ -658,7 +658,7 @@
 	borg_skins = list(
 		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
-		"Zoomba Miner" = list(SKIN_ICON_STATE = "zoomba_miner", special_light_key = "zoomba_miner_l", hat_offset = -13),
+		"Zoomba Miner" = list(SKIN_ICON_STATE = "zoomba_miner", special_light_key = "zoomba_miner_l", SKIN_HAT_OFFSET = -13),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
@@ -690,7 +690,7 @@
 	hat_offset = -2
 	borg_skins = list(
 		"Fluffy Peacekeeper" = list(SKIN_ICON_STATE = "peace"),
-		"Zoomba Peacekeeper" = list(SKIN_ICON_STATE = "zoomba_peace", special_light_key = "zoomba_peace_l", hat_offset = -13),
+		"Zoomba Peacekeeper" = list(SKIN_ICON_STATE = "zoomba_peace", special_light_key = "zoomba_peace_l", SKIN_HAT_OFFSET = -13),
 	)
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
@@ -760,10 +760,10 @@
 	borg_skins = list(
 		"Bro" = list(SKIN_ICON_STATE = "brobot"),
 		"Butler" = list(SKIN_ICON_STATE = "service_m"),
-		"Kent" = list(SKIN_ICON_STATE = "kent", special_light_key = "medical", hat_offset = 3),
-		"Tophat" = list(SKIN_ICON_STATE = "tophat", special_light_key = NONE, hat_offset = INFINITY),
+		"Kent" = list(SKIN_ICON_STATE = "kent", special_light_key = "medical", SKIN_HAT_OFFSET = 3),
+		"Tophat" = list(SKIN_ICON_STATE = "tophat", special_light_key = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
-		"Zoomba" = list(SKIN_ICON_STATE = "zoomba_green", special_light_key = "zoomba_green_l", hat_offset = -13),
+		"Zoomba" = list(SKIN_ICON_STATE = "zoomba_green", special_light_key = "zoomba_green_l", SKIN_HAT_OFFSET = -13),
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
