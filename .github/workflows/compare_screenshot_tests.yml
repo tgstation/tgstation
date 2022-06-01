@@ -15,12 +15,30 @@ jobs:
     # workflow_run has access to secrets, it is intended for use
     # for things like commenting on the PR (which we're doing here).
     steps:
+      - name: Download artifact
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require("fs");
+            const allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.payload.workflow_run.id,
+            });
+
+            for (const artifact of allArtifacts.data.artifacts) {
+              const download = await github.rest.actions.downloadArtifact({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                artifact_id: matchArtifact.id,
+                archive_format: "zip",
+              });
+
+              fs.writeFileSync(`artifacts/${process.env.GITHUB_WORKSPACE}/${artifact.name}.zip`, Buffer.from(download.data));
+            }
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
           persist-credentials: false
-      - uses: actions/download-artifact@v3
-        with:
-          path: artifacts
       - name: List artifacts
         run: ls -R artifacts
