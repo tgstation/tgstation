@@ -119,7 +119,9 @@
 		if(server.machine_stat & EMPED)
 			status_text = "<font color=red>O&F@I*$ - R3*&O$T R@U!R%D</font>"
 		else if(server.machine_stat & NOPOWER)
-			status_text = "<font color=red>Offline - Servers Unpowered</font>"
+			status_text = "<font color=red>Offline - Server Unpowered</font>"
+		else if(server.research_disabled)
+			status_text = "<font color=red>Offline - Server Control Disabled</font>"
 		else if(!server.working)
 			// If, for some reason, working is FALSE even though we're not emp'd or powerless,
 			// We need something to update our working state - such as rebooting the server
