@@ -114,20 +114,20 @@
 		var/server_info = ""
 
 		var/status_text
-		var/disable_text = research_disabled ? "<font color=red>Disabled</font>" : "<font color=lightgreen>Online</font>"
+		var/disable_text = server.research_disabled ? "<font color=red>Disabled</font>" : "<font color=lightgreen>Online</font>"
 
 		if(server.machine_stat & EMPED)
 			status_text = "<font color=red>O&F@I*$ - R3*&O$T R@U!R%D</font>"
 		else if(server.machine_stat & NOPOWER)
 			status_text = "<font color=red>Offline - Servers Unpowered</font>"
-		else if(!working)
+		else if(!server.working)
 			status_text = "<font color=red>Offline - Reboot Required</font>"
 		else
 			status_text = "<font color='lightgreen'>Nominal</font>"
 
 		server_info += "<tr><td style='width:25%'>[server.name]</td>"
 		server_info += "<td style='width:25%'>[status_text]</td>"
-		server_info += "<td style='width:25%'><a href='?src=[REF(src)];toggle=[REF(S)]'>([disable_text])</a></td><br>"
+		server_info += "<td style='width:25%'><a href='?src=[REF(src)];toggle=[REF(server)]'>([disable_text])</a></td><br>"
 
 		dat += server_info
 
