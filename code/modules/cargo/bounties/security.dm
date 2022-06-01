@@ -53,7 +53,7 @@
 	///list of areas for security to choose from to perform an inspection. Pulls the list and cross references it to the map to make sure the area is on the map before assigning.
 	var/static/list/possible_areas
 	if(!possible_areas)
-		possible_areas = list(\
+		possible_areas = typecacheof(list(\
 			/area/station/maintenance,\
 			/area/station/commons,\
 			/area/station/service,\
@@ -62,7 +62,7 @@
 			/area/station/security/prison,\
 			/area/station/security/range,\
 			/area/station/security/checkpoint,\
-			/area/station/security/interrogation)
+			/area/station/security/interrogation))
 		for (var/area_type in possible_areas)
 			if(GLOB.areas_by_type[area_type])
 				continue
