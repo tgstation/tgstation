@@ -417,14 +417,13 @@
 	switch(state)
 		if(RWINDOW_SECURE)
 			if(tool.tool_behaviour == TOOL_WELDER)
-				var/obj/item/weldingtool/welder = tool
-				if(welder.isOn())
+				if(tool.tool_start_check(user))
 					user.visible_message(span_notice("[user] holds \the [tool] to the security screws on \the [src]..."),
 						span_notice("You begin heating the security screws on \the [src]..."))
-				if(tool.use_tool(src, user, 150, volume = 100))
-					to_chat(user, span_notice("The security screws are glowing white hot and look ready to be removed."))
-					state = RWINDOW_BOLTS_HEATED
-					addtimer(CALLBACK(src, .proc/cool_bolts), 300)
+					if(tool.use_tool(src, user, 15 SECONDS, volume = 100))
+						to_chat(user, span_notice("The security screws are glowing white hot and look ready to be removed."))
+						state = RWINDOW_BOLTS_HEATED
+						addtimer(CALLBACK(src, .proc/cool_bolts), 30 SECONDS)
 			else if (tool.tool_behaviour)
 				to_chat(user, span_warning("The security screws need to be heated first!"))
 

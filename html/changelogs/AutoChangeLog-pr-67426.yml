@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - balance: "IceMoon Fauna no longer regenerate health. This should make it a bit easier to kill them in spots such as IceBoxStation."

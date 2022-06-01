@@ -54,7 +54,7 @@
 
 		if(iscarbon(caster))
 			var/mob/living/carbon/carbon_caster = caster
-			var/obj/item/organ/brain/lich_brain = carbon_caster.getorganslot(ORGAN_SLOT_BRAIN)
+			var/obj/item/organ/internal/brain/lich_brain = carbon_caster.getorganslot(ORGAN_SLOT_BRAIN)
 			if(lich_brain) // This prevents MMIs being used to stop lich revives
 				lich_brain.organ_flags &= ~ORGAN_VITAL
 				lich_brain.decoy_override = TRUE

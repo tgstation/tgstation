@@ -312,7 +312,7 @@
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/human_user = user
-	var/obj/item/organ/brain/our_brain = human_user.getorgan(/obj/item/organ/brain)
+	var/obj/item/organ/internal/brain/our_brain = human_user.getorgan(/obj/item/organ/internal/brain)
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(active)

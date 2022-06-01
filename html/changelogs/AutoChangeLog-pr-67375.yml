@@ -1,5 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - qol: "Access helpers were added to centcom"
-  - bugfix: "Some accesses in centcomm were made more consistent"
