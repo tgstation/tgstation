@@ -15,20 +15,12 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "RD-server-on"
 	base_icon_state = "RD-server"
-	var/heat_health = 100
-	//Code for point mining here.
-	var/working = TRUE //temperature should break it.
+	req_access = list(ACCESS_RD)
+
+	/// if TRUE, we are currently operational and giving out research points.
+	var/working = TRUE
+	/// if TRUE, someone manually disabled us via console.
 	var/research_disabled = FALSE
-	var/server_id = 0
-	var/base_mining_income = 2
-	var/current_temp = 0
-	var/heat_gen = 100
-	var/heating_power = 40000
-	var/delay = 5
-	var/temp_tolerance_low = 0
-	var/temp_tolerance_high = T20C
-	var/temp_penalty_coefficient = 0.5 //1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
-	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
 /obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
@@ -39,29 +31,29 @@
 	SSresearch.servers -= src
 	return ..()
 
-/obj/machinery/rnd/server/RefreshParts()
-	. = ..()
-	var/tot_rating = 0
-	for(var/obj/item/stock_parts/SP in src)
-		tot_rating += SP.rating
-	heat_gen /= max(1, tot_rating)
-
 /obj/machinery/rnd/server/update_icon_state()
-	if(machine_stat & EMPED || machine_stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]-off"
-		return ..()
-	icon_state = "[base_icon_state]-[research_disabled ? "halt" : "on"]"
+	else
+		// "working" will cover EMP'd, disabled, or just broken
+		icon_state = "[base_icon_state]-[working ? "halt" : "on"]"
 	return ..()
 
 /obj/machinery/rnd/server/power_change()
 	refresh_working()
 	return ..()
 
+/obj/machinery/rnd/server/on_set_machine_stat()
+	refresh_working()
+	return ..()
+
+/// Checks if we should be working or not, and updates accordingly.
 /obj/machinery/rnd/server/proc/refresh_working()
-	if(machine_stat & EMPED || research_disabled || machine_stat & NOPOWER)
+	if(machine_stat & (NOPOWER|EMPED) || research_disabled)
 		working = FALSE
 	else
 		working = TRUE
+
 	update_current_power_usage()
 	update_appearance()
 
@@ -70,67 +62,19 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	set_machine_stat(machine_stat | EMPED)
-	addtimer(CALLBACK(src, .proc/unemp), 600)
+	addtimer(CALLBACK(src, .proc/fix_emp), 60 SECONDS)
 	refresh_working()
 
-/obj/machinery/rnd/server/proc/unemp()
+/// Callback to un-emp the server afetr some time.
+/obj/machinery/rnd/server/proc/fix_emp()
 	set_machine_stat(machine_stat & ~EMPED)
 	refresh_working()
 
+/// Toggles whether or not researched_disabled is, yknow, disabled
 /obj/machinery/rnd/server/proc/toggle_disable(mob/user)
 	research_disabled = !research_disabled
 	log_game("[key_name(user)] [research_disabled ? "shut off" : "turned on"] [src] at [loc_name(user)]")
 	refresh_working()
-
-/obj/machinery/rnd/server/proc/get_env_temp()
-	var/turf/open/L = loc
-	if(isturf(L))
-		return L.temperature
-	return 0 //what
-
-/obj/machinery/rnd/server/proc/produce_heat(heat_amt)
-	if(!(machine_stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
-		var/turf/L = loc
-		if(istype(L))
-			var/datum/gas_mixture/env = L.return_air()
-			if(env.temperature < (heat_amt+T0C))
-
-				var/transfer_moles = 0.25 * env.total_moles()
-
-				var/datum/gas_mixture/removed = env.remove(transfer_moles)
-
-				if(removed)
-
-					var/heat_capacity = removed.heat_capacity()
-					if(heat_capacity == 0 || heat_capacity == null)
-						heat_capacity = 1
-					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
-
-				env.merge(removed)
-				air_update_turf(FALSE, FALSE)
-
-/proc/fix_noid_research_servers()
-	var/list/no_id_servers = list()
-	var/list/server_ids = list()
-	for(var/obj/machinery/rnd/server/S in GLOB.machines)
-		switch(S.server_id)
-			if(-1)
-				continue
-			if(0)
-				no_id_servers += S
-			else
-				server_ids += S.server_id
-
-	for(var/obj/machinery/rnd/server/S in no_id_servers)
-		var/num = 1
-		while(!S.server_id)
-			if(num in server_ids)
-				num++
-			else
-				S.server_id = num
-				server_ids += num
-		no_id_servers -= S
-
 
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
@@ -165,15 +109,33 @@
 	var/list/dat = list()
 
 	dat += "<b>Connected Servers:</b>"
-	dat += "<table><tr><td style='width:25%'><b>Server</b></td><td style='width:25%'><b>Operating Temp</b></td><td style='width:25%'><b>Status</b></td>"
-	for(var/obj/machinery/rnd/server/S in GLOB.machines)
-		dat += "<tr><td style='width:25%'>[S.name]</td><td style='width:25%'>[S.current_temp]</td><td style='width:25%'>[S.machine_stat & EMPED || machine_stat & NOPOWER?"Offline":"<A href='?src=[REF(src)];toggle=[REF(S)]'>([S.research_disabled? "<font color=red>Disabled" : "<font color=lightgreen>Online"]</font>)</A>"]</td><BR>"
+	dat += "<table><tr><td style='width:25%'><b>Server</b></td><td style='width:25%'><b>Status</b></td><td style='width:25%'><b>Control</b></td>"
+	for(var/obj/machinery/rnd/server/server in GLOB.machines)
+		var/server_info = ""
+
+		var/status_text
+		var/disable_text = research_disabled ? "<font color=red>Disabled</font>" : "<font color=lightgreen>Online</font>"
+
+		if(server.machine_stat & EMPED)
+			status_text = "<font color=red>O&F@I*$ - R3*&O$T R@U!R%D</font>"
+		else if(server.machine_stat & NOPOWER)
+			status_text = "<font color=red>Offline - Servers Unpowered</font>"
+		else if(!working)
+			status_text = "<font color=red>Offline - Reboot Required</font>"
+		else
+			status_text = "<font color='lightgreen'>Nominal</font>"
+
+		server_info += "<tr><td style='width:25%'>[server.name]</td>"
+		server_info += "<td style='width:25%'>[status_text]</td>"
+		server_info += "<td style='width:25%'><a href='?src=[REF(src)];toggle=[REF(S)]'>([disable_text])</a></td><br>"
+
+		dat += server_info
+
 	dat += "</table></br>"
 
 	dat += "<b>Research Log</b></br>"
-	var/datum/techweb/stored_research
-	stored_research = SSresearch.science_tech
-	if(stored_research.research_logs.len)
+	var/datum/techweb/stored_research = SSresearch.science_tech
+	if(length(stored_research.research_logs))
 		dat += "<table BORDER=\"1\">"
 		dat += "<tr><td><b>Entry</b></td><td><b>Research Name</b></td><td><b>Cost</b></td><td><b>Researcher Name</b></td><td><b>Console Location</b></td></tr>"
 		for(var/i=stored_research.research_logs.len, i>0, i--)
@@ -311,6 +273,7 @@
 			to_chat(user, span_notice("You cut the final wire and remove [source_code_hdd]."))
 			try_put_in_hand(source_code_hdd, user)
 			source_code_hdd = null
+			SSresearch.income_modifier *= 0.5
 			return TRUE
 		to_chat(user, span_notice("You delicately cut the wire. [hdd_wires] wire\s left..."))
 	return TRUE
