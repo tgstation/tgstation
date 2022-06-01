@@ -60,7 +60,8 @@
 		return
 	if(++stage < 6)
 		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
-		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
+		var/slowdown = owner.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
+		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time*slowdown)
 
 /obj/item/organ/internal/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
