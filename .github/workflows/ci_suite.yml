@@ -139,8 +139,9 @@ jobs:
         with:
           name: test_artifacts_${{ matrix.map }}
           path: |
-            data/unit_tests/screenshots/
-            data/unit_tests/screenshots_new/
+            data/screenshots/
+            data/screenshots_new/
+          retention-days: 1
 
   # Collate relevant results into one artifact.
   # This is currently only used for screenshot tests.
