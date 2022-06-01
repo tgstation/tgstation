@@ -32,10 +32,10 @@
 	return
 
 /turf/open/floor/glass/icemoon
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/glass/airless
-	initial_gas_mix = "AIRLESS_ATMOS"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/glass/reinforced
 	name = "reinforced glass floor"
@@ -49,10 +49,10 @@
 	return list("reinf_glass-damaged1", "reinf_glass-damaged2", "reinf_glass-damaged3")
 
 /turf/open/floor/glass/reinforced/icemoon
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/glass/reinforced/airless
-	initial_gas_mix = "AIRLESS_ATMOS"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/glass/plasma
 	name = "plasma glass floor"
@@ -66,10 +66,10 @@
 	return list("plasma_glass-damaged1", "plasma_glass-damaged2", "plasma_glass-damaged3")
 
 /turf/open/floor/glass/plasma/icemoon
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/glass/plasma/airless
-	initial_gas_mix = "AIRLESS_ATMOS"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/glass/reinforced/plasma
 	name = "reinforced plasma glass floor"
@@ -83,7 +83,7 @@
 	return list("reinf_plasma_glass-damaged1", "reinf_plasma_glass-damaged2", "reinf_plasma_glass-damaged3")
 
 /turf/open/floor/glass/reinforced/plasma/icemoon
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/glass/reinforced/plasma/airless
-	initial_gas_mix = "AIRLESS_ATMOS"
+	initial_gas_mix = AIRLESS_ATMOS
