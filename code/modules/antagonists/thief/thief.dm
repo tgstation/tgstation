@@ -9,6 +9,7 @@
 	preview_outfit = /datum/outfit/thief
 	antag_hud_name = "thief"
 	ui_name = "AntagInfoThief"
+	count_against_dynamic_roll_chance = FALSE
 	///assoc list of strings set up for the flavor of the thief.
 	var/list/thief_flavor
 	///if added by an admin, they can choose a thief flavor
@@ -154,7 +155,7 @@
 	glasses = /obj/item/clothing/glasses/night
 	gloves = /obj/item/clothing/gloves/color/latex
 	back = /obj/item/storage/backpack/duffelbag/syndie
-	mask = /obj/item/clothing/mask/bandana/color/red
+	mask = /obj/item/clothing/mask/bandana/red
 
 /datum/outfit/thief/post_equip(mob/living/carbon/human/thief, visualsOnly=FALSE)
 	// This outfit is used by the assets SS, which is ran before the atoms SS

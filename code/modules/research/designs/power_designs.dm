@@ -21,7 +21,7 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/high/empty
 	category = list("Misc","Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/super_cell
 	name = "Super-Capacity Power Cell"
@@ -32,7 +32,7 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/super/empty
 	category = list("Misc","Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
@@ -43,7 +43,7 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/hyper/empty
 	category = list("Misc","Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/bluespace_cell
 	name = "Bluespace Power Cell"
@@ -54,7 +54,7 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/bluespace/empty
 	category = list("Misc","Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/inducer
 	name = "Inducer"
@@ -64,7 +64,7 @@
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1000)
 	build_path = /obj/item/inducer/sci
 	category = list("Power Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/pacman
 	name = "Machine Design (PACMAN-type Generator Board)"
@@ -72,7 +72,7 @@
 	id = "pacman"
 	build_path = /obj/item/circuitboard/machine/pacman
 	category = list("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/turbine_part_compressor
 	name = "Turbine Part - Compressor"

@@ -27,7 +27,6 @@
 	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
 	alternate_worn_layer = HANDS_LAYER+0.1 //we want it to go above generally everything, but not hands
 	/// The MOD's theme, decides on some stuff like armor and statistics.
@@ -130,7 +129,6 @@
 		part.cold_protection = NONE
 		part.max_heat_protection_temperature = theme.max_heat_protection_temperature
 		part.min_cold_protection_temperature = theme.min_cold_protection_temperature
-		part.permeability_coefficient = theme.permeability_coefficient
 		part.siemens_coefficient = theme.siemens_coefficient
 	for(var/obj/item/part as anything in mod_parts)
 		RegisterSignal(part, COMSIG_ATOM_DESTRUCTION, .proc/on_part_destruction)
@@ -218,6 +216,7 @@
 			. += span_notice("You could remove [ai] with an <b>intellicard</b>.")
 		else
 			. += span_notice("You could install an AI with an <b>intellicard</b>.")
+	. += span_notice("<i>You could examine it more thoroughly...</i>")
 
 /obj/item/mod/control/examine_more(mob/user)
 	. = ..()
@@ -424,7 +423,7 @@
 	if(. & EMP_PROTECT_CONTENTS)
 		return
 	selected_module?.on_deactivation(display_message = TRUE)
-	wearer.apply_damage(10 / severity, BURN, spread_damage=TRUE)
+	wearer.apply_damage(5 / severity, BURN, spread_damage=TRUE)
 	to_chat(wearer, span_danger("You feel [src] heat up from the EMP, burning you slightly."))
 	if(wearer.stat < UNCONSCIOUS && prob(10))
 		wearer.emote("scream")
@@ -509,7 +508,7 @@
 		return
 	var/module_reference = display_names[pick]
 	var/obj/item/mod/module/picked_module = locate(module_reference) in modules
-	if(!istype(picked_module) || user.incapacitated())
+	if(!istype(picked_module))
 		return
 	picked_module.on_select()
 
@@ -594,6 +593,9 @@
 /obj/item/mod/control/proc/subtract_charge(amount)
 	return core?.subtract_charge(amount) || FALSE
 
+/obj/item/mod/control/proc/check_charge(amount)
+	return core?.check_charge(amount) || FALSE
+
 /obj/item/mod/control/proc/update_charge_alert()
 	if(!wearer)
 		return
@@ -624,13 +626,12 @@
 		CRASH("[src] tried to set skin while active!")
 	skin = new_skin
 	var/list/used_skin = theme.skins[new_skin]
-	alternate_worn_layer = used_skin[CONTROL_LAYER]
+	if(used_skin[CONTROL_LAYER])
+		alternate_worn_layer = used_skin[CONTROL_LAYER]
 	var/list/skin_updating = mod_parts + src
 	for(var/obj/item/part as anything in skin_updating)
-		if(used_skin[MOD_ICON_OVERRIDE])
-			part.icon = used_skin[MOD_ICON_OVERRIDE]
-		if(used_skin[MOD_WORN_ICON_OVERRIDE])
-			part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE]
+		part.icon = used_skin[MOD_ICON_OVERRIDE] || 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+		part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 		part.icon_state = "[skin]-[initial(part.icon_state)]"
 	for(var/obj/item/clothing/part as anything in mod_parts)
 		var/used_category

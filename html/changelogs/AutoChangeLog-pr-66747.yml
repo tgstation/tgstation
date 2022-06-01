@@ -1,4 +1,0 @@
-author: "OperativeLyn"
-delete-after: True
-changes: 
-  - bugfix: "Removed a duplicated airlock in IceBox lower maints."

@@ -87,7 +87,7 @@
 	limb._embed_object(weapon) // on the inside... on the inside...
 	weapon.forceMove(victim)
 	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/weaponDeleted)
-	victim.visible_message(span_danger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] [victim]'s [limb.name]!"), span_userdanger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] your [limb.name]!"))
+	victim.visible_message(span_danger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] [victim]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] your [limb.plaintext_zone]!"))
 
 	var/damage = weapon.throwforce
 	if(harmful)
@@ -98,7 +98,7 @@
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 
 	if(damage > 0)
-		var/armor = victim.run_armor_check(limb.body_zone, MELEE, "Your armor has protected your [limb.name].", "Your armor has softened a hit to your [limb.name].",I.armour_penetration, weak_against_armour = I.weak_against_armour)
+		var/armor = victim.run_armor_check(limb.body_zone, MELEE, "Your armor has protected your [limb.plaintext_zone].", "Your armor has softened a hit to your [limb.plaintext_zone].",I.armour_penetration, weak_against_armour = I.weak_against_armour)
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, blocked=armor, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
 /datum/component/embedded/Destroy()
@@ -142,7 +142,7 @@
 
 	if(harmful && prob(pain_chance_current))
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
-		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.name] hurts!"))
+		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.plaintext_zone]] hurts!"))
 
 	var/fall_chance_current = DT_PROB_RATE(fall_chance / 100, delta_time) * 100
 	if(victim.body_position == LYING_DOWN)
@@ -168,7 +168,7 @@
 	if(harmful && prob(chance))
 		var/damage = weapon.w_class * jostle_pain_mult
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
-		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.name] jostles and stings!"))
+		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.plaintext_zone] jostles and stings!"))
 
 
 /// Called when then item randomly falls out of a carbon. This handles the damage and descriptors, then calls safe_remove()
@@ -179,7 +179,7 @@
 		var/damage = weapon.w_class * remove_pain_mult
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 
-	victim.visible_message(span_danger("[weapon] falls [harmful ? "out" : "off"] of [victim.name]'s [limb.name]!"), span_userdanger("[weapon] falls [harmful ? "out" : "off"] of your [limb.name]!"))
+	victim.visible_message(span_danger("[weapon] falls [harmful ? "out" : "off"] of [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] falls [harmful ? "out" : "off"] of your [limb.plaintext_zone]!"))
 	safeRemove()
 
 
@@ -195,7 +195,7 @@
 
 /// everything async that ripOut used to do
 /datum/component/embedded/proc/complete_rip_out(mob/living/carbon/victim, obj/item/I, obj/item/bodypart/limb, time_taken)
-	victim.visible_message(span_warning("[victim] attempts to remove [weapon] from [victim.p_their()] [limb.name]."),span_notice("You attempt to remove [weapon] from your [limb.name]... (It will take [DisplayTimeText(time_taken)].)"))
+	victim.visible_message(span_warning("[victim] attempts to remove [weapon] from [victim.p_their()] [limb.plaintext_zone]."),span_notice("You attempt to remove [weapon] from your [limb.plaintext_zone]... (It will take [DisplayTimeText(time_taken)].)"))
 	if(!do_after(victim, time_taken, target = victim))
 		return
 	if(!weapon || !limb || weapon.loc != victim || !(weapon in limb.embedded_objects))
@@ -206,7 +206,7 @@
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
 		victim.emote("scream")
 
-	victim.visible_message(span_notice("[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.name]!"), span_notice("You successfully remove [weapon] from your [limb.name]."))
+	victim.visible_message(span_notice("[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.plaintext_zone]!"), span_notice("You successfully remove [weapon] from your [limb.plaintext_zone]."))
 	safeRemove(victim)
 
 /// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
@@ -235,7 +235,7 @@
 	limb._unembed_object(weapon)
 
 	if(victim)
-		to_chat(victim, span_userdanger("\The [weapon] that was embedded in your [limb.name] disappears!"))
+		to_chat(victim, span_userdanger("\The [weapon] that was embedded in your [limb.plaintext_zone] disappears!"))
 
 	qdel(src)
 
@@ -264,22 +264,22 @@
 	var/self_pluck = (user == victim)
 
 	if(self_pluck)
-		user.visible_message(span_danger("[user] begins plucking [weapon] from [user.p_their()] [limb.name]"), span_notice("You start plucking [weapon] from your [limb.name]..."),\
+		user.visible_message(span_danger("[user] begins plucking [weapon] from [user.p_their()] [limb.plaintext_zone]"), span_notice("You start plucking [weapon] from your [limb.plaintext_zone]..."),\
 			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
 	else
-		user.visible_message(span_danger("[user] begins plucking [weapon] from [victim]'s [limb.name]"),span_notice("You start plucking [weapon] from [victim]'s [limb.name]..."), \
+		user.visible_message(span_danger("[user] begins plucking [weapon] from [victim]'s [limb.plaintext_zone]"),span_notice("You start plucking [weapon] from [victim]'s [limb.plaintext_zone]..."), \
 			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] begins plucking [weapon] from your [limb.name]..."))
+		to_chat(victim, span_userdanger("[user] begins plucking [weapon] from your [limb.plaintext_zone]..."))
 
 	var/pluck_time = 2.5 SECONDS * weapon.w_class * (self_pluck ? 2 : 1)
 	if(!do_after(user, pluck_time, victim))
 		if(self_pluck)
-			to_chat(user, span_danger("You fail to pluck [weapon] from your [limb.name]."))
+			to_chat(user, span_danger("You fail to pluck [weapon] from your [limb.plaintext_zone]."))
 		else
-			to_chat(user, span_danger("You fail to pluck [weapon] from [victim]'s [limb.name]."))
-			to_chat(victim, span_danger("[user] fails to pluck [weapon] from your [limb.name]."))
+			to_chat(user, span_danger("You fail to pluck [weapon] from [victim]'s [limb.plaintext_zone]."))
+			to_chat(victim, span_danger("[user] fails to pluck [weapon] from your [limb.plaintext_zone]."))
 		return
 
-	to_chat(user, span_notice("You successfully pluck [weapon] from [victim]'s [limb.name]."))
-	to_chat(victim, span_notice("[user] plucks [weapon] from your [limb.name]."))
+	to_chat(user, span_notice("You successfully pluck [weapon] from [victim]'s [limb.plaintext_zone]."))
+	to_chat(victim, span_notice("[user] plucks [weapon] from your [limb.plaintext_zone]."))
 	safeRemove(user)

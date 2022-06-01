@@ -16,9 +16,28 @@
 	name = "unfinished paper scrap"
 	desc = "Looks like someone started shakily writing a will in space common, but were interrupted by something bloody..."
 	info = "I, Victor Belyakov, do hereby leave my _- "
+
 /obj/item/paper/fluff/ruins/thederelict/vaultraider
 	name = "Vault Raider Objectives"
 	info = "<b>Objectives #1</b>: Find out what is hidden in Kosmicheskaya Stantsiya 13s Vault"
+
+///The Derelict Terminals
+/obj/machinery/computer/terminal/derelict/bridge
+	icon_screen = "comm"
+	icon_keyboard = "tech_key"
+	content = list("Central Command Status Summary -- Impending Doom -- Your station is somehow in the middle of hostile territory, in clear view of any enemy of the corporation. Your likelihood to survive is low, \
+	and station destruction is expected and almost inevitable. Secure any sensitive material and neutralize any enemy you will come across. It is important that you at least try to maintain the station. \
+	Good luck. -- Special Orders for KC13: Our military presence is inadequate in your sector. We need you to construct BSA-87 Artillery position aboard your station. Base parts are available for shipping via cargo. \
+	-Nanotrasen Naval Command -- Identified Shift Divergences: Overflow bureaucracy mistake - It seems for some reason we put out the wrong job-listing for the overflow role this shift...I hope you like captains.")
+
+/obj/machinery/computer/terminal/derelict/cargo
+	content = list("INTER-MAIL - #789 - Cargo Technician I. Miller -> J. Holmes -- Jake, with all due respect, I don't know how you guys can keep this shit up. Robotics has made not one, but THREE AIs, \
+	and at least one of them either has combat upgrades or isn't telling us the whole story. Not that we can even get close enough to tell, mind, they're doing everything in their power to keep us away. It's \
+	unnerving. Meanwhile, a little birdie tells me one of your officers has been spending all shift trying to get their baton back from the clown with.. lethal force. This place is a fucking powder keg, Jake, \
+	you know as well as I do. Either stop fucking around or we'll take matters into our own hands.")
+
+/obj/machinery/computer/terminal/derelict/security
+	content = list("INTER-MAIL - #790 - Cargo Technician J. Holmes -> I. Miller -- HOT SINGLE SILICONS IN YOUR AREA, CLICK ->HERE<- FOR MORE INFORMATION!")
 
 /// Vault controller for use on the derelict/KS13.
 /obj/machinery/computer/vaultcontroller

@@ -47,7 +47,6 @@
 	inhand_icon_state = "bl_suit"
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
 	desc = "A cybernetically enhanced jumpsuit used for administrative duties."
-	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100,ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
@@ -86,7 +85,7 @@
 	icon_state = "durathread"
 	inhand_icon_state = "durathread"
 	can_adjust = FALSE
-	armor = list(MELEE = 10, LASER = 10, FIRE = 40, ACID = 10, BOMB = 5)
+	armor = list(MELEE = 10, LASER = 10, FIRE = 40, ACID = 10, BOMB = 5, BIO = 10, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/misc/bouncer
 	name = "bouncer uniform"
@@ -94,7 +93,7 @@
 	icon_state = "bouncer"
 	inhand_icon_state = "bouncer"
 	can_adjust = FALSE
-	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 30, ACID = 30)
+	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 30, ACID = 30)
 
 /obj/item/clothing/under/misc/coordinator
 	name = "coordinator jumpsuit"

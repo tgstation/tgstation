@@ -96,7 +96,6 @@
 	l_hand = /obj/item/gun/energy/pulse/carbine/loyalpin
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/storage/belt/security/full = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)
@@ -422,7 +421,7 @@
 	)
 	belt = /obj/item/storage/belt/janitor/full
 	glasses = /obj/item/clothing/glasses/meson
-	mask = /obj/item/clothing/mask/bandana/color/blue
+	mask = /obj/item/clothing/mask/bandana/blue
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_hand = /obj/item/storage/bag/trash

@@ -7,7 +7,7 @@
 	cures = list("plasma")
 	agent = "Unknown"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 1
+	spreading_modifier = 1
 	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/rhumba_beat/stage_act(delta_time, times_fired)

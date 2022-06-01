@@ -153,7 +153,8 @@
 	var/unconscious = 0
 	var/eyeblur = 0
 	var/drowsy = 0
-	var/jitter = 0
+	/// Jittering applied on projectile hit
+	var/jitter = 0 SECONDS
 	/// Extra stamina damage applied on projectile hit (in addition to the main damage)
 	var/stamina = 0
 	/// Stuttering applied on projectile hit
@@ -454,34 +455,38 @@
  * 0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
  * Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be ""too"" bad and I frankly don't have a better *generic non snowflakey* way that I can think of right now at 3 AM.
  * FURTHERMORE, mobs/objs have a density check from can_hit_target - to hit non dense objects over a turf, you must click on them, same for mobs that usually wouldn't get hit.
- * 1. The thing originally aimed at/clicked on
- * 2. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
- * 3. Objs
- * 4. Turf
- * 5. Nothing
+ * 1. Special check on what we bumped to see if it's a border object that intercepts hitting anything behind it
+ * 2. The thing originally aimed at/clicked on
+ * 3. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
+ * 4. Objs
+ * 5. Turf
+ * 6. Nothing
  */
 /obj/projectile/proc/select_target(turf/our_turf, atom/target, atom/bumped)
-	// 1. original
+	// 1. special bumped border object check
+	if(bumped?.flags_1 & ON_BORDER_1)
+		return bumped
+	// 2. original
 	if(can_hit_target(original, TRUE, FALSE, original == bumped))
 		return original
 	var/list/atom/considering = list()  // let's define this ONCE
-	// 2. mobs
+	// 3. mobs
 	for(var/mob/living/iter_possible_target in our_turf)
 		if(can_hit_target(iter_possible_target, iter_possible_target == original, TRUE, iter_possible_target == bumped))
 			considering += iter_possible_target
 	if(considering.len)
 		var/mob/living/hit_living = pick(considering)
 		return hit_living.lowest_buckled_mob()
-	// 3. objs and other dense things
+	// 4. objs and other dense things
 	for(var/i in our_turf)
 		if(can_hit_target(i, i == original, TRUE, i == bumped))
 			considering += i
 	if(considering.len)
 		return pick(considering)
-	// 4. turf
+	// 5. turf
 	if(can_hit_target(our_turf, our_turf == original, TRUE, our_turf == bumped))
 		return our_turf
-	// 5. nothing
+	// 6. nothing
 		// (returns null)
 
 //Returns true if the target atom is on our current turf and above the right layer
@@ -641,7 +646,7 @@
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
 	return get_line(current, ending)
 
-/obj/projectile/Process_Spacemove(movement_dir = 0)
+/obj/projectile/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return TRUE //Bullets don't drift in space
 
 /obj/projectile/process()

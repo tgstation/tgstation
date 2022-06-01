@@ -34,9 +34,9 @@
 /area/awaymission/bmpship/midship)
 "bj" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Security Checkpoint";
-	req_access_txt = "63"
+	name = "Security Checkpoint"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
 "ck" = (
@@ -48,9 +48,9 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/command{
 	emergency = 1;
-	name = "E.V.A. Storage";
-	req_access_txt = "18"
+	name = "E.V.A. Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/eva,
 /turf/open/floor/iron/white/corner,
 /area/awaymission/bmpship/midship)
 "cR" = (
@@ -359,9 +359,9 @@
 /area/awaymission/bmpship/aft)
 "on" = (
 /obj/machinery/door/airlock/command{
-	name = "Captain's Office";
-	req_access_txt = "20"
+	name = "Captain's Office"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/captain,
 /turf/open/floor/iron/airless,
 /area/awaymission/bmpship/fore)
 "oM" = (
@@ -741,9 +741,9 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/command{
 	emergency = 1;
-	name = "Teleport Access";
-	req_access_txt = "17"
+	name = "Teleport Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/teleporter,
 /turf/open/floor/iron/white/side{
 	dir = 6
 	},
@@ -1139,9 +1139,9 @@
 "Lo" = (
 /obj/machinery/door/airlock/command{
 	emergency = 1;
-	name = "Teleport Access";
-	req_access_txt = "17"
+	name = "Teleport Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/teleporter,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/awaymission/bmpship/midship)

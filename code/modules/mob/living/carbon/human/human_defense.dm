@@ -415,7 +415,7 @@
 //200 max knockdown for EXPLODE_HEAVY
 //160 max knockdown for EXPLODE_LIGHT
 
-	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			if(bomb_armor < EXPLODE_GIB_THRESHOLD) //gibs the mob if their bomb armor is lower than EXPLODE_GIB_THRESHOLD
@@ -519,7 +519,7 @@
 	//If they can't, they're missing their heart and this would runtime
 	if(undergoing_cardiac_arrest() && can_heartattack() && !(flags & SHOCK_ILLUSION))
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
-			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+			var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 			if(heart.Restart() && stat == CONSCIOUS)
 				to_chat(src, span_notice("You feel your heart beating again!"))
 	electrocution_animation(40)
@@ -693,28 +693,16 @@
 			. = rand(-1000, 1000)
 	..() //Called afterwards because getting the mind after getting gibbed is sketchy
 
-/mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
-	if(!istype(M))
+/mob/living/carbon/human/help_shake_act(mob/living/carbon/helper)
+	if(!istype(helper))
 		return
 
-	if(src == M)
-		if(has_status_effect(/datum/status_effect/strandling))
-			to_chat(src, span_notice("You attempt to remove the durathread strand from around your neck."))
-			if(do_after(src, 3.5 SECONDS, src))
-				to_chat(src, span_notice("You succesfuly remove the durathread strand."))
-				remove_status_effect(/datum/status_effect/strandling)
-			return
-		check_self_for_injuries()
+	if(wear_suit)
+		wear_suit.add_fingerprint(helper)
+	else if(w_uniform)
+		w_uniform.add_fingerprint(helper)
 
-
-	else
-		if(wear_suit)
-			wear_suit.add_fingerprint(M)
-		else if(w_uniform)
-			w_uniform.add_fingerprint(M)
-
-		..()
-
+	return ..()
 
 /mob/living/carbon/human/check_self_for_injuries()
 	if(stat >= UNCONSCIOUS)

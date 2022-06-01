@@ -36,7 +36,7 @@
 		REMOVE_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
 
-//Medical Visor
+//Medical Visor - Gives you a medical HUD.
 /obj/item/mod/module/visor/medhud
 	name = "MOD medical visor module"
 	desc = "A heads-up display installed into the visor of the suit. This cross-references suit sensor data with a modern \
@@ -46,7 +46,7 @@
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
 	visor_traits = list(TRAIT_MEDICAL_HUD)
 
-//Diagnostic Visor
+//Diagnostic Visor - Gives you a diagnostic HUD.
 /obj/item/mod/module/visor/diaghud
 	name = "MOD diagnostic visor module"
 	desc = "A heads-up display installed into the visor of the suit. This uses a series of advanced sensors to access data \
@@ -56,7 +56,7 @@
 	hud_type = DATA_HUD_DIAGNOSTIC_ADVANCED
 	visor_traits = list(TRAIT_DIAGNOSTIC_HUD)
 
-//Security Visor
+//Security Visor - Gives you a security HUD.
 /obj/item/mod/module/visor/sechud
 	name = "MOD security visor module"
 	desc = "A heads-up display installed into the visor of the suit. This module is a heavily-retrofitted targeting system, \
@@ -66,7 +66,7 @@
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	visor_traits = list(TRAIT_SECURITY_HUD)
 
-//Meson Visor
+//Meson Visor - Gives you meson vision.
 /obj/item/mod/module/visor/meson
 	name = "MOD meson visor module"
 	desc = "A heads-up display installed into the visor of the suit. This module is based off well-loved meson scanner \
@@ -75,7 +75,7 @@
 	icon_state = "meson_visor"
 	visor_traits = list(TRAIT_MESON_VISION, TRAIT_MADNESS_IMMUNE)
 
-//Thermal Visor
+//Thermal Visor - Gives you thermal vision.
 /obj/item/mod/module/visor/thermal
 	name = "MOD thermal visor module"
 	desc = "A heads-up display installed into the visor of the suit. This uses a small IR scanner to detect and identify \
@@ -84,7 +84,7 @@
 	icon_state = "thermal_visor"
 	visor_traits = list(TRAIT_THERMAL_VISION)
 
-//Night Visor
+//Night Visor - Gives you night vision.
 /obj/item/mod/module/visor/night
 	name = "MOD night visor module"
 	desc = "A heads-up display installed into the visor of the suit. Typical for both civilian and military applications, \

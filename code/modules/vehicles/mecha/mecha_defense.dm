@@ -13,26 +13,6 @@
  * where they target the "dangerous" modules
  */
 
-/// returns a number for the damage multiplier for this relative angle/dir
-/obj/vehicle/sealed/mecha/proc/get_armour_facing(relative_dir)
-	switch(relative_dir)
-		if(180) // BACKSTAB!
-			return facing_modifiers[MECHA_BACK_ARMOUR]
-		if(0, 45) // direct or 45 degrees off
-			return facing_modifiers[MECHA_FRONT_ARMOUR]
-	return facing_modifiers[MECHA_SIDE_ARMOUR] //if its not a front hit or back hit then assume its from the side
-
-///tries to deal internal damaget depending on the damage amount
-/obj/vehicle/sealed/mecha/proc/try_deal_internal_damage(damage)
-	if(damage < internal_damage_threshold)
-		return
-	if(!prob(internal_damage_probability))
-		return
-	var/internal_damage_to_deal = possible_int_damage
-	internal_damage_to_deal &= ~mecha_flags
-	if(internal_damage_to_deal)
-		set_internal_damage(pick(bitfield_to_list(internal_damage_to_deal)))
-
 /// tries to damage mech equipment depending on damage and where is being targetted
 /obj/vehicle/sealed/mecha/proc/try_damage_component(damage, def_zone)
 	if(damage < component_damage_threshold)
@@ -193,6 +173,15 @@
 /obj/vehicle/sealed/mecha/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	log_message("Exposed to dangerous temperature.", LOG_MECHA, color="red")
 	take_damage(5, BURN, 0, 1)
+
+/obj/vehicle/sealed/mecha/fire_act() //Check if we should ignite the pilot of an open-canopy mech
+	. = ..()
+	if(enclosed || mecha_flags & SILICON_PILOT)
+		return
+	for(var/mob/living/cookedalive as anything in occupants)
+		if(cookedalive.fire_stacks < 5)
+			cookedalive.adjust_fire_stacks(1)
+			cookedalive.ignite_mob()
 
 /obj/vehicle/sealed/mecha/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/mecha_parts))
@@ -364,3 +353,53 @@
 			cell.charge = rand(0, cell.charge)
 			cell = null
 	. = ..()
+
+/obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/A, mob/user,fail_chat_override = FALSE)
+	if(!A.rounds)
+		if(!fail_chat_override)
+			to_chat(user, span_warning("This box of ammo is empty!"))
+		return FALSE
+	var/ammo_needed
+	var/found_gun
+	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in flat_equipment)
+		ammo_needed = 0
+
+		if(!istype(gun, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic) && gun.ammo_type == A.ammo_type)
+			continue
+		found_gun = TRUE
+		if(A.direct_load)
+			ammo_needed = initial(gun.projectiles) - gun.projectiles
+		else
+			ammo_needed = gun.projectiles_cache_max - gun.projectiles_cache
+
+		if(!ammo_needed)
+			continue
+		if(ammo_needed < A.rounds)
+			if(A.direct_load)
+				gun.projectiles = gun.projectiles + ammo_needed
+			else
+				gun.projectiles_cache = gun.projectiles_cache + ammo_needed
+			playsound(get_turf(user),A.load_audio,50,TRUE)
+			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
+			A.rounds = A.rounds - ammo_needed
+			if(A.custom_materials)
+				A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
+			A.update_name()
+			return TRUE
+
+		if(A.direct_load)
+			gun.projectiles = gun.projectiles + A.rounds
+		else
+			gun.projectiles_cache = gun.projectiles_cache + A.rounds
+		playsound(get_turf(user),A.load_audio,50,TRUE)
+		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
+		A.rounds = 0
+		A.set_custom_materials(list(/datum/material/iron=2000))
+		A.update_name()
+		return TRUE
+	if(!fail_chat_override)
+		if(found_gun)
+			to_chat(user, span_notice("You can't fit any more ammo of this type!"))
+		else
+			to_chat(user, span_notice("None of the equipment on this exosuit can use this ammo!"))
+	return FALSE

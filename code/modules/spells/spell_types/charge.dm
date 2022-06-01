@@ -1,6 +1,10 @@
 /obj/effect/proc_holder/spell/targeted/charge
 	name = "Charge"
-	desc = "This spell can be used to recharge a variety of things in your hands, from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."
+	desc = "This spell can be used to recharge a variety of things in your hands, \
+		from magical artifacts to electrical components. A creative wizard can even use it \
+		to grant magical power to a fellow magic user."
+	sound = 'sound/magic/charge.ogg'
+	action_icon_state = "charge"
 
 	school = SCHOOL_TRANSMUTATION
 	charge_max = 600
@@ -10,92 +14,43 @@
 	range = -1
 	cooldown_min = 400 //50 deciseconds reduction per rank
 	include_user = TRUE
-	action_icon_state = "charge"
 
-/obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
-	for(var/mob/living/L in targets)
-		var/list/hand_items = list(L.get_active_held_item(),L.get_inactive_held_item())
-		var/charged_item = null
-		var/burnt_out = FALSE
+/obj/effect/proc_holder/spell/targeted/charge/cast(list/targets, mob/user = usr)
+	// Charge people we're pulling first and foremost
+	if(isliving(user.pulling))
+		var/mob/living/pulled_living = user.pulling
+		var/pulled_has_spells = FALSE
 
-		if(L.pulling && isliving(L.pulling))
-			var/mob/living/M = L.pulling
-			if(LAZYLEN(M.mob_spell_list) || (LAZYLEN(M.mind?.spell_list)))
-				for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
-					S.charge_counter = S.charge_max
-				if(M.mind)
-					for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
-						S.charge_counter = S.charge_max
-				to_chat(M, span_notice("You feel raw magic flowing through you. It feels good!"))
-			else
-				to_chat(M, span_notice("You feel very strange for a moment, but then it passes."))
-				burnt_out = TRUE
-			charged_item = M
-			break
-		for(var/obj/item in hand_items)
-			if(istype(item, /obj/item/spellbook))
-				to_chat(L, span_danger("Glowing red letters appear on the front cover..."))
-				to_chat(L, span_warning("[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE! VERY CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]"))
-				burnt_out = TRUE
-			else if(istype(item, /obj/item/book/granter/spell))
-				var/obj/item/book/granter/spell/I = item
-				if(!I.oneuse)
-					to_chat(L, span_notice("This book is infinite use and can't be recharged, yet the magic has improved the book somehow..."))
-					burnt_out = TRUE
-					I.pages_to_mastery--
-					break
-				if(prob(80))
-					L.visible_message(span_warning("[I] catches fire!"))
-					qdel(I)
-				else
-					I.used = FALSE
-					charged_item = I
-					break
-			else if(istype(item, /obj/item/gun/magic))
-				var/obj/item/gun/magic/I = item
-				if(prob(80) && !I.can_charge)
-					I.max_charges--
-				if(I.max_charges <= 0)
-					I.max_charges = 0
-					burnt_out = TRUE
-				I.charges = I.max_charges
-				if(istype(item, /obj/item/gun/magic/wand) && I.max_charges != 0)
-					var/obj/item/gun/magic/W = item
-					W.icon_state = initial(W.icon_state)
-				I.recharge_newshot()
-				charged_item = I
-				break
-			else if(istype(item, /obj/item/stock_parts/cell))
-				var/obj/item/stock_parts/cell/C = item
-				if(prob(80))
-					C.maxcharge -= 200
-				if(C.maxcharge <= 1) //Div by 0 protection
-					C.maxcharge = 1
-					burnt_out = TRUE
-				C.charge = C.maxcharge
-				charged_item = C
-				break
-			else if(item.contents)
-				var/obj/I = null
-				for(I in item.contents)
-					if(istype(I, /obj/item/stock_parts/cell/))
-						var/obj/item/stock_parts/cell/C = I
-						if(prob(80))
-							C.maxcharge -= 200
-						if(C.maxcharge <= 1) //Div by 0 protection
-							C.maxcharge = 1
-							burnt_out = TRUE
-						C.charge = C.maxcharge
-						if(istype(C.loc, /obj/item/gun))
-							var/obj/item/gun/G = C.loc
-							G.process_chamber()
-						item.update_appearance()
-						charged_item = item
-						break
-		if(!charged_item)
-			to_chat(L, span_notice("You feel magical power surging through your hands, but the feeling rapidly fades..."))
-		else if(burnt_out)
-			to_chat(L, span_warning("[charged_item] doesn't seem to be reacting to the spell!"))
-		else
-			playsound(get_turf(L), 'sound/magic/charge.ogg', 50, TRUE)
-			to_chat(L, span_notice("[charged_item] suddenly feels very warm!"))
+		for(var/obj/effect/proc_holder/spell/spell in pulled_living.mob_spell_list | pulled_living.mind?.spell_list)
+			spell.charge_counter = spell.charge_max
+			spell.recharging = FALSE
+			spell.update_appearance()
+			pulled_has_spells = TRUE
+
+		if(pulled_has_spells)
+			to_chat(pulled_living, span_notice("You feel raw magic flowing through you. It feels good!"))
+			to_chat(user, span_notice("[pulled_living] suddenly feels very warm!"))
+			return
+
+		to_chat(pulled_living, span_notice("You feel very strange for a moment, but then it passes."))
+
+	// Then charge their main hand item, then charge their offhand item
+	var/obj/item/to_charge = user.get_active_held_item() || user.get_inactive_held_item()
+	if(!to_charge)
+		to_chat(user, span_notice("You feel magical power surging through your hands, but the feeling rapidly fades."))
+		return
+
+	var/charge_return = SEND_SIGNAL(to_charge, COMSIG_ITEM_MAGICALLY_CHARGED, src, user)
+
+	if(QDELETED(to_charge))
+		to_chat(user, span_warning("[src] seems to react adversely with [to_charge]!"))
+		return
+
+	if(charge_return & COMPONENT_ITEM_BURNT_OUT)
+		to_chat(user, span_warning("[to_charge] seems to react negatively to [src], becoming uncomfortably warm!"))
+
+	else if(charge_return & COMPONENT_ITEM_CHARGED)
+		to_chat(user, span_notice("[to_charge] suddenly feels very warm!"))
+
+	else
+		to_chat(user, span_notice("[to_charge] doesn't seem to be react to [src]."))

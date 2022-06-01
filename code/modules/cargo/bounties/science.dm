@@ -93,3 +93,46 @@
 		return FALSE
 	return TRUE
 
+
+//******Anomaly Cores******
+/datum/bounty/item/science/ref_anomaly
+	name = "Refined Bluespace Core"
+	description = "We need a bluespace core to fit in a Phazon, ship us one, please."
+	reward = CARGO_CRATE_VALUE * 20
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/bluespace = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/can_get(obj/O)
+	var/anomaly_type = wanted_types[1]
+	if(SSresearch.created_anomaly_types[anomaly_type] >= SSresearch.anomaly_hard_limit_by_type[anomaly_type])
+		return FALSE
+	return TRUE
+
+/datum/bounty/item/science/ref_anomaly/flux
+	name = "Refined Flux Core"
+	description = "We're trying to make a tesla cannon to handle some moths, ship us a flux core, please."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/flux = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/pyro
+	name = "Refined Pyroclastic Core"
+	description = "We need to study a refined pyroclastic core, please send one."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/pyro = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/grav
+	name = "Refined Gravitational Core"
+	description = "Central R&D is trying to discover a way to make mechs float, send over a gravitational core."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/grav = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/vortex
+	name = "Refined Vortex Core"
+	description = "We're going to throw a vortex core into a wormhole to see what happens. Send one."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/vortex = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/hallucination
+	name = "Refined Hallucination Core"
+	description = "We're making a better version of space drugs, send us a core to help us replicate its effects."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/hallucination = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/delimber
+	name = "Refined Delimber Core"
+	description = "Our janitor lizard lost all their limbs, send us a delimber core to replace them."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/delimber = TRUE)

@@ -6,7 +6,6 @@
 		var/datum/action/vehicle/sealed/mecha/mecha = .
 		mecha.chassis = src
 
-
 /datum/action/vehicle/sealed/mecha
 	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
 	var/obj/vehicle/sealed/mecha/chassis
@@ -32,6 +31,12 @@
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_internals/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
+		return
+
+	if(!chassis.internal_tank) //Just in case.
+		chassis.use_internal_tank = FALSE
+		chassis.balloon_alert(owner, "no tank available!")
+		chassis.log_message("Switch to internal tank failed. No tank available.", LOG_MECHA)
 		return
 
 	chassis.use_internal_tank = !chassis.use_internal_tank

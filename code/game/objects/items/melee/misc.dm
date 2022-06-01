@@ -254,7 +254,7 @@
 
 /obj/item/melee/supermatter_sword/proc/consume_everything(target)
 	if(isnull(target))
-		shard.Consume()
+		shard.Bump(target)
 	else if(!isturf(target))
 		shard.Bumped(target)
 	else
@@ -270,7 +270,7 @@
 		span_danger("[turf] smacks into [src] and rapidly flashes to ash."),
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
-	shard.Consume()
+	shard.Bump(turf)
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
 	return FALSE

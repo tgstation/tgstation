@@ -126,8 +126,6 @@
 #define GHOST_PLANE 80
 #define POINT_PLANE 90
 
-#define RAD_TEXT_PLANE 90
-
 //---------- LIGHTING -------------
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 100
@@ -160,6 +158,9 @@
 #define EMISSIVE_LAYER_UNBLOCKABLE 9999
 
 ///---------------- MISC -----------------------
+
+///Pipecrawling images
+#define PIPECRAWL_IMAGES_PLANE 180
 
 ///AI Camera Static
 #define CAMERA_STATIC_PLANE 200

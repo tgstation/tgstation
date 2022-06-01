@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 	//new vars
 	///what area type this holodeck loads into. linked turns into the nearest instance of this area
-	var/area/mapped_start_area = /area/holodeck/rec_center
+	var/area/mapped_start_area = /area/station/holodeck/rec_center
 
 	///the currently used map template
 	var/datum/map_template/holodeck/template
@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	//old vars
 
 	///the area that this holodeck loads templates into, used for power and deleting holo objects that leave it
-	var/area/holodeck/linked
+	var/area/station/holodeck/linked
 
 	///what program is loaded right now or is about to be loaded
 	var/program = "holodeck_offline"
@@ -90,31 +90,35 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 /obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
 	linked = GLOB.areas_by_type[mapped_start_area]
+	if(!linked)
+		log_mapping("[src] at [AREACOORD(src)] has no matching holodeck area.")
+		qdel(src)
+		return
+
 	bottom_left = locate(linked.x, linked.y, src.z)
+	if(!bottom_left)
+		log_mapping("[src] at [AREACOORD(src)] has an invalid holodeck area.")
+		qdel(src)
+		return
 
 	var/area/computer_area = get_area(src)
-	if(istype(computer_area, /area/holodeck))
+	if(istype(computer_area, /area/station/holodeck))
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
 		return
 
 	// the following is necessary for power reasons
-	if(!linked)
-		log_world("No matching holodeck area found")
-		qdel(src)
-		return
-	else if (!offline_program)
+	if(!offline_program)
 		stack_trace("Holodeck console created without an offline program")
 		qdel(src)
 		return
 
+	linked.linked = src
+	var/area/my_area = get_area(src)
+	if(my_area)
+		linked.power_usage = my_area.power_usage
 	else
-		linked.linked = src
-		var/area/my_area = get_area(src)
-		if(my_area)
-			linked.power_usage = my_area.power_usage
-		else
-			linked.power_usage = list(AREA_USAGE_LEN)
+		linked.power_usage = list(AREA_USAGE_LEN)
 
 	COOLDOWN_START(src, holodeck_cooldown, HOLODECK_CD)
 	generate_program_list()
