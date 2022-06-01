@@ -99,9 +99,14 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 		// MOTHBLOCKS TODO: Needed?
 		fdel(data_filename)
 		fcopy(icon, data_filename)
-	else
+	else if (fexists("code"))
+		// We are probably running in a local build
 		fcopy(icon, filename)
 		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
+	else
+		// We are probably running in real CI
+		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
+		TEST_FAIL("Screenshot for [name] did not exist.")
 
 /proc/RunUnitTest(test_path, list/test_results)
 	var/datum/unit_test/test = new test_path
