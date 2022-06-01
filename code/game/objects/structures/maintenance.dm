@@ -295,10 +295,13 @@ at the cost of risking a vicious bite.**/
 /**
  * Creates "steam" smoke, and determines when the vent needs to block line of sight via reset_opacity.
  */
-/obj/structure/steam_vent/proc/blow_steam()
+/obj/structure/steam_vent/proc/blow_steam(datum/source, atom/movable/leaving, direction)
+	SIGNAL_HANDLER
 	if(!vent_active)
 		return
 	if(!COOLDOWN_FINISHED(src, steam_vent_interact))
+		return
+	if(!ismob(leaving))
 		return
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(range = 1, amount = 1, location = src)
