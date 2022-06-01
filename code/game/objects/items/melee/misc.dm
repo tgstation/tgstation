@@ -65,7 +65,7 @@
 	obj_flags = UNIQUE_RENAME
 	force = 15
 	throwforce = 10
-	demolition_mod = 0.50 //but not metal
+	demolition_mod = 0.75 //but not metal
 	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 50
 	armour_penetration = 75
