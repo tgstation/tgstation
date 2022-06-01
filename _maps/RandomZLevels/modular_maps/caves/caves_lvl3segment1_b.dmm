@@ -36,6 +36,7 @@
 "Ck" = (/mob/living/simple_animal/hostile/asteroid/goliath/beast,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "CD" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/wideplating_new,/obj/effect/turf_decal/siding/wideplating_new{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
 "Ea" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Ej" = (/obj/item/gibtonite{name = "high quality gibtonite ore"; quality = 3},/turf/open/indestructible/necropolis,/area/template_noop)
 "Gq" = (/turf/template_noop,/area/template_noop)
 "HV" = (/obj/effect/decal/cleanable/blood/old,/obj/item/kinetic_crusher,/turf/open/indestructible/necropolis,/area/template_noop)
 "Ii" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
@@ -62,7 +63,7 @@
 "Vl" = (/obj/structure/industrial_lift/tram{icon_state = "titanium_purple"; initial_id = "caves_drill_left"; name = "drill platform"},/obj/item/shard,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "Vq" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened{desc = "It looks REALLY hard to break through by normal means..."; hand_mine_speed = 999999; name = "collapsed dense rock"; tool_mine_speed = 999999},/area/template_noop)
 "Vt" = (/obj/structure/marker_beacon/burgundy,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"WH" = (/obj/item/gibtonite{quality = 3; name = "high quality gibtonite ore"},/obj/effect/decal/cleanable/blood/old,/turf/open/indestructible/necropolis,/area/template_noop)
+"WH" = (/obj/item/gibtonite{name = "high quality gibtonite ore"; quality = 3},/obj/effect/decal/cleanable/blood/old,/turf/open/indestructible/necropolis,/area/template_noop)
 "Xl" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "Yf" = (/obj/effect/decal/cleanable/blood/old,/turf/open/indestructible/necropolis,/area/template_noop)
 "Zd" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/wideplating_new{dir = 1},/obj/effect/turf_decal/siding/wideplating_new,/obj/structure/industrial_lift/tram{icon_state = "titanium_purple"; initial_id = "caves_drill_left"; name = "drill platform"},/obj/structure/frame/computer{dir = 4; name = "busted computer frame"},/obj/item/stack/cable_coil/cut,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
@@ -80,7 +81,7 @@ oIcuGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqcucucucucucucucukkrxrxcucuvFNHvF
 oIcuGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqcucucucucucucucukkkkrxcuvFvFNHvFNHNHNHrxNHrbhJhJrxvFNHvFvFvFcucurxrxrxrxXlXlrxcucuoIGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGq
 oIcuGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqcucucucucucucucucurxrxcuvFNHNHNHNHUvNHYfBGVhNHrxrxNHNHNHNHvFcucurxXlrxrxVhcucucucuoIGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGq
 oIcuGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqcucucucucucucucucurxrxcuvFvFNHrxNHNHNHNHNHBGNHrxrxNHNHvFvFvFcurxrxrxrxcucucucucucuoIGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGq
-oIcuGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqcucucucucucucucucucurxcucuvFvFrxNHYfNHNHScNHNHNHNHNHNHNHNHrxrxrxrxcucucucucucucucuoIGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGq
+oIcuGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqcucucucucucucucucucurxcucuvFvFrxNHYfNHNHScNHEjNHNHNHNHNHNHrxrxrxrxcucucucucucucucuoIGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGq
 oIcuGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqcucucucucurxcucucucurbcucucucuNHNHrxNHHVjfWHNHNHNHUvNHNHNHrxrxrxrxcucucucucucucucuoIGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGq
 oIcuGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqcucucucucurxcucurxrxrbVhrbrxrxrxNHkkNHNHYfYfNHrxNHNHNHrxrxrxrxrxcucucucucucucucucuoIGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGq
 oIcuGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqcucucurxrxrxrxrxrxrxrxrbrxNHrxrxrxNHNHNHJzNHNHNHNHNHrxrxvFcucucucucucucucucucucucuoIGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGqGq
