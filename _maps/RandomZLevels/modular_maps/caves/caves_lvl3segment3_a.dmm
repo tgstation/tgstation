@@ -13,11 +13,6 @@
 /obj/item/stack/sheet/bone,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
-"f" = (
-/obj/machinery/power/rtg,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/template_noop)
 "g" = (
 /turf/closed/mineral/volcanic/lava_land_surface/hardened,
 /area/template_noop)
@@ -25,41 +20,19 @@
 /obj/item/stack/sheet/bone,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
-"j" = (
-/turf/closed/wall,
-/area/template_noop)
-"k" = (
-/obj/machinery/atmospherics/components/tank/oxygen,
-/turf/open/floor/plating,
-/area/template_noop)
 "m" = (
 /turf/closed/indestructible/riveted,
-/area/template_noop)
-"o" = (
-/turf/open/floor/bronze/flat,
 /area/template_noop)
 "p" = (
 /obj/structure/flora/rock,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"q" = (
-/obj/structure/cable,
-/turf/open/floor/iron,
 /area/template_noop)
 "r" = (
 /obj/effect/decal/remains/xeno,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "t" = (
-/obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/template_noop)
-"u" = (
-/obj/structure/cable,
-/turf/closed/wall/mineral/bronze,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "w" = (
 /obj/structure/flora/rock,
@@ -69,10 +42,6 @@
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
-"y" = (
-/obj/structure/cable,
-/turf/open/floor/bronze/flat,
-/area/template_noop)
 "z" = (
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -80,49 +49,24 @@
 "A" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"C" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/bronze/flat,
-/area/template_noop)
 "D" = (
 /obj/modular_map_connector,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"E" = (
-/turf/closed/wall/mineral/bronze,
-/area/template_noop)
-"G" = (
-/turf/open/floor/iron,
-/area/template_noop)
 "H" = (
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
-/obj/machinery/door/airlock/bronze,
-/turf/open/floor/bronze/flat,
-/area/template_noop)
-"K" = (
-/obj/effect/turf_decal/stripes/box,
 /obj/structure/ladder/unbreakable{
 	height = 1;
 	id = "cavesfinale"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "M" = (
-/obj/structure/barricade/sandbags,
+/obj/structure/fluff/clockwork/clockgolem_remains,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "N" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Life Support Access"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/engineering,
-/obj/machinery/atmospherics/pipe/layer_manifold,
-/turf/open/floor/plating,
-/area/template_noop)
-"P" = (
-/obj/machinery/power/smes/engineering,
-/obj/structure/cable,
-/turf/open/floor/bronze/flat,
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "R" = (
 /mob/living/simple_animal/hostile/ant,
@@ -137,20 +81,8 @@
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
-"W" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/template_noop)
-"X" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/template_noop)
 "Y" = (
 /turf/open/misc/asteroid/basalt/wasteland,
-/area/template_noop)
-"Z" = (
-/turf/open/floor/bronze,
 /area/template_noop)
 
 (1,1,1) = {"
@@ -3809,7 +3741,7 @@ g
 g
 Y
 Y
-j
+g
 g
 g
 g
@@ -3840,9 +3772,9 @@ g
 Y
 g
 g
+M
 Y
-M
-M
+Y
 Y
 g
 g
@@ -3872,9 +3804,9 @@ g
 g
 Y
 g
-j
-M
-M
+g
+Y
+Y
 Y
 Y
 Y
@@ -3939,11 +3871,11 @@ g
 Y
 g
 A
-Y
 A
 A
+t
 A
-A
+N
 A
 A
 g
@@ -3969,16 +3901,16 @@ g
 Y
 g
 g
-Y
 g
 A
 A
 A
-j
-E
-H
-E
-E
+t
+t
+t
+A
+A
+g
 g
 "}
 (117,1,1) = {"
@@ -4002,16 +3934,16 @@ g
 Y
 g
 Y
-Y
-Y
 A
 A
 A
-E
-o
-o
-o
-E
+t
+t
+H
+t
+t
+A
+g
 g
 "}
 (118,1,1) = {"
@@ -4035,16 +3967,16 @@ g
 Y
 g
 U
-Y
-Y
-j
-j
-j
-j
-E
-H
-E
-j
+A
+A
+A
+A
+t
+t
+t
+A
+A
+g
 g
 "}
 (119,1,1) = {"
@@ -4068,16 +4000,16 @@ g
 Y
 g
 g
-j
-j
-j
-k
-C
-E
-Z
-G
-G
-E
+A
+A
+A
+N
+A
+t
+A
+A
+A
+g
 g
 "}
 (120,1,1) = {"
@@ -4101,16 +4033,16 @@ g
 Y
 U
 g
-j
-f
-X
-t
-W
-N
-G
-K
-G
-j
+A
+A
+A
+A
+A
+A
+A
+A
+g
+g
 g
 "}
 (121,1,1) = {"
@@ -4134,16 +4066,16 @@ g
 Y
 Y
 U
-j
-j
-E
-P
-y
-u
-q
-G
-Z
-j
+N
+A
+A
+A
+A
+g
+g
+g
+g
+g
 g
 "}
 (122,1,1) = {"
@@ -4167,16 +4099,16 @@ g
 Y
 Y
 Y
-Y
-Y
-E
-E
-j
-j
-j
-E
-E
-j
+A
+g
+g
+g
+g
+g
+g
+g
+g
+g
 g
 "}
 (123,1,1) = {"

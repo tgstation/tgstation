@@ -14,11 +14,25 @@
 "r" = (
 /turf/closed/indestructible/rock,
 /area/template_noop)
+"x" = (
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "A" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"C" = (
+/obj/structure/ladder/unbreakable{
+	height = 1;
+	id = "cavesfinale"
+	},
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "D" = (
 /obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Y" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 
@@ -395,7 +409,7 @@ A
 A
 A
 A
-a
+A
 a
 a
 a
@@ -428,8 +442,8 @@ A
 A
 A
 A
-a
-a
+A
+A
 a
 a
 a
@@ -492,7 +506,7 @@ g
 g
 A
 A
-a
+A
 A
 A
 A
@@ -590,7 +604,7 @@ g
 g
 A
 A
-A
+a
 a
 A
 A
@@ -3800,7 +3814,7 @@ g
 g
 A
 A
-A
+Y
 g
 g
 g
@@ -3860,13 +3874,13 @@ g
 A
 A
 A
+Y
 A
 A
 A
+x
 A
-A
-A
-A
+Y
 A
 A
 A
@@ -3896,9 +3910,9 @@ A
 A
 A
 A
-A
-A
-A
+x
+x
+x
 A
 A
 A
@@ -3928,11 +3942,11 @@ g
 g
 A
 A
-A
-A
-A
-A
-A
+x
+x
+C
+x
+x
 A
 A
 A
@@ -3962,9 +3976,9 @@ g
 g
 A
 A
-A
-A
-A
+x
+x
+x
 A
 A
 A
@@ -3994,9 +4008,9 @@ g
 g
 g
 A
+Y
 A
-A
-A
+x
 A
 A
 g
