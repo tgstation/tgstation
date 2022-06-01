@@ -54,7 +54,7 @@
 	if (type == "ready")
 		// NOT functional at the moment. JS never receives these
 		window.send_message("modal_props", list(
-			"channel" = "ooc",
+			"channel" = channel,
 			"maxLength" = max_length,
 		))
 		return TRUE
@@ -66,15 +66,34 @@
 			return FALSE
 		if(length(payload["entry"]) > max_length)
 			CRASH("[usr] has entered more characters than allowed")
-		set_entry(payload)
+		delegate_speech(payload["entry"], payload["channel"])
 		close()
+		return TRUE
+	if (type == "forced")
+		if(!payload || !payload["entry"])
+			return FALSE
+		var/entry = copytext_char(payload["entry"], 0, 12)
+		entry += pick("GACK", "GLORF", "OOF", "AUGH", "OW", "URGH")
+		delegate_speech(entry, SAY_CHAN)
 		return TRUE
 	return TRUE
 
 /**
- * Sets the return values for the tgui_modal proc.
+ * Delegates the speech to the proper channel.
  */
-/datum/tgui_modal/proc/set_entry(payload)
-	src.channel = payload["channel"]
-	src.entry = payload["entry"]
+/datum/tgui_modal/proc/delegate_speech(entry, channel)
+	if(!client)
+		return FALSE
+	if(channel == OOC_CHAN)
+		client.ooc(entry)
+		return TRUE
+	if(!client.mob)
+		return FALSE
+	if(channel == RADIO_CHAN)
+		entry = ";" + entry
+	if(channel == ME_CHAN)
+		client.mob.me_verb(entry)
+	if(channel == SAY_CHAN)
+		client.mob.say_verb(entry)
 	return TRUE
+

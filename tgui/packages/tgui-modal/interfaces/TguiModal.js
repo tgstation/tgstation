@@ -1,4 +1,4 @@
-import { Component } from 'inferno';
+import { Component, createRef } from 'inferno';
 import { classes } from 'common/react';
 import { KEY_TAB } from 'common/keycodes';
 import { TextArea } from 'tgui/components';
@@ -20,6 +20,7 @@ const getCss = (element, channel, size) =>
 export class TguiModal extends Component {
   constructor() {
     super();
+    this.textareaRef = createRef();
     this.maxLength = 1024;
     this.state = {
       buttonContent: '>',
@@ -42,20 +43,17 @@ export class TguiModal extends Component {
     const { channel } = this.state;
     const { maxLength } = this;
     event.preventDefault();
-    this.resetWindow();
-    if (!value || value.length > maxLength) {
-      Byond.sendMessage('close');
-    } else {
+    if (value && value.length < maxLength) {
       Byond.sendMessage('entry', {
         channel: CHANNELS[channel],
         entry: value,
       });
     }
+    this.closeWindow();
   };
   /** User presses escape, closes the window */
   handleEscape = () => {
-    this.resetWindow();
-    Byond.sendMessage('close');
+    this.closeWindow();
   };
   /** Mouse over button. Changes button to channel name. */
   handleFocus = () => {
@@ -67,8 +65,8 @@ export class TguiModal extends Component {
   };
   /** Purge the current input value */
   handleForce = () => {
-    this.setSize(65);
-    // Byond.sendMessage('force', { entry: textAreaRef.current.value });
+    Byond.sendMessage('force', { entry: textAreaRef.current.value });
+    this.textareaRef.current.value = '';
   };
   /** Grabs the TAB key to change channels. */
   handleKeyDown = (event, value) => {
@@ -98,10 +96,13 @@ export class TguiModal extends Component {
       });
     }
   };
-  /** Resets the channel and window size */
-  resetWindow = () => {
+  /** Resets the state of the window and hides it from user view */
+  closeWindow = () => {
     this.setState({ channel: 0 });
     this.setSize(0);
+    Byond.winset('tgui_modal', { 'is-visible': false });
+    Byond.sendMessage('close');
+    // this.textareaRef.current?.blur();
   };
   /**  Adjusts window sized based on target value */
   setSize = (value) => {
@@ -159,6 +160,7 @@ export class TguiModal extends Component {
           </button>
         )}
         <TextArea
+          ref={this.textareaRef}
           autoFocus
           className={getCss('input', channel, size)}
           dontUseTabForIndent
