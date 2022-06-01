@@ -1,7 +1,7 @@
 name: Compare Screenshot Tests
 on:
   workflow_run:
-    workflows: [Integration Tests]
+    workflows: [CI Suite]
     types:
       - completed
 jobs:
