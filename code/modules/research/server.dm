@@ -36,7 +36,7 @@
 		icon_state = "[base_icon_state]-off"
 	else
 		// "working" will cover EMP'd, disabled, or just broken
-		icon_state = "[base_icon_state]-[working ? "halt" : "on"]"
+		icon_state = "[base_icon_state]-[working ? "on" : "halt"]"
 	return ..()
 
 /obj/machinery/rnd/server/power_change()
@@ -55,7 +55,7 @@
 		working = TRUE
 
 	update_current_power_usage()
-	update_appearance()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/rnd/server/emp_act()
 	. = ..()
@@ -121,6 +121,8 @@
 		else if(server.machine_stat & NOPOWER)
 			status_text = "<font color=red>Offline - Servers Unpowered</font>"
 		else if(!server.working)
+			// If, for some reason, working is FALSE even though we're not emp'd or powerless,
+			// We need something to update our working state - such as rebooting the server
 			status_text = "<font color=red>Offline - Reboot Required</font>"
 		else
 			status_text = "<font color='lightgreen'>Nominal</font>"
