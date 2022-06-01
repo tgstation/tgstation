@@ -7097,6 +7097,9 @@
 	dir = 2;
 	name = "Access Queue"
 	},
+/obj/structure/desk_bell{
+	pixel_x = -7
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "cAd" = (
@@ -15153,6 +15156,17 @@
 "fjq" = (
 /turf/open/floor/iron/stairs/medium,
 /area/station/hallway/secondary/construction/engineering)
+"fjr" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/iron,
+/area/station/service/bar)
 "fjQ" = (
 /obj/structure/grille,
 /turf/closed/wall/r_wall,
@@ -18432,6 +18446,7 @@
 /obj/item/controller,
 /obj/item/compact_remote,
 /obj/item/compact_remote,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "gqp" = (
@@ -19089,7 +19104,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "gCH" = (
@@ -25001,6 +25015,9 @@
 	name = "Chemistry Desk";
 	req_access = list("pharmacy")
 	},
+/obj/structure/desk_bell{
+	pixel_x = -7
+	},
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "iCT" = (
@@ -29573,6 +29590,9 @@
 	dir = 1;
 	name = "Cargo Desk";
 	req_access = list("cargo")
+	},
+/obj/structure/desk_bell{
+	pixel_x = -7
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -43367,8 +43387,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/west,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "oIz" = (
@@ -47226,6 +47246,9 @@
 	req_access = list("mail_sorting")
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/desk_bell{
+	pixel_x = -7
+	},
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "pXv" = (
@@ -57729,7 +57752,12 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/folder,
+/obj/item/folder{
+	pixel_x = 5
+	},
+/obj/structure/desk_bell{
+	pixel_x = -7
+	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "tzS" = (
@@ -62685,6 +62713,18 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"vhV" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchencounter";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/structure/desk_bell{
+	pixel_x = -7
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "vik" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -64572,7 +64612,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/structure/table,
 /obj/item/reagent_containers/dropper{
@@ -69142,7 +69181,7 @@
 /obj/structure/sign/plaques/kiddie{
 	pixel_y = -32
 	},
-/obj/item/ai_module/core/full/asimov,
+/obj/effect/spawner/round_default_module,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xwX" = (
@@ -69480,6 +69519,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/desk_bell{
+	pixel_x = -7
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -104269,7 +104311,7 @@ tju
 nwb
 uZy
 dyc
-aeT
+fjr
 ykL
 xKV
 nxy
@@ -168261,7 +168303,7 @@ mro
 mDJ
 mro
 iQy
-fhD
+vhV
 mUX
 prk
 ocp

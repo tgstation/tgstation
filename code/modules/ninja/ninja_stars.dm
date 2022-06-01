@@ -1,27 +1,3 @@
-/datum/action/item_action/ninjastar
-	name = "Create Throwing Stars (1E)"
-	desc = "Creates a throwing star in your hand, if possible."
-	button_icon_state = "throwingstar"
-	icon_icon = 'icons/obj/items_and_weapons.dmi'
-
-/**
- * Proc called to create a ninja star in the ninja's hands.
- *
- * Called to create a ninja star in the wearer's hand.  The ninja
- * star doesn't do much up-front damage, but deals stamina damage
- * as the target moves around, forcing a finish or flee scenario.
- */
-/obj/item/clothing/suit/space/space_ninja/proc/ninjastar()
-	if(ninjacost(10))
-		return
-	var/mob/living/carbon/human/ninja = affecting
-	var/obj/item/throwing_star/stamina/ninja/ninja_star = new(ninja)
-	if(ninja.put_in_hands(ninja_star))
-		to_chat(ninja, span_notice("A throwing star has been created in your hand!"))
-	else
-		qdel(ninja_star)
-		to_chat(ninja, span_notice("You can't create a throwing star, your hands are full!"))
-
 /**
  * # Ninja Throwing Star
  *
