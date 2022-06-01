@@ -77,8 +77,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Find Maps
         id: map_finder
+        # MOTHBLOCKS TODO: Revert
         run: |
-          echo "$(ls -mw0 _maps/*.json)" > maps_output.txt
+          echo "_maps/runtimestation.json, _maps/metastation.json" > maps_output.txt
           sed -i -e s+_maps/+\"+g -e s+.json+\"+g maps_output.txt
           echo "Maps: $(cat maps_output.txt)"
           echo "::set-output name=maps::{\"paths\":[$(cat maps_output.txt)]}"
@@ -132,6 +133,14 @@ jobs:
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ matrix.map }}
+      - name: Upload relevant results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_artifacts_${{ matrix.map }}
+          path: |
+            data/unit_tests/screenshots/
+            data/unit_tests/screenshots_new/
 
   # Collate relevant results into one artifact.
   # This is currently only used for screenshot tests.
