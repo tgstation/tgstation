@@ -472,9 +472,9 @@
 "bQ" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Gateway";
-	req_access = list("syndicate")
+	name = "Gateway"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -816,9 +816,9 @@
 /area/awaymission/moonoutpost19/syndicate)
 "cw" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Power Maintenance";
-	req_access = list("syndicate")
+	name = "Power Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -1355,9 +1355,9 @@
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
-	req_access = list("syndicate");
 	set_obj_flags = "EMAGGED"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
@@ -1445,9 +1445,9 @@
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
-	req_access = list("syndicate");
 	set_obj_flags = "EMAGGED"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -1827,9 +1827,8 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "fc" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access = list("away_maintenance")
-	},
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
 	dir = 8;
@@ -1972,9 +1971,9 @@
 	icon_state = "open";
 	name = "Xenobiology Lab";
 	opacity = 0;
-	req_access = list("away_maintenance");
 	set_obj_flags = "EMAGGED"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/structure/cable,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -2316,9 +2315,9 @@
 /area/awaymission/moonoutpost19/research)
 "gk" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Security Post";
-	req_access = list("away_maintenance")
+	name = "Security Post"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
@@ -2623,9 +2622,9 @@
 	},
 /obj/machinery/button/door/directional/west{
 	id = "Awaybiohazard";
-	name = "Biohazard Shutter Control";
-	req_access = list("cent_general")
+	name = "Biohazard Shutter Control"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -2946,9 +2945,9 @@
 	icon_state = "open";
 	name = "Research Director's Office";
 	opacity = 0;
-	req_access = list("away_maintenance");
 	set_obj_flags = "EMAGGED"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -2976,9 +2975,9 @@
 /area/awaymission/moonoutpost19/research)
 "hG" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Research Storage";
-	req_access = list("away_maintenance")
+	name = "Research Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
@@ -3176,9 +3175,9 @@
 /area/awaymission/moonoutpost19/research)
 "ie" = (
 /obj/machinery/door/airlock/medical{
-	name = "Research Division";
-	req_access = list("away_maintenance")
+	name = "Research Division"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -4667,9 +4666,9 @@
 /area/awaymission/moonoutpost19/arrivals)
 "lu" = (
 /obj/machinery/door/airlock{
-	name = "Kitchen Cold Room";
-	req_access = list("away_maintenance")
+	name = "Kitchen Cold Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006
 	},
@@ -4808,9 +4807,9 @@
 "lQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	name = "Kitchen";
-	req_access = list("away_maintenance")
+	name = "Kitchen"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "lR" = (
@@ -5469,9 +5468,8 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nz" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access = list("away_maintenance")
-	},
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6287,9 +6285,9 @@
 /area/awaymission/moonoutpost19/syndicate)
 "Mm" = (
 /obj/machinery/door/airlock/medical{
-	name = "Research Division";
-	req_access = list("away_maintenance")
+	name = "Research Division"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},

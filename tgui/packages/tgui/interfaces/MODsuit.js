@@ -141,10 +141,10 @@ const HealthAnalyzer = (props, context) => {
             average: [0.2, 0.5],
             bad: [-Infinity, 0.2],
           }} >
-          <AnimatedNumber value={userhealth} />
+          <AnimatedNumber value={active ? userhealth : 0} />
         </ProgressBar>
       </Section>
-      <Stack fill textAlign="center">
+      <Stack textAlign="center">
         <Stack.Item grow>
           <Section title="Brute">
             <ProgressBar
@@ -154,7 +154,7 @@ const HealthAnalyzer = (props, context) => {
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
               }} >
-              <AnimatedNumber value={userbrute} />
+              <AnimatedNumber value={active ? userbrute : 0} />
             </ProgressBar>
           </Section>
         </Stack.Item>
@@ -167,7 +167,7 @@ const HealthAnalyzer = (props, context) => {
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
               }} >
-              <AnimatedNumber value={userburn} />
+              <AnimatedNumber value={active ? userburn : 0} />
             </ProgressBar>
           </Section>
         </Stack.Item>
@@ -180,7 +180,7 @@ const HealthAnalyzer = (props, context) => {
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
               }} >
-              <AnimatedNumber value={usertoxin} />
+              <AnimatedNumber value={active ? usertoxin : 0} />
             </ProgressBar>
           </Section>
         </Stack.Item>
@@ -193,7 +193,7 @@ const HealthAnalyzer = (props, context) => {
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
               }} >
-              <AnimatedNumber value={useroxy} />
+              <AnimatedNumber value={active ? useroxy : 0} />
             </ProgressBar>
           </Section>
         </Stack.Item>
@@ -202,9 +202,191 @@ const HealthAnalyzer = (props, context) => {
   );
 };
 
+const StatusReadout = (props, context) => {
+  const {
+    active,
+    statustime,
+    statusid,
+    statushealth,
+    statusmaxhealth,
+    statusbrute,
+    statusburn,
+    statustoxin,
+    statusoxy,
+    statustemp,
+    statusnutrition,
+    statusfingerprints,
+    statusdna,
+    statusviruses,
+  } = props;
+  return (
+    <>
+      <Stack textAlign="center">
+        <Stack.Item grow>
+          <Section title="Operation Time">
+            {active ? statustime : '00:00:00'}
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Section title="Operation Number">
+            {active ? (statusid || '0') : '???'}
+          </Section>
+        </Stack.Item>
+      </Stack>
+      <Section title="Health">
+        <ProgressBar
+          value={active ? statushealth / statusmaxhealth : 0}
+          ranges={{
+            good: [0.5, Infinity],
+            average: [0.2, 0.5],
+            bad: [-Infinity, 0.2],
+          }} >
+          <AnimatedNumber value={active ? statushealth : 0} />
+        </ProgressBar>
+      </Section>
+      <Stack textAlign="center">
+        <Stack.Item grow>
+          <Section title="Brute">
+            <ProgressBar
+              value={active ? statusbrute / statusmaxhealth : 0}
+              ranges={{
+                good: [-Infinity, 0.2],
+                average: [0.2, 0.5],
+                bad: [0.5, Infinity],
+              }} >
+              <AnimatedNumber value={active ? statusbrute : 0} />
+            </ProgressBar>
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Section title="Burn">
+            <ProgressBar
+              value={active ? statusburn / statusmaxhealth : 0}
+              ranges={{
+                good: [-Infinity, 0.2],
+                average: [0.2, 0.5],
+                bad: [0.5, Infinity],
+              }} >
+              <AnimatedNumber value={active ? statusburn : 0} />
+            </ProgressBar>
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Section title="Toxin">
+            <ProgressBar
+              value={active ? statustoxin / statusmaxhealth : 0}
+              ranges={{
+                good: [-Infinity, 0.2],
+                average: [0.2, 0.5],
+                bad: [0.5, Infinity],
+              }} >
+              <AnimatedNumber value={statustoxin} />
+            </ProgressBar>
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Section title="Suffocation">
+            <ProgressBar
+              value={active ? statusoxy / statusmaxhealth : 0}
+              ranges={{
+                good: [-Infinity, 0.2],
+                average: [0.2, 0.5],
+                bad: [0.5, Infinity],
+              }} >
+              <AnimatedNumber value={statusoxy} />
+            </ProgressBar>
+          </Section>
+        </Stack.Item>
+      </Stack>
+      <Stack textAlign="center">
+        <Stack.Item grow>
+          <Section title="Body Temperature">
+            {active ? statustemp : 0}
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Section title="Nutrition Status">
+            {active ? statusnutrition : 0}
+          </Section>
+        </Stack.Item>
+      </Stack>
+      <Section title="DNA">
+        <LabeledList>
+          <LabeledList.Item label="Fingerprints">
+            {active ? statusfingerprints : "???"}
+          </LabeledList.Item>
+          <LabeledList.Item label="Unique Enzymes">
+            {active ? statusdna : "???"}
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+      {!!active && !!statusviruses && (
+        <Section title="Diseases">
+          <Table>
+            <Table.Row
+              header>
+              <Table.Cell
+                textAlign="center">
+                <Button
+                  color="transparent"
+                  icon="signature"
+                  tooltip="Name"
+                  tooltipPosition="top" />
+              </Table.Cell>
+              <Table.Cell
+                textAlign="center">
+                <Button
+                  color="transparent"
+                  icon="wind"
+                  tooltip="Type"
+                  tooltipPosition="top" />
+              </Table.Cell>
+              <Table.Cell
+                textAlign="center">
+                <Button
+                  color="transparent"
+                  icon="bolt"
+                  tooltip="Stage"
+                  tooltipPosition="top" />
+              </Table.Cell>
+              <Table.Cell
+                textAlign="center">
+                <Button
+                  color="transparent"
+                  icon="flask"
+                  tooltip="Cure"
+                  tooltipPosition="top" />
+              </Table.Cell>
+            </Table.Row>
+            {statusviruses.map(virus => {
+              return (
+                <Table.Row key={virus.name}>
+                  <Table.Cell textAlign="center">
+                    {virus.name}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {virus.type}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {virus.stage}/{virus.maxstage}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {virus.cure}
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table>
+        </Section>
+      )}
+    </>
+  );
+};
+
 const ID2MODULE = {
   rad_counter: RadCounter,
   health_analyzer: HealthAnalyzer,
+  status_readout: StatusReadout,
 };
 
 const LockedInterface = () => (
@@ -440,7 +622,7 @@ const ModuleSection = (props, context) => {
           return (
             <Flex.Item key={module.ref} >
               <Collapsible
-                title={module.name} >
+                title={module.module_name} >
                 <Section>
                   {configureState === module.ref && (
                     <ConfigureScreen
@@ -501,7 +683,7 @@ const ModuleSection = (props, context) => {
                     </Table.Row>
                     <Table.Row>
                       <Table.Cell textAlign="center">
-                        {module.complexity}/{complexity_max}
+                        {module.module_complexity}/{complexity_max}
                       </Table.Cell>
                       <Table.Cell textAlign="center">
                         {module.idle_power}
@@ -523,7 +705,7 @@ const ModuleSection = (props, context) => {
                         <Button
                           onClick={() => act('select', { "ref": module.ref })}
                           icon="bullseye"
-                          selected={module.active}
+                          selected={module.module_active}
                           tooltip={displayText(module.module_type)}
                           tooltipPosition="left"
                           disabled={!module.module_type} />
