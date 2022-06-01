@@ -1,4 +1,4 @@
-import { Component, createRef } from 'inferno';
+import { Component } from 'inferno';
 import { classes } from 'common/react';
 import { KEY_TAB } from 'common/keycodes';
 import { TextArea } from 'tgui/components';
@@ -20,12 +20,12 @@ const getCss = (element, channel, size) =>
 export class TguiModal extends Component {
   constructor() {
     super();
-    this.textareaRef = createRef();
+    this.hovering = false;
     this.maxLength = 1024;
+    this.value = '';
     this.state = {
       buttonContent: '>',
       channel: 0,
-      hovering: false,
       size: SIZE.small,
     };
   }
@@ -52,36 +52,52 @@ export class TguiModal extends Component {
     this.closeWindow();
   };
   /** User presses escape, closes the window */
-  handleEscape = () => {
-    this.closeWindow();
+  handleEscape = (event) => {
+    // this.closeWindow();
+    this.handleForce();
+    event.preventDefault();
   };
   /** Mouse over button. Changes button to channel name. */
   handleFocus = () => {
     const { channel } = this.state;
+    this.hovering = true;
     this.setState({
       buttonContent: CHANNELS[channel].slice(0, 1).toUpperCase(),
-      hovering: true,
     });
   };
-  /** Purge the current input value */
+  /** Send the current input to byond and purge it */
   handleForce = () => {
-    Byond.sendMessage('force', { entry: textAreaRef.current.value });
-    this.textareaRef.current.value = '';
+    const { channel } = this.state;
+    const { value } = this;
+    if (value) {
+      Byond.sendMessage('force', {
+        channel: CHANNELS[channel],
+        entry: value,
+      });
+      this.value = '';
+    }
+  };
+  /** Grabs input and sets size, force values etc.
+   * Input value is not set to trigger rerenders, just forced output.
+   */
+  handleInput = (_, value) => {
+    this.value = value;
+    this.setSize(value.length);
   };
   /** Grabs the TAB key to change channels. */
-  handleKeyDown = (event, value) => {
+  handleKeyDown = (event) => {
     if (event.keyCode === KEY_TAB) {
       this.incrementChannel();
       event.preventDefault();
     }
-    this.setSize(value.length);
   };
   /**
    * Increments the channel or resets to the beginning of the list.
    * If a user is hovering over the button, the channel is changed.
    */
   incrementChannel = () => {
-    const { channel, hovering } = this.state;
+    const { channel } = this.state;
+    const { hovering } = this;
     if (channel === CHANNELS.length - 1) {
       this.setState({
         buttonContent: !hovering ? '>' : CHANNELS[0].slice(0, 1).toUpperCase(),
@@ -99,17 +115,16 @@ export class TguiModal extends Component {
   /** Resets the state of the window and hides it from user view */
   closeWindow = () => {
     this.setState({ channel: 0 });
+    this.value = '';
     this.setSize(0);
     Byond.winset('tgui_modal', { 'is-visible': false });
     Byond.sendMessage('close');
-    // this.textareaRef.current?.blur();
   };
   /**  Adjusts window sized based on target value */
   setSize = (value) => {
-    Byond.winset(Byond.windowId, { size: '333x200' });
     if (value > 56) {
       this.setState({ size: SIZE.large });
-    } else if (value > 22) {
+    } else if (value > 24) {
       this.setState({ size: SIZE.medium });
     } else {
       this.setState({ size: SIZE.small });
@@ -146,7 +161,7 @@ export class TguiModal extends Component {
       handleKeyDown,
       maxLength,
     } = this;
-    const { buttonContent, channel, size } = this.state;
+    const { buttonContent, channel, size, value } = this.state;
     return (
       <div className={getCss('window', channel, size)}>
         {size < SIZE.medium && (
@@ -160,7 +175,6 @@ export class TguiModal extends Component {
           </button>
         )}
         <TextArea
-          ref={this.textareaRef}
           autoFocus
           className={getCss('input', channel, size)}
           dontUseTabForIndent
@@ -170,6 +184,7 @@ export class TguiModal extends Component {
           onInput={handleInput}
           onKeyDown={handleKeyDown}
           selfClear
+          value={value}
         />
       </div>
     );

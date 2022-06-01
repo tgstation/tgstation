@@ -54,8 +54,8 @@
 	if (type == "ready")
 		// NOT functional at the moment. JS never receives these
 		window.send_message("modal_props", list(
-			"channel" = channel,
-			"maxLength" = max_length,
+			channel = channel,
+			maxLength = max_length,
 		))
 		return TRUE
 	if (type == "close")
@@ -69,14 +69,26 @@
 		delegate_speech(payload["entry"], payload["channel"])
 		close()
 		return TRUE
-	if (type == "forced")
-		if(!payload || !payload["entry"])
+	if (type == "force")
+		if(!payload || !payload["entry"] || !payload["channel"])
 			return FALSE
-		var/entry = copytext_char(payload["entry"], 0, 12)
-		entry += pick("GACK", "GLORF", "OOF", "AUGH", "OW", "URGH")
+		var/entry = alter_entry(payload)
 		delegate_speech(entry, SAY_CHAN)
 		return TRUE
 	return TRUE
+
+/**
+ * Alters text when players are injured. Adds text, trims, and returns a string.
+ */
+/datum/tgui_modal/proc/alter_entry(payload)
+	var/entry = payload["entry"]
+	if(payload["channel"] != OOC_CHAN) // No OOC leaks
+		if(length(payload["entry"]) > 8)
+			entry = trim(payload["entry"], rand(8, 15))
+		else
+			entry = trim(payload["entry"], length(payload["entry"]))
+	entry += pick("GACK", "GLORF", "OOF", "AUGH", "OW", "URGH")
+	return entry
 
 /**
  * Delegates the speech to the proper channel.
