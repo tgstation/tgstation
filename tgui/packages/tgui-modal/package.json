@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "tgui-modal",
-  "version": "1.0",
+  "version": "1.0.0",
   "dependencies": {
     "common": "workspace:*",
     "dompurify": "^2.3.1",

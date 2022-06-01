@@ -18,9 +18,9 @@
 	var/datum/tgui_window/window
 
 /** Creates the new input window to exist in the background. */
-/datum/tgui_modal/New(client/client)
+/datum/tgui_modal/New(client/client, id)
 	src.client = client
-	window = new(client, "tgui_modal")
+	window = new(client, id)
 	window.subscribe(src, .proc/on_message)
 
 /**
@@ -28,18 +28,16 @@
  * then feeds it props for the chat channel and max message length.
  */
 /datum/tgui_modal/proc/initialize()
+	set waitfor = FALSE
+	// Minimal sleep to defer initialization to after client constructor
+	sleep(1)
 	window.initialize(
+			strict_mode = TRUE,
 			fancy = TRUE,
-			inline_css = file2text("tgui/public/tgui-modal.bundle.css"),
-			inline_js = file2text("tgui/public/tgui-modal.bundle.js"),
+			inline_css = file("tgui/public/tgui-modal.bundle.css"),
+			inline_js = file("tgui/public/tgui-modal.bundle.js"),
 	);
 	close()
-
-/datum/tgui_modal/proc/send_props()
-	window.send_message("modal_data", list(
-		channel = "ooc",
-		maxLength = max_length,
-	))
 
 /**
  * Closes the window and hides it from view.
@@ -53,8 +51,16 @@
  * and delegates actions.
  */
 /datum/tgui_modal/proc/on_message(type, payload)
+	if (type == "ready")
+		// NOT functional at the moment. JS never receives these
+		window.send_message("modal_props", list(
+			"channel" = "ooc",
+			"maxLength" = max_length,
+		))
+		return TRUE
 	if (type == "close")
 		close()
+		return TRUE
 	if (type == "entry")
 		if(!payload || !payload["channel"] || !payload["entry"])
 			return FALSE
@@ -62,6 +68,7 @@
 			CRASH("[usr] has entered more characters than allowed")
 		set_entry(payload)
 		close()
+		return TRUE
 	return TRUE
 
 /**

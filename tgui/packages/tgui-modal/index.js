@@ -12,6 +12,7 @@ const setupApp = () => {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
+
   renderApp();
 };
 

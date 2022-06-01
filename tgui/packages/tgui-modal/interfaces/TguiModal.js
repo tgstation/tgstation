@@ -38,9 +38,10 @@ export class TguiModal extends Component {
     this.incrementChannel();
   };
   /** User presses enter. Closes if no value. */
-  handleEnter = (_, value) => {
+  handleEnter = (event, value) => {
     const { channel } = this.state;
     const { maxLength } = this;
+    event.preventDefault();
     this.resetWindow();
     if (!value || value.length > maxLength) {
       Byond.sendMessage('close');
@@ -124,10 +125,9 @@ export class TguiModal extends Component {
     Byond.winset('tgui_modal_browser', { size: `333x${size}` });
   };
   componentDidMount() {
-    Byond.subscribeTo('modal_data', (data) => {
+    Byond.subscribeTo('modal_props', (data) => {
       this.setState({ channel: CHANNELS.indexOf(data.channel) });
       this.maxLength = data.maxLength;
-      Byond.sendMessage('messaged', { test: 'Ok' });
     });
     Byond.subscribeTo('modal_force', () => {
       this.handleForce();
