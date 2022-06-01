@@ -1,0 +1,26 @@
+name: Compare Screenshot Tests
+on:
+  workflow_run:
+    workflows: [Integration Tests]
+    types:
+      - completed
+jobs:
+  compare_snapshots:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Compare Screenshot Tests
+    runs-on: ubuntu-20.04
+
+    # WARNING: DO NOT RUN ANY CODE FROM THE REPOSITORY HERE!
+    # This might include something like `tools/compare.sh`
+    # workflow_run has access to secrets, it is intended for use
+    # for things like commenting on the PR (which we're doing here).
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          persist-credentials: false
+      - uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+      - name: List artifacts
+        run: ls -R artifacts
