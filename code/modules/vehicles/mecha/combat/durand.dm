@@ -180,7 +180,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		chassis = null
 	return ..()
 
-obj/durand_shield/proc/shield_glide_size_update(datum/source, target)
+/obj/durand_shield/proc/shield_glide_size_update(datum/source, target)
 	SIGNAL_HANDLER
 	glide_size = target
 
