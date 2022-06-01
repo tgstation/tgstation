@@ -467,5 +467,5 @@ MAXFINE 2000
 ## Whether native FoV is enabled for all people.
 #NATIVE_FOV
 
-## Comment if you wish to disable title music from playing at the lobby screen.
-ALLOW_TITLE_MUSIC
+## Uncomment if you wish to disable title music from playing at the lobby screen.
+#DISALLOW_TITLE_MUSIC
