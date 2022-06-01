@@ -135,6 +135,8 @@ jobs:
       #     bash tools/ci/run_server.sh ${{ matrix.map }}
       - name: Test collating screenshots
         run:
+          mkdir data/screenshots
+          mkdir data/screenshots_new
           cp code/modules/unit_tests/screenshots/screenshot_basic_red.png data/screenshots/screenshot_basic_red.png
           cp code/modules/unit_tests/screenshots/screenshot_basic_red.png data/screenshots_new/screenshot_basic_red.png
       - name: Upload relevant results
