@@ -319,8 +319,7 @@
 "ahv" = (
 /obj/machinery/button/crematorium{
 	id = "crematoriumChapel";
-	pixel_y = -26;
-	req_access = list("crematorium")
+	pixel_y = -26
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Civilian - Chapel Crematorium"
