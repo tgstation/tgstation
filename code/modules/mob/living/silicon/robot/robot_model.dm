@@ -338,10 +338,6 @@
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
-	borg_skins = list(
-		"Cyborg Engineer" = list(SKIN_ICON_STATE = "engineer"),
-		"Zoomba Engineer" = list(SKIN_ICON_STATE = "zoomba_engi", special_light_key = "zoomba_engi_l", SKIN_HAT_OFFSET = -13),
-	)
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -632,7 +628,6 @@
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
-		"Zoomba Doctor" = list(SKIN_ICON_STATE = "zoomba_med", special_light_key = "zoomba_med_l", SKIN_HAT_OFFSET = -13),
 	)
 
 /obj/item/robot_model/miner
@@ -658,7 +653,6 @@
 	borg_skins = list(
 		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
-		"Zoomba Miner" = list(SKIN_ICON_STATE = "zoomba_miner", special_light_key = "zoomba_miner_l", SKIN_HAT_OFFSET = -13),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
@@ -688,10 +682,6 @@
 	model_select_icon = "standard"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
-	borg_skins = list(
-		"Fluffy Peacekeeper" = list(SKIN_ICON_STATE = "peace"),
-		"Zoomba Peacekeeper" = list(SKIN_ICON_STATE = "zoomba_peace", special_light_key = "zoomba_peace_l", SKIN_HAT_OFFSET = -13),
-	)
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
@@ -763,7 +753,6 @@
 		"Kent" = list(SKIN_ICON_STATE = "kent", special_light_key = "medical", SKIN_HAT_OFFSET = 3),
 		"Tophat" = list(SKIN_ICON_STATE = "tophat", special_light_key = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
-		"Zoomba" = list(SKIN_ICON_STATE = "zoomba_green", special_light_key = "zoomba_green_l", SKIN_HAT_OFFSET = -13),
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
