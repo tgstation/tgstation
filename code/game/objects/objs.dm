@@ -93,14 +93,14 @@
 
 	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1)
 
-	var/damage_verb= "hit"
+	var/damage_verb = "hit"
 
-	if((attacking_item.demolition_mod > 1) && damage)
+	if(attacking_item.demolition_mod > 1 && damage)
 		damage_verb = "pulverise"
-	if((attacking_item.demolition_mod < 1))
+	if(attacking_item.demolition_mod < 1)
 		damage_verb = "ineffectively pierce"
 
-	user.visible_message(span_danger("[user] [damage_verb]s [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
+	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
 		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
 
