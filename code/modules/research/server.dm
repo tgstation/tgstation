@@ -9,6 +9,8 @@
 /// The ninja has blown the HDD up.
 #define HDD_OVERLOADED 4
 
+#define SERVER_NOMINAL_TEXT "<font color='lightgreen'>Nominal</font>"
+
 /obj/machinery/rnd/server
 	name = "\improper R&D Server"
 	desc = "A computer system running a deep neural network that processes arbitrary information to produce data useable in the development of new technologies. In layman's terms, it makes research points."
@@ -76,6 +78,21 @@
 	log_game("[key_name(user)] [research_disabled ? "shut off" : "turned on"] [src] at [loc_name(user)]")
 	refresh_working()
 
+/// Gets status text based on this server's status for the computer.
+/obj/machinery/rnd/server/proc/get_status_text()
+	if(machine_stat & EMPED)
+		return "<font color=red>O&F@I*$ - R3*&O$T R@U!R%D</font>"
+	else if(machine_stat & NOPOWER)
+		return "<font color=red>Offline - Server Unpowered</font>"
+	else if(research_disabled)
+		return "<font color=red>Offline - Server Control Disabled</font>"
+	else if(!working)
+		// If, for some reason, working is FALSE even though we're not emp'd or powerless,
+		// We need something to update our working state - such as rebooting the server
+		return "<font color=red>Offline - Reboot Required</font>"
+
+	return SERVER_NOMINAL_TEXT
+
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
 	desc = "Used to manage access to research and manufacturing databases."
@@ -113,21 +130,8 @@
 	for(var/obj/machinery/rnd/server/server in GLOB.machines)
 		var/server_info = ""
 
-		var/status_text
+		var/status_text = server.get_status_text()
 		var/disable_text = server.research_disabled ? "<font color=red>Disabled</font>" : "<font color=lightgreen>Online</font>"
-
-		if(server.machine_stat & EMPED)
-			status_text = "<font color=red>O&F@I*$ - R3*&O$T R@U!R%D</font>"
-		else if(server.machine_stat & NOPOWER)
-			status_text = "<font color=red>Offline - Server Unpowered</font>"
-		else if(server.research_disabled)
-			status_text = "<font color=red>Offline - Server Control Disabled</font>"
-		else if(!server.working)
-			// If, for some reason, working is FALSE even though we're not emp'd or powerless,
-			// We need something to update our working state - such as rebooting the server
-			status_text = "<font color=red>Offline - Reboot Required</font>"
-		else
-			status_text = "<font color='lightgreen'>Nominal</font>"
 
 		server_info += "<tr><td style='width:25%'>[server.name]</td>"
 		server_info += "<td style='width:25%'>[status_text]</td>"
@@ -191,6 +195,12 @@
 	SSresearch.master_servers -= src
 
 	return ..()
+
+/obj/machinery/rnd/server/master/get_status_text()
+	. = ..()
+	// Give us a special message if we're nominal, but our hard drive is gone
+	if(. == SERVER_NOMINAL_TEXT && !source_code_hdd)
+		return "<font color=orange>Nominal - Hard Drive Missing</font>"
 
 /obj/machinery/rnd/server/master/examine(mob/user)
 	. = ..()
