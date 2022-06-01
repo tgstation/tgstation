@@ -12,7 +12,7 @@
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	visibility_flags = HIDDEN_PANDEMIC
-	required_organs = list(/obj/item/organ/heart)
+	required_organs = list(/obj/item/organ/internal/heart)
 	bypasses_immunity = TRUE // Immunity is based on not having an appendix; this isn't a virus
 	var/sound = FALSE
 

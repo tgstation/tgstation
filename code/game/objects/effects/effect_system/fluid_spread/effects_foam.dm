@@ -38,7 +38,7 @@
 
 /obj/effect/particle_effect/fluid/foam/Initialize(mapload)
 	. = ..()
-	create_reagents(1000)
+	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	SSfoam.start_processing(src)
@@ -131,7 +131,7 @@
 	if(!istype(location))
 		return FALSE
 
-	for(var/turf/spread_turf as anything in location.reachableAdjacentTurfs())
+	for(var/turf/spread_turf as anything in location.reachableAdjacentTurfs(no_id = TRUE))
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
 		if(foundfoam)
 			continue

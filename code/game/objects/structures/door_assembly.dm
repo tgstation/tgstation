@@ -7,7 +7,7 @@
 	density = TRUE
 	max_integrity = 200
 	var/state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
-	var/base_name = "airlock"
+	var/base_name = "Airlock"
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed

@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(idlenpcpool)
 		--currentrun.len
 		if (QDELETED(SA))
 			GLOB.simple_animals[AI_IDLE] -= SA
-			log_world("Found a null in simple_animals list!")
+			stack_trace("Found a null in simple_animals deactive list [SA.type]!")
 			continue
 
 		if(!SA.ckey)

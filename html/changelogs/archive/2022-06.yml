@@ -1,0 +1,48 @@
+2022-06-01:
+  ATHATH:
+  - bugfix: Podpeople can no longer circumvent their immunity to becoming fat by chowing
+      down on some food and then hiding in a locker.
+  Fikou:
+  - balance: The engilathe can now print plasma cutters.
+  - rscadd: Adds a chance for ID cards to be tastefully thick
+  - bugfix: reinforced windows can be heated up by things that can weld but arent
+      welding tools
+  Fikou, PositiveEntropy, Nerevar, InfraRedBaron:
+  - refactor: the ninja space suit is now a modsuit
+  - bugfix: fixes dash beams not working
+  JohnFulpWillard:
+  - refactor: Electrocuting faunas now causes them to target you, much like hitting
+      them.
+  Kylerace:
+  - bugfix: external organs show up now
+  Son-of-Space:
+  - bugfix: The trash driver on MetaStation now fires trash off the z level again
+  - bugfix: A scrubber pipe has found its way back to a scrubber in the engine on
+      MetaStation
+  - bugfix: Removed an inconsistent camera guarding EVA maints on IceBoxStation
+  - bugfix: two windoors were removed from walls on IceBoxStation
+  - bugfix: The turbine boards on the derelict have been mysteriously resupplied (spooky!)
+  - bugfix: removed some unnecessary varedits from some external airlocks
+  - bugfix: The APC in TramStation's Experimentor room is now accessible.
+  - bugfix: A floating intercom was removed from the same experimentor room
+  Wallem:
+  - rscadd: Adds a desk bell, so you can let the service industry know how much you
+      truly care about their hearing.
+  - imageadd: Ties have now been GAGS-ified
+  - rscadd: Ties now must be manually tied, allowing for both a classic and a "I just
+      woke up" look.
+  - imagedel: Removed inherent ties from several outfits.
+  axietheaxolotl for the human, armhulenn for the butt and nothing else:
+  - imageadd: Brand new human sprites!
+  san7890:
+  - bugfix: There is no longer a Prisoner Management Console in the space outside
+      brig on DeltaStation's Security.
+  - rscadd: On IceBoxStation, the permanent prison situation now has a firing range.
+      Don't worry, the guns are still fake and are about as useful as the laser tag
+      guns you already had.
+  - bugfix: The walls between the nuke ops base and the holding facility have been
+      tweaked a bit to ensure that when you load in the nuke ops shuttle that you
+      can't see the rocky walls of the holding facility.
+  vincentiusvin:
+  - spellcheck: gasmix reading on some atmos ui stuffs should no longer have funny
+      chars

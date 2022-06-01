@@ -17,7 +17,7 @@
 	var/liver_damage = 0.5
 
 /datum/reagent/impurity/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(!L)//Though, lets be safe
 		C.adjustToxLoss(1 * REM * delta_time, FALSE)//Incase of no liver!
 		return ..()
