@@ -76,6 +76,12 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
+"ca" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/storage/photo_album/listeningstation,
+/turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation)
 "ch" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -90,8 +96,11 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "cq" = (
-/obj/machinery/atmospherics/components/tank/air,
 /obj/effect/turf_decal/bot,
+/obj/item/weldingtool/largetank,
+/obj/item/wrench,
+/obj/item/clothing/head/welding,
+/obj/structure/rack,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "ct" = (
@@ -167,7 +176,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "fG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/listeningstation)
 "gc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -181,6 +190,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "gJ" = (
 /obj/structure/table/wood,
+/obj/item/seeds/potato,
 /obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
@@ -197,6 +207,7 @@
 /area/ruin/unpowered/no_grav)
 "hK" = (
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/hydroponics/soil,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "iU" = (
@@ -215,7 +226,6 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/item/wrench,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -262,6 +272,7 @@
 "nG" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/structure/table,
+/obj/item/camera,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "nX" = (
@@ -308,8 +319,6 @@
 	dir = 4
 	},
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/clothing/head/welding,
-/obj/item/weldingtool/largetank,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -332,6 +341,7 @@
 "ta" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/sign/poster/contraband/random/directional/west,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "tf" = (
@@ -362,6 +372,13 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/listeningstation)
+"vC" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "vI" = (
 /turf/closed/mineral/random,
@@ -529,6 +546,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
+"BX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation)
 "Cc" = (
 /obj/structure/table,
 /obj/item/toy/figure/dsquad,
@@ -572,6 +594,7 @@
 "DC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/ash,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "Eb" = (
@@ -638,7 +661,6 @@
 	pixel_y = -1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/photo_album,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "It" = (
@@ -650,6 +672,10 @@
 "IG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/reagent_dispensers/plumbed{
+	name = "Syndicate Ceritified Drinking Water";
+	desc = "Who knew water could taste so good?"
+	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -682,6 +708,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
 "Lq" = (
+/obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "LA" = (
@@ -704,6 +731,13 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
+"Ml" = (
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9
+	},
+/turf/closed/wall,
+/area/ruin/space/has_grav/listeningstation)
 "Mt" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/cable,
@@ -718,13 +752,10 @@
 /area/ruin/space/has_grav/listeningstation)
 "MT" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
 /obj/item/mining_scanner,
 /obj/item/pickaxe,
 /obj/item/clothing/mask/gas,
+/obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "MY" = (
@@ -751,7 +782,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "NY" = (
-/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "Om" = (
@@ -898,15 +929,16 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 8
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/unpowered/no_grav)
 "VH" = (
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen/edagger,
+/obj/item/reagent_containers/food/drinks/waterbottle{
+	pixel_x = 10;
+	pixel_y = 16
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "VK" = (
@@ -971,7 +1003,7 @@
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "Zj" = (
@@ -1301,7 +1333,7 @@ JB
 JB
 dg
 aP
-tf
+vC
 JB
 vI
 AV
@@ -1373,8 +1405,8 @@ rG
 RB
 SB
 FV
-wm
-FV
+ca
+BX
 dW
 QI
 JB
@@ -1396,7 +1428,7 @@ LU
 Mt
 nX
 Sx
-tf
+vC
 ym
 tf
 ym
@@ -1441,7 +1473,7 @@ vI
 JB
 rG
 rG
-rG
+Ml
 rG
 rG
 rG
