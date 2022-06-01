@@ -79,7 +79,7 @@
 	base_icon_state = "reinf_plasma_glass"
 	floor_tile = /obj/item/stack/tile/rglass/plasma
 
-/turf/open/floor/glass/reinforced/plasma/setup_broken_States()
+/turf/open/floor/glass/reinforced/plasma/setup_broken_states()
 	return list("reinf_plasma_glass-damaged1", "reinf_plasma_glass-damaged2", "reinf_plasma_glass-damaged3")
 
 /turf/open/floor/glass/reinforced/plasma/icemoon
