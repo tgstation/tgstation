@@ -292,8 +292,8 @@ Works together with spawning an observer, noted above.
 		if(ishuman(usr)) //following code only applies to those capable of having an ethereal heart, ie humans
 			var/mob/living/carbon/human/crystal_fella = usr
 			var/our_heart = crystal_fella.getorganslot(ORGAN_SLOT_HEART)
-			if(istype(our_heart, /obj/item/organ/heart/ethereal)) //so you got the heart?
-				var/obj/item/organ/heart/ethereal/ethereal_heart = our_heart
+			if(istype(our_heart, /obj/item/organ/internal/heart/ethereal)) //so you got the heart?
+				var/obj/item/organ/internal/heart/ethereal/ethereal_heart = our_heart
 				ethereal_heart.stop_crystalization_process(crystal_fella) //stops the crystallization process
 
 	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
@@ -845,8 +845,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/is_literate()
 	return TRUE
 
-/mob/dead/observer/can_read(obj/O)
-	return TRUE
+/mob/dead/observer/can_read(obj/O, check_for_light = FALSE)
+	return TRUE // we want to bypass all the checks
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -992,7 +992,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 // Ghosts have no momentum, being massless ectoplasm
-/mob/dead/observer/Process_Spacemove(movement_dir)
+/mob/dead/observer/Process_Spacemove(movement_dir, continuous_move = FALSE)
 	return TRUE
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)

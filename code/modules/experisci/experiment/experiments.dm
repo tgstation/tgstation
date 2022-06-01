@@ -98,24 +98,24 @@
 	name = "Reactionless Explosives"
 	description = "Gases with high specific heat can heat up those with a low one and produce a lot of pressure. Perform research and publish papers on this field. No gas reactions are allowed."
 	gain = list(10,50,100)
-	target_amount = list(20,75,200)
+	target_amount = list(20,50,100)
 	experiment_proper = TRUE
 	sanitized_misc = FALSE
 	sanitized_reactions = TRUE
 
-/datum/experiment/ordnance/gaseous/nitrium
-	name = "Nitrium Gas Shells"
-	description = "The delivery of Nitrium gas into an area of operation might prove useful. Perform research and publish papers on this field."
-	gain = list(20,60,120)
-	target_amount = list(20,120,500)
+/datum/experiment/ordnance/gaseous/nitrous_oxide
+	name = "Nitrous Oxide Gas Shells"
+	description = "The delivery of N2O into an area of operation might prove useful. Perform research and publish papers on this field."
+	gain = list(10,40)
+	target_amount = list(200,600)
 	experiment_proper = TRUE
-	required_gas = /datum/gas/nitrium
+	required_gas = /datum/gas/nitrous_oxide
 
 /datum/experiment/ordnance/gaseous/bz
 	name = "BZ Gas Shells"
 	description = "The delivery of BZ gas into an area of operation might prove useful. Perform research and publish papers on this field."
-	gain = list(25,50)
-	target_amount = list(200,600)
+	gain = list(10,30,60)
+	target_amount = list(50,125,400)
 	experiment_proper = TRUE
 	required_gas = /datum/gas/bz
 
@@ -126,14 +126,6 @@
 	target_amount = list(15,55,250)
 	experiment_proper = TRUE
 	required_gas = /datum/gas/hypernoblium
-
-/datum/experiment/ordnance/gaseous/halon
-	name = "Halon Gas Shells"
-	description = "The delivery of Halon gas into an area of operation might prove useful. Perform research and publish papers on this field."
-	gain = list(10,30,60)
-	target_amount = list(15,55,250)
-	experiment_proper = TRUE
-	required_gas = /datum/gas/halon
 
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"

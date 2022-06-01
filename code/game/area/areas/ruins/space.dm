@@ -10,7 +10,16 @@
 /area/ruin/space/has_grav/powered
 	requires_power = FALSE
 
-/////////////
+
+// Ruin solars define, /area/solars was moved to /area/station/solars, causing the solars specific areas to lose their properties
+/area/ruin/solars
+	requires_power = FALSE
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	flags_1 = NONE
+	ambience_index = AMBIENCE_ENGI
+	airlock_wires = /datum/wires/airlock/engineering
+	sound_environment = SOUND_AREA_SPACE
+	base_lighting_alpha = 255
 
 /area/ruin/space/way_home
 	name = "\improper Salvation"
@@ -168,7 +177,9 @@
 /area/ruin/space/has_grav/deepstorage/crusher
 	name = "\improper Deep Storage Recycler"
 
-
+/area/ruin/space/has_grav/deepstorage/pharmacy
+	name = "\improper Deep Storage Pharmacy"
+	
 //Ruin of Abandoned Zoo
 
 /area/ruin/space/has_grav/abandonedzoo
@@ -177,109 +188,120 @@
 
 //Ruin of ancient Space Station (OldStation)
 
-/area/ruin/space/has_grav/ancientstation
+/area/ruin/space/ancientstation
 	icon_state = "oldstation"
-	has_gravity = TRUE
 
-
-/area/ruin/space/has_grav/ancientstation/powered
+/area/ruin/space/ancientstation/powered
 	name = "Powered Tile"
 	icon_state = "teleporter"
 	requires_power = FALSE
 
-/area/ruin/space/has_grav/ancientstation/space
-	name = "Exposed To Space"
-	icon_state = "teleporter"
-	has_gravity = FALSE
-
-/area/ruin/space/has_grav/ancientstation/beta
+/area/ruin/space/ancientstation/beta
 	icon_state = "betastation"
 
-/area/ruin/space/has_grav/ancientstation/beta/atmos
+/area/ruin/space/ancientstation/beta/atmos
 	name = "Beta Station Atmospherics"
 	icon_state = "os_beta_atmos"
 	ambience_index = AMBIENCE_ENGI
 
-/area/ruin/space/has_grav/ancientstation/beta/hall
+/area/ruin/space/ancientstation/beta/supermatter
+	name = "Beta Station Supermatter chamber"
+	icon_state = "os_beta_engine"
+
+/area/ruin/space/ancientstation/beta/hall
 	name = "Beta Station Main Corridor"
 	icon_state = "os_beta_hall"
 
-/area/ruin/space/has_grav/ancientstation/beta/mining
+/area/ruin/space/ancientstation/beta/gravity
+	name = "Beta Station Gravity Generator"
+	icon_state = "os_beta_gravity"
+
+/area/ruin/space/ancientstation/beta/mining
 	name = "Beta Station Mining Equipment"
 	icon_state = "os_beta_mining"
+	ambience_index = AMBIENCE_MINING
 
-/area/ruin/space/has_grav/ancientstation/beta/medbay
+/area/ruin/space/ancientstation/beta/medbay
 	name = "Beta Station Medbay"
 	icon_state = "os_beta_medbay"
+	ambience_index = AMBIENCE_MEDICAL
 
-/area/ruin/space/has_grav/ancientstation/beta/storage
+/area/ruin/space/ancientstation/beta/storage
 	name = "\improper Beta Station Storage"
 	icon_state = "os_beta_storage"
 
-/area/ruin/space/has_grav/ancientstation/charlie
+/area/ruin/space/ancientstation/charlie
 	icon_state = "charliestation"
 
-/area/ruin/space/has_grav/ancientstation/charlie/hall
+/area/ruin/space/ancientstation/charlie/hall
 	name = "Charlie Station Main Corridor"
 	icon_state = "os_charlie_hall"
 
-/area/ruin/space/has_grav/ancientstation/charlie/engie
+/area/ruin/space/ancientstation/charlie/engie
 	name = "Charlie Station Engineering"
 	icon_state = "os_charlie_engine"
 	ambience_index = AMBIENCE_ENGI
 
-/area/ruin/space/has_grav/ancientstation/charlie/bridge
+/area/ruin/space/ancientstation/charlie/bridge
 	name = "Charlie Station Command"
 	icon_state = "os_charlie_bridge"
 
-/area/ruin/space/has_grav/ancientstation/charlie/hydro
+/area/ruin/space/ancientstation/charlie/hydro
 	name = "Charlie Station Hydroponics"
 	icon_state = "os_charlie_hydro"
 
-/area/ruin/space/has_grav/ancientstation/charlie/kitchen
+/area/ruin/space/ancientstation/charlie/kitchen
 	name = "\improper Charlie Station Kitchen"
 	icon_state = "os_charlie_kitchen"
 
-/area/ruin/space/has_grav/ancientstation/charlie/sec
+/area/ruin/space/ancientstation/charlie/sec
 	name = "Charlie Station Security"
 	icon_state = "os_charlie_sec"
 
-/area/ruin/space/has_grav/ancientstation/charlie/dorms
+/area/ruin/space/ancientstation/charlie/dorms
 	name = "Charlie Station Dorms"
 	icon_state = "os_charlie_dorms"
 
-/area/solars/ancientstation/charlie/solars
+/area/ruin/solars/ancientstation/charlie/solars
 	name = "\improper Charlie Station Solar Array"
 	icon = 'icons/area/areas_ruins.dmi' // Solars inheriet areas_misc.dmi, not areas_ruin.dmi
 	icon_state = "os_charlie_solars"
+	requires_power = FALSE
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	sound_environment = SOUND_AREA_SPACE
+	base_lighting_alpha = 255
 
-/area/ruin/space/has_grav/ancientstation/charlie/storage
+/area/ruin/space/ancientstation/charlie/storage
 	name = "Charlie Station Storage"
 	icon_state = "os_charlie_storage"
 
-/area/ruin/space/has_grav/ancientstation/delta
+/area/ruin/space/ancientstation/delta
 	icon_state = "deltastation"
 
-/area/ruin/space/has_grav/ancientstation/delta/hall
+/area/ruin/space/ancientstation/delta/hall
 	name = "Delta Station Main Corridor"
 	icon_state = "os_delta_hall"
 
-/area/ruin/space/has_grav/ancientstation/delta/proto
+/area/ruin/space/ancientstation/delta/proto
 	name = "\improper Delta Station Prototype Lab"
 	icon_state = "os_delta_protolab"
 
-/area/ruin/space/has_grav/ancientstation/delta/rnd
+/area/ruin/space/ancientstation/delta/rnd
 	name = "Delta Station Research and Development"
 	icon_state = "os_delta_rnd"
 
-/area/ruin/space/has_grav/ancientstation/delta/ai
+/area/ruin/space/ancientstation/delta/ai
 	name = "\improper Delta Station AI Core"
 	icon_state = "os_delta_ai"
 	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
-/area/ruin/space/has_grav/ancientstation/delta/storage
+/area/ruin/space/ancientstation/delta/storage
 	name = "\improper Delta Station Storage"
 	icon_state = "os_delta_storage"
+
+/area/ruin/space/ancientstation/delta/biolab
+	name = "Delta Station Biolab"
+	icon_state = "os_delta_biolab"
 
 //DERELICT
 
@@ -322,10 +344,10 @@
 /area/ruin/space/derelict/medical/chapel
 	name = "\improper Derelict Chapel"
 
-/area/solars/derelict_starboard
+/area/ruin/solars/derelict_starboard
 	name = "\improper Derelict Starboard Solar Array"
 
-/area/solars/derelict_aft
+/area/ruin/solars/derelict_aft
 	name = "\improper Derelict Aft Solar Array"
 
 /area/ruin/space/derelict/singularity_engine
@@ -363,8 +385,12 @@
 
 //OLD AI SAT
 
-/area/tcommsat/oldaisat
+/area/ruin/tcommsat_oldaisat // Since tcommsat was moved to /area/station/, this turf doesn't inhereit its properties anymore
 	name = "\improper Abandoned Satellite"
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
+											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
+	airlock_wires = /datum/wires/airlock/engineering
+	network_root_id = STATION_NETWORK_ROOT
 
 //ABANDONED BOX WHITESHIP
 
@@ -388,3 +414,8 @@
 /area/ruin/space/has_grav/hellfactoryoffice
 	name = "\improper Hell Factory Office"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT
+
+//Ruin of Spinward Smoothies
+
+/area/ruin/space/has_grav/spinwardsmoothies
+	name = "Spinward Smoothies"

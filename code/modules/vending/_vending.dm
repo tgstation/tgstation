@@ -609,12 +609,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(6) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
 						if(O)
-							C.visible_message(span_danger("[O] explodes in a shower of gore beneath [src]!"), \
-								span_userdanger("Oh f-"))
-							O.dismember()
-							O.drop_organs()
-							qdel(O)
-							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
+							if(O.dismember())
+								C.visible_message(span_danger("[O] explodes in a shower of gore beneath [src]!"), \
+									span_userdanger("Oh f-"))
+								O.drop_organs()
+								qdel(O)
+								new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
 
 				if(prob(30))
 					C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE) // the 30% chance to spread the damage means you escape breaking any bones

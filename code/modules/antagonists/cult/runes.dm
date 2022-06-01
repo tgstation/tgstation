@@ -909,7 +909,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /mob/living/carbon/human/cult_ghost/getorganszone(zone, subzones = 0)
 	. = ..()
-	for(var/obj/item/organ/brain/B in .) //they're not that smart, really
+	for(var/obj/item/organ/internal/brain/B in .) //they're not that smart, really
 		. -= B
 
 

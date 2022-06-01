@@ -15,11 +15,16 @@
 	animate_movement = FALSE
 	/// How long the smoke sticks around before it dissipates.
 	var/lifetime = 10 SECONDS
+	/// Makes the smoke react to changes on/of its turf.
+	var/static/loc_connections = list(
+		COMSIG_TURF_CALCULATED_ADJACENT_ATMOS = .proc/react_to_atmos_adjacency_changes
+	)
 
 /obj/effect/particle_effect/fluid/smoke/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
-	create_reagents(1000)
+	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 	setDir(pick(GLOB.cardinals))
+	AddElement(/datum/element/connect_loc, loc_connections)
 	SSsmoke.start_processing(src)
 
 /obj/effect/particle_effect/fluid/smoke/Destroy()
@@ -120,6 +125,21 @@
 	smoker.smoke_delay = TRUE
 	addtimer(VARSET_CALLBACK(smoker, smoke_delay, FALSE), 1 SECONDS)
 	return TRUE
+
+/**
+ * Makes the smoke react to nearby opening/closing airlocks and the like.
+ * Makes it possible for smoke to spread through airlocks that open after the edge of the smoke cloud has already spread past them.
+ *
+ * Arguments:
+ * - [source][/turf]: The turf that has been touched by an atmos adjacency change.
+ */
+/obj/effect/particle_effect/fluid/smoke/proc/react_to_atmos_adjacency_changes(turf/source)
+	SIGNAL_HANDLER
+	if(!group)
+		return NONE
+	if (spread_bucket)
+		return NONE
+	SSsmoke.queue_spread(src)
 
 /// A factory which produces clouds of smoke.
 /datum/effect_system/fluid_spread/smoke

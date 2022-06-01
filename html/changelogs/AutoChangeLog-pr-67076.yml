@@ -1,5 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "fixed cryoxadone not working in crit, it now checks for general unconsciousness. So things like oxyloss knock out is included."
-  - qol: "If the state or temperature of your cryo ui is red that means cryoxadone wont be able to work."

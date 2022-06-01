@@ -1,4 +1,0 @@
-author: "Ivniinvi"
-delete-after: True
-changes: 
-  - bugfix: "Admins can no longer unprotect globals."

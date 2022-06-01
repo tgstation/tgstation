@@ -84,33 +84,32 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	dir = WEST
 
 // Rooms for where heretic sacrifices send people.
-/area/heretic_sacrifice
+/area/centcom/heretic_sacrifice
 	name = "Mansus"
-	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "heretic"
 	has_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
 	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
 
-/area/heretic_sacrifice/Initialize(mapload)
+/area/centcom/heretic_sacrifice/Initialize(mapload)
 	if(!ambientsounds)
 		ambientsounds = GLOB.ambience_assoc[ambience_index]
 		ambientsounds += 'sound/ambience/ambiatm1.ogg'
 	return ..()
 
-/area/heretic_sacrifice/ash //also, the default
+/area/centcom/heretic_sacrifice/ash //also, the default
 	name = "Mansus Ash Gate"
 
-/area/heretic_sacrifice/void
+/area/centcom/heretic_sacrifice/void
 	name = "Mansus Void Gate"
 	sound_environment = SOUND_ENVIRONMENT_UNDERWATER
 
-/area/heretic_sacrifice/flesh
+/area/centcom/heretic_sacrifice/flesh
 	name = "Mansus Flesh Gate"
 	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
-/area/heretic_sacrifice/rust
+/area/centcom/heretic_sacrifice/rust
 	name = "Mansus Rust Gate"
 	ambience_index = AMBIENCE_REEBE
 	sound_environment = SOUND_ENVIRONMENT_SEWER_PIPE

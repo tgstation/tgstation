@@ -147,9 +147,9 @@
 			if(24 to 30)
 				airlock.panel_open = TRUE
 	if(airlock.cutAiWire)
-		wires.cut(WIRE_AI)
+		airlock.wires.cut(WIRE_AI)
 	if(airlock.autoname)
-		name = get_area_name(src, TRUE)
+		airlock.name = get_area_name(src, TRUE)
 	update_appearance()
 	qdel(src)
 
@@ -174,6 +174,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.closeOtherId)
 		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] closeOtherId, but it's already set!")
+	else if(!cycle_id)
+		log_mapping("[src] at [AREACOORD(src)] doesn't have a cycle_id to assign to [airlock]!")
 	else
 		airlock.closeOtherId = cycle_id
 
@@ -189,7 +191,7 @@
 
 
 /obj/effect/mapping_helpers/airlock/unres
-	name = "airlock unresctricted side helper"
+	name = "airlock unrestricted side helper"
 	icon_state = "airlock_unres_helper"
 
 /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)

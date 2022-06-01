@@ -67,9 +67,9 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external/ruin{
-	id_tag = "syndie_listeningpost_external";
-	req_access_txt = "150"
+	id_tag = "syndie_listeningpost_external"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -87,9 +87,9 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external/ruin{
-	id_tag = "syndie_listeningpost_external";
-	req_access_txt = "150"
+	id_tag = "syndie_listeningpost_external"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -119,7 +119,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/med_data/syndie{
 	dir = 4;
-	req_one_access = null
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -498,7 +498,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/structure/sign/warning/explosives/alt{
 	pixel_x = 32
@@ -603,7 +603,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/medical1{
 	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/listeningstation)
@@ -847,7 +847,7 @@
 	id = "syndie_listeningpost_external";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	req_access_txt = "150";
+	req_access = list("syndicate");
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark,
@@ -953,9 +953,9 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/airlock/hatch{
-	name = "Telecommunications";
-	req_access_txt = "150"
+	name = "Telecommunications"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -968,9 +968,9 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/airlock/hatch{
-	name = "E.V.A. Equipment";
-	req_access_txt = "150"
+	name = "E.V.A. Equipment"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
