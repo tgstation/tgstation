@@ -141,6 +141,7 @@ jobs:
     name: Collate Relevant Results
     steps:
       - name: If you see this, then wow!
+        run: echo wow
 
   test_windows:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
