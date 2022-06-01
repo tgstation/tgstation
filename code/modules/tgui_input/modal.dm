@@ -32,12 +32,14 @@
 			fancy = TRUE,
 			inline_css = file2text("tgui/public/tgui-modal.bundle.css"),
 			inline_js = file2text("tgui/public/tgui-modal.bundle.js"),
-	)
+	);
+	close()
+
+/datum/tgui_modal/proc/send_props()
 	window.send_message("modal_data", list(
 		channel = "ooc",
 		maxLength = max_length,
 	))
-	close()
 
 /**
  * Closes the window and hides it from view.
