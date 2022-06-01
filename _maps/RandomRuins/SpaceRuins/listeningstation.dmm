@@ -553,7 +553,13 @@
 /area/ruin/space/has_grav/listeningstation)
 "Cc" = (
 /obj/structure/table,
-/obj/item/toy/figure/dsquad,
+/obj/item/toy/figure/dsquad{
+	pixel_x = -7
+	},
+/obj/structure/desk_bell{
+	pixel_y = -1;
+	pixel_x = 9
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "Cw" = (
