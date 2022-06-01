@@ -90060,6 +90060,7 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/cmo)
 "ykB" = (
