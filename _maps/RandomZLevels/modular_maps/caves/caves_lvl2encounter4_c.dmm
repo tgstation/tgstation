@@ -1,20 +1,22 @@
-"i" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"s" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"x" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"B" = (/turf/open/chasm/lavaland,/area/template_noop)
-"V" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Y" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"d" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"e" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"h" = (/turf/open/chasm/lavaland,/area/template_noop)
+"j" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"B" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"E" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"T" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"Z" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 
 (1,1,1) = {"
-BBBBBBBBBBVBBBBBBBBBBBBBBBBV
-BBBBBBBBBBVBBBBBBBBBBBBBBBBV
-BBBBBBBBBVVBBBBBBBBBVVVBBBBV
-BBBBBBBBBiVBBBBBBBBBVVVVVVVV
-BBBBBBBBBVVBBBBBVVVVVVVVVVVV
-BBBBBBBBVVVVVVVVVVVVVYYYYYYY
-BBVVVVVVVVVVVVVYYYYYYYYYYYYY
-xVVVVYYYYYYYYYYYYYYYYYYYYYYY
-VVVYYYYYYYYYYYYYYsssssssssYY
-YYYYYYYYYYYYYYssssssssssssYY
-VVYYYYYYYYssssssssssssssssss
+hhhhhhhhhhhhhhhhhhhhhhhhhhhd
+hhhhhhhhhhhhhhhhhhhhhhhhhhhd
+hhhhhhhhhhhhhhhhhhhhhhhhhhhd
+hhhhhhhhhhhhhhhhhhhhhhhhdZZd
+hhhhhhhhhhhhhhhhhBhhhhhddjZd
+hhhdhhhhhhhhhhhdhdhhddEEEEEE
+hhdZjdBhBhhdZhhdEddEEEEEEEEE
+eddZZEEEEhhdBEEEEEEEEEEEEEEE
+dddEEEEEEEEEEEEEETTTTTTTTTEE
+EEEEEEEEEEEEEETTTTTTTTTTTTEE
+ddEEEEEEEETTTTTTTTTTTTTTTTTT
 "}

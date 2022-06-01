@@ -1,20 +1,32 @@
-"d" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"j" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"o" = (/turf/open/chasm/lavaland,/area/template_noop)
-"D" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"J" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"K" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"a" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"b" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"c" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"e" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/end{dir = 8},/obj/structure/railing,/obj/structure/railing{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"i" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"k" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/end{dir = 4},/obj/structure/railing,/obj/structure/railing{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"r" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/railing,/obj/structure/railing{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"s" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/railing,/obj/structure/railing{dir = 1},/mob/living/simple_animal/hostile/ashwalker{name = "Has-The-High-Ground"; speak = list("Isss over, defiler! I hasss the high ground!"); speak_chance = 15},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"x" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"y" = (/obj/structure/marker_beacon/burgundy,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"A" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"F" = (/mob/living/simple_animal/hostile/ashwalker{name = "Defends-The-Bridge"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"G" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"I" = (/obj/structure/barricade/sandbags,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"L" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"N" = (/mob/living/simple_animal/hostile/ashwalker{name = "Stands-Their-Ground"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"P" = (/turf/open/chasm/lavaland,/area/template_noop)
+"R" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 
 (1,1,1) = {"
-ooooooooooKooooooooooooooooK
-ooooooooooKooooooooooooooooK
-oooooooooKKoooooooooKKKooooK
-oooooooooJKoooooooooKKKKKKKK
-oooooooooKKoooooKKKKKKKKKKKK
-ooooooooKKKKKKKKKKKKKddddddd
-ooKKKKKKKKKKKKKddddddddddddd
-DKKKKddddddddddddddddddddddd
-KKKddddddddddddddjjjjjjjjjdd
-ddddddddddddddjjjjjjjjjjjjdd
-KKddddddddjjjjjjjjjjjjjjjjjj
+PPPPPPPPPPbPPPPPPPPPPPPPPPPx
+PPPPPPPPPPbPPPPPPPPPPPPPPPPR
+PPPPPPPPPbyPPPPPPPPPLNLPPPPL
+PPPPPPPPPRLPPPPPPPPPLLyRxaII
+PPPPPPPPPLerrrrsrrrrkLLLaaIL
+PPPPPPPPLLLPPPPPPPPPLyAAAAAA
+PPLIILLLyFLPPPPPPPPPLGAAAAAA
+cLLLIAAAiiLAPPPPPAAALGAAAAAA
+LRxAAAAAAiiAAAAAAAGGGGGGGGAA
+AAAAAAAAAALGGGGGGGGGGGGGGGAA
+LLAAAAAAAAGGGGGGGGGGGGGGGGGG
 "}

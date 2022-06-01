@@ -1,20 +1,30 @@
-"c" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"e" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"x" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"G" = (/turf/open/chasm/lavaland,/area/template_noop)
-"H" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Y" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"a" = (/obj/item/pickaxe,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"g" = (/obj/item/stack/ore/plasma,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"h" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"k" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"m" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"r" = (/obj/item/stack/ore/diamond,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"s" = (/obj/structure/flora/ash/cap_shroom,/obj/structure/reagent_dispensers/beerkeg{desc = "Brewed in a locally owned spacerig, orbiting around the barren planet of Hoxxes."; name = "Oily Oaf Keg"; reagent_id = /datum/reagent/consumable/ethanol/manly_dorf},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"x" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"y" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"z" = (/turf/open/chasm/lavaland,/area/template_noop)
+"H" = (/obj/item/stack/ore/silver,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"M" = (/mob/living/simple_animal/hostile/ashwalker{name = "Loots-The-Precious-Minerals"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"N" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"S" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"W" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"Z" = (/mob/living/simple_animal/hostile/asteroid/goldgrub,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 
 (1,1,1) = {"
-GGGGGGGGGGxGGGGGGGGGGGGGGGGx
-GGGGGGGGGGxGGGGGGGGGGGGGGGGx
-GGGGGGGGGxxGGGGGGGGGxxxGGGGx
-GGGGGGGGGcxGGGGGGGGGxxxxxxxx
-GGGGGGGGGxxGGGGGxxxxxxxxxxxx
-GGGGGGGGxxxxxxxxxxxxxeeeeeee
-GGxxxxxxxxxxxxxeeeeeeeeeeeee
-Hxxxxeeeeeeeeeeeeeeeeeeeeeee
-xxxeeeeeeeeeeeeeeYYYYYYYYYee
-eeeeeeeeeeeeeeYYYYYYYYYYYYee
-xxeeeeeeeeYYYYYYYYYYYYYYYYYY
+zzzzzzzzzzzzzzzzzzzzzzzzzzzk
+zzzzzzzzzzzzzzzzzzzzzzzzzzzk
+zzzzzzzzzkzzzzzzzzzzkSyzzzzk
+zzzzzzzzzyzzzzzzzzzzkkkkkmmk
+zzzzzzzzzNNzzzzzZHkkkrkkkmkk
+zzzzzzzzNNgrzzkHgkryHkkkkyyx
+zzkkkkaHrkHgkMryrkgkrZkkkxxx
+hkmkyykrHZrgWkyyZHWWNxxxxxxx
+kkmxySyskkWWWWkSkWWWWWWWWWxx
+xxxxyyyyyWWWWWWWWWWWWWWWWWxx
+kkxxxxxxWWWWWWWWWWWWWWWWWWWW
 "}
