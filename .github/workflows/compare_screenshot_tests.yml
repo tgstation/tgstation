@@ -15,6 +15,8 @@ jobs:
     # workflow_run has access to secrets, it is intended for use
     # for things like commenting on the PR (which we're doing here).
     steps:
+      - name: Prepare artifacts
+        run: mkdir artifacts
       - name: Download artifact
         uses: actions/github-script@v6
         with:
