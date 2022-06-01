@@ -1,4 +1,3 @@
-#define SNAKE_SPAM_TICKS 600 //how long between cardboard box openings that trigger the '!'
 /obj/structure/closet/cardboard
 	name = "large cardboard box"
 	desc = "Just a box..."
