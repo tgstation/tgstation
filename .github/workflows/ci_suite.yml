@@ -7,48 +7,48 @@ on:
     branches:
     - master
 jobs:
-  run_linters:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    name: Run Linters
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Restore SpacemanDMM cache
-        uses: actions/cache@v2
-        with:
-          path: ~/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
-      - name: Restore Yarn cache
-        uses: actions/cache@v2
-        with:
-          path: tgui/.yarn/cache
-          key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ secrets.CACHE_PURGE_KEY }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install Tools
-        run: |
-          pip3 install setuptools
-          bash tools/ci/install_node.sh
-          bash tools/ci/install_spaceman_dmm.sh dreamchecker
-          tools/bootstrap/python -c ''
-      - name: Run Linters
-        run: |
-          bash tools/ci/check_filedirs.sh tgstation.dme
-          bash tools/ci/check_changelogs.sh
-          bash tools/ci/check_grep.sh
-          bash tools/ci/check_misc.sh
-          tools/bootstrap/python tools/validate_dme.py <tgstation.dme
-          tools/build/build --ci lint tgui-test
-          tools/bootstrap/python -m dmi.test
-          tools/bootstrap/python -m mapmerge2.dmm_test
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
-      - name: Annotate Lints
-        uses: yogstation13/DreamAnnotate@v1
-        if: always()
-        with:
-          outputFile: output-annotations.txt
+  # run_linters:
+  #   if: "!contains(github.event.head_commit.message, '[ci skip]')"
+  #   name: Run Linters
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Restore SpacemanDMM cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/SpacemanDMM
+  #         key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
+  #     - name: Restore Yarn cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: tgui/.yarn/cache
+  #         key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-build-${{ secrets.CACHE_PURGE_KEY }}-
+  #           ${{ runner.os }}-build-
+  #           ${{ runner.os }}-
+  #     - name: Install Tools
+  #       run: |
+  #         pip3 install setuptools
+  #         bash tools/ci/install_node.sh
+  #         bash tools/ci/install_spaceman_dmm.sh dreamchecker
+  #         tools/bootstrap/python -c ''
+  #     - name: Run Linters
+  #       run: |
+  #         bash tools/ci/check_filedirs.sh tgstation.dme
+  #         bash tools/ci/check_changelogs.sh
+  #         bash tools/ci/check_grep.sh
+  #         bash tools/ci/check_misc.sh
+  #         tools/bootstrap/python tools/validate_dme.py <tgstation.dme
+  #         tools/build/build --ci lint tgui-test
+  #         tools/bootstrap/python -m dmi.test
+  #         tools/bootstrap/python -m mapmerge2.dmm_test
+  #         ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+  #     - name: Annotate Lints
+  #       uses: yogstation13/DreamAnnotate@v1
+  #       if: always()
+  #       with:
+  #         outputFile: output-annotations.txt
 
   compile_all_maps:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -160,31 +160,31 @@ jobs:
       - name: If you see this, then wow!
         run: echo wow
 
-  test_windows:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    name: Windows Build
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Restore Yarn cache
-        uses: actions/cache@v2
-        with:
-          path: tgui/.yarn/cache
-          key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ secrets.CACHE_PURGE_KEY }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Compile
-        run: pwsh tools/ci/build.ps1
-        env:
-          DM_EXE: "C:\\byond\\bin\\dm.exe"
-      - name: Create artifact
-        run: |
-          md deploy
-          bash tools/deploy.sh ./deploy
-      - name: Deploy artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: deploy
-          path: deploy
+  # test_windows:
+  #   if: "!contains(github.event.head_commit.message, '[ci skip]')"
+  #   name: Windows Build
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Restore Yarn cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: tgui/.yarn/cache
+  #         key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-build-${{ secrets.CACHE_PURGE_KEY }}-
+  #           ${{ runner.os }}-build-
+  #           ${{ runner.os }}-
+  #     - name: Compile
+  #       run: pwsh tools/ci/build.ps1
+  #       env:
+  #         DM_EXE: "C:\\byond\\bin\\dm.exe"
+  #     - name: Create artifact
+  #       run: |
+  #         md deploy
+  #         bash tools/deploy.sh ./deploy
+  #     - name: Deploy artifact
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: deploy
+  #         path: deploy
