@@ -338,6 +338,10 @@
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
+	borg_skins = list(
+		"Cyborg Engineer" = list(SKIN_ICON_STATE = "engineer"),
+		"Zoomba Engineer" = list(SKIN_ICON_STATE = "zoomba_engi", SKIN_LIGHT_KEY = "zoomba_engi_l", SKIN_HAT_OFFSET = -7),
+	)
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -361,6 +365,10 @@
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
 	hat_offset = -5
+	borg_skins = list(
+		"Default Janitor" = list(SKIN_ICON_STATE = "janitor"),
+		"Zoomba Janitor" = list(SKIN_ICON_STATE = "zoomba_jani", SKIN_LIGHT_KEY = "zoomba_jani_l", SKIN_HAT_OFFSET = -7),
+	)
 	/// Weakref to the wash toggle action we own
 	var/datum/weakref/wash_toggle_ref
 
@@ -624,6 +632,7 @@
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
+		"Zoomba Doctor" = list(SKIN_ICON_STATE = "zoomba_med", SKIN_LIGHT_KEY = "zoomba_med_l", SKIN_HAT_OFFSET = -7),
 	)
 
 /obj/item/robot_model/miner
@@ -649,6 +658,7 @@
 	borg_skins = list(
 		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
+		"Zoomba Miner" = list(SKIN_ICON_STATE = "zoomba_miner", SKIN_LIGHT_KEY = "zoomba_miner_l", SKIN_HAT_OFFSET = -7),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
@@ -678,6 +688,10 @@
 	model_select_icon = "standard"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
+	borg_skins = list(
+		"Fluffy Peacekeeper" = list(SKIN_ICON_STATE = "peace"),
+		"Zoomba Peacekeeper" = list(SKIN_ICON_STATE = "zoomba_peace", SKIN_LIGHT_KEY = "zoomba_peace_l", SKIN_HAT_OFFSET = -7),
+	)
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
@@ -749,6 +763,7 @@
 		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
 		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
+		"Zoomba" = list(SKIN_ICON_STATE = "zoomba_green", SKIN_LIGHT_KEY = "zoomba_green_l", SKIN_HAT_OFFSET = -7),
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
