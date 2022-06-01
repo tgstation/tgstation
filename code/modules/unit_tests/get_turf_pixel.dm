@@ -2,23 +2,11 @@
 /datum/unit_test/get_turf_pixel/Run()
 	//we need long larry to peek over the top edge of the earth
 	var/turf/north = locate(1, world.maxy, run_loc_floor_bottom_left.z)
-	var/turf/east = locate(world.maxx, world.maxy, run_loc_floor_bottom_left.z)
-
-	///long larry is long indeed
-	var/long_larry_coefficient = 30
-	var/matrix/identity_matrix = matrix()
-
-	var/matrix/north_transform = identity_matrix.Scale(1,long_larry_coefficient)
-	var/matrix/east_transform = identity_matrix.Scale(long_larry_coefficient, 1)
 
 	///hes really long, so hes really good at peaking over the edge of the map
 	var/mob/living/simple_animal/hostile/megafauna/colossus/long_larry = allocate(/mob/living/simple_animal/hostile/megafauna/colossus, north)
-	long_larry.transform = north_transform
 	TEST_ASSERT(get_turf_pixel(long_larry) != null, "get_turf_pixel() isnt clamping a mob whos sprite is above the bounds of the world inside of the map.")
 
-	long_larry.loc = east
-	long_larry.transform = east_transform
-	TEST_ASSERT(get_turf_pixel(long_larry) != null, "get_turf_pixel() isnt clamping a mob whos sprite extends east of the bounds of the world inside of the map.")
 
 
 
