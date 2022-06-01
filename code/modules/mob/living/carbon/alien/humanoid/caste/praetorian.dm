@@ -41,10 +41,8 @@
 		return FALSE
 
 	var/mob/living/carbon/alien/humanoid/royal/evolver = owner
-	var/obj/item/organ/alien/hivenode/node = evolver.getorgan(/obj/item/organ/internal/alien/hivenode)
-	if(!node)
-		return FALSE
-	if(node.recent_queen_death)
+	var/obj/item/organ/internal/alien/hivenode/node = evolver.getorgan(/obj/item/organ/internal/alien/hivenode)
+	if(!node || node.recent_queen_death)
 		return FALSE
 
 	return TRUE

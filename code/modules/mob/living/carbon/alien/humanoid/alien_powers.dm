@@ -34,13 +34,15 @@ Doesn't work on other aliens/AI.*/
 	. = ..()
 	if(!.)
 		return FALSE
-	// Xeno actions like "evolve" may result in our action being deleted
+	// Xeno actions like "evolve" may result in our action (or our alien) being deleted
 	// In that case, we can just exit now as a "success"
-	if(QDELETED(src))
+	if(QDELETED(src) || QDELETED(owner))
 		return TRUE
 
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.adjustPlasma(-plasma_cost)
+	// It'd be really annoying if click-to-fire actions stayed active,
+	// even if our plasma amount went under the required amount.
 	if(click_to_activate && carbon_owner.getPlasma() < plasma_cost)
 		unset_click_ability(owner, refund_cooldown = FALSE)
 
@@ -127,10 +129,7 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	var/mob/living/chosen_recipient = tgui_input_list(owner, "Select whisper recipient", "Whisper", sort_names(possible_recipients))
-	if(QDELETED(chosen_recipient) || QDELETED(src) || QDELETED(owner)|| !IsAvailable())
-		return FALSE
-	if(chosen_recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-		to_chat(owner, span_warning("As you reach into [chosen_recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
+	if(!chosen_recipient)
 		return FALSE
 
 	var/to_whisper = tgui_input_text(owner, title = "Alien Whisper")
@@ -171,14 +170,14 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	var/mob/living/carbon/donation_target = tgui_input_list(owner, "Target to transfer to", "Plasma Donation", sort_names(aliens_around))
-	if(QDELETED(donation_target) || QDELETED(src) || QDELETED(owner) || !IsAvailable())
+	if(!donation_target)
 		return FALSE
 
 	var/amount = tgui_input_number(owner, "Amount", "Transfer Plasma to [donation_target]", max_value = carbon_owner.getPlasma())
 	if(QDELETED(donation_target) || QDELETED(src) || QDELETED(owner) || !IsAvailable() || isnull(amount) || amount <= 0)
 		return FALSE
 
-	if (get_dist(owner, donation_target) > 1)
+	if(get_dist(owner, donation_target) > 1)
 		to_chat(owner, span_noticealien("You need to be closer!"))
 		return FALSE
 
@@ -189,47 +188,40 @@ Doesn't work on other aliens/AI.*/
 	to_chat(owner, span_noticealien("You transfer [amount] plasma to [donation_target]."))
 	return TRUE
 
-
 /datum/action/cooldown/alien/acid
+	click_to_activate = TRUE
+	unset_after_click = FALSE
+
+/datum/action/cooldown/alien/acid/corrosion
 	name = "Corrosive Acid"
 	desc = "Drench an object in acid, destroying it over time."
 	button_icon_state = "alien_acid"
-	click_to_activate = TRUE
-	unset_after_click = FALSE
 	plasma_cost = 200
 
-/datum/action/cooldown/alien/acid/set_click_ability(mob/on_who)
+/datum/action/cooldown/alien/acid/corrosion/set_click_ability(mob/on_who)
 	. = ..()
 	if(!.)
 		return
 
 	to_chat(on_who, span_noticealien("You prepare to vomit acid. <b>Click a target to acid it!</b>"))
+	on_who.update_icons()
 
-	if(isalienadult(on_who))
-		var/mob/living/carbon/alien/humanoid/alien = on_who
-		alien.drooling = TRUE
-		alien.update_icons()
-
-/datum/action/cooldown/alien/acid/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
+/datum/action/cooldown/alien/acid/corrosion/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(!.)
 		return
 
 	if(refund_cooldown)
 		to_chat(on_who, span_noticealien("You empty your corrosive acid glands."))
+	on_who.update_icons()
 
-	if(isalienadult(on_who))
-		var/mob/living/carbon/alien/humanoid/alien = on_who
-		alien.drooling = FALSE
-		alien.update_icons()
-
-/datum/action/cooldown/alien/acid/PreActivate(atom/target)
+/datum/action/cooldown/alien/acid/corrosion/PreActivate(atom/target)
 	if(get_dist(owner, target) > 1)
 		return FALSE
 
 	return ..()
 
-/datum/action/cooldown/alien/acid/Activate(atom/target)
+/datum/action/cooldown/alien/acid/corrosion/Activate(atom/target)
 	if(!target.acid_act(200, 1000))
 		to_chat(owner, span_noticealien("You cannot dissolve this object."))
 		return FALSE
@@ -240,18 +232,16 @@ Doesn't work on other aliens/AI.*/
 	)
 	return TRUE
 
-/datum/action/cooldown/alien/neurotoxin
+/datum/action/cooldown/alien/acid/neurotoxin
 	name = "Spit Neurotoxin"
 	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
 	button_icon_state = "alien_neurotoxin_0"
-	click_to_activate = TRUE
-	unset_after_click = FALSE
 	plasma_cost = 50
 
-/datum/action/cooldown/alien/neurotoxin/IsAvailable()
+/datum/action/cooldown/alien/acid/neurotoxin/IsAvailable()
 	return ..() && isturf(owner.loc)
 
-/datum/action/cooldown/alien/neurotoxin/set_click_ability(mob/on_who)
+/datum/action/cooldown/alien/acid/neurotoxin/set_click_ability(mob/on_who)
 	. = ..()
 	if(!.)
 		return
@@ -260,13 +250,9 @@ Doesn't work on other aliens/AI.*/
 
 	button_icon_state = "alien_neurotoxin_1"
 	UpdateButtons()
+	on_who.update_icons()
 
-	if(isalienadult(on_who))
-		var/mob/living/carbon/alien/humanoid/alien = on_who
-		alien.drooling = TRUE
-		alien.update_icons()
-
-/datum/action/cooldown/alien/neurotoxin/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
+/datum/action/cooldown/alien/acid/neurotoxin/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -276,13 +262,9 @@ Doesn't work on other aliens/AI.*/
 
 	button_icon_state = "alien_neurotoxin_0"
 	UpdateButtons()
+	on_who.update_icons()
 
-	if(isalienadult(on_who))
-		var/mob/living/carbon/alien/humanoid/alien = on_who
-		alien.drooling = FALSE
-		alien.update_icons()
-
-/datum/action/cooldown/alien/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/alien/acid/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
 	if(!.)
 		unset_click_ability(caller, refund_cooldown = FALSE)
@@ -309,7 +291,7 @@ Doesn't work on other aliens/AI.*/
 	return TRUE
 
 // Has to return TRUE, otherwise is skipped.
-/datum/action/cooldown/alien/neurotoxin/Activate(atom/target)
+/datum/action/cooldown/alien/acid/neurotoxin/Activate(atom/target)
 	return TRUE
 
 /datum/action/cooldown/alien/make_structure/resin
@@ -327,7 +309,7 @@ Doesn't work on other aliens/AI.*/
 // Snowflake to check for multiple types of alien resin structures
 /datum/action/cooldown/alien/make_structure/resin/check_for_duplicate()
 	for(var/blocker_name in structures)
-		var/blocker_type = structures[blocker_name]
+		var/obj/structure/blocker_type = structures[blocker_name]
 		if(locate(blocker_type) in owner.loc)
 			to_chat(owner, span_warning("There is already a resin structure there!"))
 			return FALSE
@@ -355,27 +337,30 @@ Doesn't work on other aliens/AI.*/
 	name = "Sneak"
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon_state = "alien_sneak"
-	/// Whether we're currently sneaking or not
-	var/sneaking = FALSE
+	/// The alpha we go to when sneaking.
+	var/sneak_alpha = 75
+
+/datum/action/cooldown/alien/sneak/Remove(mob/living/remove_from)
+	if(HAS_TRAIT(remove_from, TRAIT_ALIEN_SNEAK))
+		remove_from.alpha = initial(remove_from.alpha)
+		REMOVE_TRAIT(remove_from, TRAIT_ALIEN_SNEAK, name)
+
+	return ..()
 
 /datum/action/cooldown/alien/sneak/Activate(atom/target)
-	if(sneaking)
-		sneaking = FALSE
+	if(HAS_TRAIT(owner, TRAIT_ALIEN_SNEAK))
+		// It's safest to go to the initial alpha of the mob.
+		// Otherwise we get permanent invisbility exploits.
 		owner.alpha = initial(owner.alpha)
-		if(isalien(owner))
-			var/mob/living/carbon/alien/humanoid/alien = owner
-			alien.sneaking = FALSE
 		to_chat(owner, span_noticealien("You reveal yourself!"))
+		REMOVE_TRAIT(owner, TRAIT_ALIEN_SNEAK, name)
 
 	else
-		sneaking = TRUE
-		// Still easy to see in lit areas with bright tiles, almost invisible on resin.
-		owner.alpha = 75
-		if(isalien(owner))
-			var/mob/living/carbon/alien/humanoid/alien = owner
-			alien.sneaking = TRUE
+		owner.alpha = sneak_alpha
 		to_chat(owner, span_noticealien("You blend into the shadows..."))
+		ADD_TRAIT(owner, TRAIT_ALIEN_SNEAK, name)
 
+	return TRUE
 
 /// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one
 /mob/living/carbon/proc/getPlasma()

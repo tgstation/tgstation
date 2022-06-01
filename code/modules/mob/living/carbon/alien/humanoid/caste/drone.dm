@@ -14,7 +14,7 @@
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/internal/alien/resinspinner
 	internal_organs += new /obj/item/organ/internal/alien/acid
-	..()
+	return ..()
 
 /datum/action/cooldown/alien/evolve_to_praetorian
 	name = "Evolve to Praetorian"
@@ -34,13 +34,11 @@
 		return FALSE
 
 	var/mob/living/carbon/alien/humanoid/royal/evolver = owner
-	var/obj/item/organ/alien/hivenode/node = evolver.getorgan(/obj/item/organ/internal/alien/hivenode)
-	//Players are Murphy's Law. We may not expect
+	var/obj/item/organ/internal/alien/hivenode/node = evolver.getorgan(/obj/item/organ/internal/alien/hivenode)
+	// Players are Murphy's Law. We may not expect
 	// there to ever be a living xeno with no hivenode,
 	// but they _WILL_ make it happen.
-	if(!node)
-		return FALSE
-	if(node.recent_queen_death)
+	if(!node || node.recent_queen_death)
 		return FALSE
 
 	return TRUE
