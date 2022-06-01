@@ -133,6 +133,15 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ matrix.map }}
 
+  # Collate relevant results into one artifact.
+  # This is currently only used for screenshot tests.
+  collate_relevant_results:
+    needs: [run_all_tests]
+    runs-on: ubuntu-20.04
+    name: Collate Relevant Results
+    steps:
+      - name: If you see this, then wow!
+
   test_windows:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Windows Build
