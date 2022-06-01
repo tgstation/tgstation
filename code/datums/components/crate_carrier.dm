@@ -3,13 +3,13 @@
  */
 /datum/component/crate_carrier
 	/// The max number of crates we can carry
-	var/crate_limit = 2
+	var/crate_limit = 3
 	/// Typecache of all the types we can pick up and carry
 	var/list/carriable_cache
 	/// A lazylist of all crates we are carrying
 	var/list/atom/movable/crates_in_hand
 
-/datum/component/crate_carrier/Initialize(crate_limit = 2, list/carriable_types)
+/datum/component/crate_carrier/Initialize(crate_limit = 3, list/carriable_types)
 	. = ..()
 	if(!isanimal_or_basicmob(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -52,7 +52,7 @@
 
 	if(is_type_in_typecache(target, carriable_cache))
 		var/atom/movable/movable_target = target
-		if(LAZYLEN(crates_in_hand) > crate_limit)
+		if(LAZYLEN(crates_in_hand) >= crate_limit)
 			source.balloon_alert(source, "too many crates!")
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
