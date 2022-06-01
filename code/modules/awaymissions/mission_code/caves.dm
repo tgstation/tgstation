@@ -90,7 +90,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/trader/ashwalker
 	name = "Sells-The-Wares"
-	desc = "An ashwalker who recognizesss a good businessssss opportunity when ssshe ssseesss it."
+	desc = "An assshwalker who recognizesss a good businessssss opportunity when ssshe ssseesss it."
 	speak_emote = list("hisses")
 	speech_span = SPAN_SANS
 	sell_sound = 'sound/voice/hiss2.ogg'
@@ -104,7 +104,7 @@
 	interestedphrase = "You.. I see you have ssshiny. Why not participate in some Nanotrasssen-approved capitalisssm?"
 	buyphrase = "Hss.. Pleasssure doing busssinesss with you."
 	nocashphrase = "Do you take me for a sssimpleton like my fellow walkersss? No casssh, no grasssss."
-
+	//TODO: More items in this list that make sense for the mission
 	products = list(
 		/obj/item/spear/bonespear = 150,
 		/obj/item/skeleton_key = 3000,
@@ -112,9 +112,10 @@
 	)
 	wanted_items = list(
 		/obj/item/stack/sheet/mineral/snow = 150,
-		/obj/item/stack/sheet/bone = 25,
-		/obj/item/food/meat/slab/goliath = 25,
-		/obj/item/stack/sheet/animalhide/goliath_hide = 25,
+		/obj/item/stack/sheet/bone = 10,
+		/obj/item/stack/sheet/bronze = 5,
+		/obj/item/food/meat/slab/goliath = 10,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 15,
 	)
 	icon_state = "ashtrader"
 	gender = FEMALE
@@ -371,6 +372,7 @@
 //Lore/fluff items for detailing
 
 //Lore terminals
+//TODO: MORE LORE MORE LORE MORE LORE
 /obj/machinery/computer/terminal/caves/robo
 	content = list("MINER-MAIL - #344 - Site Director Richard Evans -> K. Simmers -- I just finished approving your request for additional access to more combat-orienated mecha-based designs. \
 	With the introduction of the concern with the locals, Central has deemed it neccesary to elevate our security contract and will be sending blueprint schematics with relevant printing diagnostics. \

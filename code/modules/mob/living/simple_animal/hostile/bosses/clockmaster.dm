@@ -1,3 +1,4 @@
+//TODO: cult item interactions, make boss do more damage to cult item weilders and take more damage from cult items
 /mob/living/simple_animal/hostile/boss/clockmaster
 	name = "Clockwork Priest"
 	desc = "A man who has gone mad with the promise of great power from a dead god."
@@ -37,6 +38,7 @@
 	is_in_phase_2 = TRUE
 
 //activates at 50% hp, does a cool monologue before killing this mob and spawning the next stage
+//TODO: better dialogue and do a cool hover animation
 /mob/living/simple_animal/hostile/boss/clockmaster/proc/get_angry()
 	is_in_phase_2 = TRUE
 	point_regen_delay = 0 //prevents dummy from shooting off additional abilities during the monologue
@@ -77,11 +79,9 @@
 	boss_type = /mob/living/simple_animal/hostile/boss/clockmaster
 	say_when_triggered = "Arise once more, watchful guardians! Yrg Uvf Tenpvbhf Yvtug thvqr lbhe nvz gehr!"
 
-/datum/action/boss/steam_traps/IsAvailable()
+/datum/action/boss/turret_summon/IsAvailable()
 	. = ..()
 	if(!.)
-		return FALSE
-	if(vents_active)
 		return FALSE
 	return TRUE
 
@@ -93,7 +93,7 @@
 	var/id = "clockmaster"
 
 
-//temporaily activates steam traps placed throughout the arena, which cause burn damage if walked into. If steam traps are active already, refund boss points.
+//Activates a series of steam traps placed around the arena. Stepping onto these while active throws the victim back a few tiles and causes burn damage.
 /datum/action/boss/steam_traps
 	name = "Activate Steam Traps"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'

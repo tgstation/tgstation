@@ -29,6 +29,18 @@ modules = ["caves_lvl2encounter1_a.dmm", "caves_lvl2encounter1_b.dmm", "caves_lv
 [rooms.caves_lvl2encounter2]
 modules = ["caves_lvl2encounter2_a.dmm", "caves_lvl2encounter2_b.dmm", "caves_lvl2encounter2_c.dmm"]
 
+#A - Goliath pack
+#B - Ashwalker outpost
+#C - Elite goliath encounter
+[rooms.caves_lvl2encounter3]
+modules = ["caves_lvl2encounter3_a.dmm", "caves_lvl2encounter3_b.dmm", "caves_lvl2encounter3_c.dmm"]
+
+#A - We're rich!
+#B - Ashwalker bridge
+#C - Destroyed ledge (blocked access)
+[rooms.caves_lvl2encounter4]
+modules = ["caves_lvl2encounter4_a.dmm", "caves_lvl2encounter4_b.dmm", "caves_lvl2encounter4_c.dmm"]
+
 #Research outpost on the 2nd floor#
 [rooms.caves_lvl2researchpost]
 modules = ["caves_lvl2researchpost_a.dmm", "caves_lvl2researchpost_b.dmm", "caves_lvl2researchpost_c.dmm"]
