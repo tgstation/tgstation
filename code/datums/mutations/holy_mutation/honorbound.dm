@@ -239,7 +239,7 @@
 	if(!ishuman(grant_to))
 		return FALSE
 
-	var/mob/living/carbon/human/human_owner = owner
+	var/mob/living/carbon/human/human_owner = grant_to
 	var/datum/mutation/human/honorbound/honor_mut = human_owner.dna?.check_mutation(/datum/mutation/human/honorbound)
 	if(QDELETED(honor_mut))
 		return FALSE
