@@ -1,15 +1,9 @@
 name: Compare Screenshot Tests
 on:
-  # workflow_run:
-  #   workflows: [CI Suite]
-  #   types:
-  #     - completed
-  push:
-    branches:
-    - master
-  pull_request:
-    branches:
-    - master
+  workflow_run:
+    workflows: [CI Suite]
+    types:
+      - completed
 jobs:
   compare_snapshots:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
