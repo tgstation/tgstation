@@ -12,24 +12,18 @@ const SIZE = {
   large: 110,
 };
 
-/** Returns modular css classes*/
+/** Returns modular css classes */
 const getCss = (element, channel, size) =>
   classes([element, `${element}-${CHANNELS[channel]}`, `${element}-${size}`]);
 
-/**
- * Primary class for the TGUI modal.
- *
- * Props:
- *  - channel: The channel (thereby, color) to display the modal for.
- *  - maxLength: The maximum length of the message.
- */
+/** Primary class for the TGUI modal. */
 export class TguiModal extends Component {
-  constructor(props) {
-    super(props);
-    this.maxLength = props.maxLength || 1024;
+  constructor() {
+    super();
+    this.maxLength = 1024;
     this.state = {
       buttonContent: '>',
-      channel: CHANNELS.indexOf(props.channel) || 0,
+      channel: 0,
       hovering: false,
       size: SIZE.small,
     };
@@ -46,8 +40,8 @@ export class TguiModal extends Component {
   /** User presses enter. Closes if no value. */
   handleEnter = (_, value) => {
     const { channel } = this.state;
-    const { maxLength } = this.maxLength;
-    this.setSize(0);
+    const { maxLength } = this;
+    this.resetWindow();
     if (!value || value.length > maxLength) {
       Byond.sendMessage('close');
     } else {
@@ -59,7 +53,7 @@ export class TguiModal extends Component {
   };
   /** User presses escape, closes the window */
   handleEscape = () => {
-    this.setSize(0);
+    this.resetWindow();
     Byond.sendMessage('close');
   };
   /** Mouse over button. Changes button to channel name. */
@@ -70,19 +64,24 @@ export class TguiModal extends Component {
       hovering: true,
     });
   };
+  /** Purge the current input value */
+  handleForce = () => {
+    this.setSize(65);
+    // Byond.sendMessage('force', { entry: textAreaRef.current.value });
+  };
   /** Grabs the TAB key to change channels. */
   handleKeyDown = (event, value) => {
-    if (e.keyCode === KEY_TAB) {
+    if (event.keyCode === KEY_TAB) {
       this.incrementChannel();
       event.preventDefault();
     }
-    this.setSize(value);
+    this.setSize(value.length);
   };
   /**
    * Increments the channel or resets to the beginning of the list.
    * If a user is hovering over the button, the channel is changed.
    */
-  incrementChannel() {
+  incrementChannel = () => {
     const { channel, hovering } = this.state;
     if (channel === CHANNELS.length - 1) {
       this.setState({
@@ -97,12 +96,18 @@ export class TguiModal extends Component {
         channel: channel + 1,
       });
     }
-  }
+  };
+  /** Resets the channel and window size */
+  resetWindow = () => {
+    this.setState({ channel: 0 });
+    this.setSize(0);
+  };
   /**  Adjusts window sized based on target value */
   setSize = (value) => {
-    if (value.length > 56) {
+    Byond.winset(Byond.windowId, { size: '333x200' });
+    if (value > 56) {
       this.setState({ size: SIZE.large });
-    } else if (value.length > 22) {
+    } else if (value > 22) {
       this.setState({ size: SIZE.medium });
     } else {
       this.setState({ size: SIZE.small });
@@ -118,6 +123,16 @@ export class TguiModal extends Component {
     Byond.winset(Byond.windowId, { size: `333x${size}` });
     Byond.winset('tgui_modal_browser', { size: `333x${size}` });
   };
+  componentDidMount() {
+    Byond.subscribeTo('modal_data', (data) => {
+      this.setState({ channel: CHANNELS.indexOf(data.channel) });
+      this.maxLength = data.maxLength;
+      Byond.sendMessage('messaged', { test: 'Ok' });
+    });
+    Byond.subscribeTo('modal_force', () => {
+      this.handleForce();
+    });
+  }
 
   render() {
     const {
@@ -128,7 +143,7 @@ export class TguiModal extends Component {
       handleFocus,
       handleInput,
       handleKeyDown,
-      props: { maxLength },
+      maxLength,
     } = this;
     const { buttonContent, channel, size } = this.state;
     return (
