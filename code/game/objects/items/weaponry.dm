@@ -975,3 +975,38 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()
+
+/obj/item/scissors
+	name = "pair of scissors"
+	desc = "A blade that was mastercrafted by a legendary blacksmith. Its' enchantments let it slash through anything."
+	force = 7
+	sharpness = SHARP_POINTY
+	wound_bonus = 5
+	embedding = list("embed_chance" = 40)
+
+/obj/item/scissors/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/rps, strong_against_path = /obj/item/paper,  weak_against_path = /obj/item/stack/ore)
+
+/obj/item/scissors/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot == ITEM_SLOT_HANDS)
+		RegisterSignal(user, COMSIG_ON_CARBON_SLIP, .proc/running_with_scissors)
+	else
+		UnregisterSignal(user, COMSIG_ON_CARBON_SLIP)
+
+/obj/item/scissors/dropped(mob/user, silent)
+	. = ..()
+	UnregisterSignal(user, COMSIG_ON_CARBON_SLIP)
+
+/obj/item/scissors/proc/running_with_scissors(mob/living/carbon/goofus)
+	SIGNAL_HANDLER
+
+	if(prob(50) && !HAS_TRAIT(goofus, TRAIT_CLUMSY))
+		return
+
+	goofus.visible_message(span_danger("[goofus] slips right onto \the [src] [goofus.p_they()] [goofus.p_were()] holding!"), \
+		span_userdanger("You slip and fall over right onto \the [src] you were holding!"),
+		vision_distance = COMBAT_MESSAGE_RANGE)
+	tryEmbed(goofus, forced = TRUE)
+	UnregisterSignal(goofus, COMSIG_ON_CARBON_SLIP)

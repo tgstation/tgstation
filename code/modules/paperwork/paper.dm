@@ -36,6 +36,7 @@
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = "white"
+	sharpness = SHARP_EDGED // for rock paper scissors
 	/// What's actually written on the paper.
 	var/info = ""
 	/**
@@ -120,6 +121,7 @@
 	pixel_x = base_pixel_x + rand(-9, 9)
 	pixel_y = base_pixel_y + rand(-8, 8)
 	update_appearance()
+	AddElement(/datum/element/rps, strong_against_path = /obj/item/stack/ore,  weak_against_path = /obj/item/scissors)
 
 /obj/item/paper/update_icon_state()
 	if((info || add_info) && show_written_words)
