@@ -134,7 +134,7 @@ jobs:
       #     source $HOME/BYOND/byond/bin/byondsetup
       #     bash tools/ci/run_server.sh ${{ matrix.map }}
       - name: Test collating screenshots
-        run:
+        run: |
           mkdir data/screenshots
           mkdir data/screenshots_new
           cp code/modules/unit_tests/screenshots/screenshot_basic_red.png data/screenshots/screenshot_basic_red.png
