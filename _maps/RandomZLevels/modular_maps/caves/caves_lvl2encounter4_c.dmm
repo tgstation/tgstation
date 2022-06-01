@@ -1,0 +1,20 @@
+"i" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"s" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"x" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"B" = (/turf/open/chasm/lavaland,/area/template_noop)
+"V" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Y" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+
+(1,1,1) = {"
+BBBBBBBBBBVBBBBBBBBBBBBBBBBV
+BBBBBBBBBBVBBBBBBBBBBBBBBBBV
+BBBBBBBBBVVBBBBBBBBBVVVBBBBV
+BBBBBBBBBiVBBBBBBBBBVVVVVVVV
+BBBBBBBBBVVBBBBBVVVVVVVVVVVV
+BBBBBBBBVVVVVVVVVVVVVYYYYYYY
+BBVVVVVVVVVVVVVYYYYYYYYYYYYY
+xVVVVYYYYYYYYYYYYYYYYYYYYYYY
+VVVYYYYYYYYYYYYYYsssssssssYY
+YYYYYYYYYYYYYYssssssssssssYY
+VVYYYYYYYYssssssssssssssssss
+"}
