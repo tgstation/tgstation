@@ -477,8 +477,8 @@
 	//This is basically just about adding a shake to the borg, effect should look ilke an engine's running
 	var/base_x = robot_owner.base_pixel_x
 	var/base_y = robot_owner.base_pixel_y
-	robot_owner.pixel_x = base_x + rand(-13, 7)
-	robot_owner.pixel_y = base_y + rand(-13, 7)
+	robot_owner.pixel_x = base_x + rand(-7, 7)
+	robot_owner.pixel_y = base_y + rand(-7, 7)
 	//Larger shake with more changes to start out, feels like "Revving"
 	animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
 	for(var/i in 1 to 100)
