@@ -55,7 +55,7 @@ jobs:
         run: ls -R .
       - name: Extract
         if: steps.dl_results.outcome == 'success'
-        run: unzip bad-screenshots.zip bad-screenshots
+        run: unzip bad-screenshots.zip -d bad-screenshots
       - name: Use deploy key
         if: steps.dl_results.outcome == 'success'
         env:
