@@ -53,8 +53,8 @@
 	if(!next_turf || locate(/obj/crystal_mass) in next_turf)
 		return
 
+	var/datum/component/supermatter_crystal/sm = GetComponent(/datum/component/supermatter_crystal)
 	for(var/atom/movable/checked_atom as anything in next_turf)
-		var/datum/component/supermatter_crystal/sm = GetComponent(/datum/component/supermatter_crystal)
 		if(isliving(checked_atom))
 			sm.dust_mob(src, checked_atom, span_danger("\The [src] lunges out on [checked_atom], touching [checked_atom.p_them()]... \
 					[checked_atom.p_their()] body begins to shine with a brilliant light before crystallizing from the inside out and joining \the [src]!"),
@@ -125,9 +125,6 @@
 	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/cascade_portal/Destroy(force)
-	message_admins("[src] deleted at [get_area_name(loc)]. [ADMIN_JMP(loc)]")
-	log_game("[src] was deleted.")
-	investigate_log("was deleted.", INVESTIGATE_ENGINE)
 	. = ..()
 
 /**

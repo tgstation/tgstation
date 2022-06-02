@@ -233,6 +233,9 @@
 
 /datum/supermatter_delamination/proc/deleted_portal()
 	SIGNAL_HANDLER
+	message_admins("[src] deleted at [get_area_name(loc)]. [ADMIN_JMP(loc)]")
+	log_game("[src] was deleted.")
+	investigate_log("was deleted.", INVESTIGATE_ENGINE)
 
 	priority_announce("[Gibberish("The rift has been destroyed, we can no longer help you.", FALSE, 5)]")
 
