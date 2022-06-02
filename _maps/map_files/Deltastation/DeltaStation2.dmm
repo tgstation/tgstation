@@ -85218,8 +85218,7 @@
 "wRV" = (
 /obj/machinery/button/crematorium{
 	id = "cremawheat";
-	pixel_x = -26;
-	req_access = list("crematorium")
+	pixel_x = -26
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

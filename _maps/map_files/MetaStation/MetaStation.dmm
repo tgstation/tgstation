@@ -22441,8 +22441,7 @@
 "ijP" = (
 /obj/machinery/button/crematorium{
 	id = "crematoriumChapel";
-	pixel_x = -26;
-	req_access = list("crematorium")
+	pixel_x = -26
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
