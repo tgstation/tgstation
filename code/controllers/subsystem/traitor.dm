@@ -66,7 +66,6 @@ SUBSYSTEM_DEF(traitor)
 		/area/station/engineering/lobby,
 		/area/station/engineering/storage,
 		/area/station/science/lobby,
-		/area/station/science/test_area,
 		/area/station/security/prison,
 	))
 
