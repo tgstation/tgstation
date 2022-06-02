@@ -233,9 +233,9 @@
 
 /datum/supermatter_delamination/proc/deleted_portal()
 	SIGNAL_HANDLER
-	message_admins("[src] deleted at [get_area_name(loc)]. [ADMIN_JMP(loc)]")
-	log_game("[src] was deleted.")
-	investigate_log("was deleted.", INVESTIGATE_ENGINE)
+	message_admins("[cascade_rift] deleted at [get_area_name(cascade_rift.loc)]. [ADMIN_JMP(cascade_rift.loc)]")
+	log_game("[cascade_rift] was deleted.")
+	cascade_rift.investigate_log("was deleted.", INVESTIGATE_ENGINE)
 
 	priority_announce("[Gibberish("The rift has been destroyed, we can no longer help you.", FALSE, 5)]")
 
