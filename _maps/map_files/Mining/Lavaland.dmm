@@ -2053,11 +2053,6 @@
 /obj/item/stack/ore/glass/basalt,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"ns" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/mine/production)
 "nw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2071,7 +2066,9 @@
 /area/mine/maintenance)
 "nF" = (
 /obj/effect/spawner/random/trash/moisture_trap,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/commons)
 "nG" = (
@@ -3478,7 +3475,9 @@
 	name = "Mining Station Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/mine/production)
 "yS" = (
@@ -3592,7 +3591,7 @@
 /area/mine/eva)
 "zW" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/pump/on/layer4{
+/obj/machinery/atmospherics/components/binary/pump/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -3604,10 +3603,7 @@
 /area/mine/laborcamp/production)
 "zZ" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 4;
-	layer = 2.35
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/mine/laborcamp/commons)
 "Ad" = (
@@ -4250,8 +4246,7 @@
 /area/mine/living_quarters)
 "Ez" = (
 /obj/machinery/atmospherics/components/tank/air{
-	dir = 8;
-	layer = 2.35
+	dir = 8
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -6021,6 +6016,9 @@
 /area/lavaland/surface/outdoors)
 "Qy" = (
 /obj/effect/spawner/random/contraband/permabrig_gear,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/commons)
 "QC" = (
@@ -6819,8 +6817,7 @@
 /area/mine/maintenance)
 "XD" = (
 /obj/machinery/atmospherics/components/tank/air{
-	dir = 8;
-	layer = 2.35
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/mine/production)
@@ -6967,7 +6964,7 @@
 /turf/open/floor/iron,
 /area/mine/eva)
 "YA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/plating,
 /area/mine/production)
 "YE" = (
@@ -26371,7 +26368,7 @@ FP
 mE
 bq
 Po
-ns
+YA
 wR
 aj
 aj
