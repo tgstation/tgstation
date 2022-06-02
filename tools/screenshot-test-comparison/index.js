@@ -50,7 +50,7 @@ for (const filename of fs.readdirSync(artifactsDirectory)) {
 		continue
 	}
 
-	for (const screenshotName of fs.readdirSync(fullPathStat)) {
+	for (const screenshotName of fs.readdirSync(fullPath)) {
 		if (knownFailures.has(screenshotName)) {
 			continue
 		}
