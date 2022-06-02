@@ -61,7 +61,7 @@
 
 	loot = list(/obj/effect/decal/cleanable/blood, \
 				/obj/effect/decal/cleanable/blood/innards, \
-				/obj/item/organ/heart/demon)
+				/obj/item/organ/internal/heart/demon)
 	del_on_death = 1
 	///Sound played when consuming a body
 	var/feast_sound = 'sound/magic/demon_consume.ogg'
@@ -140,18 +140,18 @@
 	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
-/obj/item/organ/heart/demon
+/obj/item/organ/internal/heart/demon
 	name = "demon heart"
 	desc = "Still it beats furiously, emanating an aura of utter hate."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart-on"
 	decay_factor = 0
 
-/obj/item/organ/heart/demon/ComponentInitialize()
+/obj/item/organ/internal/heart/demon/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 
-/obj/item/organ/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
+/obj/item/organ/internal/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
 	user.visible_message(span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"), \
@@ -167,17 +167,17 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
-/obj/item/organ/heart/demon/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/demon/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(M.mind)
 		M.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl(null))
 
-/obj/item/organ/heart/demon/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/demon/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(M.mind)
 		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
 
-/obj/item/organ/heart/demon/Stop()
+/obj/item/organ/internal/heart/demon/Stop()
 	return 0 // Always beating.
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter

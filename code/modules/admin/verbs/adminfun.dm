@@ -143,7 +143,7 @@
 
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/H = i
-		new /obj/item/organ/zombie_infection/nodamage(H)
+		new /obj/item/organ/internal/zombie_infection/nodamage(H)
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
@@ -160,7 +160,7 @@
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/organ/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
+	for(var/obj/item/organ/internal/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
 		qdel(I)
 
 	message_admins("[key_name_admin(usr)] cured all zombies.")
