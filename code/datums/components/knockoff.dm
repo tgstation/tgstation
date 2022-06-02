@@ -75,7 +75,7 @@
 	UnregisterSignal(M, COMSIG_HUMAN_DISARM_HIT)
 	UnregisterSignal(M, COMSIG_LIVING_STATUS_KNOCKDOWN)
 
-/datum/component/knockoff/proc/unique_item_check(/obj/item/our_item, /obj/item/unique_item)
+/datum/component/knockoff/proc/unique_item_check(obj/item/our_item, obj/item/unique_item)
 	if(!QDELETED(our_item))
 		if(istype(our_item, unique_item))
 			return TRUE
