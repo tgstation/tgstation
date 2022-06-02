@@ -58,7 +58,7 @@
 	var/pinless = FALSE
 	var/can_flashlight = FALSE //if a flashlight can be added or removed if it already has one.
 	var/obj/item/flashlight/seclite/gun_light
-	var/datum/action/item_action/toggle_gunlight/alight
+
 	var/gunlight_state = "flight"
 
 	var/can_bayonet = FALSE //if a bayonet can be added or removed if it already has one.
@@ -77,8 +77,9 @@
 	. = ..()
 	if(pin)
 		pin = new pin(src)
+
 	if(gun_light)
-		alight = new(src)
+		add_item_action(/datum/action/item_action/toggle_gunlight)
 
 /obj/item/gun/Destroy()
 	if(isobj(pin)) //Can still be the initial path, then we skip
@@ -417,6 +418,7 @@
 /obj/item/gun/attackby(obj/item/I, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
+
 	else if(istype(I, /obj/item/flashlight/seclite))
 		if(!can_flashlight)
 			return ..()
@@ -427,9 +429,11 @@
 			to_chat(user, span_notice("You click [S] into place on [src]."))
 			set_gun_light(S)
 			update_gunlight()
-			alight = new(src)
-			if(loc == user)
-				alight.Grant(user)
+			var/datum/action/light_action = add_item_action(/datum/action/item_action/toggle_gunlight)
+			// If we're being held, we need to go ahead and give the action out
+			if(user == loc)
+				give_item_action(light_action, user)
+
 	else if(istype(I, /obj/item/knife))
 		var/obj/item/knife/K = I
 		if(!can_bayonet || !K.bayonet || bayonet) //ensure the gun has an attachment point available, and that the knife is compatible with it.
@@ -537,7 +541,9 @@
 	set_gun_light(null)
 	update_gunlight()
 	removed_light.update_brightness()
-	QDEL_NULL(alight)
+
+	var/datum/action/item_action/toggle_gunlight/light_action = locate() in actions
+	remove_item_action(light_action)
 	return TRUE
 
 
@@ -570,16 +576,16 @@
 	gun_light = new_light
 
 /obj/item/gun/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, alight))
-		toggle_gunlight()
-	else
-		..()
+	if(istype(actiontype, /datum/action/item_action/toggle_gunlight))
+		toggle_gunlight(user)
+		return
 
-/obj/item/gun/proc/toggle_gunlight()
+	return ..()
+
+/obj/item/gun/proc/toggle_gunlight(mob/user)
 	if(!gun_light)
 		return
 
-	var/mob/living/carbon/human/user = usr
 	gun_light.on = !gun_light.on
 	gun_light.update_brightness()
 	to_chat(user, span_notice("You toggle the gunlight [gun_light.on ? "on":"off"]."))

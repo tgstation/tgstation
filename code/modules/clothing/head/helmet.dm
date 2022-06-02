@@ -17,13 +17,11 @@
 
 	var/can_flashlight = FALSE //if a flashlight can be mounted. if it has a flashlight and this is false, it is permanently attached.
 	var/obj/item/flashlight/seclite/attached_light
-	var/datum/action/item_action/toggle_helmet_flashlight/alight
 
 /obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
 	if(attached_light)
-		alight = new(src)
-
+		add_item_action(/datum/action/item_action/toggle_helmet_flashlight)
 
 /obj/item/clothing/head/helmet/Destroy()
 	var/obj/item/flashlight/seclite/old_light = set_attached_light(null)
@@ -42,15 +40,16 @@
 		. += "It has a mounting point for a <b>seclite</b>."
 
 
-/obj/item/clothing/head/helmet/handle_atom_del(atom/A)
-	if(A == attached_light)
+/obj/item/clothing/head/helmet/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == attached_light)
 		set_attached_light(null)
 		update_helmlight()
 		update_appearance()
-		QDEL_NULL(alight)
-		qdel(A)
-	return ..()
 
+		var/datum/action/item_action/toggle_helmet_flashlight/light_action = locate() in actions
+		remove_item_action(light_action)
+		qdel(deleting_atom)
+	return ..()
 
 ///Called when attached_light value changes.
 /obj/item/clothing/head/helmet/proc/set_attached_light(obj/item/flashlight/seclite/new_attached_light)
@@ -531,11 +530,12 @@
 		icon_state = state
 	return ..()
 
-/obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
-	if(istype(action, alight))
+/obj/item/clothing/head/helmet/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_helmet_flashlight))
 		toggle_helmlight()
-	else
-		..()
+		return
+
+	return ..()
 
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/flashlight/seclite))
@@ -547,9 +547,11 @@
 			set_attached_light(S)
 			update_appearance()
 			update_helmlight()
-			alight = new(src)
-			if(loc == user)
-				alight.Grant(user)
+			var/datum/action/light_action = add_item_action(/datum/action/item_action/toggle_helmet_flashlight)
+			// If we're being held, we need to go ahead and give the action out
+			if(user == loc)
+				give_item_action(light_action, user)
+
 		return
 	return ..()
 
@@ -567,7 +569,8 @@
 		removed_light.update_brightness(user)
 		update_appearance()
 		user.update_inv_head()
-		QDEL_NULL(alight)
+		var/datum/action/item_action/toggle_helmet_flashlight/light_action = locate() in actions
+		remove_item_action(light_action)
 		return TRUE
 
 /obj/item/clothing/head/helmet/proc/toggle_helmlight()

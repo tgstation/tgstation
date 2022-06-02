@@ -50,7 +50,7 @@
 	var/list/datum/action/actions
 	/// A list of chameleon actions we have specifically
 	/// This can be unified with the actions list
-	var/list/datum/action/chameleon/chameleon_item_actions
+	var/list/datum/action/item_action/chameleon/chameleon_item_actions
 	///Cursor icon used when holding shift over things
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 

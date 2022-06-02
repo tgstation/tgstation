@@ -8,13 +8,6 @@
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
 
-/datum/action/item_action/toggle_light/Trigger(trigger_flags)
-	if(istype(target, /obj/item/modular_computer))
-		var/obj/item/modular_computer/mc = target
-		mc.toggle_flashlight()
-		return
-	..()
-
 /datum/action/item_action/toggle_computer_light
 	name = "Toggle Flashlight"
 
@@ -45,44 +38,17 @@
 /datum/action/item_action/toggle_welding_screen
 	name = "Toggle Welding Screen"
 
-/datum/action/item_action/toggle_welding_screen/Trigger(trigger_flags)
-	var/obj/item/clothing/head/hardhat/weldhat/H = target
-	if(istype(H))
-		H.toggle_welding_screen(owner)
-
-/datum/action/item_action/toggle_welding_screen/plasmaman
-	name = "Toggle Welding Screen"
-
-/datum/action/item_action/toggle_welding_screen/plasmaman/Trigger(trigger_flags)
-	var/obj/item/clothing/head/helmet/space/plasmaman/H = target
-	if(istype(H))
-		H.toggle_welding_screen(owner)
-
 /datum/action/item_action/toggle_spacesuit
 	name = "Toggle Suit Thermal Regulator"
 	icon_icon = 'icons/mob/actions/actions_spacesuit.dmi'
 	button_icon_state = "thermal_off"
 
-/datum/action/item_action/toggle_spacesuit/New(Target)
-	. = ..()
-	RegisterSignal(target, COMSIG_SUIT_SPACE_TOGGLE, .proc/toggle)
-
-/datum/action/item_action/toggle_spacesuit/Destroy()
-	UnregisterSignal(target, COMSIG_SUIT_SPACE_TOGGLE)
-	return ..()
-
-/datum/action/item_action/toggle_spacesuit/Trigger(trigger_flags)
+/datum/action/item_action/toggle_spacesuit/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force)
 	var/obj/item/clothing/suit/space/suit = target
-	if(!istype(suit))
-		return
-	suit.toggle_spacesuit()
+	if(istype(suit))
+		button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
 
-/// Toggle the action icon for the space suit thermal regulator
-/datum/action/item_action/toggle_spacesuit/proc/toggle(obj/item/clothing/suit/space/suit)
-	SIGNAL_HANDLER
-
-	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
-	UpdateButtons()
+	return ..()
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
@@ -106,8 +72,8 @@
 	name = "Toggle Jetpack Stabilization"
 
 /datum/action/item_action/jetpack_stabilization/IsAvailable()
-	var/obj/item/tank/jetpack/J = target
-	if(!istype(J) || !J.on)
+	var/obj/item/tank/jetpack/linked_jetpack = target
+	if(!istype(linked_jetpack) || !linked_jetpack.on)
 		return FALSE
 	return ..()
 
