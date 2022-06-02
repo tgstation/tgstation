@@ -9162,6 +9162,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"drj" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/station/command/bridge)
 "drm" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
@@ -46028,14 +46034,6 @@
 "qsL" = (
 /obj/machinery/vending/coffee{
 	pixel_x = -3
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/obj/machinery/button/door/directional/west{
-	id = "council blast";
-	name = "Council Chamber Blast Door Control";
-	req_access = list("command")
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -95700,7 +95698,7 @@ duI
 duI
 eal
 ddm
-nEC
+drj
 gmH
 lSz
 aks
