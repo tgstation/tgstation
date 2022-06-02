@@ -9162,12 +9162,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"drj" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/station/command/bridge)
 "drm" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
@@ -46032,6 +46026,11 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "qsL" = (
+/obj/machinery/button/door/directional/west{
+	id = "council blast";
+	name = "Council Chamber Blast Door Control";
+	req_access = list("command")
+	},
 /obj/machinery/vending/coffee{
 	pixel_x = -3
 	},
@@ -61782,6 +61781,12 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/station/service/library)
+"vKL" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/station/command/bridge)
 "vKW" = (
 /obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/siding/purple{
@@ -95698,7 +95703,7 @@ duI
 duI
 eal
 ddm
-drj
+vKL
 gmH
 lSz
 aks
