@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "Cargorilla."
-  - code_imp: "Removed a locate() in world from the evil PunPun trait"
