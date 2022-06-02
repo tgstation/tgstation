@@ -1,3 +1,5 @@
+/datum/unit_test/get_turf_pixel
+
 ///ensures that get_turf_pixel() returns turfs within the bounds of the map, even when called on a movable with its sprite out of bounds
 /datum/unit_test/get_turf_pixel/Run()
 	//we need long larry to peek over the top edge of the earth
