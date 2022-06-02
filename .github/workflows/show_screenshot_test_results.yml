@@ -1,0 +1,79 @@
+# This is a separate workflow so that it can access secrets, which are necessary
+# because we need to be able to upload the images and post a comment.
+# In the event this workflow fails, the screenshot test results are still
+# available as an artifact of the screenshot test comparison workflow itself.
+# This simply provides necessary quality of life.
+name: Show Screenshot Test Results
+on:
+  workflow_run:
+    workflows: [CI Suite]
+    types:
+      - completed
+jobs:
+  show_screenshot_test_results:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Show Screenshot Test Results
+    runs-on: ubuntu-20.04
+
+    # ⚠ DO NOT RUN USER CODE HERE ⚠
+    # This could mean something like tools/whatever.sh.
+    # This runs on workflow_run, and has access to SECRETS.
+    # There's no checkout step here, that's intentional!
+    steps:
+      - name: 'Download artifact'
+        uses: actions/github-script@v3.1.0
+        with:
+          script: |
+            const artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+
+            const matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "bad-screenshots"
+            })[0];
+
+            const download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+
+            const fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/bad-screenshots.zip', Buffer.from(download.data));      - name: ls
+      - name: Extract
+        if: steps.dl_results.outcome == 'success'
+        run: unzip bad-screenshots.zip bad-screenshots
+      - name: What's here
+        if: steps.dl_results.outcome == 'success'
+        run: ls -R .
+      - name: Use deploy key
+        if: steps.dl_results.outcome == 'success'
+        env:
+          DEPLOY_KEY_PRIVATE: ${{ secrets.ARTIFACTS_REPO_DEPLOY_KEY_PRIVATE }}
+        run: |
+          echo "$DEPLOY_KEY_PRIVATE" > ~/.ssh/deploy_key
+          ssh-add ~/.ssh/deploy_key
+      - name: Checkout assets repository
+        if: steps.dl_results.outcome == 'success'
+        uses: actions/checkout@v3
+        with:
+          repository: Mothblocks/screenshot-test-files
+          path: repository
+      - name: Test pushing to the repository
+        if: steps.dl_results.outcome == 'success'
+        run: |
+          echo '🦋' > moth.txt
+          git add moth.txt
+          git config user.name 'Screenshot Tests'
+          git commit -m 'Automated push'
+          git push origin main
+      # - name: Show screenshot test results
+      #   if: steps.dl_results.outcome == 'success'
+      #   # MOTHBLOCKS TODO: Move this to a tgstation repository
+      #   uses: Mothblocks/show-screenshot-test-results@master
+      #   with:
+      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+      #     screenshots-folder: bad-screenshots
