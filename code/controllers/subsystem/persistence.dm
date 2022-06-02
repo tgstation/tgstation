@@ -250,11 +250,10 @@ SUBSYSTEM_DEF(persistence)
 			continue
 
 		T.showpiece = new /obj/item/showpiece_dummy(T, path)
-		var/trophy_message = trim(html_encode(chosen_trophy["message"]))
-		if(trophy_message == "")
-			trophy_message = T.showpiece.desc
-		T.trophy_message = trophy_message
-		T.placer_key = chosen_trophy["placer_key"]
+		T.trophy_message = trim(html_encode(chosen_trophy["message"]))
+		if(T.trophy_message == "")
+			T.trophy_message = T.showpiece.desc
+		T.placer_key = trim(html_encode(chosen_trophy["placer_key"]))
 		T.added_roundstart = TRUE
 		T.set_light(2)
 		T.update_appearance()
@@ -366,7 +365,7 @@ SUBSYSTEM_DEF(persistence)
 	if(!T.added_roundstart && T.showpiece)
 		var/list/data = list()
 		data["path"] = T.showpiece.type
-		data["message"] = T.trophy_message
+		data["message"] = T.trophy_message ? T.trophy_message : T.showpiece.desc
 		data["placer_key"] = T.placer_key
 		saved_trophies += list(data)
 

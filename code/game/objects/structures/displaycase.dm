@@ -289,9 +289,13 @@
 /obj/structure/displaycase/trophy
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
-	var/placer_key = ""
-	var/added_roundstart = FALSE
 	integrity_failure = 0
+	///the key of the player who placed the item in the case
+	var/placer_key = ""
+	///is the trophy a hologram, added roundstart?
+	var/added_roundstart = FALSE
+	///are we about to edit
+	var/historian_mode = FALSE
 
 /obj/structure/displaycase/trophy/Initialize(mapload)
 	. = ..()
@@ -301,16 +305,35 @@
 	GLOB.trophy_cases -= src
 	return ..()
 
+/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/key/displaycase))
+		toggle_historian_mode(user)
+		return
+	. = ..()
+
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
 		if(added_roundstart)
 			visible_message(span_danger("The [showpiece] fizzles and vanishes!"))
 			do_sparks(1, FALSE, src)
 			QDEL_NULL(showpiece)
-			trophy_message = null
 			added_roundstart = FALSE
 		else
 			. = ..()
+		placer_key = ""
+		trophy_message = null
+
+/obj/structure/displaycase/trophy/insert_showpiece(obj/item/wack, mob/user)
+	if(..())
+		return
+	if(showpiece == wack)
+		placer_key = user.ckey
+
+/obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
+	historian_mode = !historian_mode
+	to_chat(user, span_notice("You [!historian_mode ? "disable" : "enable"] the case's historian mode."))
+	playsound(src, 'sound/machines/twobeep.ogg', 50)
+	SStgui.update_uis(src)
 
 /obj/structure/displaycase/trophy/toggle_lock(mob/user)
 	..()
@@ -322,8 +345,27 @@
 		data["showpiece_name"] = capitalize(showpiece.name)
 		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
 		data["showpiece_icon"] = base64
-		data["showpiece_description"] = trophy_message ? trophy_message : showpiece?.desc
+		data["showpiece_description"] = trophy_message ? trophy_message : null
+		data["historian_mode"] = historian_mode
+		data["added_roundstart"] = added_roundstart
 	return data
+
+/obj/structure/displaycase/trophy/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("keyInsert")
+			var/obj/item/key/displaycase/disk = usr.get_active_held_item()
+			if(istype(disk))
+				toggle_historian_mode(usr)
+				return TRUE
+			return
+		if("changeMessage")
+			if(!added_roundstart)
+				var/new_trophy_message = trim("[params["passedMessage"]]", 255)
+				trophy_message = new_trophy_message
+				return TRUE
 
 /obj/structure/displaycase/trophy/ui_interact(mob/user, datum/tgui/ui)
 	if(open)

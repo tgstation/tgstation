@@ -1,12 +1,12 @@
 import { useBackend } from '../backend';
-import { Icon, Box, Section, Flex } from '../components';
+import { Icon, Input, Box, Section, Flex } from '../components';
 import { Window } from '../layouts';
 
 export const Trophycase = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    historian_mode,
     showpiece_name,
-    showpiece_description,
   } = data;
   return (
     <Window
@@ -21,12 +21,12 @@ export const Trophycase = (props, context) => {
           </Flex.Item>
           <Flex.Item align="center" mb={1}>
             <Section fill>
-              <HistoryImage />
+              <ShowpieceImage />
             </Section>
           </Flex.Item>
           <Flex.Item mb={1}>
             <Section>
-              <b>{showpiece_description ? showpiece_description : "This exhibit under construction. History awaits your contribution!"}</b>
+              <ShowpieceDescription />
             </Section>
           </Flex.Item>
         </Flex>
@@ -35,7 +35,7 @@ export const Trophycase = (props, context) => {
   );
 };
 
-const HistoryImage = (props, context) => {
+const ShowpieceImage = (props, context) => {
   const { data } = useBackend(context);
   const {
     showpiece_icon,
@@ -56,5 +56,36 @@ const HistoryImage = (props, context) => {
       <Section height="100%">
         <Icon name="landmark" spin />
       </Section>)
+  );
+};
+
+const ShowpieceDescription = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    added_roundstart,
+    historian_mode,
+    showpiece_description,
+  } = data;
+  return (
+    added_roundstart
+      ? (
+        <Section>
+          <b>{showpiece_description}</b>
+        </Section>
+      )
+      : historian_mode
+        ? (
+          <Section>
+            <Input fluid placeholder="Let's make history!" value={showpiece_description}
+              onChange={(e, value) => act('changeMessage', {
+                passedMessage: value,
+              })} />
+          </Section>
+        )
+        : (
+          <Section>
+            <b>{showpiece_description ? showpiece_description : "This exhibit under construction. History awaits your contribution!"}</b>
+          </Section>
+        )
   );
 };
