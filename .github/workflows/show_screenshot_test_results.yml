@@ -79,6 +79,7 @@ jobs:
           git config user.name 'Screenshot Tests'
           git commit -m 'Automated push'
           git push origin main
+        working-directory: repository
       # - name: Show screenshot test results
       #   if: steps.dl_results.outcome == 'success'
       #   # MOTHBLOCKS TODO: Move this to a tgstation repository
