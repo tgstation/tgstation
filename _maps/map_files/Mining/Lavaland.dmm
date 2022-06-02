@@ -261,7 +261,7 @@
 "cR" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
-	id = "Gulag Panic";
+	id = "gulag_panic";
 	name = "Security Lockdown Door"
 	},
 /turf/open/floor/iron,
@@ -451,12 +451,12 @@
 "dZ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/poddoor/preopen{
-	id = "Gulag Panic";
-	name = "Security Lockdown Door"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/poddoor/preopen{
+	id = "gulag_panic";
+	name = "Security Lockdown Door"
+	},
 /turf/open/floor/iron,
 /area/mine/laborcamp/commons)
 "ea" = (
@@ -492,6 +492,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/light/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -1077,7 +1078,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/living)
 "it" = (
-/obj/effect/spawner/structure/window/reinforced/damaged,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "iu" = (
@@ -1111,14 +1112,14 @@
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp/ruins/seedvault)
 "iB" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Private Room B";
-	id_tag = "mining_private_room_b"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/mining{
+	name = "Private Room B";
+	id_tag = "mining_private_room_b"
+	},
 /turf/open/floor/carpet/donk,
 /area/mine/eva)
 "iH" = (
@@ -1176,10 +1177,6 @@
 	id = "Oink Oink"
 	},
 /obj/machinery/airalarm/directional/south,
-/obj/item/ammo_casing/shotgun/executioner/spent,
-/obj/item/ammo_casing/shotgun/executioner/spent{
-	pixel_y = 15
-	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/bar)
 "jh" = (
@@ -2484,7 +2481,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth,
-/area/lavaland/surface/outdoors)
+/area/mine/living_quarters)
 "qM" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/box/cups{
@@ -3461,9 +3458,6 @@
 /area/mine/living_quarters)
 "yI" = (
 /obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
@@ -3586,7 +3580,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/camera/autoname/broken/directional/west{
 	c_tag = "Security - Labor Camp Storage";
-	network = list("labor")
+	network = list("labor");
+	machine_stat = BROKEN
 	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/bar)
@@ -4134,7 +4129,7 @@
 "Ds" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
-	id = "Gulag Panic";
+	id = "gulag_panic";
 	name = "Security Lockdown Door"
 	},
 /turf/open/floor/iron,
@@ -4419,9 +4414,6 @@
 /area/mine/production)
 "Fk" = (
 /obj/structure/table/wood,
-/obj/item/gun/energy/floragun{
-	pixel_y = 6
-	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
@@ -4669,9 +4661,9 @@
 	name = "Prison Ofitser"
 	},
 /obj/machinery/button/door/directional/south{
-	id = "PermaLockdown";
+	id = "gulag_panic";
 	name = "Panic Button";
-	req_access_txt = list("brig")
+	req_access = list("brig")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -5290,9 +5282,9 @@
 	req_access_txt = list("brig")
 	},
 /obj/machinery/button/door/directional/south{
-	id = "PermaLockdown";
+	id = "gulag_panic";
 	name = "Panic Button";
-	req_access_txt = list("brig")
+	req_access = list("brig")
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/commons)
@@ -5552,7 +5544,7 @@
 "MJ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
-	id = "Gulag Panic";
+	id = "gulag_panic";
 	name = "Security Lockdown Door"
 	},
 /obj/structure/cable,
@@ -5577,10 +5569,6 @@
 /obj/effect/decal/cleanable/blood/gibs/core,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/ammo_casing/shotgun/executioner/spent{
-	pixel_x = -1;
-	pixel_y = 9
-	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/bar)
 "MT" = (
@@ -5691,6 +5679,11 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/smooth,
 /area/mine/production)
+"NF" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/mine/laborcamp/bar)
 "NG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
@@ -6420,13 +6413,6 @@
 "TH" = (
 /turf/open/floor/iron,
 /area/mine/laborcamp/commons)
-"TI" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/textured,
-/area/mine/living_quarters)
 "TL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/very_dim/directional/south,
@@ -6811,10 +6797,6 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/east,
-/obj/machinery/camera/directional/east{
-	network = list("labor");
-	c_tag = "Security - Labor Camp Garden"
-	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/mine/hydroponics)
 "Xs" = (
@@ -12796,7 +12778,7 @@ qM
 MN
 qV
 Qs
-RK
+NF
 aw
 aj
 aj
@@ -13053,7 +13035,7 @@ Ev
 RZ
 Ts
 wp
-RK
+NF
 aw
 aj
 aj
@@ -13310,7 +13292,7 @@ Oz
 RD
 Dd
 EG
-RK
+NF
 aw
 aj
 aj
@@ -16385,7 +16367,6 @@ aw
 aj
 aj
 aj
-Rp
 aj
 aj
 aj
@@ -16393,7 +16374,8 @@ aj
 aj
 aj
 aj
-Rp
+aj
+aj
 aj
 aj
 aj
@@ -16642,7 +16624,6 @@ aj
 aj
 aj
 aj
-aI
 aj
 aj
 aj
@@ -16650,7 +16631,8 @@ aj
 aj
 aj
 aj
-aI
+aj
+aj
 aj
 aj
 aj
@@ -16899,15 +16881,15 @@ aj
 aj
 aj
 aj
-QR
-QR
-QR
-QR
-QR
-QR
-QR
-QR
-QR
+Rp
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+Rp
 aj
 aj
 aj
@@ -17156,15 +17138,15 @@ aj
 aj
 aj
 aj
-QR
-QR
-QR
-QR
-QR
-QR
-QR
-QR
-QR
+aI
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aI
 aj
 aj
 aj
@@ -22798,11 +22780,11 @@ AJ
 yO
 gd
 sU
-Dq
+sU
 Pf
 sU
-sU
-TI
+Dq
+Pf
 sU
 sU
 Ri
@@ -23057,11 +23039,11 @@ au
 WF
 Vd
 WF
-Ov
 WF
+Ov
 WF
 Vd
-Ov
+WF
 Dk
 eM
 De

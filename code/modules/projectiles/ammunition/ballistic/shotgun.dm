@@ -15,10 +15,6 @@
 	icon_state = "stunshell"
 	projectile_type = /obj/projectile/bullet/shotgun_slug/executioner
 
-/obj/item/ammo_casing/shotgun/executioner/spent
-	name = "spent executioner slug"
-	loaded_projectile = null
-
 /obj/item/ammo_casing/shotgun/pulverizer
 	name = "pulverizer slug"
 	desc = "A 12 gauge lead slug purpose built to annihilate bones on impact."
