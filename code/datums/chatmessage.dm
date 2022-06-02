@@ -96,6 +96,8 @@
 	approx_lines = list()
 	fade_times_by_image = list()
 
+GLOBAL_VAR_INIT(find_chatmessage_references, FALSE)
+
 /datum/chatmessage/Destroy()
 	. = ..()
 	for(var/client/hearer in hearers)
@@ -127,6 +129,8 @@
 	hearers = null
 	approx_lines = null
 	fade_times_by_image = null
+	if(GLOB.find_chatmessage_references)
+		return QDEL_HINT_IFFAIL_FINDREFERENCE
 
 /datum/chatmessage/proc/end_of_life()
 	SIGNAL_HANDLER
