@@ -4,14 +4,11 @@
 # available as an artifact of the screenshot test comparison workflow itself.
 # This simply provides necessary quality of life.
 name: Show Screenshot Test Results
-# MOTHBLOCKS TODO: Change this to workflow_run, this is just for testing
 on:
-  push:
-    branches:
-    - master
-  pull_request:
-    branches:
-    - master
+  workflow_run:
+    workflows: [CI Suite]
+    types:
+      - completed
 jobs:
   show_screenshot_test_results:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -23,17 +20,33 @@ jobs:
     # This runs on workflow_run, and has access to SECRETS.
     # There's no checkout step here, that's intentional!
     steps:
-      # MOTHBLOCKS TODO: Use https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
-      # when this switches to workflow_run
-      - name: Download screenshot test results
-        id: dl_results
-        uses: actions/download-artifact@v3
-        # It's okay if a test doesn't have an artifact, that means
-        # everything went good.
-        continue-on-error: true
+      - name: 'Download artifact'
+        uses: actions/github-script@v3.1.0
         with:
-          name: bad-screenshots
-      - name: ls
+          script: |
+            const artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+
+            const matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "bad-screenshots"
+            })[0];
+
+            const download = await github.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+
+            const fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/bad-screenshots.zip', Buffer.from(download.data));      - name: ls
+      - name: Extract
+        if: steps.dl_results.outcome == 'success'
+        run: unzip bad-screenshots.zip bad-screenshots
+      - name: What's here
         if: steps.dl_results.outcome == 'success'
         run: ls -R .
       - name: Use deploy key
