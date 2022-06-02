@@ -57,7 +57,7 @@
 
 /obj/item/crowbar/large/emergency
 	name = "emergency crowbar"
-	desc = "It's a huge crowbar. It almost seems deliberately designed to not be able to fit inside of a backpack."
+	desc = "It's a bulky crowbar. It almost seems deliberately designed to not be able to fit inside of a backpack."
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/crowbar/large/heavy //from space ruin
