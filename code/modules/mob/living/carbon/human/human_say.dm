@@ -84,4 +84,12 @@
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
-		return " (as [get_id_name("Unknown")])"\
+		return " (as [get_id_name("Unknown")])"
+
+/**
+ * Makes the player force say what's in their current input box.
+ */
+/mob/living/carbon/human/proc/force_say()
+	if(!client || !mind || !client.tgui_modal)
+		return FALSE
+	client.tgui_modal.force_say()

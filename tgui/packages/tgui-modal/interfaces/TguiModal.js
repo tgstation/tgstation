@@ -52,10 +52,8 @@ export class TguiModal extends Component {
     this.closeWindow();
   };
   /** User presses escape, closes the window */
-  handleEscape = (event) => {
-    // this.closeWindow();
-    this.handleForce();
-    event.preventDefault();
+  handleEscape = () => {
+    this.closeWindow();
   };
   /** Mouse over button. Changes button to channel name. */
   handleFocus = () => {

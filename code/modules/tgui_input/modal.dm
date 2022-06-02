@@ -31,8 +31,8 @@
  */
 /datum/tgui_modal/proc/initialize()
 	set waitfor = FALSE
-	// Minimal sleep to defer initialization to after client constructor
-	sleep(1)
+	// Sleep to defer initialization to after client constructor
+	sleep(10 SECONDS)
 	window.initialize(
 			strict_mode = TRUE,
 			fancy = TRUE,
@@ -47,6 +47,13 @@
 /datum/tgui_modal/proc/close()
 	winset(client, "tgui_modal", "is-visible=false")
 	closed = TRUE
+
+/**
+ * Force say handler.
+ * Sends a message to the modal window to send its current value.
+ */
+/datum/tgui_modal/proc/force_say()
+	window.send_message("force")
 
 /**
  * The equivalent of ui_act, this waits on messages from the window
