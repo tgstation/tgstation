@@ -8,6 +8,7 @@
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_PLANT_SAFE,
+		TRAIT_LITERATE,
 	)
 	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
