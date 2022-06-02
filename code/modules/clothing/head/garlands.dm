@@ -8,9 +8,8 @@
 	. = ..()
 	if(slot_flags & slot)
 		var/datum/component/mood/our_mood = user.GetComponent(/datum/component/mood)
-		if(our_mood?.sanity <= SANITY_NEUTRAL)
-			START_PROCESSING(SSobj, src)
-			RegisterSignal(src, COMSIG_ATOM_FIRE_ACT, .proc/stop_sanity_boost)
+		START_PROCESSING(SSobj, src)
+		RegisterSignal(src, COMSIG_ATOM_FIRE_ACT, .proc/stop_sanity_boost)
 
 /obj/item/clothing/head/garland/dropped(mob/user)
 	. = ..()
