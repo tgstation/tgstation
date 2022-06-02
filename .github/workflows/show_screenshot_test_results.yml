@@ -42,7 +42,7 @@ jobs:
             });
 
             const fs = require('fs');
-            fs.writeFileSync('${{github.workspace}}/bad-screenshots.zip', Buffer.from(download.data));      - name: ls
+            fs.writeFileSync('${{github.workspace}}/bad-screenshots.zip', Buffer.from(download.data));
       - name: Extract
         if: steps.dl_results.outcome == 'success'
         run: unzip bad-screenshots.zip bad-screenshots
