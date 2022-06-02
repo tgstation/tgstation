@@ -1076,6 +1076,10 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/living)
+"it" = (
+/obj/effect/spawner/structure/window/reinforced/damaged,
+/turf/open/floor/plating,
+/area/mine/living_quarters)
 "iu" = (
 /obj/machinery/chem_dispenser/mutagensaltpeter,
 /turf/open/floor/iron/dark,
@@ -3590,13 +3594,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp/commons)
-"zP" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/mine/laborcamp/bar)
 "zV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4129,6 +4126,11 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/textured,
 /area/mine/living_quarters)
+"Dr" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/mine/laborcamp/commons)
 "Ds" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
@@ -6145,8 +6147,8 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/bar)
 "RK" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced/damaged,
 /turf/open/floor/plating,
 /area/mine/laborcamp/bar)
 "RP" = (
@@ -11508,7 +11510,7 @@ wT
 wT
 PD
 zZ
-dG
+Dr
 aw
 aj
 aj
@@ -11765,7 +11767,7 @@ sg
 sg
 Gc
 nF
-dG
+Dr
 aw
 aj
 aj
@@ -12022,7 +12024,7 @@ Sx
 sg
 Ik
 Qy
-dG
+Dr
 aw
 aj
 aj
@@ -13819,7 +13821,7 @@ aq
 aq
 aq
 yr
-zP
+RK
 yr
 yr
 Db
@@ -21504,7 +21506,7 @@ aj
 aj
 bf
 cM
-kb
+it
 gB
 cM
 cM
@@ -21760,13 +21762,13 @@ pU
 aj
 aj
 aj
-AL
+it
 US
 yO
 oX
 DP
 es
-AL
+it
 pU
 pU
 aj
@@ -22017,13 +22019,13 @@ pU
 aj
 aj
 aj
-AL
+it
 BR
 yO
 Tk
 fm
 ia
-AL
+it
 pU
 pU
 pU
@@ -22274,7 +22276,7 @@ pU
 aj
 aj
 aj
-AL
+it
 cO
 yO
 EC
@@ -22788,7 +22790,7 @@ pU
 pU
 aj
 aj
-AL
+it
 cP
 yO
 ss
@@ -23045,7 +23047,7 @@ pU
 pU
 aj
 aj
-AL
+it
 My
 yO
 eS
@@ -23559,7 +23561,7 @@ pU
 pU
 pU
 aj
-AL
+it
 Dl
 yO
 Gr
@@ -23816,13 +23818,13 @@ pU
 pU
 pU
 aj
-AL
+it
 ze
 yO
 JQ
 SD
 uR
-AL
+it
 pU
 pU
 pU
@@ -24073,13 +24075,13 @@ pU
 pU
 pU
 aj
-AL
+it
 Mb
 yO
 NC
 dM
 dW
-AL
+it
 pU
 pU
 pU
@@ -24331,7 +24333,7 @@ pU
 bq
 bq
 cM
-kb
+it
 dd
 cM
 cM
