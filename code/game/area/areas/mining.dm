@@ -159,6 +159,7 @@
 	flags_1 = NONE
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
 	sound_environment = SOUND_AREA_ICEMOON
+
 /area/icemoon/surface
 	name = "Icemoon"
 	icon_state = "explored"
