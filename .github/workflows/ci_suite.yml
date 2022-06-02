@@ -156,7 +156,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: artifacts
-        working-directory: artifacts
       - name: Setup screenshot comparison
         run: npm i
         working-directory: tools/screenshot-test-comparison
