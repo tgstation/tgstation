@@ -156,6 +156,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: artifacts
+      - name: List
+        run: ls -R artifacts
       - name: Extract relevant results
         run: for f in *.zip; do unzip "$f" -d "${f%.zip}"; done
         working-directory: artifacts
