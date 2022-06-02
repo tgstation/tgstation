@@ -37,6 +37,9 @@
 
 	var/ball_skill = user.mind?.get_skill_modifier(/datum/skill/balling, SKILL_PROBS_MODIFIER)
 
+	if(!ball_skill)
+		ball_skill = 0
+
 	if(prob(60 - ball_skill)) //60% base chance to fail a dunk
 		if(isliving(user))
 			var/mob/living/living_baller = user
@@ -91,6 +94,9 @@
 	var/shot_difficulty = clamp((throwingdatum?.maxrange - (ball_skill / 10)), 0, 9)
 	var/stam_cost = clamp((throwingdatum?.maxrange * 2), 5, 15)
 	var/ball_exp = clamp((throwingdatum?.maxrange * 8), 10, 50)
+
+	if(!ball_skill)
+		ball_skill = 0
 
 	if(isliving(baller))
 		var/mob/living/living_baller = baller
