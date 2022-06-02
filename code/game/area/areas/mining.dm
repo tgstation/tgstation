@@ -92,7 +92,26 @@
 	icon_state = "labor_camp_security"
 	ambience_index = AMBIENCE_DANGER
 
+/area/mine/laborcamp/bar
+	name = "Labor Camp Bar"
 
+/area/mine/laborcamp/commons
+	name = "Labor Camp Commons"
+
+/area/mine/laborcamp/living
+	name = "Labor Camp Living Area"
+
+/area/mine/laborcamp/production
+	name = "Labor Camp Production"
+
+/area/mine/laborcamp/ruins
+	name = "Labor Camp Ruins"
+
+/area/mine/laborcamp/ruins/seedvault
+	name = "Ruined Seed Vault"
+
+/area/mine/laborcamp/ruins/controlpost
+	name = "Labor Camp Bin Control Post"
 
 
 /**********************Lavaland Areas**************************/
