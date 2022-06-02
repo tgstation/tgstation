@@ -149,6 +149,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     needs: [run_all_tests]
     name: Compare Screenshot Tests
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Download relevant results
