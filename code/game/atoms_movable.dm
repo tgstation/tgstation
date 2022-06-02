@@ -680,6 +680,9 @@
 		stack_trace("move_stacks is negative in Moved()!")
 		move_stacks = 0 //setting it to 0 so that we dont get every movable with negative move_stacks runtiming on every movement
 
+	if(atom_storage)
+		atom_storage.close_distance()
+
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs)
 
 	var/turf/old_turf = get_turf(old_loc)

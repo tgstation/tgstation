@@ -284,7 +284,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		return
 	contents = shuffle(contents)
 	if(user.active_storage)
-		user.active_storage.close(user)
+		user.active_storage.hide_contents(user)
 	if(visable)
 		user.visible_message(span_notice("[user] shuffles \the [src]!"), \
 						span_notice("You shuffle \the [src]!"))

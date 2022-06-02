@@ -414,7 +414,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			if(I.on_found(M))
 				return FALSE
 	if(M.active_storage)
-		M.active_storage.hide_from(M)
+		M.active_storage.hide_contents(M)
 	orient2hud()
 	M.client.screen |= boxes
 	M.client.screen |= closer
@@ -811,7 +811,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!attack_hand_interact)
 		return
 	if(user.active_storage == src && A.loc == user) //if you're already looking inside the storage item
-		user.active_storage.close(user)
+		user.active_storage.hide_contents(user)
 		close(user)
 		. = COMPONENT_CANCEL_ATTACK_CHAIN
 		return
