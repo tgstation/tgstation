@@ -50,14 +50,7 @@ for (const filename of fs.readdirSync(artifactsDirectory)) {
 		continue
 	}
 
-	const screenshotsNew = path.join(fullPath, "screenshots_new")
-	const screenshotsNewStat = fs.statSync(screenshotsNew)
-	if (!screenshotsNewStat.isDirectory()) {
-		console.log(`${screenshotsNew} was not found`)
-		continue
-	}
-
-	for (const screenshotName of fs.readdirSync(screenshotsNew)) {
+	for (const screenshotName of fs.readdirSync(fullPathStat)) {
 		if (knownFailures.has(screenshotName)) {
 			continue
 		}
@@ -68,7 +61,7 @@ for (const filename of fs.readdirSync(artifactsDirectory)) {
 			process.exit(1)
 		}
 
-		const fullPathScreenshotName = path.join(screenshotsNew, screenshotName)
+		const fullPathScreenshotName = path.join(fullPathStat, screenshotName)
 
 		const screenshotNew = PNG.sync.read(fs.readFileSync(fullPathScreenshotName))
 		const screenshotCompare = PNG.sync.read(fs.readFileSync(fullPathCompareScreenshot))

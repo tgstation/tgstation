@@ -137,7 +137,7 @@ jobs:
         run: |
           mkdir -p data/screenshots_new
           cp code/modules/unit_tests/screenshots/screenshot_basic_red.png data/screenshots_new/screenshot_basic_red.png
-      - name: Upload relevant results
+      - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v3
         with:
@@ -152,7 +152,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Download relevant results
+      # If we ever add more artifacts, this is going to break, but it'll be obvious.
+      - name: Download screenshot tests
         uses: actions/download-artifact@v3
         with:
           path: artifacts
