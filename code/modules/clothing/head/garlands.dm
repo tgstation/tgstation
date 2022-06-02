@@ -7,12 +7,13 @@
 /obj/item/clothing/head/garland/equipped(mob/user, slot)
 	. = ..()
 	if(slot_flags & slot)
-		var/datum/component/mood/our_mood = user.GetComponent(/datum/component/mood)
 		START_PROCESSING(SSobj, src)
 		RegisterSignal(src, COMSIG_ATOM_FIRE_ACT, .proc/stop_sanity_boost)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "garland", /datum/mood_event/garland)
 
 /obj/item/clothing/head/garland/dropped(mob/user)
 	. = ..()
+	SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "garland")
 	stop_sanity_boost()
 
 /obj/item/clothing/head/garland/Destroy()
