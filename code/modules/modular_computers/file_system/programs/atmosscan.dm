@@ -13,7 +13,9 @@
 	tgui_id = "NtosGasAnalyzer"
 	program_icon = "thermometer-half"
 
+	/// Whether we scan the current turf automatically (env) or scan tapped objects manually (click).
 	var/atmozphere_mode = ATMOZPHERE_SCAN_ENV
+	/// Saved [GasmixParser][/proc/gas_mixture_parser] data of the last thing we scanned.
 	var/list/last_gasmix_data
 
 /// Secondary attack self.
@@ -29,7 +31,8 @@
 /datum/computer_file/program/atmosscan/tap(atom/A, mob/living/user, params)
 	if(atmozphere_mode != ATMOZPHERE_SCAN_CLICK)
 		return FALSE
-	atmos_scan(user=user, target=A, silent=FALSE)
+	if(!atmos_scan(user=user, target=A, silent=FALSE))
+		return FALSE
 	on_analyze(source=computer, target=A)
 	return TRUE
 
