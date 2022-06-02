@@ -38,23 +38,41 @@ export class TguiModal extends Component {
   }
   /** Resets the state of the window and hides it from user view */
   closeWindow = () => {
-    this.setState({ channel: 0 });
+    this.setState({ buttonContent: '>', channel: 0 });
+    this.historyCounter = 0;
     this.value = '';
     this.setSize(0);
     Byond.winset('tgui_modal', { 'is-visible': false });
     Byond.sendMessage('close');
+  };
+  /** Increments the chat history counter, looping through entries */
+  handleArrowKeys = (direction) => {
+    const { historyCounter } = this;
+    if (direction === KEY_UP) {
+      if (historyCounter < savedMessages.length) {
+        this.historyCounter++;
+      }
+    } else if (direction === KEY_DOWN) {
+      if (historyCounter > 0) {
+        this.historyCounter--;
+      }
+    }
+    this.viewHistory();
   };
   /** Mouse leaves the button */
   handleBlur = () => {
     this.hovering = false;
     this.setState({ buttonContent: `>` });
   };
-  /** User clicks the channel button. */
+  /**
+   * User clicks the channel button.
+   * Simulates the tab key.
+   */
   handleClick = () => {
     this.incrementChannel();
   };
   /** Ensures backspace and delete reset size and history */
-  handleDelete = (value) => {
+  handleBkspDelete = (value) => {
     this.historyCounter = 0;
     this.setSize(value.length);
   };
@@ -84,7 +102,7 @@ export class TguiModal extends Component {
       buttonContent: CHANNELS[channel].slice(0, 1).toUpperCase(),
     });
   };
-  /** Send the current input to byond and purge it */
+  /** Sends the current input to byond and purges it */
   handleForce = () => {
     const { channel } = this.state;
     const { value } = this;
@@ -94,17 +112,24 @@ export class TguiModal extends Component {
         entry: value,
       });
       this.value = '';
+      this.setSize(0);
       this.setState({ edited: true });
     }
   };
-  /** Grabs input and sets size, force values etc.
-   * Input value is not set to trigger rerenders, just forced output.
+  /**
+   * Grabs input and sets size, force values etc.
+   * Input value only triggers a rerender on setEdited.
    */
   handleInput = (_, value) => {
     this.value = value;
     this.setSize(value.length);
   };
-  /** Grabs the TAB key to change channels. */
+  /**
+  * Handles other key events.
+  * TAB - Changes channels.
+  * UP/DOWN - Sets history counter and input value.
+  * BKSP/DEL - Resets history counter and checks window size.
+  Grabs the TAB key to change channels. */
   handleKeyDown = (event, value) => {
     if (event.keyCode === KEY_TAB) {
       this.incrementChannel();
@@ -112,13 +137,11 @@ export class TguiModal extends Component {
     }
     if (event.keyCode === KEY_UP || event.keyCode === KEY_DOWN) {
       if (savedMessages.length) {
-        this.incrementCounter(event.keyCode);
-        this.viewHistory();
-        this.setState({ edited: true });
+        this.handleArrowKeys(event.keyCode);
       }
     }
     if (event.keyCode === KEY_DELETE || event.keyCode === KEY_BACKSPACE) {
-      this.handleDelete(value);
+      this.handleBkspDelete(value);
     }
   };
   /**
@@ -142,32 +165,22 @@ export class TguiModal extends Component {
       });
     }
   };
-  /** Increments the chat history counter, looping through entries */
-  incrementCounter = (direction) => {
-    const { historyCounter } = this;
-    if (direction === KEY_UP) {
-      if (historyCounter < savedMessages.length) {
-        this.historyCounter++;
-      }
-    } else if (direction === KEY_DOWN) {
-      if (historyCounter > 1) {
-        this.historyCounter--;
-      } else {
-        this.value = '';
-        this.setState({ edited: true });
-      }
-    }
-  };
   /**  Adjusts window sized based on target value */
   setSize = (value) => {
-    if (value > 56) {
+    const { size } = this.state;
+    if (value > 56 && size !== SIZE.large) {
+      Byond.sendMessage('notlarge', { value });
       this.setState({ size: SIZE.large });
-    } else if (value > 24) {
+      this.setWindow();
+    } else if (value <= 56 && value > 24 && size !== SIZE.medium) {
+      Byond.sendMessage('notmedium', { value });
       this.setState({ size: SIZE.medium });
-    } else {
+      this.setWindow();
+    } else if (value <= 24 && size !== SIZE.small) {
+      Byond.sendMessage('notsmall', { value });
       this.setState({ size: SIZE.small });
+      this.setWindow();
     }
-    this.setWindow();
   };
   /**
    * Modifies the window size.
@@ -182,10 +195,16 @@ export class TguiModal extends Component {
   unsetEdited = () => {
     this.setState({ edited: false });
   };
-  /** Sets the value to be displayed from chat history. */
+  /**  Sets the input value to chat history at index historyCounter. */
   viewHistory = () => {
     const { historyCounter } = this;
-    this.value = savedMessages[historyCounter - 1];
+    if (historyCounter > 0 && savedMessages.length) {
+      this.value = savedMessages[savedMessages.length - historyCounter];
+      this.setState({ buttonContent: historyCounter, edited: true });
+    } else {
+      this.value = '';
+      this.setState({ buttonContent: '>', edited: true });
+    }
   };
   componentDidMount() {
     Byond.subscribeTo('props', (data) => {
@@ -195,7 +214,9 @@ export class TguiModal extends Component {
     Byond.subscribeTo('force', () => {
       this.handleForce();
     });
+    this.setWindow();
   }
+  /** After updating the input value, sets back to false */
   componentDidUpdate() {
     if (this.state.edited) {
       this.unsetEdited();
@@ -253,7 +274,7 @@ const getCss = (element, channel, size) =>
  * Deletes old entries if the list is too long.
  */
 const storeChat = (message) => {
-  if (savedMessages.length === 4) {
+  if (savedMessages.length === 5) {
     savedMessages.shift();
   }
   savedMessages.push(message);

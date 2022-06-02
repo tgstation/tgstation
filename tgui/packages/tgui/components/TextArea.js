@@ -146,7 +146,7 @@ export class TextArea extends Component {
     const prevValue = prevProps.value;
     const nextValue = this.props.value;
     const input = this.textareaRef.current;
-    if (input && typeof nextValue !== "string" && prevValue !== nextValue) {
+    if (input && typeof nextValue === "string" && prevValue !== nextValue) {
       input.value = toInputValue(nextValue);
     }
   }
