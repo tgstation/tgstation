@@ -61,8 +61,8 @@ jobs:
         env:
           DEPLOY_KEY_PRIVATE: ${{ secrets.ARTIFACTS_REPO_DEPLOY_KEY_PRIVATE }}
         run: |
-          echo "$DEPLOY_KEY_PRIVATE" > ~/.ssh/deploy_key
-          ssh-add ~/.ssh/deploy_key
+          echo "$DEPLOY_KEY_PRIVATE" > ./deploy_key
+          ssh-add ./deploy_key
       - name: Checkout assets repository
         if: steps.dl_results.outcome == 'success'
         uses: actions/checkout@v3
