@@ -18,13 +18,12 @@
 	/// list of images generated for the message sent to each hearing client.
 	/// associative list of the form: list(message image = client using that image)
 	var/list/image/messages
-	/// The clients who heard this message. only populated with clients that have been assigned an image
-	/// associative list of the form: list(client who hears this message = chat message image that client uses)
+	/// The clients who heard this message. set when we first start working with a player in prepare_text(),
+	/// and then again later when we finish the runechat image.
+	/// this is so that we can associate clients with their image but not have race conditions from
+	/// MeasureText() causing us to sleep.
+	/// associative list of the form: list(client who hears this message = chat message image that client uses, or TRUE)
 	var/list/client/hearers
-	/// all clients that have been assigned to this chatmessage datum from create_chat_message().
-	/// needed to ensure that the same client cant be a hearer to a message twice.
-	/// associative list of the form: list(client = TRUE)
-	var/list/client/all_hearers
 	/// The location in which the message is appearing
 	var/atom/message_loc
 	/// Contains the approximate amount of lines for height decay for each message image.
@@ -96,15 +95,14 @@
 	hearers = list()
 	approx_lines = list()
 	fade_times_by_image = list()
-	all_hearers = list()
 
 /datum/chatmessage/Destroy()
 	. = ..()
-	for(var/client/hearer in all_hearers)
+	for(var/client/hearer in hearers)
 		LAZYREMOVEASSOC(hearer.seen_messages, message_loc, src)
 
 		var/image/seen_image = hearers[hearer]
-		if(seen_image)
+		if(istype(seen_image))
 			hearer.images -= seen_image
 			seen_image.loc = null
 
@@ -127,7 +125,6 @@
 
 	messages = null
 	hearers = null
-	all_hearers = null
 	approx_lines = null
 	fade_times_by_image = null
 
@@ -142,13 +139,13 @@
 	LAZYREMOVEASSOC(hearer.seen_messages, message_loc, src)
 
 	var/image/seen_image = hearers[hearer]
-	messages -= seen_image
-	hearer.images -= seen_image
+	if(istype(seen_image))
+		messages -= seen_image
+		hearer.images -= seen_image
 
 	hearers -= hearer
-	all_hearers -= hearer
 
-	if(!length(all_hearers) && !QDELETED(src))
+	if(!length(hearers) && !QDELETED(src))
 		qdel(src)
 
 /**
@@ -173,7 +170,9 @@
 	if(!owned_by)
 		return FALSE
 
-	LAZYSET(all_hearers, owned_by, TRUE)
+	///before we create the image make sure that we know the client is being associated with us, because
+	///MeasureText() makes us sleep and thus this client could delete before we wake up
+	LAZYSET(hearers, owned_by, TRUE)
 
 	// Remove spans in the message from things like the recorder
 	var/static/regex/span_check = new(@"<\/?span[^>]*>", "gi")
@@ -238,7 +237,7 @@
 	//fun fact: MeasureText() works by waiting for the client to send back the measurements for the text. meaning it works like a verb.
 	//procs like this are called at the last section of hte tick before it ends, meaning if the other portions used up most of it,
 	//then everything after this point is likely to overtime. queuing the message completion if the server is overloaded fixes this
-	if(QDELETED(owned_by) || QDELETED(src) || QDELETED(message_loc) || !all_hearers?[owned_by])
+	if(QDELETED(owned_by) || QDELETED(src) || QDELETED(message_loc) || !hearers?[owned_by])
 		return //we should already have been qdel'd() if this evaluates to TRUE, doing it now would throw an error
 
 	if(TICK_CHECK)
@@ -258,7 +257,7 @@
  */
 /datum/chatmessage/proc/generate_image(atom/target, mob/owner, complete_text, mheight)
 	var/client/owned_by = owner.client
-	if(QDELETED(owned_by) || QDELETED(target) || QDELETED(src) || QDELETED(message_loc) || !all_hearers?[owned_by])//possible since generate_image() is called via a queue
+	if(QDELETED(owned_by) || QDELETED(target) || QDELETED(src) || QDELETED(message_loc) || !hearers?[owned_by])//possible since generate_image() is called via a queue
 		return
 
 	var/our_approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
@@ -276,7 +275,7 @@
 
 			var/image/other_message_image = preexisting_message.hearers[owned_by]
 
-			if(!other_message_image)
+			if(!istype(other_message_image))
 				continue //no image yet because the message hasnt been able to create an image.
 
 			combined_height += preexisting_message.approx_lines[other_message_image]
@@ -369,6 +368,7 @@
 
 	LAZYADDASSOCLIST(associated_client.seen_messages, message_loc, src)
 	LAZYSET(messages, message_image, associated_client)
+	// set hearers to be associated with the image now that the client has gone through the process fully
 	LAZYSET(hearers, associated_client, message_image)
 
 /**
@@ -409,7 +409,7 @@
 	message_to_use = SSrunechat.messages_by_creation_string[message_parameters]
 	//if an already existing message already has processed us as a hearer then we have to assume that this is from a new, identical message sent in the same tick
 	//as the already existing one. thats the only time this can happen. if this is the case then create a new chatmessage
-	if(!message_to_use || (message_to_use && message_to_use.all_hearers?[client]))
+	if(!message_to_use || (message_to_use && message_to_use.hearers?[client]))
 		message_to_use = new /datum/chatmessage(message_parameters, text_to_use, speaker, message_language, spans)
 
 	message_to_use.prepare_text(text_to_use, speaker, src, message_language, spans)
