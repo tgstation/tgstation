@@ -61,6 +61,7 @@ jobs:
         env:
           DEPLOY_KEY_PRIVATE: ${{ secrets.ARTIFACTS_REPO_DEPLOY_KEY_PRIVATE }}
         run: |
+          ssh-agent -s
           echo "$DEPLOY_KEY_PRIVATE" > ./deploy_key
           ssh-add ./deploy_key
       - name: Checkout assets repository
