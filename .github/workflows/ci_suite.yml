@@ -136,7 +136,7 @@ jobs:
       - name: Test collating screenshots
         run: |
           mkdir -p data/screenshots_new
-          cp code/modules/unit_tests/screenshots/screenshot_basic_red.png data/screenshots_new/screenshot_basic_red.png
+          cp icons/ui_icons/common/tg_32.png data/screenshots_new/screenshot_basic_red.png
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v3
