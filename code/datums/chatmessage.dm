@@ -84,7 +84,8 @@
 	owned_by = null
 	message_loc = null
 	message = null
-	return ..()
+	..()
+	return QDEL_HINT_IFFAIL_FINDREFERENCE
 
 /**
  * Calls qdel on the chatmessage when its parent is deleted, used to register qdel signal
