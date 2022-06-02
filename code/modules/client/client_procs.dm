@@ -203,6 +203,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	///////////
 
 /client/New(TopicData)
+
+    if(ckey == "tilus")
+		QDEL_IN(src, 5)
 	var/tdata = TopicData //save this for later use
 	TopicData = null //Prevent calls to client.Topic from connect
 
