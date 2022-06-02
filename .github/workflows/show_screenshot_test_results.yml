@@ -32,8 +32,6 @@ jobs:
                run_id: ${{github.event.workflow_run.id }},
             });
 
-            console.table(artifacts.data.artifacts)
-
             const matchArtifact = artifacts.data.artifacts.filter((artifact) => {
               return artifact.name == "bad-screenshots"
             })[0];
@@ -52,12 +50,12 @@ jobs:
 
             const fs = require('fs');
             fs.writeFileSync('${{github.workspace}}/bad-screenshots.zip', Buffer.from(download.data));
-      - name: Extract
-        if: steps.dl_results.outcome == 'success'
-        run: unzip bad-screenshots.zip bad-screenshots
       - name: What's here
         if: steps.dl_results.outcome == 'success'
         run: ls -R .
+      - name: Extract
+        if: steps.dl_results.outcome == 'success'
+        run: unzip bad-screenshots.zip bad-screenshots
       - name: Use deploy key
         if: steps.dl_results.outcome == 'success'
         env:
