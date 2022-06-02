@@ -1,6 +1,6 @@
 import { Component } from 'inferno';
 import { classes } from 'common/react';
-import { KEY_TAB } from 'common/keycodes';
+import { KEY_DOWN, KEY_TAB, KEY_UP } from 'common/keycodes';
 import { TextArea } from 'tgui/components';
 
 const CHANNELS = ['say', 'radio', 'me', 'ooc'];
@@ -12,14 +12,14 @@ const SIZE = {
   large: 110,
 };
 
-/** Returns modular css classes */
-const getCss = (element, channel, size) =>
-  classes([element, `${element}-${CHANNELS[channel]}`, `${element}-${size}`]);
+/** Stores a list of chat messages entered as values */
+let savedMessages = [];
 
 /** Primary class for the TGUI modal. */
 export class TguiModal extends Component {
   constructor() {
     super();
+    this.historyCounter = 0;
     this.hovering = false;
     this.maxLength = 1024;
     this.value = '';
@@ -29,6 +29,14 @@ export class TguiModal extends Component {
       size: SIZE.small,
     };
   }
+  /** Resets the state of the window and hides it from user view */
+  closeWindow = () => {
+    this.setState({ channel: 0 });
+    this.value = '';
+    this.setSize(0);
+    Byond.winset('tgui_modal', { 'is-visible': false });
+    Byond.sendMessage('close');
+  };
   /** Mouse leaves the button */
   handleBlur = () => {
     this.hovering = false;
@@ -44,6 +52,7 @@ export class TguiModal extends Component {
     const { maxLength } = this;
     event.preventDefault();
     if (value && value.length < maxLength) {
+      storeChat(value);
       Byond.sendMessage('entry', {
         channel: CHANNELS[channel],
         entry: value,
@@ -68,7 +77,7 @@ export class TguiModal extends Component {
     const { channel } = this.state;
     const { value } = this;
     if (value) {
-      Byond.sendMessage('force', {
+      Byond.sendMessage('purge', {
         channel: CHANNELS[channel],
         entry: value,
       });
@@ -87,6 +96,12 @@ export class TguiModal extends Component {
     if (event.keyCode === KEY_TAB) {
       this.incrementChannel();
       event.preventDefault();
+    }
+    if (event.keyCode === KEY_UP || event.keyCode === KEY_DOWN) {
+      if (savedMessages.length) {
+        this.incrementCounter(event.keyCode);
+        this.viewHistory();
+      }
     }
   };
   /**
@@ -110,13 +125,18 @@ export class TguiModal extends Component {
       });
     }
   };
-  /** Resets the state of the window and hides it from user view */
-  closeWindow = () => {
-    this.setState({ channel: 0 });
-    this.value = '';
-    this.setSize(0);
-    Byond.winset('tgui_modal', { 'is-visible': false });
-    Byond.sendMessage('close');
+  /** Increments the chat history counter, looping through entries */
+  incrementCounter = (direction) => {
+    const { historyCounter } = this;
+    if (direction === KEY_UP) {
+      if (historyCounter < savedMessages.length) {
+        this.historyCounter++;
+      }
+    } else if (direction === KEY_DOWN) {
+      if (historyCounter > 0) {
+        this.historyCounter--;
+      }
+    }
   };
   /**  Adjusts window sized based on target value */
   setSize = (value) => {
@@ -137,6 +157,15 @@ export class TguiModal extends Component {
     const { size } = this.state;
     Byond.winset(Byond.windowId, { size: `333x${size}` });
     Byond.winset('tgui_modal_browser', { size: `333x${size}` });
+  };
+  /** Sets the value to be displayed from chat history. */
+  viewHistory = () => {
+    const { historyCounter } = this.historyCounter;
+    Byond.sendMessage('hist', { history: this.historyCounter.toString() });
+    this.value = savedMessages[historyCounter - 1];
+    Byond.sendMessage('saved', {
+      saved: savedMessages[this.historyCounter - 1],
+    });
   };
   componentDidMount() {
     Byond.subscribeTo('modal_props', (data) => {
@@ -188,3 +217,18 @@ export class TguiModal extends Component {
     );
   }
 }
+
+/** Returns modular css classes */
+const getCss = (element, channel, size) =>
+  classes([element, `${element}-${CHANNELS[channel]}`, `${element}-${size}`]);
+
+/**
+ * Stores entries in the chat history.
+ * Deletes old entries if the list is too long.
+ */
+const storeChat = (message) => {
+  if (savedMessages.length === 4) {
+    savedMessages.shift();
+  }
+  savedMessages.push(message);
+};

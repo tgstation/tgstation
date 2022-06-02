@@ -53,7 +53,7 @@
  * Sends a message to the modal window to send its current value.
  */
 /datum/tgui_modal/proc/force_say()
-	window.send_message("force")
+	window.send_message("modal_force")
 
 /**
  * The equivalent of ui_act, this waits on messages from the window
@@ -78,7 +78,7 @@
 		delegate_speech(payload["entry"], payload["channel"])
 		close()
 		return TRUE
-	if (type == "force")
+	if (type == "purge")
 		if(!payload || !payload["entry"] || !payload["channel"])
 			return FALSE
 		if(length(payload["entry"]) > max_length)
