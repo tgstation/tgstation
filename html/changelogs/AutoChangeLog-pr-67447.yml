@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - code_imp: "Adds some greps to check for commonly misplaced structures in closed turfs"
+  - bugfix: "Some objects stacked within closed turfs have been removed from those turfs."
