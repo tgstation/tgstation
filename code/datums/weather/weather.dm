@@ -242,7 +242,7 @@
 	var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, ABOVE_LIGHTING_PLANE, 100)
 	for(var/V in impacted_areas)
 		var/area/N = V
-		if(current_emissive)
+		if(current_glow)
 			N.overlays -= current_glow
 		if(stage == END_STAGE)
 			N.color = null
