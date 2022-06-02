@@ -130,8 +130,11 @@ handles linking back and forth.
 		return
 
 	var/turf/silo_turf = get_turf(silo)
-	if(silo_turf.z != new_turf.z)
-		disconnect_from(silo)
+	if(is_station_level(silo_turf.z) && is_station_level(new_turf.z)) // if we're both on "station", regardless of multi-z, we'll pass by.
+		return
+	if(silo_turf.z == new_turf.z)
+		return
+	disconnect_from(silo)
 
 /datum/component/remote_materials/proc/on_hold()
 	return silo?.holds["[get_area(parent)]/[category]"]
