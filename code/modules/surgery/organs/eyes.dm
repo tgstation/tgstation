@@ -99,6 +99,7 @@
 #define OFFSET_X 1
 #define OFFSET_Y 2
 
+// Lemon todo: figure this shit out
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
 	if(!istype(parent) || parent.getorgan(/obj/item/organ/eyes) != src)
@@ -120,8 +121,8 @@
 
 	var/obscured = parent.check_obscured_slots(TRUE)
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
-		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, alpha = eye_left.alpha)
-		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, alpha = eye_right.alpha)
+		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha)
+		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha)
 
 	return list(eye_left, eye_right)
 

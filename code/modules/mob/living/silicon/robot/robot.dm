@@ -348,6 +348,7 @@
 	icon_state = model.cyborg_base_icon
 	var/turf/our_turf = get_turf(src)
 	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
+	// Todo: needs to update on move
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)

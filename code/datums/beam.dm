@@ -147,7 +147,7 @@
 
 /obj/effect/ebeam/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, icon_state)
+	. += emissive_appearance(icon, icon_state, src)
 
 /obj/effect/ebeam/Destroy()
 	owner = null

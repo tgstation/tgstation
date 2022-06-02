@@ -30,6 +30,7 @@
 	return ..()
 
 
+// Lemon todo: and here...
 /obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
 	. = ..()
 	if(isinhands)
@@ -44,7 +45,7 @@
 	. += hair_overlay
 
 	// So that the wig actually blocks emissives.
-	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, alpha = hair_overlay.alpha)
+	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, src, alpha = hair_overlay.alpha)
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.hairstyles_list - "Bald")

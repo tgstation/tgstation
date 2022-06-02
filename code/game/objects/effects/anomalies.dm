@@ -215,7 +215,7 @@
 
 /obj/effect/anomaly/flux/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, icon_state, alpha=src.alpha)
+	. += emissive_appearance(icon, icon_state, src, alpha=src.alpha)
 
 /obj/effect/anomaly/flux/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

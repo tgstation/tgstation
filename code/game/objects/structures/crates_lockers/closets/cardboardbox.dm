@@ -61,6 +61,7 @@
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()
 	var/turf/our_turf = get_turf(src)
+	// Todo: needs to update on move
 	var/image/alert_image = image('icons/obj/closet.dmi', src, "cardboard_special", layer+1)
 	SET_PLANE(alert_image, ABOVE_LIGHTING_PLANE, our_turf)
 	flick_overlay_view(alert_image, src, 8)

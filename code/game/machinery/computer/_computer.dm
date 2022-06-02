@@ -42,7 +42,7 @@
 		return
 
 	. += mutable_appearance(icon, icon_screen)
-	. += emissive_appearance(icon, icon_screen)
+	. += emissive_appearance(icon, icon_screen, src)
 
 /obj/machinery/computer/power_change()
 	. = ..()

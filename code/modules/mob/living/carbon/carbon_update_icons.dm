@@ -187,12 +187,13 @@
 	apply_overlay(HEAD_LAYER)
 
 
+// Lemon todo: and here
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive)
-			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, alpha = handcuff_overlay.alpha)
+			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
@@ -226,6 +227,7 @@
 
 
 
+// Lemon todo: and HERE
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
 //"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
@@ -237,7 +239,7 @@
 	if(!blocks_emissive)
 		return
 
-	. += emissive_blocker(standing.icon, standing.icon_state, alpha = standing.alpha)
+	. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
 
 /mob/living/carbon/update_body(is_creating)
 	update_body_parts(is_creating)

@@ -694,6 +694,7 @@
 		img.pixel_y = px_y
 	add_overlay(standing)
 
+// LEMON TODO: AHHHHHHHHHHHHHHHHHHH
 ///Generates an /image for the limb to be used as an overlay
 /obj/item/bodypart/proc/get_limb_icon(dropped)
 	SHOULD_CALL_PARENT(TRUE)
@@ -728,7 +729,7 @@
 			limb.icon_state = "[animal_origin]_[body_zone]"
 
 		if(blocks_emissive)
-			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, alpha = limb.alpha)
+			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, src, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
 			limb.overlays += limb_em_block
 		return
@@ -771,12 +772,12 @@
 
 	//EMISSIVE CODE START
 	if(blocks_emissive)
-		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, alpha = limb.alpha)
+		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, src, alpha = limb.alpha)
 		limb_em_block.dir = image_dir
 		limb.overlays += limb_em_block
 
 		if(aux_zone)
-			var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, alpha = aux.alpha)
+			var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, src, alpha = aux.alpha)
 			aux_em_block.dir = image_dir
 			aux.overlays += aux_em_block
 

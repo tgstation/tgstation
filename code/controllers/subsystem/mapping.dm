@@ -689,6 +689,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	create_plane_offsets(gen_from, new_offset)
 	for(var/offset in gen_from to new_offset)
 		GLOB.fullbright_overlays += create_fullbright_overlay(offset)
+		GLOB.cryo_overlays_cover_on += create_cryo_overlay(offset, "cover-on")
+		GLOB.cryo_overlays_cover_off += create_cryo_overlay(offset, "cover-off")
 
 /datum/controller/subsystem/mapping/proc/create_plane_offsets(gen_from, new_offset)
 	for(var/plane_offset in gen_from to new_offset)

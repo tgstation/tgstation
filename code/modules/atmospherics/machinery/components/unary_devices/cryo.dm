@@ -199,8 +199,12 @@
 	var/turf/our_turf = get_turf(src)
 	SET_PLANE(src, initial(plane), our_turf)
 
-GLOBAL_VAR_INIT(cryo_overlay_cover_on, mutable_appearance('icons/obj/cryogenics.dmi', "cover-on", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE))
-GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics.dmi', "cover-off", layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE))
+GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_on, /mutable_appearance, list(create_cryo_overlay(0, "cover-on")))
+GLOBAL_LIST_INIT_TYPED(cryo_overlays_cover_off, /mutable_appearance, list(create_cryo_overlay(0, "cover-off")))
+
+/proc/create_cryo_overlay(offset, icon_state)
+	var/mutable_appearance/cryo_overlay = mutable_appearance('icons/obj/cryogenics.dmi', icon_state, ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE, offset_const = offset)
+	return cryo_overlay
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_overlays()
 	. = ..()
@@ -208,7 +212,9 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		. += "pod-panel"
 	if(state_open)
 		return
-	. += (on && is_operational) ? GLOB.cryo_overlay_cover_on : GLOB.cryo_overlay_cover_off
+	var/turf/our_turf = get_turf(src)
+	var/offset = GET_TURF_PLANE_OFFSET(our_turf) + 1
+	. += (on && is_operational) ? GLOB.cryo_overlays_cover_on[offset] : GLOB.cryo_overlays_cover_off[offset]
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()

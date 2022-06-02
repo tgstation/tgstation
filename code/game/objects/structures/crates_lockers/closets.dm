@@ -114,7 +114,7 @@
 		if(opened && has_opened_overlay)
 			var/mutable_appearance/door_overlay = mutable_appearance(icon, "[icon_state]_open", alpha = src.alpha)
 			. += door_overlay
-			door_overlay.overlays += emissive_blocker(door_overlay.icon, door_overlay.icon_state, alpha = door_overlay.alpha) // If we don't do this the door doesn't block emissives and it looks weird.
+			door_overlay.overlays += emissive_blocker(door_overlay.icon, door_overlay.icon_state, src, alpha = door_overlay.alpha) // If we don't do this the door doesn't block emissives and it looks weird.
 		else if(has_closed_overlay)
 			. += "[icon_door || icon_state]_door"
 
@@ -127,7 +127,7 @@
 	if(broken || !secure)
 		return
 	//Overlay is similar enough for both that we can use the same mask for both
-	. += emissive_appearance(icon, "locked", alpha = src.alpha)
+	. += emissive_appearance(icon, "locked", src, alpha = src.alpha)
 	. += locked ? "locked" : "unlocked"
 
 /// Animates the closet door opening and closing

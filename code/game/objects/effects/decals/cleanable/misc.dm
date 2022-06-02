@@ -314,4 +314,4 @@
 
 /obj/effect/decal/cleanable/ants/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "[icon_state]_light", alpha = src.alpha)
+	. += emissive_appearance(icon, "[icon_state]_light", src, alpha = src.alpha)

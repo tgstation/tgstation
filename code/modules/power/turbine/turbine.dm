@@ -78,7 +78,7 @@
 	if(active)
 		. += active_overlay
 		if(emissive)
-			. += emissive_appearance(icon, active_overlay)
+			. += emissive_appearance(icon, active_overlay, src)
 	else
 		. += off_overlay
 

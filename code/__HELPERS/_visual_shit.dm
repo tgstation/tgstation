@@ -10,17 +10,12 @@
 // Lemon todo: There's way too many get_turf(src) calls using SET_PLANE
 // You should make a macro just for that case, reduce code bloat
 // Global todos:
+// Do a pass on vis_contents uses, also maybe underlays?
 // Figure out how the hell you want to handle points where upper plane stuff is rendered on lower planes (basically, mirages)
-// Report that bug with vis_contents and overlays (if a turf is in another turf's vis contents, and has an overlay of its removed while neither turf is in view
-// The removal will not display on the source turf until the other turf is loaded into view)
-// Add a ui that can be used to visualize, edit and debug the plane master and rendering plane setup of any mob
 // Add a shit ton of documentation, preferablely to the whole rendering pipeline
-// Grock backdrops
 // Run on live to make sure this isn't too laggy for some reason
 // Test to see if it fixes the wallening bug
-// Do something about the lighting pop in
 // Do something about darkness being fucking cursed (potentially use layers to stick the darkness plane in its proper place on all levels? maybe? (yes, you can do this, with multiple render targets))
-// Do something about emissives (when you do mutable appearances)
 #define GET_NEW_PLANE(new_value, multiplier) ((new_value) - (PLANE_RANGE * (multiplier)))
 #define MUTATE_PLANE(new_value, z_reference) (GET_NEW_PLANE(new_value, GET_TURF_PLANE_OFFSET(z_reference)))
 #define GET_TURF_PLANE_OFFSET(z_reference) ((isatom(z_reference) && SSmapping.max_plane_offset) ? GET_Z_PLANE_OFFSET(z_reference.z) : 0)

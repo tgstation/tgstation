@@ -410,7 +410,7 @@
 
 /turf/open/floor/emissive_test/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, icon_state, alpha = src.alpha)
+	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
 
 /turf/open/floor/emissive_test/white
 	icon_state = "pure_white"

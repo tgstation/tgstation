@@ -42,6 +42,7 @@
 		var/atom/movable/movable_source = src
 		bound_width = movable_source.bound_width
 
+	// Todo: needs to update on move
 	var/turf/our_turf = get_turf(src)
 	var/image/balloon_alert = image(loc = isturf(src) ? src : get_atom_on_turf(src), layer = ABOVE_MOB_LAYER)
 	SET_PLANE(balloon_alert, BALLOON_CHAT_PLANE, our_turf)

@@ -10,8 +10,15 @@
 						// And yes this does have to be in the constructor, BYOND ignores it if you set it as a normal var
 
 /// Helper similar to image()
-// Lemon TODO: do a pass, maybe add support for passing in a loc reference
-/proc/mutable_appearance(icon, icon_state = "", layer = FLOAT_LAYER, plane = FLOAT_PLANE, alpha = 255, appearance_flags = NONE)
+/proc/mutable_appearance(icon, icon_state = "", layer = FLOAT_LAYER, atom/offset_spokesman, plane = FLOAT_PLANE, alpha = 255, appearance_flags = NONE, offset_const)
+	if(plane != FLOAT_PLANE)
+		// Essentially, we allow users that only want one static offset to pass one in
+		if(offset_const)
+			plane = GET_NEW_PLANE(plane, offset_const)
+		else
+			// otherwise if you're setting plane you better have the guts to back it up
+			var/turf/our_turf = get_turf(offset_spokesman)
+			plane = MUTATE_PLANE(plane, our_turf)
 	var/mutable_appearance/MA = new()
 	MA.icon = icon
 	MA.icon_state = icon_state

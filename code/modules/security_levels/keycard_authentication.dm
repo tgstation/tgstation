@@ -97,7 +97,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 	if(event_source && !(machine_stat & (NOPOWER|BROKEN)))
 		. += mutable_appearance(icon, "auth_on")
-		. += emissive_appearance(icon, "auth_on", alpha = src.alpha)
+		. += emissive_appearance(icon, "auth_on", src, alpha = src.alpha)
 
 /obj/machinery/keycard_auth/proc/sendEvent(event_type)
 	triggerer = usr

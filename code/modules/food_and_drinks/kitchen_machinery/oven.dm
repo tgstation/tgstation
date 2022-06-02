@@ -55,7 +55,7 @@
 	else
 		. += mutable_appearance(icon, "oven_lid_closed")
 		if(used_tray?.contents.len)
-			. += emissive_appearance(icon, "oven_light_mask", alpha = src.alpha)
+			. += emissive_appearance(icon, "oven_light_mask", src, alpha = src.alpha)
 
 /obj/machinery/oven/process(delta_time)
 	..()

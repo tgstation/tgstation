@@ -143,7 +143,7 @@
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
-	stab_overlay = mutable_appearance(icon, "[icon_state]_stab", layer = ABOVE_MOB_LAYER, plane = GAME_PLANE_FOV_HIDDEN)
+	stab_overlay = mutable_appearance(icon, "[icon_state]_stab", layer = ABOVE_MOB_LAYER, offset_spokesman = src, plane = GAME_PLANE_FOV_HIDDEN)
 
 /obj/structure/punji_sticks/intercept_zImpact(list/falling_movables, levels)
 	. = ..()

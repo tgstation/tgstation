@@ -268,7 +268,7 @@
 	if(panel_open)
 		. += panel_type
 	if(light_mask && !(machine_stat & BROKEN) && powered())
-		. += emissive_appearance(icon, light_mask)
+		. += emissive_appearance(icon, light_mask, src)
 
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()

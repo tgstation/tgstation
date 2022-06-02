@@ -99,6 +99,7 @@
 		var/datum/atom_hud/overlay = overlay_ref?.resolve()
 		QDEL_NULL(overlay)
 
+	// Todo: needs to update on move
 	var/turf/our_turf = get_turf(target_atom)
 	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = options_map[object_overlay_options.value], layer = RIPPLE_LAYER)
 	SET_PLANE(cool_overlay, ABOVE_LIGHTING_PLANE, our_turf)

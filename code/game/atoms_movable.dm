@@ -93,7 +93,7 @@
 	. = ..()
 	switch(blocks_emissive)
 		if(EMISSIVE_BLOCK_GENERIC)
-			var/mutable_appearance/gen_emissive_blocker = mutable_appearance(icon, icon_state, plane = EMISSIVE_PLANE, alpha = src.alpha)
+			var/mutable_appearance/gen_emissive_blocker = mutable_appearance(icon, icon_state, offset_spokesman = src, plane = EMISSIVE_PLANE, alpha = src.alpha)
 			gen_emissive_blocker.color = GLOB.em_block_color
 			gen_emissive_blocker.dir = dir
 			gen_emissive_blocker.appearance_flags |= appearance_flags
@@ -168,7 +168,7 @@
 	if(!blocks_emissive)
 		return
 	else if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
-		var/mutable_appearance/gen_emissive_blocker = emissive_blocker(icon, icon_state, alpha = src.alpha, appearance_flags = src.appearance_flags)
+		var/mutable_appearance/gen_emissive_blocker = emissive_blocker(icon, icon_state, src, alpha = src.alpha, appearance_flags = src.appearance_flags)
 		gen_emissive_blocker.dir = dir
 		return gen_emissive_blocker
 	else if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
@@ -962,6 +962,10 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_turf, new_turf)
 
 	SET_PLANE(src, PLANE_TO_TRUE(src.plane), new_turf)
+	// a TON of overlays use planes, and thus require offsets
+	// so we do this. sucks to suck
+	update_appearance()
+
 	if(!notify_contents)
 		return
 

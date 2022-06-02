@@ -223,6 +223,7 @@
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
+	// Todo: needs to update on move
 				user_image = image(icon,loc,icon_state, FLY_LAYER)
 				SET_PLANE(user_image, ABOVE_GAME_PLANE, destination)
 				eye_user.client.images += user_image

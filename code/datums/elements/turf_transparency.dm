@@ -70,6 +70,6 @@
 		if(!ispath(path))
 			warning("Z-level [our_turf.z] has invalid baseturf '[SSmapping.level_trait(our_turf.z, ZTRAIT_BASETURF)]'")
 			path = /turf/open/space
-	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER-0.02, plane = PLANE_SPACE)
+	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER-0.02, offset_spokesman = our_turf, plane = PLANE_SPACE)
 	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
 	our_turf.underlays += underlay_appearance

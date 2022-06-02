@@ -66,7 +66,7 @@
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 	if(!machine_stat)
-		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", alpha = src.alpha)
+		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/smartfridge/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

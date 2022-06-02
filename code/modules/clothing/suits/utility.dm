@@ -29,10 +29,11 @@
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
 
+// Lemon todo: and here
 /obj/item/clothing/suit/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
@@ -151,7 +152,8 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
+// Lemon todo and here
 /obj/item/clothing/suit/radiation/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
