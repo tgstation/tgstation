@@ -1286,3 +1286,42 @@
   - bugfix: access to medical laptops is now consistent across all stations
   - spellcheck: Fixed the name of a shutter button on KiloStation
   - code_imp: Reorganized the UpdatePaths folder
+2022-05-31:
+  Comxy:
+  - imageadd: added new hallucination and delimber anomaly icons
+  - imagedel: deleted old hallucination and delimber anomaly icons
+  Fikou:
+  - bugfix: fixes crusher inhands being swapped
+  GoldenAlpharex:
+  - bugfix: Map votes will now happen again once the shuttle departs, regardless of
+      whether your server allows everyone to start a map vote or not, as intended.
+  Iamgoofball:
+  - rscadd: Aurora Caelus is now localized entirely within your station's kitchen.
+  Melbert:
+  - rscadd: The science breakroom on Icebox is in a slightly nicer state again.
+  - bugfix: Chaplains no longer trigger their own anti-magic when they use Nullwave
+      Vibrato.
+  - code_imp: Reduced some copy+paste from sect music code.
+  Meyhazah:
+  - imageadd: Resprited chaplain's witch hunter set.
+  ReinaCoder:
+  - qol: Head of Personnels rejoice! Their jumpsuit when adjusted no longer covers
+      the chest.
+  Ryll/Shaps:
+  - balance: Armor can now only block up to 90% of damage from projectiles, same as
+      for melee attacks
+  - bugfix: Pellet cloud attacks like buckshot and frag grenades now respect armor
+      damage reduction when rolling for wounds
+  Son-of-Space:
+  - qol: Access helpers were added to centcom
+  - bugfix: Some accesses in centcomm were made more consistent
+  Son-of-Space, Pepsilawn:
+  - code_imp: Adds checks for double firelocks or airlocks
+  - bugfix: fixes several double firelocks and airlocks across our maps
+  Urumasi, Meyhazah:
+  - imageadd: The H.E.C.K. suit has a new sprite. (by Meyhazah)
+  - rscadd: You can now use a spray can to completely recolor the H.E.C.K. suit.
+  tralezab:
+  - balance: Unique AI trait now gets rid of the station's DIFFERENT lawset modules,
+      and increases the research cost to unlocking them.
+  - qol: AI is given a printout of their new laws

@@ -20,7 +20,7 @@
 		/obj/item/shard,
 		/obj/effect/decal/cleanable/ash,
 		/obj/item/clothing/suit/armor,
-		/obj/item/organ/lungs,
+		/obj/item/organ/internal/lungs,
 	)
 	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/mirror_walk)
 
