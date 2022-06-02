@@ -40,12 +40,13 @@
 	if(!ball_skill)
 		ball_skill = 0
 
+	playsound(src, 'sound/weapons/gun/general/grenade_launch.ogg', 50, TRUE)
+
 	if(prob(60 - ball_skill)) //60% base chance to fail a dunk
 		if(isliving(user))
 			var/mob/living/living_baller = user
 			living_baller.apply_damage(50, STAMINA) //failing a dunk is universally taxing
 		user?.mind.adjust_experience(/datum/skill/balling, UNSUCCESSFUL_EXP)
-		playsound(src, 'sound/weapons/gun/general/grenade_launch.ogg', 50, TRUE)
 		visible_message(span_warning("[user] fumbles the dunk!"))
 		user.dropItemToGround(dunk_object)
 		step(dunk_object, pick(NORTH,SOUTH,EAST,WEST))
@@ -57,7 +58,6 @@
 			var/mob/living/living_baller = user
 			living_baller.apply_damage(stam_cost, STAMINA)
 		user?.mind.adjust_experience(/datum/skill/balling, SUCCESSFUL_DUNK_EXP)
-		playsound(src, 'sound/weapons/thudswoosh.ogg', 130, TRUE)
 		visible_message(span_boldnicegreen("[user] dunks [dunk_object] into \the [src]!"))
 
 /obj/structure/hoop/attack_hand(mob/living/user, list/modifiers)

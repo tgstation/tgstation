@@ -34,7 +34,8 @@
 		return
 	if(!wearer.dropItemToGround(item))
 		return
-	if(istype(item, /obj/item/toy/basketball))
+	var/bball_check = CALLBACK(src, .proc/unique_item_check, item, /obj/item/toy/basketball)
+	if(bball_check)
 		wearer.visible_message(span_boldwarning("[attacker] swats the [item.name] out of [wearer]'s hand!"),span_userdanger("[attacker] steals your [item.name]!"))
 		playsound(item, 'sound/items/dodgeball.ogg', 50, TRUE)
 		return
@@ -73,3 +74,9 @@
 
 	UnregisterSignal(M, COMSIG_HUMAN_DISARM_HIT)
 	UnregisterSignal(M, COMSIG_LIVING_STATUS_KNOCKDOWN)
+
+/datum/component/knockoff/proc/unique_item_check(var/obj/item/our_item, var/obj/item/unique_item)
+	if(!QDELETED(our_item))
+		if(istype(our_item, unique_item))
+			return TRUE
+	return FALSE
