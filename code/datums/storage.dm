@@ -2,24 +2,30 @@
 	var/atom/parent
 
 	var/max_slots
-	var/max_specific_storage
-	var/max_total_storage
+	var/max_specific_storage // max weight class for a single item being inserted
+	var/max_total_storage // max combined weight classes the storage can hold
 
-	var/list/is_using = list()
+	var/list/is_using = list() // list of all the mobs currently viewing the contents
 
 	var/locked = FALSE
-	var/attack_hand_interact = TRUE
-	var/allow_big_nesting = FALSE
+	var/attack_hand_interact = TRUE // whether or not we should open when clicked
+	var/allow_big_nesting = FALSE // whether or not we allow storage objects of the same size inside
 
-	var/atom/movable/screen/storage/boxes //storage display object
-	var/atom/movable/screen/close/closer //close button object
+	var/insert_preposition = "in" // you put things *in* a bag, but *on* a plate
+	
+	var/silent = FALSE // don't show any chat messages regarding inserting items
+	var/rustle_sound = TRUE // play a rustling sound when interacting with the bag
 
-	//Screen variables: Do not mess with these vars unless you know what you're doing. They're not defines so storage that isn't in the same location can be supported in the future.
-	var/screen_max_columns = 7 //These two determine maximum screen sizes.
+	var/numerical_stacking = FALSE // instead of displaying multiple items of the same type, display them as numbered contents
+
+	var/atom/movable/screen/storage/boxes // storage display object
+	var/atom/movable/screen/close/closer // close button object
+
+	var/screen_max_columns = 7 // maximum amount of columns a storage object can have
 	var/screen_max_rows = INFINITY
-	var/screen_pixel_x = 16 //These two are pixel values for screen loc of boxes and closer
+	var/screen_pixel_x = 16 // pixel location of the boxes and close button
 	var/screen_pixel_y = 16
-	var/screen_start_x = 4 //These two are where the storage starts being rendered, screen_loc wise.
+	var/screen_start_x = 4 // where storage starts being rendered, screen_loc wise
 	var/screen_start_y = 2
 
 
@@ -44,6 +50,7 @@
 	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_CLICK_ALT), .proc/open_storage)
 
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/refresh_views)
+	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/remove_and_refresh)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/close_distance)
 
 /datum/storage/Destroy()
@@ -104,18 +111,38 @@
 			return FALSE
 
 	to_insert.forceMove(parent)
-	playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+	item_insertion_feedback(user, to_insert)
+
+/datum/storage/proc/item_insertion_feedback(mob/user, obj/item/thing, override = FALSE)
+	if(silent && !override)
+		return
+
+	if(rustle_sound)
+		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+
+	to_chat(user, span_notice("You put [thing] [insert_preposition]to [parent]."))
+
+	for(var/mob/viewing in viewers(user, null))
+		if(in_range(other, viewing))
+			viewing.show_message(span_notice("[user] puts [thing] [insert_preposition]to [parent]."), MSG_VISUAL)
+			return
+
+		if(thing && thing.w_class >= 3)
+			viewing.show_message(span_notice("[user] puts [thing] [insert_preposition]to [parent]."), MSG_VISUAL)
+			return
 
 /datum/storage/proc/attempt_remove(obj/item/thing, atom/newLoc)
 	if(istype(thing))
 		if(ismob(parent.loc))
 			var/mob/mobparent = parent.loc
-			thing.dropped(mobparent, silent = TRUE)
+			thing.dropped(mobparent, TRUE)
 
 	if(newLoc)
 		reset_item(thing)
 		thing.forceMove(newLoc)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+
+		if(rustle_sound)
+			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 	else
 		thing.moveToNullspace()
 
@@ -136,6 +163,12 @@
 		if(thing.loc != parent)
 			continue
 		attempt_remove(thing, target)
+
+/datum/storage/proc/remove_and_refresh(datum/source, atom/movable/gone, direction)
+	SIGNAL_HANDLER
+
+	reset_item(gone)
+	refresh_views()
 
 /datum/storage/proc/handle_mousedrop(datum/source, atom/over_object, mob/user)
 	SIGNAL_HANDLER
@@ -159,7 +192,8 @@
 	if(parent.loc != user)
 		return
 	
-	playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+	if(rustle_sound)
+		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		var/atom/movable/screen/inventory/hand/hand = over_object
@@ -203,31 +237,70 @@
 		open_storage(parent, user)
 		return TRUE
 
+/datum/storage/proc/process_numerical_display()
+	var/list/toreturn = list()
+
+	for(var/obj/item/thing in parent.contents)
+		if(!toreturn["[thing.type]-[thing.name]"])
+			toreturn["[thing.type]-[thing.name]"] = new /datum/numbered_display(thing, 1)
+		else
+			var/datum/numbered_display/numberdisplay = toreturn["[thing.type]-[thing.name]"]
+			numberdisplay.number++
+
+	return toreturn
+
 /datum/storage/proc/orient_to_hud()
 	var/adjusted_contents = parent.contents.len
 
+	//Numbered contents display
+	var/list/datum/numbered_display/numbered_contents
+	if(numerical_stacking)
+		numbered_contents = process_numerical_display()
+		adjusted_contents = numbered_contents.len
+
 	var/columns = clamp(max_slots, 1, screen_max_columns)
 	var/rows = clamp(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
-	orient_item_boxes(rows, columns)
 
-/datum/storage/proc/orient_item_boxes(rows, cols)
+	orient_item_boxes(rows, columns, numbered_contents)
+
+/datum/storage/proc/orient_item_boxes(rows, cols, list/obj/item/numerical_display_contents)
 	boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+cols-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
-	var/cx = screen_start_x
-	var/cy = screen_start_y
+	var/current_x = screen_start_x
+	var/current_y = screen_start_y
 
-	for(var/obj/item in parent)
-		if(QDELETED(item))
-			continue
-		item.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
-		item.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-		item.maptext = ""
-		item.plane = ABOVE_HUD_PLANE
-		cx++
-		if(cx - screen_start_x >= cols)
-			cx = screen_start_x
-			cy++
-			if(cy - screen_start_y >= rows)
-				break
+	if(islist(numerical_display_contents))
+		for(var/type in numerical_display_contents)
+			var/datum/numbered_display/numberdisplay = numerical_display_contents[type]
+
+			numberdisplay.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
+			numberdisplay.sample_object.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
+			numberdisplay.sample_object.maptext = MAPTEXT("<font color='white'>[(numberdisplay.number > 1)? "[numberdisplay.number]" : ""]</font>")
+			numberdisplay.sample_object.plane = ABOVE_HUD_PLANE
+
+			current_x++
+
+			if(current_x - screen_start_x >= cols)
+				current_x = screen_start_x
+				current_y++
+
+				if(current_y - screen_start_y >= rows)
+					break
+
+	else
+		for(var/obj/item in parent)
+			item.mouse_opacity = MOUSE_OPACITY_OPAQUE 
+			item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
+			item.maptext = ""
+			item.plane = ABOVE_HUD_PLANE
+
+			current_x++
+
+			if(current_x - screen_start_x >= cols)
+				current_x = screen_start_x
+				current_y++
+
+				if(current_y - screen_start_y >= rows)
+					break
 
 	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 
@@ -246,7 +319,9 @@
 		return FALSE
 	
 	show_contents(toshow)
-	playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+
+	if(rustle_sound)
+		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 /datum/storage/proc/close_distance(datum/source)
 	SIGNAL_HANDLER
