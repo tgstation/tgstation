@@ -31,8 +31,6 @@
 	if(our_mood?.sanity <= SANITY_NEUTRAL + 2)
 		our_mood.setSanity(our_mood.sanity + 0.05 * delta_time, SANITY_UNSTABLE, SANITY_NEUTRAL)
 
-	if(our_mood?.sanity >= SANITY_NEUTRAL)
-		stop_sanity_boost()
 
 /// Disables our sanity boost processing and unregisters signals.
 /obj/item/clothing/head/garland/proc/stop_sanity_boost(datum/source)
