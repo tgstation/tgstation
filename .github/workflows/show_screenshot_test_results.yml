@@ -63,6 +63,7 @@ jobs:
         run: |
           eval `ssh-agent -s`
           echo "$DEPLOY_KEY_PRIVATE" > ./deploy_key
+          chmod ./deploy_key 600
           ssh-add ./deploy_key
       - name: Checkout assets repository
         if: steps.dl_results.outcome == 'success'
