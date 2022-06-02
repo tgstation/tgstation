@@ -36,13 +36,12 @@
 	orient_to_hud()
 
 /datum/storage/Destroy()
-	. = ..()
-
 	parent = null
 	boxes = null
 	closer = null
 	is_using.Cut()
 
+	return ..()
 
 
 /datum/storage/proc/reset_item(obj/item/thing)
@@ -102,7 +101,7 @@
 	if(istype(thing))
 		if(ismob(parent.loc))
 			var/mob/mobparent = parent.loc
-			thing.dropped(mobparent, TRUE)
+			thing.dropped(mobparent, silent = TRUE)
 
 	if(newLoc)
 		reset_item(thing)
@@ -168,11 +167,9 @@
 	attempt_insert(thing, user)
 
 /datum/storage/proc/handle_attack(mob/user)
-	var/atom/aparent = parent
-
 	if(!attack_hand_interact)
 		return
-	if(user.active_storage == src && aparent.loc == user)
+	if(user.active_storage == src && parent.loc == user)
 		user.active_storage.hide_contents(user)
 		hide_contents(user)
 		return
@@ -187,7 +184,7 @@
 			hum.r_store = null
 			return
 
-	if(aparent.loc == user)
+	if(parent.loc == user)
 		open_storage(user)
 		return TRUE
 

@@ -119,7 +119,7 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /atom/proc/attackby(obj/item/attacking_item, mob/user, params)
-	if(atom_storage && atom_storage.attempt_insert(attacking_item, user))
+	if(atom_storage?.attempt_insert(attacking_item, user))
 		return TRUE
 	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, attacking_item, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
