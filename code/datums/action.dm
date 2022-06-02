@@ -698,7 +698,7 @@
 	if(isnull(melee_cooldown_time))
 		melee_cooldown_time = cooldown_time
 	if(original)
-		CreateSequenceActions()
+		create_sequence_actions()
 
 /datum/action/cooldown/CreateButton()
 	var/atom/movable/screen/movable/action_button/button = ..()
@@ -734,7 +734,7 @@
 	return ..() && (next_use_time <= world.time)
 
 /// Initializes any sequence actions
-/datum/action/cooldown/proc/CreateSequenceActions()
+/datum/action/cooldown/proc/create_sequence_actions()
 	if(!LAZYLEN(sequence_actions))
 		return
 	// remove existing actions if any
