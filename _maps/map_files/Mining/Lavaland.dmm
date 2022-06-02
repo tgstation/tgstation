@@ -55,6 +55,10 @@
 "aq" = (
 /turf/closed/wall,
 /area/mine/laborcamp)
+"as" = (
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "aw" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
@@ -1592,12 +1596,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/mine/laborcamp)
-"nX" = (
-/obj/effect/turf_decal/trimline/red/arrow_ccw{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/mine/laborcamp)
 "ok" = (
 /obj/structure/stone_tile/block,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -2151,11 +2149,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
-"uI" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
 "uR" = (
 /obj/structure/chair/sofa{
 	dir = 1
@@ -3333,7 +3326,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/preopen{
 	id = "labor";
-	name = "labor camp blast door"
+	name = "Labor Camp Blast Door"
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -3963,10 +3956,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
-"Nu" = (
-/obj/structure/lattice/catwalk,
-/turf/open/lava/smooth/lava_land_surface,
-/area/space)
 "Nv" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -10094,7 +10083,7 @@ Oh
 Ru
 Di
 az
-nX
+az
 az
 vj
 vj
@@ -15494,7 +15483,7 @@ aj
 aj
 aj
 dQ
-uI
+HO
 HO
 lG
 aj
@@ -17294,7 +17283,7 @@ aj
 aj
 Pz
 HO
-uI
+HO
 Af
 aj
 aj
@@ -25274,7 +25263,7 @@ aj
 aj
 pU
 Rp
-Nu
+as
 Rp
 pU
 aj
@@ -25530,9 +25519,9 @@ ot
 ot
 ot
 ot
-ot
-ot
-ot
+as
+as
+as
 aj
 aj
 aj
@@ -25788,7 +25777,7 @@ aj
 aj
 pU
 Rp
-ot
+as
 Rp
 pU
 aj
