@@ -2055,7 +2055,7 @@
 /area/lavaland/surface/outdoors)
 "ns" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/mine/production)
 "nw" = (
@@ -3478,7 +3478,7 @@
 	name = "Mining Station Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/mine/production)
 "yS" = (
@@ -3578,11 +3578,6 @@
 "zG" = (
 /obj/machinery/light_switch/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/camera/autoname/broken/directional/west{
-	c_tag = "Security - Labor Camp Storage";
-	network = list("labor");
-	machine_stat = BROKEN
-	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/bar)
 "zL" = (
@@ -3597,10 +3592,9 @@
 /area/mine/eva)
 "zW" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/pump/on{
+/obj/machinery/atmospherics/components/binary/pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/mine/production)
 "zY" = (
@@ -3611,7 +3605,8 @@
 "zZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/tank/air{
-	dir = 4
+	dir = 4;
+	layer = 2.35
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/commons)
@@ -4255,7 +4250,8 @@
 /area/mine/living_quarters)
 "Ez" = (
 /obj/machinery/atmospherics/components/tank/air{
-	dir = 8
+	dir = 8;
+	layer = 2.35
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -6823,7 +6819,8 @@
 /area/mine/maintenance)
 "XD" = (
 /obj/machinery/atmospherics/components/tank/air{
-	dir = 8
+	dir = 8;
+	layer = 2.35
 	},
 /turf/open/floor/plating,
 /area/mine/production)
@@ -6970,7 +6967,7 @@
 /turf/open/floor/iron,
 /area/mine/eva)
 "YA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/mine/production)
 "YE" = (

@@ -68,14 +68,6 @@
 					number = max(number, C.number+1)
 		c_tag = "[A.name] #[number]"
 
-// STARTS BROKEN
-/obj/machinery/camera/autoname/broken
-
-/obj/machinery/camera/autoname/broken/Initialize(mapload)
-	. = ..()
-	set_machine_stat(machine_stat | BROKEN)
-
-
 // UPGRADE PROCS
 
 /obj/machinery/camera/proc/isEmpProof(ignore_malf_upgrades)
