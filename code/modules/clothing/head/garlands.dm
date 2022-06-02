@@ -28,7 +28,7 @@
 
 	// Under no circumstances do I recommend the use of GetComponent in this way, for anyone thinking about copy+pasting.
 	var/datum/component/mood/our_mood = carbon_loc.GetComponent(/datum/component/mood)
-	if(our_mood?.sanity <= SANITY_NEUTRAL + 2)
+	if(our_mood?.sanity < SANITY_NEUTRAL)
 		our_mood.setSanity(our_mood.sanity + 0.05 * delta_time, SANITY_UNSTABLE, SANITY_NEUTRAL)
 
 
