@@ -154,11 +154,11 @@
 #define rustg_read_toml_file_result(path) json_decode(call(RUST_G, "toml_file_to_json")(path) || "null")
 
 /proc/rustg_read_toml_file(path)
-    var/list/result = rustg_read_toml_file_result(path)
-    if (result["success"])
-        return result["content"]
-    else
-        CRASH(result["content"])
+var/list/result = rustg_read_toml_file_result(path)
+	if (result["success"])
+		return result["content"]
+	else
+		CRASH(result["content"])
 
 #define rustg_url_encode(text) call(RUST_G, "url_encode")("[text]")
 #define rustg_url_decode(text) call(RUST_G, "url_decode")(text)
