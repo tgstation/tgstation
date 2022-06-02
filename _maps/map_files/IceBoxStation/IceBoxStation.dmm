@@ -18492,7 +18492,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/bluespace_vendor/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "fVe" = (
@@ -57015,11 +57015,13 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "sof" = (
-/obj/item/radio/intercom/directional/south,
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "sot" = (
@@ -68886,7 +68888,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/requests_console/auto_name/directional/north,
+/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "weK" = (
@@ -238042,7 +238044,7 @@ fbr
 mPF
 fvW
 fbr
-mPF
+sof
 mPF
 fbr
 fvW
@@ -239072,7 +239074,7 @@ jsX
 lLf
 asa
 kCu
-sof
+iXK
 uja
 ewd
 ehm
