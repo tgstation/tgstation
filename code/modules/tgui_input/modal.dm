@@ -24,6 +24,7 @@
 	src.client = client
 	window = new(client, id)
 	window.subscribe(src, .proc/on_message)
+	window.is_browser = TRUE
 
 /**
  * Injects the scripts and styling into the window,
@@ -32,7 +33,7 @@
 /datum/tgui_modal/proc/initialize()
 	set waitfor = FALSE
 	// Sleep to defer initialization to after client constructor
-	sleep(10 SECONDS)
+	sleep(5 SECONDS)
 	window.initialize(
 			strict_mode = TRUE,
 			fancy = TRUE,
@@ -53,7 +54,7 @@
  * Sends a message to the modal window to send its current value.
  */
 /datum/tgui_modal/proc/force_say()
-	window.send_message("modal_force")
+	window.send_message("force")
 
 /**
  * The equivalent of ui_act, this waits on messages from the window
@@ -61,8 +62,7 @@
  */
 /datum/tgui_modal/proc/on_message(type, payload)
 	if (type == "ready")
-		// NOT functional at the moment. JS never receives these
-		window.send_message("modal_props", list(
+		window.send_message("props", list(
 			channel = channel,
 			maxLength = max_length,
 		))

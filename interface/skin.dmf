@@ -351,12 +351,11 @@ window "tgui_modal"
 		statusbar = false
 		can-minimize = false
 		can-resize = false
-	elem "tgui_modal_browser"
+	elem "browser"
 		type = BROWSER
 		pos = 0,0
 		size = 333x58
 		anchor1 = 0,0
 		anchor2 = 0,0
 		saved-params = ""
-		statusbar = false
 

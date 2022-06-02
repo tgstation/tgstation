@@ -1,6 +1,12 @@
 import { Component } from 'inferno';
 import { classes } from 'common/react';
-import { KEY_DOWN, KEY_TAB, KEY_UP } from 'common/keycodes';
+import {
+  KEY_BACKSPACE,
+  KEY_DELETE,
+  KEY_DOWN,
+  KEY_TAB,
+  KEY_UP,
+} from 'common/keycodes';
 import { TextArea } from 'tgui/components';
 
 const CHANNELS = ['say', 'radio', 'me', 'ooc'];
@@ -26,6 +32,7 @@ export class TguiModal extends Component {
     this.state = {
       buttonContent: '>',
       channel: 0,
+      edited: false,
       size: SIZE.small,
     };
   }
@@ -45,6 +52,11 @@ export class TguiModal extends Component {
   /** User clicks the channel button. */
   handleClick = () => {
     this.incrementChannel();
+  };
+  /** Ensures backspace and delete reset size and history */
+  handleDelete = (value) => {
+    this.historyCounter = 0;
+    this.setSize(value.length);
   };
   /** User presses enter. Closes if no value. */
   handleEnter = (event, value) => {
@@ -82,6 +94,7 @@ export class TguiModal extends Component {
         entry: value,
       });
       this.value = '';
+      this.setState({ edited: true });
     }
   };
   /** Grabs input and sets size, force values etc.
@@ -92,7 +105,7 @@ export class TguiModal extends Component {
     this.setSize(value.length);
   };
   /** Grabs the TAB key to change channels. */
-  handleKeyDown = (event) => {
+  handleKeyDown = (event, value) => {
     if (event.keyCode === KEY_TAB) {
       this.incrementChannel();
       event.preventDefault();
@@ -101,7 +114,11 @@ export class TguiModal extends Component {
       if (savedMessages.length) {
         this.incrementCounter(event.keyCode);
         this.viewHistory();
+        this.setState({ edited: true });
       }
+    }
+    if (event.keyCode === KEY_DELETE || event.keyCode === KEY_BACKSPACE) {
+      this.handleDelete(value);
     }
   };
   /**
@@ -133,8 +150,11 @@ export class TguiModal extends Component {
         this.historyCounter++;
       }
     } else if (direction === KEY_DOWN) {
-      if (historyCounter > 0) {
+      if (historyCounter > 1) {
         this.historyCounter--;
+      } else {
+        this.value = '';
+        this.setState({ edited: true });
       }
     }
   };
@@ -155,26 +175,31 @@ export class TguiModal extends Component {
    */
   setWindow = () => {
     const { size } = this.state;
-    Byond.winset(Byond.windowId, { size: `333x${size}` });
-    Byond.winset('tgui_modal_browser', { size: `333x${size}` });
+    Byond.winset('tgui_modal', { size: `333x${size}` });
+    Byond.winset('tgui_modal.browser', { size: `333x${size}` });
+  };
+  /** Triggers a refresh in the event something changes input (by force) */
+  unsetEdited = () => {
+    this.setState({ edited: false });
   };
   /** Sets the value to be displayed from chat history. */
   viewHistory = () => {
-    const { historyCounter } = this.historyCounter;
-    Byond.sendMessage('hist', { history: this.historyCounter.toString() });
+    const { historyCounter } = this;
     this.value = savedMessages[historyCounter - 1];
-    Byond.sendMessage('saved', {
-      saved: savedMessages[this.historyCounter - 1],
-    });
   };
   componentDidMount() {
-    Byond.subscribeTo('modal_props', (data) => {
+    Byond.subscribeTo('props', (data) => {
       this.setState({ channel: CHANNELS.indexOf(data.channel) });
       this.maxLength = data.maxLength;
     });
-    Byond.subscribeTo('modal_force', () => {
+    Byond.subscribeTo('force', () => {
       this.handleForce();
     });
+  }
+  componentDidUpdate() {
+    if (this.state.edited) {
+      this.unsetEdited();
+    }
   }
 
   render() {
@@ -187,8 +212,9 @@ export class TguiModal extends Component {
       handleInput,
       handleKeyDown,
       maxLength,
+      value,
     } = this;
-    const { buttonContent, channel, size, value } = this.state;
+    const { buttonContent, channel, edited, size } = this.state;
     return (
       <div className={getCss('window', channel, size)}>
         {size < SIZE.medium && (
@@ -211,7 +237,7 @@ export class TguiModal extends Component {
           onInput={handleInput}
           onKeyDown={handleKeyDown}
           selfClear
-          value={value}
+          value={edited && value}
         />
       </div>
     );
