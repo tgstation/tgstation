@@ -98,7 +98,7 @@
 	make_invisible()
 	return ..()
 
-/// Makes our cloak "invisible". No the wearer, the cloak itself.
+/// Makes our cloak "invisible". Not the wearer, the cloak itself.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	item_flags |= EXAMINE_SKIP
 	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
