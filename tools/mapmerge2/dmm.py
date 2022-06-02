@@ -87,7 +87,7 @@ class DMM:
         unused_keys = modified_keys if modified_keys is not None else self.dictionary.keys()
         for key in self.grid.values():
             if key in unused_keys:
-                unused_keys.remove(key)
+                unused_keys = [v for v in unused_keys if v != key]
         for key in unused_keys:
             del self.dictionary[key]
 
