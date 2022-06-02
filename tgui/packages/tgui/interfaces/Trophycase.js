@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Icon, Input, Box, Section, Flex } from '../components';
+import { Icon, TextArea, Box, Section, Flex } from '../components';
 import { Window } from '../layouts';
 
 export const Trophycase = (props, context) => {
@@ -76,7 +76,7 @@ const ShowpieceDescription = (props, context) => {
       : historian_mode
         ? (
           <Section>
-            <Input fluid placeholder="Let's make history!" value={showpiece_description}
+            <TextArea fluid placeholder="Let's make history!" value={showpiece_description}
               onChange={(e, value) => act('changeMessage', {
                 passedMessage: value,
               })} />
