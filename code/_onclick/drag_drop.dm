@@ -10,8 +10,6 @@
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP) //Whatever is receiving will verify themselves for adjacency.
 		return
-	if(atom_storage?.handle_mousedrop(over, usr))
-		return
 	if(over == src)
 		return usr.client.Click(src, src_location, src_control, params)
 	if(!Adjacent(usr) || !over.Adjacent(usr))

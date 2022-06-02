@@ -34,6 +34,17 @@
 	src.max_total_storage = max_total_storage
 
 	orient_to_hud()
+	
+	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), .proc/handle_attack)
+	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/handle_mousedrop)
+
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/remove_all)
+
+	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_CLICK_ALT), .proc/open_storage)
+
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/refresh_views)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/close_distance)
 
 /datum/storage/Destroy()
 	parent = null
@@ -42,8 +53,7 @@
 	is_using.Cut()
 
 	return ..()
-
-
+	
 /datum/storage/proc/reset_item(obj/item/thing)
 	thing.layer = initial(thing.layer)
 	thing.plane = initial(thing.plane)
@@ -51,10 +61,9 @@
 	if(thing.maptext)
 		thing.maptext = ""
 
+/datum/storage/proc/attempt_insert(datum/source, obj/item/to_insert, mob/user)
+	SIGNAL_HANDLER
 
-
-/datum/storage/proc/attempt_insert(obj/item/to_insert, mob/user)
-	message_admins("ran")
 	if(!isitem(to_insert))
 		return FALSE
 
@@ -117,7 +126,9 @@
 
 	return TRUE
 
-/datum/storage/proc/remove_all(atom/target)
+/datum/storage/proc/remove_all(datum/source, atom/target)
+	SIGNAL_HANDLER
+
 	if(!target)
 		target = get_turf(parent)
 
@@ -126,9 +137,9 @@
 			continue
 		attempt_remove(thing, target)
 
+/datum/storage/proc/handle_mousedrop(datum/source, atom/over_object, mob/user)
+	SIGNAL_HANDLER
 
-
-/datum/storage/proc/handle_mousedrop(atom/over_object, mob/user)
 	if(!istype(user))
 		return
 	if(!over_object)
@@ -141,7 +152,7 @@
 	parent.add_fingerprint(user)
 
 	if(over_object == user)
-		open_storage(user)
+		open_storage(parent, user)
 	if(!istype(over_object, /atom/movable/screen))
 		return
 	
@@ -156,17 +167,21 @@
 		return
 
 /datum/storage/proc/attackby(datum/source, obj/item/thing, mob/user, params)
+	SIGNAL_HANDLER
+
 	if(!thing.attackby_storage_insert(src, parent, user))
 		return FALSE
 
-	. = TRUE
+	. = TRUE // prevent after attack
 
 	if(iscyborg(user))
 		return
 
-	attempt_insert(thing, user)
+	attempt_insert(parent, thing, user)
 
-/datum/storage/proc/handle_attack(mob/user)
+/datum/storage/proc/handle_attack(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(!attack_hand_interact)
 		return
 	if(user.active_storage == src && parent.loc == user)
@@ -185,10 +200,8 @@
 			return
 
 	if(parent.loc == user)
-		open_storage(user)
+		open_storage(parent, user)
 		return TRUE
-
-
 
 /datum/storage/proc/orient_to_hud()
 	var/adjusted_contents = parent.contents.len
@@ -218,7 +231,9 @@
 
 	closer.screen_loc = "[screen_start_x + cols]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y]"
 
-/datum/storage/proc/open_storage(mob/toshow)
+/datum/storage/proc/open_storage(datum/source, mob/toshow)
+	SIGNAL_HANDLER
+
 	if(!toshow.CanReach(parent))
 		parent.balloon_alert(toshow, "can't reach!")
 		return FALSE
@@ -229,18 +244,20 @@
 	if(locked)
 		to_chat(toshow, span_warning("[pick("Ka-chunk!", "Ka-chink!", "Plunk!", "Glorf!")] \The [parent] appears to be locked!"))
 		return FALSE
-
-	. = TRUE
 	
 	show_contents(toshow)
 	playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
-/datum/storage/proc/close_distance()
+/datum/storage/proc/close_distance(datum/source)
+	SIGNAL_HANDLER
+
 	for(var/mob/living/user in can_see_contents())
 		if (!user.CanReach(parent))
 			hide_contents(user)
 
-/datum/storage/proc/refresh_views()
+/datum/storage/proc/refresh_views(datum/source)
+	SIGNAL_HANDLER
+
 	for (var/user in can_see_contents())
 		show_contents(user)
 
