@@ -16,6 +16,8 @@
 	var/max_length = MAX_MESSAGE_LEN
 	/// The modal window
 	var/datum/tgui_window/window
+	/// Injury phrases to blurt out
+	var/list/hurt_phrases = list("GACK", "GLORF", "OOF", "AUGH", "OW", "URGH", "HRNK")
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_modal/New(client/client, id)
@@ -72,26 +74,74 @@
 	if (type == "force")
 		if(!payload || !payload["entry"] || !payload["channel"])
 			return FALSE
-		var/entry = alter_entry(payload)
-		delegate_speech(entry, SAY_CHAN)
+		if(length(payload["entry"]) > max_length)
+			CRASH("[usr] has entered more characters than allowed")
+		delegate_speech(alter_entry(payload), SAY_CHAN)
 		return TRUE
 	return TRUE
 
 /**
- * Alters text when players are injured. Adds text, trims, and returns a string.
+ * Alters text when players are injured.
+ * Adds text, trims left and right side
+ *
+ * Arguments:
+ *  payload - a string list containing entry & channel
+ * Returns:
+ *  string - the altered entry
  */
 /datum/tgui_modal/proc/alter_entry(payload)
 	var/entry = payload["entry"]
-	if(payload["channel"] != OOC_CHAN) // No OOC leaks
-		if(length(payload["entry"]) > 8)
-			entry = trim(payload["entry"], rand(8, 15))
+	/// No OOC leaks
+	if(payload["channel"] == OOC_CHAN || payload["channel"] == ME_CHAN)
+		return pick(hurt_phrases)
+	/// Sanitizes radio prefixes so users can't game the system (mostly)
+	entry = remove_prefixes(entry)
+	if(!entry)
+		return pick(hurt_phrases)
+	/// Random trimming for larger sentences
+	if(length(entry) > 50)
+		entry = trim(entry, rand(40, 50))
+	else
+		/// Otherwise limit trim to just last letter
+		if(length(entry) > 1)
+			entry = trim(entry, length(entry))
+	return entry + "-" + pick(hurt_phrases)
+
+/**
+ * Sanitizes text from radio and emote prefixes
+ *
+ * Arguments:
+ * 	entry - the text to sanitize
+ * Returns:
+ * 	string || boolean FALSE if the entry is empty
+ */
+/datum/tgui_modal/proc/remove_prefixes(entry)
+	if(length(entry) < 2)
+		return FALSE
+	/// Start removing any type of radio prefix
+	while(copytext_char(entry, 1, 2) == ";" \
+		|| copytext_char(entry, 1, 2) == ":" \
+		|| copytext_char(entry, 1, 2) == "*")
+		/// Ensure we're not clipping the only letter
+		if(length(entry) < 2)
+			return FALSE
+		/// Sanitize standard departmental chat
+		if(copytext_char(entry, 1, 2) == ":" \
+			&& length(entry) > 3 \
+			&& copytext_char(entry, 3, 4) == " ")
+			entry = copytext(entry, 4)
 		else
-			entry = trim(payload["entry"], length(payload["entry"]))
-	entry += pick("GACK", "GLORF", "OOF", "AUGH", "OW", "URGH")
+			entry = copytext(entry, 2)
 	return entry
 
 /**
  * Delegates the speech to the proper channel.
+ *
+ * Arguments:
+ * 	entry - the text to broadcast
+ * 	channel - the channel to broadcast in
+ * Returns:
+ *  boolean - on success or failure
  */
 /datum/tgui_modal/proc/delegate_speech(entry, channel)
 	if(!client)
@@ -101,11 +151,19 @@
 		return TRUE
 	if(!client.mob)
 		return FALSE
-	if(channel == RADIO_CHAN)
-		entry = ";" + entry
-	if(channel == ME_CHAN)
-		client.mob.me_verb(entry)
-	if(channel == SAY_CHAN)
-		client.mob.say_verb(entry)
-	return TRUE
+	switch(channel)
+		if(RADIO_CHAN)
+			entry = remove_prefixes(entry)
+			if(entry)
+				entry = ";" + entry
+				client.mob.say_verb(entry)
+			return TRUE
+		if(ME_CHAN)
+			client.mob.me_verb(entry)
+			return TRUE
+		if(SAY_CHAN)
+			client.mob.say_verb(entry)
+			return TRUE
+	return FALSE
+
 
