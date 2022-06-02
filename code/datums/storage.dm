@@ -123,7 +123,7 @@
 	to_chat(user, span_notice("You put [thing] [insert_preposition]to [parent]."))
 
 	for(var/mob/viewing in viewers(user, null))
-		if(in_range(other, viewing))
+		if(in_range(user, viewing))
 			viewing.show_message(span_notice("[user] puts [thing] [insert_preposition]to [parent]."), MSG_VISUAL)
 			return
 
