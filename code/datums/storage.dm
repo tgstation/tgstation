@@ -12,7 +12,9 @@
 	var/allow_big_nesting = FALSE // whether or not we allow storage objects of the same size inside
 
 	var/pickup_on_click = FALSE // should we be allowed to pickup an object by clicking it
-	var/collection_mode = COLLECT_ONE
+	var/collection_mode = COLLECT_ONE // the mode for collection when pickup_on_click is enabled
+
+	var/emp_shielded // contents shouldn't be emped
 
 	var/insert_preposition = "in" // you put things *in* a bag, but *on* a plate
 	
@@ -47,6 +49,7 @@
 	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), .proc/handle_attack)
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/handle_mousedrop)
 
+	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/emp_act)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/intercept_preattack)
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/remove_all)
@@ -208,6 +211,15 @@
 
 	reset_item(gone)
 	refresh_views()
+
+/datum/storage/proc/emp_act(datum/source, severity)
+	SIGNAL_HANDLER
+
+	if(emp_shielded)
+		return
+	
+	for(var/atom/thing in parent)
+		thing.emp_act(severity)
 
 /datum/storage/proc/intercept_preattack(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
