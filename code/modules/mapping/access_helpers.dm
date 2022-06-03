@@ -53,7 +53,7 @@
 	access_list += ACCESS_EVA
 	return access_list
 
-/obj/effect/mapping_helpers/airlock/access/any/command/eva/get_access()
+/obj/effect/mapping_helpers/airlock/access/any/command/minisat/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_MINISAT
 	return access_list
@@ -535,7 +535,7 @@
 	access_list += ACCESS_EVA
 	return access_list
 
-/obj/effect/mapping_helpers/airlock/access/all/command/eva/get_access()
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_MINISAT
 	return access_list
