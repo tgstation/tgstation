@@ -5,6 +5,7 @@
 
 /datum/preference/toggle/widescreen/apply_to_client(client/client, value)
 	if(client?.prefs?.read_preference(/datum/preference/toggle/widescreen))
-		INVOKE_ASYNC(client, /client.verb/SetWindowIconSize, client.prefs.icon_size)
+		var/val = client?.prefs.read_preference(/datum/preference/numeric/icon_size)
+		INVOKE_ASYNC(client, /client.verb/SetWindowIconSize, val)
 	else
 		client.view_size?.setDefault(getScreenSize(value))

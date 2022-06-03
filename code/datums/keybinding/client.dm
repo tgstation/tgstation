@@ -45,3 +45,32 @@
 		return
 	user.mob.button_pressed_F12()
 	return TRUE
+
+
+/datum/keybinding/client/zoomin
+	hotkey_keys = list("Add")
+	name = "viewport_zoomin"
+	full_name = "Zoom viewport inwards"
+	description = "Adjusts your viewport inwards slightly."
+	keybind_signal = COMSIG_KB_CLIENT_VIEWPORT_IN
+
+/datum/keybinding/client/zoomin/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.ScaleHotkey(2)
+	return TRUE
+
+/datum/keybinding/client/zoomout
+	hotkey_keys = list("Subtract")
+	name = "viewport_zoomout"
+	full_name = "Zoom viewport outwards"
+	description = "Adjusts your viewport outwards slightly."
+	keybind_signal = COMSIG_KB_CLIENT_VIEWPORT_OUT
+
+/datum/keybinding/client/zoomout/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.ScaleHotkey(-2)
+	return TRUE

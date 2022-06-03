@@ -1,29 +1,22 @@
-/client/ // Holder Variables
-	var/last_view_x_dim = 7
-	var/last_view_y_dim = 7
-
-// Used in OnResize() - Holds the clients prefs.
+/// Used in OnResize() - Holds the clients prefs.
 GLOBAL_VAR_INIT(lock_client_view_x, null)
 GLOBAL_VAR_INIT(lock_client_view_y, null)
 GLOBAL_LIST_INIT(valid_icon_sizes, list(32, 48, 64, 96, 128))
-
-// We hold this so we don't hit prefs often.
-/datum/preferences/var/icon_size = 64
-
+/// General handler for viewport updates. Takes an argument for an icon size, if not aligning with your preference, updates your preference.
 /client/verb/SetWindowIconSize(val as num|text)
 	set hidden = 1
 	winset(src, "mapwindow.map", "icon-size=[val]")
-	if(val != prefs?.icon_size)
-		prefs.icon_size = val ? val : prefs.read_preference(/datum/preference/numeric/pixel_size)
+	if(prefs && val != prefs.read_preference(/datum/preference/numeric/icon_size))
+		prefs.write_preference(GLOB.preference_entries[/datum/preference/numeric/icon_size], val)
 		prefs.save_preferences()
 	OnResize()
-
+/// Verb called by the games skin.dmf to update the server to update view.
 /client/verb/OnResize()
 	set hidden = 1
-	if(!prefs.read_preference(/datum/preference/toggle/widescreen))
+	if(!prefs?.read_preference(/datum/preference/toggle/widescreen))
 		return
 
-	var/divisor = text2num(winget(src, "mapwindow.map", "icon-size")) || prefs.icon_size || world.icon_size
+	var/divisor = text2num(winget(src, "mapwindow.map", "icon-size")) || prefs.read_preference(/datum/preference/numeric/icon_size) || world.icon_size
 	if(!isnull(GLOB.lock_client_view_x) && !isnull(GLOB.lock_client_view_y))
 		last_view_x_dim = GLOB.lock_client_view_x
 		last_view_y_dim = GLOB.lock_client_view_y
@@ -51,10 +44,17 @@ GLOBAL_LIST_INIT(valid_icon_sizes, list(32, 48, 64, 96, 128))
 	if(eye != last_eye)
 		eye = last_eye
 
-	// Recenter skybox, lighting and the screentip(whyy).
+	// Recenter skybox, lighting.
 	mob?.reload_fullscreen()
 	// We do this aswell because things tend to be buggy if not. Mostly lighting and sprite origin issues.
 	change_view(getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
+
+/// Used in skin.dmf to scale on hotkeys.
+/client/verb/ScaleHotkey(number as num)
+	var/lastsize = text2num(winget(src, "mapwindow.map", "icon-size"))
+	var/newpref = lastsize + number
+	SetWindowIconSize(newpref)
+
 
 /client/verb/show_winset_debug_values()
 	set name = "Show Client View Debug Values"

@@ -96,7 +96,8 @@
 		if(client.view_size)
 			client.view_size.resetToDefault() // Resets the client.view in case it was changed.
 		if((client?.prefs?.read_preference(/datum/preference/toggle/widescreen)))
-			client.SetWindowIconSize(client.prefs.icon_size)
+			var/val = client?.prefs.read_preference(/datum/preference/numeric/icon_size)
+			INVOKE_ASYNC(client, /client.verb/SetWindowIconSize, val)
 
 		if(client.player_details.player_actions.len)
 			for(var/datum/action/A in client.player_details.player_actions)
