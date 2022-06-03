@@ -314,7 +314,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/smooth,
-/area/lavaland/surface/outdoors/explored)
+/area/mine/laborcamp/production)
 "dq" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -11718,7 +11718,7 @@ KT
 Yv
 aj
 aj
-aj
+aw
 aw
 Mu
 Dg
@@ -11975,8 +11975,8 @@ KT
 Yv
 Na
 aj
-aj
-Na
+aw
+Mu
 Mu
 Mu
 Mu
@@ -12489,8 +12489,8 @@ KT
 Yv
 Na
 aj
-aj
-Na
+aw
+Mu
 ey
 ey
 Mu
@@ -12746,7 +12746,7 @@ KT
 Yv
 aj
 aj
-aj
+aw
 aw
 aw
 aw
