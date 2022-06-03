@@ -284,7 +284,7 @@
 
 /datum/mood_event/garland
 	description = "These flowers are rather soothing."
-	mood_change = 0
+	mood_change = 1
 
 /datum/mood_event/playing_cards/add_effects(param)
 	var/card_players = 1
