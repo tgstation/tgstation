@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "departmental officers' access across departments has been standardized, and previously lost accesses were added back"
+  - balance: "Departmental security officers have access to more areas in their departments, including xenobiology or virology"
