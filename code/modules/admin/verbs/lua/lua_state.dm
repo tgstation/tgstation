@@ -1,3 +1,6 @@
+GLOBAL_VAR_INIT(IsLuaCall, FALSE)
+GLOBAL_PROTECT(IsLuaCall)
+
 GLOBAL_DATUM(lua_usr, /mob)
 GLOBAL_PROTECT(lua_usr)
 
@@ -22,7 +25,7 @@ GLOBAL_PROTECT(lua_usr)
 		return FALSE
 
 /datum/lua_state/CanProcCall(procname)
-	if(IsAdminAdvancedProcCall()) //No calling auxlua hooks from lua code
+	if(GLOB.IsLuaCall) //No calling auxlua hooks from lua code
 		return FALSE
 	return ..()
 
@@ -48,8 +51,13 @@ GLOBAL_PROTECT(lua_usr)
 			return result["param"]
 
 /datum/lua_state/proc/load_script(script)
-	var/tmp_usr = SSlua.lua_usr
+	message_admins("[key_name(usr)] executed [length(script)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(src, log.len+1)]")
+	log_lua("[key_name(usr)] executed the following lua code:\n[script]")
+	GLOB.IsLuaCall = TRUE
+	var/tmp_usr = GLOB.lua_usr
+	GLOB.lua_usr = usr
 	var/result = __lua_load(internal_id, script)
+	GLOB.IsLuaCall = FALSE
 	GLOB.lua_usr = tmp_usr
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "input")
@@ -58,20 +66,23 @@ GLOBAL_PROTECT(lua_usr)
 
 /datum/lua_state/proc/call_function(function, ...)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
-	var/tmp_usr = SSlua.lua_usr
-	SSlua.lua_usr = usr
 	var/msg = "[key_name(usr)] called the lua function \"[function]\" with arguments: [english_list(call_args)]"
 	message_admins("[msg] [ADMIN_LUAVIEW(src)]")
+	log_lua(msg)
+	var/tmp_usr = GLOB.lua_usr
 	GLOB.lua_usr = usr
+	GLOB.IsLuaCall = TRUE
 	var/result = __lua_call(internal_id, function, call_args)
-	SSlua.lua_usr = tmp_usr
+	GLOB.IsLuaCall = FALSE
 	GLOB.lua_usr = tmp_usr
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	return handle_result(result)
 
 /datum/lua_state/proc/awaken()
+	GLOB.IsLuaCall = TRUE
 	var/result = __lua_awaken(internal_id)
+	GLOB.IsLuaCall = FALSE
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "An attempted awaken")
 	return handle_result(result)
@@ -79,7 +90,12 @@ GLOBAL_PROTECT(lua_usr)
 /// Prefer calling SSlua.queue_resume over directly calling this
 /datum/lua_state/proc/resume(index, ...)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
+	var/msg = "[key_name(usr)] resumed a lua coroutine with arguments: [english_list(call_args)]"
+	message_admins("[msg] [ADMIN_LUAVIEW(src)]")
+	log_lua(msg)
+	GLOB.IsLuaCall = TRUE
 	var/result = __lua_resume(internal_id, index, call_args)
+	GLOB.IsLuaCall = FALSE
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "An attempted resume")
 	return handle_result(result)
