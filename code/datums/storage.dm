@@ -11,6 +11,9 @@
 	var/attack_hand_interact = TRUE // whether or not we should open when clicked
 	var/allow_big_nesting = FALSE // whether or not we allow storage objects of the same size inside
 
+	var/pickup_on_click = FALSE // should we be allowed to pickup an object by clicking it
+	var/collection_mode = COLLECT_ONE
+
 	var/insert_preposition = "in" // you put things *in* a bag, but *on* a plate
 	
 	var/silent = FALSE // don't show any chat messages regarding inserting items
@@ -45,6 +48,7 @@
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/handle_mousedrop)
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
+	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/intercept_preattack)
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/remove_all)
 
 	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_CLICK_ALT), .proc/open_storage)
@@ -65,11 +69,14 @@
 	thing.layer = initial(thing.layer)
 	thing.plane = initial(thing.plane)
 	thing.mouse_opacity = initial(thing.mouse_opacity)
+	thing.screen_loc = null
 	if(thing.maptext)
 		thing.maptext = ""
 
-/datum/storage/proc/attempt_insert(datum/source, obj/item/to_insert, mob/user)
+/datum/storage/proc/attempt_insert(datum/source, obj/item/to_insert, mob/user, override = FALSE)
 	SIGNAL_HANDLER
+
+	. = TRUE
 
 	if(!isitem(to_insert))
 		return FALSE
@@ -110,8 +117,31 @@
 			to_chat(user, span_warning("[iparent] cannot hold [to_insert] as it's a storage item of the same size!"))
 			return FALSE
 
+	to_insert.item_flags |= IN_STORAGE
+
 	to_insert.forceMove(parent)
-	item_insertion_feedback(user, to_insert)
+	item_insertion_feedback(user, to_insert, override)
+
+/datum/storage/proc/handle_mass_pickup(mob/user, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
+	for(var/obj/item/thing in things)
+		message_admins("[thing]")
+		things -= thing
+		if(thing.loc != thing_loc)
+			continue
+		if(thing.type in rejections) // To limit bag spamming: any given type only complains once
+			continue
+		if(!attempt_insert(parent, thing, user, TRUE)) // Note can_be_inserted still makes noise when the answer is no
+			if(parent.contents.len >= max_slots)
+				break
+			rejections += thing.type // therefore full bags are still a little spammy
+			continue
+
+		if (TICK_CHECK)
+			progress.update(progress.goal - things.len)
+			return TRUE
+
+	progress.update(progress.goal - things.len)
+	return FALSE
 
 /datum/storage/proc/item_insertion_feedback(mob/user, obj/item/thing, override = FALSE)
 	if(silent && !override)
@@ -122,11 +152,10 @@
 
 	to_chat(user, span_notice("You put [thing] [insert_preposition]to [parent]."))
 
-	for(var/mob/viewing in viewers(user, null))
+	for(var/mob/viewing in oviewers(user, null))
 		if(in_range(user, viewing))
 			viewing.show_message(span_notice("[user] puts [thing] [insert_preposition]to [parent]."), MSG_VISUAL)
 			return
-
 		if(thing && thing.w_class >= 3)
 			viewing.show_message(span_notice("[user] puts [thing] [insert_preposition]to [parent]."), MSG_VISUAL)
 			return
@@ -145,6 +174,8 @@
 			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 	else
 		thing.moveToNullspace()
+
+	thing.item_flags &= ~IN_STORAGE
 
 	refresh_views()
 
@@ -167,8 +198,53 @@
 /datum/storage/proc/remove_and_refresh(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
+	message_admins("ran remove and refresh")
+
+	for(var/mob/user in is_using)
+		if(user.client)
+			message_admins("removed from [user]")
+			var/client/cuser = user.client
+			cuser.screen -= gone
+
 	reset_item(gone)
 	refresh_views()
+
+/datum/storage/proc/intercept_preattack(datum/source, obj/item/thing, mob/user, params)
+	SIGNAL_HANDLER
+
+	if(!istype(thing) || !pickup_on_click || thing.atom_storage)
+		return FALSE
+
+	. = TRUE // cancel the attack chain now
+
+	if(collection_mode == COLLECT_ONE)
+		attempt_insert(source, thing, user)
+		return
+
+	if(!isturf(thing.loc))
+		return
+
+	INVOKE_ASYNC(src, .proc/collect_on_turf, thing, user)
+
+/datum/storage/proc/collect_on_turf(obj/item/thing, mob/user)
+	var/list/turf_things = thing.loc.contents.Copy()
+
+	if(collection_mode == COLLECT_SAME)
+		turf_things = typecache_filter_list(turf_things, typecacheof(thing.type))
+
+	var/amount = length(turf_things)
+	if(!amount)
+		to_chat(user, span_warning("You failed to pick up anything with [parent]!"))
+		return
+
+	var/datum/progressbar/progress = new(user, amount, thing.loc)
+	var/list/rejections = list()
+
+	while(do_after(user, 1 SECONDS, parent, NONE, FALSE, CALLBACK(src, .proc/handle_mass_pickup, user, turf_things, thing.loc, rejections, progress)))
+		stoplag(1)
+
+	progress.end_progress()
+	to_chat(user, span_notice("You put everything you could [insert_preposition]to [parent]."))
 
 /datum/storage/proc/handle_mousedrop(datum/source, atom/over_object, mob/user)
 	SIGNAL_HANDLER
@@ -241,11 +317,17 @@
 	var/list/toreturn = list()
 
 	for(var/obj/item/thing in parent.contents)
+		var/total_amnt = 1
+
+		if(istype(thing, /obj/item/stack))
+			var/obj/item/stack/things = thing
+			total_amnt = things.amount
+
 		if(!toreturn["[thing.type]-[thing.name]"])
-			toreturn["[thing.type]-[thing.name]"] = new /datum/numbered_display(thing, 1)
+			toreturn["[thing.type]-[thing.name]"] = new /datum/numbered_display(thing, total_amnt)
 		else
 			var/datum/numbered_display/numberdisplay = toreturn["[thing.type]-[thing.name]"]
-			numberdisplay.number++
+			numberdisplay.number += total_amnt
 
 	return toreturn
 

@@ -670,6 +670,7 @@
 	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
 	. = F
 	F.copy_evidences(src)
+	loc.atom_storage?.refresh_views()
 	if(user)
 		if(!user.put_in_hands(F, merge_stacks = FALSE))
 			F.forceMove(user.drop_location())
