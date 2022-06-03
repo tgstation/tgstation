@@ -82,7 +82,7 @@
 			continue
 		living_guy.adjustBruteLoss(666)
 		to_chat(living_guy, span_danger("Pain rushes through all your body..."))
-		living_guy.visible_message(span_danger("[living_guy] kicks \the bucket for real this time!!"))
+		living_guy.visible_message(span_danger("[living_guy] kicks the bucket for real this time!!"))
 		if(!permanent)
 			qdel(src)
 		return

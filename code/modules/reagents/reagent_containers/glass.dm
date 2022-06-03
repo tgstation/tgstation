@@ -258,7 +258,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(5,10,25,50,100,200)
-	volume = 200
+	volume = 100
 	flags_inv = HIDEHAIR
 	slot_flags = ITEM_SLOT_HEAD
 	resistance_flags = NONE
@@ -293,7 +293,21 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/kicker = AM
+
+	// if there is more than 1 bucket on a tile you can't kick them to avoid 10 buckets in a tile insta kill traps
+	var/turf/turf_with_buckets = get_turf(src)
+	var/list/pile_of_buckets = list()
+	for(var/obj/item/reagent_containers/glass/bucket/total_of_buckets in turf_with_buckets.contents)
+		pile_of_buckets += total_of_buckets
+		if(pile_of_buckets.len > 1)
+			kicker.visible_message(span_danger("[kicker] avoids the multiple buckets on the floor."), \
+			span_userdanger("You avoid the multiple buckets!"))
+			return
+
 	if(!isturf(loc) || !isliving(AM))
+		return
+
+	if(kicker.body_position == LYING_DOWN) //if we're not standing we cant kick the bucket
 		return
 
 	if(istype(kicker.buckled, /obj/vehicle))
@@ -308,14 +322,13 @@
 	if(thrown_at && kicker.movement_type & (FLYING|FLOATING)) //won't kick the bucket if you are flying
 		return
 
-	if(reagents?.total_volume < 100) //this is to add some cost to this trap and prevent 1u bucket spam
+	if(reagents?.total_volume < 50) //this is to add some cost to this trap and prevent 1u bucket spam
 		return
 
-	if(isanimal(kicker))
-		var/mob/living/simple_animal/simple_kicker = kicker
-		if(simple_kicker.mob_size <= MOB_SIZE_TINY) //don't let small animals kick the bucket
-			return
+	if(isanimal(kicker) && kicker.mob_size <= MOB_SIZE_TINY)
+		return
 
+	kicker.Paralyze(30)
 	bucket_got_kicked()
 	kicker.visible_message(span_danger("[kicker] kicks \the [src]."), \
 	span_userdanger("You kicked \the [src]!"))

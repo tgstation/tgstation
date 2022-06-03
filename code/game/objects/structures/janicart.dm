@@ -18,7 +18,7 @@
 
 /obj/structure/janitorialcart/Initialize(mapload)
 	. = ..()
-	create_reagents(200, OPENCONTAINER)
+	create_reagents(150, OPENCONTAINER)
 	GLOB.janitor_devices += src
 
 /obj/structure/janitorialcart/Destroy()
