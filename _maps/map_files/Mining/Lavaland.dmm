@@ -138,7 +138,9 @@
 	},
 /area/mine/laborcamp/living)
 "bd" = (
-/obj/machinery/mineral/processing_unit_console,
+/obj/machinery/mineral/processing_unit_console{
+	machinedir = 2
+	},
 /turf/closed/wall,
 /area/mine/laborcamp/production)
 "bf" = (
@@ -509,7 +511,9 @@
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "en" = (
-/obj/machinery/mineral/processing_unit_console,
+/obj/machinery/mineral/processing_unit_console{
+	machinedir = 2
+	},
 /turf/closed/wall,
 /area/mine/production)
 "ep" = (
