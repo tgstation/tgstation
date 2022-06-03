@@ -1,4 +1,0 @@
-author: "Pandarsenic"
-delete-after: True
-changes: 
-  - bugfix: "Shuffles objects to stop sprites from clipping or covering each other (with differing levels of severity) on IceBox's overcrowded dormitory walls."

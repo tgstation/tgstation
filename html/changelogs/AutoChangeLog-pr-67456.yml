@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Light switches no longer cause anchored objects over conveyors to move."

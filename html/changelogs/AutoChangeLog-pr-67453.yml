@@ -1,4 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - bugfix: "Some overlapping objects were adjusted on the walls in the firing range on MetaStation"

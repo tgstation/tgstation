@@ -65,3 +65,48 @@
       long
   tralezab:
   - balance: Removed silver costs from surgery tools
+2022-06-03:
+  Crumpaloo:
+  - imageadd: Added new sprites for the airlock painter, tile & decal sprayer.
+  Fikou:
+  - bugfix: surplus prosthetics have correct sprites now
+  GoldenAlpharex:
+  - bugfix: The stasis ripple effect will now play in a loop as intended, rather than
+      only playing once.
+  - bugfix: Buckling down someone to a stasis bed should no longer occasionally make
+      them lie down veeeeery slowly.
+  Melbert:
+  - balance: 'Heretic: The Amber Focus is now fireproof.'
+  - balance: 'Heretic: The Eldritch Medallion (thermal vision necklace) is now fireproof,
+      acid proof, and works as a focus.'
+  - balance: 'Heretic: The Void Cloak can carry more things in its pocket, including
+      various ritual components (organs, bodyparts, flowers), small heretic items,
+      and a singular sickly blade. It also functions as a focus while the hood is
+      down.'
+  - balance: 'Heretic: Mawed Crucible potions are now small sized (down from normal).'
+  - balance: Cremator button has no access requirements
+  - bugfix: Light switches no longer cause anchored objects over conveyors to move.
+  Pandarsenic:
+  - bugfix: Shuffles objects to stop sprites from clipping or covering each other
+      (with differing levels of severity) on IceBox's overcrowded dormitory walls.
+  Ryll/Shaps:
+  - bugfix: Fixed pellet clouds not being able to wound
+  SingingSpock:
+  - bugfix: Changed triple citrus recipe to make 3u instead of 5u
+  Son-of-Space:
+  - bugfix: Some overlapping objects were adjusted on the walls in the firing range
+      on MetaStation
+  - code_imp: Adds some greps to check for commonly misplaced structures in closed
+      turfs
+  - bugfix: Some objects stacked within closed turfs have been removed from those
+      turfs.
+  robbertapir:
+  - bugfix: Made engraving not throw errors when everything works as expected.
+  tralezab:
+  - balance: Engineering SMESes now start with a bit more juice.
+  vincentiusvin:
+  - qol: Added a roundstart program disk containing nt frontier
+  - code_imp: Changed ordnance's area definition a bit, this includes the misc labs
+      (usually used for circuit labs). Gameplay wise they will have new names.
+  - code_imp: Made the ordnance chamber injector start off. You gotta turn them on
+      using the monitors. Also tidied their code a bit.
