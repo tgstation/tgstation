@@ -99,7 +99,9 @@
 	///Used to decide what the maximum time between ambience is
 	var/max_ambience_cooldown = 90 SECONDS
 
+	/// Refer to [/obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status]
 	var/list/air_vent_info = list()
+	/// Refer to [/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status]
 	var/list/air_scrub_info = list()
 
 /**

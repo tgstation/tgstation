@@ -36,6 +36,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize(mapload)
 	. = ..()
 	RefreshParts()
+	target_temperature = clamp(target_temperature, min_temperature, max_temperature)
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/is_connectable()
@@ -237,7 +238,7 @@
 	data["min"] = min_temperature
 	data["max"] = max_temperature
 	data["target"] = target_temperature
-	data["initial"] = initial(target_temperature)
+	data["initial"] = clamp(initial(target_temperature), min_temperature, max_temperature)
 
 	var/datum/gas_mixture/port = airs[1]
 	data["temperature"] = port.temperature
@@ -287,29 +288,20 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/update_layer()
 	return
 
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer
-
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
+/obj/machinery/atmospherics/components/unary/thermomachine/on
 	on = TRUE
-	icon_state = "thermo_base_1"
 
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize(mapload)
-	. = ..()
-	if(target_temperature == initial(target_temperature))
-		target_temperature = min_temperature
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
+/obj/machinery/atmospherics/components/unary/thermomachine/on/cold_room
 	name = "Cold room temperature control unit"
-	icon_state = "thermo_base_1"
-	greyscale_colors = COLOR_CYAN
-
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)
-	. = ..()
 	target_temperature = COLD_ROOM_TEMP
 
-/obj/machinery/atmospherics/components/unary/thermomachine/heater
+// Clamped on init, dont worry about these values.
+/obj/machinery/atmospherics/components/unary/thermomachine/on/coldest
+	name = "Cold room temperature control unit"
+	target_temperature = TCMB
 
-/obj/machinery/atmospherics/components/unary/thermomachine/heater/on
-	on = TRUE
-	icon_state = "thermo_base_1"
+/obj/machinery/atmospherics/components/unary/thermomachine/on/hottest
+	name = "Hot room temperature control unit"
+	target_temperature = 10000
 
 #undef THERMOMACHINE_POWER_CONVERSION

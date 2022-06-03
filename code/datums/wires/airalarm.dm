@@ -15,7 +15,7 @@
 	if(!..())
 		return FALSE
 	var/obj/machinery/airalarm/A = holder
-	if(A.panel_open && A.buildstage == 2)
+	if(A.panel_open && A.build_stage == 2)
 		return TRUE
 
 /datum/wires/airalarm/get_status()
@@ -23,7 +23,7 @@
 	var/list/status = list()
 	status += "The interface light is [A.locked ? "red" : "green"]."
 	status += "The short indicator is [A.shorted ? "lit" : "off"]."
-	status += "The AI connection light is [!A.aidisabled ? "on" : "off"]."
+	status += "The AI connection light is [!A.ai_disabled ? "on" : "off"]."
 	return status
 
 /datum/wires/airalarm/on_pulse(wire)
@@ -37,8 +37,8 @@
 		if(WIRE_IDSCAN) // Toggle lock.
 			A.locked = !A.locked
 		if(WIRE_AI) // Disable AI control for a while.
-			if(!A.aidisabled)
-				A.aidisabled = TRUE
+			if(!A.ai_disabled)
+				A.ai_disabled = TRUE
 			addtimer(CALLBACK(A, /obj/machinery/airalarm.proc/reset, wire), 100)
 		if(WIRE_PANIC) // Toggle panic siphon.
 			if(!A.shorted)
@@ -63,7 +63,7 @@
 			if(!mend)
 				A.locked = TRUE
 		if(WIRE_AI)
-			A.aidisabled = mend // Enable/disable AI control.
+			A.ai_disabled = mend // Enable/disable AI control.
 		if(WIRE_PANIC) // Force panic syphon on.
 			if(!mend && !A.shorted)
 				A.mode = 3 // AALARM_MODE_PANIC

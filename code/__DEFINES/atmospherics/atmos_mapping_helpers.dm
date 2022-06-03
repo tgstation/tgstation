@@ -9,7 +9,7 @@
 /// -93.15°C snow and ice turfs
 #define FROZEN_ATMOS "o2=22;n2=82;TEMP=180"
 /// -14°C kitchen coldroom, just might loss your tail; higher amount of mol to reach about 101.3 kpA
-#define KITCHEN_COLDROOM_ATMOS "o2=26;n2=97;TEMP=[COLD_ROOM_TEMP]"
+#define KITCHEN_COLDROOM_ATMOS "o2=26;n2=97;TEMP=[CHILLY_ROOM_TEMP]"
 /// used in the holodeck burn test program
 #define BURNMIX_ATMOS "o2=2500;plasma=5000;TEMP=370"
 

@@ -1,0 +1,12 @@
+#comment Changes air alarm TLVs and makes the thermomachine path align with them. https://github.com/tgstation/tgstation/pull/65902
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on : /obj/machinery/atmospherics/components/unary/thermomachine/on {@OLD}
+/obj/machinery/atmospherics/components/unary/thermomachine/heater : /obj/machinery/atmospherics/components/unary/thermomachine {@OLD}
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom : /obj/machinery/atmospherics/components/unary/thermomachine/on/cold_room {@OLD}
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on : /obj/machinery/atmospherics/components/unary/thermomachine/on/coldest {@OLD}
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer : /obj/machinery/atmospherics/components/unary/thermomachine {@OLD}
+
+/obj/machinery/airalarm/kitchen_cold_room : /obj/machinery/airalarm/cold_room {@OLD}
+/obj/machinery/airalarm/server : /obj/machinery/airalarm/coldest {@OLD}
+
+

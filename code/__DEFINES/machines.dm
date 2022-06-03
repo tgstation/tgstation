@@ -185,11 +185,22 @@
 /// Air alarm has all components but isn't completed
 #define AIRALARM_BUILD_COMPLETE 2
 
-///TLV datums wont check limits set to this
-#define TLV_DONT_CHECK -1
-///the gas mixture is within the bounds of both warning and hazard limits
-#define TLV_NO_DANGER 0
-///the gas value is outside the warning limit but within the hazard limit, the air alarm will go into warning mode
-#define TLV_OUTSIDE_WARNING_LIMIT 1
-///the gas is outside the hazard limit, the air alarm will go into hazard mode
-#define TLV_OUTSIDE_HAZARD_LIMIT 2
+/// Special number that means we can safely ignore this specific check.
+#define AIR_ALARM_THRESHOLD_IGNORE -1
+
+#define AIR_ALARM_THRESHOLD_WARNING_MIN (1 << 0)
+#define AIR_ALARM_THRESHOLD_HAZARD_MIN (1 << 1)
+#define AIR_ALARM_THRESHOLD_WARNING_MAX (1 << 2)
+#define AIR_ALARM_THRESHOLD_HAZARD_MAX (1 << 3)
+
+#define AIR_ALARM_THRESHOLD_SAFE 0
+#define AIR_ALARM_THRESHOLD_WARNING 1
+#define AIR_ALARM_THRESHOLD_HAZARDOUS 2
+
+// The checks will turn off the vent when its greater or lower 
+// than the set value depending on the mode, refer to
+// [/obj/machinery/atmospherics/components/unary/vent_pump/proc/process_atmos]
+/// Whether we have an external pressure check set. Means we check for the pressure where the vent is on.
+#define VENT_PUMP_EXT_BOUND (1 << 0)
+/// Whether we have an internal pressure check set. Means we check for the pressure of the vent gasmix.
+#define VENT_PUMP_INT_BOUND (1 << 1)

@@ -1,7 +1,3 @@
-#define EXT_BOUND 1
-#define INT_BOUND 2
-#define NO_BOUND 3
-
 #define SIPHONING 0
 #define RELEASING 1
 
@@ -23,15 +19,12 @@
 
 	///Direction of pumping the gas (RELEASING or SIPHONING)
 	var/pump_direction = RELEASING
-	///Should we check internal pressure, external pressure, both or none? (EXT_BOUND, INT_BOUND, NO_BOUND)
-	var/pressure_checks = EXT_BOUND
+	///Should we check internal pressure, external pressure, both or none? (VENT_PUMP_EXT_BOUND, VENT_PUMP_INT_BOUND,)
+	var/pressure_checks = VENT_PUMP_EXT_BOUND
 	///The external pressure threshold (default 101 kPa)
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	///The internal pressure threshold (default 0 kPa)
 	var/internal_pressure_bound = 0
-	// EXT_BOUND: Do not pass external_pressure_bound
-	// INT_BOUND: Do not pass internal_pressure_bound
-	// NO_BOUND: Do not pass either
 
 	///Frequency id for connecting to the NTNet
 	var/frequency = FREQ_ATMOS_CONTROL
@@ -74,24 +67,24 @@
 			icon_state = "vent_off"
 			return
 
-		if(pump_direction & RELEASING)
+		if(pump_direction == RELEASING)
 			icon_state = "vent_out-off"
-		else // pump_direction == SIPHONING
+		else
 			icon_state = "vent_in-off"
 		return
 
 	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
-		if(pump_direction & RELEASING)
+		if(pump_direction == RELEASING)
 			icon_state = "vent_out"
 			flick("vent_out-starting", src)
-		else // pump_direction == SIPHONING
+		else
 			icon_state = "vent_in"
 			flick("vent_in-starting", src)
 		return
 
-	if(pump_direction & RELEASING)
+	if(pump_direction == RELEASING)
 		icon_state = "vent_out"
-	else // pump_direction == SIPHONING
+	else
 		icon_state = "vent_in"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
@@ -108,12 +101,13 @@
 	var/datum/gas_mixture/environment = us.return_air()
 	var/environment_pressure = environment.return_pressure()
 
-	if(pump_direction & RELEASING) // internal -> external
+	// Pump air out until low enough to reach internal pressure or high enough to reach external pressure.
+	if(pump_direction == RELEASING)
+		// Choose whichever is smaller to reach the desired limit. Upper limit at 10k.
 		var/pressure_delta = 10000
-
-		if(pressure_checks&EXT_BOUND)
+		if(pressure_checks&VENT_PUMP_EXT_BOUND)
 			pressure_delta = min(pressure_delta, (external_pressure_bound - environment_pressure))
-		if(pressure_checks&INT_BOUND)
+		if(pressure_checks&VENT_PUMP_INT_BOUND)
 			pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
 
 		if(pressure_delta > 0)
@@ -127,11 +121,13 @@
 				loc.assume_air(removed)
 				update_parents()
 
-	else // external -> internal
+	// Suck air in until high enough to reach internal pressure or low enough to reach external pressure.
+	else
+		// Choose whichever is smaller to reach the desired limit. Upper limit at 10k.
 		var/pressure_delta = 10000
-		if(pressure_checks&EXT_BOUND)
+		if(pressure_checks&VENT_PUMP_EXT_BOUND)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
-		if(pressure_checks&INT_BOUND)
+		if(pressure_checks&VENT_PUMP_INT_BOUND)
 			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
 		if(pressure_delta > 0 && environment.temperature > 0)
@@ -208,12 +204,12 @@
 	var/atom/signal_sender = signal.data["user"]
 
 	if("purge" in signal.data)
-		pressure_checks &= ~EXT_BOUND
+		pressure_checks &= ~VENT_PUMP_EXT_BOUND
 		pump_direction = SIPHONING
 		investigate_log("pump direction was set to [pump_direction] by [key_name(signal_sender)]", INVESTIGATE_ATMOS)
 
 	if("stabilize" in signal.data)
-		pressure_checks |= EXT_BOUND
+		pressure_checks |= VENT_PUMP_EXT_BOUND
 		pump_direction = RELEASING
 		investigate_log("pump direction was set to [pump_direction] by [key_name(signal_sender)]", INVESTIGATE_ATMOS)
 
@@ -229,35 +225,28 @@
 		if(pressure_checks != old_checks)
 			investigate_log(" pressure checks were set to [pressure_checks] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
-	if("checks_toggle" in signal.data)
-		pressure_checks = (pressure_checks?0:NO_BOUND)
-
 	if("direction" in signal.data)
 		pump_direction = text2num(signal.data["direction"])
 
 	if("set_internal_pressure" in signal.data)
-		var/old_pressure = internal_pressure_bound
-		internal_pressure_bound = clamp(text2num(signal.data["set_internal_pressure"]),0,ONE_ATMOSPHERE*50)
-		if(old_pressure != internal_pressure_bound)
-			investigate_log(" internal pressure was set to [internal_pressure_bound] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
+		var/new_pressure = clamp(text2num(signal.data["set_internal_pressure"]),0,ONE_ATMOSPHERE*50)
+		if(new_pressure != internal_pressure_bound)
+			investigate_log(" internal pressure was set to [new_pressure] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
+		// Trying to pump until internal is zero means we're turning off internal checks.
+		if(new_pressure == 0 && pump_direction == RELEASING)
+			pressure_checks ^= VENT_PUMP_INT_BOUND
+		else
+			internal_pressure_bound = new_pressure
 
 	if("set_external_pressure" in signal.data)
-		var/old_pressure = external_pressure_bound
-		external_pressure_bound = clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
-		if(old_pressure != external_pressure_bound)
-			investigate_log(" external pressure was set to [external_pressure_bound] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
-
-	if("reset_external_pressure" in signal.data)
-		external_pressure_bound = ONE_ATMOSPHERE
-
-	if("reset_internal_pressure" in signal.data)
-		internal_pressure_bound = 0
-
-	if("adjust_internal_pressure" in signal.data)
-		internal_pressure_bound = clamp(internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),0,ONE_ATMOSPHERE*50)
-
-	if("adjust_external_pressure" in signal.data)
-		external_pressure_bound = clamp(external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),0,ONE_ATMOSPHERE*50)
+		var/new_pressure = clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
+		if(new_pressure != external_pressure_bound)
+			investigate_log(" external pressure was set to [new_pressure] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
+		// Trying to suck until external is zero means we're turning off external checks.
+		if(new_pressure == 0 && pump_direction == SIPHONING)
+			pressure_checks ^= VENT_PUMP_EXT_BOUND
+		else
+			external_pressure_bound = new_pressure
 
 	if("init" in signal.data)
 		name = signal.data["init"]
@@ -348,7 +337,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon
 	pump_direction = SIPHONING
-	pressure_checks = INT_BOUND
+	pressure_checks = VENT_PUMP_INT_BOUND
 	internal_pressure_bound = 4000
 	external_pressure_bound = 0
 
@@ -394,7 +383,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon
 	pump_direction = SIPHONING
-	pressure_checks = INT_BOUND
+	pressure_checks = VENT_PUMP_INT_BOUND
 	internal_pressure_bound = 2000
 	external_pressure_bound = 0
 
@@ -417,10 +406,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer4
 	piping_layer = 4
 	icon_state = "vent_map_siphon_on-4"
-
-#undef INT_BOUND
-#undef EXT_BOUND
-#undef NO_BOUND
 
 #undef SIPHONING
 #undef RELEASING
