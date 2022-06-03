@@ -207,7 +207,7 @@
 
 /obj/item/storage/belt/medical/cmo
 	name = "sophisticated medical belt"
-	desc = "A medical belt made with materials used in the inner fabrics of modsuits. It's noticably smaller than regular medical belts."
+	desc = "A medical belt made with materials used in the inner fabrics of MODsuits. It's noticeably smaller than regular medical belts."
 	icon_state = "medical_cmo"
 	worn_icon_state = "medical_cmo"
 	w_class = WEIGHT_CLASS_NORMAL
