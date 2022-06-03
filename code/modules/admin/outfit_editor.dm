@@ -179,7 +179,7 @@
 			choose_any_item(slot)
 		if("back")
 			options = typesof(/obj/item/storage/backpack)
-			for(var/obj/item/mod/control/pre_equipped/potential_mod as anything in typesof(/obj/item/mod/control/pre_equipped))
+			for(var/obj/item/mod/control/pre_equipped/potential_mod as anything in subtypesof(/obj/item/mod/control/pre_equipped))
 				if(!(initial(potential_mod.slot_flags) == ITEM_SLOT_BACK))
 					continue
 				options |= potential_mod
