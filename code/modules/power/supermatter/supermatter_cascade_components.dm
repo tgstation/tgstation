@@ -15,6 +15,7 @@
 	move_resist = INFINITY
 	///All dirs we can expand to
 	var/list/available_dirs = list(NORTH,SOUTH,EAST,WEST,UP,DOWN)
+	var/datum/component/supermatter_crystal/sm_comp
 	///Cooldown on the expansion process
 	COOLDOWN_DECLARE(sm_wall_cooldown)
 
@@ -23,7 +24,7 @@
 	icon_state = "crystal_cascade_[rand(1,6)]"
 	START_PROCESSING(SSsupermatter_cascade, src)
 
-	AddComponent(/datum/component/supermatter_crystal, null, null)
+	sm_comp = AddComponent(/datum/component/supermatter_crystal, null, null)
 
 	playsound(src, 'sound/misc/cracking_crystal.ogg', 45, TRUE)
 
@@ -53,10 +54,9 @@
 	if(!next_turf || locate(/obj/crystal_mass) in next_turf)
 		return
 
-	var/datum/component/supermatter_crystal/sm = GetComponent(/datum/component/supermatter_crystal)
 	for(var/atom/movable/checked_atom as anything in next_turf)
 		if(isliving(checked_atom))
-			sm.dust_mob(src, checked_atom, span_danger("\The [src] lunges out on [checked_atom], touching [checked_atom.p_them()]... \
+			sm_comp.dust_mob(src, checked_atom, span_danger("\The [src] lunges out on [checked_atom], touching [checked_atom.p_them()]... \
 					[checked_atom.p_their()] body begins to shine with a brilliant light before crystallizing from the inside out and joining \the [src]!"),
 				span_userdanger("The crystal mass lunges on you and hits you in the chest. As your vision is filled with a blinding light, you think to yourself \"Damn it.\""))
 		else if(istype(checked_atom, /obj/cascade_portal))
