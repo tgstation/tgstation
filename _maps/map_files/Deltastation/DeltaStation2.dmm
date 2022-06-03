@@ -30590,10 +30590,6 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"iwr" = (
-/obj/effect/spawner/structure/window/reinforced/tinted,
-/turf/open/space/basic,
-/area/station/commons/dorms)
 "iwy" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Central Hallway - Aft Port";
@@ -143506,7 +143502,7 @@ yaI
 yaI
 unm
 ijp
-iwr
+ijp
 tKi
 yaI
 yaI
