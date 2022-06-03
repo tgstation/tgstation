@@ -205,6 +205,13 @@
 	inhand_icon_state = "medical"
 	worn_icon_state = "medical"
 
+/obj/item/storage/belt/medical/cmo
+	name = "sophisticated medical belt"
+	desc = "A medical belt made with materials used in the inner fabrics of modsuits. It's noticably smaller than regular medical belts."
+	icon_state = "medical_cmo"
+	worn_icon_state = "medical_cmo"
+	w_class = WEIGHT_CLASS_NORMAL
+
 /obj/item/storage/belt/medical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
