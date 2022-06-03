@@ -100,7 +100,7 @@
 		if(do_after(user, 3 SECONDS, src))
 			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)]")
 			log_game("[key_name(user)] attached [destabilizing_crystal] to the supermatter at [AREACOORD(src)]")
-			investigate_log("[key_name(user)] attached [destabilizing_crystal] to the supermatter at [AREACOORD(src)]", INVESTIGATE_ENGINE)
+			investigate_log("[key_name(user)] attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
 			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
 			has_destabilizing_crystal = TRUE
 			cascade_initiated = TRUE

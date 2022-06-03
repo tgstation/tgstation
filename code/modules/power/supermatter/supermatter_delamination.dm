@@ -215,7 +215,7 @@
 	cascade_rift = new /obj/cascade_portal(rift_location)
 	message_admins("Exit rift created at [get_area_name(rift_location)]. [ADMIN_JMP(cascade_rift)]")
 	log_game("Bluespace Exit Rift was created at [get_area_name(rift_location)].")
-	cascade_rift.investigate_log("created at [AREACOORD(rift_location)].", INVESTIGATE_ENGINE)
+	cascade_rift.investigate_log("created at [get_area_name(rift_location)].", INVESTIGATE_ENGINE)
 	RegisterSignal(cascade_rift, COMSIG_PARENT_QDELETING, .proc/deleted_portal)
 	return rift_location
 
