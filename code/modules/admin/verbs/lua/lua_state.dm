@@ -1,3 +1,6 @@
+GLOBAL_DATUM(lua_usr, /mob)
+GLOBAL_PROTECT(lua_usr)
+
 /datum/lua_state
 	var/name
 
@@ -46,9 +49,8 @@
 
 /datum/lua_state/proc/load_script(script)
 	var/tmp_usr = SSlua.lua_usr
-	SSlua.lua_usr = usr
 	var/result = __lua_load(internal_id, script)
-	SSlua.lua_usr = tmp_usr
+	GLOB.lua_usr = tmp_usr
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "input")
 	result["chunk"] = script
@@ -58,8 +60,12 @@
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
 	var/tmp_usr = SSlua.lua_usr
 	SSlua.lua_usr = usr
+	var/msg = "[key_name(usr)] called the lua function \"[function]\" with arguments: [english_list(call_args)]"
+	message_admins("[msg] [ADMIN_LUAVIEW(src)]")
+	GLOB.lua_usr = usr
 	var/result = __lua_call(internal_id, function, call_args)
 	SSlua.lua_usr = tmp_usr
+	GLOB.lua_usr = tmp_usr
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	return handle_result(result)
