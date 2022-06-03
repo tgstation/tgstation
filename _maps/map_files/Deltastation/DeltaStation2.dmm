@@ -25465,7 +25465,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
-	name = "Prison Blast door"
+	name = "Prison Blast Door"
 	},
 /obj/machinery/door/airlock/security/glass{
 	name = "Permabrig Visitation"
