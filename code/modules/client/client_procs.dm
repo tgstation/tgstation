@@ -1036,11 +1036,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				if("South")
 					movement_keys[key] = SOUTH
 				if("Say")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=\".winset \\\"tgui_modal.is-visible=true\\\"\"")
+					// I'm so sorry for anyone that has to read this. This is strung together with trial & error.
+					var/say = "\".winset \\\"command=\\\".start_thinking say\\\";tgui_modal.is-visible=true;\\\"\""
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[say]")
+				if("Radio")
+					var/radio = "\".winset \\\"command=\\\".start_thinking radio\\\";tgui_modal.is-visible=true;\\\"\""
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[radio]")
 				if("OOC")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=ooc")
+					var/ooc = "\".winset \\\"command=\\\".start_thinking ooc\\\";tgui_modal.is-visible=true;\\\"\""
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[ooc]")
 				if("Me")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=me")
+					var/me = "\".winset \\\"command=\\\".start_thinking me\\\";tgui_modal.is-visible=true;\\\"\""
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[me]")
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

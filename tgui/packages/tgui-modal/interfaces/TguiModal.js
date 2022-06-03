@@ -1,13 +1,13 @@
 import { Component } from 'inferno';
 import { classes } from 'common/react';
 import {
-  KEY_A,
   KEY_BACKSPACE,
   KEY_DELETE,
   KEY_DOWN,
   KEY_TAB,
   KEY_UP,
   KEY_Z,
+  KEY_0,
 } from 'common/keycodes';
 import { TextArea } from 'tgui/components';
 
@@ -133,7 +133,7 @@ export class TguiModal extends Component {
     if (!event.keyCode) {
       return; // Really doubt it, but...
     }
-    if (isLetter(event.keyCode) || isNumber(event.keyCode)) {
+    if (isAlphanumeric(event.keyCode)) {
       Byond.sendMessage('typing');
     }
     if (event.keyCode === KEY_TAB) {
@@ -275,8 +275,7 @@ const getCss = (element, channel, size) =>
   classes([element, `${element}-${CHANNELS[channel]}`, `${element}-${size}`]);
 
 /** Checks keycodes for alpha/numeric characters */
-const isLetter = (keyCode) => keyCode >= KEY_A && keyCode <= KEY_Z;
-const isNumber = (keyCode) => keyCode >= KEY_0 && keyCode <= KEY_9;
+const isAlphanumeric = (keyCode) => keyCode >= KEY_0 && keyCode <= KEY_Z;
 
 /**
  * Stores entries in the chat history.

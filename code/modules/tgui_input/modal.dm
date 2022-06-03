@@ -4,8 +4,6 @@
  * delegate the speech to the proper channel.
  */
 /datum/tgui_modal
-	/// The channel to broadcast in
-	var/channel = SAY_CHAN
 	/// The user who opened the window
 	var/client/client
 	/// Boolean for whether the tgui_modal was closed by the user.
@@ -44,18 +42,20 @@
  * Sets the window as "opened" server side, though it is already
  * visible to the user. We do this to send props && set local vars.
  */
-/datum/tgui_modal/proc/open()
-	winset(client, "tgui_modal", "is-visible=true")
+/datum/tgui_modal/proc/open(channel = SAY_CHAN)
 	window.send_message("channel", list(
 			channel = channel,
 		))
 	closed = FALSE
+
 /**
  * Closes the window and hides it from view.
  */
 /datum/tgui_modal/proc/close()
 	winset(client, "tgui_modal", "is-visible=false")
 	closed = TRUE
+	if(client?.mob)
+		client.mob.cancel_thinking()
 
 /**
  * Force say handler.
@@ -78,27 +78,35 @@
 	if (type == "close")
 		close()
 		return TRUE
-	if (type == "entry")
+	if (type == "entry" || type == "force")
 		if(!payload || !payload["channel"] || !payload["entry"])
 			return FALSE
 		if(length(payload["entry"]) > max_length)
 			CRASH("[usr] has entered more characters than allowed")
-		delegate_speech(payload["entry"], payload["channel"])
-		close()
-		return TRUE
-	if (type == "purge")
-		if(!payload || !payload["entry"] || !payload["channel"])
-			return FALSE
-		if(length(payload["entry"]) > max_length)
-			CRASH("[usr] has entered more characters than allowed")
-		delegate_speech(alter_entry(payload), SAY_CHAN)
+		if(type == "force")
+			delegate_speech(alter_entry(payload), SAY_CHAN)
+		if(type == "entry")
+			delegate_speech(payload["entry"], payload["channel"])
+			close()
 		return TRUE
 	if (type == "typing")
-		if(!client || closed)
-			return FALSE
-		if(isliving(client.mob))
-			show_typing_indicator()
+		init_typing()
 	return TRUE
+
+/**
+ * Handles the user typing. After a brief period of inactivity,
+ * signals the client mob to revert to the "thinking" icon.
+ */
+/datum/tgui_modal/proc/init_typing()
+	addtimer(CALLBACK(src, .proc/stop_typing), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+	if(client.mob)
+		client.mob.start_typing()
+
+/** Signals the parent to return to "thinking" state */
+/datum/tgui_modal/proc/stop_typing()
+	if(client.mob)
+		client.mob.cancel_typing()
+
 
 /**
  * Alters text when players are injured.

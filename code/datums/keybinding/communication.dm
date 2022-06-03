@@ -7,6 +7,12 @@
 	full_name = "IC Say"
 	keybind_signal = COMSIG_KB_CLIENT_SAY_DOWN
 
+/datum/keybinding/client/communication/radio
+	hotkey_keys = list("Y")
+	name = "Radio"
+	full_name = "IC Radio (;)"
+	keybind_signal = COMSIG_KB_CLIENT_RADIO_DOWN
+
 /datum/keybinding/client/communication/ooc
 	hotkey_keys = list("O")
 	name = "OOC"
