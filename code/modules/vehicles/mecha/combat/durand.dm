@@ -164,18 +164,20 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	///To keep track of things during the animation
 	var/switching = FALSE
 
-/obj/durand_shield/Initialize(mapload, _chassis, _plane, _layer, _dir)
+/obj/durand_shield/Initialize(mapload, chassis, plane, layer, dir)
 	. = ..()
-	chassis = _chassis
-	layer = _layer
-	plane = _plane
-	setDir(_dir)
+	src.chassis = chassis
+	src.layer = layer
+	src.plane = plane
+	setDir(dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/activate)
 	RegisterSignal(chassis, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/shield_glide_size_update)
 
 
 /obj/durand_shield/Destroy()
+	UnregisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER)
 	if(chassis)
+		UnregisterSignal(chassis, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 		chassis.shield = null
 		chassis = null
 	return ..()
