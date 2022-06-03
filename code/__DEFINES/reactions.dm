@@ -153,15 +153,19 @@
 /// The amount of energy one mole of pluoxium forming from carbon dioxide, oxygen, and tritium releases.
 #define PLUOXIUM_FORMATION_ENERGY 250
 /// The pressure scaling factor for pluoxium formation efficiency. Higher values will mean you need more pressure to achieve the same efficiency.
-#define PLUOXIUM_FORMATION_PRESSURE_SCALE 100000
+#define PLUOXIUM_FORMATION_PRESSURE_SCALE 50000
+/// The divisor for the maximum pluoxium formation rate. (Up to 1/2 of the minimum required gas scaled by their consumption rate can get consumed at once).
+#define PLUOXIUM_FORMATION_DELTA 2
 
 // Nitrium:
 /// The minimum temperature necessary for nitrium to form from tritium, nitrogen, and BZ.
 #define NITRIUM_FORMATION_MIN_TEMP 1500
 /// A scaling divisor for the rate of nitrium formation relative to mix temperature.
-#define NITRIUM_FORMATION_TEMP_DIVISOR 200000
+#define NITRIUM_FORMATION_TEMP_DIVISOR 100000
 /// The amount of thermal energy consumed when a mole of nitrium is formed from tritium, nitrogen, and BZ.
 #define NITRIUM_FORMATION_ENERGY 100000
+/// The divisor for the maximum nitrium formation rate. (Up to 1/2 of the minimum required gas scaled by their consumption rate can get consumed at once).
+#define NITRIUM_FORMATION_DELTA 2
 
 /// The maximum temperature nitrium can decompose into nitrogen and hydrogen at.
 #define NITRIUM_DECOMPOSITION_MAX_TEMP (T0C + 70) //Pretty warm, explicitly not fire temps. Time bombs are cool, but not that cool. If it makes you feel any better it's close.
@@ -208,9 +212,11 @@
 /// The maximum temperature healium can form from BZ and freon at.
 #define HEALIUM_FORMATION_MAX_TEMP 300
 /// The pressure scaling factor for healium formation efficiency. Higher values will mean you need more pressure to achieve the same efficiency.
-#define HEALIUM_FORMATION_PRESSURE_SCALE 100000
+#define HEALIUM_FORMATION_PRESSURE_SCALE 50000
 /// The amount of energy three moles of healium forming from BZ and freon releases.
 #define HEALIUM_FORMATION_ENERGY 9000
+/// The divisor for the maximum healium formation rate. (Up to 1/2 of the minimum required gas scaled by their consumption rate can get consumed at once).
+#define HEALIUM_FORMATION_DELTA 2
 
 // Zauker:
 /// The minimum temperature zauker can form from hyper-noblium and nitrium at.
@@ -218,9 +224,11 @@
 /// The maximum temperature zauker can form from hyper-noblium and nitrium at.
 #define ZAUKER_FORMATION_MAX_TEMPERATURE 75000
 /// The pressure scaling factor for zauker formation efficiency. Higher values will mean you need more pressure to achieve the same efficiency.
-#define ZAUKER_FORMATION_PRESSURE_SCALE 3e7
+#define ZAUKER_FORMATION_PRESSURE_SCALE 1.5e7
 /// The amount of energy half a mole of zauker forming from hypernoblium and nitrium consumes.
 #define ZAUKER_FORMATION_ENERGY 5000
+/// The divisor for the maximum zauker formation rate. (Up to 1/2 of the minimum required gas scaled by their consumption rate can get consumed at once).
+#define ZAUKER_FORMATION_DELTA 2
 
 /// The maximum number of moles of zauker that can decompose per reaction tick.
 #define ZAUKER_DECOMPOSITION_MAX_RATE 20
@@ -244,7 +252,7 @@
 /// The amount of hydrogen necessary for proto-nitrate to start converting it to more proto-nitrate.
 #define PN_HYDROGEN_CONVERSION_THRESHOLD 150
 /// The pressure scaling factor for proto-nitrate hydrogen response efficiency. Higher values will mean you need more pressure to achieve the same efficiency.
-#define PN_HYDROGEN_CONVERSION_PRESSURE_SCALE 300000
+#define PN_HYDROGEN_CONVERSION_PRESSURE_SCALE 150000
 /// The amount of energy converting a mole of hydrogen into half a mole of proto-nitrate consumes.
 #define PN_HYDROGEN_CONVERSION_ENERGY 2500
 
