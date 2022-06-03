@@ -58,13 +58,13 @@ Difficulty: Medium
 	ranged_cooldown_time = 6 SECONDS
 	loot = list(/obj/item/stack/sheet/bronze/ten, /obj/effect/decal/cleanable/oil, /obj/item/borg/upgrade/modkit/chassis_mod/clockwork)
 	small_sprite_type = /datum/action/small_sprite/megafauna/clockwork_golem
-	/// Ruby blast
+	/// Shoot ruby blast explosive ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast/ruby_blast
-	/// Oil ball
+	/// Shoot bouncy oil ball projectile ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/oil_ball/oil_ball
-	/// Release smoke
+	/// Releases smoke ability
 	var/datum/action/cooldown/mob_cooldown/release_smoke/release_smoke
-	/// Summon spider
+	/// Summons a clockworkspider ability
 	var/datum/action/cooldown/mob_cooldown/summon_minion/summon_spider
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete/Initialize(mapload)

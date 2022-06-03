@@ -20,6 +20,5 @@
 
 /datum/action/cooldown/mob_cooldown/summon_minion/proc/create_minion(atom/target)
 	SLEEP_CHECK_DEATH(summon_delay, src)
-	var/turf/summon_location = null
-	summon_location = get_turf(owner)
+	var/turf/summon_location = get_turf(owner)
 	new minion_type(summon_location)

@@ -20,8 +20,7 @@
 
 /datum/action/cooldown/mob_cooldown/release_smoke/proc/create_smoke(atom/target)
 	SLEEP_CHECK_DEATH(smoke_delay, src)
-	var/turf/smoke_location = null
-	smoke_location = get_turf(owner)
+	var/turf/smoke_location = get_turf(owner)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(smoke_amount, location = smoke_location)
 	smoke.start()
