@@ -32,6 +32,9 @@ Equivalent to DM's `list[index]`
 ### list:set(index, value)
 Equivalent to DM's `list[index] = value`
 
+### list:add(value)
+Equivalent to DM's `list.Add(value)`
+
 ### list:to_table()
 Converts a DM list into a lua table.
 
