@@ -11,16 +11,17 @@ import { sanitizeText } from "../../sanitize";
 
 export const LuaEditor = (props, context) => {
   const { act, data } = useBackend(context);
-  const { noStateYet, importedCode, globals, documentation } = data;
+  const {
+    noStateYet,
+    globals,
+    documentation,
+  } = data;
   const [
     modal,
     setModal,
-  ] = useLocalState(context, "modal", "states");
+  ] = useLocalState(context, "modal", noStateYet ? "states" : null);
   const [activeTab, setActiveTab] = useLocalState(context, "activeTab", "globals");
   const [input, setInput] = useLocalState(context, "scriptInput", "");
-  if (importedCode) {
-    setInput(importedCode);
-  }
   let tabContent;
   switch (activeTab) {
     case "globals": {
@@ -67,9 +68,11 @@ export const LuaEditor = (props, context) => {
             <Stack.Item>
               <Section fill title="Input" buttons={(
                 <>
-                  <Button onClick={() => act("loadCode")} >
+                  <Button.File
+                    onSelectFiles={(file) => setInput(file)}
+                    accept=".lua,.luau">
                     Import
-                  </Button>
+                  </Button.File>
                   <Button onClick={() => setModal("documentation")}>
                     Help
                   </Button>
@@ -79,7 +82,7 @@ export const LuaEditor = (props, context) => {
                   fluid
                   width="700px"
                   height="590px"
-                  value={importedCode || input}
+                  value={input}
                   onInput={(_, value) => setInput(value)} />
                 <Button onClick={() => act("runCode", { code: input })} >
                   Run

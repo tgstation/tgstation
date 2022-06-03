@@ -158,6 +158,8 @@ GLOBAL_VAR(restart_counter)
 
 	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
 
+	GLOB.lua_log = "[GLOB.log_directory]/lua.log"
+
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"
 	start_log(GLOB.test_log)

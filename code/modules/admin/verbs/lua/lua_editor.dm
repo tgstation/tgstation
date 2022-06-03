@@ -7,6 +7,12 @@
 	/// Arguments for a function call or coroutine resume
 	var/list/arguments = list()
 
+/datum/lua_editor/New(state, _quick_log_index)
+	. = ..()
+	if(state)
+		current_state = state
+		LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+
 /datum/lua_editor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -91,9 +97,6 @@
 		data["tasks"] = current_state.get_tasks()
 		if(current_state.globals)
 			data["globals"] = kvpify_list(refify_list(current_state.globals))
-	if(imported_code)
-		data["importedCode"] = imported_code
-		imported_code = null
 	data["states"] = SSlua.states
 	data["callArguments"] = kvpify_list(refify_list(arguments))
 	return data
@@ -308,12 +311,6 @@
 				thing_to_debug = dekvpify_list(thing_to_debug)
 			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
 			return
-		if("loadCode")
-			var/file_to_load = input(usr, "Select Script File", "Lua") as file|null
-			if(!file_to_load)
-				return
-			imported_code = file2text(file_to_load)
-			return TRUE
 		if("clearArgs")
 			arguments.Cut()
 			return TRUE

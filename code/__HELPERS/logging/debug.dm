@@ -58,3 +58,7 @@
 	WRITE_LOG(GLOB.world_runtime_log, text)
 #endif
 	SEND_TEXT(world.log, text)
+
+/// Logging for lua scripting
+/proc/log_lua(text)
+	WRITE_LOG(GLOB.lua_log, text)

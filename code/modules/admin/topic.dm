@@ -1975,3 +1975,20 @@
 		if(!datum_to_mark)
 			return
 		return usr.client?.mark_datum(datum_to_mark)
+
+	else if(href_list["lua_state"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/datum/lua_state/state_to_view = locate(href_list["lua_state"])
+		if(!state_to_view)
+			return
+		var/datum/lua_editor/editor = new(state_to_view)
+		editor.ui_interact(usr)
+		var/log_index = href_list["log_index"]
+		if(log_index)
+			log_index = text2num(log_index)
+		if(!log_index || state_to_view.log.len < log_index)
+			return
+		var/list/log_entry = state_to_view.log[log_index]
+		if(log_entry["chunk"])
+			tgui_alert_async(usr, log_entry["chunk"])
