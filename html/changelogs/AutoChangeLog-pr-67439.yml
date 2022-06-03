@@ -1,4 +1,0 @@
-author: "robbertapir"
-delete-after: True
-changes: 
-  - bugfix: "Made engraving not throw errors when everything works as expected."

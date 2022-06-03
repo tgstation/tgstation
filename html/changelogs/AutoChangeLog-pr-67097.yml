@@ -1,6 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - qol: "Added a roundstart program disk containing nt frontier"
-  - code_imp: "Changed ordnance's area definition a bit, this includes the misc labs (usually used for circuit labs). Gameplay wise they will have new names."
-  - code_imp: "Made the ordnance chamber injector start off. You gotta turn them on using the monitors. Also tidied their code a bit."
