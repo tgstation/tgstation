@@ -122,6 +122,9 @@
 		var/perpname = get_face_name(get_id_name(""))
 		if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD) && !HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
 			return
+		if((text2num(href_list["examine_time"]) + 1 MINUTES) < world.time)
+			to_chat(usr, "[span_notice("It's too late to use this now!")]")
+			return
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.general)
 		if(href_list["photo_front"] || href_list["photo_side"])
 			if(!R)
