@@ -53,6 +53,12 @@
 	access_list += ACCESS_EVA
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/any/command/eva/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_MINISAT
+	return access_list
+
+
 /obj/effect/mapping_helpers/airlock/access/any/command/gateway/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_GATEWAY
@@ -347,9 +353,9 @@
 	access_list += ACCESS_CARGO
 	return access_list
 
-/obj/effect/mapping_helpers/airlock/access/any/supply/mail_sorting/get_access()
+/obj/effect/mapping_helpers/airlock/access/any/supply/shipping/get_access()
 	var/list/access_list = ..()
-	access_list += ACCESS_MAIL_SORTING
+	access_list += ACCESS_SHIPPING
 	return access_list
 
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining/get_access()
@@ -527,6 +533,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/eva/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_EVA
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/command/eva/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_MINISAT
 	return access_list
 
 /obj/effect/mapping_helpers/airlock/access/all/command/gateway/get_access()
@@ -795,7 +806,7 @@
 
 /obj/effect/mapping_helpers/airlock/access/all/supply/mail_sorting/get_access()
 	var/list/access_list = ..()
-	access_list += ACCESS_MAIL_SORTING
+	access_list += ACCESS_SHIPPING
 	return access_list
 
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining/get_access()
