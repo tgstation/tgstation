@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes: 
+  - bugfix: "Player-facing Traitor reputation numbers are now consistent when you view how much you have."
