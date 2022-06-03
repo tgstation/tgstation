@@ -54,7 +54,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_GHOST, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(user.client)
-		if(user.gas_scan && atmos_scan(user=user, target=src, tool=null, silent=TRUE))
+		if(user.gas_scan && atmos_scan(user=user, target=src, silent=TRUE))
 			return TRUE
 		else if(isAdminGhostAI(user))
 			attack_ai(user)
