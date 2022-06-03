@@ -301,7 +301,7 @@
 		pile_of_buckets += total_of_buckets
 		if(pile_of_buckets.len > 1)
 			kicker.visible_message(span_danger("[kicker] avoids the multiple buckets on the floor."), \
-			span_userdanger("You avoid the multiple buckets!"))
+				span_userdanger("You avoid the multiple buckets!"))
 			return
 
 	if(!isturf(loc) || !isliving(AM))
@@ -331,7 +331,7 @@
 	kicker.Paralyze(30)
 	bucket_got_kicked()
 	kicker.visible_message(span_danger("[kicker] kicks \the [src]."), \
-	span_userdanger("You kicked \the [src]!"))
+		span_userdanger("You kicked \the [src]!"))
 
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
