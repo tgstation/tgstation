@@ -25,48 +25,48 @@
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
 	var/brain_damage = FALSE
-	var/illiterate = FALSE
+	var/causes_illiteracy = FALSE
 
-/datum/symptom/confusion/Start(datum/disease/advance/A)
+/datum/symptom/confusion/Start(datum/disease/advance/advanced_disease)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 6)
-		illiterate = TRUE
-	if(A.totalResistance() >= 6)
+	if(advanced_disease.totalStageSpeed() >= 6)
+		causes_illiteracy = TRUE
+	if(advanced_disease.totalResistance() >= 6)
 		brain_damage = TRUE
-	if(A.totalTransmittable() >= 6)
+	if(advanced_disease.totalTransmittable() >= 6)
 		power = 1.5
-	if(A.totalStealth() >= 4)
+	if(advanced_disease.totalStealth() >= 4)
 		suppress_warning = TRUE
 
-/datum/symptom/confusion/End(datum/disease/advance/A)
-	A.affected_mob.remove_status_effect(/datum/status_effect/confusion)
-	REMOVE_TRAIT(A.affected_mob, TRAIT_ILLITERATE, DISEASE_TRAIT)
+/datum/symptom/confusion/End(datum/disease/advance/advanced_disease)
+	advanced_disease.affected_mob.remove_status_effect(/datum/status_effect/confusion)
+	REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_ILLITERATE, DISEASE_TRAIT)
 	return ..()
 
-/datum/symptom/confusion/Activate(datum/disease/advance/A)
+/datum/symptom/confusion/Activate(datum/disease/advance/advanced_disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/carbon/M = A.affected_mob
-	switch(A.stage)
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+	switch(advanced_disease.stage)
 		if(1, 2, 3, 4)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, span_warning("[pick("Your head hurts.", "Your mind blanks for a moment.")]"))
+				to_chat(infected_mob, span_warning("[pick("Your head hurts.", "Your mind blanks for a moment.")]"))
 		else
-			to_chat(M, span_userdanger("You can't think straight!"))
-			M.adjust_timed_status_effect(16 SECONDS * power, /datum/status_effect/confusion)
+			to_chat(infected_mob, span_userdanger("You can't think straight!"))
+			infected_mob.adjust_timed_status_effect(16 SECONDS * power, /datum/status_effect/confusion)
 			if(brain_damage)
-				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
-				M.updatehealth()
+				infected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
+				infected_mob.updatehealth()
 	return
 
-/datum/symptom/confusion/on_stage_change(datum/disease/advance/A)
+/datum/symptom/confusion/on_stage_change(datum/disease/advance/advanced_disease)
 	. = ..()
 	if(!.)
 		return FALSE
-	var/mob/living/carbon/M = A.affected_mob
-	if(A.stage >= 4 && illiterate)
-		ADD_TRAIT(M, TRAIT_ILLITERATE, DISEASE_TRAIT)
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+	if(advanced_disease.stage >= 4 && causes_illiteracy)
+		ADD_TRAIT(infected_mob, TRAIT_ILLITERATE, DISEASE_TRAIT)
 	return TRUE
