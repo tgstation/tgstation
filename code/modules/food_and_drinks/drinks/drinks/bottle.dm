@@ -652,16 +652,16 @@
 			isGlass = FALSE
 	return
 
-/obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/reagent_containers/food/drinks/bottle/molotov/smash(atom/target, mob/thrower, ranged = FALSE)
 	var/firestarter = 0
-	for(var/datum/reagent/R in reagents.reagent_list)
-		for(var/A in accelerants)
-			if(istype(R,A))
+	for(var/datum/reagent/contained_reagent in reagents.reagent_list)
+		for(var/accelerant_type in accelerants)
+			if(istype(contained_reagent, accelerant_type))
 				firestarter = 1
 				break
 	if(firestarter && active)
-		hit_atom.fire_act()
-		new /obj/effect/hotspot(get_turf(hit_atom))
+		target.fire_act()
+		new /obj/effect/hotspot(get_turf(target))
 	..()
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
