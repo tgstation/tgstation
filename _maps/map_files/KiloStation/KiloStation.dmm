@@ -3888,7 +3888,7 @@
 /area/station/security/execution/transfer)
 "bjb" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -6029,7 +6029,7 @@
 /turf/open/misc/asteroid/lowpressure,
 /area/space/nearstation)
 "bQX" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/obj/machinery/atmospherics/components/unary/thermomachine/on/coldest,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light/small/directional/north,
@@ -25269,7 +25269,7 @@
 "hdm" = (
 /obj/structure/kitchenspike,
 /obj/effect/turf_decal/bot/left,
-/obj/machinery/airalarm/kitchen_cold_room{
+/obj/machinery/airalarm/cold_room{
 	dir = 1;
 	pixel_y = 24
 	},
@@ -33529,7 +33529,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/storage)
 "jia" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
+/obj/machinery/atmospherics/components/unary/thermomachine{
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
@@ -39753,7 +39753,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/electrical)
 "ldc" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -49467,7 +49467,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/on{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -52752,7 +52752,7 @@
 /turf/open/floor/plastic,
 /area/station/hallway/secondary/service)
 "oPX" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine{
 	dir = 8;
 	piping_layer = 2
 	},
@@ -54661,7 +54661,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/on/coldest{
 	name = "euthanization chamber freezer"
 	},
 /turf/open/floor/iron/dark,
@@ -67417,7 +67417,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
+/obj/machinery/atmospherics/components/unary/thermomachine{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -72815,7 +72815,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/obj/machinery/atmospherics/components/unary/thermomachine,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4

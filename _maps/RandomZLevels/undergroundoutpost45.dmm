@@ -7548,7 +7548,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ql" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/obj/machinery/atmospherics/components/unary/thermomachine/on/coldest,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
@@ -7815,7 +7815,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "qP" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/airalarm/server{
+/obj/machinery/airalarm/coldest{
 	dir = 8;
 	pixel_x = -22
 	},

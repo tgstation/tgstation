@@ -7615,7 +7615,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "wo" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -9999,7 +9999,7 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,

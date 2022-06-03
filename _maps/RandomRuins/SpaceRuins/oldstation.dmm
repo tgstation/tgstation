@@ -6641,7 +6641,7 @@
 /area/ruin/space/ancientstation/beta/medbay)
 "DR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/obj/machinery/atmospherics/components/unary/thermomachine,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "DW" = (
@@ -8648,7 +8648,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/obj/machinery/atmospherics/components/unary/thermomachine,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Up" = (

@@ -22941,7 +22941,7 @@
 /area/station/hallway/secondary/entry)
 "hTA" = (
 /obj/machinery/icecream_vat,
-/obj/machinery/airalarm/kitchen_cold_room{
+/obj/machinery/airalarm/cold_room{
 	dir = 1;
 	pixel_y = 24
 	},
@@ -32708,7 +32708,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "kYZ" = (
-/obj/machinery/airalarm/server{
+/obj/machinery/airalarm/coldest{
 	dir = 4;
 	pixel_x = 22
 	},
@@ -38731,7 +38731,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/on/coldest{
 	name = "euthanization chamber freezer"
 	},
 /obj/structure/cable,
@@ -48357,7 +48357,7 @@
 /turf/open/floor/iron,
 /area/station/service/theater)
 "qkS" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
+/obj/machinery/atmospherics/components/unary/thermomachine{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -56790,7 +56790,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "tgO" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/on/coldest{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -58297,7 +58297,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "tFE" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine{
 	piping_layer = 2
 	},
 /turf/open/floor/iron/white,
@@ -64209,12 +64209,6 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
-"vEq" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "vEF" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/machinery/light/small/directional/west,
@@ -66676,7 +66670,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/on/coldest{
 	name = "euthanization chamber freezer"
 	},
 /turf/open/floor/iron/dark,
@@ -71236,7 +71230,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "yfU" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine{
 	dir = 8;
 	initialize_directions = 8
 	},
@@ -107030,7 +107024,7 @@ ora
 ora
 ora
 qkS
-vEq
+qkS
 kkc
 lyK
 tTW
