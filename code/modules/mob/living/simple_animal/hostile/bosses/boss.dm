@@ -10,6 +10,7 @@
 	var/list/boss_abilities = list() //list of /datum/action/boss
 	var/datum/boss_active_timed_battle/atb
 	var/point_regen_delay = 1
+	var/assign_abilities = TRUE //in case you want the bosses to not immediately gain their abilities for whatever reason
 
 
 /mob/living/simple_animal/hostile/boss/Initialize(mapload)
@@ -18,18 +19,19 @@
 	atb = new()
 	atb.point_regen_delay = point_regen_delay
 	atb.boss = src
+	if(assign_abilities)
+		AssignAbilities()
 
+/mob/living/simple_animal/hostile/boss/proc/AssignAbilities()
 	for(var/ab in boss_abilities)
 		boss_abilities -= ab
 		var/datum/action/boss/AB = new ab()
 		AB.boss = src
 		AB.Grant(src)
 		boss_abilities += AB
+		atb.assign_abilities(boss_abilities)
 
-	atb.assign_abilities(boss_abilities)
-
-
-/mob/living/simple_animal/hostile/boss/Destroy()
+/mob/living/simple_animal/hostile/boss/proc/RemoveAbilities()
 	qdel(atb)
 	atb = null
 	for(var/ab in boss_abilities)
@@ -38,6 +40,9 @@
 		AB.Remove(src)
 		qdel(AB)
 	boss_abilities.Cut()
+
+/mob/living/simple_animal/hostile/boss/Destroy()
+	RemoveAbilities()
 	return ..()
 
 

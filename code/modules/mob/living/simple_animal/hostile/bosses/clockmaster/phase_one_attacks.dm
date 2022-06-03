@@ -1,83 +1,13 @@
-//TODO: cult item interactions, make boss do more damage to cult item weilders and take more damage from cult items
-/mob/living/simple_animal/hostile/boss/clockmaster
-	name = "Clockwork Priest"
-	desc = "A man who has gone mad with the promise of great power from a dead god."
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	boss_abilities = list(/datum/action/boss/turret_summon, /datum/action/boss/steam_traps, /datum/action/boss/cogscarab_swarm)
-	var/list/phase_2_abilities = list()
-	faction = list("clockwork")
-	del_on_death = TRUE
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "clockminer"
-	ranged = TRUE
-	environment_smash = ENVIRONMENT_SMASH_NONE
-	minimum_distance = 3
-	retreat_distance = 3
-	obj_damage = 0
-	melee_damage_lower = 10
-	melee_damage_upper = 20
-	health = 2000
-	maxHealth = 2000
-	speed = 1
-	loot = list(/obj/effect/temp_visual/paperwiz_dying)
-	projectiletype = /obj/projectile/temp
-	projectilesound = 'sound/weapons/emitter.ogg'
-	attack_sound = 'sound/hallucinations/growl1.ogg'
-	var/is_in_phase_2 = FALSE
-
-/mob/living/simple_animal/hostile/boss/clockmaster/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(health < maxHealth*0.5 && !is_in_phase_2)
-		get_angry()
-
-//TODO: actually make the abilities for his 2nd stage
-/mob/living/simple_animal/hostile/boss/clockmaster/phase_two
-	name = "Justicar of Bronze"
-	desc = "How can you kill a god? What a grand and intoxicating innocence."
-	boss_abilities = list(/datum/action/boss/turret_summon, /datum/action/boss/steam_traps, /datum/action/boss/cogscarab_swarm)
-	is_in_phase_2 = TRUE
-
-//activates at 50% hp, does a cool monologue before killing this mob and spawning the next stage
-//TODO: better dialogue and do a cool hover animation
-/mob/living/simple_animal/hostile/boss/clockmaster/proc/get_angry()
-	is_in_phase_2 = TRUE
-	point_regen_delay = 0 //prevents dummy from shooting off additional abilities during the monologue
-	ranged = FALSE
-	name = "Awakened Clockwork Priest"
-	desc = "A shell of a man who has gone mad with the promise of great power from a not-so-dead god."
-	for(var/mob/living/nearby_mob in urange(8, src))
-		shake_camera(nearby_mob, 2, 3)
-		nearby_mob.Paralyze(25 SECONDS)
-		to_chat(nearby_mob, span_warning("You feel yourself tense up at the sound of [src]!"))
-	say("ENOUGH!")
-	sleep(3 SECONDS)
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "clockpriest_ascend"
-	pixel_x = -32
-	base_pixel_x = -32
-	maptext_height = 96
-	maptext_width = 96
-	say("I should of known relying on mere mortals is a foolish endeavour, as if the ruins of my previous body wasn't evidence enough.")
-	sleep(7 SECONDS)
-	say("I do not know what brought you here. Whether it be your employers that enshackle my kin, that wicked blood mother or your own foolish curiosity.")
-	sleep(8 SECONDS)
-	say("What I do know is that I've grown tired of festering in this forsaken pit and a Heretic such as yourself will NOT stop my return.")
-	sleep(7 SECONDS)
-	say("Now, bear witness and cower before me! Rehd qdum, buj jxo ijuqc vbem jxhekwx qdt sewi ifyd! Qbb mybb adem co jhku dqcu ev Ratvar!")
-	sleep(7 SECONDS)
-	gib()
-
-
-//summons a set of ocular warden turrets placed throughout the arena. If no turret slots avaiable, refund boss points.
-//TODO: actually finish this boss action
+//Summons a set of ocular warden turrets placed at landmarks in the arena. If there are any turrets still active, more will not spawn.
 /datum/action/boss/turret_summon
 	name = "Raise Ocular Warden"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "mimic_summon"
-	usage_probability = 20
-	boss_cost = 50
+	usage_probability = 15
+	boss_cost = 25
 	boss_type = /mob/living/simple_animal/hostile/boss/clockmaster
 	say_when_triggered = "Arise once more, watchful guardians! Yrg Uvf Tenpvbhf Yvtug thvqr lbhe nvz gehr!"
+	var/id = "clockmasterocularwarden"
 
 /datum/action/boss/turret_summon/IsAvailable()
 	. = ..()
@@ -86,24 +16,84 @@
 	return TRUE
 
 /datum/action/boss/turret_summon/Trigger(trigger_flags)
+	if(..())
+		SEND_GLOBAL_SIGNAL(COMSIG_ACTION_TRIGGER_ID,src)
 
-
-/obj/effect/landmark/ocularwarden_boss_spawn
+/obj/effect/landmark/ocularwarden_turret_spawn
 	name = "occular warden tower spawner for the cool clock cult arena"
-	var/id = "clockmaster"
+	var/id = "clockmasterocularwarden"
 
+/obj/effect/landmark/ocularwarden_turret_spawn/Initialize(mapload)
+	. = ..()
+	RegisterSignal(SSdcs,COMSIG_ACTION_TRIGGER_ID, .proc/OnActionActivation)
+
+//Spawns a turret on the landmark's turf if no turret exists there currently.
+/obj/effect/landmark/ocularwarden_turret_spawn/proc/OnActionActivation(datum/source,datum/action/boss/turret_summon/boss)
+	SIGNAL_HANDLER
+
+	if(boss.id == id)
+		var/turf/turret_tile = get_turf(src)
+		if(!(locate(/mob/living/simple_animal/hostile/ocular_warden) in turret_tile))
+			new /mob/living/simple_animal/hostile/ocular_warden(turret_tile)
+
+
+/mob/living/simple_animal/hostile/ocular_warden
+	name = "Ocular Warden"
+	desc = "A pristine bronze machine with a giant beady eye. It stares at you menancingly."
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "ocular_warden"
+	icon_state = "ocular_warden"
+	icon_dead = "drone_clock_dead"
+	ranged = 1
+	rapid = 2
+	rapid_fire_delay = 6
+	stop_automated_movement = TRUE
+	projectiletype = /obj/projectile/beam/laser/ocularwarden
+	speak_chance = 0
+	stat_attack = HARD_CRIT
+	maxHealth = 35
+	health = 35
+	rapid_melee = 2
+	attack_verb_continuous = "slashes at"
+	attack_verb_simple = "slash at"
+	attack_sound = 'sound/weapons/circsawhit.ogg'
+	deathmessage = "breaks apart into various metallic debris!"
+	combat_mode = TRUE
+	gender = NEUTER
+	mob_biotypes = MOB_ROBOTIC
+	speech_span = SPAN_ROBOT
+	loot = list(/obj/effect/decal/cleanable/robot_debris)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	faction = list("clockwork")
+	del_on_death = 1
+
+/mob/living/simple_animal/hostile/ocular_warden/Move(atom/newloc)//stop moving please
+	return FALSE
+
+/obj/projectile/beam/laser/ocularwarden
+	name = "hellfire laser"
+	wound_bonus = -35
+	damage = 5
+
+/obj/projectile/beam/laser/ocularwarden/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		if(IS_CULTIST(M))
+			M.adjust_bodytemperature(30)
+			to_chat(M, span_warning("You feel a burning gaze strike your inner core, as if Ratvar himself is staring you down intently."))
 
 //Activates a series of steam traps placed around the arena. Stepping onto these while active throws the victim back a few tiles and causes burn damage.
 /datum/action/boss/steam_traps
 	name = "Activate Steam Traps"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "mimic_summon"
-	usage_probability = 50
+	usage_probability = 20
 	boss_cost = 25
 	boss_type = /mob/living/simple_animal/hostile/boss/clockmaster
 	say_when_triggered = "Step into the cleansing steam, burn away your sins for your slights against His Gracious Light!"
 	var/vents_active = FALSE
-	var/id = "clockmaster"
+	var/id = "clockmastersteamvent"
 
 /datum/action/boss/steam_traps/IsAvailable()
 	. = ..()
@@ -117,6 +107,7 @@
 	if(..())
 		SEND_GLOBAL_SIGNAL(COMSIG_ACTION_TRIGGER_ID,src)
 
+
 /obj/structure/steamvent
 	name = "steam pit"
 	desc = "An exhaust hole covered by a protective metal grate."
@@ -126,7 +117,7 @@
 	opacity = FALSE
 	plane = FLOOR_PLANE
 	anchored = TRUE
-	var/id = "clockmaster"
+	var/id = "clockmastersteamvent"
 	var/active = FALSE
 
 /obj/structure/steamvent/Initialize(mapload)
@@ -165,7 +156,7 @@
 	name = "Summon Cogscarab Swarm"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "mimic_summon"
-	usage_probability = 20
+	usage_probability = 15
 	boss_cost = 40
 	boss_type = /mob/living/simple_animal/hostile/boss/clockmaster
 	say_when_triggered = "Devout machines of His Grand Design, arise! Yrg ab Urergvp gerffcnff hcba Uvf Qbznva!"

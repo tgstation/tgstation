@@ -220,3 +220,8 @@
 	id = /obj/item/card/id/advanced
 	l_pocket = /obj/item/paper/fluff/bee_objectives
 	mask = /obj/item/clothing/mask/animal/small/bee
+
+/obj/effect/mob_spawn/corpse/human/ashwalker
+	name = "Ashwalker"
+	outfit = /datum/outfit/ashwalker
+	mob_species = /datum/species/lizard/ashwalker

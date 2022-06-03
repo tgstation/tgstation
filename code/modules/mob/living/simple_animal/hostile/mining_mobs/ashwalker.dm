@@ -33,7 +33,8 @@
     attack_sound = 'sound/weapons/bladeslice.ogg'
     deathsound = SFX_BODYFALL
     combat_mode = TRUE
-    loot = list(/obj/item/spear/bonespear)
+    loot = list(/obj/item/spear/bonespear, 
+        /obj/effect/mob_spawn/corpse/human/ashwalker)
     del_on_death = 1
 
 /mob/living/simple_animal/hostile/ashwalker/Move(atom/newloc)
