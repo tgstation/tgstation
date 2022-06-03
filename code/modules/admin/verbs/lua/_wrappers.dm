@@ -3,7 +3,7 @@
 
 /proc/wrap_lua_datum_proc_call(datum/thing_to_call, proc_name, list/arguments)
 	if(!usr)
-		usr = SSlua.lua_usr
+		usr = GLOB.lua_usr
 	if(usr)
 		SSlua.gc_guard = WrapAdminProcCall(thing_to_call, proc_name, arguments)
 	else
@@ -12,7 +12,7 @@
 
 /proc/wrap_lua_global_proc_call(proc_name, list/arguments)
 	if(!usr)
-		usr = SSlua.lua_usr
+		usr = GLOB.lua_usr
 	if(usr)
 		SSlua.gc_guard = WrapAdminProcCall(GLOBAL_PROC, proc_name, arguments)
 	else
