@@ -107,7 +107,6 @@
 	if(client.mob)
 		client.mob.cancel_typing()
 
-
 /**
  * Alters text when players are injured.
  * Adds text, trims left and right side

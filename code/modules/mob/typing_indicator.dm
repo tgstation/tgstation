@@ -38,9 +38,10 @@ When you press the hotkey, the .start_typing verb is called with the source ("sa
 When you send a message from the custom window, the appropriate verb is called, .say or .me
 If you close the window without actually sending the message, the .cancel_thinking verb is called with the source.
 Cancel thinking and cancel typing remove the indicators.
+
 How this differs from the original implementation:
 Since we can differentiate user input, we can show the thinking indicator immediately, and the typing indicator if user is
-typing into the window. Pressing the hotkey can also direct the channel
+typing into the window. Pressing the hotkey also sends a message to switch channels.
 */
 
 /// Shows the thinking indicator - player has window open
@@ -50,13 +51,12 @@ typing into the window. Pressing the hotkey can also direct the channel
 	client?.tgui_modal?.open(channel)
 	create_thinking_indicator()
 
-
 /// Hides all typing/thinking indicators
 /mob/verb/cancel_thinking()
 	set name = ".cancel_thinking"
 	set hidden = 1
 	remove_thinking_indicator()
-	remove_thinking_indicator()
+	remove_typing_indicator()
 
 /// Show the typing indicator - player is typing into the window
 /mob/verb/start_typing()

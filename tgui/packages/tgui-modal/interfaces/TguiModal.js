@@ -33,14 +33,14 @@ export class TguiModal extends Component {
     this.value = '';
     this.state = {
       buttonContent: '>',
-      channel: 0,
+      channel: null,
       edited: false,
       size: SIZE.small,
     };
   }
   /** Resets the state of the window and hides it from user view */
   closeWindow = () => {
-    this.setState({ buttonContent: '>', channel: 0 });
+    this.setState({ buttonContent: '>', channel: null });
     this.historyCounter = 0;
     this.value = '';
     this.setSize(0);
