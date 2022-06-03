@@ -1,7 +1,7 @@
 /**
  * The tgui speech modal. This initializes an input window which hides until
  * the user presses one of the speech hotkeys. Once an entry is set, it will
- * delegate the speech to the speech manager.
+ * delegate the speech to the proper channel.
  */
 /datum/tgui_modal
 	/// The channel to broadcast in
@@ -10,14 +10,12 @@
 	var/client/client
 	/// Boolean for whether the tgui_modal was closed by the user.
 	var/closed
-	/// The typed user input
-	var/entry
 	/// Max message length
 	var/max_length = MAX_MESSAGE_LEN
 	/// The modal window
 	var/datum/tgui_window/window
 	/// Injury phrases to blurt out
-	var/list/hurt_phrases = list("GACK", "GLORF", "OOF", "AUGH", "OW", "URGH", "HRNK")
+	var/list/hurt_phrases = list("GACK!", "GLORF!", "OOF!", "AUGH!", "OW!", "URGH!", "HRNK!")
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_modal/New(client/client, id)
@@ -43,6 +41,16 @@
 	close()
 
 /**
+ * Sets the window as "opened" server side, though it is already
+ * visible to the user. We do this to send props && set local vars.
+ */
+/datum/tgui_modal/proc/open()
+	winset(client, "tgui_modal", "is-visible=true")
+	window.send_message("channel", list(
+			channel = channel,
+		))
+	closed = FALSE
+/**
  * Closes the window and hides it from view.
  */
 /datum/tgui_modal/proc/close()
@@ -61,9 +69,9 @@
  * and delegates actions.
  */
 /datum/tgui_modal/proc/on_message(type, payload)
-	if (type == "ready")
-		window.send_message("props", list(
-			channel = channel,
+	if(type == "ready")
+		/// Sanity check in case the server ever changes MAX_LEN_MESSAGE
+		window.send_message("maxLength", list(
 			maxLength = max_length,
 		))
 		return TRUE
@@ -85,6 +93,11 @@
 			CRASH("[usr] has entered more characters than allowed")
 		delegate_speech(alter_entry(payload), SAY_CHAN)
 		return TRUE
+	if (type == "typing")
+		if(!client || closed)
+			return FALSE
+		if(isliving(client.mob))
+			show_typing_indicator()
 	return TRUE
 
 /**

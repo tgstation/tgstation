@@ -1,11 +1,13 @@
 import { Component } from 'inferno';
 import { classes } from 'common/react';
 import {
+  KEY_A,
   KEY_BACKSPACE,
   KEY_DELETE,
   KEY_DOWN,
   KEY_TAB,
   KEY_UP,
+  KEY_Z,
 } from 'common/keycodes';
 import { TextArea } from 'tgui/components';
 
@@ -48,16 +50,13 @@ export class TguiModal extends Component {
   /** Increments the chat history counter, looping through entries */
   handleArrowKeys = (direction) => {
     const { historyCounter } = this;
-    if (direction === KEY_UP) {
-      if (historyCounter < savedMessages.length) {
-        this.historyCounter++;
-      }
-    } else if (direction === KEY_DOWN) {
-      if (historyCounter > 0) {
-        this.historyCounter--;
-      }
+    if (direction === KEY_UP && historyCounter < savedMessages.length) {
+      this.historyCounter++;
+      this.viewHistory();
+    } else if (direction === KEY_DOWN && historyCounter > 0) {
+      this.historyCounter--;
+      this.viewHistory();
     }
-    this.viewHistory();
   };
   /** Mouse leaves the button */
   handleBlur = () => {
@@ -131,6 +130,12 @@ export class TguiModal extends Component {
   * BKSP/DEL - Resets history counter and checks window size.
   Grabs the TAB key to change channels. */
   handleKeyDown = (event, value) => {
+    if (!event.keyCode) {
+      return; // Really doubt it, but...
+    }
+    if (isLetter(event.keyCode) || isNumber(event.keyCode)) {
+      Byond.sendMessage('typing');
+    }
     if (event.keyCode === KEY_TAB) {
       this.incrementChannel();
       event.preventDefault();
@@ -169,15 +174,12 @@ export class TguiModal extends Component {
   setSize = (value) => {
     const { size } = this.state;
     if (value > 56 && size !== SIZE.large) {
-      Byond.sendMessage('notlarge', { value });
       this.setState({ size: SIZE.large });
       this.setWindow();
     } else if (value <= 56 && value > 24 && size !== SIZE.medium) {
-      Byond.sendMessage('notmedium', { value });
       this.setState({ size: SIZE.medium });
       this.setWindow();
     } else if (value <= 24 && size !== SIZE.small) {
-      Byond.sendMessage('notsmall', { value });
       this.setState({ size: SIZE.small });
       this.setWindow();
     }
@@ -206,9 +208,12 @@ export class TguiModal extends Component {
       this.setState({ buttonContent: '>', edited: true });
     }
   };
+  /** Attach listeners, sets window size just in case */
   componentDidMount() {
-    Byond.subscribeTo('props', (data) => {
+    Byond.subscribeTo('channel', (data) => {
       this.setState({ channel: CHANNELS.indexOf(data.channel) });
+    });
+    Byond.subscribeTo('maxLength', (data) => {
       this.maxLength = data.maxLength;
     });
     Byond.subscribeTo('force', () => {
@@ -268,6 +273,10 @@ export class TguiModal extends Component {
 /** Returns modular css classes */
 const getCss = (element, channel, size) =>
   classes([element, `${element}-${CHANNELS[channel]}`, `${element}-${size}`]);
+
+/** Checks keycodes for alpha/numeric characters */
+const isLetter = (keyCode) => keyCode >= KEY_A && keyCode <= KEY_Z;
+const isNumber = (keyCode) => keyCode >= KEY_0 && keyCode <= KEY_9;
 
 /**
  * Stores entries in the chat history.
