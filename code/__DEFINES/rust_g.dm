@@ -154,7 +154,7 @@
 #define rustg_read_toml_file_result(path) json_decode(call(RUST_G, "toml_file_to_json")(path) || "null")
 
 /proc/rustg_read_toml_file(path)
-var/list/result = rustg_read_toml_file_result(path)
+	var/list/result = rustg_read_toml_file_result(path)
 	if (result["success"])
 		return result["content"]
 	else
