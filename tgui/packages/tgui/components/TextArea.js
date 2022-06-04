@@ -132,15 +132,9 @@ export class TextArea extends Component {
     }
     if (this.props.autoFocus || this.props.autoSelect) {
       Byond.subscribeTo('open', () => {
-        input.focus();
+        this.getFocus();
       });
-      setTimeout(() => {
-        input.focus();
-
-        if (this.props.autoSelect) {
-          input.select();
-        }
-      }, 1);
+      this.getFocus();
     }
   }
 
@@ -157,6 +151,16 @@ export class TextArea extends Component {
     this.setState({ editing });
   }
 
+  getFocus() {
+    const input = this.textareaRef.current;
+    setTimeout(() => {
+      input.focus();
+
+      if (this.props.autoSelect) {
+        input.select();
+      }
+    }, 1);
+  }
   getValue() {
     return this.textareaRef.current && this.textareaRef.current.value;
   }

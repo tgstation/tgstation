@@ -29,14 +29,14 @@ export const windowLoad = () => {
  * Modifies the window size.
  *
  * Parameters:
- * size: The size of the window in pixels. Optional.
+ *  size - The size of the window in pixels. Optional.
  */
 export const windowSet = (size = SIZE.small) => {
   Byond.winset('tgui_modal', { size: `333x${size}` });
   Byond.winset('tgui_modal.browser', { size: `333x${size}` });
 };
 /** Private functions */
-/** Sets the window props as opened and gains focus. */
+/** Sets the skin props as opened. Focus might be a placebo here. */
 const setOpen = () => {
   Byond.winset('tgui_modal', {
     'is-visible': true,
@@ -48,7 +48,7 @@ const setOpen = () => {
     size: `333x${SIZE.small}`,
   });
 };
-/** Sets the window props as closed.  */
+/** Sets the skin props as closed.  */
 const setClosed = () => {
   Byond.winset('tgui_modal', {
     'is-visible': false,

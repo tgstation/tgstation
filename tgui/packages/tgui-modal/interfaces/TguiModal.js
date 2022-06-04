@@ -116,15 +116,20 @@ export class TguiModal extends Component {
     this.setSize(value.length);
   };
   /**
-  * Handles other key events.
-  * TAB - Changes channels.
-  * UP/DOWN - Sets history counter and input value.
-  * BKSP/DEL - Resets history counter and checks window size.
-  Grabs the TAB key to change channels. */
+   * Handles other key events.
+   * TAB - Changes channels.
+   * UP/DOWN - Sets history counter and input value.
+   * BKSP/DEL - Resets history counter and checks window size.
+   * TYPING - When users key, it tells byond that it's typing.
+   */
   handleKeyDown = (event, value) => {
+    const { channel } = this.state;
     if (!event.keyCode) {
       return; // Really doubt it, but...
     }
+    // Consider that this does not differentiate channels. If users
+    // don't wish to have their typing indicators seen they can use
+    // the default input box or turn off in prefs.
     if (isAlphanumeric(event.keyCode)) {
       Byond.sendMessage('typing');
     }
