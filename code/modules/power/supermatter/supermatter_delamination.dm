@@ -223,8 +223,8 @@
  * Warns the crew about the cascade start and the rift location
  */
 /datum/supermatter_delamination/proc/warn_crew()
-	priority_announce("Harmonic flux event affecting local spatial substructure. Scans indicate multiple resonance hotspots \
-		have formed. Please standby.", "Central Command Star Observation Association", ANNOUNCER_SPANOMALIES)
+	priority_announce("A Type-C resonance shift event has occurred in your sector. Scans indicate local oscillation flux affecting spatial and gravitational substructure. \
+		Multiple resonance hotspots have formed. Please standby.", "Nanotrasen Star Observation Association", ANNOUNCER_SPANOMALIES)
 
 	if(SSshuttle.emergency.mode != SHUTTLE_IDLE)
 		addtimer(CALLBACK(src, .proc/announce_shuttle_gone), 2 SECONDS)
@@ -239,18 +239,26 @@
 
 	priority_announce("[Gibberish("The rift has been destroyed, we can no longer help you.", FALSE, 5)]")
 
+	addtimer(CALLBACK(src, .proc/announce_gravitation_shift), 25 SECONDS)
 	addtimer(CALLBACK(src, .proc/last_message), 50 SECONDS)
+	if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE) // if the shuttle is enroute to centcom, we let the shuttle end the round
+		addtimer(CALLBACK(src, .proc/the_end), 1 MINUTES)
 
-	addtimer(CALLBACK(src, .proc/the_end), 1 MINUTES)
+// this function is for flavor and to let people know that we reached the halfway point
+/datum/supermatter_delamination/proc/announce_gravitation_shift()
+	priority_announce("Reports indicate formation of crystalline seeds following resonance shift event. \
+		Rapid expansion of crystal mass proportional to rising gravitational force. \
+		Matter collapse and subsequent formation of stellar object due to gravitational pull likely.",
+		"Nanotrasen Star Observation Association")
 
 /datum/supermatter_delamination/proc/announce_shuttle_gone()
 	// say goodbye to that shuttle of yours
 	if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE)
-		priority_announce("Fatal connection error occurred in emergency shuttle uplink during transit. Unable to reestablish connection.",
+		priority_announce("Fatal error occurred in emergency shuttle uplink during transit. Unable to reestablish connection.",
 			"Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 	else
 	// except if you are on it already, then you are safe c:
-		minor_announce("ERROR: Corruption detected in navigation protocols. Connection with Transponder ID #XCC-P5831-12 lost. \
+		minor_announce("ERROR: Corruption detected in navigation protocols. Connection with Transponder #XCC-P5831-ES13 lost. \
 				Backup exit route protocol decrypted. Calibrating route...",
 			"Emergency Shuttle", TRUE) // wait out until the rift on the station gets destroyed and the final message plays
 		var/list/shuttle_areas = list(/area/shuttle/escape)
@@ -268,16 +276,17 @@
 		To the remaining survivors of [station_name()], farewell.", FALSE, 5)]")
 
 	if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
-		minor_announce("Emergency navigation set to backup route. Reorienting bluespace vessel to exit vector. ETA 15 seconds.",
+		minor_announce("Navigation route set to backup route. Reorienting bluespace vessel to exit vector. ETA 15 seconds.",
 			"Emergency Shuttle", TRUE)
 		SSshuttle.emergency.setTimer(15 SECONDS)
+		SSticker.news_report = SUPERMATTER_CASCADE
 
 /**
  * Announce detail about the event, as well as rift location
  */
 /datum/supermatter_delamination/proc/announce_beginning()
-	priority_announce("We have been hit by a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those required for shuttle navigation. \
-		We can only reasonably conclude that a supermatter cascade is occurring on or near your station.\n\n\
+	priority_announce("We have been hit by a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those \
+		required for shuttle navigation. We can only reasonably conclude that a supermatter cascade is occurring on or near your station.\n\n\
 		Evacuation is no longer possible by conventional means; however, we managed to open a rift near the [get_area_name(cascade_rift)]. \
 		All personnel are hereby required to enter the rift by any means available.\n\n\
 		[Gibberish("Retrieval of survivors will be conducted upon recovery of necessary facilities.", FALSE, 5)] \
@@ -299,8 +308,8 @@
  */
 /datum/supermatter_delamination/proc/the_end()
 	SSticker.news_report = SUPERMATTER_CASCADE
-	if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE) // if the shuttle is enroute to centcom, we let the shuttle end the round
-		SSticker.force_ending = TRUE
+	SSticker.force_ending = TRUE
+
 /**
  * Break the lights on the station, have 35% of them be set to emergency
  */

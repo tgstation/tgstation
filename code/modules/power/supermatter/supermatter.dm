@@ -12,6 +12,7 @@
 #define OBJECT (LOWEST + 1)
 #define LOWEST (1)
 
+// length of returned list is our bool
 #define IS_CASCADING LAZYLEN
 
 #define CASCADING_ADMIN "Admin"
