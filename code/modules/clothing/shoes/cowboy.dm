@@ -5,8 +5,6 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 0, ACID = 0) //these are quite tall
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	custom_price = PAYCHECK_CREW
-	var/list/occupants = list()
-	var/max_occupants = 4
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
