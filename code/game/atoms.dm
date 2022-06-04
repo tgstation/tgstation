@@ -333,9 +333,8 @@
 
 	return ..()
 
-/atom/proc/create_storage(max_slots, max_specific_storage, max_total_storage, numerical_stacking = FALSE, pickup_on_click = FALSE, collection_mode = COLLECT_ONE, list/canhold, list/canthold)
-	atom_storage = new(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, pickup_on_click, collection_mode)
-
+/atom/proc/create_storage(max_slots, max_specific_storage, max_total_storage, numerical_stacking = FALSE, allow_quick_gather = FALSE, allow_quick_empty = FALSE, collection_mode = COLLECT_ONE, attack_hand_interact = TRUE, list/canhold, list/canthold)
+	atom_storage = new(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
 	atom_storage.set_holdable(canhold, canthold)
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)

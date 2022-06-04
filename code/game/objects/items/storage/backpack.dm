@@ -40,17 +40,7 @@
 
 /obj/item/storage/backpack/tsu/Initialize(mapload)
 	. = ..()
-	create_storage(16, WEIGHT_CLASS_NORMAL, 30, canthold = list(/obj/item/singularityhammer))
-
-/obj/item/storage/backpack/tsu_miner
-	name = "satchel of tsu mining"
-
-/obj/item/storage/backpack/tsu_miner/ComponentInitialize()
-	return
-
-/obj/item/storage/backpack/tsu_miner/Initialize(mapload)
-	. = ..()
-	create_storage(16, WEIGHT_CLASS_NORMAL, 30, numerical_stacking = TRUE, pickup_on_click = TRUE, collection_mode = COLLECT_SAME, canhold = list(/obj/item/stack/ore))
+	create_storage(16, WEIGHT_CLASS_NORMAL, 30)
 
 /obj/item/storage/backpack/old/ComponentInitialize()
 	. = ..()

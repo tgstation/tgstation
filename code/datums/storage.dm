@@ -7,9 +7,9 @@
 	/// If set can only contain stuff with this single trait present.
 	var/list/can_hold_trait
 
-	var/max_slots
-	var/max_specific_storage // max weight class for a single item being inserted
-	var/max_total_storage // max combined weight classes the storage can hold
+	var/max_slots = 7
+	var/max_specific_storage = WEIGHT_CLASS_NORMAL // max weight class for a single item being inserted
+	var/max_total_storage = 14 // max combined weight classes the storage can hold
 
 	var/list/is_using = list() // list of all the mobs currently viewing the contents
 
@@ -17,8 +17,9 @@
 	var/attack_hand_interact = TRUE // whether or not we should open when clicked
 	var/allow_big_nesting = FALSE // whether or not we allow storage objects of the same size inside
 
-	var/pickup_on_click = FALSE // should we be allowed to pickup an object by clicking it
-	var/collection_mode = COLLECT_ONE // the mode for collection when pickup_on_click is enabled
+	var/allow_quick_gather = FALSE // should we be allowed to pickup an object by clicking it
+	var/allow_quick_empty = FALSE // show we allow emptying all contents by using the storage object in hand
+	var/collection_mode = COLLECT_ONE // the mode for collection when allow_quick_gather is enabled
 
 	var/emp_shielded // contents shouldn't be emped
 
@@ -41,7 +42,7 @@
 
 	var/datum/action/item_action/storage_collection_mode/toggle_collectmode
 
-/datum/storage/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, pickup_on_click, collection_mode)
+/datum/storage/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
 	boxes = new(null, src)
 	closer = new(null, src)
 
@@ -50,8 +51,10 @@
 	src.max_specific_storage = max_specific_storage
 	src.max_total_storage = max_total_storage
 	src.numerical_stacking = numerical_stacking
-	src.pickup_on_click = pickup_on_click
+	src.allow_quick_gather = allow_quick_gather
+	src.allow_quick_empty = allow_quick_empty
 	src.collection_mode = collection_mode
+	src.attack_hand_interact = attack_hand_interact
 
 	orient_to_hud()
 	
@@ -62,6 +65,8 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/intercept_preattack)
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/remove_all)
+
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/mass_empty)
 
 	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_CLICK_ALT), .proc/open_storage)
 
@@ -111,7 +116,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	QDEL_NULL(toggle_collectmode)
-	if(!isitem(parent) || !pickup_on_click)
+	if(!isitem(parent) || !allow_quick_gather)
 		return
 	var/obj/item/iparent = parent
 	toggle_collectmode = new(iparent)
@@ -261,14 +266,19 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			continue
 		attempt_remove(thing, target)
 
+/datum/storage/proc/mass_empty(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	if(!allow_quick_empty)
+		return
+
+	remove_all(get_turf(user))
+
 /datum/storage/proc/remove_and_refresh(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
-	message_admins("ran remove and refresh")
-
 	for(var/mob/user in is_using)
 		if(user.client)
-			message_admins("removed from [user]")
 			var/client/cuser = user.client
 			cuser.screen -= gone
 
@@ -287,7 +297,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/intercept_preattack(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(!istype(thing) || !pickup_on_click || thing.atom_storage)
+	if(!istype(thing) || !allow_quick_gather || thing.atom_storage)
 		return FALSE
 
 	if(collection_mode == COLLECT_ONE)

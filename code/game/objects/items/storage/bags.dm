@@ -108,17 +108,15 @@
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
-	component_type = /datum/component/storage/concrete/stack
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/mob/listeningTo
 
 /obj/item/storage/bag/ore/ComponentInitialize()
+	return
+
+/obj/item/storage/bag/ore/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
-	STR.allow_quick_empty = TRUE
-	STR.set_holdable(list(/obj/item/stack/ore))
-	STR.max_w_class = WEIGHT_CLASS_HUGE
-	STR.max_combined_stack_amount = 50
+	create_storage(7, WEIGHT_CLASS_HUGE, 50, numerical_stacking = TRUE, allow_quick_gather = TRUE, allow_quick_empty = TRUE, collection_mode = COLLECT_SAME, canhold = list(/obj/item/stack/ore))
 
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
@@ -126,7 +124,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/pickup_ores)
 	listeningTo = user
 
 /obj/item/storage/bag/ore/dropped()
@@ -135,24 +133,27 @@
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
 
-/obj/item/storage/bag/ore/proc/Pickup_ores(mob/living/user)
+/obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
+
 	var/show_message = FALSE
 	var/obj/structure/ore_box/box
-	var/turf/tile = user.loc
-	if (!isturf(tile))
+	var/turf/tile = get_turf(user)
+
+	if(!isturf(tile))
 		return
-	if (istype(user.pulling, /obj/structure/ore_box))
+
+	if(istype(user.pulling, /obj/structure/ore_box))
 		box = user.pulling
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	if(STR)
-		for(var/A in tile)
-			if (!is_type_in_typecache(A, STR.can_hold))
+
+	if(atom_storage)
+		for(var/thing in tile)
+			if(!is_type_in_typecache(thing, atom_storage.can_hold))
 				continue
-			if (box)
-				user.transferItemToLoc(A, box)
+			if(box)
+				user.transferItemToLoc(thing, box)
 				show_message = TRUE
-			else if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
+			else if(atom_storage.attempt_insert(src, thing, user))
 				show_message = TRUE
 			else
 				if(!spam_protection)
@@ -161,12 +162,14 @@
 					continue
 	if(show_message)
 		playsound(user, SFX_RUSTLE, 50, TRUE)
+
 		if (box)
 			user.visible_message(span_notice("[user] offloads the ores beneath [user.p_them()] into [box]."), \
-			span_notice("You offload the ores beneath you into your [box]."))
+				span_notice("You offload the ores beneath you into your [box]."))
 		else
 			user.visible_message(span_notice("[user] scoops up the ores beneath [user.p_them()]."), \
 				span_notice("You scoop up the ores beneath you with your [name]."))
+
 	spam_protection = FALSE
 
 /obj/item/storage/bag/ore/cyborg
@@ -177,12 +180,11 @@
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
 
-/obj/item/storage/bag/ore/holding/ComponentInitialize()
+/obj/item/storage/bag/ore/holding/Initialize()
 	. = ..()
-	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
-	STR.max_items = INFINITY
-	STR.max_combined_w_class = INFINITY
-	STR.max_combined_stack_amount = INFINITY
+	atom_storage.max_slots = INFINITY
+	atom_storage.max_specific_storage = INFINITY
+	atom_storage.max_total_storage = INFINITY
 
 // -----------------------------
 //          Plant bag

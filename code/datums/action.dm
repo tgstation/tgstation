@@ -938,6 +938,8 @@
 	current_button.add_overlay(target)
 	item_target.layer = old_layer
 	item_target.plane = old_plane
+	item_target.pixel_x = 0
+	item_target.pixel_y = 0
 	current_button.appearance_cache = item_target.appearance
 
 /datum/action/item_action/storage_collection_mode/Trigger(trigger_flags)
