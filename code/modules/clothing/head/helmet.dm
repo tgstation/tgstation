@@ -42,12 +42,7 @@
 
 /obj/item/clothing/head/helmet/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == attached_light)
-		set_attached_light(null)
-		update_helmlight()
-		update_appearance()
-
-		var/datum/action/item_action/toggle_helmet_flashlight/light_action = locate() in actions
-		remove_item_action(light_action)
+		remove_helmlight()
 		qdel(deleting_atom)
 	return ..()
 
@@ -564,13 +559,7 @@
 		if(Adjacent(user) && !issilicon(user))
 			user.put_in_hands(attached_light)
 
-		var/obj/item/flashlight/removed_light = set_attached_light(null)
-		update_helmlight()
-		removed_light.update_brightness(user)
-		update_appearance()
-		user.update_inv_head()
-		var/datum/action/item_action/toggle_helmet_flashlight/light_action = locate() in actions
-		remove_item_action(light_action)
+		remove_helmlight(user)
 		return TRUE
 
 /obj/item/clothing/head/helmet/proc/toggle_helmlight()
@@ -596,3 +585,15 @@
 		update_appearance()
 
 	update_action_buttons()
+
+/obj/item/clothing/head/helmet/proc/remove_helmlight(mob/user)
+	var/obj/item/flashlight/removed_light = set_attached_light(null)
+	update_helmlight()
+	update_appearance()
+
+	if(user)
+		removed_light.update_brightness(user)
+		user.update_inv_head()
+
+	var/datum/action/item_action/toggle_helmet_flashlight/light_action = locate() in actions
+	remove_item_action(light_action)

@@ -57,7 +57,11 @@
 	/// True if a gun dosen't need a pin, mostly used for abstract guns like tentacles and meathooks
 	var/pinless = FALSE
 	var/can_flashlight = FALSE //if a flashlight can be added or removed if it already has one.
+
+	/// A reference to the gunlight attached to us
 	var/obj/item/flashlight/seclite/gun_light
+	/// A weakref to the item action associated with the gunlight
+	var/datum/weakref/light_action_ref
 
 	var/gunlight_state = "flight"
 
@@ -79,7 +83,8 @@
 		pin = new pin(src)
 
 	if(gun_light)
-		add_item_action(/datum/action/item_action/toggle_gunlight)
+		var/datum/action/light_action = add_item_action(/datum/action/item_action/toggle_gunlight)
+		light_action_ref = WEAKREF(light_action)
 
 /obj/item/gun/Destroy()
 	if(isobj(pin)) //Can still be the initial path, then we skip
@@ -430,6 +435,7 @@
 			set_gun_light(S)
 			update_gunlight()
 			var/datum/action/light_action = add_item_action(/datum/action/item_action/toggle_gunlight)
+			light_action_ref = WEAKREF(light_action)
 			// If we're being held, we need to go ahead and give the action out
 			if(user == loc)
 				give_item_action(light_action, user)
@@ -541,9 +547,7 @@
 	set_gun_light(null)
 	update_gunlight()
 	removed_light.update_brightness()
-
-	var/datum/action/item_action/toggle_gunlight/light_action = locate() in actions
-	remove_item_action(light_action)
+	remove_item_action(light_action_ref?.resolve())
 	return TRUE
 
 
