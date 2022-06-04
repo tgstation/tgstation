@@ -123,7 +123,6 @@ export class TguiModal extends Component {
    * TYPING - When users key, it tells byond that it's typing.
    */
   handleKeyDown = (event, value) => {
-    const { channel } = this.state;
     if (!event.keyCode) {
       return; // Really doubt it, but...
     }
