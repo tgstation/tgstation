@@ -26,6 +26,7 @@ export class TguiModal extends Component {
     super();
     this.historyCounter = 0;
     this.hovering = false;
+    this.innerRef = null;
     this.maxLength = 1024;
     this.value = '';
     this.state = {
@@ -182,6 +183,9 @@ export class TguiModal extends Component {
       size: SIZE.small,
     });
   };
+  setInnerRef = (ref) => {
+    this.innerRef = ref;
+  };
   /**  Adjusts window sized based on event.target.value */
   setSize = (value) => {
     const { size } = this.state;
@@ -222,6 +226,9 @@ export class TguiModal extends Component {
     });
     Byond.subscribeTo('open', (data) => {
       this.reset(data.channel && CHANNELS.indexOf(data.channel));
+      setTimeout(() => {
+        this.innerRef?.current?.focus();
+      }, 1);
       windowOpen();
     });
     windowLoad();
@@ -243,6 +250,7 @@ export class TguiModal extends Component {
       handleInput,
       handleKeyDown,
       maxLength,
+      setInnerRef,
       value,
     } = this;
     const { buttonContent, channel, edited, size } = this.state;
@@ -259,7 +267,6 @@ export class TguiModal extends Component {
           </button>
         )}
         <TextArea
-          autoFocus
           className={getCss('input', channel, size)}
           dontUseTabForIndent
           maxLength={maxLength}
@@ -268,6 +275,7 @@ export class TguiModal extends Component {
           onInput={handleInput}
           onKeyDown={handleKeyDown}
           selfClear
+          setInnerRef={setInnerRef}
           value={edited && value}
         />
       </div>

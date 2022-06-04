@@ -116,5 +116,3 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 	if(typing_indicator)
 		cut_overlay(GLOB.typing_indicator)
 		typing_indicator = FALSE
-
-
