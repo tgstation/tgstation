@@ -15,7 +15,7 @@
 		log_mapping("[src] at [AREACOORD(src)] tried to set req_one_access, but req_access was already set!")
 	else
 		var/list/access_list = get_access()
-		airlock.req_access_txt += access_list
+		airlock.req_access += access_list
 
 /obj/effect/mapping_helpers/airlock/access/proc/get_access()
 	var/list/access = list()
