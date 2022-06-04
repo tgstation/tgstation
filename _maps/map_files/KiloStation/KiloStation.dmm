@@ -51640,9 +51640,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
-"oAy" = (
-/turf/closed/wall,
-/area/station/science/ordnance/storage)
 "oAJ" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
@@ -126486,7 +126483,7 @@ mDQ
 qGq
 qGq
 nIg
-oAy
+dty
 cqr
 lDu
 sdy
