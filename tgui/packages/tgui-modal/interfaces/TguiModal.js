@@ -97,7 +97,7 @@ export class TguiModal extends Component {
     const { channel, size } = this.state;
     const { value } = this;
     if (value) {
-      Byond.sendMessage('purge', {
+      Byond.sendMessage('force', {
         channel: CHANNELS[channel],
         entry: value,
       });
