@@ -49,6 +49,7 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 	set name = ".start_thinking"
 	set hidden = TRUE
 	create_thinking_indicator()
+	remove_typing_indicator()
 
 /// Hides all typing/thinking indicators
 /mob/verb/cancel_thinking()
