@@ -25,12 +25,11 @@ export class TguiModal extends Component {
   constructor() {
     super();
     this.historyCounter = 0;
-    this.hovering = false;
     this.innerRef = null;
     this.maxLength = 1024;
     this.value = '';
     this.state = {
-      buttonContent: '>',
+      buttonContent: null,
       channel: -1,
       edited: false,
       size: SIZE.small,
@@ -49,13 +48,10 @@ export class TguiModal extends Component {
   };
   /** Ensures backspace and delete reset size and history */
   handleBkspDelete = (value) => {
+    const { channel } = this.state;
     this.historyCounter = 0;
+    this.setState({ buttonContent: CHANNELS[channel].slice(0, 1) });
     this.setSize(value.length);
-  };
-  /** Mouse leaves the button */
-  handleBlur = () => {
-    this.hovering = false;
-    this.setState({ buttonContent: `>` });
   };
   /**
    * User clicks the channel button.
@@ -84,14 +80,6 @@ export class TguiModal extends Component {
   handleEscape = () => {
     this.reset();
     windowClose();
-  };
-  /** Mouse over button. Changes button to channel name. */
-  handleFocus = () => {
-    const { channel } = this.state;
-    this.hovering = true;
-    this.setState({
-      buttonContent: CHANNELS[channel]?.slice(0, 1),
-    });
   };
   /** Sends the current input to byond and purges it */
   handleForce = () => {
@@ -133,7 +121,16 @@ export class TguiModal extends Component {
     // turn off chat bubbles because that is entire gameable:
     // type whole message in ooc -> switch channels -> enter
     if (isAlphanumeric(event.keyCode) && channel < 2) {
-      Byond.sendMessage('typing');
+      let delay = function (s) {
+        return new Promise((resolve, _) => {
+          setTimeout(resolve, s);
+        });
+      };
+      delay()
+        .then(() => {
+          return delay(3000); // delay 3 sec
+        })
+        .then(Byond.sendMessage('typing'));
     }
     if (event.keyCode === KEY_UP || event.keyCode === KEY_DOWN) {
       if (getHistoryLength()) {
@@ -148,21 +145,20 @@ export class TguiModal extends Component {
       event.preventDefault();
     }
   };
+
   /**
    * Increments the channel or resets to the beginning of the list.
-   * If a user is hovering over the button, the label is changed.
    */
   incrementChannel = () => {
     const { channel } = this.state;
-    const { hovering } = this;
     if (channel === CHANNELS.length - 1) {
       this.setState({
-        buttonContent: !hovering ? '>' : CHANNELS[0].slice(0, 1),
+        buttonContent: CHANNELS[0].slice(0, 1),
         channel: 0,
       });
     } else {
       this.setState({
-        buttonContent: !hovering ? '>' : CHANNELS[channel + 1]?.slice(0, 1),
+        buttonContent: CHANNELS[channel + 1]?.slice(0, 1),
         channel: channel + 1,
       });
     }
@@ -171,14 +167,15 @@ export class TguiModal extends Component {
    * Resets window to default parameters.
    *
    * Parameters:
-   * channel - Optional. Sets the channel and thus the colors scheme.
+   * channel - Optional. Sets the channel and thus the color scheme.
    */
   reset = (channel) => {
+    const chan = typeof channel === 'number';
     this.historyCounter = 0;
     this.value = '';
     this.setState({
-      buttonContent: '>',
-      channel: typeof channel === 'number' ? channel : -1,
+      buttonContent: chan ? CHANNELS[channel]?.slice(0, 1) : null,
+      channel: chan ? channel : -1,
       edited: true,
       size: SIZE.small,
     });
@@ -189,13 +186,13 @@ export class TguiModal extends Component {
   /**  Adjusts window sized based on event.target.value */
   setSize = (value) => {
     const { size } = this.state;
-    if (value > 56 && size !== SIZE.large) {
+    if (value > 51 && size !== SIZE.large) {
       this.setState({ size: SIZE.large });
       windowSet(SIZE.large);
-    } else if (value <= 56 && value > 24 && size !== SIZE.medium) {
+    } else if (value <= 51 && value > 21 && size !== SIZE.medium) {
       this.setState({ size: SIZE.medium });
       windowSet(SIZE.medium);
-    } else if (value <= 24 && size !== SIZE.small) {
+    } else if (value <= 21 && size !== SIZE.small) {
       this.setState({ size: SIZE.small });
       windowSet(SIZE.small);
     }
@@ -213,7 +210,10 @@ export class TguiModal extends Component {
       this.setState({ buttonContent: historyCounter, edited: true });
     } else {
       this.value = '';
-      this.setState({ buttonContent: '>', edited: true });
+      this.setState({
+        buttonContent: CHANNELS[channel].slice(0, 1),
+        edited: true,
+      });
     }
   };
   /** Attach listeners, sets window size just in case */

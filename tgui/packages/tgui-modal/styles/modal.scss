@@ -1,18 +1,23 @@
-$input-background: #131313;
-$input-button-hover: #2a2a2a;
+$window-background: #131313;
+$button: #1f1f1f;
+$button-hover: #2a2a2a;
 
 ////////////////////////////////////////////////
 // Largely pulling from in game colors
 $color-say: #a4bad6;
+$color-say-border: #3c4550;
 $color-say-dark: #181e25;
 $color-say-highlight: #d7e9ff;
 $color-radio: #1ecc43;
+$color-radio-border: #0b641d;
 $color-radio-dark: #041d09;
 $color-radio-highlight: #4fff75;
 $color-me: #5975da;
+$color-me-border: #1b2650;
 $color-me-dark: #13182c;
 $color-me-highlight: #7694ff;
 $color-ooc: #cca300;
+$color-ooc-border: #443701;
 $color-ooc-dark: #1f1800;
 $color-ooc-highlight: #ffd631;
 
@@ -31,32 +36,33 @@ $color-ooc-highlight: #ffd631;
 ////////////////////////////////////////////////
 // Main window styles
 .window {
-  background: $input-background;
-  border-left: 2px solid $color-say;
-  border-right: 2px solid $color-say;
+  background: $window-background;
   display: flex;
   flex-direction: row;
   font-family: 'Consolas', monospace;
   margin: 0 auto;
-  max-width: 333px;
-  padding: 0.8rem 0 1rem 0.8rem;
+  max-width: 280px;
+  padding: 0.4rem 0 0.4rem 0.4rem;
   position: relative;
   width: 100%;
 }
 
-.window-58 {
-  height: 58px;
+.window-40 {
+  height: 40px;
 }
 
-.window-85 {
-  height: 85px;
+.window-64 {
+  height: 64px;
 }
 
-.window-110 {
-  height: 110px;
+.window-88 {
+  height: 88px;
 }
 
 .window-say {
+  border-left: 2px solid $color-say-border;
+  border-right: 2px solid $color-say-border;
+
   &:after {
     animation: gradient 10s linear infinite;
     background: linear-gradient(to right,
@@ -78,6 +84,9 @@ $color-ooc-highlight: #ffd631;
 }
 
 .window-radio {
+  border-left: 2px solid $color-radio-border;
+  border-right: 2px solid $color-radio-border;
+
   &:after {
     animation: gradient 10s linear infinite;
     background: linear-gradient(to right,
@@ -99,6 +108,9 @@ $color-ooc-highlight: #ffd631;
 }
 
 .window-me {
+  border-left: 2px solid $color-me-border;
+  border-right: 2px solid $color-me-border;
+
   &:after {
     animation: gradient 10s linear infinite;
     background: linear-gradient(to right,
@@ -120,6 +132,9 @@ $color-ooc-highlight: #ffd631;
 }
 
 .window-ooc {
+  border-left: 2px solid $color-ooc-border;
+  border-right: 2px solid $color-ooc-border;
+
   &:after {
     animation: gradient 10s linear infinite;
     background: linear-gradient(to right,
@@ -141,56 +156,23 @@ $color-ooc-highlight: #ffd631;
 }
 
 ////////////////////////////////////////////////
-// Input box styles
-.input {
-  background-color: transparent;
-  border: none;
-  color: $input-background;
-  font-family: inherit;
-  font-size: 1.5rem;
-  letter-spacing: 2px;
-  margin-top: 7px;
-  width: 100%;
-}
-
-.input-expanded {
-  height: 100%;
-}
-
-.input-say {
-  color: $color-say-highlight;
-}
-
-.input-radio {
-  color: $color-radio;
-}
-
-.input-me {
-  color: $color-me;
-}
-
-.input-ooc {
-  color: $color-ooc;
-}
-
-////////////////////////////////////////////////
 // Button styles
 .button {
-  background-color: transparent;
-  border: none;
-  color: $input-background;
+  background-color: $button;
+  border: thin solid $button-hover;
+  border-radius: 6px;
+  color: $window-background;
   font-family: inherit;
   font-weight: bold;
   font-size: 1.8rem;
-  height: 36px;
+  height: 28px;
+  margin-right: 0.2rem;
   text-align: center;
   vertical-align: middle;
-  width: 55px;
+  width: 35px;
 
   &:hover {
-    background-color: $input-button-hover;
-    border: thin solid;
-    border-radius: 6px;
+    background-color: $button-hover;
   }
 }
 
@@ -228,4 +210,33 @@ $color-ooc-highlight: #ffd631;
     border-color: $color-ooc-highlight;
     color: $color-ooc-highlight;
   }
+}
+
+////////////////////////////////////////////////
+// Input box styles
+.input {
+  background-color: transparent;
+  border: none;
+  color: $window-background;
+  font-family: inherit;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  margin-top: 0.2rem;
+  width: 100%;
+}
+
+.input-say {
+  color: $color-say-highlight;
+}
+
+.input-radio {
+  color: $color-radio;
+}
+
+.input-me {
+  color: $color-me;
+}
+
+.input-ooc {
+  color: $color-ooc;
 }

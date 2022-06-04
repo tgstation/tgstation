@@ -343,7 +343,7 @@ window "tgui_modal"
 	elem "tgui_modal"
 		type = MAIN
 		pos = 694,602
-		size = 333x58
+		size = 280x40
 		anchor1 = 50,50
 		anchor2 = 50,50
 		is-visible = false
@@ -354,7 +354,7 @@ window "tgui_modal"
 	elem "browser"
 		type = BROWSER
 		pos = 0,0
-		size = 333x58
+		size = 280x40
 		anchor1 = 0,0
 		anchor2 = 0,0
 		saved-params = ""
