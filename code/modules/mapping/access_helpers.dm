@@ -804,7 +804,7 @@
 	access_list += ACCESS_CARGO
 	return access_list
 
-/obj/effect/mapping_helpers/airlock/access/all/supply/mail_sorting/get_access()
+/obj/effect/mapping_helpers/airlock/access/all/supply/shipping/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_SHIPPING
 	return access_list
