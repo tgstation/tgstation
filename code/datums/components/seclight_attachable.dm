@@ -134,18 +134,6 @@
 	item_parent.update_appearance()
 	item_parent.update_action_buttons()
 
-	/*
-
-	// Don't forget to update mob sprites too
-	if(ismob(item_parent.loc))
-		var/mob/wearer = item_parent.loc
-		if(wearer.is_holding(item_parent))
-			wearer.update_inv_hands()
-		else
-			wearer.update_clothing(item_parent.slot_flags)
-
-	*/
-
 /// Sets a new light as our current light for our parent.
 /datum/component/seclite_attachable/proc/add_light(obj/item/flashlight/new_light, mob/attacher)
 	if(light)
