@@ -48,12 +48,7 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 /mob/verb/start_thinking()
 	set name = ".start_thinking"
 	set hidden = TRUE
-	var/datum/tgui_modal/modal = client.tgui_modal
-	if(!modal)
-		return
-	modal.open()
-	if(modal.open)
-		create_thinking_indicator()
+	create_thinking_indicator()
 
 /// Hides all typing/thinking indicators
 /mob/verb/cancel_thinking()
@@ -67,16 +62,14 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 	set name = ".start_typing"
 	set hidden = TRUE
 	remove_thinking_indicator()
-	if(client?.tgui_modal?.open)
-		create_typing_indicator()
+	create_typing_indicator()
 
 /// Hide the typing indicator.
 /mob/verb/cancel_typing()
 	set name = ".cancel_typing"
 	set hidden = TRUE
 	remove_typing_indicator()
-	if(client?.tgui_modal?.open)
-		create_thinking_indicator()
+	create_thinking_indicator()
 
 ///Human Thinking Indicators///
 /mob/living/create_thinking_indicator()

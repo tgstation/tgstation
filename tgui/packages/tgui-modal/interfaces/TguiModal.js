@@ -1,4 +1,6 @@
 import { Component } from 'inferno';
+import { TextArea } from 'tgui/components';
+import { CHANNELS, SIZE } from '../constants/constants';
 import {
   KEY_BACKSPACE,
   KEY_DELETE,
@@ -6,12 +8,17 @@ import {
   KEY_TAB,
   KEY_UP,
 } from 'common/keycodes';
-import { windowOpen, windowClose, windowSet } from '../helpers/helpers';
-import { CHANNELS, SIZE } from '../constants/constants';
-import { TextArea } from 'tgui/components';
-
-/** Stores a list of chat messages entered as values */
-let savedMessages = [];
+import {
+  getCss,
+  getHistoryAt,
+  getHistoryLength,
+  isAlphanumeric,
+  storeChat,
+  windowClose,
+  windowLoad,
+  windowOpen,
+  windowSet,
+} from '../helpers/helpers';
 
 /** Primary class for the TGUI modal. */
 export class TguiModal extends Component {
@@ -23,7 +30,7 @@ export class TguiModal extends Component {
     this.value = '';
     this.state = {
       buttonContent: '>',
-      channel: null,
+      channel: -1,
       edited: false,
       size: SIZE.small,
     };
@@ -31,13 +38,18 @@ export class TguiModal extends Component {
   /** Increments the chat history counter, looping through entries */
   handleArrowKeys = (direction) => {
     const { historyCounter } = this;
-    if (direction === KEY_UP && historyCounter < savedMessages.length) {
+    if (direction === KEY_UP && historyCounter < getHistoryLength()) {
       this.historyCounter++;
       this.viewHistory();
     } else if (direction === KEY_DOWN && historyCounter > 0) {
       this.historyCounter--;
       this.viewHistory();
     }
+  };
+  /** Ensures backspace and delete reset size and history */
+  handleBkspDelete = (value) => {
+    this.historyCounter = 0;
+    this.setSize(value.length);
   };
   /** Mouse leaves the button */
   handleBlur = () => {
@@ -51,11 +63,7 @@ export class TguiModal extends Component {
   handleClick = () => {
     this.incrementChannel();
   };
-  /** Ensures backspace and delete reset size and history */
-  handleBkspDelete = (value) => {
-    this.historyCounter = 0;
-    this.setSize(value.length);
-  };
+
   /** User presses enter. Closes if no value. */
   handleEnter = (event, value) => {
     const { channel } = this.state;
@@ -81,7 +89,7 @@ export class TguiModal extends Component {
     const { channel } = this.state;
     this.hovering = true;
     this.setState({
-      buttonContent: CHANNELS[channel].slice(0, 1).toUpperCase(),
+      buttonContent: CHANNELS[channel]?.slice(0, 1).toUpperCase(),
     });
   };
   /** Sends the current input to byond and purges it */
@@ -118,17 +126,17 @@ export class TguiModal extends Component {
     if (isAlphanumeric(event.keyCode)) {
       Byond.sendMessage('typing');
     }
-    if (event.keyCode === KEY_TAB) {
-      this.incrementChannel();
-      event.preventDefault();
-    }
     if (event.keyCode === KEY_UP || event.keyCode === KEY_DOWN) {
-      if (savedMessages.length) {
+      if (getHistoryLength()) {
         this.handleArrowKeys(event.keyCode);
       }
     }
     if (event.keyCode === KEY_DELETE || event.keyCode === KEY_BACKSPACE) {
       this.handleBkspDelete(value);
+    }
+    if (event.keyCode === KEY_TAB) {
+      this.incrementChannel();
+      event.preventDefault();
     }
   };
   /**
@@ -147,7 +155,7 @@ export class TguiModal extends Component {
       this.setState({
         buttonContent: !hovering
           ? '>'
-          : CHANNELS[channel + 1].slice(0, 1).toUpperCase(),
+          : CHANNELS[channel + 1]?.slice(0, 1).toUpperCase(),
         channel: channel + 1,
       });
     }
@@ -156,20 +164,19 @@ export class TguiModal extends Component {
    * Resets window to default parameters.
    *
    * Parameters:
-   * channel - Sets the channel (optional)
+   * channel - Optional. Sets the channel and thus the colors scheme.
    */
   reset = (channel) => {
     this.historyCounter = 0;
     this.value = '';
     this.setState({
       buttonContent: '>',
-      channel,
+      channel: typeof channel === 'number' ? channel : -1,
       edited: true,
       size: SIZE.small,
     });
   };
-
-  /**  Adjusts window sized based on target value */
+  /**  Adjusts window sized based on event.target.value */
   setSize = (value) => {
     const { size } = this.state;
     if (value > 56 && size !== SIZE.large) {
@@ -190,8 +197,9 @@ export class TguiModal extends Component {
   /**  Sets the input value to chat history at index historyCounter. */
   viewHistory = () => {
     const { historyCounter } = this;
-    if (historyCounter > 0 && savedMessages.length) {
-      this.value = savedMessages[savedMessages.length - historyCounter];
+    if (historyCounter > 0 && getHistoryLength()) {
+      this.value = getHistoryAt(historyCounter);
+      Byond.sendMessage('typing');
       this.setState({ buttonContent: historyCounter, edited: true });
     } else {
       this.value = '';
@@ -207,9 +215,10 @@ export class TguiModal extends Component {
       this.handleForce();
     });
     Byond.subscribeTo('open', (data) => {
+      this.reset(data.channel && CHANNELS.indexOf(data.channel));
       windowOpen();
-      this.reset(data.channel);
     });
+    windowLoad();
   }
   /** After updating the input value, sets back to false */
   componentDidUpdate() {
@@ -233,7 +242,7 @@ export class TguiModal extends Component {
     const { buttonContent, channel, edited, size } = this.state;
     return (
       <div className={getCss('window', channel, size)}>
-        {size < SIZE.medium && (
+        {size <= SIZE.medium && (
           <button
             className={getCss('button', channel)}
             onclick={handleClick}
@@ -259,14 +268,3 @@ export class TguiModal extends Component {
     );
   }
 }
-
-/**
- * Stores entries in the chat history.
- * Deletes old entries if the list is too long.
- */
-const storeChat = (message) => {
-  if (savedMessages.length === 5) {
-    savedMessages.shift();
-  }
-  savedMessages.push(message);
-};

@@ -130,8 +130,10 @@ export class TextArea extends Component {
     if (input) {
       input.value = toInputValue(nextValue);
     }
-
     if (this.props.autoFocus || this.props.autoSelect) {
+      Byond.subscribeTo('open', () => {
+        input.focus();
+      });
       setTimeout(() => {
         input.focus();
 

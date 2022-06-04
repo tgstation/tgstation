@@ -3,27 +3,27 @@ import { KEY_0, KEY_Z } from 'common/keycodes';
 import { classes } from 'common/react';
 
 /**
+ * Window functions
+ */
+/**
  * Once byond signals this via keystroke, it
  * ensures window size, visibility, and focus.
  */
 export const windowOpen = () => {
-  Byond.winset('tgui_modal', {
-    'is-visible': true,
-    focus: true,
-    size: `333x${SIZE.small}`,
-  });
+  setOpen();
   Byond.sendMessage('open');
 };
-/** Resets the state of the window and hides it from user view */
+/**
+ * Resets the state of the window and hides it from user view.
+ * Sending "close" logs it server side.
+ */
 export const windowClose = () => {
-  Byond.winset('tgui_modal', {
-    'is-visible': false,
-    size: `333x${SIZE.small}`,
-  });
-  Byond.winset('map', {
-    focus: true,
-  });
+  setClosed();
   Byond.sendMessage('close');
+};
+/** Some QoL to hide the window on load. Doesn't log this event */
+export const windowLoad = () => {
+  setClosed();
 };
 /**
  * Modifies the window size.
@@ -35,8 +35,63 @@ export const windowSet = (size = SIZE.small) => {
   Byond.winset('tgui_modal', { size: `333x${size}` });
   Byond.winset('tgui_modal.browser', { size: `333x${size}` });
 };
+/** Private functions */
+/** Sets the window props as opened and gains focus. */
+const setOpen = () => {
+  Byond.winset('tgui_modal', {
+    'is-visible': true,
+    size: `333x${SIZE.small}`,
+    focus: true,
+  });
+  Byond.winset('tgui_modal.browser', {
+    'is-visible': true,
+    size: `333x${SIZE.small}`,
+  });
+};
+/** Sets the window props as closed.  */
+const setClosed = () => {
+  Byond.winset('tgui_modal', {
+    'is-visible': false,
+    size: `333x${SIZE.small}`,
+  });
+  Byond.winset('map', {
+    focus: true,
+  });
+};
+
+/**
+ * Chat history functions
+ */
+/** Stores a list of chat messages entered as values */
+let savedMessages = [];
+
+/** Returns the chat history at specified index */
+export const getHistoryAt = (index) =>
+  savedMessages[savedMessages.length - index];
+/**
+ * The length of chat history.
+ * I am absolutely being excessive, but whatever
+ */
+export const getHistoryLength = () => savedMessages.length;
+/**
+ * Stores entries in the chat history.
+ * Deletes old entries if the list is too long.
+ */
+export const storeChat = (message) => {
+  if (savedMessages.length === 5) {
+    savedMessages.shift();
+  }
+  savedMessages.push(message);
+};
+
+/** Miscellaneous */
 /** Returns modular css classes */
 export const getCss = (element, channel, size) =>
-  classes([element, `${element}-${CHANNELS[channel]}`, `${element}-${size}`]);
+  classes([
+    element,
+    channel >= 0 && `${element}-${CHANNELS[channel]}`,
+    `${element}-${size}`,
+  ]);
+
 /** Checks keycodes for alpha/numeric characters */
 export const isAlphanumeric = (keyCode) => keyCode >= KEY_0 && keyCode <= KEY_Z;

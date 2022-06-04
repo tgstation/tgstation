@@ -6,8 +6,8 @@
 /datum/tgui_modal
 	/// The user who opened the window
 	var/client/client
-	/// Boolean for whether the tgui_modal was closed by the user.
-	var/closed
+	/// Boolean for whether the tgui_modal was opened by the user.
+	var/window_open
 	/// Max message length
 	var/max_length = MAX_MESSAGE_LEN
 	/// The modal window
@@ -36,37 +36,35 @@
 			inline_css = file("tgui/public/tgui-modal.bundle.css"),
 			inline_js = file("tgui/public/tgui-modal.bundle.js"),
 	);
-	close()
 
 /**
  * Sets the window as "opened" server side, though it is already
- * visible to the user. We do this to set local vars.
+ * visible to the user. We do this to set local vars &&
+ * start typing (if enabled). Logs the event.
  */
-/datum/tgui_modal/proc/open(channel = SAY_CHAN)
-	closed = FALSE
-	if(!client.mob)
+/datum/tgui_modal/proc/open()
+	window_open = TRUE
+	if(!client?.mob)
 		return
-	if(client?.mob.typing_thinking_indicator)
-		if(client?.typing_indicators)
-			log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators enabled.")
-		else
-			log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators DISABLED.")
-		client?.mob.typing_thinking_indicator = FALSE
+	client?.mob.start_thinking()
+	if(client?.typing_indicators)
+		log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators enabled.")
+	else
+		log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators DISABLED.")
 
 /**
- * Closes the window and hides it from view.
+ * Closes the window serverside. Closes any open chat bubbles
+ * regardless of preference. Logs the event.
  */
 /datum/tgui_modal/proc/close()
-	closed = TRUE
-	if(!client.mob)
+	window_open = FALSE
+	if(!client?.mob)
 		return
-	if(client?.mob.typing_thinking_indicator)
-		if(client?.typing_indicators)
-			log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client?.mob)], indicators enabled.")
-		else
-			log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client?.mob)], indicators DISABLED.")
-		client?.mob.typing_thinking_indicator = FALSE
-	client.mob.cancel_thinking()
+	client?.mob.cancel_thinking()
+	if(client?.typing_indicators)
+		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client?.mob)], indicators enabled.")
+	else
+		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client?.mob)], indicators DISABLED.")
 
 /**
  * Force say handler.
@@ -86,8 +84,14 @@
 			maxLength = max_length,
 		))
 		return TRUE
+	if (type == "open")
+		open()
+		return TRUE
 	if (type == "close")
 		close()
+		return TRUE
+	if (type == "typing")
+		init_typing()
 		return TRUE
 	if (type == "entry" || type == "force")
 		if(!payload || !payload["channel"] || !payload["entry"])
@@ -98,10 +102,7 @@
 			delegate_speech(alter_entry(payload), SAY_CHAN)
 		if(type == "entry")
 			delegate_speech(payload["entry"], payload["channel"])
-			close()
 		return TRUE
-	if (type == "typing")
-		init_typing()
 	return TRUE
 
 /**
@@ -113,10 +114,16 @@
 	if(client.mob)
 		client.mob.start_typing()
 
-/** Signals the parent to return to "thinking" state */
+/** Signals the mob to return to "thinking" state */
 /datum/tgui_modal/proc/stop_typing()
-	if(client.mob)
+	if(!client?.mob)
+		stack_trace(("[usr] has no client or mob but was typing?"))
+		return FALSE
+	if(window_open)
 		client.mob.cancel_typing()
+	else
+		client.mob.cancel_thinking()
+
 
 /**
  * Alters text when players are injured.
