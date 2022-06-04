@@ -377,6 +377,10 @@
 	)
 
 //these exist for the prefs menu
+/obj/item/mod/control/pre_equipped/empty/ninja
+	theme = /datum/mod_theme/ninja
+
+INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/empty)
 /obj/item/mod/control/pre_equipped/syndicate_empty
 	theme = /datum/mod_theme/syndicate
 
