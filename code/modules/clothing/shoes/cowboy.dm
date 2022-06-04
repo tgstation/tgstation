@@ -9,26 +9,6 @@
 	var/max_occupants = 4
 	can_be_tied = FALSE
 
-/obj/item/clothing/shoes/cowboy/Initialize(mapload)
-	. = ..()
-	if(prob(2))
-		var/mob/living/simple_animal/hostile/retaliate/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/snake(src)
-		occupants += bootsnake
-
-
-/obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
-	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
-	if(slot == ITEM_SLOT_FEET)
-		for(var/mob/living/occupant in occupants)
-			occupant.forceMove(user.drop_location())
-			user.visible_message(span_warning("[user] recoils as something slithers out of [src]."), span_userdanger("You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!"))
-			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
-			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate))
-				user.reagents.add_reagent(/datum/reagent/toxin, 7)
-		occupants.Cut()
-
 /obj/item/clothing/shoes/cowboy/dropped(mob/living/user)
 	. = ..()
 	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
@@ -40,24 +20,6 @@
 /obj/item/clothing/shoes/cowboy/proc/handle_table_slam(mob/living/user)
 	user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)
 	user.client?.give_award(/datum/award/achievement/misc/hot_damn, user)
-
-/obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
-	. = ..()
-	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
-		return
-	if(occupants.len >= max_occupants)
-		to_chat(user, span_warning("[src] are full!"))
-		return
-	if(istype(target, /mob/living/simple_animal/hostile/retaliate/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
-		occupants += target
-		target.forceMove(src)
-		to_chat(user, span_notice("[target] slithers into [src]."))
-
-/obj/item/clothing/shoes/cowboy/container_resist_act(mob/living/user)
-	if(!do_after(user, 10, target = user))
-		return
-	user.forceMove(user.drop_location())
-	occupants -= user
 
 /obj/item/clothing/shoes/cowboy/white
 	name = "white cowboy boots"
