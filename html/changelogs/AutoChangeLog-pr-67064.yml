@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - refactor: "Wizard's warp whistle is now an effect that charges at the summoner to pick them up, and will drop them down."

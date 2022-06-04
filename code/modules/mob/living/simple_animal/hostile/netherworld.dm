@@ -20,13 +20,12 @@
 	minbodytemp = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/phaser = TRUE
-	var/datum/action/innate/creature/teleport/teleport
 	var/is_phased = FALSE
 
 /mob/living/simple_animal/hostile/netherworld/Initialize(mapload)
 	. = ..()
 	if(phaser)
-		teleport = new
+		var/datum/action/innate/creature/teleport/teleport = new(src)
 		teleport.Grant(src)
 	add_cell_sample()
 
