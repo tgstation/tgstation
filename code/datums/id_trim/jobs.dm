@@ -461,22 +461,22 @@
 /datum/id_trim/job/security_officer/supply
 	assignment = "Security Officer (Cargo)"
 	trim_state = "trim_securityofficer_car"
-	department_access = list(ACCESS_CARGO, ACCESS_MAIL_SORTING, ACCESS_MINING, ACCESS_MINING_STATION)
+	department_access = list(ACCESS_AUX_BASE, ACCESS_CARGO, ACCESS_MAIL_SORTING, ACCESS_MINING, ACCESS_MINING_STATION)
 
 /datum/id_trim/job/security_officer/engineering
 	assignment = "Security Officer (Engineering)"
 	trim_state = "trim_securityofficer_engi"
-	department_access = list(ACCESS_ATMOSPHERICS, ACCESS_CONSTRUCTION, ACCESS_ENGINEERING)
+	department_access = list(ACCESS_ATMOSPHERICS, ACCESS_CONSTRUCTION, ACCESS_ENGINEERING, ACCESS_ENGINE_EQUIP, ACCESS_TCOMMS)
 
 /datum/id_trim/job/security_officer/medical
 	assignment = "Security Officer (Medical)"
 	trim_state = "trim_securityofficer_med"
-	department_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
+	department_access = list(ACCESS_PHARMACY, ACCESS_PLUMBING, ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_VIROLOGY)
 
 /datum/id_trim/job/security_officer/science
 	assignment = "Security Officer (Science)"
 	trim_state = "trim_securityofficer_sci"
-	department_access = list(ACCESS_RESEARCH, ACCESS_SCIENCE)
+	department_access = list(ACCESS_GENETICS, ACCESS_ORDNANCE, ACCESS_ORDNANCE_STORAGE, ACCESS_RESEARCH, ACCESS_ROBOTICS, ACCESS_SCIENCE, ACCESS_XENOBIOLOGY)
 
 /datum/id_trim/job/shaft_miner
 	assignment = "Shaft Miner"

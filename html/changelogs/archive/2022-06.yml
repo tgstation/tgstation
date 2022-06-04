@@ -110,3 +110,26 @@
       (usually used for circuit labs). Gameplay wise they will have new names.
   - code_imp: Made the ordnance chamber injector start off. You gotta turn them on
       using the monitors. Also tidied their code a bit.
+2022-06-04:
+  Profakos:
+  - bugfix: Player-facing Traitor reputation numbers are now consistent when you view
+      how much you have.
+  Rhials:
+  - bugfix: Moves the scrubber out from under a vending machine in the Metastation
+      Meeting Room.
+  SmArtKar:
+  - bugfix: Fixed statue simplemob teleport not working and 3 other spells not appearing
+  Son-of-Space:
+  - bugfix: departmental officers' access across departments has been standardized,
+      and previously lost accesses were added back
+  - balance: Departmental security officers have access to more areas in their departments,
+      including xenobiology or virology
+  Zonespace27:
+  - admin: MODsuits can now be picked through the outfit manager
+  san7890:
+  - rscadd: On all five stations, Nanotrasen has redrawn up the area plans in the
+      permabrig areas. Expect to see a few more APCs in each room to feed each with
+      power.
+  vincentiusvin:
+  - qol: breathedeep makes a return in the atmozphere tablet app. Right click to scan
+      things, right self click (on the tablet) to scan current turf.
