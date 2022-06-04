@@ -79,6 +79,7 @@
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit/black_really(src)
+			new /obj/item/clothing/neck/tie/red/hitman(src)
 
 		if(KIT_SCREWED)
 			new /obj/item/sbeacondrop/bomb(src)
@@ -140,6 +141,7 @@
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit/black_really(src)
+			new /obj/item/clothing/neck/tie/red/hitman(src)
 
 		if(KIT_NUKEOPS_METAGAME)
 			new /obj/item/mod/control/pre_equipped/nuclear(src) // 8 tc

@@ -226,6 +226,18 @@
 		/obj/item/mod/module/emp_shield/advanced,
 	)
 
+/obj/item/mod/control/pre_equipped/ninja
+	theme = /datum/mod_theme/ninja
+	applied_cell = /obj/item/stock_parts/cell/ninja
+	initial_modules = list(
+		/obj/item/mod/module/noslip,
+		/obj/item/mod/module/stealth/ninja,
+		/obj/item/mod/module/dispenser/ninja,
+		/obj/item/mod/module/dna_lock/reinforced,
+		/obj/item/mod/module/emp_shield/pulse,
+		/obj/item/mod/module/status_readout,
+	)
+
 /obj/item/mod/control/pre_equipped/prototype
 	theme = /datum/mod_theme/prototype
 	req_access = list(ACCESS_AWAY_GENERAL)
@@ -380,13 +392,18 @@
 
 INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/ntuplinkagent_empty)
 //these exist for the prefs menu
-/obj/item/mod/control/pre_equipped/syndicate_empty
+/obj/item/mod/control/pre_equipped/empty
+
+/obj/item/mod/control/pre_equipped/empty/syndicate
 	theme = /datum/mod_theme/syndicate
 
-/obj/item/mod/control/pre_equipped/syndicate_empty/honkerative
+/obj/item/mod/control/pre_equipped/empty/syndicate/honkerative
 	applied_skin = "honkerative"
 
-/obj/item/mod/control/pre_equipped/syndicate_empty/elite
+/obj/item/mod/control/pre_equipped/empty/elite
 	theme = /datum/mod_theme/elite
 
-INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/syndicate_empty)
+/obj/item/mod/control/pre_equipped/empty/ninja
+	theme = /datum/mod_theme/ninja
+
+INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/empty)
