@@ -1,24 +1,14 @@
 import { Component } from 'inferno';
-import { classes } from 'common/react';
 import {
   KEY_BACKSPACE,
   KEY_DELETE,
   KEY_DOWN,
   KEY_TAB,
   KEY_UP,
-  KEY_Z,
-  KEY_0,
 } from 'common/keycodes';
+import { windowOpen, windowClose, windowSet } from '../helpers/helpers';
+import { CHANNELS, SIZE } from '../constants/constants';
 import { TextArea } from 'tgui/components';
-
-const CHANNELS = ['say', 'radio', 'me', 'ooc'];
-
-/** Window sizes in pixels */
-const SIZE = {
-  small: 58,
-  medium: 85,
-  large: 110,
-};
 
 /** Stores a list of chat messages entered as values */
 let savedMessages = [];
@@ -38,15 +28,6 @@ export class TguiModal extends Component {
       size: SIZE.small,
     };
   }
-  /** Resets the state of the window and hides it from user view */
-  closeWindow = () => {
-    this.setState({ buttonContent: '>', channel: null });
-    this.historyCounter = 0;
-    this.value = '';
-    this.setSize(0);
-    Byond.winset('tgui_modal', { 'is-visible': false });
-    Byond.sendMessage('close');
-  };
   /** Increments the chat history counter, looping through entries */
   handleArrowKeys = (direction) => {
     const { historyCounter } = this;
@@ -87,11 +68,13 @@ export class TguiModal extends Component {
         entry: value,
       });
     }
-    this.closeWindow();
+    this.reset();
+    windowClose();
   };
   /** User presses escape, closes the window */
   handleEscape = () => {
-    this.closeWindow();
+    this.reset();
+    windowClose();
   };
   /** Mouse over button. Changes button to channel name. */
   handleFocus = () => {
@@ -110,9 +93,8 @@ export class TguiModal extends Component {
         channel: CHANNELS[channel],
         entry: value,
       });
-      this.value = '';
-      this.setSize(0);
-      this.setState({ edited: true });
+      this.reset(channel);
+      windowSet();
     }
   };
   /**
@@ -170,28 +152,36 @@ export class TguiModal extends Component {
       });
     }
   };
+  /**
+   * Resets window to default parameters.
+   *
+   * Parameters:
+   * channel - Sets the channel (optional)
+   */
+  reset = (channel) => {
+    this.historyCounter = 0;
+    this.value = '';
+    this.setState({
+      buttonContent: '>',
+      channel,
+      edited: true,
+      size: SIZE.small,
+    });
+  };
+
   /**  Adjusts window sized based on target value */
   setSize = (value) => {
     const { size } = this.state;
     if (value > 56 && size !== SIZE.large) {
       this.setState({ size: SIZE.large });
-      this.setWindow();
+      windowSet(SIZE.large);
     } else if (value <= 56 && value > 24 && size !== SIZE.medium) {
       this.setState({ size: SIZE.medium });
-      this.setWindow();
+      windowSet(SIZE.medium);
     } else if (value <= 24 && size !== SIZE.small) {
       this.setState({ size: SIZE.small });
-      this.setWindow();
+      windowSet(SIZE.small);
     }
-  };
-  /**
-   * Modifies the window size.
-   * This would be included in setSize but state is async
-   */
-  setWindow = () => {
-    const { size } = this.state;
-    Byond.winset('tgui_modal', { size: `333x${size}` });
-    Byond.winset('tgui_modal.browser', { size: `333x${size}` });
   };
   /** Triggers a refresh in the event something changes input (by force) */
   unsetEdited = () => {
@@ -210,16 +200,16 @@ export class TguiModal extends Component {
   };
   /** Attach listeners, sets window size just in case */
   componentDidMount() {
-    Byond.subscribeTo('channel', (data) => {
-      this.setState({ channel: CHANNELS.indexOf(data.channel) });
-    });
     Byond.subscribeTo('maxLength', (data) => {
       this.maxLength = data.maxLength;
     });
     Byond.subscribeTo('force', () => {
       this.handleForce();
     });
-    this.setWindow();
+    Byond.subscribeTo('open', (data) => {
+      windowOpen();
+      this.reset(data.channel);
+    });
   }
   /** After updating the input value, sets back to false */
   componentDidUpdate() {
@@ -269,13 +259,6 @@ export class TguiModal extends Component {
     );
   }
 }
-
-/** Returns modular css classes */
-const getCss = (element, channel, size) =>
-  classes([element, `${element}-${CHANNELS[channel]}`, `${element}-${size}`]);
-
-/** Checks keycodes for alpha/numeric characters */
-const isAlphanumeric = (keyCode) => keyCode >= KEY_0 && keyCode <= KEY_Z;
 
 /**
  * Stores entries in the chat history.
