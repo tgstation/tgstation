@@ -138,13 +138,20 @@
 /datum/component/seclite_attachable/proc/add_light(obj/item/flashlight/new_light, mob/attacher)
 	if(light)
 		CRASH("[type] tried to add a new light when it already had one.")
+
 	light = new_light
 
 	light.set_light_flags(light.light_flags | LIGHT_ATTACHED)
-	// We may already exist within our item. But if we don't move it over
+	// We may already exist within in our parent's contents... But if we don't move it over now
 	if(light.loc != parent)
 		light.forceMove(parent)
 
+	// We already have an action for the light for some reason? Clean it up
+	if(toggle_action_ref?.resolve())
+		stack_trace("[type] - add_light had an existing toggle action when add_light was called.")
+		QDEL_NULL(toggle_action_ref)
+
+	// Make a new toggle light item action for our parent
 	var/obj/item/item_parent = parent
 	var/datum/action/item_action/toggle_seclight/toggle_action = new(item_parent)
 	toggle_action_ref = WEAKREF(toggle_action)
@@ -155,12 +162,15 @@
 
 /// Removes the current light from our parent.
 /datum/component/seclite_attachable/proc/remove_light()
+	// Our action may be linked to our parent,
+	// but it's really sourced from our light. Get rid of it.
+	QDEL_NULL(toggle_action_ref)
+
 	// It is possible the light was removed by being deleted.
 	if(!QDELETED(light))
 		UnregisterSignal(light, COMSIG_PARENT_QDELETING)
 		light.set_light_flags(light.light_flags & ~LIGHT_ATTACHED)
 		light.update_brightness()
-		QDEL_NULL(toggle_action_ref)
 
 	light = null
 	update_light()
@@ -178,21 +188,23 @@
 
 	QDEL_NULL(light)
 
-/// Signal proc for [COMSIG_ATOM_DESTRUCTION] that drops our light to the ground if our parent is deleted.
+/// Signal proc for [COMSIG_ATOM_DESTRUCTION] that drops our light to the ground if our parent is deconstructed.
 /datum/component/seclite_attachable/proc/on_parent_deconstructed(obj/item/source, disassembled)
 	SIGNAL_HANDLER
 
 	light.forceMove(source.drop_location())
 
-/// Signal proc for [COMSIG_PARENT_ATTACKBY] that allows a user to attach a seclite by hitting our item with it.
+/// Signal proc for [COMSIG_PARENT_ATTACKBY] that allows a user to attach a seclite by hitting our parent with it.
 /datum/component/seclite_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, params)
 	SIGNAL_HANDLER
 
 	if(!is_type_in_typecache(attacking_item, valid_lights))
 		return
+
 	if(light)
-		source.balloon_alert(attacker, "already has a [light.name]!")
+		source.balloon_alert(attacker, "already has \a [light]!")
 		return
+
 	if(!attacker.transferItemToLoc(attacking_item, source))
 		return
 
@@ -213,13 +225,17 @@
 /datum/component/seclite_attachable/proc/on_action_click(obj/item/source, mob/user, datum/action)
 	SIGNAL_HANDLER
 
+	// This isn't OUR action specifically, we don't care.
 	if(!IS_WEAKREF_OF(action, toggle_action_ref))
 		return
 
-	if(toggle_light(user))
-		return COMPONENT_ACTION_HANDLED
+	// Toggle light fails = no light attached = shouldn't be possible
+	if(!toggle_light(user))
+		CRASH("[type] - on_action_click somehow both HAD AN ACTION and also HAD A TRIGGERABLE ACTION, without having an attached light.")
 
-/// Signal proc for [COMSIG_ATOM_TOOL_ACT] for [TOOL_SCREWDRIVER] that removes any attached seclite.
+	return COMPONENT_ACTION_HANDLED
+
+/// Signal proc for [COMSIG_ATOM_TOOL_ACT] via [TOOL_SCREWDRIVER] that removes any attached seclite.
 /datum/component/seclite_attachable/proc/on_screwdriver(obj/item/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 
@@ -241,7 +257,7 @@
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(to_remove)
 
-/// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] that updates our item with our seclite overlays, if we have some.
+/// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] that updates our parent with our seclite overlays, if we have some.
 /datum/component/seclite_attachable/proc/on_update_overlays(obj/item/source, list/overlays)
 	SIGNAL_HANDLER
 
@@ -258,16 +274,22 @@
 	flashlight_overlay.pixel_y = overlay_y
 	overlays += flashlight_overlay
 
-/// Signal proc for [COMSIG_ATOM_UPDATE_ICON_STATE] that updates our item's icon state, if we have one.
+/// Signal proc for [COMSIG_ATOM_UPDATE_ICON_STATE] that updates our parent's icon state, if we have one.
 /datum/component/seclite_attachable/proc/on_update_icon_state(obj/item/source)
 	SIGNAL_HANDLER
 
 	// No icon state to set, no reason to run
 	if(!light_icon_state)
 		return
-	// No light, nothing to set
-	if(!light)
-		return
 
+	// Get the "base icon state" to work on
 	var/base_state = source.base_icon_state || initial(source.icon_state)
-	source.icon_state = "[base_state]-[light_icon_state][light.on ? "-on":""]"
+	// Updates our icon state based on our light state.
+	if(light)
+		source.icon_state = "[base_state]-[light_icon_state][light.on ? "-on":""]"
+
+	// Reset their icon state when if we've got no light.
+	else if(source.icon_state != base_state)
+		// Yes, this might mess with other icon state alterations,
+		// but that's the downside of using icon states over overlays.
+		source.icon_state = base_state
