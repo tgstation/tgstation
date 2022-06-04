@@ -1,0 +1,9 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - admin: "cyborg wire pulses/cuts are now logged in silicon.log"
+  - admin: "AIs being carded is now logged in silicon.log"
+  - admin: "giving an AI a combat module is now logged in silicon.log"
+  - admin: "trying to upload over the maximum number of laws is now logged in silicon.log"
+  - admin: "ion storm law changes are now logged in silicon.log"
+  - admin: "changing settings on a borg shell is now logged in silicon.log"
