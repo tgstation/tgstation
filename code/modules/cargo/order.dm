@@ -1,4 +1,4 @@
-/// The chance for a manifest or crate to be created with errors 
+/// The chance for a manifest or crate to be created with errors
 #define MANIFEST_ERROR_CHANCE 5
 
 // MANIFEST BITFLAGS
@@ -6,7 +6,7 @@
 #define MANIFEST_ERROR_NAME (1 << 0)
 /// Determines if contents will be deleted from the manifest but still be present in the crate
 #define MANIFEST_ERROR_CONTENTS (1 << 1)
-/// Determines if contents will be deleted from the crate but still be present in the manifest 
+/// Determines if contents will be deleted from the crate but still be present in the manifest
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
@@ -106,7 +106,7 @@
 	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
 
 	if(P.errors & MANIFEST_ERROR_ITEM)
-		if(istype(container, /obj/structure/closet/crate/secure) || istype(container, /obj/structure/closet/crate/large))
+		if(istype(container, /obj/structure/closet/crate/secure) || istype(container, /obj/structure/closet/crate/large) || istype(container, /obj/item/storage/lockbox/order))
 			P.errors &= ~MANIFEST_ERROR_ITEM
 		else
 			var/lost = max(round(container.contents.len / 10), 1)
