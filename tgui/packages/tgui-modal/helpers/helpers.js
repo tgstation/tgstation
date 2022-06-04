@@ -89,7 +89,7 @@ export const storeChat = (message) => {
 export const getCss = (element, channel, size) =>
   classes([
     element,
-    channel >= 0 && `${element}-${CHANNELS[channel]}`,
+    channel >= 0 && `${element}-${CHANNELS[channel]?.toLowerCase()}`,
     `${element}-${size}`,
   ]);
 

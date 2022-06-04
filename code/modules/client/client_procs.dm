@@ -1035,19 +1035,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					movement_keys[key] = WEST
 				if("South")
 					movement_keys[key] = SOUTH
-				if("Say")
+				if(SAY_CHAN)
 					var/say = create_window_message(SAY_CHAN)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[say]")
-				if("Radio")
+				if(RADIO_CHAN)
 					var/radio = create_window_message(RADIO_CHAN)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[radio]")
-				if("Me")
+				if(ME_CHAN)
 					var/me = create_window_message(ME_CHAN)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[me]")
-				if("OOC")
+				if(OOC_CHAN)
 					var/ooc = create_window_message(OOC_CHAN)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[ooc]")
-
 
 /** Creates a JSON encoded message to open TGUI modals properly */
 /client/proc/create_window_message(channel)

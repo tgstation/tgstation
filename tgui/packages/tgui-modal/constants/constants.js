@@ -1,5 +1,5 @@
 /** Radio channels */
-export const CHANNELS = ['say', 'radio', 'me', 'ooc'];
+export const CHANNELS = ['Say', 'Radio', 'Me', 'OOC'];
 
 /** Window sizes in pixels */
 export const SIZE = {

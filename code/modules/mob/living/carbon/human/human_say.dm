@@ -92,10 +92,9 @@
 /mob/living/carbon/human/proc/force_say()
 	if(!client || !mind || !client.tgui_modal)
 		return FALSE
-	if(typing_thinking_indicator)
-		if(client?.typing_indicators)
-			log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators enabled.")
-		else
-			log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators DISABLED.")
-		client?.mob.typing_thinking_indicator = FALSE
 	client.tgui_modal.force_say()
+	client.mob.typing_indicator = FALSE
+	if(client?.typing_indicators)
+		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators enabled.")
+	else
+		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators DISABLED.")

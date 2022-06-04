@@ -89,12 +89,12 @@ export class TguiModal extends Component {
     const { channel } = this.state;
     this.hovering = true;
     this.setState({
-      buttonContent: CHANNELS[channel]?.slice(0, 1).toUpperCase(),
+      buttonContent: CHANNELS[channel]?.slice(0, 1),
     });
   };
   /** Sends the current input to byond and purges it */
   handleForce = () => {
-    const { channel } = this.state;
+    const { channel, size } = this.state;
     const { value } = this;
     if (value) {
       Byond.sendMessage('purge', {
@@ -102,7 +102,9 @@ export class TguiModal extends Component {
         entry: value,
       });
       this.reset(channel);
-      windowSet();
+      if (size !== SIZE.small) {
+        windowSet();
+      }
     }
   };
   /**
@@ -141,21 +143,19 @@ export class TguiModal extends Component {
   };
   /**
    * Increments the channel or resets to the beginning of the list.
-   * If a user is hovering over the button, the channel is changed.
+   * If a user is hovering over the button, the label is changed.
    */
   incrementChannel = () => {
     const { channel } = this.state;
     const { hovering } = this;
     if (channel === CHANNELS.length - 1) {
       this.setState({
-        buttonContent: !hovering ? '>' : CHANNELS[0].slice(0, 1).toUpperCase(),
+        buttonContent: !hovering ? '>' : CHANNELS[0].slice(0, 1),
         channel: 0,
       });
     } else {
       this.setState({
-        buttonContent: !hovering
-          ? '>'
-          : CHANNELS[channel + 1]?.slice(0, 1).toUpperCase(),
+        buttonContent: !hovering ? '>' : CHANNELS[channel + 1]?.slice(0, 1),
         channel: channel + 1,
       });
     }
@@ -242,7 +242,7 @@ export class TguiModal extends Component {
     const { buttonContent, channel, edited, size } = this.state;
     return (
       <div className={getCss('window', channel, size)}>
-        {size <= SIZE.medium && (
+        {size < SIZE.medium && (
           <button
             className={getCss('button', channel)}
             onclick={handleClick}
