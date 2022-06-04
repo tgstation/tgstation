@@ -230,7 +230,7 @@
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
-		CCESS_CHANGE_IDS,
+		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
 		)
 	job = /datum/job/chaplain
