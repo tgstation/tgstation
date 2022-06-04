@@ -14,7 +14,7 @@
 	var/light_overlay_icon
 	/// The state to take from the light overlay icon if supplied.
 	var/light_overlay
-	/// The x offset of our overlay if supplied.
+	/// The X offset of our overlay if supplied.
 	var/overlay_x = 0
 	/// The Y offset of our overlay if supplied.
 	var/overlay_y = 0
@@ -89,15 +89,15 @@
 		add_light(starting_light)
 
 /datum/component/seclite_attachable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/on_light_exit)
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/on_parent_deleted)
 	RegisterSignal(parent, COMSIG_ATOM_DESTRUCTION, .proc/on_parent_deconstructed)
+	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/on_light_exit)
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, .proc/on_update_icon_state)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
+	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_CLICK, .proc/on_action_click)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_ITEM_UI_ACTION_CLICK, .proc/on_action_click)
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, .proc/on_update_icon_state)
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/on_parent_deleted)
 
 /datum/component/seclite_attachable/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -111,28 +111,6 @@
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_PARENT_QDELETING,
 	))
-
-/// Toggles the light within on or off.
-/// Returns TRUE if there is a light inside, FALSE otherwise.
-/datum/component/seclite_attachable/proc/toggle_light(mob/user)
-	if(!light)
-		return FALSE
-
-	light.on = !light.on
-	light.update_brightness()
-	if(user)
-		user.balloon_alert(user, "[light.name] toggled [light.on ? "on":"off"]")
-
-	playsound(light, 'sound/weapons/empty.ogg', 100, TRUE)
-	update_light()
-	return TRUE
-
-/// Called after the a light is added, removed, or toggles.
-/// Ensures all of our appearances look correct for the new light state.
-/datum/component/seclite_attachable/proc/update_light()
-	var/obj/item/item_parent = parent
-	item_parent.update_appearance()
-	item_parent.update_action_buttons()
 
 /// Sets a new light as our current light for our parent.
 /datum/component/seclite_attachable/proc/add_light(obj/item/flashlight/new_light, mob/attacher)
@@ -175,6 +153,28 @@
 	light = null
 	update_light()
 
+/// Toggles the light within on or off.
+/// Returns TRUE if there is a light inside, FALSE otherwise.
+/datum/component/seclite_attachable/proc/toggle_light(mob/user)
+	if(!light)
+		return FALSE
+
+	light.on = !light.on
+	light.update_brightness()
+	if(user)
+		user.balloon_alert(user, "[light.name] toggled [light.on ? "on":"off"]")
+
+	playsound(light, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_light()
+	return TRUE
+
+/// Called after the a light is added, removed, or toggles.
+/// Ensures all of our appearances look correct for the new light state.
+/datum/component/seclite_attachable/proc/update_light()
+	var/obj/item/item_parent = parent
+	item_parent.update_appearance()
+	item_parent.update_action_buttons()
+
 /// Signal proc for [COMSIG_ATOM_EXITED] that handles our light being removed or deleted from our parent.
 /datum/component/seclite_attachable/proc/on_light_exit(obj/item/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
@@ -182,17 +182,31 @@
 	if(gone == light)
 		remove_light()
 
+/// Signal proc for [COMSIG_ATOM_DESTRUCTION] that drops our light to the ground if our parent is deconstructed.
+/datum/component/seclite_attachable/proc/on_parent_deconstructed(obj/item/source, disassembled)
+	SIGNAL_HANDLER
+
+	light.forceMove(source.drop_location())
+
 /// Signal proc for [COMSIG_PARENT_QDELETING] that deletes our light if our parent is deleted.
 /datum/component/seclite_attachable/proc/on_parent_deleted(obj/item/source)
 	SIGNAL_HANDLER
 
 	QDEL_NULL(light)
 
-/// Signal proc for [COMSIG_ATOM_DESTRUCTION] that drops our light to the ground if our parent is deconstructed.
-/datum/component/seclite_attachable/proc/on_parent_deconstructed(obj/item/source, disassembled)
+/// Signal proc for [COMSIG_ITEM_UI_ACTION_CLICK] that toggles our light on and off if our action button is clicked.
+/datum/component/seclite_attachable/proc/on_action_click(obj/item/source, mob/user, datum/action)
 	SIGNAL_HANDLER
 
-	light.forceMove(source.drop_location())
+	// This isn't OUR action specifically, we don't care.
+	if(!IS_WEAKREF_OF(action, toggle_action_ref))
+		return
+
+	// Toggle light fails = no light attached = shouldn't be possible
+	if(!toggle_light(user))
+		CRASH("[type] - on_action_click somehow both HAD AN ACTION and also HAD A TRIGGERABLE ACTION, without having an attached light.")
+
+	return COMPONENT_ACTION_HANDLED
 
 /// Signal proc for [COMSIG_PARENT_ATTACKBY] that allows a user to attach a seclite by hitting our parent with it.
 /datum/component/seclite_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, params)
@@ -211,29 +225,6 @@
 	add_light(attacking_item, attacker)
 	source.balloon_alert(attacker, "attached [attacking_item]")
 	return COMPONENT_NO_AFTERATTACK
-
-/// Signal proc for [COMSIG_PARENT_EXAMINE] that shows our item can have / does have a seclite attached.
-/datum/component/seclite_attachable/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)
-	SIGNAL_HANDLER
-
-	if(light)
-		examine_list += "It has \a [light] [is_light_removable ? "mounted on it with a few <b>screws</b>" : "permanently mounted on it"]."
-	else
-		examine_list += "It has a mounting point for a <b>seclite</b>."
-
-/// Signal proc for [COMSIG_ITEM_UI_ACTION_CLICK] that toggles our light on and off if our action button is clicked.
-/datum/component/seclite_attachable/proc/on_action_click(obj/item/source, mob/user, datum/action)
-	SIGNAL_HANDLER
-
-	// This isn't OUR action specifically, we don't care.
-	if(!IS_WEAKREF_OF(action, toggle_action_ref))
-		return
-
-	// Toggle light fails = no light attached = shouldn't be possible
-	if(!toggle_light(user))
-		CRASH("[type] - on_action_click somehow both HAD AN ACTION and also HAD A TRIGGERABLE ACTION, without having an attached light.")
-
-	return COMPONENT_ACTION_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_TOOL_ACT] via [TOOL_SCREWDRIVER] that removes any attached seclite.
 /datum/component/seclite_attachable/proc/on_screwdriver(obj/item/source, mob/user, obj/item/tool)
@@ -256,6 +247,15 @@
 	to_remove.forceMove(source.drop_location())
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(to_remove)
+
+/// Signal proc for [COMSIG_PARENT_EXAMINE] that shows our item can have / does have a seclite attached.
+/datum/component/seclite_attachable/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(light)
+		examine_list += "It has \a [light] [is_light_removable ? "mounted on it with a few <b>screws</b>" : "permanently mounted on it"]."
+	else
+		examine_list += "It has a mounting point for a <b>seclite</b>."
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] that updates our parent with our seclite overlays, if we have some.
 /datum/component/seclite_attachable/proc/on_update_overlays(obj/item/source, list/overlays)
