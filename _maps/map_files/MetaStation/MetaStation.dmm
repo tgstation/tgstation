@@ -31302,6 +31302,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "ldg" = (
+/obj/machinery/modular_computer/console/preset/id{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/cargo/qm)
 "lds" = (
@@ -67373,6 +67376,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
+"xEs" = (
+/obj/machinery/pdapainter/supply,
+/turf/open/floor/carpet/red,
+/area/station/cargo/qm)
 "xEt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -87589,7 +87596,7 @@ hyw
 iGD
 kga
 fRQ
-xgw
+xEs
 eDi
 geK
 krf

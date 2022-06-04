@@ -32591,6 +32591,7 @@
 /obj/item/computer_hardware/hard_drive/portable/quartermaster,
 /obj/item/gps/mining,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/paper_bin/carbon,
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "iTV" = (
@@ -52641,6 +52642,9 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/modular_computer/console/preset/id{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "oig" = (
@@ -71423,11 +71427,10 @@
 /area/station/command/bridge)
 "tmx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/paper_bin/carbon,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "tmy" = (

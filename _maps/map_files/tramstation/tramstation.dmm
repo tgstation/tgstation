@@ -10912,6 +10912,11 @@
 /area/station/hallway/secondary/entry)
 "dFS" = (
 /obj/structure/table,
+/obj/item/folder/yellow,
+/obj/item/pen{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/open/floor/carpet,
 /area/station/cargo/qm)
 "dFY" = (
@@ -25675,13 +25680,13 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "iPD" = (
-/obj/machinery/modular_computer/console/preset/civilian{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/modular_computer/console/preset/id{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "iPQ" = (
@@ -26271,12 +26276,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "iYb" = (
-/obj/structure/table,
-/obj/item/folder/yellow,
-/obj/item/pen{
-	pixel_x = 4;
-	pixel_y = 4
-	},
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/carpet,
 /area/station/cargo/qm)
 "iYm" = (
