@@ -32,7 +32,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	return FALSE
 
 /obj/machinery/bsa
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/particle_accelerator.dmi'
 	density = TRUE
 	anchored = TRUE
 
@@ -260,7 +260,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	name = "bluespace artillery control"
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/computer/bsa_control
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/particle_accelerator.dmi'
 	icon_state = "control_boxp"
 	icon_keyboard = null
 	icon_screen = null

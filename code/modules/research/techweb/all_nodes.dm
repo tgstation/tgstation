@@ -662,6 +662,10 @@
 		"turbine_compressor",
 		"turbine_rotor",
 		"turbine_stator",
+		"circulator",
+		"teg",
+		"superpacman",
+		"mrspacman",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = 2500)

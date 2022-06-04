@@ -59,9 +59,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 /obj/machinery/computer/arcade/orion_trail/kobayashi
 	name = "Kobayashi Maru control computer"
 	desc = "A test for cadets."
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
-	icon_keyboard = null
-	icon_screen = null
+	icon = 'icons/obj/particle_accelerator.dmi'
 	icon_state = "control_boxp"
 	//kobatashi has a smaller list of events, so we copy from the global list and cut whatever isn't here
 	var/list/event_whitelist = list(
