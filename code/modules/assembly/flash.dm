@@ -324,6 +324,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "memorizer"
 	inhand_icon_state = "nullrod"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
 

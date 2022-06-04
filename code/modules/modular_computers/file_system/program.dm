@@ -77,7 +77,7 @@
 	return 0
 
 /**
- *Runs when the device is used to attack an atom in non-combat mode.
+ *Runs when the device is used to attack an atom in non-combat mode using right click (secondary).
  *
  *Simulates using the device to read or scan something. Tap is called by the computer during pre_attack
  *and sends us all of the related info. If we return TRUE, the computer will stop the attack process
