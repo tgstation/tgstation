@@ -340,7 +340,7 @@
 			ability_melee_cooldown = 2
 		add_ability.melee_cooldown_time = ability_melee_cooldown SECONDS
 		add_ability.name = input(usr, "Choose ability name", "Ability name")
-		add_ability.CreateSequenceActions()
+		add_ability.create_sequence_actions()
 	else
 		add_ability = new ability_type(marked_mob)
 
