@@ -122,7 +122,6 @@
 /// I'm not because I do not trust implementers of the storage component to use them, BUT
 /// IF I FIND YOU USING THIS PATTERN IN YOUR CODE I WILL BREAK YOU ACROSS MY KNEES
 /// ~Lemon
-GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /datum/component/storage/proc/set_holdable(list/can_hold_list, list/cant_hold_list)
 	if(!islist(can_hold_list))

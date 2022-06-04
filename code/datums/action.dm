@@ -918,3 +918,34 @@
 	item_target.layer = old_layer
 	item_target.plane = old_plane
 	current_button.appearance_cache = item_target.appearance
+
+/datum/action/item_action/storage_collection_mode
+	name = "Switch collection mode"
+	desc = "Switches the collection mode of a storage object."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "storage_gather_switch"
+
+/datum/action/item_action/storage_collection_mode/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
+	. = ..()
+	var/obj/item/item_target = target
+
+	var/old_layer = item_target.layer
+	var/old_plane = item_target.plane
+
+	item_target.layer = FLOAT_LAYER
+	item_target.plane = FLOAT_PLANE
+	current_button.cut_overlays()
+	current_button.add_overlay(target)
+	item_target.layer = old_layer
+	item_target.plane = old_plane
+	current_button.appearance_cache = item_target.appearance
+
+/datum/action/item_action/storage_collection_mode/Trigger(trigger_flags)
+	. = ..()
+	
+	var/atom/aowner = target
+
+	if(!istype(aowner))
+		return
+
+	aowner.atom_storage?.toggle_collection_mode(owner)

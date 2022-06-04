@@ -333,8 +333,10 @@
 
 	return ..()
 
-/atom/proc/create_storage(max_slots, max_specific_storage, max_total_storage)
-	atom_storage = new(src, max_slots, max_specific_storage, max_total_storage)
+/atom/proc/create_storage(max_slots, max_specific_storage, max_total_storage, numerical_stacking = FALSE, pickup_on_click = FALSE, collection_mode = COLLECT_ONE, list/canhold, list/canthold)
+	atom_storage = new(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, pickup_on_click, collection_mode)
+
+	atom_storage.set_holdable(canhold, canthold)
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/turf/p_turf = get_turf(ricocheting_projectile)

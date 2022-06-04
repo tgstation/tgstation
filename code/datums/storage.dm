@@ -1,6 +1,12 @@
 /datum/storage
 	var/atom/parent
 
+	var/list/can_hold //if this is set, only items, and their children, will fit
+	var/list/cant_hold //if this is set, items, and their children, won't fit
+	var/list/exception_hold //if set, these items will be the exception to the max size of object that can fit.
+	/// If set can only contain stuff with this single trait present.
+	var/list/can_hold_trait
+
 	var/max_slots
 	var/max_specific_storage // max weight class for a single item being inserted
 	var/max_total_storage // max combined weight classes the storage can hold
@@ -33,9 +39,9 @@
 	var/screen_start_x = 4 // where storage starts being rendered, screen_loc wise
 	var/screen_start_y = 2
 
+	var/datum/action/item_action/storage_collection_mode/toggle_collectmode
 
-
-/datum/storage/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, pickup_on_click, collection_mode)
 	boxes = new(null, src)
 	closer = new(null, src)
 
@@ -43,6 +49,9 @@
 	src.max_slots = max_slots
 	src.max_specific_storage = max_specific_storage
 	src.max_total_storage = max_total_storage
+	src.numerical_stacking = numerical_stacking
+	src.pickup_on_click = pickup_on_click
+	src.collection_mode = collection_mode
 
 	orient_to_hud()
 	
@@ -59,6 +68,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/refresh_views)
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/remove_and_refresh)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/close_distance)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/update_actions)
 
 /datum/storage/Destroy()
 	parent = null
@@ -67,7 +77,51 @@
 	is_using.Cut()
 
 	return ..()
+
+/// [And now, a message from component storage, brought to you graciously by Lemon]
+/// Almost 100% of the time the lists passed into set_holdable are reused for each instance of the component
+/// Just fucking cache it 4head
+/// Yes I could generalize this, but I don't want anyone else using it. in fact, DO NOT COPY THIS
+/// If you find yourself needing this pattern, you're likely better off using static typecaches
+/// I'm not because I do not trust implementers of the storage component to use them, BUT
+/// IF I FIND YOU USING THIS PATTERN IN YOUR CODE I WILL BREAK YOU ACROSS MY KNEES
+/// ~Lemon
+GLOBAL_LIST_EMPTY(cached_storage_typecaches)
+
+/datum/storage/proc/set_holdable(list/can_hold_list, list/cant_hold_list)
+	if(!islist(can_hold_list))
+		can_hold_list = list(can_hold_list)
+	if(!islist(cant_hold_list))
+		cant_hold_list = list(cant_hold_list)
+
+	// can_hold_description = generate_hold_desc(can_hold_list)
+	if (can_hold_list)
+		var/unique_key = can_hold_list.Join("-")
+		if(!GLOB.cached_storage_typecaches[unique_key])
+			GLOB.cached_storage_typecaches[unique_key] = typecacheof(can_hold_list)
+		can_hold = GLOB.cached_storage_typecaches[unique_key]
+
+	if (cant_hold_list != null)
+		var/unique_key = cant_hold_list.Join("-")
+		if(!GLOB.cached_storage_typecaches[unique_key])
+			GLOB.cached_storage_typecaches[unique_key] = typecacheof(cant_hold_list)
+		cant_hold = GLOB.cached_storage_typecaches[unique_key]
+
+/datum/storage/proc/update_actions()
+	SIGNAL_HANDLER
+
+	QDEL_NULL(toggle_collectmode)
+	if(!isitem(parent) || !pickup_on_click)
+		return
+	var/obj/item/iparent = parent
+	toggle_collectmode = new(iparent)
 	
+	if(iparent.item_flags & IN_INVENTORY)
+		var/mob/user = iparent.loc
+		if(!istype(user))
+			return
+		toggle_collectmode.Grant(user)
+
 /datum/storage/proc/reset_item(obj/item/thing)
 	thing.layer = initial(thing.layer)
 	thing.plane = initial(thing.plane)
@@ -79,8 +133,6 @@
 /datum/storage/proc/attempt_insert(datum/source, obj/item/to_insert, mob/user, override = FALSE)
 	SIGNAL_HANDLER
 
-	. = TRUE
-
 	if(!isitem(to_insert))
 		return FALSE
 
@@ -90,7 +142,7 @@
 	if(to_insert.loc == parent)
 		return FALSE
 
-	if(to_insert.w_class > max_specific_storage)
+	if(to_insert.w_class > max_specific_storage && !is_type_in_typecache(to_insert, exception_hold))
 		to_chat(user, span_warning("\The [to_insert] is too big for \the [parent]!"))
 		return FALSE
 
@@ -107,7 +159,16 @@
 		to_chat(user, span_warning("\The [to_insert] can't fit into \the [parent]! Make some space!"))
 		return FALSE
 
-	var/datum/storage/biggerfish = parent.loc.atom_storage
+	if(length(can_hold))
+		if(!is_type_in_typecache(to_insert, can_hold))
+			to_chat(user, span_warning("\The [parent] cannot hold \the [to_insert]!"))
+			return FALSE
+	
+	if(is_type_in_typecache(to_insert, cant_hold) || HAS_TRAIT(to_insert, TRAIT_NO_STORAGE_INSERT) || (can_hold_trait && !HAS_TRAIT(to_insert, can_hold_trait)))
+		to_chat(user, span_warning("\The [parent] cannot hold \the [to_insert]!"))
+		return FALSE
+
+	var/datum/storage/biggerfish = parent.loc.atom_storage // this is valid if the container our parent is being held in is a storage item
 
 	if(biggerfish && biggerfish.max_specific_storage < max_specific_storage)
 		to_chat(user, span_warning("[to_insert] can't fit in [parent] while [parent.loc] is in the way!"))
@@ -124,6 +185,8 @@
 
 	to_insert.forceMove(parent)
 	item_insertion_feedback(user, to_insert, override)
+
+	return TRUE
 
 /datum/storage/proc/handle_mass_pickup(mob/user, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
 	for(var/obj/item/thing in things)
@@ -227,16 +290,15 @@
 	if(!istype(thing) || !pickup_on_click || thing.atom_storage)
 		return FALSE
 
-	. = TRUE // cancel the attack chain now
-
 	if(collection_mode == COLLECT_ONE)
 		attempt_insert(source, thing, user)
-		return
+		return TRUE
 
 	if(!isturf(thing.loc))
-		return
+		return TRUE
 
 	INVOKE_ASYNC(src, .proc/collect_on_turf, thing, user)
+	return TRUE
 
 /datum/storage/proc/collect_on_turf(obj/item/thing, mob/user)
 	var/list/turf_things = thing.loc.contents.Copy()
@@ -294,12 +356,11 @@
 	if(!thing.attackby_storage_insert(src, parent, user))
 		return FALSE
 
-	. = TRUE // prevent after attack
-
 	if(iscyborg(user))
-		return
+		return TRUE
 
 	attempt_insert(parent, thing, user)
+	return TRUE
 
 /datum/storage/proc/handle_attack(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -417,6 +478,8 @@
 	if(rustle_sound)
 		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
+	return TRUE
+
 /datum/storage/proc/close_distance(datum/source)
 	SIGNAL_HANDLER
 
@@ -472,3 +535,13 @@
 	toshow.client.screen -= boxes
 	toshow.client.screen -= closer
 	toshow.client.screen -= parent.contents
+
+/datum/storage/proc/toggle_collection_mode(mob/user)
+	collection_mode = (collection_mode+1)%3
+	switch(collection_mode)
+		if(COLLECT_SAME)
+			to_chat(user, span_notice("[parent] now picks up all items of a single type at once."))
+		if(COLLECT_EVERYTHING)
+			to_chat(user, span_notice("[parent] now picks up all items in a tile at once."))
+		if(COLLECT_ONE)
+			to_chat(user, span_notice("[parent] now picks up one item at a time."))
