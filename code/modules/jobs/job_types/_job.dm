@@ -120,6 +120,9 @@
 	///RPG job names, for the memes
 	var/rpg_title
 
+	/// Does this job ignore human authority?
+	var/ignore_human_authority = FALSE
+
 
 /datum/job/New()
 	. = ..()
@@ -440,7 +443,7 @@
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
 
-	var/require_human = CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+	var/require_human = !job.ignore_human_authority && CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 
 	src.job = job.title
 
