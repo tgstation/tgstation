@@ -29,8 +29,9 @@
 	if(issignaler(attacking_item))
 		var/obj/item/assembly/signaler/attached_signaler = attacking_item
 		// There's a flashlight in us. Remove it first, or it'll be lost forever!
-		if(locate(/obj/item/flashlight/seclite) in src)
-			to_chat(user, span_warning("The mounted flashlight is in the way, remove it first!"))
+		var/obj/item/flashlight/seclite/blocking_us = locate() in src
+		if(blocking_us)
+			to_chat(user, span_warning("[blocking_us] is in the way, remove it first!"))
 			return TRUE
 
 		if(!attached_signaler.secured)

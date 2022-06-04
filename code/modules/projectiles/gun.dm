@@ -85,8 +85,9 @@
 		QDEL_NULL(suppressed)
 	return ..()
 
-/// Handles adding [/datum/component/seclite_attachable] to the gun.
+/// Handles adding [the seclite mount component][/datum/component/seclite_attachable] to the gun.
 /// If the gun shouldn't have a seclight mount, override this with a return.
+/// Or, if a child of a gun with a seclite mount has slightly different behavior or icons, extend this.
 /obj/item/gun/proc/add_seclight_point()
 	return
 
