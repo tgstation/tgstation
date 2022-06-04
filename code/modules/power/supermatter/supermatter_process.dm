@@ -69,12 +69,12 @@
 		//handles temperature increase and gases made by the crystal
 		temperature_gas_production(env, removed)
 
-	if(check_cascade_requirements(anomaly_event))
+	if(IS_CASCADING(check_cascade_requirements()))
 		if(!cascade_initiated)
-			addtimer(CALLBACK(src, .proc/announce_incoming_cascade), 2 MINUTES)
+			addtimer(CALLBACK(src, .proc/announce_incoming_cascade), 2 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
 			log_game("[src] has begun a cascade.")
-			message_admins("[src] has begun a cascade. [ADMIN_JMP(src)]")
-			investigate_log("has begun a cascade.", INVESTIGATE_ENGINE)
+			message_admins("[src] has begun a cascade, reasons: [jointext(check_cascade_requirements(), ", ")]. [ADMIN_JMP(src)]")
+			investigate_log("has begun a cascade, reasons: [jointext(check_cascade_requirements(), ", ")].", INVESTIGATE_ENGINE)
 		cascade_initiated = TRUE
 		if(!warp)
 			warp = new(src)
@@ -437,7 +437,7 @@
 		if(combined_gas > MOLE_PENALTY_THRESHOLD)
 			radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel)
 
-		if(check_cascade_requirements(anomaly_event))
+		if(IS_CASCADING(check_cascade_requirements()))
 			var/channel_to_talk_to = damage > emergency_point ? common_channel : engineering_channel
 			radio.talk_into(src, "DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.", channel_to_talk_to)
 			for(var/mob/victim as anything in GLOB.player_list)
@@ -455,7 +455,7 @@
 		countdown()
 
 /obj/machinery/power/supermatter_crystal/proc/announce_incoming_cascade()
-	if(check_cascade_requirements(anomaly_event))
+	if(IS_CASCADING(check_cascade_requirements()))
 		priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
 			a subject within [station_name()], a resonance collapse may occur.",
 			"Nanotrasen Star Observation Association")
