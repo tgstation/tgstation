@@ -179,3 +179,14 @@
 	SSticker.delay_end = FALSE
 	//This shouldn't be needed, but let's be polite
 	SSgarbage.collection_timeout[GC_QUEUE_HARDDELETE] = 10 SECONDS
+
+// Everything past this line is a custom definition that aims to guarantee a path be tested.
+// These exist to prevent regressions that would otherwise only be checked on a random chance.
+
+// Cowboy boots - There is a % chance that a snake be spawned in them, these
+// guarantee both outcomes are ran.
+/obj/item/clothing/shoes/cowboy/consistent_snake
+	forced_snake_in_my_boot = TRUE
+
+/obj/item/clothing/shoes/cowboy/consistent_no_snake
+	forced_snake_in_my_boot = FALSE

@@ -7,11 +7,18 @@
 	custom_price = PAYCHECK_CREW
 	var/list/occupants = list()
 	var/max_occupants = 4
+
+	/// When TRUE, always spawn a snake in the boot when made.
+	/// When FALSE, never spawn a snake in the boot when made.
+	/// When null, will be a random chance.
+	var/forced_snake_in_my_boot = null
+
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
-	if(prob(2))
+
+	if (forced_snake_in_my_boot || (isnull(forced_snake_in_my_boot) && prob(2)))
 		var/mob/living/simple_animal/hostile/retaliate/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/snake(src)
 		occupants += bootsnake
 
@@ -40,6 +47,11 @@
 /obj/item/clothing/shoes/cowboy/proc/handle_table_slam(mob/living/user)
 	user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)
 	user.client?.give_award(/datum/award/achievement/misc/hot_damn, user)
+
+// /obj/item/clothing/shoes/cowboy/Exited(atom/movable/gone, direction)
+// 	. = ..()
+
+// 	if (gone in occupants)
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
 	. = ..()
