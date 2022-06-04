@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		var/target_area = get_area(possible_target.current)
-		if(possible_target in owners)
+		if(possible_target == owner)
 			continue
 		if(!ishuman(possible_target.current))
 			continue
