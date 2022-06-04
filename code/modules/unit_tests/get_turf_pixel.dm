@@ -8,4 +8,4 @@
 
 	//hes really long, so hes really good at peaking over the edge of the map
 	var/mob/living/simple_animal/hostile/megafauna/colossus/long_larry = allocate(/mob/living/simple_animal/hostile/megafauna/colossus, north)
-	TEST_ASSERT(get_turf_pixel(long_larry) != null, "get_turf_pixel() isnt clamping a mob whos sprite is above the bounds of the world inside of the map.")
+	TEST_ASSERT(istype(get_turf_pixel(long_larry), /turf), "get_turf_pixel() isnt clamping a mob whos sprite is above the bounds of the world inside of the map.")
