@@ -74,6 +74,8 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 
 ///Human Thinking Indicators///
 /mob/living/create_thinking_indicator()
+	if(!client || !client.typing_indicators) // If they've got typing indicators shut off, don't show the thinking indicator
+		return
 	if(!thinking_indicator && stat == CONSCIOUS) //Prevents sticky overlays and typing while in any state besides conscious
 		add_overlay(GLOB.thinking_indicator)
 		thinking_indicator = TRUE
@@ -85,6 +87,8 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 
 ///Human Typing Indicators///
 /mob/living/create_typing_indicator()
+	if(!client || !client.typing_indicators) // If they've got typing indicators shut off, don't show the typing indicator
+		return
 	if(!typing_indicator && stat == CONSCIOUS)
 		add_overlay(GLOB.typing_indicator)
 		typing_indicator = TRUE
