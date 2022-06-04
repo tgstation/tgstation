@@ -12200,16 +12200,16 @@
 /area/station/science/xenobiology)
 "dmC" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
-	name = "Auxiliary Construction Zone"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/aux_base,
+/obj/effect/mapping_helpers/airlock/access/all/supply/aux_base,
+/obj/machinery/door/airlock/mining{
+	name = "Auxiliary Base Zone"
+	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "dmK" = (
@@ -25737,16 +25737,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/engineering{
-	name = "Auxiliary Construction Storage"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/door/airlock/mining{
+	name = "Auxiliary Base Storage"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/aux_base,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "gYK" = (
@@ -58973,10 +58973,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/door/airlock/engineering{
-	name = "Auxiliary Construction Zone"
+/obj/effect/mapping_helpers/airlock/access/all/supply/aux_base,
+/obj/machinery/door/airlock/mining{
+	name = "Auxiliary Base Zone"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/aux_base,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "pSt" = (
@@ -86166,7 +86166,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/supply/aux_base,
 /turf/open/floor/iron,
 /area/station/maintenance/fore)
 "xds" = (

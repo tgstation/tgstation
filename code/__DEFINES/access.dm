@@ -426,7 +426,6 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of all engineering regional accesses that are overseen by the CE.
 #define REGION_ACCESS_ENGINEERING list( \
 	ACCESS_CONSTRUCTION, \
-	ACCESS_AUX_BASE, \
 	ACCESS_MAINT_TUNNELS, \
 	ACCESS_ENGINEERING, \
 	ACCESS_ENGINE_EQUIP, \
@@ -442,6 +441,7 @@
 #define REGION_SUPPLY "Supply"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
 #define REGION_ACCESS_SUPPLY list( \
+	ACCESS_AUX_BASE, \
 	ACCESS_MAIL_SORTING, \
 	ACCESS_MINING, \
 	ACCESS_MINING_STATION, \

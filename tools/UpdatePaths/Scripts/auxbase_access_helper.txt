@@ -1,0 +1,2 @@
+/obj/effect/mapping_helpers/airlock/access/any/engineering/aux_base : /obj/effect/mapping_helpers/airlock/access/any/supply/aux_base
+/obj/effect/mapping_helpers/airlock/access/all/engineering/aux_base : /obj/effect/mapping_helpers/airlock/access/all/supply/aux_base

@@ -19367,7 +19367,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/any/supply/aux_base,
 /turf/open/floor/iron/dark,
 /area/station/construction/mining/aux_base)
 "fyD" = (
@@ -33027,6 +33027,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/supply/aux_base,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/fore)
 "jcs" = (
@@ -37654,6 +37655,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/supply/aux_base,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/fore)
 "kzY" = (
@@ -53282,6 +53284,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/supply/aux_base,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/fore)
 "oXK" = (
@@ -55307,7 +55310,7 @@
 /obj/machinery/door/airlock/mining{
 	name = "Auxiliary Base"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/any/supply/aux_base,
 /turf/open/floor/iron/dark,
 /area/station/construction/mining/aux_base)
 "pBR" = (
