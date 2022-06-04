@@ -239,3 +239,5 @@
 	var/typing_indicator = FALSE
 	/// Thinking indicator - mob has input window open
 	var/thinking_indicator = FALSE
+	/// typing or thinking - mob is typing into an input or has input window open
+	var/typing_thinking_indicator = FALSE

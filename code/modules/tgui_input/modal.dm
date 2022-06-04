@@ -46,6 +46,12 @@
 	window.send_message("channel", list(
 			channel = channel,
 		))
+	if(client?.mob.typing_thinking_indicator)
+		if(client?.typing_indicators)
+			log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators enabled.")
+		else
+			log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators DISABLED.")
+		client?.mob.typing_thinking_indicator = FALSE
 	closed = FALSE
 
 /**
@@ -55,6 +61,12 @@
 	winset(client, "tgui_modal", "is-visible=false")
 	closed = TRUE
 	if(client?.mob)
+		if(client?.mob.typing_thinking_indicator)
+			if(client?.typing_indicators)
+				log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client?.mob)], indicators enabled.")
+			else
+				log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client?.mob)], indicators DISABLED.")
+			client?.mob.typing_thinking_indicator = FALSE
 		client.mob.cancel_thinking()
 
 /**
