@@ -375,12 +375,11 @@
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/anomaly_locked/kinesis/plus,
 	)
+/obj/item/mod/control/pre_equipped/ntuplinkagent_empty
+	theme = /datum/mod_theme/ntagent
 
+INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/ntuplinkagent_empty)
 //these exist for the prefs menu
-/obj/item/mod/control/pre_equipped/empty/ninja
-	theme = /datum/mod_theme/ninja
-
-INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/empty)
 /obj/item/mod/control/pre_equipped/syndicate_empty
 	theme = /datum/mod_theme/syndicate
 
@@ -391,8 +390,3 @@ INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/empty)
 	theme = /datum/mod_theme/elite
 
 INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/syndicate_empty)
-
-/obj/item/mod/control/pre_equipped/ntuplinkagent_empty
-	theme = /datum/mod_theme/ntagent
-
-INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/ntuplinkagent_empty)
