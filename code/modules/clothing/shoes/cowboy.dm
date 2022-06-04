@@ -9,6 +9,10 @@
 	var/max_occupants = 4
 	can_be_tied = FALSE
 
+/obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
+	. = ..()
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
+
 /obj/item/clothing/shoes/cowboy/dropped(mob/living/user)
 	. = ..()
 	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
