@@ -1036,24 +1036,17 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				if("South")
 					movement_keys[key] = SOUTH
 				if(SAY_CHAN)
-					var/say = create_window_message(SAY_CHAN)
+					var/say = tgui_modal_create_open_command(SAY_CHAN)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[say]")
 				if(RADIO_CHAN)
-					var/radio = create_window_message(RADIO_CHAN)
+					var/radio = tgui_modal_create_open_command(RADIO_CHAN)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[radio]")
 				if(ME_CHAN)
-					var/me = create_window_message(ME_CHAN)
+					var/me = tgui_modal_create_open_command(ME_CHAN)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[me]")
 				if(OOC_CHAN)
-					var/ooc = create_window_message(OOC_CHAN)
+					var/ooc = tgui_modal_create_open_command(OOC_CHAN)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[ooc]")
-
-/** Creates a JSON encoded message to open TGUI modals properly */
-/client/proc/create_window_message(channel)
-	var/message = TGUI_CREATE_MESSAGE("open", list(
-		channel = channel,
-	))
-	return "\".output tgui_modal.browser:update [message]\""
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

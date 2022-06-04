@@ -123,13 +123,15 @@ export class TguiModal extends Component {
    * TYPING - When users key, it tells byond that it's typing.
    */
   handleKeyDown = (event, value) => {
+    const { channel } = this.state;
     if (!event.keyCode) {
       return; // Really doubt it, but...
     }
-    // Consider that this does not differentiate channels. If users
-    // don't wish to have their typing indicators seen they can use
-    // the default input box or turn off in prefs.
-    if (isAlphanumeric(event.keyCode)) {
+    // This gives only some degree of deniability to emotes and ooc.
+    // I don't want to add server side channel switching support to
+    // turn off chat bubbles because that is entire gameable:
+    // type whole message in ooc -> switch channels -> enter
+    if (isAlphanumeric(event.keyCode) && channel < 2) {
       Byond.sendMessage('typing');
     }
     if (event.keyCode === KEY_UP || event.keyCode === KEY_DOWN) {

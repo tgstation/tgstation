@@ -47,10 +47,12 @@
  * required src_object datum The object or datum which owns the UI.
  * required interface string The interface used to render the UI.
  * optional title string The title of the UI.
+ * optional ui_x int Deprecated: Window width.
+ * optional ui_y int Deprecated: Window height.
  *
  * return datum/tgui The requested UI.
  */
-/datum/tgui/New(mob/user, datum/src_object, interface, title)
+/datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
 	log_tgui(user,
 		"new [interface] fancy [user?.client?.prefs.read_preference(/datum/preference/toggle/tgui_fancy)]",
 		src_object = src_object)
@@ -61,6 +63,9 @@
 	if(title)
 		src.title = title
 	src.state = src_object.ui_state(user)
+	// Deprecated
+	if(ui_x && ui_y)
+		src.window_size = list(ui_x, ui_y)
 
 /datum/tgui/Destroy()
 	user = null

@@ -72,6 +72,25 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 	remove_typing_indicator()
 	create_thinking_indicator()
 
+/**
+ * Handles the user typing. After a brief period of inactivity,
+ * signals the client mob to revert to the "thinking" icon.
+ */
+/datum/tgui_modal/proc/init_typing()
+	addtimer(CALLBACK(src, .proc/stop_typing), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+	if(client.mob)
+		client.mob.start_typing()
+
+/** Signals the mob to return to "thinking" state */
+/datum/tgui_modal/proc/stop_typing()
+	if(!client?.mob)
+		stack_trace(("[usr] has no client or mob but was typing?"))
+		return FALSE
+	if(window_open)
+		client.mob.cancel_typing()
+	else
+		client.mob.cancel_thinking()
+
 ///Human Thinking Indicators///
 /mob/living/create_thinking_indicator()
 	if(!client || !client.typing_indicators) // If they've got typing indicators shut off, don't show the thinking indicator
