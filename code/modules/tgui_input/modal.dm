@@ -53,7 +53,6 @@
 			log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators DISABLED.")
 		client?.mob.typing_thinking_indicator = FALSE
 
-
 /**
  * Closes the window and hides it from view.
  */
