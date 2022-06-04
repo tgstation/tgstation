@@ -25,7 +25,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 /mob/Logout()
 	remove_typing_indicator()
 	remove_thinking_indicator()
-	. = ..()
+	return ..()
 
 ////Typing verbs////
 //Those are used to show the typing indicator for the player without waiting on the client.
@@ -47,28 +47,28 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 /// Shows the thinking indicator - player has window open
 /mob/verb/start_thinking(channel as text)
 	set name = ".start_thinking"
-	set hidden = 1
+	set hidden = TRUE
 	client?.tgui_modal?.open(channel)
 	create_thinking_indicator()
 
 /// Hides all typing/thinking indicators
 /mob/verb/cancel_thinking()
 	set name = ".cancel_thinking"
-	set hidden = 1
+	set hidden = TRUE
 	remove_thinking_indicator()
 	remove_typing_indicator()
 
 /// Show the typing indicator - player is typing into the window
 /mob/verb/start_typing()
 	set name = ".start_typing"
-	set hidden = 1
+	set hidden = TRUE
 	remove_thinking_indicator()
 	create_typing_indicator()
 
 /// Hide the typing indicator.
 /mob/verb/cancel_typing()
 	set name = ".cancel_typing"
-	set hidden = 1
+	set hidden = TRUE
 	remove_typing_indicator()
 	create_thinking_indicator()
 

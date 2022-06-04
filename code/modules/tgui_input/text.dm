@@ -85,7 +85,7 @@
 
 /datum/tgui_input_text/Destroy(force, ...)
 	SStgui.close_uis(src)
-	. = ..()
+	return ..()
 
 /**
  * Waits for a user's response to the tgui_input_text's prompt before returning. Returns early if
