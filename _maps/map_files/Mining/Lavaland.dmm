@@ -2693,14 +2693,20 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -10;
+	pixel_x = 8;
 	pixel_y = 14
 	},
 /obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = -1;
-	pixel_y = 16
+	pixel_x = 10;
+	pixel_y = 11
+	},
+/obj/item/book/manual/chef_recipes{
+	pixel_x = -4
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_x = -4;
+	pixel_y = 7
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
@@ -4487,8 +4493,12 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/table,
-/obj/item/book/manual/chef_recipes{
-	pixel_x = -4
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/storage/bag/tray/cafeteria{
+	pixel_y = 2
+	},
+/obj/item/storage/bag/tray/cafeteria{
+	pixel_y = 4
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
@@ -5871,6 +5881,10 @@
 /obj/item/mining_scanner,
 /obj/item/flashlight,
 /obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/flashlight,
+/obj/item/pickaxe,
+/obj/item/mining_scanner,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Pv" = (
@@ -6031,7 +6045,7 @@
 "Qy" = (
 /obj/effect/spawner/random/contraband/permabrig_gear,
 /obj/machinery/atmospherics/components/tank/air{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/commons)
