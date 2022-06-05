@@ -466,3 +466,6 @@ MAXFINE 2000
 
 ## Whether native FoV is enabled for all people.
 #NATIVE_FOV
+
+## Whether circuit sounds are allowed to be played or not.
+#DISALLOW_CIRCUIT_SOUNDS
