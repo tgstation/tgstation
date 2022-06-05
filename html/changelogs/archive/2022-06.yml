@@ -133,3 +133,16 @@
   vincentiusvin:
   - qol: breathedeep makes a return in the atmozphere tablet app. Right click to scan
       things, right self click (on the tablet) to scan current turf.
+2022-06-05:
+  Son-of-Space:
+  - bugfix: A severe lack of plating under a window in the DeltaStation rec room was
+      remedied
+  dragomagol:
+  - admin: cyborg wire pulses/cuts are now logged in silicon.log
+  - admin: AIs being carded is now logged in silicon.log
+  - admin: giving an AI a combat module is now logged in silicon.log
+  - admin: trying to upload over the maximum number of laws is now logged in silicon.log
+  - admin: ion storm law changes are now logged in silicon.log
+  - admin: changing settings on a borg shell is now logged in silicon.log
+  robbertapir:
+  - bugfix: held memorizers are now visible
