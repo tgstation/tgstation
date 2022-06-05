@@ -50,9 +50,12 @@ export class TguiModal extends Component {
   };
   /** Ensures backspace and delete reset size and history */
   handleBkspDelete = (value) => {
-    const { channel } = this.state;
+    const { buttonContent, channel } = this.state;
     this.historyCounter = 0;
-    this.setState({ buttonContent: CHANNELS[channel]?.slice(0, 3) });
+    // User is on a chat history message
+    if (typeof buttonContent === 'number') {
+      this.setState({ buttonContent: CHANNELS[channel]?.slice(0, 3) });
+    }
     this.setSize(value.length);
   };
   /**
@@ -179,10 +182,10 @@ export class TguiModal extends Component {
   /**  Adjusts window sized based on event.target.value */
   setSize = (value) => {
     const { size } = this.state;
-    if (value > 53 && size !== SIZE.large) {
+    if (value > 51 && size !== SIZE.large) {
       this.setState({ size: SIZE.large });
       windowSet(SIZE.large);
-    } else if (value <= 53 && value > 22 && size !== SIZE.medium) {
+    } else if (value <= 51 && value > 22 && size !== SIZE.medium) {
       this.setState({ size: SIZE.medium });
       windowSet(SIZE.medium);
     } else if (value <= 22 && size !== SIZE.small) {

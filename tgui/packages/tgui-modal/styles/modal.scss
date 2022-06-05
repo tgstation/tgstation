@@ -42,7 +42,7 @@ $color-ooc-highlight: #ffd631;
   font-family: 'Consolas', monospace;
   margin: 0 auto;
   max-width: 231px;
-  padding: 0.3rem 0 0.4rem 0.2rem;
+  padding: 0.2rem 0 0.4rem 0.2rem;
   position: relative;
   width: 100%;
 }
@@ -169,9 +169,10 @@ $color-ooc-highlight: #ffd631;
   font-family: inherit;
   font-weight: bold;
   font-size: 0.9rem;
+  margin-top: 1px;
   text-align: center;
   vertical-align: middle;
-  width: 3.4rem;
+  width: 3.5rem;
 
   &:hover {
     background-color: $button-hover;
