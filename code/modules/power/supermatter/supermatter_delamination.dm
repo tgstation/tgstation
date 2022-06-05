@@ -175,6 +175,9 @@
 	SSshuttle.emergency.setTimer(INFINITY)
 	SSshuttle.emergency_no_recall = TRUE
 	SSshuttle.supermatter_cascade = TRUE
+	if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
+		SSshuttle.emergency.mode = SHUTTLE_STRANDED
+		SSshuttle.registerHostileEnvironment(src)
 
 	for(var/mob/player as anything in GLOB.player_list)
 		if(!isobserver(player))
@@ -227,7 +230,7 @@
 	priority_announce("A Type-C resonance shift event has occurred in your sector. Scans indicate local oscillation flux affecting spatial and gravitational substructure. \
 		Multiple resonance hotspots have formed. Please standby.", "Nanotrasen Star Observation Association", ANNOUNCER_SPANOMALIES)
 
-	if(SSshuttle.emergency.mode != SHUTTLE_IDLE)
+	if(SSshuttle.emergency.mode != SHUTTLE_STRANDED)
 		addtimer(CALLBACK(src, .proc/announce_shuttle_gone), 2 SECONDS)
 
 	addtimer(CALLBACK(src, .proc/announce_beginning), 5 SECONDS)
@@ -266,7 +269,7 @@
 		var/list/mobs = mobs_in_area_type(shuttle_areas)
 		for(var/mob/living/mob as anything in mobs)
 			if(mob.client)
-				shake_camera(mob, 2 SECONDS, 2)
+				shake_camera(mob, 3 SECONDS * 0.25, 1) // properly emulate lateShuttleMove() behaviour
 			mob.Paralyze(3 SECONDS, TRUE)
 
 /**s
@@ -277,7 +280,7 @@
 		To the remaining survivors of [station_name()], farewell.", FALSE, 5)]")
 
 	if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
-		minor_announce("Navigation route set to backup route. Reorienting bluespace vessel to exit vector. ETA 15 seconds.",
+		minor_announce("Navigation protocol set to backup route. Reorienting bluespace vessel to exit vector. ETA 15 seconds.",
 			"Emergency Shuttle", TRUE)
 		SSshuttle.emergency.setTimer(15 SECONDS)
 		SSticker.news_report = SUPERMATTER_CASCADE
