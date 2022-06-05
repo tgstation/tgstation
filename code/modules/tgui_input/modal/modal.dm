@@ -1,3 +1,5 @@
+#define NULL_CLIENTMOB "Tgui modal loaded on a null client/mob"
+
 /**
  * The tgui speech modal. This initializes an input window which hides until
  * the user presses one of the speech hotkeys. Once an entry is set, it will
@@ -40,7 +42,14 @@
 			inline_js = file("tgui/public/tgui-modal.bundle.js"),
 	);
 
-/** Creates a JSON encoded message to open TGUI modals properly */
+/**
+ * Creates a JSON encoded message to open TGUI modals properly.
+ *
+ * Arguments:
+ * channel - The channel to open the modal in.
+ * Returns:
+ * string - A JSON encoded message to open the modal.
+ */
 /client/proc/tgui_modal_create_open_command(channel)
 	var/message = TGUI_CREATE_MESSAGE("open", list(
 		channel = channel,
@@ -48,28 +57,46 @@
 	return "\".output tgui_modal.browser:update [message]\""
 
 /**
+ * Ensures nothing funny is going on window load.
+ * Minimizes the winddow, sets max length, closes all
+ * typing and thinking indicators.
+ */
+/datum/tgui_modal/proc/load()
+	if(!client?.mob)
+		CRASH(NULL_CLIENTMOB)
+	window_open = FALSE
+	winset(client, "tgui_modal", "is-visible=false")
+	/// Sanity check in case the server ever changes MAX_LEN_MESSAGE
+	window.send_message("maxLength", list(
+		maxLength = max_length,
+	))
+	client?.mob?.cancel_thinking()
+	return TRUE
+
+/**
  * Sets the window as "opened" server side, though it is already
  * visible to the user. We do this to set local vars &&
  * start typing (if enabled). Logs the event.
  */
 /datum/tgui_modal/proc/open()
-	window_open = TRUE
 	if(!client?.mob)
-		return
+		CRASH(NULL_CLIENTMOB)
+	window_open = TRUE
 	client?.mob.start_thinking()
 	if(client?.typing_indicators)
 		log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators enabled.")
 	else
 		log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators DISABLED.")
+	return TRUE
 
 /**
  * Closes the window serverside. Closes any open chat bubbles
  * regardless of preference. Logs the event.
  */
 /datum/tgui_modal/proc/close()
-	window_open = FALSE
 	if(!client?.mob)
-		return
+		CRASH(NULL_CLIENTMOB)
+	window_open = FALSE
 	client?.mob.cancel_thinking()
 	if(client?.typing_indicators)
 		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client?.mob)], indicators enabled.")
@@ -82,10 +109,7 @@
  */
 /datum/tgui_modal/proc/on_message(type, payload)
 	if(type == "ready")
-		/// Sanity check in case the server ever changes MAX_LEN_MESSAGE
-		window.send_message("maxLength", list(
-			maxLength = max_length,
-		))
+		load()
 		return TRUE
 	if (type == "open")
 		open()
@@ -97,18 +121,8 @@
 		init_typing()
 		return TRUE
 	if (type == "entry" || type == "force")
-		if(!payload || !payload["channel"] || !payload["entry"])
-			return FALSE
-		if(length(payload["entry"]) > max_length)
-			CRASH("[usr] has entered more characters than allowed")
-		if(type == "entry")
-			delegate_speech(payload["entry"], payload["channel"])
-		if(type == "force")
-			var/target_chan = payload["channel"]
-			if(target_chan == ME_CHAN || target_chan == OOC_CHAN)
-				target_chan = SAY_CHAN // No ooc leaks
-			delegate_speech(alter_entry(payload), target_chan)
+		handle_entry(type, payload)
 		return TRUE
-	return TRUE
+	return FALSE
 
-
+#undef NULL_CLIENTMOB

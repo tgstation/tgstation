@@ -78,6 +78,32 @@
 	else
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators DISABLED.")
 
+
+/**
+ * Handles text entry and forced speech.
+ *
+ * Arguments:
+ *  type - a string "entry" or "force" based on how this function is called
+ *  payload - a string list containing entry & channel
+ * Returns:
+ *  boolean - success or failure
+ */
+/datum/tgui_modal/proc/handle_entry(type, payload)
+	if(!payload || !payload["channel"] || !payload["entry"])
+		return FALSE
+	if(length(payload["entry"]) > max_length)
+		CRASH("[usr] has entered more characters than allowed into a tgui modal")
+	if(type == "entry")
+		delegate_speech(payload["entry"], payload["channel"])
+		return TRUE
+	if(type == "force")
+		var/target_chan = payload["channel"]
+		if(target_chan == ME_CHAN || target_chan == OOC_CHAN)
+			target_chan = SAY_CHAN // No ooc leaks
+		delegate_speech(alter_entry(payload), target_chan)
+		return TRUE
+	return FALSE
+
 /**
  * Sanitizes text from radio and emote prefixes
  *
