@@ -54,7 +54,7 @@ export class TguiModal extends Component {
     this.historyCounter = 0;
     // User is on a chat history message
     if (typeof buttonContent === 'number') {
-      this.setState({ buttonContent: CHANNELS[channel]?.slice(0, 3) });
+      this.setState({ buttonContent: CHANNELS[channel] });
     }
     this.setSize(value.length);
   };
@@ -154,7 +154,7 @@ export class TguiModal extends Component {
       });
     } else {
       this.setState({
-        buttonContent: CHANNELS[channel + 1]?.slice(0, 3),
+        buttonContent: CHANNELS[channel + 1],
         channel: channel + 1,
       });
     }
@@ -170,7 +170,7 @@ export class TguiModal extends Component {
     this.historyCounter = 0;
     this.value = '';
     this.setState({
-      buttonContent: chan ? CHANNELS[channel]?.slice(0, 3) : null,
+      buttonContent: chan ? CHANNELS[channel] : null,
       channel: chan ? channel : -1,
       edited: true,
       size: SIZE.small,
@@ -207,7 +207,7 @@ export class TguiModal extends Component {
     } else {
       this.value = '';
       this.setState({
-        buttonContent: CHANNELS[channel]?.slice(0, 3),
+        buttonContent: CHANNELS[channel],
         edited: true,
       });
     }
