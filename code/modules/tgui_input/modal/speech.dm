@@ -71,6 +71,7 @@
 	if(!client || !mind || !client.tgui_modal)
 		return FALSE
 	client.tgui_modal.force_say()
+	client.mob.cancel_typing()
 	client.mob.typing_indicator = FALSE
 	if(client?.typing_indicators)
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators enabled.")

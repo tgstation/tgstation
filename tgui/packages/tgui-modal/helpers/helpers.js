@@ -95,3 +95,30 @@ export const getCss = (element, channel, size) =>
 
 /** Checks keycodes for alpha/numeric characters */
 export const isAlphanumeric = (keyCode) => keyCode >= KEY_0 && keyCode <= KEY_Z;
+
+/**
+ * Wraps a byond message in a cooldown.
+ *
+ * Parameters:
+ *  message - The message to send.
+ *  timeout - The cooldown in seconds.
+ */
+export class CooldownWrapper {
+  constructor(message, timeout) {
+    this.message = message;
+    this.onCooldown = false;
+    this.timeout = timeout;
+  }
+  setTimer = () => {
+    this.onCooldown = true;
+    setTimeout(() => {
+      this.onCooldown = false;
+    }, this.timeout);
+  };
+  sendMessage = () => {
+    if (!this.onCooldown) {
+      Byond.sendMessage(this.message);
+      this.setTimer();
+    }
+  };
+}

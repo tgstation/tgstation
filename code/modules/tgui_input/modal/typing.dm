@@ -77,7 +77,7 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
  * signals the client mob to revert to the "thinking" icon.
  */
 /datum/tgui_modal/proc/init_typing()
-	addtimer(CALLBACK(src, .proc/stop_typing), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, .proc/stop_typing), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
 	if(client.mob)
 		client.mob.start_typing()
 

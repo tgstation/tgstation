@@ -9,6 +9,7 @@ import {
   KEY_UP,
 } from 'common/keycodes';
 import {
+  CooldownWrapper,
   getCss,
   getHistoryAt,
   getHistoryLength,
@@ -27,6 +28,7 @@ export class TguiModal extends Component {
     this.historyCounter = 0;
     this.innerRef = null;
     this.maxLength = 1024;
+    this.typingCooldown = null;
     this.value = '';
     this.state = {
       buttonContent: null,
@@ -121,16 +123,7 @@ export class TguiModal extends Component {
     // turn off chat bubbles because that is entire gameable:
     // type whole message in ooc -> switch channels -> enter
     if (isAlphanumeric(event.keyCode) && channel < 2) {
-      let delay = function (s) {
-        return new Promise((resolve, _) => {
-          setTimeout(resolve, s);
-        });
-      };
-      delay()
-        .then(() => {
-          return delay(3000); // delay 3 sec
-        })
-        .then(Byond.sendMessage('typing'));
+      this.typingCooldown?.sendMessage();
     }
     if (event.keyCode === KEY_UP || event.keyCode === KEY_DOWN) {
       if (getHistoryLength()) {
@@ -186,13 +179,13 @@ export class TguiModal extends Component {
   /**  Adjusts window sized based on event.target.value */
   setSize = (value) => {
     const { size } = this.state;
-    if (value > 51 && size !== SIZE.large) {
+    if (value > 50 && size !== SIZE.large) {
       this.setState({ size: SIZE.large });
       windowSet(SIZE.large);
-    } else if (value <= 51 && value > 21 && size !== SIZE.medium) {
+    } else if (value <= 50 && value > 20 && size !== SIZE.medium) {
       this.setState({ size: SIZE.medium });
       windowSet(SIZE.medium);
-    } else if (value <= 21 && size !== SIZE.small) {
+    } else if (value <= 20 && size !== SIZE.small) {
       this.setState({ size: SIZE.small });
       windowSet(SIZE.small);
     }
@@ -232,6 +225,7 @@ export class TguiModal extends Component {
       windowOpen();
     });
     windowLoad();
+    this.typingCooldown = new CooldownWrapper('typing', 6000);
   }
   /** After updating the input value, sets back to false */
   componentDidUpdate() {
