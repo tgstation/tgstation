@@ -136,6 +136,13 @@
 /obj/item/gun/ballistic/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_ballistic)
 
+/obj/item/gun/ballistic/fire_sounds()
+	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo())
+	if(suppressed)
+		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = frequency_to_use)
+	else
+		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use)
+
 /**
  *
  * Outputs type-specific weapon stats for ballistic weaponry based on its magazine and its caliber.

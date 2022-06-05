@@ -34,6 +34,18 @@
 	///set to true so the gun is given an empty cell
 	var/dead_cell = FALSE
 
+/obj/item/gun/energy/fire_sounds()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/shot_cost_percent = FLOOR(clamp(shot.e_cost / cell.maxcharge, 0, 1) * 100, 1)
+	var/batt_percent = FLOOR(clamp(cell.charge / cell.maxcharge, 0, 1) * 100, 1)
+	var/max_shots = round(100/shot_cost_percent)
+	var/shots_left = round(batt_percent/shot_cost_percent)
+	var/frequency_to_use = sin((90/max_shots) * shots_left)
+	if(suppressed)
+		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = frequency_to_use)
+	else
+		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use)
+
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
 	if(!(. & EMP_PROTECT_CONTENTS))
