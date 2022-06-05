@@ -32,7 +32,7 @@
 /datum/tgui_modal/proc/initialize()
 	set waitfor = FALSE
 	// Sleep to defer initialization to after client constructor
-	sleep(5 SECONDS)
+	sleep(3 SECONDS)
 	window.initialize(
 			strict_mode = TRUE,
 			fancy = TRUE,

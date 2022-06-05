@@ -42,7 +42,7 @@ $color-ooc-highlight: #ffd631;
   font-family: 'Consolas', monospace;
   margin: 0 auto;
   max-width: 231px;
-  padding: 0.3rem 0 0.4rem 0.3rem;
+  padding: 0.3rem 0 0.4rem 0.2rem;
   position: relative;
   width: 100%;
 }
@@ -62,6 +62,7 @@ $color-ooc-highlight: #ffd631;
 .window-say {
   border-left: 2px solid $color-say-border;
   border-right: 2px solid $color-say-border;
+  border-top: 2px solid $color-say-border;
 
   &:after {
     animation: gradient 10s linear infinite;
@@ -86,6 +87,7 @@ $color-ooc-highlight: #ffd631;
 .window-radio {
   border-left: 2px solid $color-radio-border;
   border-right: 2px solid $color-radio-border;
+  border-top: 2px solid $color-radio-border;
 
   &:after {
     animation: gradient 10s linear infinite;
@@ -110,6 +112,7 @@ $color-ooc-highlight: #ffd631;
 .window-me {
   border-left: 2px solid $color-me-border;
   border-right: 2px solid $color-me-border;
+  border-top: 2px solid $color-me-border;
 
   &:after {
     animation: gradient 10s linear infinite;
@@ -134,6 +137,7 @@ $color-ooc-highlight: #ffd631;
 .window-ooc {
   border-left: 2px solid $color-ooc-border;
   border-right: 2px solid $color-ooc-border;
+  border-top: 2px solid $color-ooc-border;
 
   &:after {
     animation: gradient 10s linear infinite;
@@ -160,13 +164,14 @@ $color-ooc-highlight: #ffd631;
 .button {
   background-color: $button;
   border: thin solid $button-hover;
-  border-radius: 6px;
+  border-radius: 2px;
   color: $window-background;
   font-family: inherit;
   font-weight: bold;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  text-align: center;
   vertical-align: middle;
-  width: 3.2rem;
+  width: 3.4rem;
 
   &:hover {
     background-color: $button-hover;
@@ -175,6 +180,7 @@ $color-ooc-highlight: #ffd631;
 
 .button-say {
   color: $color-say;
+  border-color: $color-say-border;
 
   &:hover {
     border-color: $color-say-highlight;
@@ -184,6 +190,7 @@ $color-ooc-highlight: #ffd631;
 
 .button-radio {
   color: $color-radio;
+  border-color: $color-radio-border;
 
   &:hover {
     border-color: $color-radio-highlight;
@@ -193,6 +200,7 @@ $color-ooc-highlight: #ffd631;
 
 .button-me {
   color: $color-me;
+  border-color: $color-me-border;
 
   &:hover {
     border-color: $color-me-highlight;
@@ -202,6 +210,7 @@ $color-ooc-highlight: #ffd631;
 
 .button-ooc {
   color: $color-ooc;
+  border-color: $color-ooc-border;
 
   &:hover {
     border-color: $color-ooc-highlight;

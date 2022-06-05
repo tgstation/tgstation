@@ -87,14 +87,11 @@ export class TguiModal extends Component {
   handleForce = () => {
     const { channel, size } = this.state;
     const { value } = this;
-    if (!value) {
-      return;
-    }
-    Byond.sendMessage('force', {
-      channel: CHANNELS[channel],
-      entry: channel < 2 ? value : ' ',
-    });
-    if (channel < 2) {
+    if (value && channel < 2) {
+      Byond.sendMessage('force', {
+        channel: CHANNELS[channel],
+        entry: value,
+      });
       this.reset(channel);
       if (size !== SIZE.small) {
         windowSet();
