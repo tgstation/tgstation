@@ -123,6 +123,8 @@
 	var/accepts_rig = TRUE
 	//overlay of attached assemblies
 	var/mutable_appearance/assembliesoverlay
+	/// The last person to rig this fuel tank - Stored with the object. Only the last person matters for investigation
+	var/lastrigger = ""
 
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
@@ -147,12 +149,17 @@
 	user.visible_message(span_notice("[user] detaches [rig] from [src]."), span_notice("You detach [rig] from [src]."))
 	rig.forceMove(get_turf(user))
 	rig = null
+	lastrigger = null
 	cut_overlays(assembliesoverlay)
 	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
 	qdel(src)
+
+/obj/structure/reagent_dispensers/fueltank/proc/rig_boom()
+	log_bomber(lastrigger, "rigged fuel tank exploded", src)
+	boom()
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
 	boom()
@@ -206,11 +213,13 @@
 				rig = holder
 				if(!user.transferItemToLoc(holder, src))
 					return
+				log_bomber(user, "rigged [name] with [holder.name] for explosion", src)
+				lastrigger = user
 				assembliesoverlay = holder
 				assembliesoverlay.pixel_x += 6
 				assembliesoverlay.pixel_y += 1
 				add_overlay(assembliesoverlay)
-				RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/boom)
+				RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/rig_boom)
 		return
 	return ..()
 
