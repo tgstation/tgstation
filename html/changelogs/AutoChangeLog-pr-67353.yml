@@ -1,0 +1,4 @@
+author: "kugamo"
+delete-after: True
+changes: 
+  - bugfix: "fixed parallax blue stars showing through parallax asteroids."
