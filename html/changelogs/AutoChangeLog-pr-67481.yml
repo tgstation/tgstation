@@ -1,0 +1,4 @@
+author: "magatsuchi"
+delete-after: True
+changes: 
+  - code_imp: "replaces some slot names with proper names"
