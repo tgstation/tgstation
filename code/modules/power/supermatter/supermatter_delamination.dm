@@ -189,14 +189,13 @@
 	new /obj/crystal_mass(supermatter_turf)
 
 	var/list/mass_loc_candidates = GLOB.generic_event_spawns
-	mass_loc_candidates.Remove(rift_loc) // this should get rid of stalemates
+	mass_loc_candidates.Remove(rift_loc) // this should now actually get rid of stalemates
 	for(var/i in 1 to rand(4,6))
 		var/mass_loc
 		do
-			mass_loc = pick(mass_loc_candidates)
+			mass_loc = pick_n_take(mass_loc_candidates)
 		while(get_dist(mass_loc, rift_loc) < MIN_RIFT_SAFE_DIST)
 		new /obj/crystal_mass(get_turf(mass_loc))
-		mass_loc_candidates -= mass_loc
 
 /**
  * Adds a bit of spiciness to the cascade by breaking lights and turning emergency maint access on
@@ -209,15 +208,17 @@
 
 /**
  * Picks a random location for the rift
+ * Returns: ref to eve
  */
 /datum/supermatter_delamination/proc/pick_rift_location()
-	var/turf/rift_location = get_turf(pick(GLOB.generic_event_spawns))
-	cascade_rift = new /obj/cascade_portal(rift_location)
-	message_admins("Exit rift created at [get_area_name(rift_location)]. [ADMIN_JMP(cascade_rift)]")
-	log_game("Bluespace Exit Rift was created at [get_area_name(rift_location)].")
-	cascade_rift.investigate_log("created at [get_area_name(rift_location)].", INVESTIGATE_ENGINE)
+	var/rift_spawn = pick(GLOB.generic_event_spawns)
+	var/turf/rift_turf = get_turf(rift_spawn)
+	cascade_rift = new /obj/cascade_portal(rift_turf)
+	message_admins("Exit rift created at [get_area_name(rift_turf)]. [ADMIN_JMP(cascade_rift)]")
+	log_game("Bluespace Exit Rift was created at [get_area_name(rift_turf)].")
+	cascade_rift.investigate_log("created at [get_area_name(rift_turf)].", INVESTIGATE_ENGINE)
 	RegisterSignal(cascade_rift, COMSIG_PARENT_QDELETING, .proc/deleted_portal)
-	return rift_location
+	return rift_spawn
 
 /**
  * Warns the crew about the cascade start and the rift location
@@ -248,7 +249,7 @@
 /datum/supermatter_delamination/proc/announce_gravitation_shift()
 	priority_announce("Reports indicate formation of crystalline seeds following resonance shift event. \
 		Rapid expansion of crystal mass proportional to rising gravitational force. \
-		Matter collapse and subsequent formation of stellar object due to gravitational pull likely.",
+		Matter collapse due to gravitational pull likely.",
 		"Nanotrasen Star Observation Association")
 
 /datum/supermatter_delamination/proc/announce_shuttle_gone()
