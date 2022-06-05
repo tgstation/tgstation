@@ -26628,11 +26628,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7";
-	luminosity = 2;
-	temperature = 2.7
-	},
+/turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "hmx" = (
 /obj/docking_port/stationary/random{
@@ -43033,11 +43029,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7";
-	luminosity = 2;
-	temperature = 2.7
-	},
+/turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "lIu" = (
 /obj/structure/table/reinforced,
