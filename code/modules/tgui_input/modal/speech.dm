@@ -12,8 +12,8 @@
 	/// No OOC leaks
 	if(payload["channel"] == OOC_CHAN || payload["channel"] == ME_CHAN)
 		return pick(hurt_phrases)
-	/// Sanitizes radio prefixes so users can't game the system (mostly)
-	entry = remove_prefixes(entry)
+	// /// Sanitizes radio prefixes so users can't game the system (mostly)
+	// entry = remove_prefixes(entry)
 	if(!entry)
 		return pick(hurt_phrases)
 	/// Random trimming for larger sentences

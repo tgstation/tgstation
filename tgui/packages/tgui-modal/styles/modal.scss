@@ -41,22 +41,22 @@ $color-ooc-highlight: #ffd631;
   flex-direction: row;
   font-family: 'Consolas', monospace;
   margin: 0 auto;
-  max-width: 280px;
-  padding: 0.4rem 0 0.4rem 0.4rem;
+  max-width: 231px;
+  padding: 0.3rem 0 0.4rem 0.3rem;
   position: relative;
   width: 100%;
 }
 
-.window-40 {
-  height: 40px;
+.window-30 {
+  height: 30px;
 }
 
-.window-64 {
-  height: 64px;
+.window-50 {
+  height: 50px;
 }
 
-.window-88 {
-  height: 88px;
+.window-70 {
+  height: 70px;
 }
 
 .window-say {
@@ -164,12 +164,9 @@ $color-ooc-highlight: #ffd631;
   color: $window-background;
   font-family: inherit;
   font-weight: bold;
-  font-size: 1.8rem;
-  height: 28px;
-  margin-right: 0.1rem;
-  text-align: center;
+  font-size: 0.8rem;
   vertical-align: middle;
-  width: 35px;
+  width: 3.2rem;
 
   &:hover {
     background-color: $button-hover;
@@ -218,9 +215,8 @@ $color-ooc-highlight: #ffd631;
   background-color: transparent;
   border: none;
   color: $window-background;
-  font-family: inherit;
-  font-size: 1.4rem;
-  letter-spacing: 2px;
+  font-family: "Lucida Console", monospace;
+  font-size: 1rem;
   margin-top: 0.2rem;
   width: 100%;
 }

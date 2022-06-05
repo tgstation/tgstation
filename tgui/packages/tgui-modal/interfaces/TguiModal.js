@@ -52,7 +52,7 @@ export class TguiModal extends Component {
   handleBkspDelete = (value) => {
     const { channel } = this.state;
     this.historyCounter = 0;
-    this.setState({ buttonContent: CHANNELS[channel].slice(0, 1) });
+    this.setState({ buttonContent: CHANNELS[channel]?.slice(0, 3) });
     this.setSize(value.length);
   };
   /**
@@ -87,7 +87,7 @@ export class TguiModal extends Component {
   handleForce = () => {
     const { channel, size } = this.state;
     const { value } = this;
-    if (value) {
+    if (value && channel < 2) {
       Byond.sendMessage('force', {
         channel: CHANNELS[channel],
         entry: value,
@@ -146,12 +146,12 @@ export class TguiModal extends Component {
     const { channel } = this.state;
     if (channel === CHANNELS.length - 1) {
       this.setState({
-        buttonContent: CHANNELS[0].slice(0, 1),
+        buttonContent: CHANNELS[0],
         channel: 0,
       });
     } else {
       this.setState({
-        buttonContent: CHANNELS[channel + 1]?.slice(0, 1),
+        buttonContent: CHANNELS[channel + 1]?.slice(0, 3),
         channel: channel + 1,
       });
     }
@@ -167,7 +167,7 @@ export class TguiModal extends Component {
     this.historyCounter = 0;
     this.value = '';
     this.setState({
-      buttonContent: chan ? CHANNELS[channel]?.slice(0, 1) : null,
+      buttonContent: chan ? CHANNELS[channel]?.slice(0, 3) : null,
       channel: chan ? channel : -1,
       edited: true,
       size: SIZE.small,
@@ -179,13 +179,13 @@ export class TguiModal extends Component {
   /**  Adjusts window sized based on event.target.value */
   setSize = (value) => {
     const { size } = this.state;
-    if (value > 50 && size !== SIZE.large) {
+    if (value > 53 && size !== SIZE.large) {
       this.setState({ size: SIZE.large });
       windowSet(SIZE.large);
-    } else if (value <= 50 && value > 20 && size !== SIZE.medium) {
+    } else if (value <= 53 && value > 22 && size !== SIZE.medium) {
       this.setState({ size: SIZE.medium });
       windowSet(SIZE.medium);
-    } else if (value <= 20 && size !== SIZE.small) {
+    } else if (value <= 22 && size !== SIZE.small) {
       this.setState({ size: SIZE.small });
       windowSet(SIZE.small);
     }
@@ -204,7 +204,7 @@ export class TguiModal extends Component {
     } else {
       this.value = '';
       this.setState({
-        buttonContent: CHANNELS[channel].slice(0, 1),
+        buttonContent: CHANNELS[channel]?.slice(0, 3),
         edited: true,
       });
     }

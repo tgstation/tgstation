@@ -41,7 +41,7 @@ const setOpen = () => {
   Byond.winset('tgui_modal', {
     'is-visible': true,
     size: `${SIZE.width}x${SIZE.small}`,
-    focus: true,
+    pos: '694,602',
   });
   Byond.winset('tgui_modal.browser', {
     'is-visible': true,

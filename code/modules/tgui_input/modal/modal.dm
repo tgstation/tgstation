@@ -101,10 +101,13 @@
 			return FALSE
 		if(length(payload["entry"]) > max_length)
 			CRASH("[usr] has entered more characters than allowed")
-		if(type == "force")
-			delegate_speech(alter_entry(payload), SAY_CHAN)
 		if(type == "entry")
 			delegate_speech(payload["entry"], payload["channel"])
+		if(type == "force")
+			var/target_chan = payload["channel"]
+			if(target_chan == ME_CHAN || target_chan == OOC_CHAN)
+				target_chan = SAY_CHAN // No ooc leaks
+			delegate_speech(alter_entry(payload), target_chan)
 		return TRUE
 	return TRUE
 
