@@ -39,6 +39,27 @@
 		/obj/item/organ/internal/body_egg/alien_embryo = 1,
 	)
 
+/obj/effect/spawner/random/medical/organs/prison //For areas like the gulag or permabrig where we mostly want harmless organs or ones with very minor impact but strong aid to escape or cause shenanigans
+	name = "Prison Organs Spawner"
+	icon_state = "eyes"
+	spawn_loot_count = 1
+	loot = list(
+		/obj/item/organ/internal/ears/penguin = 10,
+		/obj/item/organ/internal/ears/cat = 10,
+		/obj/item/organ/internal/eyes/fly = 10,
+		/obj/item/organ/internal/tongue/tied = 8,
+		/obj/item/organ/external/tail/cat = 6,
+		/obj/item/organ/external/tail/lizard = 6,
+		/obj/item/organ/internal/liver/plasmaman = 5,
+		/obj/item/organ/internal/lungs/ashwalker = 5,
+		/obj/item/organ/internal/eyes/night_vision/mushroom = 3,
+		/obj/item/organ/internal/heart/gland/ventcrawling = 3,
+		/obj/item/organ/internal/heart/demon = 2,
+		/obj/item/organ/internal/heart/gland/egg = 1,
+		/obj/item/organ/internal/heart/gland/mindshock = 1,
+	)
+
+
 /obj/effect/spawner/random/medical/memeorgans
 	name = "meme organ spawner"
 	icon_state = "eyes"

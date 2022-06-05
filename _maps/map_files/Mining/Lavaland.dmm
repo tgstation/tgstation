@@ -2642,10 +2642,10 @@
 /turf/open/floor/iron,
 /area/mine/cafeteria)
 "sb" = (
-/obj/effect/spawner/random/medical/organs,
 /obj/structure/toilet/greyscale,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/prison/directional/north,
+/obj/effect/spawner/random/medical/organs/prison,
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp/living)
 "sc" = (
