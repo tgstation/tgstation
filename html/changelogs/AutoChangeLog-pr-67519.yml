@@ -1,0 +1,4 @@
+author: "SpaceSmithers"
+delete-after: True
+changes: 
+  - bugfix: "Electric razors are now functional again"
