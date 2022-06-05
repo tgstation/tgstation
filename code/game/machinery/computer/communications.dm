@@ -776,8 +776,6 @@
 #define MIN_GHOSTS_FOR_FUGITIVES 6
 /// The maximum percentage of the population to be ghosts before we no longer have the chance of spawning Sleeper Agents.
 #define MAX_PERCENT_GHOSTS_FOR_SLEEPER 0.2
-/// The amount of threat injected by a hack, if chosen.
-#define HACK_THREAT_INJECTION_AMOUNT 15
 
 /*
  * The communications console hack,
@@ -830,11 +828,11 @@
 				CRASH("hack_console() attempted to run fugitives, but could not find an event controller!")
 			addtimer(CALLBACK(fugitive_event, /datum/round_event_control.proc/runEvent), rand(20 SECONDS, 1 MINUTES))
 
-		if(HACK_THREAT) // Adds a flat amount of threat to buy a (probably) more dangerous antag later
+		if(HACK_THREAT) // Force an unfavorable situation on the crew
 			priority_announce(
 				"Attention crew, it appears that someone on your station has shifted your orbit into more dangerous territory.",
-				"[command_name()] High-Priority Update"
-				)
+				"[command_name()] High-Priority Update",
+			)
 
 			for(var/mob/crew_member as anything in GLOB.player_list)
 				if(!is_station_level(crew_member.z))
@@ -842,7 +840,7 @@
 				shake_camera(crew_member, 15, 1)
 
 			var/datum/game_mode/dynamic/dynamic = SSticker.mode
-			dynamic.create_threat(HACK_THREAT_INJECTION_AMOUNT, list(dynamic.threat_log, dynamic.roundend_threat_log), "[worldtime2text()]: Communications console hacked by [hacker]")
+			dynamic.unfavorable_situation()
 
 		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
 			var/datum/dynamic_ruleset/midround/sleeper_agent_type = /datum/dynamic_ruleset/midround/autotraitor
@@ -850,16 +848,13 @@
 			var/max_number_of_sleepers = clamp(round(length(GLOB.alive_player_list) / 20), 1, 3)
 			var/num_agents_created = 0
 			for(var/num_agents in 1 to rand(1, max_number_of_sleepers))
-				// Offset the threat cost of the sleeper agent(s) we're about to run...
-				dynamic.create_threat(initial(sleeper_agent_type.cost))
-				// ...Then try to actually trigger a sleeper agent.
-				if(!dynamic.picking_specific_rule(sleeper_agent_type, TRUE))
+				if(!dynamic.picking_specific_rule(sleeper_agent_type, forced = TRUE, ignore_cost = TRUE))
 					break
 				num_agents_created++
 
 			if(num_agents_created <= 0)
 				// We failed to run any midround sleeper agents, so let's be patient and run latejoin traitor
-				dynamic.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator, TRUE)
+				dynamic.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator, forced = TRUE, ignore_cost = TRUE)
 
 			else
 				// We spawned some sleeper agents, nice - give them a report to kickstart the paranoia
