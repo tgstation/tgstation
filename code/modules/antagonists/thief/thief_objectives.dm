@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 
 /datum/objective/all_access/find_target(dupe_search_range, blacklist)
 	var/list/possible_targets = list()
-	for(var/datum/mind/possible_target in get_crewmember_minds())
+	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
 		var/target_area = get_area(possible_target.current)
 		if(possible_target == owner)
 			continue
