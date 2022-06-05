@@ -301,7 +301,7 @@
 	for(var/mob/living/mob as anything in GLOB.mob_living_list)
 		if(QDELETED(mob))
 			continue
-		for(var/area as anything in checked_areas)
+		for(var/area in checked_areas)
 			if(istype(get_area(mob), area))
 				mobs_in_area += mob
 				break
