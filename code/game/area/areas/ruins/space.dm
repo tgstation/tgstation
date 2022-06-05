@@ -10,7 +10,16 @@
 /area/ruin/space/has_grav/powered
 	requires_power = FALSE
 
-/////////////
+
+// Ruin solars define, /area/solars was moved to /area/station/solars, causing the solars specific areas to lose their properties
+/area/ruin/solars
+	requires_power = FALSE
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	flags_1 = NONE
+	ambience_index = AMBIENCE_ENGI
+	airlock_wires = /datum/wires/airlock/engineering
+	sound_environment = SOUND_AREA_SPACE
+	base_lighting_alpha = 255
 
 /area/ruin/space/way_home
 	name = "\improper Salvation"
@@ -253,10 +262,14 @@
 	name = "Charlie Station Dorms"
 	icon_state = "os_charlie_dorms"
 
-/area/solars/ancientstation/charlie/solars
+/area/ruin/solars/ancientstation/charlie/solars
 	name = "\improper Charlie Station Solar Array"
 	icon = 'icons/area/areas_ruins.dmi' // Solars inheriet areas_misc.dmi, not areas_ruin.dmi
 	icon_state = "os_charlie_solars"
+	requires_power = FALSE
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	sound_environment = SOUND_AREA_SPACE
+	base_lighting_alpha = 255
 
 /area/ruin/space/ancientstation/charlie/storage
 	name = "Charlie Station Storage"
@@ -285,6 +298,10 @@
 /area/ruin/space/ancientstation/delta/storage
 	name = "\improper Delta Station Storage"
 	icon_state = "os_delta_storage"
+
+/area/ruin/space/ancientstation/delta/biolab
+	name = "Delta Station Biolab"
+	icon_state = "os_delta_biolab"
 
 //DERELICT
 
@@ -327,10 +344,10 @@
 /area/ruin/space/derelict/medical/chapel
 	name = "\improper Derelict Chapel"
 
-/area/solars/derelict_starboard
+/area/ruin/solars/derelict_starboard
 	name = "\improper Derelict Starboard Solar Array"
 
-/area/solars/derelict_aft
+/area/ruin/solars/derelict_aft
 	name = "\improper Derelict Aft Solar Array"
 
 /area/ruin/space/derelict/singularity_engine
@@ -368,8 +385,12 @@
 
 //OLD AI SAT
 
-/area/tcommsat/oldaisat
+/area/ruin/tcommsat_oldaisat // Since tcommsat was moved to /area/station/, this turf doesn't inhereit its properties anymore
 	name = "\improper Abandoned Satellite"
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
+											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
+	airlock_wires = /datum/wires/airlock/engineering
+	network_root_id = STATION_NETWORK_ROOT
 
 //ABANDONED BOX WHITESHIP
 

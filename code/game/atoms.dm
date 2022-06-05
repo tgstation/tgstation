@@ -416,7 +416,7 @@
 	if(!is_centcom_level(current_turf.z))//if not, don't bother
 		return FALSE
 
-	if(istype(current_turf.loc, /area/shuttle/syndicate) || istype(current_turf.loc, /area/syndicate_mothership) || istype(current_turf.loc, /area/shuttle/assault_pod))
+	if(istype(current_turf.loc, /area/shuttle/syndicate) || istype(current_turf.loc, /area/centcom/syndicate_mothership) || istype(current_turf.loc, /area/shuttle/assault_pod))
 		return TRUE
 
 	return FALSE
@@ -2059,8 +2059,9 @@
  * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
  * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
  * * caller- The movable we're checking pass flags for, if we're making any such checks
+ * * no_id: When true, doors with public access will count as impassible
  **/
-/atom/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/atom/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
 	if(caller && (caller.pass_flags & pass_flags_self))
 		return TRUE
 	. = !density

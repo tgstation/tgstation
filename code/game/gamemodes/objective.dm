@@ -282,7 +282,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 
 /datum/objective/protect/check_completion()
-	var/obj/item/organ/brain/brain_target
+	var/obj/item/organ/internal/brain/brain_target
 	if(human_check)
 		brain_target = target.current?.getorganslot(ORGAN_SLOT_BRAIN)
 	//Protect will always suceed when someone suicides
@@ -652,7 +652,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
 	var/captured_amount = 0
-	var/area/centcom/holding/A = GLOB.areas_by_type[/area/centcom/holding]
+	var/area/centcom/central_command_areas/holding/A = GLOB.areas_by_type[/area/centcom/central_command_areas/holding]
 	for(var/mob/living/carbon/human/M in A)//Humans.
 		if(ismonkey(M))
 			captured_amount+=0.1
