@@ -1736,10 +1736,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
-"aGr" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/station/science/xenobiology)
 "aGD" = (
 /obj/structure/closet/crate/coffin,
 /obj/machinery/door/window/left/directional/east{
@@ -118999,7 +118995,7 @@ jlU
 jlU
 jlU
 jlU
-aGr
+lMJ
 aaa
 aaa
 aaa
