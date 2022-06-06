@@ -45,12 +45,16 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
-	if(iscarbon(cast_on))
-		var/mob/living/carbon/our_lizard = cast_on
-		if(our_lizard.is_mouth_covered())
-			our_lizard.adjust_fire_stacks(cone_levels)
-			our_lizard.ignite_mob()
-			to_chat(our_lizard, span_warning("Something in front of your mouth catches fire!"))
+	if(!iscarbon(cast_on))
+		return
+
+	var/mob/living/carbon/our_lizard = cast_on
+	if(!our_lizard.is_mouth_covered())
+		return
+
+	our_lizard.adjust_fire_stacks(cone_levels)
+	our_lizard.ignite_mob()
+	to_chat(our_lizard, span_warning("Something in front of your mouth catches fire!"))
 
 /datum/action/cooldown/spell/cone/staggered/fire_breath/after_cast(atom/cast_on)
 	. = ..()

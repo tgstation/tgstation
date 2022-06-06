@@ -222,7 +222,7 @@
 	/// A ref to our owner's honorbound mutation
 	var/datum/mutation/human/honorbound/honor_mutation
 	/// The declaration that's shouted in invocation. Set in New()
-	var/declaration = "By the divine light of my diety, you are an evil of this world that must be wrought low!"
+	var/declaration = "By the divine light of my deity, you are an evil of this world that must be wrought low!"
 
 /datum/action/cooldown/spell/pointed/declare_evil/New()
 	. = ..()

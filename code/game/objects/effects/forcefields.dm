@@ -6,13 +6,13 @@
 	opacity = FALSE
 	density = TRUE
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	/// Set to 0 for permanent forcefields (ugh)
-	var/timeleft = 30 SECONDS
+	/// If set, how long the force field lasts after it's created. Set to 0 to have infinite duration forcefields.
+	var/initial_duration = 30 SECONDS
 
 /obj/effect/forcefield/Initialize(mapload)
 	. = ..()
-	if(timeleft)
-		QDEL_IN(src, timeleft)
+	if(initial_duration > 0 SECONDS)
+		QDEL_IN(src, initial_duration)
 
 /obj/effect/forcefield/singularity_pull()
 	return
