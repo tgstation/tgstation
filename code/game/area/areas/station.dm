@@ -1187,6 +1187,10 @@
 	name = "Security Post - Medbay"
 	icon_state = "checkpoint_med"
 
+/area/station/security/checkpoint/medical/medsci
+	name = "Security Post - Medsci"
+	icon_state = "checkpoint_med"
+
 /area/station/security/checkpoint/science
 	name = "Security Post - Science"
 	icon_state = "checkpoint_sci"
