@@ -69,3 +69,17 @@ modules = ["caves_lvl3segment2_a.dmm", "caves_lvl3segment2_b.dmm", "caves_lvl3se
 #C - idk yet lol
 [rooms.caves_lvl3segment3]
 modules = ["caves_lvl3segment3_a.dmm", "caves_lvl3segment3_b.dmm", "caves_lvl3segment3_c.dmm"]
+
+#4th floor leading up to the boss arena
+#A - idk yet lol
+#B - idk yet lol
+#C - idk yet lol
+[rooms.caves_lvl4]
+modules = ["caves_lvl4_a.dmm", "caves_lvl4_b.dmm", "caves_lvl4_c.dmm"]
+
+#4th floor boss arena
+#A - idk yet lol
+#B - idk yet lol
+#C - idk yet lol
+[rooms.caves_lvl4bossarena]
+modules = ["caves_lvl4bossarena_a.dmm", "caves_lvl4bossarena_b.dmm", "caves_lvl4bossarena_c.dmm"]

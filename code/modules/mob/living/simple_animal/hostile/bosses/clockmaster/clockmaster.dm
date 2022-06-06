@@ -21,7 +21,7 @@
 	maxHealth = 2000
 	speed = 1
 	loot = list(/obj/effect/temp_visual/paperwiz_dying)
-	projectiletype = /obj/projectile/temp/hot
+	projectiletype = /obj/projectile/energy/inferno
 	projectilesound = 'sound/weapons/emitter.ogg'
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	var/is_in_phase_2 = FALSE //are we past the health threshold and gone through our mid-way monologue?

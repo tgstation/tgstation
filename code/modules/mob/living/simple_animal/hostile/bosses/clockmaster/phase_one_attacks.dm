@@ -38,17 +38,17 @@
 
 
 /mob/living/simple_animal/hostile/ocular_warden
-	name = "Ocular Warden"
+	name = "ocular warden"
 	desc = "A pristine bronze machine with a giant beady eye. It stares at you menancingly."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ocular_warden"
 	icon_state = "ocular_warden"
 	icon_dead = "drone_clock_dead"
-	ranged = 1
-	rapid = 2
-	rapid_fire_delay = 6
+	ranged = TRUE
+	rapid = 1
+	rapid_fire_delay = 4
 	stop_automated_movement = TRUE
-	projectiletype = /obj/projectile/beam/laser/ocularwarden
+	projectiletype = /obj/projectile/temp/ocularwarden
 	speak_chance = 0
 	stat_attack = HARD_CRIT
 	maxHealth = 35
@@ -70,18 +70,16 @@
 /mob/living/simple_animal/hostile/ocular_warden/Move(atom/newloc)//stop moving please
 	return FALSE
 
-/obj/projectile/beam/laser/ocularwarden
-	name = "hellfire laser"
-	wound_bonus = -35
-	damage = 5
+/obj/projectile/temp/ocularwarden
+	damage = 2
 
-/obj/projectile/beam/laser/ocularwarden/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/temp/ocularwarden/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(IS_CULTIST(M))
-			M.adjust_bodytemperature(30)
-			to_chat(M, span_warning("You feel a burning gaze strike your inner core, as if Ratvar himself is staring you down intently."))
+			M.adjust_bodytemperature(-20)
+			to_chat(M, span_warning("You feel a chilling gaze strike you to your very core, as if Ratvar himself is staring you down intently."))
 
 //Activates a series of steam traps placed around the arena. Stepping onto these while active throws the victim back a few tiles and causes burn damage.
 /datum/action/boss/steam_traps
@@ -190,7 +188,7 @@
 	summoned_cogscarabs--
 
 /mob/living/simple_animal/hostile/cogscarab
-	name = "Cogscarab"
+	name = "cogscarab"
 	desc = "A station maintenance drone adorned in intricate bronze detailing. Its front sensor glows an eery red."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_clock"

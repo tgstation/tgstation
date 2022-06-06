@@ -443,6 +443,25 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	defer_change = TRUE
 
+/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	tool_mine_speed = 20 SECONDS
+	can_mine_with_projectiles = FALSE
+	mineralSpawnChanceList = list(
+		/obj/item/stack/ore/uranium = 35, /obj/item/stack/ore/diamond = 30, /obj/item/stack/ore/gold = 45, /obj/item/stack/ore/titanium = 45,
+		/obj/item/stack/ore/silver = 50, /obj/item/stack/ore/plasma = 50, /obj/item/stack/ore/bluespace_crystal = 20)
+
+/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/labormineral
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	tool_mine_speed = 20 SECONDS
+	can_mine_with_projectiles = FALSE
+	icon_state = "rock_labor"
+	mineralSpawnChanceList = list(
+		/obj/item/stack/ore/uranium = 3, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 8, /obj/item/stack/ore/titanium = 8,
+		/obj/item/stack/ore/silver = 20, /obj/item/stack/ore/plasma = 30, /obj/item/stack/ore/iron = 95)
+
 /turf/closed/mineral/volcanic/lava_land_surface/hardened
 	tool_mine_speed = 20 SECONDS
 	can_mine_with_projectiles = FALSE
