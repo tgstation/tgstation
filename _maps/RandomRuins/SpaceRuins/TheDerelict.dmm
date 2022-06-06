@@ -447,7 +447,7 @@
 	},
 /area/ruin/space/derelict/gravity_generator)
 "cH" = (
-/obj/machinery/gravity_generator/main/station{
+/obj/machinery/gravity_generator/main{
 	on = 0
 	},
 /turf/open/floor/iron/airless,

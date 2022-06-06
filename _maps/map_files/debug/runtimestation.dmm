@@ -2367,7 +2367,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "IE" = (
-/obj/machinery/gravity_generator/main/station,
+/obj/machinery/gravity_generator/main,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)

@@ -217,7 +217,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "bi" = (
-/obj/machinery/gravity_generator/main/station,
+/obj/machinery/gravity_generator/main,
 /turf/open/floor/iron{
 	dir = 8
 	},

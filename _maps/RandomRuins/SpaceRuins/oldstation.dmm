@@ -6662,7 +6662,7 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "El" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/gravity_generator/main/station/off,
+/obj/machinery/gravity_generator/main/off,
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/ancientstation/beta/gravity)
 "En" = (

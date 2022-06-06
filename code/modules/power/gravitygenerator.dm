@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/Initialize(mapload)
 	. = ..()
-	soundloop = new(src, TRUE)
+	soundloop = new(src, FALSE)
 
 /obj/machinery/gravity_generator/Destroy()
 	QDEL_NULL(gravity_field)
@@ -81,7 +81,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	if(main_part)
 		qdel(main_part)
 	set_broken()
-	QDEL_NULL(soundloop)
 	return ..()
 
 //
@@ -111,22 +110,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	return update_appearance(updates)
 
 //
-// Generator which spawns with the station.
-//
-
-/obj/machinery/gravity_generator/main/station/Initialize(mapload)
-	. = ..()
-	setup_parts()
-	middle.add_overlay("activated")
-	update_list()
-
-//
-// Generator an admin can spawn
-//
-/obj/machinery/gravity_generator/main/station/admin
-	use_power = NO_POWER_USE
-
-//
 // Main Generator with the main code
 //
 
@@ -149,10 +132,22 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/setting = 1 //Gravity value when on
 
 ///Station generator that spawns with gravity turned off.
-/obj/machinery/gravity_generator/main/station/off
+/obj/machinery/gravity_generator/main/off
 	on = FALSE
 	breaker = FALSE
 	charge_count = 0
+
+///Admin station generator, uses no power.
+/obj/machinery/gravity_generator/main/admin
+	use_power = NO_POWER_USE
+
+/obj/machinery/gravity_generator/main/Initialize(mapload)
+	. = ..()
+	setup_parts()
+	update_list()
+	if(on)
+		soundloop.start()
+		middle.add_overlay("activated")
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
@@ -341,60 +336,44 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	update_appearance()
 	update_list()
 
-// Set the state of the gravity.
-/obj/machinery/gravity_generator/main/proc/set_state(new_state)
-
-	on = new_state
-	update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
-	// Sound the alert if gravity was just enabled or disabled.
-	var/alert = FALSE
-	if(SSticker.IsRoundInProgress())
-		if(on) // If we turned on and the game is live.
-
-		else
-
-
-
-	if(alert)
-		shake_everyone()
-
 // Charge/Discharge and turn on/off gravity when you reach 0/100 percent.
 /obj/machinery/gravity_generator/main/process()
 	if(machine_stat & BROKEN)
 		return
-	if(charging_state != POWER_IDLE)
-		if(charging_state == POWER_UP && charge_count >= 100)
-			enable()
-		else if(charging_state == POWER_DOWN && charge_count <= 0)
-			disable()
-		else
-			if(charging_state == POWER_UP)
-				charge_count += 2
-			else if(charging_state == POWER_DOWN)
-				charge_count -= 2
+	if(charging_state == POWER_IDLE)
+		return
+	if(charging_state == POWER_UP && charge_count >= 100)
+		enable()
+	else if(charging_state == POWER_DOWN && charge_count <= 0)
+		disable()
+	else
+		if(charging_state == POWER_UP)
+			charge_count += 2
+		else if(charging_state == POWER_DOWN)
+			charge_count -= 2
 
-			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
+		if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
+			playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
 
-			var/overlay_state = null
-			switch(charge_count)
-				if(0 to 20)
-					overlay_state = null
-				if(21 to 40)
-					overlay_state = "startup"
-				if(41 to 60)
-					overlay_state = "idle"
-				if(61 to 80)
-					overlay_state = "activating"
-				if(81 to 100)
-					overlay_state = "activated"
+		var/overlay_state = null
+		switch(charge_count)
+			if(0 to 20)
+				overlay_state = null
+			if(21 to 40)
+				overlay_state = "startup"
+			if(41 to 60)
+				overlay_state = "idle"
+			if(61 to 80)
+				overlay_state = "activating"
+			if(81 to 100)
+				overlay_state = "activated"
 
-			if(overlay_state != current_overlay)
-				if(middle)
-					middle.cut_overlays()
-					if(overlay_state)
-						middle.add_overlay(overlay_state)
-					current_overlay = overlay_state
+		if(overlay_state != current_overlay)
+			if(middle)
+				middle.cut_overlays()
+				if(overlay_state)
+					middle.add_overlay(overlay_state)
+				current_overlay = overlay_state
 
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
