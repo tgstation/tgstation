@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - bugfix: "Firelocks no longer check the atmospheric contents of solid walls."
