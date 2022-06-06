@@ -47,6 +47,7 @@
 		/obj/item/organ/internal/ears/penguin = 10,
 		/obj/item/organ/internal/ears/cat = 10,
 		/obj/item/organ/internal/eyes/fly = 10,
+		/obj/item/organ/internal/tongue/fly = 10,
 		/obj/item/organ/internal/tongue/tied = 8,
 		/obj/item/organ/external/tail/cat = 6,
 		/obj/item/organ/external/tail/lizard = 6,
@@ -54,9 +55,13 @@
 		/obj/item/organ/internal/lungs/ashwalker = 5,
 		/obj/item/organ/internal/eyes/night_vision/mushroom = 3,
 		/obj/item/organ/internal/heart/gland/ventcrawling = 3,
-		/obj/item/organ/internal/heart/demon = 2,
 		/obj/item/organ/internal/heart/gland/egg = 1,
 		/obj/item/organ/internal/heart/gland/mindshock = 1,
+		/obj/item/organ/internal/heart/gland/plasma = 1,
+		/obj/item/organ/internal/heart/gland/spiderman = 1,
+		/obj/item/organ/internal/heart/gland/slime = 1,
+		/obj/item/organ/internal/heart/gland/trauma = 1,
+		/obj/item/organ/internal/heart/gland/electric = 1,
 	)
 
 
