@@ -129,12 +129,12 @@
 
 	var/area/local_area = get_area(src)
 	if(emergency_mode || (local_area?.fire))
-		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
+		. += emissive_appearance(overlay_icon, "[base_state]_emergency")
 		return
 	if(nightshift_enabled)
-		. += mutable_appearance(overlay_icon, "[base_state]_nightshift")
+		. += emissive_appearance(overlay_icon, "[base_state]_nightshift")
 		return
-	. += mutable_appearance(overlay_icon, base_state)
+	. += emissive_appearance(overlay_icon, base_state)
 
 // Area sensitivity is traditionally tied directly to power use, as an optimization
 // But since we want it for fire reacting, we disregard that
