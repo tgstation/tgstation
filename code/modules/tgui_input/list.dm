@@ -129,7 +129,7 @@
 		if("submit")
 			if (!(params["entry"] in items))
 				return
-			src.choice = items_map[params["entry"]]
+			set_choice(items_map[params["entry"]])
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
@@ -137,3 +137,6 @@
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
+
+/datum/tgui_list_input/proc/set_choice(choice)
+	src.choice = choice

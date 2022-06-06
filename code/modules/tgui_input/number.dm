@@ -142,7 +142,7 @@
 				CRASH("A number greater than the max value was input into tgui input number by [usr]")
 			if(choice < min_value)
 				CRASH("A number less than the min value was input into tgui input number by [usr]")
-			src.entry = entry
+			set_entry(choice)
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
@@ -150,3 +150,6 @@
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
+
+/datum/tgui_input_number/proc/set_entry(entry)
+	src.entry = entry

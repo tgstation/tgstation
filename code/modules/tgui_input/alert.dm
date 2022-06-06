@@ -120,7 +120,7 @@
 		if("choose")
 			if (!(params["choice"] in buttons))
 				CRASH("[usr] entered a non-existent button choice: [params["choice"]]")
-			src.choice = choice
+			set_choice(params["choice"])
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
@@ -128,3 +128,6 @@
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
+
+/datum/tgui_alert/proc/set_choice(choice)
+	src.choice = choice
