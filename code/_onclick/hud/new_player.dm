@@ -49,9 +49,6 @@
 	if(!usr.client || usr.client.interviewee)
 		return
 
-	if(usr.client.interviewee)
-		return
-
 	. = ..()
 
 	if(!enabled)
