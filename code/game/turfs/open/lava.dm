@@ -118,6 +118,23 @@
 		else
 			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
 		return
+	// Light a cigarette in the lava
+	if(istype(C, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/ciggie = C
+		if(!ciggie)
+			..()
+			return
+		if(ciggie.lit)
+			to_chat(user, span_warning("The [ciggie.name] is already lit!"))
+			return
+		if(prob(75))
+			ciggie.light(span_rose("[user] expertly dips \the [ciggie.name] into [src], lighting it with the scorching heat of the planet. Witnessing such a feat is almost enough to make you cry."))
+		else
+			ciggie.light(span_warning("[user] expertly dips \the [ciggie.name] into [src], along with the rest of [user.p_their()] arm. What a dumbass."))
+			var/mob/living/carbon/human/blunderer = user
+			var/obj/item/bodypart/affecting = blunderer.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+			affecting?.receive_damage(burn = 90)
+		return
 
 /turf/open/lava/proc/is_safe()
 	//if anything matching this typecache is found in the lava, we don't burn things
