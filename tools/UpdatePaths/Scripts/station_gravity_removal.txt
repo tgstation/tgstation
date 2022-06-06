@@ -1,0 +1,3 @@
+# Main station gravity generator was merged into main generator.
+
+/obj/machinery/gravity_generator/main/station : /obj/machinery/gravity_generator/main
