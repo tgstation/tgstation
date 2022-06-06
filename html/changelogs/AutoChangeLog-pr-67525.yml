@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - qol: "ninjas now get told about pinning modules and the direction to the station"

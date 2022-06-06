@@ -24898,7 +24898,6 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/rd)
 "gVv" = (
@@ -44958,7 +44957,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/engineering/hallway)
 "mDQ" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/security/checkpoint/science/research)
 "mEg" = (
 /turf/closed/wall/r_wall/rust,
@@ -51630,9 +51629,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
-"oAy" = (
-/turf/closed/wall,
-/area/station/science/ordnance/storage)
 "oAJ" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
@@ -126484,7 +126480,7 @@ mDQ
 qGq
 qGq
 nIg
-oAy
+dty
 cqr
 lDu
 sdy
