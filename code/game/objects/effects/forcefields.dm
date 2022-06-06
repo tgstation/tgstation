@@ -46,12 +46,12 @@
 	icon = 'icons/effects/cult/effects.dmi'
 	icon_state = "cultshield"
 	can_atmos_pass = ATMOS_PASS_NO
-	timeleft = 20 SECONDS
+	initial_duration = 20 SECONDS
 
 /// A form of the cult forcefield that lasts permanently.
 /// Used on the Shuttle 667.
 /obj/effect/forcefield/cult/permanent
-	timeleft = 0
+	initial_duration = 0
 
 /// Mime forcefields (invisible walls)
 
@@ -64,4 +64,4 @@
 /obj/effect/forcefield/mime/advanced
 	name = "invisible blockade"
 	desc = "You're gonna be here awhile."
-	timeleft = 1 MINUTES
+	initial_duration = 1 MINUTES

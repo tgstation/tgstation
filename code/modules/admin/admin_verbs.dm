@@ -75,7 +75,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/respawn_character,
 	/datum/admins/proc/open_borgopanel,
 	/datum/admins/proc/view_all_circuits,
-	/datum/admins/proc/view_all_sdql_spells,
 	/datum/admins/proc/known_alts_panel,
 	/datum/admins/proc/paintings_manager,
 	/datum/admins/proc/display_tags,
@@ -194,7 +193,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/datum/admins/proc/create_or_modify_area,
 	/client/proc/check_timer_sources,
 	/client/proc/toggle_cdn,
-	/client/proc/cmd_sdql_spell_menu,
 	/client/proc/adventure_manager,
 	/client/proc/load_circuit,
 	/client/proc/cmd_admin_toggle_fov,
@@ -670,7 +668,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/list/spell_list = list()
 	for(var/datum/action/cooldown/spell/to_add as anything in subtypesof(/datum/action/cooldown/spell))
 		var/spell_name = initial(to_add.name)
-		if(spell_name == "Spell" || findtext(spell_name, "SDQL"))
+		if(spell_name == "Spell") // abstract or un-named spells should be skipped.
 			continue
 
 		if(which == "Name")
