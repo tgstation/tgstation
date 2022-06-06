@@ -4,15 +4,14 @@
 	alert_type = null
 
 /datum/status_effect/jitter/on_creation(mob/living/new_owner, duration = 10 SECONDS)
-	if(new_owner.stat == DEAD)
-		new_owner.do_jitter_animation(duration / 10)
-		return FALSE
-
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/jitter/on_apply()
+	// If we're being applied to a dead person, don't make the status effect.
+	// Just do a bit of jitter animation and be done.
 	if(owner.stat == DEAD)
+		owner.do_jitter_animation(duration / 10)
 		return FALSE
 
 	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/remove_jitter)
