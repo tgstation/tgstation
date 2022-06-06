@@ -5,14 +5,12 @@
 
 /datum/round_event/gravity_generator_blackout
 	announceWhen = 1
+	startWhen = 1
+	announceChance = 33
 
 /datum/round_event/gravity_generator_blackout/announce(fake)
-	var/alert = pick( "Gravnospheric anomalies detected. Temporary gravity field failure imminent.")
-
-	if(prob(30) || fake) //most of the time, we don't want an announcement, allows quiet sabotage.
-		priority_announce(alert)
-
+	priority_announce("Gravnospheric anomalies detected near [station_name()]. Manual reset of generators is required.")
 
 /datum/round_event/gravity_generator_blackout/start()
-	for(var/obj/machinery/gravity_generator/main/the_generator in GLOB.gravity_generators)
-		the_generator.blackout
+	for(var/obj/machinery/gravity_generator/main/the_generator in GLOB.machines)
+		the_generator.blackout()
