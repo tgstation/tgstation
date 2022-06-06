@@ -215,6 +215,8 @@
 			var/turf/checked_turf = get_step(get_turf(firelock), dir)
 			if(!checked_turf)
 				continue
+			if(isclosedturf(checked_turf))
+				continue
 			process_results(checked_turf)
 
 /obj/machinery/door/firedoor/proc/register_adjacent_turfs(atom/loc)
@@ -226,6 +228,8 @@
 		var/turf/checked_turf = get_step(get_turf(loc), dir)
 
 		if(!checked_turf)
+			continue
+		if(isclosedturf(checked_turf))
 			continue
 		process_results(checked_turf)
 		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
