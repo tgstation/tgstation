@@ -530,6 +530,7 @@
 /obj/item/gun/energy/laser{
 	pixel_y = 3
 	},
+/obj/machinery/cell_charger,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "bm" = (
