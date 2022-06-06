@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "fixes modsuits fucking up when unequipping every item, like staff of change or slime toxin or whatever"

@@ -19124,9 +19124,6 @@
 /area/station/commons/dorms)
 "gBW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 8
-	},
 /obj/machinery/door/airlock/hatch{
 	name = "Ladder Access Hatch"
 	},
