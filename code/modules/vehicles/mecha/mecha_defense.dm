@@ -39,10 +39,10 @@
 /obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	var/damage_taken = ..()
 	if(damage_taken <= 0)
-		return
+		return damage_taken
 
 	if(atom_integrity < 0)
-		return
+		return damage_taken
 
 	spark_system.start()
 	try_deal_internal_damage(damage_taken)
