@@ -199,6 +199,7 @@ export class TguiModal extends Component {
   };
   /**  Sets the input value to chat history at index historyCounter. */
   viewHistory = () => {
+    const { channel } = this.state;
     const { historyCounter } = this;
     if (historyCounter > 0 && getHistoryLength()) {
       this.value = getHistoryAt(historyCounter);
