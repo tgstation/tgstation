@@ -1,6 +1,0 @@
-author: "EOBGames"
-delete-after: True
-changes: 
-  - rscadd: "A few new crates have made their way to cargo: buy yourself a Lizard or Moth food crate today!"
-  - rscadd: "Recipes for Yoghurt (10u cream, 2u virus food), Cornmeal (grind corn), and Quality Oil (1u quality oil, 2u cooking oil) have been added. Bon appetit!"
-  - balance: "Species food (lizard and moth food) have received a sweep of balance changes: they're now more filling and a bit easier to access."

@@ -146,3 +146,38 @@
   - admin: changing settings on a borg shell is now logged in silicon.log
   robbertapir:
   - bugfix: held memorizers are now visible
+2022-06-06:
+  Dragomagol, sprites by MistakeNot4892:
+  - rscadd: 'Added a new pAI holoform: the crow!'
+  EOBGames:
+  - rscadd: 'A few new crates have made their way to cargo: buy yourself a Lizard
+      or Moth food crate today!'
+  - rscadd: Recipes for Yoghurt (10u cream, 2u virus food), Cornmeal (grind corn),
+      and Quality Oil (1u quality oil, 2u cooking oil) have been added. Bon appetit!
+  - balance: 'Species food (lizard and moth food) have received a sweep of balance
+      changes: they''re now more filling and a bit easier to access.'
+  Iamgoofball:
+  - bugfix: Central Command no longer erroneously refers to the Ice Box planet as
+      a station in orbit.
+  - bugfix: Under construction airlocks no longer have paper stuck to them.
+  Jolly:
+  - bugfix: One of Trams ladder hatches no longer uses a redundant "all-access" helper
+      to help you escape. The door in question already had no access requirements.
+  Looks-to-the-Moon:
+  - bugfix: Xenomorph larva cancelling their evolution no longer displays unnecessary
+      messages
+  Melbert:
+  - bugfix: Fixes some cinematics sticking around for longer than comfortable
+  Rhials:
+  - bugfix: right clicking the BEPIS no longer makes it invisible.
+  SpaceSmithers:
+  - bugfix: Electric razors are now functional again
+  kugamo:
+  - bugfix: fixed parallax blue stars showing through parallax asteroids.
+  magatsuchi:
+  - code_imp: replaces some slot names with proper names
+  robbertapir:
+  - bugfix: Caught Molotovs no longer immolate the target.
+  vincentiusvin:
+  - bugfix: fixed a bigger dose of zombie powder permasleeping you
+  - bugfix: fixed regular scientists spawning in RD's office in kilo

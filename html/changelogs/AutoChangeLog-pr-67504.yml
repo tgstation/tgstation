@@ -1,4 +1,0 @@
-author: "Looks-to-the-Moon"
-delete-after: True
-changes: 
-  - bugfix: "Xenomorph larva cancelling their evolution no longer displays unnecessary messages"

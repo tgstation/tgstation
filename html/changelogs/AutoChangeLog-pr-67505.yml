@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes: 
-  - bugfix: "One of Trams ladder hatches no longer uses a redundant \"all-access\" helper to help you escape. The door in question already had no access requirements."
