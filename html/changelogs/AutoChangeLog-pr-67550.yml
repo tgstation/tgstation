@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer get objectives on a random tile in maintenance on TramStation, along with any other area/based assignments."
