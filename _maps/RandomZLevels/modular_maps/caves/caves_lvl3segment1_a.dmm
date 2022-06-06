@@ -5,7 +5,7 @@
 "bo" = (/obj/structure/stone_tile/slab,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/ashwalker_village)
 "bs" = (/obj/structure/stone_tile/slab/cracked,/obj/structure/bed/maint,/obj/item/bedsheet/centcom,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "bt" = (/obj/structure/stone_tile/block/burnt{dir = 4},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"bN" = (/obj/structure/spawner/lavaland{mob_types = list(/mob/living/simple_animal/hostile/ashwalker); max_mobs = 2},/obj/structure/stone_tile/slab,/obj/effect/gibspawner/human/bodypartless,/turf/open/indestructible/boss,/area/template_noop)
+"bN" = (/obj/structure/spawner/lavaland{max_mobs = 2; mob_types = list(/mob/living/simple_animal/hostile/ashwalker)},/obj/structure/stone_tile/slab,/obj/effect/gibspawner/human/bodypartless,/turf/open/indestructible/boss,/area/template_noop)
 "bO" = (/obj/structure/stone_tile/block/cracked,/obj/structure/stone_tile/block/burnt{dir = 1},/obj/structure/mineral_door/iron,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "bQ" = (/obj/structure/stone_tile/slab,/obj/structure/table/wood,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "cg" = (/obj/structure/stone_tile/cracked{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
@@ -48,7 +48,7 @@
 "ka" = (/obj/structure/statue/sandstone/assistant,/turf/open/misc/asteroid{initial_gas_mix = "LAVALAND_ATMOS"; name = "ashen sand"},/area/template_noop)
 "kf" = (/obj/structure/stone_tile{dir = 1},/obj/structure/stone_tile{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "ks" = (/obj/structure/stone_tile/slab/cracked,/obj/structure/bed{dir = 8},/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
-"kT" = (/obj/structure/stone_tile/slab,/obj/structure/rack,/obj/item/spear/bonespear,/obj/item/spear/bonespear{pixel_y = 3; pixel_x = -1},/obj/item/spear/bonespear{pixel_y = 3; pixel_x = 6},/obj/item/shield/riot/roman,/obj/item/shield/riot/roman,/obj/item/shield/riot/roman,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
+"kT" = (/obj/structure/stone_tile/slab,/obj/structure/rack,/obj/item/spear/bonespear,/obj/item/spear/bonespear{pixel_x = -1; pixel_y = 3},/obj/item/spear/bonespear{pixel_x = 6; pixel_y = 3},/obj/item/shield/riot/roman,/obj/item/shield/riot/roman,/obj/item/shield/riot/roman,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "lm" = (/obj/structure/stone_tile/slab/burnt,/turf/open/indestructible/boss,/area/template_noop)
 "mt" = (/obj/structure/stone_tile/block/burnt{dir = 4},/obj/structure/stone_tile/block{dir = 8},/turf/open/indestructible/boss,/area/template_noop)
 "mF" = (/obj/structure/fence,/obj/structure/stone_tile/block{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
@@ -61,6 +61,7 @@
 "oj" = (/obj/structure/stone_tile/slab/burnt,/obj/structure/bed{dir = 8},/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "os" = (/obj/structure/stone_tile/slab,/obj/structure/statue/bananium/clown,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "oR" = (/obj/structure/rack,/obj/structure/stone_tile/slab,/obj/item/shovel/spade,/obj/item/shovel/spade{pixel_x = 3; pixel_y = 3},/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
+"pn" = (/obj/machinery/hydroponics/soil,/obj/structure/stone_tile/block/burnt,/obj/item/seeds/cotton/durathread,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/ashwalker_village)
 "po" = (/obj/structure/fence,/obj/structure/stone_tile/block/burnt{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "pH" = (/obj/structure/stone_tile/burnt,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "pW" = (/obj/structure/stone_tile/block/cracked,/turf/open/chasm/lavaland,/area/template_noop)
@@ -94,6 +95,7 @@
 "xr" = (/obj/machinery/hydroponics/soil,/obj/structure/stone_tile/block/burnt,/obj/item/cultivator/rake,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/ashwalker_village)
 "xN" = (/obj/structure/stone_tile/slab/burnt,/obj/structure/closet/crate/miningcar,/obj/item/gun/energy/recharge/kinetic_accelerator,/obj/item/stack/sheet/mineral/diamond{amount = 5},/obj/item/stack/sheet/mineral/gold{amount = 6},/obj/item/stack/sheet/mineral/silver{amount = 4},/obj/item/stack/sheet/mineral/bananium{amount = 10},/obj/item/pickaxe/drill,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "xR" = (/obj/structure/stone_tile/burnt{dir = 4},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"xV" = (/obj/machinery/hydroponics/soil,/obj/structure/stone_tile/block/burnt,/obj/item/seeds/chili/ghost,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/ashwalker_village)
 "ys" = (/obj/structure/stone_tile/block/cracked{dir = 1},/obj/structure/stone_tile/block,/obj/structure/mineral_door/iron,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "yv" = (/obj/structure/stone_tile/burnt{dir = 8},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
 "yG" = (/turf/closed/indestructible/rock,/area/template_noop)
@@ -121,9 +123,10 @@
 "Dg" = (/obj/structure/stone_tile/block,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/ashwalker_village)
 "EB" = (/obj/structure/stone_tile/slab/burnt,/obj/effect/gibspawner/human/bodypartless,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "Fo" = (/obj/structure/stone_tile/block{dir = 8},/mob/living/simple_animal/hostile/ashwalker{name = "Waggles-The-Finger"},/obj/structure/chair/stool/bamboo{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Fr" = (/obj/item/food/grown/banana{desc = "shh... its a secret. 3 of 6."; name = "secret banana"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "FF" = (/obj/structure/stone_tile/slab/burnt,/obj/structure/bed/maint,/obj/item/bedsheet/ian,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "Gf" = (/obj/structure/stone_tile/block{dir = 1},/obj/structure/stone_tile/block,/obj/structure/necropolis_gate,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
-"Gy" = (/obj/structure/stone_tile/slab,/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/britcup,/obj/item/clothing/mask/fakemoustache,/obj/item/food/butterbiscuit{pixel_y = 9; pixel_x = 8},/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
+"Gy" = (/obj/structure/stone_tile/slab,/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/britcup,/obj/item/clothing/mask/fakemoustache,/obj/item/food/butterbiscuit{pixel_x = 8; pixel_y = 9},/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "GQ" = (/obj/structure/fence,/obj/structure/stone_tile/block/cracked{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "Hc" = (/obj/structure/stone_tile/surrounding/burnt,/obj/structure/stone_tile/center,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
 "Hf" = (/turf/closed/indestructible/riveted/boss,/area/template_noop)
@@ -132,9 +135,11 @@
 "IG" = (/obj/structure/stone_tile/block{dir = 4},/mob/living/simple_animal/hostile/ashwalker{name = "Drops-It-Low"},/obj/structure/chair/stool/bamboo{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "Jc" = (/obj/structure/fence{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/ashwalker_village)
 "Ji" = (/obj/structure/stone_tile/block/burnt,/turf/open/chasm/lavaland,/area/template_noop)
+"Ju" = (/obj/item/knife/combat/bone,/obj/structure/rack,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "JE" = (/obj/structure/stone_tile/block/cracked,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "JG" = (/mob/living/simple_animal/hostile/ashwalker{name = "Guards-The-Bridge"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "Kh" = (/obj/structure/stone_tile/slab/burnt,/obj/structure/closet/crate/trashcart,/obj/item/food/sosjerky,/obj/item/food/sosjerky,/obj/item/food/no_raisin,/obj/item/food/no_raisin,/obj/item/vending_refill/snack,/obj/item/vending_refill/snack,/obj/item/reagent_containers/food/drinks/dry_ramen,/obj/item/reagent_containers/food/drinks/dry_ramen,/obj/item/reagent_containers/food/drinks/dry_ramen,/obj/item/food/chocolatebar,/obj/item/food/chocolatebar,/obj/item/food/candy,/obj/item/food/candy,/obj/effect/spawner/random/food_or_drink/snack/lizard,/obj/effect/spawner/random/food_or_drink/snack/lizard,/obj/effect/spawner/random/food_or_drink/snack/lizard,/obj/effect/spawner/random/food_or_drink/snack/lizard,/obj/effect/spawner/random/food_or_drink/snack/lizard,/obj/effect/spawner/random/food_or_drink/snack/lizard,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
+"KJ" = (/obj/effect/decal/remains/human,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "KR" = (/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "Lp" = (/obj/structure/stone_tile/block/cracked,/obj/structure/stone_tile/block/cracked{dir = 1},/obj/structure/mineral_door/iron,/turf/open/indestructible/boss,/area/awaymission/caves/misc/ashwalker_village)
 "Lt" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
@@ -201,9 +206,9 @@
 
 (1,1,1) = {"
 rEyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGyGAYAYAYAYyGyGyGyGyGyGyGyGyGyGyGyGyGyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
-yGAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYSXAYAYAYCBAYAYAYAYCBCBCBCBCBCBAYAYAYAYAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
-yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYAYAYAYAYSXSXSXAYSXAYAYAYAYAYAYAYSXAYAYCBCBAYAYAYAYAYAYAYCBCBCBCBCBCBAYAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
-yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYAYAYAYAYSXSXSXSXSXAYAYAYAYAYAYSXSXAYAYCBCBCBCBCBAYAYAYAYAYCBCBCBCBCBCBCBAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
+yGAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYSXAYAYAYCBAYAYAYAYCBCBCBCBCBCBAYAYRSRSWkAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
+yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYAYAYAYAYSXSXSXAYSXAYAYAYAYAYAYAYSXAYAYCBCBAYAYAYAYAYAYAYCBCBCBCBCBCBWkFrRSAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
+yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYAYAYAYAYSXSXSXSXSXAYAYAYAYAYAYSXSXAYAYCBCBCBCBCBAYAYAYAYAYCBCBCBCBCBCBCBWkAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
 yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYAYAYAYSXSXSXSXSXSXAYSXAYAYLtRSSXSXWkWkCBCBCBxRvtRyCBCBAYAYlmRyCBCBCBCBCBCBAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
 yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYAYAYAYSXSXSXSXSXSXSXSXWkRSWkWkSXSXWkWkCBCBCBlmxmlmCBckCBlmxmvtAYAYAYAYCBCBAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
 yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYAYAYAYSXSXSXSXSXSXSXSXRSLtRSWkSXSXWkWkWkCBCByvlmqxmTCBmTyvvtqxAYAYAYAYAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
@@ -214,11 +219,11 @@ yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYAYSXSXSXSXSXSXSXSXSXSXWkWk
 yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYAYSXSXSXSXSXSXSXSXSXSXWkWkSXSXSXWkRSWkCBCBCBWkCBbtCHdXvjiCCBCBCBWkCBCBCBCBAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
 yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYAYSXSXSXSXSXSXSXSXSXSXRSWkSXSXSXRSLtWkWkCBCBVQCBCBiCnJbtCBCBCBWkWkCBCBCBCBAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
 yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYSXSXSXSXSXSXSXSXSXSXSXRSWkSXSXSXWkWkWkWkRSWkWkWkCBiCYabtCBCBCBWkVQWkCBAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
-yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYSXSXSXSXSXSXSXSXSXSXWkLtRSSXSXSXWkWkRSLtRSVQCBCBCBiCjcbtCBWkWkWkWkLtRSAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
-yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYSXSXSXSXSXSXSXSXSXSXWkWkWkSXSXWkRSRSLtLtRSWkWkWkAZiCinbtzEVQWkWkRSRSRSAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
-yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeSXSXSXSXSXSXSXSXSXSXSXWkSXSXSXSXWkWkWkWkRSRSWkRSWkWkHcYaHcWkWkWkRSLtRSRSAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
+yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYSXSXSXSXSXSXSXSXSXSXWkLtRSSXSXSXWkWkRSLtRSVQCBCBCBiCjcbtCBWkWkKJWkLtRSAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
+yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeAYSXSXSXSXSXSXSXSXSXSXWkWkWkSXSXWkRSRSLtLtRSWkWkKJAZiCinbtzEVQWkWkRSRSRSAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
+yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeSXSXSXSXSXSXSXSXSXSXSXWkSXSXSXSXWkWkWkWkRSRSWkRSWkWkHcYaHcKJWkWkRSLtRSRSAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
 yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeSXSXSXSXSXSXSXSXSXSXSXWkSXSXSXSXWkWkWkWkWkWkWkWkWvWvWvmtWvtjXsWkWkRSRSRSAYAYAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
-yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXWkZUSqSqSqZUWkWvXsZUZUSqSqZUtjtjVQZUSqSqSqZUAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
+yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXWkZUSqSqSqZUKJWvXsZUZUSqSqZUtjtjVQZUSqSqSqZUAYyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
 yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXWkZUSqeVbQZzZUZUWvZUSqQlNDxNSqZUtjZUSqSoLHYMZUSqyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
 yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXWkSqNDCJiYAabsZUWvSqWgCJcMAafrZUtjZUjXCJiYAacYSqyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
 yGAYOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXWkZUbQOUCJBIGySqWvSqZWOUCJRffFZUXsSqbQOUCJBIbQZUyGOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
@@ -247,14 +252,14 @@ yGWRWRWRWRWRWRWRWRWRWRAYAYWkWkWkAYAYWRAYWkWkWkAYWRWRWRWRWRWRAYAYSXSXSXSXSXWkWkWk
 yGWRWRWRWRWRWRWRWRWRWRAYAYWkWkWkAYAYWRAYRSWkWkWkAYAYAYWRWRWRWRWRSXSXSXSXSXWkWkWkWkWkWkWkWkWkWkWktjWkRSWkWkWkWkWkWkWktjtjWvWvWvXsWvWvWvWvXsWvWvWvWkWkWkWkWkWkWkWkWkWkRSRSWkAYAYWkSXWkWkWkSXSXSXAYAYAYOOOOOOOOOOOOOOOOOOOOOOOOAYAYWkWkWkWkWkWkAYOOOOAY
 yGWRWRWRWRWRWRWRWRWRWRAYAYWkWkWkAYAYWRAYWkWkWkWkWkWkAYWRWRWRWRWRSXSXSXSXSXWkWkWkWkWkWkWkWkWkWkWkWvtjtjtjtjtjtjtjtjtjtjWkWkWkWkWkWkWkWkWvWkWkWkWkWkWkWkWkWkWkWkWkWkWkWkRSAYAYAYWkSXWkWkWkWkSXSXAYAYAYOOOOOOOOOOOOOOOOOOOOOOOOAYAYWkWkWkWkWkWkAYOOOOAY
 yGWRWRWRWRWRWRWRWRWRWRAYAYRSWkWkAYAYWRAYAYWkWkWkWkWkWkAYWRWRWRWRSXSXSXSXAYAYWkWkWkWkWkAYSqJcJcJcJcJcJchsJcJcJchsJcJcJcJcJcJcSqWkWkWkWkWvWkWkWkWkWkWkWkWkRSWkWkWkWkWkWkWkAYAYAYWkSXWkWkWkAYSXSXAYAYAYOOOOOOOOOOOOOOOOOOOOOOOOAYAYWkWkWkWkWkWkAYOOOOAY
-yGWRWRWRWRWRWRWRWRWRWRWRAYRSWkWkWkAYAYAYAYAYAYWkWkRSRSAYWRWRWRWRSXSXSXSXAYAYWkWkAYAYAYAYZUPvPvgWgWgWxrNigWgWgWtGgWgWgWgWPvPvZUWkWkWkWkWvWkWkWkWkWkWkWkRSLtRSWkWkAYAYAYAYAYAYAYAYSXAYAYAYAYSXSXAYAYAYOOOOOOOOOOOOOOOOOOAYAYAYAYWkWkWkWkWkWkWkAYOOOOAY
+yGWRWRWRWRWRWRWRWRWRWRWRAYRSWkWkWkAYAYAYAYAYAYWkWkRSRSAYWRWRWRWRSXSXSXSXAYAYWkWkAYAYAYAYZUPvPvgWxVgWxrNigWgWgWtGgWgWpngWPvPvZUWkWkWkWkWvWkWkWkWkWkWkWkRSLtRSWkWkAYAYAYAYAYAYAYAYSXAYAYAYAYSXSXAYAYAYOOOOOOOOOOOOOOOOOOAYAYAYAYWkWkWkWkWkWkWkAYOOOOAY
 yGWRWRWRWRWRWRWRWRWRWRWRAYAYWkWkWkAYAYAYAYAYWkWkWkRSLtAYWRWRWRWRAYSXSXSXAYWRWRWRWRWRWRAYSqYcPvboboWNWNNiWNboboWNboNiWNboPvYcSqAYWkWkWkXsWkWkWkWkWkWkRSRSRSRSAYAYAYAYAYAYAYOOOOOOAYAYAYAYAYSXAYAYAYAYOOOOOOOOOOOOOOOOOOAYWkWkWkWkWkWkWkWkWkWkAYOOOOAY
-yGWRWRWRWRWRWRWRWRWRWRWRAYAYWkWkWkAYAYAYAYAYAYWkRSLtLtAYWRWRWRWRAYSXSXSXAYWRWRWRWRWRWRAYZUoRslgWgWtJgWzKgWtJjDbojDjDgWjDPkMISqAYWkWkWkXsWkWkWkWkWkWkWkWkRSAYAYAYAYAYAYWkWkWkAYAYAYOOOOOOOOAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYWkWkWkWkWkWkWkWkWkAYAYOOOOAY
-yGWRWRWRWRWRWRWRWRWRWRWRAYAYWkWkWkAYAYAYAYWkWkWkWkRSRSAYWRWRWRWRAYSXSXSXAYWRWRWRWRWRWRAYfSaxslWNNiboWNNiboNiWNgsboboboWNPkrBSqAYAYAYWkWvWvWkWkWkWkWkAYAYAYAYVQVQVQRSRSRSWkWkCpCpCpCpAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYWkWkWkWkWkWkWkWkWkWkWkWkAYAYOOOOAY
-yGWRWRWRWRWRWRWRWRWRWRWRAYAYAYWkWkWkWkWkWkWkWkWkWkRSAYAYWRWRWRWRAYAYSXWRWRWRWRWRWRWRWRAYfSDgPvjDgWjDtJbojDgWjDNijDtJjDjDPvDgfSAYAYAYWkWkWvWkWkWkBTHfHfnErOWkWkVQVQRSLtXhXhWkCpCpCpCpAYAYOOOOAYAYAYWkRSRSLtRSRSWkWkWkWkWkWkWkWkWkWkWkWkWkWkAYAYOOOOAY
-yGWRWRWRWRWRWRWRWRWRWRWRAYAYAYWkWkWkWkWkWkfzfzAYAYWRWRWRWRWRWRWRAYAYSXWRWRWRWRWRWRWRWRAYfSPvPvNiboboNiboboboWNboboboWNWNPvPvfSAYAYAYAYAYBTXsWvWvCoWkWkWkWkWkWQRSRSRSRSXhXhWkWkWkCpCpWkWkOOOOAYAYSEWkWkRSRSRSWkWkWkWkWkWkSESERSRSRSRSWkWkAYAYAYOOOOAY
-yGWRWRWRWRWRWRWRWRWRWRWRAYAYAYAYWkWkWkWkfzAYAYAYAYWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRAYfSfSfSPvPvPvfSPvfSfSPvPvZjZjPvfSfSUyfSAYAYWRWRAYAYAYAYBTHfWkWkWkWkWkWkSEWkWkWkXhWkWkWkWkWkWkWkWkOOOOAYSEWkWkWkWkWkWkWkWkWkWkWkSESERSRSRSLtRSAYAYAYAYOOOOOOAY
-yGWRWRWRWRWRWRWRWRWRWRAYAYAYAYAYAYAYAYAYAYAYAYAYAYWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYWRWRWRWRWRAYAYAYAYAYAYAYAYWkWkSESESEWkWkRSLtRSRSWkXhXhAYAYOOOOAYWkWkWkWkWkWkSEWkWkWkWkAYAYAYAYAYAYAYAYAYAYAYAYOOOOOOAY
+yGWRWRWRWRWRWRWRWRWRWRWRAYAYWkWkWkAYAYAYAYAYAYWkRSLtLtAYWRWRWRWRAYSXSXSXAYWRWRWRWRWRWRAYZUoRslgWgWtJxVzKgWtJjDbojDjDpnjDPkMISqAYWkWkWkXsWkWkWkWkWkWkWkWkRSAYAYAYAYAYAYWkWkWkAYAYAYOOOOOOOOAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYWkWkWkWkWkWkWkWkWkAYAYOOOOAY
+yGWRWRWRWRWRWRWRWRWRWRWRAYAYWkWkWkAYAYAYAYWkWkWkWkRSRSAYWRWRWRWRAYSXSXSXAYWRWRWRWRWRWRAYfSaxslWNNiboWNNiboNiWNgsboboboWNPkrBSqAYAYAYWkWvWvWkWkWkWkWkAYAYAYAYVQVQVQRSRSRSWkKJCpCpCpCpAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYWkWkWkWkWkWkWkWkWkWkWkWkAYAYOOOOAY
+yGWRWRWRWRWRWRWRWRWRWRWRAYAYAYWkWkWkWkWkWkWkWkWkWkRSAYAYWRWRWRWRAYAYSXWRWRWRWRWRWRWRWRAYfSDgPvjDgWjDtJbojDpnjDNijDtJjDjDPvDgfSAYAYAYWkWkWvWkWkWkBTHfHfnErOJuWkVQVQRSLtXhXhWkCpCpCpCpAYAYOOOOAYAYAYWkRSRSLtRSRSWkWkWkWkWkWkWkWkWkWkWkWkWkWkAYAYOOOOAY
+yGWRWRWRWRWRWRWRWRWRWRWRAYAYAYWkWkWkWkWkWkfzfzAYAYWRWRWRWRWRWRWRAYAYSXWRWRWRWRWRWRWRWRAYfSPvPvNiboboNiboboboWNboboboWNWNPvPvfSAYAYAYAYAYBTXsWvWvCoWkWkWkWkWkWQRSRSRSRSXhXhWkKJWkCpCpWkWkOOOOAYAYSEWkWkRSRSRSWkWkWkWkWkWkSESERSRSRSRSWkWkAYAYAYOOOOAY
+yGWRWRWRWRWRWRWRWRWRWRWRAYAYAYAYWkWkWkWkfzAYAYAYAYWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRAYfSfSfSPvPvPvfSPvfSfSPvPvZjZjPvfSfSUyfSAYAYWRWRAYAYAYAYBTHfWkWkWkWkWkWkSEWkWkWkXhWkWkWkWkWkWkKJWkOOOOAYSEWkWkWkWkWkWkWkWkWkWkWkSESERSRSRSLtRSAYAYAYAYOOOOOOAY
+yGWRWRWRWRWRWRWRWRWRWRAYAYAYAYAYAYAYAYAYAYAYAYAYAYWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRWRAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYWRWRWRWRWRAYAYAYAYAYAYAYAYWkWkSESESEWkKJRSLtRSRSWkXhXhAYAYOOOOAYWkWkWkWkWkWkSEWkWkWkWkAYAYAYAYAYAYAYAYAYAYAYAYOOOOOOAY
 yGAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYWRWRWRWRWRAYAYAYAYAYAYAYAYAYAYAYSESESEWkRSRSAYAYAYAYAYAYAYOOOOAYAYWkWkWkWkWkAYAYAYAYAYAYAYOOOOOOOOOOOOOOOOOOOOOOAYAYAY
 OeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeuUOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOeOe
 "}
