@@ -4,10 +4,17 @@
 	alert_type = null
 
 /datum/status_effect/jitter/on_creation(mob/living/new_owner, duration = 10 SECONDS)
+	if(new_owner.stat == DEAD)
+		new_owner.do_jitter_animation(duration / 10)
+		return FALSE
+
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/jitter/on_apply()
+	if(owner.stat == DEAD)
+		return FALSE
+
 	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/remove_jitter)
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, id, /datum/mood_event/jittery)
 	return TRUE
