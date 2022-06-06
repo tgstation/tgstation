@@ -26844,6 +26844,7 @@
 	},
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
+/obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "hqH" = (
@@ -69257,9 +69258,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mining{
-	name = "Quartermaster's Office"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -69268,6 +69266,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
+/obj/machinery/door/airlock/command/glass{
+	name = "Quartermaster's Office"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "sIP" = (
@@ -73195,9 +73196,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/mining{
-	name = "Quartermaster's Quarters"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -73205,6 +73203,9 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
+/obj/machinery/door/airlock/command/glass{
+	name = "Quartermaster's Office"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "tHB" = (
@@ -137213,7 +137214,7 @@ iwW
 uni
 oif
 hqC
-rje
+cez
 aad
 uUz
 juo

@@ -34850,15 +34850,14 @@
 "lfG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/mining/glass{
-	id_tag = "Quatermaster";
-	name = "Quartermaster"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/door/airlock/command/glass{
+	name = "Quartermaster's Office"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "lfL" = (
@@ -42953,6 +42952,7 @@
 	pixel_y = 4
 	},
 /obj/item/folder/yellow,
+/obj/machinery/keycard_auth/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "nNv" = (
