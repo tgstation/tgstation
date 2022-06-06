@@ -560,12 +560,6 @@ GLOBAL_VAR(station_nuke_source)
 	else
 		detonation_status = DETONATION_MISSED_STATION
 
-	/*
-	if(detonation_status < NUKE_MISS_STATION)
-		SSshuttle.registerHostileEnvironment(src)
-		SSshuttle.lockdown = TRUE
-	*/
-
 	// Missing the station will register a hostile environment, until it actually explodes
 	if(detonation_status == DETONATION_MISSED_STATION)
 		SSshuttle.registerHostileEnvironment(src)

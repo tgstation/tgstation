@@ -45,7 +45,7 @@
 		fly = new
 		fly.Grant(reciever)
 
-/obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 
 	fly.Remove(organ_owner)
@@ -187,7 +187,7 @@
 	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, .proc/heal_wings)
 	RegisterSignal(reciever, COMSIG_MOVABLE_PRE_MOVE, .proc/update_float_move)
 
-/obj/item/organ/external/wings/moth/Remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/external/wings/moth/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))

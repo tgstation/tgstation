@@ -28,6 +28,7 @@
 	name = "Mafia Psychologist"
 
 	uniform = /obj/item/clothing/under/suit/black
+	neck = /obj/item/clothing/neck/tie/black/tied
 	shoes = /obj/item/clothing/shoes/laceup
 
 /datum/outfit/mafia/chaplain

@@ -56,9 +56,9 @@
 	name = "Incinerator Chamber Monitor (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/nocontrol/incinerator
 
-/obj/item/circuitboard/computer/atmos_control/nocontrol/ordnancemix
-	name = "Ordnance Chamber Monitor (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/nocontrol/ordnancemix
+/obj/item/circuitboard/computer/atmos_control/ordnancemix
+	name = "Ordnance Chamber Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/ordnancemix
 
 /obj/item/circuitboard/computer/atmos_control/oxygen_tank
 	name = "Oxygen Supply Control (Computer Board)"

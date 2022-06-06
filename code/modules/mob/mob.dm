@@ -1152,7 +1152,7 @@
 
 /// This mob is abile to read books
 /mob/proc/is_literate()
-	return FALSE
+	return HAS_TRAIT(src, TRAIT_LITERATE) && !HAS_TRAIT(src, TRAIT_ILLITERATE)
 
 /// Can this mob write
 /mob/proc/can_write(obj/writing_instrument)

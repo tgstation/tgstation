@@ -9,8 +9,9 @@
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_TOXINLOVER,
+		TRAIT_LITERATE,
 	)
-	mutantlungs = /obj/item/organ/lungs/slime
+	mutantlungs = /obj/item/organ/internal/lungs/slime
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	damage_overlay_type = ""

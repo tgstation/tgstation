@@ -1,0 +1,4 @@
+author: "SpaceSmithers"
+delete-after: True
+changes: 
+  - qol: "The Tip of the Round will no longer misinform you about PACMAN generators."

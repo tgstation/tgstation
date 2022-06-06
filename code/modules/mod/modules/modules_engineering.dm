@@ -8,7 +8,7 @@
 		immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/welding)
+	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/armor_booster)
 	overlay_state_inactive = "module_welding"
 
 /obj/item/mod/module/welding/on_suit_activation()
@@ -168,9 +168,9 @@
 
 /obj/item/mod/module/rad_protection/add_ui_data()
 	. = ..()
-	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : 0
-	.["usertoxins"] = mod.wearer ? mod.wearer.getToxLoss() : 0
-	.["usermaxtoxins"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
+	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : FALSE
+	.["usertoxins"] = mod.wearer?.getToxLoss() || 0
+	.["usermaxtoxins"] = mod.wearer?.getMaxHealth() || 0
 	.["threatlevel"] = perceived_threat_level
 
 /obj/item/mod/module/rad_protection/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)

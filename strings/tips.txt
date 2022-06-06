@@ -36,6 +36,7 @@ If there's something you need from another department, try asking! This game isn
 You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
 Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.
 Don't be afraid to ask for help, whether from your peers or from admins.
+You can pin your MODsuit module buttons to your action bar in the suit UI.
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
@@ -100,7 +101,6 @@ As an Engineer, you can temporarily power the station solely with the solar arra
 As an Engineer, you can cool the supermatter crystal by spraying it with a fire extinguisher. Only for the brave!
 As an Engineer, you can repair windows by using a welding tool on them while not in combat mode.
 As an Engineer, you can lock APCs, fire alarms, emitters and radiation collectors using your ID card to prevent others from disabling them.
-As an Engineer, don't underestimate the humble P.A.C.M.A.N. generators. With upgraded parts, a couple units working in tandem are sufficient to take over for an exploded engine or shattered solars.
 As an Engineer, your departmental protolathe and circuit printer can manufacture the necessary circuit boards and components to build just about anything. Make extra medical machinery everywhere! Build a gibber for security! Set up an array of emitters pointing down the hall! The possibilities are endless!
 As an Engineer, you can pry open secure storage blast doors by disabling the engine room APC's main breaker. This is obviously a bad idea if the engine is running.
 As an Engineer, your RCD can be reloaded with iron, glass or plasteel sheets instead of just compressed matter cartridges.
