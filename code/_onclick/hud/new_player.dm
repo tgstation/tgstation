@@ -2,8 +2,13 @@
 
 /datum/hud/new_player/New(mob/owner)
 	..()
-	if (owner?.client?.interviewee)
+
+	if(!owner || !owner.client)
 		return
+
+	if (owner.client.interviewee)
+		return
+
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/button_type in buttons)
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
