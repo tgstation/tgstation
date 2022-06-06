@@ -55,6 +55,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	///UI for screentips that appear when you mouse over things
 	var/atom/movable/screen/screentip/screentip_text
 
+	///UI for announcements
+	var/atom/movable/screen/screentip/announcements/announcements_text
+
 	/// Whether or not screentips are enabled.
 	/// This is updated by the preference for cheaper reads than would be
 	/// had with a proc call, especially on one of the hottest procs in the
@@ -110,6 +113,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screentips_enabled = preferences?.read_preference(/datum/preference/choiced/enable_screentips)
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
+
+	announcements_text = new(null, src)
+	static_inventory += announcements_text
 
 	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
 		var/atom/movable/plane_master_controller/controller_instance = new mytype(null,src)

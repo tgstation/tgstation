@@ -10,6 +10,8 @@
 	var/event_sounds = list()
 	///Override this to have a custom message to show instead of the normal priority announcement
 	var/custom_alert_message
+	///The raw text of the above message, without html tags.
+	var/custom_alert_message_raw
 
 
 /datum/centcom_announcer/proc/get_rand_welcome_sound()

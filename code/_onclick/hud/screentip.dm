@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(announcements_huds)
+
 /atom/movable/screen/screentip
 	icon = null
 	icon_state = null
@@ -19,4 +21,25 @@
 		return
 	maptext_width = view_to_pixels(hud.mymob.client.view_size.getView())[1]
 
+/atom/movable/screen/screentip/announcements
+	screen_loc = "TOP,CENTER"
+	maptext_y = -30
+	maptext_x = -130
+	maptext_width = 300
+	maptext_height = 480
 
+/atom/movable/screen/screentip/announcements/Initialize(mapload, _hud)
+	. = ..()
+	GLOB.announcements_huds += src
+	maptext_width = 300
+
+/atom/movable/screen/screentip/announcements/Destroy()
+	GLOB.announcements_huds -= src
+	. = ..()
+
+/atom/movable/screen/screentip/announcements/proc/set_text(text, raw_msg)
+	maptext = text
+	addtimer(CALLBACK(src, .proc/clear_text), 10 SECONDS)
+
+/atom/movable/screen/screentip/announcements/proc/clear_text()
+	maptext = ""
