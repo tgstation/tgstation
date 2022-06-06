@@ -30,7 +30,7 @@
 	antimagic_flags = flags
 
 /obj/effect/forcefield/wizard/CanAllowThrough(atom/movable/mover, border_dir)
-	if(WEAKREF(mover) == caster_weakref)
+	if(IS_WEAKREF_OF(mover, caster_weakref))
 		return TRUE
 	if(isliving(mover))
 		var/mob/living/living_mover = mover
