@@ -338,7 +338,7 @@
 					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
 				var/amount = round(min(desired,50,smelt_amount))
-				if(amount < 1)
+				if(amount < 1) //no negative mats
 					return
 				mat_container.use_materials(alloy.materials, amount)
 				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)
