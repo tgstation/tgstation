@@ -253,3 +253,4 @@ Laying down will help slow down bloodloss. Death will halt it entirely.
 If you knock into somebody while doing a wicked grind on a skateboard, they will be floored for double the time. Radical!
 Sleeping can be used to recover from minor injuries. Sanity, darkness, blindfolds, earmuffs, tables, beds, and bedsheets affect the healing rate.
 You can cheat games by baking dice in microwaves to make them loaded. Cards can be seen with x-ray vision or be marked with either a pen or crayon to gain an edge.
+Some weapons are better at taking down robots and structures than others. Don't try to break a window with a scalpel, try a toolbox.
