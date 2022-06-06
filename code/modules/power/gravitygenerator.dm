@@ -375,7 +375,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 					middle.add_overlay(overlay_state)
 				current_overlay = overlay_state
 
-// Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
+// Shake everyone on the z level to let them know that gravity was enagaged/disengaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/T = get_turf(src)
 	var/sound/alert_sound = sound('sound/effects/alert.ogg')
