@@ -23,6 +23,9 @@ export const windowClose = () => {
 };
 /** Some QoL to hide the window on load. Doesn't log this event */
 export const windowLoad = () => {
+  Byond.winset('tgui_modal', {
+    pos: '694,602',
+  });
   setClosed();
 };
 /**
@@ -41,7 +44,6 @@ const setOpen = () => {
   Byond.winset('tgui_modal', {
     'is-visible': true,
     size: `${SIZE.width}x${SIZE.small}`,
-    pos: '694,602',
   });
   Byond.winset('tgui_modal.browser', {
     'is-visible': true,
