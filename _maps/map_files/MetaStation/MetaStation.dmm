@@ -60211,7 +60211,6 @@
 /turf/open/floor/plating,
 /area/station/science/ordnance)
 "vbN" = (
-/obj/structure/lattice,
 /turf/closed/wall/r_wall,
 /area/station/security/prison)
 "vbO" = (
