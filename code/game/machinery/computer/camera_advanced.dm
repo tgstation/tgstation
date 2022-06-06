@@ -3,6 +3,7 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
+	circuit = /obj/item/circuitboard/computer/advanced_camera
 	light_color = COLOR_SOFT_RED
 	var/list/z_lock = list() // Lock use to these z levels
 	var/lock_override = NONE
@@ -57,7 +58,6 @@
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
-	circuit = /obj/item/circuitboard/computer/advanced_camera
 
 /obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return //For syndie nuke shuttle, to spy for station.
