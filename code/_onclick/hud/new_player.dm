@@ -46,6 +46,12 @@
 	if(owner != REF(usr))
 		return
 
+	if(!usr.client || usr.client.interviewee)
+		return
+
+	if(usr.client.interviewee)
+		return
+
 	. = ..()
 
 	if(!enabled)
@@ -58,12 +64,18 @@
 	if(owner != REF(usr))
 		return
 
+	if(!usr.client || usr.client.interviewee)
+		return
+
 	. = ..()
 	highlighted = TRUE
 	update_appearance(UPDATE_ICON)
 
 /atom/movable/screen/lobby/button/MouseExited()
 	if(owner != REF(usr))
+		return
+
+	if(!usr.client || usr.client.interviewee)
 		return
 
 	. = ..()
