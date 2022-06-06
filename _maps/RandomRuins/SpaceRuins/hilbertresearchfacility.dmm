@@ -13,9 +13,9 @@
 "av" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
-	name = "Secured Door";
-	req_access = list("away_generic3")
+	name = "Secured Door"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
 "az" = (

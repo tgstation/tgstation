@@ -1,0 +1,4 @@
+author: "Pandarsenic"
+delete-after: True
+changes: 
+  - bugfix: "Corrected a couple of trivial typos."

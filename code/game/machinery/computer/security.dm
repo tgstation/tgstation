@@ -502,7 +502,7 @@ What a mess.*/
 				else if(I && check_access(I))
 					active1 = null
 					active2 = null
-					authenticated = I.registered_name
+					authenticated = (I.registered_name ? I.registered_name : "Unknown")
 					rank = I.assignment
 					screen = 1
 				else

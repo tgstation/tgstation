@@ -78,6 +78,10 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 	delays = list(POD_TRANSIT = 25, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
+	reversing = TRUE
+	stay_after_drop = TRUE
+	leavingSound = 'sound/effects/podwoosh.ogg'
+	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE, "Mecha"=FALSE)
 
 /obj/structure/closet/supplypod/centcompod
 	style = STYLE_CENTCOM

@@ -15,13 +15,14 @@
 		TRAIT_GENELESS,
 		TRAIT_NOHUNGER,
 		TRAIT_HARDLY_WOUNDED,
+		TRAIT_LITERATE,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
-	mutantlungs = /obj/item/organ/lungs/plasmaman
-	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
-	mutantliver = /obj/item/organ/liver/plasmaman
-	mutantstomach = /obj/item/organ/stomach/bone/plasmaman
+	mutantlungs = /obj/item/organ/internal/lungs/plasmaman
+	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
+	mutantliver = /obj/item/organ/internal/liver/plasmaman
+	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
 	burnmod = 1.5
 	heatmod = 1.5
 	brutemod = 1.5
@@ -64,7 +65,7 @@
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	var/atmos_sealed = TRUE
-	if(!HAS_TRAIT(H, TRAIT_NOFIRE))
+	if(HAS_TRAIT(H, TRAIT_NOFIRE))
 		atmos_sealed = FALSE
 	else if(!isclothing(H.wear_suit) || !(H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE))
 		atmos_sealed = FALSE

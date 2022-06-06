@@ -1,0 +1,5 @@
+author: "Jolly, sprites by Blueshirtguy"
+delete-after: True
+changes: 
+  - rscadd: "Jolly: Added the flower garland to the crafting tab under clothing! You'll need 4 of these flowers to craft it: poppies, harebells and roses. It'll also calm your nerves a bit, if you're on edge."
+  - imageadd: "Blueshirtguy: Sprites for the flower garland on-mob and icon sprites."

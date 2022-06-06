@@ -251,7 +251,7 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/plating/abductor2,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "me" = (
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/ctf)
@@ -467,7 +467,7 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/plating/abductor2,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "zF" = (
 /obj/effect/turf_decal/trimline/green/warning{
 	dir = 8
@@ -570,7 +570,7 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/plating/abductor,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "GH" = (
 /obj/structure/window/reinforced{
 	dir = 4;

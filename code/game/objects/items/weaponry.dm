@@ -644,6 +644,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 12
 	wound_bonus = -10
 	throwforce = 12
+	demolition_mod = 1.25
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)

@@ -26,10 +26,11 @@
 		TRAIT_XENO_IMMUNE,
 		TRAIT_NOCLONELOSS,
 		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_LITERATE,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutanttongue = /obj/item/organ/tongue/bone
-	mutantstomach = /obj/item/organ/stomach/bone
+	mutanttongue = /obj/item/organ/internal/tongue/bone
+	mutantstomach = /obj/item/organ/internal/stomach/bone
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
