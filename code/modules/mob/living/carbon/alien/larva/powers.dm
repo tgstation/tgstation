@@ -86,6 +86,9 @@
 	if(QDELETED(src) || QDELETED(owner) || !IsAvailable() || !alien_caste)
 		return
 
+	if(alien_caste == null)
+		return
+
 	var/mob/living/carbon/alien/humanoid/new_xeno
 	switch(alien_caste)
 		if("Hunter")
