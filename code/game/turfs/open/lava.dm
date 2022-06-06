@@ -127,13 +127,13 @@
 		if(ciggie.lit)
 			to_chat(user, span_warning("The [ciggie.name] is already lit!"))
 			return
-		if(prob(75))
-			ciggie.light(span_rose("[user] expertly dips \the [ciggie.name] into [src], lighting it with the scorching heat of the planet. Witnessing such a feat is almost enough to make you cry."))
-		else
+		if(prob(25) || (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
 			ciggie.light(span_warning("[user] expertly dips \the [ciggie.name] into [src], along with the rest of [user.p_their()] arm. What a dumbass."))
 			var/mob/living/carbon/human/blunderer = user
 			var/obj/item/bodypart/affecting = blunderer.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 			affecting?.receive_damage(burn = 90)
+		else
+			ciggie.light(span_rose("[user] expertly dips \the [ciggie.name] into [src], lighting it with the scorching heat of the planet. Witnessing such a feat is almost enough to make you cry."))
 		return
 
 /turf/open/lava/proc/is_safe()
