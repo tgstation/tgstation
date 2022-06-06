@@ -90,7 +90,7 @@
  */
 /datum/tgui_modal/proc/handle_entry(type, payload)
 	if(!payload || !payload["channel"] || !payload["entry"])
-		return FALSE
+		CRASH("[usr] entered in a null payload to the chat window.")
 	if(length(payload["entry"]) > max_length)
 		CRASH("[usr] has entered more characters than allowed into a tgui modal")
 	if(type == "entry")

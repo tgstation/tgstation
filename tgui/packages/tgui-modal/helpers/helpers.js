@@ -9,9 +9,9 @@ import { classes } from 'common/react';
  * Once byond signals this via keystroke, it
  * ensures window size, visibility, and focus.
  */
-export const windowOpen = () => {
+export const windowOpen = (channel) => {
   setOpen();
-  Byond.sendMessage('open');
+  Byond.sendMessage('open', { channel });
 };
 /**
  * Resets the state of the window and hides it from user view.

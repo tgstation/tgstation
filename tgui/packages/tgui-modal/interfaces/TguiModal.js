@@ -121,10 +121,6 @@ export class TguiModal extends Component {
     if (!event.keyCode) {
       return; // Really doubt it, but...
     }
-    // This gives only some degree of deniability to emotes and ooc.
-    // I don't want to add server side channel switching support to
-    // turn off chat bubbles because that is entire gameable:
-    // type whole message in ooc -> switch channels -> enter
     if (isAlphanumeric(event.keyCode) && channel < 2) {
       this.typingCooldown?.sendMessage();
     }
@@ -222,11 +218,12 @@ export class TguiModal extends Component {
       this.handleForce();
     });
     Byond.subscribeTo('open', (data) => {
-      this.reset(data.channel && CHANNELS.indexOf(data.channel));
+      const channel = CHANNELS.indexOf(data.channel) || 0;
+      this.reset(channel);
       setTimeout(() => {
         this.innerRef?.current?.focus();
       }, 1);
-      windowOpen();
+      windowOpen(CHANNELS[channel]);
     });
     windowLoad();
     this.typingCooldown = new CooldownWrapper('typing', 6000);

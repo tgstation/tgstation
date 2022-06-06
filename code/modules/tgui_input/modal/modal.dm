@@ -76,17 +76,24 @@
 /**
  * Sets the window as "opened" server side, though it is already
  * visible to the user. We do this to set local vars &&
- * start typing (if enabled). Logs the event.
+ * start typing (if enabled and in an IC channel). Logs the event.
+ *
+ * Arguments:
+ * payload - A list containing the channel the window was opened in.
  */
-/datum/tgui_modal/proc/open()
+/datum/tgui_modal/proc/open(payload)
 	if(!client?.mob)
 		CRASH(NULL_CLIENTMOB)
+	if(!payload || !payload["channel"])
+		CRASH("No channel provided to open TGUI modal")
 	window_open = TRUE
+	if(payload["channel"] == OOC_CHAN || payload["channel"] == ME_CHAN)
+		return TRUE
 	client?.mob.start_thinking()
 	if(client?.typing_indicators)
-		log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators enabled.")
+		log_speech_indicators("[key_name(client)] started typing IC at [loc_name(client?.mob)], indicators enabled.")
 	else
-		log_speech_indicators("[key_name(client)] started typing at [loc_name(client?.mob)], indicators DISABLED.")
+		log_speech_indicators("[key_name(client)] started typing IC at [loc_name(client?.mob)], indicators DISABLED.")
 	return TRUE
 
 /**
@@ -99,9 +106,9 @@
 	window_open = FALSE
 	client?.mob.cancel_thinking()
 	if(client?.typing_indicators)
-		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client?.mob)], indicators enabled.")
+		log_speech_indicators("[key_name(client)] stopped typing IC at [loc_name(client?.mob)], indicators enabled.")
 	else
-		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client?.mob)], indicators DISABLED.")
+		log_speech_indicators("[key_name(client)] stopped typing IC at [loc_name(client?.mob)], indicators DISABLED.")
 
 /**
  * The equivalent of ui_act, this waits on messages from the window
@@ -112,7 +119,7 @@
 		load()
 		return TRUE
 	if (type == "open")
-		open()
+		open(payload)
 		return TRUE
 	if (type == "close")
 		close()
