@@ -137,12 +137,12 @@
 		ACCESS_BAR,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SERVICE,
+		ACCESS_THEATRE,
 		ACCESS_WEAPONS,
 		)
 	extra_access = list(
 		ACCESS_HYDROPONICS,
 		ACCESS_KITCHEN,
-		ACCESS_THEATRE,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -224,10 +224,9 @@
 		ACCESS_CREMATORIUM,
 		ACCESS_MORGUE,
 		ACCESS_SERVICE,
-		)
-	extra_access = list(
 		ACCESS_THEATRE,
 		)
+	extra_access = list()
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
@@ -464,6 +463,7 @@
 		ACCESS_CARGO,
 		ACCESS_CHAPEL_OFFICE,
 		ACCESS_CHANGE_IDS,
+		ACCESS_CREMATORIUM,
 		ACCESS_COMMAND,
 		ACCESS_CONSTRUCTION,
 		ACCESS_COURT,
@@ -652,7 +652,6 @@
 		ACCESS_SERVICE,
 		)
 	extra_access = list(
-		ACCESS_PHARMACY,
 		ACCESS_SURGERY,
 		)
 	template_access = list(
@@ -1002,7 +1001,6 @@
 		ACCESS_VIROLOGY,
 		)
 	extra_access = list(
-		ACCESS_PHARMACY,
 		ACCESS_PLUMBING,
 		ACCESS_MORGUE,
 		ACCESS_SURGERY,
