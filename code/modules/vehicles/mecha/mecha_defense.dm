@@ -281,19 +281,19 @@
 	if(!attacking_item.force)
 		return
 
-	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1)
-	try_damage_component(damage, user.zone_selected)
+	var/damage_taken = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, 1)
+	try_damage_component(damage_taken, user.zone_selected)
 
 	var/hit_verb = length(attacking_item.attack_verb_simple) ? "[pick(attacking_item.attack_verb_simple)]" : "hit"
 	user.visible_message(
-		span_danger("[user] [hit_verb][plural_s(hit_verb)] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"),
-		span_danger("You [hit_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"),
+		span_danger("[user] [hit_verb][plural_s(hit_verb)] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]"),
+		span_danger("You [hit_verb] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]"),
 		span_hear("You hear a [hit_verb]."),
 		COMBAT_MESSAGE_RANGE,
 	)
 
 	log_combat(user, src, "attacked", attacking_item)
-	log_message("Attacked by [user]. Item - [attacking_item], Damage - [damage]", LOG_MECHA)
+	log_message("Attacked by [user]. Item - [attacking_item], Damage - [damage_taken]", LOG_MECHA)
 
 /obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/I)
 	..()
