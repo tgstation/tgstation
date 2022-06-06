@@ -23,8 +23,6 @@
 	to_modify.cone_levels += 2  // Cone fwooshes further, and...
 	to_modify.self_throw_range += 1 // the breath throws the user back more
 
-	return .
-
 /datum/action/cooldown/spell/cone/staggered/fire_breath
 	name = "Fire Breath"
 	desc = "You breathe a cone of fire directly in front of you."

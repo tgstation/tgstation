@@ -17,8 +17,6 @@
 
 	to_modify.sensitivity = GET_MUTATION_SYNCHRONIZER(src)
 
-	return .
-
 /datum/action/cooldown/spell/olfaction
 	name = "Remember the Scent"
 	desc = "Get a scent off of the item you're currently holding to track it. \
