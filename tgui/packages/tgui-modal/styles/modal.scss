@@ -38,11 +38,10 @@ $color-ooc-highlight: #ffd631;
 .window {
   background: $window-background;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   font-family: 'Consolas', monospace;
   margin: 0 auto;
   max-width: 231px;
-  padding: 0.2rem 0 0.4rem 0.2rem;
   position: relative;
   width: 100%;
 }
@@ -57,6 +56,27 @@ $color-ooc-highlight: #ffd631;
 
 .window-70 {
   height: 70px;
+}
+
+.window__content {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.dragzone-top {
+  height: 4px;
+  width: 100%;
+}
+
+.dragzone-bottom {
+  height: 4px;
+  width: 100%;
+}
+
+.dragzone-vertical {
+  height: 100%;
+  width: 3px;
 }
 
 .window-say {
@@ -169,8 +189,7 @@ $color-ooc-highlight: #ffd631;
   font-family: inherit;
   font-weight: bold;
   font-size: 0.9rem;
-  margin-top: 1px;
-  padding: 0;
+  height: 1.5rem;
   text-align: center;
   vertical-align: middle;
   width: 4rem;
@@ -228,7 +247,7 @@ $color-ooc-highlight: #ffd631;
   color: $window-background;
   font-family: "Lucida Console", monospace;
   font-size: 1rem;
-  margin-top: 0.2rem;
+  margin-top: 1px;
   width: 100%;
 }
 

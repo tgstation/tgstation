@@ -1,6 +1,7 @@
 import { Component } from 'inferno';
 import { TextArea } from 'tgui/components';
 import { CHANNELS, SIZE } from '../constants/constants';
+import { Dragzone } from '../components/dragzone';
 import {
   KEY_BACKSPACE,
   KEY_DELETE,
@@ -251,28 +252,34 @@ export class TguiModal extends Component {
     const { buttonContent, channel, edited, size } = this.state;
     return (
       <div className={getCss('window', channel, size)}>
-        {size < SIZE.medium && (
-          <button
-            className={getCss('button', channel)}
-            onclick={handleClick}
-            onmouseenter={handleFocus}
-            onmouseleave={handleBlur}
-            type="submit">
-            {buttonContent}
-          </button>
-        )}
-        <TextArea
-          className={getCss('input', channel, size)}
-          dontUseTabForIndent
-          maxLength={maxLength}
-          onEnter={handleEnter}
-          onEscape={handleEscape}
-          onInput={handleInput}
-          onKeyDown={handleKeyDown}
-          selfClear
-          setInnerRef={setInnerRef}
-          value={edited && value}
-        />
+        <Dragzone top />
+        <div className="window__content">
+          <Dragzone vertical />
+          {size < SIZE.medium && (
+            <button
+              className={getCss('button', channel)}
+              onclick={handleClick}
+              onmouseenter={handleFocus}
+              onmouseleave={handleBlur}
+              type="submit">
+              {buttonContent}
+            </button>
+          )}
+          <TextArea
+            className={getCss('input', channel, size)}
+            dontUseTabForIndent
+            maxLength={maxLength}
+            onEnter={handleEnter}
+            onEscape={handleEscape}
+            onInput={handleInput}
+            onKeyDown={handleKeyDown}
+            selfClear
+            setInnerRef={setInnerRef}
+            value={edited && value}
+          />
+          <Dragzone vertical />
+        </div>
+        <Dragzone bottom />
       </div>
     );
   }
