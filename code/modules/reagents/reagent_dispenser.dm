@@ -124,13 +124,22 @@
 	//overlay of attached assemblies
 	var/mutable_appearance/assembliesoverlay
 	/// The last person to rig this fuel tank - Stored with the object. Only the last person matters for investigation
-	var/lastrigger = ""
+	var/last_rigger = ""
 
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
 
 	if(SSevents.holidays?[APRIL_FOOLS])
 		icon_state = "fuel_fools"
+
+/obj/structure/reagent_dispensers/fueltank/Destroy()
+	QDEL_NULL(rig)
+	return ..()
+
+/obj/structure/reagent_dispensers/fueltank/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == rig)
+		rig = null
 
 /obj/structure/reagent_dispensers/fueltank/examine(mob/user)
 	. = ..()
@@ -143,13 +152,15 @@
 		return
 	if(!rig)
 		return
-	user.visible_message(span_notice("[user] begins to detach [rig] from [src]..."), span_notice("You begin to detach [rig] from [src]..."))
+	user.balloon_alert_to_viewers("detaching rig...")
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
-	user.visible_message(span_notice("[user] detaches [rig] from [src]."), span_notice("You detach [rig] from [src]."))
-	rig.forceMove(get_turf(user))
+	user.balloon_alert_to_viewers("detached rig")
+	log_message("[key_name(user)] detached [rig] from [src]", LOG_GAME)
+	if(!user.put_in_hands(rig))
+		rig.forceMove(get_turf(user))
 	rig = null
-	lastrigger = null
+	last_rigger = null
 	cut_overlays(assembliesoverlay)
 	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
@@ -158,7 +169,7 @@
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/proc/rig_boom()
-	log_bomber(lastrigger, "rigged fuel tank exploded", src)
+	log_bomber(last_rigger, "rigged fuel tank exploded", src)
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
@@ -203,23 +214,24 @@
 		return
 	if(istype(I, /obj/item/assembly_holder) && accepts_rig)
 		if(rig)
-			to_chat(user, span_warning("There is another device in the way!"))
+			user.balloon_alert("another device is in the way!")
 			return ..()
-		user.visible_message(span_notice("[user] begins rigging [I] to [src]..."), span_notice("You begin rigging [I] to [src]..."))
-		if(do_after(user, 20, target = src))
-			user.visible_message(span_notice("[user] rigs [I] to [src]."), span_notice("You rig [I] to [src]."))
-			var/obj/item/assembly_holder/holder = I
-			if(locate(/obj/item/assembly/igniter) in holder.assemblies)
-				rig = holder
-				if(!user.transferItemToLoc(holder, src))
-					return
-				log_bomber(user, "rigged [name] with [holder.name] for explosion", src)
-				lastrigger = user
-				assembliesoverlay = holder
-				assembliesoverlay.pixel_x += 6
-				assembliesoverlay.pixel_y += 1
-				add_overlay(assembliesoverlay)
-				RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/rig_boom)
+		user.balloon_alert_to_viewers("attaching rig...")
+		if(!do_after(user, 2 SECONDS, target = src))
+			return
+		user.balloon_alert_to_viewers("attached rig")
+		var/obj/item/assembly_holder/holder = I
+		if(locate(/obj/item/assembly/igniter) in holder.assemblies)
+			rig = holder
+			if(!user.transferItemToLoc(holder, src))
+				return
+			log_bomber(user, "rigged [name] with [holder.name] for explosion", src)
+			last_rigger = user
+			assembliesoverlay = holder
+			assembliesoverlay.pixel_x += 6
+			assembliesoverlay.pixel_y += 1
+			add_overlay(assembliesoverlay)
+			RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/rig_boom)
 		return
 	return ..()
 
