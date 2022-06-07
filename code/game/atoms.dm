@@ -333,7 +333,21 @@
 
 	return ..()
 
-/atom/proc/create_storage(max_slots, max_specific_storage, max_total_storage, numerical_stacking = FALSE, allow_quick_gather = FALSE, allow_quick_empty = FALSE, collection_mode = COLLECT_ONE, attack_hand_interact = TRUE, list/canhold, list/canthold)
+/atom/proc/create_storage(max_slots = 7, \
+	max_specific_storage = WEIGHT_CLASS_NORMAL, \
+	max_total_storage = 14, \
+	numerical_stacking = FALSE, \
+	allow_quick_gather = FALSE, \
+	allow_quick_empty = FALSE, \
+	collection_mode = COLLECT_ONE, \
+	attack_hand_interact = TRUE, \
+	list/canhold, \
+	list/canthold, \
+	)
+
+	if(atom_storage)
+		QDEL_NULL(atom_storage)
+
 	atom_storage = new(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
 	atom_storage.set_holdable(canhold, canthold)
 
@@ -997,8 +1011,8 @@
  * TODO these should be purely component items that intercept the atom clicks higher in the
  * call chain
  */
-/atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	if(GetComponent(/datum/component/storage))
+/atom/proc/storage_contents_dump_act(obj/item/src_object, mob/user)
+	if(atom_storage)
 		return component_storage_contents_dump_act(src_object, user)
 	return FALSE
 
@@ -1011,16 +1025,15 @@
  * TODO these should be purely component items that intercept the atom clicks higher in the
  * call chain
  */
-/atom/proc/component_storage_contents_dump_act(datum/component/storage/src_object, mob/user)
-	var/list/things = src_object.contents()
+/atom/proc/component_storage_contents_dump_act(obj/item/src_object, mob/user)
+	var/list/things = src_object.contents
 	var/datum/progressbar/progress = new(user, things.len, src)
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	while (do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
+	while (do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(atom_storage, /datum/storage.proc/handle_mass_pickup, user, things, src_object, list(), progress)))
 		stoplag(1)
 	progress.end_progress()
-	to_chat(user, span_notice("You dump as much of [src_object.parent]'s contents [STR.insert_preposition]to [src] as you can."))
-	STR.orient2hud(user)
-	src_object.orient2hud(user)
+	to_chat(user, span_notice("You dump as much of [src_object]'s contents [atom_storage.insert_preposition]to [src] as you can."))
+	atom_storage.orient_to_hud(user)
+	src_object.atom_storage.orient_to_hud(user)
 	if(user.active_storage) //refresh the HUD to show the transfered contents
 		user.active_storage.refresh_views()
 	return TRUE

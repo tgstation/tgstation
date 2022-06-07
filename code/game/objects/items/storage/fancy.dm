@@ -85,11 +85,10 @@
 	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
 
-/obj/item/storage/fancy/donut_box/ComponentInitialize()
+/obj/item/storage/fancy/donut_box/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/food/donut))
+	atom_storage.max_slots = 6
+	atom_storage.set_holdable(list(/obj/item/food/donut))
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
 	. = ..()
@@ -133,11 +132,10 @@
 	spawn_type = /obj/item/food/egg
 	contents_tag = "egg"
 
-/obj/item/storage/fancy/egg_box/ComponentInitialize()
+/obj/item/storage/fancy/egg_box/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 12
-	STR.set_holdable(list(/obj/item/food/egg))
+	atom_storage.max_slots = 12
+	atom_storage.set_holdable(list(/obj/item/food/egg))
 
 /*
  * Candle Box
@@ -157,10 +155,9 @@
 	is_open = TRUE
 	contents_tag = "candle"
 
-/obj/item/storage/fancy/candle_box/ComponentInitialize()
+/obj/item/storage/fancy/candle_box/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
+	atom_storage.max_slots = 5
 
 /obj/item/storage/fancy/candle_box/attack_self(mob/user)
 	if(!contents.len)
@@ -208,15 +205,14 @@
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"
 	desc = "An old cigarette packet with the back torn off, worth less than nothing now."
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 0
+	atom_storage.max_slots = 0
 	return
 
-/obj/item/storage/fancy/cigarettes/ComponentInitialize()
+/obj/item/storage/fancy/cigarettes/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	atom_storage.max_slots = 6
+	atom_storage.quickdraw = TRUE
+	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
@@ -224,18 +220,6 @@
 	. += span_notice("Alt-click to extract contents.")
 	if(spawn_coupon)
 		. += span_notice("There's a coupon on the back of the pack! You can tear it off once it's empty.")
-
-/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
-		return
-	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
-	if(W && contents.len > 0)
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
-		user.put_in_hands(W)
-		contents -= W
-		to_chat(user, span_notice("You take \a [W] out of the pack."))
-	else
-		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
 
 /obj/item/storage/fancy/cigarettes/update_icon_state()
 	. = ..()
@@ -266,24 +250,6 @@
 
 		. += "[use_icon_state]_[cig_position]"
 		cig_position++
-
-/obj/item/storage/fancy/cigarettes/attack(mob/living/carbon/target, mob/living/carbon/user)
-	if(!istype(target))
-		return
-
-	var/obj/item/clothing/mask/cigarette/cig = locate() in contents
-	if(!cig)
-		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
-		return
-	if(target != user || !contents.len || user.wear_mask)
-		return ..()
-
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, cig, target)
-	target.equip_to_slot_if_possible(cig, ITEM_SLOT_MASK)
-	contents -= cig
-	to_chat(user, span_notice("You take \a [cig] out of the pack."))
-	return
-
 
 /obj/item/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"
@@ -388,7 +354,7 @@
 	spawn_type = /obj/item/rollingpaper
 	custom_price = PAYCHECK_LOWER
 
-/obj/item/storage/fancy/rollingpapers/ComponentInitialize()
+/obj/item/storage/fancy/rollingpapers/Initialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
@@ -420,11 +386,10 @@
 	spawn_coupon = FALSE
 	display_cigs = FALSE
 
-/obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
+/obj/item/storage/fancy/cigarettes/cigars/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
-	STR.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
+	atom_storage.max_slots = 5
+	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	. = ..()
@@ -470,11 +435,10 @@
 	contents_tag = "chocolate"
 	spawn_type = /obj/item/food/tinychocolate
 
-/obj/item/storage/fancy/heart_box/ComponentInitialize()
+/obj/item/storage/fancy/heart_box/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 8
-	STR.set_holdable(list(/obj/item/food/tinychocolate))
+	atom_storage.max_slots = 8
+	atom_storage.set_holdable(list(/obj/item/food/tinychocolate))
 
 
 /obj/item/storage/fancy/nugget_box
@@ -486,8 +450,7 @@
 	contents_tag = "nugget"
 	spawn_type = /obj/item/food/nugget
 
-/obj/item/storage/fancy/nugget_box/ComponentInitialize()
+/obj/item/storage/fancy/nugget_box/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/food/nugget))
+	atom_storage.max_slots = 6
+	atom_storage.set_holdable(list(/obj/item/food/nugget))

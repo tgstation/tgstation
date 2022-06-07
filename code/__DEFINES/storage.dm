@@ -5,9 +5,6 @@
 #define COLLECT_EVERYTHING 1
 #define COLLECT_SAME 2
 
-// Nullspace storage
-#define STORAGE_NULL "storage_null"
-
 // Drop style defines
 #define DROP_NOTHING 0
 #define DROP_AT_PARENT 1
