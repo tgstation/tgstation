@@ -202,12 +202,14 @@ export class TguiModal extends Component {
       this.value = getHistoryAt(historyCounter);
       Byond.sendMessage('typing');
       this.setState({ buttonContent: historyCounter, edited: true });
+      this.setSize(0);
     } else {
       this.value = '';
       this.setState({
         buttonContent: CHANNELS[channel],
         edited: true,
       });
+      this.setSize(0);
     }
   };
   /** Attach listeners, sets window size just in case */
