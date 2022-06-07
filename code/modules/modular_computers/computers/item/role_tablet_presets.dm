@@ -122,7 +122,7 @@
 		/datum/computer_file/program/robocontrol,
 	)
 
-/obj/item/modular_computer/tablet/pda/quartermaster/Initialize(mapload)
+/obj/item/modular_computer/tablet/pda/heads/quartermaster/Initialize(mapload)
 	. = ..()
 	install_component(new /obj/item/computer_hardware/printer/mini)
 
