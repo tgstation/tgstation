@@ -25,7 +25,7 @@
 	///What color is our demand connect?
 	var/demand_color = "#ff0000" // red
 	///What color is our supply connect?
-	var/supply_color = "#0000ff" // blue
+	var/supply_color = COLOR_BLUE
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
 /datum/component/plumbing/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
