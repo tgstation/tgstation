@@ -181,3 +181,79 @@
   vincentiusvin:
   - bugfix: fixed a bigger dose of zombie powder permasleeping you
   - bugfix: fixed regular scientists spawning in RD's office in kilo
+2022-06-07:
+  13spacemen:
+  - rscadd: You can now add assemblies to welding fuel tanks to blow them up
+  ATHATH:
+  - rscadd: Bulky crowbars have been added to all fire-safety lockers.
+  - spellcheck: Large crowbars are now named "large crowbars" instead of just "crowbars".
+  - bugfix: Unholy water's stun length reduction effect is now as potent as it was
+      intended to be. Its strength was previously half as strong as it was intended
+      to be due to a copy+paste error.
+  CocaColaTastesGood:
+  - bugfix: Fixes stack multiplier exploit
+  Fikou:
+  - qol: ninjas now get told about pinning modules and the direction to the station
+  - bugfix: fixes modsuits fucking up when unequipping every item, like staff of change
+      or slime toxin or whatever
+  Iamgoofball:
+  - bugfix: You can no longer roll more IDs to steal than there are crewmembers for
+      All Access Fan.
+  - bugfix: Firelocks no longer check the atmospheric contents of solid walls.
+  - bugfix: Health Analyzers now properly flag robotic and prosthetic limbs again.
+  Iatots:
+  - imageadd: Hot Cocoa and Tea now come in mugs again.
+  Jolly, sprites by Blueshirtguy:
+  - rscadd: 'Jolly: Added the flower garland to the crafting tab under clothing! You''ll
+      need 4 of these flowers to craft it: poppies, harebells and roses. It''ll also
+      calm your nerves a bit, if you''re on edge.'
+  - imageadd: 'Blueshirtguy: Sprites for the flower garland on-mob and icon sprites.'
+  Mooshimi:
+  - bugfix: There is now air in the Deltastation security escape pod airlock.
+  Mothblocks:
+  - bugfix: Fixed Adminwho taking several seconds to resolve.
+  Pandarsenic:
+  - bugfix: Corrected a couple of trivial typos.
+  RandomGamer123:
+  - bugfix: Nameless ID cards (with security access) can now access the security records
+      console without issue
+  ReinaCoder:
+  - imageadd: The Soviet costume has been resprited and the russian mobs have been
+      updated to match.
+  Son-of-Space:
+  - bugfix: You can no longer get objectives on a random tile in maintenance on TramStation,
+      along with any other area/based assignments.
+  - bugfix: You can now properly pull or cancel a fire alarm from outside the eastern
+      side of the library on MetaStation.
+  - bugfix: Inspect bounties no longer give you invalid areas to scan for bounties
+  - bugfix: Inspect bounties now properly choose from a broader range of assignments
+      in service, maintenance, commons, etc.
+  SpaceSmithers:
+  - qol: The Tip of the Round will no longer misinform you about PACMAN generators.
+  Wallem:
+  - rscdel: Full Ant Party Pizza pies has been removed. Instead, you can get ant pizza
+      slices by pouring ants on margherita pizza slices.
+  itseasytosee:
+  - balance: Some items are better at damaging structures and robots than others!
+      Don't try to kill a metal death robot with a scalpel, use a toolbox!
+  robbertapir:
+  - bugfix: Photon projector implants can no longer be used in assemblies. This means
+      that they can no longer bilocate.
+  san7890:
+  - rscadd: Nanotrasen has finally tracked down an elusive signal that's been haunting
+      them over all of their broadcasts... there appears to be a new Syndicate Listening
+      Base commissioned.
+  - balance: The odds for a Syndicate Communications Agent (the Space kind) is now
+      at an 15% chance to spawn.
+  - balance: Nanotrasen has now implemented a "buffer zone" on IceBoxStation between
+      the wilderness portions of the moon and the parts where there is a station presence.
+      Hopefully, you should see a lot less fauna try to make their way on station.
+  silicons:
+  - bugfix: infinite loop on process_hit in projectiles when hitting ON_BORDER objects,
+      like windoors
+  timothymtorres:
+  - bugfix: Fix drones not being able to use computers or vault.
+  - bugfix: Fix monkeys being able to read or write.  They are now illiterate however
+      they can gain literacy through the Clever mutation.
+  - bugfix: Fix illiterate mobs being able to receive tablet messages in their chat
+      log.
