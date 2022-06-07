@@ -490,7 +490,7 @@
 	extra_wildcard_access = list()
 	template_access = list(
 		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS
+		ACCESS_CHANGE_IDS,
 	)
 	job = /datum/job/head_of_personnel
 
