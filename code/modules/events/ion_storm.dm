@@ -48,7 +48,7 @@
 			if(prob(shuffleLawsChance))
 				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
 
-			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
+			log_silicon("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
 			M.post_lawchange()
 
 	if(botEmagChance)

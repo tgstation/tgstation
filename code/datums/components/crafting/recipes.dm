@@ -806,13 +806,13 @@
 	name = "Curtains"
 	reqs = list(/obj/item/stack/sheet/cloth = 4, /obj/item/stack/rods = 1)
 	result = /obj/structure/curtain/cloth
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/showercurtain
 	name = "Shower Curtains"
 	reqs = list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/sheet/plastic = 2, /obj/item/stack/rods = 1)
 	result = /obj/structure/curtain
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/extendohand_r
 	name = "Extendo-Hand (Right Arm)"
@@ -1082,7 +1082,7 @@
 				/obj/item/stack/sheet/mineral/wood = 20,
 				/obj/item/stack/cable_coil = 10)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/aitater
 	name = "intelliTater"
@@ -1234,7 +1234,7 @@
 				/obj/item/stack/sheet/mineral/zaukerite = 15,
 				/obj/item/stack/sheet/iron = 30,
 				)
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/bluespace_vendor_mount
 	name = "Bluespace Vendor Wall Mount"
@@ -1278,7 +1278,7 @@
 				/obj/item/stack/sheet/glass = 10,
 				/obj/item/aquarium_kit = 1
 				)
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/mod_core_standard
 	name = "MOD core (Standard)"
@@ -1738,6 +1738,15 @@
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
 	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
+
+/datum/crafting_recipe/steam_vent
+	name = "Steam Vent"
+	result = /obj/structure/steam_vent
+	time = 8
+	reqs = list(/obj/item/stack/sheet/iron = 2,
+				/obj/item/stack/tile/iron = 1,
+				/obj/item/stock_parts/water_recycler = 1)
+	category = CAT_STRUCTURE
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE
