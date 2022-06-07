@@ -35,7 +35,7 @@
  * source - our plant
  * user - the mob wielding our [source]
  */
-/datum/element/plant_backfire/proc/attack_safety_check(datum/source, atom/target, mob/user)
+/datum/element/plant_backfire/proc/attack_safety_check(obj/item/source, atom/target, mob/user)
 	SIGNAL_HANDLER
 
 	if(!backfire(source, user))
@@ -49,7 +49,7 @@
  * source - our plant
  * user - the mob picking our [source]
  */
-/datum/element/plant_backfire/proc/pickup_safety_check(datum/source, mob/user)
+/datum/element/plant_backfire/proc/pickup_safety_check(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
 	backfire(source, user)
@@ -60,7 +60,7 @@
  * source - our plant
  * thrower - the mob throwing our [source]
  */
-/datum/element/plant_backfire/proc/throw_safety_check(datum/source, list/arguments)
+/datum/element/plant_backfire/proc/throw_safety_check(obj/item/source, list/arguments)
 	SIGNAL_HANDLER
 
 	var/mob/living/thrower = arguments[4] // the 4th arg = the mob throwing our item
@@ -112,8 +112,7 @@
 		if(HAS_TRAIT(user, checked_trait))
 			return TRUE
 
-	var/obj/item/parent_item = plant
-	var/obj/item/seeds/our_seed = parent_item.get_plant_seed()
+	var/obj/item/seeds/our_seed = plant.get_plant_seed()
 	if(our_seed)
 		for(var/checked_gene in extra_genes)
 			if(!our_seed.get_gene(checked_gene))
