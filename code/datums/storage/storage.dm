@@ -601,15 +601,18 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	attempt_remove(to_remove)
 
-	if(!toshow.put_in_hands(to_remove))
-		if(!silent)
-			to_chat(toshow, span_notice("You fumble for [to_remove] and it falls on the floor."))
-		return TRUE
+	INVOKE_ASYNC(src, .proc/put_in_hands_async, toshow, to_remove)
 	
 	if(!silent)
 		toshow.visible_message(span_warning("[toshow] draws [to_remove] from [resolve_parent]!"), span_notice("You draw [to_remove] from [resolve_parent]."))
 
 	return TRUE
+
+/datum/storage/proc/put_in_hands_async(mob/toshow, obj/item/toremove)
+	if(!toshow.put_in_hands(toremove))
+		if(!silent)
+			to_chat(toshow, span_notice("You fumble for [to_remove] and it falls on the floor."))
+		return TRUE
 
 /datum/storage/proc/close_distance(datum/source)
 	SIGNAL_HANDLER
