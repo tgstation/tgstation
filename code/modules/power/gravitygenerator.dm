@@ -167,6 +167,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	QDEL_NULL(gravity_field)
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/internal_parts as anything in generator_parts)
+		internal_parts.main_part = null
 		if(!QDESTROYING(internal_parts))
 			qdel(internal_parts)
 	return ..()
