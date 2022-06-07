@@ -10276,6 +10276,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "cMw" = (
@@ -13488,6 +13491,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -19791,12 +19797,11 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "fni" = (
-/obj/machinery/disposal/bin,
-/obj/effect/turf_decal/bot,
+/obj/machinery/chem_heater/withbuffer,
+/obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "fnj" = (
@@ -26226,15 +26231,13 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "hbj" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	sortType = 11;
-	name = "Pharmacy Junction"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay)
 "hbo" = (
@@ -31328,7 +31331,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/navigate_destination,
 /obj/machinery/duct,
-/turf/open/floor/iron/dark,
+/turf/closed/wall/r_wall,
 /area/station/science/genetics)
 "iqr" = (
 /obj/structure/chair/stool/bar/directional/south,
@@ -33111,6 +33114,10 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/grimy,
 /area/station/command/bridge)
+"iOT" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/closed/wall/r_wall,
+/area/station/medical/pharmacy)
 "iOU" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "portbow_maint_shutters"
@@ -33937,10 +33944,10 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "iZY" = (
@@ -38269,6 +38276,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
+/obj/item/storage/medkit/emergency,
 /obj/item/toy/figure/paramedic,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
@@ -41877,6 +41885,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"lbZ" = (
+/turf/closed/wall/r_wall,
+/area/station/science/genetics)
 "lce" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -43443,12 +43454,13 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison)
 "lwB" = (
-/obj/machinery/chem_heater/withbuffer,
-/obj/effect/turf_decal/bot_red,
+/obj/machinery/status_display/evac/directional/west,
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "lwE" = (
@@ -52560,7 +52572,6 @@
 /area/station/science/robotics/lab)
 "nRI" = (
 /obj/structure/table/reinforced,
-/obj/machinery/newscaster/directional/east,
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/matter_bin{
 	pixel_x = 3;
@@ -54424,6 +54435,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "orL" = (
@@ -64678,7 +64690,9 @@
 	network = list("ss13","medbay")
 	},
 /obj/machinery/newscaster/directional/south,
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "raw" = (
@@ -64804,9 +64818,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay/lobby)
 "rbB" = (
 /obj/structure/table/wood,
@@ -67417,7 +67431,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "rNQ" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/medical/pharmacy)
 "rNR" = (
 /obj/structure/table/wood,
@@ -82772,6 +82786,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"vGZ" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/chemistry)
 "vHh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -84930,9 +84950,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -88777,7 +88794,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "xgr" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/science/lab)
 "xgs" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -90681,7 +90698,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "xDO" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/space)
 "xDP" = (
 /obj/structure/sign/nanotrasen{
@@ -91980,10 +91997,12 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "xVF" = (
-/obj/structure/disposalpipe/junction/flip{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 4;
+	sortType = 11;
+	name = "Pharmacy Junction"
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "xVI" = (
@@ -127742,19 +127761,19 @@ hnj
 kCP
 tlX
 tlX
-akK
-akK
-akK
-akK
-akK
-akK
-akK
-akK
-akK
-akK
-akK
-akK
-akK
+rTo
+rTo
+rTo
+rTo
+rTo
+rTo
+rTo
+rTo
+rTo
+rTo
+rTo
+rTo
+rTo
 ljZ
 uFT
 rTo
@@ -127999,7 +128018,7 @@ tlX
 tlX
 tlX
 tlX
-akK
+rTo
 geG
 dBr
 iYV
@@ -128010,8 +128029,8 @@ spO
 jKE
 wcr
 dBr
-dBr
-iVE
+vGZ
+rTo
 ljZ
 tlX
 sFX
@@ -128256,7 +128275,7 @@ akK
 akK
 akK
 akK
-akK
+rTo
 ofW
 eKe
 eKe
@@ -128267,7 +128286,7 @@ bqW
 bqW
 bqW
 aUX
-bgd
+qDL
 rTo
 ljZ
 uFT
@@ -128486,8 +128505,8 @@ bBO
 kxg
 hJs
 xmX
-oJD
-oJD
+lbZ
+lbZ
 jii
 jii
 oJD
@@ -128524,8 +128543,8 @@ jjn
 laE
 laE
 skI
-bgd
-rTo
+eKe
+iVE
 vxQ
 bsg
 rTo
@@ -128743,7 +128762,7 @@ bBO
 szH
 whK
 nMF
-oJD
+lbZ
 ktX
 tma
 cFD
@@ -129000,7 +129019,7 @@ xKb
 avR
 whK
 gmh
-oJD
+lbZ
 tOe
 bkP
 vMe
@@ -129257,7 +129276,7 @@ xKb
 avR
 whK
 gmh
-oJD
+lbZ
 hfN
 osl
 tYH
@@ -129514,16 +129533,16 @@ xKb
 avR
 qLG
 gmh
-oJD
+lbZ
 qCF
 gQR
 nek
 kPJ
 otd
 wVk
-oJD
+lbZ
 xgr
-xgr
+qJf
 xgr
 xgr
 mrg
@@ -129771,8 +129790,8 @@ bBO
 iLc
 pHt
 gmh
-oJD
-oJD
+lbZ
+lbZ
 lGl
 gYp
 qHh
@@ -130035,7 +130054,7 @@ gee
 iOY
 dhB
 wmZ
-oJD
+lbZ
 cRV
 iIt
 aXG
@@ -130292,7 +130311,7 @@ wlN
 aBl
 cOI
 pur
-oJD
+lbZ
 xWf
 ygJ
 xWf
@@ -130549,7 +130568,7 @@ lbG
 ifL
 cfH
 tNw
-oJD
+lbZ
 lVB
 iry
 xWH
@@ -130800,13 +130819,13 @@ qAh
 whK
 qPf
 xDO
-oJD
-oJD
-oJD
-oJD
-oJD
-oJD
-oJD
+lbZ
+lbZ
+lbZ
+lbZ
+lbZ
+lbZ
+lbZ
 rXv
 cdI
 nvY
@@ -133118,7 +133137,7 @@ iUd
 rNQ
 sif
 lXr
-fvF
+iOT
 rNQ
 tUM
 unH
