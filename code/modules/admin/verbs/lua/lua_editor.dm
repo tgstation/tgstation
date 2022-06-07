@@ -92,6 +92,35 @@
 	data["callArguments"] = kvpify_list(refify_list(arguments))
 	return data
 
+/datum/lua_editor/proc/traverse_list(list/path, list/root, traversal_depth_offset = 0)
+	var/top_affected_list_depth = LAZYLEN(path)-traversal_depth_offset // The depth of the element to get
+	if(top_affected_list_depth)
+		var/list/current_list = root
+		// We kvpify the list to the depth of the element to get - this allows us to reach list elements contained within a assoc list's key
+		var/list/path_list = kvpify_list(current_list, top_affected_list_depth-1)
+		while(LAZYLEN(path) > traversal_depth_offset)
+			// Navigate to the index of the next path element within the current path element
+			var/list/path_element = popleft(path)
+			var/list/list_element = path_list[path_element["index"]]
+
+			// Enter the next path element - be it the key or the value
+			switch(path_element["type"])
+				if("key")
+					path_list = list_element["key"]
+				if("value")
+					path_list = list_element["value"]
+				else
+					to_chat(usr, span_warning("invalid path element type \[[path_element["type"]]] for argument move (expected \"key\" or \"value\""))
+					return
+			// The element we are entering SHOULD be a list
+			if(!islist(path_list))
+				to_chat(usr, span_warning("invalid path element \[[path_list]] for argument move (expected a list)"))
+				return
+			current_list = path_list
+		return current_list
+	else
+		return root
+
 /datum/lua_editor/ui_act(action, list/params)
 	. = ..()
 	if(.)
@@ -118,104 +147,27 @@
 			current_state.load_script(code)
 			return TRUE
 		if("moveArgUp")
-			var/list/recursive_indices = params["path"]
-			var/top_affected_list_depth = LAZYLEN(recursive_indices)-1
-			var/list/target_list
-			if(top_affected_list_depth)
-				var/list/path_list = kvpify_list(arguments, top_affected_list_depth-1)
-				while(LAZYLEN(recursive_indices) > 1)
-					var/list/path_element = popleft(recursive_indices)
-					var/list/list_element = path_list[path_element["index"]]
-					switch(path_element["type"])
-						if("key")
-							path_list = list_element["key"]
-						if("value")
-							path_list = list_element["value"]
-						else
-							to_chat(usr, span_warning("invalid path element type \[[path_element["type"]]] for argument move (expected \"key\" or \"value\""))
-							return
-					if(!islist(path_list))
-						to_chat(usr, span_warning("invalid path element \[[path_list]] for argument move (expected a list)"))
-						return
-					target_list = path_list
-			else
-				target_list = arguments
-			var/index = popleft(recursive_indices)["index"]
+			var/list/path = params["path"]
+			var/list/target_list = traverse_list(path, arguments, traversal_depth_offset = 1)
+			var/index = popleft(path)["index"]
 			target_list.Swap(index-1, index)
 			return TRUE
 		if("moveArgDown")
-			var/list/recursive_indices = params["path"]
-			var/top_affected_list_depth = LAZYLEN(recursive_indices)-1
-			var/list/target_list
-			if(top_affected_list_depth)
-				var/list/path_list = kvpify_list(arguments, top_affected_list_depth-1)
-				while(LAZYLEN(recursive_indices) > 1)
-					var/list/path_element = popleft(recursive_indices)
-					var/list/list_element = path_list[path_element["index"]]
-					switch(path_element["type"])
-						if("key")
-							path_list = list_element["key"]
-						if("value")
-							path_list = list_element["value"]
-						else
-							to_chat(usr, span_warning("invalid path element type \[[path_element["type"]]] for argument move (expected \"key\" or \"value\""))
-							return
-					if(!islist(path_list))
-						to_chat(usr, span_warning("invalid path element \[[path_list]] for argument move (expected a list)"))
-						return
-					target_list = path_list
-			else
-				target_list = arguments
-			var/index = popleft(recursive_indices)["index"]
+			var/list/path = params["path"]
+			var/list/target_list = traverse_list(path, arguments, traversal_depth_offset = 1)
+			var/index = popleft(path)["index"]
 			target_list.Swap(index, index+1)
 			return TRUE
 		if("removeArg")
-			var/list/recursive_indices = params["path"]
-			var/top_affected_list_depth = LAZYLEN(recursive_indices)-1
-			var/list/target_list
-			if(top_affected_list_depth)
-				var/list/path_list = kvpify_list(arguments, top_affected_list_depth-1)
-				while(LAZYLEN(recursive_indices) > 1)
-					var/list/path_element = popleft(recursive_indices)
-					var/list/list_element = path_list[path_element["index"]]
-					switch(path_element["type"])
-						if("key")
-							path_list = list_element["key"]
-						if("value")
-							path_list = list_element["value"]
-						else
-							to_chat(usr, span_warning("invalid path element type \[[path_element["type"]]] for argument removal (expected \"key\" or \"value\""))
-							return
-					if(!islist(path_list))
-						to_chat(usr, span_warning("invalid path element \[[path_list]] for argument removal (expected a list)"))
-						return
-					target_list = path_list
-			else
-				target_list = arguments
-			var/index = popleft(recursive_indices)["index"]
+			var/list/path = params["path"]
+			var/list/target_list = traverse_list(path, arguments, traversal_depth_offset = 1)
+			var/index = popleft(path)["index"]
 			target_list.Cut(index, index+1)
 			return TRUE
 		if("addArg")
-			var/list/recursive_indices = params["path"]
-			var/top_affected_list_depth = LAZYLEN(recursive_indices)
-			if(top_affected_list_depth)
-				var/list/target_list
-				var/list/path_list = kvpify_list(arguments, top_affected_list_depth-1)
-				while(LAZYLEN(recursive_indices))
-					var/list/path_element = popleft(recursive_indices)
-					var/list/list_element = path_list[path_element["index"]]
-					switch(path_element["type"])
-						if("key")
-							path_list = list_element["key"]
-						if("value")
-							path_list = list_element["value"]
-						else
-							to_chat(usr, span_warning("invalid path element type \[[path_element["type"]]] for argument addition (expected \"key\" or \"value\""))
-							return
-					if(!islist(path_list))
-						to_chat(usr, span_warning("invalid path element \[[path_list]] for argument addition (expected a list)"))
-						return
-					target_list = path_list
+			var/list/path = params["path"]
+			var/list/target_list = traverse_list(path, arguments)
+			if(target_list != arguments)
 				usr?.client?.mod_list_add(target_list, null, "a lua editor", "arguments")
 			else
 				var/list/vv_val = usr?.client?.vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
@@ -260,46 +212,11 @@
 		if("vvReturnValue")
 			var/log_entry_index = params["entryIndex"]
 			var/list/log_entry = current_state.log[log_entry_index]
-			var/list/return_values = log_entry["param"]
-			var/list/recursive_indices = params["tableIndices"]
-			var/thing_to_debug = kvpify_list(return_values)
-			while(LAZYLEN(recursive_indices))
-				var/path_element = popleft(recursive_indices)
-				var/index = path_element["index"]
-				var/list_element = thing_to_debug[index]
-				switch(path_element["type"])
-					if("key")
-						thing_to_debug = list_element["key"]
-					if("value")
-						thing_to_debug = list_element["value"]
-					else
-						to_chat(usr, span_warning("invalid path element \[[path_element["type"]]] for lua return VV (expected \"key\" or \"value\""))
-						return
-				if(!islist(thing_to_debug))
-					break
-			if(islist(thing_to_debug))
-				thing_to_debug = dekvpify_list(thing_to_debug)
+			var/thing_to_debug = traverse_list(params["tableIndices"], log_entry["param"])
 			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
 			return
 		if("vvGlobal")
-			var/list/recursive_indices = params["indices"]
-			var/thing_to_debug = kvpify_list(current_state.globals)
-			while(LAZYLEN(recursive_indices))
-				var/path_element = popleft(recursive_indices)
-				var/index = path_element["index"]
-				var/list_element = thing_to_debug[index]
-				switch(path_element["type"])
-					if("key")
-						thing_to_debug = list_element["key"]
-					if("value")
-						thing_to_debug = list_element["value"]
-					else
-						to_chat(usr, span_warning("invalid path element \[[path_element["type"]]] for lua return VV (expected \"key\" or \"value\""))
-						return
-				if(!islist(thing_to_debug))
-					break
-			if(islist(thing_to_debug))
-				thing_to_debug = dekvpify_list(thing_to_debug)
+			var/thing_to_debug = traverse_list(params["indices"], current_state.globals)
 			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
 			return
 		if("clearArgs")
