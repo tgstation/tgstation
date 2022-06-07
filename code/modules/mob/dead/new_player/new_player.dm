@@ -439,5 +439,6 @@
 	if (I)
 		I.ui_interact(src)
 
-	// Add verb for re-opening the interview panel, and re-init the verbs for the stat panel
+	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
 	add_verb(src, /mob/dead/new_player/proc/open_interview)
+	add_verb(client, /client/verb/fix_tgui_panel)
