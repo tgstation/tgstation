@@ -90,6 +90,7 @@
 		"hawk" = FALSE,
 		"lizard" = FALSE,
 		"duffel" = TRUE,
+		"crow" = TRUE,
 	)
 
 	var/emitterhealth = 20

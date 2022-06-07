@@ -1,0 +1,16 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - code_imp: "Reorganizes some of the access and jobs access code for readability"
+  - balance: "The minisat and tcomms are more accessible to engineering roles on skeleton crew, and engineers normally"
+  - balance: "Service personnel who do not handle corpses have had their morgue access revoked and moved to skeleton crew."
+  - balance: "The HOP has had their cremator access revoked, as they are not licensed to handle the dead"
+  - balance: "The Research Director has had their mining and mining station access removed."
+  - balance: "The Research Director has been given construction access to allow for access to the minisat and that access has been removed from the HOP"
+  - balance: "The roboticist has had their skeleton crew access to ordnance revoked to align with the geneticist's skeleton crew access"
+  - balance: "Miners no longer have SHIPPING access (previously Mail Sorting)"
+  - bugfix: "The HOS has proper access to the basics in each department again"
+  - bugfix: "A holdover access from when genetics was in medical has been removed from the Research Director"
+  - bugfix: "Paramedics can now access the entrance doors for most departments again"
+  - bugfix: "Minisats across all maps have proper access requirements to their contents"
+  - bugfix: "Tech storage now uses its access properly and again requires both command and tech access to get to secure storage"

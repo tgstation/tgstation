@@ -116,6 +116,21 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/turf/clos
     echo "ERROR: found lattice stacked with a wall, please remove them."
     st=1
 fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/turf/closed[/\w]*?,\n[^)]*?/area/.+?\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found lattice stacked within a wall, please remove them."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/window[/\w]*?,\n[^)]*?/turf/closed[/\w]*?,\n[^)]*?/area/.+?\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found a window stacked within a wall, please remove it."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/door/airlock[/\w]*?,\n[^)]*?/turf/closed[/\w]*?,\n[^)]*?/area/.+?\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found an airlock stacked within a wall, please remove it."
+    st=1
+fi;
 if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/stairs[/\w]*?,\n[^)]*?/turf/open/genturf[/\w]*?,\n[^)]*?/area/.+?\)' _maps/**/*.dmm;	then
 	echo
     echo "ERROR: found a staircase on top of a genturf. Please replace the genturf with a proper tile."
