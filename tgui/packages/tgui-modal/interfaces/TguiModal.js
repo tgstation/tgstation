@@ -173,6 +173,7 @@ export class TguiModal extends Component {
       size: SIZE.small,
     });
   };
+  /** Gets the inner text area ref so we can use .focus on open */
   setInnerRef = (ref) => {
     this.innerRef = ref;
   };
@@ -242,11 +243,9 @@ export class TguiModal extends Component {
 
   render() {
     const {
-      handleBlur,
       handleClick,
       handleEnter,
       handleEscape,
-      handleFocus,
       handleInput,
       handleKeyDown,
       maxLength,
@@ -263,8 +262,6 @@ export class TguiModal extends Component {
             <button
               className={getCss('button', channel)}
               onclick={handleClick}
-              onmouseenter={handleFocus}
-              onmouseleave={handleBlur}
               type="submit">
               {buttonContent}
             </button>
