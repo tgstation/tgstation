@@ -1,3 +1,4 @@
+/// Unit tests that the novaflower's unique genes function.
 /datum/unit_test/novaflower_burn
 
 /datum/unit_test/novaflower_burn/Run()

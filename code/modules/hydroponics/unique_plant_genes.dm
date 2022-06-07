@@ -51,7 +51,7 @@
 	if(force_multiplier)
 		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 		our_plant.force = round((5 + our_seed.potency * force_multiplier), 1)
-	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK, .proc/attack_effect)
+	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK, .proc/on_plant_attack)
 	RegisterSignal(our_plant, COMSIG_ITEM_AFTERATTACK, .proc/after_plant_attack)
 
 /// Signal proc for [COMSIG_ITEM_ATTACK] that allows for effects on attack
@@ -61,7 +61,7 @@
 	INVOKE_ASYNC(src, .proc/attack_effect, our_plant, target, user)
 
 /*
- * Effects done when we hit people with our plant, AFTER attack.
+ * Effects done when we hit people with our plant, ON attack.
  *
  * our_plant - our plant, that we're attacking with
  * user - the person who is attacking with the plant
@@ -77,10 +77,18 @@
 	if(!proximity_flag)
 		return
 
+	if(!ismovable(target))
+		return
+
+	if(isobj(target))
+		var/obj/object_target = target
+		if(!(object_target & CAN_BE_HIT))
+			return
+
 	INVOKE_ASYNC(src, .proc/after_attack_effect, our_plant, target, user)
 
 /*
- * Effects done when we hit people with our plant, AFTER attack.
+ * Effects done when we hit people with our plant, AFTER the attack is done.
  *
  * our_plant - our plant, that we're attacking with
  * user - the person who is attacking with the plant
@@ -89,15 +97,6 @@
 /datum/plant_gene/trait/attack/proc/after_attack_effect(obj/item/our_plant, atom/target, mob/living/user)
 	if(!degrades_after_hit)
 		return
-
-	// Only care about non-turfs and such
-	if(!ismovable(target))
-		return
-	// If it's an object, and not typically hittable, don't count it
-	if(isobj(target))
-		var/obj/object_target = target
-		if(!(object_target & CAN_BE_HIT))
-			return
 
 	// We probably hit something or someone. Reduce our force
 	if(our_plant.force > 0)
