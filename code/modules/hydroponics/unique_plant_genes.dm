@@ -161,9 +161,9 @@
 	/// Whether our actions are cancelled when the backfire triggers.
 	var/cancel_action_on_backfire = FALSE
 	/// A list of extra traits to check to be considered safe.
-	var/traits_to_check
+	var/list/traits_to_check
 	/// A list of extra genes to check to be considered safe.
-	var/genes_to_check
+	var/list/genes_to_check
 
 /datum/plant_gene/trait/backfire/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
