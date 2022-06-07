@@ -40,7 +40,7 @@
 ///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal acid container
 /datum/component/plumbing/acidic_input
 	demand_connects = WEST
-	demand_color = "#ffff00" // yellow
+	demand_color = COLOR_YELLOW
 
 	ducting_layer = SECOND_DUCT_LAYER
 
