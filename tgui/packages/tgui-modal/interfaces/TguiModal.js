@@ -200,7 +200,9 @@ export class TguiModal extends Component {
     const { historyCounter } = this;
     if (historyCounter > 0 && getHistoryLength()) {
       this.value = getHistoryAt(historyCounter);
-      Byond.sendMessage('typing');
+      if (channel < 2) {
+        this.typingCooldown?.sendMessage();
+      }
       this.setState({ buttonContent: historyCounter, edited: true });
       this.setSize(0);
     } else {
@@ -254,7 +256,7 @@ export class TguiModal extends Component {
     const { buttonContent, channel, edited, size } = this.state;
     return (
       <div className={getCss('window', channel, size)}>
-        <Dragzone top />
+        <Dragzone horizontal />
         <div className="window__content">
           <Dragzone vertical />
           {size < SIZE.medium && (
@@ -281,7 +283,7 @@ export class TguiModal extends Component {
           />
           <Dragzone vertical />
         </div>
-        <Dragzone bottom />
+        <Dragzone horizontal />
       </div>
     );
   }

@@ -62,7 +62,7 @@
  * typing and thinking indicators.
  */
 /datum/tgui_modal/proc/load()
-	if(!client?.mob)
+	if(!client || !client.mob)
 		CRASH(NULL_CLIENTMOB)
 	window_open = FALSE
 	winset(client, "tgui_modal", "is-visible=false")
@@ -70,7 +70,7 @@
 	window.send_message("maxLength", list(
 		maxLength = max_length,
 	))
-	client?.mob?.cancel_thinking()
+	client.mob.cancel_thinking()
 	return TRUE
 
 /**
@@ -82,18 +82,18 @@
  * payload - A list containing the channel the window was opened in.
  */
 /datum/tgui_modal/proc/open(payload)
-	if(!client?.mob)
+	if(!client || !client.mob)
 		CRASH(NULL_CLIENTMOB)
 	if(!payload || !payload["channel"])
 		CRASH("No channel provided to open TGUI modal")
 	window_open = TRUE
 	if(payload["channel"] == OOC_CHAN || payload["channel"] == ME_CHAN)
 		return TRUE
-	client?.mob.start_thinking()
-	if(client?.typing_indicators)
-		log_speech_indicators("[key_name(client)] started typing IC at [loc_name(client?.mob)], indicators enabled.")
+	client.mob.start_thinking()
+	if(client.typing_indicators)
+		log_speech_indicators("[key_name(client)] started typing IC at [loc_name(client.mob)], indicators enabled.")
 	else
-		log_speech_indicators("[key_name(client)] started typing IC at [loc_name(client?.mob)], indicators DISABLED.")
+		log_speech_indicators("[key_name(client)] started typing IC at [loc_name(client.mob)], indicators DISABLED.")
 	return TRUE
 
 /**
@@ -101,14 +101,14 @@
  * regardless of preference. Logs the event.
  */
 /datum/tgui_modal/proc/close()
-	if(!client?.mob)
+	if(!client || !client.mob)
 		CRASH(NULL_CLIENTMOB)
 	window_open = FALSE
-	client?.mob.cancel_thinking()
-	if(client?.typing_indicators)
-		log_speech_indicators("[key_name(client)] stopped typing IC at [loc_name(client?.mob)], indicators enabled.")
+	client.mob.cancel_thinking()
+	if(client.typing_indicators)
+		log_speech_indicators("[key_name(client)] stopped typing IC at [loc_name(client.mob)], indicators enabled.")
 	else
-		log_speech_indicators("[key_name(client)] stopped typing IC at [loc_name(client?.mob)], indicators DISABLED.")
+		log_speech_indicators("[key_name(client)] stopped typing IC at [loc_name(client.mob)], indicators DISABLED.")
 
 /**
  * The equivalent of ui_act, this waits on messages from the window

@@ -83,7 +83,7 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 
 /** Signals the mob to return to "thinking" state */
 /datum/tgui_modal/proc/stop_typing()
-	if(!client?.mob)
+	if(!client || !client.mob)
 		stack_trace(("[usr] has no client or mob but was typing?"))
 		return FALSE
 	if(window_open)
