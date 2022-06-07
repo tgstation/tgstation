@@ -201,6 +201,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_admin_debug_traitor_objectives,
 	/client/proc/spawn_debug_full_crew,
 	/client/proc/validate_puzzgrids,
+	/client/proc/show_winset_debug_values,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -274,7 +275,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/toggle_nuke,
 	/client/proc/cmd_display_del_log,
 	/client/proc/toggle_combo_hud,
-	/client/proc/debug_huds
+	/client/proc/debug_huds,
+	/client/proc/show_winset_debug_values,
 	))
 GLOBAL_PROTECT(admin_verbs_hideable)
 
@@ -930,3 +932,15 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		CHECK_TICK
 
 	to_chat(admin, "[number_made] crewmembers have been created.")
+
+/client/proc/show_winset_debug_values()
+	set name = "Show Client View Debug Values"
+	set category = "Debug"
+	set desc = "Shows your viewport's values for debugging purposes."
+	var/divisor = text2num(winget(src, "mapwindow.map", "icon-size")) || world.icon_size
+	var/winsize_string = winget(src, "mapwindow.map", "size")
+
+	to_chat(usr, "Current client view: [view]")
+	to_chat(usr, "Icon size: [divisor]")
+	to_chat(usr, "xDim: [round(text2num(winsize_string) / divisor)]")
+	to_chat(usr, "yDim: [round(text2num(copytext(winsize_string,findtext(winsize_string,"x")+1,0)) / divisor)]")
