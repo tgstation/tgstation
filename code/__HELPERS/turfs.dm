@@ -230,10 +230,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/rough_x = round(round(pixel_x_offset, world.icon_size) / world.icon_size)
 	var/rough_y = round(round(pixel_y_offset, world.icon_size) / world.icon_size)
 
-	//Find coordinates
-	var/turf/atom_turf = get_turf(checked_atom) //use checked_atom's turfs, as it's coords are the same as checked_atom's AND checked_atom's coords are lost if it is inside another atom
-	if(!atom_turf)
-		return null
 	var/final_x = clamp(atom_turf.x + rough_x, 1, world.maxx)
 	var/final_y = clamp(atom_turf.y + rough_y, 1, world.maxy)
 
