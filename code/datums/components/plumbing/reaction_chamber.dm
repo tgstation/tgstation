@@ -50,7 +50,7 @@
 ///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal base container
 /datum/component/plumbing/alkaline_input
 	demand_connects = EAST
-	demand_color = "#00ff00" // green
+	demand_color = COLOR_VIBRANT_LIME
 
 	ducting_layer = FOURTH_DUCT_LAYER
 
