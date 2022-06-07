@@ -3,7 +3,7 @@
 /// If a user is protected with something like leather gloves, they can handle them normally.
 /// If they're not protected properly, we invoke a callback on the user, harming or inconveniencing them.
 /datum/element/plant_backfire
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	/// Whether we stop the current action if backfire is triggered (EX: returning CANCEL_ATTACK_CHAIN)
 	var/cancel_action = FALSE
@@ -38,12 +38,10 @@
 /datum/element/plant_backfire/proc/attack_safety_check(datum/source, atom/target, mob/user)
 	SIGNAL_HANDLER
 
-	if(plant_safety_check(source, user))
+	if(!backfire(source, user))
 		return
-	
-	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, user)
-	if(cancel_action)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	return cancel_action ? COMPONENT_CANCEL_ATTACK_CHAIN : NONE
 
 /*
  * Checks before we pick up the plant if we're okay to continue.
@@ -54,9 +52,7 @@
 /datum/element/plant_backfire/proc/pickup_safety_check(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(plant_safety_check(source, user))
-		return
-	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, user)
+	backfire(source, target, user)
 
 /*
  * Checks before we throw the plant if we're okay to continue.
@@ -67,12 +63,18 @@
 /datum/element/plant_backfire/proc/throw_safety_check(datum/source, list/arguments)
 	SIGNAL_HANDLER
 
-	var/mob/living/thrower = arguments[4] // 4th arg = mob/thrower
-	if(plant_safety_check(source, thrower))
+	var/mob/living/thrower = arguments[4] // the 4th arg = the mob throwing our item
+	if(!backfire(source, thrower))
 		return
+
+	return cancel_action ? COMPONENT_CANCEL_ATTACK_CHAIN : NONE
+
+/datum/element/plant_backfire/proc/backfire(datum/source, mob/user)
+	if(plant_safety_check(source, thrower))
+		return FALSE
+
 	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, thrower)
-	if(cancel_action)
-		return COMPONENT_CANCEL_THROW
+	return TRUE
 
 /*
  * Actually checks if our user is safely handling our plant.
@@ -86,11 +88,13 @@
  *
  * returns FALSE if none of the checks are successful.
  */
-/datum/element/plant_backfire/proc/plant_safety_check(datum/source, mob/living/carbon/user)
+/datum/element/plant_backfire/proc/plant_safety_check(obj/item/plant, mob/living/carbon/user)
 	if(!istype(user))
 		return TRUE
 
-	if(istype(source, /obj/item/tk_grab)) // since we aren't actually touching the plant
+	// Covers stuff like tk.
+	// ...since we aren't actually touching the plant.
+	if(!user.is_holding(plant))
 		return TRUE
 
 	if(HAS_TRAIT(user, TRAIT_PLANT_SAFE))
@@ -100,7 +104,7 @@
 		if(HAS_TRAIT(user, checked_trait))
 			return TRUE
 
-	var/obj/item/parent_item = source
+	var/obj/item/parent_item = plant
 	var/obj/item/seeds/our_seed = parent_item.get_plant_seed()
 	if(our_seed)
 		for(var/checked_gene in extra_genes)
