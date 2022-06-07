@@ -253,3 +253,4 @@ You'll quickly lose your interest in the game if you play to win and kill. If yo
 Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.
 Don't be afraid to ask for help, whether from your peers or from admins.
 You can pin your MODsuit module buttons to your action bar in the suit UI.
+Some weapons are better at taking down robots and structures than others. Don't try to break a window with a scalpel, try a toolbox.
