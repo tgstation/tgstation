@@ -229,7 +229,7 @@ export class TguiModal extends Component {
       windowOpen(CHANNELS[channel]);
     });
     windowLoad();
-    this.typingCooldown = new CooldownWrapper('typing', 6000);
+    this.typingCooldown = new CooldownWrapper('typing', 5000);
   }
   /** After updating the input value, sets back to false */
   componentDidUpdate() {
