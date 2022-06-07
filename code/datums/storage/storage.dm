@@ -51,14 +51,14 @@
 	closer = new(null, src)
 
 	src.parent = WEAKREF(parent)
-	src.max_slots = max_slots
-	src.max_specific_storage = max_specific_storage
-	src.max_total_storage = max_total_storage
-	src.numerical_stacking = numerical_stacking
-	src.allow_quick_gather = allow_quick_gather
-	src.allow_quick_empty = allow_quick_empty
-	src.collection_mode = collection_mode
-	src.attack_hand_interact = attack_hand_interact
+	src.max_slots = max_slots || src.max_slots
+	src.max_specific_storage = max_specific_storage || src.max_specific_storage
+	src.max_total_storage = max_total_storage || src.max_total_storage
+	src.numerical_stacking = numerical_stacking || src.numerical_stacking
+	src.allow_quick_gather = allow_quick_gather || src.allow_quick_gather
+	src.allow_quick_empty = allow_quick_empty || src.allow_quick_empty
+	src.collection_mode = collection_mode || src.collection_mode
+	src.attack_hand_interact = attack_hand_interact || src.attack_hand_interact
 
 	orient_to_hud()
 
@@ -153,12 +153,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(thing.maptext)
 		thing.maptext = ""
 
-/datum/storage/proc/can_insert(obj/item/to_insert, mob/user, messages = TRUE)
+/datum/storage/proc/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
 
 	if(!isitem(to_insert))
+		return FALSE
+
+	if(locked && !force)
 		return FALSE
 
 	if(to_insert == resolve_parent)
@@ -211,14 +214,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	return TRUE
 
-/datum/storage/proc/attempt_insert(datum/source, obj/item/to_insert, mob/user, override = FALSE)
+/datum/storage/proc/attempt_insert(datum/source, obj/item/to_insert, mob/user, override = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
 
-	if(!can_insert(to_insert, user))
+	if(!can_insert(to_insert, user, force = force))
 		return FALSE
 
 	to_insert.item_flags |= IN_STORAGE
@@ -576,7 +579,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	if(locked)
-		to_chat(toshow, span_warning("[pick("Ka-chunk!", "Ka-chink!", "Plunk!", "Glorf!")] \The [resolve_parent] appears to be locked!"))
+		if(!silent)
+			to_chat(toshow, span_warning("[pick("Ka-chunk!", "Ka-chink!", "Plunk!", "Glorf!")] \The [resolve_parent] appears to be locked!"))
 		return FALSE
 	
 	if(!quickdraw)
@@ -598,10 +602,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	attempt_remove(to_remove)
 
 	if(!toshow.put_in_hands(to_remove))
-		to_chat(toshow, span_notice("You fumble for [to_remove] and it falls on the floor."))
+		if(!silent)
+			to_chat(toshow, span_notice("You fumble for [to_remove] and it falls on the floor."))
 		return TRUE
 	
-	toshow.visible_message(span_warning("[toshow] draws [to_remove] from [resolve_parent]!"), span_notice("You draw [to_remove] from [resolve_parent]."))
+	if(!silent)
+		toshow.visible_message(span_warning("[toshow] draws [to_remove] from [resolve_parent]!"), span_notice("You draw [to_remove] from [resolve_parent]."))
 
 	return TRUE
 
