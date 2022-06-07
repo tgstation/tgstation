@@ -4,22 +4,24 @@
 	icon_state = "joy"
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDESNOUT
-	actions_types = list(/datum/action/item_action/adjust)
 	unique_reskin = list("Joy" = "joy",
 						"Flushed" = "flushed",
 						"Pensive" = "pensive",
 						"Angry" = "angry",
 						)
 
-/obj/item/clothing/mask/joy/ui_action_click(mob/user)
-	reskin_obj(user)
+/obj/item/clothing/mask/joy/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/clothing/mask/joy/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Change Emotion"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
 	..()
 	user.update_inv_wear_mask()
-	for(var/X in actions)
-		var/datum/action/actionbutton = X
-		actionbutton.UpdateButtons()
 	current_skin = null//so we can infinitely reskin
 
 /obj/item/clothing/mask/mummy
