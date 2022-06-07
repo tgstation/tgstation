@@ -87,7 +87,7 @@ RLD
 	upgrade |= rcd_up.upgrade
 	if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
 		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", FALSE, FALSE)
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rcd_up)
 
 /// Inserts matter into the RCD allowing it to build
@@ -105,7 +105,7 @@ RLD
 		if(R.ammoamt <= 0)
 			qdel(R)
 		matter += load
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 		loaded = TRUE
 	else if(istype(O, /obj/item/stack))
 		loaded = loadwithsheets(O, user)
@@ -124,17 +124,17 @@ RLD
 		var/amount_to_use = min(S.amount, maxsheets)
 		S.use(amount_to_use)
 		matter += value*amount_to_use
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 		to_chat(user, span_notice("You insert [amount_to_use] [S.name] sheets into [src]. "))
 		return TRUE
 	to_chat(user, span_warning("You can't insert any more [S.name] sheets into [src]!"))
 	return FALSE
 
 /obj/item/construction/proc/activate()
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 /obj/item/construction/attack_self(mob/user)
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
+	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 	if(prob(20))
 		spark_system.start()
 
@@ -358,7 +358,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			T.rcd_act(user, src, RCD_FLOORWALL)
 		useResource(16, user)
 		activate()
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		user.gib()
 		return MANUAL_SUICIDE
 
@@ -640,7 +640,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	if(rcd_results["mode"] == RCD_MACHINE || rcd_results["mode"] == RCD_COMPUTER || rcd_results["mode"] == RCD_FURNISHING)
 		var/turf/target_turf = get_turf(A)
 		if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
-			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 			qdel(rcd_effect)
 			return FALSE
 	if(!do_after(user, delay, target = A))
@@ -655,7 +655,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	rcd_effect.end_animation()
 	useResource(rcd_results["cost"], user)
 	activate()
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	return TRUE
 
 /obj/item/construction/rcd/Initialize(mapload)
@@ -980,7 +980,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				if(checkResource(deconcost, user))
 					to_chat(user, span_notice("You start deconstructing [A]..."))
 					user.Beam(A,icon_state="light_beam", time = 15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+					playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
 							return FALSE
@@ -994,8 +994,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				if(checkResource(floorcost, user))
 					to_chat(user, span_notice("You start building a wall light..."))
 					user.Beam(A,icon_state="light_beam", time = 15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+					playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+					playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(W))
 							return FALSE
@@ -1009,7 +1009,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 								candidates += C
 						if(!candidates.len)
 							to_chat(user, span_warning("Valid target not found..."))
-							playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, TRUE)
+							playsound(loc, 'sound/misc/compiler-failure.ogg', 30, TRUE)
 							return FALSE
 						for(var/turf/open/O in candidates)
 							if(istype(O))
@@ -1040,8 +1040,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				if(checkResource(floorcost, user))
 					to_chat(user, span_notice("You start building a floor light..."))
 					user.Beam(A,icon_state="light_beam", time = 15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
+					playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+					playsound(loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(F))
 							return FALSE
@@ -1212,21 +1212,21 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/obj/blueprint_template = blueprint
 	var/layer_id = GLOB.plumbing_layers[current_layer]
 
-	for(var/obj/machinery/machine in destination.contents)
+	for(var/obj/content_obj in destination.contents)
 		// Let's not built ontop of dense stuff, if this is also dense.
-		if(initial(blueprint_template.density) && machine.density)
+		if(initial(blueprint_template.density) && content_obj.density)
 			return FALSE
 
-		// Ducts and overlap machines IF the layers are different
+		// Ducts can overlap other plumbing objects IF the layers are different
 
 		// make sure plumbling isn't overlapping.
-		for(var/datum/component/plumbing/plumber as anything in machine.GetComponents(/datum/component/plumbing))
+		for(var/datum/component/plumbing/plumber as anything in content_obj.GetComponents(/datum/component/plumbing))
 			if(plumber.ducting_layer & layer_id)
 				return FALSE
 
-		if(istype(machine, /obj/machinery/duct))
+		if(istype(content_obj, /obj/machinery/duct))
 			// Make sure ducts aren't overlapping.
-			var/obj/machinery/duct/duct_machine = machine
+			var/obj/machinery/duct/duct_machine = content_obj
 			if(duct_machine.duct_layer & layer_id)
 				return FALSE
 
@@ -1252,7 +1252,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		"Current Color" = image('icons/hud/radial.dmi', icon_state = current_color),
 	)
 
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
+	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 	var/choice = show_radial_menu(user, src, options_menu, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
@@ -1274,7 +1274,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		for(var/layer_name in GLOB.plumbing_layers)
 			GLOB.plumbing_layer_menu_options += list((layer_name) = image('icons/hud/radial.dmi', icon_state = "plumbing_layer[GLOB.plumbing_layers[layer_name]]"))
 
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
+	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 	var/new_layer = show_radial_menu(user, src, GLOB.plumbing_layer_menu_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!new_layer || !check_menu(user))
 		return
@@ -1293,7 +1293,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		for(var/color_name in GLOB.pipe_paint_colors)
 			GLOB.plumbing_color_menu_options += list((color_name) = image('icons/hud/radial.dmi', icon_state = color_name))
 
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
+	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 	var/new_color = show_radial_menu(user, src, GLOB.plumbing_color_menu_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!new_color || !check_menu(user))
 		return
