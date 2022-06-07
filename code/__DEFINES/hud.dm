@@ -86,7 +86,7 @@
 #define ui_alert5 "RIGHT-1:28,CENTER+1:19"
 
 //Upper left (action buttons)
-#define ui_action_palette "LEFT+0:23,TOP-2:25"
+#define ui_action_palette "LEFT+0:23,TOP-1:25"
 #define ui_action_palette_offset(north_offset) ("LEFT+0:23,TOP-[1+north_offset]:5")
 
 #define ui_palette_scroll "LEFT+1:8,TOP-6:28"

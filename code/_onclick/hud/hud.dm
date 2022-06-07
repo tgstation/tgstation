@@ -612,7 +612,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/palette_scroll/scroll_down = owner.palette_down
 	var/atom/movable/screen/palette_scroll/scroll_up = owner.palette_up
 
-	var/actions_above = round((owner.listed_actions.size() - 1) / owner.listed_actions.column_max)
+	var/actions_above = round((owner.listed_actions.size() - 1) / owner.listed_actions.column_max) + 1
 	north_offset = initial(north_offset) + actions_above
 
 	palette.screen_loc = ui_action_palette_offset(actions_above)
