@@ -227,6 +227,10 @@
 /area/icemoon/underground/unexplored/rivers/deep
 	map_generator = /datum/map_generator/cave_generator/icemoon/deep
 
+/area/icemoon/underground/unexplored/rivers/deep/shoreline //use this for when you don't want mobs to spawn in certain areas in the "deep" portions. Think adjacent to rivers or station structures.
+	icon_state = "shore"
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | NO_ALERTS
+
 /area/icemoon/underground/explored // ruins can't spawn here
 	name = "Icemoon Underground"
 	area_flags = UNIQUE_AREA | NO_ALERTS

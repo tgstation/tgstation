@@ -26631,11 +26631,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7";
-	luminosity = 2;
-	temperature = 2.7
-	},
+/turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "hmx" = (
 /obj/docking_port/stationary/random{
@@ -30907,10 +30903,6 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"iwr" = (
-/obj/effect/spawner/structure/window/reinforced/tinted,
-/turf/open/space/basic,
-/area/station/commons/dorms)
 "iwy" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Central Hallway - Aft Port";
@@ -43040,11 +43032,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7";
-	luminosity = 2;
-	temperature = 2.7
-	},
+/turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "lIu" = (
 /obj/structure/table/reinforced,
@@ -143698,7 +143686,7 @@ yaI
 yaI
 unm
 ijp
-iwr
+ijp
 tKi
 yaI
 yaI
