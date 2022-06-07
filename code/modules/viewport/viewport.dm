@@ -22,8 +22,8 @@ GLOBAL_LIST_INIT(valid_icon_sizes, list(32, 48, 64, 96, 128))
 		last_view_y_dim = GLOB.lock_client_view_y
 	else
 		var/winsize_string = winget(src, "mapwindow.map", "size")
-		last_view_x_dim = GLOB.lock_client_view_x || clamp(CEIL(text2num(winsize_string) / divisor), 15, (CONFIG_GET(number/max_client_view_x)) || (CONFIG_GET(number/max_client_view_x)))
-		last_view_y_dim = GLOB.lock_client_view_y || clamp(CEIL(text2num(copytext(winsize_string,findtext(winsize_string,"x")+1,0)) / divisor), 15, (CONFIG_GET(number/max_client_view_y)) || (CONFIG_GET(number/max_client_view_y)))
+		last_view_x_dim = GLOB.lock_client_view_x || clamp(ROUND_UP(text2num(winsize_string) / divisor), 15, (CONFIG_GET(number/max_client_view_x)) || (CONFIG_GET(number/max_client_view_x)))
+		last_view_y_dim = GLOB.lock_client_view_y || clamp(ROUND_UP(text2num(copytext(winsize_string,findtext(winsize_string,"x")+1,0)) / divisor), 15, (CONFIG_GET(number/max_client_view_y)) || (CONFIG_GET(number/max_client_view_y)))
 		if(last_view_x_dim % 2 == 0)
 			last_view_x_dim++
 		if(last_view_y_dim % 2 == 0)
