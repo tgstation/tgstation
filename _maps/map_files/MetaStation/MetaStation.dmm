@@ -6154,6 +6154,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
+"cpH" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/yellow,
+/turf/open/space/basic,
+/area/space/nearstation)
 "cpR" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral{
@@ -9388,6 +9393,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"dxK" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/purple,
+/turf/open/space/basic,
+/area/space/nearstation)
 "dxO" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/camera/directional/east{
@@ -14710,10 +14720,10 @@
 /area/station/security/holding_cell)
 "fxr" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/burgundy,
 /obj/item/instrument/musicalmoth{
 	name = "Syl Labee"
 	},
+/obj/structure/marker_beacon/olive,
 /turf/open/space/basic,
 /area/space/nearstation)
 "fxI" = (
@@ -41777,6 +41787,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"oPS" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/olive,
+/turf/open/space/basic,
+/area/space/nearstation)
 "oPY" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -47485,6 +47500,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"qPs" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/indigo,
+/turf/open/space/basic,
+/area/space/nearstation)
 "qPx" = (
 /obj/structure/disposaloutlet{
 	dir = 1
@@ -69034,11 +69054,11 @@
 /area/station/science/explab)
 "yib" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/burgundy,
 /obj/item/toy/plush/space_lizard_plushie{
 	desc = "He stared into the void and listened. He didn't expect an answer...";
 	name = "Void-Stares-Back"
 	},
+/obj/structure/marker_beacon/purple,
 /turf/open/space/basic,
 /area/space/nearstation)
 "yih" = (
@@ -77042,7 +77062,7 @@ aaa
 aaa
 aaa
 aaa
-quc
+oPS
 aaa
 aaa
 fxr
@@ -77057,19 +77077,19 @@ aaa
 aaa
 aaa
 aaa
-quc
+oPS
 aaa
 aaa
-quc
+oPS
 aaa
 aaa
 aaa
 aaa
 aaa
-quc
+oPS
 aaa
 aaa
-quc
+oPS
 aaa
 aaa
 aaa
@@ -78320,7 +78340,7 @@ aaa
 aaa
 aaa
 aaa
-quc
+oPS
 lMJ
 eeg
 wdr
@@ -78604,9 +78624,9 @@ ndI
 nDP
 qEt
 aox
-quc
+oPS
 aox
-quc
+oPS
 aox
 qEt
 jjS
@@ -79348,7 +79368,7 @@ aaa
 aaa
 aaa
 aaa
-quc
+oPS
 lMJ
 eeg
 wdr
@@ -80983,7 +81003,7 @@ rrt
 rrt
 rrt
 rrt
-quc
+qPs
 aaa
 aaa
 aaa
@@ -82528,7 +82548,7 @@ anS
 wDi
 anS
 lMJ
-quc
+qPs
 aaa
 aaa
 aaa
@@ -84070,7 +84090,7 @@ tPH
 tPH
 nRb
 lMJ
-quc
+qPs
 aaa
 aaa
 aaa
@@ -85612,7 +85632,7 @@ anS
 anS
 anS
 lMJ
-quc
+qPs
 aaa
 aaa
 aaa
@@ -87154,7 +87174,7 @@ nRb
 tPH
 anS
 lMJ
-quc
+qPs
 aaa
 aaa
 aaa
@@ -99229,7 +99249,7 @@ uGg
 dKC
 nRb
 lMJ
-quc
+oPS
 aaa
 aaa
 aaa
@@ -101542,7 +101562,7 @@ rQO
 dKC
 anS
 lMJ
-quc
+oPS
 aaa
 aaa
 aaa
@@ -103847,7 +103867,7 @@ kYD
 lMJ
 lMJ
 aaa
-quc
+dxK
 lMJ
 lMJ
 aaa
@@ -103855,7 +103875,7 @@ lMJ
 aaa
 lMJ
 lMJ
-quc
+dxK
 lMJ
 lMJ
 aaa
@@ -103863,7 +103883,7 @@ lMJ
 aaa
 lMJ
 lMJ
-quc
+dxK
 lMJ
 lMJ
 aaa
@@ -103871,7 +103891,7 @@ lMJ
 aaa
 lMJ
 lMJ
-quc
+dxK
 lMJ
 lMJ
 aaa
@@ -103879,14 +103899,14 @@ lMJ
 aaa
 lMJ
 lMJ
-quc
+dxK
 lMJ
 lMJ
 aaa
 lMJ
 aaa
 lMJ
-quc
+dxK
 aaf
 aaf
 weq
@@ -104875,7 +104895,7 @@ uZM
 kYD
 aaa
 aaa
-quc
+dxK
 lMJ
 lMJ
 aaa
@@ -104883,7 +104903,7 @@ lMJ
 aaa
 lMJ
 lMJ
-quc
+dxK
 lMJ
 lMJ
 aaa
@@ -104891,7 +104911,7 @@ lMJ
 aaa
 lMJ
 lMJ
-quc
+dxK
 lMJ
 lMJ
 aaa
@@ -104899,7 +104919,7 @@ lMJ
 aaa
 lMJ
 lMJ
-quc
+dxK
 lMJ
 lMJ
 aaa
@@ -104907,14 +104927,14 @@ lMJ
 aaa
 lMJ
 lMJ
-quc
+dxK
 lMJ
 lMJ
 aaa
 lMJ
 aaa
 lMJ
-quc
+dxK
 aaf
 aaf
 weq
@@ -107843,7 +107863,7 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 aaa
 aaa
 aaa
@@ -108871,7 +108891,7 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 aaa
 aaa
 aaa
@@ -109474,9 +109494,9 @@ pnH
 aaa
 aaa
 aaa
-quc
+dxK
 lMJ
-quc
+dxK
 lMJ
 tOg
 tOg
@@ -109899,7 +109919,7 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 aaa
 aaa
 blx
@@ -110927,7 +110947,7 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 aaa
 aaa
 ffP
@@ -111785,9 +111805,9 @@ eoU
 aaf
 aaa
 aaa
-quc
+dxK
 aaa
-quc
+dxK
 aaa
 aaa
 oMA
@@ -111955,7 +111975,7 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 aaa
 aaa
 aaa
@@ -112983,7 +113003,7 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 aaa
 aaa
 aaa
@@ -116075,13 +116095,13 @@ oIG
 oIG
 lMJ
 lMJ
-quc
+cpH
 aaa
 aaa
 aaa
 aaa
 aaa
-quc
+cpH
 lMJ
 lMJ
 tlE
@@ -116112,11 +116132,11 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 aaa
 gFa
 aaa
-quc
+cpH
 twf
 lMJ
 lMJ
@@ -117383,13 +117403,13 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 lMJ
 wDi
 ghL
 anS
 lMJ
-quc
+cpH
 lMJ
 lMJ
 lMJ
@@ -118443,7 +118463,7 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 lMJ
 jBX
 ghL
@@ -120020,11 +120040,11 @@ aaa
 aaa
 aaa
 aaa
-jLw
+dxK
 aaa
 lMJ
 aaa
-jLw
+dxK
 aaa
 aaa
 aaa
@@ -120467,13 +120487,13 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 lMJ
 jBX
 ghL
 anS
 lMJ
-quc
+cpH
 aaa
 aaa
 aaa
@@ -120499,13 +120519,13 @@ aaa
 aaa
 aaa
 aaa
-quc
+cpH
 lMJ
 nRb
 ghL
 wDi
 lMJ
-quc
+cpH
 aaa
 aaa
 aaa
