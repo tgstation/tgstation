@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - rscadd: "Nanotrasen has finally tracked down an elusive signal that's been haunting them over all of their broadcasts... there appears to be a new Syndicate Listening Base commissioned."
+  - balance: "The odds for a Syndicate Communications Agent (the Space kind) is now at an 15% chance to spawn."
