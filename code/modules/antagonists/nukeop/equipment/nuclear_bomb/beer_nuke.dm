@@ -48,12 +48,12 @@
 	return ..()
 
 /obj/machinery/nuclearbomb/beer/proc/local_foam()
-	var/datum/reagents/R = new/datum/reagents(1000)
-	R.my_atom = src
-	R.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
+	var/datum/reagents/tmp_holder = new/datum/reagents(1000)
+	tmp_holder.my_atom = src
+	tmp_holder.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
 
 	var/datum/effect_system/fluid_spread/foam/foam = new
-	foam.set_up(200, location = get_turf(src), carry = R)
+	foam.set_up(200, holder = src, location = get_turf(src), carry = tmp_holder)
 	foam.start()
 	disarm_nuke()
 

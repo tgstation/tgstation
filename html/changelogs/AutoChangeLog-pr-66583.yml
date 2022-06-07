@@ -1,0 +1,5 @@
+author: "SnoopCooper"
+delete-after: True
+changes: 
+  - balance: "BZ production rates between pipes and turfs are now consistent. O2 production removed."
+  - bugfix: "Multiplying production rates by splitting pipenets no longer possible."

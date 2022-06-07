@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - qol: "Playing Russian Roulette with lethal intent now creates a mood event for the user and is engrained in any nearby peoples memories. The more bullets the better the memory and mood boost."

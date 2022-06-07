@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "infinite loop on process_hit in projectiles when hitting ON_BORDER objects, like windoors"
