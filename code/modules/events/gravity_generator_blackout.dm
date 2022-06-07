@@ -4,11 +4,13 @@
 	weight = 30
 
 /datum/round_event_control/gravity_generator_blackout/canSpawnEvent()
+	var/station_generator_exists = FALSE
 	for(var/obj/machinery/gravity_generator/main/the_generator in GLOB.machines)
-		if(!the_generator)
-			return FALSE
+		if(is_station_level(the_generator.z))
+			station_generator_exists = TRUE
 
-	return ..()
+	if(!station_generator_exists)
+		return FALSE
 
 /datum/round_event/gravity_generator_blackout
 	announceWhen = 1
