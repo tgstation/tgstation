@@ -216,3 +216,10 @@
 		/obj/structure/billboard/roadsign/twomillion = 25,
 		/obj/structure/billboard/roadsign/error = 25,
 	)
+
+/obj/effect/spawner/random/structure/steam_vent
+	name = "steam vent spawner"
+	loot = list(
+		/obj/structure/steam_vent = 50,
+		/obj/structure/steam_vent/fast = 50,
+	)

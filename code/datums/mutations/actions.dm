@@ -280,9 +280,9 @@
 	var/mob/living/carbon/C = user
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return
-	var/obj/item/organ/tongue/tongue
+	var/obj/item/organ/internal/tongue/tongue
 	for(var/org in C.internal_organs)
-		if(istype(org, /obj/item/organ/tongue))
+		if(istype(org, /obj/item/organ/internal/tongue))
 			tongue = org
 			break
 

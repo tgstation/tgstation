@@ -82,6 +82,9 @@
 /obj/machinery/rnd/bepis/screwdriver_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, "chamber_open", "chamber", tool)
 
+/obj/machinery/rnd/bepis/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "chamber_open", "chamber", tool)
+
 /obj/machinery/rnd/bepis/RefreshParts()
 	. = ..()
 	var/C = 0

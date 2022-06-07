@@ -38,6 +38,15 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear
+	outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
+
+/datum/outfit/syndicatecommandocorpse/lessenedgear
+	name = "Syndicate Commando Corpse"
+	gloves = /obj/item/clothing/gloves/tackler
+	back = null
+	id = null
+	id_trim = null
 
 /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"

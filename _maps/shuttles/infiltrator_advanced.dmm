@@ -2183,10 +2183,6 @@
 "ev" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/syndicate/hallway)
-"AO" = (
-/obj/machinery/door/airlock/hatch,
-/turf/closed/wall/r_wall/syndicate,
-/area/shuttle/syndicate/airlock)
 
 (1,1,1) = {"
 ad
@@ -2308,7 +2304,7 @@ ad
 ad
 ad
 ad
-AO
+aO
 aI
 aP
 bC

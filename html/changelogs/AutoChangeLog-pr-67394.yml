@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Map votes will now happen again once the shuttle departs, regardless of whether your server allows everyone to start a map vote or not, as intended."
