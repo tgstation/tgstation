@@ -492,6 +492,7 @@
 	/obj/item/modular_computer/tablet/pda/warden = list(REGION_SECURITY), \
 	/obj/item/modular_computer/tablet/pda/janitor = list(REGION_GENERAL), \
 	/obj/item/modular_computer/tablet/pda/science = list(REGION_RESEARCH), \
+	/obj/item/modular_computer/tablet/pda/heads/quartermaster = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/heads/hop = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/heads/hos = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/heads/cmo = list(REGION_COMMAND), \
@@ -499,7 +500,6 @@
 	/obj/item/modular_computer/tablet/pda/heads/rd = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/heads/captain = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/cargo = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/tablet/pda/quartermaster = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/tablet/pda/shaftminer = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/tablet/pda/chaplain = list(REGION_GENERAL), \
 	/obj/item/modular_computer/tablet/pda/lawyer = list(REGION_GENERAL, REGION_SECURITY), \
