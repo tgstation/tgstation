@@ -17,6 +17,7 @@
 		TRAIT_GENELESS,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
+		TRAIT_LITERATE,
 	)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
@@ -124,6 +125,7 @@
 		TRAIT_GENELESS,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
+		TRAIT_LITERATE,
 	)
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you burn easily. Be careful, if you get hot enough while burning, you'll blow up!"
 	heatmod = 0 //fine until they blow up
@@ -334,6 +336,7 @@
 		TRAIT_GENELESS,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
+		TRAIT_LITERATE,
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	armor = 30
@@ -605,6 +608,7 @@
 		TRAIT_GENELESS,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
+		TRAIT_LITERATE,
 	)
 	punchdamagelow = 0
 	punchdamagehigh = 1
@@ -713,6 +717,7 @@
 		TRAIT_GENELESS,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
+		TRAIT_LITERATE,
 	)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	prefix = "Runic"
@@ -795,6 +800,7 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
 		TRAIT_CHUNKYFINGERS,
+		TRAIT_LITERATE,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	armor = 15 //feels no pain, but not too resistant
@@ -970,6 +976,7 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
 		TRAIT_VENTCRAWLER_NUDE,
+		TRAIT_LITERATE,
 	)
 	prefix = "Plastic"
 	special_names = list("Sheet", "Bag", "Bottle")
@@ -1067,6 +1074,7 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFLASH,
+		TRAIT_LITERATE,
 	)
 	attack_verb = "whips"
 	attack_sound = 'sound/weapons/whip.ogg'
@@ -1132,6 +1140,7 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
 		TRAIT_STRONG_GRABBER,
+		TRAIT_LITERATE,
 	)
 	prefix = "Leather"
 	fixed_mut_color = "#624a2e"
@@ -1159,6 +1168,7 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFLASH,
+		TRAIT_LITERATE,
 	)
 	info_text = "As a <span class='danger'>Durathread Golem</span>, your strikes will cause those your targets to start choking, but your woven body won't withstand fire as well."
 	bodypart_overrides = list(
@@ -1204,6 +1214,7 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
 		TRAIT_FAKEDEATH,
+		TRAIT_LITERATE,
 	)
 	species_language_holder = /datum/language_holder/golem/bone
 	info_text = "As a <span class='danger'>Bone Golem</span>, You have a powerful spell that lets you chill your enemies with fear, and milk heals you! Just make sure to watch our for bone-hurting juice."
@@ -1313,6 +1324,7 @@
 		TRAIT_GENELESS,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
+		TRAIT_LITERATE,
 	)
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem/snow,
@@ -1374,6 +1386,7 @@
 		TRAIT_GENELESS,
 		TRAIT_NODISMEMBER,
 		TRAIT_CHUNKYFINGERS,
+		TRAIT_LITERATE,
 	)
 	examine_limb_id = SPECIES_GOLEM
 

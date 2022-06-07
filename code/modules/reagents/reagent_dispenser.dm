@@ -117,6 +117,14 @@
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
 	openable = TRUE
+	//an assembly attached to the tank
+	var/obj/item/assembly_holder/rig = null
+	//whether it accepts assemblies or not
+	var/accepts_rig = TRUE
+	//overlay of attached assemblies
+	var/mutable_appearance/assembliesoverlay
+	/// The last person to rig this fuel tank - Stored with the object. Only the last person matters for investigation
+	var/last_rigger = ""
 
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
@@ -124,9 +132,45 @@
 	if(SSevents.holidays?[APRIL_FOOLS])
 		icon_state = "fuel_fools"
 
+/obj/structure/reagent_dispensers/fueltank/Destroy()
+	QDEL_NULL(rig)
+	return ..()
+
+/obj/structure/reagent_dispensers/fueltank/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == rig)
+		rig = null
+
+/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
+	. = ..()
+	if(get_dist(user, src) <= 2 && rig)
+		. += span_notice("There is some kind of device rigged to the tank.")
+
+/obj/structure/reagent_dispensers/fueltank/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!rig)
+		return
+	user.balloon_alert_to_viewers("detaching rig...")
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
+	user.balloon_alert_to_viewers("detached rig")
+	log_message("[key_name(user)] detached [rig] from [src]", LOG_GAME)
+	if(!user.put_in_hands(rig))
+		rig.forceMove(get_turf(user))
+	rig = null
+	last_rigger = null
+	cut_overlays(assembliesoverlay)
+	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
+
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
 	qdel(src)
+
+/obj/structure/reagent_dispensers/fueltank/proc/rig_boom()
+	log_bomber(last_rigger, "rigged fuel tank exploded", src)
+	boom()
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
 	boom()
@@ -167,6 +211,27 @@
 			user.visible_message(span_danger("[user] catastrophically fails at refilling [user.p_their()] [I.name]!"), span_userdanger("That was stupid of you."))
 			log_bomber(user, "detonated a", src, "via welding tool")
 			boom()
+		return
+	if(istype(I, /obj/item/assembly_holder) && accepts_rig)
+		if(rig)
+			user.balloon_alert("another device is in the way!")
+			return ..()
+		user.balloon_alert_to_viewers("attaching rig...")
+		if(!do_after(user, 2 SECONDS, target = src))
+			return
+		user.balloon_alert_to_viewers("attached rig")
+		var/obj/item/assembly_holder/holder = I
+		if(locate(/obj/item/assembly/igniter) in holder.assemblies)
+			rig = holder
+			if(!user.transferItemToLoc(holder, src))
+				return
+			log_bomber(user, "rigged [name] with [holder.name] for explosion", src)
+			last_rigger = user
+			assembliesoverlay = holder
+			assembliesoverlay.pixel_x += 6
+			assembliesoverlay.pixel_y += 1
+			add_overlay(assembliesoverlay)
+			RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/rig_boom)
 		return
 	return ..()
 

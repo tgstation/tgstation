@@ -303,7 +303,7 @@
 
 		if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
 			var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
-			smoke.set_up(smoke_amt, location = get_turf(owner))
+			smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
 			smoke.start()
 
 /// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation

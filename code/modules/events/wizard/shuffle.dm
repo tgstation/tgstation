@@ -24,15 +24,15 @@
 	shuffle_inplace(moblocs)
 	shuffle_inplace(mobs)
 
-	for(var/mob/living/carbon/human/H in mobs)
+	for(var/mob/living/carbon/human/victim in mobs)
 		if(!moblocs)
 			break //locs aren't always unique, so this may come into play
-		do_teleport(H, moblocs[moblocs.len], channel = TELEPORT_CHANNEL_MAGIC)
+		do_teleport(victim, moblocs[moblocs.len], channel = TELEPORT_CHANNEL_MAGIC)
 		moblocs.len -= 1
 
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/victim in GLOB.alive_mob_list)
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(0, location = H.loc)
+		smoke.set_up(0, holder = victim, location = victim.loc)
 		smoke.start()
 
 //---//
@@ -58,15 +58,15 @@
 	shuffle_inplace(mobnames)
 	shuffle_inplace(mobs)
 
-	for(var/mob/living/carbon/human/H in mobs)
+	for(var/mob/living/carbon/human/victim in mobs)
 		if(!mobnames)
 			break
-		H.real_name = mobnames[mobnames.len]
+		victim.real_name = mobnames[mobnames.len]
 		mobnames.len -= 1
 
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/victim in GLOB.alive_mob_list)
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(0, location = H.loc)
+		smoke.set_up(0, holder = victim, location = victim.loc)
 		smoke.start()
 
 //---//
@@ -103,5 +103,5 @@
 
 	for(var/mob/living/carbon/human/alive_human in GLOB.alive_mob_list)
 		var/datum/effect_system/fluid_spread/smoke/smoke = new()
-		smoke.set_up(0, location = get_turf(alive_human))
+		smoke.set_up(0, holder = alive_human, location = alive_human.loc)
 		smoke.start()
