@@ -111,7 +111,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/proc/oogaooga()
 	oogas -= 1
-	if(oogas == 0)
+	if(oogas <= 0)
 		oogas = rand(2,6)
 		playsound(src, 'sound/creatures/gorilla.ogg', 50)
 
