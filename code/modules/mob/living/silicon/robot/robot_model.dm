@@ -750,8 +750,8 @@
 	borg_skins = list(
 		"Bro" = list(SKIN_ICON_STATE = "brobot"),
 		"Butler" = list(SKIN_ICON_STATE = "service_m"),
-		"Kent" = list(SKIN_ICON_STATE = "kent", special_light_key = "medical", SKIN_HAT_OFFSET = 3),
-		"Tophat" = list(SKIN_ICON_STATE = "tophat", special_light_key = NONE, SKIN_HAT_OFFSET = INFINITY),
+		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
+		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
 	)
 
