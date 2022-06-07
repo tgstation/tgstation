@@ -24,7 +24,8 @@
 	if(holder.fakekey)
 		rank_name = pick(strings("admin_nicknames.json", "ranks", "config"))
 		admin_name = pick(strings("admin_nicknames.json", "names", "config"))
-	var/rendered = "<span class='game deadsay'>[span_prefix("DEAD:")] [span_name("[rank_name]([admin_name])")] says, <span class='message'>\"[emoji_parse(msg)]\"</span></span>"
+	var/name_and_rank = "[span_tooltip(rank_name, "STAFF")] ([admin_name])"
+	var/rendered = "<span class='game deadsay'>[span_prefix("DEAD:")] [name_and_rank] says, <span class='message'>\"[emoji_parse(msg)]\"</span></span>"
 
 	for (var/mob/M in GLOB.player_list)
 		var/admin_holder = M.client?.holder

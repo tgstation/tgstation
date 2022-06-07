@@ -1,45 +1,45 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted,
-/area/mafia)
+/area/centcom/mafia)
 "b" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
 /obj/item/food/sashimi,
 /turf/open/floor/carpet/black,
-/area/mafia)
+/area/centcom/mafia)
 "c" = (
 /turf/closed/wall/rust,
-/area/mafia)
+/area/centcom/mafia)
 "d" = (
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
 "e" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "f" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "g" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "h" = (
 /obj/structure/grille/indestructable,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
 "i" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "j" = (
 /turf/closed/wall/mineral/wood{
 	desc = "A door that goes nowhere. How kafkaesque.";
@@ -47,26 +47,26 @@
 	icon_state = "paperframe";
 	name = "Door"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "k" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/wood,
-/area/mafia)
+/area/centcom/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/carpet/black,
-/area/mafia)
+/area/centcom/mafia)
 "o" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
 /obj/item/food/sashimi,
 /turf/open/floor/wood,
-/area/mafia)
+/area/centcom/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -78,27 +78,27 @@
 	icon = 'icons/obj/smooth_structures/paperframes.dmi';
 	icon_state = "paper"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "q" = (
 /turf/open/floor/wood,
-/area/mafia)
+/area/centcom/mafia)
 "r" = (
 /turf/open/floor/carpet/black,
-/area/mafia)
+/area/centcom/mafia)
 "t" = (
 /turf/open/misc/beach/sand,
-/area/mafia)
+/area/centcom/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /turf/open/misc/beach/sand,
-/area/mafia)
+/area/centcom/mafia)
 "v" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/mafia)
+/area/centcom/mafia)
 "B" = (
 /obj/structure/showcase{
 	density = 0;
@@ -108,10 +108,10 @@
 	name = "seppuku katana"
 	},
 /turf/open/misc/beach/sand,
-/area/mafia)
+/area/centcom/mafia)
 "S" = (
 /turf/closed/wall/mineral/wood,
-/area/mafia)
+/area/centcom/mafia)
 
 (1,1,1) = {"
 a

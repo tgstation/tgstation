@@ -398,10 +398,10 @@
 
 /mob/living/carbon/get_status_tab_items()
 	. = ..()
-	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 	if(vessel)
 		. += "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]"
-	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
+	var/obj/item/organ/internal/heart/vampire/darkheart = getorgan(/obj/item/organ/internal/heart/vampire)
 	if(darkheart)
 		. += "Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM]."
 	if(locate(/obj/item/assembly/health) in src)
@@ -562,7 +562,7 @@
 
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
-	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		update_tint()
 	else
@@ -634,7 +634,7 @@
 	if(isclothing(wear_mask))
 		. += wear_mask.tint
 
-	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		. += E.tint
 
@@ -887,7 +887,7 @@
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
-	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(!getorgan(/obj/item/organ/internal/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
 
 /mob/living/carbon/proc/can_defib()
@@ -907,7 +907,7 @@
 
 	// Only check for a heart if they actually need a heart. Who would've thunk
 	if (needs_heart())
-		var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
+		var/obj/item/organ/internal/heart = getorgan(/obj/item/organ/internal/heart)
 
 		if (!heart)
 			return DEFIB_FAIL_NO_HEART
@@ -915,7 +915,7 @@
 		if (heart.organ_flags & ORGAN_FAILING)
 			return DEFIB_FAIL_FAILING_HEART
 
-	var/obj/item/organ/brain/current_brain = getorgan(/obj/item/organ/brain)
+	var/obj/item/organ/internal/brain/current_brain = getorgan(/obj/item/organ/internal/brain)
 
 	if (QDELETED(current_brain))
 		return DEFIB_FAIL_NO_BRAIN
@@ -944,14 +944,6 @@
 	if(organs_amt)
 		to_chat(user, span_notice("You retrieve some of [src]\'s internal organs!"))
 	remove_all_embedded_objects()
-
-/mob/living/carbon/extinguish_mob()
-	for(var/X in get_equipped_items())
-		var/obj/item/I = X
-		I.wash(CLEAN_TYPE_ACID) //washes off the acid on our clothes
-		I.extinguish() //extinguishes our clothes
-	..()
-
 
 /mob/living/carbon/proc/create_bodyparts()
 	var/l_arm_index_next = -1
@@ -1006,15 +998,6 @@
 	for(var/X in internal_organs)
 		var/obj/item/organ/I = X
 		I.Insert(src)
-
-/// Takes an organ to slot in, and the slot to put it in, and puts in inside our lists properly
-/// To be called once the organ is actually inside us. NOT a helper proc
-/mob/living/carbon/proc/slot_in_organ(obj/item/organ/insert, slot)
-	internal_organs |= insert
-	internal_organs_slot[slot] = insert
-	/// internal_organs_slot must ALWAYS be ordered in the same way as organ_process_order
-	/// Otherwise life processing breaks down
-	sortTim(internal_organs_slot, /proc/cmp_organ_slot_asc)
 
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
 	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)
@@ -1284,7 +1267,7 @@
 /mob/living/carbon/proc/adjust_skillchip_complexity_modifier(delta)
 	skillchip_complexity_modifier += delta
 
-	var/obj/item/organ/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = getorganslot(ORGAN_SLOT_BRAIN)
 
 	if(!brain)
 		return

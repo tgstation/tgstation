@@ -126,6 +126,7 @@
 	projectile = /obj/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/plasma_cutter.ogg'
 	harmful = TRUE
+	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(..()) //combat mech
@@ -144,6 +145,7 @@
 	projectile = /obj/projectile/kinetic/mech
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
 	harmful = TRUE
+	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
 
 //attachable to all mechas, like the plasma cutter
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
@@ -195,7 +197,7 @@
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
-		var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
 		if(ears)
 			ears.adjustEarDamage(0, 30)
 		M.Paralyze(60)

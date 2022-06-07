@@ -173,12 +173,19 @@
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.supermatter_cascade = TRUE
 	call_explosion()
+	create_cascade_ambience()
 	pick_rift_location()
 	warn_crew()
-	supermatter_turf.ChangeTurf(/turf/closed/indestructible/supermatter_wall)
-	for(var/i in 1 to rand(1,3))
-		var/turf/crystal_cascade_location = get_turf(pick(GLOB.generic_event_spawns))
-		crystal_cascade_location.ChangeTurf(/turf/closed/indestructible/supermatter_wall)
+	new /obj/crystal_mass(supermatter_turf)
+	for(var/i in 1 to rand(4,6))
+		new /obj/crystal_mass(get_turf(pick(GLOB.generic_event_spawns)))
+
+/**
+ * Adds a bit of spiciness to the cascade by breaking lights and turning emergency maint access on
+ */
+/datum/supermatter_delamination/proc/create_cascade_ambience()
+	break_lights_on_station()
+	make_maint_all_access()
 
 /**
  * Picks a random location for the rift
@@ -186,6 +193,7 @@
 /datum/supermatter_delamination/proc/pick_rift_location()
 	var/turf/rift_location = get_turf(pick(GLOB.generic_event_spawns))
 	cascade_rift = new /obj/cascade_portal(rift_location)
+	RegisterSignal(cascade_rift, COMSIG_PARENT_QDELETING, .proc/deleted_portal)
 
 /**
  * Warns the crew about the cascade start and the rift location
@@ -197,12 +205,17 @@
 	priority_announce("Unknown harmonance affecting local spatial substructure, all nearby matter is starting to crystallize.", "Central Command Higher Dimensional Affairs", 'sound/misc/bloblarm.ogg')
 	priority_announce("There's been a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those required for emergency shuttle navigation. \
 		We can only reasonably conclude that a supermatter cascade has been initiated on or near your station. \
-		Evacuation is no longer possible by conventional means; however, a bluespace rift of unkown origin has appeared near the [get_area_name(cascade_rift)]. \
+		Evacuation is no longer possible by conventional means; however, we managed to open a rift near the [get_area_name(cascade_rift)]. \
 		All personnel are hereby advised to enter the rift using all means available. Retrieval of survivors will be conducted upon recovery of necessary facilities. \
-		One minute before total loss of the station and nearby space. Good l\[\[###!!!-")
+		Good l\[\[###!!!-")
 
 
 	addtimer(CALLBACK(src, .proc/delta), 10 SECONDS)
+
+/datum/supermatter_delamination/proc/deleted_portal()
+	SIGNAL_HANDLER
+
+	priority_announce("The rift has been destroyed, we can no longer help you...", "Warning", 'sound/misc/bloblarm.ogg')
 
 	addtimer(CALLBACK(src, .proc/last_message), 50 SECONDS)
 
@@ -219,7 +232,7 @@
  * Announces the last message to the station
  */
 /datum/supermatter_delamination/proc/last_message()
-	priority_announce("To the remaining survivors of [station_name()], I hope it was worth it.", " ", 'sound/misc/bloop.ogg')
+	priority_announce("To the remaining survivors of [station_name()], We're sorry.", " ", 'sound/misc/bloop.ogg')
 
 /**
  * Ends the round
@@ -227,3 +240,14 @@
 /datum/supermatter_delamination/proc/the_end()
 	SSticker.news_report = SUPERMATTER_CASCADE
 	SSticker.force_ending = 1
+
+/**
+ * Break the lights on the station, have 35% of them be set to emergency
+ */
+/datum/supermatter_delamination/proc/break_lights_on_station()
+	for(var/obj/machinery/light/light_to_break in GLOB.machines)
+		if(prob(35))
+			light_to_break.emergency_mode = TRUE
+			light_to_break.update_appearance()
+			continue
+		light_to_break.break_light_tube()

@@ -21,7 +21,7 @@
 	pixel_y = -3
 	},
 /obj/machinery/airalarm/directional/north{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
@@ -66,7 +66,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west{
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
@@ -75,9 +75,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/door/airlock/hatch{
-	name = "Experimentation Lab";
-	req_access_txt = "150"
+	name = "Experimentation Lab"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /obj/modular_map_connector,
@@ -88,9 +88,9 @@
 /area/ruin/syndicate_lava_base/testlab)
 "P" = (
 /obj/machinery/door/airlock/external{
-	name = "external experimentation";
-	req_access_txt = "150"
+	name = "External Experimentation"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)

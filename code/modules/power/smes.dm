@@ -408,7 +408,7 @@
 	log_smes()
 
 /obj/machinery/power/smes/engineering
-	charge = 2e6 // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
+	charge = 2.5e6 // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
 	output_level = 90000
 
 /obj/machinery/power/smes/magical

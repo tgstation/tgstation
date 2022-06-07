@@ -235,3 +235,84 @@ at the cost of risking a vicious bite.**/
 #undef ALTAR_STAGETWO
 #undef ALTAR_STAGETHREE
 #undef ALTAR_TIME
+
+/**
+ * Spawns in maint shafts, and blocks lines of sight perodically when active.
+ */
+/obj/structure/steam_vent
+	name = "steam vent"
+	desc = "A device periodically filtering out moisture particles from the nearby walls and windows. It's only possible due to the moisture traps nearby."
+	icon_state = "steam_vent"
+	anchored = TRUE
+	density = FALSE
+	/// How often does the vent reset the blow_steam cooldown.
+	var/steam_speed = 20 SECONDS
+	/// Is the steam vent active?
+	var/vent_active = TRUE
+	/// The cooldown for toggling the steam vent to prevent infinite steam vent looping.
+	COOLDOWN_DECLARE(steam_vent_interact)
+
+/obj/structure/steam_vent/Initialize(mapload)
+	. = ..()
+	if(prob(75))
+		vent_active = FALSE
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXIT = .proc/blow_steam,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	update_icon_state()
+
+/obj/structure/steam_vent/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, steam_vent_interact))
+		balloon_alert(user, "not ready to adjust!")
+		return
+	vent_active = !vent_active
+	update_icon_state()
+	if(vent_active)
+		balloon_alert(user, "vent on")
+	else
+		balloon_alert(user, "vent off")
+		return
+	blow_steam()
+
+/obj/structure/steam_vent/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(vent_active)
+		balloon_alert(user, "must be off!")
+		return
+	if(tool.use_tool(src, user, 3 SECONDS))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		deconstruct()
+		return TRUE
+
+/obj/structure/steam_vent/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/iron(loc, 1)
+		new /obj/item/stock_parts/water_recycler(loc, 1)
+	qdel(src)
+
+/**
+ * Creates "steam" smoke, and determines when the vent needs to block line of sight via reset_opacity.
+ */
+/obj/structure/steam_vent/proc/blow_steam(datum/source, atom/movable/leaving, direction)
+	SIGNAL_HANDLER
+	if(!vent_active)
+		return
+	if(!COOLDOWN_FINISHED(src, steam_vent_interact))
+		return
+	if(!ismob(leaving))
+		return
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(range = 1, amount = 1, location = src)
+	smoke.start()
+	playsound(src, 'sound/machines/steam_hiss.ogg', 75, TRUE, -2)
+	COOLDOWN_START(src, steam_vent_interact, steam_speed)
+
+/obj/structure/steam_vent/update_icon_state()
+	. = ..()
+	icon_state = "steam_vent[vent_active ? "": "_off"]"
+
+/obj/structure/steam_vent/fast
+	desc = "A device periodically filtering out moisture particles from the nearby walls and windows. It's only possible due to the moisture traps nearby. It's faster than most."
+	steam_speed = 10 SECONDS

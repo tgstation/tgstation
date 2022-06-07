@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - admin: "Smoke now logs the last person to touch the source of the smoke as the last person to touch the smoke itself. Gunpowder smoke should be less annoying to log dive as a result as every explosion will log that person."

@@ -118,6 +118,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = HEALIUM_TRANSMIT_MODIFIER,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_TRANSMIT_MODIFIER,
 		/datum/gas/zauker = ZAUKER_TRANSMIT_MODIFIER,
+		/datum/gas/hypernoblium = HYPERNOBLIUM_TRANSMIT_MODIFIER,
+		/datum/gas/antinoblium = ANTINOBLIUM_TRANSMIT_MODIFIER,
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
@@ -159,9 +161,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/proto_nitrate = 1,
 		/datum/gas/zauker = 1,
 		/datum/gas/miasma = 0.5,
+		/datum/gas/antinoblium = 1,
+		/datum/gas/hypernoblium = -1,
 	)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
+	///Total mole count of the environment we are in
+	var/environment_total_moles = 0
 	///Affects the power gain the sm experiances from heat
 	var/gasmix_power_ratio = 0
 	///Affects the amount of o2 and plasma the sm outputs, along with the heat it makes.
@@ -485,7 +491,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/gas_path in required_gases)
 		if(has_destabilizing_crystal)
 			break // We have a destabilizing crystal, we're good
-		if(gas_comp[gas_path] < 0.4 || combined_gas < MOLE_PENALTY_THRESHOLD)
+		if(gas_comp[gas_path] < 0.4 || environment_total_moles < MOLE_PENALTY_THRESHOLD)
 			supermatter_cascade = FALSE
 			break
 

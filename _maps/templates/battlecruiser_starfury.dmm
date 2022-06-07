@@ -75,7 +75,7 @@
 	active = 1;
 	anchored = 1;
 	locked = 1;
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
@@ -126,7 +126,7 @@
 	active = 1;
 	anchored = 1;
 	locked = 1;
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
@@ -381,14 +381,14 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/machinery/light/directional/west,
 /obj/machinery/shieldgen{
 	active = 1;
 	anchored = 1;
 	locked = 1;
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
@@ -399,14 +399,14 @@
 	name = "Bridge Lockdown";
 	normaldoorcontrol = 1;
 	pixel_x = -6;
-	req_access_txt = "151";
+	req_access = list("syndicate_leader");
 	specialfunctions = 4
 	},
 /obj/machinery/button/door{
 	id = "syndie_battlecruier_bridge_blast";
 	name = "Bridge Blast Doors";
 	pixel_x = 6;
-	req_access_txt = "151"
+	req_access = list("syndicate_leader")
 	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
@@ -471,7 +471,7 @@
 	active = 1;
 	anchored = 1;
 	locked = 1;
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
@@ -633,9 +633,9 @@
 /area/shuttle/sbc_starfury)
 "ce" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Weapon Bay 2";
-	req_access_txt = "150"
+	name = "Weapon Bay 2"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -690,9 +690,9 @@
 /area/shuttle/sbc_starfury)
 "co" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Weapon Bay 3";
-	req_access_txt = "150"
+	name = "Weapon Bay 3"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -708,9 +708,9 @@
 /area/shuttle/sbc_starfury)
 "cs" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Weapon Bay 1";
-	req_access_txt = "150"
+	name = "Weapon Bay 1"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -719,9 +719,9 @@
 "ct" = (
 /obj/machinery/door/airlock/centcom{
 	id_tag = "syndie_battlecruiser_bridge_bolt";
-	name = "Weapon Bays Access";
-	req_access_txt = "150"
+	name = "Weapon Bays Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -759,9 +759,9 @@
 "cB" = (
 /obj/machinery/door/airlock/centcom{
 	id_tag = "syndie_battlecruiser_bridge_bolt";
-	name = "Bridge";
-	req_access_txt = "150"
+	name = "Bridge"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -783,9 +783,9 @@
 /area/shuttle/sbc_starfury)
 "cG" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Weapon Bays Access";
-	req_access_txt = "150"
+	name = "Weapon Bays Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -793,9 +793,9 @@
 /area/shuttle/sbc_starfury)
 "cH" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Weapon Bay 4";
-	req_access_txt = "150"
+	name = "Weapon Bay 4"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -817,8 +817,8 @@
 /obj/item/razor,
 /obj/machinery/button/door/directional/west{
 	id = "starfury_surgery_shutters";
-	name = "privacy shutters";
-	req_access_txt = "150"
+	name = "Privacy Shutters";
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/siding/blue,
 /turf/open/floor/iron/white,
@@ -876,7 +876,7 @@
 /obj/item/defibrillator/compact/combat/loaded,
 /obj/item/gun/syringe/rapidsyringe,
 /obj/machinery/airalarm/directional/east{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/sbc_starfury)
@@ -934,8 +934,8 @@
 /area/shuttle/sbc_starfury)
 "dk" = (
 /obj/machinery/door/window/brigdoor/left/directional/north{
-	name = "command desk";
-	req_access_txt = "151"
+	name = "Command Desk";
+	req_access = list("syndicate_leader")
 	},
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
@@ -967,7 +967,7 @@
 	active = 1;
 	anchored = 1;
 	locked = 1;
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
@@ -998,9 +998,9 @@
 /area/shuttle/sbc_starfury)
 "du" = (
 /obj/machinery/door/airlock/medical{
-	name = "Operating Theatre";
-	req_access_txt = "150"
+	name = "Operating Theatre"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
@@ -1011,7 +1011,7 @@
 "dx" = (
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/south{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
@@ -1023,7 +1023,7 @@
 	active = 1;
 	anchored = 1;
 	locked = 1;
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
@@ -1167,7 +1167,7 @@
 /obj/machinery/door/airlock/centcom{
 	id_tag = "syndie_battlecruiser_bridge_bolt";
 	name = "Shuttle Bay";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -1180,7 +1180,7 @@
 /obj/machinery/door/airlock/centcom{
 	id_tag = "syndie_battlecruiser_bridge_bolt";
 	name = "Shuttle Bay";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -1259,7 +1259,7 @@
 /obj/machinery/door/airlock/centcom{
 	id_tag = "syndie_battlecruiser_bridge_bolt";
 	name = "Shuttle Bay";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -1291,7 +1291,7 @@
 /area/shuttle/sbc_starfury)
 "er" = (
 /obj/machinery/airalarm/directional/north{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/pod/dark,
@@ -1513,7 +1513,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/south{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/pod/dark,
@@ -1779,9 +1779,9 @@
 /area/shuttle/sbc_starfury)
 "fD" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Shuttle Bay";
-	req_access_txt = "150"
+	name = "Shuttle Bay"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1791,18 +1791,18 @@
 /area/shuttle/sbc_starfury)
 "fF" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Shuttle Bay";
-	req_access_txt = "150"
+	name = "Shuttle Bay"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "fG" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Shuttle Bay";
-	req_access_txt = "150"
+	name = "Shuttle Bay"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1821,7 +1821,7 @@
 "fV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/airalarm/directional/north{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
@@ -1982,9 +1982,9 @@
 /area/shuttle/sbc_starfury)
 "gT" = (
 /obj/machinery/door/airlock{
-	name = "Crew Cabin 1";
-	req_access_txt = "150"
+	name = "Crew Cabin 1"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -1993,7 +1993,7 @@
 "gV" = (
 /obj/machinery/door/airlock{
 	name = "Crew Cabin 3";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2063,7 +2063,7 @@
 	anchored = 1;
 	icon_state = "tac";
 	name = "Explosives Locker";
-	req_access_txt = "151"
+	req_access = list("syndicate_leader")
 	},
 /obj/item/storage/belt/grenade/full,
 /obj/item/grenade/syndieminibomb{
@@ -2205,7 +2205,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/north{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
@@ -2286,7 +2286,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/north{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -2316,7 +2316,7 @@
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
 /obj/machinery/airalarm/directional/north{
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/siding/blue,
@@ -2331,7 +2331,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "syndie_battlecruiser_mech";
 	name = "Mech Storage Shutters";
-	req_access_txt = "151"
+	req_access = list("syndicate_leader")
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/pod/dark,
@@ -2347,7 +2347,7 @@
 	anchored = 1;
 	icon_state = "tac";
 	name = "Ammunitions Locker";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/ammo_box/a40mm{
 	icon_state = "40mm-4"
@@ -2484,9 +2484,9 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	id_tag = "syndie_battlecruiser_armory";
-	name = "Starfury Armory";
-	req_access_txt = "150"
+	name = "Starfury Armory"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
@@ -2528,7 +2528,7 @@
 	anchored = 1;
 	icon_state = "tac";
 	name = "Ammunitions Locker";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/ammo_box/c10mm{
 	pixel_y = 4
@@ -2599,9 +2599,9 @@
 /area/shuttle/sbc_starfury)
 "ig" = (
 /obj/machinery/door/airlock{
-	name = "Crew Cabin 2";
-	req_access_txt = "150"
+	name = "Crew Cabin 2"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -2616,9 +2616,9 @@
 /area/shuttle/sbc_starfury)
 "ii" = (
 /obj/machinery/door/airlock{
-	name = "Captain's Quarters";
-	req_access_txt = "151"
+	name = "Captain's Quarters"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/leader,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -2667,7 +2667,7 @@
 	id = "syndie_battlecruiser_armory";
 	name = "Armory Bolt Control";
 	normaldoorcontrol = 1;
-	req_access_txt = "151";
+	req_access = list("syndicate_leader");
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark,
@@ -2694,7 +2694,7 @@
 	layer = 2.9
 	},
 /obj/machinery/airalarm/directional/east{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/machinery/light/directional/east,
 /obj/item/storage/belt/military,
@@ -2728,11 +2728,11 @@
 	anchored = 1;
 	icon_state = "hos";
 	name = "Captain's Locker";
-	req_access_txt = "151"
+	req_access = list("syndicate_leader")
 	},
 /obj/item/storage/lockbox/medal{
 	req_access = null;
-	req_access_txt = "151"
+	req_access = list("syndicate_leader")
 	},
 /obj/item/ammo_box/a357{
 	icon_state = "357-7";
@@ -2824,7 +2824,7 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/south{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium,
@@ -2869,7 +2869,7 @@
 	pixel_x = -5
 	},
 /obj/machinery/airalarm/directional/east{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/carpet,
 /area/shuttle/sbc_starfury)
@@ -2983,9 +2983,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/engineering{
-	name = "Engineering Bay";
-	req_access_txt = "150"
+	name = "Engineering Bay"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/smooth,
@@ -2993,9 +2993,9 @@
 "iQ" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/door/airlock/engineering{
-	name = "Engineering Bay";
-	req_access_txt = "150"
+	name = "Engineering Bay"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/smooth,
@@ -3003,7 +3003,7 @@
 "iT" = (
 /obj/structure/closet/secure_closet/engineering_electrical{
 	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/bot/right,
 /turf/open/floor/iron/smooth,
@@ -3011,11 +3011,11 @@
 "iU" = (
 /obj/structure/closet/secure_closet/engineering_welding{
 	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/bot/right,
 /obj/machinery/airalarm/directional/north{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/smooth,
 /area/shuttle/sbc_starfury)
@@ -3112,9 +3112,9 @@
 /area/shuttle/sbc_starfury)
 "jk" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Engineering Storage";
-	req_access_txt = "150"
+	name = "Engineering Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
@@ -3157,9 +3157,9 @@
 /area/shuttle/sbc_starfury)
 "jz" = (
 /obj/machinery/door/airlock/engineering{
-	name = "SMES Room";
-	req_access_txt = "150"
+	name = "SMES Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
@@ -3248,9 +3248,9 @@
 "kb" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/door/airlock/engineering{
-	name = "Engineering Bay";
-	req_access_txt = "150"
+	name = "Engineering Bay"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/smooth,
@@ -3299,9 +3299,9 @@
 /obj/machinery/door/airlock/engineering/glass{
 	heat_proof = 1;
 	id_tag = "syndie_battlecruiser_smbolt";
-	name = "Supermatter Chamber";
-	req_access_txt = "150"
+	name = "Supermatter Chamber"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/engine,
 /area/shuttle/sbc_starfury)
@@ -3376,14 +3376,14 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "kq" = (
 /obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Medbay Storage";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/blue{
@@ -3440,7 +3440,7 @@
 /obj/structure/closet/toolcloset,
 /obj/structure/window/reinforced/survival_pod,
 /obj/machinery/airalarm/directional/east{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
@@ -3493,7 +3493,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "syndie_battlecruiser_sm";
 	name = "engine shutters";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
@@ -3524,9 +3524,9 @@
 	cycle_id = "starfury_left"
 	},
 /obj/machinery/door/airlock/external{
-	name = "Starfury Port External Access";
-	req_access_txt = "150"
+	name = "Starfury Port External Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
@@ -3770,9 +3770,9 @@
 /area/shuttle/sbc_starfury)
 "lA" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Emitter Room";
-	req_access_txt = "150"
+	name = "Emitter Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4042,9 +4042,9 @@
 	cycle_id = "starfury_left"
 	},
 /obj/machinery/door/airlock/external{
-	name = "Starfury Port External Access";
-	req_access_txt = "150"
+	name = "Starfury Port External Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
@@ -4133,9 +4133,9 @@
 	},
 /obj/machinery/door/airlock/centcom{
 	id_tag = "syndie_battlecruiser_bridge_bolt";
-	name = "Bridge";
-	req_access_txt = "150"
+	name = "Bridge"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/dark,
@@ -4147,9 +4147,9 @@
 /area/shuttle/sbc_starfury)
 "pQ" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Starfury Engineering Maintenance";
-	req_access_txt = "150"
+	name = "Starfury Engineering Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
@@ -4213,9 +4213,9 @@
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Emitter Room";
-	req_access_txt = "150"
+	name = "Emitter Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "rB" = (
@@ -4229,7 +4229,7 @@
 	id = "syndie_battlecruiser_armory";
 	name = "Armory Bolt Control";
 	normaldoorcontrol = 1;
-	req_access_txt = "151";
+	req_access = list("syndicate_leader");
 	specialfunctions = 4
 	},
 /turf/open/floor/pod/dark,
@@ -4471,7 +4471,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/east{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
@@ -4490,9 +4490,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/engineering{
-	name = "Engineering Bay";
-	req_access_txt = "150"
+	name = "Engineering Bay"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/smooth,
@@ -4519,7 +4519,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/west{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
@@ -4613,7 +4613,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/engine,
 /area/shuttle/sbc_starfury)
@@ -4665,9 +4665,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	id_tag = "syndie_battlecruiser_bridge_bolt";
-	name = "Bridge";
-	req_access_txt = "150"
+	name = "Bridge"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4678,9 +4678,9 @@
 "Fc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/maintenance{
-	name = "Engineering Maintenance";
-	req_access_txt = "150"
+	name = "Engineering Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
@@ -4734,7 +4734,7 @@
 	icon_state = "control_stun";
 	name = "Ship Turret Control";
 	pixel_y = 4;
-	req_access = 150
+	req_access = list("syndicate")
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster/directional/south,
@@ -4743,9 +4743,9 @@
 "Gm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "E.V.A. Equipment";
-	req_access_txt = "150"
+	name = "E.V.A. Equipment"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -4806,9 +4806,9 @@
 	cycle_id = "starfury_right"
 	},
 /obj/machinery/door/airlock/external{
-	name = "Starfury Starboard External Access";
-	req_access_txt = "150"
+	name = "Starfury Starboard External Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
@@ -4968,7 +4968,7 @@
 "LN" = (
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Medbay Storage";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
@@ -5131,9 +5131,9 @@
 /area/shuttle/sbc_starfury)
 "Pb" = (
 /obj/machinery/door/airlock/external{
-	name = "Starfury Starboard External Access";
-	req_access_txt = "150"
+	name = "Starfury Starboard External Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "starfury_right"
 	},
@@ -5262,9 +5262,9 @@
 "Rj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "E.V.A. Equipment";
-	req_access_txt = "150"
+	name = "E.V.A. Equipment"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/dark,
@@ -5292,9 +5292,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	id_tag = "syndie_battlecruiser_bridge_bolt";
-	name = "Bridge";
-	req_access_txt = "150"
+	name = "Bridge"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/dark,
@@ -5605,7 +5605,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
@@ -5615,7 +5615,7 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/north{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
@@ -5624,9 +5624,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	id_tag = "syndie_battlecruiser_bridge_bolt";
-	name = "Bridge";
-	req_access_txt = "150"
+	name = "Bridge"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5662,9 +5662,9 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	id_tag = "syndie_battlecruiser_armory";
-	name = "Starfury Armory";
-	req_access_txt = "150"
+	name = "Starfury Armory"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)

@@ -77,7 +77,6 @@
 	circuit = /obj/item/circuitboard/machine/telecomms/message_server
 
 	var/list/datum/data_tablet_msg/pda_msgs = list()
-	var/list/datum/data_tablet_msg/modular_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/decryptkey = "password"
 	var/calibrating = 15 MINUTES //Init reads this and adds world.time, then becomes 0 when that time has passed and the machine works

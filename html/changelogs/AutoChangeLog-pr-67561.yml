@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - qol: "Replace red colored beacons on solars/catwalk areas outside Meta to be colored according to department (sec is red, medical is blue, etc.)"

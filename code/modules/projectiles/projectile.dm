@@ -464,7 +464,7 @@
  */
 /obj/projectile/proc/select_target(turf/our_turf, atom/target, atom/bumped)
 	// 1. special bumped border object check
-	if(bumped?.flags_1 & ON_BORDER_1)
+	if((bumped?.flags_1 & ON_BORDER_1) && can_hit_target(bumped, original == bumped, FALSE, TRUE))
 		return bumped
 	// 2. original
 	if(can_hit_target(original, TRUE, FALSE, original == bumped))
@@ -646,7 +646,7 @@
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
 	return get_line(current, ending)
 
-/obj/projectile/Process_Spacemove(movement_dir = 0)
+/obj/projectile/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return TRUE //Bullets don't drift in space
 
 /obj/projectile/process()
