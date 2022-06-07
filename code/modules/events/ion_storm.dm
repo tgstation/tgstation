@@ -41,7 +41,7 @@
 			var/message = ionMessage || generate_ion_law()
 			if(message)
 				if(prob(removeDontImproveChance))
-					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION), LAW_ION)
 				else
 					M.add_ion_law(message)
 
