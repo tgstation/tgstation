@@ -1,6 +1,7 @@
 #define DYE_REGISTRY_UNDER "under"
 #define DYE_REGISTRY_JUMPSKIRT "jumpskirt"
 #define DYE_REGISTRY_GLOVES "gloves"
+#define DYE_REGISTRY_BANDANA "bandana"
 #define DYE_REGISTRY_SNEAKERS "sneakers"
 #define DYE_REGISTRY_FANNYPACK "fannypack"
 #define DYE_REGISTRY_BEDSHEET "bedsheet"

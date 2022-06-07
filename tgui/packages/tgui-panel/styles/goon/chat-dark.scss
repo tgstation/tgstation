@@ -523,6 +523,10 @@ em {
   color: #059223;
 }
 
+.grey {
+  color: #838383;
+}
+
 .red {
   color: #FF0000;
 }
@@ -533,6 +537,11 @@ em {
 
 .nicegreen {
   color: #059223;
+}
+
+.boldnicegreen {
+  color: #059223;
+  font-weight: bold;
 }
 
 .cult {
@@ -889,4 +898,9 @@ em {
 
 .ml-3 {
   margin-left: 3em;
+}
+
+.tooltip {
+  font-style: italic;
+  border-bottom: 1px dashed #fff;
 }

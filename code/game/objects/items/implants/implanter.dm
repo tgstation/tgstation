@@ -4,7 +4,7 @@
 /obj/item/implanter
 	name = "implanter"
 	desc = "A sterile automatic implant injector."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/syringe.dmi'
 	icon_state = "implanter0"
 	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -48,8 +48,7 @@
 /obj/item/implanter/attackby(obj/item/I, mob/living/user, params)
 	if(!istype(I, /obj/item/pen))
 		return ..()
-	if(!user.is_literate())
-		to_chat(user, span_notice("You prod at [src] with [I]!"))
+	if(!user.can_write(I))
 		return
 
 	var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)

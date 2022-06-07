@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	custom_premium_price = PAYCHECK_HARD * 1.25
+	custom_premium_price = PAYCHECK_COMMAND * 1.25
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 	/// Spam alert prevention
@@ -117,9 +117,9 @@
 		if("fix_speech")
 			to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
 			to_chat(usr, span_notice("You fix the pAI's speech modulator."))
-			pai.stuttering = 0
-			pai.slurring = 0
-			pai.derpspeech = 0
+			for(var/effect in typesof(/datum/status_effect/speech))
+				pai.remove_status_effect(effect)
+
 		if("request")
 			if(!pai)
 				SSpai.findPAI(src, usr)

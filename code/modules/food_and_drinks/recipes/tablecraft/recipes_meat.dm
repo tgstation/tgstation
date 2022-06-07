@@ -33,7 +33,7 @@
 	name = "Lizard tail kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/organ/tail/lizard = 1
+		/obj/item/organ/external/tail/lizard = 1
 	)
 	result = /obj/item/food/kebab/tail
 	subcategory = CAT_MEAT
@@ -193,7 +193,7 @@
 	reqs = list(
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/grown/tomato = 1,
-		/obj/item/food/cheese = 2,
+		/obj/item/food/cheese/wedge = 2,
 		/obj/item/food/spaghetti/raw = 1
 	)
 	result = /obj/item/food/lasagna

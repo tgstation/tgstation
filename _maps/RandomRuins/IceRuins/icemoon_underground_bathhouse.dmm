@@ -47,7 +47,7 @@
 /area/ruin/powered/bathhouse)
 "i" = (
 /obj/machinery/door/airlock/freezer{
-	name = "bath house airlock"
+	name = "Bath House Airlock"
 	},
 /turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
@@ -67,7 +67,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/bathhouse)
 "n" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "o" = (
 /obj/structure/bed,

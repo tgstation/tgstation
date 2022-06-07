@@ -31,7 +31,7 @@
 /datum/traitor_objective/destroy_item/very_risky
 	progression_minimum = 40 MINUTES
 	progression_reward = 15 MINUTES
-	telecrystal_reward = 3
+	telecrystal_reward = list(6, 9)
 
 	possible_items = list(
 		/datum/objective_item/steal/blackbox,

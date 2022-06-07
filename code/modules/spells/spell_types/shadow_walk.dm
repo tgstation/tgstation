@@ -5,7 +5,7 @@
 	desc = "Grants unlimited movement in darkness."
 	charge_max = 0
 	clothes_req = FALSE
-	antimagic_allowed = TRUE
+	antimagic_flags = NONE
 	phase_allowed = TRUE
 	selection_type = "range"
 	range = -1
@@ -63,7 +63,7 @@
 	if(!jaunter || jaunter.loc != src)
 		qdel(src)
 	if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
-		jaunter.heal_overall_damage((SHADOW_REGEN_RATE * delta_time), (SHADOW_REGEN_RATE * delta_time), 0, BODYPART_ORGANIC)
+		jaunter.heal_overall_damage((SHADOW_REGEN_RATE * delta_time), (SHADOW_REGEN_RATE * delta_time), 0, BODYTYPE_ORGANIC)
 	check_light_level()
 
 

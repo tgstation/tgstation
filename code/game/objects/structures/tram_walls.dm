@@ -23,7 +23,7 @@
 	var/mineral_amount = 2
 	var/tram_wall_type = /obj/structure/tramwall
 	var/girder_type = /obj/structure/girder/tram
-
+	var/slicing_duration = 100
 
 /obj/structure/tramwall/Initialize(mapload)
 	. = ..()
@@ -38,7 +38,7 @@
 			return FALSE
 
 		to_chat(user, span_notice("You begin slicing through the outer plating..."))
-		if(welder.use_tool(src, user, 10 SECONDS, volume=100))
+		if(welder.use_tool(src, user, slicing_duration, volume=100))
 			to_chat(user, span_notice("You remove the outer plating."))
 			dismantle(user, TRUE)
 	else
@@ -96,3 +96,231 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
+
+/obj/structure/tramwall/gold
+	name = "gold wall"
+	desc = "A wall with gold plating. Swag!"
+	icon = 'icons/turf/walls/gold_wall.dmi'
+	icon_state = "gold_wall-0"
+	base_icon_state = "gold_wall"
+	mineral = /obj/item/stack/sheet/mineral/gold
+	tram_wall_type = /obj/structure/tramwall/gold
+	explosion_block = 0 //gold is a soft metal you dingus.
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_GOLD_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_GOLD_WALLS)
+	custom_materials = list(/datum/material/gold = 4000)
+
+/obj/structure/tramwall/silver
+	name = "silver wall"
+	desc = "A wall with silver plating. Shiny!"
+	icon = 'icons/turf/walls/silver_wall.dmi'
+	icon_state = "silver_wall-0"
+	base_icon_state = "silver_wall"
+	mineral = /obj/item/stack/sheet/mineral/silver
+	tram_wall_type = /obj/structure/tramwall/silver
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SILVER_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_SILVER_WALLS)
+	custom_materials = list(/datum/material/silver = 4000)
+
+/obj/structure/tramwall/diamond
+	name = "diamond wall"
+	desc = "A wall with diamond plating. You monster."
+	icon = 'icons/turf/walls/diamond_wall.dmi'
+	icon_state = "diamond_wall-0"
+	base_icon_state = "diamond_wall"
+	mineral = /obj/item/stack/sheet/mineral/diamond
+	tram_wall_type = /obj/structure/tramwall/diamond
+	slicing_duration = 200   //diamond wall takes twice as much time to slice
+	max_integrity = 800
+	explosion_block = 3
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_DIAMOND_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_DIAMOND_WALLS)
+	custom_materials = list(/datum/material/diamond = 4000)
+
+/obj/structure/tramwall/bananium
+	name = "bananium wall"
+	desc = "A wall with bananium plating. Honk!"
+	icon = 'icons/turf/walls/bananium_wall.dmi'
+	icon_state = "bananium_wall-0"
+	base_icon_state = "bananium_wall"
+	mineral = /obj/item/stack/sheet/mineral/bananium
+	tram_wall_type = /obj/structure/tramwall/bananium
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BANANIUM_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_BANANIUM_WALLS)
+	custom_materials = list(/datum/material/bananium = 4000)
+
+/obj/structure/tramwall/sandstone
+	name = "sandstone wall"
+	desc = "A wall with sandstone plating. Rough."
+	icon = 'icons/turf/walls/sandstone_wall.dmi'
+	icon_state = "sandstone_wall-0"
+	base_icon_state = "sandstone_wall"
+	mineral = /obj/item/stack/sheet/mineral/sandstone
+	tram_wall_type = /obj/structure/tramwall/sandstone
+	explosion_block = 0
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SANDSTONE_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_SANDSTONE_WALLS)
+	custom_materials = list(/datum/material/sandstone = 4000)
+
+/obj/structure/tramwall/uranium
+	article = "a"
+	name = "uranium wall"
+	desc = "A wall with uranium plating. This is probably a bad idea."
+	icon = 'icons/turf/walls/uranium_wall.dmi'
+	icon_state = "uranium_wall-0"
+	base_icon_state = "uranium_wall"
+	mineral = /obj/item/stack/sheet/mineral/uranium
+	tram_wall_type = /obj/structure/tramwall/uranium
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_URANIUM_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
+	custom_materials = list(/datum/material/uranium = 4000)
+
+	/// Mutex to prevent infinite recursion when propagating radiation pulses
+	var/active = null
+
+	/// The last time a radiation pulse was performed
+	var/last_event = 0
+
+/obj/structure/tramwall/uranium/attackby(obj/item/W, mob/user, params)
+	radiate()
+	return ..()
+
+/obj/structure/tramwall/uranium/attack_hand(mob/user, list/modifiers)
+	radiate()
+	return ..()
+
+/obj/structure/tramwall/uranium/proc/radiate()
+	SIGNAL_HANDLER
+	if(active)
+		return
+	if(world.time <= last_event + 1.5 SECONDS)
+		return
+	active = TRUE
+	radiation_pulse(
+		src,
+		max_range = 3,
+		threshold = RAD_LIGHT_INSULATION,
+		chance = URANIUM_IRRADIATION_CHANCE,
+		minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+	)
+	propagate_radiation_pulse()
+	last_event = world.time
+	active = FALSE
+
+/obj/structure/tramwall/plasma
+	name = "plasma wall"
+	desc = "A wall with plasma plating. This is definitely a bad idea."
+	icon = 'icons/turf/walls/plasma_wall.dmi'
+	icon_state = "plasma_wall-0"
+	base_icon_state = "plasma_wall"
+	mineral = /obj/item/stack/sheet/mineral/plasma
+	tram_wall_type = /obj/structure/tramwall/plasma
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASMA_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_PLASMA_WALLS)
+	custom_materials = list(/datum/material/plasma = 4000)
+
+/obj/structure/tramwall/wood
+	name = "wooden wall"
+	desc = "A wall with wooden plating. Stiff."
+	icon = 'icons/turf/walls/wood_wall.dmi'
+	icon_state = "wood_wall-0"
+	base_icon_state = "wood_wall"
+	mineral = /obj/item/stack/sheet/mineral/wood
+	tram_wall_type = /obj/structure/tramwall/wood
+	explosion_block = 0
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
+	custom_materials = list(/datum/material/wood = 4000)
+
+/obj/structure/tramwall/wood/attackby(obj/item/W, mob/user)
+	if(W.get_sharpness() && W.force)
+		var/duration = ((4.8 SECONDS) / W.force) * 2 //In seconds, for now.
+		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/fireaxe))
+			duration /= 4 //Much better with hatchets and axes.
+		if(do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
+			dismantle(user, disassembled = FALSE, tool = W)
+			return
+	return ..()
+
+/obj/structure/tramwall/bamboo
+	name = "bamboo wall"
+	desc = "A wall with a bamboo finish."
+	icon = 'icons/turf/walls/bamboo_wall.dmi'
+	icon_state = "bamboo"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BAMBOO_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)
+	mineral = /obj/item/stack/sheet/mineral/bamboo
+	tram_wall_type = /obj/structure/tramwall/bamboo
+
+/obj/structure/tramwall/iron
+	name = "rough iron wall"
+	desc = "A wall with rough iron plating."
+	icon = 'icons/turf/walls/iron_wall.dmi'
+	icon_state = "iron_wall-0"
+	base_icon_state = "iron_wall"
+	mineral = /obj/item/stack/rods
+	mineral_amount = 5
+	tram_wall_type = /obj/structure/tramwall/iron
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_IRON_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_IRON_WALLS)
+	custom_materials = list(/datum/material/iron = 5000)
+
+/obj/structure/tramwall/abductor
+	name = "alien wall"
+	desc = "A wall with alien alloy plating."
+	icon = 'icons/turf/walls/abductor_wall.dmi'
+	icon_state = "abductor_wall-0"
+	base_icon_state = "abductor_wall"
+	mineral = /obj/item/stack/sheet/mineral/abductor
+	tram_wall_type = /obj/structure/tramwall/abductor
+	slicing_duration = 200   //alien wall takes twice as much time to slice
+	explosion_block = 3
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ABDUCTOR_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_ABDUCTOR_WALLS)
+	custom_materials = list(/datum/material/alloy/alien = 4000)
+
+/obj/structure/tramwall/material
+	name = "wall"
+	desc = "A huge chunk of material used to separate rooms."
+	icon = 'icons/turf/walls/materialwall.dmi'
+	icon_state = "materialwall-0"
+	base_icon_state = "materialwall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_MATERIAL_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_MATERIAL_WALLS)
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/obj/structure/tramwall/material/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(disassembled)
+			new girder_type(loc)
+		for(var/material in custom_materials)
+			var/datum/material/material_datum = material
+			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / MINERAL_MATERIAL_AMOUNT, 1))
+	qdel(src)
+
+/obj/structure/tramwall/material/mat_update_desc(mat)
+	desc = "A huge chunk of [mat] used to separate rooms."
+
+/obj/structure/tramwall/material/update_icon(updates)
+	. = ..()
+	for(var/datum/material/material in custom_materials)
+		if(material.alpha < 255)
+			update_transparency_underlays()
+			return
+
+/obj/structure/tramwall/material/proc/update_transparency_underlays()
+	underlays.Cut()
+	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = LOW_OBJ_LAYER-0.01)
+	girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR
+	underlays += girder_underlay

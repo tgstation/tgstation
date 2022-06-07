@@ -16,7 +16,7 @@
 	name = "Cheese cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/food/cheese = 2
+		/obj/item/food/cheese/wedge = 2
 	)
 	result = /obj/item/food/cake/cheese
 	subcategory = CAT_CAKE
@@ -90,7 +90,7 @@
 /datum/crafting_recipe/food/braincake
 	name = "Brain cake"
 	reqs = list(
-		/obj/item/organ/brain = 1,
+		/obj/item/organ/internal/brain = 1,
 		/obj/item/food/cake/plain = 1
 	)
 	result = /obj/item/food/cake/brain
@@ -222,8 +222,8 @@
 /datum/crafting_recipe/food/cak
 	name = "Living cat/cake hybrid"
 	reqs = list(
-		/obj/item/organ/brain = 1,
-		/obj/item/organ/heart = 1,
+		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/heart = 1,
 		/obj/item/food/cake/birthday = 1,
 		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 30,

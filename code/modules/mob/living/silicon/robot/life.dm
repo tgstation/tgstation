@@ -70,23 +70,3 @@
 				throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell)
 	else
 		throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/nocell)
-
-//Robots on fire
-/mob/living/silicon/robot/handle_fire(delta_time, times_fired)
-	. = ..()
-	if(.) //if the mob isn't on fire anymore
-		return
-	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.5 * delta_time)
-	else
-		extinguish_mob()
-		return TRUE
-
-	//adjustFireLoss(3)
-
-/mob/living/silicon/robot/update_fire()
-	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', "Generic_mob_burning")
-	if(on_fire)
-		add_overlay(fire_overlay)
-	else
-		cut_overlay(fire_overlay)

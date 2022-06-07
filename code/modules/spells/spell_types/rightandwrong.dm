@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/rifle/boltaction/harpoon,
 	/obj/item/gun/ballistic/automatic/mini_uzi,
 	/obj/item/gun/energy/lasercannon,
-	/obj/item/gun/energy/kinetic_accelerator/crossbow/large,
+	/obj/item/gun/energy/recharge/ebow/large,
 	/obj/item/gun/energy/e_gun/nuclear,
 	/obj/item/gun/ballistic/automatic/proto,
 	/obj/item/gun/ballistic/automatic/c20r,
@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/pulse/carbine,
 	/obj/item/gun/energy/decloner,
 	/obj/item/gun/energy/mindflayer,
-	/obj/item/gun/energy/kinetic_accelerator,
+	/obj/item/gun/energy/recharge/kinetic_accelerator,
 	/obj/item/gun/energy/plasmacutter/adv,
 	/obj/item/gun/energy/wormhole_projector,
 	/obj/item/gun/ballistic/automatic/wt550,
@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/door,
 	/obj/item/scrying,
-	/obj/item/warpwhistle,
+	/obj/item/warp_whistle,
 	/obj/item/immortality_talisman,
 	/obj/item/melee/ghost_sword))
 
@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/scrying,
 	/obj/item/spellbook,
 	/obj/item/storage/belt/wands/full,
-	/obj/item/warpwhistle))
+	/obj/item/warp_whistle))
 
 /*
  * Gives [to_equip] a random gun from a list.

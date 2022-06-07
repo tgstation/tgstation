@@ -16,7 +16,7 @@
 /datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 	return TRUE
@@ -30,6 +30,9 @@
 		/obj/item/shard = 25,
 		/obj/item = 20)
 	time = 100
+	preop_sound = 'sound/surgery/scalpel1.ogg'
+	success_sound = 'sound/surgery/scalpel2.ogg'
+	failure_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/lobotomize/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.get_sharpness())
@@ -65,7 +68,7 @@
 	return ..()
 
 /datum/surgery_step/lobotomize/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(target_brain)
 		display_results(user, target, span_warning("You remove the wrong part, causing more damage!"),
 			span_notice("[user] successfully lobotomizes [target]!"),

@@ -14,6 +14,7 @@
 
 /obj/structure/ladder/Initialize(mapload, obj/structure/ladder/up, obj/structure/ladder/down)
 	..()
+	GLOB.ladders += src
 	if (up)
 		src.up = up
 		up.down = src
@@ -25,8 +26,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy(force)
-	if ((resistance_flags & INDESTRUCTIBLE) && !force)
-		return QDEL_HINT_LETMELIVE
+	GLOB.ladders -= src
 	disconnect()
 	return ..()
 
@@ -71,6 +71,10 @@
 		qdel(src)
 
 /obj/structure/ladder/proc/travel(going_up, mob/user, is_ghost, obj/structure/ladder/ladder)
+	var/response = SEND_SIGNAL(user, COMSIG_LADDER_TRAVEL, src, ladder, going_up)
+	if(response & LADDER_TRAVEL_BLOCK)
+		return
+
 	if(!is_ghost)
 		ladder.add_fingerprint(user)
 		if(!do_after(user, travel_time, target = src))
@@ -161,35 +165,25 @@
 	var/id
 	var/height = 0  // higher numbers are considered physically higher
 
-/obj/structure/ladder/unbreakable/Initialize(mapload)
-	GLOB.ladders += src
-	return ..()
-
-/obj/structure/ladder/unbreakable/Destroy()
-	. = ..()
-	if (. != QDEL_HINT_LETMELIVE)
-		GLOB.ladders -= src
-
 /obj/structure/ladder/unbreakable/LateInitialize()
 	// Override the parent to find ladders based on being height-linked
 	if (!id || (up && down))
 		update_appearance()
 		return
 
-	for (var/O in GLOB.ladders)
-		var/obj/structure/ladder/unbreakable/L = O
-		if (L.id != id)
+	for(var/obj/structure/ladder/unbreakable/unbreakable_ladder in GLOB.ladders)
+		if (unbreakable_ladder.id != id)
 			continue  // not one of our pals
-		if (!down && L.height == height - 1)
-			down = L
-			L.up = src
-			L.update_appearance()
+		if (!down && unbreakable_ladder.height == height - 1)
+			down = unbreakable_ladder
+			unbreakable_ladder.up = src
+			unbreakable_ladder.update_appearance()
 			if (up)
 				break  // break if both our connections are filled
-		else if (!up && L.height == height + 1)
-			up = L
-			L.down = src
-			L.update_appearance()
+		else if (!up && unbreakable_ladder.height == height + 1)
+			up = unbreakable_ladder
+			unbreakable_ladder.down = src
+			unbreakable_ladder.update_appearance()
 			if (down)
 				break  // break if both our connections are filled
 

@@ -29,7 +29,7 @@
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 	/// Which area we announce updates on the flag to. Should just generally be the area of the arena.
-	var/game_area = /area/ctf
+	var/game_area = /area/centcom/ctf
 
 /obj/item/ctf/Destroy()
 	QDEL_NULL(reset)
@@ -228,7 +228,7 @@
 
 	var/static/arena_reset = FALSE
 	var/static/list/people_who_want_to_play = list()
-	var/game_area = /area/ctf
+	var/game_area = /area/centcom/ctf
 
 	/// This variable is needed because of ctf shitcode + we need to make sure we're deleting the current ctf landmark that spawned us in and not a new one.
 	var/obj/effect/landmark/ctf/ctf_landmark
@@ -389,7 +389,8 @@
 
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
-	M.set_species(/datum/species/synth)
+	if(M.dna.species.outfit_important_for_life)
+		M.set_species(/datum/species/human)
 	M.key = new_team_member.key
 	M.faction += team
 	M.equipOutfit(chosen_class)
@@ -590,7 +591,7 @@
 	var/team = "none"
 	///This is how many points are gained a second while controlling this point
 	var/point_rate = 1
-	var/game_area = /area/ctf
+	var/game_area = /area/centcom/ctf
 
 /obj/machinery/control_point/process(delta_time)
 	if(controlling)

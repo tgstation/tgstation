@@ -45,12 +45,12 @@ Burning extracts:
 
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
 	user.visible_message(span_danger("[src] boils over with a caustic gas!"))
-	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
+	var/datum/reagents/tmp_holder = new/datum/reagents(100)
+	tmp_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
 
-	var/datum/effect_system/smoke_spread/chem/smoke = new
-	smoke.set_up(R, 7, get_turf(user))
-	smoke.start()
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
+	smoke.set_up(7, holder = src, location = get_turf(user), carry = tmp_holder)
+	smoke.start(log = TRUE)
 	..()
 
 /obj/item/slimecross/burning/purple
@@ -116,16 +116,16 @@ Burning extracts:
 
 /obj/item/slimecross/burning/darkblue
 	colour = "dark blue"
-	effect_desc = "Expels a burst of chilling smoke while also filling you with cryoxadone."
+	effect_desc = "Expels a burst of chilling smoke while also filling you with regenerative jelly."
 
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
 	user.visible_message(span_danger("[src] releases a burst of chilling smoke!"))
-	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent(/datum/reagent/consumable/frostoil, 40)
-	user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,10)
-	var/datum/effect_system/smoke_spread/chem/smoke = new
-	smoke.set_up(R, 7, get_turf(user))
-	smoke.start()
+	var/datum/reagents/tmp_holder = new/datum/reagents(100)
+	tmp_holder.add_reagent(/datum/reagent/consumable/frostoil, 40)
+	user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 10)
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
+	smoke.set_up(7, holder = src, location = get_turf(user), carry = tmp_holder)
+	smoke.start(log = TRUE)
 	..()
 
 /obj/item/slimecross/burning/silver

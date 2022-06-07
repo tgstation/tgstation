@@ -9,18 +9,12 @@
  */
 /atom/proc/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	SHOULD_CALL_PARENT(TRUE)
-	var/mech_damtype = mecha_attacker.damtype
-	if(mecha_attacker.selected)
-		mech_damtype = mecha_attacker.selected.damtype
-	log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.combat_mode)] (DAMTYPE: [uppertext(mech_damtype)])")
+	log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.combat_mode)] (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
 	return 0
 
 /turf/closed/wall/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	mecha_attacker.do_attack_animation(src)
-	var/mech_damtype = mecha_attacker.damtype
-	if(mecha_attacker.selected)
-		mech_damtype = mecha_attacker.selected.damtype
-	switch(mech_damtype)
+	switch(mecha_attacker.damtype)
 		if(BRUTE)
 			playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		if(BURN)
@@ -38,10 +32,7 @@
 
 /obj/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	mecha_attacker.do_attack_animation(src)
-	var/mech_damtype = mecha_attacker.damtype
-	if(mecha_attacker.selected)
-		mech_damtype = mecha_attacker.selected.damtype
-	switch(mech_damtype)
+	switch(mecha_attacker.damtype)
 		if(BRUTE)
 			playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		if(BURN)
@@ -50,7 +41,7 @@
 			return 0
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
 	..()
-	return take_damage(mecha_attacker.force * 3, mech_damtype, "melee", mecha_attacker.selected, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
+	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/structure/window/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	if(!can_be_reached())

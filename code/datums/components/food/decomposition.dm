@@ -21,9 +21,9 @@
 	/// Use for determining what kind of item the food decomposes into.
 	var/decomp_result
 	/// Does our food attract ants?
-	var/produce_ants = TRUE
+	var/produce_ants = FALSE
 
-/datum/component/decomposition/Initialize(mapload, decomp_req_handle, decomp_flags = NONE, decomp_result, ant_attracting = TRUE, custom_time = 0)
+/datum/component/decomposition/Initialize(mapload, decomp_req_handle, decomp_flags = NONE, decomp_result, ant_attracting = FALSE, custom_time = 0)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -31,8 +31,7 @@
 	src.decomp_result = decomp_result
 	if(mapload || decomp_req_handle)
 		handled = FALSE
-	if(!ant_attracting)
-		produce_ants = FALSE
+	src.produce_ants = ant_attracting
 
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
 	RegisterSignal(parent, list(
@@ -74,7 +73,7 @@
 
 	var/turf/open/open_turf = food.loc
 
-	if(!istype(open_turf) || istype(open_turf, /turf/open/lava)) //Are we actually in a valid open turf?
+	if(!istype(open_turf) || istype(open_turf, /turf/open/lava) || istype(open_turf, /turf/open/misc/asteroid)) //Are we actually in a valid open turf?
 		remove_timer()
 		return
 
@@ -111,8 +110,9 @@
 	var/obj/decomp = parent //Lets us spawn things at decomp
 	if(produce_ants)
 		new /obj/effect/decal/cleanable/ants(decomp.loc)
-	new decomp_result(decomp.loc)
-	decomp.visible_message("<span class='notice'>[decomp] gets overtaken by mold and ants! Gross!</span>")
+	if(decomp_result)
+		new decomp_result(decomp.loc)
+	decomp.visible_message("<span class='notice'>[decomp] gets overtaken by mold[produce_ants ? " and ants":""]! Gross!</span>")
 	qdel(decomp)
 	return
 

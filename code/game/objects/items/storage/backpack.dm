@@ -511,6 +511,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman/PopulateContents()
 	new /obj/item/clothing/under/suit/black(src)
+	new /obj/item/clothing/neck/tie/red/hitman(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
@@ -615,7 +616,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
-	new /obj/item/storage/firstaid/tactical(src)
+	new /obj/item/storage/medkit/tactical(src)
 	new /obj/item/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 
@@ -662,7 +663,7 @@
 	STR.silent = TRUE
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
-	new /obj/item/pda/clown(src)
+	new /obj/item/modular_computer/tablet/pda/clown(src)
 	new /obj/item/clothing/under/rank/civilian/clown(src)
 	new /obj/item/clothing/shoes/clown_shoes(src)
 	new /obj/item/clothing/mask/gas/clown_hat(src)

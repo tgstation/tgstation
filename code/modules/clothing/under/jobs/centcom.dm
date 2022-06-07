@@ -34,6 +34,7 @@
 	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/centcom/officer_skirt/replica
 	name = "\improper CentCom turtleneck skirt replica"
@@ -46,13 +47,14 @@
 	inhand_icon_state = "dg_suit"
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/centcom/military
 	name = "tactical combat uniform"
 	desc = "A dark colored uniform worn by CentCom's conscripted military forces."
 	icon_state = "military"
 	inhand_icon_state = "bl_suit"
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 40)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
 
 /obj/item/clothing/under/rank/centcom/military/eng
 	name = "tactical engineering uniform"

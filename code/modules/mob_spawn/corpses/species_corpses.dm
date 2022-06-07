@@ -7,6 +7,9 @@
 /obj/effect/mob_spawn/corpse/human/zombie
 	mob_species = /datum/species/zombie
 
+/obj/effect/mob_spawn/corpse/human/monkey
+	mob_species = /datum/species/monkey
+
 /obj/effect/mob_spawn/corpse/human/abductor
 	name = "abductor"
 	mob_name = "alien"

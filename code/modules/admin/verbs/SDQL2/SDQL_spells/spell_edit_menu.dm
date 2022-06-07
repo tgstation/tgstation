@@ -404,7 +404,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		if("confirm")
 			if(target_spell)
 				reassign_vars(target_spell)
-				target_spell.action.UpdateButtonIcon()
+				target_spell.action.UpdateButtons()
 				log_admin("[key_name(user)] edited the SDQL spell \"[target_spell]\" owned by [key_name(target_mob)].")
 			else
 				var/new_spell = give_spell()
@@ -895,7 +895,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 	var/obj/effect/proc_holder/spell/new_spell = new path(null, target_mob, user.ckey)
 	GLOB.sdql_spells += new_spell
 	reassign_vars(new_spell)
-	new_spell.action.UpdateButtonIcon()
+	new_spell.action.UpdateButtons()
 	if(target_mob.mind)
 		target_mob.mind.AddSpell(new_spell)
 	else

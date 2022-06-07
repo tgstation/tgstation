@@ -100,9 +100,9 @@
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>\n"+\
 	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"
 	/// blacklisted drone areas, direct
-	var/list/drone_area_blacklist_flat = list(/area/engineering/atmos, /area/engineering/atmospherics_engine)
+	var/list/drone_area_blacklist_flat = list(/area/station/engineering/atmos, /area/station/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
-	var/list/drone_area_blacklist_recursive = list(/area/engineering/supermatter)
+	var/list/drone_area_blacklist_recursive = list(/area/station/engineering/supermatter)
 	/// blacklisted drone machines, direct
 	var/list/drone_machinery_blacklist_flat
 	/// blacklisted drone machines, recursive/includes descendants
@@ -182,10 +182,11 @@
 	alert_drones(DRONE_NET_CONNECT)
 
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_LITERATE, INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
@@ -338,7 +339,7 @@
 	var/static/list/not_shy_of = typecacheof(list(/mob/living/simple_animal/drone, /mob/living/simple_animal/bot))
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		LoadComponent(/datum/component/shy, mob_whitelist=not_shy_of, shy_range=3, message="Your laws prevent this action near %TARGET.", dead_shy=FALSE, dead_shy_immediate=TRUE, machine_whitelist=shy_machine_whitelist)
+		LoadComponent(/datum/component/shy, mob_whitelist=not_shy_of, shy_range=3, message="Your laws prevent this action near %TARGET.", keyless_shy=FALSE, clientless_shy=TRUE, dead_shy=FALSE, dead_shy_immediate=TRUE, machine_whitelist=shy_machine_whitelist)
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 		LoadComponent(/datum/component/technoshy, 1 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")

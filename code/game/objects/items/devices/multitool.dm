@@ -27,7 +27,7 @@
 	drop_sound = 'sound/items/handling/multitool_drop.ogg'
 	pickup_sound = 'sound/items/handling/multitool_pickup.ogg'
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
-	custom_premium_price = PAYCHECK_HARD * 3
+	custom_premium_price = PAYCHECK_COMMAND * 3
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
 	var/obj/machinery/buffer // simple machine buffer for device linkage
@@ -106,8 +106,8 @@
 		var/atom/movable/screen/plane_master/camera_static/ai_detect_plane = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
 		ai_detect_plane.alpha = 64
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
-		if(!hud.hudusers[user])
-			hud.add_hud_to(user)
+		if(!hud.hud_users[user])
+			hud.show_to(user)
 		eye.eye_user = user
 		eye.setLoc(get_turf(src))
 
@@ -116,7 +116,7 @@
 		var/atom/movable/screen/plane_master/camera_static/ai_detect_plane = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
 		ai_detect_plane.alpha = 255
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
-		hud.remove_hud_from(user)
+		hud.hide_from(user)
 		if(eye)
 			eye.setLoc(null)
 			eye.eye_user = null
@@ -167,6 +167,7 @@
 	desc = "An omni-technological interface."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
+	belt_icon_state = "multitool_alien"
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	toolspeed = 0.1
 

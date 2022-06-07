@@ -48,8 +48,8 @@
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing(delta_time, times_fired)
 	var/next_breath = 4
-	var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
-	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/heart/H = getorganslot(ORGAN_SLOT_HEART)
 	if(L)
 		if(L.damage > L.high_threshold)
 			next_breath--
@@ -70,11 +70,11 @@
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe(delta_time, times_fired)
-	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
+
+	SEND_SIGNAL(src, COMSIG_CARBON_PRE_BREATHE)
 
 	var/datum/gas_mixture/environment
 	if(loc)
@@ -83,7 +83,7 @@
 	var/datum/gas_mixture/breath
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby?.grab_state >= GRAB_KILL) || (lungs?.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 		else if(health <= crit_threshold)
@@ -138,7 +138,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
 
-	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		adjustOxyLoss(2)
 
@@ -326,28 +326,28 @@
 	return
 
 /mob/living/carbon/proc/handle_bodyparts(delta_time, times_fired)
-	var/stam_regen = FALSE
 	if(stam_regen_start_time <= world.time)
-		stam_regen = TRUE
 		if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
-	for(var/I in bodyparts)
-		var/obj/item/bodypart/BP = I
-		if(BP.needs_processing)
-			. |= BP.on_life(delta_time, times_fired, stam_regen)
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		. |= limb.on_life(delta_time, times_fired)
 
 /mob/living/carbon/proc/handle_organs(delta_time, times_fired)
-	if(stat != DEAD)
-		for(var/organ_slot in GLOB.organ_process_order)
-			var/obj/item/organ/organ = getorganslot(organ_slot)
-			if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
-				organ.on_life(delta_time, times_fired)
-	else
+	if(stat == DEAD)
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
-		for(var/V in internal_organs)
-			var/obj/item/organ/organ = V
+		for(var/obj/item/organ/internal/organ as anything in internal_organs)
 			organ.on_death(delta_time, times_fired) //Needed so organs decay while inside the body.
+		return
+
+	// NOTE: internal_organs_slot is sorted by GLOB.organ_process_order on insertion
+	for(var/slot in internal_organs_slot)
+		// We don't use getorganslot here because we know we have the organ we want, since we're iterating the list containing em already
+		// This code is hot enough that it's just not worth the time
+		var/obj/item/organ/internal/organ = internal_organs_slot[slot]
+		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
+			organ.on_life(delta_time, times_fired)
+
 
 /mob/living/carbon/handle_diseases(delta_time, times_fired)
 	for(var/thing in diseases)
@@ -421,130 +421,23 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 #define BALLMER_POINTS 5
 
-//this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
+// This updates all special effects that really should be status effect datums: Druggy, Hallucinations, Drunkenness, Mute, etc..
 /mob/living/carbon/handle_status_effects(delta_time, times_fired)
 	..()
 
 	var/restingpwr = 0.5 + 2 * resting
 
-	//Dizziness
-	if(dizziness)
-		var/old_dizzy = dizziness
-		dizziness = max(dizziness - (restingpwr * delta_time), 0)
-
-		if(client)
-			//Want to be able to offset things by the time the animation should be "playing" at
-			var/time = world.time
-			var/delay = 0
-			var/pixel_x_diff = 0
-			var/pixel_y_diff = 0
-
-			var/amplitude = old_dizzy*(sin(old_dizzy * (time)) + 1) // This shit is annoying at high strengthvar/pixel_x_diff = 0
-			var/x_diff = amplitude * sin(old_dizzy * time)
-			var/y_diff = amplitude * cos(old_dizzy * time)
-			pixel_x_diff += x_diff
-			pixel_y_diff += y_diff
-			// Brief explanation. We're basically snapping between different pixel_x/ys instantly, with delays between
-			// Doing this with relative changes. This way we don't override any existing pixel_x/y values
-			// We use EASE_OUT here for similar reasons, we want to act at the end of the delay, not at its start
-			// Relative animations are weird, so we do actually need this
-			animate(client, pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
-			delay += 0.3 SECONDS // This counts as a 0.3 second wait, so we need to shift the sine wave by that much
-
-			x_diff = amplitude * sin(dizziness * (time + delay))
-			y_diff = amplitude * cos(dizziness * (time + delay))
-			pixel_x_diff += x_diff
-			pixel_y_diff += y_diff
-			animate(pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
-
-			// Now we reset back to our old pixel_x/y, since these animates are relative
-			animate(pixel_x = -pixel_x_diff, pixel_y = -pixel_y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
-
 	if(drowsyness)
 		adjust_drowsyness(-1 * restingpwr * delta_time)
 		blur_eyes(1 * delta_time)
 		if(DT_PROB(2.5, delta_time))
-			AdjustSleeping(100)
-
-	//Jitteriness
-	if(jitteriness)
-		do_jitter_animation(jitteriness)
-		jitteriness = max(jitteriness - (restingpwr * delta_time), 0)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "jittery", /datum/mood_event/jittery)
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
-
-	if(druggy)
-		adjust_drugginess(-0.5 * delta_time)
+			AdjustSleeping(10 SECONDS)
 
 	if(silent)
 		silent = max(silent - (0.5 * delta_time), 0)
 
 	if(hallucination)
 		handle_hallucinations(delta_time, times_fired)
-
-	if(drunkenness)
-		drunkenness = max(drunkenness - ((0.005 + (drunkenness * 0.02)) * delta_time), 0)
-		if(drunkenness >= 6)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
-			if(DT_PROB(16, delta_time))
-				slurring += 2
-			jitteriness = max(jitteriness - (1.5 * delta_time), 0)
-			throw_alert(ALERT_DRUNK, /atom/movable/screen/alert/drunk)
-			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
-		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
-			clear_alert(ALERT_DRUNK)
-			sound_environment_override = SOUND_ENVIRONMENT_NONE
-
-		if(drunkenness >= 11 && slurring < 5)
-			slurring += 0.6 * delta_time
-
-		if(mind && (is_scientist_job(mind.assigned_role) || is_research_director_job(mind.assigned_role)))
-			if(SSresearch.science_tech)
-				if(drunkenness >= 12.9 && drunkenness <= 13.8)
-					drunkenness = round(drunkenness, 0.01)
-					if(DT_PROB(2.5, delta_time))
-						say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
-				if(drunkenness > 26) // by this point you're into windows ME territory
-					if(DT_PROB(2.5, delta_time))
-						say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
-
-		if(drunkenness >= 41)
-			if(DT_PROB(16, delta_time))
-				add_confusion(2)
-			Dizzy(5 * delta_time)
-
-		if(drunkenness >= 51)
-			if(DT_PROB(1.5, delta_time))
-				add_confusion(15)
-				vomit() // vomiting clears toxloss, consider this a blessing
-			Dizzy(12.5 * delta_time)
-
-		if(drunkenness >= 61)
-			if(DT_PROB(30, delta_time))
-				blur_eyes(5)
-
-		if(drunkenness >= 71)
-			blur_eyes(2.5 * delta_time)
-
-		if(drunkenness >= 81)
-			adjustToxLoss(0.5 * delta_time)
-			if(!stat && DT_PROB(2.5, delta_time))
-				to_chat(src, span_warning("Maybe you should lie down for a bit..."))
-
-		if(drunkenness >= 91)
-			adjustToxLoss(0.5 * delta_time)
-			adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * delta_time)
-			if(DT_PROB(10, delta_time) && !stat)
-				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z)) //QoL mainly
-					to_chat(src, span_warning("You're so tired... but you can't miss that shuttle..."))
-				else
-					to_chat(src, span_warning("Just a quick nap..."))
-					Sleeping(900)
-
-		if(drunkenness >= 101)
-			adjustToxLoss(1 * delta_time) //Let's be honest you shouldn't be alive by now
 
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
@@ -685,7 +578,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/get_fullness()
 	var/fullness = nutrition
 
-	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
 	if(!belly) //nothing to see here if we do not have a stomach
 		return fullness
 
@@ -703,7 +596,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	. = ..()
 	if(.)
 		return
-	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
 	if(!belly)
 		return FALSE
 	return belly.reagents.has_reagent(reagent, amount, needs_metabolizing)
@@ -718,7 +611,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!dna)
 		return
 
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		return
 
@@ -732,7 +625,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS), 0.5* delta_time)
 
 /mob/living/carbon/proc/undergoing_liver_failure()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver?.organ_flags & ORGAN_FAILING)
 		return TRUE
 
@@ -760,13 +653,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(limb.get_damage() >= limb.max_damage)
 				limb.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
 				if(limb.cremation_progress >= 100)
-					if(limb.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+					if(IS_ORGANIC_LIMB(limb)) //Non-organic limbs don't burn
 						limb.drop_limb()
-						limb.visible_message(span_warning("[src]'s [limb.name] crumbles into ash!"))
+						limb.visible_message(span_warning("[src]'s [limb.plaintext_zone] crumbles into ash!"))
 						qdel(limb)
 					else
 						limb.drop_limb()
-						limb.visible_message(span_warning("[src]'s [limb.name] detaches from [p_their()] body!"))
+						limb.visible_message(span_warning("[src]'s [limb.plaintext_zone] detaches from [p_their()] body!"))
 	if(still_has_limbs)
 		return
 
@@ -776,7 +669,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(head.get_damage() >= head.max_damage)
 			head.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
 			if(head.cremation_progress >= 100)
-				if(head.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+				if(IS_ORGANIC_LIMB(head)) //Non-organic limbs don't burn
 					head.drop_limb()
 					head.visible_message(span_warning("[src]'s head crumbles into ash!"))
 					qdel(head)
@@ -807,7 +700,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/proc/can_heartattack()
 	if(!needs_heart())
 		return FALSE
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || (heart.organ_flags & ORGAN_SYNTHETIC))
 		return FALSE
 	return TRUE
@@ -827,7 +720,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
  * related situations (i.e not just cardiac arrest)
  */
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)
 		return FALSE
 	else if(!needs_heart())
@@ -838,7 +731,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!can_heartattack())
 		return FALSE
 
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!istype(heart))
 		return
 

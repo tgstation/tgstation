@@ -403,7 +403,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
-	custom_price = PAYCHECK_PRISONER * 0.8
+	custom_price = PAYCHECK_LOWER * 0.8
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
@@ -546,7 +546,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return ..()
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == BODYPART_ROBOTIC)
+	if(affecting && !IS_ORGANIC_LIMB(affecting))
 		if(user == H)
 			user.visible_message(span_notice("[user] starts to fix some of the wires in [H]'s [affecting.name]."), span_notice("You start fixing some of the wires in [H == user ? "your" : "[H]'s"] [affecting.name]."))
 			if(!do_mob(user, H, 50))

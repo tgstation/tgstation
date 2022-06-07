@@ -26,7 +26,7 @@
 	playsound(src, P.hitsound, 50, TRUE)
 	var/damage
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		damage = take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)
+		damage = take_damage(P.damage, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration)
 	if(P.suppressed != SUPPRESSED_VERY)
 		visible_message(span_danger("[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE)
 
@@ -179,6 +179,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///what happens when the obj's integrity reaches zero.
 /obj/atom_destruction(damage_flag)
+	. = ..()
 	if(damage_flag == ACID)
 		acid_melt()
 	else if(damage_flag == FIRE)

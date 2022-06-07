@@ -1,22 +1,12 @@
-/*
-//////////////////////////////////////
-
-Deafness
-
-	Slightly noticable.
-	Lowers resistance.
-	Decreases stage speed slightly.
-	Decreases transmittablity.
-	Intense Level.
-
-Bonus
-	Causes intermittent loss of hearing.
-
-//////////////////////////////////////
+/**Deafness
+ * Slightly decreases stealth
+ * Lowers Resistance
+ * Slightly decreases stage speed
+ * Decreases transmissibility
+ * Intense level
+ * Bonus: Causes intermittent loss of hearing.
 */
-
 /datum/symptom/deafness
-
 	name = "Deafness"
 	desc = "The virus causes inflammation of the eardrums, causing intermittent deafness."
 	stealth = -1
@@ -47,7 +37,7 @@ Bonus
 	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
-	var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
 	if(!ears)
 		return //cutting off your ears to cure the deafness: the ultimate own
 	switch(A.stage)
@@ -58,7 +48,8 @@ Bonus
 			if(power >= 2)
 				if(ears.damage < ears.maxHealth)
 					to_chat(M, span_userdanger("Your ears pop painfully and start bleeding!"))
-					ears.damage = max(ears.damage, ears.maxHealth)
+					// Just absolutely murder me man
+					ears.applyOrganDamage(ears.maxHealth)
 					M.emote("scream")
 			else
 				to_chat(M, span_userdanger("Your ears pop and begin ringing loudly!"))

@@ -47,6 +47,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/recycler/RefreshParts()
+	. = ..()
 	var/amt_made = 0
 	var/mat_mod = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -68,15 +69,16 @@
 	The safety-mode light is [safety_mode ? "on" : "off"].
 	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
+/obj/machinery/recycler/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 
 	if(default_pry_open(I))
-		return
-
-	if(default_unfasten_wrench(user, I))
 		return
 
 	if(default_deconstruction_crowbar(I))
@@ -132,23 +134,26 @@
 		if(istype(AM, /obj/item))
 			var/obj/item/bodypart/head/as_head = AM
 			var/obj/item/mmi/as_mmi = AM
-			if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
+			if(istype(AM, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
 				living_detected = TRUE
 			nom += AM
 		else if(isliving(AM))
 			living_detected = TRUE
 			crunchy_nom += AM
+
 	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
 	if(living_detected) // First, check if we have any living beings detected.
 		if(obj_flags & EMAGGED)
 			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
 				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
 					crush_living(CRUNCH)
+					use_power(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
 	for(var/nommed in nom)
 		recycle_item(nommed)
+		use_power(active_power_usage)
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
@@ -212,6 +217,9 @@
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
 
+/obj/machinery/recycler/on_deconstruction()
+	safety_mode = TRUE
+
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
 	obj_flags = CAN_BE_HIT | EMAGGED
@@ -220,6 +228,6 @@
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"
-	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect the said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then deliver these minerals to cargo or engineering. You are our last hope for a clean station, do not screw this up!"
+	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then, deliver these minerals to cargo or engineering. You are our last hope for a clean station. Do not screw this up!"
 
 #undef SAFETY_COOLDOWN

@@ -4,11 +4,12 @@
 	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for viewing and printing the current crew manifest"
-	transfer_access = list(ACCESS_HEADS)
+	transfer_access = list(ACCESS_COMMAND)
 	requires_ntnet = TRUE
 	size = 4
 	tgui_id = "NtosCrewManifest"
 	program_icon = "clipboard-list"
+	detomatix_resistance = DETOMATIX_RESIST_MAJOR
 
 /datum/computer_file/program/crew_manifest/ui_static_data(mob/user)
 	var/list/data = list()

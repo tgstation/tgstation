@@ -71,12 +71,6 @@
 	var/flight_x_offset = 0
 	var/flight_y_offset = 0
 
-	//Zooming
-	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
-	var/zoomed = FALSE //Zoom toggle
-	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
-	var/zoom_out_amt = 0
-	var/datum/action/toggle_scope_zoom/azoom
 	var/pb_knockback = 0
 
 /obj/item/gun/Initialize(mapload)
@@ -85,7 +79,6 @@
 		pin = new pin(src)
 	if(gun_light)
 		alight = new(src)
-	build_zooming()
 
 /obj/item/gun/Destroy()
 	if(isobj(pin)) //Can still be the initial path, then we skip
@@ -96,8 +89,6 @@
 		QDEL_NULL(bayonet)
 	if(chambered) //Not all guns are chambered (EMP'ed energy guns etc)
 		QDEL_NULL(chambered)
-	if(azoom)
-		QDEL_NULL(azoom)
 	if(isatom(suppressed)) //SUPPRESSED IS USED AS BOTH A TRUE/FALSE AND AS A REF, WHAT THE FUCKKKKKKKKKKKKKKKKK
 		QDEL_NULL(suppressed)
 	return ..()
@@ -146,11 +137,6 @@
 	if(can_bayonet)
 		. += "It has a <b>bayonet</b> lug on it."
 
-/obj/item/gun/equipped(mob/living/user, slot)
-	. = ..()
-	if(zoomed && user.get_active_held_item() != src)
-		zoom(user, user.dir, FALSE) //we can only stay zoomed in if it's in our hands //yeah and we only unzoom if we're actually zoomed using the gun!!
-
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	handle_chamber(empty_chamber, from_firing, chamber_next_round)
@@ -164,21 +150,28 @@
 /obj/item/gun/proc/can_shoot()
 	return TRUE
 
+/obj/item/gun/proc/tk_firing(mob/living/user)
+	return loc != user ? TRUE : FALSE
+
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	to_chat(user, span_danger("*click*"))
+	visible_message(span_warning("*click*"), vision_distance = COMBAT_MESSAGE_RANGE)
 	playsound(src, dry_fire_sound, 30, TRUE)
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
-	if(recoil)
+	if(recoil && !tk_firing(user))
 		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
-		playsound(user, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
-		playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
+		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(message)
-			if(pointblank)
+			if(tk_firing(user))
+				visible_message(span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"), \
+								blind_message = span_hear("You hear a gunshot!"), \
+								vision_distance = COMBAT_MESSAGE_RANGE)
+			else if(pointblank)
 				user.visible_message(span_danger("[user] fires [src] point blank at [pbtarget]!"), \
 								span_danger("You fire [src] point blank at [pbtarget]!"), \
 								span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget)
@@ -187,7 +180,7 @@
 					var/mob/PBT = pbtarget
 					var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
 					PBT.throw_at(throw_target, pb_knockback, 2)
-			else
+			else if(!tk_firing(user))
 				user.visible_message(span_danger("[user] fires [src]!"), \
 								span_danger("You fire [src]!"), \
 								span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE)
@@ -217,6 +210,8 @@
 	if(QDELETED(target))
 		return
 	if(firing_burst)
+		return
+	if(SEND_SIGNAL(src, COMSIG_GUN_TRY_FIRE, user, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
@@ -596,18 +591,6 @@
 	update_appearance()
 	update_action_buttons()
 
-/obj/item/gun/pickup(mob/user)
-	..()
-	if(azoom)
-		azoom.Grant(user)
-
-/obj/item/gun/dropped(mob/user)
-	. = ..()
-	if(azoom)
-		azoom.Remove(user)
-	if(zoomed)
-		zoom(user, user.dir, FALSE)
-
 /obj/item/gun/update_overlays()
 	. = ..()
 	if(gun_light)
@@ -679,67 +662,6 @@
 //Happens before the actual projectile creation
 /obj/item/gun/proc/before_firing(atom/target,mob/user)
 	return
-
-/////////////
-// ZOOMING //
-/////////////
-
-/datum/action/toggle_scope_zoom
-	name = "Toggle Scope"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "sniper_zoom"
-	var/obj/item/gun/gun = null
-
-/datum/action/toggle_scope_zoom/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-	gun.zoom(owner, owner.dir)
-
-/datum/action/toggle_scope_zoom/IsAvailable()
-	. = ..()
-	if(owner.get_active_held_item() != gun)
-		. = FALSE
-	if(!. && gun)
-		gun.zoom(owner, owner.dir, FALSE)
-
-/datum/action/toggle_scope_zoom/Remove(mob/living/L)
-	gun.zoom(L, L.dir, FALSE)
-	..()
-
-/obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)
-	SIGNAL_HANDLER
-
-	if(ismob(thing))
-		var/mob/lad = thing
-		lad.client.view_size.zoomOut(zoom_out_amt, zoom_amt, new_dir)
-
-/obj/item/gun/proc/zoom(mob/living/user, direc, forced_zoom)
-	if(!user || !user.client)
-		return
-
-	if(isnull(forced_zoom))
-		zoomed = !zoomed
-	else
-		zoomed = forced_zoom
-
-	if(zoomed)
-		RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
-		user.client.view_size.zoomOut(zoom_out_amt, zoom_amt, direc)
-	else
-		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)
-		user.client.view_size.zoomIn()
-	return zoomed
-
-//Proc, so that gun accessories/scopes/etc. can easily add zooming.
-/obj/item/gun/proc/build_zooming()
-	if(azoom)
-		return
-
-	if(zoomable)
-		azoom = new()
-		azoom.gun = src
 
 #undef FIRING_PIN_REMOVAL_DELAY
 #undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

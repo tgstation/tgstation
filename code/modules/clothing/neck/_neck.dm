@@ -14,39 +14,157 @@
 	if(body_parts_covered & HEAD)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-		if(HAS_BLOOD_DNA(src))
+		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
-	name = "tie"
-	desc = "A neosilk clip-on tie."
+	name = "slick tie"
+	desc = "A neosilk tie."
 	icon = 'icons/obj/clothing/neck.dmi'
-	icon_state = "bluetie"
+	icon_state = "tie_greyscale_tied"
 	inhand_icon_state = "" //no inhands
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
+	greyscale_config = /datum/greyscale_config/ties
+	greyscale_config_worn = /datum/greyscale_config/ties_worn
+	greyscale_colors = "#4d4e4e"
+	flags_1 = IS_PLAYER_COLORABLE_1
+	/// All ties start untied unless otherwise specified
+	var/is_tied = FALSE
+	/// How long it takes to tie the tie
+	var/tie_timer = 4 SECONDS
+	/// Is this tie a clip-on, meaning it does not have an untied state?
+	var/clip_on = FALSE
+
+/obj/item/clothing/neck/tie/Initialize(mapload)
+	. = ..()
+	if(clip_on)
+		return
+	update_appearance(UPDATE_ICON)
+	register_context()
+
+/obj/item/clothing/neck/tie/examine(mob/user)
+	. = ..()
+	if(clip_on)
+		. += span_notice("Looking closely, you can see that it's actually a cleverly disguised clip-on.")
+	else if(!is_tied)
+		. += span_notice("The tie can be tied with Alt-Click.")
+	else
+		. += span_notice("The tie can be untied with Alt-Click.")
+
+/obj/item/clothing/neck/tie/AltClick(mob/user)
+	. = ..()
+	if(clip_on)
+		return
+	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
+	var/tie_timer_actual = tie_timer
+	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
+	for(var/obj/structure/mirror/reflection in view(2, user))
+		tie_timer_actual /= 1.25
+	// Heads of staff are experts at tying their ties.
+	if(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		tie_timer_actual /= 2
+	// Tie/Untie our tie
+	if(!do_after(user, tie_timer_actual))
+		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
+		return
+	// Clumsy & Dumb people have trouble tying their ties.
+	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
+		to_chat(user, span_notice("You just can't seem to get a proper grip on [src]!"))
+		return
+	// Success!
+	is_tied = !is_tied
+	user.visible_message(
+		span_notice("[user] adjusts [user.p_their()] tie[HAS_TRAIT(user, TRAIT_BALD) ? "" : " and runs a hand across [user.p_their()] head"]."),
+		span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"),
+	)
+	update_appearance(UPDATE_ICON)
+	user.update_clothing(ITEM_SLOT_NECK)
+
+/obj/item/clothing/neck/tie/update_icon()
+	. = ..()
+	// Normal strip & equip delay, along with 2 second self equip since you need to squeeze your head through the hole.
+	if(is_tied)
+		icon_state = "tie_greyscale_tied"
+		strip_delay = 4 SECONDS
+		equip_delay_other = 4 SECONDS
+		equip_delay_self = 2 SECONDS
+	else // Extremely quick strip delay, it's practically a ribbon draped around your neck
+		icon_state = "tie_greyscale_untied"
+		strip_delay = 1 SECONDS
+		equip_delay_other = 1 SECONDS
+		equip_delay_self = 0
+
+/obj/item/clothing/neck/tie/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(clip_on)
+		return
+	if(is_tied)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Untie"
+	else
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Tie"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
-	icon_state = "bluetie"
+	icon_state = "tie_greyscale_untied"
+	greyscale_colors = "#5275b6ff"
 
 /obj/item/clothing/neck/tie/red
 	name = "red tie"
-	icon_state = "redtie"
+	icon_state = "tie_greyscale_untied"
+	greyscale_colors = "#c23838ff"
+
+/obj/item/clothing/neck/tie/red/tied
+	is_tied = TRUE
+
+/obj/item/clothing/neck/tie/red/hitman
+	desc = "This is a $47,000 custom-tailored Référence Du Tueur À Gages tie. The clot is from neosilkworms raised at a tie microfarm in Cookwell, from a secret pattern passed down by monk tailors since the twenty-first century!"
+	icon_state = "tie_greyscale_untied"
+	tie_timer = 1 SECONDS // You're a professional.
+
+/obj/item/clothing/neck/tie/red/hitman/tied
+	is_tied = TRUE
 
 /obj/item/clothing/neck/tie/black
 	name = "black tie"
-	icon_state = "blacktie"
+	icon_state = "tie_greyscale_untied"
+	greyscale_colors = "#151516ff"
+
+/obj/item/clothing/neck/tie/black/tied
+	is_tied = TRUE
 
 /obj/item/clothing/neck/tie/horrible
 	name = "horrible tie"
-	desc = "A neosilk clip-on tie. This one is disgusting."
+	desc = "A neosilk tie. This one is disgusting."
 	icon_state = "horribletie"
+	clip_on = TRUE
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+
+/obj/item/clothing/neck/tie/disco
+	name = "horrific necktie"
+	icon_state = "eldritch_tie"
+	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
+	clip_on = TRUE
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/neck/tie/detective
 	name = "loose tie"
 	desc = "A loosely tied necktie, a perfect accessory for the over-worked detective."
 	icon_state = "detective"
+	clip_on = TRUE
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+
+/obj/item/clothing/neck/maid
+	name = "maid neck cover"
+	desc = "A neckpiece for a maid costume, it smells faintly of disappointment."
+	icon_state = "maid_neck"
 
 /obj/item/clothing/neck/stethoscope
 	name = "stethoscope"
@@ -69,8 +187,8 @@
 	var/heart_strength = span_danger("no")
 	var/lung_strength = span_danger("no")
 
-	var/obj/item/organ/heart/heart = carbon_patient.getorganslot(ORGAN_SLOT_HEART)
-	var/obj/item/organ/lungs/lungs = carbon_patient.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/heart/heart = carbon_patient.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/lungs/lungs = carbon_patient.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(carbon_patient.stat != DEAD && !(HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)))
 		if(istype(heart))
@@ -96,7 +214,7 @@
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
 	w_class = WEIGHT_CLASS_TINY
 	dog_fashion = /datum/dog_fashion/head
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"
@@ -160,17 +278,17 @@
 /obj/item/clothing/neck/stripedredscarf
 	name = "striped red scarf"
 	icon_state = "stripedredscarf"
-	custom_price = PAYCHECK_ASSISTANT * 0.2
+	custom_price = PAYCHECK_CREW * 0.2
 
 /obj/item/clothing/neck/stripedgreenscarf
 	name = "striped green scarf"
 	icon_state = "stripedgreenscarf"
-	custom_price = PAYCHECK_ASSISTANT * 0.2
+	custom_price = PAYCHECK_CREW * 0.2
 
 /obj/item/clothing/neck/stripedbluescarf
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
-	custom_price = PAYCHECK_ASSISTANT * 0.2
+	custom_price = PAYCHECK_CREW * 0.2
 
 /obj/item/clothing/neck/petcollar
 	name = "pet collar"
@@ -226,50 +344,15 @@
 	else
 		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
 
-
-/obj/item/clothing/neck/neckerchief
-	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
-	w_class = WEIGHT_CLASS_TINY
-	var/sourceBandanaType
-
-/obj/item/clothing/neck/neckerchief/worn_overlays(mutable_appearance/standing, isinhands)
-	. = ..()
-	if(!isinhands)
-		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/clothing/mask.dmi', icon_state)
-		realOverlay.pixel_y = -3
-		. += realOverlay
-
-/obj/item/clothing/neck/neckerchief/AltClick(mob/user)
-	. = ..()
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(C.get_item_by_slot(ITEM_SLOT_NECK) == src)
-			to_chat(user, span_warning("You can't untie [src] while wearing it!"))
-			return
-		if(user.is_holding(src))
-			var/obj/item/clothing/mask/bandana/newBand = new sourceBandanaType(user)
-			var/currentHandIndex = user.get_held_index_of_item(src)
-			var/oldName = src.name
-			qdel(src)
-			user.put_in_hand(newBand, currentHandIndex)
-			user.visible_message(span_notice("You untie [oldName] back into a [newBand.name]."), span_notice("[user] unties [oldName] back into a [newBand.name]."))
-		else
-			to_chat(user, span_warning("You must be holding [src] in order to untie it!"))
-
 /obj/item/clothing/neck/beads
 	name = "plastic bead necklace"
 	desc = "A cheap, plastic bead necklace. Show team spirit! Collect them! Throw them away! The posibilites are endless!"
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "beads"
 	color = "#ffffff"
-	custom_price = PAYCHECK_ASSISTANT * 0.2
+	custom_price = PAYCHECK_CREW * 0.2
 	custom_materials = (list(/datum/material/plastic = 500))
 
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
-
-/obj/item/clothing/neck/tie/disco
-	name = "horrific necktie"
-	icon_state = "eldritch_tie"
-	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."

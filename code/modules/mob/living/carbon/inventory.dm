@@ -14,6 +14,16 @@
 			return legcuffed
 	return null
 
+/mob/living/carbon/proc/get_all_worn_items()
+	return list(
+		back,
+		wear_mask,
+		wear_neck,
+		head,
+		handcuffed,
+		legcuffed,
+	)
+
 /mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
 	for(var/slot in slots)
 		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE))
@@ -162,27 +172,51 @@
  *
  * This handles creating an alert and adding an overlay to it
  */
-/mob/living/carbon/proc/give()
-	var/obj/item/offered_item = get_active_held_item()
-	if(!offered_item)
-		to_chat(src, span_warning("You're not holding anything to give!"))
+/mob/living/carbon/proc/give(mob/living/carbon/offered)
+	if(has_status_effect(/datum/status_effect/offering))
+		to_chat(src, span_warning("You're already offering something!"))
 		return
 
 	if(IS_DEAD_OR_INCAP(src))
 		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
 		return
 
-	if(has_status_effect(/datum/status_effect/offering))
-		to_chat(src, span_warning("You're already offering up something!"))
+	var/obj/item/offered_item = get_active_held_item()
+	if(!offered_item)
+		to_chat(src, span_warning("You're not holding anything to offer!"))
 		return
+
+	if(offered)
+		if(offered == src)
+			if(!swap_hand(get_inactive_hand_index())) //have to swap hands first to take something
+				to_chat(src, span_warning("You try to take [offered_item] from yourself, but fail."))
+				return
+			if(!put_in_active_hand(offered_item))
+				to_chat(src, span_warning("You try to take [offered_item] from yourself, but fail."))
+				return
+			else
+				to_chat(src, span_notice("You take [offered_item] from yourself."))
+				return
+
+		if(IS_DEAD_OR_INCAP(offered))
+			to_chat(src, span_warning("[offered.p_theyre(TRUE)] unable to take anything in [offered.p_their()] current state!"))
+			return
+
+		if(!CanReach(offered))
+			to_chat(src, span_warning("You have to be beside [offered.p_them()]!"))
+			return
+	else
+		if(!(locate(/mob/living/carbon) in orange(1, src)))
+			to_chat(src, span_warning("There's nobody beside you to take it!"))
+			return
 
 	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
 		return
 
-	visible_message(span_notice("[src] is offering [offered_item]."), \
-					span_notice("You offer [offered_item]."), null, 2)
+	visible_message(span_notice("[src] is offering [offered ? "[offered] " : ""][offered_item]."), \
+					span_notice("You offer [offered ? "[offered] " : ""][offered_item]."), null, 2)
 
-	apply_status_effect(/datum/status_effect/offering, offered_item)
+	apply_status_effect(/datum/status_effect/offering, offered_item, null, offered)
 
 /**
  * Proc called when the player clicks the give alert
@@ -195,6 +229,9 @@
  */
 /mob/living/carbon/proc/take(mob/living/carbon/offerer, obj/item/I)
 	clear_alert("[offerer]")
+	if(IS_DEAD_OR_INCAP(src))
+		to_chat(src, span_warning("You're unable to take anything in your current state!"))
+		return
 	if(get_dist(src, offerer) > 1)
 		to_chat(src, span_warning("[offerer] is out of range!"))
 		return
@@ -215,3 +252,26 @@
 	visible_message(span_notice("[src] takes [I] from [offerer]."), \
 					span_notice("You take [I] from [offerer]."))
 	put_in_hands(I)
+
+///Returns a list of all body_zones covered by clothing
+/mob/living/carbon/proc/get_covered_body_zones()
+	RETURN_TYPE(/list)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/covered_flags = NONE
+	var/list/all_worn_items = get_all_worn_items()
+	for(var/obj/item/worn_item in all_worn_items)
+		covered_flags |= worn_item.body_parts_covered
+
+	return cover_flags2body_zones(covered_flags)
+
+///Returns a bitfield of all zones covered by clothing
+/mob/living/carbon/proc/get_all_covered_flags()
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/covered_flags = NONE
+	var/list/all_worn_items = get_all_worn_items()
+	for(var/obj/item/worn_item in all_worn_items)
+		covered_flags |= worn_item.body_parts_covered
+
+	return covered_flags

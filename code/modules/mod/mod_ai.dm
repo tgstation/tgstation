@@ -14,6 +14,8 @@
 			if(!do_after(user, 5 SECONDS, target = src))
 				balloon_alert(user, "interrupted!")
 				return
+			if(!ai)
+				return
 			intAI = ai
 			intAI.ai_restore_power()//So the AI initially has power.
 			intAI.control_disabled = TRUE
@@ -34,6 +36,9 @@
 			if(!intAI)
 				balloon_alert(user, "no AI in card!")
 				return
+			if(ai)
+				balloon_alert(user, "already has AI!")
+				return
 			if(intAI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				intAI.disconnect_shell()
 			if(intAI.stat || !intAI.client)
@@ -42,6 +47,8 @@
 			balloon_alert(user, "transferring to suit...")
 			if(!do_after(user, 5 SECONDS, target = src))
 				balloon_alert(user, "interrupted!")
+				return
+			if(ai)
 				return
 			balloon_alert(user, "AI transferred to suit")
 			ai_enter_mod(intAI)

@@ -44,7 +44,7 @@
 	unique_name = 1
 	gold_core_spawnable = HOSTILE_SPAWN
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	///How much of a reagent the mob injects on attack
 	var/poison_per_bite = 0
@@ -61,7 +61,7 @@
 	///The message that the mother spider left for this spider when the egg was layed.
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
-	var/menu_description = "Versatile spider variant for frontline combat with high health and damage. Does not inject toxin."
+	var/menu_description = "Versatile spider variant for frontline combat with high health and damage."
 
 /mob/living/simple_animal/hostile/giant_spider/Initialize(mapload)
 	. = ..()
@@ -110,7 +110,7 @@
 	poison_per_bite = 5
 	move_to_delay = 5
 	speed = -0.1
-	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage. Toxin injection of 10u per bite."
+	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
 
 /**
  * # Spider Nurse
@@ -135,14 +135,14 @@
 	poison_per_bite = 3
 	web_speed = 0.25
 	web_sealer = TRUE
-	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
+	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
 	///The health HUD applied to the mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/Initialize(mapload)
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
-	datahud.add_hud_to(src)
+	datahud.show_to(src)
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/AttackingTarget()
 	if(is_busy)
@@ -193,7 +193,7 @@
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
-	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup. Does not inject toxin."
+	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
 	/// Whether or not the tarantula is currently walking on webbing.
 	var/silk_walking = TRUE
 	/// Charging ability
@@ -246,7 +246,7 @@
 	poison_type = /datum/reagent/toxin/venom
 	speed = -0.5
 	gold_core_spawnable = NO_SPAWN
-	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage. Venom injection of 6u per bite."
+	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage."
 
 /**
  * # Spider Broodmother
@@ -272,7 +272,7 @@
 	poison_per_bite = 3
 	gold_core_spawnable = NO_SPAWN
 	web_sealer = TRUE
-	menu_description = "Royal spider variant specializing in reproduction and leadership, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
+	menu_description = "Royal spider variant specializing in reproduction and leadership, but has very low amount of health and deals low damage."
 	///If the spider is trying to cocoon something, what that something is.
 	var/atom/movable/cocoon_target
 	///How many humans this spider has drained but not layed enriched eggs for.
@@ -337,7 +337,7 @@
 				if(ishuman(living_target) && (living_target.stat != DEAD || !consumed_mobs[living_target.tag])) //if they're not dead, you can consume them anyway
 					consumed_mobs[living_target.tag] = TRUE
 					fed++
-					lay_eggs_enriched.UpdateButtonIcon(TRUE)
+					lay_eggs_enriched.UpdateButtons(TRUE)
 					visible_message(span_danger("[src] sticks a proboscis into [living_target] and sucks a viscous substance out."),span_notice("You suck the nutriment out of [living_target], feeding you enough to lay a cluster of eggs."))
 					living_target.death() //you just ate them, they're dead.
 				else
@@ -403,7 +403,7 @@
 
 /obj/effect/proc_holder/wrap/update_icon()
 	action.button_icon_state = "wrap_[active]"
-	action.UpdateButtonIcon()
+	action.UpdateButtons()
 	return ..()
 
 /obj/effect/proc_holder/wrap/Click()
@@ -486,7 +486,7 @@
 					new_eggs.faction = spider.faction
 					if(enriched)
 						spider.fed--
-					UpdateButtonIcon(TRUE)
+					UpdateButtons(TRUE)
 		spider.is_busy = FALSE
 		spider.stop_automated_movement = FALSE
 
@@ -573,7 +573,7 @@
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
-	menu_description = "Versatile ice spider variant for frontline combat with high health and damage. Immune to temperature damage. Does not inject frost oil."
+	menu_description = "Versatile ice spider variant for frontline combat with high health and damage. Immune to temperature damage."
 
 /**
  * # Ice Nurse Spider
@@ -589,7 +589,7 @@
 	maxbodytemp = 1500
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
-	menu_description = "Support ice spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Immune to temperature damage. Frost oil injection of 3u per bite."
+	menu_description = "Support ice spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Immune to temperature damage."
 
 /**
  * # Ice Hunter Spider
@@ -606,7 +606,7 @@
 	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
-	menu_description = "Fast ice spider variant specializing in catching running prey and frost oil injection, but has less health and damage. Immune to temperature damage. Frost oil injection of 10u per bite."
+	menu_description = "Fast ice spider variant specializing in catching running prey and frost oil injection, but has less health and damage. Immune to temperature damage."
 
 /**
  * # Scrawny Hunter Spider
@@ -623,7 +623,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail."
-	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less damage than a normal hunter spider at the cost of a little more health. Toxin injection of 10u per bite."
+	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less damage than a normal hunter spider at the cost of a little more health."
 
 /**
  * # Scrawny Tarantula
@@ -640,7 +640,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes, and looks abnormally thin and frail."
-	menu_description = "A weaker variant of the tarantula with reduced amount of health and damage, very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup. Does not inject toxin."
+	menu_description = "A weaker variant of the tarantula with reduced amount of health and damage, very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
 
 /**
  * # Scrawny Nurse Spider
@@ -655,7 +655,7 @@
 	health = 30
 	maxHealth = 30
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes, and looks abnormally thin and frail."
-	menu_description = "Weaker version of the nurse spider, specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage. Toxin injection of 3u per bite."
+	menu_description = "Weaker version of the nurse spider, specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
 
 /**
  * # Flesh Spider
@@ -671,7 +671,7 @@
 	icon_living = "flesh_spider"
 	icon_dead = "flesh_spider_dead"
 	web_speed = 0.7
-	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health and damage. Toxin injection of 10u per bite."
+	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health and damage."
 
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh/Initialize(mapload)
 	. = ..()
@@ -704,7 +704,7 @@
 /mob/living/simple_animal/hostile/giant_spider/viper/wizard
 	maxHealth = 80
 	health = 80
-	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl. Venom injection of 6u per bite."
+	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl."
 
 /mob/living/simple_animal/hostile/giant_spider/viper/wizard/Initialize(mapload)
 	. = ..()

@@ -27,10 +27,10 @@
 			if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 
-			if((methods & (TOUCH|VAPOR)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				exposed_mob.ContactContractDisease(strain)
-			else //ingest, patch or inject
+			if(methods & (INJECT|INGEST|PATCH))
 				exposed_mob.ForceContractDisease(strain)
+			else if((methods & (TOUCH|VAPOR)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+				exposed_mob.ContactContractDisease(strain)
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
@@ -88,7 +88,14 @@
 
 	var/obj/effect/decal/cleanable/blood/bloodsplatter = locate() in exposed_turf //find some blood here
 	if(!bloodsplatter)
-		bloodsplatter = new(exposed_turf)
+		bloodsplatter = new(exposed_turf, data["viruses"])
+	else if(LAZYLEN(data["viruses"]))
+		var/list/viri_to_add = list()
+		for(var/datum/disease/virus in data["viruses"])
+			if(virus.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+				viri_to_add += virus
+		if(LAZYLEN(viri_to_add))
+			bloodsplatter.AddComponent(/datum/component/infective, viri_to_add)
 	if(data["blood_DNA"])
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
@@ -277,17 +284,15 @@
 		data = list("misc" = 0)
 
 	data["misc"] += delta_time SECONDS * REM
-	M.jitteriness = min(M.jitteriness + (2 * delta_time), 10)
+	M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/jitter, max_duration = 20 SECONDS)
 	if(IS_CULTIST(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			to_chat(M, span_cultlarge("Your blood rites falter as holy water scours your body!"))
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
 	if(data["misc"] >= (25 SECONDS)) // 10 units
-		if(!M.stuttering)
-			M.stuttering = 1
-		M.stuttering = min(M.stuttering + (2 * delta_time), 10)
-		M.Dizzy(5)
+		M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
+		M.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
 			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
 			if(prob(10))
@@ -299,8 +304,8 @@
 		if(IS_CULTIST(M))
 			M.mind.remove_antag_datum(/datum/antagonist/cult)
 			M.Unconscious(100)
-		M.jitteriness = 0
-		M.stuttering = 0
+		M.remove_status_effect(/datum/status_effect/jitter)
+		M.remove_status_effect(/datum/status_effect/speech/stutter)
 		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
 		return
 	holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * delta_time) //fixed consumption to prevent balancing going out of whack
@@ -364,8 +369,8 @@
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(IS_CULTIST(M))
-		M.adjust_drowsyness(-5* REM * delta_time)
-		M.AdjustAllImmobility(-40 *REM* REM * delta_time)
+		M.adjust_drowsyness(-5 * REM * delta_time)
+		M.AdjustAllImmobility(-40 * REM * delta_time)
 		M.adjustStaminaLoss(-10 * REM * delta_time, 0)
 		M.adjustToxLoss(-2 * REM * delta_time, 0)
 		M.adjustOxyLoss(-2 * REM * delta_time, 0)
@@ -390,7 +395,7 @@
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.set_fire_stacks(min(M.fire_stacks + (1.5 * delta_time), 5))
-	M.IgniteMob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
+	M.ignite_mob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
 	M.adjustToxLoss(0.5*delta_time, 0)
 	M.adjustFireLoss(0.5*delta_time, 0) //Hence the other damages... ain't I a bastard?
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5*delta_time, 150)
@@ -492,7 +497,7 @@
 							break
 				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
 					exposed_human.dna.features["mcolor"] = newcolor
-			exposed_human.regenerate_icons()
+			exposed_human.update_body(is_creating = TRUE)
 
 		if((methods & INGEST) && show_message)
 			to_chat(exposed_mob, span_notice("That tasted horrible."))
@@ -514,7 +519,7 @@
 			N.skin_tone = "orange"
 		else if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "#ff8800"
-		N.regenerate_icons()
+		N.update_body(is_creating = TRUE)
 		if(DT_PROB(3.5, delta_time))
 			if(N.w_uniform)
 				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
@@ -646,9 +651,19 @@
 	name = "Golem Mutation Toxin"
 	description = "A crystal toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/golem/random
+	race = /datum/species/golem
 	taste_description = "rocks"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/mutationtoxin/golem/on_mob_metabolize()
+	var/static/list/random_golem_types
+	random_golem_types = subtypesof(/datum/species/golem) - type
+	for(var/i in random_golem_types)
+		var/datum/species/golem/golem = i
+		if(!initial(golem.random_eligible))
+			random_golem_types -= golem
+	race = pick(random_golem_types)
+	..()
 
 /datum/reagent/mutationtoxin/abductor
 	name = "Abductor Mutation Toxin"
@@ -714,7 +729,7 @@
 
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
-	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
+	description = "This toxin will rapidly change the DNA of humanoid beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY
 	taste_description = "slime"
@@ -1097,7 +1112,7 @@
 /datum/reagent/bluespace/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle > 10 && DT_PROB(7.5, delta_time))
 		to_chat(M, span_warning("You feel unstable..."))
-		M.Jitter(2)
+		M.set_timed_status_effect(2 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 		current_cycle = 1
 		addtimer(CALLBACK(M, /mob/living/proc/bluespace_shuffle), 30)
 	..()
@@ -1143,10 +1158,21 @@
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.adjust_fire_stacks(reac_volume / 10)
 
-/datum/reagent/fuel/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustToxLoss(0.5*delta_time, 0)
+/datum/reagent/fuel/on_mob_life(mob/living/carbon/victim, delta_time, times_fired)
+	victim.adjustToxLoss(0.5 * delta_time, 0)
 	..()
 	return TRUE
+
+/datum/reagent/fuel/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+
+	if(!istype(exposed_turf) || isspaceturf(exposed_turf))
+		return
+
+	if((reac_volume < 5))
+		return
+
+	new /obj/effect/decal/cleanable/fuel_pool(exposed_turf, round(reac_volume / 5))
 
 /datum/reagent/space_cleaner
 	name = "Space Cleaner"
@@ -1214,8 +1240,17 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/cryptobiolin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.Dizzy(1)
-	M.set_confusion(clamp(M.get_confusion(), 1, 20))
+	M.set_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+
+	// Cryptobiolin adjusts the mob's confusion down to 20 seconds if it's higher,
+	// or up to 1 second if it's lower, but will do nothing if it's in between
+	var/confusion_left = M.get_timed_status_effect_duration(/datum/status_effect/confusion)
+	if(confusion_left < 1 SECONDS)
+		M.set_timed_status_effect(1 SECONDS, /datum/status_effect/confusion)
+
+	else if(confusion_left > 20 SECONDS)
+		M.set_timed_status_effect(20 SECONDS, /datum/status_effect/confusion)
+
 	..()
 
 /datum/reagent/impedrezene
@@ -1225,10 +1260,10 @@
 	taste_description = "numbness"
 	ph = 9.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opiods = 10)
+	addiction_types = list(/datum/addiction/opioids = 10)
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.jitteriness = max(M.jitteriness - (2.5*delta_time),0)
+	M.adjust_timed_status_effect(-5 SECONDS * delta_time, /datum/status_effect/jitter)
 	if(DT_PROB(55, delta_time))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
 	if(DT_PROB(30, delta_time))
@@ -1392,7 +1427,7 @@
 		H.blood_volume = max(H.blood_volume - (10 * REM * delta_time), 0)
 	if(DT_PROB(10, delta_time))
 		M.losebreath += 2
-		M.set_confusion(min(M.get_confusion() + 2, 5))
+		M.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/confusion, max_duration = 5 SECONDS)
 	..()
 
 /datum/reagent/nitrium_high_metabolization
@@ -1492,11 +1527,12 @@
 	L.SetSleeping(10)
 	return ..()
 
-/datum/reagent/healium/on_mob_life(mob/living/L, delta_time, times_fired)
-	. = ..()
-	L.adjustFireLoss(-2 * REM * delta_time, FALSE)
-	L.adjustToxLoss(-5 * REM * delta_time, FALSE)
-	L.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+/datum/reagent/healium/on_mob_life(mob/living/breather, delta_time, times_fired)
+	breather.adjustFireLoss(-2 * REM * delta_time, FALSE)
+	breather.adjustToxLoss(-5 * REM * delta_time, FALSE)
+	breather.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+	..()
+	return TRUE
 
 /datum/reagent/halon
 	name = "Halon"
@@ -1517,6 +1553,22 @@
 	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
 	return ..()
 
+/datum/reagent/zauker
+	name = "Zauker"
+	description = "An unstable gas that is toxic to all living beings."
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "bitter"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/zauker/on_mob_life(mob/living/breather, delta_time, times_fired)
+	breather.adjustBruteLoss(6 * REM * delta_time, FALSE)
+	breather.adjustOxyLoss(1 * REM * delta_time, FALSE)
+	breather.adjustFireLoss(2 * REM * delta_time, FALSE)
+	breather.adjustToxLoss(2 * REM * delta_time, FALSE)
+	..()
+	return TRUE
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
@@ -1781,9 +1833,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/carpet/expose_turf(turf/exposed_turf, reac_volume)
-	if(isplatingturf(exposed_turf) || istype(exposed_turf, /turf/open/floor/iron))
-		var/turf/open/floor/target_floor = exposed_turf
-		target_floor.PlaceOnTop(carpet_type, flags = CHANGETURF_INHERIT_AIR)
+	if(isopenturf(exposed_turf) && exposed_turf.turf_flags & IS_SOLID && !istype(exposed_turf, /turf/open/floor/carpet))
+		exposed_turf.PlaceOnTop(carpet_type, flags = CHANGETURF_INHERIT_AIR)
 	..()
 
 /datum/reagent/carpet/black
@@ -1848,7 +1899,7 @@
 
 /datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		// Heads of staff and the captain have a "royal metabolism"
 		if(HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM))
@@ -2232,7 +2283,8 @@
 	. = ..()
 	if(!istype(exposed_turf))
 		return
-	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 5 SECONDS) //50 deciseconds per unit
+	// We want one spray of this stuff (5u) to take out a wet floor. Feels better that way
+	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 10 SECONDS)
 
 /datum/reagent/drying_agent/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -2328,7 +2380,7 @@
 	. = ..()
 	// Silently add the zombie infection organ to be activated upon death
 	if(!exposed_mob.getorganslot(ORGAN_SLOT_ZOMBIE))
-		var/obj/item/organ/zombie_infection/nodamage/ZI = new()
+		var/obj/item/organ/internal/zombie_infection/nodamage/ZI = new()
 		ZI.Insert(exposed_mob)
 
 /datum/reagent/magillitis
@@ -2465,10 +2517,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.get_confusion() < 6)
-		M.set_confusion(clamp(M.get_confusion() + (3 * REM * delta_time), 0, 5))
-	if(M.dizziness < 6)
-		M.dizziness = clamp(M.dizziness + (3 * REM * delta_time), 0, 5)
+	M.adjust_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/confusion, max_duration = 5 SECONDS)
+	M.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/dizziness, max_duration = 12 SECONDS)
+
 	if(DT_PROB(10, delta_time))
 		to_chat(M, "You feel confused and disoriented.")
 	..()
@@ -2817,7 +2868,7 @@
 		pests = new(exposed_turf)
 	var/spilled_ants = (round(reac_volume,1) - 5) // To account for ant decals giving 3-5 ants on initialize.
 	pests.reagents.add_reagent(/datum/reagent/ants, spilled_ants)
-	pests.update_ant_damage(spilled_ants)
+	pests.update_ant_damage()
 
 //This is intended to a be a scarce reagent to gate certain drugs and toxins with. Do not put in a synthesizer. Renewable sources of this reagent should be inefficient.
 /datum/reagent/lead

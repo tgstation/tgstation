@@ -1,7 +1,6 @@
 /datum/unit_test/card_mismatch
 
 /datum/unit_test/card_mismatch/Run()
-	var/message = checkCardpacks(SStrading_card_game.card_packs)
-	message += checkCardDatums()
-	if(message)
-		Fail(message)
+	var/message = SStrading_card_game.checkCardpacks(SStrading_card_game.card_packs)
+	message += SStrading_card_game.checkCardDatums()
+	TEST_ASSERT(!message, message)

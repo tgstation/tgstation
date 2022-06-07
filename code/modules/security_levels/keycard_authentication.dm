@@ -9,9 +9,6 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 6
 	power_channel = AREA_USAGE_ENVIRON
 	req_access = list(ACCESS_KEYCARD_AUTH)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -142,7 +139,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
-	for(var/area/maintenance/A in world)
+	for(var/area/station/maintenance/A in world)
 		for(var/obj/machinery/door/airlock/D in A)
 			D.emergency = TRUE
 			D.update_icon(ALL, 0)
@@ -151,7 +148,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "enabled"))
 
 /proc/revoke_maint_all_access()
-	for(var/area/maintenance/A in world)
+	for(var/area/station/maintenance/A in world)
 		for(var/obj/machinery/door/airlock/D in A)
 			D.emergency = FALSE
 			D.update_icon(ALL, 0)

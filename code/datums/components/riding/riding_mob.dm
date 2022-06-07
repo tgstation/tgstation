@@ -141,7 +141,7 @@
 		var/obj/effect/proc_holder/proc_holder = ability
 		if(!proc_holder.action)
 			return
-		proc_holder.action.Share(rider)
+		proc_holder.action.GiveAction(rider)
 
 /// Takes away the riding parent's abilities from the rider
 /datum/component/riding/creature/proc/remove_abilities(mob/living/rider)
@@ -156,7 +156,7 @@
 			return
 		if(rider == proc_holder.ranged_ability_user)
 			proc_holder.remove_ranged_ability()
-		proc_holder.action.Unshare(rider)
+		proc_holder.action.HideFrom(rider)
 
 /datum/component/riding/creature/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
 	if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS))

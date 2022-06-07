@@ -44,6 +44,11 @@
 	inhand_icon_state = "witch"
 	flags_inv = HIDEHAIR
 
+/obj/item/clothing/head/maidheadband
+	name = "maid headband"
+	desc = "Just like from one of those chinese cartoons!"
+	icon_state = "maid_headband"
+
 /obj/item/clothing/head/chicken
 	name = "chicken suit head"
 	desc = "Bkaw!"
@@ -88,7 +93,7 @@
 	flags_inv = HIDEHAIR //bald
 	icon_state = "shrine_wig"
 	inhand_icon_state = "shrine_wig"
-	dynamic_hair_suffix = ""
+
 	worn_y_offset = 1
 
 /obj/item/clothing/head/cardborg

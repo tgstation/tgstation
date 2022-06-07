@@ -21,6 +21,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/head_of_personnel
 	departments_list = list(
 		/datum/job_department/service,
+		/datum/job_department/cargo,
 		/datum/job_department/command,
 		)
 
@@ -57,13 +58,13 @@
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
 		/obj/item/storage/box/ids = 1,
 		)
-	belt = /obj/item/pda/heads/hop
+	belt = /obj/item/modular_computer/tablet/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
 	head = /obj/item/clothing/head/hopcap
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	shoes = /obj/item/clothing/shoes/laceup
+	suit = /obj/item/clothing/suit/armor/vest/hop
 
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,

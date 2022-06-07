@@ -204,7 +204,7 @@
 //Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
 //If both fail it drops it on the floor and returns FALSE.
 //This is probably the main one you need to know :)
-/mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE)
+/mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE, ignore_animation = TRUE)
 	if(QDELETED(I))
 		return FALSE
 
@@ -228,14 +228,14 @@
 						to_chat(usr, span_notice("Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s."))
 						return TRUE
 
-	if(put_in_active_hand(I, forced))
+	if(put_in_active_hand(I, forced, ignore_animation))
 		return TRUE
 
 	var/hand = get_empty_held_index_for_side(LEFT_HANDS)
 	if(!hand)
 		hand = get_empty_held_index_for_side(RIGHT_HANDS)
 	if(hand)
-		if(put_in_hand(I, hand, forced))
+		if(put_in_hand(I, hand, forced, ignore_animation))
 			return TRUE
 	if(del_on_fail)
 		qdel(I)
@@ -331,6 +331,7 @@
 				I.forceMove(newloc)
 		I.dropped(src, silent)
 	SEND_SIGNAL(I, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
+	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, I, force, newloc, no_move, invdrop, silent)
 	return TRUE
 
 /**
@@ -479,7 +480,6 @@
 				path = /obj/item/bodypart/r_arm
 
 			var/obj/item/bodypart/BP = new path ()
-			BP.owner = src
 			BP.held_index = i
 			add_bodypart(BP)
 			hand_bodyparts[i] = BP

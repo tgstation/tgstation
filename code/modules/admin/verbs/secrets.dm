@@ -42,6 +42,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	data["is_funmin"] = is_funmin
 	return data
 
+#define THUNDERDOME_TEMPLATE_FILE "admin_thunderdome.dmm"
 /datum/secrets_menu/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -63,7 +64,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
-					dat += "[ckey] - [D.rank.name]<br>"
+					dat += "[ckey] - [D.rank_names()]<br>"
 				holder << browse(dat, "window=showadmins;size=600x500")
 		//Buttons for debug.
 		if("maint_access_engiebrig")
@@ -73,7 +74,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				M.check_access()
 				if (ACCESS_MAINT_TUNNELS in M.req_access)
 					M.req_access = list()
-					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINE)
+					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINEERING)
 			message_admins("[key_name_admin(holder)] made all maint doors engineering and brig access-only.")
 		if("maint_access_brig")
 			if(!is_debugger)
@@ -151,7 +152,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			log_admin("[key_name(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
 			message_admins(span_adminnotice("[key_name_admin(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs]."))
 
-			var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena]
+			var/area/thunderdome = GLOB.areas_by_type[/area/centcom/tdome/arena]
 			if(delete_mobs == "Yes")
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
@@ -159,8 +160,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
-			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
-			template.copy_contents_to(thunderdome)
+			var/datum/map_template/thunderdome_template = SSmapping.map_templates[THUNDERDOME_TEMPLATE_FILE]
+			var/turf/thunderdome_corner = locate(thunderdome.x - 3, thunderdome.y - 1, 1) // have to do a little bit of coord manipulation to get it in the right spot
+			thunderdome_template.load(thunderdome_corner)
 		if("set_name")
 			var/new_name = input(holder, "Please input a new name for the station.", "What?", "") as text|null
 			if(!new_name)
@@ -330,7 +332,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Egalitarian Station"))
 			for(var/obj/machinery/door/airlock/W in GLOB.machines)
-				if(is_station_level(W.z) && !istype(get_area(W), /area/command) && !istype(get_area(W), /area/commons) && !istype(get_area(W), /area/service) && !istype(get_area(W), /area/command/heads_quarters) && !istype(get_area(W), /area/security/prison))
+				if(is_station_level(W.z) && !istype(get_area(W), /area/station/command) && !istype(get_area(W), /area/station/commons) && !istype(get_area(W), /area/station/service) && !istype(get_area(W), /area/station/command/heads_quarters) && !istype(get_area(W), /area/station/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, SSstation.announcer.get_rand_report_sound())
@@ -499,8 +501,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 				if(H.dna.species.id == SPECIES_HUMAN)
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-						var/obj/item/organ/ears/cat/ears = new
-						var/obj/item/organ/tail/cat/tail = new
+						var/obj/item/organ/internal/ears/cat/ears = new
+						var/obj/item/organ/external/tail/cat/tail = new
 						ears.Insert(H, drop_if_replaced=FALSE)
 						tail.Insert(H, drop_if_replaced=FALSE)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san"), "[PLURAL]" = list("san")) //John Robust -> Robust-kun
@@ -588,6 +590,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		E.processing = TRUE
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
+#undef THUNDERDOME_TEMPLATE_FILE
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE

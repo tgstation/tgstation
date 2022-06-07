@@ -8,13 +8,15 @@
 		immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
 	icon_state = "welding"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/welding)
+	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/armor_booster)
 	overlay_state_inactive = "module_welding"
 
 /obj/item/mod/module/welding/on_suit_activation()
 	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
-/obj/item/mod/module/welding/on_suit_deactivation()
+/obj/item/mod/module/welding/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
 ///T-Ray Scan - Scans the terrain for undertile objects.
@@ -26,11 +28,11 @@
 	icon_state = "tray"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/t_ray)
 	cooldown_time = 0.5 SECONDS
 	/// T-ray scan range.
-	var/range = 2
+	var/range = 4
 
 /obj/item/mod/module/t_ray/on_active_process(delta_time)
 	t_ray_scan(mod.wearer, 0.8 SECONDS, range)
@@ -61,7 +63,7 @@
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
-/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -119,6 +121,7 @@
 	hitsound_wall = 'sound/weapons/batonextend.ogg'
 	suppressed = SUPPRESSED_VERY
 	hit_threshhold = LATTICE_LAYER
+	/// Reference to the beam following the projectile.
 	var/line
 
 /obj/projectile/tether/fire(setAngle)
@@ -156,7 +159,7 @@
 	for(var/obj/item/part in mod.mod_parts)
 		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
 
-/obj/item/mod/module/rad_protection/on_suit_deactivation()
+/obj/item/mod/module/rad_protection/on_suit_deactivation(deleting = FALSE)
 	qdel(GetComponent(/datum/component/geiger_sound))
 	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION)
@@ -165,9 +168,9 @@
 
 /obj/item/mod/module/rad_protection/add_ui_data()
 	. = ..()
-	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : 0
-	.["usertoxins"] = mod.wearer ? mod.wearer.getToxLoss() : 0
-	.["usermaxtoxins"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
+	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : FALSE
+	.["usertoxins"] = mod.wearer?.getToxLoss() || 0
+	.["usermaxtoxins"] = mod.wearer?.getMaxHealth() || 0
 	.["threatlevel"] = perceived_threat_level
 
 /obj/item/mod/module/rad_protection/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
@@ -194,7 +197,7 @@
 /obj/item/mod/module/constructor/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
-/obj/item/mod/module/constructor/on_suit_deactivation()
+/obj/item/mod/module/constructor/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
 /obj/item/mod/module/constructor/on_use()
@@ -215,6 +218,7 @@
 	device = /obj/item/reagent_containers/spray/mister
 	incompatible_modules = list(/obj/item/mod/module/mister)
 	cooldown_time = 0.5 SECONDS
+	/// Volume of our reagent holder.
 	var/volume = 500
 
 /obj/item/mod/module/mister/Initialize(mapload)

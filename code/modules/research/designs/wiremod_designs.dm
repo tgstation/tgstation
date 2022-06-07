@@ -6,7 +6,7 @@
 	build_type = IMPRINTER | COMPONENT_PRINTER
 	category = list("Circuitry", "Core")
 	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/circuit_multitool
 	name = "Circuit Multitool"
@@ -16,7 +16,7 @@
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Core")
 	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/usb_cable
 	name = "USB Cable"
@@ -27,14 +27,14 @@
 	category = list("Circuitry", "Core")
 	// Yes, it would make sense to make them take plastic, but then less people would make them, and I think they're cool
 	materials = list(/datum/material/iron = 2500)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/component
 	name = "Component ( NULL ENTRY )"
 	desc = "A component that goes into an integrated circuit."
 	build_type = IMPRINTER | COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 1000)
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 	category = list("Circuitry", "Components")
 
 /datum/design/component/New()
@@ -72,6 +72,16 @@
 	name = "Delay Component"
 	id = "comp_delay"
 	build_path = /obj/item/circuit_component/delay
+
+/datum/design/component/format
+	name = "Format List Component"
+	id = "comp_format"
+	build_path = /obj/item/circuit_component/format
+
+/datum/design/component/format_assoc
+	name = "Format Associative List Component"
+	id = "comp_format_assoc"
+	build_path = /obj/item/circuit_component/format/assoc
 
 /datum/design/component/index
 	name = "Index Component"
@@ -122,6 +132,11 @@
 	name = "Speech Component"
 	id = "comp_speech"
 	build_path = /obj/item/circuit_component/speech
+
+/datum/design/component/laserpointer
+	name = "Laser Pointer Component"
+	id = "comp_laserpointer"
+	build_path = /obj/item/circuit_component/laserpointer
 
 /datum/design/component/timepiece
 	name = "Timepiece Component"
@@ -341,6 +356,16 @@
 	id = "comp_bar_overlay"
 	build_path = /obj/item/circuit_component/object_overlay/bar
 
+/datum/design/component/bci/vox
+	name = "VOX Announcement Component"
+	id = "comp_vox"
+	build_path = /obj/item/circuit_component/vox
+
+/datum/design/component/bci/thought_listener
+	name = "Thought Listener Component"
+	id = "comp_thought_listener"
+	build_path = /obj/item/circuit_component/thought_listener
+
 /datum/design/component/bci/target_intercept
 	name = "BCI Target Interceptor"
 	id = "comp_target_intercept"
@@ -372,7 +397,7 @@
 	build_path = /obj/item/circuit_component/id_getter
 
 /datum/design/component/id_info_reader
-	name = "ID Getter Component"
+	name = "ID Info Reader Component"
 	id = "comp_id_info_reader"
 	build_path = /obj/item/circuit_component/id_info_reader
 
@@ -385,6 +410,11 @@
 	name = "Set Variable Trigger"
 	id = "comp_set_variable_trigger"
 	build_path = /obj/item/circuit_component/variable/setter/trigger
+
+/datum/design/component/view_sensor
+	name = "View Sensor Component"
+	id = "comp_view_sensor"
+	build_path = /obj/item/circuit_component/view_sensor
 
 /datum/design/component/access_checker
 	name = "Access Checker Component"

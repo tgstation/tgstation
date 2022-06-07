@@ -8,10 +8,10 @@
 /datum/preference/choiced/ethereal_color/init_possible_values()
 	var/list/values = list()
 
-	var/icon/ethereal_base = icon('icons/mob/human_parts_greyscale.dmi', "ethereal_head_m")
-	ethereal_base.Blend(icon('icons/mob/human_parts_greyscale.dmi', "ethereal_chest_m"), ICON_OVERLAY)
-	ethereal_base.Blend(icon('icons/mob/human_parts_greyscale.dmi', "ethereal_l_arm"), ICON_OVERLAY)
-	ethereal_base.Blend(icon('icons/mob/human_parts_greyscale.dmi', "ethereal_r_arm"), ICON_OVERLAY)
+	var/icon/ethereal_base = icon('icons/mob/species/ethereal/bodyparts.dmi', "ethereal_head")
+	ethereal_base.Blend(icon('icons/mob/species/ethereal/bodyparts.dmi', "ethereal_chest"), ICON_OVERLAY)
+	ethereal_base.Blend(icon('icons/mob/species/ethereal/bodyparts.dmi', "ethereal_l_arm"), ICON_OVERLAY)
+	ethereal_base.Blend(icon('icons/mob/species/ethereal/bodyparts.dmi', "ethereal_r_arm"), ICON_OVERLAY)
 
 	var/icon/eyes = icon('icons/mob/human_face.dmi', "eyes")
 	eyes.Blend(COLOR_BLACK, ICON_MULTIPLY)

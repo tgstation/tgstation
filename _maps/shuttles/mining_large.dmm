@@ -50,7 +50,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/shuttle/mining/large)
 "g" = (

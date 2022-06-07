@@ -25,7 +25,7 @@
 	//Start recharging.
 	attached_hand = null
 	recharging = TRUE
-	action.UpdateButtonIcon()
+	action.UpdateButtons()
 
 /obj/effect/proc_holder/spell/targeted/touch/cast(list/targets,mob/user = usr)
 	if(!QDELETED(attached_hand))

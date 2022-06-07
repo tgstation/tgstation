@@ -352,7 +352,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
-			user.stuttering = baton.knockdown_time*0.5
+			user.set_timed_status_effect(baton.knockdown_time, /datum/status_effect/speech/stutter)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
@@ -437,7 +437,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/sink/proc/begin_reclamation()
 	if(!reclaiming)
 		reclaiming = TRUE
-		START_PROCESSING(SSfluids, src)
+		START_PROCESSING(SSplumbing, src)
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
@@ -557,7 +557,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
-			user.stuttering = baton.knockdown_time*0.5
+			user.set_timed_status_effect(baton.knockdown_time, /datum/status_effect/speech/stutter)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
@@ -677,9 +677,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	else
 		return ..()
 
-/obj/structure/curtain/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I, 50)
+/obj/structure/curtain/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool, time = 5 SECONDS)
 	return TRUE
 
 /obj/structure/curtain/wirecutter_act(mob/living/user, obj/item/I)

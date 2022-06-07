@@ -26,8 +26,8 @@
 	name = "Repair Compound Fracture"
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/reset_compound_fracture,
 		/datum/surgery_step/repair_bone_compound,
 		/datum/surgery_step/close)

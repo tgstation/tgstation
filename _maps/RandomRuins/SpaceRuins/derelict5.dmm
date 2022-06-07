@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "c" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "d" = (
 /turf/closed/mineral/random,
@@ -57,7 +57,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "p" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/unpowered)
 "q" = (
 /obj/structure/barricade/wooden,
@@ -66,7 +66,7 @@
 "r" = (
 /obj/structure/barricade/wooden,
 /obj/machinery/door/airlock/external/ruin,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered)
 "s" = (
 /obj/machinery/door/airlock/external/ruin,

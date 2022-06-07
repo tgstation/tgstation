@@ -23,9 +23,13 @@
 		. = COMPONENT_OVERRIDE_POWER_USAGE
 
 /obj/item/mod/module/circuit/on_install()
+	if(!shell?.attached_circuit)
+		return
 	RegisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, .proc/override_power_usage)
 
-/obj/item/mod/module/circuit/on_uninstall()
+/obj/item/mod/module/circuit/on_uninstall(deleting = FALSE)
+	if(!shell?.attached_circuit)
+		return
 	UnregisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
 /obj/item/mod/module/circuit/on_use()

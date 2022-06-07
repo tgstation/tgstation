@@ -279,7 +279,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/mask/animal/rat/bee
+	drone_hat = /obj/item/clothing/mask/animal/small/bee
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -414,6 +414,16 @@
 
 /datum/holiday/indigenous/getStationPrefix()
 	return pick("Endangered language", "Word", "Language", "Language revitalization", "Potato", "Corn")
+
+// AUGUST
+
+/datum/holiday/ukraine
+	name = "Independence Day of Ukraine"
+	begin_month = AUGUST
+	begin_day = 24
+
+/datum/holiday/indigenous/getStationPrefix()
+	return pick("Kyiv", "Ukraine")
 
 // SEPTEMBER
 
@@ -601,7 +611,7 @@
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
-	drone_hat = /obj/item/clothing/mask/animal/rat/tribal
+	drone_hat = /obj/item/clothing/mask/animal/small/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS

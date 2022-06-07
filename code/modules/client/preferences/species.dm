@@ -6,7 +6,7 @@
 	randomize_by_default = FALSE
 
 /datum/preference/choiced/species/deserialize(input, datum/preferences/preferences)
-	return GLOB.species_list[sanitize_inlist(input, get_choices_serialized(), "human")]
+	return GLOB.species_list[sanitize_inlist(input, get_choices_serialized(), SPECIES_HUMAN)]
 
 /datum/preference/choiced/species/serialize(input)
 	var/datum/species/species = input

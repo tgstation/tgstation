@@ -11,6 +11,7 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
 	action_icon_state = "mindswap"
 	active_msg = "You prepare to swap minds with a target..."
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 	/// For how long is the caster stunned for after the spell
 	var/unconscious_amount_caster = 40 SECONDS
 	/// For how long is the victim stunned for after the spell
@@ -34,7 +35,7 @@
 		if(stand.summoner)
 			victim = stand.summoner
 	var/datum/mind/VM = victim.mind
-	if(victim.anti_magic_check(TRUE, FALSE) || VM.has_antag_datum(/datum/antagonist/wizard) || VM.has_antag_datum(/datum/antagonist/cult) || VM.has_antag_datum(/datum/antagonist/changeling) || VM.has_antag_datum(/datum/antagonist/rev) || victim.key[1] == "@")
+	if(victim.can_block_magic(antimagic_flags) || VM.has_antag_datum(/datum/antagonist/wizard) || VM.has_antag_datum(/datum/antagonist/cult) || VM.has_antag_datum(/datum/antagonist/changeling) || VM.has_antag_datum(/datum/antagonist/rev) || victim.key[1] == "@")
 		if(!silent)
 			to_chat(user, span_warning("[victim.p_their(TRUE)] mind is resisting your spell!"))
 		return FALSE

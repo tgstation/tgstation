@@ -12,7 +12,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset
 	var/_abstract = /datum/asset
-	var/cached_url_mappings
+	var/cached_serialized_url_mappings
+	var/cached_serialized_url_mappings_transport_type
 
 	/// Whether or not this asset should be loaded in the "early assets" SS
 	var/early = FALSE
@@ -31,10 +32,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /// Returns a cached tgui message of URL mappings
 /datum/asset/proc/get_serialized_url_mappings()
-	if (isnull(cached_url_mappings))
-		cached_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+	if (isnull(cached_serialized_url_mappings) || cached_serialized_url_mappings_transport_type != SSassets.transport.type)
+		cached_serialized_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+		cached_serialized_url_mappings_transport_type = SSassets.transport.type
 
-	return cached_url_mappings
+	return cached_serialized_url_mappings
 
 /datum/asset/proc/register()
 	return
@@ -472,18 +474,18 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/name
 
 /datum/asset/json/send(client)
-	return SSassets.transport.send_assets(client, "data/[name].json")
+	return SSassets.transport.send_assets(client, "[name].json")
 
 /datum/asset/json/get_url_mappings()
 	return list(
-		"[name].json" = SSassets.transport.get_asset_url("data/[name].json"),
+		"[name].json" = SSassets.transport.get_asset_url("[name].json"),
 	)
 
 /datum/asset/json/register()
 	var/filename = "data/[name].json"
 	fdel(filename)
 	text2file(json_encode(generate()), filename)
-	SSassets.transport.register_asset(filename, fcopy_rsc(filename))
+	SSassets.transport.register_asset("[name].json", fcopy_rsc(filename))
 	fdel(filename)
 
 /// Returns the data that will be JSON encoded

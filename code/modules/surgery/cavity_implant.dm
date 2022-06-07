@@ -2,8 +2,8 @@
 	name = "Cavity implant"
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/handle_cavity,
 		/datum/surgery_step/close)
@@ -18,6 +18,8 @@
 	implements = list(/obj/item = 100)
 	repeatable = TRUE
 	time = 32
+	preop_sound = 'sound/surgery/organ1.ogg'
+	success_sound = 'sound/surgery/organ2.ogg'
 	var/obj/item/item_for_cavity
 
 /datum/surgery_step/handle_cavity/tool_check(mob/user, obj/item/tool)

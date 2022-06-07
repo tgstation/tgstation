@@ -90,6 +90,7 @@
 		"hawk" = FALSE,
 		"lizard" = FALSE,
 		"duffel" = TRUE,
+		"crow" = TRUE,
 	)
 
 	var/emitterhealth = 20
@@ -126,6 +127,8 @@
 		"internal gps" = 35,
 		"universal translator" = 35,
 	)
+
+	var/atom/movable/screen/ai/modpc/interfaceButton
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
@@ -166,14 +169,14 @@
 	atmos_analyzer = new /obj/item/analyzer(src)
 	signaler = new /obj/item/assembly/signaler/internal(src)
 	hostscan = new /obj/item/healthanalyzer(src)
-	newscaster = new /obj/machinery/newscaster(src)
+	newscaster = new /obj/machinery/newscaster/pai(src)
 	if(!aicamera)
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
 		aicamera.flash_enabled = TRUE
 
-	addtimer(CALLBACK(src, .proc/pdaconfig), 5)
-
 	. = ..()
+
+	create_modularInterface()
 
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
@@ -181,6 +184,8 @@
 	if(!holoform)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
+
+	return INITIALIZE_HINT_LATELOAD
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(atmos_analyzer)
@@ -198,12 +203,9 @@
 	GLOB.pai_list -= src
 	return ..()
 
-/mob/living/silicon/pai/proc/pdaconfig()
-	//PDA
-	aiPDA = new /obj/item/pda/ai(src)
-	aiPDA.owner = real_name
-	aiPDA.ownjob = "pAI Messenger"
-	aiPDA.name = "[real_name] ([aiPDA.ownjob])"
+/mob/living/silicon/pai/LateInitialize()
+	. = ..()
+	modularInterface.saved_identification = name
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -231,7 +233,7 @@
 	if(delold)
 		qdel(src)
 
-/mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
+/mob/living/silicon/pai/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	. = ..()
 	if(!.)
 		add_movespeed_modifier(/datum/movespeed_modifier/pai_spacewalk)
@@ -254,6 +256,8 @@
 
 /mob/living/silicon/pai/can_interact_with(atom/A)
 	if(A == signaler) // Bypass for signaler
+		return TRUE
+	if(A == modularInterface)
 		return TRUE
 
 	return ..()

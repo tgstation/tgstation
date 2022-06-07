@@ -3,11 +3,11 @@
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/mine/explored)
 "c" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "e" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "h" = (
 /obj/structure/table,
@@ -16,11 +16,11 @@
 	pixel_y = 5
 	},
 /obj/effect/spawner/random/food_or_drink/donkpockets,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "k" = (
 /obj/effect/spawner/random/trash/cigbutt,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "r" = (
 /obj/effect/spawner/random/trash/hobo_squat,
@@ -28,29 +28,29 @@
 /obj/structure/sign/poster/contraband/imperial_propaganda{
 	pixel_y = 32
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "t" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "u" = (
 /obj/item/pickaxe/mini{
 	pixel_x = 5;
 	pixel_y = -1
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "x" = (
 /obj/item/relic,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "y" = (
 /turf/closed/wall,
 /area/mine/explored)
 "z" = (
 /obj/structure/water_source/puddle,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "E" = (
 /obj/modular_map_connector,
@@ -60,11 +60,11 @@
 /obj/item/stack/ore/iron{
 	pixel_y = -11
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "V" = (
 /obj/item/kirbyplants/random,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 
 (1,1,1) = {"

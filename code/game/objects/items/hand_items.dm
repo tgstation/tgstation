@@ -127,7 +127,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
-	if((target.get_biological_state() != BIO_FLESH_BONE && target.get_biological_state() != BIO_JUST_FLESH) || !the_head.is_organic_limb())
+	if((target.get_biological_state() != BIO_FLESH_BONE && target.get_biological_state() != BIO_JUST_FLESH) || !IS_ORGANIC_LIMB(the_head))
 		to_chat(user, span_warning("You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!"))
 		return
 
@@ -213,9 +213,11 @@
 	var/table_smacks_left = 3
 
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
+	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
+
 	if(ishuman(slapped))
 		var/mob/living/carbon/human/human_slapped = slapped
-		human_slapped.dna?.species?.stop_wagging_tail(slapped)
+		SEND_SIGNAL(human_slapped, COMSIG_ORGAN_WAG_TAIL, FALSE)
 	user.do_attack_animation(slapped)
 
 	var/slap_volume = 50
@@ -232,7 +234,7 @@
 		SEND_SOUND(slapped, sound('sound/weapons/flash_ring.ogg'))
 		shake_camera(slapped, 2, 2)
 		slapped.Paralyze(2.5 SECONDS)
-		slapped.add_confusion(7)
+		slapped.adjust_timed_status_effect(7 SECONDS, /datum/status_effect/confusion)
 		slapped.adjustStaminaLoss(40)
 	else if(user.zone_selected == BODY_ZONE_HEAD || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		if(user == slapped)
@@ -533,12 +535,12 @@
 		if(1)
 			other_msg = "stumbles slightly, turning a bright red!"
 			self_msg = "You lose control of your limbs for a moment as your blood rushes to your face, turning it bright red!"
-			living_target.add_confusion(rand(5, 10))
+			living_target.adjust_timed_status_effect(rand(5 SECONDS, 10 SECONDS), /datum/status_effect/confusion)
 		if(2)
 			other_msg = "stammers softly for a moment before choking on something!"
 			self_msg = "You feel your tongue disappear down your throat as you fight to remember how to make words!"
 			addtimer(CALLBACK(living_target, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
-			living_target.stuttering += rand(5, 15)
+			living_target.adjust_timed_status_effect(rand(10 SECONDS, 30 SECONDS), /datum/status_effect/speech/stutter)
 		if(3)
 			other_msg = "locks up with a stunned look on [living_target.p_their()] face, staring at [firer ? firer : "the ceiling"]!"
 			self_msg = "Your brain completely fails to process what just happened, leaving you rooted in place staring at [firer ? "[firer]" : "the ceiling"] for what feels like an eternity!"
@@ -567,7 +569,7 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/heartbreakee = target
-	var/obj/item/organ/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.applyOrganDamage(999)
 
 

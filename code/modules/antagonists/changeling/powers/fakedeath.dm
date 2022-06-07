@@ -18,7 +18,7 @@
 		name = "Reviving Stasis"
 		desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
 		button_icon_state = "fake_death"
-		UpdateButtonIcon()
+		UpdateButtons()
 		chemical_cost = 15
 		to_chat(user, span_notice("We have revived ourselves."))
 	else
@@ -43,7 +43,7 @@
 			"<span class='hear'>You hear organic matter ripping \
 			and tearing!</span>")
 		user.emote("scream")
-		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))
+		user.regenerate_limbs(list(BODY_ZONE_HEAD))
 	user.regenerate_organs()
 
 /datum/action/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
@@ -58,7 +58,7 @@
 	name = "Revive"
 	desc = "We arise once more."
 	button_icon_state = "revive"
-	UpdateButtonIcon()
+	UpdateButtons()
 	chemical_cost = 0
 	revive_ready = TRUE
 

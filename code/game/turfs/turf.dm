@@ -22,8 +22,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/list/baseturfs = /turf/baseturf_bottom
 
 	var/temperature = T20C
-	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
-	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
+	///Used for fire, if a melting temperature was reached, it will be destroyed
+	var/to_be_destroyed = 0
+	///The max temperature of the fire which it was subjected to
+	var/max_fire_temperature_sustained = 0
 
 	var/blocks_air = FALSE
 
@@ -73,8 +75,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// See __DEFINES/construction.dm for RCD_MEMORY_*.
 	var/rcd_memory
 
+	/// How pathing algorithm will check if this turf is passable by itself (not including content checks). By default it's just density check.
+	/// WARNING: Currently to use a density shortcircuiting this does not support dense turfs with special allow through function
+	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
+
 /turf/vv_edit_var(var_name, new_value)
-	var/static/list/banned_edits = list("x", "y", "z")
+	var/static/list/banned_edits = list(NAMEOF(src, x), NAMEOF(src, y), NAMEOF(src, z))
 	if(var_name in banned_edits)
 		return FALSE
 	. = ..()
@@ -509,6 +515,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/burn_tile()
 	return
 
+/turf/proc/break_tile()
+	return
+
 /turf/proc/is_shielded()
 	return
 
@@ -580,6 +589,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return
 
 /turf/rust_heretic_act()
+	if(turf_flags & NO_RUST)
+		return
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		return
 
@@ -625,7 +636,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
-	var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
 	if(!belly?.reagents.total_volume)
 		return
 	var/chemicals_lost = belly.reagents.total_volume * purge_ratio
@@ -677,8 +688,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
  * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
+ * * no_id: When true, doors with public access will count as impassible
 */
-/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
+/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only, no_id = FALSE)
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 	. = list()
 
@@ -686,7 +698,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/turf/turf_to_check = get_step(src,iter_dir)
 		if(!turf_to_check || (simulated_only && space_type_cache[turf_to_check.type]))
 			continue
-		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller, ID))
+		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller, ID, no_id = no_id))
 			continue
 		. += turf_to_check
 

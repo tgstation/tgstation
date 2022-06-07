@@ -21,6 +21,7 @@
 #define span_bold(str) ("<span class='bold'>" + str + "</span>")
 #define span_boldannounce(str) ("<span class='boldannounce'>" + str + "</span>")
 #define span_bolddanger(str) ("<span class='bolddanger'>" + str + "</span>")
+#define span_boldnicegreen(str) ("<span class='boldnicegreen'>" + str + "</span>")
 #define span_boldnotice(str) ("<span class='boldnotice'>" + str + "</span>")
 #define span_boldwarning(str) ("<span class='boldwarning'>" + str + "</span>")
 #define span_centcomradio(str) ("<span class='centcomradio'>" + str + "</span>")
@@ -45,6 +46,7 @@
 #define span_greenannounce(str) ("<span class='greenannounce'>" + str + "</span>")
 #define span_greenteamradio(str) ("<span class='greenteamradio'>" + str + "</span>")
 #define span_greentext(str) ("<span class='greentext'>" + str + "</span>")
+#define span_grey(str) ("<span class='grey'>" + str + "</span>")
 #define span_gangradio(str) ("<span class='gangradio'>" + str + "</span>")
 #define span_hear(str) ("<span class='hear'>" + str + "</span>")
 #define span_hidden(str) ("<span class='hidden'>" + str + "</span>")
@@ -114,3 +116,7 @@
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
+
+// Spans that use embedded tgui components:
+// Sorted alphabetically
+#define span_tooltip(tip, main_text) ("<span data-component=\"Tooltip\" data-content=\"" + tip + "\" class=\"tooltip\">" + main_text + "</span>")

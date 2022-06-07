@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscadd: "Ghost darkness is now a game preference, and will persist between rounds"
-  - balance: "Ghost darkness defaults to a bit darker then currently. I think it looks better"

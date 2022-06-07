@@ -5,8 +5,6 @@
 	icon = 'icons/obj/machines/suit_storage.dmi'
 	icon_state = "classic"
 	base_icon_state = "classic"
-	use_power = ACTIVE_POWER_USE
-	active_power_usage = 60
 	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the unit is open
@@ -390,8 +388,8 @@
 		if(uv_super)
 			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
-			var/datum/effect_system/smoke_spread/bad/black/smoke = new
-			smoke.set_up(0, src)
+			var/datum/effect_system/fluid_spread/smoke/bad/black/smoke = new
+			smoke.set_up(0, holder = src, location = src)
 			smoke.start()
 			QDEL_NULL(helmet)
 			QDEL_NULL(suit)
@@ -439,10 +437,12 @@
 		cell = suit.cell
 	if(mod)
 		cell = mod.get_cell()
-	if(!cell)
+	if(!cell || cell.charge == cell.maxcharge)
 		return
-	use_power(charge_rate * delta_time)
-	cell.give(charge_rate * delta_time)
+
+	var/cell_charged = cell.give(charge_rate * delta_time)
+	if(cell_charged)
+		use_power((active_power_usage + charge_rate) * delta_time)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))

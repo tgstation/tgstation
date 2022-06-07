@@ -1,6 +1,6 @@
 import { resolveAsset } from '../assets';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Flex, NoticeBox, Section } from '../components';
+import { Button, Flex, NoticeBox, Section, Input } from '../components';
 import { Window } from '../layouts';
 
 export const PortraitPicker = (props, context) => {
@@ -8,9 +8,16 @@ export const PortraitPicker = (props, context) => {
   const [listIndex, setListIndex] = useLocalState(context, 'listIndex', 0);
   const {
     paintings,
+    search_string,
+    search_mode,
   } = data;
-  const current_portrait_title = paintings[listIndex]["title"];
-  const current_portrait_asset_name = "paintings" + "_" + paintings[listIndex]["md5"];
+  const got_paintings = !!paintings.length;
+  const current_portrait_title = got_paintings
+    && paintings[listIndex]["title"];
+  const current_portrait_author = got_paintings
+    && "By " + paintings[listIndex]["creator"];
+  const current_portrait_asset_name = got_paintings
+    && "paintings" + "_" + paintings[listIndex]["md5"];
   return (
     <Window
       theme="ntos"
@@ -19,6 +26,28 @@ export const PortraitPicker = (props, context) => {
       height={406}>
       <Window.Content>
         <Flex height="100%" direction="column">
+          <Flex.Item mb={1}>
+            <Section
+              title="Search">
+              <Input fluid
+                placeholder="Search Paintings..."
+                value={search_string}
+                onChange={(e, value) => {
+                  act('search', {
+                    to_search: value,
+                  });
+                  setListIndex(0);
+                }} />
+              <Button
+                content={search_mode}
+                onClick={() => {
+                  act('change_search_mode');
+                  if (search_string) {
+                    setListIndex(0);
+                  }
+                }} />
+            </Section>
+          </Flex.Item>
           <Flex.Item mb={1} grow={2}>
             <Section fill>
               <Flex
@@ -26,19 +55,30 @@ export const PortraitPicker = (props, context) => {
                 align="center"
                 justify="center"
                 direction="column">
-                <Flex.Item>
-                  <img
-                    src={resolveAsset(current_portrait_asset_name)}
-                    height="96px"
-                    width="96px"
-                    style={{
-                      'vertical-align': 'middle',
-                      '-ms-interpolation-mode': 'nearest-neighbor',
-                    }} />
-                </Flex.Item>
-                <Flex.Item className="Section__titleText">
-                  {current_portrait_title}
-                </Flex.Item>
+                {got_paintings ? (
+                  <>
+                    <Flex.Item>
+                      <img
+                        src={resolveAsset(current_portrait_asset_name)}
+                        height="128px"
+                        width="128px"
+                        style={{
+                          'vertical-align': 'middle',
+                          '-ms-interpolation-mode': 'nearest-neighbor',
+                        }} />
+                    </Flex.Item>
+                    <Flex.Item className="Section__titleText">
+                      {current_portrait_title}
+                    </Flex.Item>
+                    <Flex.Item>
+                      {current_portrait_author}
+                    </Flex.Item>
+                  </>
+                ) : (
+                  <Flex.Item className="Section__titleText">
+                    No paintings found.
+                  </Flex.Item>
+                )}
               </Flex>
             </Section>
           </Flex.Item>
@@ -65,6 +105,7 @@ export const PortraitPicker = (props, context) => {
                       <Button
                         icon="check"
                         content="Select Portrait"
+                        disabled={!got_paintings}
                         onClick={() => act("select", {
                           selected: paintings[listIndex]["ref"],
                         })}
@@ -73,14 +114,14 @@ export const PortraitPicker = (props, context) => {
                     <Flex.Item grow={1}>
                       <Button
                         icon="chevron-right"
-                        disabled={listIndex === paintings.length-1}
+                        disabled={listIndex >= paintings.length-1}
                         onClick={() => setListIndex(listIndex+1)}
                       />
                     </Flex.Item>
                     <Flex.Item>
                       <Button
                         icon="angle-double-right"
-                        disabled={listIndex === paintings.length-1}
+                        disabled={listIndex >= paintings.length-1}
                         onClick={() => setListIndex(paintings.length-1)}
                       />
                     </Flex.Item>

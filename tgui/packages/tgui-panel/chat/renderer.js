@@ -8,14 +8,28 @@ import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
 import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPES, MESSAGE_TYPE_INTERNAL, MESSAGE_TYPE_UNKNOWN } from './constants';
+import { render } from 'inferno';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
+import { Tooltip } from "../../tgui/components";
 
 const logger = createLogger('chatRenderer');
 
 // We consider this as the smallest possible scroll offset
 // that is still trackable.
 const SCROLL_TRACKING_TOLERANCE = 24;
+
+// List of injectable component names to the actual type
+export const TGUI_CHAT_COMPONENTS = {
+  Tooltip,
+};
+
+// List of injectable attibute names mapped to their proper prop
+// We need this because attibutes don't support lowercase names
+export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
+  "position": "position",
+  "content": "content",
+};
 
 const findNearestScrollableParent = startingNode => {
   const body = document.body;
@@ -301,6 +315,51 @@ class ChatRenderer {
         else {
           logger.error('Error: message is missing text payload', message);
         }
+        // Get all nodes in this message that want to be rendered like jsx
+        const nodes = node.querySelectorAll("[data-component]");
+        for (let i = 0; i < nodes.length; i++) {
+          const childNode = nodes[i];
+          const targetName = childNode.getAttribute("data-component");
+          // Let's pull out the attibute info we need
+          let outputProps = {};
+          for (let j = 0; j < childNode.attributes.length; j++) {
+            const attribute = childNode.attributes[j];
+
+            let working_value = attribute.nodeValue;
+            // We can't do the "if it has no value it's truthy" trick
+            // Because getAttribute returns "", not null. Hate IE
+            if (working_value === "$true") {
+              working_value = true;
+            }
+            else if (working_value === "$false") {
+              working_value = false;
+            }
+            else if (!isNaN(working_value)) {
+              const parsed_float = parseFloat(working_value);
+              if (!isNaN(parsed_float)) {
+                working_value = parsed_float;
+              }
+            }
+
+            let canon_name = attribute.nodeName.replace("data-", "");
+            // html attributes don't support upper case chars, so we need to map
+            canon_name = TGUI_CHAT_ATTRIBUTES_TO_PROPS[canon_name];
+            outputProps[canon_name] = working_value;
+          }
+          const oldHtml = { __html: childNode.innerHTML };
+          while (childNode.firstChild) {
+            childNode.removeChild(childNode.firstChild);
+          }
+          const Element = TGUI_CHAT_COMPONENTS[targetName];
+          /* eslint-disable react/no-danger */
+          render(
+            <Element {...outputProps}>
+              <span dangerouslySetInnerHTML={oldHtml} />
+            </Element>, childNode);
+          /* eslint-enable react/no-danger */
+
+        }
+
         // Highlight text
         if (!message.avoidHighlighting && this.highlightRegex) {
           const highlighted = highlightNode(node,

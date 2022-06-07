@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - rscadd: "Becoming the patron of a painting now lets you select a different appearance for the frame it's in. This appearance will persist between rounds (the ability to modify the frame won't, though). The more credits have been spent on the patronage, the better the options: from 150 for the iron frame up to 12000 for the supermatter one (doesn't dust nor irradiate)."
-  - bugfix: "You can now sponsor a painting that hasn't been archived yet. Just make sure it's inserted in a frame with persistence on."
-  - bugfix: "fixed some mismatches between sprites and sizes for a few canvases."

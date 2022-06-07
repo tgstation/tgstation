@@ -39,7 +39,7 @@
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/bread/plain/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 30, table_required = TRUE)
 
 /obj/item/food/breadslice/plain
 	name = "bread slice"
@@ -86,7 +86,7 @@
 
 
 /obj/item/food/bread/meat/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/meat, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/meat, 5, 30, table_required = TRUE)
 
 /obj/item/food/breadslice/meat
 	name = "meatbread slice"
@@ -104,7 +104,7 @@
 	tastes = list("bread" = 10, "meat" = 10)
 
 /obj/item/food/bread/sausage/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/sausage, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/sausage, 5, 30, table_required = TRUE)
 
 /obj/item/food/breadslice/sausage
 	name = "sausagebread slice"
@@ -123,7 +123,7 @@
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/bread/xenomeat/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/xenomeat, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/xenomeat, 5, 30, table_required = TRUE)
 
 /obj/item/food/breadslice/xenomeat
 	name = "xenomeatbread slice"
@@ -141,7 +141,7 @@
 	foodtypes = GRAIN | MEAT | TOXIC
 
 /obj/item/food/bread/spidermeat/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/spidermeat, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/spidermeat, 5, 30, table_required = TRUE)
 
 /obj/item/food/breadslice/spidermeat
 	name = "spider meat bread slice"
@@ -159,7 +159,7 @@
 	foodtypes = GRAIN | FRUIT
 
 /obj/item/food/bread/banana/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/banana, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/banana, 5, 30, table_required = TRUE)
 
 /obj/item/food/breadslice/banana
 	name = "banana-nut bread slice"
@@ -178,7 +178,7 @@
 	venue_value = FOOD_PRICE_TRASH
 
 /obj/item/food/bread/tofu/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/tofu, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/tofu, 5, 30, table_required = TRUE)
 
 /obj/item/food/breadslice/tofu
 	name = "tofubread slice"
@@ -196,7 +196,7 @@
 	foodtypes = GRAIN | DAIRY
 
 /obj/item/food/bread/creamcheese/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/creamcheese, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/creamcheese, 5, 30, table_required = TRUE)
 
 /obj/item/food/breadslice/creamcheese
 	name = "cream cheese bread slice"
@@ -210,7 +210,7 @@
 	desc = "It's bread, customized to your wildest dreams."
 
 /obj/item/food/bread/empty/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/empty, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/empty, 5, 30, table_required = TRUE)
 
 /obj/item/food/bread/mimana
 	name = "mimana bread"
@@ -221,7 +221,7 @@
 	foodtypes = GRAIN | FRUIT
 
 /obj/item/food/bread/mimana/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/mimana, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/mimana, 5, 30, table_required = TRUE)
 
 /obj/item/food/breadslice/mimana
 	name = "mimana bread slice"
@@ -270,84 +270,6 @@
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_NORMAL
 
-/obj/item/food/deepfryholder
-	name = "Deep Fried Foods Holder Obj"
-	desc = "If you can see this description the code for the deep fryer fucked up."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = ""
-	bite_consumption = 2
-
-/obj/item/food/deepfryholder/MakeEdible()
-	AddComponent(/datum/component/edible,\
-			initial_reagents = food_reagents,\
-			food_flags = food_flags,\
-			foodtypes = foodtypes,\
-			volume = max_volume,\
-			eat_time = eat_time,\
-			tastes = tastes,\
-			eatverbs = eatverbs,\
-			bite_consumption = bite_consumption,\
-			on_consume = CALLBACK(src, .proc/On_Consume))
-
-
-/obj/item/food/deepfryholder/Initialize(mapload, obj/item/fried)
-	if(!fried)
-		stack_trace("A deepfried object was created with no fried target")
-		return INITIALIZE_HINT_QDEL
-	. = ..()
-	name = fried.name //We'll determine the other stuff when it's actually removed
-	appearance = fried.appearance
-	layer = initial(layer)
-	plane = initial(plane)
-	lefthand_file = fried.lefthand_file
-	righthand_file = fried.righthand_file
-	inhand_icon_state = fried.inhand_icon_state
-	desc = fried.desc
-	w_class = fried.w_class
-	slowdown = fried.slowdown
-	equip_delay_self = fried.equip_delay_self
-	equip_delay_other = fried.equip_delay_other
-	strip_delay = fried.strip_delay
-	species_exception = fried.species_exception
-	item_flags = fried.item_flags
-	obj_flags = fried.obj_flags
-	inhand_x_dimension = fried.inhand_x_dimension
-	inhand_y_dimension = fried.inhand_y_dimension
-
-	if(!(SEND_SIGNAL(fried, COMSIG_ITEM_FRIED, src) & COMSIG_FRYING_HANDLED)) //If frying is handled by signal don't do the defaault behavior.
-		fried.forceMove(src)
-
-
-/obj/item/food/deepfryholder/Destroy()
-	if(contents)
-		QDEL_LIST(contents)
-	return ..()
-
-/obj/item/food/deepfryholder/proc/On_Consume(eater, feeder)
-	if(contents)
-		QDEL_LIST(contents)
-
-
-/obj/item/food/deepfryholder/proc/fry(cook_time = 30)
-	switch(cook_time)
-		if(0 to 15)
-			add_atom_colour(rgb(166, 103, 54), FIXED_COLOUR_PRIORITY)
-			name = "lightly-fried [name]"
-			desc = "[desc] It's been lightly fried in a deep fryer."
-		if(16 to 49)
-			add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
-			name = "fried [name]"
-			desc = "[desc] It's been fried, increasing its tastiness value by [rand(1, 75)]%."
-		if(50 to 59)
-			add_atom_colour(rgb(63, 23, 4), FIXED_COLOUR_PRIORITY)
-			name = "deep-fried [name]"
-			desc = "[desc] Deep-fried to perfection."
-		if(60 to INFINITY)
-			add_atom_colour(rgb(33, 19, 9), FIXED_COLOUR_PRIORITY)
-			name = "\proper the physical manifestation of the very concept of fried foods"
-			desc = "A heavily-fried... something. Who can tell anymore?"
-	foodtypes |= FRIED
-
 /obj/item/food/butterbiscuit
 	name = "butter biscuit"
 	desc = "Well butter my biscuit!"
@@ -373,3 +295,27 @@
 /obj/item/food/butterdog/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
+
+/obj/item/food/raw_frenchtoast
+	name = "raw french toast"
+	desc = "A slice of bread soaked in a beaten egg mixture. Put it on a griddle to start cooking!."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "raw_frenchtoast"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2,)
+	tastes = list("raw egg" = 2, "soaked bread" = 1)
+	foodtypes = GRAIN | RAW | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/raw_frenchtoast/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/frenchtoast, rand(20 SECONDS, 30 SECONDS), TRUE)
+
+/obj/item/food/frenchtoast
+	name = "french toast"
+	desc = "A slice of bread soaked in an egg mixture and grilled until golden-brown. Drizzled with syrup!."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "frenchtoast"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2,)
+	tastes = list("french toast" = 1, "syrup" = 1, "golden deliciousness" = 1)
+	foodtypes = GRAIN | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE

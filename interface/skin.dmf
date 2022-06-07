@@ -39,7 +39,7 @@ menu "menu"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem "help-menu"
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
@@ -50,7 +50,7 @@ menu "menu"
 		saved-params = "is-checked"
 	elem
 		name = "&Hotkeys"
-		command = "hotkeys-help"
+		command = "Hotkeys-Help"
 		category = "&Help"
 		saved-params = "is-checked"
 

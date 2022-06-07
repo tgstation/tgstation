@@ -143,9 +143,9 @@
 /datum/crafting_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/tailclub
-	reqs = list(/obj/item/organ/tail/lizard = 1,
+	reqs = list(/obj/item/organ/external/tail/lizard = 1,
 				/obj/item/stack/sheet/iron = 1)
-	blacklist = list(/obj/item/organ/tail/lizard/fake)
+	blacklist = list(/obj/item/organ/external/tail/lizard/fake)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -153,9 +153,9 @@
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
-	reqs = list(/obj/item/organ/tail/lizard = 1,
+	reqs = list(/obj/item/organ/external/tail/lizard = 1,
 				/obj/item/stack/cable_coil = 1)
-	blacklist = list(/obj/item/organ/tail/lizard/fake)
+	blacklist = list(/obj/item/organ/external/tail/lizard/fake)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -163,7 +163,7 @@
 /datum/crafting_recipe/catwhip
 	name = "Cat O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip/kitty
-	reqs = list(/obj/item/organ/tail/cat = 1,
+	reqs = list(/obj/item/organ/external/tail/cat = 1,
 				/obj/item/stack/cable_coil = 1)
 	time = 40
 	category = CAT_WEAPONRY
@@ -241,18 +241,14 @@
 /datum/crafting_recipe/ebow
 	name = "Energy Crossbow"
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	result = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
-	reqs = list(/obj/item/gun/energy/kinetic_accelerator = 1,
+	result = /obj/item/gun/energy/recharge/ebow/large
+	reqs = list(/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
 				/obj/item/stack/cable_coil = 5,
 				/obj/item/weaponcrafting/gunkit/ebow = 1,
 				/datum/reagent/uranium/radium = 15)
 	time = 200
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
-
-/datum/crafting_recipe/ebow/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/kinetic_accelerator)
 
 /datum/crafting_recipe/xraylaser
 	name = "X-ray Laser Gun"
@@ -378,11 +374,11 @@
 	name = "Medbot"
 	result = /mob/living/simple_animal/bot/medbot
 	reqs = list(/obj/item/healthanalyzer = 1,
-				/obj/item/storage/firstaid = 1,
+				/obj/item/storage/medkit = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	parts = list(
-		/obj/item/storage/firstaid = 1,
+		/obj/item/storage/medkit = 1,
 		/obj/item/healthanalyzer = 1,
 		)
 	time = 40
@@ -390,22 +386,22 @@
 
 /datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
 	var/mob/living/simple_animal/bot/medbot/bot = result
-	var/obj/item/storage/firstaid/first_aid = bot.contents[3]
-	bot.firstaid = first_aid
+	var/obj/item/storage/medkit/medkit = bot.contents[3]
+	bot.medkit_type = medkit
 	bot.healthanalyzer = bot.contents[4]
 
-	if (istype(first_aid, /obj/item/storage/firstaid/fire))
+	if (istype(medkit, /obj/item/storage/medkit/fire))
 		bot.skin = "ointment"
-	else if (istype(first_aid, /obj/item/storage/firstaid/toxin))
+	else if (istype(medkit, /obj/item/storage/medkit/toxin))
 		bot.skin = "tox"
-	else if (istype(first_aid, /obj/item/storage/firstaid/o2))
+	else if (istype(medkit, /obj/item/storage/medkit/o2))
 		bot.skin = "o2"
-	else if (istype(first_aid, /obj/item/storage/firstaid/brute))
+	else if (istype(medkit, /obj/item/storage/medkit/brute))
 		bot.skin = "brute"
-	else if (istype(first_aid, /obj/item/storage/firstaid/advanced))
+	else if (istype(medkit, /obj/item/storage/medkit/advanced))
 		bot.skin = "advanced"
 
-	bot.damagetype_healer = initial(first_aid.damagetype_healed) ? initial(first_aid.damagetype_healed) : BRUTE
+	bot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
@@ -446,6 +442,18 @@
 				/obj/item/assembly/prox_sensor = 1)
 	tool_behaviors = list(TOOL_WELDER)
 	time = 40
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vim
+	name = "Vim"
+	result = /obj/vehicle/sealed/car/vim
+	reqs = list(/obj/item/clothing/head/helmet/space/eva = 1,
+				/obj/item/bodypart/l_leg/robot = 1,
+				/obj/item/bodypart/r_leg/robot = 1,
+				/obj/item/flashlight = 1,
+				/obj/item/assembly/voice = 1)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 6 SECONDS //Has a four second do_after when building manually
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
@@ -627,7 +635,7 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 10
-	reqs = list(/obj/item/organ/tail/lizard = 1)
+	reqs = list(/obj/item/organ/external/tail/lizard = 1)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/lizardhat_alternate
@@ -641,8 +649,8 @@
 	name = "Kitty Ears"
 	result = /obj/item/clothing/head/kitty/genuine
 	time = 10
-	reqs = list(/obj/item/organ/tail/cat = 1,
-				/obj/item/organ/ears/cat = 1)
+	reqs = list(/obj/item/organ/external/tail/cat = 1,
+				/obj/item/organ/internal/ears/cat = 1)
 	category = CAT_CLOTHING
 
 
@@ -752,7 +760,7 @@
 
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
-	result = /obj/item/organ/eyes/robotic/flashlight
+	result = /obj/item/organ/internal/eyes/robotic/flashlight
 	time = 10
 	reqs = list(
 		/obj/item/flashlight = 2,
@@ -775,6 +783,13 @@
 	result = /obj/item/paper_bin/bundlenatural
 	category = CAT_MISC
 
+/datum/crafting_recipe/sillycup
+	name = "Paper Cup"
+	result =  /obj/item/reagent_containers/food/drinks/sillycup
+	time = 1 SECONDS
+	reqs = list(/obj/item/paper = 2)
+	category = CAT_MISC
+
 /datum/crafting_recipe/toysword
 	name = "Toy Sword"
 	reqs = list(/obj/item/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
@@ -791,13 +806,13 @@
 	name = "Curtains"
 	reqs = list(/obj/item/stack/sheet/cloth = 4, /obj/item/stack/rods = 1)
 	result = /obj/structure/curtain/cloth
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/showercurtain
 	name = "Shower Curtains"
 	reqs = list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/sheet/plastic = 2, /obj/item/stack/rods = 1)
 	result = /obj/structure/curtain
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/extendohand_r
 	name = "Extendo-Hand (Right Arm)"
@@ -1059,6 +1074,15 @@
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/flower_garland
+	name = "Flower Garland"
+	result = /obj/item/clothing/head/garland
+	time = 10
+	reqs = list(/obj/item/food/grown/poppy = 4,
+				/obj/item/food/grown/harebell = 4,
+				/obj/item/food/grown/rose = 4)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/guillotine
 	name = "Guillotine"
 	result = /obj/structure/guillotine
@@ -1067,7 +1091,7 @@
 				/obj/item/stack/sheet/mineral/wood = 20,
 				/obj/item/stack/cable_coil = 10)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/aitater
 	name = "intelliTater"
@@ -1106,14 +1130,14 @@
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
 /datum/crafting_recipe/rib
-	name = "Collosal Rib"
+	name = "Colossal Rib"
 	always_available = FALSE
 	reqs = list(
 		/obj/item/stack/sheet/bone = 10,
 		/datum/reagent/fuel/oil = 5,
 	)
 	result = /obj/structure/statue/bone/rib
-	subcategory = CAT_PRIMAL
+	category = CAT_PRIMAL
 
 /datum/crafting_recipe/skull
 	name = "Skull Carving"
@@ -1197,7 +1221,7 @@
 	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE))
 		return FALSE
 	var/turf/T = get_turf(user)
-	if(istype(T,/turf/open/water) || istype(T,/turf/open/floor/plating/beach/water))
+	if(istype(T, /turf/open/water))
 		return TRUE
 	var/obj/machinery/shower/S = locate() in T
 	if(S?.on)
@@ -1219,7 +1243,7 @@
 				/obj/item/stack/sheet/mineral/zaukerite = 15,
 				/obj/item/stack/sheet/iron = 30,
 				)
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/bluespace_vendor_mount
 	name = "Bluespace Vendor Wall Mount"
@@ -1263,7 +1287,7 @@
 				/obj/item/stack/sheet/glass = 10,
 				/obj/item/aquarium_kit = 1
 				)
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/mod_core_standard
 	name = "MOD core (Standard)"
@@ -1273,7 +1297,7 @@
 	reqs = list(/obj/item/stack/cable_coil = 5,
 				/obj/item/stack/rods = 2,
 				/obj/item/stack/sheet/glass = 1,
-				/obj/item/organ/heart/ethereal = 1,
+				/obj/item/organ/internal/heart/ethereal = 1,
 				)
 	category = CAT_MISC
 
@@ -1723,6 +1747,15 @@
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
 	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
+
+/datum/crafting_recipe/steam_vent
+	name = "Steam Vent"
+	result = /obj/structure/steam_vent
+	time = 8
+	reqs = list(/obj/item/stack/sheet/iron = 2,
+				/obj/item/stack/tile/iron = 1,
+				/obj/item/stock_parts/water_recycler = 1)
+	category = CAT_STRUCTURE
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE

@@ -40,13 +40,6 @@
 
 	var/pocket_storage_component_path
 
-	//These allow head/mask items to dynamically alter the user's hair
-	// and facial hair, checking hair_extensions.dmi and facialhair_extensions.dmi
-	// for a state matching hair_state+dynamic_hair_suffix
-	// THESE OVERRIDE THE HIDEHAIR FLAGS
-	var/dynamic_hair_suffix = ""//head > mask for head hair
-	var/dynamic_fhair_suffix = ""//mask > head for facial hair
-
 	/// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
 	var/list/damage_by_parts
 	/// How much integrity is in a specific limb before that limb is disabled (for use in [/obj/item/clothing/proc/take_damage_zone], and only if we cover multiple zones.) Set to 0 to disable shredding.
@@ -89,7 +82,7 @@
 	// sigh, ok, so it's not ACTUALLY infinite nutrition. this is so you can eat clothes more than...once.
 	// bite_consumption limits how much you actually get, and the take_damage in after eat makes sure you can't abuse this.
 	// ...maybe this was a mistake after all.
-	food_reagents = list(/datum/reagent/consumable/nutriment = INFINITY)
+	food_reagents = list(/datum/reagent/consumable/nutriment/cloth_fibers = INFINITY)
 	tastes = list("dust" = 1, "lint" = 1)
 	foodtypes = CLOTH
 
@@ -118,7 +111,7 @@
 		qdel(src)
 
 /obj/item/clothing/attack(mob/living/M, mob/living/user, params)
-	if(user.combat_mode || !ismoth(M))
+	if(user.combat_mode || !ismoth(M) || ispickedupmob(src))
 		return ..()
 	if(isnull(moth_snack))
 		moth_snack = new
@@ -180,7 +173,7 @@
 /obj/item/clothing/proc/take_damage_zone(def_zone, damage_amount, damage_type, armour_penetration)
 	if(!def_zone || !limb_integrity || (initial(body_parts_covered) in GLOB.bitflags)) // the second check sees if we only cover one bodypart anyway and don't need to bother with this
 		return
-	var/list/covered_limbs = body_parts_covered2organ_names(body_parts_covered) // what do we actually cover?
+	var/list/covered_limbs = cover_flags2body_zones(body_parts_covered) // what do we actually cover?
 	if(!(def_zone in covered_limbs))
 		return
 
@@ -202,7 +195,7 @@
  * * damage_type: Only really relevant for the verb for describing the breaking, and maybe atom_destruction()
  */
 /obj/item/clothing/proc/disable_zone(def_zone, damage_type)
-	var/list/covered_limbs = body_parts_covered2organ_names(body_parts_covered)
+	var/list/covered_limbs = cover_flags2body_zones(body_parts_covered)
 	if(!(def_zone in covered_limbs))
 		return
 
@@ -215,7 +208,7 @@
 		RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
 
 	zones_disabled++
-	for(var/i in zone2body_parts_covered(def_zone))
+	for(var/i in body_zone2cover_flags(def_zone))
 		body_parts_covered &= ~i
 
 	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
@@ -312,16 +305,16 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
-	if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee || armor.fire || armor.acid)
+	if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee || armor.fire || armor.acid || flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
 		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 /obj/item/clothing/Topic(href, href_list)
 	. = ..()
 
 	if(href_list["list_armor"])
-		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES (I-X)</u></b>")
+		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES</u></b>")
 		if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee)
-			readout += "\n<b>ARMOR</b>"
+			readout += "\n<b>ARMOR (I-X)</b>"
 			if(armor.bio)
 				readout += "\nTOXIN [armor_to_protection_class(armor.bio)]"
 			if(armor.bomb)
@@ -335,11 +328,21 @@
 			if(armor.melee)
 				readout += "\nMELEE [armor_to_protection_class(armor.melee)]"
 		if(armor.fire || armor.acid)
-			readout += "\n<b>DURABILITY</b>"
+			readout += "\n<b>DURABILITY (I-X)</b>"
 			if(armor.fire)
 				readout += "\nFIRE [armor_to_protection_class(armor.fire)]"
 			if(armor.acid)
 				readout += "\nACID [armor_to_protection_class(armor.acid)]"
+		if(flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
+			var/list/things_blocked = list()
+			if(flags_cover & HEADCOVERSMOUTH)
+				things_blocked += span_tooltip("Because this item is worn on the head and is covering the mouth, it will block facehugger proboscides, killing facehuggers.", "facehuggers")
+			if(flags_cover & PEPPERPROOF)
+				things_blocked += "pepperspray"
+			if(length(things_blocked))
+				readout += "\n<b>COVERAGE</b>"
+				readout += "\nIt will block [english_list(things_blocked)]."
+
 		readout += "</span>"
 
 		to_chat(usr, "[readout.Join()]")
@@ -452,6 +455,8 @@ BLIND     // can't see anything
 	new /obj/effect/decal/cleanable/shreds(get_turf(src), name)
 
 /obj/item/clothing/atom_destruction(damage_flag)
+	if(damage_flag in list(ACID, FIRE))
+		return ..()
 	if(damage_flag == BOMB)
 		//so the shred survives potential turf change from the explosion.
 		addtimer(CALLBACK(src, .proc/_spawn_shreds), 1)
@@ -463,7 +468,7 @@ BLIND     // can't see anything
 			var/mob/living/possessing_mob = loc
 			possessing_mob.visible_message(span_danger("[src] is consumed until naught but shreds remains!"), span_boldwarning("[src] falls apart into little bits!"))
 		deconstruct(FALSE)
-	else if(!(damage_flag in list(ACID, FIRE)))
+	else
 		body_parts_covered = NONE
 		slot_flags = NONE
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
@@ -476,8 +481,7 @@ BLIND     // can't see anything
 				M.visible_message(span_danger("[src] fall[p_s()] apart, completely shredded!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		name = "shredded [initial(name)]" // change the name -after- the message, not before.
 		update_appearance()
-	else
-		..()
+	SEND_SIGNAL(src, COMSIG_ATOM_DESTRUCTION, damage_flag)
 
 /// If we're a clothing with at least 1 shredded/disabled zone, give the wearer a periodic heads up letting them know their clothes are damaged
 /obj/item/clothing/proc/bristle(mob/living/L)

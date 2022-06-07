@@ -1,0 +1,53 @@
+/turf/open/floor/plating/dirt : /turf/open/misc/dirt{@OLD}
+/turf/open/floor/plating/dirt/dark : /turf/open/misc/dirt/dark{@OLD}
+/turf/open/floor/plating/dirt/jungle : /turf/open/misc/dirt/jungle{@OLD}
+/turf/open/floor/plating/dirt/jungle/dark : /turf/open/misc/dirt/jungle/dark{@OLD}
+/turf/open/floor/plating/dirt/jungle/wasteland : /turf/open/misc/dirt/jungle/wasteland{@OLD}
+
+/turf/open/floor/plating/ashplanet : /turf/open/misc/ashplanet{@OLD}
+/turf/open/floor/plating/ashplanet/ash : /turf/open/misc/ashplanet/ash{@OLD}
+/turf/open/floor/plating/ashplanet/rocky : /turf/open/misc/ashplanet/rocky{@OLD}
+/turf/open/floor/plating/ashplanet/wateryrock : /turf/open/misc/ashplanet/wateryrock{@OLD}
+
+/turf/open/floor/plating/grass : /turf/open/misc/grass{@OLD}
+/turf/open/floor/plating/grass/jungle : /turf/open/misc/grass/jungle{@OLD}
+/turf/open/floor/plating/grass/lavaland : /turf/open/misc/grass/lavaland{@OLD}
+
+/turf/open/floor/plating/sandy_dirt : /turf/open/misc/sandy_dirt{@OLD}
+
+/turf/open/floor/plating/ironsand : /turf/open/misc/ironsand{@OLD}
+
+/turf/open/floor/plating/ice : /turf/open/misc/ice{@OLD}
+/turf/open/floor/plating/ice/smooth : /turf/open/misc/ice/smooth{@OLD}
+/turf/open/floor/plating/ice/icemoon : /turf/misc/ice/icemoon{@OLD}
+/turf/open/floor/plating/ice/icemoon/no_planet_atmos : /turf/open/misc/ice/icemoon/no_planet_atmos{@OLD}
+
+/turf/open/floor/plating/beach : /turf/open/misc/beach{@OLD}
+/turf/open/floor/plating/beach/sand : /turf/open/misc/beach/sand{@OLD}
+/turf/open/floor/plating/beach/coastline_t : /turf/open/misc/beach/coastline_t{@OLD}
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner : /turf/open/misc/beach/coastline_t/sandwater_inner{@OLD}
+/turf/open/floor/plating/beach/coastline_b : /turf/open/misc/beach/coastline_b{@OLD}
+/turf/open/floor/plating/beach/water : /turf/open/water/beach{@OLD}
+
+/turf/open/floor/grass/snow : /turf/open/misc/snow{@OLD}
+/turf/open/floor/grass/snow/safe : /turf/open/floor/fake_snow{@OLD}
+/turf/open/floor/grass/snow/basalt : /turf/open/misc/basalt{@OLD}
+/turf/open/floor/grass/snow/basalt/safe : /turf/open/floor/fakebasalt{@OLD}
+
+/turf/open/floor/plating/asteroid : /turf/open/misc/asteroid{@OLD}
+/turf/open/floor/plating/asteroid/dug : /turf/open/misc/asteroid/dug{@OLD}
+/turf/open/floor/plating/asteroid/basalt : /turf/open/misc/asteroid/basalt{@OLD}
+/turf/open/floor/plating/asteroid/basalt/lava : /turf/open/misc/asteroid/basalt/lava{@OLD}
+/turf/open/floor/plating/asteroid/basalt/airless : /turf/open/misc/asteroid/basalt/airless{@OLD}
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface : /turf/open/misc/asteroid/basalt/lava_land_surface{@OLD}
+/turf/open/floor/plating/asteroid/lowpressure : /turf/open/misc/asteroid/lowpressure{@OLD}
+/turf/open/floor/plating/asteroid/airless : /turf/open/misc/asteroid/airless{@OLD}
+/turf/open/floor/plating/asteroid/snow : /turf/open/misc/asteroid/snow{@OLD}
+/turf/open/floor/plating/asteroid/snow/icemoon : /turf/open/misc/asteroid/snow/icemoon{@OLD}
+/turf/open/floor/plating/asteroid/snow/ice : /turf/open/misc/asteroid/snow/ice{@OLD}
+/turf/open/floor/plating/asteroid/snow/ice/icemoon : /turf/open/misc/asteroid/snow/ice/icemoon{@OLD}
+/turf/open/floor/plating/asteroid/snow/airless : /turf/open/misc/asteroid/snow/airless{@OLD}
+/turf/open/floor/plating/asteroid/snow/temperatre : /turf/open/misc/asteroid/snow/temperatre{@OLD}
+/turf/open/floor/plating/asteroid/snow/atmosphere : /turf/open/misc/asteroid/snow/atmosphere{@OLD}
+/turf/open/floor/plating/asteroid/snow/standard_air : /turf/open/misc/asteroid/snow/standard_air{@OLD}
+/turf/open/floor/plating/asteroid/basalt/wasteland : /turf/open/misc/asteroid/basalt/wasteland{@OLD}

@@ -74,7 +74,7 @@
 	targets_from = WEAKREF(M)
 	allow_movement_on_non_turfs = TRUE //duh
 	var/do_ranged = 0
-	for(var/equip in mecha.equipment)
+	for(var/equip in mecha.flat_equipment)
 		var/obj/item/mecha_parts/mecha_equipment/ME = equip
 		if(ME.range & MECHA_RANGED)
 			do_ranged = 1
@@ -136,7 +136,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/mecha_reload()
 	if(mecha)
-		for(var/equip in mecha.equipment)
+		for(var/equip in mecha.flat_equipment)
 			var/obj/item/mecha_parts/mecha_equipment/ME = equip
 			if(ME.needs_rearm())
 				ME.rearm()
@@ -145,7 +145,7 @@
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/get_mecha_equip_by_flag(flag = MECHA_RANGED)
 	. = list()
 	if(mecha)
-		for(var/equip in mecha.equipment)
+		for(var/equip in mecha.flat_equipment)
 			var/obj/item/mecha_parts/mecha_equipment/ME = equip
 			if((ME.range & flag) && ME.action_checks(ME)) //this looks weird, but action_checks() just needs any atom, so I spoofed it here
 				. += ME

@@ -86,13 +86,13 @@
  * Returns a formatted string of all station traits (that are shown) affecting the station.
  */
 /datum/game_mode/proc/generate_station_trait_report()
-	if(!SSstation.station_traits.len)
-		return
-	. = "<hr><b>Identified shift divergencies:</b><BR>"
+	var/trait_list_string = ""
 	for(var/datum/station_trait/station_trait as anything in SSstation.station_traits)
 		if(!station_trait.show_in_report)
 			continue
-		. += "[station_trait.get_report()]<BR>"
+		trait_list_string += "[station_trait.get_report()]<BR>"
+	if(trait_list_string != "")
+		return "<hr><b>Identified shift divergencies:</b><BR>" + trait_list_string
 	return
 
 /proc/reopen_roundstart_suicide_roles()

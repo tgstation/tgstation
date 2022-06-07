@@ -24,6 +24,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/backwards
 	/// The actual direction to move stuff in.
 	var/movedir
+	/// The time between movements of the conveyor belts, base 0.2 seconds
+	var/speed = 0.2
 	/// The control ID - must match at least one conveyor switch's ID to be useful.
 	var/id = ""
 	/// Inverts the direction the conveyor belt moves when true.
@@ -82,7 +84,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXITED = .proc/conveyable_exit,
 		COMSIG_ATOM_ENTERED = .proc/conveyable_enter,
-		COMSIG_ATOM_CREATED = .proc/conveyable_enter
+		COMSIG_ATOM_INITIALIZED_ON = .proc/conveyable_enter
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	update_move_direction()
@@ -198,28 +200,26 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	operating = new_value
 	update_appearance()
 	update_move_direction()
-	if(!operating) //If we ever turn off, disable moveloops
+	//If we ever turn off, disable moveloops
+	if(operating == CONVEYOR_OFF)
 		for(var/atom/movable/movable in get_turf(src))
 			stop_conveying(movable)
 
 /obj/machinery/conveyor/proc/update()
-	. = TRUE
 	if(machine_stat & NOPOWER)
 		set_operating(FALSE)
 		return FALSE
-	if(!operating) //If we're on, start conveying so moveloops on our tile can be refreshed if they stopped for some reason
-		return
-	for(var/atom/movable/movable in get_turf(src))
-		start_conveying(movable)
+
+	// If we're on, start conveying so moveloops on our tile can be refreshed if they stopped for some reason
+	if(operating != CONVEYOR_OFF)
+		for(var/atom/movable/movable in get_turf(src))
+			start_conveying(movable)
+	return TRUE
 
 /obj/machinery/conveyor/proc/conveyable_enter(datum/source, atom/convayable)
 	SIGNAL_HANDLER
 	if(operating == CONVEYOR_OFF)
 		SSmove_manager.stop_looping(convayable, SSconveyors)
-		return
-	var/datum/move_loop/move/moving_loop = SSmove_manager.processing_on(convayable, SSconveyors)
-	if(moving_loop)
-		moving_loop.direction = movedir
 		return
 	start_conveying(convayable)
 
@@ -230,10 +230,16 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		SSmove_manager.stop_looping(convayable, SSconveyors)
 
 /obj/machinery/conveyor/proc/start_conveying(atom/movable/moving)
+	var/datum/move_loop/move/moving_loop = SSmove_manager.processing_on(moving, SSconveyors)
+	if(moving_loop)
+		moving_loop.direction = movedir
+		moving_loop.delay = speed * 1 SECONDS
+		return
+
 	var/static/list/unconveyables = typecacheof(list(/obj/effect, /mob/dead))
 	if(!istype(moving) || is_type_in_typecache(moving, unconveyables) || moving == src)
 		return
-	moving.AddComponent(/datum/component/convey, movedir, 0.2 SECONDS)
+	moving.AddComponent(/datum/component/convey, movedir, speed * 1 SECONDS)
 
 /obj/machinery/conveyor/proc/stop_conveying(atom/movable/thing)
 	if(!ismovable(thing))
@@ -281,8 +287,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	else if(!user.combat_mode)
 		user.transferItemToLoc(attacking_item, drop_location())
-	else
-		return ..()
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user, list/modifiers)
@@ -314,6 +321,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/invert_icon = FALSE
 	/// The ID of the switch, must match conveyor IDs to control them.
 	var/id = ""
+	/// The set time between movements of the conveyor belts
+	var/conveyor_speed = 0.2
 
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
 	. = ..()
@@ -355,6 +364,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor_switch/proc/update_linked_conveyors()
 	for(var/obj/machinery/conveyor/belt in GLOB.conveyors_by_id[id])
 		belt.set_operating(position)
+		belt.speed = conveyor_speed
 		CHECK_TICK
 
 /// Finds any switches with same `id` as this one, and set their position and icon to match us.
@@ -362,6 +372,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	for(var/obj/machinery/conveyor_switch/belt_switch in GLOB.conveyors_by_id[id])
 		belt_switch.invert_icon = invert_icon
 		belt_switch.position = position
+		belt_switch.conveyor_speed = conveyor_speed
 		belt_switch.update_appearance()
 		CHECK_TICK
 
@@ -389,11 +400,19 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update_linked_conveyors()
 	update_linked_switches()
 
-
 /obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, params)
 	if(is_wire_tool(attacking_item))
 		wires.interact(user)
 		return TRUE
+
+/obj/machinery/conveyor_switch/multitool_act(mob/living/user, obj/item/I)
+	var/input_speed = tgui_input_number(user, "Set the speed of the conveyor belts in seconds", "Speed", conveyor_speed, 20, 0.2)
+	if(!input_speed || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	conveyor_speed = input_speed
+	to_chat(user, span_notice("You change the time between moves to [input_speed] seconds."))
+	update_linked_conveyors()
+	return TRUE
 
 /obj/machinery/conveyor_switch/crowbar_act(mob/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)

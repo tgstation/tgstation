@@ -610,7 +610,7 @@
 	},
 /area/template_noop)
 "GN" = (
-/obj/machinery/door/window/westleft{
+/obj/machinery/door/window/left/directional/west{
 	dir = 2
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -778,7 +778,9 @@
 	},
 /area/template_noop)
 "Tt" = (
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8

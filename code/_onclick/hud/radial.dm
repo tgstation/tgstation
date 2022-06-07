@@ -25,15 +25,26 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/next_page = FALSE
 	var/tooltips = FALSE
 
+/atom/movable/screen/radial/slice/set_parent(new_value)
+	. = ..()
+	if(parent)
+		icon_state = parent.radial_slice_icon
+
 /atom/movable/screen/radial/slice/MouseEntered(location, control, params)
 	. = ..()
-	icon_state = "radial_slice_focus"
+	if(next_page || !parent)
+		icon_state = "radial_slice_focus"
+	else
+		icon_state = "[parent.radial_slice_icon]_focus"
 	if(tooltips)
 		openToolTip(usr, src, params, title = name)
 
 /atom/movable/screen/radial/slice/MouseExited(location, control, params)
 	. = ..()
-	icon_state = "radial_slice"
+	if(next_page || !parent)
+		icon_state = "radial_slice"
+	else
+		icon_state = parent.radial_slice_icon
 	if(tooltips)
 		closeToolTip(usr)
 
@@ -42,7 +53,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		if(next_page)
 			parent.next_page()
 		else
-			parent.element_chosen(choice,usr)
+			parent.element_chosen(choice, usr, params)
 
 /atom/movable/screen/radial/center
 	name = "Close Menu"
@@ -100,6 +111,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/py_shift = 0
 	var/entry_animation = TRUE
 
+	///A replacement icon state for the generic radial slice bg icon. Doesn't affect the next page nor the center buttons
+	var/radial_slice_icon
+
 //If we swap to vis_contens inventory these will need a redo
 /datum/radial_menu/proc/check_screen_border(mob/user)
 	var/atom/movable/AM = anchor
@@ -131,7 +145,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			starting_angle = 180
 			ending_angle = 45
 
-/datum/radial_menu/proc/setup_menu(use_tooltips)
+/datum/radial_menu/proc/setup_menu(use_tooltips, set_page = 1)
 	if(ending_angle > starting_angle)
 		zone = ending_angle - starting_angle
 	else
@@ -167,7 +181,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 	page_data[page] = current
 	pages = page
-	current_page = 1
+	current_page = clamp(set_page, 1, pages)
 	update_screen_objects(anim = entry_animation)
 
 /datum/radial_menu/proc/update_screen_objects(anim = FALSE)
@@ -213,9 +227,14 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(choice_id == NEXT_PAGE_ID)
 		E.name = "Next Page"
 		E.next_page = TRUE
+		E.icon_state = "radial_slice" // Resets the bg icon state to the default for next page buttons.
 		E.add_overlay("radial_next")
 	else
-		if(istext(choices_values[choice_id]))
+		//This isn't granted to exist, so use the ?. operator for conditionals that use it.
+		var/datum/radial_menu_choice/choice_datum = choice_datums[choice_id]
+		if(choice_datum?.name)
+			E.name = choice_datum.name
+		else if(istext(choices_values[choice_id]))
 			E.name = choices_values[choice_id]
 		else if(ispath(choices_values[choice_id],/atom))
 			var/atom/A = choices_values[choice_id]
@@ -228,13 +247,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		E.next_page = FALSE
 		if(choices_icons[choice_id])
 			E.add_overlay(choices_icons[choice_id])
-		if (choice_datums[choice_id])
-			var/datum/radial_menu_choice/choice_datum = choice_datums[choice_id]
-			if (choice_datum.info)
-				var/obj/effect/abstract/info/info_button = new(E, choice_datum.info)
-				info_button.plane = ABOVE_HUD_PLANE
-				info_button.layer = RADIAL_CONTENT_LAYER
-				E.vis_contents += info_button
+		if (choice_datum?.info)
+			var/obj/effect/abstract/info/info_button = new(E, choice_datum.info)
+			info_button.plane = ABOVE_HUD_PLANE
+			info_button.layer = RADIAL_CONTENT_LAYER
+			E.vis_contents += info_button
 
 /datum/radial_menu/New()
 	close_button = new
@@ -244,6 +261,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	choices.Cut()
 	choices_icons.Cut()
 	choices_values.Cut()
+	choice_datums.Cut()
 	current_page = 1
 
 /datum/radial_menu/proc/element_chosen(choice_id,mob/user)
@@ -252,7 +270,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /datum/radial_menu/proc/get_next_id()
 	return "c_[choices.len]"
 
-/datum/radial_menu/proc/set_choices(list/new_choices, use_tooltips)
+/datum/radial_menu/proc/set_choices(list/new_choices, use_tooltips, set_page = 1)
 	if(choices.len)
 		Reset()
 	for(var/E in new_choices)
@@ -266,7 +284,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 			if (istype(new_choices[E], /datum/radial_menu_choice))
 				choice_datums[id] = new_choices[E]
-	setup_menu(use_tooltips)
+	setup_menu(use_tooltips, set_page)
 
 /datum/radial_menu/proc/extract_image(to_extract_from)
 	if (istype(to_extract_from, /datum/radial_menu_choice))
@@ -325,7 +343,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice")
 	if(!user || !anchor || !length(choices))
 		return
 	if(!uniqueid)
@@ -344,6 +362,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(istype(custom_check))
 		menu.custom_check_callback = custom_check
 	menu.anchor = anchor
+	menu.radial_slice_icon = radial_slice_icon
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
 	menu.set_choices(choices, tooltips)
 	menu.show_to(user)
@@ -362,6 +381,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /datum/radial_menu_choice
 	/// Required -- what to display for this button
 	var/image
+
+	/// If provided, this will be the name the radial slice hud button. This has priority over everything else.
+	var/name
 
 	/// If provided, will display an info button that will put this text in your chat
 	var/info

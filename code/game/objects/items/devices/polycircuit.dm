@@ -6,6 +6,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 8
 	merge_type = /obj/item/stack/circuit_stack
+	singular_name = "circuit aggregate"
 	var/circuit_type = /obj/item/electronics/airlock
 	var/chosen_circuit = "airlock"
 

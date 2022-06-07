@@ -15,7 +15,7 @@
 	organ_to_manipulate = ORGAN_SLOT_STOMACH
 
 /datum/surgery/gastrectomy/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/stomach/target_stomach = target.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/target_stomach = target.getorganslot(ORGAN_SLOT_STOMACH)
 	if(target_stomach?.damage > 50 && !(target_stomach.organ_flags & ORGAN_FAILING))
 		return TRUE
 
@@ -29,6 +29,9 @@
 		/obj/item/knife = 45,
 		/obj/item/shard = 35)
 	time = 52
+	preop_sound = 'sound/surgery/scalpel1.ogg'
+	success_sound = 'sound/surgery/organ1.ogg'
+	failure_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/gastrectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to cut out a damaged piece of [target]'s stomach..."),

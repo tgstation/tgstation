@@ -72,11 +72,20 @@
 	icon_state = "cycler"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	w_class = WEIGHT_CLASS_HUGE
-	var/toggled = FALSE
-	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 	semi_auto = TRUE
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
+	/// If defined, the secondary tube is this type, if you want different shell loads
+	var/alt_mag_type
+	/// If TRUE, we're drawing from the alternate_magazine
+	var/toggled = FALSE
+	/// The B tube
+	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
+
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
+	name = "bounty cycler shotgun"
+	desc = "An advanced shotgun with two separate magazine tubes. This one shows signs of bounty hunting customization, meaning it likely has a dual rubbershot/fire slug load."
+	alt_mag_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
@@ -84,8 +93,8 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize(mapload)
 	. = ..()
-	if (!alternate_magazine)
-		alternate_magazine = new mag_type(src)
+	alt_mag_type = alt_mag_type || mag_type
+	alternate_magazine = new alt_mag_type(src)
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/attack_self(mob/living/user)
 	if(!chambered && magazine.contents.len)

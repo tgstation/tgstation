@@ -70,8 +70,6 @@
 		/////////
 	///Player preferences datum for the client
 	var/datum/preferences/prefs = null
-	///last turn of the controlled mob, I think this is only used by mechs?
-	var/last_turn = 0
 	///Move delay of controlled mob, any keypresses inside this period will persist until the next proper move
 	var/move_delay = 0
 	///The visual delay to use for the current client.Move(), mostly used for making a client based move look like it came from some other slower source
@@ -133,8 +131,6 @@
 	///world.timeofday they connected
 	var/connection_timeofday
 
-	///If the client is currently in player preferences
-	var/inprefs = FALSE
 	///Used for limiting the rate of topic sends by the client to avoid abuse
 	var/list/topiclimiter
 	///Used for limiting the rate of clicks sends by the client to avoid abuse
@@ -166,14 +162,15 @@
 	var/obj/item/active_mousedown_item = null
 	///Used in MouseDrag to preserve the original mouse click parameters
 	var/mouseParams = ""
-	///Used in MouseDrag to preserve the last mouse-entered location.
-	var/mouseLocation = null
-	///Used in MouseDrag to preserve the last mouse-entered object.
-	var/mouseObject = null
+	///Used in MouseDrag to preserve the last mouse-entered location. Weakref
+	var/datum/weakref/mouse_location_ref = null
+	///Used in MouseDrag to preserve the last mouse-entered object. Weakref
+	var/datum/weakref/mouse_object_ref
 	//Middle-mouse-button click dragtime control for aimbot exploit detection.
 	var/middragtime = 0
-	//Middle-mouse-button clicked object control for aimbot exploit detection.
-	var/atom/middragatom
+	//Middle-mouse-button clicked object control for aimbot exploit detection. Weakref
+	var/datum/weakref/middle_drag_atom_ref
+
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
@@ -183,9 +180,6 @@
 
 	/// our current tab
 	var/stat_tab
-
-	/// whether our browser is ready or not yet
-	var/statbrowser_ready = FALSE
 
 	/// list of all tabs
 	var/list/panel_tabs = list()
@@ -201,13 +195,16 @@
 	var/turf/previous_turf
 	///world.time of when we can state animate()ing parallax again
 	var/dont_animate_parallax
-	///world.time of last parallax update
-	var/last_parallax_shift
-	///ds between parallax updates
-	var/parallax_throttle = 0
+	/// Direction our current area wants to move parallax
 	var/parallax_movedir = 0
+	/// How many parallax layers to show our client
 	var/parallax_layers_max = 4
+	/// Timer for the area directional animation
 	var/parallax_animate_timer
+	/// Do we want to do parallax animations at all?
+	/// Exists to prevent laptop fires
+	var/do_parallax_animations = TRUE
+
 	///Are we locking our movement input?
 	var/movement_locked = FALSE
 

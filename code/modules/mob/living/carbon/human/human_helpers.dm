@@ -12,9 +12,9 @@
 	if(id)
 		. = id.assignment
 	else
-		var/obj/item/pda/pda = wear_id
+		var/obj/item/modular_computer/pda = wear_id
 		if(istype(pda))
-			. = pda.ownjob
+			. = pda.saved_job
 		else
 			return if_no_id
 	if(!.)
@@ -26,9 +26,9 @@
 	var/obj/item/card/id/id = get_idcard(FALSE)
 	if(id)
 		return id.registered_name
-	var/obj/item/pda/pda = wear_id
+	var/obj/item/modular_computer/pda = wear_id
 	if(istype(pda))
-		return pda.owner
+		return pda.saved_identification
 	return if_no_id
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
@@ -60,17 +60,14 @@
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/pda/pda = wear_id
+	var/obj/item/modular_computer/tablet/pda/pda = wear_id
 	var/obj/item/card/id/id = wear_id
-	var/obj/item/modular_computer/tablet/tablet = wear_id
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
 		. = id.registered_name
 	else if(istype(pda))
-		. = pda.owner
-	else if(istype(tablet))
-		var/obj/item/computer_hardware/card_slot/card_slot = tablet.all_components[MC_CARD]
+		var/obj/item/computer_hardware/card_slot/card_slot = pda.all_components[MC_CARD]
 		if(card_slot?.stored_card)
 			. = card_slot.stored_card.registered_name
 	if(!.)
@@ -87,15 +84,6 @@
 /mob/living/carbon/human/reagent_check(datum/reagent/R, delta_time, times_fired)
 	return dna.species.handle_chemicals(R, src, delta_time, times_fired)
 	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
-
-
-/mob/living/carbon/human/can_track(mob/living/user)
-	if(istype(head, /obj/item/clothing/head))
-		var/obj/item/clothing/head/hat = head
-		if(hat.blockTracking)
-			return 0
-
-	return ..()
 
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
@@ -215,7 +203,7 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	if(key || !getorgan(/obj/item/organ/brain) || ghost?.can_reenter_corpse)
+	if(key || !getorgan(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")

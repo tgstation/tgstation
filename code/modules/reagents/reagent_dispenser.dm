@@ -15,11 +15,23 @@
 	var/can_be_tanked = TRUE
 	///Is this source self-replenishing?
 	var/refilling = FALSE
+	///Can this dispenser be opened using a wrench?
+	var/openable = FALSE
+	///Is this dispenser slowly leaking its reagent?
+	var/leaking = FALSE
+
+/obj/structure/reagent_dispensers/Initialize(mapload)
+	. = ..()
+
+	if(icon_state == "water" && SSevents.holidays?[APRIL_FOOLS])
+		icon_state = "water_fools"
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	. = ..()
 	if(can_be_tanked)
 		. += span_notice("Use a sheet of iron to convert this into a plumbing-compatible tank.")
+	if(leaking)
+		. += span_warning("Its tap is wrenched open!")
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -30,6 +42,7 @@
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
 	if(W.is_refillable())
 		return FALSE //so we can refill them via their afterattack.
+
 	if(istype(W, /obj/item/stack/sheet/iron) && can_be_tanked)
 		var/obj/item/stack/sheet/iron/metal_stack = W
 		metal_stack.use(1)
@@ -41,8 +54,8 @@
 		new_tank.set_anchored(anchored)
 		qdel(src)
 		return FALSE
-	else
-		return ..()
+
+	return ..()
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
 	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
@@ -62,10 +75,27 @@
 	else
 		qdel(src)
 
+/obj/structure/reagent_dispensers/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!openable)
+		return FALSE
+	leaking = !leaking
+	balloon_alert(user, "[leaking ? "opened" : "closed"] [src]'s tap")
+	log_game("[key_name(user)] [leaking ? "opened" : "closed"] [src]")
+	if(leaking && reagents)
+		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/structure/reagent_dispensers/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(leaking && reagents)
+		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
+
 /obj/structure/reagent_dispensers/watertank
 	name = "water tank"
 	desc = "A water tank."
 	icon_state = "water"
+	openable = TRUE
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
@@ -79,16 +109,68 @@
 	icon_state = "foam"
 	reagent_id = /datum/reagent/firefighting_foam
 	tank_volume = 500
+	openable = TRUE
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
 	desc = "A tank full of industrial welding fuel. Do not consume."
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
+	openable = TRUE
+	//an assembly attached to the tank
+	var/obj/item/assembly_holder/rig = null
+	//whether it accepts assemblies or not
+	var/accepts_rig = TRUE
+	//overlay of attached assemblies
+	var/mutable_appearance/assembliesoverlay
+	/// The last person to rig this fuel tank - Stored with the object. Only the last person matters for investigation
+	var/last_rigger = ""
+
+/obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
+	. = ..()
+
+	if(SSevents.holidays?[APRIL_FOOLS])
+		icon_state = "fuel_fools"
+
+/obj/structure/reagent_dispensers/fueltank/Destroy()
+	QDEL_NULL(rig)
+	return ..()
+
+/obj/structure/reagent_dispensers/fueltank/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == rig)
+		rig = null
+
+/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
+	. = ..()
+	if(get_dist(user, src) <= 2 && rig)
+		. += span_notice("There is some kind of device rigged to the tank.")
+
+/obj/structure/reagent_dispensers/fueltank/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!rig)
+		return
+	user.balloon_alert_to_viewers("detaching rig...")
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
+	user.balloon_alert_to_viewers("detached rig")
+	log_message("[key_name(user)] detached [rig] from [src]", LOG_GAME)
+	if(!user.put_in_hands(rig))
+		rig.forceMove(get_turf(user))
+	rig = null
+	last_rigger = null
+	cut_overlays(assembliesoverlay)
+	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
 	qdel(src)
+
+/obj/structure/reagent_dispensers/fueltank/proc/rig_boom()
+	log_bomber(last_rigger, "rigged fuel tank exploded", src)
+	boom()
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
 	boom()
@@ -129,6 +211,27 @@
 			user.visible_message(span_danger("[user] catastrophically fails at refilling [user.p_their()] [I.name]!"), span_userdanger("That was stupid of you."))
 			log_bomber(user, "detonated a", src, "via welding tool")
 			boom()
+		return
+	if(istype(I, /obj/item/assembly_holder) && accepts_rig)
+		if(rig)
+			user.balloon_alert("another device is in the way!")
+			return ..()
+		user.balloon_alert_to_viewers("attaching rig...")
+		if(!do_after(user, 2 SECONDS, target = src))
+			return
+		user.balloon_alert_to_viewers("attached rig")
+		var/obj/item/assembly_holder/holder = I
+		if(locate(/obj/item/assembly/igniter) in holder.assemblies)
+			rig = holder
+			if(!user.transferItemToLoc(holder, src))
+				return
+			log_bomber(user, "rigged [name] with [holder.name] for explosion", src)
+			last_rigger = user
+			assembliesoverlay = holder
+			assembliesoverlay.pixel_x += 6
+			assembliesoverlay.pixel_y += 1
+			add_overlay(assembliesoverlay)
+			RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/rig_boom)
 		return
 	return ..()
 
@@ -196,6 +299,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	desc = "Beer is liquid bread, it's good for you..."
 	icon_state = "beer"
 	reagent_id = /datum/reagent/consumable/ethanol/beer
+	openable = TRUE
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
 	explosion(src, heavy_impact_range = 3, light_impact_range = 5, flame_range = 10, flash_range = 7)
@@ -216,6 +320,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	icon_state = "vat"
 	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/cooking_oil
+	openable = TRUE
 
 /obj/structure/reagent_dispensers/servingdish
 	name = "serving dish"
@@ -236,10 +341,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply)
 
-/obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+/obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/reagent_dispensers/plumbed/storage
 	name = "stationary storage tank"

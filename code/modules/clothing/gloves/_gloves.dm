@@ -8,7 +8,6 @@
 	slot_flags = ITEM_SLOT_GLOVES
 	attack_verb_continuous = list("challenges")
 	attack_verb_simple = list("challenge")
-	var/transfer_prints = FALSE
 	strip_delay = 20
 	equip_delay_other = 40
 	// Path variable. If defined, will produced the type through interaction with wirecutters.
@@ -33,7 +32,7 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
-	if(HAS_BLOOD_DNA(src))
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
@@ -41,10 +40,6 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_gloves()
-
-// Called just before an attack_hand(), in mob/UnarmedAttack()
-/obj/item/clothing/gloves/proc/Touch(atom/A, proximity, mouseparams)
-	return FALSE // return 1 to cancel attack_hand()
 
 /obj/item/clothing/gloves/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()

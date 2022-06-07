@@ -2,15 +2,16 @@
 	name = "Monkey"
 	id = SPECIES_MONKEY
 	say_mod = "chimpers"
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
 	attack_verb = "bite"
 	attack_effect = ATTACK_EFFECT_BITE
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/bite.ogg'
-	mutant_organs = list(/obj/item/organ/tail/monkey)
-	mutant_bodyparts = list("tail_monkey" = "Monkey")
+	external_organs = list(
+		/obj/item/organ/external/tail/monkey = "Monkey"
+	)
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
-	allowed_animal_origin = MONKEY_BODY
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	species_traits = list(
 		HAS_FLESH,
@@ -28,10 +29,9 @@
 		TRAIT_PRIMITIVE,
 		TRAIT_WEAK_SOUL,
 		TRAIT_GUN_NATURAL,
+		//TRAIT_LITERATE, monkeys shouldn't be able to read or write
 	)
 	no_equip = list(
-		ITEM_SLOT_EARS,
-		ITEM_SLOT_EYES,
 		ITEM_SLOT_OCLOTHING,
 		ITEM_SLOT_GLOVES,
 		ITEM_SLOT_FEET,
@@ -39,16 +39,16 @@
 		ITEM_SLOT_SUITSTORE,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
-	liked_food = MEAT | FRUIT
+	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
-	limbs_id = "monkey"
 	damage_overlay_type = "monkey"
 	sexes = FALSE
 	punchdamagelow = 1
 	punchdamagehigh = 3
 	punchstunthreshold = 4 // no stun punches
 	species_language_holder = /datum/language_holder/monkey
-	bodypart_overides = list(
+
+	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/monkey,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/monkey,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey,
@@ -56,7 +56,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
-	fire_overlay = "Monkey_burning"
+	fire_overlay = "monkey"
 	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 
@@ -73,10 +73,6 @@
 	. = ..()
 	H.pass_flags |= PASSTABLE
 	H.butcher_results = knife_butcher_results
-	if(!H.dna.features["tail_monkey"] || H.dna.features["tail_monkey"] == "None")
-		H.dna.features["tail_monkey"] = "Monkey"
-		handle_mutant_bodyparts(H)
-
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
 

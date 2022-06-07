@@ -12,7 +12,7 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered)
 "e" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "f" = (
 /turf/closed/mineral/random/high_chance,
@@ -21,10 +21,10 @@
 /turf/closed/mineral/bananium,
 /area/ruin/unpowered)
 "h" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered)
 "i" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/unpowered)
 "j" = (
 /turf/closed/wall/mineral/titanium,

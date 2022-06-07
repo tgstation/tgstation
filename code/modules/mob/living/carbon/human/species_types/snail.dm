@@ -1,13 +1,12 @@
 /datum/species/snail
 	name = "Snailperson"
 	id = SPECIES_SNAIL
-	offset_features = list(OFFSET_GLASSES = list(0,4))
-	default_color = "336600" //vomit green
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_NOSLIPALL,
+		TRAIT_LITERATE,
 	)
 	attack_verb = "slap"
 	attack_effect = ATTACK_EFFECT_DISARM
@@ -20,9 +19,18 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP
 	sexes = FALSE //snails are hermaphrodites
 
-	mutanteyes = /obj/item/organ/eyes/snail
-	mutanttongue = /obj/item/organ/tongue/snail
+	mutanteyes = /obj/item/organ/internal/eyes/snail
+	mutanttongue = /obj/item/organ/internal/tongue/snail
 	exotic_blood = /datum/reagent/lube
+
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/snail,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/snail,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/snail,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/snail,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/snail,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/snail
+	)
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(istype(chem,/datum/reagent/consumable/salt))

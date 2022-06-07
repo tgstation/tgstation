@@ -26,17 +26,28 @@
 		TRAIT_XENO_IMMUNE,
 		TRAIT_NOCLONELOSS,
 		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_LITERATE,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutanttongue = /obj/item/organ/tongue/bone
-	mutantstomach = /obj/item/organ/stomach/bone
+	mutanttongue = /obj/item/organ/internal/tongue/bone
+	mutantstomach = /obj/item/organ/internal/stomach/bone
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
 	wings_icons = list("Skeleton")
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
+	species_cookie = /obj/item/reagent_containers/food/condiment/milk
 	species_language_holder = /datum/language_holder/skeleton
+
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/skeleton,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/skeleton,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/skeleton,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/skeleton,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/skeleton,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/skeleton,
+	)
 
 /datum/species/skeleton/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()

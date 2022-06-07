@@ -38,6 +38,7 @@
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
 		return
+	log_combat(src, target, "started to harvest")
 	face_atom(target)
 	draining = TRUE
 	essence_drained += rand(15, 20)
@@ -79,10 +80,10 @@
 				reveal(46)
 				stun(46)
 				target.visible_message(span_warning("[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray."))
-				if(target.anti_magic_check(FALSE, TRUE))
+				if(target.can_block_magic(MAGIC_RESISTANCE_HOLY))
 					to_chat(src, span_revenminor("Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!"))
 					target.visible_message(span_warning("[target] slumps onto the ground."), \
-											   span_revenwarning("Violet lights, dancing in your vision, receding--"))
+					span_revenwarning("Violet lights, dancing in your vision, receding--"))
 					draining = FALSE
 					return
 				var/datum/beam/B = Beam(target,icon_state="drain_life")
@@ -129,8 +130,7 @@
 	action_background_icon_state = "bg_revenant"
 	notice = "revennotice"
 	boldnotice = "revenboldnotice"
-	holy_check = TRUE
-	tinfoil_check = FALSE
+	antimagic_flags = MAGIC_RESISTANCE_MIND
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0
@@ -138,6 +138,7 @@
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
 	name = "Report this to a coder"
+	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	var/reveal = 80 //How long it reveals the revenant in deciseconds
 	var/stun = 20 //How long it stuns the revenant in deciseconds
 	var/locked = TRUE //If it's locked and needs to be unlocked before use
@@ -189,7 +190,7 @@
 	user.reveal(reveal)
 	user.stun(stun)
 	if(action)
-		action.UpdateButtonIcon()
+		action.UpdateButtons()
 	return TRUE
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
@@ -229,10 +230,10 @@
 		if(M == user)
 			continue
 		L.Beam(M,icon_state="purple_lightning", time = 5)
-		if(!M.anti_magic_check(FALSE, TRUE))
-			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
+		if(!M.can_block_magic(antimagic_flags))
+			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile
@@ -312,7 +313,7 @@
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
-		if(human.anti_magic_check(FALSE, TRUE))
+		if(human.can_block_magic(antimagic_flags))
 			continue
 		to_chat(human, span_revenwarning("You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")]."))
 		new /obj/effect/temp_visual/revenant(human.loc)
@@ -349,14 +350,14 @@
 	for(var/mob/living/mob in T)
 		if(mob == user)
 			continue
-		if(mob.anti_magic_check(FALSE, TRUE))
+		if(mob.can_block_magic(antimagic_flags))
+			to_chat(user, span_warning("The spell had no effect on [mob]!"))
 			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
 		if(iscarbon(mob))
 			if(ishuman(mob))
 				var/mob/living/carbon/human/H = mob
-				if(H.dna && H.dna.species)
-					H.dna.species.handle_hair(H,"#1d2953") //will be reset when blight is cured
+				H.set_haircolor("#1d2953", override = TRUE) //will be reset when blight is cured
 				var/blightfound = FALSE
 				for(var/datum/disease/revblight/blight in H.diseases)
 					blightfound = TRUE

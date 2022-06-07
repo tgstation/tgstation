@@ -4,7 +4,6 @@
 	desc = "These clunky gauntlets allow you to drag things with more confidence on them not getting nabbed from you."
 	icon_state = "haul_gauntlet"
 	inhand_icon_state = "bgloves"
-	transfer_prints = FALSE
 	equip_delay_self = 3 SECONDS
 	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
@@ -55,7 +54,7 @@
 	desc = "Just looking at these fills you with an urge to beat the shit out of people."
 	icon_state = "rapid"
 	inhand_icon_state = "rapid"
-	transfer_prints = TRUE
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
 /obj/item/clothing/gloves/rapid/ComponentInitialize()
 	. = ..()

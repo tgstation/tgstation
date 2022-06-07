@@ -53,7 +53,6 @@
 /obj/structure/closet/jcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/rank/civilian/janitor(src)
-	new /obj/item/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
 	new /obj/item/paint/paint_remover(src)
@@ -82,10 +81,12 @@
 	new /obj/item/clothing/under/rank/civilian/lawyer/black(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/red(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/bluesuit(src)
+	new /obj/item/clothing/neck/tie/blue(src)
 	new /obj/item/clothing/suit/toggle/lawyer(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/purpsuit(src)
 	new /obj/item/clothing/suit/toggle/lawyer/purple(src)
 	new /obj/item/clothing/under/suit/black(src)
+	new /obj/item/clothing/neck/tie/black(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)
@@ -213,9 +214,9 @@
 		/obj/item/clothing/head/soft/black = 2)
 	generate_items_inside(items_inside,src)
 	if(prob(40))
-		new /obj/item/clothing/mask/bandana/skull(src)
+		new /obj/item/clothing/mask/bandana/skull/black(src)
 	if(prob(40))
-		new /obj/item/clothing/mask/bandana/skull(src)
+		new /obj/item/clothing/mask/bandana/skull/black(src)
 	return
 
 
@@ -300,7 +301,7 @@
 		/obj/item/clothing/suit/apron = 2,
 		/obj/item/clothing/suit/apron/overalls = 2,
 		/obj/item/clothing/under/rank/civilian/hydroponics = 3,
-		/obj/item/clothing/mask/bandana = 3)
+		/obj/item/clothing/mask/bandana/striped/botany = 3)
 	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/wardrobe/curator

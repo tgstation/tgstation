@@ -118,7 +118,7 @@
 	burn_heal = 1
 
 /datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.satiety < 600)
+	if(M.satiety < MAX_SATIETY)
 		M.satiety += 30 * REM * delta_time
 	. = ..()
 
@@ -135,6 +135,26 @@
 	description = "Natural tissues that make up the bulk of organs, providing many vitamins and minerals."
 	taste_description = "rich earthy pungent"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/nutriment/cloth_fibers
+	name = "Cloth Fibers"
+	description = "It's not actually a form of nutriment but it does keep Mothpeople going for a short while..."
+	nutriment_factor = 30 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	brute_heal = 0
+	burn_heal = 0
+	///Amount of satiety that will be drained when the cloth_fibers is fully metabolized
+	var/delayed_satiety_drain = 2 * CLOTHING_NUTRITION_GAIN
+
+/datum/reagent/consumable/nutriment/cloth_fibers/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(M.satiety < MAX_SATIETY)
+		M.adjust_nutrition(CLOTHING_NUTRITION_GAIN)
+		delayed_satiety_drain += CLOTHING_NUTRITION_GAIN
+	return ..()
+
+/datum/reagent/consumable/nutriment/cloth_fibers/on_mob_delete(mob/living/carbon/M)
+	M.adjust_nutrition(-delayed_satiety_drain)
+	return ..()
 
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"
@@ -364,7 +384,7 @@
 				victim.emote("scream")
 			victim.blur_eyes(5) // 10 seconds
 			victim.blind_eyes(3) // 6 seconds
-			victim.set_confusion(max(exposed_mob.get_confusion(), 5)) // 10 seconds
+			victim.set_timed_status_effect(5 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
@@ -376,7 +396,7 @@
 			if(prob(10))
 				victim.blur_eyes(1)
 			if(prob(10))
-				victim.Dizzy(1)
+				victim.set_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			if(prob(5))
 				victim.vomit()
 
@@ -440,9 +460,9 @@
 		if(DT_PROB(min(current_cycle/2, 12.5), delta_time))
 			to_chat(M, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
 			M.Paralyze(10)
-			M.Jitter(10)
+			M.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	else
-		var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+		var/obj/item/organ/internal/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 		if(liver && HAS_TRAIT(liver, TRAIT_CULINARY_METABOLISM))
 			if(DT_PROB(10, delta_time)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
 				M.heal_bodypart_damage(brute = 1, burn = 1)
@@ -457,7 +477,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time, 0)
 		. = TRUE
@@ -818,7 +838,7 @@
 		return
 
 	var/mob/living/carbon/exposed_carbon = exposed_mob
-	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 30)
 
@@ -996,7 +1016,7 @@
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
 	if(isabductor(M))
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "ET_pieces", /datum/mood_event/et_pieces, name)
-		M.set_drugginess(15 * REM * delta_time)
+		M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	..()
 
 /datum/reagent/consumable/vinegar

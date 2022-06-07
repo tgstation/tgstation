@@ -25,6 +25,9 @@
 		/obj/item/clothing/head/beret/black = 3,
 		/obj/item/clothing/head/kippah = 3,
 		/obj/item/clothing/head/taqiyahred = 3,
+		/obj/item/clothing/mask/bandana = 3,
+		/obj/item/clothing/mask/bandana/striped = 3,
+		/obj/item/clothing/mask/bandana/skull = 3,
 		/obj/item/clothing/gloves/fingerless = 2,
 		/obj/item/clothing/neck/scarf/pink = 3,
 		/obj/item/clothing/neck/scarf/red = 3,
@@ -41,9 +44,7 @@
 		/obj/item/clothing/neck/stripedredscarf = 3,
 		/obj/item/clothing/neck/stripedbluescarf = 3,
 		/obj/item/clothing/neck/stripedgreenscarf = 3,
-		/obj/item/clothing/neck/tie/blue = 3,
-		/obj/item/clothing/neck/tie/red = 3,
-		/obj/item/clothing/neck/tie/black = 3,
+		/obj/item/clothing/neck/tie = 6,
 		/obj/item/clothing/neck/tie/horrible = 3,
 		/obj/item/clothing/accessory/pride = 15,
 		/obj/item/storage/belt/fannypack = 3,
@@ -92,8 +93,8 @@
 		/obj/item/clothing/accessory/waistcoat = 1,
 		/obj/item/clothing/head/that = 1,
 		/obj/item/clothing/head/fedora = 1,
-		/obj/item/clothing/head/cowboy_hat_white =1,
-		/obj/item/clothing/head/cowboy_hat_grey =1,
+		/obj/item/clothing/head/cowboy_hat_white = 1,
+		/obj/item/clothing/head/cowboy_hat_grey = 1,
 		/obj/item/clothing/glasses/monocle = 1,
 		/obj/item/clothing/head/sombrero = 1,
 		/obj/item/clothing/suit/poncho = 1,
@@ -190,7 +191,7 @@
 		/obj/item/clothing/under/costume/jabroni = 1,
 		/obj/item/clothing/under/costume/geisha = 1,
 		/obj/item/clothing/under/rank/centcom/officer/replica = 1,
-		/obj/item/clothing/under/rank/centcom/officer_skirt/replica = 1
+		/obj/item/clothing/under/rank/centcom/officer_skirt/replica = 1,
 	)
 	premium = list(/obj/item/clothing/under/suit/checkered = 1,
 		/obj/item/clothing/head/mailman = 1,
@@ -202,11 +203,11 @@
 		/obj/item/clothing/suit/jacket/letterman_nanotrasen = 1,
 		/obj/item/clothing/under/costume/swagoutfit = 1,
 		/obj/item/clothing/shoes/swagshoes = 1,
-		/obj/item/instrument/piano_synth/headphones/spacepods = 1
+		/obj/item/instrument/piano_synth/headphones/spacepods = 1,
 	)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = PAYCHECK_ASSISTANT * 0.7 //Default of
-	extra_price = PAYCHECK_HARD
+	default_price = PAYCHECK_CREW * 0.7 //Default of
+	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
 	light_mask = "wardrobe-light-mask"
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN

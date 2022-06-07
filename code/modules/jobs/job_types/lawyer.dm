@@ -13,7 +13,7 @@
 	outfit = /datum/outfit/job/lawyer
 	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
-	paycheck = PAYCHECK_EASY
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	mind_traits = list(TRAIT_DONUT_LOVER)
@@ -36,9 +36,10 @@
 	id_trim = /datum/id_trim/job/lawyer
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
-	belt = /obj/item/pda/lawyer
+	belt = /obj/item/modular_computer/tablet/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
 	shoes = /obj/item/clothing/shoes/laceup
+	neck = /obj/item/clothing/neck/tie/red/tied
 	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 	l_hand = /obj/item/storage/briefcase/lawyer

@@ -12,7 +12,7 @@
 	outfit = /datum/outfit/job/botanist
 	plasmaman_outfit = /datum/outfit/plasmaman/botany
 
-	paycheck = PAYCHECK_EASY
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BOTANIST
 	bounty_types = CIV_JOB_GROW
@@ -42,7 +42,7 @@
 	uniform = /obj/item/clothing/under/rank/civilian/hydroponics
 	suit = /obj/item/clothing/suit/apron
 	suit_store = /obj/item/plant_analyzer
-	belt = /obj/item/pda/botanist
+	belt = /obj/item/modular_computer/tablet/pda/botanist
 	ears = /obj/item/radio/headset/headset_srv
 	gloves = /obj/item/clothing/gloves/botanic_leather
 

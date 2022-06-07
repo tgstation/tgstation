@@ -4,9 +4,6 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 500
 	circuit = /obj/item/circuitboard/machine/gibber
 
 	var/operating = FALSE //Is it on?
@@ -21,6 +18,7 @@
 	add_overlay("grjam")
 
 /obj/machinery/gibber/RefreshParts()
+	. = ..()
 	gibtime = 40
 	meat_produced = initial(meat_produced)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -104,14 +102,16 @@
 	else
 		startgibbing(user)
 
+/obj/machinery/gibber/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
 
 	else if(default_pry_open(P))
-		return
-
-	else if(default_unfasten_wrench(user, P))
 		return
 
 	else if(default_deconstruction_crowbar(P))
@@ -142,7 +142,7 @@
 		audible_message(span_hear("You hear a loud metallic grinding sound."))
 		return
 
-	use_power(1000)
+	use_power(active_power_usage)
 	audible_message(span_hear("You hear a loud squelchy grinding sound."))
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE

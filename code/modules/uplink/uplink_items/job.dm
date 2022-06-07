@@ -43,6 +43,14 @@
 	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
 
+/datum/uplink_item/role_restricted/oldtoolboxclean
+	name = "Ancient Toolbox"
+	desc = "An iconic toolbox design notorious with Assistants everywhere, this design was especially made to become more robust the more telecrystals it has inside it! Tools and insulated gloves included."
+	item = /obj/item/storage/toolbox/mechanical/old/clean
+	cost = 2
+	restricted_roles = list(JOB_ASSISTANT)
+	surplus = 0
+
 // Low progression cost
 
 /datum/uplink_item/role_restricted/clownpin
@@ -232,16 +240,6 @@
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
 	restricted_roles = list(JOB_CLOWN)
-
-/datum/uplink_item/role_restricted/concealed_weapon_bay
-	name = "Concealed Weapon Bay"
-	desc = "A modification for non-combat mechas that allows them to equip one piece of equipment designed for combat mechs. \
-			It also hides the equipped weapon from plain sight. \
-			Only one can fit on a mecha."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/mecha_parts/concealed_weapon_bay
-	cost = 3
-	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"

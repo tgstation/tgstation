@@ -61,6 +61,7 @@
 		// we need a second, silent armor check to actually know how much to reduce damage taken, as opposed to
 		// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
 		var/armor_check = check_projectile_armor(def_zone, P, is_silent = TRUE)
+		armor_check = min(ARMOR_MAX_BLOCK, armor_check) //cap damage reduction at 90%
 		apply_damage(P.damage, P.damage_type, def_zone, armor_check, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, attack_direction = attack_direction)
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
@@ -68,7 +69,7 @@
 	return . ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /mob/living/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
-	return run_armor_check(def_zone, impacting_projectile.flag, "","",impacting_projectile.armour_penetration, "", is_silent, impacting_projectile.weak_against_armour)
+	return run_armor_check(def_zone, impacting_projectile.armor_flag, "","",impacting_projectile.armour_penetration, "", is_silent, impacting_projectile.weak_against_armour)
 
 /mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	return 0
@@ -129,7 +130,7 @@
 
 /mob/living/fire_act()
 	adjust_fire_stacks(3)
-	IgniteMob()
+	ignite_mob()
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
@@ -278,7 +279,7 @@
 		return martial_result
 
 /mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
-	if(isturf(loc) && istype(loc.loc, /area/start))
+	if(isturf(loc) && istype(loc.loc, /area/misc/start))
 		to_chat(user, "No attacking people at spawn, you jackass.")
 		return FALSE
 
@@ -402,7 +403,7 @@
 
 ///Logs, gibs and returns point values of whatever mob is unfortunate enough to get eaten.
 /mob/living/singularity_act()
-	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
+	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_ENGINE) //Oh that's where the clown ended up!
 	gib()
 	return 20
 
@@ -416,7 +417,7 @@
 		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
 			GLOB.cult_narsie.resolved = TRUE
 			sound_to_playing_players('sound/machines/alarm.ogg')
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, CULT_VICTORY_MASS_CONVERSION), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
 	if(client)
 		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
@@ -500,7 +501,7 @@
 	if(methods & INGEST)
 		taste(source)
 
-	var/touch_protection = (methods & VAPOR) ? get_permeability_protection() : 0
+	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent

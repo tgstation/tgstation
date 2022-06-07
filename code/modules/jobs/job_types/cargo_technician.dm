@@ -14,7 +14,7 @@
 	outfit = /datum/outfit/job/cargo_tech
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
-	paycheck = PAYCHECK_EASY
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 	display_order = JOB_DISPLAY_ORDER_CARGO_TECHNICIAN
 	bounty_types = CIV_JOB_RANDOM
@@ -41,10 +41,7 @@
 
 	id_trim = /datum/id_trim/job/cargo_technician
 	uniform = /obj/item/clothing/under/rank/cargo/tech
-	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/cargo = 1,
-		)
-	belt = /obj/item/pda/cargo
+	belt = /obj/item/modular_computer/tablet/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
 	l_hand = /obj/item/export_scanner
 

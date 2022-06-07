@@ -20,14 +20,18 @@
 	icon_state = "savannah_ivanov_0_0"
 	//does not include mmi compatibility
 	mecha_flags = ADDING_ACCESS_POSSIBLE | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
+	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
 	max_integrity = 450 //really tanky, like damn
-	deflect_chance = 25
 	armor = list(MELEE = 45, BULLET = 40, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100)
 	max_temperature = 30000
 	wreckage = /obj/structure/mecha_wreckage/savannah_ivanov
-	internal_damage_threshold = 25
 	max_occupants = 2
+	max_equip_by_category = list(
+		MECHA_UTILITY = 1,
+		MECHA_POWER = 1,
+		MECHA_ARMOR = 3,
+	)
 	//no tax on flying, since the power cost is in the leap itself.
 	phasing_energy_drain = 0
 
@@ -114,8 +118,8 @@
 		return
 	S_TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_SKYFALL, skyfall_cooldown_time)
 	button_icon_state = "mech_savannah_cooldown"
-	UpdateButtonIcon()
-	addtimer(CALLBACK(src, /datum/action/vehicle/sealed/mecha/skyfall.proc/reset_button_icon), skyfall_cooldown_time)
+	UpdateButtons()
+	addtimer(CALLBACK(src, .proc/reset_button_icon), skyfall_cooldown_time)
 	for(var/mob/living/shaken in range(7, chassis))
 		shake_camera(shaken, 3, 3)
 
@@ -216,7 +220,7 @@
  */
 /datum/action/vehicle/sealed/mecha/skyfall/proc/reset_button_icon()
 	button_icon_state = "mech_savannah"
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/vehicle/sealed/mecha/ivanov_strike
 	name = "Ivanov Strike"
@@ -251,7 +255,7 @@
  */
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/reset_button_icon()
 	button_icon_state = "mech_ivanov"
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /**
  * ## start_missile_targeting
@@ -319,7 +323,7 @@
 		"explosionSize" = list(0,0,1,2)
 	))
 	button_icon_state = "mech_ivanov_cooldown"
-	UpdateButtonIcon()
+	UpdateButtons()
 	addtimer(CALLBACK(src, /datum/action/vehicle/sealed/mecha/ivanov_strike.proc/reset_button_icon), strike_cooldown_time)
 
 //misc effects

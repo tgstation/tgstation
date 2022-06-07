@@ -61,7 +61,7 @@
 			return // The condiment might be empty after the delay.
 		M.visible_message(span_warning("[user] fed [M] from [src]."), \
 			span_warning("[user] fed you from [src]."))
-		log_combat(user, M, "fed", reagents.log_list())
+		log_combat(user, M, "fed", reagents.get_reagent_log_string())
 	reagents.trans_to(M, 10, transfered_by = user, methods = INGEST)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE

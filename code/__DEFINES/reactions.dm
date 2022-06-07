@@ -13,9 +13,12 @@
 /// An exponent used to make large volume gas mixtures significantly less likely to release rads. Used to prevent tritfires in distro from irradiating literally the entire station with no warning.
 #define ATMOS_RADIATION_VOLUME_EXP 3
 
+/// Maximum range a radiation pulse is allowed to be from a gas reaction.
+#define GAS_REACTION_MAXIMUM_RADIATION_PULSE_RANGE 20
+
 // Water Vapor:
 /// The temperature required for water vapor to condense.
-#define WATER_VAPOR_CONDENSATION_POINT (T0C + 10)
+#define WATER_VAPOR_CONDENSATION_POINT (T20C + 10)
 /// The temperature required for water vapor to condense as ice instead of water.
 #define WATER_VAPOR_DEPOSITION_POINT 200
 
@@ -82,6 +85,8 @@
 #define FIRE_TRITIUM_ENERGY_RELEASED 2.8e5
 /// The minimum number of moles of trit that must be burnt for a tritium fire reaction to produce a radiation pulse. (0.01 moles trit or 10 moles oxygen to start producing rads.)
 #define TRITIUM_RADIATION_MINIMUM_MOLES 0.1
+/// The minimum released energy necessary for tritium to release radiation during combustion. (at a mix volume of [CELL_VOLUME]).
+#define TRITIUM_RADIATION_RELEASE_THRESHOLD (FIRE_TRITIUM_ENERGY_RELEASED * TRITIUM_OXYBURN_MULTIPLIER)
 /// A scaling factor for the range of radiation pulses produced by tritium fires.
 #define TRITIUM_RADIATION_RANGE_DIVISOR 1.5
 /// A scaling factor for the irradiation threshold of radiation pulses produced by tritium fires.
@@ -90,8 +95,10 @@
 // - Freon:
 /// The maximum temperature freon can combust at.
 #define FREON_MAXIMUM_BURN_TEMPERATURE 283
-/// The minimum temperature freon can combust at.
+///Minimum temperature allowed for the burn to go at max speed, we would have negative pressure otherwise
 #define FREON_LOWER_TEMPERATURE 60
+///Terminal temperature after wich we stop the reaction
+#define FREON_TERMINAL_TEMPERATURE 20
 /// Multiplier for freonfire with O2 moles * FREON_OXYGEN_FULLBURN for the maximum fuel consumption
 #define FREON_OXYGEN_FULLBURN 10
 /// The maximum fraction of the freon in a mix that can combust each reaction tick.
@@ -129,8 +136,10 @@
 #define N2O_DECOMPOSITION_ENERGY 200000
 
 // BZ:
-/// The amount of energy ~2.5 moles of BZ forming from N2O and plasma releases.
-#define BZ_FORMATION_ENERGY FIRE_CARBON_ENERGY_RELEASED
+/// The maximum temperature BZ can form at. Deliberately set lower than the minimum burn temperature for most combustible gases in an attempt to prevent long fuse singlecaps.
+#define BZ_FORMATION_MAX_TEMPERATURE (FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 60) // Yes, someone used this as a bomb timer. I hate players.
+/// The amount of energy 1 mole of BZ forming from N2O and plasma releases.
+#define BZ_FORMATION_ENERGY 80000
 
 // Pluoxium:
 /// The minimum temperature pluoxium can form from carbon dioxide, oxygen, and tritium at.
@@ -159,9 +168,7 @@
 
 // Freon:
 /// The minimum temperature freon can form from plasma, CO2, and BZ at.
-#define FREON_FORMATION_MIN_TEMPERATURE FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-/// A scaling divisor for the rate of freon formation relative to mix temperature.
-#define FREON_FORMATION_TEMP_DIVISOR (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10)
+#define FREON_FORMATION_MIN_TEMPERATURE FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
 /// The amount of energy 2.5 moles of freon forming from plasma, CO2, and BZ consumes.
 #define FREON_FORMATION_ENERGY 100
 

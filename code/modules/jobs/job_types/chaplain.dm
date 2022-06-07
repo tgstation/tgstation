@@ -13,7 +13,7 @@
 	outfit = /datum/outfit/job/chaplain
 	plasmaman_outfit = /datum/outfit/plasmaman/chaplain
 
-	paycheck = PAYCHECK_EASY
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
@@ -96,7 +96,7 @@
 			B.deity_name = "Anime"
 		else
 			if(new_bible == DEFAULT_BIBLE)
-				new_bible = "The Holy Book of [new_religion]"
+				new_bible = DEFAULT_BIBLE_REPLACE(new_bible)
 
 	B.name = new_bible
 
@@ -120,7 +120,7 @@
 		/obj/item/camera/spooky = 1,
 		/obj/item/stamp/chap = 1,
 		)
-	belt = /obj/item/pda/chaplain
+	belt = /obj/item/modular_computer/tablet/pda/chaplain
 	ears = /obj/item/radio/headset/headset_srv
 
 	backpack = /obj/item/storage/backpack/cultpack

@@ -12,7 +12,7 @@
 	outfit = /datum/outfit/job/mime
 	plasmaman_outfit = /datum/outfit/plasmaman/mime
 
-	paycheck = PAYCHECK_MINIMAL
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_MIME
@@ -54,7 +54,7 @@
 		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 1,
 		/obj/item/stamp/mime = 1,
 		)
-	belt = /obj/item/pda/mime
+	belt = /obj/item/modular_computer/tablet/pda/mime
 	ears = /obj/item/radio/headset/headset_srv
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
@@ -77,7 +77,7 @@
 		H.mind.miming = TRUE
 
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.add_hud_to(H)
+	fan.show_to(H)
 
 /obj/item/book/mimery
 	name = "Guide to Dank Mimery"
