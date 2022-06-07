@@ -28,7 +28,8 @@
 /datum/lua_editor/ui_state(mob/user)
 	return GLOB.debug_state
 
-/datum/lua_editor/proc/refify_list(list/L)
+/// Returns a copy of the list where any element that is a datum or the world is converted into a ref
+/proc/refify_list(list/L)
 	. = list()
 	for(var/i in 1 to L.len)
 		var/key = L[i]
@@ -53,7 +54,7 @@
  * Converts a list into a list of assoc lists of the form ("key" = key, "value" = value)
  * so that list keys that are themselves lists can be fully json-encoded
  */
-/datum/lua_editor/proc/kvpify_list(list/L, depth = INFINITY)
+/proc/kvpify_list(list/L, depth = INFINITY)
 	. = list()
 	for(var/i in 1 to L.len)
 		var/key = L[i]
@@ -69,16 +70,6 @@
 			. += list(list("key" = new_key, "value" = value))
 		else
 			. += list(list("key" = i, "value" = new_key))
-
-/datum/lua_editor/proc/dekvpify_list(list/L)
-	. = list()
-	for(var/i in 1 to L.len)
-		var/pair = L[i]
-		var/key = pair["key"]
-		var/value = pair["value"]
-		var/list/to_add = list(key)
-		to_add[key] = value
-		. += to_add
 
 /datum/lua_editor/ui_static_data(mob/user)
 	var/list/data = list()
