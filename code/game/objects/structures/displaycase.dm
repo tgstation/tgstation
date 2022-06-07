@@ -292,8 +292,8 @@
 	integrity_failure = 0
 	///the key of the player who placed the item in the case
 	var/placer_key = ""
-	///is the trophy a hologram, added roundstart?
-	var/added_roundstart = FALSE
+	///is the trophy a hologram, not a real item placed by a player?
+	var/holographic_showpiece = FALSE
 	///are we about to edit
 	var/historian_mode = FALSE
 
@@ -313,11 +313,11 @@
 
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
-		if(added_roundstart)
+		if(holographic_showpiece)
 			visible_message(span_danger("The [showpiece] fizzles and vanishes!"))
 			do_sparks(1, FALSE, src)
 			QDEL_NULL(showpiece)
-			added_roundstart = FALSE
+			holographic_showpiece = FALSE
 		else
 			. = ..()
 		placer_key = ""
@@ -347,7 +347,7 @@
 		data["showpiece_icon"] = base64
 		data["showpiece_description"] = trophy_message ? trophy_message : null
 		data["historian_mode"] = historian_mode
-		data["added_roundstart"] = added_roundstart
+		data["holographic_showpiece"] = holographic_showpiece
 	return data
 
 /obj/structure/displaycase/trophy/ui_act(action, params)
@@ -355,14 +355,14 @@
 	if(.)
 		return
 	switch(action)
-		if("keyInsert")
+		if("insert_key")
 			var/obj/item/key/displaycase/disk = usr.get_active_held_item()
 			if(istype(disk))
 				toggle_historian_mode(usr)
 				return TRUE
 			return
-		if("changeMessage")
-			if(!added_roundstart)
+		if("change_message")
+			if(!holographic_showpiece)
 				var/new_trophy_message = trim("[params["passedMessage"]]", 255)
 				trophy_message = new_trophy_message
 				return TRUE

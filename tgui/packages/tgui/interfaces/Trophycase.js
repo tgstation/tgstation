@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Icon, TextArea, Box, Section, Flex } from '../components';
+import { Icon, Box, Section, TextArea, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Trophycase = (props, context) => {
@@ -11,25 +11,25 @@ export const Trophycase = (props, context) => {
   return (
     <Window
       width={300}
-      height={270}>
+      height={300}>
       <Window.Content>
-        <Flex direction="column" mb={1}>
-          <Flex.Item mb={1}>
+        <Stack vertical fill>
+          <Stack.Item>
             <Section align="center">
               <b>{showpiece_name ? showpiece_name : "Under construction."}</b>
             </Section>
-          </Flex.Item>
-          <Flex.Item align="center" mb={1}>
-            <Section fill>
+          </Stack.Item>
+          <Stack.Item>
+            <Section align="center">
               <ShowpieceImage />
             </Section>
-          </Flex.Item>
-          <Flex.Item mb={1}>
-            <Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section align="center">
               <ShowpieceDescription />
             </Section>
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -42,50 +42,44 @@ const ShowpieceImage = (props, context) => {
   } = data;
   return (
     showpiece_icon ?(
-      <Section height="100%">
-        <Box as="img"
-          m={1}
-          src={`data:image/jpeg;base64,${showpiece_icon}`}
-          height="96px"
-          width="96px"
-          style={{
-            '-ms-interpolation-mode': 'nearest-neighbor',
-          }} />
-      </Section>
+      <Box as="img"
+        m={1}
+        src={`data:image/jpeg;base64,${showpiece_icon}`}
+        height="96px"
+        width="96px"
+        style={{
+          '-ms-interpolation-mode': 'nearest-neighbor',
+        }} />
     ) : (
-      <Section height="100%">
+      <Box>
         <Icon name="landmark" spin />
-      </Section>)
+      </Box>
+    )
   );
 };
 
 const ShowpieceDescription = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    added_roundstart,
+    holographic_showpiece,
     historian_mode,
     showpiece_description,
   } = data;
   return (
-    added_roundstart
+    holographic_showpiece
       ? (
-        <Section>
-          <b>{showpiece_description}</b>
-        </Section>
+        <b>{showpiece_description}</b>
       )
       : historian_mode
         ? (
-          <Section>
-            <TextArea fluid placeholder="Let's make history!" value={showpiece_description}
-              onChange={(e, value) => act('changeMessage', {
+          <Box>
+            <TextArea height="80px" maxLength={250} fluid placeholder="Let's make history!" value={showpiece_description}
+              onChange={(e, value) => act('change_message', {
                 passedMessage: value,
               })} />
-          </Section>
-        )
+          </Box>)
         : (
-          <Section>
-            <b>{showpiece_description ? showpiece_description : "This exhibit under construction. History awaits your contribution!"}</b>
-          </Section>
+          <b>{showpiece_description ? showpiece_description : "This exhibit under construction. History awaits your contribution!"}</b>
         )
   );
 };

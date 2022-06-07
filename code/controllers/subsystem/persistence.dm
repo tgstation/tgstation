@@ -254,8 +254,7 @@ SUBSYSTEM_DEF(persistence)
 		if(T.trophy_message == "")
 			T.trophy_message = T.showpiece.desc
 		T.placer_key = trim(html_encode(chosen_trophy["placer_key"]))
-		T.added_roundstart = TRUE
-		T.set_light(2)
+		T.holographic_showpiece = TRUE
 		T.update_appearance()
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
@@ -362,7 +361,7 @@ SUBSYSTEM_DEF(persistence)
 			ukeys[tkey] = TRUE
 
 /datum/controller/subsystem/persistence/proc/save_trophy(obj/structure/displaycase/trophy/T)
-	if(!T.added_roundstart && T.showpiece)
+	if(!T.holographic_showpiece && T.showpiece)
 		var/list/data = list()
 		data["path"] = T.showpiece.type
 		data["message"] = T.trophy_message ? T.trophy_message : T.showpiece.desc
