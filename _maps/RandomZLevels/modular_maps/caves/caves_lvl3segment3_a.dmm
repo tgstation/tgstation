@@ -13,26 +13,70 @@
 /obj/item/stack/sheet/bone,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
+"f" = (
+/mob/living/simple_animal/hostile/ant,
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
 "g" = (
 /turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/cogscarab,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "i" = (
 /obj/item/stack/sheet/bone,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
+"j" = (
+/turf/closed/wall/mineral/bronze,
+/area/template_noop)
+"k" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"l" = (
+/obj/effect/mine/explosive{
+	range_heavy = 0
+	},
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
 "m" = (
 /turf/closed/indestructible/riveted,
+/area/template_noop)
+"n" = (
+/mob/living/simple_animal/hostile/ant,
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "p" = (
 /obj/structure/flora/rock,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"q" = (
+/obj/effect/decal/remains/xeno,
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
 "r" = (
 /obj/effect/decal/remains/xeno,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
+"s" = (
+/obj/structure/fluff/clockwork/blind_eye,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
 "t" = (
-/turf/open/floor/bronze/filled/lavaland,
+/obj/structure/fluff/clockwork/alloy_shards,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
+"u" = (
+/obj/effect/decal/remains/human,
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "w" = (
 /obj/structure/flora/rock,
@@ -49,16 +93,47 @@
 "A" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"C" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "D" = (
 /obj/modular_map_connector,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"H" = (
+"E" = (
 /obj/structure/ladder/unbreakable{
 	height = 1;
 	id = "cavesfinale"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"G" = (
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
+"I" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"J" = (
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
+"K" = (
+/obj/item/food/grown/banana{
+	desc = "shh... its a secret. 5 of 6.";
+	name = "secret banana"
+	},
+/obj/structure/bed/nest,
+/turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "M" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
@@ -66,6 +141,10 @@
 /area/template_noop)
 "N" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"O" = (
+/obj/structure/fluff/clockwork/alloy_shards,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "R" = (
@@ -77,8 +156,23 @@
 /mob/living/simple_animal/hostile/ant,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
+"T" = (
+/mob/living/simple_animal/hostile/ocular_warden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "U" = (
 /obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
+"W" = (
+/obj/item/stack/sheet/bone,
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
+"X" = (
+/obj/structure/flora/rock/pile,
+/obj/structure/flora/ash/cap_shroom,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "Y" = (
@@ -978,8 +1072,8 @@ g
 "}
 (28,1,1) = {"
 m
-Y
-Y
+J
+J
 Y
 g
 g
@@ -1011,9 +1105,9 @@ g
 "}
 (29,1,1) = {"
 m
-S
-Y
-Y
+f
+J
+J
 Y
 g
 g
@@ -1044,9 +1138,9 @@ g
 "}
 (30,1,1) = {"
 m
-Y
-Y
-Y
+J
+J
+J
 S
 Y
 g
@@ -1077,10 +1171,10 @@ g
 "}
 (31,1,1) = {"
 m
-Y
+J
 U
-Y
-Y
+J
+J
 Y
 g
 Y
@@ -1113,7 +1207,7 @@ m
 U
 U
 U
-Y
+J
 Y
 Y
 Y
@@ -1145,8 +1239,8 @@ g
 m
 w
 U
-Y
-Y
+J
+J
 Y
 g
 Y
@@ -1177,8 +1271,8 @@ g
 (34,1,1) = {"
 m
 U
-S
-Y
+f
+J
 Y
 g
 g
@@ -1564,7 +1658,7 @@ g
 g
 g
 g
-Y
+K
 g
 Y
 g
@@ -3171,11 +3265,11 @@ Y
 g
 Y
 Y
+G
+G
+G
 Y
-Y
-Y
-Y
-Y
+G
 g
 Y
 g
@@ -3203,12 +3297,12 @@ Y
 Y
 g
 Y
-r
-Y
-Y
-i
+q
+G
+G
+W
 S
-Y
+G
 g
 Y
 g
@@ -3237,11 +3331,11 @@ Y
 g
 Y
 Y
-U
+X
 Y
 a
 Y
-Y
+G
 g
 Y
 g
@@ -3271,9 +3365,9 @@ g
 g
 Y
 Y
-S
-Y
-Y
+n
+G
+G
 x
 g
 Y
@@ -3304,9 +3398,9 @@ g
 g
 Y
 a
-Y
-Y
-Y
+G
+G
+G
 Y
 Y
 Y
@@ -3337,11 +3431,11 @@ g
 g
 Y
 U
-x
+u
 a
-Y
-i
-U
+G
+W
+X
 Y
 g
 g
@@ -3368,13 +3462,13 @@ g
 Y
 Y
 Y
-i
+W
 Y
-Y
-x
+G
+u
 S
-Y
-Y
+G
+G
 Y
 g
 g
@@ -3400,9 +3494,9 @@ g
 g
 Y
 Y
-U
-Y
-S
+X
+G
+n
 Y
 Y
 Y
@@ -3434,8 +3528,8 @@ g
 Y
 Y
 Y
-Y
-Y
+G
+G
 a
 U
 Y
@@ -3480,7 +3574,7 @@ g
 Y
 g
 Y
-Y
+S
 Y
 g
 "}
@@ -3510,7 +3604,7 @@ g
 g
 g
 U
-S
+Y
 Y
 Y
 Y
@@ -3607,9 +3701,9 @@ Y
 Y
 Y
 Y
-Y
-Y
-Y
+l
+g
+g
 g
 g
 g
@@ -3635,15 +3729,15 @@ g
 Y
 g
 Y
-S
+Y
 g
 g
 g
 U
 Y
 g
-g
-g
+Y
+Y
 g
 g
 g
@@ -3674,11 +3768,11 @@ Y
 g
 g
 Y
-g
-g
-g
-g
-g
+Y
+Y
+Y
+Y
+Y
 g
 g
 "}
@@ -3700,19 +3794,19 @@ g
 g
 Y
 g
-Y
+S
 g
 g
 Y
 g
-g
 Y
-g
-g
-g
-g
-g
-g
+l
+Y
+Y
+Y
+Y
+Y
+Y
 g
 "}
 (111,1,1) = {"
@@ -3735,15 +3829,15 @@ Y
 g
 Y
 g
-g
-Y
-g
-g
 Y
 Y
 g
-g
-g
+Y
+t
+Y
+l
+B
+T
 g
 g
 g
@@ -3767,16 +3861,16 @@ g
 Y
 g
 Y
-g
-g
+Y
+U
 Y
 g
-g
+T
 M
 Y
-Y
-Y
-g
+I
+I
+j
 g
 g
 g
@@ -3801,15 +3895,15 @@ Y
 g
 Y
 g
+Y
+Y
 g
-Y
-g
-g
-Y
-Y
-Y
-Y
-Y
+j
+I
+I
+I
+B
+B
 A
 g
 g
@@ -3838,12 +3932,12 @@ g
 Y
 g
 g
-Y
-A
-A
-A
-A
-A
+B
+B
+B
+B
+B
+B
 A
 g
 "}
@@ -3868,14 +3962,14 @@ g
 Y
 g
 g
-Y
+g
 g
 A
-A
-A
-t
-A
-N
+B
+B
+B
+B
+C
 A
 A
 g
@@ -3903,12 +3997,12 @@ g
 g
 g
 A
-A
-A
-t
-t
-t
-A
+B
+B
+k
+B
+B
+O
 A
 g
 g
@@ -3933,15 +4027,15 @@ Y
 g
 Y
 g
-Y
 A
 A
 A
-t
-t
-H
-t
-t
+z
+B
+B
+E
+h
+B
 A
 g
 g
@@ -3966,14 +4060,14 @@ Y
 g
 Y
 g
-U
+z
 A
 A
-A
-A
-t
-t
-t
+z
+z
+B
+B
+B
 A
 A
 g
@@ -4003,12 +4097,12 @@ g
 A
 A
 A
-N
+C
+B
+B
 A
-t
 A
-A
-A
+z
 g
 g
 "}
@@ -4032,12 +4126,12 @@ Y
 g
 Y
 U
-g
+j
 A
 A
 A
 A
-A
+B
 A
 A
 A
@@ -4064,8 +4158,8 @@ Y
 Y
 g
 Y
-Y
-U
+s
+j
 N
 A
 A
@@ -4098,7 +4192,7 @@ U
 g
 Y
 Y
-Y
+j
 A
 g
 g
