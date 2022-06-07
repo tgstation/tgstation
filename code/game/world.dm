@@ -340,6 +340,9 @@ GLOBAL_VAR(restart_counter)
 	if (features)
 		s += ": [jointext(features, ", ")]"
 
+	s += "<br>Round time: <b>[gameTimestamp("hh:mm")]</b>"
+	s += "<br>Alert level: <b>[capitalize(get_security_level())]</b>"
+
 	status = s
 
 /world/proc/update_hub_visibility(new_visibility)
