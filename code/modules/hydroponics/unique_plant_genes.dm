@@ -83,7 +83,7 @@
 
 	if(isobj(target))
 		var/obj/object_target = target
-		if(!(object_target & CAN_BE_HIT))
+		if(!(object_target.obj_flags & CAN_BE_HIT))
 			return
 
 	INVOKE_ASYNC(src, .proc/after_attack_effect, source, target, user)

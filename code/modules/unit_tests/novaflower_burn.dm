@@ -12,7 +12,8 @@
 	var/initial_force = weapon.force
 	// Start by having the novaflower equipped to an attacker's hands
 	// They are not wearing botany gloves (have plant protection), so they should take damage = the flower's force.
-	botanist.put_in_active_hand(weapon)
+	weapon.attack_hand(botanist)
+	TEST_ASSERT_EQUAL(botanist.get_active_held_item(), weapon, "The botanist failed to pick up [weapon].")
 	TEST_ASSERT_EQUAL(botanist.getFireLoss(), weapon.force, "The botanist picked up [weapon] with their bare hands, and took an incorrect amount of fire damage.")
 
 	// Heal our attacker for easy comparison later
