@@ -611,7 +611,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/put_in_hands_async(mob/toshow, obj/item/toremove)
 	if(!toshow.put_in_hands(toremove))
 		if(!silent)
-			to_chat(toshow, span_notice("You fumble for [to_remove] and it falls on the floor."))
+			to_chat(toshow, span_notice("You fumble for [toremove] and it falls on the floor."))
 		return TRUE
 
 /datum/storage/proc/close_distance(datum/source)
