@@ -55,13 +55,14 @@
 	RegisterSignal(our_plant, COMSIG_ITEM_AFTERATTACK, .proc/after_plant_attack)
 
 /// Signal proc for [COMSIG_ITEM_ATTACK] that allows for effects on attack
-/datum/plant_gene/trait/attack/proc/on_plant_attack(obj/item/our_plant, mob/living/target, mob/living/user)
+/datum/plant_gene/trait/attack/proc/on_plant_attack(obj/item/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/attack_effect, our_plant, target, user)
+	INVOKE_ASYNC(src, .proc/attack_effect, source, target, user)
 
 /*
  * Effects done when we hit people with our plant, ON attack.
+ * Override on a per-plant basis.
  *
  * our_plant - our plant, that we're attacking with
  * user - the person who is attacking with the plant
@@ -71,7 +72,7 @@
 	return
 
 /// Signal proc for [COMSIG_ITEM_AFTERATTACK] that allows for effects after an attack is done
-/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
 
 	if(!proximity_flag)
@@ -85,16 +86,19 @@
 		if(!(object_target & CAN_BE_HIT))
 			return
 
-	INVOKE_ASYNC(src, .proc/after_attack_effect, our_plant, target, user)
+	INVOKE_ASYNC(src, .proc/after_attack_effect, source, target, user)
 
 /*
  * Effects done when we hit people with our plant, AFTER the attack is done.
+ * Extend on a per-plant basis.
  *
  * our_plant - our plant, that we're attacking with
  * user - the person who is attacking with the plant
  * target - the atom which is attacked by the plant
  */
 /datum/plant_gene/trait/attack/proc/after_attack_effect(obj/item/our_plant, atom/target, mob/living/user)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!degrades_after_hit)
 		return
 
@@ -169,17 +173,16 @@
 	our_plant.AddElement(/datum/element/plant_backfire, cancel_action_on_backfire, traits_to_check, genes_to_check)
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/on_backfire)
 
-/*
- * The backfire effect. Override with plant-specific effects.
- *
- * user - the person who is carrying the plant
- * our_plant - our plant
- */
-/datum/plant_gene/trait/backfire/proc/on_backfire(obj/item/our_plant, mob/living/carbon/user)
+/// Signal proc for [COMSIG_PLANT_ON_BACKFIRE] that causes the backfire effect.
+/datum/plant_gene/trait/backfire/proc/on_backfire(obj/item/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/backfire_effect)
+	INVOKE_ASYNC(src, .proc/backfire_effect, source, user)
 
+/**
+ * The actual backfire effect on the user.
+ * Override with plant-specific effects.
+ */
 /datum/plant_gene/trait/backfire/proc/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	return
 
