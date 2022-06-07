@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/part/Destroy()
 	if(main_part)
-		main_part = null
+		qdel(main_part)
 	return ..()
 
 /obj/machinery/gravity_generator/part/attackby(obj/item/weapon, mob/user, params)
