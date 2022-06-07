@@ -38,6 +38,9 @@
 /datum/element/plant_backfire/proc/attack_safety_check(obj/item/source, atom/target, mob/user)
 	SIGNAL_HANDLER
 
+	// Covers stuff like tk, since we aren't actually touching the plant.
+	if(!user.is_holding(source))
+		return
 	if(!backfire(source, user))
 		return
 
@@ -64,6 +67,8 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/thrower = arguments[4] // the 4th arg = the mob throwing our item
+	if(!thrower.is_holding(source))
+		return
 	if(!backfire(source, thrower))
 		return
 
@@ -98,11 +103,6 @@
  */
 /datum/element/plant_backfire/proc/plant_safety_check(obj/item/plant, mob/living/carbon/user)
 	if(!istype(user))
-		return TRUE
-
-	// Covers stuff like tk.
-	// ...since we aren't actually touching the plant.
-	if(!user.is_holding(plant))
 		return TRUE
 
 	if(HAS_TRAIT(user, TRAIT_PLANT_SAFE))
