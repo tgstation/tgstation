@@ -80,7 +80,7 @@
 	var/list/shitcode = getviewsize(toAdd)  //Backward compatability to account
 	width = shitcode[1] //for a change in how sizes get calculated. we used to include world.view in
 	height = shitcode[2] //this, but it was jank, so I had to move it
-	apply()
+	apply(toAdd)
 
 /datum/view_data/proc/setBoth(wid, hei)
 	width = wid
@@ -103,10 +103,10 @@
 	height += toAdd
 	apply()
 
-/datum/view_data/proc/apply()
-	if(chief.prefs.read_preference(/datum/preference/toggle/widescreen))
+/datum/view_data/proc/apply(forced)
+	if(chief.prefs.read_preference(/datum/preference/toggle/widescreen) && !forced)
 		return
-	chief?.change_view(getView())
+	chief?.change_view(getView(), forced)
 	afterViewChange()
 
 /datum/view_data/proc/supress()
@@ -124,6 +124,7 @@
 	return "[width + temp[1]]x[height + temp[2]]"
 
 /datum/view_data/proc/zoomIn()
+	chief.SetWindowIconSize(chief.prefs?.read_preference(/datum/preference/numeric/icon_size))
 	resetToDefault()
 	animate(chief, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 

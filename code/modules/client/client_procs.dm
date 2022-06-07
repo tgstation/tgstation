@@ -1038,7 +1038,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				if("Me")
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=me")
 
-/client/proc/change_view(new_size)
+/client/proc/change_view(new_size, forced)
 	if((!prefs?.read_preference(/datum/preference/toggle/widescreen)))
 		if (isnull(new_size))
 			CRASH("change_view called without argument.")
@@ -1052,6 +1052,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		apply_clickcatcher()
 		mob?.reload_fullscreen()
+		if(forced)
+			view = new_size
 
 /client/proc/generate_clickcatcher()
 	if(!void)
