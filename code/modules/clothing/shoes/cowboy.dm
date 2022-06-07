@@ -12,7 +12,7 @@
 	. = ..()
 	if(prob(2))
 		//There's a snake in my boot
-		new/mob/living/simple_animal/hostile/retaliate/snake(src)
+		new /mob/living/simple_animal/hostile/retaliate/snake(src)
 
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
