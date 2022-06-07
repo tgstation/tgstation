@@ -179,7 +179,7 @@
 
 /area/ruin/space/has_grav/deepstorage/pharmacy
 	name = "\improper Deep Storage Pharmacy"
-	
+
 //Ruin of Abandoned Zoo
 
 /area/ruin/space/has_grav/abandonedzoo
@@ -303,60 +303,60 @@
 	name = "Delta Station Biolab"
 	icon_state = "os_delta_biolab"
 
-//DERELICT
+//KS13, aka TheDerelict.dmm
 
-/area/ruin/space/derelict
+/area/ruin/space/ks13
 	name = "\improper Derelict Station"
 
-/area/ruin/space/derelict/hallway/primary
+/area/ruin/space/ks13/hallway/primary
 	name = "\improper Derelict Primary Hallway"
 
-/area/ruin/space/derelict/hallway/secondary
+/area/ruin/space/ks13/hallway/secondary
 	name = "\improper Derelict Secondary Hallway"
 
-/area/ruin/space/derelict/hallway/primary/port
+/area/ruin/space/ks13/hallway/port
 	name = "\improper Derelict Port Hallway"
 
-/area/ruin/space/derelict/arrival
+/area/ruin/space/ks13/arrival
 	name = "\improper Derelict Arrival Centre"
 
-/area/ruin/space/derelict/storage/equipment
+/area/ruin/space/ks13/storage/equipment
 	name = "\improper Derelict Equipment Storage"
 
-/area/ruin/space/derelict/bridge
+/area/ruin/space/ks13/bridge
 	name = "\improper Derelict Control Room"
 
-/area/ruin/space/derelict/bridge/access
+/area/ruin/space/ks13/bridge/access
 	name = "\improper Derelict Control Room Access"
 
-/area/ruin/space/derelict/bridge/ai_upload
+/area/ruin/space/ks13/bridge/ai_upload
 	name = "\improper Derelict Computer Core"
 
-/area/ruin/space/derelict/solar_control
+/area/ruin/space/ks13/solar_control
 	name = "\improper Derelict Solar Control"
 
-/area/ruin/space/derelict/se_solar
+/area/ruin/space/ks13/se_solar
 	name = "\improper South East Solars"
 
-/area/ruin/space/derelict/medical
+/area/ruin/space/ks13/medical
 	name = "\improper Derelict Medbay"
 
-/area/ruin/space/derelict/medical/chapel
+/area/ruin/space/ks13/medical/chapel
 	name = "\improper Derelict Chapel"
 
-/area/ruin/solars/derelict_starboard
+/area/ruin/solars/ks13
 	name = "\improper Derelict Starboard Solar Array"
 
-/area/ruin/solars/derelict_aft
+/area/ruin/solars/ks13/solars_aft
 	name = "\improper Derelict Aft Solar Array"
 
-/area/ruin/space/derelict/singularity_engine
+/area/ruin/space/ks13/singularity_engine
 	name = "\improper Derelict Singularity Engine"
 
-/area/ruin/space/derelict/gravity_generator
+/area/ruin/space/ks13/gravity_generator
 	name = "\improper Derelict Gravity Generator Room"
 
-/area/ruin/space/derelict/atmospherics
+/area/ruin/space/ks13/atmospherics
 	name = "Derelict Atmospherics"
 
 //DJSTATION
