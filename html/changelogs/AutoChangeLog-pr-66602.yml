@@ -1,0 +1,7 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - qol: "Plumbing now supports 5 layers."
+  - qol: "The plumbing constructor can now place ducts and change layer via scroll wheel."
+  - bugfix: "Bunch of cryptic failures and errors fixed in placing plumbing."
+  - imageadd: "New plumbing duct sprites."
