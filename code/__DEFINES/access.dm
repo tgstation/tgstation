@@ -309,8 +309,8 @@
 	ACCESS_HOP, \
 	ACCESS_CE, \
 	ACCESS_CMO, \
-	ACCESS_RD, \
 	ACCESS_QM, \
+	ACCESS_RD, \
 )
 
 /// Captains private rooms. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN)
