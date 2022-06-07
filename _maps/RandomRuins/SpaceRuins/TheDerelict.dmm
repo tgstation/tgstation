@@ -2903,6 +2903,20 @@
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"pw" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/turbine_compressor{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/circuitboard/machine/turbine_rotor{
+	pixel_y = 4
+	},
+/obj/item/circuitboard/machine/turbine_stator{
+	pixel_x = -4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/derelict/bridge/ai_upload)
 "pM" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -8837,7 +8851,7 @@ ax
 ax
 bo
 by
-by
+pw
 by
 bg
 ax

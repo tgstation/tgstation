@@ -1,6 +1,6 @@
 // A mob which only moves when it isn't being watched by living beings.
 
-/mob/living/simple_animal/hostile/statue
+/mob/living/simple_animal/hostile/netherworld/statue
 	name = "statue" // matches the name of the statue with the flesh-to-stone spell
 	desc = "An incredibly lifelike marble carving. Its eyes seem to follow you..." // same as an ordinary statue with the added "eye following you" description
 	icon = 'icons/obj/statue.dmi'
@@ -56,34 +56,37 @@
 
 // No movement while seen code.
 
-/mob/living/simple_animal/hostile/statue/Initialize(mapload, mob/living/creator)
+/mob/living/simple_animal/hostile/netherworld/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
 	// Give spells
-	LAZYINITLIST(mob_spell_list)
-	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
-	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
-	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
-	var/datum/action/innate/creature/teleport/teleport = new(src)
-	teleport.Grant(src)
+	var/obj/effect/proc_holder/spell/aoe_turf/flicker_lights/flicker = new(src)
+	var/obj/effect/proc_holder/spell/aoe_turf/blindness/blind = new(src)
+	var/obj/effect/proc_holder/spell/targeted/night_vision/night_vision = new(src)
+	AddSpell(flicker)
+	AddSpell(blind)
+	AddSpell(night_vision)
 
 	// Set creator
 	if(creator)
 		src.creator = creator
 
-/mob/living/simple_animal/hostile/statue/med_hud_set_health()
+/mob/living/simple_animal/hostile/netherworld/statue/add_cell_sample()
+	return
+
+/mob/living/simple_animal/hostile/netherworld/statue/med_hud_set_health()
 	return //we're a statue we're invincible
 
-/mob/living/simple_animal/hostile/statue/med_hud_set_status()
+/mob/living/simple_animal/hostile/netherworld/statue/med_hud_set_status()
 	return //we're a statue we're invincible
 
-/mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
+/mob/living/simple_animal/hostile/netherworld/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))
 		if(client)
 			to_chat(src, span_warning("You cannot move, there are eyes on you!"))
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/statue/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/netherworld/statue/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(!client && target) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()
@@ -94,7 +97,7 @@
 				LoseTarget()
 				GiveTarget(watching)
 
-/mob/living/simple_animal/hostile/statue/AttackingTarget()
+/mob/living/simple_animal/hostile/netherworld/statue/AttackingTarget()
 	if(can_be_seen(get_turf(loc)))
 		if(client)
 			to_chat(src, span_warning("You cannot attack, there are eyes on you!"))
@@ -102,60 +105,31 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/hostile/statue/DestroyPathToTarget()
+/mob/living/simple_animal/hostile/netherworld/statue/DestroyPathToTarget()
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animal/hostile/statue/face_atom()
+/mob/living/simple_animal/hostile/netherworld/statue/face_atom()
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animal/hostile/statue/IsVocal() //we're a statue, of course we can't talk.
+/mob/living/simple_animal/hostile/netherworld/statue/IsVocal() //we're a statue, of course we can't talk.
 	return FALSE
-
-/mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
-	if(!cannot_be_seen)
-		return null
-	// Check for darkness
-	var/turf/T = get_turf(loc)
-	if(T && destination && T.lighting_object)
-		if(T.get_lumcount()<0.1 && destination.get_lumcount()<0.1) // No one can see us in the darkness, right?
-			return null
-		if(T == destination)
-			destination = null
-
-	// We aren't in darkness, loop for viewers.
-	var/list/check_list = list(src)
-	if(destination)
-		check_list += destination
-
-	// This loop will, at most, loop twice.
-	for(var/atom/check in check_list)
-		for(var/mob/living/M in viewers(world.view + 1, check) - src)
-			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
-				if(!M.is_blind())
-					return M
-		for(var/obj/vehicle/sealed/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
-			for(var/O in M.occupants)
-				var/mob/mechamob = O
-				if(mechamob.client && !mechamob.is_blind())
-					return mechamob
-	return null
 
 // Cannot talk
 
-/mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/living/simple_animal/hostile/netherworld/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	return
 
 // Turn to dust when gibbed
 
-/mob/living/simple_animal/hostile/statue/gib()
+/mob/living/simple_animal/hostile/netherworld/statue/gib()
 	dust()
 
 
 // Stop attacking clientless mobs
 
-/mob/living/simple_animal/hostile/statue/CanAttack(atom/the_target)
+/mob/living/simple_animal/hostile/netherworld/statue/CanAttack(atom/the_target)
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)
@@ -164,7 +138,7 @@
 
 // Don't attack your creator if there is one
 
-/mob/living/simple_animal/hostile/statue/ListTargets()
+/mob/living/simple_animal/hostile/netherworld/statue/ListTargets()
 	. = ..()
 	return . - creator
 
@@ -231,5 +205,5 @@
 				name = "Toggle Nightvision \[ON]"
 		target.update_sight()
 
-/mob/living/simple_animal/hostile/statue/sentience_act()
+/mob/living/simple_animal/hostile/netherworld/statue/sentience_act()
 	faction -= "neutral"

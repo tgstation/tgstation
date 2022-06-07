@@ -144,7 +144,7 @@
 	for(var/trait in mind_traits)
 		ADD_TRAIT(spawned.mind, trait, JOB_TRAIT)
 
-	var/obj/item/organ/liver/liver = spawned.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = spawned.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		for(var/trait in liver_traits)
 			ADD_TRAIT(liver, trait, JOB_TRAIT)

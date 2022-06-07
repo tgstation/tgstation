@@ -202,8 +202,8 @@
 		worn_icon_state = "[base_icon_state]_impregnated"
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
-		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
-			new /obj/item/organ/body_egg/alien_embryo(target)
+		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+			new /obj/item/organ/internal/body_egg/alien_embryo(target)
 			var/turf/T = get_turf(target)
 			log_game("[key_name(target)] was impregnated by a facehugger at [loc_name(T)]")
 
@@ -245,7 +245,7 @@
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
-	if(M.getorgan(/obj/item/organ/alien/hivenode))
+	if(M.getorgan(/obj/item/organ/internal/alien/hivenode))
 		return FALSE
 	var/mob/living/carbon/C = M
 	if(ishuman(C) && !(ITEM_SLOT_MASK in C.dna.species.no_equip))
