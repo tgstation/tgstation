@@ -13,7 +13,9 @@ SUBSYSTEM_DEF(lua)
 	/// A list of all lua states
 	var/list/datum/lua_state/states = list()
 
-	/// A list of open editors, with each key in the list associated with a list of editors
+	/// A list of open editors, with each key in the list associated with a list of editors.
+	/// Tracks which UIs are open for each state so that they can be updated whenever
+	/// code is run in the state.
 	var/list/editors
 
 	var/list/sleeps = list()
@@ -26,15 +28,23 @@ SUBSYSTEM_DEF(lua)
 
 /datum/controller/subsystem/lua/Initialize(start_timeofday)
 	try
+
+		// Initialize the auxtools library
 		AUXTOOLS_CHECK(AUXLUA)
+
+		// Set the wrappers for setting vars and calling procs
 		__lua_set_set_var_wrapper("/proc/wrap_lua_set_var")
 		__lua_set_datum_proc_call_wrapper("/proc/wrap_lua_datum_proc_call")
 		__lua_set_global_proc_call_wrapper("/proc/wrap_lua_global_proc_call")
+
+		// Get the current working directory - we need it to set the LUAU_PATH environment variable
 		var/here = world.shelleo(world.system_type == MS_WINDOWS ? "cd" : "pwd")[SHELLEO_STDOUT]
 		here = replacetext(here, "\n", "")
 		var/last_char = copytext_char(here, -1)
 		if(last_char != "/" && last_char != "\\")
 			here += "/"
+
+		// Read the paths from the config file
 		var/list/lua_path = list()
 		var/list/config_paths = CONFIG_GET(str_list/lua_path)
 		for(var/path in config_paths)
@@ -44,6 +54,7 @@ SUBSYSTEM_DEF(lua)
 		world.SetConfig("env", "LUAU_PATH", jointext(lua_path, ";"))
 		return ..()
 	catch(var/exception/e)
+		// Something went wrong, best not allow the subsystem to run
 		initialized = SSLUA_INIT_FAILED
 		can_fire = FALSE
 		var/time = (REALTIMEOFDAY - start_timeofday) / 10
@@ -77,6 +88,8 @@ SUBSYSTEM_DEF(lua)
 		if("sleep")
 			var/task_index = task_info["index"]
 			var/state_index = 1
+
+			// Get the nth sleep in the sleep list corresponding to the target state
 			for(var/i in 1 to length(sleeps))
 				var/datum/lua_state/sleeping_state = sleeps[i]
 				if(sleeping_state == state)
@@ -85,6 +98,7 @@ SUBSYSTEM_DEF(lua)
 						break
 					state_index++
 		if("yield")
+			// Remove the resumt from the resumt list
 			for(var/i in 1 to length(resumes))
 				var/resume = resumes[i]
 				if(resume["state"] == state && resume["index"] == task_info["index"])
@@ -93,6 +107,8 @@ SUBSYSTEM_DEF(lua)
 	state.kill_task(task_info)
 
 /datum/controller/subsystem/lua/fire(resumed)
+	// Each fire of SSlua awakens every sleeping task in the order they slept,
+	// then resumes every yielded task in the order their resumes were queued
 	if(!resumed)
 		current_run = list("sleeps" = sleeps.Copy(), "resumes" = resumes.Copy())
 		sleeps.Cut()
@@ -131,6 +147,7 @@ SUBSYSTEM_DEF(lua)
 			if(MC_TICK_CHECK)
 				break
 
+	// Update every lua editor TGUI open for each state that had a task awakened or resumed
 	for(var/state in affected_states)
 		var/list/editor_list = editors["\ref[state]"]
 		if(editor_list)

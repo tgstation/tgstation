@@ -37,14 +37,21 @@ GLOBAL_PROTECT(lua_usr)
 	internal_id = __lua_new_state()
 
 /datum/lua_state/proc/handle_result(result)
+
+	// If this is a sleep, we need to add it to the subsystem's list of sleeps to run in the next fire
 	if(result["status"] == "sleeping")
 		SSlua.sleeps += src
+		// We only want to add the result to the state log if there is any meaningful information
+		// (particularly chunk source code), otherwise we'll get an unnecessarily flooded log at best
+		// or an OOM error at worst
 		if(!result["chunk"])
 			return
 	log += list(result)
+	// We want to return the return value(s) of executed code
 	if(result["status"] == "finished" || result["status"] == "yielded")
 		if(!length(result["param"]))
 			return
+		// Is there a meaningful difference between returning multiple values and returning a single list?
 		else if(length(result["param"]) == 1)
 			return result["param"][1]
 		else
@@ -53,12 +60,15 @@ GLOBAL_PROTECT(lua_usr)
 /datum/lua_state/proc/load_script(script)
 	message_admins("[key_name(usr)] executed [length(script)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(src, log.len+1)]")
 	log_lua("[key_name(usr)] executed the following lua code:\n[script]")
+
 	GLOB.IsLuaCall = TRUE
 	var/tmp_usr = GLOB.lua_usr
 	GLOB.lua_usr = usr
 	var/result = __lua_load(internal_id, script)
 	GLOB.IsLuaCall = FALSE
 	GLOB.lua_usr = tmp_usr
+
+	// Internal errors unrelated to the code being executed are returned as text rather than lists
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "input")
 	result["chunk"] = script
@@ -69,12 +79,14 @@ GLOBAL_PROTECT(lua_usr)
 	var/msg = "[key_name(usr)] called the lua function \"[function]\" with arguments: [english_list(call_args)]"
 	message_admins("[msg] [ADMIN_LUAVIEW(src)]")
 	log_lua(msg)
+
 	var/tmp_usr = GLOB.lua_usr
 	GLOB.lua_usr = usr
 	GLOB.IsLuaCall = TRUE
 	var/result = __lua_call(internal_id, function, call_args)
 	GLOB.IsLuaCall = FALSE
 	GLOB.lua_usr = tmp_usr
+
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	return handle_result(result)
@@ -83,6 +95,7 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.IsLuaCall = TRUE
 	var/result = __lua_awaken(internal_id)
 	GLOB.IsLuaCall = FALSE
+
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "An attempted awaken")
 	return handle_result(result)
@@ -93,9 +106,11 @@ GLOBAL_PROTECT(lua_usr)
 	var/msg = "[key_name(usr)] resumed a lua coroutine with arguments: [english_list(call_args)]"
 	message_admins("[msg] [ADMIN_LUAVIEW(src)]")
 	log_lua(msg)
+
 	GLOB.IsLuaCall = TRUE
 	var/result = __lua_resume(internal_id, index, call_args)
 	GLOB.IsLuaCall = FALSE
+
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "An attempted resume")
 	return handle_result(result)
