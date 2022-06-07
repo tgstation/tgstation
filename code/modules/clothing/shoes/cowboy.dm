@@ -55,7 +55,7 @@
 /obj/item/clothing/shoes/cowboy/container_resist_act(mob/living/user)
 	if(!do_after(user, 10, target = user))
 		return
-	user.forceMove(src.drop_location())
+	user.forceMove(drop_location())
 
 /obj/item/clothing/shoes/cowboy/white
 	name = "white cowboy boots"
