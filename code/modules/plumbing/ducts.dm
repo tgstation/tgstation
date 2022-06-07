@@ -36,10 +36,8 @@ All the important duct code:
 	var/active = TRUE
 	///track ducts we're connected to. Mainly for ducts we connect to that we normally wouldn't, like different layers and colors, for when we regenerate the ducts
 	var/list/neighbours = list()
-	///wheter we just unanchored or drop whatever is in the variable. either is safe
+	///what stack to drop when disconnected. Must be /obj/item/stack/ducts or a subtype
 	var/drop_on_wrench = /obj/item/stack/ducts
-	///Copy color and layer to drop_on_wrench when created. Must be /obj/item/stack/ducts or a subtype if used.
-	var/customize_drop_on_wrench = TRUE
 
 /obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct = null, layer_of_duct = null, force_connects, force_ignore_colors)
 	. = ..()
@@ -159,10 +157,9 @@ All the important duct code:
 	update_appearance()
 	if(ispath(drop_on_wrench))
 		var/obj/item/stack/ducts/duct_stack = new drop_on_wrench(drop_location())
-		if(customize_drop_on_wrench)
-			duct_stack.duct_color = GLOB.pipe_color_name[duct_color] || DUCT_COLOR_OMNI
-			duct_stack.duct_layer = GLOB.plumbing_layer_names["[duct_layer]"] || GLOB.plumbing_layer_names["[DUCT_LAYER_DEFAULT]"]
-			duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
+		duct_stack.duct_color = GLOB.pipe_color_name[duct_color] || DUCT_COLOR_OMNI
+		duct_stack.duct_layer = GLOB.plumbing_layer_names["[duct_layer]"] || GLOB.plumbing_layer_names["[DUCT_LAYER_DEFAULT]"]
+		duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 		drop_on_wrench = null
 	if(!QDELING(src))
 		qdel(src)
@@ -364,8 +361,11 @@ All the important duct code:
 			to_chat(user, span_warning("The duct must be unanchored before it can be picked up."))
 			return
 
-		add(1)
+		// Turn into a duct stack and then merge to the in-hand stack.
+		var/obj/item/stack/ducts/stack = new(duct.loc, 1, FALSE)
 		qdel(duct)
+		if(stack.can_merge(src))
+			stack.merge(src)
 		return
 
 	check_attach_turf(target)
