@@ -208,6 +208,7 @@
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
 	var/list/data = list()
 	data["unclaimedPoints"] = points
+	data["ore_silo"] = materials.silo
 
 	data["materials"] = list()
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -250,6 +251,9 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
+			if(!materials.silo)
+				to_chat(usr, span_warning("Mining points undistributable while unsynced to an ore silo."))
+				return
 			var/obj/item/card/id/user_id_card
 			if(isliving(usr))
 				var/mob/living/user = usr

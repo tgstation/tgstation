@@ -7,6 +7,7 @@ export const OreRedemptionMachine = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     unclaimedPoints,
+    ore_silo,
     materials,
     alloys,
     diskDesigns,
@@ -23,6 +24,12 @@ export const OreRedemptionMachine = (props, context) => {
             This machine only accepts ore.<br />
             Gibtonite and Slag are not accepted.
           </BlockQuote>
+          {!ore_silo && (
+            <BlockQuote mb={1}>
+              Point claiming impossible.<br />
+              Reason: Ore silo link missing.
+            </BlockQuote>
+          )}
           <Box>
             <Box inline color="label" mr={1}>
               Unclaimed points:
@@ -31,7 +38,7 @@ export const OreRedemptionMachine = (props, context) => {
             <Button
               ml={2}
               content="Claim"
-              disabled={unclaimedPoints === 0}
+              disabled={unclaimedPoints === 0 || !ore_silo}
               onClick={() => act('Claim')} />
           </Box>
         </Section>
