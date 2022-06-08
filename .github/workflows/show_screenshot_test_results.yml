@@ -20,6 +20,8 @@ jobs:
         with:
           repository: "Mothblocks/tgstation"
           ref: "screenshot-tests"
+      - name: Install packages
+        run: npm install node-fetch
       - name: Show screenshot test results
         uses: actions/github-script@v6
         env:
