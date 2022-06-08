@@ -48,9 +48,3 @@ GLOBAL_LIST_INIT(valid_icon_sizes, list(32, 48, 64, 96, 128))
 	mob?.reload_fullscreen()
 	// We do this aswell because things tend to be buggy if not. Mostly lighting and sprite origin issues.
 	change_view(getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
-
-/// Used in skin.dmf to scale on hotkeys.
-/client/verb/ScaleHotkey(number as num)
-	var/lastsize = text2num(winget(src, "mapwindow.map", "icon-size"))
-	var/newpref = lastsize + number
-	SetWindowIconSize(newpref)

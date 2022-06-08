@@ -1213,3 +1213,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
+
+/// Used in skin.dmf to scale on hotkeys.
+/client/verb/ScaleHotkey(number as num)
+	var/lastsize = text2num(winget(src, "mapwindow.map", "icon-size"))
+	var/newpref = lastsize + number
+	SetWindowIconSize(newpref)
