@@ -57861,10 +57861,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"unO" = (
-/obj/effect/mapping_helpers/airlock/access/all/supply/shipping,
-/turf/open/space/basic,
-/area/space)
 "unP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -71263,7 +71259,7 @@ aaa
 aaa
 aaa
 aaa
-unO
+aaa
 aaa
 aaa
 aaa
