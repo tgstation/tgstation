@@ -441,13 +441,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		shake_everyone()
 
 /obj/machinery/gravity_generator/main/proc/blackout()
-	charging_state = POWER_IDLE
-	on = FALSE
 	charge_count = 0
 	breaker = FALSE
 	set_power()
 	disable()
-	investigate_log("has turned down by blackout event.", INVESTIGATE_GRAVITY)
+	investigate_log("was turned off by blackout event or a gravity anomaly detonation.", INVESTIGATE_GRAVITY)
 
 // Misc
 
