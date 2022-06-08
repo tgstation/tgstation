@@ -70,7 +70,7 @@
 	. = ..()
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
-		. += span_notice("It is considered as [lowertext(types.Join(", "))]")
+		. += span_notice("It is [lowertext(english_list(types))].")
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/MakeEdible()
