@@ -2392,7 +2392,6 @@
 /area/station/science/server)
 "aEr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/directional/east,
 /obj/machinery/conveyor/inverted{
 	dir = 10;
 	id = "cargoload"
@@ -7820,18 +7819,6 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"bZR" = (
-/obj/structure/cable,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
-/obj/machinery/door/poddoor{
-	id = "cargounload";
-	name = "Supply Dock Unloading Door"
-	},
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "bZX" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -9821,7 +9808,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "cCj" = (
-/obj/machinery/status_display/supply,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
 /area/station/cargo/storage)
 "cCn" = (
@@ -11634,6 +11621,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "ddv" = (
@@ -13588,13 +13576,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/science/research)
-"dHK" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/pods{
-	name = "MINING POD"
-	},
-/turf/open/floor/plating,
-/area/station/cargo/miningoffice)
 "dHM" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/red{
@@ -14724,10 +14705,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "ebf" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/station/cargo/miningoffice)
 "ebg" = (
 /obj/machinery/light/directional/east,
@@ -18428,7 +18407,7 @@
 /obj/item/folder/blue,
 /obj/item/clothing/under/rank/centcom/commander,
 /obj/item/clothing/head/centhat{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0);
+	armor = list("melee"=0,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0);
 	desc = "A replica hat of a Central Commander's attire. It has a small tag on it saying, 'It's good to be emperor.'";
 	name = "Replica CentCom hat"
 	},
@@ -21051,8 +21030,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -30429,8 +30408,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -31545,7 +31524,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing=15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5
@@ -32134,6 +32113,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "iNg" = (
@@ -33269,6 +33249,14 @@
 /obj/item/toy/figure/assistant,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
+"jcD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "jcL" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
@@ -40065,7 +40053,6 @@
 /area/station/maintenance/port/aft)
 "kSZ" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
 	},
@@ -45514,12 +45501,6 @@
 /obj/effect/landmark/start/botanist,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"mpJ" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "mpL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/half{
@@ -48779,7 +48760,6 @@
 /turf/closed/wall,
 /area/station/maintenance/starboard/aft)
 "njF" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -50683,7 +50663,6 @@
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
 "nKd" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -52408,7 +52387,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "ofm" = (
-/obj/structure/cable,
 /obj/machinery/light/directional/south,
 /obj/machinery/status_display/supply{
 	pixel_y = -32
@@ -53301,12 +53279,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"otS" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "otX" = (
 /obj/structure/chair,
 /obj/effect/landmark/start/assistant,
@@ -54981,7 +54953,7 @@
 /obj/item/folder/red,
 /obj/item/toy/gun,
 /obj/item/clothing/head/beret/sec{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0);
+	armor = list("melee"=0,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0);
 	desc = "A replica beret resembling that of a special operations officer under Nanotrasen.";
 	name = "replica officer's beret"
 	},
@@ -60256,6 +60228,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "qkm" = (
@@ -61089,7 +61062,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
 "qvC" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/supply{
@@ -63506,6 +63478,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "rhy" = (
@@ -66105,7 +66078,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/item/radio/intercom/directional/west,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "rSJ" = (
@@ -70276,7 +70249,6 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
 "sWw" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -72819,11 +72791,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"tDH" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "tDL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/red{
@@ -75271,13 +75238,12 @@
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "uhC" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -76994,7 +76960,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "uIm" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -77915,11 +77880,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/warden)
-"uUz" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/cargo/miningoffice)
 "uUA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -85765,7 +85725,6 @@
 /turf/closed/wall/r_wall,
 /area/station/medical/virology)
 "wYJ" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -87108,6 +87067,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/caution/stand_clear,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "xqW" = (
@@ -89426,10 +89386,10 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/status_display/ai/directional/east,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "xUL" = (
@@ -135915,7 +135875,7 @@ iGd
 iGd
 apY
 awl
-otS
+ivt
 iHf
 ggo
 oSJ
@@ -136171,7 +136131,7 @@ egU
 jPz
 egU
 aEr
-awl
+jcD
 uIm
 iHf
 xdE
@@ -136415,21 +136375,21 @@ axr
 vQh
 hIs
 kic
+tDx
+tDx
 jrp
-tDH
-tDH
-tDH
+tDx
 xDW
 fKx
-tDx
+jrp
 ipu
 sSh
-tDH
-tDH
-tDH
-tDH
-tDH
-tDH
+tDx
+jrp
+tDx
+tDx
+jrp
+tDx
 cez
 sNy
 pDD
@@ -136675,13 +136635,13 @@ kic
 aad
 aad
 aad
-mpJ
+tDx
 xEO
 bti
 cCj
 bti
 sJi
-mpJ
+tDx
 aad
 aad
 aad
@@ -136693,7 +136653,7 @@ buT
 jCx
 iTM
 tDU
-rje
+iHf
 jfO
 jBM
 xVv
@@ -136701,7 +136661,7 @@ qkk
 rht
 rgC
 tDD
-uUz
+rWo
 aad
 aaa
 aaa
@@ -136932,13 +136892,13 @@ kic
 aaa
 aaa
 aaa
-tDH
-bZR
+tDx
+xDW
 uhC
-tDH
+tDx
 uhC
 bFy
-tDH
+tDx
 aaa
 aaa
 aaa
@@ -136950,15 +136910,15 @@ jGR
 eGI
 jGR
 ear
-rje
-uUz
-uUz
-dHK
+iHf
+rWo
+rWo
+rWo
 ddr
 rWo
-uUz
-uUz
-uUz
+rWo
+rWo
+rWo
 aad
 aaa
 aaa
@@ -137207,13 +137167,13 @@ iwW
 uni
 oif
 hqC
-rje
+iHf
 aad
-uUz
+rWo
 juo
 iNd
 fvC
-uUz
+rWo
 aad
 aad
 aad
@@ -137723,11 +137683,11 @@ rSD
 rje
 aad
 aaa
-uUz
-uUz
+rWo
+rWo
 dqv
-uUz
-uUz
+rWo
+rWo
 aaa
 aaa
 aaa

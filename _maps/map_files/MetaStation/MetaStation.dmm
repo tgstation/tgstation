@@ -7061,6 +7061,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"cEE" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall,
+/area/station/cargo/storage)
 "cFa" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
@@ -24842,8 +24846,8 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "iSE" = (
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -52519,8 +52523,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "sxq" = (
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -67720,11 +67724,6 @@
 "xKK" = (
 /turf/closed/wall,
 /area/station/science/research)
-"xLq" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum/external,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "xLu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -85543,13 +85542,13 @@ lMJ
 lMJ
 lMJ
 lMJ
-xLq
+hxo
 aSZ
 iSE
-xLq
+hxo
 iSE
 deU
-xLq
+hxo
 lMJ
 lMJ
 lMJ
@@ -85803,7 +85802,7 @@ aaa
 hxo
 bnA
 oDp
-hxo
+cEE
 xvv
 fyz
 hxo
@@ -86060,7 +86059,7 @@ hxo
 hxo
 uor
 sxq
-hxo
+cbz
 sxq
 dZB
 hxo

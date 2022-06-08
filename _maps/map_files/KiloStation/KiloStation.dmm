@@ -8093,6 +8093,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
+"cru" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall,
+/area/station/cargo/storage)
 "cry" = (
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -11154,12 +11158,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
-"dmS" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/caution/stand_clear,
-/obj/structure/extinguisher_cabinet/directional/east,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/starboard)
 "dmU" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/pale/style_random,
@@ -12466,7 +12464,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Cargo Lockers";
 	name = "cargo camera";
@@ -17693,6 +17690,10 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/status_display/supply{
+	pixel_x = 32;
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "ffd" = (
@@ -23969,7 +23970,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/spawner/random/structure/crate,
 /mob/living/simple_animal/chicken{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0);
+	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_tox"=0,"max_tox"=1,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0);
 	desc = "A timeless classic.";
 	name = "Kentucky"
 	},
@@ -30730,10 +30731,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32;
-	pixel_y = -32
-	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "iwL" = (
@@ -34094,7 +34091,6 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/airalarm/directional/east,
 /obj/machinery/camera/directional/east{
 	c_tag = "Cargo Ramps";
 	name = "cargo camera";
@@ -37881,6 +37877,7 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "kEm" = (
@@ -38080,7 +38077,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "kHh" = (
@@ -44900,6 +44896,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "mCO" = (
@@ -47402,8 +47399,8 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "nnR" = (
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -48423,11 +48420,6 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
-"nCn" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum/external,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "nCs" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -48562,8 +48554,8 @@
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "nDU" = (
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -48732,7 +48724,7 @@
 "nFN" = (
 /obj/machinery/igniter/incinerator_ordmix,
 /mob/living/simple_animal/chicken{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0);
+	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_tox"=0,"max_tox"=1,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0);
 	desc = "A timeless classic.";
 	name = "Kentucky"
 	},
@@ -56217,23 +56209,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
-"pOc" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "QMLoad";
-	name = "off ramp"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/bot,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32;
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark,
-/area/station/cargo/storage)
 "pOo" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -64784,7 +64759,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "A station exclusive. Consumption may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 30);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=30);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
@@ -71241,8 +71216,8 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "udT" = (
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -75306,7 +75281,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/light/directional/south,
 /obj/machinery/status_display/supply{
 	pixel_y = -32
 	},
@@ -79727,8 +79701,8 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "wsz" = (
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -81379,6 +81353,7 @@
 /obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "wOb" = (
@@ -82123,10 +82098,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/status_display/supply{
-	pixel_x = 32;
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -83599,9 +83570,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box/corners,
-/obj/machinery/status_display/supply{
-	pixel_x = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/starboard)
 "xuM" = (
@@ -123415,7 +123384,7 @@ fkw
 hDK
 ege
 fak
-dmS
+ykP
 xcV
 gUK
 eqz
@@ -127786,7 +127755,7 @@ acm
 aaa
 acm
 izY
-pOc
+wer
 eHJ
 fCb
 ijH
@@ -128045,7 +128014,7 @@ qJs
 lKq
 iSb
 wsz
-hOc
+lKq
 udT
 tey
 tOy
@@ -128302,7 +128271,7 @@ aaa
 hOc
 hBg
 srA
-hOc
+cru
 sls
 hLO
 hOc
@@ -128559,7 +128528,7 @@ aaa
 bBV
 iSb
 nDU
-nCn
+hOc
 nnR
 tey
 gkf

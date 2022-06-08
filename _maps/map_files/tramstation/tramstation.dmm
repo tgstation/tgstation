@@ -11138,8 +11138,8 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "dKh" = (
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -59907,8 +59907,8 @@
 /turf/open/floor/eighties,
 /area/station/commons/fitness/recreation/entertainment)
 "uik" = (
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
@@ -61781,6 +61781,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"uOe" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Supply Door Airlock"
+	},
+/turf/open/space/basic,
+/area/space)
 "uOg" = (
 /obj/machinery/computer/atmos_control/carbon_tank{
 	dir = 8
@@ -77786,7 +77792,7 @@ ajc
 ajc
 ajc
 ajc
-ajc
+uOe
 ajc
 ajc
 ajc
