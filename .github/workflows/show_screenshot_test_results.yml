@@ -20,10 +20,12 @@ jobs:
         with:
           repository: "Mothblocks/tgstation"
           ref: "screenshot-tests"
-      - name: Script test
+      - name: Show screenshot test results
         uses: actions/github-script@v6
+        env:
+          # FILE_HOUSE_
         with:
-          script: "require('./tools/ci/show_screenshot_test_results.js')({ github, context })"
+          script: "require('./tools/ci/show_screenshot_test_results.js')({ github, context, exec })"
       # - name: Download artifact
       #   uses: actions/github-script@v3.1.0
       #   id: dl_results
