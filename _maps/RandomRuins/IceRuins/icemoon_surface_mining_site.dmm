@@ -41,7 +41,7 @@
 /turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors/nospawn)
 "j" = (
-/obj/structure/sink/kitchen,
+/obj/structure/sink/kitchen/directional/south,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "k" = (

@@ -33,13 +33,35 @@
 	var/can_refill = TRUE
 	/// Whether to allow players to toggle the water reclaimer.
 	var/can_toggle_refill = TRUE
+	///How far to shift the sprite when placing.
+	var/pixel_shift = 16
 
-/obj/machinery/shower/Initialize(mapload)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
+
+/obj/machinery/shower/Initialize(mapload, ndir)
 	. = ..()
+
+	if(ndir)
+		dir = ndir
+
+	switch(dir)
+		if(NORTH)
+			pixel_x = 0
+			pixel_y = -pixel_shift
+		if(SOUTH)
+			pixel_x = 0
+			pixel_y = pixel_shift
+		if(EAST)
+			pixel_x = -pixel_shift
+			pixel_y = 0
+		if(WEST)
+			pixel_x = pixel_shift
+			pixel_y = 0
+
 	create_reagents(reagent_capacity)
 	reagents.add_reagent(reagent_id, reagent_capacity)
 	soundloop = new(src, FALSE)
-	AddComponent(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
@@ -47,6 +69,7 @@
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
+	. += span_notice("It looks like the thermostat has an adjustment screw.")
 	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
 
 /obj/machinery/shower/Destroy()
@@ -89,7 +112,7 @@
 	return TRUE
 
 
-/obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/shower/screwdriver_act(mob/living/user, obj/item/I)
 	..()
 	to_chat(user, span_notice("You begin to adjust the temperature valve with \the [I]..."))
 	if(I.use_tool(src, user, 50))
@@ -106,6 +129,14 @@
 	handle_mist()
 	return TRUE
 
+/obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+
+	I.play_tool_sound(src)
+	deconstruct()
+	return TRUE
 
 /obj/machinery/shower/update_overlays()
 	. = ..()
@@ -170,7 +201,8 @@
 		return PROCESS_KILL
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/iron(drop_location(), 3)
+	new /obj/item/stack/sheet/iron(drop_location(), 2)
+	new /obj/item/stock_parts/water_recycler(drop_location())
 	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/L)
@@ -201,8 +233,7 @@
 /obj/structure/showerframe/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/water_recycler))
 		qdel(I)
-		var/obj/machinery/shower/new_shower = new /obj/machinery/shower(loc)
-		new_shower.setDir(dir)
+		new /obj/machinery/shower(loc, REVERSE_DIR(dir))
 		qdel(src)
 		return
 	return ..()

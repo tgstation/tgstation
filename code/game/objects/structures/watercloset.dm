@@ -256,6 +256,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. Passively reclaims water over time."
 	anchored = TRUE
+	pixel_z = 1
 	///Something's being washed at the moment
 	var/busy = FALSE
 	///What kind of reagent is produced by this sink by default? (We now have actual plumbing, Arcane, August 2020)
@@ -270,13 +271,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	var/reclaiming = FALSE
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
+	///Amount of shift the pixel for placement
+	var/pixel_shift = 14
 
-/obj/structure/sink/Initialize(mapload, bolt)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
+
+/obj/structure/sink/Initialize(mapload, ndir)
 	. = ..()
+
+	if(ndir)
+		dir = ndir
+
+	switch(dir)
+		if(NORTH)
+			pixel_x = 0
+			pixel_y = -pixel_shift
+		if(SOUTH)
+			pixel_x = 0
+			pixel_y = pixel_shift
+		if(EAST)
+			pixel_x = -pixel_shift
+			pixel_y = 0
+		if(WEST)
+			pixel_x = pixel_shift
+			pixel_y = 0
+
 	create_reagents(100, NO_REACT)
 	if(has_water_reclaimer)
 		reagents.add_reagent(dispensedreagent, 100)
-	AddComponent(/datum/component/plumbing/simple_demand, bolt)
+	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
 
 /obj/structure/sink/examine(mob/user)
 	. = ..()
@@ -417,6 +440,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/sink/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		drop_materials()
+		new /obj/item/stock_parts/water_recycler(drop_location())
 	..()
 
 /obj/structure/sink/process(delta_time)
@@ -442,6 +466,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
 	icon_state = "sink_alt"
+	pixel_z = 4
+	pixel_shift = 16
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"
@@ -463,10 +491,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/sinkframe/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/water_recycler))
 		qdel(I)
-		var/obj/structure/sink/greyscale/new_sink = new /obj/structure/sink/greyscale(loc)
-		new_sink.has_water_reclaimer = TRUE
+		var/obj/structure/sink/greyscale/new_sink = new /obj/structure/sink/greyscale(loc, REVERSE_DIR(dir))
 		new_sink.set_custom_materials(custom_materials)
-		new_sink.setDir(dir)
 		qdel(src)
 		return
 	return ..()

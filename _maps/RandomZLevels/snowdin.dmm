@@ -2320,10 +2320,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/hydro)
 "gL" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	piping_layer = 4;
 	pixel_x = 5;
@@ -3494,10 +3491,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -3792,9 +3786,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/machinery/shower{
-	pixel_y = 25
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/dorm)
 "kw" = (
@@ -3807,9 +3799,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
 	},
-/obj/machinery/shower{
-	pixel_y = 25
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/dorm)
 "kx" = (
@@ -3822,9 +3812,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/shower{
-	pixel_y = 25
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/dorm)
 "ky" = (
@@ -4511,21 +4499,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/dorm)
 "lV" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/dorm)
 "lW" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/dorm)
@@ -4723,10 +4705,7 @@
 	},
 /area/awaymission/snowdin/post/hydro)
 "mv" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -6815,10 +6794,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/cavern2)
 "tc" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/cavern2)
 "td" = (
@@ -6856,9 +6832,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
 "ti" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /obj/structure/window{
 	dir = 4
@@ -7220,10 +7194,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/cavern1)
 "vw" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/cavern1)
 "vx" = (
@@ -7270,9 +7241,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern1)
 "vD" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /obj/structure/window{
 	dir = 4
@@ -11656,10 +11625,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "Nt" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/dorm)

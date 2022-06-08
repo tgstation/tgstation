@@ -73,6 +73,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/fuel/oil
+	pixel_shift = 0
 
 /obj/structure/sink/oil_well/Initialize(mapload)
 	.=..()

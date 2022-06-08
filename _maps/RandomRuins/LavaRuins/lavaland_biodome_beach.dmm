@@ -198,9 +198,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "ek" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/powered/beach)
 "et" = (
@@ -491,9 +489,7 @@
 /area/ruin/powered/beach)
 "qc" = (
 /obj/structure/mirror/directional/west,
-/obj/structure/sink/kitchen{
-	pixel_y = 32
-	},
+/obj/structure/sink/kitchen/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -936,11 +932,9 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "FC" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/west{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	dir = 8;
-	name = "old sink";
-	pixel_x = 12
+	name = "old sink"
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -1225,11 +1219,9 @@
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "PY" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/east{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	dir = 4;
-	name = "old sink";
-	pixel_x = -12
+	name = "old sink"
 	},
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)

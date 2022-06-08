@@ -275,9 +275,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bv" = (
-/obj/structure/sink{
-	pixel_y = 28
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer{
@@ -2391,11 +2389,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gr" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/moonoutpost19/research)
 "gs" = (
@@ -3054,10 +3048,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "hS" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/urinal/directional/north,
 /obj/structure/mirror/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -3066,17 +3057,13 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "hT" = (
-/obj/machinery/shower{
-	pixel_y = 16
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "hU" = (
-/obj/machinery/shower{
-	pixel_y = 16
-	},
+/obj/machinery/shower/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -3228,10 +3215,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "ik" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east{
 	icon_state = "mirror_broke"
 	},
@@ -3252,9 +3236,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "in" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
@@ -3366,9 +3348,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "iA" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -3408,9 +3388,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "iF" = (
-/obj/structure/sink{
-	pixel_y = 28
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -3481,11 +3459,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "iN" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -3505,9 +3479,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "iP" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
@@ -4680,10 +4652,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lw" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	pixel_y = 28
+	name = "old sink"
 	},
 /turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006;
@@ -6239,8 +6210,7 @@
 /obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
-/obj/machinery/shower{
-	dir = 4;
+/obj/machinery/shower/directional/east{
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/stripes/line{

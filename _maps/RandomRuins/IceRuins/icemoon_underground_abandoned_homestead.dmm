@@ -22,9 +22,7 @@
 /obj/structure/table/bronze{
 	color = "#666666"
 	},
-/obj/structure/sink/kitchen{
-	pixel_y = 24
-	},
+/obj/structure/sink/kitchen/directional/south,
 /obj/item/plate,
 /turf/open/floor/wood/large{
 	initial_gas_mix = "ICEMOON_ATMOS"
