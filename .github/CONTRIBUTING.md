@@ -194,6 +194,6 @@ Github actions that require additional configuration are disabled on the reposit
 
 ## Using the Maintainer Role Ping in Discord
 
-This role is pingable as a compromise reached with the server host mso over the auto staling system. It should be used only to ping maintainers when your PR has had the stale label applied. Using it before then can be met with escalating timeouts and referall to the discord moderators for further infractions.
+This role `@Maintainer` is pingable as a compromise reached with the server host MrStonedOne over the auto-staling system we presently have in the codebase. It should be used only to ping Maintainers when your PR has had the "Stale" label applied. Using it before then can be met with escalating timeouts and referral to /tg/station's Discord moderators for further infractions.
 
 Feel free to engage in general in coding general without the role ping, before your PR goes stale to build interest and get reviews.
