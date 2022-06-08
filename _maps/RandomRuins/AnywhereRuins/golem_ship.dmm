@@ -234,6 +234,12 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"S" = (
+/obj/item/circuitboard/machine/ore_silo,
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/five,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "T" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/titanium,
@@ -568,7 +574,7 @@ g
 g
 b
 n
-l
+S
 b
 Y
 Y
