@@ -565,7 +565,7 @@
 	*Plasma acts as a catalyst on decomposition, so it doesn't get consumed in the process.
 	*N2O decomposes with its normal decomposition energy
 	*/
-	var/nitrous_oxide_decomposed_factor = max(4*(cached_gases[/datum/gas/plasma][MOLES]/(cached_gases[/datum/gas/plasma]+cached_gases[/datum/gas/plasma][MOLES]) - 0.75), 0)
+	var/nitrous_oxide_decomposed_factor = max(4 * (cached_gases[/datum/gas/plasma][MOLES] / (cached_gases[/datum/gas/nitrous_oxide][MOLES] + cached_gases[/datum/gas/plasma][MOLES]) - 0.75), 0)
 	if (nitrous_oxide_decomposed_factor>0)
 		ASSERT_GAS(/datum/gas/nitrogen, air)
 		ASSERT_GAS(/datum/gas/oxygen, air)
