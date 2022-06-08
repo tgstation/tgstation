@@ -1,6 +1,11 @@
 import { dragStartHandler } from 'tgui/drag';
 
-export const Dragzone = (props) => {
+interface Props {
+  horizontal: boolean,
+  vertical: boolean,
+}
+
+export const Dragzone = (props: Partial<Props>) => {
   const direction
     = (props.horizontal && 'horizontal')
     || (props.vertical && 'vertical');

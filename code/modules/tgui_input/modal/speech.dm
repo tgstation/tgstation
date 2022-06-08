@@ -10,7 +10,7 @@
 /datum/tgui_modal/proc/alter_entry(payload)
 	var/entry = payload["entry"]
 	/// No OOC leaks
-	if(payload["channel"] == OOC_CHAN || payload["channel"] == ME_CHAN)
+	if(payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
 		return pick(hurt_phrases)
 	// /// Sanitizes radio prefixes so users can't game the system (mostly)
 	// entry = remove_prefixes(entry)
@@ -37,22 +37,22 @@
 /datum/tgui_modal/proc/delegate_speech(entry, channel)
 	if(!client)
 		return FALSE
-	if(channel == OOC_CHAN)
+	if(channel == OOC_CHANNEL)
 		client.ooc(entry)
 		return TRUE
 	if(!client.mob)
 		return FALSE
 	switch(channel)
-		if(RADIO_CHAN)
+		if(RADIO_CHANNEL)
 			entry = remove_prefixes(entry)
 			if(entry)
 				entry = ";" + entry
 				client.mob.say_verb(entry)
 			return TRUE
-		if(ME_CHAN)
+		if(ME_CHANNEL)
 			client.mob.me_verb(entry)
 			return TRUE
-		if(SAY_CHAN)
+		if(SAY_CHANNEL)
 			client.mob.say_verb(entry)
 			return TRUE
 	return FALSE
@@ -97,10 +97,10 @@
 		delegate_speech(payload["entry"], payload["channel"])
 		return TRUE
 	if(type == "force")
-		var/target_chan = payload["channel"]
-		if(target_chan == ME_CHAN || target_chan == OOC_CHAN)
-			target_chan = SAY_CHAN // No ooc leaks
-		delegate_speech(alter_entry(payload), target_chan)
+		var/target_channel = payload["channel"]
+		if(target_channel == ME_CHANNEL || target_channel == OOC_CHANNEL)
+			target_channel = SAY_CHANNEL // No ooc leaks
+		delegate_speech(alter_entry(payload), target_channel)
 		return TRUE
 	return FALSE
 

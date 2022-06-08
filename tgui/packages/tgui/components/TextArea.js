@@ -14,7 +14,7 @@ import { KEY_ENTER, KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
 export class TextArea extends Component {
   constructor(props, context) {
     super(props, context);
-    this.textareaRef = createRef();
+    this.textareaRef = props.innerRef || createRef();
     this.fillerRef = createRef();
     this.state = {
       editing: false,
@@ -129,9 +129,6 @@ export class TextArea extends Component {
     const input = this.textareaRef.current;
     if (input) {
       input.value = toInputValue(nextValue);
-    }
-    if (this.props.setInnerRef) {
-      this.props.setInnerRef(this.textareaRef);
     }
     if (this.props.autoFocus || this.props.autoSelect) {
       setTimeout(() => {

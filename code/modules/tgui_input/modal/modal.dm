@@ -87,7 +87,7 @@
 	if(!payload || !payload["channel"])
 		CRASH("No channel provided to open TGUI modal")
 	window_open = TRUE
-	if(payload["channel"] == OOC_CHAN || payload["channel"] == ME_CHAN)
+	if(payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
 		return TRUE
 	client.mob.start_thinking()
 	if(client.typing_indicators)

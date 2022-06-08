@@ -1,5 +1,5 @@
 // Used to direct channels to speak into.
-#define SAY_CHAN "Say"
-#define RADIO_CHAN "Radio"
-#define ME_CHAN "Me"
-#define OOC_CHAN "OOC"
+#define SAY_CHANNEL "Say"
+#define RADIO_CHANNEL "Radio"
+#define ME_CHANNEL "Me"
+#define OOC_CHANNEL "OOC"

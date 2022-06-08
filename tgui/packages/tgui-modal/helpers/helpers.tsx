@@ -9,10 +9,11 @@ import { classes } from 'common/react';
  * Once byond signals this via keystroke, it
  * ensures window size, visibility, and focus.
  */
-export const windowOpen = (channel) => {
+export const windowOpen = (channel: string) => {
   setOpen();
   Byond.sendMessage('open', { channel });
 };
+
 /**
  * Resets the state of the window and hides it from user view.
  * Sending "close" logs it server side.
@@ -21,6 +22,7 @@ export const windowClose = () => {
   setClosed();
   Byond.sendMessage('close');
 };
+
 /** Some QoL to hide the window on load. Doesn't log this event */
 export const windowLoad = () => {
   Byond.winset('tgui_modal', {
@@ -28,16 +30,18 @@ export const windowLoad = () => {
   });
   setClosed();
 };
+
 /**
  * Modifies the window size.
  *
  * Parameters:
  *  size - The size of the window in pixels. Optional.
  */
-export const windowSet = (size = SIZE.small) => {
+export const windowSet = (size: number = SIZE.small) => {
   Byond.winset('tgui_modal', { size: `${SIZE.width}x${size}` });
   Byond.winset('tgui_modal.browser', { size: `${SIZE.width}x${size}` });
 };
+
 /** Private functions */
 /** Sets the skin props as opened. Focus might be a placebo here. */
 const setOpen = () => {
@@ -50,6 +54,7 @@ const setOpen = () => {
     size: `${SIZE.width}x${SIZE.small}`,
   });
 };
+
 /** Sets the skin props as closed.  */
 const setClosed = () => {
   Byond.winset('tgui_modal', {
@@ -65,21 +70,21 @@ const setClosed = () => {
  * Chat history functions
  */
 /** Stores a list of chat messages entered as values */
-let savedMessages = [];
+let savedMessages: string[] = [];
 
 /** Returns the chat history at specified index */
-export const getHistoryAt = (index) =>
+export const getHistoryAt = (index: number): string =>
   savedMessages[savedMessages.length - index];
 /**
  * The length of chat history.
  * I am absolutely being excessive, but whatever
  */
-export const getHistoryLength = () => savedMessages.length;
+export const getHistoryLength = (): number => savedMessages.length;
 /**
  * Stores entries in the chat history.
  * Deletes old entries if the list is too long.
  */
-export const storeChat = (message) => {
+export const storeChat = (message: string): void => {
   if (savedMessages.length === 5) {
     savedMessages.shift();
   }
@@ -88,15 +93,24 @@ export const storeChat = (message) => {
 
 /** Miscellaneous */
 /** Returns modular css classes */
-export const getCss = (element, channel, size) =>
+export const getCss = (
+  element: string,
+  channel?: number,
+  size?: number
+): string =>
   classes([
     element,
-    channel >= 0 && `${element}-${CHANNELS[channel]?.toLowerCase()}`,
-    `${element}-${size}`,
+    valueExists(channel) && `${element}-${CHANNELS[channel!]?.toLowerCase()}`,
+    valueExists(size) && `${element}-${size}`,
   ]);
 
 /** Checks keycodes for alpha/numeric characters */
-export const isAlphanumeric = (keyCode) => keyCode >= KEY_0 && keyCode <= KEY_Z;
+export const isAlphanumeric = (keyCode: number): boolean =>
+  keyCode >= KEY_0 && keyCode <= KEY_Z;
+
+/** Checks if a parameter is null or undefined. Returns bool */
+export const valueExists = (param: any): boolean =>
+  param !== null && param !== undefined;
 
 /**
  * Wraps a byond message in a cooldown.
@@ -106,9 +120,11 @@ export const isAlphanumeric = (keyCode) => keyCode >= KEY_0 && keyCode <= KEY_Z;
  *  timeout - The cooldown in seconds.
  */
 export class CooldownWrapper {
-  constructor(message, timeout) {
+  private message: string;
+  private onCooldown: boolean = false;
+  private timeout: number;
+  constructor(message: string, timeout: number) {
     this.message = message;
-    this.onCooldown = false;
     this.timeout = timeout;
   }
   setTimer = () => {

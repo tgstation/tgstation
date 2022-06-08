@@ -27,22 +27,14 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 	remove_thinking_indicator()
 	return ..()
 
-////Typing verbs////
-//Those are used to show the typing indicator for the player without waiting on the client.
-/*
-Some information on how these work:
-The keybindings for say and me have been modified to call start_typing and immediately open the textbox clientside.
-Because of this, the client doesn't have to wait for a message from the server before opening the textbox, the server
-knows immediately when the user pressed the hotkey, and the clientside textbox can signal success or failure to the server.
-When you press the hotkey, the .start_typing verb is called with the source ("say" or "me") to show the thinking indicator.
-When you send a message from the custom window, the appropriate verb is called, .say or .me
-If you close the window without actually sending the message, the .cancel_thinking verb is called with the source.
-Cancel thinking and cancel typing remove the indicators.
+/// Whether or not to show a typing indicator when speaking. Defaults to on.
+/datum/preference/toggle/typing_indicator
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "typingIndicator"
+	savefile_identifier = PREFERENCE_PLAYER
 
-How this differs from the original implementation:
-Since we can differentiate user input, we can show the thinking indicator immediately, and the typing indicator if user is
-typing into the window. Pressing the hotkey also sends a message to switch channels.
-*/
+/datum/preference/toggle/typing_indicator/apply_to_client(client/client, value)
+	client?.typing_indicators = value
 
 /// Shows the thinking indicator - player has window open
 /mob/verb/start_thinking()
@@ -91,7 +83,7 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 	else
 		client.mob.cancel_thinking()
 
-///Human Thinking Indicators///
+
 /mob/living/create_thinking_indicator()
 	if(!client || !client.typing_indicators) // If they've got typing indicators shut off, don't show the thinking indicator
 		return
@@ -104,7 +96,6 @@ typing into the window. Pressing the hotkey also sends a message to switch chann
 		cut_overlay(GLOB.thinking_indicator)
 		thinking_indicator = FALSE
 
-///Human Typing Indicators///
 /mob/living/create_typing_indicator()
 	if(!client || !client.typing_indicators) // If they've got typing indicators shut off, don't show the typing indicator
 		return
