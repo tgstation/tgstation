@@ -35322,6 +35322,10 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"lmc" = (
+/obj/effect/turf_decal/trimline/white/filled/warning,
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers/deep)
 "lmf" = (
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 9
@@ -78846,7 +78850,7 @@ oSU
 oSU
 oSU
 oSU
-oSU
+lmc
 oSU
 oSU
 oSU

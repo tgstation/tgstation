@@ -20884,12 +20884,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"hez" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Supply Door Airlock"
-	},
-/turf/open/space/basic,
-/area/space)
 "heJ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/structure/disposalpipe/segment{
@@ -53153,7 +53147,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/mapping_helpers/airlock/access/all/supply/shipping,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "rOb" = (
@@ -77788,7 +77782,7 @@ ajc
 ajc
 ajc
 ajc
-hez
+ajc
 ajc
 ajc
 ajc

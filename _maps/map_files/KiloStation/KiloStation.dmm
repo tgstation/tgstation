@@ -18365,7 +18365,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "cargo-mailroom"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/mapping_helpers/airlock/access/all/supply/shipping,
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "fla" = (
@@ -72122,7 +72122,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "cargo-mailroom"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/effect/mapping_helpers/airlock/access/all/supply/shipping,
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "upK" = (
