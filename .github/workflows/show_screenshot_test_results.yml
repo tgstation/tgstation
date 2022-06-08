@@ -23,7 +23,7 @@ jobs:
       - name: Script test
         uses: actions/github-script@v6
         with:
-          script: "require('./tools/show_screenshot_test_results.js')({ github, context })"
+          script: "require('./tools/ci/show_screenshot_test_results.js')({ github, context })"
       # - name: Download artifact
       #   uses: actions/github-script@v3.1.0
       #   id: dl_results
