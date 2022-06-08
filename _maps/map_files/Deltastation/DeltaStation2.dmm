@@ -7562,7 +7562,6 @@
 	},
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
-/obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "bUQ" = (
@@ -75758,13 +75757,6 @@
 	dir = 1
 	},
 /area/station/commons/fitness/recreation)
-"uqo" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/wall,
-/area/station/cargo/qm)
 "uqt" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
@@ -88656,9 +88648,15 @@
 /obj/structure/extinguisher_cabinet/directional/north{
 	pixel_x = 32
 	},
-/obj/item/radio/intercom/directional/east,
+/obj/item/radio/intercom/directional/east{
+	pixel_y = 3
+	},
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
+	},
+/obj/machinery/keycard_auth/directional/east{
+	pixel_x = 25;
+	pixel_y = -8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
@@ -137181,7 +137179,7 @@ iwW
 uni
 loU
 bUz
-uqo
+iHf
 aad
 rWo
 juo
