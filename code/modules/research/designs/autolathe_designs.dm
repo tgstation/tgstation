@@ -535,7 +535,7 @@
 	name = "Scalpel"
 	id = "scalpel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/silver = 2000)
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000)
 	build_path = /obj/item/scalpel
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -544,7 +544,7 @@
 	name = "Circular Saw"
 	id = "circular_saw"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/silver = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
 	build_path = /obj/item/circular_saw
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -553,7 +553,7 @@
 	name = "Bonesetter"
 	id = "bonesetter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500, /datum/material/silver = 2500)
+	materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500)
 	build_path = /obj/item/bonesetter
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -562,7 +562,7 @@
 	name = "Surgical Drill"
 	id = "surgicaldrill"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/silver = 5000)
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
 	build_path = /obj/item/surgicaldrill
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -571,7 +571,7 @@
 	name = "Retractor"
 	id = "retractor"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000, /datum/material/silver = 3000)
+	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000)
 	build_path = /obj/item/retractor
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -580,7 +580,7 @@
 	name = "Cautery"
 	id = "cautery"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 750, /datum/material/silver = 1250)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 750)
 	build_path = /obj/item/cautery
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -589,7 +589,7 @@
 	name = "Hemostat"
 	id = "hemostat"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 2500)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500)
 	build_path = /obj/item/hemostat
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
@@ -1265,3 +1265,19 @@
 	build_path = /obj/item/toner/large
 	category = list("initial", "Misc", "Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/solar
+	name = "Solar Panel Frame"
+	id = "solar_panel"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 3500, /datum/material/glass = 1000)
+	build_path = /obj/item/solar_assembly
+	category = list("initial", "Construction")
+
+/datum/design/tracker_electronics
+	name = "Solar Tracking Electronics"
+	id = "solar_tracker"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 500)
+	build_path = /obj/item/electronics/tracker
+	category = list("initial", "Electronics", "Construction")

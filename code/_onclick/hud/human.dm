@@ -94,7 +94,7 @@
 	static_inventory += using
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "i_clothing"
+	inv_box.name = "uniform"
 	inv_box.icon = ui_style
 	inv_box.slot_id = ITEM_SLOT_ICLOTHING
 	inv_box.icon_state = "uniform"
@@ -103,7 +103,7 @@
 	toggleable_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "o_clothing"
+	inv_box.name = "suit"
 	inv_box.icon = ui_style
 	inv_box.slot_id = ITEM_SLOT_OCLOTHING
 	inv_box.icon_state = "suit"
@@ -164,7 +164,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "storage1"
+	inv_box.name = "left pocket"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage1
@@ -173,7 +173,7 @@
 	static_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "storage2"
+	inv_box.name = "right pocket"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
 	inv_box.screen_loc = ui_storage2

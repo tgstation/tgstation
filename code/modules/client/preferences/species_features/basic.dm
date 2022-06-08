@@ -34,7 +34,7 @@
 	if(!hetero)
 		target.eye_color_right = value
 
-	var/obj/item/organ/eyes/eyes_organ = target.getorgan(/obj/item/organ/eyes)
+	var/obj/item/organ/internal/eyes/eyes_organ = target.getorgan(/obj/item/organ/internal/eyes)
 	if (!eyes_organ || !istype(eyes_organ))
 		return
 
