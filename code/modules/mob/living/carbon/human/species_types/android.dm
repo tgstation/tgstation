@@ -23,6 +23,9 @@
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_LITERATE,
 	)
+	brute_damage_desc = ROBOTIC_BRUTE_EXAMINE_TEXT
+	burn_damage_desc = ROBOTIC_BURN_EXAMINE_TEXT
+
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
 	damage_overlay_type = "synth"
