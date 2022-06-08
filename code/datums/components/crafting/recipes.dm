@@ -1197,6 +1197,19 @@
 	result = /obj/item/storage/backpack/holding
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/boh/New()
+	..()
+	blacklist += subtypesof(/obj/item/bag_of_holding_inert)
+
+/datum/crafting_recipe/soh
+	name = "Satchel of Holding"
+	reqs = list(
+		/obj/item/bag_of_holding_inert/satchel = 1,
+		/obj/item/assembly/signaler/anomaly/bluespace = 1,
+	)
+	result = /obj/item/storage/backpack/holding/satchel
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/ipickaxe
 	name = "Improvised Pickaxe"
 	reqs = list(

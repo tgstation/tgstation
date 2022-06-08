@@ -44,6 +44,7 @@
 	id_trim = /datum/id_trim/job/quartermaster
 	id = /obj/item/card/id/advanced/silver
 	uniform = /obj/item/clothing/under/rank/cargo/qm
+	backpack = /obj/item/storage/backpack/cargo
 	belt = /obj/item/modular_computer/tablet/pda/heads/quartermaster
 	ears = /obj/item/radio/headset/heads/qm
 	glasses = /obj/item/clothing/glasses/sunglasses

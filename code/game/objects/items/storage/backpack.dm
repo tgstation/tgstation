@@ -49,6 +49,23 @@
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 
+/obj/item/bag_of_holding_inert/attack_self(mob/user, modifiers)
+	. = ..()
+	var/satchel = new /obj/item/bag_of_holding_inert/satchel(get_turf(src))
+	user.put_in_hands(satchel)
+	balloon_alert(user, "you fashion the bag into a satchel")
+	qdel(src)
+
+/obj/item/bag_of_holding_inert/satchel
+	name = "inert satchel of holding"
+	icon_state = "brokensat"
+
+/obj/item/bag_of_holding_inert/satchel/attack_self(mob/user, modifiers)
+	var/backpack = new /obj/item/bag_of_holding_inert(get_turf(src))
+	user.put_in_hands(backpack)
+	balloon_alert(user, "you fashion the satchel into a bag")
+	qdel(src)
+
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of bluespace."
@@ -73,6 +90,11 @@
 	sleep(20)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
 	qdel(user)
+
+/obj/item/storage/backpack/holding/satchel
+	name = "satchel of holding"
+	desc = "A satchel that opens into a localized pocket of bluespace."
+	icon_state = "holdingsat"
 
 /obj/item/storage/backpack/santabag
 	name = "Santa's Gift Bag"
@@ -160,11 +182,23 @@
 	inhand_icon_state = "engiepack"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/storage/backpack/cargo
+	name = "cargo backpack"
+	desc = "It's a huge backpack for daily looting of station's stashes."
+	icon_state = "cargopack"
+	inhand_icon_state = "cargopack"
+
 /obj/item/storage/backpack/botany
 	name = "botany backpack"
 	desc = "It's a backpack made of all-natural fibers."
 	icon_state = "botpack"
 	inhand_icon_state = "botpack"
+
+/obj/item/storage/backpack/lizard
+	name = "lizard skin backpack"
+	desc = "A backpack made out of what appears to be supple green lizard skin. A face can be vaguely seen on the front."
+	icon_state = "lizardpack"
+	inhand_icon_state = "lizardpack"
 
 /obj/item/storage/backpack/chemistry
 	name = "chemistry backpack"
@@ -291,6 +325,28 @@
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
 	inhand_icon_state = "satchel-sec"
+
+/obj/item/storage/backpack/satchel/detective
+	name = "forensic satchel"
+	desc = "For every man, who at the bottom of his heart believes that he is a born detective."
+	icon_state = "satchel-detective"
+
+/obj/item/storage/backpack/satchel/lizard
+	name = "lizard skin handbag"
+	desc = "A handbag made out of what appears to be supple green lizard skin. A face can be vaguely seen on the front."
+	icon_state = "satchel-lizard"
+
+/obj/item/storage/backpack/satchel/clown
+	name = "Giggles Von Robuston"
+	desc = "It's a satchel made by Honk! Co."
+	icon_state = "satchel-clown"
+	inhand_icon_state = "clownpack"
+
+/obj/item/storage/backpack/satchel/mime
+	name = "Parcel Parobust"
+	desc = "A silent satchel made for those silent workers. Silence Co."
+	icon_state = "satchel-mime"
+	inhand_icon_state = "mimepack"
 
 /obj/item/storage/backpack/satchel/explorer
 	name = "explorer satchel"

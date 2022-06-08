@@ -2419,6 +2419,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	access = ACCESS_THEATRE
 	contains = list(/obj/item/storage/backpack/clown,
+					/obj/item/storage/backpack/satchel/clown,
 					/obj/item/clothing/shoes/clown_shoes,
 					/obj/item/clothing/mask/gas/clown_hat,
 					/obj/item/clothing/under/rank/civilian/clown,
@@ -2430,7 +2431,8 @@
 					/obj/item/clothing/head/frenchberet,
 					/obj/item/clothing/suit/toggle/suspenders,
 					/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,
-					/obj/item/storage/backpack/mime)
+					/obj/item/storage/backpack/mime,
+					/obj/item/storage/backpack/satchel/mime)
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
 

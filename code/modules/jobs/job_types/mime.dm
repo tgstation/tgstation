@@ -62,7 +62,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 
 	backpack = /obj/item/storage/backpack/mime
-	satchel = /obj/item/storage/backpack/mime
+	satchel = /obj/item/storage/backpack/satchel/mime
 
 	chameleon_extras = /obj/item/stamp/mime
 

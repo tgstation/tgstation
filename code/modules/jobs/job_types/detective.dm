@@ -56,6 +56,7 @@
 		/obj/item/melee/baton = 1,
 		/obj/item/storage/box/evidence = 1,
 		)
+	satchel = /obj/item/storage/backpack/satchel/detective
 	belt = /obj/item/modular_computer/tablet/pda/detective
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black
