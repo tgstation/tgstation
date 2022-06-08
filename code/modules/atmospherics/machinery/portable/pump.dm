@@ -62,11 +62,11 @@
 	var/datum/gas_mixture/receiving
 
 	if (holding) //Work with tank when inserted, otherwise - with area
-		sending = (direction ? holding.return_air() : air_contents)
-		receiving = (direction ? air_contents : holding.return_air())
+		sending = (direction == PUMP_IN ? holding.return_air() : air_contents)
+		receiving = (direction == PUMP_IN ? air_contents : holding.return_air())
 	else
-		sending = (direction ? local_turf.return_air() : air_contents)
-		receiving = (direction ? air_contents : local_turf.return_air())
+		sending = (direction == PUMP_IN ? local_turf.return_air() : air_contents)
+		receiving = (direction == PUMP_IN ? air_contents : local_turf.return_air())
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
 		air_update_turf(FALSE, FALSE) // Update the environment if needed.
@@ -96,7 +96,7 @@
 		if(on)
 			on = FALSE
 			update_appearance()
-	else if(on && holding && !direction)
+	else if(on && holding && direction == PUMP_OUT)
 		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
@@ -140,11 +140,11 @@
 				if(n2o || plasma)
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [ADMIN_VERBOSEJMP(src)]")
 					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [AREACOORD(src)]")
-			else if(on && !direction)
+			else if(on && direction == PUMP_OUT)
 				investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("direction")
-			if(!direction)
+			if(direction == PUMP_OUT)
 				direction = PUMP_IN
 			else
 				if(on && holding)
