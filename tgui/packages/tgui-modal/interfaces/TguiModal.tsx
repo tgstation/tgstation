@@ -23,12 +23,12 @@ import {
   windowSet,
 } from '../helpers/helpers';
 
-interface State {
+type State = {
   buttonContent: string | number;
   channel: number;
   edited: boolean;
   size: number;
-}
+};
 
 /** Primary class for the TGUI modal. */
 export class TguiModal extends Component<{}, State> {
