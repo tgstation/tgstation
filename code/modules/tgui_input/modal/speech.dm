@@ -10,11 +10,7 @@
 /datum/tgui_modal/proc/alter_entry(payload)
 	var/entry = payload["entry"]
 	/// No OOC leaks
-	if(payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
-		return pick(hurt_phrases)
-	// /// Sanitizes radio prefixes so users can't game the system (mostly)
-	// entry = remove_prefixes(entry)
-	if(!entry)
+	if(!entry || payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
 		return pick(hurt_phrases)
 	/// Random trimming for larger sentences
 	if(length(entry) > 50)
