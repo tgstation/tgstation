@@ -9208,7 +9208,6 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/assistant,
-/obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "dgN" = (
