@@ -118,20 +118,20 @@
 	if(href_list["hud"])
 		if(!ishuman(usr))
 			return
-		var/mob/living/carbon/human/H = usr
+		var/mob/living/carbon/human/human_user = usr
 		var/perpname = get_face_name(get_id_name(""))
-		if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD) && !HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
+		if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD) && !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 			return
 		if((text2num(href_list["examine_time"]) + 1 MINUTES) < world.time)
-			to_chat(usr, "[span_notice("It's too late to use this now!")]")
+			to_chat(human_user, "[span_notice("It's too late to use this now!")]")
 			return
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.general)
 		if(href_list["photo_front"] || href_list["photo_side"])
 			if(!R)
 				return
-			if(!H.canUseHUD())
+			if(!human_user.canUseHUD())
 				return
-			if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD) && !HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
+			if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD) && !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 				return
 			var/obj/item/photo/P = null
 			if(href_list["photo_front"])
@@ -139,11 +139,11 @@
 			else if(href_list["photo_side"])
 				P = R.fields["photo_side"]
 			if(P)
-				P.show(H)
+				P.show(human_user)
 			return
 
 		if(href_list["hud"] == "m")
-			if(!HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
+			if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 				return
 			if(href_list["evaluation"])
 				if(!getBruteLoss() && !getFireLoss() && !getOxyLoss() && getToxLoss() < 20)
@@ -187,20 +187,20 @@
 					to_chat(usr, span_danger("Patient has signs of suffocation, emergency treatment may be required!"))
 				if(getToxLoss() > 20)
 					to_chat(usr, span_danger("Gathered data is inconsistent with the analysis, possible cause: poisoning."))
-			if(!H.wear_id) //You require access from here on out.
-				to_chat(H, span_warning("ERROR: Invalid access"))
+			if(!human_user.wear_id) //You require access from here on out.
+				to_chat(human_user, span_warning("ERROR: Invalid access"))
 				return
-			var/list/access = H.wear_id.GetAccess()
+			var/list/access = human_user.wear_id.GetAccess()
 			if(!(ACCESS_MEDICAL in access))
-				to_chat(H, span_warning("ERROR: Invalid access"))
+				to_chat(human_user, span_warning("ERROR: Invalid access"))
 				return
 			if(href_list["p_stat"])
 				var/health_status = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
 				if(!R)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
 				if(health_status && health_status != "Cancel")
 					R.fields["p_stat"] = health_status
@@ -209,9 +209,9 @@
 				var/health_status = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
 				if(!R)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
 				if(health_status && health_status != "Cancel")
 					R.fields["m_stat"] = health_status
@@ -225,27 +225,27 @@
 			return //Medical HUD ends here.
 
 		if(href_list["hud"] == "s")
-			if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+			if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 				return
 			if(usr.stat || usr == src) //|| !usr.canmove || usr.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 				return   //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 			// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 			var/allowed_access = null
-			var/obj/item/clothing/glasses/hud/security/G = H.glasses
+			var/obj/item/clothing/glasses/hud/security/G = human_user.glasses
 			if(istype(G) && (G.obj_flags & EMAGGED))
 				allowed_access = "@%&ERROR_%$*"
 			else //Implant and standard glasses check access
-				if(H.wear_id)
-					var/list/access = H.wear_id.GetAccess()
+				if(human_user.wear_id)
+					var/list/access = human_user.wear_id.GetAccess()
 					if(ACCESS_SECURITY in access)
-						allowed_access = H.get_authentification_name()
+						allowed_access = human_user.get_authentification_name()
 
 			if(!allowed_access)
-				to_chat(H, span_warning("ERROR: Invalid access."))
+				to_chat(human_user, span_warning("ERROR: Invalid access."))
 				return
 
 			if(!perpname)
-				to_chat(H, span_warning("ERROR: Can not identify target."))
+				to_chat(human_user, span_warning("ERROR: Can not identify target."))
 				return
 			R = find_record("name", perpname, GLOB.data_core.security)
 			if(!R)
@@ -256,9 +256,9 @@
 				if(setcriminal != "Cancel")
 					if(!R)
 						return
-					if(!H.canUseHUD())
+					if(!human_user.canUseHUD())
 						return
-					if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+					if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
 					investigate_log("[key_name(src)] has been set from [R.fields["criminal"]] to [setcriminal] by [key_name(usr)].", INVESTIGATE_RECORDS)
 					R.fields["criminal"] = setcriminal
@@ -266,9 +266,9 @@
 				return
 
 			if(href_list["view"])
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				to_chat(usr, "<b>Name:</b> [R.fields["name"]] <b>Criminal Status:</b> [R.fields["criminal"]]")
 				for(var/datum/data/crime/c in R.fields["crim"])
@@ -290,9 +290,9 @@
 					return
 				if(!R || !t1 || !allowed_access)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
 				var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
@@ -317,9 +317,9 @@
 				var/t1 = tgui_input_text(usr, "Crime name", "Security HUD")
 				if(!R || !t1 || !allowed_access)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				var/crime = GLOB.data_core.createCrimeEntry(t1, null, allowed_access, station_time_timestamp())
 				GLOB.data_core.addCrime(R.fields["id"], crime)
@@ -331,9 +331,9 @@
 				var/t1 = tgui_input_text(usr, "Crime details", "Security Records", multiline = TRUE)
 				if(!R || !t1 || !allowed_access)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				if(href_list["cdataid"])
 					GLOB.data_core.addCrimeDetails(R.fields["id"], href_list["cdataid"], t1)
@@ -342,9 +342,9 @@
 				return
 
 			if(href_list["view_comment"])
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				to_chat(usr, "<b>Comments/Log:</b>")
 				var/counter = 1
@@ -358,9 +358,9 @@
 				var/t1 = tgui_input_text(usr, "Add a comment", "Security Records", multiline = TRUE)
 				if (!R || !t1 || !allowed_access)
 					return
-				if(!H.canUseHUD())
+				if(!human_user.canUseHUD())
 					return
-				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
+				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 				var/counter = 1
 				while(R.fields[text("com_[]", counter)])
