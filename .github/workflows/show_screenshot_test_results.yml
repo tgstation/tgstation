@@ -20,15 +20,18 @@ jobs:
         with:
           repository: "Mothblocks/tgstation"
           ref: "screenshot-tests"
-      - name: Install dependencies
-        run: npm install formdata-polyfill
+      - name: Prepare module
+        run: |
+          # This is needed because node-fetch needs import and doesn't work with require :/
+          echo "{\"type\": \"module\"}" > package.json
+          npm install node-fetch
       - name: Show screenshot test results
         uses: actions/github-script@v6
         env:
           # TODO: Don't run if this is not set
           FILE_HOUSE_KEY: ${{ secrets.ARTIFACTS_FILE_HOUSE_KEY }}
         with:
-          script: "require('./tools/ci/show_screenshot_test_results.js')({ github, context, exec })"
+          script: "await import('${{ github.workspace }}/tools/ci/show_screenshot_test_results.js')({ github, context, exec })"
       # - name: Download artifact
       #   uses: actions/github-script@v3.1.0
       #   id: dl_results
