@@ -191,3 +191,9 @@ Unless overridden or a non standard git binary is used the line ending settings 
 Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.
 
 Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.
+
+## Using the maintainer role ping in discord
+
+This role is pingable as a compromise reached with the server host mso over the auto staling system. It should be used only to ping maintainers when your PR has had the stale label applied. Using it before then can be met with escalating timeouts and referall to the discord moderators for further infractions.
+
+Feel free to engage in general in coding general without the role ping, before your PR goes stale to build interest and get reviews.
