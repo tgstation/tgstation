@@ -49,7 +49,16 @@
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 
-/obj/item/bag_of_holding_inert/attack_self(mob/user, modifiers)
+/obj/item/bag_of_holding_inert/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/bag_of_holding_inert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Change Style"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/bag_of_holding_inert/AltClick(mob/user)
 	. = ..()
 	var/satchel = new /obj/item/bag_of_holding_inert/satchel(get_turf(src))
 	user.put_in_hands(satchel)
@@ -60,7 +69,7 @@
 	name = "inert satchel of holding"
 	icon_state = "brokensat"
 
-/obj/item/bag_of_holding_inert/satchel/attack_self(mob/user, modifiers)
+/obj/item/bag_of_holding_inert/satchel/AltClick(mob/user)
 	var/backpack = new /obj/item/bag_of_holding_inert(get_turf(src))
 	user.put_in_hands(backpack)
 	balloon_alert(user, "you fashion the satchel into a bag")
