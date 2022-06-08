@@ -231,8 +231,8 @@
 				return   //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 			// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 			var/allowed_access = null
-			var/obj/item/clothing/glasses/hud/security/G = human_user.glasses
-			if(istype(G) && (G.obj_flags & EMAGGED))
+			var/obj/item/clothing/glasses/hud/security/user_glasses = human_user.glasses
+			if(istype(user_glasses) && (user_glasses.obj_flags & EMAGGED))
 				allowed_access = "@%&ERROR_%$*"
 			else //Implant and standard glasses check access
 				if(human_user.wear_id)
