@@ -319,6 +319,10 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"GZ" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/indestructible/rock,
+/area/template_noop)
 "Hq" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/effect/decal/cleanable/dirt,
@@ -456,7 +460,7 @@
 /area/template_noop)
 
 (1,1,1) = {"
-ar
+GZ
 ar
 ar
 ar

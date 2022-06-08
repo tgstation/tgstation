@@ -1,92 +1,239 @@
-"c" = (/mob/living/simple_animal/hostile/asteroid/goliath/beast,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"d" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"g" = (/obj/structure/flora/rock/pile,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"h" = (/obj/modular_map_root/caves{key = "caves_lvl3segment2"; name = "lvl3segment2"},/turf/template_noop,/area/template_noop)
-"i" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"n" = (/turf/open/indestructible/necropolis,/area/template_noop)
-"o" = (/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"p" = (/obj/effect/decal/remains/human,/turf/open/indestructible/necropolis,/area/template_noop)
-"q" = (/obj/item/pickaxe/diamond,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"t" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"v" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"w" = (/obj/item/food/grown/banana{desc = "shh... its a secret. 3 of 6."; name = "secret banana"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"A" = (/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/labormineral,/area/template_noop)
-"B" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"D" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"E" = (/obj/effect/baseturf_helper/lava_land/surface,/turf/closed/indestructible/rock,/area/template_noop)
-"F" = (/obj/structure/flora/ash/tall_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"H" = (/obj/structure/flora/ash/seraka,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"I" = (/obj/effect/decal/cleanable/blood/old,/turf/open/indestructible/necropolis,/area/template_noop)
-"J" = (/turf/open/chasm/lavaland,/area/template_noop)
-"K" = (/turf/closed/indestructible/rock,/area/template_noop)
-"L" = (/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,/area/template_noop)
-"M" = (/turf/template_noop,/area/template_noop)
-"N" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Q" = (/obj/effect/mob_spawn/corpse/goliath{mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher; name = "watcher"},/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"R" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"S" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"V" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"W" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"X" = (/obj/effect/mob_spawn/corpse/human/miner/explorer/caves{brute_damage = 0; burn_damage = 200; facial_hairstyle = "Moustache (Watson)"; hairstyle = "Pompadour"; mob_name = "Jim Joffee"},/obj/effect/decal/cleanable/blood/old,/obj/item/gun/energy/recharge/kinetic_accelerator,/turf/open/indestructible/necropolis,/area/template_noop)
-"Y" = (/turf/closed/indestructible/necropolis,/area/template_noop)
-"Z" = (/obj/structure/spawner/lavaland/icewatcher,/turf/open/indestructible/necropolis,/area/template_noop)
+"ad" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"ag" = (/obj/structure/flora/rock/pile,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"ah" = (/obj/modular_map_root/caves{key = "caves_lvl3segment2"; name = "lvl3segment2"},/turf/template_noop,/area/template_noop)
+"ai" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"an" = (/turf/open/indestructible/necropolis,/area/template_noop)
+"ap" = (/obj/effect/decal/remains/human,/turf/open/indestructible/necropolis,/area/template_noop)
+"aq" = (/obj/item/pickaxe/diamond,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"as" = (/obj/machinery/mineral/processing_unit{input_dir = 8; output_dir = 4},/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 8; id = "caves_depo3"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"at" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"av" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aw" = (/obj/item/food/grown/banana{desc = "shh... its a secret. 3 of 6."; name = "secret banana"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aA" = (/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/labormineral,/area/template_noop)
+"aB" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"aD" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aE" = (/obj/effect/baseturf_helper/lava_land/surface,/turf/closed/indestructible/rock,/area/template_noop)
+"aF" = (/obj/structure/flora/ash/tall_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aI" = (/obj/effect/decal/cleanable/blood/old,/turf/open/indestructible/necropolis,/area/template_noop)
+"aJ" = (/turf/open/chasm/lavaland,/area/template_noop)
+"aK" = (/turf/closed/indestructible/rock,/area/template_noop)
+"aL" = (/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,/area/template_noop)
+"aM" = (/turf/template_noop,/area/template_noop)
+"aN" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aQ" = (/obj/effect/mob_spawn/corpse/goliath{mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher; name = "watcher"},/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aR" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aS" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"aV" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aW" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aX" = (/obj/effect/mob_spawn/corpse/human/miner/explorer/caves{brute_damage = 0; burn_damage = 200; facial_hairstyle = "Moustache (Watson)"; hairstyle = "Pompadour"; mob_name = "Jim Joffee"},/obj/effect/decal/cleanable/blood/old,/obj/item/gun/energy/recharge/kinetic_accelerator,/turf/open/indestructible/necropolis,/area/template_noop)
+"aY" = (/turf/closed/indestructible/necropolis,/area/template_noop)
+"aZ" = (/obj/structure/spawner/lavaland/icewatcher,/turf/open/indestructible/necropolis,/area/template_noop)
+"bn" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing/corner{dir = 1},/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"bJ" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/structure/sign/warning{desc = "A sign warning you about how falling into the elevator shaft is a bad idea."; name = "WARNING: Lethal Fall Hazard"; pixel_x = 0; pixel_y = -32},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"bL" = (/turf/closed/wall,/area/template_noop)
+"cw" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/loading_area,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"cP" = (/obj/effect/turf_decal/stripes/white/corner{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"dm" = (/obj/machinery/mineral/processing_unit_console{machinedir = 2},/turf/closed/wall,/area/template_noop)
+"dS" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/north,/turf/open/floor/iron,/area/template_noop)
+"ef" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo4"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"ex" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/west,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"eA" = (/obj/effect/turf_decal/stripes/white/line,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"eN" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing/corner{dir = 4},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"fk" = (/obj/machinery/power/smes/engineering,/obj/structure/cable,/turf/open/floor/plating,/area/template_noop)
+"fl" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/structure/railing{dir = 8},/obj/structure/railing/corner,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"fy" = (/obj/effect/spawner/structure/window/reinforced,/obj/structure/cable,/turf/open/floor/plating,/area/template_noop)
+"fB" = (/obj/effect/decal/cleanable/dirt,/obj/structure/ore_box,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"fE" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/template_noop)
+"gU" = (/obj/machinery/conveyor{id = "caves_depo1"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"hl" = (/obj/effect/turf_decal/stripes/white/line{dir = 1},/mob/living/simple_animal/hostile/ashwalker{name = "Disrupts-The-Machine"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"hr" = (/obj/effect/turf_decal/stripes/white/line,/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/east,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"hF" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 4},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"hL" = (/obj/structure/sign/warning{desc = "A sign warning you about some explosive ordnance. Whether or not you care about this warning is up to you."; name = "WARNING: Explosive Ordnance"; pixel_x = 32; pixel_y = 0},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"hR" = (/obj/machinery/conveyor{dir = 10; id = "caves_depo1"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"hX" = (/obj/effect/turf_decal/stripes/white/line{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"iY" = (/obj/effect/turf_decal/stripes/white/line{dir = 10},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"je" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/line,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"jD" = (/obj/effect/turf_decal/stripes/white/line{dir = 8},/obj/structure/railing{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"jH" = (/obj/structure/marker_beacon/yellow,/obj/effect/turf_decal/stripes/white/line,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"jJ" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 1; id = "caves_depo3"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"jM" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor_switch/oneway{id = "caves_depo2"; name = "mining conveyor"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"kc" = (/obj/effect/decal/cleanable/dirt,/obj/structure/sign/warning{desc = "A sign warning you about how falling into the elevator shaft is a bad idea."; name = "WARNING: Lethal Fall Hazard"; pixel_x = 32},/turf/open/floor/plating,/area/template_noop)
+"kW" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"lm" = (/obj/effect/turf_decal/stripes/white/line{dir = 5},/mob/living/simple_animal/hostile/ashwalker{name = "Raids-The-Hummies"},/obj/item/crowbar/large,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"mO" = (/obj/machinery/conveyor_switch/oneway{id = "caves_depo5"; name = "mining conveyor"},/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"nq" = (/obj/machinery/computer/pod/old/mass_driver_controller{id = "caveslvldumbjump"; name = "Rapid Mineral Transport Control"; pixel_x = -28},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"nK" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor_switch/oneway{id = "caves_depo4"; name = "mining conveyor"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"nM" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 1},/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"od" = (/obj/structure/flora/ash/tall_shroom,/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"op" = (/obj/machinery/conveyor{id = "caves_depo2"},/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"oX" = (/obj/structure/flora/rock/pile,/obj/structure/sign/warning{desc = "A sign warning you about some explosive ordnance. Whether or not you care about this warning is up to you."; name = "WARNING: Explosive Ordnance"; pixel_x = 32; pixel_y = 0},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"pE" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"pL" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/structure/railing{dir = 4},/obj/structure/railing{dir = 8},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"qA" = (/obj/structure/cable,/obj/structure/railing{dir = 1},/obj/structure/railing,/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"rL" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"sq" = (/obj/machinery/atmospherics/components/tank/oxygen,/obj/structure/cable,/turf/open/floor/plating,/area/template_noop)
+"ss" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/machinery/mass_driver{dir = 1; id = "caveslvldumbjump"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"sW" = (/obj/effect/turf_decal/stripes/white/line,/turf/closed/wall,/area/template_noop)
+"sY" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{id = "caves_depo4"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"tc" = (/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"tm" = (/obj/machinery/conveyor{id = "caves_depo1"},/obj/machinery/mineral/stacking_machine{input_dir = 1; output_dir = 2},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"tt" = (/obj/structure/cable,/obj/structure/railing{dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"tU" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,/turf/open/floor/plating,/area/template_noop)
+"tV" = (/obj/machinery/conveyor{id = "caves_depo1"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"ut" = (/obj/machinery/power/rtg,/obj/structure/cable,/turf/open/floor/plating,/area/template_noop)
+"uD" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/mass_driver{dir = 8; id = "caveslvldumbjump3"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"uU" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 1},/obj/structure/railing/corner{dir = 8},/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"wF" = (/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/railing{dir = 1},/obj/structure/railing,/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"xf" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/mass_driver{dir = 4; id = "caveslvldumbjump4"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"xm" = (/obj/machinery/conveyor{dir = 1; id = "caves_depo1"},/obj/structure/plasticflaps,/turf/open/floor/plating,/area/template_noop)
+"xs" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo4"},/obj/effect/decal/cleanable/dirt,/obj/machinery/mineral/processing_unit{input_dir = 8; output_dir = 4},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"xV" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,/turf/open/floor/plating,/area/template_noop)
+"yl" = (/obj/effect/turf_decal/stripes/white/line,/obj/machinery/computer/pod/old/mass_driver_controller{id = "caveslvldumbjump3"; name = "Rapid Mineral Transport Control"; pixel_x = -28},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"yI" = (/obj/structure/barricade/sandbags,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"yL" = (/obj/effect/turf_decal/stripes/white/line{dir = 6},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"zf" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"zH" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/corner{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"zL" = (/turf/open/floor/iron,/area/template_noop)
+"zN" = (/obj/machinery/atmospherics/pipe/layer_manifold,/obj/structure/cable,/turf/open/floor/plating,/area/template_noop)
+"zV" = (/obj/structure/marker_beacon/yellow,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Ah" = (/obj/machinery/conveyor{id = "caves_depo4"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"Bu" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/structure/railing/corner{dir = 4},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"BN" = (/obj/effect/turf_decal/stripes/white/line,/obj/structure/marker_beacon/yellow,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Cg" = (/obj/machinery/conveyor{dir = 9; id = "caves_depo1"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"CE" = (/obj/structure/lattice/lava{base_icon_state = "lattice"; icon = 'icons/obj/smooth_structures/lattice.dmi'; icon_state = "lattice-255"},/turf/open/chasm/lavaland,/area/template_noop)
+"CM" = (/obj/machinery/conveyor/inverted{dir = 5; id = "caves_depo1"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"CT" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo1"},/obj/structure/plasticflaps,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"DO" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/mass_driver{dir = 8; id = "caveslvldumbjump5"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"Ed" = (/obj/machinery/conveyor{dir = 9; id = "caves_depo5"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"Ee" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/structure/railing{dir = 8},/obj/structure/railing{dir = 4},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"ER" = (/obj/effect/turf_decal/stripes/white/line{dir = 9},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"EU" = (/obj/machinery/atmospherics/components/tank/oxygen,/turf/open/floor/plating,/area/template_noop)
+"EY" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Gj" = (/obj/machinery/conveyor{id = "caves_depo2"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"Gm" = (/obj/effect/turf_decal/stripes/white/line{dir = 8},/obj/structure/marker_beacon/yellow,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Gn" = (/turf/open/floor/plating,/area/template_noop)
+"Gw" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"GG" = (/obj/structure/railing{dir = 1},/obj/structure/railing,/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"GM" = (/obj/structure/ore_box,/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Hk" = (/obj/structure/flora/ash/tall_shroom,/obj/effect/turf_decal/stripes/white/line{dir = 10},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Hl" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/corner{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Hn" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/iron,/area/template_noop)
+"HP" = (/obj/effect/decal/cleanable/dirt,/obj/structure/sign/warning/xeno_mining/directional/east,/turf/open/floor/iron,/area/template_noop)
+"IA" = (/obj/effect/turf_decal/stripes/white/corner{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"IG" = (/obj/machinery/door/airlock/external/glass{name = "Mining External Airlock"},/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"Js" = (/obj/effect/turf_decal/stripes/white/line{dir = 5},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"JA" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/obj/structure/sign/warning{desc = "A sign warning you about how falling into the elevator shaft is a bad idea."; name = "WARNING: Lethal Fall Hazard"; pixel_x = 0; pixel_y = -32},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"JD" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 9; id = "caves_depo2"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"JE" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor/inverted{dir = 6; id = "caves_depo2"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"Km" = (/obj/effect/mine/explosive{range_heavy = 0},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"KI" = (/obj/machinery/mass_driver{id = "caveslvldumbjump2"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"KK" = (/obj/effect/turf_decal/stripes/white/corner{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"KP" = (/obj/structure/flora/ash/tall_shroom,/obj/effect/turf_decal/stripes/white/line,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Lw" = (/obj/machinery/power/terminal{dir = 1},/obj/structure/cable,/turf/open/floor/plating,/area/template_noop)
+"LS" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 8; id = "caves_depo3"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"MX" = (/obj/structure/flora/rock,/obj/effect/turf_decal/stripes/white/corner{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"MZ" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"Na" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/loading_area,/obj/item/stock_parts/cell/empty,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"Nc" = (/obj/machinery/power/rtg,/turf/open/floor/plating,/area/template_noop)
+"NM" = (/obj/structure/cable,/obj/structure/railing{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"NS" = (/obj/structure/flora/ash/tall_shroom,/obj/effect/turf_decal/stripes/white/line{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Ob" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/machinery/computer/pod/old/mass_driver_controller{id = "caveslvldumbjump5"; name = "Rapid Mineral Transport Control"; pixel_x = 0; pixel_y = 28},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"Og" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/structure/sign/warning{desc = "A sign warning you about how falling into the elevator shaft is a bad idea."; name = "WARNING: Lethal Fall Hazard"; pixel_x = 32},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"OF" = (/obj/structure/cable,/turf/open/floor/plating,/area/template_noop)
+"Pa" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 9; id = "caves_depo3"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"Pe" = (/obj/effect/mine/explosive{range_heavy = 0},/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"PE" = (/obj/effect/turf_decal/stripes/white/line{dir = 5},/mob/living/simple_animal/hostile/ashwalker{name = "Hates-The-Technology"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"PG" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/template_noop)
+"PN" = (/turf/closed/wall/rust,/area/template_noop)
+"QF" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,/obj/structure/cable,/turf/open/floor/plating,/area/template_noop)
+"QI" = (/obj/machinery/conveyor{id = "caves_depo2"},/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"QQ" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/iron,/area/template_noop)
+"Rd" = (/obj/structure/flora/ash/tall_shroom,/obj/effect/turf_decal/stripes/white/line{dir = 5},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Ro" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Ru" = (/obj/machinery/conveyor_switch/oneway{id = "caves_depo1"; name = "mining conveyor"},/turf/open/floor/iron,/area/template_noop)
+"RK" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo5"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"RZ" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/line{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Sd" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 1; id = "caves_depo2"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"SQ" = (/obj/effect/turf_decal/stripes/white/corner,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Tx" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/computer/pod/old/mass_driver_controller{id = "caveslvldumbjump2"; name = "Rapid Mineral Transport Control"; pixel_x = 28},/mob/living/simple_animal/hostile/ashwalker{name = "Breaks-The-Bridge"},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"TH" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/mineral/processing_unit_console{machinedir = 2},/turf/closed/wall,/area/template_noop)
+"TJ" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor/inverted{dir = 5; id = "caves_depo4"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"TS" = (/obj/machinery/conveyor/inverted{dir = 6; id = "caves_depo5"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"TZ" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Uk" = (/obj/structure/cable,/obj/structure/railing{dir = 5},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"Uo" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor/inverted{dir = 6; id = "caves_depo3"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"UA" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo1"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"VH" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/structure/railing{dir = 8},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"VJ" = (/obj/machinery/door/airlock/external/glass{name = "Mining External Airlock"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/template_noop)
+"VR" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo2"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"VY" = (/obj/machinery/conveyor_switch/oneway{id = "caves_depo3"; name = "mining conveyor"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"WL" = (/turf/closed/wall/r_wall,/area/template_noop)
+"WP" = (/obj/machinery/conveyor{dir = 10; id = "caves_depo2"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"Xc" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"Xi" = (/obj/effect/turf_decal/stripes/white/line{dir = 10},/obj/structure/marker_beacon/yellow,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"XB" = (/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"YW" = (/obj/machinery/conveyor{dir = 1; id = "caves_depo5"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"YX" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/machinery/computer/pod/old/mass_driver_controller{id = "caveslvldumbjump4"; name = "Rapid Mineral Transport Control"; pixel_x = 28},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"YZ" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 8; id = "caves_depo2"},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
+"Zm" = (/obj/structure/railing{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"ZM" = (/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/south{cell_type = null},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
 
 (1,1,1) = {"
-EKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKBBBBBBBBBBBBBBBBBBBBBKKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBBBBBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAABBBBAAAAABBBBBAAAAAAAABKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMBAAAAAAAAAAAAAAAAAAAABJJBBBBBJJJJBBBBBBBAAABKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMBAAAAAAAAAABBBBBBJJJJJJJJJJJJJJJJJJJJJJBAAABKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMBBBBAAAAAAABBJJJJJJJJJJJJJJJJJJJJJJJBBBBAAABKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMBBBBAAAAAAABJJJJJJJJJJJJJJJJJJJJJJJBBBBBAAABKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAABBJJJJJJJJJJJJJJJJJJBBBBBBBBBBBBAAAAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAABBJJJJJJJJJJJJJJBBBBBBBBSSSSSSSBBBAAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAABBJJJJJJJJJJJJJJBBBBBBSSSSSSSSSSBBBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAABJJJJJJJJJJJJJNNNFNBSSSSSSSSSSSSSBBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAABJJJJJJJJJJJJNNVNNNNNNNNNNNSSSSSSSBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAABJJJJJJJJJJJJNFNNNNNNNNNFFNNNSSSSSBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAAJJJJJJJJJJJJJNNNoNNBBBNNNNNNNNVSSBBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAAJJJJJJJJJJJJJNNNNNNBBBNNNNNNNVRVSBBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAABJJJJJJJJJJJFNNNFFBBBBBBNNNNNNVVBBBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAABBJJJJJJJJJJFNNVBBAAAAAAVVNNNNNVNBBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAABBBBBBBBJJJJJNoNBBAAAAAAABBVFNNNNNBBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAABBBJJJJJJJJJJNNNBBAANNAAABBRVFNNNNBBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMMMMBAAAJJJJJJJJJJJJJNNNBABNNNAAAABRVFNNNNBBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMBBBBAAAJJJJJJJJJJJJJNNBBABNFNNNAABBBNNNNNBBAKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMBAABBAJJJJJJJJJJJJJJNNNBABNNNNFBBBBBBNNNNNBBKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMBAABBBJJJJJJJJJJJJJJNNNBAABFNNNNNBBBBNNNNFBBKMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-KBMMMMMMMMMMMMMMMMMMMBAAABJJJJJJJJJJJJJJJNNNBAABBNFNNNBBBBNNNNFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-KBMMMMMMMMMMMMMMMMMMMBAAABBBBBJJJJJJJJJJJNNNBAABBNNNNNNNBBBNNNFNNBBBBBAABBBNNVVNNNBBBYYBBBAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBB
-KBMMMMMMMMMMMMMMMMMMMBAAABBBBBBBJJJJJJJJJNNNBBAANFNBBNNNBBBNNNNNVVRVBBAABNNNNNNNNNNNNYnYYYBBBBBAAAAAAAAAAAAAABBJBBBLLLLLLB
-KBMMMMMMMMMMMMMMMMMMMBBBABJJJJJJJJJJJJJJJJNNJJAABBNBBBBNNNNNNNNNNNVNBBAANNNNNBBBNNnnnNnNYYYYBBBBBBBBBBBBBAAAABBJBBBLLLLLLB
-KBMMMMMMMMMMMMMMMMMMMBBBJJJJJJJJJJJJJJJJJJNNJJBBBFNFBBBBBBBNNNNNNNNNNBBBNNNNBBBBBYNnZnnpnNNYYNNNNNNNNNNNBAAAABJJBBBLLLLLLB
-KBMMMMMMMMMMMMMMMMMMMAAJJJJJJJJJJJJJJJJJJJNNJJJJBNFNBJJJJJJJNNNNNNNNNNBBNNNBBBYYYYYnnnnnnnnnnnNNNNNNNNNNNBABBJJJJBBLLLLLLB
-KBMMMMMMMMMMMMMMMMMMMBBJJJJJJJJJJJJJJJJJJJNNJJJJBBBBBJJJJJJJVNNNNNNNNNBNNNNDQNXInnnpnnYnZnnnNNNNNNNNNNNNNNBJJJJJJJBLLLLLLB
-KBMMMMMMMMMMMMMMMMMMMBBBBBBJJJJJJJJJJJJJJJNNJJJJJJBBJJJJJJJJJJJJNVVNNNNNNNDQDNqNQDNNnYYnnNNNVVBBBBBNNNNNNNNJJJJJJJBLLLLLLB
-KBMMMMMMMMMMMMMMMMMMMBBBBJJJJJJJJJJJJJJJJNNNNJJJJJBBJJJJJJJJJJJJJJJJNNNNNNNgNBBDDNVNNnnnNNNVRVBBBBBBBBBNNNvJJJJJJJBLLLLLLB
-KBMMMMMMMMMMMMMMMMMMMBBBBBJJJJJJJVJJJJJJJNNNNJJJJJBJJJJJBJJJJJJJJJJJJJJJNNNBBBBBBBJJJJJJJJNVBBBAAABBJJJNNNNJJJJJJJBLLLLLLB
-KBMMMMMMMMMMMMMMMMMMMBJJJJJJJJJJJVBJJJJJJNNNNJJJJJJJJJJJBJJJJJJJJJJJJJJJJJJBBAABBJJJJJJJJJNNBBBAAABBJJJvNNNJJJJJJJJJBLLLBB
-KBMMMMMMMMMMMMMMMMMMMBJJJJJJJJJBBwBBJJJJJNNNNJJJJJJBBBBBBBJJJJJJJJJJJJJJJJJJBAABJJJJJJJJJJJJJJBAAABJJJJNNNvJJJJJBBBBBLLLBB
-BBBBBNNNtNNNBBBBBBBBBBJJJJJJJJJJJBBJJJJJJNNNNJJJJJJJJJJBBBBBBJJJJJJJJJJJJJJJBBBJJJJJJJJJJJJJJJBAAABJJJJJNNJJJJBBBLLLLLLLLB
-BBBBBBVNNNNVNBBAAAAABJJJJJJJJJJJJJJJJJNNNNVNNJJJJJJJJJJJBJJJJJJJNNNNNJJJJJJJJBBJJJJJJJJJJJJJJJBBBBBJJJJJNNJJJJJJBBBBBBBLLB
-BBAABBVVNNNNNNBAAAAABJJJJJJJJJJJJJJJJJNcNNVNNNNNNVJJJJJJBJJJJNWNNVVVVVNNJJJJJBJJJJJJJJJJJJJJJJJJBBJJJJJNNNVJJJJJJJJJJBBLLB
-BBAABBBNNNNNVVBBBBBBBJJJJJJJJJJJJJJJJJNNVLNNNNNNNNNVNJJJJJNVNNNNWWVVVRNNNNNJJBJJJJJJJJJJJJJJJJJJBBJJJJJNNNVJJJJJJJJJJJBBBB
-BBAABiiNNNNNNNBBBvVNNNNNJJJJJJJJJJJJNNNNLLLicNJJJJJJJJJJJJJJJJNNNNWWNVVVNNNNNNJJJJJJJJJJJJJJJJJJBJJJJJJvNVVJJJJJJJJJJJJBBB
-BAAAABiNNNNNNNNBNNVRVNNNNNNJJJJJJJJJNNNLLLiiNNJJJJJJJJJJJJJJJJJJNNNNNJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJNNVRJJJJJJJJJJJJBBB
-BAAAABNNNNNNNNNBvNvVVNNNNNNNNNNNNNNNVcNNLiiVNNNNJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJNNvVJJJJJJJJJBBBBBB
-BAAAABNVVNVNNNNNNNvVVNNNNNNVNNNNNNNNNNNNNNNcNNNNNNNJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJNNNNJJJJJJBBBBLLLBB
-BAAAABBVVNNNNNNNNNNVNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJNNNNJJJJJJBBBBBLLLBB
-BAAAAABRVVNNNNNNNNNNNNNNNNNNNNNVNNNNNNNJJJJNNNNNNNNNNNNNJJJJJJJJJJJJJJJJJJJJJJJJJBJJJJJJJJJJJJJJJJJJJJNNNNJJJJJJJJJJBBBBBB
-BAAAAABBRVNNNNNNNNNNNNNNNNNNNNNNNNJJJJJJJJJJJJJNNNNNNNNNNHHHHJJJJJJJJJJJJJJJJJJJJBJJJJJJJJJJJJJJJJJJJJNNNJJJJJJJJJJJJJJLLB
-BAAAAABBBVvNNNNNNVVVVVNNNNNJJJJJJJJJJJJJJJJBJJJJJJJNNNNHNVVVHJJJJJJJJJJJJJJJJJJJJBJJJJJJJJJJJJJJJJJJJJNNNJJJJJJJJJJJJJJLLB
-BAAAAAAABJJJJJvvVVVVVNNNJJJJJJJJJJJJJJJJJJJBJJJJJJJJNNNNNHVHNNNJJJJJJJJJJJJJJJJJJBJJJJJJJJJJJJJJJJJJJJNNNJJJJJJJJJJJJBBLLB
-BAAAAAAABBJJJJJJJJJJJJJJJJJJJJBJJJJJJJJJJJBBBJJJJJJJVVNNNNNNNNNNNJJJJJJJJJJJJJJBBBBBJJJJJJJJJJJJJJJJNNNNJJJJJJJJJJJJNNBLLB
-BAAAAAAAAABBBBJJJJJJJJJJJJJJJBBBJJJJJJJJJBBBBBJJJJJJJJJJJJNNNNNNNNNNJJJJJJJJJJJBAAABJJJJJJJJJJJJJJJJNNNNJJJJJJJJJJJJNNBLLB
-BAAAAAAAAAAABBJJJJJJJJJJJJJJJBBBJJJJJJJJJJJBJJJJJJJJJJJJJNNNNNNNNNNNNNNJJJJJJJJBAAABJJJJJJJJJJJJJJJJNNNNJJJJJJJJJJJJNNBLLB
-BAAAAAAAAAAABBBBBJJJJJJJJJJBBAABBBJJJJJJJJJJJJJJJJJJJJVRVNNNNNNNNNNNNNNNNNNNNBBBAAABBBBBJJJJJJJJJJJNNNNNJJJJJJJJJNVVVNBLLB
-BAAAAAAAAAAAAAAABBBBBBBJJJJBBAABBBJJJJJJJJJJJJJJJJJJJNVVVVNNNNNNNNNNNNVVVNNNNBAAAAAAAAAAJJJJJJJJJNNNNNNNNJJJJJJJJNVRVBBLLB
-BAAAAAAAAAAAAAAABBBBBBBBBBBBBAAAABBBBBBBddNNNdNNNNNNNNNNNNNNNVVNNNNNNVRBBBBBBBAAAAAAAAAABNNNVRVVNNNNNNNNNNNWNWNNNNNNNBBLLB
-BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBdNNNNNNNNNNNVVRBBAAAAAAAAAAAAAAAAAAAAAAAABBWNNVVNNNNNNNNNNWNNNWNNNNBBBBBLLB
-BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBNNNNNNNNBBLLLLLLLLLLLLLLLLB
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBNNNNNBBBBLLLLLLLLLLLLLLBBB
-MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMhMMMMMMMMMMMMMMMMMMMMMMM
+aEaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaKaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaAaAaAaAaAaBaBaBaBaBaAaAaAaAaAaAaAaAaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaJaJaBaBaBaBaBaJaJaJaJaBaBaBaBaBaBaBaAaAaAaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaAaAaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaBaAaAaAaAaAaAaAaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaAaAaAaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaBaAaAaAaAaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaAaAaAaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaBaBaBaBaBaBaBaAaAaAaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaBaBaBaSaSaSaSaSaSaSaBaBaBaAaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaBaSaSaSaSaSaSaSaSaSaSaBaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaNSQjHKPeAaBaSaSaSaSaSaSaSaSaSaSaSaSaSaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaNaNTZbLGwGweNkWkWkWPNhXaNaNaSaSaSaSaSaSaSaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJSQbLeAERGwnKGwGwdmcwNaGwlmeAeAeAeAaSaSaSaSaSaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaJaJaJaJaJaJaJaJaJaJaJaJTZTJefefefefefefxsefefefRKRKRKRKTShXaVaSaSaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaJaJaJaJaJaJaJaJaJaJaJzVTZAhzfzfbJzfzfzfzfzfzfZMpEpEpEpEYWRZaRaVaSaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaJaJaJaJaJaJaJaJaJaNaNodAhzfyLPNGwGwGwGwGwGwbLGMtcXipEYWPEjeHlaBaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaBaJaJaJaJaJaJaJaJaNaNodsYMZRZaBaBaAaAaAaAaAaAaVaVTZpEEdRKTSRZaNaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaBaBaBaBaBaBaBaBaJaJaJaNaNTZKITxbLaBaAaAaAaAaAaAaAaBaBEYpEpEpEYWJsBNaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaBaBaBaJaJaJaJaJaJaJaJaNaNaJCEVHaBaBaAaAaNaNaAaAaAaBaBMXRoHkpEEdRKTSaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaJaJaJaJaJaJaJaJaJaJaJaJaJaJCECEaBaAaBaNaNaNaAaAaAaAaBaRaVodpEpEpEYWaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaBaAaAaAaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaBaNaFaNaNaNaAaAaBaBaBKKhliYpEYWaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaBaBaAaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaBaNaNaNaNaFaBaBaBaBaBaBaNTZpEYWhXaBaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJCEaBaAaAaBaFaNaNaNaNaNaBaBaBaBaNTZpEYWNSaBaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJCECEaBaAaAaBaBaNaFaNaNaNaBaBaBaBaNTZpEYWRdKPKPaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJCEVHaBaAaAaBaBaNaNaNaNaNaNaNaBaBaBTZpEEdRKRKTSbLaBaBaBaBaAaAaBaBPNeAeAjejeeAeAeAaBaBaBaYaYaBaBaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaBaBaBaBaBaBaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaBaBaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJflaBaBaAaAaNaFaNaBaBaNaNaNaBaBaBTZpEpEpEpEEdRKRKRKRKRKRKRKRKRKRKRKRKRKRKRKRKRKaNRKaNaYanaYaYaYaBaBaBaBaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaJaBaBaBaLaLaLaLaLaLaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJCEpLCEaJaAaAaBaBaNaBaBaBaBaNaNaNaNKKtctciYpEpEpEpEhLbLaBaAaAtctctcPetcaBaBaBmOrLanananaNanaNaYaYaYaYaBaBaBaBaBaBaBaBaBaBaBaBaBaAaAaAaAaBaBaJaBaBaBaLaLaLaLaLaLaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJCEaJCEaJaBaBaBaFaNaFaBaBaBaBaBaBaBaNzVaNKKtctctctcyIyIaBaBaBaNaNzVaNaBaBaBaBaBaYzVanaZananapanaNaNaYaYaNaNaNaNaNaNaNaNaNaNaNaBaAaAaAaAaBaJaJaBaBaBaLaLaLaLaLaLaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaAaAaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaNaFaNaBaJaJaJaJaJaJaJaNaNaNaNaNaNaNyIaNzVaBaBaNaNaNaBaBaBaYaYaYaYaYanananananananananananaNaNaNaNaNaNaNaNaNaNaNaBaAaBaBaJaJaJaJaBaBaLaLaLaLaLaLaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaJaJaJaJaJaJaJaVaNaNaNaNaNaNyIaNKmaBaNaNaNaNaDaQaNaXaIanananapananaYanaZanananaNaNaNaNaNaNaNaNaNaNaNaNaNaNaBaJaJaJaJaJaJaJaBaLaLaLaLaLaLaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaJaJaJaJaJaJaJaJaJaJaJaJaNaVoXbLaNaNaNaNaNaNaDaQaDaNaqaNaQaDaNaNanaYaYananaNaNaNaVaVaBaBaBaBaBaNaNaNaNaNaNaNaNaJaJaJaJaJaJaJaBaLaLaLaLaLaLaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJCEaJaJaJaJaJaJaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNzVaNKmaNaNagaNaBaBaDaDaNaVaNaNanananaNaNaNaVaRaVaBaBaBaBaBaBaBaBaBaNaNaNavaJaJaJaJaJaJaJaBaLaLaLaLaLaLaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBbLaBaJaJaJaJaJaJaJaVaJaJaJaJaJaJaJaJaJEeCEaJaJaJaJaJaBaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaBaBaBaBaBaBaBaJaJaJaJaJaJaJaJaNaVaBaBaBaAaAaAaBaBaJaJaJaNaNaNaNaJaJaJaJaJaJaJaBaLaLaLaLaLaLaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMbLbLbLbLbLbLaJCEaJaJaJaJaJaJaJaJaVaBaJaJaJaJaJaJaJCEEeCEaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaAaAaBaBaJaJaJaJaJaJaJaJaJaNaNaBaBaBaAaAaAaBaBaJaJaJavaNaNaNaJaJaJaJaJaJaJaJaJaBaLaLaLaBaB
+aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMWLWLWLfkOFsqEUbLaJCEaJaJaJaJaJaJaBaBawaBaBaJaJaJaJaJaJCEEeCEaJaJaJaJaJaJaBaBaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaAaAaBaJaJaJaJaNaNaNavaJaJaJaJaJaBaBaBaBaBaLaLaLaBaB
+aBaBaBaBaBaNaNaNataNaNaNaBaBaBWLNcfyLwGnxVtUbLaJCEaJaJaJaJaJaJaJaJaBaBaJaJaJaJbLnqTZsshFhXaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaAaAaBaJaJaJaJaJaNaNaJaJaJaJaBaBaBaLaLaLaLaLaLaLaLaB
+aBaBaBaBaBaBaVaNaNaNaNaVaNaBaBWLWLWLOFGnxVGnbLaJCEaJaJaJaJaJaJaJaJaJaJaJaJaJbLzVaNTZopOgbLaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaNaNaNaNaNaJaJaJaJaJaJaJaJaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaJaJaJaJaJaNaNaJaJaJaJaJaJaBaBaBaBaBaBaBaLaLaB
+aBaBaAaAaBaBaVaVaNaNaNaNaNaNaBWLutfyOFGnQFGnbLbLbLaJaJaJaJaJaJaJaJaJaJaJaJaJZmXBXBXBQIzfhXaNaNzVaNaVaJaJaJaJaJaJaBaJaJaJaJaNaWaNaNaVaVaVaVaVaNaNaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaJaJaJaJaJaNaNaNaVaJaJaJaJaJaJaJaJaJaJaBaBaLaLaB
+aBaBaAaAaBaBaBaNaNaNaNaNaVaVbLWLWLWLbLbLzNbLbLkcbLCECECECECECECECECECECECECEZmXBGwjMGjzfJseAeAcPaNaNaNaVaNaJaJaJaJaJaNaVaNaNaNaNaWaWaVaVaVaRaNaNaNaNaNaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaJaJaJaJaJaNaNaNaVaJaJaJaJaJaJaJaJaJaJaJaBaBaBaB
+aBaBaAaAaBaiaiaNaNaNaNaNaNaNbLPGbLzLzLzLQQdSIGMZIGwFwFwFwFwFwFwFwFwFwFwFuUnMbnMZMZXcGjzfzfzfzfhXaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaWaWaNaVaVaVaNaNaNaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJavaNaVaVaJaJaJaJaJaJaJaJaJaJaJaJaBaBaB
+aBaAaAaAaAaBaiaNaNaNaNaNaNaNVJPGVJHnzLzLzLHPbLbLbLCECECECECECECECECECECEsWyleAeAhrbLGjYZYZJEYXbLaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaVaRaJaJaJaJaJaJaJaJaJaJaJaJaBaBaB
+aBaAaAaAaAaBaNaNaNaNaNaNaNaNbLbLbLzLzLzLzLRubLCMCTaJaJaJaJaJaJaJaJaJaJaJuDVRVRVRVRVRWPbLiYSdhFCECECECEaJaJaJaJaJaJaJPNCECECEaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNavaVaJaJaJaJaJaJaJaJaJaBaBaBaBaBaB
+aBaAaAaAaAaBaNaVaVaNaVaNaNaNaNaNfEzLzLzLzLzLGntVbLaJaJaJaJaJaJaJaJaJaJaJtctctctctctcbLIAJASdBuqAGGGGaJaJaJaJaJaJaJCEObttUkCEaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaJaJaJaJaJaJaBaBaBaBaLaLaLaBaB
+aBaAaAaAaAaBaBaVaVaNaNaNaNaNaNaNfEzLzLzLzLzLfEtmbLaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNzVaNaNbLJDYZxfCECEaJaJaJaJaJaJaJDOLSUoNMCEaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaJaJaJaJaJaJaBaBaBaBaBaLaLaLaBaB
+aBaAaAaAaAaAaBaRaVaVaNaNaNaNaNaNfEzLzLzLzLzLfEgUbLaJaJaJaJaJaJaJaJaJaJaJaJaJaNaJaJaJaJaNKKtctcCEaJaJaJaJaJaJaJaJaJtciYjJBujDaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaB
+aBaAaAaAaAaAaBaBaRaVaNaNaNaNaNaNbLbLxmbLfEfEbLgUbLaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNTZjJzfGmaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaLaLaB
+aBaAaAaAaAaAaAaBaBaVavaNaNaNaNaNaNbLCgUAUAUAUAhRbLaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaNTZjJzfhXaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaLaLaB
+aBaAaAaAaAaAaAaAaBaJaJaJaJaJavavaVbLbLbLbLbLbLbLbLaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaNTZjJzfhXaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaBaBaLaLaB
+aBaAaAaAaAaAaAaAaBaBaJaJaJaJaJaJaJCEaJaJaJaJaJaJCEaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaNTZjJzfJseAcPaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaNaNaBaLaLaB
+aBaAaAaAaAaAaAaAaAaBaBaBaJaJaJaJaJCEaJaJaJaJaJaJCEaJaJaJaJaBaBaBaJaJaJaJaJaJaJaJaJaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaNaNTZjJzfzfzfJseAeAeAjHaJaJaJaJaJaJaJaJaJaJaJaBaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaNaNaBaLaLaB
+aBaAaAaAaAaAaAaAaAaAaAaBaBaBaJaJaJCEaJaJaJaJaJaJCEaJaJaJaJaBaBaBaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaNaNTZPaUobLexGwGwGwGwGwPNcPaNaJaJaJaJaJaJaJaJaBaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaNaNaBaLaLaB
+aBaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBCEaJaJaJaJaJaJCEaJaJaBaBaAaAaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaVaRaVaNKKiYjJfBGwGwVYTHcwcwGwhXaNaNaNaNaNaNaNaBaBaBaAaAaAaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaNaJaJaJaJaJaJaJaJaJaNaVaVaVaNaBaLaLaB
+aBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBbLaBaBaBaBaBaJCEaJaJaBaBaAaAaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaVaVaVaVaNTZPaLSLSLSLSasLSLSGwhXaVaVaVaNaNaNaNaBaAaAaAaAaAaAaAaAaAaAaJaJaJaJaJaJaJaJaJaNaNaNaNaNaNaNaNaJaJaJaJaJaJaJaJaNaVaRaVaBaBaLaLaB
+aBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaBaBbLaBaBaBaBaAaAaAaAaBaBaBaBaBaBaBadadaNaNaNadaNaNaNaNaNaNaNaNaNaNaNaNaNKKtcbLGwGwGwGwGwGwbLzHaRaBaBaBaBaBaBaBaAaAaAaAaAaAaAaAaAaAaBaNaNaNaVaRaVaVaNaNaNaNaNaNaNaNaNaNaNaWaNaWaNaNaNaNaNaNaNaBaBaLaLaB
+aBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaBaBadaNaNaNaNaNaNaNaNaNaNaNaVaVaRaBaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaWaNaNaVaVaNaNaNaNaNaNaNaNaNaNaWaNaNaNaWaNaNaNaNaBaBaBaBaBaLaLaB
+aBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaBaBaNaNaNaNaNaNaNaNaBaBaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaB
+aBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaNaNaNaNaNaBaBaBaBaLaLaLaLaLaLaLaLaLaLaLaLaLaLaBaBaB
+aMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMahaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
 "}
