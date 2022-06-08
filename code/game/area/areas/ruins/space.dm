@@ -303,7 +303,7 @@
 	name = "Delta Station Biolab"
 	icon_state = "os_delta_biolab"
 
-//KS13, aka TheDerelict.dmm
+//KC13, sometimes KS13, aka TheDerelict.dmm
 
 /area/ruin/space/ks13
 	name = "\improper Derelict Station"
@@ -335,13 +335,13 @@
 /area/ruin/space/ks13/solar_control
 	name = "\improper Derelict Solar Control"
 
-/area/ruin/space/ks13/se_solar
+/area/ruin/solars/ks13/solars_se
 	name = "\improper South East Solars"
 
 /area/ruin/space/ks13/medical
 	name = "\improper Derelict Medbay"
 
-/area/ruin/space/ks13/medical/chapel
+/area/ruin/space/ks13/chapel
 	name = "\improper Derelict Chapel"
 
 /area/ruin/solars/ks13
