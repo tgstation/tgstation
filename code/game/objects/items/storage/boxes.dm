@@ -132,12 +132,6 @@
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
 
-/obj/item/storage/box/survival/maskless
-	mask_type = null
-
-/obj/item/storage/box/survival/maskless/PopulateContents()
-	..()
-
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
@@ -824,6 +818,10 @@
 	playsound(loc, SFX_RUSTLE, 50, TRUE, -5)
 	user.visible_message(span_notice("[user] hugs \the [src]."),span_notice("You hug \the [src]."))
 
+/obj/item/storage/box/hug/black
+	icon_state = "hugbox_black"
+	illustration = "heart_black"
+
 /////clown box & honkbot assembly
 /obj/item/storage/box/clown
 	name = "clown box"
@@ -861,6 +859,18 @@
 
 // Clown survival box
 /obj/item/storage/box/hug/survival/PopulateContents()
+	new /obj/item/reagent_containers/hypospray/medipen(src)
+
+	if(!isplasmaman(loc))
+		new /obj/item/tank/internals/emergency_oxygen(src)
+	else
+		new /obj/item/tank/internals/plasmaman/belt(src)
+
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+		new /obj/item/flashlight/flare(src)
+		new /obj/item/radio/off(src)
+
+/obj/item/storage/box/hug/black/survival/PopulateContents()
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 	if(!isplasmaman(loc))
