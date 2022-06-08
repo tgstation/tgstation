@@ -84,6 +84,29 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	allocated += instance
 	return instance
 
+/datum/unit_test/proc/test_screenshot(name, icon/icon)
+	if (!istype(icon))
+		TEST_FAIL("[icon] is not an icon.")
+		return
+
+	var/path_prefix = replacetext(replacetext("[type]", "/datum/unit_test/", ""), "/", "_")
+
+	var/filename = "code/modules/unit_tests/screenshots/[path_prefix]_[name].png"
+
+	if (fexists(filename))
+		var/data_filename = "data/screenshots/[path_prefix]_[name].png"
+
+		// MOTHBLOCKS TODO: Needed?
+		fdel(data_filename)
+		fcopy(icon, data_filename)
+	else if (fexists("code"))
+		// We are probably running in a local build
+		fcopy(icon, filename)
+		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
+	else
+		// We are probably running in real CI, so just pretend it worked and move on
+		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
+
 /proc/RunUnitTest(test_path, list/test_results)
 	var/datum/unit_test/test = new test_path
 

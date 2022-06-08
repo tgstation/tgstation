@@ -14,76 +14,55 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Show Screenshot Test Results
     runs-on: ubuntu-20.04
-
-    # ⚠ DO NOT RUN USER CODE HERE ⚠
-    # This could mean something like tools/whatever.sh.
-    # This runs on workflow_run, and has access to SECRETS.
-    # There's no checkout step here, that's intentional!
     steps:
-      - name: 'Download artifact'
-        uses: actions/github-script@v3.1.0
-        id: dl_results
-        continue-on-error: true
-        with:
-          script: |
-            const artifacts = await github.actions.listWorkflowRunArtifacts({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               run_id: ${{github.event.workflow_run.id }},
-            });
-
-            const matchArtifact = artifacts.data.artifacts.filter((artifact) => {
-              return artifact.name == "bad-screenshots"
-            })[0];
-
-            if (matchArtifact === undefined) {
-              console.log("No bad-screenshot artifact found")
-              require("process").exit(1)
-            }
-
-            const download = await github.actions.downloadArtifact({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               artifact_id: matchArtifact.id,
-               archive_format: 'zip',
-            });
-
-            const fs = require('fs');
-            fs.writeFileSync('${{github.workspace}}/bad-screenshots.zip', Buffer.from(download.data));
-      - name: What's here
-        if: steps.dl_results.outcome == 'success'
-        run: ls -R .
-      - name: Extract
-        if: steps.dl_results.outcome == 'success'
-        run: unzip bad-screenshots.zip -d bad-screenshots
-      - name: Use deploy key
-        if: steps.dl_results.outcome == 'success'
-        env:
-          DEPLOY_KEY_PRIVATE: ${{ secrets.ARTIFACTS_REPO_DEPLOY_KEY_PRIVATE }}
-        run: |
-          eval `ssh-agent -s`
-          echo "$DEPLOY_KEY_PRIVATE" > ./deploy_key
-          chmod 600 ./deploy_key
-          ssh-add ./deploy_key
-      - name: Checkout assets repository
-        if: steps.dl_results.outcome == 'success'
+      - name: Checkout
         uses: actions/checkout@v3
         with:
-          repository: Mothblocks/screenshot-test-files
-          path: repository
-      - name: Test pushing to the repository
-        if: steps.dl_results.outcome == 'success'
-        run: |
-          echo '🦋' > moth.txt
-          git add moth.txt
-          git config user.name 'Screenshot Tests'
-          git commit -m 'Automated push'
-          git push origin main
-        working-directory: repository
+          repository: "Mothblocks/tgstation"
+          ref: "screenshot-tests"
+      - name: Script test
+        uses: actions/github-script@v6
+        with:
+          script: "require('./tools/show_screenshot_test_results.js')({ github, context })"
+      # - name: Download artifact
+      #   uses: actions/github-script@v3.1.0
+      #   id: dl_results
+      #   continue-on-error: true
+      #   with:
+      #     script: |
+      #       const artifacts = await github.actions.listWorkflowRunArtifacts({
+      #          owner: context.repo.owner,
+      #          repo: context.repo.repo,
+      #          run_id: ${{github.event.workflow_run.id }},
+      #       });
+
+      #       const matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+      #         return artifact.name == "bad-screenshots"
+      #       })[0];
+
+      #       if (matchArtifact === undefined) {
+      #         console.log("No bad-screenshot artifact found")
+      #         require("process").exit(1)
+      #       }
+
+      #       const download = await github.actions.downloadArtifact({
+      #          owner: context.repo.owner,
+      #          repo: context.repo.repo,
+      #          artifact_id: matchArtifact.id,
+      #          archive_format: 'zip',
+      #       });
+
+      #       const fs = require('fs');
+      #       fs.writeFileSync('${{github.workspace}}/bad-screenshots.zip', Buffer.from(download.data));
+      # - name: Extract
+      #   if: steps.dl_results.outcome == 'success'
+      #   run: unzip bad-screenshots.zip -d bad-screenshots
       # - name: Show screenshot test results
       #   if: steps.dl_results.outcome == 'success'
       #   # MOTHBLOCKS TODO: Move this to a tgstation repository
-      #   uses: Mothblocks/show-screenshot-test-results@master
+      #   uses: Mothblocks/show-screenshot-test-results@main
+      #   # MOTHBLOCKS TODO: Max file size
       #   with:
+      #     file-house-key: ${{ secrets.ARTIFACTS_FILE_HOUSE_KEY }}
       #     repo-token: ${{ secrets.GITHUB_TOKEN }}
       #     screenshots-folder: bad-screenshots

@@ -7,65 +7,65 @@ on:
     branches:
     - master
 jobs:
-  run_linters:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    name: Run Linters
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Restore SpacemanDMM cache
-        uses: actions/cache@v2
-        with:
-          path: ~/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
-      - name: Restore Yarn cache
-        uses: actions/cache@v2
-        with:
-          path: tgui/.yarn/cache
-          key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ secrets.CACHE_PURGE_KEY }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install Tools
-        run: |
-          pip3 install setuptools
-          bash tools/ci/install_node.sh
-          bash tools/ci/install_spaceman_dmm.sh dreamchecker
-          tools/bootstrap/python -c ''
-      - name: Run Linters
-        run: |
-          bash tools/ci/check_filedirs.sh tgstation.dme
-          bash tools/ci/check_changelogs.sh
-          bash tools/ci/check_grep.sh
-          bash tools/ci/check_misc.sh
-          tools/bootstrap/python tools/validate_dme.py <tgstation.dme
-          tools/build/build --ci lint tgui-test
-          tools/bootstrap/python -m dmi.test
-          tools/bootstrap/python -m mapmerge2.dmm_test
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
-      - name: Annotate Lints
-        uses: yogstation13/DreamAnnotate@v1
-        if: always()
-        with:
-          outputFile: output-annotations.txt
+  # run_linters:
+  #   if: "!contains(github.event.head_commit.message, '[ci skip]')"
+  #   name: Run Linters
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Restore SpacemanDMM cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/SpacemanDMM
+  #         key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
+  #     - name: Restore Yarn cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: tgui/.yarn/cache
+  #         key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-build-${{ secrets.CACHE_PURGE_KEY }}-
+  #           ${{ runner.os }}-build-
+  #           ${{ runner.os }}-
+  #     - name: Install Tools
+  #       run: |
+  #         pip3 install setuptools
+  #         bash tools/ci/install_node.sh
+  #         bash tools/ci/install_spaceman_dmm.sh dreamchecker
+  #         tools/bootstrap/python -c ''
+  #     - name: Run Linters
+  #       run: |
+  #         bash tools/ci/check_filedirs.sh tgstation.dme
+  #         bash tools/ci/check_changelogs.sh
+  #         bash tools/ci/check_grep.sh
+  #         bash tools/ci/check_misc.sh
+  #         tools/bootstrap/python tools/validate_dme.py <tgstation.dme
+  #         tools/build/build --ci lint tgui-test
+  #         tools/bootstrap/python -m dmi.test
+  #         tools/bootstrap/python -m mapmerge2.dmm_test
+  #         ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+  #     - name: Annotate Lints
+  #       uses: yogstation13/DreamAnnotate@v1
+  #       if: always()
+  #       with:
+  #         outputFile: output-annotations.txt
 
-  compile_all_maps:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    name: Compile Maps
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Restore BYOND cache
-        uses: actions/cache@v2
-        with:
-          path: ~/BYOND
-          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
-      - name: Compile All Maps
-        run: |
-          bash tools/ci/install_byond.sh
-          source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
+  # compile_all_maps:
+  #   if: "!contains(github.event.head_commit.message, '[ci skip]')"
+  #   name: Compile Maps
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Restore BYOND cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/BYOND
+  #         key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
+  #     - name: Compile All Maps
+  #       run: |
+  #         bash tools/ci/install_byond.sh
+  #         source $HOME/BYOND/byond/bin/byondsetup
+  #         tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
 
   find_all_maps:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -77,8 +77,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Find Maps
         id: map_finder
+        # MOTHBLOCKS TODO: Revert
         run: |
-          echo "$(ls -mw0 _maps/*.json)" > maps_output.txt
+          echo "_maps/runtimestation.json, _maps/metastation.json" > maps_output.txt
           sed -i -e s+_maps/+\"+g -e s+.json+\"+g maps_output.txt
           echo "Maps: $(cat maps_output.txt)"
           echo "::set-output name=maps::{\"paths\":[$(cat maps_output.txt)]}"
@@ -92,72 +93,107 @@ jobs:
       fail-fast: false
       matrix:
         map: ${{ fromJSON(needs.find_all_maps.outputs.maps).paths }}
-    services:
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        ports:
-          - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    # services:
+    #   mysql:
+    #     image: mysql:latest
+    #     env:
+    #       MYSQL_ROOT_PASSWORD: root
+    #     ports:
+    #       - 3306
+    #     options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     concurrency:
       group: ci-${{ github.ref }}-${{ matrix.map }}
       cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
-      - name: Restore BYOND cache
-        uses: actions/cache@v2
+      # - name: Restore BYOND cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ~/BYOND
+      #     key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
+      # - name: Setup database
+      #   run: |
+      #     sudo systemctl start mysql
+      #     mysql -u root -proot -e 'CREATE DATABASE tg_ci;'
+      #     mysql -u root -proot tg_ci < SQL/tgstation_schema.sql
+      #     mysql -u root -proot -e 'CREATE DATABASE tg_ci_prefixed;'
+      #     mysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
+      # - name: Install rust-g
+      #   run: |
+      #     sudo dpkg --add-architecture i386
+      #     sudo apt update || true
+      #     sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
+      #     bash tools/ci/install_rust_g.sh
+      # - name: Compile Tests
+      #   run: |
+      #     bash tools/ci/install_byond.sh
+      #     source $HOME/BYOND/byond/bin/byondsetup
+      #     tools/build/build --ci dm -DCIBUILDING -DANSICOLORS
+      # - name: Run Tests
+      #   run: |
+      #     source $HOME/BYOND/byond/bin/byondsetup
+      #     bash tools/ci/run_server.sh ${{ matrix.map }}
+      - name: Test collating screenshots
+        run: |
+          mkdir -p data/screenshots_new
+          cp icons/ui_icons/common/tg_32.png data/screenshots_new/screenshot_basic_red.png
+      - name: Upload screenshot tests
+        if: always()
+        uses: actions/upload-artifact@v3
         with:
-          path: ~/BYOND
-          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
-      - name: Setup database
-        run: |
-          sudo systemctl start mysql
-          mysql -u root -proot -e 'CREATE DATABASE tg_ci;'
-          mysql -u root -proot tg_ci < SQL/tgstation_schema.sql
-          mysql -u root -proot -e 'CREATE DATABASE tg_ci_prefixed;'
-          mysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
-      - name: Install rust-g
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo apt update || true
-          sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
-          bash tools/ci/install_rust_g.sh
-      - name: Compile Tests
-        run: |
-          bash tools/ci/install_byond.sh
-          source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS
-      - name: Run Tests
-        run: |
-          source $HOME/BYOND/byond/bin/byondsetup
-          bash tools/ci/run_server.sh ${{ matrix.map }}
+          name: test_artifacts_${{ matrix.map }}
+          path: data/screenshots_new/
+          retention-days: 1
 
-  test_windows:
+  compare_screenshots:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    name: Windows Build
-    runs-on: windows-latest
+    needs: [run_all_tests]
+    name: Compare Screenshot Tests
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Restore Yarn cache
-        uses: actions/cache@v2
+      # If we ever add more artifacts, this is going to break, but it'll be obvious.
+      - name: Download screenshot tests
+        uses: actions/download-artifact@v3
         with:
-          path: tgui/.yarn/cache
-          key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ secrets.CACHE_PURGE_KEY }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Compile
-        run: pwsh tools/ci/build.ps1
-        env:
-          DM_EXE: "C:\\byond\\bin\\dm.exe"
-      - name: Create artifact
-        run: |
-          md deploy
-          bash tools/deploy.sh ./deploy
-      - name: Deploy artifact
-        uses: actions/upload-artifact@v2
+          path: artifacts
+      - name: Setup screenshot comparison
+        run: npm i
+        working-directory: tools/screenshot-test-comparison
+      - name: Run screenshot comparison
+        run: node tools/screenshot-test-comparison/index.js artifacts code/modules/unit_tests/screenshots artifacts/screenshot_comparisons
+      - name: Upload bad screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
         with:
-          name: deploy
-          path: deploy
+          name: bad-screenshots
+          path: artifacts/screenshot_comparisons
+
+  # test_windows:
+  #   if: "!contains(github.event.head_commit.message, '[ci skip]')"
+  #   name: Windows Build
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Restore Yarn cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: tgui/.yarn/cache
+  #         key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-build-${{ secrets.CACHE_PURGE_KEY }}-
+  #           ${{ runner.os }}-build-
+  #           ${{ runner.os }}-
+  #     - name: Compile
+  #       run: pwsh tools/ci/build.ps1
+  #       env:
+  #         DM_EXE: "C:\\byond\\bin\\dm.exe"
+  #     - name: Create artifact
+  #       run: |
+  #         md deploy
+  #         bash tools/deploy.sh ./deploy
+  #     - name: Deploy artifact
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: deploy
+  #         path: deploy
