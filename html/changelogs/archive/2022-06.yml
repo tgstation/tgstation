@@ -181,3 +181,150 @@
   vincentiusvin:
   - bugfix: fixed a bigger dose of zombie powder permasleeping you
   - bugfix: fixed regular scientists spawning in RD's office in kilo
+2022-06-07:
+  13spacemen:
+  - rscadd: You can now add assemblies to welding fuel tanks to blow them up
+  ATHATH:
+  - rscadd: Bulky crowbars have been added to all fire-safety lockers.
+  - spellcheck: Large crowbars are now named "large crowbars" instead of just "crowbars".
+  - bugfix: Unholy water's stun length reduction effect is now as potent as it was
+      intended to be. Its strength was previously half as strong as it was intended
+      to be due to a copy+paste error.
+  CocaColaTastesGood:
+  - bugfix: Fixes stack multiplier exploit
+  Fikou:
+  - qol: ninjas now get told about pinning modules and the direction to the station
+  - bugfix: fixes modsuits fucking up when unequipping every item, like staff of change
+      or slime toxin or whatever
+  Iamgoofball:
+  - bugfix: You can no longer roll more IDs to steal than there are crewmembers for
+      All Access Fan.
+  - bugfix: Firelocks no longer check the atmospheric contents of solid walls.
+  - bugfix: Health Analyzers now properly flag robotic and prosthetic limbs again.
+  Iatots:
+  - imageadd: Hot Cocoa and Tea now come in mugs again.
+  Jolly, sprites by Blueshirtguy:
+  - rscadd: 'Jolly: Added the flower garland to the crafting tab under clothing! You''ll
+      need 4 of these flowers to craft it: poppies, harebells and roses. It''ll also
+      calm your nerves a bit, if you''re on edge.'
+  - imageadd: 'Blueshirtguy: Sprites for the flower garland on-mob and icon sprites.'
+  Mooshimi:
+  - bugfix: There is now air in the Deltastation security escape pod airlock.
+  Mothblocks:
+  - bugfix: Fixed Adminwho taking several seconds to resolve.
+  Pandarsenic:
+  - bugfix: Corrected a couple of trivial typos.
+  RandomGamer123:
+  - bugfix: Nameless ID cards (with security access) can now access the security records
+      console without issue
+  ReinaCoder:
+  - imageadd: The Soviet costume has been resprited and the russian mobs have been
+      updated to match.
+  Son-of-Space:
+  - bugfix: You can no longer get objectives on a random tile in maintenance on TramStation,
+      along with any other area/based assignments.
+  - bugfix: You can now properly pull or cancel a fire alarm from outside the eastern
+      side of the library on MetaStation.
+  - bugfix: Inspect bounties no longer give you invalid areas to scan for bounties
+  - bugfix: Inspect bounties now properly choose from a broader range of assignments
+      in service, maintenance, commons, etc.
+  SpaceSmithers:
+  - qol: The Tip of the Round will no longer misinform you about PACMAN generators.
+  Wallem:
+  - rscdel: Full Ant Party Pizza pies has been removed. Instead, you can get ant pizza
+      slices by pouring ants on margherita pizza slices.
+  itseasytosee:
+  - balance: Some items are better at damaging structures and robots than others!
+      Don't try to kill a metal death robot with a scalpel, use a toolbox!
+  robbertapir:
+  - bugfix: Photon projector implants can no longer be used in assemblies. This means
+      that they can no longer bilocate.
+  san7890:
+  - rscadd: Nanotrasen has finally tracked down an elusive signal that's been haunting
+      them over all of their broadcasts... there appears to be a new Syndicate Listening
+      Base commissioned.
+  - balance: The odds for a Syndicate Communications Agent (the Space kind) is now
+      at an 15% chance to spawn.
+  - balance: Nanotrasen has now implemented a "buffer zone" on IceBoxStation between
+      the wilderness portions of the moon and the parts where there is a station presence.
+      Hopefully, you should see a lot less fauna try to make their way on station.
+  silicons:
+  - bugfix: infinite loop on process_hit in projectiles when hitting ON_BORDER objects,
+      like windoors
+  timothymtorres:
+  - bugfix: Fix drones not being able to use computers or vault.
+  - bugfix: Fix monkeys being able to read or write.  They are now illiterate however
+      they can gain literacy through the Clever mutation.
+  - bugfix: Fix illiterate mobs being able to receive tablet messages in their chat
+      log.
+2022-06-08:
+  Guillaume Prata:
+  - balance: Eating clothing as Mothpeople will give you cloth fibers instead of nutriment.
+      Cloth fibers give temporary nourishment that gets removed when it finishes metabolizing.
+  JohnFulpWillard:
+  - balance: Station equipment that holds materials (techfabs, ORMs) can't connect
+      to ore silo's on a different Z level.
+  Paxilmaniac:
+  - rscadd: Solar panel assemblies and solar tracker electronics can now be made in
+      an autolathe
+  ReinaCoder:
+  - imageadd: Resprites the white costume found inside the costume vendor.
+  SnoopCooper:
+  - balance: BZ production rates between pipes and turfs are now consistent. O2 production
+      removed.
+  - bugfix: Multiplying production rates by splitting pipenets no longer possible.
+  Son-of-Space:
+  - code_imp: Reorganizes some of the access and jobs access code for readability
+  - balance: The minisat and tcomms are more accessible to engineering roles on skeleton
+      crew, and engineers normally
+  - balance: Service personnel who do not handle corpses have had their morgue access
+      revoked and moved to skeleton crew.
+  - balance: The HOP has had their cremator access revoked, as they are not licensed
+      to handle the dead
+  - balance: The Research Director has had their mining and mining station access
+      removed.
+  - balance: The Research Director has been given construction access to allow for
+      access to the minisat and that access has been removed from the HOP
+  - balance: The roboticist has had their skeleton crew access to ordnance revoked
+      to align with the geneticist's skeleton crew access
+  - balance: Miners no longer have SHIPPING access (previously Mail Sorting)
+  - bugfix: The HOS has proper access to the basics in each department again
+  - bugfix: A holdover access from when genetics was in medical has been removed from
+      the Research Director
+  - bugfix: Paramedics can now access the entrance doors for most departments again
+  - bugfix: Minisats across all maps have proper access requirements to their contents
+  - bugfix: Tech storage now uses its access properly and again requires both command
+      and tech access to get to secure storage
+  Tastyfish:
+  - bugfix: The ID access reader and access checker circuit components now work again
+      with the new string-based access system.
+  - qol: Plumbing now supports 5 layers.
+  - qol: The plumbing constructor can now place ducts and change layer via scroll
+      wheel.
+  - bugfix: Bunch of cryptic failures and errors fixed in placing plumbing.
+  - imageadd: New plumbing duct sprites.
+  TemporalOroboros:
+  - admin: Smoke now logs the last person to touch the source of the smoke as the
+      last person to touch the smoke itself. Gunpowder smoke should be less annoying
+      to log dive as a result as every explosion will log that person.
+  Timberpoes:
+  - bugfix: Fixes issue where lobby buttons were still visable and usable under panic
+      bunker x interview system and also allows use of fix chat verb for interviewees.
+  private-tristan:
+  - bugfix: metastation xenobiology area no longer extends 1 tile into space
+  timothymtorres:
+  - qol: Playing Russian Roulette with lethal intent now creates a mood event for
+      the user and is engrained in any nearby peoples memories. The more bullets the
+      better the memory and mood boost.
+  - qol: Replace red colored beacons on solars/catwalk areas outside Meta to be colored
+      according to department (sec is red, medical is blue, etc.)
+  - rscadd: Add all AI lawsets can now be researched and have their modules printed
+  - rscadd: Add all AI lawsets to random spawners in AI upload
+  - rscadd: Add advanced AI techweb node
+  - balance: Change AI lawsets to be in different random spawner categories
+  - balance: Change lawsets chance for unique AI station trait
+  - balance: Move some lawsets out of AI techweb node and put into advanced AI node
+  - code_imp: Add documentation for AI lawset code
+  - config: Add every AI lawset to game_options config
+  - config: Rebalance AI lawsets in game_options config
+  - bugfix: Lawsets overflow to behave correctly

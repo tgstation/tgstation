@@ -103,6 +103,29 @@
 		/datum/computer_file/program/signal_commander,
 	)
 
+/obj/item/modular_computer/tablet/pda/heads/quartermaster/Initialize(mapload)
+	. = ..()
+	install_component(new /obj/item/computer_hardware/printer/mini)
+
+/obj/item/modular_computer/tablet/pda/heads/quartermaster
+	name = "quartermaster PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#D6B328#6506CA#927444"
+	insert_type = /obj/item/pen/survival
+	default_applications = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/shipping,
+		/datum/computer_file/program/robocontrol,
+	)
+
+/obj/item/modular_computer/tablet/pda/heads/quartermaster/Initialize(mapload)
+	. = ..()
+	install_component(new /obj/item/computer_hardware/printer/mini)
+
 /**
  * Security
  */
@@ -231,25 +254,6 @@
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/robocontrol,
 	)
-
-/obj/item/modular_computer/tablet/pda/quartermaster/Initialize(mapload)
-	. = ..()
-	install_component(new /obj/item/computer_hardware/printer/mini)
-
-/obj/item/modular_computer/tablet/pda/quartermaster
-	name = "quartermaster PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#D6B328#6506CA#927444"
-	insert_type = /obj/item/pen/survival
-	default_applications = list(
-		/datum/computer_file/program/shipping,
-		/datum/computer_file/program/budgetorders,
-		/datum/computer_file/program/robocontrol,
-	)
-
-/obj/item/modular_computer/tablet/pda/quartermaster/Initialize(mapload)
-	. = ..()
-	install_component(new /obj/item/computer_hardware/printer/mini)
 
 /obj/item/modular_computer/tablet/pda/shaftminer
 	name = "shaft miner PDA"

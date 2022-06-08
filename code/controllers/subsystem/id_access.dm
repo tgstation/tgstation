@@ -188,6 +188,12 @@ SUBSYSTEM_DEF(id_access)
 			"templates" = list(),
 			"pdas" = list(),
 		),
+		"[ACCESS_QM]" = list(
+			"regions" = list(REGION_SUPPLY),
+			"head" = JOB_QUARTERMASTER,
+			"templates" = list(),
+			"pdas" = list(),
+		),
 	)
 
 	var/list/station_job_trims = subtypesof(/datum/id_trim/job)
@@ -289,7 +295,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_THEATRE]"] = "Theatre"
 	desc_by_access["[ACCESS_RESEARCH]"] = "Science"
 	desc_by_access["[ACCESS_MINING]"] = "Mining"
-	desc_by_access["[ACCESS_MAIL_SORTING]"] = "Cargo Office"
+	desc_by_access["[ACCESS_SHIPPING]"] = "Cargo Shipping"
 	desc_by_access["[ACCESS_VAULT]"] = "Main Vault"
 	desc_by_access["[ACCESS_MINING_STATION]"] = "Mining EVA"
 	desc_by_access["[ACCESS_XENOBIOLOGY]"] = "Xenobiology Lab"
