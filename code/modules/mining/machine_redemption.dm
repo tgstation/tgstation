@@ -24,6 +24,7 @@
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
 	var/datum/component/remote_materials/materials
+	COOLDOWN_DECLARE(no_silos)
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
@@ -53,7 +54,12 @@
 		return
 
 	if(O?.refined_type)
-		points += O.points * point_upgrade * O.amount
+		if(materials.silo)
+			points += O.points * point_upgrade * O.amount
+		else if(COOLDOWN_FINISHED(src, no_silos)) // no ore silos?
+			balloon_alert_to_viewers("no silo, no points!")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+			COOLDOWN_START(src, no_silos, 5 SECONDS)
 
 	var/material_amount = mat_container.get_item_material_amount(O, BREAKDOWN_FLAGS_ORM)
 
