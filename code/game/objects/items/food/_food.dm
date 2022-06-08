@@ -66,6 +66,12 @@
 	MakeDecompose(mapload)
 	MakeBakeable()
 
+/obj/item/food/examine(mob/user)
+	. = ..()
+	if(foodtypes)
+		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
+		. += span_notice("It's considered as [lowertext(types.Join(", "))]")
+
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/MakeEdible()
 	AddComponent(/datum/component/edible,\
