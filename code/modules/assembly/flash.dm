@@ -324,6 +324,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "memorizer"
 	inhand_icon_state = "nullrod"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
 
@@ -358,6 +360,10 @@
 
 /obj/item/assembly/flash/armimplant/proc/cooldown()
 	overheat = FALSE
+
+/obj/item/assembly/flash/armimplant/screwdriver_act(mob/living/user, obj/item/I)
+	to_chat(user, span_notice("\The [src] is an implant! It cannot be unsecured!"))
+	add_fingerprint(user)
 
 /obj/item/assembly/flash/hypnotic
 	desc = "A modified flash device, programmed to emit a sequence of subliminal flashes that can send a vulnerable target into a hypnotic trance."

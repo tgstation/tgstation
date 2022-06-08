@@ -308,6 +308,9 @@
 /area/awaymission/caves/second_outpost/rest
 	name = "Mining Outpost Echo Rest Area"
 
+/area/awaymission/caves/second_outpost/barracks
+	name = "Mining Outpost Echo Barracks"
+
 /area/awaymission/caves/second_outpost/researchcenter
 	name = "Research Outpost Echo Research Center"
 
@@ -367,6 +370,12 @@
 
 /area/awaymission/caves/misc/syndicate/barracks
 	name = "Recon Outpost Tango-Bravo-443 Barracks"
+
+/area/awaymission/caves/misc/ratvar
+	name = "His Eminence's Domain"
+
+/area/awaymission/caves/misc/ratvar/barracks
+	name = "Corrupted Barracks"	
 
 
 //Lore/fluff items for detailing

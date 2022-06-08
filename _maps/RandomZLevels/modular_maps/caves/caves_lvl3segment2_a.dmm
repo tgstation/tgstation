@@ -8,20 +8,21 @@
 "hh" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "hL" = (/obj/structure/stone_tile/block{dir = 8},/obj/structure/stone_tile/block/burnt{dir = 4},/turf/open/indestructible/boss,/area/template_noop)
 "hQ" = (/turf/open/chasm/lavaland,/area/template_noop)
-"hT" = (/turf/closed/indestructible/riveted,/area/template_noop)
+"hT" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile/block{dir = 1},/obj/structure/mineral_door/transparent{desc = "An iron door with the name 'William The Tall'. A small plaque underneath reads 'May He Forever Reach Past The Stars'."; name = "burial door - 'William The Tall'"},/turf/open/indestructible/boss,/area/template_noop)
 "if" = (/obj/structure/stone_tile/surrounding_tile{dir = 4},/turf/open/indestructible/boss,/area/template_noop)
+"ji" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile/block{dir = 1},/obj/structure/mineral_door/transparent{desc = "An iron door with the name 'Cyrus The Firstborn'. A small plaque underneath reads 'What I wouldn't give for just a glass of water..'."; name = "burial door - 'Cyrus the Firstborn'"},/turf/open/indestructible/boss,/area/template_noop)
 "jC" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "kd" = (/obj/structure/stone_tile/block/cracked{dir = 1},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
 "lA" = (/turf/closed/indestructible/rock,/area/template_noop)
 "mD" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block/cracked{dir = 8},/turf/open/indestructible/boss,/area/template_noop)
 "nx" = (/obj/structure/flora/ash/stem_shroom,/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"oa" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)},/obj/structure/spider/stickyweb,/turf/open/indestructible/boss,/area/template_noop)
+"oa" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)},/obj/structure/spider/stickyweb,/turf/open/indestructible/boss,/area/template_noop)
 "ob" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/structure/closet/crate,/turf/open/indestructible/boss,/area/template_noop)
 "oV" = (/obj/structure/flora/ash/tall_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "pd" = (/obj/structure/stone_tile/slab,/obj/structure/table/wood,/turf/open/indestructible/boss,/area/template_noop)
 "pw" = (/obj/structure/stone_tile/block{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"pz" = (/obj/structure/closet/crate/grave,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
-"qj" = (/obj/effect/decal/cleanable/cobweb,/obj/structure/closet/crate/grave,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"pz" = (/obj/structure/closet/crate/grave,/obj/item/stack/sheet/bone{amount = 2},/obj/item/spear/bamboospear{name = "bamboo stilt"},/obj/item/spear/bamboospear{name = "bamboo stilt"},/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"qj" = (/obj/effect/decal/cleanable/cobweb,/obj/structure/closet/crate/grave,/obj/item/stack/sheet/bone{amount = 3},/obj/item/reagent_containers/food/drinks/waterbottle/relic,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
 "qU" = (/obj/structure/stone_tile/block,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "ru" = (/obj/structure/necropolis_gate,/obj/machinery/door/puzzle/keycard{name = "necropolis gate"; puzzle_id = "justwipedouttomatotown"; open_message = "You slot the blade into the hole and it shudders to life, grinding open."; desc = "A strange gate with runes on it with a slot seemingly for some sort of key, or maybe blade?"},/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block{dir = 8},/turf/open/indestructible/boss,/area/template_noop)
 "tq" = (/obj/structure/stone_tile/block/cracked{dir = 4},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
@@ -32,43 +33,50 @@
 "uS" = (/obj/structure/stone_tile/block/cracked{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "vM" = (/obj/structure/flora/rock/pile,/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "xo" = (/obj/structure/stone_tile/surrounding,/obj/structure/stone_tile/center,/turf/open/indestructible/boss,/area/template_noop)
-"zq" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/mimic/crate{faction = list("mimic", "skeleton")},/turf/open/indestructible/boss,/area/template_noop)
+"zf" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile/block{dir = 1},/obj/structure/mineral_door/transparent{desc = "An iron door with the name 'Workman Of The Wigman'. A small plaque underneath reads 'Shiny and Chrome May His Dome Ever Be'."; name = "burial door - 'Workman Of The Wigmen'"},/turf/open/indestructible/boss,/area/template_noop)
+"zq" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/mimic/crate{faction = list("mimic","skeleton")},/turf/open/indestructible/boss,/area/template_noop)
 "zt" = (/obj/structure/stone_tile/block{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "zA" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile/surrounding_tile{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "zI" = (/obj/modular_map_root/caves{key = "caves_lvl3segment3"; name = "lvl3segment3"},/turf/open/indestructible/boss,/area/template_noop)
 "zJ" = (/turf/template_noop,/area/template_noop)
-"BO" = (/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/structure/closet/crate/grave,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
-"CP" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)},/turf/open/indestructible/boss,/area/template_noop)
+"BO" = (/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/structure/closet/crate/grave,/obj/item/stack/sheet/bone{amount = 2},/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"CP" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)},/turf/open/indestructible/boss,/area/template_noop)
+"Dp" = (/obj/effect/decal/cleanable/cobweb,/obj/structure/closet/crate/grave,/obj/item/stack/sheet/bone,/obj/item/clothing/head/wig/natural,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
 "DC" = (/obj/structure/stone_tile/slab,/turf/open/indestructible/boss,/area/template_noop)
 "DP" = (/obj/structure/stone_tile/block/cracked{dir = 5},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "Ea" = (/obj/structure/flora/ash/seraka,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"Ge" = (/obj/structure/closet/crate/grave,/obj/item/stack/sheet/bone,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
 "Gu" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile/surrounding_tile{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "GP" = (/obj/structure/stone_tile/surrounding_tile{dir = 1},/turf/open/indestructible/boss,/area/template_noop)
 "Ia" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
 "Ji" = (/obj/structure/stone_tile/block/cracked{dir = 9},/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Jw" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile/block{dir = 1},/obj/structure/mineral_door/transparent{desc = "An iron door with the name 'Anthony The Mage'. A small plaque underneath reads 'May His Glowing Incantations Light The Way For The Rest Of Us'."; name = "burial door - 'Anthony The Mage'"},/turf/open/indestructible/boss,/area/template_noop)
 "Kt" = (/turf/open/indestructible/boss,/area/template_noop)
 "KY" = (/obj/structure/stone_tile/slab,/obj/structure/closet/crate,/turf/open/indestructible/boss,/area/template_noop)
 "LN" = (/obj/item/stack/sheet/bone,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
-"Me" = (/obj/structure/closet/crate/grave,/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"LY" = (/obj/structure/closet/crate/grave,/obj/item/stack/sheet/bone{amount = 2},/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"Me" = (/obj/structure/closet/crate/grave,/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/item/stack/sheet/bone,/obj/item/book/granter/spell/charge,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
+"NG" = (/obj/item/stack/sheet/bone{amount = 3},/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
 "Pw" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "Py" = (/obj/structure/stone_tile/slab,/obj/structure/spider/stickyweb,/turf/open/indestructible/boss,/area/template_noop)
 "Qc" = (/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
 "QC" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/structure/table/wood,/turf/open/indestructible/boss,/area/template_noop)
-"QV" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb/cobweb2,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)},/obj/structure/spider/stickyweb,/turf/open/indestructible/boss,/area/template_noop)
+"QV" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb/cobweb2,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)},/obj/structure/spider/stickyweb,/turf/open/indestructible/boss,/area/template_noop)
 "RK" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/indestructible/boss,/area/template_noop)
 "RQ" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "SA" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb,/turf/open/indestructible/boss,/area/template_noop)
 "Tk" = (/obj/structure/necropolis_gate,/obj/structure/stone_tile/slab,/turf/open/indestructible/boss,/area/template_noop)
 "TR" = (/obj/modular_map_connector,/turf/closed/indestructible/riveted/boss,/area/template_noop)
+"UD" = (/obj/effect/decal/cleanable/cobweb,/obj/structure/closet/crate/grave,/obj/item/stack/sheet/bone{amount = 3},/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
 "Vw" = (/obj/structure/stone_tile/slab/cracked,/turf/open/indestructible/boss,/area/template_noop)
 "Ws" = (/obj/effect/decal/remains/human,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
 "Wv" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block{dir = 8},/obj/structure/mineral_door/transparent,/turf/open/indestructible/boss,/area/template_noop)
-"XX" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/mimic/crate{faction = list("mimic", "skeleton")},/obj/item/keycard/office{puzzle_id = "justwipedouttomatotown"'; icon = 'icons/obj/cult/items_and_weapons.dmi'; icon_state = "render"; name = "ritualistic blade"; desc = "A blade used in various rituals. This one has markings on it that seem to match the surrounding necropolis walls."},/turf/open/indestructible/boss,/area/template_noop)
-"YT" = (/obj/structure/stone_tile/slab,/obj/structure/spider/stickyweb,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)},/turf/open/indestructible/boss,/area/template_noop)
+"XX" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/mimic/crate{faction = list("mimic","skeleton")},/obj/item/keycard/office{puzzle_id = "justwipedouttomatotown"'; icon = 'icons/obj/cult/items_and_weapons.dmi'; icon_state = "render"; name = "ritualistic blade"; desc = "A blade used in various rituals. This one has markings on it that seem to match the surrounding necropolis walls."},/turf/open/indestructible/boss,/area/template_noop)
+"YT" = (/obj/structure/stone_tile/slab,/obj/structure/spider/stickyweb,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)},/turf/open/indestructible/boss,/area/template_noop)
 "ZO" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb,/obj/structure/table/wood,/turf/open/indestructible/boss,/area/template_noop)
 
 (1,1,1) = {"
-hThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThThTdedeDCTRdedededehThThThThThThThThThThThThThThThThThThThT
+IaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIadedeDCTRdedededeIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIa
 IaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIadededededeIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIadededededededededeTkdedededededededededeIaIaIaIaIaIaIaIaIaIaIaIaIaIaIa
 lAIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIacUcUcUIaIaIaIaIaIaIaIaIadeDCzqRKdedeIaIaIaIaIaIaIaIaIaIafhIaIaIaIafhIaIaIafhIaIafhfhIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIaIadedededededeGPKtifdededededededeIafhfhfhfhfhfhIaIaIaIafhIaIaIaIalA
 lAIaIaIaIaIaIaIaIauQdededededeIacUcUcURQIaIaIaIacUcUcUcUcURQcUIaIaIaIaRQcUcUIadeDCDCDCDCWvpwRQRQhhhQcUcUfhfhfhfhfhfhIafhfhIaIaIafhfhIaIafhfhIaIaIaIaIaIaIacURQRQRQRQcUIaIaIaIaIaIaIaRQcUdededeDCDCxoDCDCdededededefhfhfhfhfhfhfhfhfhfhfhfhfhfhfhIafhlA
@@ -81,19 +89,19 @@ lAIaRQcUcURQRQRQIaIaIaIaIahQhQhQhQhQIaIaIaIacUuQdePyPyYTDCDCPydeLNWsLNEaWsQcLNRQ
 lAIaIacUcUcURQcUIaIadedededehQhQhQhQIaIaIaIaIacUdedededePyDCPydeIaWsEaWsQcLNuQuQRQRQIaIaIaRQhhhQhQhQIaIaIaIacUcUcUhQhQhQhQhQcUcUcUcUcUIaIaIaIafhfhfhfhfhfhfhfhIafhfhfhfhfhfhcUcURQcUcUcUjCjCdetPdedeIaIaIacUcUcURQRQcUcUIaRQcUcUcUcURQRQRQcUIaIaIafhlA
 lAIaIacUcUcUcUcUcUIadeZOobdehQhQhQhQhQhQIaIaIacUcUcUcUdeYTDCDCdedeIaQcQcWsQcdededecURQcURQRQhQhQhQhQIaIaIaIacUcUcUcUuQhQhQhQhQhQcUcUcUcUIaIaIaIafhIafhfhfhfhfhfhfhfhfhfhfhfhcUcURQcUIajCjCjCdeDCDCdeIaIaIaIaRQRQhhRQIaIaIaIaIacUcUcUcURQRQcUIaIafhfhlA
 lAIaIaRQRQRQcURQcUIadeDCDCdehQhQhQhQhQhQcUIaIaRQRQcUcUdededeDCRKdeIaIaIaIacUdeMedecUcUcUcUhQhQhQhQhQIaIaIaIaIaIadededededehQhQhQhQhQcUcUIaIaIaIaIaIaIafhfhfhfhfhfhfhfhfhfhfhcURQRQcUIaIadededeDCDCdededefhfhcURQRQIaIaIaIaIaIacUcUcUcURQcUcUIaIaIafhlA
-lAIaIaIahhRQcUcUcUIadetPdedeIacUhQhQhQhQcUcUcURQhhRQcUIaIadeDCoadeIaIaIaIadedetPdedeRQcUcUhQhQhQhQcUIaIaIaIaIaIadeDCDCDCWvpwcUhQhQhQcUcUcUIaIafhIafhIafhfhfhfhfhfhfhfhfhfhcURQhhIaIaIaIadepzWvDCDCWvBOdefhfhcUcUcUIaIaIaIaIaIaIacUcUcUcUcUcUcUIaIafhlA
+lAIaIaIahhRQcUcUcUIadetPdedeIacUhQhQhQhQcUcUcURQhhRQcUIaIadeDCoadeIaIaIaIadedeJwdedeRQcUcUhQhQhQhQcUIaIaIaIaIaIadeDCDCDCWvpwcUhQhQhQcUcUcUIaIafhIafhIafhfhfhfhfhfhfhfhfhfhcURQhhIaIaIaIadeLYWvDCDCWvBOdefhfhcUcUcUIaIaIaIaIaIaIacUcUcUcUcUcUcUIaIafhlA
 lAIaIaIaIaIauQcUcUuQcUqURQcUcURQhQhQhQhQcUcURQRQRQcUIaIaIadePyPydeIaIaIaIadeSADCDCdecUuQdededededeuQcUIaIaIaIaIadeDCDCDCdeRQuQhQhQhQhQcURQIaIafhfhfhdedededefhfhfhfhfhfhfhcURQhhIaIaIaIadededeDCDCdededefhfhfhfhfhIaIaIaIaIaIaIaIaIaIaIacUcUcUIaIaIalA
 lAIaIaIaIaIauQuQztcUuQcUcURQRQRQhQhQhQhQhQhQIaIaIaIaIaIaIadetPdedeIaIaoVIadeDCDCDCdecUcUdeDCDCDCWvpwcUcUcUIaIaIadededededehhRQcUcUhQhQcURQIaIaIaIafhdepdobdeIafhfhfhfhfhcURQRQIaIaIaIaIaIacUdeKYKYdeIaIaIafhfhfhfhfhIaIaIaIaIaIaIaIaIaIacUcUcUIaIaIalA
 lAIaIaIaIaIaIadetPdededecURQhhhhIaIacUhQhQhQIaIaIaIaIaIaIaIaqUuQcUoVIaoVdededetPdedeuQtMWvDCDCKYdecUcUcUcUIaIaIaIaIaIaIaIaIaRQRQcUcUhQRQhhRQIaIadededeDCDCdededefhfhfhcUcUcURQcUIaIaIaIaIaIadedededeIaIafhfhfhfhfhfhIaIaIaIaIaIaIaIaIaIacUcUcUcUcUIalA
-lAIaIajCIaIaIadeDCDCQCdeIaIaIaIaIaIacUhQhQhQhQhQIaIaIaIaIaIaoVcURQRQcUuQdeDCDCDCDCdeIaRQdededededecUuQcUIaIaIaIaIaIaIaIaIaIaIacUcUcUcURQRQRQcUIadepzWvDCDCWvpzdeIafhIacUcUcUcUcUIaIaIaIaIaIaIaIaIaIaIaIafhcUuQcURQcUIacUcUcUcUcUIaIaIaIahhcUcUcUcUIalA
+lAIaIajCIaIaIadeDCDCQCdeIaIaIaIaIaIacUhQhQhQhQhQIaIaIaIaIaIaoVcURQRQcUuQdeDCDCDCDCdeIaRQdededededecUuQcUIaIaIaIaIaIaIaIaIaIaIacUcUcUcURQRQRQcUIadeGeWvDCDCWvGedeIafhIacUcUcUcUcUIaIaIaIaIaIaIaIaIaIaIaIafhcUuQcURQcUIacUcUcUcUcUIaIaIaIahhcUcUcUcUIalA
 lAIaIajCIaIaIadeDCDCKYdeIaIaRQhhRQIacUcUIahQhQhQIaIaIaIaIaIaIaRQRQhhRQtMWvDCDCDCKYdeIahhhQhQhQhQcUcUztcUcURQcUcUcURQRQcUcUIacUcUcUcUcURQRQcUcUIadededeDCDCdededefhfhIacUcUcUcUuQcUcURQcUIaIaIaQcWsIaIaIacUcUuQcUcUcUcUcUcUcUcUcUcUcUIaIaIaIacUcUcUIalA
-lAIaIajCIaIadededetPdededecURQRQcUcULNfGIahQhQhQIaIaIaIaIaIaIacURQRQcUuQdeDCDCDCDCdeIaIahQhQhQhQcUdetPdedeuQcUIaIahhRQRQcUIaIaIacUcUcUcUcUcUcUcUcUcUdeDCDCdeIafhfhfhIaIaIacUcUcUcUQcWsQcLNQcQcLNWsQcWsQcWscUcUcUuQuQcUcUcUcUcUcUcUcURQhhRQIaIaIaIaIalA
-lAIaIaRQRQIadeqjWvDCDCDCdecUuQRQfGEaEaWsIahQhQhQhQhQIaIaIaIaIaIaRQuQuQcUdedededededeIaIahQhQhQRQRQdeDCDCdecUcUcUIaIaIaRQcUcUIaIaIaIacUcUcUcUcUcUuQuQdetPdedeIaIafhfhIaIaIacUuQcUuQcUcULNWsQcWsQcEaLNLNQcIaIafhfhfhIanxnxIaRQRQcUcUcURQvMRQIaIaIaIaIalA
+lAIaIajCIaIadededetPdededecURQRQcUcULNfGIahQhQhQIaIaIaIaIaIaIacURQRQcUuQdeDCDCDCDCdeIaIahQhQhQhQcUdetPdedeuQcUIaIahhRQRQcUIaIaIacUcUcUcUcUcUcUcUcUcUdeDCDCdeIafhfhfhIaIaIacUcUcUcUQcWsQcNGQcQcLNWsQcWsQcWscUcUcUuQuQcUcUcUcUcUcUcUcURQhhRQIaIaIaIaIalA
+lAIaIaRQRQIadeUDWvDCDCDCdecUuQRQfGEaEaWsIahQhQhQhQhQIaIaIaIaIaIaRQuQuQcUdedededededeIaIahQhQhQRQRQdeDCDCdecUcUcUIaIaIaRQcUcUIaIaIaIacUcUcUcUcUcUuQuQdetPdedeIaIafhfhIaIaIacUuQcUuQcUcULNWsQcWsQcEaLNLNQcIaIafhfhfhIanxnxIaRQRQcUcUcURQvMRQIaIaIaIaIalA
 lAIaIaRQhhIadededeDCDCDCWvpwcUfGQcWsgiLNEaIaIahQhQhQhQhQhQhQcUcUuQztoVcUcUIaIaIaIaIaIaIahQhQhQhhRQdeDCDCdecUcUcURQIaIacUcUcUcUcUIaIacUcURQcUcUcUcUcUuQqURQhhIaIaIafhIaIaIaIacURQcUIacUcUIafGQcQcgiWsRQIaIaIaIafhfhIaIaIaIaIaRQRQcUcUcUcURQIaIaIaIaIalA
 lAIaIaRQRQIaIaIadededededeuQRQcUWsLNEaWsWsIaIahQhQhQhQhQhQhQhQhQdetPdededehQhQIaIaIaIaIaIahQhQRQIadeDCDCdecUcUcUcUIaIaIaIacUcUcUIaIaIaIaIacUcUcUcURQcUuQRQRQIaIaIaIaIaIaIaIacUIaIaIaIaIaIaRQWsQcLNQcIaIaIaIaIafhfhIaIaIaIaIahhRQRQRQcUcUcUcUIaIaIaIalA
 lAIaIaRQRQIaIaIaIacURQcUcUcURQcUQcfhQcLNEaIaIaIaIahQhQhQhQhQhQhQdePyPyRKdededehQdededehQdededeRQIadedededeRQcUcUcUcUcUIaIaIacUcUcUIaIaIaIaIaIaIaIaRQjCcUuQRQcUcUIaIaIaIaIaIacUIaIaIaIaIaIafGEaWsQcWsIaIaIaIafhfhfhfhfhIaIaIaIaIaIaIaIacUcUcUIaIaIaIalA
-lAIaIajCRQIaIaIaIacUcUcUcUcUcUfhfhfhWsIaIaIaIaIaIahQhQhQhQhQcUcUdePyPyCPdeqjdeIadepzdecUdeqjdeRQIaIaIaIacURQRQRQcUcUcUcUIaIaIacUcUcUcUIaIaIaIaIaRQhhRQcUcUcUcUcUcUjCRQRQIaIacUIaIaIaIaIaIaIacULNQcfGIaIaIaIafhfhfhfhfhfhIadededededecUcUcUcUIaIaIaIalA
-lAIaIacURQIaIaIacUcUcUcURQRQfhfhfhfhfhfhfhfhIaIaIaIaIaIaIaIacUcUdeDCPyDCdetPdededetPdededetPdedeIaIaIaIaIaRQhhRQcUcUcUcURQRQIaIaIaIaIaIaIaIaIaIaIaIaIaIacUcUcUcUcUcUjCjCIaIaIaIaIaIadedededeIaQcIaIaIaIaIafhfhfhfhfhfhfhfhdeDCDCDCdeuQcUuQcUIaIaIaIalA
+lAIaIajCRQIaIaIaIacUcUcUcUcUcUfhfhfhWsIaIaIaIaIaIahQhQhQhQhQcUcUdePyPyCPdeDpdeIadepzdecUdeqjdeRQIaIaIaIacURQRQRQcUcUcUcUIaIaIacUcUcUcUIaIaIaIaIaRQhhRQcUcUcUcUcUcUjCRQRQIaIacUIaIaIaIaIaIaIacULNQcfGIaIaIaIafhfhfhfhfhfhIadededededecUcUcUcUIaIaIaIalA
+lAIaIacURQIaIaIacUcUcUcURQRQfhfhfhfhfhfhfhfhIaIaIaIaIaIaIaIacUcUdeDCPyDCdezfdededehTdededejidedeIaIaIaIaIaRQhhRQcUcUcUcURQRQIaIaIaIaIaIaIaIaIaIaIaIaIaIacUcUcUcUcUcUjCjCIaIaIaIaIaIadedededeIaQcIaIaIaIaIafhfhfhfhfhfhfhfhdeDCDCDCdeuQcUuQcUIaIaIaIalA
 lAIaIaIacUjCIaIacUcUcURQRQhhfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhcUcUcUdeCPDCDCDCDCPyPyYTPyPyDCCPDCDCdeIaIaIaIaIacURQcUcUcUcURQRQhhIaIaIaIaIaIaIaIaIaIaIaIaIaIacUcUcUztcUcURQcUIaIaIaIaIaIadeKYQCdeIaIaIaIaIaIaIafhfhfhfhfhfhfhfhdeDCDCDCWvpwcUcUcUIaIaIaIalA
 lAIaIaIajCcUcURQcUcUuQcURQfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhfhdeDCDCDCPyYTPyPyPyDCDCDCDCDCDCWvpwPwPwIaIaIaIacUcUcUcUcUcURQcUcUdededededeIaIaIaIacUcUcUcUcUdetPdecUcUcUcUcUIaIaIaIadeDCDCdeIaIaIaIaIaIaIafhfhfhfhfhfhIaIadededededeuQcUcUcUIaIaIaIalA
 lAIaIaRQcURQRQRQuQcURQcUuQfhfhfhfhfhfhfhfhfhfhfhfhfhIafhfhIaIaIadededededetPdedededededededededecUuQPwRQcUIaIaIaIaIacUcUcURQuQcUdeZOzqQCdeIaIacUcUcURQcUIacUdeDCdededecUcUIahhRQIauQdedetPdeIaIaIaIaIaIaIaIaIafhfhfhIaIaIaIaIaIaIaIacUcUIaIaIaIaIaIalA

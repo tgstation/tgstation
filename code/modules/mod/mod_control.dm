@@ -676,10 +676,12 @@
 		uninstall(part)
 		return
 	if(part in mod_parts)
+		if(!wearer)
+			part.forceMove(src)
+			return
 		retract(wearer, part)
 		if(active)
 			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
-		return
 
 /obj/item/mod/control/proc/on_part_destruction(obj/item/part, damage_flag)
 	SIGNAL_HANDLER

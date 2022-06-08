@@ -177,39 +177,63 @@
 
 	supplied[number + 1] = law
 
-/datum/ai_laws/proc/replace_random_law(law,groups)
-	var/replaceable_groups = list()
-	if(zeroth && (LAW_ZEROTH in groups))
+/**
+ * Removes a random law and replaces it with the new one
+ *
+ * Args:
+ *  law - The law that is being uploaded
+ * 	remove_law_groups - A list of law categories that can be deleted from
+ *  insert_law_group - The law category that the law will be inserted into
+**/
+/datum/ai_laws/proc/replace_random_law(law, remove_law_groups, insert_law_group)
+	var/list/replaceable_groups = list()
+	if(zeroth && (LAW_ZEROTH in remove_law_groups))
 		replaceable_groups[LAW_ZEROTH] = 1
-	if(ion.len && (LAW_ION in groups))
+	if(ion.len && (LAW_ION in remove_law_groups))
 		replaceable_groups[LAW_ION] = ion.len
-	if(hacked.len && (LAW_HACKED in groups))
+	if(hacked.len && (LAW_HACKED in remove_law_groups))
 		replaceable_groups[LAW_ION] = hacked.len
-	if(inherent.len && (LAW_INHERENT in groups))
+	if(inherent.len && (LAW_INHERENT in remove_law_groups))
 		replaceable_groups[LAW_INHERENT] = inherent.len
-	if(supplied.len && (LAW_SUPPLIED in groups))
+	if(supplied.len && (LAW_SUPPLIED in remove_law_groups))
 		replaceable_groups[LAW_SUPPLIED] = supplied.len
+
+	if(replaceable_groups.len == 0) // unable to replace any laws
+		to_chat(usr, span_alert("Unable to upload law to [owner ? owner : "the AI core"]."))
+		return
+
 	var/picked_group = pick_weight(replaceable_groups)
 	switch(picked_group)
 		if(LAW_ZEROTH)
-			. = zeroth
+			zeroth = null
+		if(LAW_ION)
+			var/i = rand(1, ion.len)
+			ion -= ion[i]
+		if(LAW_HACKED)
+			var/i = rand(1, hacked.len)
+			hacked -= ion[i]
+		if(LAW_INHERENT)
+			var/i = rand(1, inherent.len)
+			inherent -= inherent[i]
+		if(LAW_SUPPLIED)
+			var/i = rand(1, supplied.len)
+			supplied -= supplied[i]
+
+	switch(insert_law_group)
+		if(LAW_ZEROTH)
 			set_zeroth_law(law)
 		if(LAW_ION)
 			var/i = rand(1, ion.len)
-			. = ion[i]
-			ion[i] = law
+			ion.Insert(i, law)
 		if(LAW_HACKED)
 			var/i = rand(1, hacked.len)
-			. = hacked[i]
-			hacked[i] = law
+			hacked.Insert(i, law)
 		if(LAW_INHERENT)
 			var/i = rand(1, inherent.len)
-			. = inherent[i]
-			inherent[i] = law
+			inherent.Insert(i, law)
 		if(LAW_SUPPLIED)
 			var/i = rand(1, supplied.len)
-			. = supplied[i]
-			supplied[i] = law
+			supplied.Insert(i, law)
 
 /datum/ai_laws/proc/shuffle_laws(list/groups)
 	var/list/laws = list()

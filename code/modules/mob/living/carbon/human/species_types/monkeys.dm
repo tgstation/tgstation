@@ -29,6 +29,7 @@
 		TRAIT_PRIMITIVE,
 		TRAIT_WEAK_SOUL,
 		TRAIT_GUN_NATURAL,
+		//TRAIT_LITERATE, monkeys shouldn't be able to read or write
 	)
 	no_equip = list(
 		ITEM_SLOT_OCLOTHING,
