@@ -116,6 +116,9 @@
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 
 /obj/item/storage/box/survival/PopulateContents()
+	if(!isnull(mask_type))
+		new mask_type(src)
+
 	if(!isplasmaman(loc))
 		new mask_type(src)
 		new internal_type(src)
@@ -128,6 +131,12 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
+
+/obj/item/storage/box/survival/maskless
+	mask_type = null
+
+/obj/item/storage/box/survival/maskless/PopulateContents()
+	..()
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
@@ -453,7 +462,7 @@
 	name = "box of donk-pockets"
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
-	illustration=null
+	illustration = null
 	var/donktype = /obj/item/food/donkpocket
 
 /obj/item/storage/box/donkpockets/PopulateContents()
@@ -852,7 +861,6 @@
 
 // Clown survival box
 /obj/item/storage/box/hug/survival/PopulateContents()
-	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 	if(!isplasmaman(loc))
