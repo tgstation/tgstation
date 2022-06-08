@@ -57,7 +57,7 @@ const createComment = (screenshotFailures) => {
 	`;
 };
 
-module.exports = async ({ github, context, exec }) => {
+export async function showScreenshotTestResults({ github, context, exec }) {
 	const { ARTIFACTS_FILE_HOUSE_KEY } = process.env;
 
 	// Step 1. Check if bad-screenshots is in the artifacts
