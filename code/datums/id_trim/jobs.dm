@@ -728,9 +728,7 @@
 		ACCESS_KEYCARD_AUTH,
 		ACCESS_COMMAND,
 		ACCESS_EVA,
-		ACCESS_GATEWAY,
 		ACCESS_BRIG_ENTRANCE,
-		ACCESS_TELEPORTER,
 		)
 	extra_access = list()
 	minimal_wildcard_access = list(
