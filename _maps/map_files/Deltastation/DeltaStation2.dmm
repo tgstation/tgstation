@@ -68890,6 +68890,9 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/computer/security/telescreen/vault{
+	pixel_y = 30
+	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "sEm" = (
@@ -136691,7 +136694,7 @@ aad
 aad
 aad
 aad
-rje
+cez
 sEi
 buT
 jCx

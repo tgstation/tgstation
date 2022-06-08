@@ -44257,6 +44257,9 @@
 	dir = 4
 	},
 /obj/machinery/modular_computer/console/preset/id,
+/obj/machinery/computer/security/telescreen/vault{
+	pixel_y = 30
+	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "ogF" = (
@@ -54118,9 +54121,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "rpu" = (
-/obj/machinery/computer/security/telescreen/vault{
-	pixel_y = 30
-	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4

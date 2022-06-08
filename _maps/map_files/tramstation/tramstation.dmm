@@ -16761,7 +16761,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/computer/security/telescreen/vault{
+	pixel_y = 30
+	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "fLZ" = (
@@ -31268,19 +31270,6 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
-"kCL" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
-	name = "Quartermaster's Office"
-	},
-/turf/open/floor/iron,
-/area/station/cargo/qm)
 "kCN" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/command_all,
@@ -45916,6 +45905,7 @@
 	sortType = 3
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "puH" = (
@@ -49153,9 +49143,6 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/head_of_personnel,
-/obj/machinery/computer/security/telescreen/vault{
-	pixel_y = 30
-	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
@@ -67583,6 +67570,8 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Quartermaster's Office"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "wQP" = (
@@ -179472,7 +179461,7 @@ dJV
 dJV
 dJV
 nkJ
-kCL
+aFo
 fLY
 owZ
 aXZ

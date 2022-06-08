@@ -33895,6 +33895,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/computer/security/telescreen/vault{
+	pixel_y = 30
+	},
 /turf/open/floor/wood,
 /area/station/cargo/qm)
 "mbk" = (
@@ -47160,9 +47163,6 @@
 /obj/item/folder/blue,
 /obj/item/storage/secure/briefcase,
 /obj/item/assembly/flash/handheld,
-/obj/machinery/computer/security/telescreen/vault{
-	pixel_y = 30
-	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "qJz" = (
