@@ -44,7 +44,5 @@ GLOBAL_LIST_INIT(valid_icon_sizes, list(32, 48, 64, 96, 128))
 	if(eye != last_eye)
 		eye = last_eye
 
-	// Recenter skybox, lighting.
-	mob?.reload_fullscreen()
-	// We do this aswell because things tend to be buggy if not. Mostly lighting and sprite origin issues.
+	// We do this aswell because things tend to be buggy with the click catcher if not.
 	change_view(getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
