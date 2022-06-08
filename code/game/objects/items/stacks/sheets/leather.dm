@@ -96,8 +96,8 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/animalhide/lizard
 
 GLOBAL_LIST_INIT(lizard_recipes, list ( \
-	new/datum/stack_recipe("lizard skin handbag", /obj/item/storage/backpack/lizard, 5), \
-	new/datum/stack_recipe("lizard skin backpack", /obj/item/storage/backpack/satchel/lizard, 5), \
+	new/datum/stack_recipe("lizard skin backpack", /obj/item/storage/backpack/lizard, 5), \
+	new/datum/stack_recipe("lizard skin handbag", /obj/item/storage/backpack/satchel/lizard, 5), \
 	))
 
 /obj/item/stack/sheet/animalhide/lizard/get_main_recipes()
