@@ -3810,24 +3810,6 @@
 	icon_state = "alien17"
 	},
 /area/centcom/abductor_ship)
-"kM" = (
-/obj/machinery/abductor/experiment{
-	team_number = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"kN" = (
-/obj/machinery/abductor/console{
-	team_number = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"kO" = (
-/obj/machinery/abductor/pad{
-	team_number = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "kP" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien18"
@@ -3973,12 +3955,6 @@
 	icon_state = "alien14"
 	},
 /area/centcom/abductor_ship)
-"lh" = (
-/obj/machinery/computer/camera_advanced/abductor{
-	team_number = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "li" = (
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
@@ -4099,30 +4075,35 @@
 	},
 /area/centcom/abductor_ship)
 "lC" = (
-/obj/item/retractor/alien,
-/obj/item/hemostat/alien,
 /obj/structure/table/abductor,
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"lD" = (
-/obj/effect/landmark/abductor/scientist{
-	team_number = 4
+/obj/item/hemostat/alien{
+	pixel_y = 16
+	},
+/obj/item/surgicaldrill/alien{
+	pixel_y = -7
+	},
+/obj/item/retractor/alien{
+	pixel_y = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
 "lE" = (
 /obj/structure/table/optable/abductor,
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"lF" = (
-/obj/effect/landmark/abductor/agent{
-	team_number = 4
+/obj/item/surgical_drapes{
+	pixel_y = -5
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
 "lG" = (
 /obj/structure/table/abductor,
-/obj/machinery/recharger,
+/obj/machinery/recharger{
+	pixel_y = 0;
+	pixel_x = 7
+	},
+/obj/item/paper/guides/antag/abductor{
+	pixel_y = 0;
+	pixel_x = -5
+	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
 "lH" = (
@@ -4250,11 +4231,16 @@
 	},
 /area/centcom/abductor_ship)
 "lY" = (
-/obj/item/surgical_drapes,
-/obj/item/paper/guides/antag/abductor,
-/obj/item/scalpel/alien,
+/obj/item/scalpel/alien{
+	pixel_y = 7
+	},
 /obj/structure/table/abductor,
-/obj/item/cautery/alien,
+/obj/item/cautery/alien{
+	pixel_y = 15
+	},
+/obj/item/circular_saw/alien{
+	pixel_y = -2
+	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
 "lZ" = (
@@ -4377,8 +4363,14 @@
 /area/centcom/abductor_ship)
 "mu" = (
 /obj/structure/table/abductor,
-/obj/item/surgicaldrill/alien,
-/obj/item/circular_saw/alien,
+/obj/item/toy/plush/abductor{
+	pixel_y = 14;
+	pixel_x = -7
+	},
+/obj/item/toy/plush/abductor/agent{
+	pixel_y = 2;
+	pixel_x = 9
+	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
 "mv" = (
@@ -11455,7 +11447,7 @@
 /area/centcom/syndicate_mothership/control)
 "Hh" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("nukiebase" = "Burn Chamber");
+	atmos_chambers = list("nukiebase"="Burn Chamber");
 	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
 	dir = 1;
 	name = "Ordnance Chamber Monitor"
@@ -12236,24 +12228,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
-"JA" = (
-/obj/machinery/abductor/experiment{
-	team_number = 1
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"JB" = (
-/obj/machinery/abductor/console{
-	team_number = 1
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"JC" = (
-/obj/machinery/abductor/pad{
-	team_number = 1
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "JD" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomehea";
@@ -12271,12 +12245,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/central_command_areas/evacuation/ship)
-"JF" = (
-/obj/machinery/computer/camera_advanced/abductor{
-	team_number = 1
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "JH" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
@@ -12316,14 +12284,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
-"JM" = (
-/obj/effect/landmark/abductor/scientist,
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"JN" = (
-/obj/effect/landmark/abductor/agent,
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "JO" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/end,
 /obj/machinery/vending/hydroseeds{
@@ -12898,24 +12858,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/central_command_areas/evacuation/ship)
-"LK" = (
-/obj/machinery/abductor/experiment{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"LL" = (
-/obj/machinery/abductor/console{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"LM" = (
-/obj/machinery/abductor/pad{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "LN" = (
 /obj/structure/table,
 /obj/item/storage/lockbox,
@@ -12942,24 +12884,6 @@
 /obj/item/paper_bin,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/central_command_areas/evacuation/ship)
-"LS" = (
-/obj/machinery/computer/camera_advanced/abductor{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"LT" = (
-/obj/effect/landmark/abductor/scientist{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"LU" = (
-/obj/effect/landmark/abductor/agent{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "LV" = (
 /turf/closed/indestructible/riveted,
 /area/awaymission/errorroom)
@@ -19094,7 +19018,7 @@ aa
 aa
 ko
 kL
-lh
+Be
 lC
 lY
 ms
@@ -19151,7 +19075,7 @@ aa
 aa
 ko
 kL
-JF
+Be
 lC
 lY
 ms
@@ -19178,7 +19102,7 @@ aa
 aa
 ko
 kL
-LS
+Be
 lC
 lY
 ms
@@ -19350,9 +19274,9 @@ aa
 aa
 aa
 kp
-kM
+Au
 li
-lD
+BQ
 li
 mt
 nc
@@ -19407,9 +19331,9 @@ aa
 aa
 aa
 kp
-JA
+Au
 li
-JM
+BQ
 li
 mt
 nc
@@ -19434,9 +19358,9 @@ aa
 aa
 aa
 kp
-LK
+Au
 li
-LT
+BQ
 li
 mt
 nc
@@ -19607,7 +19531,7 @@ aa
 aa
 aa
 kq
-kN
+Av
 li
 lE
 li
@@ -19664,7 +19588,7 @@ aa
 aa
 aa
 kq
-JB
+Av
 li
 lE
 li
@@ -19691,7 +19615,7 @@ aa
 aa
 aa
 kq
-LL
+Av
 li
 lE
 li
@@ -19864,9 +19788,9 @@ aa
 aa
 aa
 kr
-kO
+Aw
 li
-lF
+BR
 li
 mv
 ne
@@ -19921,9 +19845,9 @@ aa
 aa
 aa
 kr
-JC
+Aw
 li
-JN
+BR
 li
 mv
 ne
@@ -19948,9 +19872,9 @@ aa
 aa
 aa
 kr
-LM
+Aw
 li
-LU
+BR
 li
 mv
 ne
