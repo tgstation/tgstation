@@ -1389,13 +1389,6 @@
 	build_path = /obj/item/mod/module/anomaly_locked/kinesis
 	department_type = MODULE_ENGINEERING
 
-/datum/design/module/criminal_capture
-	name = "MOD Module: Criminal Capture"
-	id = "mod_criminal_capture"
-	materials = list(/datum/material/iron = 1000, /datum/material/gold = 500)
-	build_path = /obj/item/mod/module/criminalcapture
-	department_type = MODULE_SECURITY
-
 /datum/design/module/projectile_dampener
 	name = "MOD Module: Projectile Dampener"
 	id = "mod_projectile_dampener"
