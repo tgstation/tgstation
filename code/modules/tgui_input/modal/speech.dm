@@ -74,7 +74,6 @@
 	else
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators DISABLED.")
 
-
 /**
  * Handles text entry and forced speech.
  *
