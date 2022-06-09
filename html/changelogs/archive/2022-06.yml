@@ -328,3 +328,71 @@
   - config: Add every AI lawset to game_options config
   - config: Rebalance AI lawsets in game_options config
   - bugfix: Lawsets overflow to behave correctly
+2022-06-09:
+  13spacemen:
+  - qol: Fuel and water tanks have examine hints now
+  ATHATH:
+  - rscadd: Cloaks, like surgical drapes and bedsheets, can now initiate surgeries.
+      This change affects both head of staff cloaks and skill capes.
+  Guillaume Prata:
+  - rscadd: Gravity generator blackout is a new random event to spice the rounds.
+  - balance: High intensity gravitational anomalies that don't get neutralized in
+      time will trigger a gravity generator blackout.
+  Iamgoofball:
+  - balance: The Quartermaster is now a Head of Staff, and answers directly to the
+      Captain now.
+  - balance: This comes with all the stuff a Head of Staff normally has, like command
+      access, a telebaton, and a silver ID.
+  - balance: This also comes with no longer being eligible for Head Revolutionary,
+      and being a target for the Revolution.
+  - balance: Thanks to a savvy contract with the Space Teamsters, non-humans are allowed
+      to be Quartermasters still.
+  - balance: The HoP is no longer the lead of Supply, nor does he have access to Supply.
+  - balance: The Warden now carries the torch for pretender royal metabolism, as the
+      last remaining pseudo-head.
+  - code_imp: Removes a hack from the NT IRN code.
+  Iatots:
+  - rscdel: you can't hold bread slices in your mouth (head) anymore.
+  - rscadd: you can hold griddled toast in your mouth (mask).
+  Jakkie Sergal:
+  - rscadd: Added darker floor decals.
+  Jolly:
+  - bugfix: A small bit of Kilos arrivals area define was touched up and fixed. Asteroid
+      rock is not consider part of the station, sorry folks.
+  - qol: On Icebox, some of the warning tapes have been properly rounded off with
+      corners.
+  - bugfix: On Icebox, a vent and scrubber has been added to the primary hall the
+      arrival shuttle drops crew members off at. This should also stop this portion
+      of the hall from having atmos specific issues.
+  Melbert:
+  - bugfix: Dead bodies shouldn't keep jittering for ages.
+  - qol: Research servers are now a bit more clear about why they aren't generating
+      research points. Check the console for more info. If in doubt, turn them off
+      and on again (i'm not kidding).
+  - code_imp: Removed a buncha old, deprecated / unused R&D server code related to
+      them making heat.
+  Pickle-Coding:
+  - bugfix: Fixes bzformation not working.
+  SmArtKar:
+  - bugfix: Fire hallucinations are no longer invisible
+  TehZombehz for the sprites, san7890:
+  - rscadd: For some reason, Donk Co. suddenly found a crate full of alien-themed
+      plushies in their warehouse. They immediately started loading up their arcade
+      machines full of them.
+  Wallem:
+  - rscadd: For the brave smokers out there, legends tell of a new lighting technique
+      involving molten stone from the planet's core. Only the brave are advised to
+      attempt this.
+  Watermelon914:
+  - balance: Traitor objectives have a significantly reduced reputation reduction,
+      making it more viable to gain reputation beyond the expected reputation.
+  robbertapir:
+  - bugfix: You can no longer create negative amounts of alloys in the ORM
+  - bugfix: sechud/medhud buttons in examines now time out after 1 minute. This means
+      that a single examine will no longer allow you to track someone's identity and/or
+      health for the rest of the round.
+  timothymtorres:
+  - rscadd: Add hallucinogen poison to frog attacks
+  zxaber:
+  - rscadd: The Concealed Weapon Bay is available again for traitor Roboticists and
+      Research Directors.
