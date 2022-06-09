@@ -1,0 +1,4 @@
+author: "private-tristan"
+delete-after: True
+changes: 
+  - bugfix: "metastation xenobiology area no longer extends 1 tile into space"

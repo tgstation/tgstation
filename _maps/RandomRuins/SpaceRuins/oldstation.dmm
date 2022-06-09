@@ -7179,10 +7179,6 @@
 	dir = 4
 	},
 /area/ruin/space/ancientstation/delta/biolab)
-"HZ" = (
-/obj/structure/lattice,
-/turf/closed/mineral/plasma,
-/area/space/nearstation)
 "Ia" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/l3closet/scientist,
@@ -7509,10 +7505,6 @@
 /obj/structure/sign/warning/test_chamber/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"Kz" = (
-/obj/structure/lattice,
-/turf/closed/mineral/random,
-/area/space/nearstation)
 "KG" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table/reinforced,
@@ -10552,11 +10544,11 @@ oJ
 lW
 YH
 Jg
-Kz
-Kz
-Kz
-HZ
-HZ
+UP
+UP
+UP
+Uu
+Uu
 Yp
 nm
 nu
@@ -11198,7 +11190,7 @@ aa
 aa
 aa
 Jg
-Kz
+UP
 Jg
 kQ
 cr

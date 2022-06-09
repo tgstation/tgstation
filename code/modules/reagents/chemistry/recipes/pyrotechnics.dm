@@ -336,8 +336,8 @@
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if(S)
-		S.set_up(amount = created_volume * 3, location = location, carry = holder, silent = FALSE)
-		S.start()
+		S.set_up(amount = created_volume * 3, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
+		S.start(log = TRUE)
 	if(holder?.my_atom)
 		holder.clear_reagents()
 
@@ -354,8 +354,8 @@
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if(S)
-		S.set_up(amount = created_volume, location = location, carry = holder, silent = FALSE)
-		S.start()
+		S.set_up(amount = created_volume, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
+		S.start(log = TRUE)
 	if(holder?.my_atom)
 		holder.clear_reagents()
 

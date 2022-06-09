@@ -119,7 +119,26 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 	var/amount = 8
 
 /datum/objective/all_access/find_target(dupe_search_range, blacklist)
-	amount = rand(amount - 2, amount + 2)
+	var/list/possible_targets = list()
+	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
+		var/target_area = get_area(possible_target.current)
+		if(possible_target == owner)
+			continue
+		if(!ishuman(possible_target.current))
+			continue
+		if(possible_target.current.stat == DEAD)
+			continue
+		if(!is_unique_objective(possible_target,dupe_search_range))
+			continue
+		if(!HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(target_area, /area/shuttle/arrival))
+			continue
+		if(possible_target in blacklist)
+			continue
+		possible_targets += possible_target
+	if(length(possible_targets) >= amount + 2)
+		amount = rand(amount - 2, amount + 2)
+	else
+		amount = length(possible_targets)
 
 /datum/objective/all_access/check_completion()
 	. = ..()
