@@ -13498,9 +13498,6 @@
 /obj/effect/landmark/abductor/scientist{
 	team_number = 3
 	},
-/obj/effect/landmark/abductor/agent{
-	team_number = 3
-	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
 "NB" = (
