@@ -116,7 +116,9 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 	for (const directory of fs.readdirSync("bad-screenshots")) {
 		console.log(`Uploading screenshots for ${directory}`);
 
-		let { diffUrl, newUrl, oldUrl };
+		let diffUrl;
+		let newUrl;
+		let oldUrl;
 
 		await Promise.all([
 			uploadFile(path.join("bad-screenshots", directory, "new.png")).then(url => newUrl = url),
