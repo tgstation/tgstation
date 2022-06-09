@@ -23,6 +23,8 @@
 	var/allow_quick_empty = FALSE // show we allow emptying all contents by using the storage object in hand
 	var/collection_mode = COLLECT_ONE // the mode for collection when allow_quick_gather is enabled
 
+	var/can_hold_description // shows what we can hold in examine text
+
 	var/emp_shielded // contents shouldn't be emped
 
 	var/insert_preposition = "in" // you put things *in* a bag, but *on* a plate
@@ -84,6 +86,8 @@
 	RegisterSignal(resolve_parent, COMSIG_MOVABLE_MOVED, .proc/close_distance)
 	RegisterSignal(resolve_parent, COMSIG_ITEM_EQUIPPED, .proc/update_actions)
 
+	RegisterSignal(resolve_parent, COMSIG_TOPIC, .proc/topic_handle)
+
 /datum/storage/Destroy()
 	parent = null
 	boxes = null
@@ -96,6 +100,15 @@
 	is_using.Cut()
 
 	return ..()
+
+/datum/storage/proc/topic_handle(datum/source, user, href_list)
+	SIGNAL_HANDLER
+
+	if(href_list["show_valid_pocket_items"])
+		handle_show_valid_items(source, user)
+
+/datum/storage/proc/handle_show_valid_items(datum/source, user)
+	to_chat(user, span_notice("[source] can hold: [can_hold_description]"))
 
 /// [And now, a message from component storage, brought to you graciously by Lemon]
 /// Almost 100% of the time the lists passed into set_holdable are reused for each instance of the component
@@ -113,7 +126,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!islist(cant_hold_list))
 		cant_hold_list = list(cant_hold_list)
 
-	// can_hold_description = generate_hold_desc(can_hold_list)
+	can_hold_description = generate_hold_desc(can_hold_list)
+
 	if (can_hold_list)
 		var/unique_key = can_hold_list.Join("-")
 		if(!GLOB.cached_storage_typecaches[unique_key])
@@ -125,6 +139,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(!GLOB.cached_storage_typecaches[unique_key])
 			GLOB.cached_storage_typecaches[unique_key] = typecacheof(cant_hold_list)
 		cant_hold = GLOB.cached_storage_typecaches[unique_key]
+
+/datum/storage/proc/generate_hold_desc(can_hold_list)
+	var/list/desc = list()
+
+	for(var/valid_type in can_hold_list)
+		var/obj/item/valid_item = valid_type
+		desc += "\a [initial(valid_item.name)]"
+
+	return "\n\t[span_notice("[desc.Join("\n\t")]")]"
 
 /datum/storage/proc/update_actions()
 	SIGNAL_HANDLER
