@@ -54,7 +54,7 @@ const createComment = (screenshotFailures) => {
 
 			If you need help, you can ask maintainers either on Discord or on this pull request.
 		</details>
-	`;
+	`.replace(/\t/g, ''); // If we keep tabs, it'll become a code block.
 };
 
 export async function showScreenshotTestResults({ github, context, exec }) {
@@ -96,9 +96,9 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 
 		const formData = new FormData();
 
-		formData.set("key", ARTIFACTS_FILE_HOUSE_KEY);
+		formData.append("key", ARTIFACTS_FILE_HOUSE_KEY);
 
-		formData.set("file", fs.createReadStream(filename), {
+		formData.append("file", fs.createReadStream(filename), {
 			filename: path.basename(filename),
 			contentType: "image/png",
 		});
