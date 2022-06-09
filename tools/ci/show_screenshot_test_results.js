@@ -58,7 +58,7 @@ const createComment = (screenshotFailures) => {
 };
 
 export async function showScreenshotTestResults({ github, context, exec }) {
-	const { ARTIFACTS_FILE_HOUSE_KEY } = process.env;
+	const { FILE_HOUSE_KEY } = process.env;
 
 	// Step 1. Check if bad-screenshots is in the artifacts
 	const { data: { artifacts } } = await github.rest.actions.listWorkflowRunArtifacts({
@@ -96,7 +96,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 
 		const formData = new FormData();
 
-		formData.set("key", ARTIFACTS_FILE_HOUSE_KEY);
+		formData.set("key", FILE_HOUSE_KEY);
 
 		formData.set("file", await fileFrom(filename), {
 			filename: path.basename(filename),
