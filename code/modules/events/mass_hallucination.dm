@@ -22,12 +22,13 @@
 			picked_hallucination = get_random_valid_subtype(/datum/hallucination/fake_sound/weird)
 
 		if(3)
+			// Send the same message to everyone
 			picked_hallucination = get_random_valid_subtype(/datum/hallucination/station_message)
 
 		if(4)
-			// Send the same delusion to everyone.
+			// Send the same delusion to everyone, but...
 			picked_hallucination = get_random_valid_subtype(/datum/hallucination/delusion/preset)
-			// Delusion will affect everyone BUT the hallucinator.
+			// The delusion will affect everyone BUT the hallucinator.
 			extra_args = list(
 				/* duration = */30 SECONDS,
 				/* skip_nearby = */FALSE,
@@ -37,9 +38,9 @@
 			)
 
 		if(5)
-			// Send the same delusion to everyone
+			// Send the same delusion to everyone, but...
 			picked_hallucination = get_random_valid_subtype(/datum/hallucination/delusion/preset)
-			// Delusion will affect only the hallucinator.
+			// The delusion will affect only the hallucinator.
 			extra_args = list(
 				/* duration = */45 SECONDS,
 				/* skip_nearby = */FALSE,
@@ -50,7 +51,7 @@
 
 		if(6 to 10)
 			// Send the same generic hallucination type to everyone
-			var/static/list/possible_hallucinations = list(
+			var/static/list/generic_hallucinations = list(
 				/datum/hallucination/bolts,
 				/datum/hallucination/chat,
 				/datum/hallucination/death,
@@ -61,7 +62,7 @@
 				/datum/hallucination/xeno_attack,
 			)
 
-			picked_hallucination = pick(possible_hallucinations)
+			picked_hallucination = pick(generic_hallucinations)
 
 	if(!picked_hallucination)
 		CRASH("[type] couldn't find a hallucination to play. (Rolled: [category_to_pick_from])")
