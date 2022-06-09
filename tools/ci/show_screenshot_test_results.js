@@ -26,7 +26,7 @@ const createComment = (screenshotFailures) => {
 
 		## Help
 		<details>
-			<summary>**What is this?**</summary>
+			<summary>What is this?</summary>
 
 			Screenshot tests make sure that specific icons look the same as they did before.
 			This is important for elements that often mistakenly change, such as alien species.
@@ -36,7 +36,7 @@ const createComment = (screenshotFailures) => {
 		</details>
 
 		<details>
-			<summary>**I am changing sprites, it's supposed to look different.**</summary>
+			<summary>I am changing sprites, it's supposed to look different.</summary>
 
 			If the newly produced sprites are correct, then the tests should be updated.
 
@@ -49,7 +49,7 @@ const createComment = (screenshotFailures) => {
 		</details>
 
 		<details>
-			<summary>**This is a false positive.**</summary>
+			<summary>This is a false positive.</summary>
 
 			If you are sure your code did not cause this failure, especially if it's inconsistent,
 			then you may have found a false positive.
@@ -62,6 +62,11 @@ const createComment = (screenshotFailures) => {
 };
 
 export async function showScreenshotTestResults({ github, context, exec }) {
+	// MOTHBLOCKS TODO: Remove
+	if (true) {
+		return;
+	}
+
 	const { FILE_HOUSE_KEY } = process.env;
 
 	// Step 1. Check if bad-screenshots is in the artifacts
