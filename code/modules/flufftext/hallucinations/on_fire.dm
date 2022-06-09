@@ -18,7 +18,7 @@
 
 /datum/hallucination/fire/start()
 	hallucinator.set_fire_stacks(max(hallucinator.fire_stacks, 0.1)) //Placebo flammability
-	fire_overlay = image('icons/mob/onfire.dmi', hallucinator, "human_burning", ABOVE_MOB_LAYER)
+	fire_overlay = image('icons/mob/onfire.dmi', hallucinator, "human_big_fire", ABOVE_MOB_LAYER)
 	hallucinator.client?.images |= fire_overlay
 	to_chat(hallucinator, span_userdanger("You're set on fire!"))
 	hallucinator.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire, override = TRUE)
@@ -27,6 +27,7 @@
 	return TRUE
 
 /datum/hallucination/fire/Destroy()
+	hallucinator.adjust_fire_stacks(-0.1)
 	hallucinator.clear_alert(ALERT_FIRE, clear_override = TRUE)
 	hallucinator.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
 	if(fire_overlay)

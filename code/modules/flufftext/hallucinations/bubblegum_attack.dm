@@ -15,7 +15,7 @@
 		"NOTHING CAN HOLD ME.",
 	)
 
-/datum/hallucination/oh_yeah/New(mob/living/target, source = "an external source", haunt_them = FALSE)
+/datum/hallucination/oh_yeah/New(mob/living/hallucinator, source = "an external source", haunt_them = FALSE)
 	src.haunt_them = haunt_them
 	return ..()
 

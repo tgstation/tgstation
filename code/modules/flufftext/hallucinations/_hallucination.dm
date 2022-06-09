@@ -104,6 +104,8 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 /**
  * Simple effect that holds an image
  * to be shown to one or multiple clients only.
+ *
+ * Pass a list of mobs in initialize() that corresponds to all mobs that can see it.
  */
 /obj/effect/client_image_holder
 	invisibility = INVISIBILITY_OBSERVER
@@ -134,9 +136,12 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		stack_trace("Client image holder was created with no mobs to see it.")
 		return INITIALIZE_HINT_QDEL
 
+	shown_image = generate_image()
+
 	if(!islist(mobs_which_see_us))
 		mobs_which_see_us = list(mobs_which_see_us)
 
+	who_sees_us = list()
 	for(var/mob/seer as anything in mobs_which_see_us)
 		if(!seer.client)
 			return
@@ -144,6 +149,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		show_image_to(seer)
 		who_sees_us += seer
 		RegisterSignal(seer, COMSIG_PARENT_QDELETING, .proc/remove_seer)
+		RegisterSignal(seer, COMSIG_MOB_LOGIN, .proc/show_image_to)
 
 /obj/effect/client_image_holder/Destroy(force)
 	if(shown_image)
@@ -159,8 +165,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
-	if(shown_image)
-		source.client?.images -= shown_image
+	hide_image_from(source)
 	who_sees_us -= source
 
 	// No reason to exist, anymore
@@ -177,35 +182,39 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		created.color = image_color
 	return created
 
-/// Shows the image we generated to the person hallucinating (the hallucinator var of our parent).
+/// Shows the image we generated to the passed mob
 /obj/effect/client_image_holder/proc/show_image_to(mob/show_to)
-	if(!image_icon)
-		return FALSE
-	if(!show_to.client)
-		return FALSE
+	SIGNAL_HANDLER
 
-	if(shown_image)
-		show_to.client?.images -= shown_image
-	shown_image = generate_image()
 	show_to.client?.images |= shown_image
-	return TRUE
+
+/// Hides the image we generated from the passed mob
+/obj/effect/client_image_holder/proc/hide_image_from(mob/hide_from)
+	SIGNAL_HANDLER
+
+	hide_from.client?.images -= shown_image
 
 /// Simple helper for refreshing / showing the image to everyone in our list.
-/obj/effect/client_image_holder/proc/show_image_to_all()
+/obj/effect/client_image_holder/proc/regenerate_image()
+	for(var/mob/seer as anything in who_sees_us)
+		hide_image_from(seer)
+
+	shown_image = generate_image()
+
 	for(var/mob/seer as anything in who_sees_us)
 		show_image_to(seer)
 
 // Whenever we perform icon updates, regenerate our image
 /obj/effect/client_image_holder/update_icon(updates = ALL)
 	. = ..()
-	show_image_to_all()
+	regenerate_image()
 
 // If we move for some reason, regenerate our image
 /obj/effect/client_image_holder/Moved(atom/OldLoc, Dir)
 	. = ..()
 	if(!loc)
 		return
-	show_image_to_all()
+	regenerate_image()
 
 /obj/effect/client_image_holder/singularity_pull()
 	return

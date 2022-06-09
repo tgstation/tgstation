@@ -1,4 +1,3 @@
-
 /datum/hallucination/station_message
 
 /datum/hallucination/station_message/start()

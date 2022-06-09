@@ -1,4 +1,3 @@
-
 /datum/hallucination/message
 
 /datum/hallucination/message/start()

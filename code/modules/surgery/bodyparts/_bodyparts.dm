@@ -198,13 +198,13 @@
  */
 /obj/item/bodypart/proc/check_for_injuries(mob/living/carbon/human/examiner, list/check_list)
 
-	var/list/limb_damage = list(brute_dam, burn_dam)
+	var/list/limb_damage = list(BRUTE = brute_dam, BURN = burn_dam)
 
 	SEND_SIGNAL(src, COMSIG_BODYPART_CHECKED_FOR_INJURY, examiner, check_list, limb_damage)
 	SEND_SIGNAL(examiner, COMSIG_CARBON_CHECKING_BODYPART, src, check_list, limb_damage)
 
-	var/shown_brute = limb_damage[1]
-	var/shown_burn = limb_damage[2]
+	var/shown_brute = limb_damage[BRUTE]
+	var/shown_burn = limb_damage[BURN]
 	var/status = ""
 	var/self_aware = HAS_TRAIT(examiner, TRAIT_SELF_AWARE)
 

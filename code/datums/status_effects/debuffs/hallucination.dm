@@ -6,13 +6,13 @@ GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
 	var/list/list = list(
 		/datum/hallucination/chat = 100,
 		/datum/hallucination/message = 60,
-		/datum/hallucination/fake_sound/normal/random = 50,
-		/datum/hallucination/random_battle = 20,
+		// /datum/hallucination/fake_sound/normal/random = 50,
+		// /datum/hallucination/random_battle = 20,
 		/datum/hallucination/fake_health_doll = 12,
-		/datum/hallucination/random_fake_alert = 12,
+		// /datum/hallucination/random_fake_alert = 12,
 		/datum/hallucination/bolts = 7,
 		/datum/hallucination/fake_flood = 7,
-		/datum/hallucination/random_nearby_fake_item = 7,
+		// /datum/hallucination/random_nearby_fake_item = 7,
 		/datum/hallucination/stray_bullet = 7,
 		/datum/hallucination/hazard/anomaly = 5,
 		/datum/hallucination/hazard/chasm = 5,
@@ -66,6 +66,9 @@ GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
 	return ..()
 
 /datum/status_effect/hallucination/on_apply()
+	if(issilicon(owner))
+		return FALSE
+
 	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_hallucinations)
 	if(iscarbon(owner))
 		RegisterSignal(owner, COMSIG_CARBON_CHECKING_BODYPART, .proc/on_check_bodypart)
@@ -83,12 +86,13 @@ GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
 	SIGNAL_HANDLER
 
 	if(prob(30))
-		limb_damage[1] += rand(30, 40)
+		limb_damage[BRUTE] += rand(30, 40)
 	if(prob(30))
-		limb_damage[2] += rand(30, 40)
-
+		limb_damage[BURN] += rand(30, 40)
 
 /datum/status_effect/hallucination/tick(delta_time, times_fired)
+	if(owner.stat == DEAD)
+		return
 	if(!COOLDOWN_FINISHED(src, hallucination_cooldown))
 		return
 

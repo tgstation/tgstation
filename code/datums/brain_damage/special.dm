@@ -87,7 +87,6 @@
 	if(!second_turf)
 		return
 
-	// Melbert todo, this needs reworking as well
 	var/obj/effect/client_image_holder/bluespace_stream/first = new(first_turf, owner)
 	var/obj/effect/client_image_holder/bluespace_stream/second = new(second_turf, owner)
 

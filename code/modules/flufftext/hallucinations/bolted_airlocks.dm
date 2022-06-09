@@ -42,7 +42,7 @@
 
 		if(!LAZYLEN(airlocks_to_hit))
 			locking = FALSE
-			next_action = 10 SECONDS
+			next_action = 100
 			return
 
 	else
@@ -75,8 +75,6 @@
 
 	/// The real airlock we're fake bolting down.
 	var/obj/machinery/door/airlock/airlock
-	/// The fake bolt light we put up over the airlock we're situated under
-	var/image/bolt_light
 
 /obj/effect/client_image_holder/hallucination/fake_door_lock/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent, obj/machinery/door/airlock/airlock)
 	if(!airlock)
@@ -91,6 +89,11 @@
 
 	return ..()
 
+/obj/effect/client_image_holder/hallucination/fake_door_lock/Destroy(force)
+	UnregisterSignal(airlock, COMSIG_PARENT_QDELETING)
+	airlock = null
+	return ..()
+
 /obj/effect/client_image_holder/hallucination/fake_door_lock/generate_image()
 	var/image/created = ..()
 	created.layer = airlock.layer + 0.1
@@ -98,32 +101,26 @@
 
 /obj/effect/client_image_holder/hallucination/fake_door_lock/show_image_to(mob/show_to)
 	. = ..()
-	if(!.)
-		return
-
-	// Make the bolts sound whenever the bolt appearance shows up
 	show_to.playsound_local(get_turf(src), 'sound/machines/boltsdown.ogg', 30, FALSE, 3)
 
-/obj/effect/client_image_holder/hallucination/fake_door_lock/Destroy(force)
-	UnregisterSignal(airlock, COMSIG_PARENT_QDELETING)
-	airlock = null
-	return ..()
+/obj/effect/client_image_holder/hallucination/fake_door_lock/hide_image_from(mob/show_to)
+	. = ..()
+	show_to.playsound_local(get_turf(src), 'sound/machines/boltsup.ogg', 30, FALSE, 3)
 
 /obj/effect/client_image_holder/hallucination/fake_door_lock/proc/on_airlock_deleted(datum/source)
 	SIGNAL_HANDLER
 
 	qdel(src)
 
-/// "Unlock" the airlock, making the unbolt sound and self-deleting
 /obj/effect/client_image_holder/hallucination/fake_door_lock/proc/unlock()
-	if(!QDELETED(airlock)) // Don't play the sound if the airlock's gone
-		for(var/mob/seer as anything in who_sees_us)
-			seer.playsound_local(get_turf(src), 'sound/machines/boltsup.ogg', 30, FALSE, 3)
+	for(var/mob/seer as anything in who_sees_us)
+		hide_image_from(seer)
 
+	shown_image = null
 	qdel(src)
 
 /obj/effect/client_image_holder/hallucination/fake_door_lock/CanAllowThrough(atom/movable/mover, border_dir)
-	if(mover in who_sees_us && airlock.density)
+	if((mover in who_sees_us) && airlock.density)
 		return FALSE
 
 	return ..()

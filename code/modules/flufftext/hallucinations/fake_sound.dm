@@ -1,36 +1,32 @@
+#define queue_fake_sound(source, sound_to_play)
+
 /// Hallucination that plays a fake sound somewhere nearby.
 /datum/hallucination/fake_sound
-	var/turf/sound_source
+	/// Volume of the fake sound
 	var/volume = 50
+	/// Whether the fake sound has vary or not
 	var/sound_vary = TRUE
+	/// A path to a sound, or a list of sounds, that plays when we trigger
 	var/sound_type
 
 /datum/hallucination/fake_sound/start()
-	sound_source = random_far_turf()
-
 	var/sound_to_play = islist(sound_type) ? pick(sound_type) : sound_type
+	var/turf/source = random_far_turf()
+	play_fake_sound(source, sound_to_play)
+
+	qdel(src)
+	return TRUE
+
+/// Actually plays the fake sound.
+/datum/hallucination/fake_sound/proc/play_fake_sound(turf/source, sound_to_play)
 	hallucinator.playsound_local(sound_source, sound_to_play, volume, sound_vary)
 
-	qdel(src)
-	return TRUE
+/// Used to queue additional, delayed fake sounds via a callback.
+/datum/hallucination/fake_sound/proc/queue_fake_sound(turf/source, sound_to_play, volume_override, vary_override, delay)
+	if(!delay)
+		CRASH("[type] tried a delayed fake sound without a timer.")
 
-/datum/hallucination/fake_sound/Destroy()
-	sound_source = null
-	return ..()
-
-/// "Normal" fake sounds are more average / standard sounds you might hear.
-/datum/hallucination/fake_sound/normal
-
-/datum/hallucination/fake_sound/normal/random
-
-/datum/hallucination/fake_sound/normal/random/start()
-	var/picked_sound = pick(subtypesof(/datum/hallucination/fake_sound/normal) - type)
-
-	feedback_details += "Type: [picked_sound]"
-	hallucinator.cause_hallucination(picked_sound, source = "random normal sound hallucination")
-
-	qdel(src)
-	return TRUE
+	addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, source, sound_to_play, volume_override || volume, vary_override || sound_vary), delay)
 
 /datum/hallucination/fake_sound/normal/airlock
 	volume = 30
@@ -40,9 +36,9 @@
 	volume = 100
 	sound_type = 'sound/machines/airlock_alien_prying.ogg'
 
-/datum/hallucination/fake_sound/normal/airlock_pry/start()
-	addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, sound_source, 'sound/machines/airlockforced.ogg', 30, TRUE), 5 SECONDS)
-	return ..()
+/datum/hallucination/fake_sound/normal/airlock_pry/play_fake_sound(turf/source, sound_to_play)
+	. = ..()
+	queue_fake_sound(source, 'sound/machines/airlockforced.ogg', 50, TRUE, delay = 5 SECONDS)
 
 /datum/hallucination/fake_sound/normal/console
 	volume = 25
@@ -52,7 +48,6 @@
 	sound_type = list('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
 
 /datum/hallucination/fake_sound/normal/distant_boom
-	volume = 50
 	sound_type = 'sound/effects/explosionfar.ogg'
 
 /datum/hallucination/fake_sound/normal/glass
@@ -67,13 +62,21 @@
 	sound_type = 'sound/voice/beepsky/freeze.ogg'
 
 /datum/hallucination/fake_sound/normal/mech
+	/// The turf the mech started walking from.
+	var/turf/mech_source
+	/// What dir is the mech walking?
 	var/mech_dir = NORTH
+	/// How many steps are left in the walk?
 	var/steps_left = 0
+
+/datum/hallucination/fake_sound/normal/mech/Destroy()
+	mech_source = null
+	return ..()
 
 /datum/hallucination/fake_sound/normal/mech/start()
 	mech_dir = pick(GLOB.cardinals)
 	steps_left = rand(4, 9)
-	sound_source = random_far_turf()
+	mech_source = random_far_turf()
 
 	mech_walk()
 	return TRUE
@@ -98,68 +101,77 @@
 /datum/hallucination/fake_sound/normal/wall_deconstruction
 	sound_type = 'sound/items/welder.ogg'
 
-/datum/hallucination/fake_sound/normal/wall_deconstruction/start()
-	addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, sound_source, 'sound/items/welder2.ogg', volume, TRUE), 10.5 SECONDS)
-	addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, sound_source, 'sound/items/ratchet.ogg', volume, TRUE), 12 SECONDS)
-	return ..()
+/datum/hallucination/fake_sound/normal/wall_deconstruction/play_fake_sound(turf/source, sound_to_play)
+	. = ..()
+	queue_fake_sound(source, 'sound/items/welder2.ogg', delay = 10.5 SECONDS)
+	queue_fake_sound(source, 'sound/items/ratchet.ogg', delay = 12 SECONDS)
 
 /datum/hallucination/fake_sound/normal/door_hacking
 	sound_type = 'sound/items/screwdriver.ogg'
+	volume = 30
 
-/datum/hallucination/fake_sound/normal/door_hacking/start()
-	var/hacking_time = rand(4 SECONDS, 8 SECONDS)
-
+/datum/hallucination/fake_sound/normal/door_hacking/play_fake_sound(turf/source, sound_to_play)
 	// Make it sound like someone's pulsing a multitool one or multiple times.
-	addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, sound_source, 'sound/weapons/empty.ogg', 30, TRUE), 0.8 SECONDS)
+	// Screwdriver happens immediately...
+	. = ..()
+
+	var/hacking_time = rand(4 SECONDS, 8 SECONDS)
+	// Multitool sound.
+	queue_fake_sound(source, 'sound/weapons/empty.ogg', delay = 0.8 SECONDS)
 	if(hacking_time > 4.5 SECONDS)
-		addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, sound_source, 'sound/weapons/empty.ogg', 30, TRUE), 3 SECONDS)
+		// Another multitool sound if the hacking time is long.
+		queue_fake_sound(source, 'sound/weapons/empty.ogg', delay = 3 SECONDS)
 		if(prob(50))
-			addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, sound_source, 'sound/weapons/empty.ogg', 30, TRUE), 3.5 SECONDS)
+			// Bonus multitool sound, rapidly after the last.
+			queue_fake_sound(source, 'sound/weapons/empty.ogg', delay = 3.5 SECONDS)
 
 	if(hacking_time > 5.5 SECONDS)
-		addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, sound_source, 'sound/weapons/empty.ogg', 30, TRUE), 5 SECONDS)
+		// A final multitool sound if the hacking time is very long.
+		queue_fake_sound(source, 'sound/weapons/empty.ogg', delay = 5 SECONDS)
 
-	addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, sound_source, 'sound/machines/airlockforced.ogg', 30, TRUE), rand(4 SECONDS, 8 SECONDS))
-	return ..()
+	// Crowbarring it open.
+	queue_fake_sound(source, 'sound/machines/airlockforced.ogg', delay = hacking_time)
 
 /datum/hallucination/fake_sound/weird
-	sound_vary = FALSE
 	/// if FALSE, we will pass "null" in as the turf source, meaning the sound will just play without direction / etc.
 	var/no_source = FALSE
 
-/datum/hallucination/fake_sound/weird/start()
-	if(!no_source)
-		return ..()
+/datum/hallucination/fake_sound/weird/play_fake_sound(turf/source, sound_to_play)
+	if(no_source)
+		return ..(null, sound_to_play)
 
-	hallucinator.playsound_local(null, sound_type, volume, sound_vary)
-	qdel(src)
-	return TRUE
+	return ..()
 
 /datum/hallucination/fake_sound/weird/phone
 	volume = 15
+	sound_vary = FALSE
 	sound_type = 'sound/weapons/ring.ogg'
 
-/datum/hallucination/fake_sound/weird/phone/start()
+/datum/hallucination/fake_sound/weird/phone/play_fake_sound(turf/source, sound_to_play)
 	for(var/next_ring in 1 to 3)
-		addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, sound_source, sound_type, volume, sound_vary), 2.5 SECONDS * next_ring)
+		queue_fake_sound(source, sound_to_play, delay = 2.5 SECONDS * next_ring)
+
 	return ..()
 
 /datum/hallucination/fake_sound/weird/hallelujah
+	sound_vary = FALSE
 	sound_type = 'sound/effects/pray_chaplain.ogg'
 
 /datum/hallucination/fake_sound/weird/hyperspace
+	sound_vary = FALSE
 	sound_type = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
 	no_source = TRUE
 
 /datum/hallucination/fake_sound/weird/highlander
+	sound_vary = FALSE
 	sound_type = 'sound/misc/highlander.ogg'
 	no_source = TRUE
 
 /datum/hallucination/fake_sound/weird/game_over
+	sound_vary = FALSE
 	sound_type = 'sound/misc/compiler-failure.ogg'
 
 /datum/hallucination/fake_sound/weird/laugher
-	sound_vary = TRUE
 	sound_type = list(
 		'sound/voice/human/womanlaugh.ogg',
 		'sound/voice/human/manlaugh1.ogg',
@@ -167,7 +179,6 @@
 	)
 
 /datum/hallucination/fake_sound/weird/creepy
-	sound_vary = TRUE
 
 /datum/hallucination/fake_sound/weird/creepy/New(mob/living/hallucinator)
 	. = ..()
@@ -176,10 +187,9 @@
 
 /datum/hallucination/fake_sound/weird/tesloose
 	volume = 35
-	sound_vary = TRUE
 	sound_type = 'sound/magic/lightningbolt.ogg'
 
-/datum/hallucination/fake_sound/weird/tesloose/start()
+/datum/hallucination/fake_sound/weird/tesloose/play_fake_sound(turf/source, sound_to_play)
+	. = ..()
 	for(var/next_shock in 1 to rand(2, 4))
-		addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, sound_source, sound_type, volume + (15 * next_shock), sound_vary), 3 SECONDS * next_shock)
-	return ..()
+		queue_fake_sound(source, sound_to_play, volume_override = volume + (15 * next_shock), delay = 3 SECONDS * next_shock)

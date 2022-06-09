@@ -510,10 +510,10 @@
 	var/release_delay = 5
 	/// Messages sent to people feeling the pulses
 	var/static/list/messages = list(
-		"You feel your conscious mind fall apart!",
-		"Reality warps around you!",
-		"Something's wispering around you!",
-		"You are going insane!",
+		span_warning("You feel your conscious mind fall apart!"),
+		span_warning("Reality warps around you!"),
+		span_warning("Something's wispering around you!"),
+		span_warning("You are going insane!"),
 	)
 
 /obj/effect/anomaly/hallucination/anomalyEffect(delta_time)

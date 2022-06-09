@@ -192,7 +192,7 @@
 		var/is_hallucinating = FALSE
 		if(isliving(user))
 			var/mob/living/living_user = user
-			is_hallucinating = living_user.has_status_effect(/datum/status_effect/hallucination)
+			is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
 
 		if(is_hallucinating)
 			ui.set_autoupdate(FALSE) //to not ruin the immersion by constantly changing the fake chemicals
@@ -230,7 +230,7 @@
 	var/is_hallucinating = FALSE
 	if(isliving(user))
 		var/mob/living/living_user = user
-		is_hallucinating = living_user.has_status_effect(/datum/status_effect/hallucination)
+		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
 
 	for(var/re in dispensable_reagents)
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]

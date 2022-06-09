@@ -110,12 +110,12 @@
 	image_icon_state = "flashtool"
 
 /datum/hallucination/nearby_fake_item/flash/generate_fake_image(mob/living/carbon/human/holder, file)
-	hallucinator.playsound_local(get_turf(holder), 'sound/items/handling/component_pickup.ogg', 35, TRUE)
+	hallucinator.playsound_local(get_turf(holder), 'sound/items/handling/component_pickup.ogg', 35, vary = FALSE)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/flash/remove_image(mob/living/carbon/human/holder)
 	if(!QDELETED(holder))
-		hallucinator.playsound_local(get_turf(holder), 'sound/items/handling/component_drop.ogg', 35, TRUE)
+		hallucinator.playsound_local(get_turf(holder), 'sound/items/handling/component_drop.ogg', 35, vary = FALSE)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/armblade

@@ -524,7 +524,7 @@
 
 ///This proc has a 5% chance to have a bubblegum line appear, with an 85% chance for just text and 15% for a bubblegum hallucination and scarier text.
 /obj/item/food/bubblegum/bubblegum/proc/hallucinate(mob/living/carbon/victim)
-	if(!prob(5)) //cursed by bubblegum
+	if(prob(95)) //cursed by bubblegum
 		return
 	if(prob(15))
 		victim.cause_hallucination(/datum/hallucination/oh_yeah, source = "bubblegum bubblegum")
@@ -532,7 +532,10 @@
 		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
 
 /obj/item/food/bubblegum/bubblegum/suicide_act(mob/user)
-	//user.say(";[pick(hallucination_lines)]") //melberet todo
+	// Maybe the hallucination lines should just be a global list or a define or string list something.
+	var/datum/hallucination/oh_yeah/to_steal_lines_from = new(user)
+	user.say(";[pick(to_steal_lines_from.hallucination_lines)]")
+	qdel(to_steal_lines_from)
 	return ..()
 
 /obj/item/food/gumball
