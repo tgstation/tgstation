@@ -20,7 +20,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		repo: context.repo.repo,
 	});
 
-	const { data: workflowRuns } = await github.graphql(`query($id:ID!) {
+	const workflowRuns = await github.graphql(`query($id:ID!) {
 		node(id: $id) {
 		  ...on IssueComment {
 			pullRequest {
