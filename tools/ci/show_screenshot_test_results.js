@@ -98,10 +98,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 
 		formData.set("key", FILE_HOUSE_KEY);
 
-		formData.set("file", await fileFrom(filename), {
-			filename: path.basename(filename),
-			contentType: "image/png",
-		});
+		formData.set("file", await fileFrom(filename), path.basename(filename));
 
 		return fetch("https://file.house/api/upload", {
 			method: "POST",
