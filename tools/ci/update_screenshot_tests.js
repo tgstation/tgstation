@@ -28,7 +28,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 								checkSuites(first:10) {
 									nodes {
 										workflowRun {
-											runNumber
+											databaseId
 											workflow {
 												name
 											}
@@ -60,12 +60,12 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		return;
 	}
 
-	console.log(`Found CI Suite workflow run ${ciSuiteWorkflow.workflowRun.runNumber}`);
+	console.log(`Found CI Suite workflow run ${ciSuiteWorkflow.workflowRun.databaseId}`);
 
 	const { data: { artifacts } } = await github.rest.actions.listWorkflowRunArtifacts({
 		owner: context.repo.owner,
 		repo: context.repo.repo,
-		run_id: ciSuiteWorkflow.workflowRun.runNumber,
+		run_id: ciSuiteWorkflow.workflowRun.databaseId,
 	});
 
 	const badScreenshots = artifacts.find(({ name }) => name === 'bad-screenshots');
