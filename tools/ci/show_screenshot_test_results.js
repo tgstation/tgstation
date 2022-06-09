@@ -67,8 +67,6 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 		run_id: context.payload.workflow_run.id,
 	});
 
-	console.log(artifacts);
-
 	const badScreenshots = artifacts.find(({ name }) => name === 'bad-screenshots');
 	if (!badScreenshots) {
 		console.log("No bad screenshots found");
@@ -76,7 +74,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 	}
 
 	// Step 2. Download the screenshots from the artifacts
-	const download = await github.actions.downloadArtifact({
+	const download = await github.rest.actions.downloadArtifact({
 		owner: context.repo.owner,
 		repo: context.repo.repo,
 		artifact_id: badScreenshots.id,
