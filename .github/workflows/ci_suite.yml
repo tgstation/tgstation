@@ -157,7 +157,7 @@ jobs:
         run: npm i
         working-directory: tools/screenshot-test-comparison
       - name: Run screenshot comparison
-        run: node tools/screenshot-test-comparison/index.js artifacts code/modules/unit_tests/screenshots artifacts/screenshot_comparisons
+        run: node tools/screenshot-test-comparison/index.js artifacts/screenshots_new code/modules/unit_tests/screenshots artifacts/screenshot_comparisons
       - name: Upload bad screenshots
         if: failure()
         uses: actions/upload-artifact@v3
