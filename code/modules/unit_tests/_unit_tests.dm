@@ -129,6 +129,7 @@
 #include "resist.dm"
 #include "say.dm"
 #include "screenshot_basic.dm"
+#include "screenshot_humanoids.dm"
 #include "security_officer_distribution.dm"
 #include "serving_tray.dm"
 #include "siunit.dm"
