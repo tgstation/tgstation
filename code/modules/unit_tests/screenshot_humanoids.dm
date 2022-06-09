@@ -12,7 +12,7 @@ TEST_FOCUS(/datum/unit_test/screenshot_humanoids)
 	// let me have this
 	var/mob/living/carbon/human/moth = make_dummy(/datum/species/moth, /datum/outfit/job/cmo)
 	moth.dna.features["moth_antennae"] = "Firewatch"
-	moth.dna.features["moth_markings"] = "Firewatch"
+	moth.dna.features["moth_markings"] = "None"
 	moth.dna.features["moth_wings"] = "Firewatch"
 	moth.set_species(/datum/species/moth) // remove this when you can just set a feature without some lame brain stuff
 
