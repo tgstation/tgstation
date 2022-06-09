@@ -4,11 +4,12 @@
 	icon_state = "joy"
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDESNOUT
-	unique_reskin = list("Joy" = "joy",
-						"Flushed" = "flushed",
-						"Pensive" = "pensive",
-						"Angry" = "angry",
-						)
+	unique_reskin = list(
+			"Joy" = "joy",
+			"Flushed" = "flushed",
+			"Pensive" = "pensive",
+			"Angry" = "angry",
+	)
 
 /obj/item/clothing/mask/joy/Initialize(mapload)
 	. = ..()
@@ -20,7 +21,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
-	..()
+	. = ..()
 	user.update_inv_wear_mask()
 	current_skin = null//so we can infinitely reskin
 
