@@ -133,7 +133,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		base_tree: commitSha,
 	});
 
-	const { data: commit } = await octokit.rest.git.createCommit({
+	const { data: newCommit } = await octokit.rest.git.createCommit({
 		owner: prOwner,
 		repo: prRepo,
 		tree: blobTree.sha,
@@ -144,7 +144,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 	await octokit.rest.git.updateRef({
 		owner: prOwner,
 		repo: prRepo,
-		sha: commit.sha,
+		sha: newCommit.sha,
 		ref: pullRequest.headRefName,
 	});
 };
