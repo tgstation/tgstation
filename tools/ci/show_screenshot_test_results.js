@@ -106,7 +106,13 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 		return fetch("https://file.house/api/upload", {
 			method: "POST",
 			body: formData,
-		}).then(response => response.json()).then(({ url }) => url);
+		})
+			.then(response => response.json())
+			.then(response => {
+				console.log(response);
+				return response;
+			})
+			.then(({ url }) => url);
 	};
 
 	const screenshotFailures = [];
@@ -137,7 +143,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 	}
 
 	// Step 4. Find the PR
-	const result = await github.graphql(`query($workflowRun:String!) {
+	const result = await github.graphql(`query($workflowRun:ID!) {
 		node(id: $workflowRun) {
 			... on WorkflowRun {
 				checkSuite {
