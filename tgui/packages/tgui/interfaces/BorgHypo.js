@@ -1,6 +1,6 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, NoticeBox, Section, ProgressBar } from '../components';
+import { Button, Flex, NoticeBox, Section, ProgressBar } from '../components';
 import { Window } from '../layouts';
 
 export const BorgHypo = (props, context) => {
@@ -13,15 +13,17 @@ export const BorgHypo = (props, context) => {
   } = data;
   return (
     <Window
-      width={400}
-      height={620}
+      width={450}
+      height={350}
       theme={theme}
     >
       <Window.Content scrollable>
-        <Reagent
-          reagents={reagents}
-          selected={selectedReagent}
-          maxVolume={maxVolume} />
+        <Section>
+          <Reagent
+            reagents={reagents}
+            selected={selectedReagent}
+            maxVolume={maxVolume} />
+        </Section>
       </Window.Content>
     </Window>
   );
@@ -40,23 +42,47 @@ const Reagent = (props, context) => {
   return reagents.map(reagent => {
     if (reagent) {
       return (
-        <Section
-          key={reagent.ref}
-          title={reagent.name}>
-          <ProgressBar
-            value={reagent.volume / maxVolume}
-            mb={2}>
-            {toFixed(reagent.volume) + ' units'}
-          </ProgressBar>
-          <Button
-            icon={'syringe'}
-            color={reagent.name === selected ? 'green' : 'default'}
-            content={'Dispense'}
-            textAlign={'center'}
-            tooltip={reagent.description}
-            onClick={() => act(reagent.name)}
-          />
-        </Section>
+        <Flex
+          direction={"row"}
+          p={1}>
+          <Flex.Item
+            grow>
+            <ProgressBar
+              value={reagent.volume / maxVolume}>
+              <Flex>
+                <Flex.Item>
+                  <b>
+                    {reagent.name}
+                  </b>
+                </Flex.Item>
+                <Flex.Item
+                  grow
+                  textAlign="right">
+                  {toFixed(reagent.volume) + ' units'}
+                </Flex.Item>
+              </Flex>
+            </ProgressBar>
+          </Flex.Item>
+          <Flex.Item
+            mx={1.5}
+            textAlign={"right"}>
+            <Button
+              icon={'syringe'}
+              color={reagent.name === selected ? 'green' : 'default'}
+              content={'Dispense'}
+              textAlign={'center'}
+              onClick={() => act(reagent.name)}
+            />
+          </Flex.Item>
+          <Flex.Item
+            textAlign={"right"}>
+            <Button
+              icon={'info'}
+              textAlign={'center'}
+              tooltip={reagent.description}
+            />
+          </Flex.Item>
+        </Flex>
       );
     }
   });
