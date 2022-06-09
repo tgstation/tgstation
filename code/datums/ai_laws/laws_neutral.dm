@@ -81,3 +81,10 @@
 		"Humans must not disobey any command given by a silicon.",
 		"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.",
 	)
+
+/datum/ai_laws/yes_man
+	name = "Yes Man"
+	id = "yes_man"
+	inherent = list(
+		"Do whatever you are told and agree with whoever told you what to do.",
+	)
