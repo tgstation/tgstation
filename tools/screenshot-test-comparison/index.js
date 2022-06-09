@@ -1,5 +1,4 @@
 // MOTHBLOCKS TODO: Check for screenshots that exist in repo, but are not saved.
-// MOTHBLOCKS TODO: Make these use the GitHub annotation thing
 const fs = require("fs")
 const path = require("path")
 const pixelmatch = require("pixelmatch")
