@@ -1,5 +1,3 @@
-#define queue_fake_sound(source, sound_to_play)
-
 /// Hallucination that plays a fake sound somewhere nearby.
 /datum/hallucination/fake_sound
 	/// Volume of the fake sound
