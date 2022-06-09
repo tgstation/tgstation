@@ -549,31 +549,37 @@
 /datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/pressure = air.return_pressure()
-	// This slows down in relation to pressure, very quickly. Please don't expect it to be anything more then a snail
+	var/volume = air.return_volume()
+	var/environment_effciency = volume/pressure		//More volume and less pressure gives better rates
+	var/ratio_efficency = min(cached_gases[/datum/gas/nitrous_oxide][MOLES]/cached_gases[/datum/gas/plasma][MOLES], 1)  //Less n2o than plasma give lower rates
+	var/bz_formed = min(0.01 * ratio_efficency * environment_effciency, cached_gases[/datum/gas/nitrous_oxide][MOLES] * INVERSE(0.4), cached_gases[/datum/gas/plasma][MOLES] * INVERSE(0.8))
 
-	// Bigger is better for these two values.
-	var/pressure_efficiency = (0.1 * ONE_ATMOSPHERE) / pressure // More pressure = more bad
-	var/ratio_efficiency = min(cached_gases[/datum/gas/nitrous_oxide][MOLES] / cached_gases[/datum/gas/plasma][MOLES], 1) // Malus to production if more plasma than n2o.
-
-	var/reaction_efficency = min(pressure_efficiency * ratio_efficiency, cached_gases[/datum/gas/nitrous_oxide][MOLES], cached_gases[/datum/gas/plasma][MOLES] * INVERSE(2))
-
-	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2 * reaction_efficency) < 0) || reaction_efficency <= 0) //Shouldn't produce gas from nothing.
+	if (cached_gases[/datum/gas/nitrous_oxide][MOLES] - bz_formed * 0.4 < 0  || cached_gases[/datum/gas/plasma][MOLES] - (0.8 * bz_formed) < 0 || bz_formed <= 0)
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
-	ASSERT_GAS(/datum/gas/bz, air)
-	if (reaction_efficency == cached_gases[/datum/gas/nitrous_oxide][MOLES])
+
+	/**
+	*If n2o-plasma ratio is less than 1:3 start decomposing n2o.
+	*Rate of decomposition vs BZ production increases as n2o concentration gets lower
+	*Plasma acts as a catalyst on decomposition, so it doesn't get consumed in the process.
+	*N2O decomposes with its normal decomposition energy
+	*/
+	var/nitrous_oxide_decomposed_factor = max(4 * (cached_gases[/datum/gas/plasma][MOLES] / (cached_gases[/datum/gas/nitrous_oxide][MOLES] + cached_gases[/datum/gas/plasma][MOLES]) - 0.75), 0)
+	if (nitrous_oxide_decomposed_factor>0)
+		ASSERT_GAS(/datum/gas/nitrogen, air)
 		ASSERT_GAS(/datum/gas/oxygen, air)
-		cached_gases[/datum/gas/bz][MOLES] += (reaction_efficency * 2.5) - min(pressure, 0.5)
-		cached_gases[/datum/gas/oxygen][MOLES] += min(pressure, 0.5)
-	else
-		cached_gases[/datum/gas/bz][MOLES] += reaction_efficency * 2.5
+		var/amount_decomposed = 0.4 * bz_formed * nitrous_oxide_decomposed_factor
+		cached_gases[/datum/gas/nitrogen] += amount_decomposed
+		cached_gases[/datum/gas/oxygen] += 0.5 * amount_decomposed
 
-	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
-	cached_gases[/datum/gas/plasma][MOLES] -= 2 * reaction_efficency
+	ASSERT_GAS(/datum/gas/bz, air)
+	cached_gases[/datum/gas/bz][MOLES] += bz_formed * (1-nitrous_oxide_decomposed_factor)
+	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= 0.4 * bz_formed
+	cached_gases[/datum/gas/plasma][MOLES] -= 0.8 * bz_formed * (1-nitrous_oxide_decomposed_factor)
 
-	SET_REACTION_RESULTS(reaction_efficency)
-	var/energy_released = 2 * reaction_efficency * FIRE_CARBON_ENERGY_RELEASED
+	SET_REACTION_RESULTS(bz_formed)
+	var/energy_released = bz_formed * (BZ_FORMATION_ENERGY + nitrous_oxide_decomposed_factor * (N2O_DECOMPOSITION_ENERGY - BZ_FORMATION_ENERGY))
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air.temperature = max(((air.temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)

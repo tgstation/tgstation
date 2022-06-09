@@ -118,7 +118,7 @@
 	burn_heal = 1
 
 /datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.satiety < 600)
+	if(M.satiety < MAX_SATIETY)
 		M.satiety += 30 * REM * delta_time
 	. = ..()
 
@@ -135,6 +135,26 @@
 	description = "Natural tissues that make up the bulk of organs, providing many vitamins and minerals."
 	taste_description = "rich earthy pungent"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/nutriment/cloth_fibers
+	name = "Cloth Fibers"
+	description = "It's not actually a form of nutriment but it does keep Mothpeople going for a short while..."
+	nutriment_factor = 30 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	brute_heal = 0
+	burn_heal = 0
+	///Amount of satiety that will be drained when the cloth_fibers is fully metabolized
+	var/delayed_satiety_drain = 2 * CLOTHING_NUTRITION_GAIN
+
+/datum/reagent/consumable/nutriment/cloth_fibers/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(M.satiety < MAX_SATIETY)
+		M.adjust_nutrition(CLOTHING_NUTRITION_GAIN)
+		delayed_satiety_drain += CLOTHING_NUTRITION_GAIN
+	return ..()
+
+/datum/reagent/consumable/nutriment/cloth_fibers/on_mob_delete(mob/living/carbon/M)
+	M.adjust_nutrition(-delayed_satiety_drain)
+	return ..()
 
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"

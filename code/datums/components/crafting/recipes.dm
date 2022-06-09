@@ -1074,6 +1074,15 @@
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/flower_garland
+	name = "Flower Garland"
+	result = /obj/item/clothing/head/garland
+	time = 10
+	reqs = list(/obj/item/food/grown/poppy = 4,
+				/obj/item/food/grown/harebell = 4,
+				/obj/item/food/grown/rose = 4)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/guillotine
 	name = "Guillotine"
 	result = /obj/structure/guillotine
