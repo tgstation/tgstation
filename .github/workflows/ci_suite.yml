@@ -136,6 +136,7 @@ jobs:
       - name: Test collating screenshots
         run: |
           mkdir -p data/screenshots_new
+          touch data/preserve_screenshots_new
           cp icons/ui_icons/common/tg_32.png data/screenshots_new/screenshot_basic_red.png
       - name: Upload screenshot tests
         if: always()
