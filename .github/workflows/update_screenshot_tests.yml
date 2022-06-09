@@ -5,7 +5,7 @@ on:
       - created
 jobs:
   update_screenshot_tests:
-    if: ${{ github.event.comment.body.contains('.ssupdate') }}
+    if: ${{ contains(github.event.comment.body, '.ssupdate') }}
     name: Update Screenshot Tests (.ssupdate)
     runs-on: ubuntu-latest
     steps:
