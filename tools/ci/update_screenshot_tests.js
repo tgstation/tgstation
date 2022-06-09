@@ -111,7 +111,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 	const prRepo = pullRequest.headRepository.name;
 
 	for (const filename of fs.readdirSync("bad-screenshots")) {
-		const { data: blobData } = await octokit.rest.git.createBlob({
+		const { data: blobData } = await github.rest.git.createBlob({
 			owner: prOwner,
 			repo: prRepo,
 			encoding: "base64",
@@ -126,14 +126,14 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		});
 	}
 
-	const { data: blobTree } = await octokit.rest.git.createTree({
+	const { data: blobTree } = await github.rest.git.createTree({
 		owner: prOwner,
 		repo: prRepo,
 		tree,
 		base_tree: commitSha,
 	});
 
-	const { data: newCommit } = await octokit.rest.git.createCommit({
+	const { data: newCommit } = await github.rest.git.createCommit({
 		owner: prOwner,
 		repo: prRepo,
 		tree: blobTree.sha,
@@ -141,7 +141,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		message: "Update screenshots",
 	});
 
-	await octokit.rest.git.updateRef({
+	await github.rest.git.updateRef({
 		owner: prOwner,
 		repo: prRepo,
 		sha: newCommit.sha,
