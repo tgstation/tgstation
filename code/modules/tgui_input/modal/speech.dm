@@ -57,6 +57,7 @@
 /datum/tgui_modal/proc/force_say()
 	window.send_message("force")
 	stop_typing()
+
 /**
  * Makes the player force say what's in their current input box.
  */
