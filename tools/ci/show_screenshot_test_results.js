@@ -22,7 +22,7 @@ const createComment = (screenshotFailures) => {
 		## Diffs
 		| Name | Expected image | Produced image | Diff |
 		| :--: | :------------: | :------------: | :--: |
-		${screenshotFailures.map(formatScreenshotFailure)}
+		${screenshotFailures.map(formatScreenshotFailure).join("\n")}
 
 		## Help
 		<details>
