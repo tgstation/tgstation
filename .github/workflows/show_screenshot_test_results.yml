@@ -34,4 +34,3 @@ jobs:
           script: |
             const { showScreenshotTestResults } = await import('${{ github.workspace }}/tools/ci/show_screenshot_test_results.js')
             await showScreenshotTestResults({ github, context, exec })
-
