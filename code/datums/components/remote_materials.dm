@@ -106,8 +106,9 @@ handles linking back and forth.
 		if (silo == M.buffer)
 			to_chat(user, span_warning("[parent] is already connected to [silo]!"))
 			return COMPONENT_BLOCK_TOOL_ATTACK
+		var/turf/silo_turf = get_turf(M.buffer)
 		var/turf/user_loc = get_turf(user)
-		if(!is_valid_z_level(user_loc, M.buffer))
+		if(!is_valid_z_level(silo_turf, user_loc))
 			to_chat(user, span_warning("[parent] is too far away to get a connection signal!"))
 			return COMPONENT_BLOCK_TOOL_ATTACK
 		if (silo)
@@ -128,30 +129,9 @@ handles linking back and forth.
 	if(!silo)
 		return
 
-	if(!is_valid_z_level(new_turf))
+	var/turf/silo_turf = get_turf(silo)
+	if(!is_valid_z_level(silo_turf, new_turf))
 		disconnect_from(silo)
-
-/**
- * - is_valid_z_level
- *
- * Checks if sync_location and the ore silo (or silo_override, for connecting new silos) is both on the station, or on the same z level.
- * This is because the station's several levels aren't considered the same z, so multi-z stations need this special case.
- *
- * Args:
- * sync_location - current turf where parent (or user making the connection) is.
- * silo_override - if we lack an ore silo, this is the silo we are trying to connect to.
- *
- * returns TRUE if connection is valid
- * returns FALSE if not.
- */
-/datum/component/remote_materials/proc/is_valid_z_level(turf/sync_location, obj/silo_override)
-	var/turf/silo_turf = get_turf(silo || silo_override)
-	// if we're both on "station", regardless of multi-z, we'll pass by.
-	if(is_station_level(silo_turf.z) && is_station_level(sync_location.z))
-		return TRUE
-	if(silo_turf.z == sync_location.z)
-		return TRUE
-	return FALSE
 
 /datum/component/remote_materials/proc/on_hold()
 	return silo?.holds["[get_area(parent)]/[category]"]
