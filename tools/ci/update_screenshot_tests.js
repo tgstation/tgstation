@@ -149,7 +149,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		owner: prOwner,
 		repo: prRepo,
 		sha: newCommit.sha,
-		ref: `${pullRequest.headRef.prefix}${pullRequest.headRef.name}`,
+		ref: `${pullRequest.headRef.prefix.replace(/^refs\//, "")}${pullRequest.headRef.name}`,
 	});
 };
 
