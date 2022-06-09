@@ -2,10 +2,10 @@
 "b" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt,/area/template_noop)
 "c" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
 "d" = (/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
-"e" = (/obj/structure/railing,/obj/structure/lattice{obj_flags = 4612},/turf/template_noop,/area/template_noop)
-"f" = (/obj/structure/lattice{obj_flags = 4612},/turf/template_noop,/area/template_noop)
+"e" = (/obj/structure/railing,/obj/structure/lattice{obj_flags = 4612},/obj/structure/fans/tiny/invisible/caves,/turf/template_noop,/area/template_noop)
+"f" = (/obj/structure/lattice{obj_flags = 4612},/obj/structure/fans/tiny/invisible/caves,/turf/template_noop,/area/template_noop)
 "g" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"h" = (/obj/structure/railing{dir = 1},/obj/structure/lattice{obj_flags = 4612},/turf/template_noop,/area/template_noop)
+"h" = (/obj/structure/railing{dir = 1},/obj/structure/lattice{obj_flags = 4612},/obj/structure/fans/tiny/invisible/caves,/turf/template_noop,/area/template_noop)
 "j" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/obj/structure/mopbucket,/obj/item/mop/advanced,/obj/effect/decal/cleanable/dirt,/obj/machinery/light/directional/north,/turf/open/indestructible,/area/template_noop)
 "k" = (/turf/open/misc/asteroid/basalt,/area/template_noop)
 "l" = (/mob/living/simple_animal/hostile/asteroid/curseblob,/turf/open/misc/asteroid/basalt,/area/template_noop)
@@ -15,6 +15,7 @@
 "q" = (/obj/structure/fluff{desc = "A humanoid figure shrouded by erratic static."; icon = 'icons/effects/effects.dmi'; icon_state = "static"; name = "humanoid figure"},/turf/open/misc/asteroid,/area/template_noop)
 "r" = (/turf/open/misc/asteroid,/area/template_noop)
 "s" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt,/area/template_noop)
+"t" = (/obj/structure/fans/tiny/invisible/caves,/turf/template_noop,/area/template_noop)
 "u" = (/turf/open/indestructible,/area/template_noop)
 "v" = (/turf/open/misc/asteroid/airless,/area/template_noop)
 "w" = (/turf/open/space/basic,/area/template_noop)
@@ -45,24 +46,24 @@
 
 (1,1,1) = {"
 JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
-JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
-JJJJJJJJJJJJJJJHJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
-JJJJJJJkJJJJJJJHHJJJJJJJGGGGvJJJJJJJJJJJJJJJJJJJJJJJJJJJ
-JJJJJJJkkJJJJJJHHJJJJJJGGvnvvJJJJJJJJJJJJJJJrJJJJJJJJJJJ
-JJJJJJJkFJJJJJJHHJJJJJJJJOvOOJJJJJJwWJJJJJJrCJJJJJJJJJJJ
-JJJJJJkFkyJJJJJJHJJJJJJJJJOJJJJJwwwwWuJJJJJrrrJJJJJJJJJJ
-JJJJJkkkkyJJJJJJJJHJJkcccJJJJJJwwRwwWuWJJJJJJJJJJJJJJJJJ
-JJJJJJkJJJJJJJHJJHHJJccccJJJJJJRwRwRWuWJJJJJJJaraaJJJJJJ
-JJJJJJJJJJJJJJHHJHHJJcccsZJJJJJcWPPPWSWWJWJJrrrraaaJJJJJ
-XJJJJJJJckkcMNNNNNNMkkkbkkkoeefkEEUUjdUEJJJrrrrrrraJJJJJ
-JJJJJJJcckkkLggggggkkkAbklkkgggkkkuudduuurVrrrrDrraJJJJJ
-JJJJJJJkkkkkMBBBBBBMkklkkkJohJJMTJJJTTJJJJJJrrarraaJJJJJ
-JJJJJJJkkkJJJJHJHHJJJJZsZJJJJJJWJJJJJJWWJJWWJJraaaJJJJJJ
-JJJJJJJJJJJJJJHJHHJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
-JJJJJJJJJJJJJJJJJJJJJJJJxJJJJJJJJJJJJJJJJJJJJqrrrJJJJJJJ
-JJJJJJJJJJJJxpJJJJJJJJJJkJJJJJHHHkkJJJJJJJJJrrrrJJJJJJJJ
-JJJJJJJJJJJkZccJJJHHJJJJJJJJJJJHkkcccJJJJJJJJJrJJJJJJJJJ
-JJJJJJJJJJJJccJJJJHHJJJsJJJJJJJJccccJJJJJJJJJJJJJJJJJJJJ
-JJJJJJJJJJJJJJJJJJJJJJJZJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
-JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+JJJJJJJJJJJJJJJtJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+JJJJJJJtJJJJJJtHtJJJJJJJtttttJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+JJJJJJtktJJJJJtHHtJJJJJtGGGGvtJJJJJJJJJJJJJJtJJJJJJJJJJJ
+JJJJJJtkktJJJJtHHtJJJJtGGvnvvtJJJJJttJJJJJJtrtJJJJJJJJJJ
+JJJJJJtkFtJJJJtHHtJJJJJttOvOOtJJtttwWtJJJJtrCtJJJJJJJJJJ
+JJJJJtkFkytJJJJtHttJJtttttOttJJtwwwwWutJJJtrrrtJJJJJJJJJ
+JJJJtkkkkytJJJtJttHttkcccttJJJtwwRwwWuWtJJJtttttttJJJJJJ
+JJJJJtktttJJJtHttHHttcccctJJJJtRwRwRWuWtJJJJttaraatJJJJJ
+JJJJJJtJttttttHHtHHttcccsZtttJtcWPPPWSWWtWJtrrrraaatJJJJ
+XJJJJJJtckkcMNNNNNNMkkkbkkkoeefkEEUUjdUEtttrrrrrrratJJJJ
+JJJJJJtcckkkLggggggkkkAbklkkgggkkkuudduuurVrrrrDrratJJJJ
+JJJJJJtkkkkkMBBBBBBMkklkkktohttMTtttTTttttttrrarraatJJJJ
+JJJJJJtkkkttttHtHHttttZsZtJtJJtWtJJJttWWJJWWttraaatJJJJJ
+JJJJJJJtttJJJtHtHHtJJJtttJJJJJJtJJJJJJJJJJJJJtttttJJJJJJ
+JJJJJJJJJJJJtttJttJJJJJtxtJJJJtttttJJJJJJJJJtqrrrtJJJJJJ
+JJJJJJJJJJJtxptJJJttJJJtktJJJtHHHkkttJJJJJJtrrrrtJJJJJJJ
+JJJJJJJJJJtkZcctJtHHtJJttJJJJJtHkkccctJJJJJJttrtJJJJJJJJ
+JJJJJJJJJJJtcctJJtHHtJtstJJJJJJtcccctJJJJJJJJJtJJJJJJJJJ
+JJJJJJJJJJJJttJJJJttJJtZtJJJJJJJttttJJJJJJJJJJJJJJJJJJJJ
+JJJJJJJJJJJJJJJJJJJJJJJtJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 "}

@@ -1771,11 +1771,6 @@
 /obj/item/stack/rods,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter/work)
-"Pw" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/chasm/lavaland,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "Pz" = (
 /turf/closed/indestructible/riveted,
 /area/awaymission/caves/second_outpost/researchcenter)
@@ -2800,7 +2795,7 @@ LJ
 Cp
 EY
 ks
-Pw
+EY
 oy
 OM
 kn

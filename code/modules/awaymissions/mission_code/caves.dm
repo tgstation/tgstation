@@ -2,6 +2,11 @@
 /obj/modular_map_root/caves
 	config_file = "strings/modular_maps/Caves.toml"
 
+//Map objects
+/obj/structure/fans/tiny/invisible/caves
+	name = "strange field"
+	invisibility = INVISIBILITY_MAXIMUM
+
 //Mech used by the clockwork miners
 /obj/vehicle/sealed/mecha/working/ripley/mk2/clockcult
 	icon_state = "ripleyclockcult"
@@ -370,6 +375,18 @@
 
 /area/awaymission/caves/misc/syndicate/barracks
 	name = "Recon Outpost Tango-Bravo-443 Barracks"
+
+/area/awaymission/caves/misc/mining_post
+	name = "Mining Depo Golf"
+
+/area/awaymission/caves/misc/mining_post/diverter
+	name = "Mining Depo Golf Ore Line Diversion Center"
+
+/area/awaymission/caves/misc/mining_post/smelter1
+	name = "Mining Depo Golf Ore Drop-off A"
+
+/area/awaymission/caves/misc/mining_post/smelter2
+	name = "Mining Depo Golf Ore Drop-off B"
 
 /area/awaymission/caves/misc/ratvar
 	name = "His Eminence's Domain"
