@@ -154,7 +154,7 @@ jobs:
         with:
           path: artifacts
       - name: ls -R
-        run: ls -R
+        run: ls -R ./artifacts
       - name: Setup screenshot comparison
         run: npm i
         working-directory: tools/screenshot-test-comparison
