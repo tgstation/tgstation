@@ -44,7 +44,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		  }
 		}
 	}`, {
-		id: payload.comment.id,
+		id: payload.comment.node_id,
 	});
 
 	const ciSuiteWorkflow = workflowRuns
