@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes: 
-  - bugfix: "A small bit of Kilos arrivals area define was touched up and fixed. Asteroid rock is not consider part of the station, sorry folks."

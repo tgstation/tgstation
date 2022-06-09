@@ -1,5 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes: 
-  - qol: "On Icebox, some of the warning tapes have been properly rounded off with corners."
-  - bugfix: "On Icebox, a vent and scrubber has been added to the primary hall the arrival shuttle drops crew members off at. This should also stop this portion of the hall from having atmos specific issues."
