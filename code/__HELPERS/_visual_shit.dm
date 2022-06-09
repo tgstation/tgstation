@@ -11,7 +11,10 @@
 // You should make a macro just for that case, reduce code bloat
 // Global todos:
 // Figure out the damn worn emissives
-// Try and make turf vis contents work, somehow
+// Try and make turf vis contents work, somehow (Start with the det's eye things, they're a good testcase)
+// Right now they do not like seeing lower planes, not sure why
+// Human overlays "might" need to fully recalc every time they move up/down a z level
+// I am not sure. Might need to automate handling this cheaply
 // I might be fucked
 // Figure out what's going on with darkness on the lower plane, it's maskin weird? maybe set hung walls to illuminated? idk
 // Figure out how the hell you want to handle points where upper plane stuff is rendered on lower planes (basically, mirages)
