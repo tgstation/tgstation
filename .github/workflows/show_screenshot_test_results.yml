@@ -31,7 +31,9 @@ jobs:
           # TODO: Don't run if this is not set
           FILE_HOUSE_KEY: ${{ secrets.ARTIFACTS_FILE_HOUSE_KEY }}
         with:
-          script: "await import('${{ github.workspace }}/tools/ci/show_screenshot_test_results.js')({ github, context, exec })"
+          script: |
+            const { showScreenshotTestResults } = await import('${{ github.workspace }}/tools/ci/show_screenshot_test_results.js')
+            await showScreenshotTestResults({ github, context, exec })
       # - name: Download artifact
       #   uses: actions/github-script@v3.1.0
       #   id: dl_results
