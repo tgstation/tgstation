@@ -99,6 +99,8 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 		// MOTHBLOCKS TODO: Needed?
 		fdel(data_filename)
 		fcopy(icon, data_filename)
+
+		log_test("[path_prefix]_[name] was found, putting in data/screenshots")
 	else if (fexists("code"))
 		// We are probably running in a local build
 		fcopy(icon, filename)
@@ -106,6 +108,8 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	else
 		// We are probably running in real CI, so just pretend it worked and move on
 		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
+
+		log_test("[path_prefix]_[name] was put in data/screenshots_new")
 
 /proc/RunUnitTest(test_path, list/test_results)
 	var/datum/unit_test/test = new test_path
