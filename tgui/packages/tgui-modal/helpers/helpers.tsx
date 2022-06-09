@@ -133,9 +133,9 @@ export class CooldownWrapper {
       this.onCooldown = false;
     }, this.timeout);
   };
-  sendMessage = () => {
+  sendMessage = (payload?: any) => {
     if (!this.onCooldown) {
-      Byond.sendMessage(this.message);
+      Byond.sendMessage(this.message, payload);
       this.setTimer();
     }
   };

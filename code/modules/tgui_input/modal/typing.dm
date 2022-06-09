@@ -36,56 +36,52 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 /datum/preference/toggle/typing_indicator/apply_to_client(client/client, value)
 	client?.typing_indicators = value
 
-/// Shows the thinking indicator - player has window open
-/mob/verb/start_thinking()
-	set name = ".start_thinking"
-	set hidden = TRUE
-	create_thinking_indicator()
-	remove_typing_indicator()
-
-/// Hides all typing/thinking indicators
-/mob/verb/cancel_thinking()
-	set name = ".cancel_thinking"
-	set hidden = TRUE
-	remove_thinking_indicator()
-	remove_typing_indicator()
-
-/// Show the typing indicator - player is typing into the window
-/mob/verb/start_typing()
-	set name = ".start_typing"
-	set hidden = TRUE
-	remove_thinking_indicator()
-	create_typing_indicator()
-
-/// Hide the typing indicator.
-/mob/verb/cancel_typing()
-	set name = ".cancel_typing"
-	set hidden = TRUE
-	remove_typing_indicator()
-	create_thinking_indicator()
+/**
+ * Modulates the visibility of thinking indicators
+ *
+ * Arguments:
+ ** enabled - boolean whether thinking indicator is to be displayed.
+ */
+/datum/tgui_modal/proc/is_thinking(enabled = TRUE)
+	if(!client || !client.mob) // If they've got typing indicators shut off, don't show the thinking indicator
+		stack_trace(("[usr] has no client or mob but was thinking?"))
+		return FALSE
+	if(enabled)
+		client.mob.create_thinking_indicator()
+		client.mob.thinking_IC = TRUE
+	else
+		client.mob.remove_thinking_indicator()
+		client.mob.remove_typing_indicator()
+		client.mob.thinking_IC = FALSE
 
 /**
  * Handles the user typing. After a brief period of inactivity,
  * signals the client mob to revert to the "thinking" icon.
  */
-/datum/tgui_modal/proc/init_typing()
+/datum/tgui_modal/proc/is_typing()
+	if(!client || !client.mob)
+		stack_trace(("[usr] has no client or mob but was typing?"))
+		return FALSE
 	addtimer(CALLBACK(src, .proc/stop_typing), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
-	if(client.mob)
-		client.mob.start_typing()
+	client.mob.remove_thinking_indicator()
+	if(client.mob.thinking_IC)
+		client.mob.create_typing_indicator()
 
-/** Signals the mob to return to "thinking" state */
+/**
+ * Signals the mob to return to "thinking" state
+ * if they were previously thinking IC.
+ */
 /datum/tgui_modal/proc/stop_typing()
 	if(!client || !client.mob)
 		stack_trace(("[usr] has no client or mob but was typing?"))
 		return FALSE
-	if(window_open)
-		client.mob.cancel_typing()
-	else
-		client.mob.cancel_thinking()
+	client.mob.remove_typing_indicator()
+	if(client.mob.thinking_IC)
+		client.mob.create_thinking_indicator()
 
-
+/** Overrides for overlay creation */
 /mob/living/create_thinking_indicator()
-	if(!client || !client.typing_indicators) // If they've got typing indicators shut off, don't show the thinking indicator
+	if(!client || !client.typing_indicators || !client.tgui_modal.window_open)
 		return
 	if(!thinking_indicator && stat == CONSCIOUS) //Prevents sticky overlays and typing while in any state besides conscious
 		add_overlay(GLOB.thinking_indicator)
@@ -97,7 +93,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 		thinking_indicator = FALSE
 
 /mob/living/create_typing_indicator()
-	if(!client || !client.typing_indicators) // If they've got typing indicators shut off, don't show the typing indicator
+	if(!client || !client.typing_indicators || !client.tgui_modal.window_open)
 		return
 	if(!typing_indicator && stat == CONSCIOUS)
 		add_overlay(GLOB.typing_indicator)

@@ -70,7 +70,7 @@
 	window.send_message("maxLength", list(
 		maxLength = max_length,
 	))
-	client.mob.cancel_thinking()
+	is_thinking(FALSE)
 	return TRUE
 
 /**
@@ -89,11 +89,11 @@
 	window_open = TRUE
 	if(payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
 		return TRUE
-	client.mob.start_thinking()
+	is_thinking(TRUE)
 	if(client.typing_indicators)
-		log_speech_indicators("[key_name(client)] started typing IC at [loc_name(client.mob)], indicators enabled.")
+		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators enabled.")
 	else
-		log_speech_indicators("[key_name(client)] started typing IC at [loc_name(client.mob)], indicators DISABLED.")
+		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators DISABLED.")
 	return TRUE
 
 /**
@@ -104,11 +104,11 @@
 	if(!client || !client.mob)
 		CRASH(NULL_CLIENTMOB)
 	window_open = FALSE
-	client.mob.cancel_thinking()
+	is_thinking(FALSE)
 	if(client.typing_indicators)
-		log_speech_indicators("[key_name(client)] stopped typing IC at [loc_name(client.mob)], indicators enabled.")
+		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client.mob)], indicators enabled.")
 	else
-		log_speech_indicators("[key_name(client)] stopped typing IC at [loc_name(client.mob)], indicators DISABLED.")
+		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client.mob)], indicators DISABLED.")
 
 /**
  * The equivalent of ui_act, this waits on messages from the window
@@ -124,8 +124,11 @@
 	if (type == "close")
 		close()
 		return TRUE
+	if (type == "thinking")
+		is_thinking(payload["mode"])
+		return TRUE
 	if (type == "typing")
-		init_typing()
+		is_typing()
 		return TRUE
 	if (type == "entry" || type == "force")
 		handle_entry(type, payload)
