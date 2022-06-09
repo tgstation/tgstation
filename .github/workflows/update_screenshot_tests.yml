@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        if: steps.secrets_set.outputs.SECRETS_ENABLED
         uses: actions/checkout@v3
         # MOTHBLOCKS TODO: Remove
         with:
