@@ -2784,6 +2784,7 @@
 #include "code\modules\events\false_alarm.dm"
 #include "code\modules\events\fugitive_spawning.dm"
 #include "code\modules\events\ghost_role.dm"
+#include "code\modules\events\gravity_generator_blackout.dm"
 #include "code\modules\events\grid_check.dm"
 #include "code\modules\events\heart_attack.dm"
 #include "code\modules\events\immovable_rod.dm"

@@ -30,8 +30,11 @@
 	. = ..()
 	if(can_be_tanked)
 		. += span_notice("Use a sheet of iron to convert this into a plumbing-compatible tank.")
-	if(leaking)
-		. += span_warning("Its tap is wrenched open!")
+	if(openable)
+		if(!leaking)
+			. += span_notice("Its tap looks like it could be <b>wrenched</b> open.")
+		else
+			. += span_warning("Its tap is <b>wrenched</b> open!")
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -143,8 +146,11 @@
 
 /obj/structure/reagent_dispensers/fueltank/examine(mob/user)
 	. = ..()
-	if(get_dist(user, src) <= 2 && rig)
-		. += span_notice("There is some kind of device rigged to the tank.")
+	if(get_dist(user, src) <= 2)
+		if(rig)
+			. += span_warning("There is some kind of device <b>rigged</b> to the tank!")
+		else
+			. += span_notice("It looks like you could <b>rig</b> a device to the tank.")
 
 /obj/structure/reagent_dispensers/fueltank/attack_hand(mob/user, list/modifiers)
 	. = ..()
