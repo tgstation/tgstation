@@ -149,7 +149,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 		return;
 	}
 
-	console.log(context.payload.workflow_run);
+	console.log(JSON.stringify(context.payload, null, 2));
 
 	// Step 4. Find the PR
 	const result = await github.graphql(`query($workflowRun:ID!) {
