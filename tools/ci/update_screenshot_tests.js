@@ -20,32 +20,30 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 
 	const workflowRuns = await github.graphql(`query($id:ID!) {
 		node(id: $id) {
-		  ...on IssueComment {
-			pullRequest {
-			  commits(last: 1) {
-				nodes {
-				  commit {
-					checkSuites(first:10) {
-					  nodes {
-						workflowRun {
-						  runNumber
-						  workflow {
-							name
-						  }
+			...on IssueComment {
+				pullRequest {
+					commits(last: 1) {
+						nodes {
+							commit {
+								checkSuites(first:10) {
+									nodes {
+										workflowRun {
+											runNumber
+											workflow {
+												name
+											}
+										}
+									}
+								}
+							}
 						}
-					  }
 					}
-				  }
 				}
-			  }
 			}
-		  }
 		}
 	}`, {
 		id: payload.comment.node_id,
 	});
-
-	console.log(workflowRuns);
 
 	const ciSuiteWorkflow = workflowRuns
 		.node
@@ -55,7 +53,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		.commit
 		.checkSuites
 		.nodes
-		.find(suite => suite.workflowRun?.name === "CI Suite");
+		.find(suite => suite.workflowRun?.workflow?.name === "CI Suite");
 
 	if (!ciSuiteWorkflow) {
 		console.log("No CI Suite workflow found");
