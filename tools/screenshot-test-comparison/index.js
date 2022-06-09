@@ -61,6 +61,7 @@ for (const filename of fs.readdirSync(artifactsDirectory)) {
 		const fullPathCompareScreenshot = path.join(screenshotsDirectory, screenshotName)
 		if (!fs.existsSync(fullPathCompareScreenshot)) {
 			fail(screenshotName, fullPathScreenshotName)
+			continue
 		}
 
 		const screenshotNew = PNG.sync.read(fs.readFileSync(fullPathScreenshotName))
