@@ -1,0 +1,5 @@
+author: "Jolly"
+delete-after: True
+changes: 
+  - bugfix: "On Tram, in sec, the floating pepper spray refiller has been removed from the armory. You guys have enough, stop hogging it damnit!"
+  - bugfix: "On Tram, in the under tram, steam vents should no longer spontaneously appear in walls."
