@@ -7,7 +7,7 @@
 	density = TRUE
 	max_integrity = 200
 	var/state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
-	var/base_name = "airlock"
+	var/base_name = "Airlock"
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
@@ -42,13 +42,13 @@
 		if(AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)
 			. += span_notice("The circuit is <b>connected loosely</b> to its slot, but the maintenance panel is <i>unscrewed and open</i>.")
 	if(!mineral && !nomineral && !glass && !noglass)
-		. += span_notice("There is a small <i>paper</i> placard on the assembly[doorname]. There are <i>empty</i> slots for glass windows and mineral covers.")
+		. += span_notice("There are <i>empty</i> slots for glass windows and mineral covers.")
 	else if(!mineral && !nomineral && glass && !noglass)
-		. += span_notice("There is a small <i>paper</i> placard on the assembly[doorname]. There are <i>empty</i> slots for mineral covers.")
+		. += span_notice("There are <i>empty</i> slots for mineral covers.")
 	else if(!glass && !noglass)
-		. += span_notice("There is a small <i>paper</i> placard on the assembly[doorname]. There are <i>empty</i> slots for glass windows.")
-	else
-		. += span_notice("There is a small <i>paper</i> placard on the assembly[doorname].")
+		. += span_notice("There are <i>empty</i> slots for glass windows.")
+	if(doorname)
+		. += span_notice("There is a small <i>paper</i> placard on the assembly labelled \"[doorname]\".")
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))

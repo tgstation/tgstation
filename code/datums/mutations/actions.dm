@@ -53,7 +53,7 @@
 	if(sniffed)
 		var/old_target = tracking_target
 		possible = list()
-		var/list/prints = sniffed.return_fingerprints()
+		var/list/prints = GET_ATOM_FINGERPRINTS(sniffed)
 		if(prints)
 			for(var/mob/living/carbon/C in GLOB.carbon_list)
 				if(prints[md5(C.dna.unique_identity)])
@@ -280,9 +280,9 @@
 	var/mob/living/carbon/C = user
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return
-	var/obj/item/organ/tongue/tongue
+	var/obj/item/organ/internal/tongue/tongue
 	for(var/org in C.internal_organs)
-		if(istype(org, /obj/item/organ/tongue))
+		if(istype(org, /obj/item/organ/internal/tongue))
 			tongue = org
 			break
 

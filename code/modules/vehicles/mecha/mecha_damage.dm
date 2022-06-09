@@ -1,3 +1,38 @@
+/*!
+ * # Mecha defence explanation
+ * Mechs focus is on a more heavy-but-slower damage approach
+ * For this they have the following mechanics
+ *
+ * ## Backstab
+ * Basically the tldr is that mechs are less flexible so we encourage good positioning, pretty simple
+ * ## Armor modules
+ * Pretty simple, adds armor, you can choose against what
+ * ## Internal damage
+ * When taking damage will force you to take some time to repair, encourages improvising in a fight
+ * Targetting different def zones will damage them to encurage a more strategic approach to fights
+ * where they target the "dangerous" modules
+ */
+
+/// returns a number for the damage multiplier for this relative angle/dir
+/obj/vehicle/sealed/mecha/proc/get_armour_facing(relative_dir)
+	switch(relative_dir)
+		if(180) // BACKSTAB!
+			return facing_modifiers[MECHA_BACK_ARMOUR]
+		if(0, 45) // direct or 45 degrees off
+			return facing_modifiers[MECHA_FRONT_ARMOUR]
+	return facing_modifiers[MECHA_SIDE_ARMOUR] //if its not a front hit or back hit then assume its from the side
+
+///tries to deal internal damaget depending on the damage amount
+/obj/vehicle/sealed/mecha/proc/try_deal_internal_damage(damage)
+	if(damage < internal_damage_threshold)
+		return
+	if(!prob(internal_damage_probability))
+		return
+	var/internal_damage_to_deal = possible_int_damage
+	internal_damage_to_deal &= ~mecha_flags
+	if(internal_damage_to_deal)
+		set_internal_damage(pick(bitfield_to_list(internal_damage_to_deal)))
+
 /// tries to repair any internal damage and plays fluff for it
 /obj/vehicle/sealed/mecha/proc/try_repair_int_damage(mob/user, flag_to_heal)
 	balloon_alert(user, get_int_repair_fluff_start(flag_to_heal))

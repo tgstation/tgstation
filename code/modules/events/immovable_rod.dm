@@ -196,7 +196,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/singularity_pull()
 	return
 
-/obj/effect/immovablerod/Process_Spacemove()
+/obj/effect/immovablerod/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return TRUE
 
 /obj/effect/immovablerod/Bump(atom/clong)
@@ -212,7 +212,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(2, location = get_turf(src))
+		smoke.set_up(2, holder = src, location = get_turf(src))
 		smoke.start()
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800

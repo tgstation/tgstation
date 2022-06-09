@@ -184,6 +184,11 @@
 /obj/effect/anomaly/grav/high/proc/setup_grav_field()
 	grav_field = new(src, 7, TRUE, rand(0, 3))
 
+/obj/effect/anomaly/grav/high/detonate()
+	for(var/obj/machinery/gravity_generator/main/the_generator in GLOB.machines)
+		if(is_station_level(the_generator.z))
+			the_generator.blackout()
+
 /obj/effect/anomaly/grav/high/Destroy()
 	QDEL_NULL(grav_field)
 	. = ..()
@@ -442,7 +447,6 @@
 	var/static/list/r_arms
 	var/static/list/l_legs
 	var/static/list/r_legs
-	var/static/list/organs
 
 /obj/effect/anomaly/delimber/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
@@ -458,8 +462,6 @@
 		l_legs = typesof(/obj/item/bodypart/l_leg)
 	if(!r_legs)
 		r_legs = typesof(/obj/item/bodypart/r_leg)
-	if(!organs)
-		organs = subtypesof(/obj/item/organ)
 
 /obj/effect/anomaly/delimber/anomalyEffect(delta_time)
 	. = ..()
@@ -495,9 +497,6 @@
 		new_part.replace_limb(nearby, TRUE)
 		if(picked_user_part)
 			qdel(picked_user_part)
-		var/obj/item/organ/picked_organ = pick(organs)
-		var/obj/item/organ/new_organ = new picked_organ
-		new_organ.Insert(nearby, TRUE, FALSE)
 		nearby.update_body(TRUE)
 		balloon_alert(nearby, "something has changed about you")
 

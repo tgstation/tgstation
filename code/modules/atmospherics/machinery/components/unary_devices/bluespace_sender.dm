@@ -9,6 +9,8 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/bluespace_sender
+	move_resist = MOVE_RESIST_DEFAULT
+	set_dir_on_move = FALSE
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
 	///Base icon name for updating the appearance
@@ -68,46 +70,57 @@
 	bluespace_network.temperature = T20C
 	update_parents()
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/attackby(obj/item/item, mob/user, params)
-	if(!on)
-		if(default_deconstruction_screwdriver(user, "[base_icon]_open", "[base_icon]_off", item))
-			update_appearance()
-			return
-	if(default_change_direction_wrench(user, item))
-		return
-	if(item.tool_behaviour == TOOL_CROWBAR && panel_open && bluespace_network.total_moles() > 0)
-		say("WARNING - Bluespace network can contain hazardous gases, deconstruct with caution!")
-		if(!do_after(user, 3 SECONDS, src))
-			return
-	if(default_deconstruction_crowbar(item))
-		return
-	return ..()
+/obj/machinery/atmospherics/components/unary/bluespace_sender/screwdriver_act(mob/living/user, obj/item/tool)
+	if(on)
+		to_chat(user, span_notice("You can't open [src] while it's on!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!anchored)
+		to_chat(user, span_notice("Anchor [src] first!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(default_deconstruction_screwdriver(user, "[base_icon]_open", "[base_icon]", tool))
+		change_pipe_connection(panel_open)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/default_change_direction_wrench(mob/user, obj/item/item)
-	if(!..())
-		return FALSE
-	set_init_directions()
-	var/obj/machinery/atmospherics/node = nodes[1]
-	if(node)
-		if(src in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node.disconnect(src)
-		nodes[1] = null
-	if(parents[1])
-		nullify_pipenet(parents[1])
-
-	atmos_init()
-	node = nodes[1]
-	if(node)
-		node.atmos_init()
-		node.add_member(src)
-	SSair.add_to_rebuild_queue(src)
-	return TRUE
+/obj/machinery/atmospherics/components/unary/bluespace_sender/crowbar_act(mob/living/user, obj/item/tool)
+	default_deconstruction_crowbar(tool, custom_deconstruct = bluespace_network.total_moles() > 0 ? TRUE : FALSE)
+	say("WARNING - Bluespace network can contain hazardous gases, deconstruct with caution!")
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	tool.play_tool_sound(src, 50)
+	deconstruct(TRUE)
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/multitool_act(mob/living/user, obj/item/item)
 	var/obj/item/multitool/multitool = item
 	multitool.buffer = src
 	to_chat(user, span_notice("You store linkage information in [item]'s buffer."))
 	return TRUE
+
+/obj/machinery/atmospherics/components/unary/bluespace_sender/wrench_act(mob/living/user, obj/item/tool)
+	return default_change_direction_wrench(user, tool)
+
+/obj/machinery/atmospherics/components/unary/bluespace_sender/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		return
+	if(default_unfasten_wrench(user, tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return
+
+/obj/machinery/atmospherics/components/unary/bluespace_sender/default_change_direction_wrench(mob/user, obj/item/item)
+	if(!..())
+		return FALSE
+	set_init_directions()
+	update_appearance()
+	return TRUE
+
+/obj/machinery/atmospherics/components/unary/bluespace_sender/CtrlClick(mob/living/user)
+	if(!panel_open)
+		if(!can_interact(user))
+			return
+		on = !on
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		update_appearance()
+		return
+	. = ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

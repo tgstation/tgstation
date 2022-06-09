@@ -56,6 +56,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/plush/moth = 2,
 		/obj/item/toy/plush/pkplush = 2,
 		/obj/item/toy/plush/rouny = 2,
+		/obj/item/toy/plush/abductor = 2,
+		/obj/item/toy/plush/abductor/agent = 2,
 		/obj/item/storage/belt/military/snack = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
@@ -71,6 +73,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_keyboard = null
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
 	var/list/prize_override
 
 /obj/machinery/computer/arcade/proc/Reset()

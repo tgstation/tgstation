@@ -86,7 +86,7 @@
 		grill_fuel -= GRILL_FUELUSAGE_IDLE * delta_time
 		if(DT_PROB(0.5, delta_time))
 			var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
-			smoke.set_up(1, location = loc)
+			smoke.set_up(1, holder = src, location = loc)
 			smoke.start()
 	if(grilled_item)
 		SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILLED, src, delta_time)

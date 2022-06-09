@@ -59,3 +59,5 @@
 #define EIGENSTASIUM_FILE "eigenstasium.json"
 /// File location for hallucination lines
 #define HALLUCINATION_FILE "hallucination.json"
+/// File location for ninja lines
+#define NINJA_FILE "ninja.json"

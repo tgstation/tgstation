@@ -38,6 +38,15 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear
+	outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
+
+/datum/outfit/syndicatecommandocorpse/lessenedgear
+	name = "Syndicate Commando Corpse"
+	gloves = /obj/item/clothing/gloves/tackler
+	back = null
+	id = null
+	id_trim = null
 
 /obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
@@ -219,4 +228,4 @@
 	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
 	id = /obj/item/card/id/advanced
 	l_pocket = /obj/item/paper/fluff/bee_objectives
-	mask = /obj/item/clothing/mask/animal/rat/bee
+	mask = /obj/item/clothing/mask/animal/small/bee

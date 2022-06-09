@@ -123,12 +123,8 @@
 	balloon_alert(user, "temperature reset to [target_temperature] K")
 	update_appearance()
 
-/** Performs heat calculation for the freezer. The full equation for this whole process is:
- * T3 = (C1 * T1 + (C1 * C2) / (C1 + C2) * (T2 - T1)) / C1.
- * C1 is main port heat capacity, T1 is the temp.
- * C2 and T2 is for the heat capacity of the freezer and temperature that we desire respectively.
- * T3 is the temperature we get
- */
+/// Performs heat calculation for the freezer.
+/// We just equalize the gasmix with an object at temp = var/target_temperature and heat cap = var/heat_capacity
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	if(!on)
 		return
@@ -151,8 +147,8 @@
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - port.temperature
 
-	// This variable holds the (C1*C2) / (C1+C2) * (T2-T1) part of the equation.
-	var/heat_amount = temperature_target_delta * (port_capacity * heat_capacity / (port_capacity + heat_capacity))
+	// We perfectly can do W1+W2 / C1+C2 here but this lets us count the power easily.
+	var/heat_amount = CALCULATE_CONDUCTION_ENERGY(temperature_target_delta, port_capacity, heat_capacity)
 
 	port.temperature = max(((port.temperature * port_capacity) + heat_amount) / port_capacity, TCMB)
 
@@ -213,30 +209,6 @@
 			visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
 			return TRUE
 	return FALSE
-
-/obj/machinery/atmospherics/components/unary/thermomachine/proc/change_pipe_connection(disconnect)
-	if(disconnect)
-		disconnect_pipes()
-		return
-	connect_pipes()
-
-/obj/machinery/atmospherics/components/unary/thermomachine/proc/connect_pipes()
-	var/obj/machinery/atmospherics/node1 = nodes[1]
-	atmos_init()
-	node1 = nodes[1]
-	if(node1)
-		node1.atmos_init()
-		node1.add_member(src)
-	SSair.add_to_rebuild_queue(src)
-
-/obj/machinery/atmospherics/components/unary/thermomachine/proc/disconnect_pipes()
-	var/obj/machinery/atmospherics/node1 = nodes[1]
-	if(node1)
-		if(src in node1.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node1.disconnect(src)
-		nodes[1] = null
-	if(parents[1])
-		nullify_pipenet(parents[1])
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open || check_pipe_on_turf())
