@@ -1,0 +1,24 @@
+name: Update Screenshot Tests (.ssupdate)
+on:
+  issue_comment:
+    types:
+      - created
+jobs:
+  update_screenshot_tests:
+    if: ${{ github.event.comment.body.contains('.ssupdate') }}
+    name: Update Screenshot Tests (.ssupdate)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        if: steps.secrets_set.outputs.SECRETS_ENABLED
+        uses: actions/checkout@v3
+        # MOTHBLOCKS TODO: Remove
+        with:
+          repository: "Mothblocks/tgstation"
+          ref: "screenshot-tests"
+      - name: Update screenshot tests
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { updateScreenshotTests } = require('./tools/ci/update_screenshot_tests.js')
+            await updateScreenshotTests({ github, context, exec })

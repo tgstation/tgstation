@@ -26,7 +26,7 @@ const createComment = (screenshotFailures) => {
 
 		## Help
 		<details>
-			<summary>What is this?</summary>
+			<summary>**What is this?**</summary>
 
 			Screenshot tests make sure that specific icons look the same as they did before.
 			This is important for elements that often mistakenly change, such as alien species.
@@ -36,16 +36,20 @@ const createComment = (screenshotFailures) => {
 		</details>
 
 		<details>
-			<summary>I am changing sprites, it's supposed to look different.</summary>
+			<summary>**I am changing sprites, it's supposed to look different.**</summary>
 
 			If the newly produced sprites are correct, then the tests should be updated.
-			Right-click the "produced image", and save it in \`code/modules/unit_tests/screenshots/NAME.png\`.
+
+			You can either:
+
+			1. Right-click the "produced image", and save it in \`code/modules/unit_tests/screenshots/NAME.png\`.
+			2. Comment \`.ssupdate\` on the pull request, and we will commit the new screenshots directly to your branch.
 
 			If you need help, you can ask maintainers either on Discord or on this pull request.
 		</details>
 
 		<details>
-			<summary>This is a false positive.</summary>
+			<summary>**This is a false positive.**</summary>
 
 			If you are sure your code did not cause this failure, especially if it's inconsistent,
 			then you may have found a false positive.
@@ -74,6 +78,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 	}
 
 	// Step 2. Download the screenshots from the artifacts
+	// MOTHBLOCKS TODO: Limit file size
 	const download = await github.rest.actions.downloadArtifact({
 		owner: context.repo.owner,
 		repo: context.repo.repo,
