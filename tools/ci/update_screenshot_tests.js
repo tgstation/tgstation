@@ -11,8 +11,6 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		return;
 	}
 
-	console.log(JSON.stringify(context.payload, null, 2));
-
 	const { payload } = context;
 
 	await github.rest.reactions.createForIssueComment({
@@ -22,7 +20,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		repo: context.repo.repo,
 	});
 
-	const workflowRuns = await github.graphql(`query($id:ID!) {
+	const graphQlResponse = await github.graphql(`query($id:ID!) {
 		node(id: $id) {
 			...on IssueComment {
 				pullRequest {
@@ -44,6 +42,16 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 							}
 						}
 					}
+
+					headRepository {
+						owner {
+							login
+						}
+
+						name
+					}
+
+					headRefName
 				}
 			}
 		}
@@ -51,9 +59,11 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		id: payload.comment.node_id,
 	});
 
-	const commit = workflowRuns
+	const pullRequest = graphQlResponse
 		.node
-		.pullRequest
+		.pullRequest;
+
+	const commit = pullRequest
 		.commits
 		.nodes[0]
 		.commit;
@@ -91,51 +101,52 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		archive_format: "zip",
 	});
 
-	// fs.writeFileSync("bad-screenshots.zip", Buffer.from(download.data));
+	fs.writeFileSync("bad-screenshots.zip", Buffer.from(download.data));
 
-	// await exec.exec("unzip bad-screenshots.zip -d bad-screenshots");
+	await exec.exec("unzip bad-screenshots.zip -d bad-screenshots");
 
-	// const tree = [];
+	const tree = [];
 
-	// for (const filename of fs.readdirSync("bad-screenshots")) {
-	// 	const { data: blobData } = await octokit.rest.git.createBlob({
-	// 		owner: context.repo.owner,
-	// 		repo: context.repo.repo,
-	// 		encoding: "base64",
-	// 		content: fs.readFileSync(`bad-screenshots/${filename}`, "base64"),
-	// 	});
+	const prOwner = pullRequest.headRepository.owner.login;
+	const prRepo = pullRequest.headRepository.name;
 
-	// 	tree.push({
-	// 		path: `code/modules/unit_tests/screenshots/${filename}.png`,
-	// 		mode: "100644",
-	// 		type: "blob",
-	// 		sha: blobData.sha,
-	// 	});
-	// }
+	for (const filename of fs.readdirSync("bad-screenshots")) {
+		const { data: blobData } = await octokit.rest.git.createBlob({
+			owner: prOwner,
+			repo: prRepo,
+			encoding: "base64",
+			content: fs.readFileSync(`bad-screenshots/${filename}`, "base64"),
+		});
 
-	// const { owner: prOwner, repo: prRepo } = payload.issue.pull_request;
+		tree.push({
+			path: `code/modules/unit_tests/screenshots/${filename}.png`,
+			mode: "100644",
+			type: "blob",
+			sha: blobData.sha,
+		});
+	}
 
-	// const { data: blobTree } = await octokit.rest.git.createTree({
-	// 	owner: context.repo.owner,
-	// 	repo: context.repo.repo,
-	// 	tree,
-	// 	base_tree: commitSha,
-	// });
+	const { data: blobTree } = await octokit.rest.git.createTree({
+		owner: prOwner,
+		repo: prRepo,
+		tree,
+		base_tree: commitSha,
+	});
 
-	// const { data: commit } = await octokit.rest.git.createCommit({
-	// 	owner: context.repo.owner,
-	// 	repo: context.repo.repo,
-	// 	tree: blobTree.sha,
-	// 	parents: [commitSha],
-	// 	message: "Update screenshots",
-	// });
+	const { data: commit } = await octokit.rest.git.createCommit({
+		owner: prOwner,
+		repo: prRepo,
+		tree: blobTree.sha,
+		parents: [commitSha],
+		message: "Update screenshots",
+	});
 
-	// await octokit.rest.git.updateRef({
-	// 	owner: context.repo.owner,
-	// 	repo: context.repo.repo,
-	// 	sha: commit.sha,
-	// 	ref: context.ref,
-	// });
+	await octokit.rest.git.updateRef({
+		owner: prOwner,
+		repo: prRepo,
+		sha: commit.sha,
+		ref: pullRequest.headRefName,
+	});
 };
 
 module.exports = { updateScreenshotTests };
