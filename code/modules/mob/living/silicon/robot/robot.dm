@@ -375,7 +375,9 @@
 		add_overlay(head_overlay)
 	update_fire()
 
-/mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf)
+/mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
+	if(same_z_layer)
+		return ..()
 	update_appearance()
 	return ..()
 

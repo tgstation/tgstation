@@ -117,7 +117,9 @@
 	SET_PLANE(water_falling, GAME_PLANE_UPPER, our_turf)
 	. += water_falling
 
-/obj/machinery/shower/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents)
+/obj/machinery/shower/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
+	if(same_z_layer)
+		return ..()
 	update_appearance()
 	return ..()
 

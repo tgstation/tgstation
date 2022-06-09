@@ -115,7 +115,8 @@ All ShuttleMove procs go here
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	var/turf/newT = get_turf(src)
 	if (newT.z != oldT.z)
-		on_changed_z_level(oldT, newT)
+		var/same_z_layer = (GET_TURF_PLANE_OFFSET(oldT) == GET_TURF_PLANE_OFFSET(newT))
+		on_changed_z_level(oldT, newT, same_z_layer)
 
 	if(light)
 		update_light()

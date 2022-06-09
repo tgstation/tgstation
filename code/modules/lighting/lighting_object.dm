@@ -85,19 +85,15 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
+	affected_turf.underlays -= current_underlay
 	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
 		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
-		affected_turf.underlays -= current_underlay
 		current_underlay.icon_state = "lighting_transparent"
 		current_underlay.color = null
-		affected_turf.underlays += current_underlay
 	else if(!set_luminosity)
-		affected_turf.underlays -= current_underlay
 		current_underlay.icon_state = "lighting_dark"
 		current_underlay.color = null
-		affected_turf.underlays += current_underlay
 	else
-		affected_turf.underlays -= current_underlay
 		current_underlay.icon_state = null
 		current_underlay.color = list(
 			rr, rg, rb, 00,
@@ -107,6 +103,5 @@
 			00, 00, 00, 01
 		)
 
-		affected_turf.underlays += current_underlay
-
+	affected_turf.underlays += current_underlay
 	affected_turf.luminosity = set_luminosity

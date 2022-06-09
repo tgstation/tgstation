@@ -545,7 +545,26 @@ Moving interrupts
 
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
+	update_content_planes()
 	update_appearance()
+
+/obj/structure/statue/custom/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
+	if(same_z_layer)
+		return ..()
+	update_content_planes()
+	update_appearance()
+
+/obj/structure/statue/custom/proc/update_content_planes()
+	if(!content_ma)
+		return
+	var/turf/our_turf = get_turf(src)
+	var/list/new_overlays = list()
+	for(var/mutable_appearance/appearance as anything in content_ma.overlays)
+		SET_PLANE(appearance, PLANE_TO_TRUE(appearance.plane), our_turf)
+		new_overlays += appearance
+	content_ma.overlays -= new_overlays
+	// Semi cargo cult, overlays will only update on add/remove, since they don't get checked constantly like vis contents do
+	content_ma.overlays += new_overlays
 
 /obj/structure/statue/custom/update_overlays()
 	. = ..()

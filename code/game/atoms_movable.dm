@@ -681,7 +681,8 @@
 	var/turf/new_turf = get_turf(src)
 
 	if (old_turf?.z != new_turf?.z)
-		on_changed_z_level(old_turf, new_turf)
+		var/same_z_layer = (GET_TURF_PLANE_OFFSET(old_turf) == GET_TURF_PLANE_OFFSET(new_turf))
+		on_changed_z_level(old_turf, new_turf, same_z_layer)
 
 	if(HAS_SPATIAL_GRID_CONTENTS(src))
 		if(old_turf && new_turf && (old_turf.z != new_turf.z \
@@ -954,23 +955,27 @@
  * Called when a movable changes z-levels.
  *
  * Arguments:
- * * old_z - The previous z-level they were on before.
+ * * old_turf - The previous turf they were on before.
+ * * new_turf - The turf they have now entered.
+ * * same_z_layer - If their old and new z levels are on the same level of plane offsets or not
  * * notify_contents - Whether or not to notify the movable's contents that their z-level has changed. NOTE, IF YOU SET THIS, YOU NEED TO MANUALLY SET PLANE OF THE CONTENTS LATER
  */
-/atom/movable/proc/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents = TRUE)
+/atom/movable/proc/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_turf, new_turf)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_turf, new_turf, same_z_layer)
 
-	SET_PLANE(src, PLANE_TO_TRUE(src.plane), new_turf)
-	// a TON of overlays use planes, and thus require offsets
-	// so we do this. sucks to suck
-	update_appearance()
+	// If our turfs are on different z "layers", recalc our planes
+	if(same_z_layer)
+		SET_PLANE(src, PLANE_TO_TRUE(src.plane), new_turf)
+		// a TON of overlays use planes, and thus require offsets
+		// so we do this. sucks to suck
+		update_appearance()
 
 	if(!notify_contents)
 		return
 
 	for (var/atom/movable/content as anything in src) // Notify contents of Z-transition.
-		content.on_changed_z_level(old_turf, new_turf)
+		content.on_changed_z_level(old_turf, new_turf, same_z_layer)
 
 /**
  * Called whenever an object moves and by mobs when they attempt to move themselves through space

@@ -11,7 +11,9 @@
 	gen_armrest()
 	AddElement(/datum/element/soft_landing)
 
-/obj/structure/chair/sofa/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents)
+/obj/structure/chair/sofa/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
+	if(same_z_layer)
+		return ..()
 	cut_overlay(armrest)
 	QDEL_NULL(armrest)
 	gen_armrest()

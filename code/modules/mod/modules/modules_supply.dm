@@ -593,7 +593,9 @@
 	generate_image()
 	addtimer(CALLBACK(src, .proc/prime), prime_time)
 
-/obj/structure/mining_bomb/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents)
+/obj/structure/mining_bomb/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
+	if(same_z_layer)
+		return ..()
 	explosion_image = null
 	generate_image()
 	return ..()

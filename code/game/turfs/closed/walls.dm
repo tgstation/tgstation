@@ -45,7 +45,6 @@
 			underlay_appearance.icon = 'icons/turf/space.dmi'
 			underlay_appearance.icon_state = SPACE_ICON_STATE
 			SET_PLANE(underlay_appearance, PLANE_SPACE, src)
-			underlay_appearance.plane = PLANE_SPACE
 		else
 			underlay_appearance.icon = fixed_underlay["icon"]
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
