@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 
 // MOTHBLOCKS TODO: Check that the owner made the comment
 const updateScreenshotTests = async ({ github, context, exec }) => {
@@ -115,7 +116,7 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 			owner: prOwner,
 			repo: prRepo,
 			encoding: "base64",
-			content: fs.readFileSync(`bad-screenshots/${filename}`, "base64"),
+			content: fs.readFileSync(path.join("bad-screenshots", filename, "new.png"), "base64"),
 		});
 
 		tree.push({
