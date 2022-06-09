@@ -1,17 +1,8 @@
-/// Triggers one of the random nearby fake item hallucinations.
-/datum/hallucination/random_nearby_fake_item
-
-/datum/hallucination/random_nearby_fake_item/start()
-	var/picked_item = pick(subtypesof(/datum/hallucination/nearby_fake_item))
-
-	feedback_details += "Type: [picked_item]"
-	hallucinator.cause_hallucination(picked_item, source = "random nearby item hallucination")
-
-	qdel(src)
-	return TRUE
-
 /// A hallucination that delivers the illusion that someone nearby has pulled out a weapon or item.
 /datum/hallucination/nearby_fake_item
+	abstract_hallucination_parent = /datum/hallucination/nearby_fake_item
+	random_hallucination_weight = 1
+
 	/// The icon file to draw from for left hand icons
 	var/left_hand_file
 	/// The icon file to draw from for right hand icons
@@ -92,7 +83,7 @@
 	right_hand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	image_icon_state = "advtaserstun4"
 
-/datum/hallucination/nearby_fake_item/taser/ebow
+/datum/hallucination/nearby_fake_item/taser/ebow // OOP be like.
 	image_icon_state = "crossbow"
 
 /datum/hallucination/nearby_fake_item/baton

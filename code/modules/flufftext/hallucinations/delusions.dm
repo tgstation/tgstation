@@ -1,5 +1,7 @@
 /// A hallucination that makes us and (possibly) other people look like something else.
 /datum/hallucination/delusion
+	abstract_hallucination_parent = /datum/hallucination/delusion
+
 	/// The duration of the delusions
 	var/duration = 30 SECONDS
 
@@ -93,6 +95,8 @@
 
 /// Used for making custom delusions.
 /datum/hallucination/delusion/custom
+	abstract_hallucination_parent = /datum/hallucination/delusion/custom
+	random_hallucination_weight = 0
 
 /datum/hallucination/delusion/custom/New(
 	mob/living/hallucinator,
@@ -117,6 +121,8 @@
 	return ..()
 
 /datum/hallucination/delusion/preset
+	abstract_hallucination_parent = /datum/hallucination/delusion/preset
+	random_hallucination_weight = 2
 
 /datum/hallucination/delusion/preset/nothing
 	delusion_icon_file = 'icons/effects/effects.dmi'
@@ -133,17 +139,9 @@
 	delusion_icon_state = "monkey"
 	delusion_name = "monkey"
 
-/datum/hallucination/delusion/preset/monkey/New(
-	mob/living/hallucinator,
-	duration = 30 SECONDS,
-	affects_us = TRUE,
-	affects_others = FALSE,
-	skip_nearby = FALSE,
-	play_wabbajack = FALSE,
-)
-
-	. = ..()
+/datum/hallucination/delusion/preset/monkey/start()
 	delusion_name += " ([rand(1,999)])"
+	return ..()
 
 /datum/hallucination/delusion/preset/corgi
 	delusion_icon_file = 'icons/mob/pets.dmi'

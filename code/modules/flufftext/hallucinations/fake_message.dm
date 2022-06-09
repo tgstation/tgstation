@@ -1,4 +1,5 @@
 /datum/hallucination/message
+	random_hallucination_weight = 60
 
 /datum/hallucination/message/start()
 	var/list/nearby_humans = list()

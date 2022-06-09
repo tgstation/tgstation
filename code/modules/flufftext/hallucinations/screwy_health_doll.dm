@@ -1,5 +1,7 @@
 ///Causes the target to see incorrect health damages on the healthdoll
 /datum/hallucination/fake_health_doll
+	random_hallucination_weight = 12
+
 	/// The duration of the hallucination
 	var/duration
 	/// Assoc list of [ref to bodyparts] to [severity]

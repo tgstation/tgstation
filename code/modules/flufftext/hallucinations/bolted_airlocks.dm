@@ -1,4 +1,5 @@
 /datum/hallucination/bolts
+	random_hallucination_weight = 7
 	/// A list of weakrefs to airlocks we bolt down around us
 	var/list/datum/weakref/airlocks_to_hit
 	/// A list of weakrefs to fake lock hallucinations we've created
@@ -58,7 +59,7 @@
 
 	next_action = rand(4, 12)
 
-/datum/hallucination/bolts/Destroy() // melbert todo null comp lookup
+/datum/hallucination/bolts/Destroy()
 	// Clean up any locks we happen to have remaining on qdel.
 	// Hypothetically this shouldn't delete anything. But just in case.
 	for(var/datum/weakref/leftover_lock_ref as anything in locks)

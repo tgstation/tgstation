@@ -1,5 +1,6 @@
 /// Shoots a random, fake projectile to the hallucinator
 /datum/hallucination/stray_bullet
+	random_hallucination_weight = 7
 
 /datum/hallucination/stray_bullet/start()
 	var/list/turf/starting_locations = list()

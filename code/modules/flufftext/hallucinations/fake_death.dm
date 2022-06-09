@@ -1,4 +1,5 @@
 /datum/hallucination/death
+	random_hallucination_weight = 1
 
 /datum/hallucination/death/Destroy()
 	if(!QDELETED(hallucinator))

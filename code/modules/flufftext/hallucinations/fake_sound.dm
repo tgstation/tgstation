@@ -1,5 +1,7 @@
 /// Hallucination that plays a fake sound somewhere nearby.
 /datum/hallucination/fake_sound
+	abstract_hallucination_parent = /datum/hallucination/fake_sound
+
 	/// Volume of the fake sound
 	var/volume = 50
 	/// Whether the fake sound has vary or not
@@ -17,7 +19,7 @@
 
 /// Actually plays the fake sound.
 /datum/hallucination/fake_sound/proc/play_fake_sound(turf/source, sound_to_play)
-	hallucinator.playsound_local(sound_source, sound_to_play, volume, sound_vary)
+	hallucinator.playsound_local(source, sound_to_play, volume, sound_vary)
 
 /// Used to queue additional, delayed fake sounds via a callback.
 /datum/hallucination/fake_sound/proc/queue_fake_sound(turf/source, sound_to_play, volume_override, vary_override, delay)
@@ -25,6 +27,10 @@
 		CRASH("[type] tried a delayed fake sound without a timer.")
 
 	addtimer(CALLBACK(hallucinator, /mob/.proc/playsound_local, source, sound_to_play, volume_override || volume, vary_override || sound_vary), delay)
+
+/datum/hallucination/fake_sound/normal
+	abstract_hallucination_parent = /datum/hallucination/fake_sound/normal
+	random_hallucination_weight = 5
 
 /datum/hallucination/fake_sound/normal/airlock
 	volume = 30
@@ -84,10 +90,10 @@
 		return
 
 	if(prob(75))
-		hallucinator.playsound_local(sound_source, 'sound/mecha/mechstep.ogg', 40, TRUE)
-		sound_source = get_step(sound_source, mech_dir)
+		hallucinator.playsound_local(mech_source, 'sound/mecha/mechstep.ogg', 40, TRUE)
+		mech_source = get_step(mech_source, mech_dir)
 	else
-		hallucinator.playsound_local(sound_source, 'sound/mecha/mechturn.ogg', 40, TRUE)
+		hallucinator.playsound_local(mech_source, 'sound/mecha/mechturn.ogg', 40, TRUE)
 		mech_dir = pick(GLOB.cardinals)
 
 	if(--steps_left <= 0)
@@ -131,6 +137,9 @@
 	queue_fake_sound(source, 'sound/machines/airlockforced.ogg', delay = hacking_time)
 
 /datum/hallucination/fake_sound/weird
+	abstract_hallucination_parent = /datum/hallucination/fake_sound/weird
+	random_hallucination_weight = 1
+
 	/// if FALSE, we will pass "null" in as the turf source, meaning the sound will just play without direction / etc.
 	var/no_source = FALSE
 

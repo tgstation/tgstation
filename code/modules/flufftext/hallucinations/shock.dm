@@ -1,5 +1,7 @@
 /// Causes a fake "zap" to the hallucinator.
 /datum/hallucination/shock
+	random_hallucination_weight = 1
+
 	var/image/shock_image
 	var/image/electrocution_skeleton_anim
 

@@ -2,6 +2,8 @@
 #define RAISE_FIRE_TIME 3
 
 /datum/hallucination/fire
+	random_hallucination_weight = 3
+
 	var/active = TRUE
 	var/stage = 0
 	var/image/fire_overlay

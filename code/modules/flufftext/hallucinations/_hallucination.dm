@@ -51,6 +51,10 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
  * See also: [the hallucination status effect][/datum/status_effect/hallucination].
  */
 /datum/hallucination
+	/// What is this hallucination's weight in the random hallucination pool?
+	var/random_hallucination_weight = 0
+	/// Who's our next highest abstract parent type?
+	var/abstract_hallucination_parent = /datum/hallucination
 	/// Extra info about the hallucination displayed in the log.
 	var/feedback_details = ""
 	/// The mob we're targeting with the hallucination.

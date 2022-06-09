@@ -1,54 +1,51 @@
 
 
-GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
+GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weighted_list())
 
 /proc/generate_hallucination_weighted_list()
-	var/list/list = list(
-		/datum/hallucination/chat = 100,
-		/datum/hallucination/message = 60,
-		// /datum/hallucination/fake_sound/normal/random = 50,
-		// /datum/hallucination/random_battle = 20,
-		/datum/hallucination/fake_health_doll = 12,
-		// /datum/hallucination/random_fake_alert = 12,
-		/datum/hallucination/bolts = 7,
-		/datum/hallucination/fake_flood = 7,
-		// /datum/hallucination/random_nearby_fake_item = 7,
-		/datum/hallucination/stray_bullet = 7,
-		/datum/hallucination/hazard/anomaly = 5,
-		/datum/hallucination/hazard/chasm = 5,
-		/datum/hallucination/hazard/lava = 5,
-		/datum/hallucination/body/husk = 4,
-		/datum/hallucination/screwy_hud/crit = 4,
-		/datum/hallucination/screwy_hud/dead = 4,
-		/datum/hallucination/screwy_hud/healthy = 4,
-		/datum/hallucination/fire = 3,
-		/datum/hallucination/body/husk/sideways = 2,
-		/datum/hallucination/station_message/meteors = 2,
-		/datum/hallucination/station_message/supermatter_delam = 2,
-		/datum/hallucination/body/alien = 1,
-		/datum/hallucination/death = 1,
-		/datum/hallucination/fake_item/baton = 1,
-		/datum/hallucination/fake_item/c4 = 1,
-		/datum/hallucination/fake_item/emag = 1,
-		/datum/hallucination/fake_item/esword = 1,
-		/datum/hallucination/fake_item/flashbang = 1,
-		/datum/hallucination/fake_item/revolver = 1,
-		/datum/hallucination/fake_sound/weird/creepy = 1,
-		/datum/hallucination/fake_sound/weird/game_over = 1,
-		/datum/hallucination/fake_sound/weird/hallelujah = 1,
-		/datum/hallucination/fake_sound/weird/highlander = 1,
-		/datum/hallucination/fake_sound/weird/hyperspace = 1,
-		/datum/hallucination/fake_sound/weird/laugher = 1,
-		/datum/hallucination/fake_sound/weird/phone = 1,
-		/datum/hallucination/fake_sound/weird/tesloose = 1,
-		/datum/hallucination/oh_yeah = 1,
-		/datum/hallucination/shock = 1,
-		/datum/hallucination/station_message/blob_alert = 1,
-		/datum/hallucination/station_message/malf_ai = 1,
-		/datum/hallucination/station_message/shuttle_dock = 1,
-	)
+	var/list/weighted_list = list()
 
-	return list
+	for(var/datum/hallucination/hallucination_type as anything in typesof(/datum/hallucination))
+		if(hallucination_type == initial(hallucination_type.abstract_hallucination_parent))
+			continue
+		var/weight = initial(hallucination_type.random_hallucination_weight)
+		if(weight <= 0)
+			continue
+
+		weighted_list[hallucination_type] = weight
+
+	return weighted_list
+
+/proc/debug_hallucination_weighted_list()
+	var/total_weight = 0
+	for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list)
+		total_weight += GLOB.random_hallucination_weighted_list[hallucination_type]
+
+	message_admins("Total weight: [total_weight]")
+	return total_weight
+
+/proc/debug_hallucination_weighted_list_per_type()
+	var/total_weight = debug_hallucination_weighted_list()
+
+	var/last_type
+	var/last_type_weight = 0
+	for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list)
+		var/this_weight = GLOB.random_hallucination_weighted_list[hallucination_type]
+		if(last_type)
+			if(ispath(hallucination_type, last_type))
+				last_type_weight += this_weight
+				continue
+
+			else
+				message_admins("[last_type]: [last_type_weight] / [total_weight] ([round(100 * (last_type_weight / total_weight), 0.01)]% chance)")
+
+		last_type = initial(hallucination_type.abstract_hallucination_parent)
+		if(last_type == /datum/hallucination)
+			message_admins("[hallucination_type]: [this_weight] / [total_weight] ([100 * (this_weight / total_weight)])")
+			last_type = null
+
+		else
+			last_type_weight = this_weight
 
 /datum/status_effect/hallucination
 	id = "hallucination"
@@ -96,7 +93,7 @@ GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
 	if(!COOLDOWN_FINISHED(src, hallucination_cooldown))
 		return
 
-	var/datum/hallucination/picked_hallucination = pick_weight(GLOB.hallucination_list)
+	var/datum/hallucination/picked_hallucination = pick_weight(GLOB.random_hallucination_weighted_list)
 	owner.cause_hallucination(picked_hallucination, "[id] status effect")
 
 	COOLDOWN_START(src, hallucination_cooldown, rand(lower_tick_interval, upper_tick_interval))

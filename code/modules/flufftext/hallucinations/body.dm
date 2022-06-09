@@ -1,5 +1,6 @@
 /// Makes a random body appear and disappear quickly.
 /datum/hallucination/body
+	abstract_hallucination_parent = /datum/hallucination/body
 	/// The file to make the body image from.
 	var/body_image_file
 	/// The icon state to make the body image form.
@@ -35,10 +36,12 @@
 	return image(body_image_file, location, body_image_state, TURF_LAYER)
 
 /datum/hallucination/body/husk
+	random_hallucination_weight = 4
 	body_image_file = 'icons/mob/human.dmi'
 	body_image_state = "husk"
 
 /datum/hallucination/body/husk/sideways
+	random_hallucination_weight = 2
 
 /datum/hallucination/body/husk/sideways/make_body_image(turf/location)
 	var/image/body = ..()
@@ -48,5 +51,6 @@
 	return body
 
 /datum/hallucination/body/alien
+	random_hallucination_weight = 1
 	body_image_file = 'icons/mob/alien.dmi'
 	body_image_state = "alienother"

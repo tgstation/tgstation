@@ -1,4 +1,6 @@
 /datum/hallucination/station_message
+	abstract_hallucination_parent = /datum/hallucination/station_message
+	random_hallucination_weight = 1
 
 /datum/hallucination/station_message/start()
 	qdel(src)
@@ -29,6 +31,7 @@
 	return ..()
 
 /datum/hallucination/station_message/meteors
+	random_hallucination_weight = 2
 
 /datum/hallucination/station_message/meteors/start()
 	to_chat(hallucinator, "<h1 class='alert'>Meteor Alert</h1>")
@@ -43,8 +46,9 @@
 	to_chat(hallucinator, span_boldannounce("You feel reality distort for a moment..."))
 	return ..()
 
-// Clock cult's long gone, but this one stays for posterity. Unobtainaible under normal circumstances.
 /datum/hallucination/station_message/ratvar
+	// Clock cult's long gone, but this stays for posterity.
+	random_hallucination_weight = 0
 
 /datum/hallucination/station_message/ratvar/start()
 	hallucinator.playsound_local(hallucinator, 'sound/machines/clockcult/ark_deathrattle.ogg', 50, FALSE, pressure_affected = FALSE)

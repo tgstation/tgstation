@@ -2,8 +2,10 @@
 #define FAKE_FLOOD_EXPAND_TIME 20
 #define FAKE_FLOOD_MAX_RADIUS 10
 
+/// Plasma starts flooding from the nearby vent
 /datum/hallucination/fake_flood
-	//Plasma starts flooding from the nearby vent
+	random_hallucination_weight = 7
+
 	var/list/image/flood_images = list()
 	var/list/obj/effect/plasma_image_holder/flood_image_holders = list()
 	var/list/turf/flood_turfs = list()

@@ -1,17 +1,7 @@
-/// Random fake alert, triggers a random subtype of fake alert.
-/datum/hallucination/random_fake_alert
-
-/datum/hallucination/random_fake_alert/start()
-	var/picked_alert = pick(subtypesof(/datum/hallucination/random_fake_alert))
-
-	feedback_details += "Type: [picked_alert]"
-	hallucinator.cause_hallucination(picked_alert, source = "random fake alert hallucination")
-
-	qdel(src)
-	return TRUE
-
 /// Fake alert hallucination. Causes a fake alert to be thrown to the hallucinator.
 /datum/hallucination/fake_alert
+	abstract_hallucination_parent = /datum/hallucination/fake_alert
+	random_hallucination_weight = 1
 
 	var/del_timer_id
 	/// The duration of the alert being thrown.

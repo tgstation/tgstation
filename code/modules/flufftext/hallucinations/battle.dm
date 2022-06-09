@@ -1,20 +1,11 @@
-/// Random battle hallucination. Triggers a random "battle" hallucination.
-/datum/hallucination/random_battle
-
-/datum/hallucination/random_battle/start()
-	var/picked_battle = pick(subtypesof(/datum/hallucination/battle))
-
-	feedback_details += "Type: [picked_battle]"
-	hallucinator.cause_hallucination(picked_battle, source = "random battle hallucination")
-
-	qdel(src)
-	return TRUE
-
 /// Battle hallucination, makes it sound like a melee or gun battle is going on in the background.
 /datum/hallucination/battle
+	abstract_hallucination_parent = /datum/hallucination/battle
+	random_hallucination_weight = 3
 
 /// Subtype of battle hallucination for gun based battles, where it sounds like someone is being shot.
 /datum/hallucination/battle/gun
+	abstract_hallucination_parent = /datum/hallucination/battle/gun
 	/// The lower end to how many shots we'll fire.
 	var/shots_to_fire_lower_range = 3
 	/// The upper end to how many shots we'll fire.

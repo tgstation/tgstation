@@ -1,5 +1,7 @@
 /// Sends a fake chat message to the hallucinator.
 /datum/hallucination/chat
+	random_hallucination_weight = 100
+
 	/// If TRUE, we force the message to be hallucinated from common radio. Only set in New()
 	var/force_radio
 	/// If set, a message we force to be picked, rather than an auto-generated message. Only set in New()

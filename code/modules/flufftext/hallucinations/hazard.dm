@@ -1,5 +1,8 @@
 /// Hallucinations that create a hazard somewhere nearby that actually has a danger associated.
 /datum/hallucination/hazard
+	abstract_hallucination_parent = /datum/hallucination/hazard
+	random_hallucination_weight = 5
+
 	/// The type of effect we create
 	var/hazard_type = /obj/effect/client_image_holder/hallucination/danger
 
@@ -21,7 +24,7 @@
 /datum/hallucination/hazard/chasm
 	hazard_type = /obj/effect/client_image_holder/hallucination/danger/chasm
 
-/datum/hallucination/hazard/anomaly // melbert todo not deleting
+/datum/hallucination/hazard/anomaly
 	hazard_type = /obj/effect/client_image_holder/hallucination/danger/anomaly
 
 /// These hallucination effects cause side effects when the hallucinator walks into them.

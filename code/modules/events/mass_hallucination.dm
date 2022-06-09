@@ -58,7 +58,8 @@
 				/datum/hallucination/fire,
 				/datum/hallucination/message,
 				/datum/hallucination/oh_yeah,
-				/datum/hallucination/random_battle,
+				/datum/hallucination/xeno_attack,
+				///datum/hallucination/random_battle,
 			)
 
 			picked_hallucination = pick(possible_hallucinations)
