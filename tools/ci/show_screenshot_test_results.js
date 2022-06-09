@@ -63,9 +63,9 @@ const createComment = (screenshotFailures) => {
 
 export async function showScreenshotTestResults({ github, context, exec }) {
 	// MOTHBLOCKS TODO: Remove
-	if (true) {
-		return;
-	}
+	// if (true) {
+	// 	return;
+	// }
 
 	const { FILE_HOUSE_KEY } = process.env;
 
