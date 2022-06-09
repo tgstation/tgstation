@@ -11,6 +11,8 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		return;
 	}
 
+	console.log(JSON.stringify(context.payload, null, 2));
+
 	const { payload } = context;
 
 	await github.rest.reactions.createForIssueComment({
@@ -88,8 +90,6 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 		artifact_id: badScreenshots.id,
 		archive_format: "zip",
 	});
-
-	console.log(payload.issue.pull_request);
 
 	// fs.writeFileSync("bad-screenshots.zip", Buffer.from(download.data));
 
