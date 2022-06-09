@@ -1,8 +1,9 @@
+// MOTHBLOCKS TODO: Check that the owner made the comment
 const updateScreenshotTests = async ({ github, context, exec }) => {
 	if (
 		!context.payload.comment.body
 			.split("\n")
-			.some(line => line.startsWith(".ssupdate"))
+			.some(line => line === ".ssupdate")
 	) {
 		console.log("Skipping screenshot tests update");
 		return;
@@ -10,11 +11,13 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 
 	const { payload } = context;
 
+	console.log(context);
+
 	await github.rest.reactions.createForIssueComment({
 		comment_id: payload.comment.id,
 		content: "+1",
 		owner: context.repo.owner,
-		repo: context.repo.name,
+		repo: context.repo.repo,
 	});
 
 	const { data: workflowRuns } = await github.graphql(`query($id:ID!) {
