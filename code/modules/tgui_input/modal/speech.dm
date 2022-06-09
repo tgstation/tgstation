@@ -40,10 +40,7 @@
 		return FALSE
 	switch(channel)
 		if(RADIO_CHANNEL)
-			entry = remove_prefixes(entry)
-			if(entry)
-				entry = ";" + entry
-				client.mob.say_verb(entry)
+			client.mob.say_verb(";" + entry)
 			return TRUE
 		if(ME_CHANNEL)
 			client.mob.me_verb(entry)
@@ -96,30 +93,3 @@
 		delegate_speech(alter_entry(payload), target_channel)
 		return TRUE
 	return FALSE
-
-/**
- * Sanitizes text from radio and emote prefixes
- *
- * Arguments:
- * 	entry - the text to sanitize
- * Returns:
- * 	string || boolean FALSE if the entry is empty
- */
-/datum/tgui_modal/proc/remove_prefixes(entry)
-	if(length(entry) < 2)
-		return FALSE
-	/// Start removing any type of radio prefix
-	while(copytext_char(entry, 1, 2) == ";" \
-		|| copytext_char(entry, 1, 2) == ":" \
-		|| copytext_char(entry, 1, 2) == "*")
-		/// Ensure we're not clipping the only letter
-		if(length(entry) < 2)
-			return FALSE
-		/// Sanitize standard departmental chat
-		if(copytext_char(entry, 1, 2) == ":" \
-			&& length(entry) > 3 \
-			&& copytext_char(entry, 3, 4) == " ")
-			entry = copytext(entry, 4)
-		else
-			entry = copytext(entry, 2)
-	return entry
