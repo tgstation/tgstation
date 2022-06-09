@@ -15,19 +15,19 @@
 	switch(category_to_pick_from)
 		if(1)
 			// Send the same sound to everyone
-			picked_hallucination = get_random_valid_subtype(/datum/hallucination/fake_sound/normal)
+			picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/fake_sound/normal)
 
 		if(2)
 			// Send the same sound to everyone, but weird
-			picked_hallucination = get_random_valid_subtype(/datum/hallucination/fake_sound/weird)
+			picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/fake_sound/weird)
 
 		if(3)
 			// Send the same message to everyone
-			picked_hallucination = get_random_valid_subtype(/datum/hallucination/station_message)
+			picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/station_message)
 
 		if(4)
 			// Send the same delusion to everyone, but...
-			picked_hallucination = get_random_valid_subtype(/datum/hallucination/delusion/preset)
+			picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
 			// The delusion will affect everyone BUT the hallucinator.
 			extra_args = list(
 				/* duration = */30 SECONDS,
@@ -39,7 +39,7 @@
 
 		if(5)
 			// Send the same delusion to everyone, but...
-			picked_hallucination = get_random_valid_subtype(/datum/hallucination/delusion/preset)
+			picked_hallucination = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
 			// The delusion will affect only the hallucinator.
 			extra_args = list(
 				/* duration = */45 SECONDS,
@@ -82,16 +82,3 @@
 			continue
 
 		hallucinating.cause_hallucination(arglist(list(picked_hallucination, "mass hallucination") + extra_args))
-
-/// Gets a random subtype of the passed hallucination type that has a random_hallucination_weight > 0.
-/datum/round_event/mass_hallucination/proc/get_random_valid_subtype(passed_type)
-	if(!ispath(passed_type, /datum/hallucination))
-		CRASH("[type] - get_random_valid_subtype passed not a hallucination subtype.")
-
-	for(var/datum/hallucination/hallucination_type as anything in shuffle(subtypesof(passed_type)))
-		if(initial(hallucination_type.random_hallucination_weight) <= 0)
-			continue
-
-		return hallucination_type
-
-	return null

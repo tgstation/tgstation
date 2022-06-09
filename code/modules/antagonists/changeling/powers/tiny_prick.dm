@@ -224,7 +224,7 @@
 /datum/action/changeling/sting/lsd/proc/hallucination_time(mob/living/carbon/target)
 	if(QDELETED(src) || QDELETED(target))
 		return
-	target.adjust_timed_status_effect(120 SECONDS, /datum/status_effect/hallucination)
+	target.adjust_timed_status_effect(180 SECONDS, /datum/status_effect/hallucination)
 
 /datum/action/changeling/sting/cryo
 	name = "Cryogenic Sting"

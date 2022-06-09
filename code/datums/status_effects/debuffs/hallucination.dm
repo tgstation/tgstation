@@ -1,7 +1,7 @@
-
-
+/// Global weighted list of all hallucinations that can show up randomly.
 GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weighted_list())
 
+/// Generates the global weighted list of random hallucinations.
 /proc/generate_hallucination_weighted_list()
 	var/list/weighted_list = list()
 
@@ -16,6 +16,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 
 	return weighted_list
 
+/// Debug proc for getting the total weight of the random_hallucination_weighted_list
 /proc/debug_hallucination_weighted_list()
 	var/total_weight = 0
 	for(var/datum/hallucination/hallucination_type as anything in GLOB.random_hallucination_weighted_list)
@@ -24,6 +25,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 	message_admins("Total weight: [total_weight]")
 	return total_weight
 
+/// Debug proc for getting the weight of each distinct type within the random_hallucination_weighted_list
 /proc/debug_hallucination_weighted_list_per_type()
 	var/total_weight = debug_hallucination_weighted_list()
 
@@ -46,6 +48,19 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 
 		else
 			last_type_weight = this_weight
+
+/// Gets a random subtype of the passed hallucination type that has a random_hallucination_weight > 0.
+/proc/get_random_valid_hallucination_subtype(passed_type)
+	if(!ispath(passed_type, /datum/hallucination))
+		CRASH("[type] - get_random_valid_hallucination_subtype passed not a hallucination subtype.")
+
+	for(var/datum/hallucination/hallucination_type as anything in shuffle(subtypesof(passed_type)))
+		if(initial(hallucination_type.random_hallucination_weight) <= 0)
+			continue
+
+		return hallucination_type
+
+	return null
 
 /datum/status_effect/hallucination
 	id = "hallucination"

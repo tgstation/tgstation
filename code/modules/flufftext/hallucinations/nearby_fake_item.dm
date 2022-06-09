@@ -123,7 +123,6 @@
 		hallucinator.playsound_local(get_turf(holder), 'sound/effects/blobattack.ogg', 35, TRUE)
 	return ..()
 
-
 /datum/hallucination/nearby_fake_item/ttv
 	left_hand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	right_hand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'

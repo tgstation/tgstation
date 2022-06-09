@@ -112,7 +112,6 @@
 	linked_to = null
 	return ..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/client_image_holder/bluespace_stream/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -137,13 +136,13 @@
 	new /obj/effect/temp_visual/bluespace_fissure(source_turf)
 	new /obj/effect/temp_visual/bluespace_fissure(destination_turf)
 
-	user.visible_message(span_warning("[user] [slip_in_message]."), null, null, null, user)
+	user.visible_message(span_warning("[user] [slip_in_message]."), ignored_mobs = user)
 
-	if(!do_teleport(user, destination_turf, no_effects = TRUE))
-		user.visible_message(span_warning("[user] [slip_out_message], ending up exactly where they left."), null, null, null, user)
-		return
+	if(do_teleport(user, destination_turf, no_effects = TRUE))
+		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...and find your way to the other side."))
+	else
+		user.visible_message(span_warning("[user] [slip_out_message], ending up exactly where they left."), span_notice("...and find yourself where you started?"))
 
-	user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...and find your way to the other side."))
 
 /obj/effect/client_image_holder/bluespace_stream/attack_tk(mob/user)
 	to_chat(user, span_warning("\The [src] actively rejects your mind, and the bluespace energies surrounding it disrupt your telekinesis!"))
@@ -357,6 +356,7 @@
 	gain_text = "<span class='warning'>Justice is coming for you.</span>"
 	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
 	random_gain = FALSE
+	/// A ref to our fake beepsky image that we chase the owner with
 	var/obj/effect/client_image_holder/securitron/beepsky
 
 /datum/brain_trauma/special/beepsky/Destroy()
@@ -368,9 +368,7 @@
 	return ..()
 
 /datum/brain_trauma/special/beepsky/proc/create_securitron()
-	if(beepsky)
-		QDEL_NULL(beepsky)
-
+	QDEL_NULL(beepsky)
 	var/turf/where = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z)
 	beepsky = new(where, owner)
 
