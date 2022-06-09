@@ -2,7 +2,6 @@ import { Component, createRef, RefObject } from 'inferno';
 import { TextArea } from 'tgui/components';
 import { CHANNELS, SIZE } from '../constants/constants';
 import { Dragzone } from '../components/dragzone';
-import { debounce } from 'common/timer';
 import {
   KEY_BACKSPACE,
   KEY_DELETE,
@@ -36,8 +35,14 @@ export class TguiModal extends Component<{}, State> {
   private historyCounter: number;
   private innerRef: RefObject<HTMLInputElement> = createRef();
   private maxLength: number;
-  private thinkingCooldown: CooldownWrapper;
-  private typingCooldown: CooldownWrapper;
+  private channelCooldown: CooldownWrapper =
+    new CooldownWrapper('thinking', 1000);
+  private forceCooldown: CooldownWrapper =
+    new CooldownWrapper('force', 1000);
+  private thinkingCooldown: CooldownWrapper =
+    new CooldownWrapper('thinking', 4000);
+  private typingCooldown: CooldownWrapper =
+    new CooldownWrapper('typing', 4000);
   private value: string;
   public state: State = {
     buttonContent: '',
@@ -104,10 +109,10 @@ export class TguiModal extends Component<{}, State> {
     const { channel, size } = this.state;
     const { value } = this;
     if (value && channel < 2) {
-      debounce(Byond.sendMessage('force', {
+      this.forceCooldown?.sendMessage({
         channel: CHANNELS[channel],
         entry: value,
-      }), 1000, true);
+      });
       this.reset(channel);
       if (size !== SIZE.small) {
         windowSet();
@@ -163,14 +168,14 @@ export class TguiModal extends Component<{}, State> {
   private incrementChannel = () => {
     const { channel } = this.state;
     if (channel === CHANNELS.length - 1) {
-      debounce(Byond.sendMessage('thinking', { mode: true }), 1000);
+      this.channelCooldown?.sendMessage({ mode: true });
       this.setState({
         buttonContent: CHANNELS[0],
         channel: 0,
       });
     } else {
       if (channel) {
-        debounce(Byond.sendMessage('thinking', { mode: false }), 1000);
+        this.channelCooldown?.sendMessage({ mode: false });
       }
       this.setState({
         buttonContent: CHANNELS[channel + 1],
@@ -254,8 +259,6 @@ export class TguiModal extends Component<{}, State> {
       windowOpen(CHANNELS[channel]);
     });
     windowLoad();
-    this.thinkingCooldown = new CooldownWrapper('thinking', 4000);
-    this.typingCooldown = new CooldownWrapper('typing', 5000);
   }
 
   /** After updating the input value, sets back to false */
