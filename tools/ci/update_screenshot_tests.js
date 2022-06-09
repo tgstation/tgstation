@@ -11,8 +11,6 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 
 	const { payload } = context;
 
-	console.log(context);
-
 	await github.rest.reactions.createForIssueComment({
 		comment_id: payload.comment.id,
 		content: "+1",
@@ -46,6 +44,8 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 	}`, {
 		id: payload.comment.node_id,
 	});
+
+	console.log(workflowRuns);
 
 	const ciSuiteWorkflow = workflowRuns
 		.node
