@@ -58,12 +58,12 @@
 /datum/addiction/alcohol/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	affected_carbon.set_timed_status_effect(20 SECONDS * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
-	affected_carbon.set_timed_status_effect(100 SECONDS, /datum/status_effect/hallucination, only_if_higher = TRUE)
+	affected_carbon.set_timed_status_effect(10 SECONDS, /datum/status_effect/hallucination, only_if_higher = TRUE)
 
 /datum/addiction/alcohol/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	affected_carbon.set_timed_status_effect(30 SECONDS * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
-	affected_carbon.set_timed_status_effect(100 SECONDS, /datum/status_effect/hallucination, only_if_higher = TRUE)
+	affected_carbon.set_timed_status_effect(10 SECONDS, /datum/status_effect/hallucination, only_if_higher = TRUE)
 	if(DT_PROB(4, delta_time))
 		if(!HAS_TRAIT(affected_carbon, TRAIT_ANTICONVULSANT))
 			affected_carbon.apply_status_effect(/datum/status_effect/seizure)
@@ -158,7 +158,9 @@
 /datum/addiction/medicine
 	name = "medicine"
 	withdrawal_stage_messages = list("", "", "")
+	/// Weakref to the "fake alert" hallucination we're giving to the addicted
 	var/datum/weakref/fake_alert_ref
+	/// Weakref to the "health doll screwup" hallucination we're giving to the addicted
 	var/datum/weakref/health_doll_ref
 
 /datum/addiction/medicine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)

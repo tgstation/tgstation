@@ -800,13 +800,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	// if you have a liver and that liver is an officer's liver
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		. = TRUE
 		drinker.adjustStaminaLoss(-10 * REM * delta_time, 0)
 		if(DT_PROB(10, delta_time))
-			drinker.cause_hallucination(pick(subtypesof(/datum/hallucination/nearby_fake_item)), name)
+			drinker.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/nearby_fake_item)), name)
 		if(DT_PROB(5, delta_time))
 			drinker.cause_hallucination(/datum/hallucination/stray_bullet, name)
+
 	..()
-	. = TRUE
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_end_metabolize(mob/living/carbon/drinker)
 	if(beepsky_hallucination)
@@ -2587,7 +2588,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/drunken_espatier/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
 	drinker.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
-
 
 /datum/reagent/consumable/ethanol/protein_blend
 	name = "Protein Blend"
