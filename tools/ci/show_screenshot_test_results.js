@@ -1,4 +1,4 @@
-import fetch, { FormData } from "node-fetch";
+import fetch, { FormData, fileFrom } from "node-fetch";
 import fs from "fs";
 import path from "path";
 import process from "process";
@@ -96,9 +96,9 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 
 		const formData = new FormData();
 
-		formData.append("key", ARTIFACTS_FILE_HOUSE_KEY);
+		formData.set("key", ARTIFACTS_FILE_HOUSE_KEY);
 
-		formData.append("file", fs.createReadStream(filename), {
+		formData.set("file", await fileFrom(filename), {
 			filename: path.basename(filename),
 			contentType: "image/png",
 		});
