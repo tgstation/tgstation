@@ -120,6 +120,8 @@
 	register_context()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
+	if(prob(1))
+		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
 /obj/item/card/id/Destroy()
 	if (registered_account)
@@ -692,7 +694,27 @@
 
 	if(HAS_TRAIT(user, TRAIT_ID_APPRAISER))
 		. += HAS_TRAIT(src, TRAIT_JOB_FIRST_ID_CARD) ? span_boldnotice("Hmm... yes, this ID was issued from Central Command!") : span_boldnotice("This ID was created in this sector, not by Central Command.")
+		if(HAS_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD) && (user.is_holding(src) || (user.CanReach(src) && user.put_in_hands(src, ignore_animation = FALSE))))
+			ADD_TRAIT(src, TRAIT_NODROP, "psycho")
+			. += span_hypnophrase("Look at that subtle coloring... The tasteful thickness of it. Oh my God, it even has a watermark...")
+			var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
+			user.playsound_local(get_turf(src), slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+			if(isliving(user))
+				var/mob/living/living_user = user
+				living_user.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/jitter)
+			addtimer(CALLBACK(src, .proc/drop_card, user), 10 SECONDS)
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
+
+/obj/item/card/id/proc/drop_card(mob/user)
+	user.stop_sound_channel(CHANNEL_HEARTBEAT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, "psycho")
+	if(user.is_holding(src))
+		user.dropItemToGround(src)
+	for(var/mob/living/carbon/human/viewing_mob in viewers(user, 2))
+		if(viewing_mob.stat || viewing_mob == user)
+			continue
+		viewing_mob.say("Is something wrong? [user.first_name()]... you're sweating.", forced = "psycho")
+		break
 
 /obj/item/card/id/examine_more(mob/user)
 	if(!user.can_read(src))
@@ -1005,6 +1027,10 @@
 	worn_icon_state = "card_gold"
 	inhand_icon_state = "gold_id"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
+
+/obj/item/card/id/advanced/gold/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
 /obj/item/card/id/advanced/gold/captains_spare
 	name = "captain's spare ID"

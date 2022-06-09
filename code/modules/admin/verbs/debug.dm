@@ -23,7 +23,7 @@
 	var/turf/T = get_turf(mob)
 	if(!isturf(T))
 		return
-	atmos_scan(user=usr, target=T, tool=null, silent=TRUE)
+	atmos_scan(user=usr, target=T, silent=TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
@@ -284,7 +284,7 @@
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
 	var/static/list/station_areas_blacklist = typecacheof(list(/area/station/holodeck/rec_center, /area/shuttle, /area/station/engineering/supermatter,
-					/area/station/science/test_area, /area/space, /area/station/solars, /area/mine, /area/ruin, /area/centcom/asteroid))
+					/area/space, /area/station/solars, /area/mine, /area/ruin, /area/centcom/asteroid))
 
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, "Game still loading, please hold!", confidential = TRUE)

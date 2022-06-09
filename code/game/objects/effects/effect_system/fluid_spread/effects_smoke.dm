@@ -85,7 +85,7 @@
 		for(var/mob/living/smoker in spread_turf)
 			smoke_mob(smoker, delta_time)
 
-		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group)
+		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group, src)
 		reagents.copy_to(spread_smoke, reagents.total_volume)
 		spread_smoke.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		spread_smoke.lifetime = lifetime
@@ -166,11 +166,11 @@
  * - location: Where to produce the smoke cloud.
  * - smoke_type: The smoke typepath to spawn.
  */
-/proc/do_smoke(range = 0, amount = DIAMOND_AREA(range), location = null, smoke_type = /obj/effect/particle_effect/fluid/smoke)
+/proc/do_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, smoke_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.effect_type = smoke_type
-	smoke.set_up(amount = amount, location = location)
-	smoke.start()
+	smoke.set_up(amount = amount, holder = holder, location = location)
+	smoke.start(log = log)
 
 /////////////////////////////////////////////
 // Quick smoke
@@ -318,11 +318,11 @@
 	for(var/obj/item/potential_tinder in chilly)
 		potential_tinder.extinguish()
 
-/datum/effect_system/fluid_spread/smoke/freezing/set_up(range = 5, amount = DIAMOND_AREA(range), atom/location, blast_radius = 0)
+/datum/effect_system/fluid_spread/smoke/freezing/set_up(range = 5, amount = DIAMOND_AREA(range), atom/holder, atom/location, blast_radius = 0)
 	. = ..()
 	blast = blast_radius
 
-/datum/effect_system/fluid_spread/smoke/freezing/start()
+/datum/effect_system/fluid_spread/smoke/freezing/start(log = FALSE)
 	if(blast)
 		for(var/turf/T in RANGE_TURFS(blast, location))
 			Chilled(T)
@@ -410,7 +410,7 @@
 	return ..()
 
 
-/datum/effect_system/fluid_spread/smoke/chem/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location = null, datum/reagents/carry = null, silent = FALSE)
+/datum/effect_system/fluid_spread/smoke/chem/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, silent = FALSE)
 	. = ..()
 	carry?.copy_to(chemholder, carry.total_volume)
 
@@ -436,7 +436,7 @@
 			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. No associated key.")
 		log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 
-/datum/effect_system/fluid_spread/smoke/chem/start()
+/datum/effect_system/fluid_spread/smoke/chem/start(log = FALSE)
 	var/start_loc = holder ? get_turf(holder) : src.location
 	var/mixcolor = mix_color_from_reagents(chemholder.reagent_list)
 	var/obj/effect/particle_effect/fluid/smoke/chem/smoke = new effect_type(start_loc, new /datum/fluid_group(amount))
@@ -444,6 +444,8 @@
 
 	if(mixcolor)
 		smoke.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
+	if (log)
+		help_out_the_admins(smoke, holder, location)
 	smoke.spread() // Making the smoke spread immediately.
 
 /**

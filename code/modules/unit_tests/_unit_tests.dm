@@ -92,6 +92,7 @@
 #include "emoting.dm"
 #include "food_edibility_check.dm"
 #include "gas_transfer.dm"
+#include "get_turf_pixel.dm"
 #include "greyscale_config.dm"
 #include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
