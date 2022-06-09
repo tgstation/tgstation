@@ -51,6 +51,7 @@
 	visuals.icon_state = icon_state
 	visuals.color = beam_color
 	visuals.layer = ABOVE_ALL_MOB_LAYER
+	visuals.vis_flags = VIS_INHERIT_PLANE
 	visuals.update_appearance()
 	Draw()
 	RegisterSignal(origin, COMSIG_MOVABLE_MOVED, .proc/redrawing)

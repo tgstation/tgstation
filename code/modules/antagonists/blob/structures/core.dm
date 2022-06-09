@@ -79,7 +79,7 @@
 	. = ..()
 	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
-/obj/structure/blob/special/core/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
+/obj/structure/blob/special/core/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(overmind && is_station_level(new_turf?.z))
 		overmind.forceMove(get_turf(src))
 	return ..()

@@ -45,6 +45,13 @@
 	unset_control() //remove from control computer
 	return ..()
 
+/obj/machinery/power/solar/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(panel_edge, PLANE_TO_TRUE(panel_edge.plane), new_turf)
+	SET_PLANE(panel, PLANE_TO_TRUE(panel.plane), new_turf)
+
 /obj/machinery/power/solar/proc/add_panel_overlay(icon_state, y_offset)
 	var/turf/our_turf = get_turf(src)
 	var/obj/effect/overlay/overlay = new()

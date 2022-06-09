@@ -6,6 +6,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /atom/movable/screen/radial
 	icon = 'icons/hud/radial.dmi'
 	plane = ABOVE_HUD_PLANE
+	vis_flags = VIS_INHERIT_PLANE
 	var/datum/radial_menu/parent
 
 /atom/movable/screen/radial/proc/set_parent(new_value)

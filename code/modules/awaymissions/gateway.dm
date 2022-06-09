@@ -358,6 +358,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	our_destination = null
 	update_portal_filters()
 
+// Lemon todo: figure out if this works alright or not
 /obj/effect/gateway_portal_effect/proc/update_portal_filters()
 	clear_filters()
 	vis_contents = null

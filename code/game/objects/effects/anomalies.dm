@@ -132,6 +132,12 @@
 	warp = null
 	return ..()
 
+/obj/effect/anomaly/grav/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(warp, PLANE_TO_TRUE(warp.plane), new_turf)
+
 /obj/effect/anomaly/grav/anomalyEffect(delta_time)
 	..()
 	boing = 1

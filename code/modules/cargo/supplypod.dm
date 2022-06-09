@@ -463,6 +463,13 @@
 	SET_PLANE(glow_effect, ABOVE_GAME_PLANE, our_turf)
 	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, .proc/remove_glow)
 
+/obj/structure/closet/supplypod/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	var/turf/our_turf = get_turf(src)
+	SET_PLANE(glow_effect, ABOVE_GAME_PLANE, our_turf)
+
 /obj/structure/closet/supplypod/proc/endGlow()
 	if(!glow_effect)
 		return

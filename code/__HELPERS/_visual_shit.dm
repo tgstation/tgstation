@@ -10,7 +10,9 @@
 // Lemon todo: There's way too many get_turf(src) calls using SET_PLANE
 // You should make a macro just for that case, reduce code bloat
 // Global todos:
-// Do a pass on vis_contents uses
+// Figure out the damn worn emissives
+// Try and make turf vis contents work, somehow
+// I might be fucked
 // Figure out what's going on with darkness on the lower plane, it's maskin weird? maybe set hung walls to illuminated? idk
 // Figure out how the hell you want to handle points where upper plane stuff is rendered on lower planes (basically, mirages)
 // Add a shit ton of documentation, preferablely to the whole rendering pipeline

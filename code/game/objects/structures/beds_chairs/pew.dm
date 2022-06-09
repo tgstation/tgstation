@@ -22,7 +22,7 @@
 	gen_armrest()
 	return ..()
 
-/obj/structure/chair/pew/left/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
+/obj/structure/chair/pew/left/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)
 		return ..()
 	cut_overlay(leftpewarmrest)
@@ -68,7 +68,7 @@
 	gen_armrest()
 	return ..()
 
-/obj/structure/chair/pew/right/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents = TRUE)
+/obj/structure/chair/pew/right/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	cut_overlay(rightpewarmrest)
 	QDEL_NULL(rightpewarmrest)
 	gen_armrest()

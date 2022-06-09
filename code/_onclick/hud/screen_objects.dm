@@ -509,6 +509,7 @@
 	vis_contents -= hover_overlays_cache[hovering]
 	hovering = choice
 
+	// Don't need to account for turf cause we're on the hud babyyy
 	var/obj/effect/overlay/zone_sel/overlay_object = hover_overlays_cache[choice]
 	if(!overlay_object)
 		overlay_object = new

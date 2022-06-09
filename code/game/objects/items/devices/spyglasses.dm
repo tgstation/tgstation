@@ -88,6 +88,8 @@
 /obj/item/clothing/accessory/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
 	cam_screen.vis_contents.Cut()
 	for(var/turf/visible_turf in view(1,get_turf(src)))//fuck you usr
+		// Lemon todo: do a pass to see if this + all other uses of turf vis contents well, function
+		// LUMMOXXXXXXXXXX
 		cam_screen.vis_contents += visible_turf
 
 //it needs to be linked, hence a kit.
