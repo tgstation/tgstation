@@ -9,7 +9,11 @@
 	var/sent_crystal = FALSE
 
 /datum/traitor_objective/final/supermatter_cascade/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	if(!can_take_final_objective())
+	var/valid_crystal = FALSE
+	for(var/obj/machinery/power/supermatter_crystal/engine/crystal in GLOB.machines)
+		if(isturf(crystal.loc) || (is_station_level(crystal.z) || is_mining_level(crystal.z)))
+			valid_crystal = TRUE
+	if(!can_take_final_objective() || !valid_crystal)
 		return
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
