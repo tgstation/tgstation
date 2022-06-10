@@ -7,8 +7,7 @@ export const BorgShaker = (props, context) => {
   const {
     maxVolume,
     theme,
-    drinks,
-    alcohol,
+    reagents,
     selectedReagent,
   } = data;
   return (
@@ -18,15 +17,9 @@ export const BorgShaker = (props, context) => {
       theme={theme}
     >
       <Window.Content scrollable>
-        <Section title={'Drinks'}>
+        <Section>
           <Reagent
-            reagents={drinks}
-            selected={selectedReagent}
-            maxVolume={maxVolume} />
-        </Section>
-        <Section title={'Alcohol'}>
-          <Reagent
-            reagents={alcohol}
+            reagents={reagents}
             selected={selectedReagent}
             maxVolume={maxVolume} />
         </Section>
@@ -52,7 +45,7 @@ const Reagent = (props, context) => {
       width="150px"
       lineHeight={1.75}
       content={reagent.name}
-      color={reagent.name === selected ? 'green' : 'default'}
+      color={reagent.name === selected ?'green' : 'default'}
       onClick={() => act(reagent.name)} />
   ));
 };
