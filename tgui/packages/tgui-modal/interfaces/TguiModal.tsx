@@ -37,8 +37,8 @@ export class TguiModal extends Component<{}, State> {
   maxLength: number;
   channelDebounce = debounce((mode) => Byond.sendMessage('thinking', mode), 400);
   forceDebounce = debounce((entry) => Byond.sendMessage('force', entry), 1000, true);
-  thinkingThrottle = throttle(() => Byond.sendMessage('thinking', { mode: false }), 4000);
-  typingThrottle = throttle(() => Byond.sendMessage('typing'), 4000);
+  thinkingThrottle = throttle(() => Byond.sendMessage('thinking', { mode: false }), 3000);
+  typingThrottle = throttle(() => Byond.sendMessage('typing'), 3000);
   value: string;
   state: State = {
     buttonContent: '',

@@ -67,7 +67,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 	client.mob.remove_thinking_indicator()
 	if(window_open && client.typing_indicators)
 		client.mob.create_typing_indicator()
-		addtimer(CALLBACK(src, .proc/stop_typing), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+		addtimer(CALLBACK(src, .proc/stop_typing), 4 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
 
 /**
  * Callback to remove the typing indicator after a brief period of inactivity.
