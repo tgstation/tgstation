@@ -39,8 +39,8 @@ const Reagent = (props, context) => {
       </NoticeBox>
     );
   }
-  return reagents.filter(Boolean).map(reagent => (
-    <Flex mb={1}>
+  return reagents.map(reagent => (
+    <Flex key={reagent.name} mb={1}>
       <Flex.Item grow>
         <ProgressBar value={reagent.volume / maxVolume}>
           <Flex>
