@@ -109,6 +109,8 @@ const updateScreenshotTests = async ({ github, context, exec }) => {
 
 	await exec.exec("unzip bad-screenshots.zip -d bad-screenshots");
 
+	fs.rmSync("bad-screenshots/pull_request_number.txt");
+
 	const tree = [];
 
 	const prOwner = pullRequest.headRepository.owner.login;
