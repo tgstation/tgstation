@@ -39,51 +39,36 @@ const Reagent = (props, context) => {
       </NoticeBox>
     );
   }
-  return reagents.map(reagent => {
-    if (reagent) {
-      return (
-        <Flex
-          direction={"row"}
-          p={1}>
-          <Flex.Item
-            grow>
-            <ProgressBar
-              value={reagent.volume / maxVolume}>
-              <Flex>
-                <Flex.Item>
-                  <b>
-                    {reagent.name}
-                  </b>
-                </Flex.Item>
-                <Flex.Item
-                  grow
-                  textAlign="right">
-                  {toFixed(reagent.volume) + ' units'}
-                </Flex.Item>
-              </Flex>
-            </ProgressBar>
-          </Flex.Item>
-          <Flex.Item
-            mx={1.5}
-            textAlign={"right"}>
-            <Button
-              icon={'syringe'}
-              color={reagent.name === selected ? 'green' : 'default'}
-              content={'Dispense'}
-              textAlign={'center'}
-              onClick={() => act(reagent.name)}
-            />
-          </Flex.Item>
-          <Flex.Item
-            textAlign={"right"}>
-            <Button
-              icon={'info'}
-              textAlign={'center'}
-              tooltip={reagent.description}
-            />
-          </Flex.Item>
-        </Flex>
-      );
-    }
-  });
+  return reagents.filter(Boolean).map(reagent => (
+    <Flex mb={1}>
+      <Flex.Item grow>
+        <ProgressBar value={reagent.volume / maxVolume}>
+          <Flex>
+            <Flex.Item grow bold>
+              {reagent.name}
+            </Flex.Item>
+            <Flex.Item>
+              {toFixed(reagent.volume) + ' units'}
+            </Flex.Item>
+          </Flex>
+        </ProgressBar>
+      </Flex.Item>
+      <Flex.Item mx={1} textAlign={'right'}>
+        <Button
+          icon={'syringe'}
+          color={reagent.name === selected ? 'green' : 'default'}
+          content={'Dispense'}
+          textAlign={'center'}
+          onClick={() => act(reagent.name)}
+        />
+      </Flex.Item>
+      <Flex.Item textAlign={"right"}>
+        <Button
+          icon={'info'}
+          textAlign={'center'}
+          tooltip={reagent.description}
+        />
+      </Flex.Item>
+    </Flex>
+  ));
 };
