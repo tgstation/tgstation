@@ -24,7 +24,6 @@
 		/area/station/holodeck,
 		/area/shuttle,
 		/area/station/maintenance,
-		/area/station/science/test_area,
 	))
 
 		//Subtypes from the above that actually should explode.

@@ -861,16 +861,6 @@
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/griddle_toast
-	name = "griddle toast"
-	desc = "Thick cut bread, griddled to perfection."
-	icon_state = "griddle_toast"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
-	tastes = list("toast" = 1)
-	foodtypes = GRAIN
-	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
-
 /obj/item/food/pesto
 	name = "pesto"
 	desc = "A combination of firm cheese, salt, herbs, garlic, oil, and pine nuts. Frequently used as a sauce for pasta or pizza, or eaten on bread."

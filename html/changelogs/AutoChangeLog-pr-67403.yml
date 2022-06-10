@@ -1,5 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "The stasis ripple effect will now play in a loop as intended, rather than only playing once."
-  - bugfix: "Buckling down someone to a stasis bed should no longer occasionally make them lie down veeeeery slowly."
