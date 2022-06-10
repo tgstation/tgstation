@@ -5,4 +5,8 @@
 	var/datum/asset/spritesheet/antagonists/antagonists = get_asset_datum(/datum/asset/spritesheet/antagonists)
 
 	for (var/antag_icon_key in antagonists.antag_icons)
-		test_screenshot(antag_icon_key, antagonists.antag_icons[antag_icon_key])
+		var/icon/reference_icon = antagonists.antag_icons[antag_icon_key]
+
+		var/icon/icon = new()
+		icon.Insert(reference_icon, null, SOUTH, 1)
+		test_screenshot(antag_icon_key, icon)
