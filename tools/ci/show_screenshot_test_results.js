@@ -17,9 +17,7 @@ const createComment = (screenshotFailures, zipFileUrl) => {
 	};
 
 	return `
-		Screenshot tests failed!
-
-		${zipFileUrl ? "" : "No zip file could be produced, this is a bug!"}
+		Screenshot tests failed! ${zipFileUrl ? `[Zip file of new screenshots](${zipFileUrl})` : "No zip file could be produced, this is a bug!"}
 
 		## Diffs
 		| Name | Expected image | Produced image | Diff |
@@ -220,7 +218,9 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 		)
 	}
 
-	await exec.exec(`zip -r ${zipFilePath}.zip ${zipFilePath}`);
+	await exec.exec("zip", ["-r", `${zipFilePath}.zip`, "."], {
+		cwd: zipFilePath,
+	});
 
 	const zipUrl = await uploadFile(`${zipFilePath}.zip`);
 
