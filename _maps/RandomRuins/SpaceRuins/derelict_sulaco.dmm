@@ -460,7 +460,7 @@
 /area/ruin/unpowered)
 "Eb" = (
 /mob/living/simple_animal/pet/cat{
-	name = "Stephan"
+	name = "Jonesy"
 	},
 /turf/open/floor/wood,
 /area/ruin/unpowered)
