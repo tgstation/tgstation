@@ -9,6 +9,7 @@
 			"Flushed" = "flushed",
 			"Pensive" = "pensive",
 			"Angry" = "angry",
+			"Pleading" = "pleading"
 	)
 
 /obj/item/clothing/mask/joy/Initialize(mapload)
