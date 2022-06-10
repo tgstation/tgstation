@@ -37,8 +37,8 @@ SUBSYSTEM_DEF(research)
 
 	/// A list of all master servers. If none of these have a source code HDD, research point generation is lowered.
 	var/list/obj/machinery/rnd/server/master/master_servers = list()
-	/// The multiplier to research points when no source code HDD is present.
-	var/no_source_code_income_modifier = 0.5
+	/// A multiplier applied to all research gain.
+	var/income_modifier = 1
 
 	//Aiming for 1.5 hours to max R&D
 	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
@@ -81,20 +81,13 @@ SUBSYSTEM_DEF(research)
 			bitcoins = single_server_income.Copy()
 			break //Just need one to work.
 
-	// Check if any master server has a source code HDD in it or if all master servers have just been plain old blown up.
-	// Start by assuming no source code, then set the modifier to 1 if we find one.
-	var/bitcoin_multiplier = no_source_code_income_modifier
-	for(var/obj/machinery/rnd/server/master/master_server as anything in master_servers)
-		if(master_server.source_code_hdd)
-			bitcoin_multiplier = 1
-			break
-
 	if (!isnull(last_income))
 		var/income_time_difference = world.time - last_income
 		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
 		for(var/i in bitcoins)
-			bitcoins[i] *= (income_time_difference / 10) * bitcoin_multiplier
+			bitcoins[i] *= (income_time_difference / 10) * income_modifier
 		science_tech.add_point_list(bitcoins)
+
 	last_income = world.time
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient() //Diminishing returns.

@@ -1475,7 +1475,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	target.set_fire_stacks(max(target.fire_stacks, 0.1)) //Placebo flammability
-	fire_overlay = image('icons/mob/onfire.dmi', target, "human_burning", ABOVE_MOB_LAYER)
+	fire_overlay = image('icons/mob/onfire.dmi', target, "human_big_fire", ABOVE_MOB_LAYER)
 	if(target.client)
 		target.client.images += fire_overlay
 	to_chat(target, span_userdanger("You're set on fire!"))
