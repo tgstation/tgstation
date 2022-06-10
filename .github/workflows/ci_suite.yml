@@ -168,7 +168,7 @@ jobs:
       # by a specific PR, so trusting the (user controlled) action here is okay,
       # as long as we check it later in show_screenshot_test_results
       - name: Save PR ID
-        if: github.event.pull_request
+        if: ${{ github.event.pull_request }}
         run: |
           echo ${{ github.event.pull_request.number }} > artifacts/screenshot_comparisons/pull_request_number.txt
       - name: Upload bad screenshots

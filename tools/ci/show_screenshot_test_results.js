@@ -95,13 +95,20 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 
 	await exec.exec("unzip bad-screenshots.zip -d bad-screenshots");
 
-	const prNumber = parseNumber(fs.readFileSync("bad-screenshots/pull_request_number.txt", "utf8"), 10);
+	const prNumberFile = path.join("bad-screenshots", "pr-number.txt");
+
+	if (!fs.existsSync(prNumberFile)) {
+		console.log("No PR number found");
+		return;
+	}
+
+	const prNumber = parseInt(fs.readFileSync(prNumberFile, "utf8"), 10);
 	if (!prNumber) {
 		console.log("No PR number found");
 		return;
 	}
 
-	fs.rmSync("bad-screenshots/pull_request_number.txt");
+	fs.rmSync(prNumberFile);
 
 	// Step 3. Upload the screenshots
 	// 1. Loop over the bad-screenshots directory
