@@ -95,7 +95,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 
 	await exec.exec("unzip bad-screenshots.zip -d bad-screenshots");
 
-	const prNumberFile = path.join("bad-screenshots", "pr-number.txt");
+	const prNumberFile = path.join("bad-screenshots", "pull_request_number.txt");
 
 	if (!fs.existsSync(prNumberFile)) {
 		console.log("No PR number found");
