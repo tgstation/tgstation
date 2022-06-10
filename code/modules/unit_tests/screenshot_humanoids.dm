@@ -1,7 +1,5 @@
-/// A screenshot test for a humanoid species with a handful of jobs.
+/// A screenshot test for every humanoid species with a handful of jobs.
 /datum/unit_test/screenshot_humanoids
-
-TEST_FOCUS(/datum/unit_test/screenshot_humanoids)
 
 /datum/unit_test/screenshot_humanoids/Run()
 	// test_screenshot("human", get_flat_icon_for_all_directions(make_dummy(/datum/species/human, /datum/outfit/job/assistant/consistent)))

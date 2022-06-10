@@ -22,9 +22,13 @@ const createComment = (screenshotFailures, zipFileUrl) => {
 		${zipFileUrl ? `[Download zip file of new screenshots.](${zipFileUrl})` : "No zip file could be produced, this is a bug!"}
 
 		## Diffs
-		| Name | Expected image | Produced image | Diff |
-		| :--: | :------------: | :------------: | :--: |
-		${screenshotFailures.map(formatScreenshotFailure).join("\n")}
+		<details>
+			<summary>See snapshot diffs</summary>
+
+			| Name | Expected image | Produced image | Diff |
+			| :--: | :------------: | :------------: | :--: |
+			${screenshotFailures.map(formatScreenshotFailure).join("\n")}
+		</details>
 
 		## Help
 		<details>
