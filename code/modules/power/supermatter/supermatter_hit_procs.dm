@@ -89,11 +89,11 @@
 		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
 
 		if(!anomaly_event)
-			to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on a shard."))
+			to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on \a [name]."))
 			return
 
 		if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT)
-			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to a crystal that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
+			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to \a [name] that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
 			return
 
 		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))

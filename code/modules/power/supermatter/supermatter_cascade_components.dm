@@ -90,8 +90,8 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/crystal_mass/Destroy()
-	set_light(l_on = FALSE)
-	. = ..()
+	sm_comp = null
+	return ..()
 
 /obj/cascade_portal
 	name = "Bluespace Rift"

@@ -181,7 +181,7 @@
 		SSshuttle.registerHostileEnvironment(src)
 
 	for(var/mob/player as anything in GLOB.player_list)
-		if(!isobserver(player))
+		if(!isdead(player))
 			to_chat(player, span_boldannounce("Everything around you is resonating with a powerful energy. This can't be good."))
 			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, "cascade", /datum/mood_event/cascade)
 		SEND_SOUND(player, 'sound/magic/charge.ogg')
