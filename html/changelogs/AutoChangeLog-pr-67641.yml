@@ -1,0 +1,4 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "A manually edited APC in the deepstorage ruin has been replaced with an APC of the appropriate type."

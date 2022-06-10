@@ -65,6 +65,9 @@
 /datum/action/item_action/toggle_helmet
 	name = "Toggle Helmet"
 
+/datum/action/item_action/toggle_seclight
+	name = "Toggle Seclight"
+
 /datum/action/item_action/toggle_jetpack
 	name = "Toggle Jetpack"
 

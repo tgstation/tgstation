@@ -269,7 +269,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	LAZYREMOVE(actions, source)
 
 /// Adds an item action to our list of item actions.
-/// Ensures that the actions are properly tracked in the actions list and removed if they're deleted.
+/// Item actions are actions linked to our item, that are granted to mobs who equip us.
+/// This also ensures that the actions are properly tracked in the actions list and removed if they're deleted.
 /// Can be be passed a typepath of an action or an instance of an action.
 /obj/item/proc/add_item_action(action_or_action_type)
 
@@ -284,6 +285,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	LAZYADD(actions, action)
 	RegisterSignal(action, COMSIG_PARENT_QDELETING, .proc/on_action_deleted)
 	if(ismob(loc))
+		// If we're adding an item action to something currently equipped,
+		// grant them the item action. This disregards slot checks (currently),
+		// but in most cases that shouldn't matter.
 		give_item_action(action, loc)
 
 	return action
@@ -747,6 +751,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
  *Checks before we get to here are: mob is alive, mob is not restrained, stunned, asleep, resting, laying, item is on the mob.
  */
 /obj/item/proc/ui_action_click(mob/user, actiontype)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_UI_ACTION_CLICK, user, actiontype) & COMPONENT_ACTION_HANDLED)
+		return
+
 	attack_self(user)
 
 ///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit

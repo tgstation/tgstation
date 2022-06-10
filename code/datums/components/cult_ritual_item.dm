@@ -41,12 +41,7 @@
 
 /datum/component/cult_ritual_item/Destroy(force, silent)
 	cleanup_shields()
-
-	var/datum/action/added_action = linked_action_ref?.resolve()
-	if(added_action)
-		var/obj/item/item_parent = parent
-		item_parent.remove_item_action(added_action)
-
+	QDEL_NULL(linked_action_ref)
 	return ..()
 
 /datum/component/cult_ritual_item/RegisterWithParent()
