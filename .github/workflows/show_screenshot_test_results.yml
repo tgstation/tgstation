@@ -26,10 +26,6 @@ jobs:
       - name: Checkout
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         uses: actions/checkout@v3
-        # MOTHBLOCKS TODO: Remove
-        with:
-          repository: "Mothblocks/tgstation"
-          ref: "screenshot-tests"
       - name: Prepare module
         run: |
           # This is needed because node-fetch needs import and doesn't work with require :/
