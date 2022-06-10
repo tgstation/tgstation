@@ -48,7 +48,7 @@
 // As an upside, this means any work we do that's the same for each lighting object can be safely cached
 // Consider precaching the max, for similar reasons (may or may not be possible, think about it (basically decreasing would be expensive potentially))
 /datum/lighting_object/proc/update()
-	switch(rand(1, 9))
+	switch(rand(1, 11))
 		if(1)
 			old_update()
 		if(2)
@@ -67,6 +67,10 @@
 			full_turf_if_update()
 		if(9)
 			full_turf_extended_if_update()
+		if(10)
+			full_extended_if_update()
+		if(11)
+			full_extended_if_update_cached()
 
 GLOBAL_VAR_INIT(color_updated_matrix, 0)
 GLOBAL_VAR_INIT(color_updated_fulldark, 0)
@@ -622,3 +626,92 @@ GLOBAL_VAR_INIT(color_updated_fullbright, 0)
 
 	underlays += underlayd_light
 	luminosity = set_luminosity
+
+/datum/lighting_object/proc/full_extended_if_update()
+	// To the future coder who sees this and thinks
+	// "Why didn't he just use a loop?"
+	// Well my man, it's because the loop performed like shit.
+	// And there's no way to improve it because
+	// without a loop you can make the list all at once which is the fastest you're gonna get.
+	// Oh it's also shorter line wise.
+	// Including with these comments.
+
+	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
+
+	var/datum/lighting_corner/red_corner = affected_turf.lighting_corner_SW || dummy_lighting_corner
+	var/datum/lighting_corner/green_corner = affected_turf.lighting_corner_SE || dummy_lighting_corner
+	var/datum/lighting_corner/blue_corner = affected_turf.lighting_corner_NW || dummy_lighting_corner
+	var/datum/lighting_corner/alpha_corner = affected_turf.lighting_corner_NE || dummy_lighting_corner
+
+	var/set_luminosity = red_corner.has_real_lum || green_corner.has_real_lum || blue_corner.has_real_lum || alpha_corner.has_real_lum
+
+	affected_turf.underlays -= current_underlay
+	// There's no reason to check this first, if max is too low we're doomed anyway
+	if(red_corner.all_max_lum && green_corner.all_max_lum && blue_corner.all_max_lum && alpha_corner.all_max_lum)
+		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
+		current_underlay.icon_state = "lighting_transparent"
+		current_underlay.color = null
+		GLOB.color_updated_fullbright += 1
+	else if(!set_luminosity)
+		current_underlay.icon_state = "lighting_dark"
+		current_underlay.color = null
+		GLOB.color_updated_fulldark += 1
+	else
+		current_underlay.icon_state = null
+		current_underlay.color = list(
+			red_corner.cache_r, red_corner.cache_g, red_corner.cache_b, 00,
+			green_corner.cache_r, green_corner.cache_g, green_corner.cache_b, 00,
+			blue_corner.cache_r, blue_corner.cache_g, blue_corner.cache_b, 00,
+			alpha_corner.cache_r, alpha_corner.cache_g, alpha_corner.cache_b, 00,
+			00, 00, 00, 01
+		)
+		GLOB.color_updated_matrix += 1
+
+	affected_turf.underlays += current_underlay
+	affected_turf.luminosity = set_luminosity
+
+/datum/lighting_object/proc/full_extended_if_update_cached()
+	// To the future coder who sees this and thinks
+	// "Why didn't he just use a loop?"
+	// Well my man, it's because the loop performed like shit.
+	// And there's no way to improve it because
+	// without a loop you can make the list all at once which is the fastest you're gonna get.
+	// Oh it's also shorter line wise.
+	// Including with these comments.
+
+	var/mutable_appearance/local_underlay = current_underlay
+	var/turf/our_turf = affected_turf
+
+	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
+
+	var/datum/lighting_corner/red_corner = our_turf.lighting_corner_SW || dummy_lighting_corner
+	var/datum/lighting_corner/green_corner = our_turf.lighting_corner_SE || dummy_lighting_corner
+	var/datum/lighting_corner/blue_corner = our_turf.lighting_corner_NW || dummy_lighting_corner
+	var/datum/lighting_corner/alpha_corner = our_turf.lighting_corner_NE || dummy_lighting_corner
+
+	var/set_luminosity = red_corner.has_real_lum || green_corner.has_real_lum || blue_corner.has_real_lum || alpha_corner.has_real_lum
+
+	our_turf.underlays -= local_underlay
+	// There's no reason to check this first, if max is too low we're doomed anyway
+	if(red_corner.all_max_lum && green_corner.all_max_lum && blue_corner.all_max_lum && alpha_corner.all_max_lum)
+		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
+		local_underlay.icon_state = "lighting_transparent"
+		local_underlay.color = null
+		GLOB.color_updated_fullbright += 1
+	else if(!set_luminosity)
+		local_underlay.icon_state = "lighting_dark"
+		local_underlay.color = null
+		GLOB.color_updated_fulldark += 1
+	else
+		local_underlay.icon_state = null
+		local_underlay.color = list(
+			red_corner.cache_r, red_corner.cache_g, red_corner.cache_b, 00,
+			green_corner.cache_r, green_corner.cache_g, green_corner.cache_b, 00,
+			blue_corner.cache_r, blue_corner.cache_g, blue_corner.cache_b, 00,
+			alpha_corner.cache_r, alpha_corner.cache_g, alpha_corner.cache_b, 00,
+			00, 00, 00, 01
+		)
+		GLOB.color_updated_matrix += 1
+
+	our_turf.underlays += local_underlay
+	our_turf.luminosity = set_luminosity
