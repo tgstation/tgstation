@@ -542,10 +542,7 @@
 			set_attached_light(S)
 			update_appearance()
 			update_helmlight()
-			var/datum/action/light_action = add_item_action(/datum/action/item_action/toggle_helmet_flashlight)
-			// If we're being held, we need to go ahead and give the action out
-			if(user == loc)
-				give_item_action(light_action, user)
+			add_item_action(/datum/action/item_action/toggle_helmet_flashlight)
 
 		return
 	return ..()

@@ -77,15 +77,11 @@
 	if(refund_cooldown)
 		to_chat(on_who, span_notice("You stop preparing your [on_who == owner ? "":"steed's "]pimp-tentacle."))
 
-// This is inended to be shared action, where a mob
-// riding another mob uses this ability for them
-// As such caller may not always be owner
 /datum/action/cooldown/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
 	// Check if we can slap
-	if(!isliving(target) ||  target == owner)
+	if(!isliving(target) || target == owner)
 		return FALSE
 
-	StartCooldown(cooldown_time / 4)
 	if(!owner.Adjacent(target))
 		owner.balloon_alert(caller, "too far!")
 		return FALSE
@@ -102,7 +98,6 @@
 
 	return TRUE
 
-// MELBERT TODO works funky.
 /datum/action/cooldown/tentacle_slap/Activate(atom/to_slap)
 	var/mob/living/living_to_slap = to_slap
 

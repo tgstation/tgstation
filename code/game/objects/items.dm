@@ -283,6 +283,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	LAZYADD(actions, action)
 	RegisterSignal(action, COMSIG_PARENT_QDELETING, .proc/on_action_deleted)
+	if(ismob(loc))
+		give_item_action(action, loc)
+
 	return action
 
 /// Removes an instance of an action from our list of item actions.

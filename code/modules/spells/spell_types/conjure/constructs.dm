@@ -17,7 +17,3 @@
 /datum/action/cooldown/spell/conjure/construct/lesser
 	background_icon_state = "bg_demon"
 	cooldown_time = 3 MINUTES
-
-/datum/action/cooldown/spell/conjure/construct/lesser/cult
-	cooldown_time = 250 SECONDS
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB // MELBERT TODO

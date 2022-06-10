@@ -3,7 +3,7 @@
 /datum/action/cooldown/spell/conjure_item/invisible_box
 	name = "Invisible Box"
 	desc = "The mime's performance transmutates a box into physical reality."
-	background_icon_state = "bg_mime" // melbert todo test
+	background_icon_state = "bg_mime"
 	icon_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "invisible_box"
 	panel = "Mime"

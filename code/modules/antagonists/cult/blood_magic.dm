@@ -214,7 +214,6 @@
 	if(charges <= 0)
 		qdel(src)
 
-// melbert todo: readd the hallucination spell
 /datum/action/innate/cult/blood_spell/horror
 	name = "Hallucinations"
 	desc = "Gives hallucinations to a target at range. A silent and invisible spell."

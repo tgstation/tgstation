@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/conjure/invisible_chair
 	name = "Invisible Chair"
 	desc = "The mime's performance transmutates a chair into physical reality."
-	background_icon_state = "bg_mime" // melbert todo test
+	background_icon_state = "bg_mime"
 	icon_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "invisible_chair"
 	panel = "Mime"

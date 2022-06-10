@@ -165,7 +165,7 @@
 		button.maptext = MAPTEXT("<b>[round(time_left/10, 0.1)]</b>")
 	if(!owner || time_left == 0)
 		button.maptext = ""
-	if(IsAvailable() && owner.click_intercept == src)
+	if(IsAvailable() && (button.our_hud.mymob.click_intercept == src))
 		button.color = COLOR_GREEN
 
 /datum/action/cooldown/process()

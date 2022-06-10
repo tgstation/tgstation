@@ -24,9 +24,10 @@
 	/// A weakref to whoever casted our forcefield.
 	var/datum/weakref/caster_weakref
 
-/obj/effect/forcefield/wizard/Initialize(mapload, mob/caster, flags = MAGIC_RESISTANCE) // melbert todo test
+/obj/effect/forcefield/wizard/Initialize(mapload, mob/caster, flags = MAGIC_RESISTANCE)
 	. = ..()
-	caster_weakref = WEAKREF(caster)
+	if(caster)
+		caster_weakref = WEAKREF(caster)
 	antimagic_flags = flags
 
 /obj/effect/forcefield/wizard/CanAllowThrough(atom/movable/mover, border_dir)

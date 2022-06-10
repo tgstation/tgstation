@@ -436,9 +436,6 @@
 			update_gunlight()
 			var/datum/action/light_action = add_item_action(/datum/action/item_action/toggle_gunlight)
 			light_action_ref = WEAKREF(light_action)
-			// If we're being held, we need to go ahead and give the action out
-			if(user == loc)
-				give_item_action(light_action, user)
 
 	else if(istype(I, /obj/item/knife))
 		var/obj/item/knife/K = I
