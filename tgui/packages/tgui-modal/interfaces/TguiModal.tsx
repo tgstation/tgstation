@@ -37,8 +37,7 @@ export class TguiModal extends Component<{}, State> {
   maxLength: number;
   channelDebounce = debounce((mode) => Byond.sendMessage('thinking', mode), 400);
   forceDebounce = debounce((entry) => Byond.sendMessage('force', entry), 1000, true);
-  thinkingThrottle = throttle(() => Byond.sendMessage('thinking', { mode: false }), 3000);
-  typingThrottle = throttle(() => Byond.sendMessage('typing'), 3000);
+  typingThrottle = throttle(() => Byond.sendMessage('typing'), 4000);
   value: string;
   state: State = {
     buttonContent: '',
@@ -132,8 +131,6 @@ export class TguiModal extends Component<{}, State> {
    * BKSP/DEL - Resets history counter and checks window size.
    * TYPING - When users key, it tells byond that it's typing.
    *
-   * Typing also provides a fail-safe to prevent stagnant
-   * thinking indicators if the user is typing OOC.
    */
   handleKeyDown = (event: KeyboardEvent, value: string) => {
     const { channel } = this.state;
@@ -143,8 +140,6 @@ export class TguiModal extends Component<{}, State> {
     if (isAlphanumeric(event.keyCode)) {
       if (channel < 2) {
         this.typingThrottle();
-      } else {
-        this.thinkingThrottle();
       }
     }
     if (event.keyCode === KEY_UP || event.keyCode === KEY_DOWN) {

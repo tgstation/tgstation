@@ -44,9 +44,14 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 
 /** Sets the mob as "thinking" - with indicator and variable thinking_IC */
 /datum/tgui_modal/proc/start_thinking()
+	/// REALLY shouldn't be here
 	if(!client || !client.mob)
 		CRASH("Started tgui modal thinking on a null client or mob")
+	/// Shouldn't be here
 	if(!window_open || !client.typing_indicators)
+		return FALSE
+	/// Special exemptions
+	if(isabductor(client.mob))
 		return FALSE
 	client.mob.thinking_IC = TRUE
 	client.mob.create_thinking_indicator()
@@ -65,9 +70,10 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 	if(!client || !client.mob)
 		CRASH("Started tgui modal typing on a null client or mob")
 	client.mob.remove_thinking_indicator()
-	if(window_open && client.typing_indicators)
-		client.mob.create_typing_indicator()
-		addtimer(CALLBACK(src, .proc/stop_typing), 4 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+	if(!window_open || !client.typing_indicators || !client.mob.thinking_IC)
+		return FALSE
+	client.mob.create_typing_indicator()
+	addtimer(CALLBACK(src, .proc/stop_typing), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
 
 /**
  * Callback to remove the typing indicator after a brief period of inactivity.
@@ -77,31 +83,37 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 	if(!client || !client.mob)
 		CRASH("Stopped tgui modal typing on a null client or mob")
 	client.mob.remove_typing_indicator()
-	if(window_open && client.typing_indicators)
-		client.mob.create_thinking_indicator()
+	if(!window_open || !client.typing_indicators || !client.mob.thinking_IC)
+		return FALSE
+	client.mob.create_thinking_indicator()
 
 /// Overrides for overlay creation
 /mob/living/create_thinking_indicator()
-	if(!thinking_indicator && thinking_IC && stat == CONSCIOUS)
-		add_overlay(GLOB.thinking_indicator)
-		thinking_indicator = TRUE
+	if(thinking_indicator || typing_indicator || !thinking_IC || stat != CONSCIOUS )
+		return FALSE
+	add_overlay(GLOB.thinking_indicator)
+	thinking_indicator = TRUE
 
 /mob/living/remove_thinking_indicator()
-	if(thinking_indicator)
-		cut_overlay(GLOB.thinking_indicator)
-		thinking_indicator = FALSE
+	if(!thinking_indicator)
+		return FALSE
+	cut_overlay(GLOB.thinking_indicator)
+	thinking_indicator = FALSE
 
 /mob/living/create_typing_indicator()
-	if(!typing_indicator && thinking_IC && stat == CONSCIOUS)
-		add_overlay(GLOB.typing_indicator)
-		typing_indicator = TRUE
+	if(typing_indicator || thinking_indicator || !thinking_IC || stat != CONSCIOUS)
+		return FALSE
+	add_overlay(GLOB.typing_indicator)
+	typing_indicator = TRUE
 
 /mob/living/remove_typing_indicator()
-	if(typing_indicator)
-		cut_overlay(GLOB.typing_indicator)
-		typing_indicator = FALSE
+	if(!typing_indicator)
+		return FALSE
+	cut_overlay(GLOB.typing_indicator)
+	typing_indicator = FALSE
 
 /mob/living/remove_all_indicators()
+	thinking_IC = FALSE
 	remove_thinking_indicator()
 	remove_typing_indicator()
-	thinking_IC = FALSE
+
