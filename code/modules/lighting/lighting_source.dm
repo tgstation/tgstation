@@ -111,6 +111,8 @@
 // If you're wondering what's with the backslashes, the backslashes cause BYOND to not automatically end the line.
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
+// Cache the max
+// see about potentially doing the pixel turf work once? may not be mathmatically possible
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
 
 #define APPLY_CORNER(C)                          \
@@ -126,6 +128,29 @@
 	);                                           \
 
 #define REMOVE_CORNER(C)                         \
+	. = -effect_str[C];                          \
+	C.update_lumcount                            \
+	(                                            \
+		. * applied_lum_r,                       \
+		. * applied_lum_g,                       \
+		. * applied_lum_b                        \
+	);
+
+#define NEW_LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / light_divisor))
+
+#define NEW_APPLY_CORNER(C)                          \
+	. = NEW_LUM_FALLOFF(C, pixel_turf);              \
+	. *= light_power;                            \
+	var/OLD = effect_str[C];                     \
+	                                             \
+	C.update_lumcount                            \
+	(                                            \
+		(. * lum_r) - (OLD * applied_lum_r),     \
+		(. * lum_g) - (OLD * applied_lum_g),     \
+		(. * lum_b) - (OLD * applied_lum_b)      \
+	);                                           \
+
+#define NEW_REMOVE_CORNER(C)                         \
 	. = -effect_str[C];                          \
 	C.update_lumcount                            \
 	(                                            \
@@ -152,8 +177,359 @@
 	APPLY_CORNER(corner)
 	effect_str[corner] = .
 
+/datum/light_source4/proc/update_corners()
+	switch(rand(1,5))
+		if(1)
+			old_corners()
+		if(2)
+			update_cached_range_corners()
+		if(3)
+			loop_corners()
+		if(4)
+			both_optimizations()
 
-/datum/light_source/proc/update_corners()
+/datum/light_source/proc/update_cached_range_corners()
+	var/update = FALSE
+	var/atom/source_atom = src.source_atom
+
+	if (QDELETED(source_atom))
+		qdel(src)
+		return
+
+	if (source_atom.light_power != light_power)
+		light_power = source_atom.light_power
+		update = TRUE
+
+	if (source_atom.light_range != light_range)
+		light_range = source_atom.light_range
+		update = TRUE
+
+	if (!top_atom)
+		top_atom = source_atom
+		update = TRUE
+
+	if (!light_range || !light_power)
+		qdel(src)
+		return
+
+	if (isturf(top_atom))
+		if (source_turf != top_atom)
+			source_turf = top_atom
+			pixel_turf = source_turf
+			update = TRUE
+	else if (top_atom.loc != source_turf)
+		source_turf = top_atom.loc
+		pixel_turf = get_turf_pixel(top_atom)
+		update = TRUE
+	else
+		var/pixel_loc = get_turf_pixel(top_atom)
+		if (pixel_loc != pixel_turf)
+			pixel_turf = pixel_loc
+			update = TRUE
+
+	if (!isturf(source_turf))
+		if (applied)
+			remove_lum()
+		return
+
+	if (light_range && light_power && !applied)
+		update = TRUE
+
+	if (source_atom.light_color != light_color)
+		light_color = source_atom.light_color
+		PARSE_LIGHT_COLOR(src)
+		update = TRUE
+
+	else if (applied_lum_r != lum_r || applied_lum_g != lum_g || applied_lum_b != lum_b)
+		update = TRUE
+
+	if (update)
+		needs_update = LIGHTING_CHECK_UPDATE
+		applied = TRUE
+	else if (needs_update == LIGHTING_CHECK_UPDATE)
+		return //nothing's changed
+
+	var/list/datum/lighting_corner/corners = list()
+	var/list/turf/turfs = list()
+
+	if (source_turf)
+		var/oldlum = source_turf.luminosity
+		var/ceiling_range = CEILING(light_range, 1)
+		source_turf.luminosity = ceiling_range
+		for(var/turf/T in view(ceiling_range, source_turf))
+			if(!IS_OPAQUE_TURF(T))
+				if (!T.lighting_corners_initialised)
+					T.generate_missing_corners()
+				corners[T.lighting_corner_NE] = 0
+				corners[T.lighting_corner_SE] = 0
+				corners[T.lighting_corner_SW] = 0
+				corners[T.lighting_corner_NW] = 0
+			turfs += T
+		source_turf.luminosity = oldlum
+
+	var/light_divisor = max(1, light_range)
+	var/list/datum/lighting_corner/new_corners = (corners - effect_str)
+	LAZYINITLIST(effect_str)
+	if (needs_update == LIGHTING_VIS_UPDATE)
+		for (var/datum/lighting_corner/corner as anything in new_corners)
+			NEW_APPLY_CORNER(corner)
+			if (. != 0)
+				LAZYADD(corner.affecting, src)
+				effect_str[corner] = .
+	else
+		for (var/datum/lighting_corner/corner as anything in new_corners)
+			NEW_APPLY_CORNER(corner)
+			if (. != 0)
+				LAZYADD(corner.affecting, src)
+				effect_str[corner] = .
+
+		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
+			NEW_APPLY_CORNER(corner)
+			if (. != 0)
+				effect_str[corner] = .
+			else
+				LAZYREMOVE(corner.affecting, src)
+				effect_str -= corner
+
+	var/list/datum/lighting_corner/gone_corners = effect_str - corners
+	for (var/datum/lighting_corner/corner as anything in gone_corners)
+		NEW_REMOVE_CORNER(corner)
+		LAZYREMOVE(corner.affecting, src)
+	effect_str -= gone_corners
+
+	applied_lum_r = lum_r
+	applied_lum_g = lum_g
+	applied_lum_b = lum_b
+
+	UNSETEMPTY(effect_str)
+
+/datum/light_source/proc/loop_corners()
+	var/update = FALSE
+	var/atom/source_atom = src.source_atom
+
+	if (QDELETED(source_atom))
+		qdel(src)
+		return
+
+	if (source_atom.light_power != light_power)
+		light_power = source_atom.light_power
+		update = TRUE
+
+	if (source_atom.light_range != light_range)
+		light_range = source_atom.light_range
+		update = TRUE
+
+	if (!top_atom)
+		top_atom = source_atom
+		update = TRUE
+
+	if (!light_range || !light_power)
+		qdel(src)
+		return
+
+	if (isturf(top_atom))
+		if (source_turf != top_atom)
+			source_turf = top_atom
+			pixel_turf = source_turf
+			update = TRUE
+	else if (top_atom.loc != source_turf)
+		source_turf = top_atom.loc
+		pixel_turf = get_turf_pixel(top_atom)
+		update = TRUE
+	else
+		var/pixel_loc = get_turf_pixel(top_atom)
+		if (pixel_loc != pixel_turf)
+			pixel_turf = pixel_loc
+			update = TRUE
+
+	if (!isturf(source_turf))
+		if (applied)
+			remove_lum()
+		return
+
+	if (light_range && light_power && !applied)
+		update = TRUE
+
+	if (source_atom.light_color != light_color)
+		light_color = source_atom.light_color
+		PARSE_LIGHT_COLOR(src)
+		update = TRUE
+
+	else if (applied_lum_r != lum_r || applied_lum_g != lum_g || applied_lum_b != lum_b)
+		update = TRUE
+
+	if (update)
+		needs_update = LIGHTING_CHECK_UPDATE
+		applied = TRUE
+	else if (needs_update == LIGHTING_CHECK_UPDATE)
+		return //nothing's changed
+
+	var/list/datum/lighting_corner/corners = list()
+	var/list/turf/turfs = list()
+
+	if (source_turf)
+		var/oldlum = source_turf.luminosity
+		source_turf.luminosity = CEILING(light_range, 1)
+		for(var/turf/T in view(CEILING(light_range, 1), source_turf))
+			if(!IS_OPAQUE_TURF(T))
+				if (!T.lighting_corners_initialised)
+					T.generate_missing_corners()
+				corners[T.lighting_corner_NE] = 0
+				corners[T.lighting_corner_SE] = 0
+				corners[T.lighting_corner_SW] = 0
+				corners[T.lighting_corner_NW] = 0
+			turfs += T
+		source_turf.luminosity = oldlum
+
+	var/list/datum/lighting_corner/new_corners = (corners - effect_str)
+	LAZYINITLIST(effect_str)
+	var/index = 1
+	var/list/gone_corners = new /list(length(corners) + length(effect_str))
+
+	if(needs_update != LIGHTING_VIS_UPDATE)
+		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
+			APPLY_CORNER(corner)
+			if (. != 0)
+				effect_str[corner] = .
+			else
+				LAZYREMOVE(corner.affecting, src)
+				gone_corners[index] = corner
+				index += 1
+	for (var/datum/lighting_corner/corner as anything in new_corners)
+		APPLY_CORNER(corner)
+		if (. != 0)
+			LAZYADD(corner.affecting, src)
+			effect_str[corner] = .
+
+	for (var/datum/lighting_corner/corner as anything in effect_str - corners)
+		REMOVE_CORNER(corner)
+		LAZYREMOVE(corner.affecting, src)
+		gone_corners[index] = corner
+		index += 1
+	gone_corners.Cut(index, length(gone_corners) + 1)
+	effect_str -= gone_corners
+
+	applied_lum_r = lum_r
+	applied_lum_g = lum_g
+	applied_lum_b = lum_b
+
+	UNSETEMPTY(effect_str)
+
+/datum/light_source/proc/both_optimizations()
+	var/update = FALSE
+	var/atom/source_atom = src.source_atom
+
+	if (QDELETED(source_atom))
+		qdel(src)
+		return
+
+	if (source_atom.light_power != light_power)
+		light_power = source_atom.light_power
+		update = TRUE
+
+	if (source_atom.light_range != light_range)
+		light_range = source_atom.light_range
+		update = TRUE
+
+	if (!top_atom)
+		top_atom = source_atom
+		update = TRUE
+
+	if (!light_range || !light_power)
+		qdel(src)
+		return
+
+	if (isturf(top_atom))
+		if (source_turf != top_atom)
+			source_turf = top_atom
+			pixel_turf = source_turf
+			update = TRUE
+	else if (top_atom.loc != source_turf)
+		source_turf = top_atom.loc
+		pixel_turf = get_turf_pixel(top_atom)
+		update = TRUE
+	else
+		var/pixel_loc = get_turf_pixel(top_atom)
+		if (pixel_loc != pixel_turf)
+			pixel_turf = pixel_loc
+			update = TRUE
+
+	if (!isturf(source_turf))
+		if (applied)
+			remove_lum()
+		return
+
+	if (light_range && light_power && !applied)
+		update = TRUE
+
+	if (source_atom.light_color != light_color)
+		light_color = source_atom.light_color
+		PARSE_LIGHT_COLOR(src)
+		update = TRUE
+
+	else if (applied_lum_r != lum_r || applied_lum_g != lum_g || applied_lum_b != lum_b)
+		update = TRUE
+
+	if (update)
+		needs_update = LIGHTING_CHECK_UPDATE
+		applied = TRUE
+	else if (needs_update == LIGHTING_CHECK_UPDATE)
+		return //nothing's changed
+
+	var/list/datum/lighting_corner/corners = list()
+	var/list/turf/turfs = list()
+
+	if (source_turf)
+		var/oldlum = source_turf.luminosity
+		var/ceiling_range = CEILING(light_range, 1)
+		source_turf.luminosity = ceiling_range
+		for(var/turf/T in view(ceiling_range, source_turf))
+			if(!IS_OPAQUE_TURF(T))
+				if (!T.lighting_corners_initialised)
+					T.generate_missing_corners()
+				corners[T.lighting_corner_NE] = 0
+				corners[T.lighting_corner_SE] = 0
+				corners[T.lighting_corner_SW] = 0
+				corners[T.lighting_corner_NW] = 0
+			turfs += T
+		source_turf.luminosity = oldlum
+
+	var/light_divisor = max(1, light_range)
+
+	var/list/datum/lighting_corner/new_corners = (corners - effect_str)
+	LAZYINITLIST(effect_str)
+	var/index = 1
+	var/list/gone_corners = new /list(length(corners) + length(effect_str))
+	if(needs_update != LIGHTING_VIS_UPDATE)
+		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
+			NEW_APPLY_CORNER(corner)
+			if (. != 0)
+				effect_str[corner] = .
+			else
+				LAZYREMOVE(corner.affecting, src)
+				gone_corners[index] = corner
+				index += 1
+	for (var/datum/lighting_corner/corner as anything in new_corners)
+		NEW_APPLY_CORNER(corner)
+		if (. != 0)
+			LAZYADD(corner.affecting, src)
+			effect_str[corner] = .
+
+	for (var/datum/lighting_corner/corner as anything in effect_str - corners)
+		NEW_REMOVE_CORNER(corner)
+		LAZYREMOVE(corner.affecting, src)
+		gone_corners[index] = corner
+		index += 1
+	gone_corners.Cut(index, length(gone_corners) + 1)
+	effect_str -= gone_corners
+
+	applied_lum_r = lum_r
+	applied_lum_g = lum_g
+	applied_lum_b = lum_b
+
+	UNSETEMPTY(effect_str)
+
+/datum/light_source/proc/old_corners()
 	var/update = FALSE
 	var/atom/source_atom = src.source_atom
 

@@ -18,6 +18,9 @@ SUBSYSTEM_DEF(lighting)
 		initialized = TRUE
 
 	fire(FALSE, TRUE)
+	GLOB.color_updated_fullbright = 0
+	GLOB.color_updated_matrix = 0
+	GLOB.color_updated_fulldark = 0
 
 	return ..()
 

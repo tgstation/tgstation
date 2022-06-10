@@ -25,6 +25,15 @@
 
 	///the maximum of lum_r, lum_g, and lum_b. if this is > 1 then the three cached color values are divided by this
 	var/largest_color_luminosity = 0
+	///if any of our lum vars are larger then the min allowed lighting value
+	var/has_real_lum = TRUE
+	///if all our cached values are equal to 1
+	var/all_max_lum = FALSE
+	///the minimum of cache_r, cache_g, cache_b
+	var/smallest_cache = 0
+
+	///list as struct, holds all three "true" color values, then the max of lum_r/g/b and the min of the three true color values
+	var/list/light_struct = list(LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, LIGHTING_SOFT_THRESHOLD, 0, 0)
 
 	///whether we are to be added to SSlighting's corners_queue list for an update
 	var/needs_update = FALSE
@@ -122,7 +131,25 @@
 	cache_b = round(lum_b * ., LIGHTING_ROUND_VALUE)
 	#endif
 
-	src.largest_color_luminosity = round(largest_color_luminosity, LIGHTING_ROUND_VALUE)
+	largest_color_luminosity = round(largest_color_luminosity, LIGHTING_ROUND_VALUE)
+	smallest_cache = min(cache_r, cache_g, cache_b)
+	all_max_lum = smallest_cache == 1
+	src.largest_color_luminosity = largest_color_luminosity
+
+	#if LIGHTING_SOFT_THRESHOLD != 0
+	has_real_lum = largest_color_luminosity > LIGHTING_SOFT_THRESHOLD
+	#else
+	// Because of floating points™?, it won't even be a flat 0.
+	// This number is mostly arbitrary.
+	has_real_lum = largest_color_luminosity > 1e-6
+	#endif
+
+	var/list/light_struct = src.light_struct
+	light_struct[1] = cache_r
+	light_struct[2] = cache_g
+	light_struct[3] = cache_b
+	light_struct[4] = largest_color_luminosity
+	light_struct[5] = smallest_cache
 
 	var/datum/lighting_object/lighting_object = master_NE?.lighting_object
 	if (lighting_object && !lighting_object.needs_update)
