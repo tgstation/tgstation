@@ -177,8 +177,8 @@
 	APPLY_CORNER(corner)
 	effect_str[corner] = .
 
-/datum/light_source4/proc/update_corners()
-	switch(rand(1,5))
+/datum/light_source/proc/update_corners()
+	switch(rand(1,4))
 		if(1)
 			old_corners()
 		if(2)
