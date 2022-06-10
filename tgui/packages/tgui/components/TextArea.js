@@ -68,7 +68,6 @@ export class TextArea extends Component {
         }
         if (this.props.selfClear) {
           e.target.value = '';
-        } else {
           e.target.blur();
         }
         return;
