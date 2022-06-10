@@ -358,13 +358,10 @@
 	slowdown = 2
 	item_flags = DROPDEL
 	max_integrity = 100
-	///counts time passed since it ate food
-	var/hunger = 0
 
 /obj/item/storage/backpack/duffelbag/cursed/Initialize(mapload)
 	. = ..()
-	var/add_dropdel = TRUE //clarified boolean
-	AddComponent(/datum/component/curse_of_hunger, add_dropdel)
+	AddComponent(/datum/component/curse_of_hunger, add_dropdel = TRUE)
 
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
@@ -680,4 +677,3 @@
 	name = "police bag"
 	desc = "A large duffel bag for holding extra police gear."
 	slowdown = 0
-
