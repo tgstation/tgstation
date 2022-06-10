@@ -35,6 +35,9 @@
 	if(our_heretic && !our_heretic.ascended && !HAS_TRAIT(living_user, TRAIT_ALLOW_HERETIC_CASTING))
 		user.balloon_alert(living_user, "you need a focus!")
 		return
+	// Delete existing
+	if(blade_effect)
+		QDEL_NULL(blade_effect)
 
 	. = ..()
 	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, 3, 25, 0.66 SECONDS)
