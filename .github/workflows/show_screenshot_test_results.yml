@@ -27,6 +27,7 @@ jobs:
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         uses: actions/checkout@v3
       - name: Prepare module
+        if: steps.secrets_set.outputs.SECRETS_ENABLED
         run: |
           # This is needed because node-fetch needs import and doesn't work with require :/
           echo "{\"type\": \"module\"}" > package.json
