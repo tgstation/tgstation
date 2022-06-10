@@ -26,6 +26,10 @@
 	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC) // Before populate so fish instatiates in ready container already
 	. = ..()
 
+	create_storage(max_slots = 1)
+	atom_storage.can_hold_trait = TRAIT_FISH_CASE_COMPATIBILE
+	atom_storage.can_hold_description = "fish and aquarium equipment"
+
 ///Fish case with single random fish inside.
 /obj/item/storage/fish_case/random/PopulateContents()
 	. = ..()
