@@ -183,7 +183,7 @@
 		ui.open()
 
 /obj/item/reagent_containers/borghypo/ui_data(mob/user)
-	var/list/available_reagents = list(0)
+	var/list/available_reagents = list()
 	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
 		if(reagent)
 			available_reagents.Add(list(list(
