@@ -1732,8 +1732,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "aGD" = (
@@ -12413,8 +12413,8 @@
 /area/station/command/teleporter)
 "eyl" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
-/obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "eyz" = (
@@ -18286,8 +18286,8 @@
 /area/station/science/explab)
 "gND" = (
 /obj/machinery/iv_drip,
-/obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "gNF" = (
@@ -25578,8 +25578,8 @@
 	dir = 4
 	},
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/item/toy/cattoy,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "jgt" = (
@@ -28091,6 +28091,7 @@
 "jXQ" = (
 /obj/structure/closet/secure_closet/medical2,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "jXU" = (
@@ -38202,9 +38203,8 @@
 /area/station/cargo/drone_bay)
 "nzh" = (
 /obj/structure/table/optable,
-/obj/machinery/airalarm/directional/south,
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "nzo" = (
@@ -50464,10 +50464,10 @@
 	dir = 9
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 26
 	},
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "rOF" = (
