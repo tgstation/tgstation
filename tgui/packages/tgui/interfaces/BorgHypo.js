@@ -44,7 +44,7 @@ const Reagent = (props, context) => {
       <Flex.Item grow>
         <ProgressBar value={reagent.volume / maxVolume}>
           <Flex>
-            <Flex.Item grow bold>
+            <Flex.Item grow bold textAlign={'left'}>
               {reagent.name}
             </Flex.Item>
             <Flex.Item>
@@ -53,22 +53,23 @@ const Reagent = (props, context) => {
           </Flex>
         </ProgressBar>
       </Flex.Item>
-      <Flex.Item mx={1} textAlign={'right'}>
+      <Flex.Item mx={1}>
         <Button
-          icon={'syringe'}
-          color={reagent.name === selected ? 'green' : 'default'}
-          content={'Dispense'}
-          textAlign={'center'}
-          onClick={() => act(reagent.name)}
-        />
-      </Flex.Item>
-      <Flex.Item textAlign={"right"}>
-        <Button
-          icon={'info'}
+          icon={'info-circle'}
           textAlign={'center'}
           tooltip={reagent.description}
         />
       </Flex.Item>
+      <Flex.Item textAlign={'right'}>
+        <Button
+          icon={'syringe'}
+          color={reagent.name === selected ? 'green' : 'default'}
+          content={'Select'}
+          textAlign={'center'}
+          onClick={() => act(reagent.name)}
+        />
+      </Flex.Item>
+
     </Flex>
   ));
 };
