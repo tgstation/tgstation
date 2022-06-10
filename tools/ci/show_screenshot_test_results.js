@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import process from "process";
 
-const createComment = (screenshotFailures) => {
+const createComment = (screenshotFailures, zipFileUrl) => {
 	const formatScreenshotFailure = ({ directory, diffUrl, newUrl, oldUrl }) => {
 		const img = (url) => {
 			if (url) {
@@ -18,6 +18,8 @@ const createComment = (screenshotFailures) => {
 
 	return `
 		Screenshot tests failed!
+
+		${zipFileUrl ? "" : "No zip file could be produced, this is a bug!"}
 
 		## Diffs
 		| Name | Expected image | Produced image | Diff |
@@ -43,7 +45,7 @@ const createComment = (screenshotFailures) => {
 			You can either:
 
 			1. Right-click the "produced image", and save it in \`code/modules/unit_tests/screenshots/NAME.png\`.
-			2. Comment \`.ssupdate\` on the pull request, and we will commit the new screenshots directly to your branch.
+			2. Download and extract [this zip file](${zipFileUrl}) in the root of your repository, and commit.
 
 			If you need help, you can ask maintainers either on Discord or on this pull request.
 		</details>
@@ -69,7 +71,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 
 	const { FILE_HOUSE_KEY } = process.env;
 
-	// Step 1. Check if bad-screenshots is in the artifacts
+	// Check if bad-screenshots is in the artifacts
 	const { data: { artifacts } } = await github.rest.actions.listWorkflowRunArtifacts({
 		owner: context.repo.owner,
 		repo: context.repo.repo,
@@ -82,7 +84,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 		return;
 	}
 
-	// Step 2. Download the screenshots from the artifacts
+	// Download the screenshots from the artifacts
 	// MOTHBLOCKS TODO: Limit file size
 	const download = await github.rest.actions.downloadArtifact({
 		owner: context.repo.owner,
@@ -110,7 +112,45 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 
 	fs.rmSync(prNumberFile);
 
-	// Step 3. Upload the screenshots
+	// Validate the PR
+	const result = await github.graphql(`query($owner:String!, $repo:String!, $prNumber:Int!) {
+		repository(owner: $owner, name: $repo) {
+			pullRequest(number: $prNumber) {
+				commits(last: 1) {
+					nodes {
+						commit {
+							checkSuites(first: 10) {
+								nodes {
+									id
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}`, {
+		owner: context.repo.owner,
+		repo: context.repo.repo,
+		prNumber,
+	});
+
+	const validPr = result
+		.repository
+		.pullRequest
+		.commits
+		.nodes[0]
+		.commit
+		.checkSuites
+		.nodes
+		.some(({ id }) => id === context.payload.workflow_run.check_suite_node_id);
+
+	if (!validPr) {
+		console.log(`PR #${prNumber} is not valid (expected check suite ID ${context.payload.workflow_run.check_suite_node_id})`);
+		return;
+	}
+
+	// Upload the screenshots
 	// 1. Loop over the bad-screenshots directory
 	// 2. Upload the screenshot
 	// 3. Save the URL
@@ -164,46 +204,28 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 		return;
 	}
 
-	// Step 4. Validate the PR
-	const result = await github.graphql(`query($owner:String!, $repo:String!, $prNumber:Int!) {
-		repository(owner: $owner, name: $repo) {
-			pullRequest(number: $prNumber) {
-				commits(last: 1) {
-					nodes {
-						commit {
-							checkSuites(first: 10) {
-								nodes {
-									id
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}`, {
-		owner: context.repo.owner,
-		repo: context.repo.repo,
-		prNumber,
-	});
+	// Upload zip file for quick fixes
+	const zipFilePath = path.join("data", "screenshot-update");
+	const finalDestination = path.join(
+		zipFilePath,
+		"code", "modules", "unit_tests", "screenshots",
+	)
 
-	const validPr = result
-		.repository
-		.pullRequest
-		.commits
-		.nodes[0]
-		.commit
-		.checkSuites
-		.nodes
-		.some(({ id }) => id === context.payload.workflow_run.check_suite_node_id);
+	fs.mkdirSync(finalDestination, { recursive: true });
 
-	if (!validPr) {
-		console.log(`PR #${prNumber} is not valid (expected check suite ID ${context.payload.workflow_run.check_suite_node_id})`);
-		return;
+	for (const { directory } of screenshotFailures) {
+		fs.copyFileSync(
+			path.join("bad-screenshots", directory, "new.png"),
+			path.join(finalDestination, `${directory}.png`),
+		)
 	}
 
-	// Step 5. Post the comment
-	const comment = createComment(screenshotFailures);
+	await exec.exec(`zip -r ${zipFilePath}.zip ${zipFilePath}`);
+
+	const zipUrl = await uploadFile(`${zipFilePath}.zip`);
+
+	// Post the comment
+	const comment = createComment(screenshotFailures, zipUrl);
 
 	await github.rest.issues.createComment({
 		owner: context.repo.owner,
