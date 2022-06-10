@@ -124,8 +124,9 @@
 	var/mob/living/carbon/cursed = cursed_item.loc
 	///check hp
 	if(current_health <= 0)
-		the_curse_ends(dropper)
+		the_curse_ends(cursed)
 		return
+
 	hunger += delta_time
 	if((hunger <= HUNGER_THRESHOLD_TRY_EATING) || prob(80))
 		return
