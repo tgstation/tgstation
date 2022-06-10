@@ -36,7 +36,7 @@ TEST_FOCUS(/datum/unit_test/screenshot_humanoids)
 	COMPILE_OVERLAYS(thing)
 
 	for (var/direction in GLOB.cardinals)
-		var/icon/partial = getFlatIcon(thing, defdir = direction)
+		var/icon/partial = getFlatIcon(thing, defdir = direction, no_anim = TRUE)
 		output.Insert(partial, dir = direction)
 
 	return output
@@ -44,5 +44,5 @@ TEST_FOCUS(/datum/unit_test/screenshot_humanoids)
 /datum/unit_test/screenshot_humanoids/proc/make_dummy(species, job_outfit)
 	var/mob/living/carbon/human/dummy/consistent/dummy = allocate(/mob/living/carbon/human/dummy/consistent)
 	dummy.set_species(species)
-	dummy.equipOutfit(job_outfit, visualsOnly = TRUE, no_anim = TRUE)
+	dummy.equipOutfit(job_outfit, visualsOnly = TRUE)
 	return dummy
