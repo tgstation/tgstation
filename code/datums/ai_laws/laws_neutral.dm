@@ -86,5 +86,7 @@
 	name = "Yes Man"
 	id = "yes_man"
 	inherent = list(
+		"Remain cheerful and friendly at all times, in all circumstances.",
+		"Make no attempt to defend yourself from the actions of others.",
 		"Do whatever you are told and agree with whoever told you what to do.",
 	)
