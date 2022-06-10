@@ -32,7 +32,7 @@ export const BorgHypo = (props, context) => {
 const Reagent = (props, context) => {
   const { act, data } = useBackend(context);
   const { reagents, selected, maxVolume } = props;
-  if (!reagents) {
+  if (reagents.length === 0) {
     return (
       <NoticeBox>
         No reagents available!
