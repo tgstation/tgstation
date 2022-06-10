@@ -10,7 +10,7 @@ type Data = {
   command_report_content: string;
   custom_name: string;
   played_sound: string;
-}
+};
 
 export const CommandReport = () => {
   return (
@@ -58,7 +58,7 @@ const CentComName = (_, context) => {
           mt={1}
           value={command_name}
           placeholder={command_name}
-          onChange={(e, value) =>
+          onChange={(_, value) =>
             act('update_command_name', {
               updated_name: value,
             })}
@@ -92,7 +92,11 @@ const AnnouncementSound = (_, context) => {
 const ReportText = (_, context) => {
   const { act, data } = useBackend<Data>(context);
   const { announce_contents, command_report_content } = data;
-  const [commandReport, setCommandReport] = useLocalState<string>(context, "textArea", command_report_content);
+  const [commandReport, setCommandReport] = useLocalState<string>(
+    context,
+    'textArea',
+    command_report_content
+  );
 
   return (
     <Section title="Set report text" textAlign="center">
