@@ -90,16 +90,13 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 		return
 
 	var/path_prefix = replacetext(replacetext("[type]", "/datum/unit_test/", ""), "/", "_")
+	name = replacetext(name, "/", "_")
 
 	var/filename = "code/modules/unit_tests/screenshots/[path_prefix]_[name].png"
 
 	if (fexists(filename))
 		var/data_filename = "data/screenshots/[path_prefix]_[name].png"
-
-		// MOTHBLOCKS TODO: Needed?
-		fdel(data_filename)
 		fcopy(icon, data_filename)
-
 		log_test("[path_prefix]_[name] was found, putting in data/screenshots")
 	else if (fexists("code"))
 		// We are probably running in a local build

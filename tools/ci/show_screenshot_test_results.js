@@ -17,7 +17,9 @@ const createComment = (screenshotFailures, zipFileUrl) => {
 	};
 
 	return `
-		Screenshot tests failed! ${zipFileUrl ? `[Zip file of new screenshots](${zipFileUrl})` : "No zip file could be produced, this is a bug!"}
+		Screenshot tests failed!
+
+		${zipFileUrl ? `[Download zip file of new screenshots.](${zipFileUrl})` : "No zip file could be produced, this is a bug!"}
 
 		## Diffs
 		| Name | Expected image | Produced image | Diff |
@@ -62,11 +64,6 @@ const createComment = (screenshotFailures, zipFileUrl) => {
 };
 
 export async function showScreenshotTestResults({ github, context, exec }) {
-	// MOTHBLOCKS TODO: Remove
-	// if (true) {
-	// 	return;
-	// }
-
 	const { FILE_HOUSE_KEY } = process.env;
 
 	// Check if bad-screenshots is in the artifacts
@@ -83,7 +80,6 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 	}
 
 	// Download the screenshots from the artifacts
-	// MOTHBLOCKS TODO: Limit file size
 	const download = await github.rest.actions.downloadArtifact({
 		owner: context.repo.owner,
 		repo: context.repo.repo,
