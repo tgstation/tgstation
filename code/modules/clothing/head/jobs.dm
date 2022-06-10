@@ -13,10 +13,14 @@
 	strip_delay = 10
 	equip_delay_other = 10
 
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/chefhat
 	dog_fashion = /datum/dog_fashion/head/chef
 	///the chance that the movements of a mouse inside of this hat get relayed to the human wearing the hat
 	var/mouse_control_probability = 20
+
+/obj/item/clothing/head/chefhat/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/chefhat)
 
 /obj/item/clothing/head/chefhat/i_am_assuming_direct_control
 	desc = "The commander in chef's head wear. Upon closer inspection, there seem to be dozens of tiny levers, buttons, dials, and screens inside of this hat. What the hell...?"
@@ -94,11 +98,13 @@
 	armor = list(MELEE = 25, BULLET = 5, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 30, ACID = 50, WOUND = 5)
 	icon_state = "detective"
 	var/candy_cooldown = 0
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/fedora/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
+
+	create_storage(type = /datum/storage/pockets/small/fedora/detective)
+
 	new /obj/item/reagent_containers/food/drinks/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)

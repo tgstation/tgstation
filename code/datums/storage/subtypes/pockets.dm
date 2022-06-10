@@ -6,11 +6,16 @@
 
 /datum/storage/pockets/attempt_insert(datum/source, obj/item/to_insert, mob/user, override, force)
 	. = ..()
+
+	var/obj/item/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
 	if(. && silent && !override)
 		if(quickdraw)
-			to_chat(user, span_notice("You discreetly slip [I] into [parent]. Right-click [parent] to remove it."))
+			to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]. Right-click [resolve_parent] to remove it."))
 		else
-			to_chat(user, span_notice("You discreetly slip [I] into [parent]."))
+			to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]."))
 
 /datum/storage/pockets/small
 	max_slots = 1
@@ -57,6 +62,7 @@
 		return FALSE
 
 /datum/storage/pockets/shoes
+	max_slots = 2
 	attack_hand_interact = FALSE
 	quickdraw = TRUE
 	silent = TRUE
@@ -127,10 +133,8 @@
 /datum/storage/pockets/pocketprotector
 	max_slots = 3
 	max_specific_storage = WEIGHT_CLASS_TINY
-	var/atom/original_parent
 
 /datum/storage/pockets/pocketprotector/New()
-	original_parent = parent
 	. = ..()
 	set_holdable(list( //Same items as a PDA
 		/obj/item/pen,
@@ -140,10 +144,8 @@
 		/obj/item/clothing/mask/cigarette)
 		)
 
-/datum/storage/pockets/pocketprotector/real_location()
-	return original_parent
-
 /datum/storage/pockets/helmet
+	max_slots = 2
 	quickdraw = TRUE
 	max_total_storage = 6
 

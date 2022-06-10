@@ -17,10 +17,18 @@
 	name = "white taqiyah"
 	desc = "An extra-mustahabb way of showing your devotion to Allah."
 	icon_state = "taqiyahwhite"
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+
+/obj/item/clothing/head/taqiyahwhite/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/small)
 
 /obj/item/clothing/head/taqiyahred
 	name = "red taqiyah"
 	desc = "An extra-mustahabb way of showing your devotion to Allah."
 	icon_state = "taqiyahred"
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+
+/obj/item/clothing/head/taqiyahred/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/small)

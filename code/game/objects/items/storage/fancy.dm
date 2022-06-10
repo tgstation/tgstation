@@ -29,8 +29,7 @@
 /obj/item/storage/fancy/PopulateContents()
 	if(!spawn_type)
 		return
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	for(var/i = 1 to STR.max_items)
+	for(var/i = 1 to atom_storage?.max_slots)
 		new spawn_type(src)
 
 /obj/item/storage/fancy/update_icon_state()
@@ -356,9 +355,8 @@
 
 /obj/item/storage/fancy/rollingpapers/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 10
-	STR.set_holdable(list(/obj/item/rollingpaper))
+	atom_storage.max_slots = 10
+	atom_storage.set_holdable(list(/obj/item/rollingpaper))
 
 ///Overrides to do nothing because fancy boxes are fucking insane.
 /obj/item/storage/fancy/rollingpapers/update_icon_state()

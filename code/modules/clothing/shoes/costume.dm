@@ -13,8 +13,12 @@
 	desc = "A pair of costume boots fashioned after bird talons."
 	icon_state = "griffinboots"
 	inhand_icon_state = "griffinboots"
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
+
+/obj/item/clothing/shoes/griffin/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"

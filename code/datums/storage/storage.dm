@@ -62,12 +62,12 @@
 	src.collection_mode = collection_mode || src.collection_mode
 	src.attack_hand_interact = attack_hand_interact || src.attack_hand_interact
 
-	orient_to_hud()
-
 	var/atom/resolve_parent = src.parent?.resolve()
 
 	if(!resolve_parent)
 		stack_trace("storage could not resolve parent weakref")
+		qdel(src)
+		return
 	
 	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), .proc/handle_attack)
 	RegisterSignal(resolve_parent, COMSIG_MOUSEDROP_ONTO, .proc/handle_mousedrop)
@@ -87,6 +87,8 @@
 	RegisterSignal(resolve_parent, COMSIG_ITEM_EQUIPPED, .proc/update_actions)
 
 	RegisterSignal(resolve_parent, COMSIG_TOPIC, .proc/topic_handle)
+
+	orient_to_hud()
 
 /datum/storage/Destroy()
 	parent = null
@@ -260,7 +262,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	for(var/obj/item/thing in things)
-		message_admins("[thing]")
 		things -= thing
 		if(thing.loc != thing_loc)
 			continue
@@ -306,7 +307,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			viewing.show_message(span_notice("[user] puts [thing] [insert_preposition]to [resolve_parent]."), MSG_VISUAL)
 			return
 
-/datum/storage/proc/attempt_remove(obj/item/thing, atom/newLoc)
+/datum/storage/proc/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
@@ -320,7 +321,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		reset_item(thing)
 		thing.forceMove(newLoc)
 
-		if(rustle_sound)
+		if(rustle_sound && !silent)
 			playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
 	else
 		thing.moveToNullspace()
@@ -350,7 +351,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	for(var/obj/item/thing in resolve_parent)
 		if(thing.loc != resolve_parent)
 			continue
-		attempt_remove(thing, target)
+		attempt_remove(thing, target, silent = TRUE)
 
 /datum/storage/proc/mass_empty(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -606,7 +607,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			to_chat(toshow, span_warning("[pick("Ka-chunk!", "Ka-chink!", "Plunk!", "Glorf!")] \The [resolve_parent] appears to be locked!"))
 		return FALSE
 	
-	if(!quickdraw)
+	if(!quickdraw || toshow.get_active_held_item())
 		show_contents(toshow)
 
 		if(animated)

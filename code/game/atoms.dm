@@ -333,9 +333,9 @@
 
 	return ..()
 
-/atom/proc/create_storage(max_slots = 7, \
-	max_specific_storage = WEIGHT_CLASS_NORMAL, \
-	max_total_storage = 14, \
+/atom/proc/create_storage(max_slots, \
+	max_specific_storage, \
+	max_total_storage, \
 	numerical_stacking = FALSE, \
 	allow_quick_gather = FALSE, \
 	allow_quick_empty = FALSE, \
@@ -350,7 +350,9 @@
 		QDEL_NULL(atom_storage)
 
 	atom_storage = new type(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
-	atom_storage.set_holdable(canhold, canthold)
+
+	if(canhold || canthold)
+		atom_storage.set_holdable(canhold, canthold)
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/turf/p_turf = get_turf(ricocheting_projectile)

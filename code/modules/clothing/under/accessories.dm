@@ -356,10 +356,12 @@
 	name = "pocket protector"
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/pocketprotector
 
 /obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
 	. = ..()
+
+	create_storage(type = /datum/storage/pockets/pocketprotector)
+
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)
 	new /obj/item/pen/blue(src)

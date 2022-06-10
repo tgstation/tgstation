@@ -1163,6 +1163,7 @@
 #include "code\datums\storage\subtypes\bag_of_holding.dm"
 #include "code\datums\storage\subtypes\cards.dm"
 #include "code\datums\storage\subtypes\extract_inventory.dm"
+#include "code\datums\storage\subtypes\implant.dm"
 #include "code\datums\storage\subtypes\pockets.dm"
 #include "code\datums\votes\_vote_datum.dm"
 #include "code\datums\votes\custom_vote.dm"

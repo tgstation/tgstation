@@ -3,7 +3,6 @@
 	desc = "A small sticker lets you know they've been inspected for snakes, It is unclear how long ago the inspection took place..."
 	icon_state = "cowboy_brown"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 0, ACID = 0) //these are quite tall
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	custom_price = PAYCHECK_CREW
 	var/list/occupants = list()
 	var/max_occupants = 4
@@ -11,6 +10,9 @@
 
 /obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
+
+	create_storage(type = /datum/storage/pockets/shoes)
+
 	if(prob(2))
 		var/mob/living/simple_animal/hostile/retaliate/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/snake(src)
 		occupants += bootsnake
