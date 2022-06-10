@@ -2,8 +2,6 @@
 /datum/unit_test/screenshot_humanoids
 
 /datum/unit_test/screenshot_humanoids/Run()
-	// test_screenshot("human", get_flat_icon_for_all_directions(make_dummy(/datum/species/human, /datum/outfit/job/assistant/consistent)))
-
 	// Test lizards as their own thing so we can get more coverage on their features
 	var/mob/living/carbon/human/lizard = allocate(/mob/living/carbon/human/dummy/consistent)
 	lizard.dna.features["mcolor"] = "#099"
