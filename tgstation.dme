@@ -1623,6 +1623,7 @@
 #include "code\game\objects\items\food\bread.dm"
 #include "code\game\objects\items\food\burgers.dm"
 #include "code\game\objects\items\food\cake.dm"
+#include "code\game\objects\items\food\cheese.dm"
 #include "code\game\objects\items\food\deepfried.dm"
 #include "code\game\objects\items\food\donkpocket.dm"
 #include "code\game\objects\items\food\donuts.dm"
