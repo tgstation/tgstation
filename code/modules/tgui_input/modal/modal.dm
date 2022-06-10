@@ -1,5 +1,3 @@
-#define NULL_CLIENTMOB "Tgui modal loaded on a null client/mob"
-
 /**
  * The tgui speech modal. This initializes an input window which hides until
  * the user presses one of the speech hotkeys. Once an entry is set, it will
@@ -63,7 +61,7 @@
  */
 /datum/tgui_modal/proc/load()
 	if(!client || !client.mob)
-		CRASH(NULL_CLIENTMOB)
+		CRASH("Tgui modal loaded on null client or mob")
 	window_open = FALSE
 	winset(client, "tgui_modal", "is-visible=false")
 	/// Sanity check in case the server ever changes MAX_LEN_MESSAGE
@@ -83,7 +81,7 @@
  */
 /datum/tgui_modal/proc/open(payload)
 	if(!client || !client.mob)
-		CRASH(NULL_CLIENTMOB)
+		CRASH("Tgui modal opened on null client or mob")
 	if(!payload || !payload["channel"])
 		CRASH("No channel provided to open TGUI modal")
 	window_open = TRUE
@@ -101,7 +99,7 @@
  */
 /datum/tgui_modal/proc/close()
 	if(!client || !client.mob)
-		CRASH(NULL_CLIENTMOB)
+		CRASH("Tgui modal closed on null client or mob")
 	window_open = FALSE
 	stop_thinking()
 	if(client.typing_indicators)
@@ -138,5 +136,3 @@
 		handle_entry(type, payload)
 		return TRUE
 	return FALSE
-
-#undef NULL_CLIENTMOB

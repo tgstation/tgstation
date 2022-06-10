@@ -131,6 +131,9 @@ export class TguiModal extends Component<{}, State> {
    * UP/DOWN - Sets history counter and input value.
    * BKSP/DEL - Resets history counter and checks window size.
    * TYPING - When users key, it tells byond that it's typing.
+   *
+   * Typing also provides a fail-safe to prevent stagnant
+   * thinking indicators if the user is typing OOC.
    */
   handleKeyDown = (event: KeyboardEvent, value: string) => {
     const { channel } = this.state;
@@ -160,6 +163,8 @@ export class TguiModal extends Component<{}, State> {
 
   /**
    * Increments the channel or resets to the beginning of the list.
+   * If the user switches between IC/OOC, messages Byond to toggle thinking
+   * indicators.
    */
   incrementChannel = () => {
     const { channel } = this.state;

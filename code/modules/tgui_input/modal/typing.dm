@@ -1,7 +1,7 @@
 /// Thinking
-GLOBAL_DATUM_INIT(thinking_indicator, /mutable_appearance, mutable_appearance('icons/mob/talk.dmi', "default3", -TYPING_LAYER))
+GLOBAL_DATUM_INIT(thinking_indicator, /mutable_appearance, mutable_appearance('icons/mob/talk.dmi', "default3", TYPING_LAYER))
 /// Typing
-GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('icons/mob/talk.dmi', "default0", -TYPING_LAYER))
+GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('icons/mob/talk.dmi', "default0", TYPING_LAYER))
 
 
 /** Creates a thinking indicator over the mob. */
@@ -48,8 +48,8 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 		CRASH("Started tgui modal thinking on a null client or mob")
 	if(!window_open || !client.typing_indicators)
 		return FALSE
-	client.mob.create_thinking_indicator()
 	client.mob.thinking_IC = TRUE
+	client.mob.create_thinking_indicator()
 
 /** Removes typing/thinking indicators and flags the mob as not thinking */
 /datum/tgui_modal/proc/stop_thinking()
@@ -65,7 +65,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 	if(!client || !client.mob)
 		CRASH("Started tgui modal typing on a null client or mob")
 	client.mob.remove_thinking_indicator()
-	if(client.mob.thinking_IC && window_open && client.typing_indicators)
+	if(window_open && client.typing_indicators)
 		client.mob.create_typing_indicator()
 		addtimer(CALLBACK(src, .proc/stop_typing), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
 
@@ -77,12 +77,12 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 	if(!client || !client.mob)
 		CRASH("Stopped tgui modal typing on a null client or mob")
 	client.mob.remove_typing_indicator()
-	if(client.mob.thinking_IC && window_open && client.typing_indicators)
+	if(window_open && client.typing_indicators)
 		client.mob.create_thinking_indicator()
 
 /// Overrides for overlay creation
 /mob/living/create_thinking_indicator()
-	if(!thinking_indicator && stat == CONSCIOUS)
+	if(!thinking_indicator && thinking_IC && stat == CONSCIOUS)
 		add_overlay(GLOB.thinking_indicator)
 		thinking_indicator = TRUE
 
@@ -92,7 +92,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 		thinking_indicator = FALSE
 
 /mob/living/create_typing_indicator()
-	if(!typing_indicator && stat == CONSCIOUS)
+	if(!typing_indicator && thinking_IC && stat == CONSCIOUS)
 		add_overlay(GLOB.typing_indicator)
 		typing_indicator = TRUE
 
