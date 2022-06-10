@@ -192,7 +192,7 @@
 	var/rift_loc = pick_rift_location()
 	new /obj/crystal_mass(supermatter_turf)
 
-	var/list/mass_loc_candidates = GLOB.generic_event_spawns
+	var/list/mass_loc_candidates = GLOB.generic_event_spawns.Copy()
 	mass_loc_candidates.Remove(rift_loc) // this should now actually get rid of stalemates
 	for(var/i in 1 to rand(4,6))
 		var/mass_loc
