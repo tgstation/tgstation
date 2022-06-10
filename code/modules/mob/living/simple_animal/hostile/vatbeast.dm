@@ -53,14 +53,13 @@
 	click_to_activate = TRUE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 
-/datum/action/cooldown/tentacle_slap/CreateButton(mob/for_who)
-	var/atom/movable/screen/movable/action_button/button = ..()
-
-	if(for_who != owner)
+/datum/action/cooldown/tentacle_slap/UpdateButton(atom/movable/screen/movable/action_button/button, status_only, force)
+	. = ..()
+	if(!button)
+		return
+	if(!status_only && button.our_hud.mymob != owner)
 		button.name = "Command Tentacle Slap"
 		button.desc = "Command your steed to slap a creature with its tentacles."
-
-	return button
 
 /datum/action/cooldown/tentacle_slap/set_click_ability(mob/on_who)
 	. = ..()

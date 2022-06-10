@@ -230,7 +230,7 @@
 
 	START_PROCESSING(SSobj, src)
 
-/datum/action/innate/bci_charge_action/CreateButton(mob/for_who)
+/datum/action/innate/bci_charge_action/CreateButton()
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext_x = 2
 	button.maptext_y = 0

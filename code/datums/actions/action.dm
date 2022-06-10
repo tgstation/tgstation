@@ -196,7 +196,7 @@
 	if(!our_hud || viewers[our_hud]) // There's no point in this if you have no hud in the first place
 		return
 
-	var/atom/movable/screen/movable/action_button/button = CreateButton(viewer)
+	var/atom/movable/screen/movable/action_button/button = CreateButton()
 	SetId(button, viewer)
 
 	button.our_hud = our_hud
@@ -216,7 +216,7 @@
 		qdel(button)
 
 /// Creates an action button movable for the passed mob, and returns it.
-/datum/action/proc/CreateButton(mob/for_who)
+/datum/action/proc/CreateButton()
 	var/atom/movable/screen/movable/action_button/button = new()
 	button.linked_action = src
 	button.name = name

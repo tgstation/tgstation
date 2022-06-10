@@ -22,7 +22,7 @@
 	/// Shares cooldowns with other cooldown abilities of the same value, not active if null
 	var/shared_cooldown
 
-/datum/action/cooldown/CreateButton(mob/for_who)
+/datum/action/cooldown/CreateButton()
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
 	button.maptext_x = 8
