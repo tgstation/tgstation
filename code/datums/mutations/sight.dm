@@ -81,10 +81,8 @@
 	var/thermal_duration = 10 SECONDS
 
 /datum/action/cooldown/spell/thermal_vision/Remove(mob/living/remove_from)
-	. = ..()
-	if(!QDELETED(remove_from))
-		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
-		owner.update_sight()
+	REMOVE_TRAIT(remove_from, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+	remove_from.update_sight()
 	return ..()
 
 /datum/action/cooldown/spell/thermal_vision/is_valid_target(atom/cast_on)
