@@ -25,9 +25,32 @@
 	/// A ref to the status effect surrounding our heretic on activation.
 	var/datum/status_effect/protective_blades/blade_effect
 
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/Grant(mob/grant_to)
+	. = ..()
+	if(!owner)
+		return
+
+	if(IS_HERETIC(grant_to))
+		RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), .proc/on_focus_lost)
+
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/Remove(mob/remove_from)
+	UnregisterSignal(remove_from, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
+	return ..()
+
+/// Signal proc for [SIGNAL_REMOVETRAIT], via [TRAIT_ALLOW_HERETIC_CASTING], to remove the effect when we lose the focus trait
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/proc/on_focus_lost(mob/source)
+	SIGNAL_HANDLER
+
+	unset_click_ability(source, refund_cooldown = TRUE)
+
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/InterceptClickOn(mob/living/caller, params, atom/click_target)
-	if(get_dist(caller, click_target) <= 1) // Let the caster prioritize melee attacks over blade casts
+	// Let the caster prioritize using items like guns over blade casts
+	if(caller.get_active_held_item())
 		return FALSE
+	// Let the caster prioritize melee attacks like punches and shoves over blade casts
+	if(get_dist(caller, click_target) <= 1)
+		return FALSE
+
 	return ..()
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/on_activation(mob/on_who)
@@ -38,8 +61,13 @@
 	if(!isliving(on_who))
 		return
 
+	if(blade_effect)
+		stack_trace("[type] had an existing blade effect in on_activation. This might be an exploit, and should be investigated.")
+		UnregisterSignal(blade_effect, COMSIG_PARENT_QDELETING)
+		QDEL_NULL(blade_effect)
+
 	var/mob/living/living_user = on_who
-	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, 3, 25, 0.66 SECONDS)
+	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, projectile_amount, 25, 0.66 SECONDS)
 	RegisterSignal(blade_effect, COMSIG_PARENT_QDELETING, .proc/on_status_effect_deleted)
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/on_deactivation(mob/on_who, refund_cooldown = TRUE)
@@ -48,6 +76,7 @@
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/before_cast(atom/cast_on)
 	if(isnull(blade_effect) || !length(blade_effect.blades))
+		unset_click_ability(owner, refund_cooldown = TRUE)
 		return SPELL_CANCEL_CAST
 
 	return ..()
@@ -61,7 +90,7 @@
 	to_launch.def_zone = check_zone(user.zone_selected)
 
 /// If our blade status effect is deleted, clear our refs and deactivate
-/datum/action/cooldown/spell/pointed/projectile/furious_steel/proc/on_status_effect_deleted(datum/source)
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/proc/on_status_effect_deleted(datum/status_effect/protective_blades/source)
 	SIGNAL_HANDLER
 
 	blade_effect = null
