@@ -197,7 +197,7 @@ const ApcContent = (props, context) => {
             label="Emergency Lighting"
             buttons={(
               <Button
-                tooltip="Lights use internal power cell when no power available."
+                tooltip="Lights use internal power cell when there is no power available."
                 icon="lightbulb-o"
                 content={data.emergencyLights ? 'Enabled' : 'Disabled'}
                 disabled={locked}
