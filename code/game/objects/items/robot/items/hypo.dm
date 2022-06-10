@@ -63,11 +63,11 @@
 		/datum/reagent/consumable/tea, /datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/tonic,\
 		/datum/reagent/water,\
 		/datum/reagent/consumable/ethanol/ale, /datum/reagent/consumable/ethanol/applejack, /datum/reagent/consumable/ethanol/beer,\
-		/datum/reagent/consumable/ethanol/champagne, /datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_coconut\
+		/datum/reagent/consumable/ethanol/champagne, /datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_coconut,\
 		/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/creme_de_menthe, /datum/reagent/consumable/ethanol/gin,\
 		/datum/reagent/consumable/ethanol/kahlua, /datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/sake,\
 		/datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,\
-		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine,\
+		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine\
 	)
 #define HACKED_SERVICE_REAGENTS list(\
 		/datum/reagent/toxin/fakebeer,\
