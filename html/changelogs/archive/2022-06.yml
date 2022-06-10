@@ -396,3 +396,16 @@
   zxaber:
   - rscadd: The Concealed Weapon Bay is available again for traitor Roboticists and
       Research Directors.
+2022-06-10:
+  Jolly:
+  - bugfix: On Tram, in sec, the floating pepper spray refiller has been removed from
+      the armory. You guys have enough, stop hogging it damnit!
+  - bugfix: On Tram, in the under tram, steam vents should no longer spontaneously
+      appear in walls.
+  PositiveEntropy:
+  - imageadd: Resprites the Captain's Antique Laser Gun!
+  ReinaCoder:
+  - bugfix: The QM now has a miniature e-gun in their locker on kilo like the other
+      heads!
+  tf-4:
+  - bugfix: Donksoft toy vendors no longer bluescreen.
