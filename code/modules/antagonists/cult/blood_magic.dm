@@ -219,13 +219,9 @@
 	desc = "Gives hallucinations to a target at range. A silent and invisible spell."
 	button_icon_state = "horror"
 	charges = 4
-
-/datum/action/innate/cult/blood_spell/horror/Activate()
-	if(owner.click_intercept == src)
-		unset_ranged_ability(owner, span_cult("You prepare to horrify a target..."))
-	else
-		set_ranged_ability(owner, span_cult("You dispel the magic..."))
-	return TRUE
+	click_action = TRUE
+	enable_text = span_cult("You prepare to horrify a target...")
+	disable_text = span_cult("You dispel the magic...")
 
 /datum/action/innate/cult/blood_spell/horror/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
 	var/turf/caller_turf = get_turf(caller)

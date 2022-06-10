@@ -89,12 +89,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/ranged
 	name = "Ranged AI Action"
 	auto_use_uses = FALSE //This is so we can do the thing and disable/enable freely without having to constantly add uses
-
-	var/ranged_mousepointer
-	/// Appears when the user activates the ability
-	var/enable_text = "<span class='notice'>Hello World!</span>"
-	/// Appears when the user deactivates the ability
-	var/disable_text = "<span class='danger'>Goodbye Cruel World!</span>"
+	click_action = TRUE
 
 /datum/action/innate/ai/ranged/adjust_uses(amt, silent)
 	uses += amt
@@ -105,23 +100,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			to_chat(owner, span_warning("[name] has run out of uses!"))
 		Remove(owner)
 		QDEL_IN(src, 100) //let any active timers on us finish up
-
-/datum/action/innate/ai/ranged/Activate()
-	if(owner.click_intercept == src)
-		unset_ranged_ability(owner, disable_text)
-	else
-		set_ranged_ability(owner, enable_text)
-	return TRUE
-
-/datum/action/innate/ai/ranged/set_ranged_ability(mob/living/on_who, text_to_show)
-	. = ..()
-	if(ranged_mousepointer)
-		on_who.client?.mouse_override_icon = ranged_mousepointer
-
-/datum/action/innate/ai/ranged/unset_ranged_ability(mob/living/on_who, text_to_show)
-	. = ..()
-	if(ranged_mousepointer)
-		on_who.client?.mouse_override_icon = initial(owner.client?.mouse_pointer_icon)
 
 /// The base module type, which holds info about each ability.
 /datum/ai_module
@@ -415,7 +393,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	disable_text = "<span class='notice'>You release your hold on the powernet.</span>"
 
 /datum/action/innate/ai/ranged/override_machine/New()
-	..()
+	. = ..()
 	desc = "[desc] It has [uses] use\s remaining."
 
 /datum/action/innate/ai/ranged/override_machine/do_ability(mob/living/caller, atom/clicked_on)

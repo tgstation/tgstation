@@ -5,6 +5,7 @@
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
+	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 
 /datum/action/innate/cult/IsAvailable()
 	if(!IS_CULTIST(owner))
@@ -230,6 +231,9 @@
 	name = "Mark Target"
 	desc = "Marks a target for the cult."
 	button_icon_state = "cult_mark"
+	click_action = TRUE
+	enable_text = span_cult("You prepare to mark a target for your cult. <b>Click a target to mark them!</b>")
+	disable_text = span_cult("You cease the marking ritual."))
 	/// The duration of the mark itself
 	var/cult_mark_duration = 90 SECONDS
 	/// The duration of the cooldown for cult marks
@@ -239,13 +243,6 @@
 
 /datum/action/innate/cult/master/cultmark/IsAvailable()
 	return ..() && COOLDOWN_FINISHED(src, cult_mark_cooldown)
-
-/datum/action/innate/cult/master/cultmark/Activate()
-	if(owner.click_intercept == src)
-		unset_ranged_ability(owner, span_cult("You cease the marking ritual."))
-	else
-		set_ranged_ability(owner, span_cult("You prepare to mark a target for your cult. <b>Click a target to mark them!</b>"))
-	return TRUE
 
 /datum/action/innate/cult/master/cultmark/InterceptClickOn(mob/caller, params, atom/clicked_on)
 	var/turf/caller_turf = get_turf(caller)
@@ -271,15 +268,13 @@
 		return FALSE
 
 	if(cult_team.set_blood_target(clicked_on, caller, cult_mark_duration))
-		to_chat(caller, span_cult("The marking rite is complete! It will last for [DisplayTimeText(cult_mark_duration)] seconds."))
-		unset_ranged_ability(caller)
+		unset_ranged_ability(caller, span_cult("The marking rite is complete! It will last for [DisplayTimeText(cult_mark_duration)] seconds."))
 		COOLDOWN_START(src, cult_mark_cooldown, cult_mark_cooldown_duration)
 		UpdateButtons()
 		addtimer(CALLBACK(src, .proc/UpdateButtons), cult_mark_cooldown_duration + 1)
 		return TRUE
 
-	to_chat(caller, span_cult("The marking rite failed!"))
-	unset_ranged_ability(caller)
+	unset_ranged_ability(caller, span_cult("The marking rite failed!")))
 	return TRUE
 
 /datum/action/innate/cult/ghostmark //Ghost version
@@ -362,6 +357,9 @@
 	desc = "Seize upon a fellow cultist or cult structure and teleport it to a nearby location."
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "arcane_barrage"
+	click_action = TRUE
+	enable_text = span_cult("You prepare to tear through the fabric of reality... <b>Click a target to sieze them!</b>")
+	disable_text = span_cult("You cease your preparations.")
 	/// Weakref to whoever we're currently about to toss
 	var/datum/weakref/throwee_ref
 	/// Cooldown of the ability
@@ -372,18 +370,7 @@
 /datum/action/innate/cult/master/pulse/IsAvailable()
 	return ..() && COOLDOWN_FINISHED(src, pulse_cooldown)
 
-/datum/action/innate/cult/master/pulse/Activate()
-	if(owner.click_intercept == src)
-		unset_ranged_ability(owner, span_cult("You cease your preparations."))
-	else
-		set_ranged_ability(owner, span_cult("You prepare to tear through the fabric of reality... <b>Click a target to sieze them!</b>"))
-	return TRUE
-
 /datum/action/innate/cult/master/pulse/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
-	if(caller.incapacitated())
-		unset_ranged_ability(caller)
-		return FALSE
-
 	var/turf/caller_turf = get_turf(caller)
 	if(!isturf(caller_turf))
 		return FALSE
