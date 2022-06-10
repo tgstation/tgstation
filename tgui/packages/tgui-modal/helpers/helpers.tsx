@@ -111,32 +111,3 @@ export const isAlphanumeric = (keyCode: number): boolean =>
 /** Checks if a parameter is null or undefined. Returns bool */
 export const valueExists = (param: any): boolean =>
   param !== null && param !== undefined;
-
-/**
- * Wraps a byond message in a cooldown.
- *
- * Parameters:
- *  message - The message to send.
- *  timeout - The cooldown in seconds.
- */
-export class CooldownWrapper {
-  private message: string;
-  private onCooldown: boolean = false;
-  private timeout: number;
-  constructor(message: string, timeout: number) {
-    this.message = message;
-    this.timeout = timeout;
-  }
-  setTimer = () => {
-    this.onCooldown = true;
-    setTimeout(() => {
-      this.onCooldown = false;
-    }, this.timeout);
-  };
-  sendMessage = (payload?: any) => {
-    if (!this.onCooldown) {
-      Byond.sendMessage(this.message, payload);
-      this.setTimer();
-    }
-  };
-}

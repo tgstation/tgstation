@@ -70,7 +70,7 @@
 	window.send_message("maxLength", list(
 		maxLength = max_length,
 	))
-	is_thinking(FALSE)
+	stop_thinking()
 	return TRUE
 
 /**
@@ -87,9 +87,8 @@
 	if(!payload || !payload["channel"])
 		CRASH("No channel provided to open TGUI modal")
 	window_open = TRUE
-	if(payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
-		return TRUE
-	is_thinking(TRUE)
+	if(payload["channel"] == SAY_CHANNEL || payload["channel"] == RADIO_CHANNEL)
+		start_thinking()
 	if(client.typing_indicators)
 		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators enabled.")
 	else
@@ -104,7 +103,7 @@
 	if(!client || !client.mob)
 		CRASH(NULL_CLIENTMOB)
 	window_open = FALSE
-	is_thinking(FALSE)
+	stop_thinking()
 	if(client.typing_indicators)
 		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client.mob)], indicators enabled.")
 	else
@@ -125,10 +124,15 @@
 		close()
 		return TRUE
 	if (type == "thinking")
-		is_thinking(payload["mode"])
-		return TRUE
+		if(payload["mode"] == TRUE)
+			start_thinking()
+			return TRUE
+		if(payload["mode"] == FALSE)
+			stop_thinking()
+			return TRUE
+		return FALSE
 	if (type == "typing")
-		is_typing()
+		start_typing()
 		return TRUE
 	if (type == "entry" || type == "force")
 		handle_entry(type, payload)

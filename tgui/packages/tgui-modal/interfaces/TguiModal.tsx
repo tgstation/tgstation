@@ -10,7 +10,6 @@ import {
   KEY_UP,
 } from 'common/keycodes';
 import {
-  CooldownWrapper,
   getCss,
   getHistoryAt,
   getHistoryLength,
@@ -22,6 +21,7 @@ import {
   windowOpen,
   windowSet,
 } from '../helpers/helpers';
+import { debounce, throttle } from 'common/timer';
 
 type State = {
   buttonContent: string | number;
@@ -32,19 +32,15 @@ type State = {
 
 /** Primary class for the TGUI modal. */
 export class TguiModal extends Component<{}, State> {
-  private historyCounter: number;
-  private innerRef: RefObject<HTMLInputElement> = createRef();
-  private maxLength: number;
-  private channelCooldown: CooldownWrapper =
-    new CooldownWrapper('thinking', 1000);
-  private forceCooldown: CooldownWrapper =
-    new CooldownWrapper('force', 1000);
-  private thinkingCooldown: CooldownWrapper =
-    new CooldownWrapper('thinking', 4000);
-  private typingCooldown: CooldownWrapper =
-    new CooldownWrapper('typing', 4000);
-  private value: string;
-  public state: State = {
+  historyCounter: number;
+  innerRef: RefObject<HTMLInputElement> = createRef();
+  maxLength: number;
+  channelDebounce = debounce((mode) => Byond.sendMessage('thinking', mode), 400);
+  forceDebounce = debounce((entry) => Byond.sendMessage('force', entry), 1000, true);
+  thinkingThrottle = throttle(() => Byond.sendMessage('thinking', { mode: false }), 4000);
+  typingThrottle = throttle(() => Byond.sendMessage('typing'), 4000);
+  value: string;
+  state: State = {
     buttonContent: '',
     channel: -1,
     edited: false,
@@ -52,7 +48,7 @@ export class TguiModal extends Component<{}, State> {
   };
 
   /** Increments the chat history counter, looping through entries */
-  private handleArrowKeys = (direction: number) => {
+  handleArrowKeys = (direction: number) => {
     const { historyCounter } = this;
     if (direction === KEY_UP && historyCounter < getHistoryLength()) {
       this.historyCounter++;
@@ -64,7 +60,7 @@ export class TguiModal extends Component<{}, State> {
   };
 
   /** Ensures backspace and delete reset size and history */
-  private handleBackspaceDelete = (value: string) => {
+  handleBackspaceDelete = (value: string) => {
     const { buttonContent, channel } = this.state;
     this.historyCounter = 0;
     // User is on a chat history message
@@ -78,12 +74,12 @@ export class TguiModal extends Component<{}, State> {
    * User clicks the channel button.
    * Simulates the tab key.
    */
-  private handleClick = () => {
+  handleClick = () => {
     this.incrementChannel();
   };
 
   /** User presses enter. Closes if no value. */
-  private handleEnter = (event: KeyboardEvent, value: string) => {
+  handleEnter = (event: KeyboardEvent, value: string) => {
     const { channel } = this.state;
     const { maxLength } = this;
     event.preventDefault();
@@ -99,17 +95,17 @@ export class TguiModal extends Component<{}, State> {
   };
 
   /** User presses escape, closes the window */
-  private handleEscape = () => {
+  handleEscape = () => {
     this.reset();
     windowClose();
   };
 
   /** Sends the current input to byond and purges it */
-  private handleForce = () => {
+  handleForce = () => {
     const { channel, size } = this.state;
     const { value } = this;
     if (value && channel < 2) {
-      this.forceCooldown?.sendMessage({
+      this.forceDebounce({
         channel: CHANNELS[channel],
         entry: value,
       });
@@ -124,7 +120,7 @@ export class TguiModal extends Component<{}, State> {
    * Grabs input and sets size, force values etc.
    * Input value only triggers a rerender on setEdited.
    */
-  private handleInput = (_, value: string) => {
+  handleInput = (_, value: string) => {
     this.value = value;
     this.setSize(value.length);
   };
@@ -136,16 +132,16 @@ export class TguiModal extends Component<{}, State> {
    * BKSP/DEL - Resets history counter and checks window size.
    * TYPING - When users key, it tells byond that it's typing.
    */
-  private handleKeyDown = (event: KeyboardEvent, value: string) => {
+  handleKeyDown = (event: KeyboardEvent, value: string) => {
     const { channel } = this.state;
     if (!event.keyCode) {
       return; // Really doubt it, but...
     }
     if (isAlphanumeric(event.keyCode)) {
       if (channel < 2) {
-        this.typingCooldown?.sendMessage();
+        this.typingThrottle();
       } else {
-        this.thinkingCooldown?.sendMessage({ mode: false });
+        this.thinkingThrottle();
       }
     }
     if (event.keyCode === KEY_UP || event.keyCode === KEY_DOWN) {
@@ -165,17 +161,17 @@ export class TguiModal extends Component<{}, State> {
   /**
    * Increments the channel or resets to the beginning of the list.
    */
-  private incrementChannel = () => {
+  incrementChannel = () => {
     const { channel } = this.state;
     if (channel === CHANNELS.length - 1) {
-      this.channelCooldown?.sendMessage({ mode: true });
+      this.channelDebounce({ mode: true });
       this.setState({
         buttonContent: CHANNELS[0],
         channel: 0,
       });
     } else {
-      if (channel) {
-        this.channelCooldown?.sendMessage({ mode: false });
+      if (channel === 1) {
+        this.channelDebounce({ mode: false });
       }
       this.setState({
         buttonContent: CHANNELS[channel + 1],
@@ -190,7 +186,7 @@ export class TguiModal extends Component<{}, State> {
    * Parameters:
    * channel - Optional. Sets the channel and thus the color scheme.
    */
-  private reset = (channel?: number) => {
+  reset = (channel?: number) => {
     this.historyCounter = 0;
     this.value = '';
     this.setState({
@@ -202,7 +198,7 @@ export class TguiModal extends Component<{}, State> {
   };
 
   /**  Adjusts window sized based on event.target.value */
-  private setSize = (value: number) => {
+  setSize = (value: number) => {
     const { size } = this.state;
     if (value > 51 && size !== SIZE.large) {
       this.setState({ size: SIZE.large });
@@ -217,18 +213,18 @@ export class TguiModal extends Component<{}, State> {
   };
 
   /** Triggers a refresh in the event something changes input (by force) */
-  private unsetEdited = () => {
+  unsetEdited = () => {
     this.setState({ edited: false });
   };
 
   /**  Sets the input value to chat history at index historyCounter. */
-  private viewHistory = () => {
+  viewHistory = () => {
     const { channel } = this.state;
     const { historyCounter } = this;
     if (historyCounter > 0 && getHistoryLength()) {
       this.value = getHistoryAt(historyCounter);
       if (channel < 2) {
-        this.typingCooldown?.sendMessage();
+        this.typingThrottle();
       }
       this.setState({ buttonContent: historyCounter, edited: true });
       this.setSize(0);
