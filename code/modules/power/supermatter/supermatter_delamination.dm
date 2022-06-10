@@ -1,3 +1,4 @@
+///Minimum distance that a crystal mass must have from the rift
 #define MIN_RIFT_SAFE_DIST 30
 
 /datum/supermatter_delamination
