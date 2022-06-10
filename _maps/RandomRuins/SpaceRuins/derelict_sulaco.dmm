@@ -98,6 +98,11 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/smooth,
 /area/ruin/unpowered)
+"iP" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
 "jb" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -1176,7 +1181,7 @@ gz
 gz
 gz
 cJ
-Uo
+iP
 eW
 eW
 eW
@@ -1207,7 +1212,7 @@ gz
 US
 cJ
 gz
-Uo
+iP
 Nj
 eW
 eW
@@ -1246,7 +1251,7 @@ eW
 Uo
 Uo
 gz
-gz
+Yx
 Ji
 Ji
 Fj
