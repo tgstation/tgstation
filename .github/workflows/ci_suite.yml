@@ -162,6 +162,15 @@ jobs:
         working-directory: tools/screenshot-test-comparison
       - name: Run screenshot comparison
         run: node tools/screenshot-test-comparison/index.js artifacts code/modules/unit_tests/screenshots artifacts/screenshot_comparisons
+      # workflow_run does not give you the PR it ran on,
+      # even through the thing literally named "matching pull requests".
+      # However, in GraphQL, you can check if the check suite was ran
+      # by a specific PR, so trusting the (user controlled) action here is okay,
+      # as long as we check it later in show_screenshot_test_results
+      - name: Save PR ID
+        if: github.event.pull_request
+        run: |
+          echo ${{ github.event.pull_request.number }} > artifacts/screenshot_comparisons/pull_request_number.txt
       - name: Upload bad screenshots
         if: failure()
         uses: actions/upload-artifact@v3

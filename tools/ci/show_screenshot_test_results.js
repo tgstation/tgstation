@@ -95,6 +95,14 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 
 	await exec.exec("unzip bad-screenshots.zip -d bad-screenshots");
 
+	const prNumber = parseNumber(fs.readFileSync("bad-screenshots/pull_request_number.txt", "utf8"), 10);
+	if (!prNumber) {
+		console.log("No PR number found");
+		return;
+	}
+
+	fs.rmSync("bad-screenshots/pull_request_number.txt");
+
 	// Step 3. Upload the screenshots
 	// 1. Loop over the bad-screenshots directory
 	// 2. Upload the screenshot
@@ -149,26 +157,43 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 		return;
 	}
 
-	console.log(JSON.stringify(context.payload, null, 2));
-
-	// Step 4. Find the PR
-	const result = await github.graphql(`query($workflowRun:ID!) {
-		node(id: $workflowRun) {
-			... on WorkflowRun {
-				checkSuite {
-					matchingPullRequests(first: 1) {
-						nodes {
-							number
+	// Step 4. Validate the PR
+	const result = await github.graphql(`query($owner:String!, $repo:String!, $prNumber:Int!) {
+		repository(owner: $owner, name: $repo) {
+			pullRequest(number: $prNumber) {
+				commits(last: 1) {
+					nodes {
+						commit {
+							checkSuites(first: 10) {
+								nodes {
+									id
+								}
+							}
 						}
 					}
 				}
 			}
 		}
 	}`, {
-		workflowRun: context.payload.workflow_run.node_id,
+		owner: context.repo.owner,
+		repo: context.repo.repo,
+		prNumber,
 	});
 
-	const prNumber = result.node.checkSuite.matchingPullRequests.nodes[0].number;
+	const validPr = result
+		.repository
+		.pullRequest
+		.commits
+		.nodes[0]
+		.commit
+		.checkSuites
+		.nodes
+		.any(({ id }) => id === context.payload.workflow_run.check_suite_id);
+
+	if (!validPr) {
+		console.log(`PR #${prNumber} is not valid (expected check suite ID ${context.payload.workflow_run.check_suite_id})`);
+		return;
+	}
 
 	// Step 5. Post the comment
 	const comment = createComment(screenshotFailures);
