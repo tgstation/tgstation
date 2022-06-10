@@ -15,6 +15,7 @@ TEST_FOCUS(/datum/unit_test/screenshot_humanoids)
 	lizard.dna.features["frills"] = "Aquatic"
 	lizard.dna.features["legs"] = "Normal Legs"
 	lizard.set_species(/datum/species/lizard)
+	lizard.equipOutfit(/datum/outfit/job/engineer)
 	test_screenshot("lizard", get_flat_icon_for_all_directions(lizard))
 
 	// let me have this
@@ -43,5 +44,5 @@ TEST_FOCUS(/datum/unit_test/screenshot_humanoids)
 /datum/unit_test/screenshot_humanoids/proc/make_dummy(species, job_outfit)
 	var/mob/living/carbon/human/dummy/consistent/dummy = allocate(/mob/living/carbon/human/dummy/consistent)
 	dummy.set_species(species)
-	dummy.equipOutfit(job_outfit, visualsOnly = TRUE)
+	dummy.equipOutfit(job_outfit, visualsOnly = TRUE, no_anim = TRUE)
 	return dummy
