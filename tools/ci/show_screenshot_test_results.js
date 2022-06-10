@@ -218,7 +218,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 		)
 	}
 
-	await exec.exec("zip", ["-r", `${zipFilePath}.zip`, "."], {
+	await exec.exec("zip", ["-r", `../screenshot-update.zip`, "."], {
 		cwd: zipFilePath,
 	});
 
