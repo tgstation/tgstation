@@ -1,43 +1,43 @@
 /// All of the default reagent lists for each hypospray (+ hacked variants)
 #define BASE_MEDICAL_REAGENTS list(\
+		/datum/reagent/medicine/c2/aiuri,\
 		/datum/reagent/medicine/c2/convermol,\
+		/datum/reagent/medicine/epinephrine,\
 		/datum/reagent/medicine/c2/libital,\
 		/datum/reagent/medicine/c2/multiver,\
-		/datum/reagent/medicine/c2/aiuri,\
-		/datum/reagent/medicine/epinephrine,\
-		/datum/reagent/medicine/spaceacillin,\
-		/datum/reagent/medicine/salglu_solution\
+		/datum/reagent/medicine/salglu_solution,\
+		/datum/reagent/medicine/spaceacillin\
 	)
 #define EXPANDED_MEDICAL_REAGENTS list(\
-		/datum/reagent/medicine/mannitol,\
-		/datum/reagent/medicine/oculine,\
-		/datum/reagent/medicine/inacusiate,\
-		/datum/reagent/medicine/mutadone,\
 		/datum/reagent/medicine/haloperidol,\
+		/datum/reagent/medicine/inacusiate,\
+		/datum/reagent/medicine/mannitol,\
+		/datum/reagent/medicine/mutadone,\
+		/datum/reagent/medicine/oculine,\
 		/datum/reagent/medicine/oxandrolone,\
-		/datum/reagent/medicine/sal_acid,\
+		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/rezadone,\
-		/datum/reagent/medicine/pen_acid\
+		/datum/reagent/medicine/sal_acid\
 	)
 #define HACKED_MEDICAL_REAGENTS list(\
-		/datum/reagent/toxin/acid/fluacid,\
-		/datum/reagent/toxin/mutetoxin,\
 		/datum/reagent/toxin/cyanide,\
-		/datum/reagent/toxin/sodium_thiopental,\
+		/datum/reagent/toxin/acid/fluacid,\
 		/datum/reagent/toxin/heparin,\
-		/datum/reagent/toxin/lexorin\
+		/datum/reagent/toxin/lexorin,\
+		/datum/reagent/toxin/mutetoxin,\
+		/datum/reagent/toxin/sodium_thiopental\
 	)
 #define BASE_PEACE_REAGENTS list(\
 		/datum/reagent/peaceborg/confuse,\
-		/datum/reagent/peaceborg/tire,\
-		/datum/reagent/pax/peaceborg\
+		/datum/reagent/pax/peaceborg,\
+		/datum/reagent/peaceborg/tire\
 	)
 #define HACKED_PEACE_REAGENTS list(\
-		/datum/reagent/toxin/staminatoxin,\
-		/datum/reagent/toxin/sulfonal,\
-		/datum/reagent/toxin/sodium_thiopental,\
 		/datum/reagent/toxin/cyanide,\
-		/datum/reagent/toxin/fentanyl\
+		/datum/reagent/toxin/fentanyl,\
+		/datum/reagent/toxin/sodium_thiopental,\
+		/datum/reagent/toxin/staminatoxin,\
+		/datum/reagent/toxin/sulfonal\
 	)
 #define BASE_CLOWN_REAGENTS list(\
 		/datum/reagent/consumable/laughter\
@@ -46,27 +46,28 @@
 		/datum/reagent/consumable/superlaughter\
 	)
 #define BASE_SYNDICATE_REAGENTS list(\
-		/datum/reagent/medicine/syndicate_nanites,\
 		/datum/reagent/medicine/inacusiate,\
-		/datum/reagent/medicine/potass_iodide,\
 		/datum/reagent/medicine/morphine,\
+		/datum/reagent/medicine/potass_iodide,\
+		/datum/reagent/medicine/syndicate_nanites\
 	)
-#define BASE_SERVICE_REAGENTS list(/datum/reagent/consumable/applejuice, /datum/reagent/consumable/banana, /datum/reagent/consumable/coffee,\
-		/datum/reagent/consumable/cream, /datum/reagent/consumable/dr_gibb, /datum/reagent/consumable/grenadine,\
-		/datum/reagent/consumable/ice, /datum/reagent/consumable/lemonjuice, /datum/reagent/consumable/lemon_lime,\
-		/datum/reagent/consumable/limejuice, /datum/reagent/consumable/menthol, /datum/reagent/consumable/milk,\
-		/datum/reagent/consumable/nothing, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/peachjuice,\
-		/datum/reagent/consumable/sodawater, /datum/reagent/consumable/space_cola, /datum/reagent/consumable/spacemountainwind,\
-		/datum/reagent/consumable/pwr_game, /datum/reagent/consumable/shamblers, /datum/reagent/consumable/soymilk,\
-		/datum/reagent/consumable/space_up, /datum/reagent/consumable/sugar, /datum/reagent/consumable/tea,\
-		/datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/tonic, /datum/reagent/water,\
-		/datum/reagent/consumable/pineapplejuice, /datum/reagent/consumable/sol_dry,\
+#define BASE_SERVICE_REAGENTS list(/datum/reagent/consumable/applejuice, /datum/reagent/consumable/banana,\
+		/datum/reagent/consumable/coffee, /datum/reagent/consumable/cream, /datum/reagent/consumable/dr_gibb,\
+		/datum/reagent/consumable/grenadine, /datum/reagent/consumable/ice, /datum/reagent/consumable/lemonjuice,\
+		/datum/reagent/consumable/lemon_lime, /datum/reagent/consumable/limejuice, /datum/reagent/consumable/menthol,\
+		/datum/reagent/consumable/milk, /datum/reagent/consumable/nothing, /datum/reagent/consumable/orangejuice,\
+		/datum/reagent/consumable/peachjuice, /datum/reagent/consumable/pineapplejuice,\
+		/datum/reagent/consumable/pwr_game, /datum/reagent/consumable/shamblers, /datum/reagent/consumable/sodawater,\
+		/datum/reagent/consumable/sol_dry, /datum/reagent/consumable/soymilk, /datum/reagent/consumable/space_cola,\
+		/datum/reagent/consumable/spacemountainwind, /datum/reagent/consumable/space_up, /datum/reagent/consumable/sugar,\
+		/datum/reagent/consumable/tea, /datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/tonic,\
+		/datum/reagent/water,\
 		/datum/reagent/consumable/ethanol/ale, /datum/reagent/consumable/ethanol/applejack, /datum/reagent/consumable/ethanol/beer,\
-		/datum/reagent/consumable/ethanol/champagne, /datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_menthe,\
-		/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/gin, /datum/reagent/consumable/ethanol/kahlua,\
-		/datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/sake, /datum/reagent/consumable/ethanol/tequila,\
-		/datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth, /datum/reagent/consumable/ethanol/vodka,\
-		/datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine, /datum/reagent/consumable/ethanol/creme_de_coconut\
+		/datum/reagent/consumable/ethanol/champagne, /datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_coconut\
+		/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/creme_de_menthe, /datum/reagent/consumable/ethanol/gin,\
+		/datum/reagent/consumable/ethanol/kahlua, /datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/sake,\
+		/datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,\
+		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine,\
 	)
 #define HACKED_SERVICE_REAGENTS list(\
 		/datum/reagent/toxin/fakebeer,\
@@ -300,6 +301,29 @@
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP //Water stays wet, ice stays ice
 	default_reagent_types = BASE_SERVICE_REAGENTS
 
+/obj/item/reagent_containers/borghypo/borgshaker/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BorgShaker", name)
+		ui.open()
+
+/obj/item/reagent_containers/borghypo/borgshaker/ui_data(mob/user)
+	var/list/available_reagents = list()
+
+	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
+		if(reagent)
+			available_reagents.Add(list(list(
+				"name" = reagent.name,
+				"volume" = round(reagent.volume, 0.01) - 1,
+			))) // list in a list because Byond merges the first list...
+
+	var/data = list()
+	data["theme"] = tgui_theme
+	data["maxVolume"] = max_volume_per_reagent
+	data["reagents"] = available_reagents
+	data["selectedReagent"] = selected_reagent?.name
+	return data
+
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
 
@@ -342,11 +366,8 @@
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
 	name = "cyborg shaker"
 	desc = "Will mix drinks that knock them dead."
-	icon = 'icons/obj/drinks.dmi'
 	icon_state = "threemileislandglass"
-	possible_transfer_amounts = list(5,10,20)
-	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
-	recharge_time = 3
+	tgui_theme = "syndicate"
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = HACKED_SERVICE_REAGENTS
 

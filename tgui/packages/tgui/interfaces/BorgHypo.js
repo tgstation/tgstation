@@ -69,7 +69,6 @@ const Reagent = (props, context) => {
           onClick={() => act(reagent.name)}
         />
       </Flex.Item>
-
     </Flex>
   ));
 };
