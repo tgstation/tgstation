@@ -44,6 +44,10 @@ const fail = (screenshotName, newScreenshot, oldScreenshot, diff) => {
 }
 
 for (const filename of fs.readdirSync(artifactsDirectory)) {
+	if (!artifactsDirectory.startsWith("test_artifacts")) {
+		continue
+	}
+
 	const fullPath = path.join(artifactsDirectory, filename, "screenshots_new")
 
 	const fullPathStat = fs.statSync(fullPath)
