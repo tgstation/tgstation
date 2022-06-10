@@ -1,0 +1,5 @@
+author: "YakumoChen"
+delete-after: True
+changes: 
+  - qol: "Changed the position of light tubes in certain surgery rooms to not be directly over a surgery bed. No more smashing lights with your saw by accident!"
+  - qol: "Aspiring AIs can now listen in on patient talk in Meta's primary surgery room. Or you could listen to the soothing sounds of the the crew dying from the comfort of a surgery bed when comms are down too, I guess."
