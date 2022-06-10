@@ -195,7 +195,7 @@ export async function showScreenshotTestResults({ github, context, exec }) {
 		.commit
 		.checkSuites
 		.nodes
-		.any(({ id }) => id === context.payload.workflow_run.check_suite_id);
+		.some(({ id }) => id === context.payload.workflow_run.check_suite_id);
 
 	if (!validPr) {
 		console.log(`PR #${prNumber} is not valid (expected check suite ID ${context.payload.workflow_run.check_suite_id})`);
