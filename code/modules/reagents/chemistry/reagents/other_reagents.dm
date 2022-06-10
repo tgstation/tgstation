@@ -1501,7 +1501,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	return ..()
 	if(isplasmaman(M))
 		M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hypernob_protection)
 	..()
