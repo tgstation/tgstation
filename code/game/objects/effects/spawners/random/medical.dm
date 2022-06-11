@@ -53,15 +53,6 @@
 		/obj/item/organ/external/tail/lizard = 6,
 		/obj/item/organ/internal/liver/plasmaman = 5,
 		/obj/item/organ/internal/lungs/ashwalker = 5,
-		/obj/item/organ/internal/eyes/night_vision/mushroom = 3,
-		/obj/item/organ/internal/heart/gland/ventcrawling = 3,
-		/obj/item/organ/internal/heart/gland/egg = 1,
-		/obj/item/organ/internal/heart/gland/mindshock = 1,
-		/obj/item/organ/internal/heart/gland/plasma = 1,
-		/obj/item/organ/internal/heart/gland/spiderman = 1,
-		/obj/item/organ/internal/heart/gland/slime = 1,
-		/obj/item/organ/internal/heart/gland/trauma = 1,
-		/obj/item/organ/internal/heart/gland/electric = 1,
 	)
 
 
