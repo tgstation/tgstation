@@ -7153,7 +7153,7 @@
 /area/station/maintenance/aft/lesser)
 "cmj" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/layer_manifold/general{
+/obj/machinery/atmospherics/pipe/layer_manifold/general/visible{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -34618,11 +34618,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
-"kPQ" = (
-/obj/structure/transit_tube/crossing,
-/obj/structure/cable,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "kQc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -41337,7 +41332,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/pink{
+/obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
 	dir = 5
 	},
 /turf/open/floor/iron/dark,
@@ -58394,11 +58389,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
-"slH" = (
-/obj/structure/cable,
-/obj/structure/transit_tube/horizontal,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "slK" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
@@ -60123,7 +60113,7 @@
 /area/station/security/office)
 "sMZ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/simple/pink{
+/obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -60847,10 +60837,6 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
-"tat" = (
-/obj/structure/transit_tube/horizontal,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "tau" = (
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -67023,6 +67009,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
+"uWB" = (
+/obj/structure/transit_tube/curved{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "uWC" = (
 /obj/effect/spawner/random/structure/steam_vent,
 /obj/structure/cable,
@@ -244457,7 +244449,7 @@ bln
 bln
 bln
 bln
-slH
+lsJ
 bln
 sEB
 bln
@@ -244714,8 +244706,8 @@ bln
 bln
 bln
 bln
-lsJ
-bln
+sPH
+vsI
 sEB
 bln
 bln
@@ -244971,16 +244963,16 @@ sEB
 sEB
 sEB
 sEB
-sPH
-vsI
-sEB
-sEB
-sEB
-sEB
-sEB
-sEB
-sEB
-sEB
+tmR
+xik
+mgK
+mgK
+mgK
+mgK
+qHg
+tmR
+tmR
+tmR
 mVm
 bln
 bln
@@ -245228,15 +245220,15 @@ bln
 bln
 bln
 bln
-tmR
-xik
-mgK
-mgK
-kPQ
-mgK
-mgK
-ipM
-tmR
+bln
+bln
+bln
+bln
+bln
+bln
+vsI
+uWB
+sEB
 tmR
 tCr
 bln
@@ -245492,8 +245484,8 @@ bln
 bln
 bln
 bln
-tat
-bln
+sdr
+sEB
 tmR
 sEB
 sEB
