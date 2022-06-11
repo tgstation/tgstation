@@ -31,8 +31,12 @@
 	if(!resolve_parent)
 		return
 
-	resolve_parent.visible_message(span_notice("\the [resolve_parent] is shuffled after looking through it."))
-	resolve_parent.contents = shuffle(resolve_parent.contents)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return
+
+	resolve_location.visible_message(span_notice("\the [resolve_parent] is shuffled after looking through it."))
+	resolve_location.contents = shuffle(resolve_location.contents)
 
 /datum/storage/tcg/remove_all()
 	. = ..()
@@ -49,10 +53,14 @@
 	if(!resolve_parent)
 		return
 
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!real_location)
+		return
+
 	//You can't have a deck of one card!
-	if(resolve_parent.contents.len == 1)
-		var/obj/item/tcgcard_deck/deck = resolve_parent
-		var/obj/item/tcgcard/card = resolve_parent.contents[1]
+	if(resolve_location.contents.len == 1)
+		var/obj/item/tcgcard_deck/deck = resolve_location
+		var/obj/item/tcgcard/card = resolve_location.contents[1]
 		attempt_remove(card, card.drop_location())
 		card.flipped = deck.flipped
 		card.update_icon_state()

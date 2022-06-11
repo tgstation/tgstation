@@ -1,5 +1,6 @@
 /datum/storage
 	var/datum/weakref/parent // the actual item we're attached to
+	var/datum/weakref/real_location // the actual item we're storing in
 
 	var/list/can_hold //if this is set, only items, and their children, will fit
 	var/list/cant_hold //if this is set, items, and their children, won't fit
@@ -53,6 +54,7 @@
 	closer = new(null, src)
 
 	src.parent = WEAKREF(parent)
+	src.real_location = src.parent
 	src.max_slots = max_slots || src.max_slots
 	src.max_specific_storage = max_specific_storage || src.max_specific_storage
 	src.max_total_storage = max_total_storage || src.max_total_storage
@@ -63,9 +65,15 @@
 	src.attack_hand_interact = attack_hand_interact || src.attack_hand_interact
 
 	var/atom/resolve_parent = src.parent?.resolve()
+	var/atom/resolve_location = src.real_location?.resolve()
 
 	if(!resolve_parent)
 		stack_trace("storage could not resolve parent weakref")
+		qdel(src)
+		return
+
+	if(!resolve_location)
+		stack_trace("storage could not resolve location weakref")
 		qdel(src)
 		return
 	
@@ -81,8 +89,8 @@
 
 	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_CLICK_ALT), .proc/open_storage)
 
-	RegisterSignal(resolve_parent, COMSIG_ATOM_ENTERED, .proc/refresh_views)
-	RegisterSignal(resolve_parent, COMSIG_ATOM_EXITED, .proc/remove_and_refresh)
+	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, .proc/handle_enter)
+	RegisterSignal(resolve_location, COMSIG_ATOM_EXITED, .proc/handle_exit)
 	RegisterSignal(resolve_parent, COMSIG_MOVABLE_MOVED, .proc/close_distance)
 	RegisterSignal(resolve_parent, COMSIG_ITEM_EQUIPPED, .proc/update_actions)
 
@@ -95,6 +103,8 @@
 	boxes = null
 	closer = null
 
+	set_real_location(null)
+
 	for(var/mob/person in is_using)
 		if(person.active_storage == src)
 			person.active_storage = null
@@ -102,6 +112,58 @@
 	is_using.Cut()
 
 	return ..()
+
+/datum/storage/proc/handle_enter(datum/source, obj/item/arrived)
+	SIGNAL_HANDLER
+
+	if(!istype(arrived))
+		return
+
+	arrived.item_flags |= IN_STORAGE
+
+	refresh_views()
+
+/datum/storage/proc/handle_exit(datum/source, obj/item/gone)
+	SIGNAL_HANDLER
+
+	if(!istype(gone))
+		return
+
+	gone.item_flags &= ~IN_STORAGE
+
+	remove_and_refresh(gone)
+
+/datum/storage/proc/set_real_location(atom/real)
+	if(!real)
+		return
+
+	var/atom/resolve_location = src.real_location?.resolve()
+	if(!resolve_location)
+		return
+
+	var/atom/resolve_parent = src.parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	remove_all(src, get_turf(resolve_parent))
+
+	resolve_location.flags_1 &= ~HAS_DISASSOCIATED_STORAGE_1
+	real.flags_1 |= HAS_DISASSOCIATED_STORAGE_1
+
+	UnregisterSignal(resolve_location, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
+
+	RegisterSignal(real, COMSIG_ATOM_ENTERED, .proc/handle_enter)
+	RegisterSignal(real, COMSIG_ATOM_EXITED, .proc/handle_exit)
+
+	real_location = WEAKREF(real)
+
+/datum/storage/proc/contents()
+	if(real_location)
+		var/atom/resolve_location = real_location?.resolve()
+		if(!resolve_location)
+			return
+
+		return resolve_location.contents.Copy()
 
 /datum/storage/proc/topic_handle(datum/source, user, href_list)
 	SIGNAL_HANDLER
@@ -183,13 +245,17 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!resolve_parent)
 		return
 
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return
+
 	if(!isitem(to_insert))
 		return FALSE
 
 	if(locked && !force)
 		return FALSE
 
-	if(to_insert == resolve_parent)
+	if((to_insert == resolve_parent) || (to_insert == real_location))
 		return FALSE
 
 	if(to_insert.w_class > max_specific_storage && !is_type_in_typecache(to_insert, exception_hold))
@@ -197,14 +263,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			to_chat(user, span_warning("\The [to_insert] is too big for \the [resolve_parent]!"))
 		return FALSE
 
-	if(resolve_parent.contents.len >= max_slots)
+	if(resolve_location.contents.len >= max_slots)
 		if(messages)
 			to_chat(user, span_warning("\The [to_insert] can't fit into \the [resolve_parent]! Make some space!"))
 		return FALSE
 
 	var/total_weight = to_insert.w_class
 
-	for(var/obj/item/thing in resolve_parent)
+	for(var/obj/item/thing in resolve_location)
 		total_weight += thing.w_class
 
 	if(total_weight > max_total_storage)
@@ -242,8 +308,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/attempt_insert(datum/source, obj/item/to_insert, mob/user, override = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
 		return
 
 	if(!can_insert(to_insert, user, force = force))
@@ -251,7 +317,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	to_insert.item_flags |= IN_STORAGE
 
-	to_insert.forceMove(resolve_parent)
+	to_insert.forceMove(resolve_location)
 	item_insertion_feedback(user, to_insert, override)
 
 	return TRUE
@@ -261,6 +327,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!resolve_parent)
 		return
 
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return
+
 	for(var/obj/item/thing in things)
 		things -= thing
 		if(thing.loc != thing_loc)
@@ -268,7 +338,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(thing.type in rejections) // To limit bag spamming: any given type only complains once
 			continue
 		if(!attempt_insert(resolve_parent, thing, user, TRUE)) // Note can_be_inserted still makes noise when the answer is no
-			if(resolve_parent.contents.len >= max_slots)
+			if(resolve_location.contents.len >= max_slots)
 				break
 			rejections += thing.type // therefore full bags are still a little spammy
 			continue
@@ -339,17 +409,19 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return TRUE
 
 /datum/storage/proc/remove_all(datum/source, atom/target)
-	SIGNAL_HANDLER
-
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
+		return
+
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
 		return
 
 	if(!target)
 		target = get_turf(resolve_parent)
 
-	for(var/obj/item/thing in resolve_parent)
-		if(thing.loc != resolve_parent)
+	for(var/obj/item/thing in resolve_location)
+		if(thing.loc != resolve_location)
 			continue
 		attempt_remove(thing, target, silent = TRUE)
 
@@ -361,7 +433,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	remove_all(get_turf(user))
 
-/datum/storage/proc/remove_and_refresh(datum/source, atom/movable/gone, direction)
+/datum/storage/proc/remove_and_refresh(atom/movable/gone)
 	SIGNAL_HANDLER
 
 	for(var/mob/user in is_using)
@@ -375,14 +447,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/emp_act(datum/source, severity)
 	SIGNAL_HANDLER
 
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
 		return
 
 	if(emp_shielded)
 		return
 	
-	for(var/atom/thing in resolve_parent)
+	for(var/atom/thing in resolve_location)
 		thing.emp_act(severity)
 
 /datum/storage/proc/intercept_preattack(datum/source, obj/item/thing, mob/user, params)
@@ -504,13 +576,13 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return TRUE
 
 /datum/storage/proc/process_numerical_display()
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!real_location)
 		return
 
 	var/list/toreturn = list()
 
-	for(var/obj/item/thing in resolve_parent.contents)
+	for(var/obj/item/thing in resolve_location.contents)
 		var/total_amnt = 1
 
 		if(istype(thing, /obj/item/stack))
@@ -526,11 +598,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return toreturn
 
 /datum/storage/proc/orient_to_hud()
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!real_location)
 		return
 
-	var/adjusted_contents = resolve_parent.contents.len
+	var/adjusted_contents = resolve_location.contents.len
 
 	//Numbered contents display
 	var/list/datum/numbered_display/numbered_contents
@@ -544,8 +616,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	orient_item_boxes(rows, columns, numbered_contents)
 
 /datum/storage/proc/orient_item_boxes(rows, cols, list/obj/item/numerical_display_contents)
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!real_location)
 		return
 
 	boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+cols-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
@@ -571,7 +643,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 					break
 
 	else
-		for(var/obj/item in resolve_parent)
+		for(var/obj/item in resolve_location)
 			item.mouse_opacity = MOUSE_OPACITY_OPAQUE 
 			item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
 			item.maptext = ""
@@ -593,6 +665,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
+		return
+
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!real_location)
 		return
 
 	if(!toshow.CanReach(resolve_parent))
@@ -618,7 +694,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 		return TRUE
 
-	var/obj/item/to_remove = locate() in resolve_parent
+	var/obj/item/to_remove = locate() in resolve_location
 
 	if(!to_remove)
 		return TRUE
@@ -653,9 +729,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	for(var/mob/user in is_using)
 		hide_contents(user)
 
-/datum/storage/proc/refresh_views(datum/source)
-	SIGNAL_HANDLER
-
+/datum/storage/proc/refresh_views()
 	for (var/user in can_see_contents())
 		show_contents(user)
 
@@ -669,15 +743,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return seeing
 
 /datum/storage/proc/show_contents(mob/toshow)
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!real_location)
 		return
 
 	if(!toshow.client)
 		return
 
 	if(toshow.active_storage != src && (toshow.stat == CONSCIOUS))
-		for(var/obj/item/thing in resolve_parent)
+		for(var/obj/item/thing in resolve_location)
 			if(thing.on_found(toshow))
 				toshow.active_storage.hide_contents(toshow)
 	
@@ -692,11 +766,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	toshow.client.screen |= boxes
 	toshow.client.screen |= closer
-	toshow.client.screen |= resolve_parent.contents
+	toshow.client.screen |= resolve_location.contents
 
 /datum/storage/proc/hide_contents(mob/toshow)
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!real_location)
 		return
 
 	if(!toshow.client)
@@ -708,7 +782,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		
 	toshow.client.screen -= boxes
 	toshow.client.screen -= closer
-	toshow.client.screen -= resolve_parent.contents
+	toshow.client.screen -= resolve_location.contents
 
 /datum/storage/proc/toggle_collection_mode(mob/user)
 	var/obj/item/resolve_parent = parent?.resolve()

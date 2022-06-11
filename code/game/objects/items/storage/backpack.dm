@@ -31,7 +31,8 @@
 
 /obj/item/storage/backpack/old/Initialize()
 	. = ..()
-	atom_storage.max_total_storage = 12
+	var/obj/item/lighter/greyscale/thing = new(get_turf(src))
+	atom_storage.set_real_location(thing)
 
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"

@@ -10,11 +10,12 @@
 
 /obj/item/storage/Initialize(mapload)
 	. = ..()
+
+	create_storage()
+	
 	PopulateContents()
 	for (var/obj/item/item in src)
 		item.item_flags |= IN_STORAGE
-
-	create_storage()
 
 /obj/item/storage/AllowDrop()
 	return FALSE

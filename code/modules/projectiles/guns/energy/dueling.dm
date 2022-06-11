@@ -319,10 +319,9 @@
 
 /obj/item/storage/lockbox/dueling/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_items = 2
-	STR.set_holdable(list(/obj/item/gun/energy/dueling))
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_slots = 2
+	atom_storage.set_holdable(list(/obj/item/gun/energy/dueling))
 
 /obj/item/storage/lockbox/dueling/update_icon_state()
 	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))

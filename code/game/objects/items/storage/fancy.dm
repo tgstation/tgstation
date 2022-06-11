@@ -29,7 +29,7 @@
 /obj/item/storage/fancy/PopulateContents()
 	if(!spawn_type)
 		return
-	for(var/i = 1 to atom_storage?.max_slots)
+	for(var/i = 1 to atom_storage.max_slots)
 		new spawn_type(src)
 
 /obj/item/storage/fancy/update_icon_state()
