@@ -2043,7 +2043,6 @@
 /turf/open/floor/iron/textured,
 /area/mine/maintenance)
 "nF" = (
-/obj/effect/spawner/random/trash/moisture_trap,
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
 	},
