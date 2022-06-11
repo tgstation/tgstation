@@ -1,9 +1,9 @@
 /**
- * The tgui speech modal. This initializes an input window which hides until
- * the user presses one of the speech hotkeys. Once an entry is set, it will
+ * The tgui say modal. This initializes an input window which hides until
+ * the user presses one of the speech hotkeys. Once something is entered, it will
  * delegate the speech to the proper channel.
  */
-/datum/tgui_modal
+/datum/tgui_say
 	/// The user who opened the window
 	var/client/client
 	/// Injury phrases to blurt out
@@ -12,14 +12,14 @@
 	var/max_length = MAX_MESSAGE_LEN
 	/// The modal window
 	var/datum/tgui_window/window
-	/// Boolean for whether the tgui_modal was opened by the user.
+	/// Boolean for whether the tgui_say was opened by the user.
 	var/window_open
 
 /** Assigned window to the client */
-/client/var/datum/tgui_modal/tgui_modal
+/client/var/datum/tgui_say/tgui_say
 
 /** Creates the new input window to exist in the background. */
-/datum/tgui_modal/New(client/client, id)
+/datum/tgui_say/New(client/client, id)
 	src.client = client
 	window = new(client, id)
 	window.subscribe(src, .proc/on_message)
@@ -29,41 +29,41 @@
  * Injects the scripts and styling into the window,
  * then feeds it props for the chat channel and max message length.
  */
-/datum/tgui_modal/proc/initialize()
+/datum/tgui_say/proc/initialize()
 	set waitfor = FALSE
 	// Sleep to defer initialization to after client constructor
 	sleep(3 SECONDS)
 	window.initialize(
 			strict_mode = TRUE,
 			fancy = TRUE,
-			inline_css = file("tgui/public/tgui-modal.bundle.css"),
-			inline_js = file("tgui/public/tgui-modal.bundle.js"),
+			inline_css = file("tgui/public/tgui-say.bundle.css"),
+			inline_js = file("tgui/public/tgui-say.bundle.js"),
 	);
 
 /**
- * Creates a JSON encoded message to open TGUI modals properly.
+ * Creates a JSON encoded message to open TGUI say modals properly.
  *
  * Arguments:
  * channel - The channel to open the modal in.
  * Returns:
  * string - A JSON encoded message to open the modal.
  */
-/client/proc/tgui_modal_create_open_command(channel)
+/client/proc/tgui_say_create_open_command(channel)
 	var/message = TGUI_CREATE_MESSAGE("open", list(
 		channel = channel,
 	))
-	return "\".output tgui_modal.browser:update [message]\""
+	return "\".output tgui_say.browser:update [message]\""
 
 /**
  * Ensures nothing funny is going on window load.
  * Minimizes the winddow, sets max length, closes all
  * typing and thinking indicators.
  */
-/datum/tgui_modal/proc/load()
+/datum/tgui_say/proc/load()
 	if(!client || !client.mob)
-		CRASH("Tgui modal loaded on null client or mob")
+		CRASH("TGUI say loaded on null client or mob")
 	window_open = FALSE
-	winset(client, "tgui_modal", "is-visible=false")
+	winset(client, "tgui_say", "is-visible=false")
 	/// Sanity check in case the server ever changes MAX_LEN_MESSAGE
 	window.send_message("maxLength", list(
 		maxLength = max_length,
@@ -79,11 +79,11 @@
  * Arguments:
  * payload - A list containing the channel the window was opened in.
  */
-/datum/tgui_modal/proc/open(payload)
+/datum/tgui_say/proc/open(payload)
 	if(!client || !client.mob)
-		CRASH("Tgui modal opened on null client or mob")
+		CRASH("Tgui say opened on null client or mob")
 	if(!payload || !payload["channel"])
-		CRASH("No channel provided to open TGUI modal")
+		CRASH("No channel provided to open TGUI say")
 	window_open = TRUE
 	if(payload["channel"] == SAY_CHANNEL || payload["channel"] == RADIO_CHANNEL)
 		start_thinking()
@@ -97,9 +97,9 @@
  * Closes the window serverside. Closes any open chat bubbles
  * regardless of preference. Logs the event.
  */
-/datum/tgui_modal/proc/close()
+/datum/tgui_say/proc/close()
 	if(!client || !client.mob)
-		CRASH("Tgui modal closed on null client or mob")
+		CRASH("TGUI say closed on null client or mob")
 	window_open = FALSE
 	stop_thinking()
 	if(client.typing_indicators)
@@ -111,7 +111,7 @@
  * The equivalent of ui_act, this waits on messages from the window
  * and delegates actions.
  */
-/datum/tgui_modal/proc/on_message(type, payload)
+/datum/tgui_say/proc/on_message(type, payload)
 	if(type == "ready")
 		load()
 		return TRUE

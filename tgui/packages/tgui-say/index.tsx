@@ -1,9 +1,9 @@
 import './styles/main.scss';
 import { createRenderer } from 'tgui/renderer';
-import { TguiModal } from './interfaces/TguiModal';
+import { TguiSay } from './interfaces/TguiSay';
 
 const renderApp = createRenderer(() => {
-  return <TguiModal />;
+  return <TguiSay />;
 });
 
 const setupApp = () => {

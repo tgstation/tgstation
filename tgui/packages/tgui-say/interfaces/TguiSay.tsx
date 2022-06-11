@@ -13,8 +13,8 @@ type State = {
   size: number;
 };
 
-/** Primary class for the TGUI modal. */
-export class TguiModal extends Component<{}, State> {
+/** Primary class for the TGUI say modal. */
+export class TguiSay extends Component<{}, State> {
   channelDebounce = debounce(
     (mode) => Byond.sendMessage('thinking', mode),
     400

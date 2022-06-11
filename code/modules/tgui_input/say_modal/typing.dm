@@ -43,10 +43,10 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 	client?.typing_indicators = value
 
 /** Sets the mob as "thinking" - with indicator and variable thinking_IC */
-/datum/tgui_modal/proc/start_thinking()
+/datum/tgui_say/proc/start_thinking()
 	/// REALLY shouldn't be here
 	if(!client || !client.mob)
-		CRASH("Started tgui modal thinking on a null client or mob")
+		CRASH("Started tgui say thinking on a null client or mob")
 	/// Shouldn't be here
 	if(!window_open || !client.typing_indicators)
 		return FALSE
@@ -57,18 +57,18 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 	client.mob.create_thinking_indicator()
 
 /** Removes typing/thinking indicators and flags the mob as not thinking */
-/datum/tgui_modal/proc/stop_thinking()
+/datum/tgui_say/proc/stop_thinking()
 	if(!client || !client.mob)
-		CRASH("Stopped tgui modal thinking on a null client or mob")
+		CRASH("Stopped tgui say thinking on a null client or mob")
 	client.mob.remove_all_indicators()
 
 /**
  * Handles the user typing. After a brief period of inactivity,
  * signals the client mob to revert to the "thinking" icon.
  */
-/datum/tgui_modal/proc/start_typing()
+/datum/tgui_say/proc/start_typing()
 	if(!client || !client.mob)
-		CRASH("Started tgui modal typing on a null client or mob")
+		CRASH("Started tgui say typing on a null client or mob")
 	client.mob.remove_thinking_indicator()
 	if(!window_open || !client.typing_indicators || !client.mob.thinking_IC)
 		return FALSE
@@ -79,9 +79,9 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
  * Callback to remove the typing indicator after a brief period of inactivity.
  * If the user was typing IC, the thinking indicator is shown.
  */
-/datum/tgui_modal/proc/stop_typing()
+/datum/tgui_say/proc/stop_typing()
 	if(!client || !client.mob)
-		CRASH("Stopped tgui modal typing on a null client or mob")
+		CRASH("Stopped tgui say typing on a null client or mob")
 	client.mob.remove_typing_indicator()
 	if(!window_open || !client.typing_indicators || !client.mob.thinking_IC)
 		return FALSE

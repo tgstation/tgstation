@@ -7,7 +7,7 @@
  * Returns:
  *  string - the altered entry
  */
-/datum/tgui_modal/proc/alter_entry(payload)
+/datum/tgui_say/proc/alter_entry(payload)
 	var/entry = payload["entry"]
 	/// No OOC leaks
 	if(!entry || payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
@@ -30,7 +30,7 @@
  * Returns:
  *  boolean - on success or failure
  */
-/datum/tgui_modal/proc/delegate_speech(entry, channel)
+/datum/tgui_say/proc/delegate_speech(entry, channel)
 	if(!client)
 		return FALSE
 	if(channel == OOC_CHANNEL)
@@ -52,9 +52,9 @@
 
 /**
  * Force say handler.
- * Sends a message to the modal window to send its current value.
+ * Sends a message to the say modal to send its current value.
  */
-/datum/tgui_modal/proc/force_say()
+/datum/tgui_say/proc/force_say()
 	window.send_message("force")
 	stop_typing()
 
@@ -62,9 +62,9 @@
  * Makes the player force say what's in their current input box.
  */
 /mob/living/carbon/human/proc/force_say()
-	if(!client || !client.mob || !mind || !client.tgui_modal)
+	if(!client || !client.mob || !mind || !client.tgui_say)
 		return FALSE
-	client.tgui_modal.force_say()
+	client.tgui_say.force_say()
 	if(client.typing_indicators)
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators enabled.")
 	else
@@ -79,11 +79,11 @@
  * Returns:
  *  boolean - success or failure
  */
-/datum/tgui_modal/proc/handle_entry(type, payload)
+/datum/tgui_say/proc/handle_entry(type, payload)
 	if(!payload || !payload["channel"] || !payload["entry"])
 		CRASH("[usr] entered in a null payload to the chat window.")
 	if(length(payload["entry"]) > max_length)
-		CRASH("[usr] has entered more characters than allowed into a tgui modal")
+		CRASH("[usr] has entered more characters than allowed into a TGUI say")
 	if(type == "entry")
 		delegate_speech(payload["entry"], payload["channel"])
 		return TRUE

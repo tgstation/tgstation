@@ -339,8 +339,8 @@ window "statwindow"
 		is-visible = false
 		saved-params = ""
 
-window "tgui_modal"
-	elem "tgui_modal"
+window "tgui_say"
+	elem "tgui_say"
 		type = MAIN
 		pos = 694,602
 		size = 231x30

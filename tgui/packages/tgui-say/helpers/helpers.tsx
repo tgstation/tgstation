@@ -25,7 +25,7 @@ export const windowClose = () => {
 
 /** Some QoL to hide the window on load. Doesn't log this event */
 export const windowLoad = () => {
-  Byond.winset('tgui_modal', {
+  Byond.winset('tgui_say', {
     pos: '694,602',
   });
   setClosed();
@@ -38,18 +38,18 @@ export const windowLoad = () => {
  *  size - The size of the window in pixels. Optional.
  */
 export const windowSet = (size: number = SIZE.small) => {
-  Byond.winset('tgui_modal', { size: `${SIZE.width}x${size}` });
-  Byond.winset('tgui_modal.browser', { size: `${SIZE.width}x${size}` });
+  Byond.winset('tgui_say', { size: `${SIZE.width}x${size}` });
+  Byond.winset('tgui_say.browser', { size: `${SIZE.width}x${size}` });
 };
 
 /** Private functions */
 /** Sets the skin props as opened. Focus might be a placebo here. */
 const setOpen = () => {
-  Byond.winset('tgui_modal', {
+  Byond.winset('tgui_say', {
     'is-visible': true,
     size: `${SIZE.width}x${SIZE.small}`,
   });
-  Byond.winset('tgui_modal.browser', {
+  Byond.winset('tgui_say.browser', {
     'is-visible': true,
     size: `${SIZE.width}x${SIZE.small}`,
   });
@@ -57,7 +57,7 @@ const setOpen = () => {
 
 /** Sets the skin props as closed.  */
 const setClosed = () => {
-  Byond.winset('tgui_modal', {
+  Byond.winset('tgui_say', {
     'is-visible': false,
     size: `${SIZE.width}x${SIZE.small}`,
   });
