@@ -1,4 +1,5 @@
 @use 'sass:color';
+@use 'sass:map';
 
 $background: #131313;
 $button: #1f1f1f;
@@ -24,3 +25,32 @@ $security: #dd3535;
 $syndicate: #8f4a4b;
 $service: #6ca729;
 $supply: #b88646;
+
+$_channel_map: (
+  'say': $say,
+  'radio': $radio,
+  'me': $me,
+  'ooc': $ooc,
+
+  'ai': $ai,
+  'binary': $binary,
+  'centcom': $centcom,
+  'command': $command,
+  'engi': $engi,
+  'hive': $hive,
+  'medical': $medical,
+  'science': $science,
+  'security': $security,
+  'syndicate': $syndicate,
+  'service': $service,
+  'supply': $supply,
+);
+
+$channel_keys: map.keys($_channel_map) !default;
+
+$channel-map: ();
+@each $channel in $channel_keys {
+  $channel-map: map-merge($channel-map, (
+    $channel: map.get($_channel_map, $channel),
+  ));
+}

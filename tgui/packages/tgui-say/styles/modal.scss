@@ -1,8 +1,6 @@
 @use 'sass:color';
 @use './colors.scss';
 
-////////////////////////////////////////////////
-// Gradient animation
 @keyframes gradient {
   0% {
     background-position: 0 0;
@@ -13,8 +11,6 @@
   }
 }
 
-////////////////////////////////////////////////
-// Main window styles
 .window {
   background: colors.$background;
   display: flex;
@@ -45,93 +41,30 @@
   height: 70px;
 }
 
-@mixin border($channel) {
-  border-left: 2px solid darken($channel, 20%);
-  border-right: 2px solid darken($channel, 20%);
-  border-top: 2px solid darken($channel, 20%);
+/** Creates an animated border for each channel */
+@each $channel, $color in colors.$channel-map {
+  .window-#{$channel} {
+    border-left: 2px solid darken($color, 20%);
+    border-right: 2px solid darken($color, 20%);
+    border-top: 2px solid darken($color, 20%);
 
-  &:after {
-    animation: gradient 10s linear infinite;
-    background: linear-gradient(to right,
-        darken($channel, 35%),
-        $channel,
-        lighten($channel, 10%),
-        $channel,
-        darken($channel, 35%));
-    background-position: 0% 0%;
-    background-size: 500% auto;
-    bottom: 0px;
-    content: '';
-    height: 2px;
-    left: 0px;
-    position: absolute;
-    right: 0px;
-    z-index: 999;
+    &:after {
+      animation: gradient 10s linear infinite;
+      background: linear-gradient(to right,
+          darken($color, 35%),
+          $color,
+          lighten($color, 10%),
+          $color,
+          darken($color, 35%));
+      background-position: 0% 0%;
+      background-size: 500% auto;
+      bottom: 0px;
+      content: '';
+      height: 2px;
+      left: 0px;
+      position: absolute;
+      right: 0px;
+      z-index: 999;
+    }
   }
-}
-
-/** Normal channels */
-.window-say {
-  @include border(colors.$say);
-}
-
-.window-radio {
-  @include border(colors.$radio);
-}
-
-.window-me {
-  @include border(colors.$me);
-}
-
-.window-ooc {
-  @include border(colors.$ooc);
-}
-
-/** Radio subchannels */
-.window-ai {
-  @include border(colors.$ai);
-}
-
-.window-binary {
-  @include border(colors.$binary);
-}
-
-.window-centcom {
-  @include border(colors.$centcom);
-}
-
-.window-command {
-  @include border(colors.$command);
-}
-
-.window-engi {
-  @include border(colors.$engi);
-}
-
-.window-hive {
-  @include border(colors.$hive);
-}
-
-.window-medical {
-  @include border(colors.$medical);
-}
-
-.window-science {
-  @include border(colors.$science);
-}
-
-.window-security {
-  @include border(colors.$security);
-}
-
-.window-syndicate {
-  @include border(colors.$syndicate);
-}
-
-.window-service {
-  @include border(colors.$service);
-}
-
-.window-supply {
-  @include border(colors.$supply);
 }
