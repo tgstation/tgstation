@@ -5092,16 +5092,6 @@
 	pixel_y = 17;
 	pixel_x = 10
 	},
-/obj/item/paper/pamphlet{
-	pixel_x = -2;
-	pixel_y = -10;
-	desc = "This pamphlet contains info about the potential hazards enterprising crew may find on the planet. At the end is a disclaimer in 8 point font detailing acknowledgement of risk and billing of profit loss from death to next of kin."
-	},
-/obj/item/paper/pamphlet{
-	pixel_x = -2;
-	pixel_y = 9;
-	desc = "This pamphlet contains info about the potential hazards enterprising crew may find on the planet. At the end is a disclaimer in 8 point font detailing acknowledgement of risk and billing of profit loss from death to next of kin."
-	},
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/smooth,
 /area/mine/lobby)
@@ -6253,8 +6243,7 @@
 /area/mine/laborcamp/living)
 "Sx" = (
 /obj/structure/rack,
-/obj/item/flamethrower/full/tank,
-/obj/item/tank/internals/plasma/full,
+/obj/item/storage/box/gum/happiness,
 /turf/open/floor/iron,
 /area/mine/laborcamp/commons)
 "Sy" = (
