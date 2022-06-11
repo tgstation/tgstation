@@ -61,7 +61,7 @@
  */
 /datum/tgui_say/proc/load()
 	if(!client || !client.mob)
-		CRASH("TGUI say loaded on null client or mob")
+		CRASH("TGUI-Say loaded on null client or mob")
 	window_open = FALSE
 	winset(client, "tgui_say", "is-visible=false")
 	/// Sanity check in case the server ever changes MAX_LEN_MESSAGE
@@ -81,9 +81,9 @@
  */
 /datum/tgui_say/proc/open(payload)
 	if(!client || !client.mob)
-		CRASH("Tgui say opened on null client or mob")
+		CRASH("TGUI-Say opened on null client or mob")
 	if(!payload || !payload["channel"])
-		CRASH("No channel provided to open TGUI say")
+		CRASH("No channel provided to open TGUI-Say")
 	window_open = TRUE
 	if(payload["channel"] == SAY_CHANNEL || payload["channel"] == RADIO_CHANNEL)
 		start_thinking()
@@ -99,7 +99,7 @@
  */
 /datum/tgui_say/proc/close()
 	if(!client || !client.mob)
-		CRASH("TGUI say closed on null client or mob")
+		CRASH("TGUI-Say closed on null client or mob")
 	window_open = FALSE
 	stop_thinking()
 	if(client.typing_indicators)

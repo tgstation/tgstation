@@ -13,7 +13,12 @@ export const SIZE: WindowSize = {
 
 type RadioPrefix = Record<string, { id: string; label: string }>;
 
-/** Radio prefixes */
+/**
+ * Radio prefixes.
+ * Contains the properties:
+ * id - string. css class identifier.
+ * label - string. button label.
+ */
 export const RADIO_PREFIXES: RadioPrefix = {
   ':a ': {
     id: 'hive',

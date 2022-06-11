@@ -46,7 +46,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 /datum/tgui_say/proc/start_thinking()
 	/// REALLY shouldn't be here
 	if(!client || !client.mob)
-		CRASH("Started tgui say thinking on a null client or mob")
+		CRASH("Started TGUI-Say thinking on a null client or mob")
 	/// Shouldn't be here
 	if(!window_open || !client.typing_indicators)
 		return FALSE
@@ -59,7 +59,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 /** Removes typing/thinking indicators and flags the mob as not thinking */
 /datum/tgui_say/proc/stop_thinking()
 	if(!client || !client.mob)
-		CRASH("Stopped tgui say thinking on a null client or mob")
+		CRASH("Stopped TGUI-Say thinking on a null client or mob")
 	client.mob.remove_all_indicators()
 
 /**
@@ -68,7 +68,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
  */
 /datum/tgui_say/proc/start_typing()
 	if(!client || !client.mob)
-		CRASH("Started tgui say typing on a null client or mob")
+		CRASH("Started TGUI-Say typing on a null client or mob")
 	client.mob.remove_thinking_indicator()
 	if(!window_open || !client.typing_indicators || !client.mob.thinking_IC)
 		return FALSE
@@ -81,7 +81,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
  */
 /datum/tgui_say/proc/stop_typing()
 	if(!client || !client.mob)
-		CRASH("Stopped tgui say typing on a null client or mob")
+		CRASH("Stopped TGUI-Say typing on a null client or mob")
 	client.mob.remove_typing_indicator()
 	if(!window_open || !client.typing_indicators || !client.mob.thinking_IC)
 		return FALSE
