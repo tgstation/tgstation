@@ -113,14 +113,14 @@
 
 	return ..()
 
-//
 /datum/action/cooldown/spell/IsAvailable()
 	return ..() && can_cast_spell(feedback = FALSE)
 
-// We implement this check before parent call on Trigger,
-// so we can give feedback to people clicking on unavailable spells
-// (even though it's redundant, as Trigger checks IsAvailable / can_cast_spell)
 /datum/action/cooldown/spell/Trigger(trigger_flags, atom/target)
+	// We implement this can_cast_spell check before the parent call of Trigger()
+	// to allow people to click unavailable abilities to get a feedback chat message
+	// about why the ability is unavailable.
+	// It is otherwise redundant, however, as IsAvailable() checks can_cast_spell as well.
 	if(!can_cast_spell())
 		return FALSE
 
@@ -336,6 +336,9 @@
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
 /datum/action/cooldown/spell/proc/can_invoke(feedback = TRUE)
+	if(spell_requirements & SPELL_CASTABLE_WITHOUT_INVOCATION)
+		return TRUE
+
 	if(invocation_type == INVOCATION_NONE)
 		return TRUE
 

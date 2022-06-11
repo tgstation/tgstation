@@ -233,7 +233,7 @@
 	button_icon_state = "cult_mark"
 	click_action = TRUE
 	enable_text = span_cult("You prepare to mark a target for your cult. <b>Click a target to mark them!</b>")
-	disable_text = span_cult("You cease the marking ritual."))
+	disable_text = span_cult("You cease the marking ritual.")
 	/// The duration of the mark itself
 	var/cult_mark_duration = 90 SECONDS
 	/// The duration of the cooldown for cult marks
@@ -274,7 +274,7 @@
 		addtimer(CALLBACK(src, .proc/UpdateButtons), cult_mark_cooldown_duration + 1)
 		return TRUE
 
-	unset_ranged_ability(caller, span_cult("The marking rite failed!")))
+	unset_ranged_ability(caller, span_cult("The marking rite failed!"))
 	return TRUE
 
 /datum/action/innate/cult/ghostmark //Ghost version

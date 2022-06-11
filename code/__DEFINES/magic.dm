@@ -38,26 +38,32 @@
 #define INVOCATION_EMOTE "emote"
 
 // Bitflags for spell requirements
-/// Whether the spell requires wizard clothes to cast
+/// Whether the spell requires wizard clothes to cast.
 #define SPELL_REQUIRES_WIZARD_GARB (1 << 0)
-/// Whether the spell can only be cast by humans (mob type, not species)
+/// Whether the spell can only be cast by humans (mob type, not species).
+/// SPELL_REQUIRES_WIZARD_GARB comes with this flag implied, as carbons and below can't wear clothes.
 #define SPELL_REQUIRES_HUMAN (1 << 1)
-/// Whether the spell can be cast by mobs who are brains
+/// Whether the spell can be cast by mobs who are brains / mmis.
+/// When applying, bear in mind most spells will not function for brains out of the box.
 #define SPELL_CASTABLE_AS_BRAIN (1 << 2)
-/// Whether the spell can be cast while phased, such as blood crawling or ethereal jaunting
+/// Whether the spell can be cast while phased, such as blood crawling, ethereal jaunting or using rod form.
 #define SPELL_CASTABLE_WHILE_PHASED (1 << 3)
-/// Whether the spell can be cast while the user has antimagic on them corresponding to the spell's magic type
+/// Whether the spell can be cast while the user has antimagic on them that corresponds to the spell's own antimagic flags.
 #define SPELL_REQUIRES_NO_ANTIMAGIC (1 << 4)
-/// Whether the spell can be cast on the centcom z level
+/// Whether the spell can be cast on the centcom z level.
 #define SPELL_REQUIRES_OFF_CENTCOM (1 << 5)
-/// Whether the spell must be cast by someone with a mind
+/// Whether the spell must be cast by someone with a mind datum.
 #define SPELL_REQUIRES_MIND (1 << 6)
-/// Whether the spell requires the caster have a mime vow (mindless mobs succeed this check regardless)
+/// Whether the spell requires the caster have a mime vow (mindless mobs will succeed this check regardless).
 #define SPELL_REQUIRES_MIME_VOW (1 << 7)
+/// Whether the spell can be cast, even if the caster is unable to speak the invocation
+/// (effectively making the invocation flavor, instead of required).
+#define SPELL_CASTABLE_WITHOUT_INVOCATION (1 << 8)
 
 DEFINE_BITFIELD(spell_requirements, list(
 	"SPELL_CASTABLE_AS_BRAIN" = SPELL_CASTABLE_AS_BRAIN,
 	"SPELL_CASTABLE_WHILE_PHASED" = SPELL_CASTABLE_WHILE_PHASED,
+	"SPELL_CASTABLE_WITHOUT_INVOCATION" = SPELL_CASTABLE_WITHOUT_INVOCATION,
 	"SPELL_REQUIRES_HUMAN" = SPELL_REQUIRES_HUMAN,
 	"SPELL_REQUIRES_MIME_VOW" = SPELL_REQUIRES_MIME_VOW,
 	"SPELL_REQUIRES_MIND" = SPELL_REQUIRES_MIND,

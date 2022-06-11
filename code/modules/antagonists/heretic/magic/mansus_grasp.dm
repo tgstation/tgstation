@@ -11,7 +11,8 @@
 
 	invocation = "R'CH T'H TR'TH!"
 	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	// Mimes can cast it. Chaplains can cast it. Anyone can cast it, so long as they have a hand.
+	spell_requirements = SPELL_CASTABLE_WITHOUT_INVOCATION
 
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 
