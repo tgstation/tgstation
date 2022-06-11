@@ -293,7 +293,7 @@
 	overlay_state = "jumbo"
 
 /obj/item/food/popsicle/licorice_creamsicle
-	name = "licorice creamsicle"
+	name = "Void Bar™"
 	desc = "A salty licorice icecream. A salty frozen treat."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/salt = 1,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
 	tastes = list("salty liquorice")
