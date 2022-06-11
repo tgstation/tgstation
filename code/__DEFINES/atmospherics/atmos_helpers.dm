@@ -100,10 +100,10 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
  * Not immediately obvious, but saves us operation time.
  * 
  * We put a lot of parentheses here because the numbers get really really big. 
- * By prioritizing the division we try and tone down the number so we dont get overflows.
+ * By prioritizing the division we try to tone the number down so we dont get overflows.
  * 
  * Arguments:
- * * temperature_delta: T2 - T1. [/datum/gas_mixture/var/temperature]. 
+ * * temperature_delta: T2 - T1. [/datum/gas_mixture/var/temperature]
  * If you have any moderating (less than 1) coefficients and are dealing with very big numbers 
  * multiply the temperature_delta by it first before passing so we get even more breathing room.
  * * heat_capacity_one:  gasmix one's [/datum/gas_mixture/proc/heat_capacity]
