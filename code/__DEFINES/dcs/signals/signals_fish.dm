@@ -13,7 +13,7 @@
 
 /// Sent by the target of the fishing rod cast
 #define COMSIG_FISHING_ROD_CAST "comsig_fishing_rod_cast"
-	#define FISHING_ROD_CAST_HANDLED 1
+	#define FISHING_ROD_CAST_HANDLED (1 << 0)
 
 /// Sent when fishing line is snapped
 #define COMSIG_FISHING_LINE_SNAPPED "comsig_fishing_line_interrupted"
