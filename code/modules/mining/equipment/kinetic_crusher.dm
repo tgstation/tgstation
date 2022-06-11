@@ -454,9 +454,9 @@
 	return "mark detonation to do <b>[bonus_value]</b> more damage and decreases the crushers charge time by <b>[bonus_value * 0.1]</b>, while increasing the destabilizer shots range by <b>3</b> tiles and increasing its speed by <b>0.8</b> times"
 
 /obj/item/crusher_trophy/clockwork_rocket/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
-		marker.name = "extended [marker.name]"
-		marker.speed *= 0.8
-		marker.range += 3
+	marker.name = "extended [marker.name]"
+	marker.speed *= 0.8
+	marker.range += 3
 
 /obj/item/crusher_trophy/clockwork_rocket/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
