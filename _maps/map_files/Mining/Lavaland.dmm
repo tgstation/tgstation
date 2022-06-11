@@ -947,12 +947,6 @@
 /turf/open/floor/iron/smooth,
 /area/mine/lobby)
 "hC" = (
-/obj/item/geneshears{
-	pixel_x = -6
-	},
-/obj/item/secateurs{
-	pixel_x = -6
-	},
 /obj/structure/table/wood,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -1139,7 +1133,6 @@
 /turf/open/floor/iron,
 /area/mine/production)
 "iJ" = (
-/obj/item/paicard,
 /obj/item/toy/plush/goatplushie{
 	name = "Lus"
 	},
@@ -1162,15 +1155,6 @@
 /turf/open/indestructible/boss,
 /area/mine/laborcamp/ruins)
 "iV" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/structure/beebox,
-/obj/item/melee/flyswatter,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/queen_bee/bought,
-/obj/item/clothing/head/beekeeper_head,
-/obj/item/clothing/suit/beekeeper_suit,
 /obj/machinery/light/directional/west,
 /turf/open/floor/vault,
 /area/mine/laborcamp/ruins/seedvault)
@@ -1310,15 +1294,6 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jK" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/structure/beebox,
-/obj/item/melee/flyswatter,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/honey_frame,
-/obj/item/queen_bee/bought,
-/obj/item/clothing/head/beekeeper_head,
-/obj/item/clothing/suit/beekeeper_suit,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/vault,
 /area/mine/laborcamp/ruins/seedvault)
@@ -2423,10 +2398,6 @@
 /area/lavaland/surface/outdoors)
 "qa" = (
 /obj/structure/rack,
-/obj/item/door_seal{
-	pixel_x = 7;
-	pixel_y = 4
-	},
 /obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/iron,
 /area/mine/laborcamp/ruins)
@@ -2520,7 +2491,7 @@
 /area/mine/laborcamp/commons)
 "rf" = (
 /obj/structure/rack,
-/obj/item/multitool,
+/obj/effect/spawner/random/contraband/permabrig_gear,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "rj" = (
@@ -2790,8 +2761,6 @@
 "sN" = (
 /obj/structure/stone_tile/slab/cracked,
 /obj/structure/rack,
-/obj/item/gun/ballistic/bow,
-/obj/item/ammo_casing/caseless/arrow,
 /turf/open/indestructible/boss,
 /area/mine/laborcamp/ruins)
 "sR" = (
@@ -2947,7 +2916,6 @@
 /obj/structure/rack,
 /obj/item/wirerod,
 /obj/item/stack/cable_coil,
-/obj/effect/spawner/random/contraband/permabrig_gear,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "uu" = (
@@ -3152,6 +3120,7 @@
 /area/mine/living_quarters)
 "vY" = (
 /obj/structure/rack,
+/obj/effect/spawner/random/contraband/narcotics,
 /turf/open/floor/iron,
 /area/mine/laborcamp/ruins)
 "wd" = (
@@ -3466,7 +3435,6 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "yI" = (
-/obj/item/reagent_containers/glass/beaker/bluespace,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/dark,
@@ -3665,10 +3633,6 @@
 	},
 /turf/open/floor/carpet,
 /area/mine/laborcamp/commons)
-"An" = (
-/obj/effect/spawner/random/contraband/narcotics,
-/turf/open/floor/iron,
-/area/mine/laborcamp/ruins)
 "Ao" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -3945,8 +3909,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/mine/living_quarters)
 "Ca" = (
-/obj/structure/alien/egg/burst,
-/obj/structure/alien/weeds,
+/obj/machinery/oven,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -5443,8 +5406,10 @@
 /area/mine/maintenance)
 "LX" = (
 /obj/structure/rack,
-/obj/item/screwdriver,
-/obj/item/wirecutters,
+/obj/item/door_seal{
+	pixel_x = 7;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/mine/laborcamp/ruins)
 "Ma" = (
@@ -5646,7 +5611,6 @@
 "Np" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/machinery/oven,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
@@ -6352,7 +6316,6 @@
 "Te" = (
 /obj/structure/stone_tile/slab/cracked,
 /obj/structure/rack,
-/obj/item/clothing/head/helmet/roman/legionnaire,
 /obj/item/clothing/head/helmet/roman/legionnaire{
 	pixel_x = -9;
 	pixel_y = 8
@@ -6651,12 +6614,6 @@
 /turf/open/floor/iron,
 /area/mine/production)
 "VO" = (
-/obj/item/geneshears{
-	pixel_x = -6
-	},
-/obj/item/secateurs{
-	pixel_x = -6
-	},
 /obj/structure/table/wood,
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
@@ -9852,7 +9809,7 @@ aj
 pU
 Hw
 Ca
-MV
+kx
 Hw
 Hw
 aj
@@ -14033,7 +13990,7 @@ an
 an
 an
 ZP
-An
+zk
 zk
 ZP
 an
