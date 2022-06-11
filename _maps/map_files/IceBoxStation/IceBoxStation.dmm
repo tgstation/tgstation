@@ -56154,21 +56154,8 @@
 	},
 /obj/effect/landmark/start/hangover,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/random{
-	pixel_x = -32
-	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/structure/chair/sofa/corp/left{
-	dir = 4;
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/effect/landmark/start/hangover,
-/obj/machinery/light/small/directional/north,
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/service/bar/atrium)
