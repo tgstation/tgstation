@@ -737,13 +737,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
-"Ml" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
-/turf/closed/wall,
-/area/ruin/space/has_grav/listeningstation)
 "Mt" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/cable,
@@ -1479,7 +1472,7 @@ vI
 JB
 rG
 rG
-Ml
+rG
 rG
 rG
 rG
