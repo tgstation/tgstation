@@ -105,9 +105,9 @@
 	var/upgraded = FALSE
 
 	/// The basic reagents that come with this hypo
-	var/list/default_reagent_types
+	var/list/default_reagent_types = list()
 	/// The expanded suite of reagents that comes from upgrading this hypo
-	var/list/expanded_reagent_types
+	var/list/expanded_reagent_types = list()
 
 	/// The reagents we're actually storing
 	var/datum/reagents/stored_reagents
