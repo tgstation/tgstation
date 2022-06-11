@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - rscadd: "Add disease resistance to spaceacillin.  It now gives 50% disease progression slowdown, 75% to block disease infection, 75% to block zombie infection when attacked, and 50% alien larva growth slowdown."
