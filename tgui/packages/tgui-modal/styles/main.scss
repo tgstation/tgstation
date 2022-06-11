@@ -7,4 +7,7 @@
 // External styles
 @include meta.load-css('~tgui/styles/components/TextArea.scss');
 // Local styles
+@include meta.load-css('./button.scss');
+@include meta.load-css('./dragzone.scss');
+@include meta.load-css('./input.scss');
 @include meta.load-css('./modal.scss');

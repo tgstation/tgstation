@@ -1,0 +1,100 @@
+@use 'sass:color';
+@use './colors.scss';
+
+////////////////////////////////////////////////
+// Button styles
+.button {
+  background-color: colors.$button;
+  border: thin solid darken(colors.$button, 10%);
+  border-radius: 2px;
+  color: colors.$background;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 0.9rem;
+  height: 1.5rem;
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+  width: 4rem;
+
+  &:hover {
+    background-color: lighten(colors.$button, 10%);
+  }
+}
+
+/** Creates a button for each channel */
+@mixin button($channel) {
+  color: $channel;
+  border-color: $channel;
+
+  &:hover {
+    border-color: lighten($channel, 10%);
+    color: lighten($channel, 5%);
+  }
+}
+
+/** Normal channels */
+.button-say {
+  @include button(colors.$say);
+}
+
+.button-radio {
+  @include button(colors.$radio);
+}
+
+.button-me {
+  @include button(colors.$me);
+}
+
+.button-ooc {
+  @include button(colors.$ooc);
+}
+
+/** Radio subchannels */
+.button-ai {
+  @include button(colors.$ai);
+}
+
+.button-binary {
+  @include button(colors.$binary);
+}
+
+.button-centcom {
+  @include button(colors.$centcom);
+}
+
+.button-command {
+  @include button(colors.$command);
+}
+
+.button-engi {
+  @include button(colors.$engi);
+}
+
+.button-hive {
+  @include button(colors.$hive);
+}
+
+.button-medical {
+  @include button(colors.$medical);
+}
+
+.button-science {
+  @include button(colors.$science);
+}
+
+.button-security {
+  @include button(colors.$security);
+}
+
+.button-syndicate {
+  @include button(colors.$syndicate);
+}
+
+.button-service {
+  @include button(colors.$service);
+}
+
+.button-supply {
+  @include button(colors.$supply);
+}

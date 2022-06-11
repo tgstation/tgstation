@@ -1,26 +1,9 @@
 import { Component, createRef, RefObject } from 'inferno';
 import { TextArea } from 'tgui/components';
-import { CHANNELS, SIZE } from '../constants/constants';
+import { CHANNELS, RADIO_PREFIXES, SIZE } from '../constants/constants';
 import { Dragzone } from '../components/dragzone';
-import {
-  KEY_BACKSPACE,
-  KEY_DELETE,
-  KEY_DOWN,
-  KEY_TAB,
-  KEY_UP,
-} from 'common/keycodes';
-import {
-  getCss,
-  getHistoryAt,
-  getHistoryLength,
-  isAlphanumeric,
-  storeChat,
-  valueExists,
-  windowClose,
-  windowLoad,
-  windowOpen,
-  windowSet,
-} from '../helpers/helpers';
+import { KEY_BACKSPACE, KEY_DELETE, KEY_DOWN, KEY_TAB, KEY_UP } from 'common/keycodes';
+import { getCss, getHistoryAt, getHistoryLength, isAlphanumeric, storeChat, valueExists, windowClose, windowLoad, windowOpen, windowSet } from '../helpers/helpers';
 import { debounce, throttle } from 'common/timer';
 
 type State = {
@@ -32,11 +15,19 @@ type State = {
 
 /** Primary class for the TGUI modal. */
 export class TguiModal extends Component<{}, State> {
+  channelDebounce = debounce(
+    (mode) => Byond.sendMessage('thinking', mode),
+    400
+  );
+  forceDebounce = debounce(
+    (entry) => Byond.sendMessage('force', entry),
+    1000,
+    true
+  );
   historyCounter: number;
   innerRef: RefObject<HTMLInputElement> = createRef();
   maxLength: number;
-  channelDebounce = debounce((mode) => Byond.sendMessage('thinking', mode), 400);
-  forceDebounce = debounce((entry) => Byond.sendMessage('force', entry), 1000, true);
+  radioPrefix: string;
   typingThrottle = throttle(() => Byond.sendMessage('typing'), 4000);
   value: string;
   state: State = {
@@ -58,12 +49,21 @@ export class TguiModal extends Component<{}, State> {
     }
   };
 
-  /** Ensures backspace and delete reset size and history */
-  handleBackspaceDelete = (value: string) => {
+  /**
+   * 1. Ensures backspace and delete reset size
+   * 2. Resets history if editing a message
+   * 3. Backspacing while empty resets any radio subchannels
+   */
+  handleBackspaceDelete = () => {
     const { buttonContent, channel } = this.state;
-    this.historyCounter = 0;
+    const { radioPrefix, value } = this;
     // User is on a chat history message
     if (typeof buttonContent === 'number') {
+      this.historyCounter = 0;
+      this.setState({ buttonContent: CHANNELS[channel] });
+    }
+    if (!value.length && radioPrefix) {
+      this.radioPrefix = '';
       this.setState({ buttonContent: CHANNELS[channel] });
     }
     this.setSize(value.length);
@@ -80,13 +80,13 @@ export class TguiModal extends Component<{}, State> {
   /** User presses enter. Closes if no value. */
   handleEnter = (event: KeyboardEvent, value: string) => {
     const { channel } = this.state;
-    const { maxLength } = this;
+    const { maxLength, radioPrefix } = this;
     event.preventDefault();
     if (value && value.length < maxLength) {
       storeChat(value);
       Byond.sendMessage('entry', {
         channel: CHANNELS[channel],
-        entry: value,
+        entry: channel === 0 ? radioPrefix + value : value,
       });
     }
     this.reset();
@@ -102,11 +102,11 @@ export class TguiModal extends Component<{}, State> {
   /** Sends the current input to byond and purges it */
   handleForce = () => {
     const { channel, size } = this.state;
-    const { value } = this;
+    const { radioPrefix, value } = this;
     if (value && channel < 2) {
       this.forceDebounce({
         channel: CHANNELS[channel],
-        entry: value,
+        entry: channel === 0 ? radioPrefix + value : value,
       });
       this.reset(channel);
       if (size !== SIZE.small) {
@@ -121,6 +121,7 @@ export class TguiModal extends Component<{}, State> {
    */
   handleInput = (_, value: string) => {
     this.value = value;
+    this.radioHandler();
     this.setSize(value.length);
   };
 
@@ -132,13 +133,14 @@ export class TguiModal extends Component<{}, State> {
    * TYPING - When users key, it tells byond that it's typing.
    *
    */
-  handleKeyDown = (event: KeyboardEvent, value: string) => {
+  handleKeyDown = (event: KeyboardEvent) => {
     const { channel } = this.state;
+    const { radioPrefix } = this;
     if (!event.keyCode) {
       return; // Really doubt it, but...
     }
     if (isAlphanumeric(event.keyCode)) {
-      if (channel < 2) {
+      if (channel < 2 && radioPrefix !== ':b ') {
         this.typingThrottle();
       }
     }
@@ -148,7 +150,7 @@ export class TguiModal extends Component<{}, State> {
       }
     }
     if (event.keyCode === KEY_DELETE || event.keyCode === KEY_BACKSPACE) {
-      this.handleBackspaceDelete(value);
+      this.handleBackspaceDelete();
     }
     if (event.keyCode === KEY_TAB) {
       this.incrementChannel();
@@ -163,6 +165,11 @@ export class TguiModal extends Component<{}, State> {
    */
   incrementChannel = () => {
     const { channel } = this.state;
+    const { radioPrefix } = this;
+    if (radioPrefix === ':b ') {
+      this.channelDebounce({ mode: true });
+    }
+    this.radioPrefix = '';
     if (channel === CHANNELS.length - 1) {
       this.channelDebounce({ mode: true });
       this.setState({
@@ -181,6 +188,38 @@ export class TguiModal extends Component<{}, State> {
   };
 
   /**
+   * Gets any channel prefixes from the chat bar
+   * and changes to the corresponding radio subchannel.
+   *
+   * Exemptions: Channel is OOC, value is too short,
+   * Not a valid radio pref, or value is already the radio pref.
+   */
+  radioHandler = () => {
+    const { channel } = this.state;
+    const { radioPrefix, value } = this;
+    if (channel > 1 || value.length < 3) {
+      return;
+    }
+    const currentPrefix = value.slice(0, 3)?.toLowerCase();
+    if (!RADIO_PREFIXES[currentPrefix] || radioPrefix === currentPrefix) {
+      return;
+    }
+    this.value = value.slice(3);
+    this.radioPrefix = currentPrefix;
+    // Binary is a "secret" channel
+    if (currentPrefix === ':b ') {
+      Byond.sendMessage('thinking', { mode: false });
+    } else {
+      Byond.sendMessage('thinking', { mode: true });
+    }
+    this.setState({
+      buttonContent: RADIO_PREFIXES[currentPrefix]?.label,
+      channel: 0,
+      edited: true,
+    });
+  };
+
+  /**
    * Resets window to default parameters.
    *
    * Parameters:
@@ -188,6 +227,7 @@ export class TguiModal extends Component<{}, State> {
    */
   reset = (channel?: number) => {
     this.historyCounter = 0;
+    this.radioPrefix = '';
     this.value = '';
     this.setState({
       buttonContent: valueExists(channel) ? CHANNELS[channel!] : '',
@@ -273,24 +313,30 @@ export class TguiModal extends Component<{}, State> {
       handleKeyDown,
       innerRef,
       maxLength,
+      radioPrefix,
       value,
     } = this;
     const { buttonContent, channel, edited, size } = this.state;
+    const prefixOrChannel
+      = RADIO_PREFIXES[radioPrefix]?.id || CHANNELS[channel]?.toLowerCase();
+
     return (
-      <div className={getCss('window', channel, size)} $HasKeyedChildren>
+      <div
+        className={getCss('window', prefixOrChannel, size)}
+        $HasKeyedChildren>
         <Dragzone horizontal />
         <div className="window__content" $HasKeyedChildren>
           <Dragzone vertical />
           {size < SIZE.medium && (
             <button
-              className={getCss('button', channel)}
+              className={getCss('button', prefixOrChannel)}
               onclick={handleClick}
               type="submit">
               {buttonContent}
             </button>
           )}
           <TextArea
-            className={getCss('input', channel, size)}
+            className={getCss('input', prefixOrChannel)}
             dontUseTabForIndent
             innerRef={innerRef}
             maxLength={maxLength}

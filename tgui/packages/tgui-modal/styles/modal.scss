@@ -1,25 +1,5 @@
-$window-background: #131313;
-$button: #1f1f1f;
-$button-hover: #2a2a2a;
-
-////////////////////////////////////////////////
-// Largely pulling from in game colors
-$color-say: #a4bad6;
-$color-say-border: #3c4550;
-$color-say-dark: #181e25;
-$color-say-highlight: #d7e9ff;
-$color-radio: #1ecc43;
-$color-radio-border: #094e16;
-$color-radio-dark: #041d09;
-$color-radio-highlight: #4fff75;
-$color-me: #5975da;
-$color-me-border: #1b2650;
-$color-me-dark: #13182c;
-$color-me-highlight: #7694ff;
-$color-ooc: #cca300;
-$color-ooc-border: #443701;
-$color-ooc-dark: #1f1800;
-$color-ooc-highlight: #ffd631;
+@use 'sass:color';
+@use './colors.scss';
 
 ////////////////////////////////////////////////
 // Gradient animation
@@ -36,7 +16,7 @@ $color-ooc-highlight: #ffd631;
 ////////////////////////////////////////////////
 // Main window styles
 .window {
-  background: $window-background;
+  background: colors.$background;
   display: flex;
   flex-direction: column;
   font-family: 'Consolas', monospace;
@@ -46,6 +26,13 @@ $color-ooc-highlight: #ffd631;
   width: 100%;
 }
 
+.window__content {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+/** Window sizes */
 .window-30 {
   height: 30px;
 }
@@ -58,35 +45,19 @@ $color-ooc-highlight: #ffd631;
   height: 70px;
 }
 
-.window__content {
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-}
-
-.dragzone-horizontal {
-  height: 4px;
-  width: 100%;
-}
-
-.dragzone-vertical {
-  height: 100%;
-  width: 3px;
-}
-
-.window-say {
-  border-left: 2px solid $color-say-border;
-  border-right: 2px solid $color-say-border;
-  border-top: 2px solid $color-say-border;
+@mixin border($channel) {
+  border-left: 2px solid darken($channel, 20%);
+  border-right: 2px solid darken($channel, 20%);
+  border-top: 2px solid darken($channel, 20%);
 
   &:after {
     animation: gradient 10s linear infinite;
     background: linear-gradient(to right,
-        $color-say-dark,
-        $color-say,
-        $color-say-highlight,
-        $color-say,
-        $color-say-dark );
+        darken($channel, 35%),
+        $channel,
+        lighten($channel, 10%),
+        $channel,
+        darken($channel, 35%));
     background-position: 0% 0%;
     background-size: 500% auto;
     bottom: 0px;
@@ -97,168 +68,70 @@ $color-ooc-highlight: #ffd631;
     right: 0px;
     z-index: 999;
   }
+}
+
+/** Normal channels */
+.window-say {
+  @include border(colors.$say);
 }
 
 .window-radio {
-  border-left: 2px solid $color-radio-border;
-  border-right: 2px solid $color-radio-border;
-  border-top: 2px solid $color-radio-border;
-
-  &:after {
-    animation: gradient 10s linear infinite;
-    background: linear-gradient(to right,
-        $color-radio-dark,
-        $color-radio,
-        $color-radio-highlight,
-        $color-radio,
-        $color-radio-dark );
-    background-position: 0% 0%;
-    background-size: 500% auto;
-    bottom: 0px;
-    content: '';
-    height: 2px;
-    left: 0px;
-    position: absolute;
-    right: 0px;
-    z-index: 999;
-  }
+  @include border(colors.$radio);
 }
 
 .window-me {
-  border-left: 2px solid $color-me-border;
-  border-right: 2px solid $color-me-border;
-  border-top: 2px solid $color-me-border;
-
-  &:after {
-    animation: gradient 10s linear infinite;
-    background: linear-gradient(to right,
-        $color-me-dark,
-        $color-me,
-        $color-me-highlight,
-        $color-me,
-        $color-me-dark );
-    background-position: 0% 0%;
-    background-size: 500% auto;
-    bottom: 0px;
-    content: '';
-    height: 2px;
-    left: 0px;
-    position: absolute;
-    right: 0px;
-    z-index: 999;
-  }
+  @include border(colors.$me);
 }
 
 .window-ooc {
-  border-left: 2px solid $color-ooc-border;
-  border-right: 2px solid $color-ooc-border;
-  border-top: 2px solid $color-ooc-border;
-
-  &:after {
-    animation: gradient 10s linear infinite;
-    background: linear-gradient(to right,
-        $color-ooc-dark,
-        $color-ooc,
-        $color-ooc-highlight,
-        $color-ooc,
-        $color-ooc-dark );
-    background-position: 0% 0%;
-    background-size: 500% auto;
-    bottom: 0px;
-    content: '';
-    height: 2px;
-    left: 0px;
-    position: absolute;
-    right: 0px;
-    z-index: 999;
-  }
+  @include border(colors.$ooc);
 }
 
-////////////////////////////////////////////////
-// Button styles
-.button {
-  background-color: $button;
-  border: thin solid $button-hover;
-  border-radius: 2px;
-  color: $window-background;
-  font-family: inherit;
-  font-weight: bold;
-  font-size: 0.9rem;
-  height: 1.5rem;
-  padding: 0;
-  text-align: center;
-  vertical-align: middle;
-  width: 4rem;
-
-  &:hover {
-    background-color: $button-hover;
-  }
+/** Radio subchannels */
+.window-ai {
+  @include border(colors.$ai);
 }
 
-.button-say {
-  color: $color-say;
-  border-color: $color-say-border;
-
-  &:hover {
-    border-color: $color-say-highlight;
-    color: $color-say-highlight;
-  }
+.window-binary {
+  @include border(colors.$binary);
 }
 
-.button-radio {
-  color: $color-radio;
-  border-color: $color-radio-border;
-
-  &:hover {
-    border-color: $color-radio-highlight;
-    color: $color-radio-highlight;
-  }
+.window-centcom {
+  @include border(colors.$centcom);
 }
 
-.button-me {
-  color: $color-me;
-  border-color: $color-me-border;
-
-  &:hover {
-    border-color: $color-me-highlight;
-    color: $color-me-highlight;
-  }
+.window-command {
+  @include border(colors.$command);
 }
 
-.button-ooc {
-  color: $color-ooc;
-  border-color: $color-ooc-border;
-
-  &:hover {
-    border-color: $color-ooc-highlight;
-    color: $color-ooc-highlight;
-  }
+.window-engi {
+  @include border(colors.$engi);
 }
 
-////////////////////////////////////////////////
-// Input box styles
-.input {
-  background-color: transparent;
-  border: none;
-  color: $window-background;
-  font-family: "Lucida Console", monospace;
-  font-size: 1rem;
-  margin-top: 1px;
-  width: 100%;
+.window-hive {
+  @include border(colors.$hive);
 }
 
-.input-say {
-  color: $color-say-highlight;
+.window-medical {
+  @include border(colors.$medical);
 }
 
-.input-radio {
-  color: $color-radio;
+.window-science {
+  @include border(colors.$science);
 }
 
-.input-me {
-  color: $color-me;
+.window-security {
+  @include border(colors.$security);
 }
 
-.input-ooc {
-  color: $color-ooc;
+.window-syndicate {
+  @include border(colors.$syndicate);
+}
+
+.window-service {
+  @include border(colors.$service);
+}
+
+.window-supply {
+  @include border(colors.$supply);
 }

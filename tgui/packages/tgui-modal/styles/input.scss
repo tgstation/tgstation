@@ -1,0 +1,79 @@
+@use './colors.scss';
+
+////////////////////////////////////////////////
+// Input box styles
+.input {
+  background-color: transparent;
+  border: none;
+  color: colors.$background;
+  font-family: "Lucida Console", monospace;
+  font-size: 1rem;
+  margin-top: 1px;
+  width: 100%;
+}
+
+/** Normal channels */
+.input-say {
+  color: colors.$say;
+}
+
+.input-radio {
+  color: colors.$radio;
+}
+
+.input-me {
+  color: colors.$me;
+}
+
+.input-ooc {
+  color: colors.$ooc;
+}
+
+/** Radio subchannels */
+.input-ai {
+  color: colors.$ai;
+}
+
+.input-binary {
+  color: colors.$binary;
+}
+
+.input-centcom {
+  color: colors.$centcom;
+}
+
+.input-command {
+  color: colors.$command;
+}
+
+.input-engi {
+  color: colors.$engi;
+}
+
+.input-hive {
+  color: colors.$hive;
+}
+
+.input-medical {
+  color: colors.$medical;
+}
+
+.input-science {
+  color: colors.$science;
+}
+
+.input-security {
+  color: colors.$security;
+}
+
+.input-syndicate {
+  color: colors.$syndicate;
+}
+
+.input-service {
+  color: colors.$service;
+}
+
+.input-supply {
+  color: colors.$supply;
+}

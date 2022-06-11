@@ -1,4 +1,4 @@
-import { CHANNELS, SIZE } from '../constants/constants';
+import { SIZE } from '../constants/constants';
 import { KEY_0, KEY_Z } from 'common/keycodes';
 import { classes } from 'common/react';
 
@@ -95,12 +95,12 @@ export const storeChat = (message: string): void => {
 /** Returns modular css classes */
 export const getCss = (
   element: string,
-  channel?: number,
+  channel?: string,
   size?: number
 ): string =>
   classes([
     element,
-    valueExists(channel) && `${element}-${CHANNELS[channel!]?.toLowerCase()}`,
+    valueExists(channel) && `${element}-${channel}`,
     valueExists(size) && `${element}-${size}`,
   ]);
 
