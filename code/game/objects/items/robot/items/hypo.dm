@@ -308,36 +308,32 @@
 		ui.open()
 
 /obj/item/reagent_containers/borghypo/borgshaker/ui_data(mob/user)
-	var/list/available_reagents = list()
+	var/list/drink_reagents = list()
+	var/list/alcohol_reagents = list()
 
 	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
-		if(reagent)
-			available_reagents.Add(list(list(
+		// Split the reagents into alcoholic/non-alcoholic
+		if(istype(reagent, /datum/reagent/consumable/ethanol))
+			alcohol_reagents.Add(list(list(
 				"name" = reagent.name,
 				"volume" = round(reagent.volume, 0.01) - 1,
 			))) // list in a list because Byond merges the first list...
+		else
+			drink_reagents.Add(list(list(
+				"name" = reagent.name,
+				"volume" = round(reagent.volume, 0.01) - 1,
+			)))
 
 	var/data = list()
 	data["theme"] = tgui_theme
-	data["maxVolume"] = max_volume_per_reagent
-	data["reagents"] = available_reagents
+	data["minimumVolume"] = amount_per_transfer_from_this
+	data["sodas"] = drink_reagents
+	data["alcohols"] = alcohol_reagents
 	data["selectedReagent"] = selected_reagent?.name
 	return data
 
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
-
-// /obj/item/reagent_containers/borghypo/borgshaker/regenerate_reagents()
-// 	if(iscyborg(src.loc))
-// 		var/mob/living/silicon/robot/R = src.loc
-// 		if(R?.cell)
-// 			for(var/i in modes) //Lots of reagents in this one, so it's best to regenrate them all at once to keep it from being tedious.
-// 				var/valueofi = modes[i]
-// 				var/datum/reagents/RG = reagent_list[valueofi]
-// 				if(RG.total_max_volume < RG.maximum_volume)
-// 					R.cell.use(charge_cost)
-// 					RG.add_reagent(reagent_ids[valueofi], 5, reagtemp = dispensed_temperature, no_react = TRUE)
-
 
 /obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
 	. = ..()

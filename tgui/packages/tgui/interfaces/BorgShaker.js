@@ -5,23 +5,30 @@ import { Window } from '../layouts';
 export const BorgShaker = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    maxVolume,
     theme,
-    reagents,
+    minimumVolume,
+    sodas,
+    alcohols,
     selectedReagent,
   } = data;
   return (
     <Window
       width={650}
-      height={335}
+      height={440}
       theme={theme}
     >
       <Window.Content scrollable>
-        <Section>
+        <Section title={'Non-Alcoholic'}>
           <Reagent
-            reagents={reagents}
+            reagents={sodas}
             selected={selectedReagent}
-            maxVolume={maxVolume} />
+            minimum={minimumVolume} />
+        </Section>
+        <Section title={'Alcoholic'}>
+          <Reagent
+            reagents={alcohols}
+            selected={selectedReagent}
+            minimum={minimumVolume} />
         </Section>
       </Window.Content>
     </Window>
@@ -30,7 +37,7 @@ export const BorgShaker = (props, context) => {
 
 const Reagent = (props, context) => {
   const { act, data } = useBackend(context);
-  const { reagents, selected, maxVolume } = props;
+  const { reagents, selected, minimum } = props;
   if (reagents.length === 0) {
     return (
       <NoticeBox>
@@ -45,7 +52,8 @@ const Reagent = (props, context) => {
       width="150px"
       lineHeight={1.75}
       content={reagent.name}
-      color={reagent.name === selected ?'green' : 'default'}
+      color={reagent.name === selected ? 'green': 'default'}
+      disabled={reagent.volume < minimum}
       onClick={() => act(reagent.name)} />
   ));
 };
