@@ -117,7 +117,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "aW" = (
-/obj/machinery/door/airlock/highsecurity,
+/obj/machinery/door/airlock/highsecurity{
+	name = "Secure Tech Storage"
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
 "aX" = (
@@ -149,14 +151,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/hallway/starboard_bow)
-"bf" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/fluff/oldturret,
-/obj/structure/fluff/oldturret,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/ai/corridor)
 "bg" = (
 /obj/structure/fluff/oldturret,
 /turf/open/floor/iron,
@@ -178,10 +172,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
 "bp" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
+/obj/machinery/door/window/right/directional/east{
+	name = "AI Upload"
+	},
+/obj/machinery/door/window/left/directional/west{
+	name = "AI Upload Access"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
@@ -199,7 +194,9 @@
 	},
 /area/ruin/space/ks13/hallway/starboard_bow)
 "bt" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/right/directional/south{
+	name = "AI Vault Access"
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
 "bu" = (
@@ -618,30 +615,23 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
 "ee" = (
-/obj/structure/window/reinforced,
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged3"
 	},
 /area/ruin/space/ks13/engineering/singulo)
 "ef" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
+/obj/machinery/door/airlock/highsecurity{
+	name = "AI Upload Access"
 	},
-/area/ruin/space/ks13/engineering/singulo)
-"eh" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
-/area/ruin/space/ks13/engineering/singulo)
+/turf/open/floor/iron,
+/area/ruin/space/ks13/ai/corridor)
 "ei" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
+/obj/machinery/door/airlock/highsecurity{
+	name = "AI Upload Chamber"
 	},
-/area/ruin/space/ks13/engineering/singulo)
+/turf/open/floor/iron,
+/area/ruin/space/ks13/ai/corridor)
 "ej" = (
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/medical/morgue)
@@ -679,17 +669,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge_hall)
 "ew" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 6
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
 "ex" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -780,12 +766,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
-"eW" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 9
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "eX" = (
 /obj/item/shard,
 /obj/structure/grille/broken,
@@ -808,8 +788,8 @@
 	},
 /area/ruin/space/ks13/engineering/singulo)
 "fd" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 5
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
@@ -829,14 +809,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
-"fj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
-/area/ruin/space/ks13/engineering/singulo)
 "fk" = (
 /obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plating/airless,
@@ -844,21 +816,6 @@
 "fl" = (
 /obj/item/shard{
 	icon_state = "small"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
-"fm" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
-"fn" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
@@ -877,25 +834,13 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
 "fr" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/door/airlock/highsecurity{
+	name = "AI Upload"
 	},
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
-/area/ruin/space/ks13/engineering/singulo)
+/turf/open/floor/iron,
+/area/ruin/space/ks13/ai/corridor)
 "fs" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
-"ft" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 4
-	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
 "fu" = (
@@ -933,12 +878,6 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
-"fE" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "fF" = (
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
@@ -947,9 +886,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "fI" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 10
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
@@ -1005,14 +942,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
-"fU" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
-/area/ruin/space/ks13/engineering/singulo)
 "fV" = (
 /obj/item/screwdriver,
 /turf/open/floor/plating/airless,
@@ -1075,23 +1004,6 @@
 	icon_state = "damaged5"
 	},
 /area/ruin/space/ks13/engineering/grav_gen)
-"gs" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
-/area/ruin/space/ks13/engineering/singulo)
-"gt" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 9
-	},
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "gu" = (
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -1155,12 +1067,6 @@
 	icon_state = "damaged3"
 	},
 /area/ruin/space/ks13/engineering/singulo)
-"gL" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 10
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "gM" = (
 /obj/item/crowbar,
 /turf/open/floor/iron/airless,
@@ -1191,10 +1097,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
-"gS" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "gX" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/service/chapel_office)
@@ -1215,9 +1117,8 @@
 	},
 /area/ruin/space/ks13/tool_storage)
 "hc" = (
-/obj/structure/lattice,
 /obj/structure/window/fulltile,
-/turf/template_noop,
+/turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/court_hall)
 "he" = (
 /obj/structure/chair,
@@ -1676,10 +1577,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
-"jG" = (
-/obj/structure/window/fulltile,
-/turf/template_noop,
-/area/ruin/space/ks13/science/toxins_hall)
 "jH" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
@@ -2114,7 +2011,7 @@
 /area/ruin/space/ks13/hallway/central)
 "mt" = (
 /obj/structure/window/fulltile,
-/turf/template_noop,
+/turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "mu" = (
 /obj/item/stack/rods,
@@ -2435,12 +2332,10 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
 "of" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
-	},
 /obj/structure/cable,
+/obj/machinery/door/window/right/directional/east{
+	name = "AI Vault"
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/ai/vault)
 "og" = (
@@ -3102,9 +2997,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/cell)
 "Dn" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
 "Dw" = (
@@ -3530,7 +3423,6 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "ME" = (
-/obj/structure/window/reinforced,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged4"
@@ -6383,7 +6275,7 @@ aa
 aa
 aa
 aa
-aa
+rk
 aa
 aa
 aa
@@ -6496,8 +6388,8 @@ aa
 aa
 aa
 rk
-aa
-aa
+rk
+rk
 aa
 rk
 aa
@@ -6605,13 +6497,13 @@ TW
 rk
 aa
 aa
-aa
-aa
+rk
+rk
+rk
 rk
 aa
-aa
-aa
-aa
+rk
+rk
 rk
 aa
 aa
@@ -6989,7 +6881,7 @@ rk
 cl
 IH
 Hr
-aW
+ei
 Hr
 cl
 aa
@@ -7024,10 +6916,10 @@ mz
 mz
 mz
 mI
-fE
-fU
-fU
-gs
+tf
+Ry
+Ry
+sU
 mz
 mz
 mz
@@ -7137,10 +7029,10 @@ mz
 mz
 mz
 vY
-fd
-ft
-ft
-ew
+He
+yk
+yk
+aq
 mz
 mz
 mz
@@ -7242,7 +7134,7 @@ rk
 mz
 mz
 ee
-eR
+Dn
 tf
 sU
 Ry
@@ -7329,7 +7221,7 @@ aa
 rk
 cl
 cl
-aW
+ef
 cl
 IM
 IM
@@ -7354,8 +7246,8 @@ Kb
 rk
 mz
 mz
-ef
-eR
+cw
+Dn
 sU
 oC
 cw
@@ -7468,18 +7360,18 @@ mz
 mz
 Ry
 ME
-eR
+Dn
 sU
 cw
 Ry
-eW
-fq
-fq
+He
+fd
+fd
 fI
 sU
 oC
 tq
-gt
+He
 fq
 gJ
 gR
@@ -7555,7 +7447,7 @@ aa
 aa
 aa
 cl
-bf
+cl
 cl
 cl
 cl
@@ -7580,19 +7472,19 @@ rk
 mz
 mz
 oC
-eh
-eR
+oC
+Dn
 sU
 Ry
-eW
-fj
-fr
-fj
-fJ
+ex
+sU
+em
+sU
+Ry
 tf
 cw
 gh
-hZ
+tf
 tf
 tf
 tf
@@ -7693,7 +7585,7 @@ rk
 mz
 dA
 zp
-eh
+oC
 ew
 eF
 eN
@@ -7919,7 +7811,7 @@ df
 ds
 dB
 tf
-ei
+Ry
 ex
 Ry
 cw
@@ -7934,8 +7826,8 @@ eL
 eL
 tf
 tf
-gS
-ft
+tf
+ew
 sU
 Ry
 sU
@@ -8386,8 +8278,8 @@ eL
 eL
 tf
 Ry
-eh
-gL
+oC
+ex
 sU
 Ry
 sU
@@ -8466,7 +8358,7 @@ cl
 cl
 cl
 cl
-bp
+Hr
 Hr
 cl
 cl
@@ -8488,19 +8380,19 @@ em
 tf
 sU
 Ry
-uM
-fm
-tf
-tf
-tf
-tf
-tf
-tf
-tf
-tf
-tf
-ei
 eR
+tf
+tf
+tf
+tf
+tf
+tf
+tf
+tf
+tf
+tf
+Ry
+Dn
 sU
 sU
 mz
@@ -8602,7 +8494,6 @@ sU
 Ry
 Ry
 Dn
-fm
 tf
 tf
 tf
@@ -8612,8 +8503,9 @@ tf
 tf
 tf
 tf
-eh
-eR
+tf
+oC
+Dn
 Ry
 sU
 mz
@@ -8714,18 +8606,18 @@ Ry
 cw
 oC
 Ry
-fd
-fn
+ew
+tf
 fs
-fE
-fE
+tf
+tf
 hA
 fV
 tf
 tf
 tf
 gK
-gS
+tf
 ew
 oC
 Ry
@@ -8828,10 +8720,10 @@ vY
 Rd
 Ry
 sU
-fd
-ft
-ft
-ew
+He
+yk
+yk
+aq
 tf
 tf
 gi
@@ -9031,7 +8923,7 @@ Hr
 Hr
 Hr
 Hr
-bt
+Hr
 aW
 qx
 cl
@@ -9253,7 +9145,7 @@ IF
 cl
 bj
 cl
-bp
+Hr
 cl
 cl
 cl
@@ -9366,7 +9258,7 @@ IF
 cl
 bj
 cl
-aW
+fr
 cl
 cl
 cl
@@ -9838,8 +9730,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+rk
+rk
 aa
 aa
 aa
@@ -9850,10 +9742,10 @@ qq
 qq
 qq
 qq
-QY
-QY
+dH
+dH
 YQ
-vH
+dH
 vH
 vH
 vH
@@ -9966,8 +9858,8 @@ qq
 ga
 YQ
 ga
+dH
 vH
-xG
 xG
 SV
 QY
@@ -10063,8 +9955,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+rk
+rk
 aa
 aa
 aa
@@ -10080,7 +9972,7 @@ gb
 mr
 gz
 vH
-GS
+vH
 GS
 SV
 QY
@@ -10883,9 +10775,9 @@ wz
 aa
 aa
 rk
-jG
+kd
 jR
-jG
+kd
 rk
 rk
 aa
@@ -10996,7 +10888,7 @@ aa
 aa
 aa
 rk
-jG
+kd
 jS
 NZ
 aa
@@ -11112,7 +11004,7 @@ IF
 NZ
 jR
 kb
-jG
+kd
 aa
 aa
 aa
@@ -11222,10 +11114,10 @@ rk
 aa
 aa
 rk
-jG
-jG
+kd
+kd
 De
-jG
+kd
 aa
 aa
 aa
@@ -11336,9 +11228,9 @@ aa
 aa
 IF
 aa
-jG
+kd
 kb
-jG
+kd
 aa
 aa
 aa
@@ -11449,7 +11341,7 @@ aa
 aa
 rk
 aa
-jG
+kd
 kd
 De
 rk
@@ -11655,12 +11547,12 @@ pg
 dv
 QJ
 rk
-aa
-aa
+IF
+IF
 aa
 rk
-aa
-aa
+rk
+rk
 aa
 IF
 IF
@@ -11768,10 +11660,10 @@ YY
 ff
 fp
 IF
-aa
-aa
-aa
-aa
+IF
+rk
+rk
+rk
 aa
 aa
 IF
@@ -11882,10 +11774,10 @@ zB
 QJ
 IF
 aa
+IF
 aa
-aa
-aa
-aa
+rk
+IF
 aa
 IF
 wz
@@ -11903,7 +11795,7 @@ rk
 aa
 NZ
 kb
-jG
+kd
 aa
 aa
 aa
@@ -11995,10 +11887,10 @@ fh
 QJ
 aa
 aa
-aa
-aa
-aa
-aa
+IF
+IF
+rk
+IF
 aa
 Gf
 Gf
@@ -12016,7 +11908,7 @@ rk
 aa
 NZ
 jR
-jG
+kd
 aa
 aa
 rk
@@ -12109,7 +12001,7 @@ QJ
 Kb
 rk
 rk
-aa
+IF
 aa
 aa
 aa
@@ -12129,7 +12021,7 @@ IF
 aa
 NZ
 kb
-jG
+kd
 aa
 aa
 rk
@@ -12242,7 +12134,7 @@ IF
 rk
 Bb
 kb
-jG
+kd
 aa
 Pr
 nQ
