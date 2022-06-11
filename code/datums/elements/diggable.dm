@@ -26,6 +26,10 @@
 
 	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_SHOVEL), .proc/on_shovel)
 
+/datum/element/diggable/Detach(datum/source, ...)
+	. = ..()
+	UnregisterSignal(source, COMSIG_ATOM_TOOL_ACT(TOOL_SHOVEL))
+
 /// Signal proc for [COMSIG_ATOM_TOOL_ACT] via [TOOL_SHOVEL].
 /datum/element/diggable/proc/on_shovel(turf/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
