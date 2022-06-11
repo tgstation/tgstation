@@ -331,7 +331,7 @@
 
 	var/data = list()
 	data["theme"] = tgui_theme
-	data["minimumVolume"] = amount_per_transfer_from_this
+	data["minVolume"] = amount_per_transfer_from_this
 	data["sodas"] = drink_reagents
 	data["alcohols"] = alcohol_reagents
 	data["selectedReagent"] = selected_reagent?.name

@@ -3,8 +3,21 @@ import { useBackend } from '../backend';
 import { Button, Flex, NoticeBox, Section, ProgressBar } from '../components';
 import { Window } from '../layouts';
 
-export const BorgHypo = (props, context) => {
-  const { act, data } = useBackend(context);
+type BorgHypoContext = {
+  maxVolume: number,
+  theme: string,
+  reagents: Reagent[],
+  selectedReagent: string;
+}
+
+type Reagent = {
+  name: string;
+  volume: number;
+  description: string;
+}
+
+export const BorgHypo = (_, context) => {
+  const { data } = useBackend<BorgHypoContext>(context);
   const {
     maxVolume,
     theme,
@@ -14,12 +27,12 @@ export const BorgHypo = (props, context) => {
   return (
     <Window
       width={450}
-      height={350}
+      height={(reagents.length * 25) + 60}
       theme={theme}
     >
-      <Window.Content scrollable>
+      <Window.Content>
         <Section>
-          <Reagent
+          <ReagentDisplay
             reagents={reagents}
             selected={selectedReagent}
             maxVolume={maxVolume} />
@@ -29,7 +42,7 @@ export const BorgHypo = (props, context) => {
   );
 };
 
-const Reagent = (props, context) => {
+const ReagentDisplay = (props, context) => {
   const { act, data } = useBackend(context);
   const { reagents, selected, maxVolume } = props;
   if (reagents.length === 0) {
@@ -40,7 +53,7 @@ const Reagent = (props, context) => {
     );
   }
   return reagents.map(reagent => (
-    <Flex key={reagent.name} mb={1}>
+    <Flex key={reagent.name} my={.5}>
       <Flex.Item grow>
         <ProgressBar value={reagent.volume / maxVolume}>
           <Flex>

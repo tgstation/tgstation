@@ -2,11 +2,25 @@ import { useBackend } from '../backend';
 import { Button, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
-export const BorgShaker = (props, context) => {
-  const { act, data } = useBackend(context);
+type BorgShakerContext = {
+  minVolume: number,
+  theme: string,
+  sodas: Reagent[],
+  alcohols: Reagent[],
+  selectedReagent: string;
+}
+
+type Reagent = {
+  name: string;
+  volume: number;
+  description: string;
+}
+
+export const BorgShaker = (_, context) => {
+  const { data } = useBackend<BorgShakerContext>(context);
   const {
     theme,
-    minimumVolume,
+    minVolume,
     sodas,
     alcohols,
     selectedReagent,
@@ -14,29 +28,33 @@ export const BorgShaker = (props, context) => {
   return (
     <Window
       width={650}
-      height={440}
+      height={
+        Math.ceil(sodas.length / 4) * 23
+          + Math.ceil(alcohols.length / 4) * 23
+          + 140
+      }
       theme={theme}
     >
-      <Window.Content scrollable>
+      <Window.Content>
         <Section title={'Non-Alcoholic'}>
-          <Reagent
+          <ReagentDisplay
             reagents={sodas}
             selected={selectedReagent}
-            minimum={minimumVolume} />
+            minimum={minVolume} />
         </Section>
         <Section title={'Alcoholic'}>
-          <Reagent
+          <ReagentDisplay
             reagents={alcohols}
             selected={selectedReagent}
-            minimum={minimumVolume} />
+            minimum={minVolume} />
         </Section>
       </Window.Content>
     </Window>
   );
 };
 
-const Reagent = (props, context) => {
-  const { act, data } = useBackend(context);
+const ReagentDisplay = (props, context) => {
+  const { act } = useBackend(context);
   const { reagents, selected, minimum } = props;
   if (reagents.length === 0) {
     return (
