@@ -105,9 +105,9 @@
 	var/upgraded = FALSE
 
 	/// The basic reagents that come with this hypo
-	var/list/default_reagent_types = list()
+	var/list/default_reagent_types
 	/// The expanded suite of reagents that comes from upgrading this hypo
-	var/list/expanded_reagent_types = list()
+	var/list/expanded_reagent_types
 
 	/// The reagents we're actually storing
 	var/datum/reagents/stored_reagents
@@ -126,7 +126,6 @@
 
 /obj/item/reagent_containers/borghypo/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	QDEL_LIST(default_reagent_types)
 	return ..()
 
 /// Every [recharge_time] seconds, recharge some reagents for the cyborg
