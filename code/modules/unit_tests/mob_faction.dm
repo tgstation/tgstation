@@ -1,3 +1,4 @@
+/// Checks if any mob's faction var initial value is not a list, which is not supported by the current code
 /datum/unit_test/mob_faction
 
 /datum/unit_test/mob_faction/Run()
