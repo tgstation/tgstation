@@ -5751,7 +5751,6 @@
 "bPD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/electrolyzer,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "bPE" = (
@@ -7266,7 +7265,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "col" = (
@@ -30039,9 +30037,6 @@
 	dir = 1
 	},
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/mix)
 "jwj" = (
@@ -46359,7 +46354,6 @@
 	c_tag = "Incinerator"
 	},
 /obj/machinery/atmospherics/components/tank/plasma,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "oxB" = (
@@ -53895,7 +53889,6 @@
 /obj/structure/sign/warning/no_smoking{
 	pixel_x = -28
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "qOl" = (
@@ -57171,6 +57164,11 @@
 "rSC" = (
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/lobby)
+"rSE" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/turf/open/floor/plating,
+/area/station/maintenance/disposal/incinerator)
 "rSN" = (
 /obj/machinery/computer/upload/borg{
 	dir = 1
@@ -245724,12 +245722,12 @@ hpI
 sQz
 wvI
 wvI
-wvI
-wvI
-wvI
-pwF
-wvI
-wvI
+puf
+puf
+puf
+rSE
+puf
+puf
 wvI
 pwF
 wvI
