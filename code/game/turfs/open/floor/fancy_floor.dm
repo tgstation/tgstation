@@ -8,6 +8,7 @@
  * Fake space
  */
 
+// Standard Wood Flooring
 /turf/open/floor/wood
 	desc = "Stylish dark wood."
 	icon_state = "wood"
@@ -20,7 +21,15 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/wood/setup_broken_states()
-	return list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
+	return list(
+		"wood-heavydamage",
+		"wood-highdamage",
+		"wood-milddamage",
+		"wood-moderatedamage",
+		"wood-mediumdamage",
+		"wood-lightdamage",
+		"wood-lowdamage",
+	)
 
 /turf/open/floor/wood/examine(mob/user)
 	. = ..()
@@ -64,6 +73,30 @@
 				to_chat(user, span_notice("You forcefully pry off the planks, destroying them in the process."))
 	return make_plating(force_plating)
 
+/turf/open/floor/wood/damaged
+	broken = TRUE
+
+/turf/open/floor/wood/damaged/light
+	icon_state = "wood-lightdamage"
+
+/turf/open/floor/wood/damaged/low
+	icon_state = "wood-lowdamage"
+
+/turf/open/floor/wood/damaged/mild
+	icon_state = "wood-milddamage"
+
+/turf/open/floor/wood/damaged/moderate
+	icon_state = "wood-moderatedamage"
+
+/turf/open/floor/wood/damaged/medium
+	icon_state = "wood-mediumdamage"
+
+/turf/open/floor/wood/damaged/high
+	icon_state = "wood-highdamage"
+
+/turf/open/floor/wood/damaged/heavy
+	icon_state = "wood-heavydamage"
+
 /turf/open/floor/wood/cold
 	temperature = 255.37
 
@@ -74,26 +107,87 @@
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+// Wood Tiles
 /turf/open/floor/wood/tile
 	icon_state = "wood_tile"
 	floor_tile = /obj/item/stack/tile/wood/tile
 
 /turf/open/floor/wood/tile/setup_broken_states()
-	return list("wood_tile-broken", "wood_tile-broken2", "wood_tile-broken3")
+	return list("wood_tile-highdamage", "wood_tile-mediumdamage", "wood_tile-milddamage")
+
+/turf/open/floor/wood/tile/damaged
+	broken = TRUE
+
+/turf/open/floor/wood/tile/damaged/mild
+	icon_state = "wood_tile-milddamage"
+
+/turf/open/floor/wood/tile/damaged/medium
+	icon_state = "wood_tile-mediumdamage"
+
+/turf/open/floor/wood/tile/damaged/high
+	icon_state = "wood_tile-highdamage"
 
 /turf/open/floor/wood/parquet
 	icon_state = "wood_parquet"
 	floor_tile = /obj/item/stack/tile/wood/parquet
 
 /turf/open/floor/wood/parquet/setup_broken_states()
-	return list("wood_parquet-broken", "wood_parquet-broken2", "wood_parquet-broken3", "wood_parquet-broken4", "wood_parquet-broken5", "wood_parquet-broken6", "wood_parquet-broken7")
+	return list(
+		"wood_parquet-highdamage",
+		"wood_parquet-lightdamage",
+		"wood_parquet-moderatedamage",
+		"wood_parquet-heavydamage",
+		"wood_parquet-mediumdamage",
+		"wood_parquet-milddamage",
+		"wood_parquet-lowdamage",
+	)
+
+/turf/open/floor/wood/parquet/damaged
+	broken = TRUE
+
+/turf/open/floor/wood/parquet/damaged/light
+	icon_state = "wood_parquet-lightdamage"
+
+/turf/open/floor/wood/parquet/damaged/low
+	icon_state = "wood_parquet-lowdamage"
+
+/turf/open/floor/wood/parquet/damaged/mild
+	icon_state = "wood_parquet-milddamage"
+
+/turf/open/floor/wood/parquet/damaged/moderate
+	icon_state = "wood_parquet-moderatedamage"
+
+/turf/open/floor/wood/parquet/damaged/medium
+	icon_state = "wood_parquet-mediumdamage"
+
+/turf/open/floor/wood/parquet/damaged/high
+	icon_state = "wood_parquet-highdamage"
+
+/turf/open/floor/wood/parquet/damaged/heavy
+	icon_state = "wood_parquet-heavydamage"
 
 /turf/open/floor/wood/large
 	icon_state = "wood_large"
 	floor_tile = /obj/item/stack/tile/wood/large
 
 /turf/open/floor/wood/large/setup_broken_states()
-	return list("wood_large-broken", "wood_large-broken2", "wood_large-broken3")
+	return list(
+		"wood_large-highdamage",
+		"wood_large-mediumdamage",
+		"wood_large-milddamage",
+	)
+
+/turf/open/floor/wood/large/damaged
+	broken = TRUE
+
+/turf/open/floor/wood/large/damaged/mild
+	icon_state = "wood_large-milddamage"
+
+/turf/open/floor/wood/large/damaged/medium
+	icon_state = "wood_large-mediumdamage"
+
+/turf/open/floor/wood/large/damaged/high
+	icon_state = "wood_large-highdamage"
 
 /turf/open/floor/bamboo
 	desc = "A bamboo mat with a decorative trim."
@@ -112,6 +206,10 @@
 
 /turf/open/floor/bamboo/setup_broken_states()
 	return list("damaged")
+
+/turf/open/floor/bamboo/damaged
+	broken = TRUE
+	icon_state = "damaged"
 
 /turf/open/floor/grass
 	name = "grass patch"
@@ -136,6 +234,10 @@
 
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
+
+/turf/open/floor/grass/damaged
+	broken = TRUE
+	icon_state = "sand"
 
 /turf/open/floor/grass/fairy //like grass but fae-er
 	name = "fairygrass patch"
@@ -180,6 +282,9 @@
 
 /turf/open/floor/fake_snow/crowbar_act(mob/living/user, obj/item/I)
 	return
+
+/turf/open/floor/fake_snow/dug
+	icon_state = "snow_dug"
 
 /turf/open/floor/fakebasalt
 	name = "aesthetic volcanic flooring"
@@ -243,6 +348,10 @@
 		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
+/turf/open/floor/carpet/damaged
+	broken = TRUE
+	icon_state = "damaged"
+
 /turf/open/floor/carpet/lone
 	icon_state = "carpetsymbol"
 	smoothing_flags = NONE
@@ -260,6 +369,10 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_BLACK)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_BLACK)
 
+/turf/open/floor/carpet/black/damaged
+	broken = TRUE
+	icon_state = "damaged"
+
 /turf/open/floor/carpet/blue
 	icon = 'icons/turf/floors/carpet_blue.dmi'
 	icon_state = "carpet_blue-255"
@@ -267,6 +380,10 @@
 	floor_tile = /obj/item/stack/tile/carpet/blue
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_BLUE)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_BLUE)
+
+/turf/open/floor/carpet/blue/damaged
+	broken = TRUE
+	icon_state = "damaged"
 
 /turf/open/floor/carpet/cyan
 	icon = 'icons/turf/floors/carpet_cyan.dmi'
@@ -276,6 +393,10 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_CYAN)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_CYAN)
 
+/turf/open/floor/carpet/cyan/damaged
+	broken = TRUE
+	icon_state = "damaged"
+
 /turf/open/floor/carpet/green
 	icon = 'icons/turf/floors/carpet_green.dmi'
 	icon_state = "carpet_green-255"
@@ -283,6 +404,10 @@
 	floor_tile = /obj/item/stack/tile/carpet/green
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_GREEN)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_GREEN)
+
+/turf/open/floor/carpet/green/damaged
+	broken = TRUE
+	icon_state = "damaged"
 
 /turf/open/floor/carpet/orange
 	icon = 'icons/turf/floors/carpet_orange.dmi'
@@ -292,6 +417,10 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_ORANGE)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_ORANGE)
 
+/turf/open/floor/carpet/orange/damaged
+	broken = TRUE
+	icon_state = "damaged"
+
 /turf/open/floor/carpet/purple
 	icon = 'icons/turf/floors/carpet_purple.dmi'
 	icon_state = "carpet_purple-255"
@@ -299,6 +428,10 @@
 	floor_tile = /obj/item/stack/tile/carpet/purple
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_PURPLE)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_PURPLE)
+
+/turf/open/floor/carpet/purple/damaged
+	broken = TRUE
+	icon_state = "damaged"
 
 /turf/open/floor/carpet/red
 	icon = 'icons/turf/floors/carpet_red.dmi'
@@ -308,6 +441,10 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_RED)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_RED)
 
+/turf/open/floor/carpet/red/damaged
+	broken = TRUE
+	icon_state = "damaged"
+
 /turf/open/floor/carpet/royalblack
 	icon = 'icons/turf/floors/carpet_royalblack.dmi'
 	icon_state = "carpet_royalblack-255"
@@ -316,6 +453,10 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_ROYAL_BLACK)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_ROYAL_BLACK)
 
+/turf/open/floor/carpet/royalblack/damaged
+	broken = TRUE
+	icon_state = "damaged"
+
 /turf/open/floor/carpet/royalblue
 	icon = 'icons/turf/floors/carpet_royalblue.dmi'
 	icon_state = "carpet_royalblue-255"
@@ -323,6 +464,10 @@
 	floor_tile = /obj/item/stack/tile/carpet/royalblue
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_ROYAL_BLUE)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_ROYAL_BLUE)
+
+/turf/open/floor/carpet/royalblue/damaged
+	broken = TRUE
+	icon_state = "damaged"
 
 /turf/open/floor/carpet/executive
 	name = "executive carpet"

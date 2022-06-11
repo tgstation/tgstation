@@ -179,7 +179,16 @@
 	floor_tile = /obj/item/stack/tile/plastic
 
 /turf/open/floor/plastic/setup_broken_states()
-	return list("plastic-damaged1","plastic-damaged2")
+	return list("plastic-damagedmolten","plastic-damagedslashed")
+
+/turf/open/floor/plastic/damaged
+	broken = TRUE
+
+/turf/open/floor/plastic/damaged/molten
+	icon_state = "plastic-damagedmolten"
+
+/turf/open/floor/plastic/damaged/slashed
+	icon_state = "plastic-damagedslashed"
 
 /turf/open/floor/eighties
 	name = "retro floor"
@@ -190,6 +199,10 @@
 /turf/open/floor/eighties/setup_broken_states()
 	return list("eighties_damaged")
 
+/turf/open/floor/eighties/damaged
+	broken = TRUE
+	icon_state = "eighties_damaged"
+
 /turf/open/floor/eighties/red
 	name = "red retro floor"
 	desc = "Totally RED-ICAL!"
@@ -198,6 +211,10 @@
 
 /turf/open/floor/eighties/red/setup_broken_states()
 	return list("eightiesred_damaged")
+
+/turf/open/floor/eighties/red/damaged
+	broken = TRUE
+	icon_state = "eightiesred_damaged"
 
 /turf/open/floor/plating/rust
 	//SDMM supports colors, this is simply for easier mapping
@@ -257,7 +274,40 @@
 	floor_tile = /obj/item/stack/tile/cult
 
 /turf/open/floor/cult/setup_broken_states()
-	return list("cultdamage","cultdamage2","cultdamage3","cultdamage4","cultdamage5","cultdamage6","cultdamage7")
+	return list(
+		"cult-lightdamage",
+		"cult-heavydamage",
+		"cult-lowdamage",
+		"cult-milddamage",
+		"cult-moderatedamage",
+		"cult-mediumdamage",
+		"cult-highdamage",
+	)
+
+/turf/open/floor/cult/damaged
+	broken = TRUE
+
+/turf/open/floor/cult/damaged/light
+	icon_state = "cult_lightdamage"
+
+/turf/open/floor/cult/damaged/low
+	icon_state = "cult_lowdamage"
+
+/turf/open/floor/cult/damaged/mild
+	icon_state = "cult_milddamage"
+
+/turf/open/floor/cult/damaged/medium
+	icon_state = "cult_mediumdamage"
+
+/turf/open/floor/cult/damaged/moderate
+	icon_state = "cult_moderatedamage"
+
+/turf/open/floor/cult/damaged/high
+	icon_state = "cult_highdamage"
+
+/turf/open/floor/cult/damaged/heavy
+	icon_state = "cult_heavydamage"
+
 
 /turf/open/floor/cult/narsie_act()
 	return
