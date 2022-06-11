@@ -8,8 +8,6 @@
 	icon_state = "storage"
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/plate_compression)
-	/// The storage component of the module.
-	var/datum/component/storage/concrete/storage
 	/// Max weight class of items in the storage.
 	var/max_w_class = WEIGHT_CLASS_NORMAL
 	/// Max combined weight of all items in the storage.
@@ -24,17 +22,15 @@
 	atom_storage.locked = TRUE
 
 /obj/item/mod/module/storage/on_install()
-	var/datum/component/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
-	modstorage.locked = TRUE
-	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
+	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
+	modstorage.set_real_location(src)
+	atom_storage.locked = FALSE
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
 	var/datum/storage/modstorage = mod.atom_storage
+	atom_storage.locked = TRUE
 	qdel(modstorage)
 	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
-	if(!deleting)
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
-	atom_storage.locked = TRUE
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)

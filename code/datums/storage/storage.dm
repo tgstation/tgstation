@@ -88,6 +88,7 @@
 	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, .proc/mass_empty)
 
 	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_CLICK_ALT), .proc/open_storage)
+	RegisterSignal(resolve_parent, COMSIG_ATOM_ATTACK_GHOST, .proc/show_contents)
 
 	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, .proc/handle_enter)
 	RegisterSignal(resolve_location, COMSIG_ATOM_EXITED, .proc/handle_exit)
@@ -103,7 +104,7 @@
 	boxes = null
 	closer = null
 
-	set_real_location(null)
+	set_real_location(null, should_drop = TRUE)
 
 	for(var/mob/person in is_using)
 		if(person.active_storage == src)
@@ -123,6 +124,8 @@
 
 	refresh_views()
 
+	arrived.on_enter_storage(src)
+
 /datum/storage/proc/handle_exit(datum/source, obj/item/gone)
 	SIGNAL_HANDLER
 
@@ -133,7 +136,9 @@
 
 	remove_and_refresh(gone)
 
-/datum/storage/proc/set_real_location(atom/real)
+	gone.on_exit_storage(src)
+
+/datum/storage/proc/set_real_location(atom/real, should_drop = FALSE)
 	if(!real)
 		return
 
@@ -145,7 +150,8 @@
 	if(!resolve_parent)
 		return
 
-	remove_all(src, get_turf(resolve_parent))
+	if(should_drop)
+		remove_all(src, get_turf(resolve_parent))
 
 	resolve_location.flags_1 &= ~HAS_DISASSOCIATED_STORAGE_1
 	real.flags_1 |= HAS_DISASSOCIATED_STORAGE_1
@@ -684,7 +690,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 	
 	if(!quickdraw || toshow.get_active_held_item())
-		show_contents(toshow)
+		show_contents(src, toshow)
 
 		if(animated)
 			animate_parent()
@@ -731,7 +737,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /datum/storage/proc/refresh_views()
 	for (var/user in can_see_contents())
-		show_contents(user)
+		show_contents(src, user)
 
 /datum/storage/proc/can_see_contents()
 	var/list/seeing = list()
@@ -742,7 +748,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			is_using -= user
 	return seeing
 
-/datum/storage/proc/show_contents(mob/toshow)
+/datum/storage/proc/show_contents(datum/source, mob/toshow)
+	SIGNAL_HANDLER
+
 	var/obj/item/resolve_location = real_location?.resolve()
 	if(!real_location)
 		return

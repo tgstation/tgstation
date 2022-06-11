@@ -354,6 +354,8 @@
 	if(canhold || canthold)
 		atom_storage.set_holdable(canhold, canthold)
 
+	return atom_storage
+
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/turf/p_turf = get_turf(ricocheting_projectile)
 	var/face_direction = get_dir(src, p_turf)
