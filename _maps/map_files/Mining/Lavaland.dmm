@@ -100,10 +100,10 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/bar)
 "aI" = (
-/obj/structure/fluff/tram_rail/lavaland{
+/obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/fluff/tram_rail/lavaland,
+/obj/structure/fluff/tram_rail,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "aK" = (
