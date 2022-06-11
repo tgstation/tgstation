@@ -809,8 +809,8 @@
 		if(HACK_PIRATE) // Triggers pirates, which the crew may be able to pay off to prevent
 			priority_announce(
 				"Attention crew, it appears that someone on your station has made unexpected communication with a Syndicate ship in nearby space.",
-				"[command_name()] High-Priority Update"
-				)
+				"[command_name()] High-Priority Update",
+			)
 
 			var/datum/round_event_control/pirates/pirate_event = locate() in SSevents.control
 			if(!pirate_event)
@@ -819,9 +819,9 @@
 
 		if(HACK_FUGITIVES) // Triggers fugitives, which can cause confusion / chaos as the crew decides which side help
 			priority_announce(
-				"Attention crew, it appears that someone on your station has established an unexpected orbit with an unmarked ship in nearby space.",
-				"[command_name()] High-Priority Update"
-				)
+				"Attention crew, it appears that someone on your station has made unexpected communication with an unmarked ship in nearby space.",
+				"[command_name()] High-Priority Update",
+			)
 
 			var/datum/round_event_control/fugitives/fugitive_event = locate() in SSevents.control
 			if(!fugitive_event)
@@ -830,7 +830,7 @@
 
 		if(HACK_THREAT) // Force an unfavorable situation on the crew
 			priority_announce(
-				"Attention crew, it appears that someone on your station has shifted your orbit into more dangerous territory.",
+				SSmapping.config.orbit_shift_replacement,
 				"[command_name()] High-Priority Update",
 			)
 
@@ -860,8 +860,8 @@
 				// We spawned some sleeper agents, nice - give them a report to kickstart the paranoia
 				priority_announce(
 					"Attention crew, it appears that someone on your station has hijacked your telecommunications, broadcasting a Syndicate radio signal to your fellow employees.",
-					"[command_name()] High-Priority Update"
-					)
+					"[command_name()] High-Priority Update",
+				)
 
 #undef HACK_PIRATE
 #undef HACK_FUGITIVES

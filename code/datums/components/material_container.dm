@@ -301,6 +301,8 @@
 		if(!materials[req_mat]) //Do we have the resource?
 			return FALSE //Can't afford it
 		var/amount_required = mats[x] * multiplier
+		if(amount_required < 0)
+			return FALSE //No negative mats
 		if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
 			return FALSE //Can't afford it
 		mats_to_remove[req_mat] += amount_required //Add it to the assoc list of things to remove

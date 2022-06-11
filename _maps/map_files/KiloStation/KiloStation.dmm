@@ -3184,9 +3184,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"aTN" = (
-/turf/closed/mineral/random/labormineral,
-/area/station/hallway/secondary/entry)
 "aTR" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/recharge_floor,
@@ -7659,7 +7656,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "clt" = (
@@ -11667,7 +11664,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "ai-passthrough"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "dsJ" = (
@@ -13483,7 +13480,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "dUQ" = (
@@ -15358,7 +15355,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "ewW" = (
@@ -22612,7 +22610,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "ai-passthrough"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "gse" = (
@@ -23968,7 +23966,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/spawner/random/structure/crate,
 /mob/living/simple_animal/chicken{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0);
+	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_tox"=0,"max_tox"=1,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0);
 	desc = "A timeless classic.";
 	name = "Kentucky"
 	},
@@ -24898,7 +24896,6 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/rd)
 "gVv" = (
@@ -35345,25 +35342,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "jNA" = (
-/obj/structure/table,
-/obj/item/flashlight/lamp/green{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/clothing/mask/cigarette/cigar{
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/item/clothing/mask/cigarette/cigar{
-	pixel_x = 10;
-	pixel_y = -1
-	},
-/obj/item/lighter{
-	pixel_x = 11;
-	pixel_y = -7
-	},
 /obj/item/toy/figure/qm{
 	pixel_x = -17
+	},
+/obj/machinery/modular_computer/console/preset/id{
+	dir = 1
+	},
+/obj/machinery/keycard_auth/directional/east{
+	pixel_y = 26
 	},
 /turf/open/floor/carpet/orange,
 /area/station/cargo/qm)
@@ -38853,7 +38839,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "ai-passthrough"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "kQT" = (
@@ -44969,7 +44955,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/engineering/hallway)
 "mDQ" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/security/checkpoint/science/research)
 "mEg" = (
 /turf/closed/wall/r_wall/rust,
@@ -48732,7 +48718,7 @@
 "nFN" = (
 /obj/machinery/igniter/incinerator_ordmix,
 /mob/living/simple_animal/chicken{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0);
+	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_tox"=0,"max_tox"=1,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0);
 	desc = "A timeless classic.";
 	name = "Kentucky"
 	},
@@ -50921,7 +50907,7 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Tech Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "oqS" = (
@@ -51641,9 +51627,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
-"oAy" = (
-/turf/closed/wall,
-/area/station/science/ordnance/storage)
 "oAJ" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
@@ -57233,14 +57216,14 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/mining/glass{
-	name = "Quartermaster"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
+/obj/machinery/door/airlock/command/glass{
+	name = "Quartermaster's Office"
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/qm)
 "qew" = (
@@ -57908,6 +57891,39 @@
 /obj/item/computer_hardware/hard_drive/portable/quartermaster,
 /obj/item/computer_hardware/hard_drive/portable/quartermaster,
 /obj/item/pen/fountain,
+/obj/item/stamp{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/stamp/denied{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/stamp/qm{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/pen,
+/obj/item/lighter{
+	pixel_x = 11;
+	pixel_y = -7
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = 10;
+	pixel_y = -1
+	},
+/obj/item/flashlight/lamp/green{
+	pixel_x = -5;
+	pixel_y = 7
+	},
 /turf/open/floor/carpet/orange,
 /area/station/cargo/qm)
 "qny" = (
@@ -60876,12 +60892,12 @@
 	req_access = list("mail_sorting")
 	},
 /obj/item/clipboard{
-	pixel_y = -2;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = -2
 	},
 /obj/item/folder{
-	pixel_y = -2;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = -2
 	},
 /obj/structure/desk_bell{
 	pixel_x = -8;
@@ -64787,7 +64803,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "A station exclusive. Consumption may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 30);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=30);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
@@ -65323,14 +65339,6 @@
 	icon_state = "panelscorched"
 	},
 /area/station/maintenance/disposal/incinerator)
-"svV" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/mining/glass{
-	name = "Quartermaster"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/turf/open/floor/iron/dark,
-/area/station/cargo/qm)
 "svW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -74004,6 +74012,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "uUm" = (
@@ -74819,7 +74828,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "vfb" = (
@@ -82468,6 +82477,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/iron/dark,
 /area/station/cargo/qm)
 "xcV" = (
@@ -82862,7 +82872,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
 "xke" = (
@@ -83896,32 +83906,15 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "xxQ" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/stamp/qm{
-	pixel_x = 8;
-	pixel_y = 10
-	},
-/obj/item/stamp/denied{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/obj/item/stamp{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/pen,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/iron/dark,
 /area/station/cargo/qm)
 "xxW" = (
@@ -86253,11 +86246,11 @@
 /turf/open/floor/plating,
 /area/space/nearstation)
 "yfv" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Quartermaster"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
+/obj/machinery/door/airlock/command/glass{
+	name = "Quartermaster's Office"
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/qm)
 "yfA" = (
@@ -125503,7 +125496,7 @@ gBp
 kmM
 hGX
 mkk
-aTN
+aeu
 bPP
 bUN
 bUN
@@ -125760,7 +125753,7 @@ oMG
 clZ
 itC
 rCi
-aTN
+aeu
 fIn
 bUN
 bUN
@@ -126487,16 +126480,16 @@ mDQ
 qGq
 qGq
 nIg
-oAy
+dty
 cqr
 lDu
 sdy
 jdZ
 rZV
 dYw
+dYw
 cBP
-cBP
-svV
+yfv
 dYw
 lmO
 orD
