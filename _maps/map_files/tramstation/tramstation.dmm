@@ -2460,6 +2460,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
+/obj/effect/landmark/start/chief_medical_officer,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "bdM" = (
@@ -3895,6 +3896,13 @@
 /obj/effect/spawner/random/clothing/bowler_or_that,
 /turf/open/floor/iron,
 /area/station/service/bar)
+"bAQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/landmark/start/psychologist,
+/turf/open/floor/wood/parquet,
+/area/station/medical/psychology)
 "bAS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -12787,6 +12795,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "epz" = (
@@ -16348,6 +16359,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/security/office)
 "fEB" = (
@@ -25824,6 +25838,16 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/left)
+"iRS" = (
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance"
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/solars/port/aft)
 "iRX" = (
 /obj/effect/landmark/start/hangover,
 /obj/machinery/duct,
@@ -36946,6 +36970,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
+"mtb" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/chaplain,
+/turf/open/floor/iron/dark,
+/area/station/service/chapel)
 "mtw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -43356,6 +43387,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/landmark/start/chaplain,
 /turf/open/floor/wood/tile,
 /area/station/service/chapel)
 "oEt" = (
@@ -44399,6 +44431,9 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/solars/port/aft)
 "oXk" = (
@@ -50959,6 +50994,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/effect/landmark/start/chaplain,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
 "reU" = (
@@ -53216,6 +53252,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "rPy" = (
@@ -59225,7 +59262,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -66808,6 +66844,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/security/office)
 "wBB" = (
@@ -107265,12 +107304,12 @@ kFp
 kFp
 qvL
 qxt
+qxt
+qxt
+qxt
+qxt
+qxt
 sxa
-qxt
-qxt
-qxt
-qxt
-qxt
 qxt
 qxt
 qxt
@@ -107522,7 +107561,7 @@ kFp
 kFp
 qvL
 qxt
-sxa
+qxt
 qxt
 qxt
 qxt
@@ -157154,7 +157193,7 @@ iUs
 dCz
 jKx
 whg
-rEu
+mtb
 rEu
 tXn
 tCi
@@ -161266,7 +161305,7 @@ dCh
 xJj
 rBC
 xJj
-oWV
+iRS
 xJj
 oWV
 wgT
@@ -172303,7 +172342,7 @@ bFq
 bFq
 ksB
 iYm
-uOl
+bAQ
 uOl
 xKH
 ugt
