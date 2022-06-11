@@ -29721,7 +29721,7 @@
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating/airless,
-/area/mine/explored)
+/area/station/engineering/supermatter/room)
 "kfZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -32347,7 +32347,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/mine/explored)
+/area/station/engineering/supermatter/room)
 "kUo" = (
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -33061,6 +33061,10 @@
 "lfB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"lfD" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
 /area/station/engineering/supermatter/room)
 "lfE" = (
 /turf/open/floor/iron/cafeteria,
@@ -58959,7 +58963,7 @@
 /area/station/commons/vacant_room/office)
 "tRC" = (
 /turf/closed/wall/rock,
-/area/mine/explored)
+/area/station/engineering/supermatter/room)
 "tRE" = (
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
@@ -99092,10 +99096,10 @@ pDT
 sLE
 aRN
 xFs
-lvw
-lvw
+igy
+igy
 tRC
-lvw
+igy
 xFs
 ajc
 ajc
@@ -99350,8 +99354,8 @@ sLE
 aRN
 aRN
 kfR
-aRN
-aRN
+lfD
+lfD
 kUk
 aRN
 ajc
@@ -99606,9 +99610,9 @@ pDT
 sLE
 aRN
 xFs
-lvw
+igy
 tRC
-lvw
+igy
 tRC
 xFs
 ajc
@@ -99863,7 +99867,7 @@ pKr
 sLE
 aRN
 dhe
-dhe
+igy
 dhe
 dhe
 dhe
@@ -100120,7 +100124,7 @@ pDT
 sLE
 aRN
 dhe
-dhe
+igy
 dhe
 dhe
 dDG
