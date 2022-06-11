@@ -200,20 +200,20 @@ export class TguiModal extends Component<{}, State> {
     if (channel > 1 || value.length < 3) {
       return;
     }
-    const currentPrefix = value.slice(0, 3)?.toLowerCase();
-    if (!RADIO_PREFIXES[currentPrefix] || radioPrefix === currentPrefix) {
+    const nextPrefix = value.slice(0, 3)?.toLowerCase();
+    if (!RADIO_PREFIXES[nextPrefix] || radioPrefix === nextPrefix) {
       return;
     }
     this.value = value.slice(3);
-    this.radioPrefix = currentPrefix;
     // Binary is a "secret" channel
-    if (currentPrefix === ':b ') {
+    if (nextPrefix === ':b ') {
       Byond.sendMessage('thinking', { mode: false });
-    } else {
+    } else if (radioPrefix === ':b ' && nextPrefix !== ':b ') {
       Byond.sendMessage('thinking', { mode: true });
     }
+    this.radioPrefix = nextPrefix;
     this.setState({
-      buttonContent: RADIO_PREFIXES[currentPrefix]?.label,
+      buttonContent: RADIO_PREFIXES[nextPrefix]?.label,
       channel: 0,
       edited: true,
     });
