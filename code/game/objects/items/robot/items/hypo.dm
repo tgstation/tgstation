@@ -84,7 +84,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "borghypo"
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list(2, 5)
+	possible_transfer_amounts = list(2,5)
 
 	/** The maximum volume for each reagent stored in this hypospray
 	 * In most places we add + 1 because we're secretly keeping [max_volume_per_reagent + 1]
@@ -104,12 +104,16 @@
 	/// If this hypospray has been upgraded
 	var/upgraded = FALSE
 
+	/// The basic reagents that come with this hypo
 	var/list/default_reagent_types
+	/// The expanded suite of reagents that comes from upgrading this hypo
 	var/list/expanded_reagent_types
 
+	/// The reagents we're actually storing
 	var/datum/reagents/stored_reagents
+	/// The reagent we've selected to dispense
 	var/datum/reagent/selected_reagent
-
+	/// The theme for our UI (hacked hypos get syndicate UI)
 	var/tgui_theme = "ntos"
 
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
@@ -135,11 +139,11 @@
 		charge_timer = 0
 	return 1
 
-// Use this to add more chemicals for the borghypo to produce.
+/// Use this to add more chemicals for the borghypo to produce.
 /obj/item/reagent_containers/borghypo/proc/add_new_reagent(datum/reagent/reagent)
 	stored_reagents.add_reagent(reagent, (max_volume_per_reagent + 1), reagtemp = dispensed_temperature, no_react = TRUE)
 
-///
+/// Regenerate our supply of all reagents (if they're not full already)
 /obj/item/reagent_containers/borghypo/proc/regenerate_reagents(list/reagents_to_regen)
 	if(iscyborg(src.loc))
 		var/mob/living/silicon/robot/cyborg = src.loc
@@ -234,6 +238,7 @@
 	default_reagent_types = BASE_MEDICAL_REAGENTS
 	expanded_reagent_types = EXPANDED_MEDICAL_REAGENTS
 
+/// Upgrade our hypospray to hold even more new reagents!
 /obj/item/reagent_containers/borghypo/medical/proc/upgrade_hypo()
 	// Expand the holder's capacity to allow for our new suite of reagents
 	stored_reagents.maximum_volume += (length(expanded_reagent_types) * (max_volume_per_reagent + 1))
@@ -241,6 +246,7 @@
 		var/datum/reagent/reagent_to_add = reagent
 		add_new_reagent(reagent_to_add)
 
+/// Remove the reagents we got from the expansion, back to our base reagents
 /obj/item/reagent_containers/borghypo/medical/proc/remove_hypo_upgrade()
 	for(var/reagent in expanded_reagent_types)
 		var/datum/reagent/reagent_to_remove = reagent
