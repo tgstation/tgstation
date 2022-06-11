@@ -22,7 +22,7 @@
 	icons = typelist("icons", icons)
 
 /turf/open/floor/mineral/setup_broken_states()
-	return list("[initial(icon_state)]_dam")
+	return list("[initial(icon_state)]_damaged")
 
 /turf/open/floor/mineral/update_icon_state()
 	if(!broken && !burnt && !(icon_state in icons))
@@ -35,7 +35,7 @@
 	name = "plasma floor"
 	icon_state = "plasma"
 	floor_tile = /obj/item/stack/tile/mineral/plasma
-	icons = list("plasma","plasma_dam")
+	icons = list("plasma","plasma_damaged")
 	custom_materials = list(/datum/material/plasma = 500)
 
 //Plasma floor that can't be removed, for disco inferno
@@ -43,6 +43,9 @@
 /turf/open/floor/mineral/plasma/disco/crowbar_act(mob/living/user, obj/item/I)
 	return
 
+/turf/open/floor/mineral/plasma/damaged
+	broken = TRUE
+	icon_state = "plasma_damaged"
 
 //GOLD
 
@@ -50,8 +53,12 @@
 	name = "gold floor"
 	icon_state = "gold"
 	floor_tile = /obj/item/stack/tile/mineral/gold
-	icons = list("gold","gold_dam")
+	icons = list("gold","gold_damaged")
 	custom_materials = list(/datum/material/gold = 500)
+
+/turf/open/floor/mineral/gold/damaged
+	broken = TRUE
+	icon_state = "gold_damaged"
 
 //SILVER
 
@@ -59,8 +66,12 @@
 	name = "silver floor"
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
-	icons = list("silver","silver_dam")
+	icons = list("silver","silver_damaged")
 	custom_materials = list(/datum/material/silver = 500)
+
+/turf/open/floor/mineral/silver
+	broken = TRUE
+	icon_state = "silver_damaged"
 
 //TITANIUM (shuttle)
 
@@ -71,7 +82,32 @@
 	custom_materials = list(/datum/material/titanium = 500)
 
 /turf/open/floor/mineral/titanium/setup_broken_states()
-	return list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
+	return list(
+		"titanium_lightdamage",
+		"titanium_heavydamage",
+		"titanium_milddamage",
+		"titanium_moderatedamage",
+		"titanium_highdamage",
+	)
+
+/turf/open/floor/mineral/titanium/damaged
+	broken = TRUE
+
+/turf/open/floor/mineral/titanium/damaged/light
+	icon_state = "titanium_lightdamage"
+
+/turf/open/floor/mineral/titanium/damaged/mild
+	icon_state = "titanium_milddamage"
+
+/turf/open/floor/mineral/titanium/damaged/moderate
+	icon_state = "titanium_moderatedamage"
+
+/turf/open/floor/mineral/titanium/damaged/high
+	icon_state = "titanium_highdamage"
+
+/turf/open/floor/mineral/titanium/damaged/heavy
+	icon_state = "titanium_heavydamage"
+
 
 /turf/open/floor/mineral/titanium/rust_heretic_act()
 	return // titanium does not rust
@@ -110,11 +146,35 @@
 // OLD TITANIUM (titanium floor tiles before PR #50454)
 /turf/open/floor/mineral/titanium/tiled
 	name = "titanium tile"
-	icon_state = "titanium_tiled"
+	icon_state = "titanium_tile"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled
 
 /turf/open/floor/mineral/titanium/tiled/setup_broken_states()
-	return list("titanium_dam1_old","titanium_dam2_old","titanium_dam3_old","titanium_dam4_old","titanium_dam5_old")
+	return list(
+		"titanium_tile-lightdamage",
+		"titanium_tile-highdamage",
+		"titanium_tile-milddamage",
+		"titanium_tile-moderatedamage",
+		"titanium_tile-heavydamage",
+	)
+
+/turf/open/floor/mineral/titanium/tiled/damaged
+	broken = TRUE
+
+/turf/open/floor/mineral/titanium/tiled/damaged/light
+	icon_state = "titanium_tile-lightdamage"
+
+/turf/open/floor/mineral/titanium/tiled/damaged/mild
+	icon_state = "titanium_tile-milddamage"
+
+/turf/open/floor/mineral/titanium/tiled/damaged/moderate
+	icon_state = "titanium_tile-moderatedamage"
+
+/turf/open/floor/mineral/titanium/tiled/damaged/high
+	icon_state = "titanium_tile-highdamage"
+
+/turf/open/floor/mineral/titanium/tiled/damaged/heavy
+	icon_state = "titanium_tile-heavydamage"
 
 /turf/open/floor/mineral/titanium/tiled/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -155,10 +215,34 @@
 	custom_materials = list(/datum/material/alloy/plastitanium = 500)
 
 /turf/open/floor/mineral/plastitanium/setup_broken_states()
-	return list("plastitanium_dam1","plastitanium_dam2","plastitanium_dam3","plastitanium_dam4","plastitanium_dam5")
+	return list(
+		"plastitanium_lightdamage",
+		"plastitanium_highdamage",
+		"plastitanium_milddamage",
+		"plastitanium_moderatedamage",
+		"plastitanium_heavydamage",
+	)
 
 /turf/open/floor/mineral/plastitanium/rust_heretic_act()
 	return // plastitanium does not rust
+
+/turf/open/floor/mineral/plastitanium/damaged
+	broken = TRUE
+
+/turf/open/floor/mineral/plastitanium/damaged/light
+	icon_state = "plastitanium_lightdamage"
+
+/turf/open/floor/mineral/plastitanium/damaged/mild
+	icon_state = "plastitanium_milddamage"
+
+/turf/open/floor/mineral/plastitanium/damaged/moderate
+	icon_state = "plastitanium_moderatedamage"
+
+/turf/open/floor/mineral/plastitanium/damaged/high
+	icon_state = "plastitanium_highdamage"
+
+/turf/open/floor/mineral/plastitanium/damaged/heavy
+	icon_state = "plastitanium_heavydamage"
 
 /turf/open/floor/mineral/plastitanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -183,7 +267,7 @@
 	name = "bananium floor"
 	icon_state = "bananium"
 	floor_tile = /obj/item/stack/tile/mineral/bananium
-	icons = list("bananium","bananium_dam")
+	icons = list("bananium","bananium_damaged")
 	custom_materials = list(/datum/material/bananium = 500)
 	material_flags = NONE //The slippery comp makes it unpractical for good clown decor. The custom mat one should still slip.
 	var/sound_cooldown = 0
@@ -220,6 +304,10 @@
 		playsound(src, SFX_CLOWN_STEP, 50, TRUE)
 		sound_cooldown = world.time + 10
 
+/turf/open/floor/mineral/bananium/damaged
+	broken = TRUE
+	icon_state = "bananium_damaged"
+
 /turf/open/floor/mineral/bananium/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -229,7 +317,7 @@
 	name = "diamond floor"
 	icon_state = "diamond"
 	floor_tile = /obj/item/stack/tile/mineral/diamond
-	icons = list("diamond","diamond_dam")
+	icons = list("diamond","diamond_damaged")
 	custom_materials = list(/datum/material/diamond = 500)
 
 //URANIUM
@@ -239,7 +327,7 @@
 	name = "uranium floor"
 	icon_state = "uranium"
 	floor_tile = /obj/item/stack/tile/mineral/uranium
-	icons = list("uranium","uranium_dam")
+	icons = list("uranium","uranium_damaged")
 	custom_materials = list(/datum/material/uranium = 500)
 	var/last_event = 0
 	var/active = null
@@ -283,12 +371,26 @@
 			active = FALSE
 			return
 
+/turf/open/floor/mineral/uranium/damaged
+	broken = TRUE
+	icon_state = "uranium_damaged"
+
 // ALIEN ALLOY
 /turf/open/floor/mineral/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
 	floor_tile = /obj/item/stack/tile/mineral/abductor
-	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
+	icons = list(
+		"alienpod1",
+		"alienpod2",
+		"alienpod3",
+		"alienpod4",
+		"alienpod5",
+		"alienpod6",
+		"alienpod7",
+		"alienpod8",
+		"alienpod9",
+	)
 	baseturfs = /turf/open/floor/plating/abductor2
 	custom_materials = list(/datum/material/alloy/alien = 500)
 

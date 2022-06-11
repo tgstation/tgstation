@@ -3,11 +3,19 @@
 	floor_tile = /obj/item/stack/tile/iron/base
 
 /turf/open/floor/iron/setup_broken_states()
-	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+	return list(
+		"floor_milddamage",
+		"floor_lightdamage",
+		"floor_highdamage",
+		"floor_moderatedamage",
+		"floor_heavydamage",
+	)
 
 /turf/open/floor/iron/setup_burnt_states()
-	return list("floorscorched1", "floorscorched2")
-
+	return list(
+		"floor_moderatescorched",
+		"floor_heavyscorched",
+	)
 
 /turf/open/floor/iron/examine(mob/user)
 	. = ..()
@@ -25,15 +33,122 @@
 	icon_state = base_icon_state
 	return ..()
 
+/turf/open/floor/iron/damaged
+	broken = TRUE
+
+/turf/open/floor/iron/damaged/light
+	icon_state = "floor_lightdamage"
+
+/turf/open/floor/iron/damaged/mild
+	icon_state = "floor_milddamage"
+
+/turf/open/floor/iron/damaged/moderate
+	icon_state = "floor_moderatedamage"
+
+/turf/open/floor/iron/damaged/high
+	icon_state = "floor_highdamage"
+
+/turf/open/floor/iron/damaged/heavy
+	icon_state = "floor_heavydamage"
+
+/turf/open/floor/iron/damaged/burnt
+	burnt = TRUE
+
+/turf/open/floor/iron/damaged/burnt/moderate
+	icon_state = "floor_moderatescorched"
+
+/turf/open/floor/iron/damaged/burnt/heavy
+	icon_state = "floor_heavyscorched"
 
 /turf/open/floor/iron/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/iron/airless/damaged
+	broken = TRUE
+
+/turf/open/floor/iron/airless/damaged/light
+	icon_state = "floor_lightdamage"
+
+/turf/open/floor/iron/airless/damaged/mild
+	icon_state = "floor_milddamage"
+
+/turf/open/floor/iron/airless/damaged/moderate
+	icon_state = "floor_moderatedamage"
+
+/turf/open/floor/iron/airless/damaged/high
+	icon_state = "floor_highdamage"
+
+/turf/open/floor/iron/airless/damaged/heavy
+	icon_state = "floor_heavydamage"
+
+/turf/open/floor/iron/airless/damaged/burnt
+	burnt = TRUE
+
+/turf/open/floor/iron/airless/damaged/burnt/moderate
+	icon_state = "floor_moderatescorched"
+
+/turf/open/floor/iron/airless/damaged/burnt/heavy
+	icon_state = "floor_heavyscorched"
+
 /turf/open/floor/iron/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
+/turf/open/floor/iron/telecomms
+	broken = TRUE
+
+/turf/open/floor/iron/telecomms/damaged/light
+	icon_state = "floor_lightdamage"
+
+/turf/open/floor/iron/telecomms/damaged/mild
+	icon_state = "floor_milddamage"
+
+/turf/open/floor/iron/telecomms/damaged/moderate
+	icon_state = "floor_moderatedamage"
+
+/turf/open/floor/iron/telecomms/damaged/high
+	icon_state = "floor_highdamage"
+
+/turf/open/floor/iron/telecomms/damaged/heavy
+	icon_state = "floor_heavydamage"
+
+/turf/open/floor/iron/telecomms/damaged/burnt
+	burnt = TRUE
+
+/turf/open/floor/iron/telecomms/damaged/burnt/moderate
+	icon_state = "floor_moderatescorched"
+
+/turf/open/floor/iron/telecomms/damaged/burnt/heavy
+	icon_state = "floor_heavyscorched"
+
 /turf/open/floor/iron/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
+/turf/open/floor/iron/icemoon/damaged
+	broken = TRUE
+
+/turf/open/floor/iron/icemoon/damaged/light
+	icon_state = "floor_lightdamage"
+
+/turf/open/floor/iron/icemoon/damaged/mild
+	icon_state = "floor_milddamage"
+
+/turf/open/floor/iron/icemoon/damaged/moderate
+	icon_state = "floor_moderatedamage"
+
+/turf/open/floor/iron/icemoon/damaged/high
+	icon_state = "floor_highdamage"
+
+/turf/open/floor/iron/icemoon/damaged/heavy
+	icon_state = "floor_heavydamage"
+
+/turf/open/floor/iron/icemoon/damaged/burnt
+	burnt = TRUE
+
+/turf/open/floor/iron/icemoon/damaged/burnt/moderate
+	icon_state = "floor_moderatescorched"
+
+/turf/open/floor/iron/icemoon/damaged/burnt/heavy
+	icon_state = "floor_heavyscorched"
 
 /turf/open/floor/iron/edge
 	icon_state = "floor_edge"

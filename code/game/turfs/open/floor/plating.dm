@@ -1,6 +1,6 @@
 /**
  * PLATINGS
- * 
+ *
  * Handle interaction with tiles and lets you put stuff on top of it.
  */
 /turf/open/floor/plating
@@ -23,10 +23,14 @@
 	var/allow_replacement = TRUE
 
 /turf/open/floor/plating/setup_broken_states()
-	return list("platingdmg1", "platingdmg2", "platingdmg3")
+	return list(
+		"plating_milddamage",
+		"plating_mediumdamage",
+		"plating_heavydamage",
+	)
 
 /turf/open/floor/plating/setup_burnt_states()
-	return list("panelscorched")
+	return list("platingscorched")
 
 /turf/open/floor/plating/examine(mob/user)
 	. = ..()
@@ -150,3 +154,21 @@
 
 /turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
 	return
+
+// Subtypes of plating that show up damaged - for mapping purposes.
+
+/turf/open/floor/plating/damaged
+	broken = TRUE
+
+/turf/open/floor/plating/damaged/mild
+	icon_state = "plating_milddamage"
+
+/turf/open/floor/plating/damaged/medium
+	icon_state = "plating_mediumdamage"
+
+/turf/open/floor/plating/damaged/heavy
+	icon_state = "plating_heavydamage"
+
+/turf/open/floor/plating/damaged/scorched
+	burnt = TRUE
+	icon_state = "plating_scorched"

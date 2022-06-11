@@ -17,7 +17,11 @@
 	overfloor_placed = FALSE
 
 /turf/open/floor/glass/setup_broken_states()
-	return list("glass-damaged1", "glass-damaged2", "glass-damaged3")
+	return list(
+		"glass-mediumdamage",
+		"glass-milddamage",
+		"glass-highdamage",
+		)
 
 /turf/open/floor/glass/Initialize(mapload)
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
@@ -31,6 +35,18 @@
 /turf/open/floor/glass/make_plating()
 	return
 
+/turf/open/floor/glass/damaged
+	broken = TRUE
+
+/turf/open/floor/glass/damaged/mild
+	icon_state = "glass-milddamage"
+
+/turf/open/floor/glass/damaged/medium
+	icon_state = "glass-mediumdamage"
+
+/turf/open/floor/glass/damaged/high
+	icon_state = "glass-highdamage"
+
 /turf/open/floor/glass/reinforced
 	name = "reinforced glass floor"
 	desc = "Do jump on it, it can take it."
@@ -40,13 +56,23 @@
 	floor_tile = /obj/item/stack/tile/rglass
 
 /turf/open/floor/glass/reinforced/icemoon
-	name = "reinforced glass floor"
-	desc = "Do jump on it, it can take it."
-	icon = 'icons/turf/floors/reinf_glass.dmi'
-	icon_state = "reinf_glass-0"
-	base_icon_state = "reinf_glass"
-	floor_tile = /obj/item/stack/tile/rglass
 	initial_gas_mix = "ICEMOON_ATMOS"
 
 /turf/open/floor/glass/reinforced/setup_broken_states()
-	return list("reinf_glass-damaged1", "reinf_glass-damaged2", "reinf_glass-damaged3")
+	return list(
+		"reinf_glass-mediumdamage",
+		"reinf_glass-milddamage",
+		"reinf_glass-highdamage",
+	)
+
+/turf/open/floor/glass/reinforced/damaged
+	broken = TRUE
+
+/turf/open/floor/glass/reinforced/damaged/mild
+	icon_state = "reinf_glass-milddamage"
+
+/turf/open/floor/glass/reinforced/damaged/medium
+	icon_state = "reinf_glass-mediumdamage"
+
+/turf/open/floor/glass/reinforced/damaged/high
+	icon_state = "reinf_glass-highdamage"

@@ -87,3 +87,53 @@
 	name = "elevator shaft"
 	icon_state = "elevatorshaft"
 	base_icon_state = "elevatorshaft"
+
+// Damaged Subtypes
+
+/turf/open/floor/plating/airless/damaged
+	broken = TRUE
+
+/turf/open/floor/plating/airless/damaged/mild
+	icon_state = "plating_milddamage"
+
+/turf/open/floor/plating/airless/damaged/medium
+	icon_state = "plating_mediumdamage"
+
+/turf/open/floor/plating/airless/damaged/heavy
+	icon_state = "plating_heavydamage"
+
+/turf/open/floor/plating/airless/damaged/scorched
+	burnt = TRUE
+	icon_state = "plating_scorched"
+
+/turf/open/floor/plating/lowpressure/damaged
+	broken = TRUE
+
+/turf/open/floor/plating/lowpressure/damaged/mild
+	icon_state = "plating_milddamage"
+
+/turf/open/floor/plating/lowpressure/damaged/medium
+	icon_state = "plating_mediumdamage"
+
+/turf/open/floor/plating/lowpressure/damaged/heavy
+	burnt = TRUE
+	icon_state = "plating_heavydamage"
+
+/turf/open/floor/plating/lowpressure/damaged/scorched
+	icon_state = "plating_scorched"
+
+/turf/open/floor/plating/icemoon/damaged
+	broken = TRUE
+
+/turf/open/floor/plating/icemoon/damaged/mild
+	icon_state = "plating_milddamage"
+
+/turf/open/floor/plating/icemoon/damaged/medium
+	icon_state = "plating_mediumdamage"
+
+/turf/open/floor/plating/icemoon/damaged/heavy
+	icon_state = "plating_heavydamage"
+
+/turf/open/floor/plating/icemoon/damaged/scorched
+	burnt = TRUE
+	icon_state = "plating_scorched"
