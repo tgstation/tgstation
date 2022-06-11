@@ -2191,7 +2191,7 @@
 /obj/machinery/door/window/left/directional/east{
 	icon_state = "right";
 	name = "Incoming Mail";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -31770,7 +31770,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/west{
 	name = "Delivery Desk";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
