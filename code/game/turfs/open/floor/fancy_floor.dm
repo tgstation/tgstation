@@ -142,28 +142,28 @@
 		"wood_parquet-lowdamage",
 	)
 
-/turf/open/floor/wood/damaged
+/turf/open/floor/wood/parquet/damaged
 	broken = TRUE
 
-/turf/open/floor/wood/damaged/parquet/light
+/turf/open/floor/wood/parquet/damaged/light
 	icon_state = "wood_parquet-lightdamage"
 
-/turf/open/floor/wood/damaged/parquet/low
+/turf/open/floor/wood/parquet/damaged/low
 	icon_state = "wood_parquet-lowdamage"
 
-/turf/open/floor/wood/damaged/parquet/mild
+/turf/open/floor/wood/parquet/damaged/mild
 	icon_state = "wood_parquet-milddamage"
 
-/turf/open/floor/wood/damaged/parquet/moderate
+/turf/open/floor/wood/parquet/damaged/moderate
 	icon_state = "wood_parquet-moderatedamage"
 
-/turf/open/floor/wood/damaged/parquet/medium
+/turf/open/floor/wood/parquet/damaged/medium
 	icon_state = "wood_parquet-mediumdamage"
 
-/turf/open/floor/wood/damaged/parquet/high
+/turf/open/floor/wood/parquet/damaged/high
 	icon_state = "wood_parquet-highdamage"
 
-/turf/open/floor/wood/damaged/parquet/heavy
+/turf/open/floor/wood/parquet/damaged/heavy
 	icon_state = "wood_parquet-heavydamage"
 
 /turf/open/floor/wood/large
