@@ -112,4 +112,4 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
  * Honestly the heat capacity is interchangeable, just make sure the delta is right.
  */
 #define CALCULATE_CONDUCTION_ENERGY(temperature_delta, heat_capacity_one, heat_capacity_two)\
-	(temperature_delta * (heat_capacity_one * (heat_capacity_two / (heat_capacity_one+heat_capacity_two))))
+	((temperature_delta) * ((heat_capacity_one) * ((heat_capacity_two) / ((heat_capacity_one) + (heat_capacity_two)))))
