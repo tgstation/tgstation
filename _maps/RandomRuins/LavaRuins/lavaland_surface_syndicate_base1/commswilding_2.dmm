@@ -172,9 +172,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/airlock/hatch{
-	name = "Telecommunications";
-	req_access = list("syndicate")
+	name = "Telecommunications"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/modular_map_connector,
 /turf/template_noop,
 /area/ruin/syndicate_lava_base/telecomms)

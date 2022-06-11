@@ -1202,3 +1202,126 @@
   - bugfix: Fix transparent floors ignoring blur effects
   - bugfix: Fix slime potions used on simple mobs to inherit all language abilities
       from the user
+2022-05-28:
+  Fikou:
+  - qol: you refill the modsuit plasma core with all your plasma at once
+  Iamgoofball:
+  - bugfix: Fixes an obvious oversight resulting in stacking inventory items to violate
+      the laws of physics. Belts are now Bulky and do not fit in bags.
+  JohnFulpWillard:
+  - bugfix: Tablet lights are now directional, like PDAs used to be.
+  JoshAdamPowell:
+  - spellcheck: Scrubber clog event will no longer end every area name in 'area',
+      like recreation area area.
+  Melbert:
+  - bugfix: Reactive Delimber armor works, for real
+  Mooshimi:
+  - qol: Ghosts will now see the name of who rolled the antagonist instead of the
+      new antagonist name.
+  RandomGamer123:
+  - bugfix: Plasmamen no longer burn in a much larger variety of situations (eg. full
+      atmos firesuit, space-proof suit but without gloves) that they logically shouldn't
+      (and previously didn't) burn in
+  SmArtKar:
+  - bugfix: Fixed most eye color effects not working
+  - bugfix: Fixed foam spreading through public airlocks and windoors
+  Thunder12345:
+  - imageadd: Medals have been resprited and should now look 126% more swag.
+  Wallem:
+  - rscadd: Bug-based food items have been given their own foodtype. Lizards, Slimes,
+      and Felinids love bugs! Humans, Moths, and Podpeople don't.
+  private-tristan:
+  - spellcheck: blade heretic lore for how much silver it takes to make a blade is
+      now correct
+  vincentiusvin:
+  - balance: Made adv engi tech node require bz shells as an experiment, organs no
+      longer need it.
+  - balance: Adv mining no longer requires adv engi.
+  - balance: Removed nitrium and halon shell, implant experiment lock lifted because
+      of the former.
+  - balance: Relocked sec 1 tech node to need pressure bombs, sec 2 no longer needs
+      tritium bomb.
+  - balance: Made advanced pressure bombs easier to do without funny fusion gases.
+  - balance: Added a new mining partner that accepts smaller (even non-atmos/non-ordnance
+      related) bombs
+  - balance: Added more options to purchase nodes in the paper partners. Your point
+      gain stays the same though.
+  - balance: Removed roundstart BZ can from xenobio.
+2022-05-29:
+  LemonInTheDark:
+  - balance: Smoke and foam can no longer continuously react their reagents
+  MTandi:
+  - imageadd: Changed light switch sprite and made it depend on the power availability.
+  - rscadd: Added microscope crafting recipe
+  - balance: 'Techweb: Moved cytology tools to a single node from different nodes'
+  - balance: 'Techweb: Operating computer now available before the experiment that
+      requires it'
+  - refactor: oldstation map size now 112x64
+  SmArtKar:
+  - rscadd: Added eyesnatcher objective which requires you to pull out someone's eyes.
+      You will be given an automatic eye extractor to assit you in that.
+  - rscadd: Added kidnapping objective which works similarly to old contractors
+  - rscadd: Added locate weakpoint objective which will require you to scan two areas(AI
+      will be alerted about the scan) and then detonate a powerful explosive in a
+      third one
+  - rscadd: Added "public" version of sleeper protocol which has high progression
+      requirement but itsn't job-locked
+  - balance: Default version of Sleeper Protocol now can be rolled by roboticists
+      as well(since they have an operating table with a console)
+  axietheaxolotl:
+  - rscadd: Brand new HoP coat!
+  - imageadd: New sprites for HoP's uniform, skirt, cap, and the ID Painter.
+  - bugfix: HoP starts with laceups, not brown sneakers.
+2022-05-30:
+  Fikou:
+  - bugfix: fixes airlock ai mapping helpers not working
+  - bugfix: chem master now lists a correct metabolization rate
+  Mooshimi:
+  - bugfix: Random windoor inside a wall in chapel maintenance on icebox is now gone.
+  - bugfix: There is now only one firelock in lower ordinance, instead of two in the
+      same door.
+  Son-of-Space:
+  - qol: access helpers have been added for the rest of our shuttles that needed them
+  - bugfix: Our away missions and ruins now use access helpers instead of varedits
+  - bugfix: access to medical laptops is now consistent across all stations
+  - spellcheck: Fixed the name of a shutter button on KiloStation
+  - code_imp: Reorganized the UpdatePaths folder
+2022-05-31:
+  Comxy:
+  - imageadd: added new hallucination and delimber anomaly icons
+  - imagedel: deleted old hallucination and delimber anomaly icons
+  Fikou:
+  - bugfix: fixes crusher inhands being swapped
+  GoldenAlpharex:
+  - bugfix: Map votes will now happen again once the shuttle departs, regardless of
+      whether your server allows everyone to start a map vote or not, as intended.
+  Iamgoofball:
+  - rscadd: Aurora Caelus is now localized entirely within your station's kitchen.
+  Melbert:
+  - rscadd: The science breakroom on Icebox is in a slightly nicer state again.
+  - bugfix: Chaplains no longer trigger their own anti-magic when they use Nullwave
+      Vibrato.
+  - code_imp: Reduced some copy+paste from sect music code.
+  Meyhazah:
+  - imageadd: Resprited chaplain's witch hunter set.
+  ReinaCoder:
+  - qol: Head of Personnels rejoice! Their jumpsuit when adjusted no longer covers
+      the chest.
+  Ryll/Shaps:
+  - balance: Armor can now only block up to 90% of damage from projectiles, same as
+      for melee attacks
+  - bugfix: Pellet cloud attacks like buckshot and frag grenades now respect armor
+      damage reduction when rolling for wounds
+  Son-of-Space:
+  - qol: Access helpers were added to centcom
+  - bugfix: Some accesses in centcomm were made more consistent
+  Son-of-Space, Pepsilawn:
+  - code_imp: Adds checks for double firelocks or airlocks
+  - bugfix: fixes several double firelocks and airlocks across our maps
+  Urumasi, Meyhazah:
+  - imageadd: The H.E.C.K. suit has a new sprite. (by Meyhazah)
+  - rscadd: You can now use a spray can to completely recolor the H.E.C.K. suit.
+  tralezab:
+  - balance: Unique AI trait now gets rid of the station's DIFFERENT lawset modules,
+      and increases the research cost to unlocking them.
+  - qol: AI is given a printout of their new laws

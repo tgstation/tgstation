@@ -745,6 +745,7 @@
 	LAZYCLEARLIST(component_parts)
 	return ..()
 
+
 /**
  * Spawns a frame where this machine is. If the machine was not disassmbled, the
  * frame is spawned damaged. If the frame couldn't exist on this turf, it's smashed
