@@ -5194,9 +5194,9 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "bFD" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/binary/valve{
+/obj/machinery/atmospherics/components/binary/pump/off/pink/visible{
 	dir = 4;
-	name = "Exfiltrate To Port"
+	name = "Exfiltrate to Port"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/mix)
@@ -24323,9 +24323,9 @@
 /area/station/command/teleporter)
 "hGk" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/binary/valve{
-	dir = 4;
-	name = "Exfiltrate To Waste"
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Exfiltrate to Waste"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/mix)
@@ -27735,6 +27735,14 @@
 /obj/machinery/atmospherics/pipe/smart/simple/brown/visible,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"iLh" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/arrows/white{
+	color = "#0000FF";
+	pixel_y = 15
+	},
+/turf/open/floor/engine,
+/area/station/engineering/atmos/hfr_room)
 "iLt" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
@@ -38422,7 +38430,10 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty{
+	pixel_y = 0;
+	pixel_x = 2
+	},
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/cable_coil{
 	pixel_x = -3;
@@ -41324,7 +41335,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 5
 	},
 /turf/open/floor/iron/dark,
@@ -60116,7 +60127,7 @@
 /area/station/security/office)
 "sMZ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -60465,10 +60476,6 @@
 /area/station/hallway/primary/central)
 "sUr" = (
 /obj/effect/turf_decal/box/white,
-/obj/effect/turf_decal/arrows/white{
-	color = "#0000FF";
-	pixel_y = 15
-	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
 "sUv" = (
@@ -180953,7 +180960,7 @@ hDa
 weu
 iNX
 sUr
-vda
+iLh
 oVE
 uiD
 upM
