@@ -14254,11 +14254,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"ewk" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/underground/explored)
 "ewq" = (
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/light/directional/north,
@@ -63740,7 +63735,6 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/fore/greater)
 "tVK" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -183770,7 +183764,7 @@ udC
 wCo
 oxO
 wCo
-ewk
+eJf
 nfG
 hku
 bsX
