@@ -81,6 +81,10 @@
 			you are stopped by a mental blockage. It seems you've been foiled."))
 		return
 
+	if(cast_on == owner)
+		to_chat(owner, span_warning("You plunge into your mind... Yep, it's your mind.))
+		return
+
 	to_chat(owner, span_boldnotice("You plunge into [cast_on]'s mind..."))
 	if(prob(20))
 		// chance to alert the read-ee
