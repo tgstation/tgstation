@@ -498,9 +498,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
 	dir = 6
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/turf/open/floor/plating/damaged/heavy,
 /area/ruin/space/has_grav/listeningstation)
 "zV" = (
 /obj/structure/sign/nanotrasen{
@@ -682,9 +680,7 @@
 	name = "Syndicate Ceritified Drinking Water";
 	desc = "Who knew water could taste so good?"
 	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/ruin/space/has_grav/listeningstation)
 "Jj" = (
 /obj/structure/lattice/catwalk,
@@ -823,9 +819,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating/damaged/mild,
 /area/ruin/space/has_grav/listeningstation)
 "QI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

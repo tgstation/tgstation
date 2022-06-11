@@ -103,17 +103,13 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating/damaged/mild,
 /area/shuttle/escape)
 "eq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/open/floor/plating/damaged/medium,
 /area/shuttle/escape)
 "ev" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
@@ -371,9 +367,7 @@
 	dir = 8
 	},
 /obj/structure/grille/broken,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/shuttle/escape)
 "lS" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -874,18 +868,14 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
-/turf/open/floor/iron{
-	icon_state = "floorscorched1"
-	},
+/turf/open/floor/iron/damaged/burnt/moderate,
 /area/shuttle/escape)
 "Hi" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/open/floor/plating/damaged/medium,
 /area/shuttle/escape)
 "Hq" = (
 /obj/structure/flora/rock/pile/style_random,
@@ -1079,9 +1069,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/shuttle/escape)
 "QO" = (
 /obj/effect/turf_decal/weather/dirt{

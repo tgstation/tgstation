@@ -7,9 +7,7 @@
 /area/centcom/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating/damaged/mild,
 /area/centcom/mafia)
 "h" = (
 /obj/structure/grille/indestructable,
@@ -70,9 +68,7 @@
 /area/centcom/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/centcom/mafia)
 "x" = (
 /obj/machinery/door/poddoor/preopen{

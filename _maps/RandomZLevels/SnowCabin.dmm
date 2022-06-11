@@ -185,9 +185,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/baseturf_helper/asteroid/snow,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/awaymission/cabin)
 "aF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -237,9 +235,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/awaymission/cabin)
 "aN" = (
 /obj/structure/chair/wood{
@@ -272,9 +268,7 @@
 	name = "geothermal generator"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/awaymission/cabin)
 "aR" = (
 /obj/machinery/door/window/right/directional/west{
@@ -859,9 +853,7 @@
 /area/awaymission/cabin)
 "cT" = (
 /obj/vehicle/ridden/atv,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating/damaged/mild,
 /area/awaymission/cabin)
 "cU" = (
 /obj/machinery/light/directional/north,
@@ -873,15 +865,11 @@
 /area/awaymission/cabin)
 "cW" = (
 /obj/item/shovel,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating/damaged/mild,
 /area/awaymission/cabin)
 "cX" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/open/floor/plating/damaged/medium,
 /area/awaymission/cabin)
 "cZ" = (
 /turf/open/floor/plating/snowed/snow_cabin,
@@ -996,9 +984,7 @@
 "du" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/awaymission/cabin)
 "dv" = (
 /obj/structure{
@@ -1011,9 +997,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/awaymission/cabin)
 "dw" = (
 /mob/living/simple_animal/hostile/bear/snow{
@@ -1162,9 +1146,7 @@
 /area/awaymission/cabin)
 "ec" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/awaymission/cabin)
 "ed" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2225,9 +2207,7 @@
 /obj/item/lightreplacer,
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/damaged/scorched,
 /area/awaymission/cabin)
 "hx" = (
 /obj/structure/cable,

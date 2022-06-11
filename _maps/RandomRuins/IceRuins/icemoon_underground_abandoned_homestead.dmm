@@ -36,8 +36,7 @@
 /area/icemoon/underground/explored)
 "hM" = (
 /obj/structure/barricade/wooden/crude/snow,
-/turf/open/floor/wood{
-	icon_state = "wood-broken7";
+/turf/open/floor/wood/damaged/low{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -108,8 +107,7 @@
 /area/ruin/powered/shuttle)
 "uA" = (
 /obj/structure/barricade/wooden/snowed,
-/turf/open/floor/wood{
-	icon_state = "wood-broken6";
+/turf/open/floor/wood/damaged/light{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -254,8 +252,7 @@
 /area/ruin/powered/shuttle)
 "Hy" = (
 /obj/structure/barricade/wooden/crude/snow,
-/turf/open/floor/wood{
-	icon_state = "wood-broken";
+/turf/open/floor/wood/damaged/heavy{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -363,15 +360,13 @@
 /area/icemoon/underground/explored)
 "Ux" = (
 /obj/structure/barricade/wooden/snowed,
-/turf/open/floor/wood{
-	icon_state = "wood-broken3";
+/turf/open/floor/wood/damaged/mild{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Vf" = (
 /obj/structure/barricade/wooden/snowed,
-/turf/open/floor/wood{
-	icon_state = "wood-broken";
+/turf/open/floor/wood/damaged/heavy{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)

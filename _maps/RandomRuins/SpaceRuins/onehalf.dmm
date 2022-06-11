@@ -113,9 +113,7 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "ay" = (
 /obj/structure/table_frame,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/turf/open/floor/iron/airless/damaged/high,
 /area/ruin/space/has_grav/onehalf/hallway)
 "az" = (
 /obj/machinery/washing_machine,
@@ -173,9 +171,7 @@
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "aJ" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/turf/open/floor/iron/airless/damaged/heavy,
 /area/ruin/space/has_grav/onehalf/hallway)
 "aK" = (
 /obj/machinery/iv_drip,
@@ -241,14 +237,10 @@
 /area/template_noop)
 "aT" = (
 /obj/structure/cable,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/turf/open/floor/iron/airless/damaged/high,
 /area/ruin/space/has_grav/onehalf/hallway)
 "aU" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged1"
-	},
+/turf/open/floor/iron/airless/damaged/mild,
 /area/ruin/space/has_grav/onehalf/hallway)
 "aV" = (
 /obj/machinery/door/airlock/medical/glass,
@@ -374,18 +366,14 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/turf/open/floor/iron/airless/damaged/high,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/turf/open/floor/iron/airless/damaged/heavy,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bj" = (
 /obj/structure/disposalpipe/segment{
@@ -399,9 +387,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged1"
-	},
+/turf/open/floor/iron/airless/damaged/mild,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bm" = (
 /obj/structure/disposalpipe/junction{
@@ -479,9 +465,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/turf/open/floor/iron/airless/damaged/high,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bx" = (
 /obj/structure/disposalpipe/segment{
@@ -494,9 +478,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged1"
-	},
+/turf/open/floor/iron/airless/damaged/mild,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bz" = (
 /obj/structure/disposalpipe/segment{
@@ -510,9 +492,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
+/turf/open/floor/iron/airless/damaged/moderate,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bB" = (
 /obj/structure/disposalpipe/segment,
@@ -572,21 +552,15 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "bL" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
+/turf/open/floor/iron/airless/damaged/moderate,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bM" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
+/turf/open/floor/iron/airless/damaged/moderate,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bN" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/turf/open/floor/iron/airless/damaged/light,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bO" = (
 /obj/structure/disposalpipe/trunk{
@@ -608,9 +582,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bS" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/turf/open/floor/iron/airless/damaged/light,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bT" = (
 /obj/structure/disposalpipe/segment,
@@ -631,9 +603,7 @@
 "bX" = (
 /obj/structure/disposalpipe/segment,
 /obj/item/stack/rods,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/turf/open/floor/iron/airless/damaged/heavy,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bY" = (
 /obj/structure/grille,
@@ -781,9 +751,7 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "cu" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/turf/open/floor/iron/airless/damaged/heavy,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cv" = (
 /obj/structure/girder/reinforced,
@@ -881,9 +849,7 @@
 /turf/template_noop,
 /area/template_noop)
 "cP" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/turf/open/floor/iron/airless/damaged/high,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cQ" = (
 /obj/effect/spawner/structure/window/reinforced,

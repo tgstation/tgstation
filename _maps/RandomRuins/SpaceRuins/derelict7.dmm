@@ -135,9 +135,7 @@
 	},
 /area/ruin/space/has_grav)
 "mM" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/turf/open/floor/iron/airless/damaged/high,
 /area/ruin/space/has_grav)
 "nf" = (
 /turf/open/floor/iron/airless,
@@ -228,9 +226,7 @@
 /turf/template_noop,
 /area/template_noop)
 "tR" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/turf/open/floor/iron/airless/damaged/heavy,
 /area/ruin/space/has_grav)
 "uB" = (
 /obj/structure/disposalpipe/broken{
@@ -242,9 +238,7 @@
 /area/ruin/space/has_grav)
 "vW" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/turf/open/floor/iron/airless/damaged/light,
 /area/ruin/space/has_grav)
 "wz" = (
 /obj/structure/lattice,
@@ -273,9 +267,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "yO" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/turf/open/floor/iron/airless/damaged/light,
 /area/ruin/space/has_grav)
 "zw" = (
 /obj/effect/spawner/random/structure/table_or_rack,
@@ -364,9 +356,7 @@
 /turf/template_noop,
 /area/template_noop)
 "FQ" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged1"
-	},
+/turf/open/floor/iron/airless/damaged/mild,
 /area/ruin/space/has_grav)
 "Gb" = (
 /obj/item/shard,
@@ -455,9 +445,7 @@
 /turf/open/floor/wood/airless,
 /area/ruin/space/has_grav)
 "Lj" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
+/turf/open/floor/iron/airless/damaged/moderate,
 /area/ruin/space/has_grav)
 "My" = (
 /obj/machinery/cell_charger,

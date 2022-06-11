@@ -75,14 +75,10 @@
 /turf/open/floor/iron/airless,
 /area/ruin/tcommsat_oldaisat)
 "ar" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/turf/open/floor/iron/airless/damaged/light,
 /area/ruin/tcommsat_oldaisat)
 "as" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/turf/open/floor/iron/airless/damaged/high,
 /area/ruin/tcommsat_oldaisat)
 "at" = (
 /obj/structure/lattice,
