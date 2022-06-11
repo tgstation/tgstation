@@ -43,7 +43,7 @@ export const BorgHypo = (_, context) => {
 };
 
 const ReagentDisplay = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act } = useBackend(context);
   const { reagents, selected, maxVolume } = props;
   if (reagents.length === 0) {
     return (
@@ -53,7 +53,7 @@ const ReagentDisplay = (props, context) => {
     );
   }
   return reagents.map(reagent => (
-    <Flex key={reagent.name} my={.5}>
+    <Flex key={reagent.name} m={0.5}>
       <Flex.Item grow>
         <ProgressBar value={reagent.volume / maxVolume}>
           <Flex>
