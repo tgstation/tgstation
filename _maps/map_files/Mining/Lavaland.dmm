@@ -1399,8 +1399,7 @@
 "kn" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/effect/decal/cleanable/confetti,
-/obj/structure/sign/poster/party_game{
+/obj/structure/sign/poster/contraband/fun_police{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/checker,
@@ -2770,7 +2769,6 @@
 /area/lavaland/surface/outdoors)
 "sI" = (
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/deepfryer,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -3926,7 +3924,6 @@
 /turf/open/floor/iron/smooth_large,
 /area/mine/living_quarters)
 "Ca" = (
-/obj/machinery/oven,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -5105,9 +5102,6 @@
 /turf/open/floor/iron/smooth,
 /area/mine/lobby)
 "JE" = (
-/obj/structure/closet/secure_closet/freezer/meat{
-	req_access = "0"
-	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
