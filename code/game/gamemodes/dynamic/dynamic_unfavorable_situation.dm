@@ -19,6 +19,9 @@
 		if (ruleset.weight == 0)
 			continue
 
+		if (ruleset.cost > max_threat_level)
+			continue
+
 		if (!ruleset.acceptable(GLOB.alive_player_list.len, threat_level))
 			continue
 
