@@ -1264,7 +1264,6 @@
 /obj/structure/rack,
 /obj/item/seeds/tower,
 /obj/item/seeds/glowshroom,
-/obj/item/storage/bag/plants/portaseeder,
 /turf/open/indestructible/boss,
 /area/mine/laborcamp/ruins)
 "jD" = (
@@ -1399,9 +1398,10 @@
 "kn" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/structure/sign/poster/contraband/fun_police{
+/obj/structure/sign/poster/party_game{
 	pixel_x = 32
 	},
+/obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "ko" = (
@@ -2364,6 +2364,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/textured,
 /area/mine/maintenance)
+"pP" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/mine/laborcamp/ruins)
 "pT" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
@@ -2403,6 +2409,7 @@
 "qa" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/hooded/wintercoat,
+/obj/effect/spawner/random/decoration/material,
 /turf/open/floor/iron,
 /area/mine/laborcamp/ruins)
 "qb" = (
@@ -2769,6 +2776,8 @@
 /area/lavaland/surface/outdoors)
 "sI" = (
 /obj/effect/decal/cleanable/glass,
+/obj/structure/alien/egg/burst,
+/obj/structure/alien/weeds,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -2776,6 +2785,7 @@
 "sN" = (
 /obj/structure/stone_tile/slab/cracked,
 /obj/structure/rack,
+/obj/item/stack/marker_beacon/ten,
 /turf/open/indestructible/boss,
 /area/mine/laborcamp/ruins)
 "sR" = (
@@ -3136,6 +3146,7 @@
 "vY" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/contraband/narcotics,
+/obj/effect/spawner/random/decoration/carpet,
 /turf/open/floor/iron,
 /area/mine/laborcamp/ruins)
 "wd" = (
@@ -3187,6 +3198,7 @@
 /area/mine/eva)
 "wu" = (
 /obj/structure/closet/crate/bin,
+/obj/item/storage/box/tail_pin,
 /turf/open/floor/iron,
 /area/mine/cafeteria)
 "wv" = (
@@ -3328,7 +3340,6 @@
 /obj/structure/spider/stickyweb,
 /obj/item/food/spiderling,
 /obj/effect/spawner/random/decoration/paint,
-/obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/iron,
 /area/mine/laborcamp/ruins)
 "xG" = (
@@ -3666,8 +3677,7 @@
 "As" = (
 /obj/structure/table,
 /obj/structure/spider/stickyweb,
-/obj/effect/spawner/random/decoration/material,
-/obj/effect/spawner/random/decoration/carpet,
+/obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/iron,
 /area/mine/laborcamp/ruins)
 "Aw" = (
@@ -6582,11 +6592,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
 /area/mine/living_quarters)
-"Vf" = (
-/obj/structure/stone_tile/slab/cracked,
-/obj/item/stack/marker_beacon/ten,
-/turf/open/indestructible/boss,
-/area/mine/laborcamp/ruins)
 "Vo" = (
 /obj/structure/stone_tile{
 	dir = 8
@@ -9831,7 +9836,7 @@ aj
 pU
 Hw
 Ca
-kx
+pP
 Hw
 Hw
 aj
@@ -15231,7 +15236,7 @@ an
 vN
 Te
 iR
-Vf
+iR
 vN
 an
 an
