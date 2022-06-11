@@ -68582,12 +68582,12 @@
 	},
 /area/station/maintenance/aft/greater)
 "vut" = (
-/obj/machinery/atmospherics/components/binary/valve{
-	dir = 4;
-	name = "Exfiltrate To Waste"
-	},
 /obj/effect/turf_decal/trimline/dark_red/filled/warning{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump/off{
+	dir = 8;
+	name = "Exfiltrate to Waste"
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
@@ -242379,7 +242379,7 @@ tbh
 tbh
 hHN
 oDz
-hHN
+oDz
 hHN
 nrA
 iHY
