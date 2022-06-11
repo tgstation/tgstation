@@ -3239,10 +3239,6 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron/dark,
 /area/mine/lobby)
-"wR" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/production)
 "wT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3613,7 +3609,6 @@
 /area/mine/laborcamp/commons)
 "Ad" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
 "Af" = (
@@ -4249,13 +4244,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
-"Ez" = (
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/production)
 "EC" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/donkpockets{
@@ -4405,7 +4393,6 @@
 	anchored = 1
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
 "Fk" = (
@@ -4669,18 +4656,18 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
 "GO" = (
-/obj/machinery/shower{
-	pixel_y = 22
-	},
-/obj/machinery/door/window/left/directional/south,
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/machinery/door/window/left/directional/south{
 	dir = 4
 	},
+/obj/structure/window/reinforced/tinted/frosted,
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
 	icon = 'icons/obj/lavaland/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
+	},
+/obj/machinery/shower{
+	dir = 4
 	},
 /turf/open/floor/plastic,
 /area/mine/production)
@@ -25884,7 +25871,7 @@ bq
 ru
 zj
 Fg
-aj
+oy
 pU
 pU
 ai
@@ -26140,8 +26127,8 @@ Rx
 yQ
 zW
 YA
-wR
-aj
+Po
+oy
 aj
 pU
 pU
@@ -26397,8 +26384,8 @@ mE
 bq
 Po
 YA
-wR
-aj
+Po
+oy
 aj
 aj
 pU
@@ -26655,7 +26642,7 @@ bq
 wJ
 YA
 Ad
-aj
+oy
 aj
 aj
 pU
@@ -26911,8 +26898,8 @@ Sm
 bq
 tf
 XD
-Ez
-aj
+XD
+oy
 aj
 aj
 pU
@@ -27169,7 +27156,7 @@ bq
 bq
 bq
 bq
-aj
+bq
 aj
 aj
 aj
