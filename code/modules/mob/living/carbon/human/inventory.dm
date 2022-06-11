@@ -317,7 +317,7 @@
 		if(equip_to_slot_if_possible(thing, slot_type))
 			update_inv_hands()
 		return
-	var/datum/component/storage/storage = equipped_item.GetComponent(/datum/component/storage)
+	var/datum/storage/storage = equipped_item.atom_storage
 	if(!storage)
 		if(!thing)
 			equipped_item.attack_hand(src)
@@ -328,7 +328,7 @@
 		if(!equipped_item.atom_storage?.attempt_insert(equipped_item, thing, src))
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
-	var/atom/real_location = storage.real_location()
+	var/atom/real_location = storage.real_location?.resolve()
 	if(!real_location.contents.len) // nothing to take out
 		to_chat(src, span_warning("There's nothing in your [equipped_item.name] to take out!"))
 		return

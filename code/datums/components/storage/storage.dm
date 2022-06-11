@@ -534,9 +534,9 @@
 	return FALSE
 
 /datum/component/storage/proc/get_dumping_location(atom/dest_object)
-	var/datum/component/storage/storage = dest_object.GetComponent(/datum/component/storage)
+	var/datum/storage/storage = dest_object.atom_storage
 	if(storage)
-		return storage.real_location()
+		return storage.real_location?.resolve()
 	return dest_object.get_dumping_location()
 
 //This proc is called when you want to place an item into the storage item.

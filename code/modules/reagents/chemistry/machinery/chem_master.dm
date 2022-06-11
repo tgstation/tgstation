@@ -232,9 +232,9 @@
 	data["autoCondiStyle"] = CONDIMASTER_STYLE_AUTO
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
-		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
+		var/datum/storage/STRB = bottle.atom_storage
 		data["pillBottleCurrentAmount"] = bottle.contents.len
-		data["pillBottleMaxAmount"] = STRB.max_items
+		data["pillBottleMaxAmount"] = STRB.max_slots
 
 	var/beaker_contents[0]
 	if(beaker)

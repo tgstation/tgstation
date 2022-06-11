@@ -159,12 +159,8 @@
 
 /datum/storage/pockets/void_cloak
 	quickdraw = TRUE
-<<<<<<< HEAD:code/datums/storage/subtypes/pockets.dm
+	max_total_storage =  = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
 	max_slots = 3
-=======
-	max_combined_w_class = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
-	max_items = 3
->>>>>>> bcf9ed3a3209a88a832c7b5588b7cfdec388c6e0:code/datums/components/storage/concrete/pockets.dm
 
 /datum/storage/pockets/void_cloak/New()
 	. = ..()

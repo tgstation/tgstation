@@ -19,29 +19,22 @@
 
 /obj/item/mod/module/storage/Initialize(mapload)
 	. = ..()
-	storage = AddComponent(/datum/component/storage/concrete)
-	storage.max_w_class = max_w_class
-	storage.max_combined_w_class = max_combined_w_class
-	storage.max_items = max_items
-	storage.allow_big_nesting = TRUE
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+	create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.locked = TRUE
 
 /obj/item/mod/module/storage/on_install()
-	var/datum/component/storage/modstorage = mod.AddComponent(/datum/component/storage, storage)
-	modstorage.max_w_class = max_w_class
-	modstorage.max_combined_w_class = max_combined_w_class
-	modstorage.max_items = max_items
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+	var/datum/component/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
+	modstorage.locked = TRUE
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
-	var/datum/component/storage/modstorage = mod.GetComponent(/datum/component/storage)
-	storage.slaves -= modstorage
+	var/datum/storage/modstorage = mod.atom_storage
 	qdel(modstorage)
 	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
 	if(!deleting)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+	atom_storage.locked = TRUE
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
