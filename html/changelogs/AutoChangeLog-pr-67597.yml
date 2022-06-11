@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Novaflowers not lighting targets on fire."
+  - code_imp: "Reduces some copy+paste and cleans up some unique plant genes code."
