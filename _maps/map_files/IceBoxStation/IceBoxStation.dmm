@@ -11892,7 +11892,6 @@
 "dGX" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/shower{
-	tag = "icon-shower (WEST)";
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/dark_blue,
