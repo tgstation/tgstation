@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscadd: "Weather effects will now be a bit more subtle in darkness, hopefully this looks nicer"
-  - imageadd: "I've done some resprites to snow and non smoothing lava"

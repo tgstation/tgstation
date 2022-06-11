@@ -409,3 +409,43 @@
       heads!
   tf-4:
   - bugfix: Donksoft toy vendors no longer bluescreen.
+2022-06-11:
+  JohnFulpWillard:
+  - bugfix: Space Dragons' expiring no longer deletes the people they had already
+      eaten.
+  LemonInTheDark:
+  - rscadd: Weather effects will now be a bit more subtle in darkness, hopefully this
+      looks nicer
+  - imageadd: I've done some resprites to snow and non smoothing lava
+  MTandi:
+  - qol: Portable pump In/Out button text replaced with source and destination.
+  Maurukas:
+  - bugfix: A manually edited APC in the deepstorage ruin has been replaced with an
+      APC of the appropriate type.
+  Melbert:
+  - refactor: Gunlight / Helmetlight behavior is now a component.
+  - qol: Gunlight / Helmetlight now uses balloon alerts.
+  Mothblocks:
+  - spellcheck: Asimov++ no longer includes "In the case of conflict, the majority
+      order rules."
+  RandomGamer123:
+  - bugfix: Fixes the layer of a scrubber in Icebox engineering
+  Watermelon914:
+  - bugfix: Skip time button on the steal objective now has a fast forward icon.
+  YakumoChen:
+  - qol: Changed the position of light tubes in certain surgery rooms to not be directly
+      over a surgery bed. No more smashing lights with your saw by accident!
+  - qol: Aspiring AIs can now listen in on patient talk in Meta's primary surgery
+      room. Or you could listen to the soothing sounds of the the crew dying from
+      the comfort of a surgery bed when comms are down too, I guess.
+  msgerbs:
+  - bugfix: There is no longer a random pipe in the wall in Metastation's Xenobiology
+      department.
+  san7890:
+  - config: Hey, server operators! Title music playing at the lobby screen is now
+      DISABLED by default in the config settings (game_options.txt). If you are not
+      hearing any title music, be sure to adjust your config. If you're a player reading
+      this and are sorely missing out on those soulful tunes, please notify your server's
+      administration team of this change so they can diagnose it properly from there.
+  tf-4:
+  - balance: Pre-loaded PACMAN generators now have 15 plasma sheets, instead of 50.
