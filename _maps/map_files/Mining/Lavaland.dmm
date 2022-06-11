@@ -1079,10 +1079,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/living)
-"it" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
 "iu" = (
 /obj/machinery/chem_dispenser/mutagensaltpeter,
 /turf/open/floor/iron/dark,
@@ -4123,7 +4119,7 @@
 /area/mine/living_quarters)
 "Dr" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/mine/laborcamp/commons)
 "Ds" = (
@@ -5665,7 +5661,7 @@
 /area/mine/production)
 "NF" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/mine/laborcamp/bar)
 "NG" = (
@@ -6153,7 +6149,9 @@
 /area/mine/laborcamp/bar)
 "RK" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced/damaged,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/bar)
 "RP" = (
@@ -6301,7 +6299,6 @@
 "SD" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/trash/tray,
-/obj/effect/spawner/random/trash/grime,
 /turf/open/floor/stone,
 /area/mine/living_quarters)
 "SL" = (
@@ -21513,7 +21510,7 @@ aj
 aj
 bf
 cM
-it
+kb
 gB
 cM
 cM
@@ -21769,13 +21766,13 @@ pU
 aj
 aj
 aj
-it
+AL
 US
 yO
 oX
 DP
 es
-it
+AL
 pU
 pU
 aj
@@ -22026,13 +22023,13 @@ pU
 aj
 aj
 aj
-it
+AL
 BR
 yO
 Tk
 fm
 ia
-it
+AL
 pU
 pU
 pU
@@ -22283,7 +22280,7 @@ pU
 aj
 aj
 aj
-it
+AL
 cO
 yO
 EC
@@ -22797,7 +22794,7 @@ pU
 pU
 aj
 aj
-it
+AL
 cP
 yO
 ss
@@ -23054,7 +23051,7 @@ pU
 pU
 aj
 aj
-it
+AL
 My
 yO
 eS
@@ -23568,7 +23565,7 @@ pU
 pU
 pU
 aj
-it
+AL
 Dl
 yO
 Gr
@@ -23825,13 +23822,13 @@ pU
 pU
 pU
 aj
-it
+AL
 ze
 yO
 JQ
 SD
 uR
-it
+AL
 pU
 pU
 pU
@@ -24082,13 +24079,13 @@ pU
 pU
 pU
 aj
-it
+AL
 Mb
 yO
 NC
 dM
 dW
-it
+AL
 pU
 pU
 pU
@@ -24340,7 +24337,7 @@ pU
 bq
 bq
 cM
-it
+kb
 dd
 cM
 cM
