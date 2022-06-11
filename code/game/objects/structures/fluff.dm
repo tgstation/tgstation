@@ -275,25 +275,14 @@
 	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	deconstructible = TRUE
-
-/obj/structure/fluff/tram_rail/lavaland
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/structure/fluff/tram_rail/floor
 	icon_state = "rail_floor"
 
-/obj/structure/fluff/tram_rail/floor/lavaland
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
-
 /obj/structure/fluff/tram_rail/end
 	icon_state = "railend"
-
-/obj/structure/fluff/tram_rail/end/lavaland
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/structure/fluff/tram_rail/anchor
 	name = "tram rail anchor"
 	icon_state = "anchor"
-
-/obj/structure/fluff/tram_rail/anchor/lavaland
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
