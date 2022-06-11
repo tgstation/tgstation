@@ -3918,6 +3918,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 8
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "bnt" = (
@@ -11892,6 +11893,7 @@
 "dGX" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/shower{
+	tag = "icon-shower (WEST)";
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/dark_blue,
@@ -14041,6 +14043,7 @@
 "erQ" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "erY" = (
@@ -48013,10 +48016,10 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "oYC" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/green{
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 1
 	},
-/obj/machinery/meter,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "oYH" = (
@@ -49708,6 +49711,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "pye" = (
@@ -50076,6 +50080,9 @@
 	dir = 8
 	},
 /obj/machinery/meter,
+/obj/effect/turf_decal/trimline/dark_red/arrow_ccw{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage)
 "pFH" = (
@@ -53102,6 +53109,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "qEm" = (
@@ -56471,6 +56479,9 @@
 /obj/effect/turf_decal/trimline/dark_green/arrow_ccw,
 /obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer1{
 	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
@@ -65546,6 +65557,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
+/obj/item/multitool,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "uyO" = (
