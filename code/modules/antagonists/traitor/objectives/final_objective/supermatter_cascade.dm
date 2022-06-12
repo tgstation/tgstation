@@ -11,7 +11,7 @@
 /datum/traitor_objective/final/supermatter_cascade/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/valid_crystal = FALSE
 	for(var/obj/machinery/power/supermatter_crystal/engine/crystal in GLOB.machines)
-		if(isturf(crystal.loc) || (is_station_level(crystal.z) || is_mining_level(crystal.z)))
+		if(is_station_level(crystal.z) || is_mining_level(crystal.z))
 			valid_crystal = TRUE
 	if(!can_take_final_objective() || !valid_crystal)
 		return
