@@ -24,6 +24,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	layer = MOB_LAYER
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	light_range = 4
+	light_color = SUPERMATTER_COLOUR
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE
 	base_icon_state = "darkmatter"
@@ -63,7 +64,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/explosion_power = 35
 	///Time in 1/10th of seconds since the last sent warning
 	var/lastwarning = 0
-	///Refered to as eer on the moniter. This value effects gas output, heat, damage, and radiation.
+	///Refered to as eer on the monitor. This value effects gas output, heat, damage, and radiation.
 	var/power = 0
 	///Determines the rate of positve change in gas comp values
 	var/gas_change_rate = 0.05
@@ -272,6 +273,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/cascade_initiated = FALSE
 	///Reference to the warp effect
 	var/atom/movable/supermatter_warp_effect/warp
+	///Have the visual effects started? (Used to not spam effects)
+	var/animated
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()

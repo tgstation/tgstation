@@ -16,6 +16,7 @@
 		return
 
 	handle_crystal_sounds()
+	handle_crystal_effects()
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = local_turf.return_air()
@@ -125,6 +126,50 @@
 		playsound(src, SFX_SM_CALM, max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
 	var/next_sound = round((100 - aggression) * 5)
 	last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
+/obj/machinery/power/supermatter_crystal/proc/animate_the_sm()
+	filters = filter(type="rays", size = clamp(power/30, 0, 125), color = SUPERMATTER_COLOUR, factor = 0.6, density = 12)
+	animate(filters[1], time = 10 SECONDS, offset = 10, loop=-1)
+	animate(time = 10 SECONDS, offset = 0, loop=-1)
+	animate(filters[1], time = 2 SECONDS, size = 80, loop=-1, flags = ANIMATION_PARALLEL)
+	animate(time = 2 SECONDS, size = 10, loop=-1, flags = ANIMATION_PARALLEL)
+	animated = TRUE
+
+/obj/machinery/power/supermatter_crystal/proc/check_special_delamination()
+	if(cascade_initiated) // Supermatter cascade goal.
+		return "cascade"
+	if(combined_gas > MOLE_PENALTY_THRESHOLD)// Singularity
+		return "singularity"
+	if(power > POWER_PENALTY_THRESHOLD) // Tesla delamination
+		return "tesla"
+	else
+		return
+/obj/machinery/power/supermatter_crystal/proc/handle_crystal_effects(tick)
+
+	if(power || damage && !final_countdown)
+		set_light((initial(light_range) + power/200), initial(light_power) + power/1000, SUPERMATTER_COLOUR, TRUE)
+
+		filters = filter(type="rays", size = clamp(power/30, 0, 125), color = SUPERMATTER_COLOUR, factor = clamp(damage/600, 1, 10), density = clamp(damage/10, 12, 100))
+		// If we did this every tick we'd be crashing peoples clients all day.
+
+		if(!animated)
+			animate_the_sm()
+
+	if(damage && final_countdown && !check_special_delamination())
+		set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_COLOUR, TRUE)
+		filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+	switch(check_special_delamination())
+		if("cascade")
+			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_CASCADE_COLOUR, TRUE)
+			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_CASCADE_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+			return
+		if("singularity")
+			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_SINGULARITY_COLOUR, TRUE)
+			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_SINGULARITY_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+			return
+		if("tesla")
+			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_TESLA_COLOUR, TRUE)
+			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_TESLA_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+			return
 
 /obj/machinery/power/supermatter_crystal/proc/deal_damage(datum/gas_mixture/removed)
 	var/has_holes = FALSE
