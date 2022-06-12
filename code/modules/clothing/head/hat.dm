@@ -15,11 +15,18 @@
 	custom_price = PAYCHECK_COMMAND * 1.5
 	worn_y_offset = 4
 
+/obj/item/clothing/head/nightcap/blue
+	name = "blue nightcap"
+	desc = "A blue nightcap for all the dreamers and snoozers out there."
+	icon_state = "sleep_blue"
+/obj/item/clothing/head/nightcap/red
+	name = "red nightcap"
+	desc = "A red nightcap for all the sleepyheads and dozers out there."
+	icon_state = "sleep_red"
 /obj/item/clothing/head/spacepolice
 	name = "space police cap"
 	desc = "A blue cap for patrolling the daily beat."
 	icon_state = "policecap_families"
-	inhand_icon_state = "policecap_families"
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
