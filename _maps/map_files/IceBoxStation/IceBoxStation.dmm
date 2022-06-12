@@ -65905,6 +65905,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "uBi" = (
