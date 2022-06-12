@@ -2,7 +2,7 @@
 #define SET_GLASSES_WEARER \
 	wears_the_glasses.forceMove(right_of_shover); \
 	wears_the_glasses.SetKnockdown(0); \
-	if(!wears_the_glasses.glasses){ wears_the_glasses.equip_to_slot(glasses, ITEM_SLOT_EYES); }
+	if(!wears_the_glasses.glasses){ wears_the_glasses.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES); }
 
 /// Test that the knockoff component will properly cause something
 /// with it applied to be knocked off when it should be.
