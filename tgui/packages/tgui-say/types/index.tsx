@@ -1,11 +1,14 @@
 import { RefObject } from 'inferno';
 
 export type TguiModal = {
-  channelDebounce: ({ mode: boolean }) => void;
-  forceDebounce: ({ channel: number, entry: string }) => void;
-  historyCounter: number;
-  innerRef: RefObject<HTMLInputElement>;
-  maxLength: number;
+  events: ModalEvents;
+  fields: ModalFields;
+  setState: (state: {}) => void;
+  state: ModalState;
+  timers: ModalTimers;
+};
+
+type ModalEvents = {
   onArrowKeys: (direction: number) => void;
   onBackspaceDelete: () => void;
   onClick: () => void;
@@ -21,11 +24,20 @@ export type TguiModal = {
   onReset: (channel?: number) => void;
   onSetSize: (size: number) => void;
   onViewHistory: () => void;
+};
+
+type ModalFields = {
+  historyCounter: number;
+  innerRef: RefObject<HTMLInputElement>;
+  maxLength: number;
   radioPrefix: string;
-  setState: (state: {}) => void;
-  typingThrottle: () => void;
   value: string;
-  state: ModalState;
+};
+
+type ModalTimers = {
+  channelDebounce: ({ mode: boolean }) => void;
+  forceDebounce: ({ channel: number, entry: string }) => void;
+  typingThrottle: () => void;
 };
 
 export type ModalState = {

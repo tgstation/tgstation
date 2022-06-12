@@ -11,8 +11,11 @@
 }
 
 /** Creates an input for each channel */
-@each $channel, $color in colors.$channel-map {
+@each $channel,
+$color in colors.$channel-map {
   .input-#{$channel} {
     color: $color;
   }
-};
+}
+
+;

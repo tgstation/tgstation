@@ -4,12 +4,12 @@ import { TguiModal } from '../types';
 
 /** Increments the chat history counter, looping through entries */
 export const handleArrowKeys = function (this: TguiModal, direction: number) {
-  const { historyCounter } = this;
+  const { historyCounter } = this.fields;
   if (direction === KEY_UP && historyCounter < getHistoryLength()) {
-    this.historyCounter++;
-    this.onViewHistory();
+    this.fields.historyCounter++;
+    this.events.onViewHistory();
   } else if (direction === KEY_DOWN && historyCounter > 0) {
-    this.historyCounter--;
-    this.onViewHistory();
+    this.fields.historyCounter--;
+    this.events.onViewHistory();
   }
 };

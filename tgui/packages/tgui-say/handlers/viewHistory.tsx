@@ -5,20 +5,20 @@ import { TguiModal } from '../types';
 /**  Sets the input value to chat history at index historyCounter. */
 export const handleViewHistory = function (this: TguiModal) {
   const { channel } = this.state;
-  const { historyCounter } = this;
+  const { historyCounter } = this.fields;
   if (historyCounter > 0 && getHistoryLength()) {
-    this.value = getHistoryAt(historyCounter);
+    this.fields.value = getHistoryAt(historyCounter);
     if (channel < 2) {
-      this.typingThrottle();
+      this.timers.typingThrottle();
     }
     this.setState({ buttonContent: historyCounter, edited: true });
-    this.onSetSize(0);
+    this.events.onSetSize(0);
   } else {
-    this.value = '';
+    this.fields.value = '';
     this.setState({
       buttonContent: CHANNELS[channel],
       edited: true,
     });
-    this.onSetSize(0);
+    this.events.onSetSize(0);
   }
 };

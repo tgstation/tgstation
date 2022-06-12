@@ -1,6 +1,7 @@
 import { WINDOW_SIZES } from '../constants';
 import { KEY_0, KEY_Z } from 'common/keycodes';
 import { classes } from 'common/react';
+import { debounce, throttle } from 'common/timer';
 
 /**
  * Window functions
@@ -111,3 +112,14 @@ export const isAlphanumeric = (keyCode: number): boolean =>
 /** Checks if a parameter is null or undefined. Returns bool */
 export const valueExists = (param: any): boolean =>
   param !== null && param !== undefined;
+
+/** Timers: Prevents overloading the server, throttles messages */
+export const timers = {
+  channelDebounce: debounce((mode) => Byond.sendMessage('thinking', mode), 400),
+  forceDebounce: debounce(
+    (entry) => Byond.sendMessage('force', entry),
+    1000,
+    true
+  ),
+  typingThrottle: throttle(() => Byond.sendMessage('typing'), 4000),
+};

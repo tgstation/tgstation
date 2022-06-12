@@ -5,16 +5,16 @@ import { TguiModal } from '../types';
 /** Attach listeners, sets window size just in case */
 export const handleComponentMount = function (this: TguiModal) {
   Byond.subscribeTo('maxLength', (data) => {
-    this.maxLength = data.maxLength;
+    this.fields.maxLength = data.maxLength;
   });
   Byond.subscribeTo('force', () => {
-    this.onForce();
+    this.events.onForce();
   });
   Byond.subscribeTo('open', (data) => {
     const channel = CHANNELS.indexOf(data.channel) || 0;
-    this.onReset(channel);
+    this.events.onReset(channel);
     setTimeout(() => {
-      this.innerRef?.current?.focus();
+      this.fields.innerRef.current?.focus();
     }, 1);
     windowOpen(CHANNELS[channel]);
   });

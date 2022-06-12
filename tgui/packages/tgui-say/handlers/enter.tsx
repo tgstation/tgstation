@@ -9,7 +9,7 @@ export const handleEnter = function (
   value: string
 ) {
   const { channel } = this.state;
-  const { maxLength, radioPrefix } = this;
+  const { maxLength, radioPrefix } = this.fields;
   event.preventDefault();
   if (value && value.length < maxLength) {
     storeChat(value);
@@ -18,6 +18,6 @@ export const handleEnter = function (
       entry: channel === 0 ? radioPrefix + value : value,
     });
   }
-  this.onReset();
+  this.events.onReset();
   windowClose();
 };

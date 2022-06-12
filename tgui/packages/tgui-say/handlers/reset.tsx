@@ -9,9 +9,9 @@ import { TguiModal } from '../types';
  * channel - Optional. Sets the channel and thus the color scheme.
  */
 export const handleReset = function (this: TguiModal, channel?: number) {
-  this.historyCounter = 0;
-  this.radioPrefix = '';
-  this.value = '';
+  this.fields.historyCounter = 0;
+  this.fields.radioPrefix = '';
+  this.fields.value = '';
   this.setState({
     buttonContent: valueExists(channel) ? CHANNELS[channel!] : '',
     channel: valueExists(channel) ? channel! : -1,

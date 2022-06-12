@@ -8,15 +8,15 @@ import { TguiModal } from '../types';
  */
 export const handleBackspaceDelete = function (this: TguiModal) {
   const { buttonContent, channel } = this.state;
-  const { radioPrefix, value } = this;
+  const { radioPrefix, value } = this.fields;
   // User is on a chat history message
   if (typeof buttonContent === 'number') {
-    this.historyCounter = 0;
+    this.fields.historyCounter = 0;
     this.setState({ buttonContent: CHANNELS[channel] });
   }
   if (!value.length && radioPrefix) {
-    this.radioPrefix = '';
+    this.fields.radioPrefix = '';
     this.setState({ buttonContent: CHANNELS[channel] });
   }
-  this.onSetSize(value.length);
+  this.events.onSetSize(value.length);
 };

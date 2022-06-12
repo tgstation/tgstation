@@ -1,30 +1,28 @@
-export { handleArrowKeys } from './arrowKeys';
-export { handleBackspaceDelete } from './backspaceDelete';
-export { handleComponentMount } from './componentMount';
-export { handleEnter } from './enter';
-export { handleForce } from './force';
-export { handleIncrementChannel } from './incrementChannel';
-export { handleKeyDown } from './keyDown';
-export { handleRadioPrefix } from './radioPrefix';
-export { handleReset } from './reset';
-export { handleSetSize } from './setSize';
-export { handleViewHistory } from './viewHistory';
-
-/** Other handlers too small for their own file */
+import { handleArrowKeys } from './arrowKeys';
+import { handleBackspaceDelete } from './backspaceDelete';
+import { handleComponentMount } from './componentMount';
+import { handleEnter } from './enter';
+import { handleForce } from './force';
 import { windowClose } from '../helpers';
+import { handleIncrementChannel } from './incrementChannel';
+import { handleKeyDown } from './keyDown';
+import { handleRadioPrefix } from './radioPrefix';
+import { handleReset } from './reset';
+import { handleSetSize } from './setSize';
 import { TguiModal } from '../types';
+import { handleViewHistory } from './viewHistory';
 
 /**
  * User clicks the channel button.
  * Simulates the tab key.
  */
-export const handleClick = function (this: TguiModal) {
-  this.onIncrementChannel();
+const handleClick = function (this: TguiModal) {
+  this.events.onIncrementChannel();
 };
 
 /** User presses escape, closes the window */
-export const handleEscape = function (this: TguiModal) {
-  this.onReset();
+const handleEscape = function (this: TguiModal) {
+  this.events.onReset();
   windowClose();
 };
 
@@ -32,13 +30,31 @@ export const handleEscape = function (this: TguiModal) {
  * Grabs input and sets size, force values etc.
  * Input value only triggers a rerender on setEdited.
  */
-export const handleInput = function (this: TguiModal, _, value: string) {
-  this.value = value;
-  this.onRadioPrefix();
-  this.onSetSize(value.length);
+const handleInput = function (this: TguiModal, _, value: string) {
+  this.fields.value = value;
+  this.events.onRadioPrefix();
+  this.events.onSetSize(value.length);
 };
 
 /** After updating the input value, sets back to false */
-export const handleComponentUpdate = function (this: TguiModal) {
+const handleComponentUpdate = function (this: TguiModal) {
   this.setState({ edited: false });
+};
+
+export const handlers = {
+  handleArrowKeys,
+  handleBackspaceDelete,
+  handleClick,
+  handleComponentMount,
+  handleComponentUpdate,
+  handleEscape,
+  handleEnter,
+  handleForce,
+  handleIncrementChannel,
+  handleInput,
+  handleKeyDown,
+  handleRadioPrefix,
+  handleReset,
+  handleSetSize,
+  handleViewHistory,
 };

@@ -1,53 +1,46 @@
 import { TextArea } from 'tgui/components';
 import { CHANNELS, RADIO_PREFIXES, WINDOW_SIZES } from '../constants';
 import { Dragzone } from '../components/dragzone';
-import { handleArrowKeys, handleBackspaceDelete, handleClick, handleComponentMount, handleComponentUpdate, handleEscape, handleEnter, handleForce, handleIncrementChannel, handleInput, handleKeyDown, handleRadioPrefix, handleReset, handleSetSize, handleViewHistory } from '../handlers';
-import { getCss } from '../helpers';
-import { Component, createRef, RefObject } from 'inferno';
-import { debounce, throttle } from 'common/timer';
-import { ModalState } from '../types';
+import { handlers } from '../handlers';
+import { getCss, timers } from '../helpers';
+import { Component, createRef } from 'inferno';
+import { ModalState, TguiModal } from '../types';
 
 /** Primary class for the TGUI say modal. */
 export class TguiSay extends Component<{}, ModalState> {
+  /** Events and handlers */
+  protected events: TguiModal['events'] = {
+    onArrowKeys: handlers.handleArrowKeys.bind(this),
+    onBackspaceDelete: handlers.handleBackspaceDelete.bind(this),
+    onClick: handlers.handleClick.bind(this),
+    onEnter: handlers.handleEnter.bind(this),
+    onEscape: handlers.handleEscape.bind(this),
+    onForce: handlers.handleForce.bind(this),
+    onKeyDown: handlers.handleKeyDown.bind(this),
+    onIncrementChannel: handlers.handleIncrementChannel.bind(this),
+    onInput: handlers.handleInput.bind(this),
+    onComponentMount: handlers.handleComponentMount.bind(this),
+    onComponentUpdate: handlers.handleComponentUpdate.bind(this),
+    onRadioPrefix: handlers.handleRadioPrefix.bind(this),
+    onReset: handlers.handleReset.bind(this),
+    onSetSize: handlers.handleSetSize.bind(this),
+    onViewHistory: handlers.handleViewHistory.bind(this),
+  };
 
   /** Local fields */
-  protected historyCounter: number;
-  protected innerRef: RefObject<HTMLInputElement> = createRef();
-  protected maxLength: number;
-  protected radioPrefix: string;
-  protected value: string;
-
-  /** Event handlers. */
-  protected onArrowKeys = handleArrowKeys.bind(this);
-  protected onBackspaceDelete = handleBackspaceDelete.bind(this);
-  protected onClick = handleClick.bind(this);
-  protected onEnter = handleEnter.bind(this);
-  protected onEscape = handleEscape.bind(this);
-  protected onForce = handleForce.bind(this);
-  protected onKeyDown = handleKeyDown.bind(this);
-  protected onIncrementChannel = handleIncrementChannel.bind(this);
-  protected onInput = handleInput.bind(this);
-  protected onComponentMount = handleComponentMount.bind(this);
-  protected onComponentUpdate = handleComponentUpdate.bind(this);
-  protected onRadioPrefix = handleRadioPrefix.bind(this);
-  protected onReset = handleReset.bind(this);
-  protected onSetSize = handleSetSize.bind(this);
-  protected onViewHistory = handleViewHistory.bind(this);
+  protected fields: TguiModal['fields'] = {
+    historyCounter: 0,
+    innerRef: createRef(),
+    maxLength: 1024,
+    radioPrefix: '',
+    value: '',
+  };
 
   /** Timers */
-  protected channelDebounce = debounce(
-    (mode) => Byond.sendMessage('thinking', mode),
-    400
-  );
-  protected forceDebounce = debounce(
-    (entry) => Byond.sendMessage('force', entry),
-    1000,
-    true
-  );
-  protected typingThrottle = throttle(() => Byond.sendMessage('typing'), 4000);
+  protected timers: TguiModal['timers'] = timers;
 
   /** State */
-  public state: ModalState = {
+  public state: TguiModal['state'] = {
     buttonContent: '',
     channel: -1,
     edited: false,
@@ -55,29 +48,20 @@ export class TguiSay extends Component<{}, ModalState> {
   };
 
   componentDidMount() {
-    this.onComponentMount();
+    this.events.onComponentMount();
   }
 
   componentDidUpdate() {
     if (this.state.edited) {
-      this.onComponentUpdate();
+      this.events.onComponentUpdate();
     }
   }
 
   render() {
-    const {
-      onClick,
-      onEnter,
-      onEscape,
-      onInput,
-      innerRef,
-      maxLength,
-      onKeyDown,
-      radioPrefix,
-      value,
-    } = this;
+    const { onClick, onEnter, onEscape, onKeyDown, onInput } = this.events;
+    const { innerRef, maxLength, radioPrefix, value } = this.fields;
     const { buttonContent, channel, edited, size } = this.state;
-    const prefixOrChannel
+    const prefixOrChannel: string
       = RADIO_PREFIXES[radioPrefix]?.id || CHANNELS[channel]?.toLowerCase();
 
     return (

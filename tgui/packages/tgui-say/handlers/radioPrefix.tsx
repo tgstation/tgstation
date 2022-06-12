@@ -10,7 +10,7 @@ import { TguiModal } from '../types';
  */
 export const handleRadioPrefix = function (this: TguiModal) {
   const { channel } = this.state;
-  const { radioPrefix, value } = this;
+  const { radioPrefix, value } = this.fields;
   if (channel > 1 || value.length < 3) {
     return;
   }
@@ -18,14 +18,14 @@ export const handleRadioPrefix = function (this: TguiModal) {
   if (!RADIO_PREFIXES[nextPrefix] || radioPrefix === nextPrefix) {
     return;
   }
-  this.value = value.slice(3);
+  this.fields.value = value.slice(3);
   // Binary is a "secret" channel
   if (nextPrefix === ':b ') {
     Byond.sendMessage('thinking', { mode: false });
   } else if (radioPrefix === ':b ' && nextPrefix !== ':b ') {
     Byond.sendMessage('thinking', { mode: true });
   }
-  this.radioPrefix = nextPrefix;
+  this.fields.radioPrefix = nextPrefix;
   this.setState({
     buttonContent: RADIO_PREFIXES[nextPrefix]?.label,
     channel: 0,

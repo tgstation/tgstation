@@ -42,7 +42,8 @@
 }
 
 /** Creates an animated border for each channel */
-@each $channel, $color in colors.$channel-map {
+@each $channel,
+$color in colors.$channel-map {
   .window-#{$channel} {
     border-left: 2px solid darken($color, 20%);
     border-right: 2px solid darken($color, 20%);

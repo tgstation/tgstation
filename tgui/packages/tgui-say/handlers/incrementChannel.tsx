@@ -8,20 +8,20 @@ import { TguiModal } from '../types';
  */
 export const handleIncrementChannel = function (this: TguiModal) {
   const { channel } = this.state;
-  const { radioPrefix } = this;
+  const { radioPrefix } = this.fields;
   if (radioPrefix === ':b ') {
-    this.channelDebounce({ mode: true });
+    this.timers.channelDebounce({ mode: true });
   }
-  this.radioPrefix = '';
+  this.fields.radioPrefix = '';
   if (channel === CHANNELS.length - 1) {
-    this.channelDebounce({ mode: true });
+    this.timers.channelDebounce({ mode: true });
     this.setState({
       buttonContent: CHANNELS[0],
       channel: 0,
     });
   } else {
     if (channel === 1) {
-      this.channelDebounce({ mode: false });
+      this.timers.channelDebounce({ mode: false });
     }
     this.setState({
       buttonContent: CHANNELS[channel + 1],
