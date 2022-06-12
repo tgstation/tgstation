@@ -48,6 +48,10 @@
 		// zombies)
 		return
 
+	// spaceacillin has a 75% chance to block infection
+	if(istype(target) && target.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) && prob(75))
+		return
+
 	var/obj/item/organ/internal/zombie_infection/infection
 	infection = target.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)

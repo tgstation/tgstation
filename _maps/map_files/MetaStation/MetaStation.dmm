@@ -5850,10 +5850,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"cjF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible,
-/turf/closed/wall/r_wall,
-/area/station/science/xenobiology)
 "cjP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -116973,7 +116969,7 @@ lKd
 gva
 iZJ
 rDd
-cjF
+jlU
 xiL
 rnE
 lmn

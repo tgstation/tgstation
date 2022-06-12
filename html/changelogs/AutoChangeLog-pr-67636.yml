@@ -1,0 +1,5 @@
+author: "kawoppi"
+delete-after: True
+changes: 
+  - balance: "removed JaniDrobe refill from the General Wardrobes Supply Crate and moved it to its own supply crate"
+  - balance: "adjusted General Wardrobes Supply Crate price due to it containing one less refill"
