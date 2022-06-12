@@ -140,8 +140,9 @@
 		if("change_product_name")
 			var/formatted_name = html_encode(params["name"])
 			if (length(formatted_name) > MAX_PILL_NAME_LENGTH)
-				return
-			product_name = formatted_name
+				product_name = copytext(formatted_name, End = MAX_PILL_NAME_LENGTH+1)
+			else
+				product_name = formatted_name
 		if("change_product")
 			product = params["product"]
 			if (product == "pill")
