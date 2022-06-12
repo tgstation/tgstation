@@ -485,7 +485,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/delamination_event()
 	var/can_spawn_anomalies = is_station_level(loc.z) && is_main_engine && anomaly_event
 
-	var/is_cascading = !!cascade_initiated
+	var/is_cascading = cascade_initiated
 
 	new /datum/supermatter_delamination(power, combined_gas, get_turf(src), explosion_power, gasmix_power_ratio, can_spawn_anomalies, is_cascading)
 	qdel(src)
