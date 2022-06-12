@@ -70,8 +70,6 @@
 
 	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
-	return
-
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()
 	var/image/alert_image = image('icons/obj/closet.dmi', src, "cardboard_special", layer+1)
