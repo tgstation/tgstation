@@ -154,6 +154,8 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/uniform_overlay
 
+		//Change check_adjustable_clothing.dm if you change this
+		var/handled_by_bodytype = TRUE
 		var/icon_file
 		var/woman
 		if(!uniform_overlay)
@@ -174,6 +176,7 @@ There are several things that need to be remembered:
 				isinhands = FALSE,
 				female_uniform = woman ? uniform.female_sprite_flags : null,
 				override_state = target_overlay,
+				override_file = handled_by_bodytype ? icon_file : null,
 			)
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
