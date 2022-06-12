@@ -1,12 +1,6 @@
-import {
-  KEY_BACKSPACE,
-  KEY_DELETE,
-  KEY_DOWN,
-  KEY_TAB,
-  KEY_UP,
-} from 'common/keycodes';
+import { KEY_BACKSPACE, KEY_DELETE, KEY_DOWN, KEY_TAB, KEY_UP } from 'common/keycodes';
 import { isAlphanumeric, getHistoryLength } from '../helpers';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /**
  * Handles other key events.
@@ -15,7 +9,7 @@ import { TguiModal } from '../types';
  * BKSP/DEL - Resets history counter and checks window size.
  * TYPING - When users key, it tells byond that it's typing.
  */
-export const handleKeyDown = function (this: TguiModal, event: KeyboardEvent) {
+export const handleKeyDown = function (this: Modal, event: KeyboardEvent) {
   const { channel } = this.state;
   const { radioPrefix } = this.fields;
   if (!event.keyCode) {

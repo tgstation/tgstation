@@ -1,5 +1,5 @@
 import { RADIO_PREFIXES } from '../constants';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /**
  * Gets any channel prefixes from the chat bar
@@ -8,7 +8,7 @@ import { TguiModal } from '../types';
  * Exemptions: Channel is OOC, value is too short,
  * Not a valid radio pref, or value is already the radio pref.
  */
-export const handleRadioPrefix = function (this: TguiModal) {
+export const handleRadioPrefix = function (this: Modal) {
   const { channel } = this.state;
   const { radioPrefix, value } = this.fields;
   if (channel > 1 || value.length < 3) {

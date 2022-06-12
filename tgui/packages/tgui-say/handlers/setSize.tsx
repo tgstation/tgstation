@@ -1,9 +1,9 @@
 import { WINDOW_SIZES } from '../constants';
 import { windowSet } from '../helpers';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /**  Adjusts window sized based on event.target.value */
-export const handleSetSize = function (this: TguiModal, value: number) {
+export const handleSetSize = function (this: Modal, value: number) {
   const { size } = this.state;
   if (value > 51 && size !== WINDOW_SIZES.large) {
     this.setState({ size: WINDOW_SIZES.large });

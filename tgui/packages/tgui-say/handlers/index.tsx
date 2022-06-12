@@ -9,19 +9,19 @@ import { handleKeyDown } from './keyDown';
 import { handleRadioPrefix } from './radioPrefix';
 import { handleReset } from './reset';
 import { handleSetSize } from './setSize';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 import { handleViewHistory } from './viewHistory';
 
 /**
  * User clicks the channel button.
  * Simulates the tab key.
  */
-const handleClick = function (this: TguiModal) {
+const handleClick = function (this: Modal) {
   this.events.onIncrementChannel();
 };
 
 /** User presses escape, closes the window */
-const handleEscape = function (this: TguiModal) {
+const handleEscape = function (this: Modal) {
   this.events.onReset();
   windowClose();
 };
@@ -30,14 +30,14 @@ const handleEscape = function (this: TguiModal) {
  * Grabs input and sets size, force values etc.
  * Input value only triggers a rerender on setEdited.
  */
-const handleInput = function (this: TguiModal, _, value: string) {
+const handleInput = function (this: Modal, _, value: string) {
   this.fields.value = value;
   this.events.onRadioPrefix();
   this.events.onSetSize(value.length);
 };
 
 /** After updating the input value, sets back to false */
-const handleComponentUpdate = function (this: TguiModal) {
+const handleComponentUpdate = function (this: Modal) {
   this.setState({ edited: false });
 };
 

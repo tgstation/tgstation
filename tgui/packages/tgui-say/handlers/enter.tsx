@@ -1,10 +1,10 @@
 import { CHANNELS } from '../constants';
 import { storeChat, windowClose } from '../helpers';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /** User presses enter. Closes if no value. */
 export const handleEnter = function (
-  this: TguiModal,
+  this: Modal,
   event: KeyboardEvent,
   value: string
 ) {

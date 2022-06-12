@@ -1,9 +1,9 @@
 import { CHANNELS, WINDOW_SIZES } from '../constants';
 import { windowSet } from '../helpers';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /** Sends the current input to byond and purges it */
-export const handleForce = function (this: TguiModal) {
+export const handleForce = function (this: Modal) {
   const { channel, size } = this.state;
   const { radioPrefix, value } = this.fields;
   if (value && channel < 2) {

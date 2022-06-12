@@ -1,9 +1,9 @@
 import { CHANNELS } from '../constants';
 import { getHistoryAt, getHistoryLength } from '../helpers';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /**  Sets the input value to chat history at index historyCounter. */
-export const handleViewHistory = function (this: TguiModal) {
+export const handleViewHistory = function (this: Modal) {
   const { channel } = this.state;
   const { historyCounter } = this.fields;
   if (historyCounter > 0 && getHistoryLength()) {

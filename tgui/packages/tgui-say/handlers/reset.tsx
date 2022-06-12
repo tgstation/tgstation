@@ -1,6 +1,6 @@
 import { CHANNELS, WINDOW_SIZES } from '../constants';
 import { valueExists } from '../helpers';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /**
  * Resets window to default parameters.
@@ -8,7 +8,7 @@ import { TguiModal } from '../types';
  * Parameters:
  * channel - Optional. Sets the channel and thus the color scheme.
  */
-export const handleReset = function (this: TguiModal, channel?: number) {
+export const handleReset = function (this: Modal, channel?: number) {
   this.fields.historyCounter = 0;
   this.fields.radioPrefix = '';
   this.fields.value = '';

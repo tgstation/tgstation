@@ -1,9 +1,9 @@
 import { KEY_DOWN, KEY_UP } from 'common/keycodes';
 import { getHistoryLength } from '../helpers';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /** Increments the chat history counter, looping through entries */
-export const handleArrowKeys = function (this: TguiModal, direction: number) {
+export const handleArrowKeys = function (this: Modal, direction: number) {
   const { historyCounter } = this.fields;
   if (direction === KEY_UP && historyCounter < getHistoryLength()) {
     this.fields.historyCounter++;

@@ -1,12 +1,12 @@
 import { CHANNELS } from '../constants';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /**
  * 1. Resets history if editing a message
  * 2. Backspacing while empty resets any radio subchannels
  * 3. Ensures backspace and delete calculate window size
  */
-export const handleBackspaceDelete = function (this: TguiModal) {
+export const handleBackspaceDelete = function (this: Modal) {
   const { buttonContent, channel } = this.state;
   const { radioPrefix, value } = this.fields;
   // User is on a chat history message

@@ -4,48 +4,42 @@ import { Dragzone } from '../components/dragzone';
 import { handlers } from '../handlers';
 import { getCss, timers } from '../helpers';
 import { Component, createRef } from 'inferno';
-import { ModalState, TguiModal } from '../types';
+import { Modal, State } from '../types';
 
 /** Primary class for the TGUI say modal. */
-export class TguiSay extends Component<{}, ModalState> {
-  /** Events and handlers */
-  protected events: TguiModal['events'] = {
+export class TguiSay extends Component<{}, State> {
+  protected events: Modal['events'] = {
     onArrowKeys: handlers.handleArrowKeys.bind(this),
     onBackspaceDelete: handlers.handleBackspaceDelete.bind(this),
     onClick: handlers.handleClick.bind(this),
+    onComponentMount: handlers.handleComponentMount.bind(this),
+    onComponentUpdate: handlers.handleComponentUpdate.bind(this),
     onEnter: handlers.handleEnter.bind(this),
     onEscape: handlers.handleEscape.bind(this),
     onForce: handlers.handleForce.bind(this),
-    onKeyDown: handlers.handleKeyDown.bind(this),
     onIncrementChannel: handlers.handleIncrementChannel.bind(this),
     onInput: handlers.handleInput.bind(this),
-    onComponentMount: handlers.handleComponentMount.bind(this),
-    onComponentUpdate: handlers.handleComponentUpdate.bind(this),
+    onKeyDown: handlers.handleKeyDown.bind(this),
     onRadioPrefix: handlers.handleRadioPrefix.bind(this),
     onReset: handlers.handleReset.bind(this),
     onSetSize: handlers.handleSetSize.bind(this),
     onViewHistory: handlers.handleViewHistory.bind(this),
   };
-
-  /** Local fields */
-  protected fields: TguiModal['fields'] = {
+  protected fields: Modal['fields'] = {
     historyCounter: 0,
     innerRef: createRef(),
     maxLength: 1024,
     radioPrefix: '',
     value: '',
   };
-
-  /** Timers */
-  protected timers: TguiModal['timers'] = timers;
-
-  /** State */
-  public state: TguiModal['state'] = {
+  public state: Modal['state'] = {
     buttonContent: '',
     channel: -1,
     edited: false,
-    size: WINDOW_SIZES.small,
+    size: WINDOW_SIZES.SMALL,
   };
+  protected timers: Modal['timers'] = timers;
+
 
   componentDidMount() {
     this.events.onComponentMount();

@@ -1,9 +1,9 @@
 import { CHANNELS } from '../constants';
 import { windowLoad, windowOpen } from '../helpers';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /** Attach listeners, sets window size just in case */
-export const handleComponentMount = function (this: TguiModal) {
+export const handleComponentMount = function (this: Modal) {
   Byond.subscribeTo('maxLength', (data) => {
     this.fields.maxLength = data.maxLength;
   });

@@ -42,13 +42,16 @@
 
 /**
  * Creates a JSON encoded message to open TGUI say modals properly.
+ * If the user has tgui inputs turned off, opens the standard input.
  *
  * Arguments:
  * channel - The channel to open the modal in.
  * Returns:
- * string - A JSON encoded message to open the modal.
+ * string - A JSON encoded message to open the modal OR normal chat.
  */
 /client/proc/tgui_say_create_open_command(channel)
+	if(!prefs.read_preference(/datum/preference/toggle/tgui_input))
+		return lowertext(channel)
 	var/message = TGUI_CREATE_MESSAGE("open", list(
 		channel = channel,
 	))

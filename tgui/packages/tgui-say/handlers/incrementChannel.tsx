@@ -1,12 +1,12 @@
 import { CHANNELS } from '../constants';
-import { TguiModal } from '../types';
+import { Modal } from '../types';
 
 /**
  * Increments the channel or resets to the beginning of the list.
  * If the user switches between IC/OOC, messages Byond to toggle thinking
  * indicators.
  */
-export const handleIncrementChannel = function (this: TguiModal) {
+export const handleIncrementChannel = function (this: Modal) {
   const { channel } = this.state;
   const { radioPrefix } = this.fields;
   if (radioPrefix === ':b ') {
