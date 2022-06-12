@@ -26,8 +26,8 @@
 		user.put_in_hands(new tape_gag)
 		use(1)
 		to_chat(user, span_notice("You rip off a piece of tape."))
-	else
-		..()
+		return TRUE
+	return ..()
 
 /obj/item/stack/sticky_tape/examine(mob/user)
 	. = ..()
