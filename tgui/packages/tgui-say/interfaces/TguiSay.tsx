@@ -1,23 +1,7 @@
 import { TextArea } from 'tgui/components';
 import { CHANNELS, RADIO_PREFIXES, WINDOW_SIZES } from '../constants';
 import { Dragzone } from '../components/dragzone';
-import {
-  handleArrowKeys,
-  handleBackspaceDelete,
-  handleClick,
-  handleComponentMount,
-  handleComponentUpdate,
-  handleEscape,
-  handleEnter,
-  handleForce,
-  handleIncrementChannel,
-  handleInput,
-  handleKeyDown,
-  handleRadioPrefix,
-  handleReset,
-  handleSetSize,
-  handleViewHistory,
-} from '../handlers';
+import { handleArrowKeys, handleBackspaceDelete, handleClick, handleComponentMount, handleComponentUpdate, handleEscape, handleEnter, handleForce, handleIncrementChannel, handleInput, handleKeyDown, handleRadioPrefix, handleReset, handleSetSize, handleViewHistory } from '../handlers';
 import { getCss } from '../helpers';
 import { Component, createRef, RefObject } from 'inferno';
 import { debounce, throttle } from 'common/timer';
@@ -25,6 +9,7 @@ import { ModalState } from '../types';
 
 /** Primary class for the TGUI say modal. */
 export class TguiSay extends Component<{}, ModalState> {
+
   /** Local fields */
   protected historyCounter: number;
   protected innerRef: RefObject<HTMLInputElement> = createRef();
