@@ -45,7 +45,6 @@
 	if(!do_after(user, equip_delay_other, target = M))
 		return
 	M.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
-	return
 
 /obj/item/clothing/mask/muzzle/tape/super
 	name = "super tape piece"
