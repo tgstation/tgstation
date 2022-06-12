@@ -15,7 +15,7 @@
 	splint_factor = 0.65
 	merge_type = /obj/item/stack/sticky_tape
 	var/list/conferred_embed = EMBED_HARMLESS
-	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape //The tape type you get when ripping off a piece of tape.
+	var/obj/tape_gag = new /obj/item/clothing/mask/muzzle/tape //The tape type you get when ripping off a piece of tape.
 	greyscale_config = /datum/greyscale_config/tape
 	greyscale_colors = "#B2B2B2#BD6A62"
 
@@ -23,7 +23,7 @@
 	if(user.get_inactive_held_item() == src)
 		if(is_zero_amount(delete_if_zero = TRUE))
 			return
-		user.put_in_hands(new tape_gag)
+		user.put_in_hands(tape_gag)
 		use(1)
 		to_chat(user, span_notice("You rip off a piece of tape."))
 		return TRUE
@@ -77,7 +77,7 @@
 	splint_factor = 0.4
 	merge_type = /obj/item/stack/sticky_tape/super
 	greyscale_colors = "#4D4D4D#75433F"
-	tape_gag = /obj/item/clothing/mask/muzzle/tape/super
+	tape_gag = new /obj/item/clothing/mask/muzzle/tape
 
 /obj/item/stack/sticky_tape/pointy
 	name = "pointy tape"
@@ -89,7 +89,7 @@
 	merge_type = /obj/item/stack/sticky_tape/pointy
 	greyscale_config = /datum/greyscale_config/tape/spikes
 	greyscale_colors = "#E64539#808080#AD2F45"
-	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy
+	tape_gag = new /obj/item/clothing/mask/muzzle/tape
 
 /obj/item/stack/sticky_tape/pointy/super
 	name = "super pointy tape"
@@ -99,7 +99,7 @@
 	conferred_embed = EMBED_POINTY_SUPERIOR
 	merge_type = /obj/item/stack/sticky_tape/pointy/super
 	greyscale_colors = "#8C0A00#4F4F4F#300008"
-	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy/super
+	tape_gag = new /obj/item/clothing/mask/muzzle/tape
 
 /obj/item/stack/sticky_tape/surgical
 	name = "surgical tape"
@@ -112,4 +112,4 @@
 	custom_price = PAYCHECK_CREW
 	merge_type = /obj/item/stack/sticky_tape/surgical
 	greyscale_colors = "#FFFFFF#BD6A62"
-	tape_gag = /obj/item/clothing/mask/muzzle/tape/surgical
+	tape_gag = new /obj/item/clothing/mask/muzzle/tape

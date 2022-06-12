@@ -41,6 +41,9 @@
 	moth_snack = FALSE
 
 /obj/item/clothing/mask/muzzle/tape/attack(mob/living/M, mob/living/user, params)
+	if(!mob_can_equip(M, user, ITEM_SLOT_MASK))
+		to_chat(user, span_notice("They are already wearing somthing on their face."))
+		return
 	balloon_alert(user, "taping mouth")
 	if(!do_after(user, equip_delay_other, target = M))
 		return
