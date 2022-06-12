@@ -11,30 +11,46 @@
 	/// determines the drain cost on the antimagic item
 	var/antimagic_charge_cost = 1
 
-/obj/projectile/magic/prehit_pierce(mob/living/target)
+/obj/projectile/magic/prehit_pierce(atom/target)
 	. = ..()
-	if(istype(target) && target.can_block_magic(antimagic_flags, antimagic_charge_cost))
-		visible_message(span_warning("[src] fizzles on contact with [target]!"))
-		return PROJECTILE_DELETE_WITHOUT_HITTING
+
+	if(isliving(target))
+		var/mob/living/target = target
+		if(target.can_block_magic(antimagic_flags, antimagic_charge_cost))
+			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			return PROJECTILE_DELETE_WITHOUT_HITTING
+
+	if(istype(target, /obj/machinery/hydroponics)) // even plants can block antimagic
+		var/obj/machinery/hydroponics/target = target
+		if(target.myseed.get_gene(/datum/plant_gene/trait/anti_magic))
+			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
-/obj/projectile/magic/death/on_hit(mob/living/target)
+/obj/projectile/magic/death/on_hit(atom/target)
 	. = ..()
-	if(!isliving(target))
+
+	if(!isliving(target) && !istype(target, /obj/machinery/hydroponics))
 		return
 
-	if(target.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-		if(target.revive(full_heal = TRUE, admin_revive = TRUE))
-			target.grab_ghost(force = TRUE) // even suicides
-			to_chat(target, span_notice("You rise with a start, you're undead!!!"))
-		else if(target.stat != DEAD)
-			to_chat(target, span_notice("You feel great!"))
-		return
+	if(isliving(target))
+		var/mob/living/target = target
+		if(target.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
+			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
+				target.grab_ghost(force = TRUE) // even suicides
+				to_chat(target, span_notice("You rise with a start, you're undead!!!"))
+			else if(target.stat != DEAD)
+				to_chat(target, span_notice("You feel great!"))
+			return
+		target.death()
 
-	target.death()
+	if(istype(target, /obj/machinery/hydroponics))
+		var/obj/machinery/hydroponics/target = target
+		target.set_weedlevel(0) // even the weeds perish
+		target.plantdies()
 
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -43,20 +59,28 @@
 	damage_type = OXY
 	nodamage = TRUE
 
-/obj/projectile/magic/resurrection/on_hit(mob/living/target)
+/obj/projectile/magic/resurrection/on_hit(atom/target)
 	. = ..()
-	if(!isliving(target))
+
+	if(!isliving(target) && !istype(target, /obj/machinery/hydroponics))
 		return
 
-	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-		target.death()
-		return
+	if(isliving(target))
+		var/mob/living/target = target
 
-	if(target.revive(full_heal = TRUE, admin_revive = TRUE))
-		target.grab_ghost(force = TRUE) // even suicides
-		to_chat(target, span_notice("You rise with a start, you're alive!!!"))
-	else if(target.stat != DEAD)
-		to_chat(target, span_notice("You feel great!"))
+		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+			target.death()
+			return
+
+		if(target.revive(full_heal = TRUE, admin_revive = TRUE))
+			target.grab_ghost(force = TRUE) // even suicides
+			to_chat(target, span_notice("You rise with a start, you're alive!!!"))
+		else if(target.stat != DEAD)
+			to_chat(target, span_notice("You feel great!"))
+
+	if(istype(target, /obj/machinery/hydroponics))
+		var/obj/machinery/hydroponics/target = target
+		target.set_plant_health(target.myseed.endurance, forced = TRUE)
 
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -139,10 +163,19 @@
 	damage_type = BURN
 	nodamage = TRUE
 
-/obj/projectile/magic/change/on_hit(mob/living/target)
+/obj/projectile/magic/change/on_hit(atom/target)
 	. = ..()
+
+	if(!isliving(target) && !istype(target, /obj/machinery/hydroponics))
+		return
+
 	if(isliving(target))
+		var/mob/living/target = target
 		target.wabbajack()
+
+	if(istype(target, /obj/machinery/hydroponics))
+		var/obj/machinery/hydroponics/target = target
+		target.mutatespecie(polymorph = TRUE)
 
 /obj/projectile/magic/animate
 	name = "bolt of animation"
