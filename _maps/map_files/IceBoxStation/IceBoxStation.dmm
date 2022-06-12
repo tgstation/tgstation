@@ -13729,6 +13729,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/construction)
+"emk" = (
+/obj/structure/stairs/north{
+	dir = 4
+	},
+/turf/open/floor/iron/stairs/old{
+	dir = 4
+	},
+/area/station/engineering/atmos/storage)
 "emp" = (
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -17792,6 +17800,9 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"fCc" = (
+/turf/closed/wall/mineral/iron,
+/area/station/engineering/atmos/mix)
 "fCd" = (
 /obj/structure/table,
 /obj/machinery/button/door{
@@ -24102,6 +24113,16 @@
 	dir = 4
 	},
 /area/station/science/research)
+"hAq" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/openspace,
+/area/station/engineering/atmos/storage)
 "hAO" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -40225,6 +40246,14 @@
 /obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/carpet/black,
 /area/station/security/prison/safe)
+"mDq" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/arrow_ccw,
+/obj/effect/turf_decal/trimline/white/arrow_cw{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/mix)
 "mDA" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/warning/no_smoking{
@@ -42836,6 +42865,14 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
+"nuh" = (
+/obj/structure/stairs/north{
+	dir = 4
+	},
+/turf/open/floor/iron/stairs/old{
+	dir = 4
+	},
+/area/station/engineering/atmos/mix)
 "nul" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -61995,6 +62032,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron/freezer,
 /area/station/science/xenobiology)
+"tsb" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/mix)
 "tsh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -183270,7 +183314,7 @@ eJf
 hku
 nFL
 hGk
-fHZ
+tsb
 fHZ
 hcY
 oVu
@@ -183527,7 +183571,7 @@ tTy
 iCM
 pLf
 scI
-fHZ
+mDq
 fHZ
 hcY
 iAL
@@ -183784,7 +183828,7 @@ eJf
 iCM
 tvc
 bFD
-fHZ
+nuh
 fHZ
 ikJ
 qXk
@@ -184041,7 +184085,7 @@ nfG
 hku
 bsX
 kkI
-fHZ
+fCc
 fHZ
 gYP
 nEg
@@ -249576,8 +249620,8 @@ qwO
 wRr
 npD
 kpk
-vdh
-kpk
+hAq
+emk
 npD
 vtr
 sPI
