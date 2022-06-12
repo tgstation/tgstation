@@ -397,6 +397,10 @@
 	name = "\improper Derelict Hydroponics"
 	icon_state = "ks13_hydro"
 
+/area/ruin/space/ks13/service/jani
+	name = "\improper Derelict Janitor Closet"
+	icon_state = "ks13_jani"
+
 // Area define for organization
 /area/ruin/space/ks13/science
 

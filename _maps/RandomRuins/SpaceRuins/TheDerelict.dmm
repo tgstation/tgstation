@@ -1464,27 +1464,18 @@
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
 "iD" = (
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/space)
+/area/ruin/space/ks13/service/jani)
 "iE" = (
-/obj/effect/decal/cleanable/blood/drip{
-	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/effect/decal/cleanable/blood/drip{
-	pixel_y = 5;
-	pixel_x = 6
-	},
-/obj/effect/decal/cleanable/blood/drip{
-	pixel_y = 17;
-	pixel_x = 10
-	},
+/obj/structure/mopbucket,
+/obj/item/mop,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged5"
 	},
-/area/space)
+/area/ruin/space/ks13/service/jani)
 "iJ" = (
 /turf/open/floor/plating,
 /area/ruin/space/ks13/service/chapel)
@@ -1510,8 +1501,9 @@
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
 "iN" = (
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/ruin/space/ks13/service/jani)
 "iO" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating/airless,
@@ -1971,7 +1963,7 @@
 "lg" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/ruin/space/ks13/service/jani)
 "lh" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access"
@@ -2685,6 +2677,9 @@
 "pH" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/hallway/aft)
+"pJ" = (
+/turf/closed/wall,
+/area/ruin/space/ks13/service/jani)
 "pK" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/airless,
@@ -2914,18 +2909,10 @@
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
 "tB" = (
-/obj/effect/decal/cleanable/blood/drip{
-	pixel_y = 11;
-	pixel_x = -2
-	},
-/obj/effect/decal/cleanable/blood/drip{
-	pixel_y = 9;
-	pixel_x = 13
-	},
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/space)
+/area/ruin/space/ks13/service/jani)
 "tH" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless,
@@ -3069,6 +3056,10 @@
 /area/ruin/space/ks13/engineering/tech_storage)
 "wf" = (
 /obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/science/genetics)
+"wo" = (
+/obj/structure/table/glass,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
 "wr" = (
@@ -3698,8 +3689,8 @@
 /area/ruin/space/ks13/engineering/atmos)
 "EV" = (
 /obj/structure/lattice,
-/turf/closed/wall,
-/area/space)
+/turf/closed/wall/r_wall,
+/area/ruin/space/ks13/service/jani)
 "EW" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/dorms)
@@ -3718,6 +3709,10 @@
 /obj/structure/table_frame,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"Fd" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/service/jani)
 "Fe" = (
 /obj/machinery/door/poddoor{
 	id = "derelict_gun";
@@ -3906,6 +3901,10 @@
 "Hr" = (
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
+"Hw" = (
+/obj/structure/door_assembly/door_assembly_mai,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/service/jani)
 "Hx" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
@@ -4065,8 +4064,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
 "Jl" = (
-/turf/template_noop,
-/area/space)
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/service/jani)
 "Jm" = (
 /obj/effect/decal/cleanable/glass,
 /obj/item/shard{
@@ -4445,6 +4444,7 @@
 	pixel_x = 8;
 	pixel_y = -5
 	},
+/obj/structure/table_frame,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
 "OJ" = (
@@ -4463,7 +4463,7 @@
 "OZ" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space)
+/area/ruin/space/ks13/service/jani)
 "Pi" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -4501,6 +4501,12 @@
 	icon_state = "floorscorched2"
 	},
 /area/ruin/space/ks13/service/kitchen)
+"PF" = (
+/obj/structure/table/glass,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/ks13/science/genetics)
 "PL" = (
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
@@ -4708,7 +4714,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/space)
+/area/ruin/space/ks13/service/jani)
 "Th" = (
 /obj/structure/sign/warning/radiation/directional/west,
 /turf/open/floor/plating/airless,
@@ -4905,6 +4911,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
+"VY" = (
+/obj/structure/lattice,
+/obj/structure/closet,
+/obj/item/pushbroom,
+/obj/item/reagent_containers/spray/cleaner,
+/turf/template_noop,
+/area/space/nearstation)
 "Wc" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker{
@@ -4921,10 +4934,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
 "Wp" = (
+/obj/structure/table_frame,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/space)
+/area/ruin/space/ks13/service/jani)
 "Wq" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
@@ -9282,7 +9296,7 @@ cw
 tf
 tf
 mz
-iP
+PF
 zQ
 UD
 AI
@@ -9395,7 +9409,7 @@ Ry
 mz
 Wq
 mz
-zQ
+wo
 UD
 dU
 YX
@@ -9959,7 +9973,7 @@ oC
 Bl
 mz
 EV
-Hd
+Fd
 EV
 tJ
 FR
@@ -10073,7 +10087,7 @@ mz
 OZ
 Wp
 iD
-Hd
+Fd
 rk
 FR
 TJ
@@ -10184,9 +10198,9 @@ sU
 Bl
 mz
 iN
-Jl
+aa
 tB
-Hd
+Fd
 vj
 jo
 iZ
@@ -10295,11 +10309,11 @@ Bl
 Bl
 Bl
 Bl
-rk
-iN
+VY
+Jl
 Tg
 iE
-Hd
+pJ
 rU
 rU
 jb
@@ -10410,9 +10424,9 @@ mz
 mz
 rk
 lg
-Hd
+Hw
 lg
-Hd
+pJ
 rU
 rU
 rU
