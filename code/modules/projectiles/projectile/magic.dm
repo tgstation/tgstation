@@ -22,6 +22,8 @@
 
 	if(istype(target, /obj/machinery/hydroponics)) // even plants can block antimagic
 		var/obj/machinery/hydroponics/target = target
+		if(!target.myseed)
+			return
 		if(target.myseed.get_gene(/datum/plant_gene/trait/anti_magic))
 			visible_message(span_warning("[src] fizzles on contact with [target]!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
@@ -32,9 +34,6 @@
 
 /obj/projectile/magic/death/on_hit(atom/target)
 	. = ..()
-
-	if(!isliving(target) && !istype(target, /obj/machinery/hydroponics))
-		return
 
 	if(isliving(target))
 		var/mob/living/target = target
@@ -49,6 +48,8 @@
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/target = target
+		if(!target.myseed)
+			return
 		target.set_weedlevel(0) // even the weeds perish
 		target.plantdies()
 
@@ -61,9 +62,6 @@
 
 /obj/projectile/magic/resurrection/on_hit(atom/target)
 	. = ..()
-
-	if(!isliving(target) && !istype(target, /obj/machinery/hydroponics))
-		return
 
 	if(isliving(target))
 		var/mob/living/target = target
@@ -80,6 +78,8 @@
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/target = target
+		if(!target.myseed)
+			return
 		target.set_plant_health(target.myseed.endurance, forced = TRUE)
 
 /obj/projectile/magic/teleport
@@ -166,16 +166,15 @@
 /obj/projectile/magic/change/on_hit(atom/target)
 	. = ..()
 
-	if(!isliving(target) && !istype(target, /obj/machinery/hydroponics))
-		return
-
 	if(isliving(target))
 		var/mob/living/target = target
 		target.wabbajack()
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/target = target
-		target.mutatespecie(polymorph = TRUE)
+		if(!target.myseed)
+			return
+		target.polymorph()
 
 /obj/projectile/magic/animate
 	name = "bolt of animation"
