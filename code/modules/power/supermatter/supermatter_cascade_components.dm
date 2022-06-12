@@ -15,7 +15,7 @@
 	move_resist = INFINITY
 	///All dirs we can expand to
 	var/list/available_dirs = list(NORTH,SOUTH,EAST,WEST,UP,DOWN)
-	///Reference to help us with dusting mobs that the crystal grows over
+	///Handler that helps with properly killing mobs that the crystal grows over
 	var/datum/component/supermatter_crystal/sm_comp
 	///Cooldown on the expansion process
 	COOLDOWN_DECLARE(sm_wall_cooldown)
