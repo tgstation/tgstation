@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Abductors should now hopefully spawn in on their little alien pod rather than on the station's arrivals shuttle."
