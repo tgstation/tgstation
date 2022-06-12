@@ -217,3 +217,79 @@
 	if(isopenturf(target) || istype(target, /turf/closed/indestructible))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
 		return
 	target.AddComponent(/datum/component/shrink, shrink_time)
+
+/obj/projectile/beam/gravblast
+	name = "gravity blast"
+	icon_state = "ka_tracer"
+	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
+	damage = 10
+	damage_type = STAMINA
+	armor_flag = ENERGY
+	light_color = COLOR_PALE_PURPLE_GRAY
+	speed = 0.2 //ZOOM
+
+/obj/projectile/beam/gravblast/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(ismovable(target) && isliving(target))
+		var/atom/movable/our_shot_target = target
+		var/atom/throw_target = get_edge_target_turf(our_shot_target, get_dir(src, get_step_away(our_shot_target, src)))
+		our_shot_target.safe_throw_at(throw_target, 3, 2, force = MOVE_FORCE_EXTREMELY_STRONG)
+
+// Shotgun energy pellet projectiles
+
+/obj/projectile/beam/pellet
+	/// How much main damage we lose each tile we pass
+	var/damage_dropoff_per_tile = 0.5
+	/// How much extra stamina damage we lose each tile we pass. Not the same as main damage flagged as STAMINA
+	var/stamina_dropoff_per_tile = 0.5
+	/// This is added onto the speed for each tile the pellet travels (positive numbers making it slower)
+	var/speed_dropoff = 0
+	/// How many tiles the speed_dropoff applies for before it caps out
+	var/speed_dropoff_tiles = 0
+	/// How much extra armour penetration we lose each tile we pass
+	var/armour_pen_dropoff_per_tile = 10
+
+/obj/projectile/beam/pellet/Range()
+	..()
+	if(speed_dropoff_tiles > 0)
+		speed = max(speed + speed_dropoff, 0.1) // so we can't cause a divide by 0 or negative if someone adds an accelerating bullet
+		speed_dropoff_tiles--
+
+	if(damage > 0)
+		damage -= damage_dropoff_per_tile
+	if(stamina > 0)
+		stamina -= stamina_dropoff_per_tile
+	if(armour_penetration > 0)
+		armour_penetration = min(armour_penetration - armour_pen_dropoff_per_tile, 0) // We don't want this going into the negatives. Madness lies there.
+	if(damage < 0 && stamina < 0)
+		qdel(src)
+
+/obj/projectile/beam/pellet/lethal
+	name = "energized pellet"
+	icon_state = "laser_pellet"
+	damage = 5
+	wound_bonus = 5
+	bare_wound_bonus = 5
+	wound_falloff_tile = -2.5
+	speed = 0.5
+	speed_dropoff = 0.3
+	speed_dropoff_tiles = 5
+	armour_penetration = 20
+
+/obj/projectile/beam/pellet/disable
+	name = "static pellet"
+	icon_state = "disabler_pellet"
+	damage = 5
+	damage_type = STAMINA
+	armor_flag = ENERGY
+	hitsound = 'sound/weapons/tap.ogg'
+	eyeblur = 0
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	light_color = LIGHT_COLOR_BLUE
+	tracer_type = /obj/effect/projectile/tracer/disabler
+	muzzle_type = /obj/effect/projectile/muzzle/disabler
+	impact_type = /obj/effect/projectile/impact/disabler
+	speed = 0.5
+	speed_dropoff = 0.3
+	speed_dropoff_tiles = 5
+	armour_penetration = 20

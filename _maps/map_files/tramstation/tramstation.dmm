@@ -32439,8 +32439,8 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/ballistic/shotgun/riot,
-/obj/item/gun/ballistic/shotgun/riot{
+/obj/item/gun/ballistic/shotgun/meltra,
+/obj/item/gun/ballistic/shotgun/meltra{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -63891,8 +63891,10 @@
 /area/station/science/research)
 "vFl" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/storage/box/snareshot,
+/obj/item/storage/box/snareshot,
+/obj/item/storage/box/nonlethal_energy,
+/obj/item/storage/box/nonlethal_energy,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

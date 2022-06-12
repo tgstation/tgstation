@@ -47,7 +47,7 @@
 	select_name = "goddamn meteor"
 
 /obj/item/ammo_casing/energy/net
-	projectile_type = /obj/projectile/energy/net
+	projectile_type = /obj/projectile/beam/pellet/net
 	select_name = "netting"
 	pellets = 6
 	variance = 40

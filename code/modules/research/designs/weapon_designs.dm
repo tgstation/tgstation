@@ -49,28 +49,48 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/rubbershot/sec
-	id = "sec_rshot"
+/datum/design/snareshell
+	name = "Energy Shell (TRIPnet shell)"
+	id = "sec_snareshell"
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list("Ammo")
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE //Redundant
-
-/datum/design/beanbag_slug/sec
-	id = "sec_beanbag_slug"
-	build_type = PROTOLATHE | AWAY_LATHE
-	category = list("Ammo")
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/plasma = 200)
+	build_path = /obj/item/ammo_casing/shotgun/energy/snare
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
-/datum/design/shotgun_dart/sec
-	id = "sec_dart"
+/datum/design/disablershell
+	name = "Energy Shell (Staticshot)"
+	id = "sec_disshell"
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list("Ammo")
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/plasma = 200)
+	build_path = /obj/item/ammo_casing/shotgun/energy/disable
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	autolathe_exportable = FALSE
+
+/datum/design/gravshell
+	name = "Energy Shell (Gravity Blast shell)"
+	id = "sec_gravshell"
+	build_type = PROTOLATHE | AWAY_LATHE
+	category = list("Ammo")
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/plasma = 200)
+	build_path = /obj/item/ammo_casing/shotgun/energy/grav
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	autolathe_exportable = FALSE
+
+/datum/design/netshell
+	name = "Energy Shell (SNATCHERnet shell)"
+	id = "sec_netshell"
+	build_type = PROTOLATHE | AWAY_LATHE
+	category = list("Ammo")
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/plasma = 200)
+	build_path = /obj/item/ammo_casing/shotgun/energy/net
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
 /datum/design/incendiary_slug/sec
+	name = "Ballistic Shell (Incendiary Slug)"
 	id = "sec_Islug"
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list("Ammo")
@@ -266,7 +286,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/stunshell
-	name = "Stun Shell"
+	name = "Ballistic Shell (Stunslug)"
 	desc = "A stunning shell for a shotgun."
 	id = "stunshell"
 	build_type = PROTOLATHE | AWAY_LATHE
@@ -276,7 +296,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/techshell
-	name = "Unloaded Technological Shotshell"
+	name = "Unloaded Technological Shotgun Shell"
 	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
 	id = "techshotshell"
 	build_type = PROTOLATHE | AWAY_LATHE

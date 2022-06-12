@@ -64,22 +64,6 @@
 /obj/item/gun/energy/laser/cyborg/emp_act()
 	return
 
-/obj/item/gun/energy/laser/scatter
-	name = "scatter laser gun"
-	desc = "A laser gun equipped with a refraction kit that spreads bolts."
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
-
-/obj/item/gun/energy/laser/scatter/shotty
-	name = "energy shotgun"
-	icon = 'icons/obj/guns/ballistic.dmi'
-	icon_state = "cshotgun"
-	inhand_icon_state = "shotgun"
-	desc = "A combat shotgun gutted and refitted with an internal laser system. Can switch between taser and scattered disabler shots."
-	shaded_charge = 0
-	pin = /obj/item/firing_pin/implant/mindshield
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/electrode)
-	automatic_charge_overlays = FALSE
-
 ///Laser Cannon
 
 /obj/item/gun/energy/lasercannon
@@ -193,17 +177,21 @@
 	name = "\improper Deltra HX62-S"
 	desc = "The Deltra is the pinnacle of projected kinetics technology. Capable of producing forcefield barriers to protect the wielder without compromising shooting capabilites, this weapon proves exceptionally useful in riot suppression, terrorist insurgencies and inquisitorial purges."
 	icon_state = "deltra"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	worn_icon_state = "deltra"
 	inhand_icon_state = null
 	shaded_charge = TRUE
 	ammo_x_offset = 1
 	weapon_weight = WEAPON_HEAVY
+	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/deltra)
-	var/obj/item/forcefield_projector/forcebarrier //The forcefield projector that our weapon uses on right click. It charges and functions independent of the weapon.
+	var/obj/item/forcefield_projector/fast/forcebarrier //The forcefield projector that our weapon uses on right click. It charges and functions independent of the weapon.
 
 /obj/item/gun/energy/laser/deltra/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 1 SECONDS, TRUE, 0.3, 0.1)
-	forcebarrier = new /obj/item/forcefield_projector(src)
+	forcebarrier = new /obj/item/forcefield_projector/fast(src)
 
 /obj/item/gun/energy/laser/deltra/examine(mob/user)
 	. = ..()

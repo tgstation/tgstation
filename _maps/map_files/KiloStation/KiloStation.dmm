@@ -2005,8 +2005,8 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/ballistic/shotgun/riot,
-/obj/item/gun/ballistic/shotgun/riot{
+/obj/item/gun/ballistic/shotgun/meltra,
+/obj/item/gun/ballistic/shotgun/meltra{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -60229,11 +60229,10 @@
 	},
 /obj/item/key/security,
 /obj/item/key/security,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = -4;
-	pixel_y = 4
-	},
+/obj/item/storage/box/snareshot,
+/obj/item/storage/box/snareshot,
+/obj/item/storage/box/nonlethal_energy,
+/obj/item/storage/box/nonlethal_energy,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "qXa" = (

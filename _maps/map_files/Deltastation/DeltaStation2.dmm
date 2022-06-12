@@ -7893,8 +7893,10 @@
 	c_tag = "Armory - Interior"
 	},
 /obj/structure/table/reinforced,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/storage/box/snareshot,
+/obj/item/storage/box/snareshot,
+/obj/item/storage/box/nonlethal_energy,
+/obj/item/storage/box/nonlethal_energy,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -21697,8 +21699,8 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/ballistic/shotgun/riot,
-/obj/item/gun/ballistic/shotgun/riot,
+/obj/item/gun/ballistic/shotgun/meltra,
+/obj/item/gun/ballistic/shotgun/meltra,
 /obj/structure/window/reinforced{
 	dir = 4
 	},

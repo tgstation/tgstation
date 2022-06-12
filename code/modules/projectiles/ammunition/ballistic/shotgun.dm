@@ -60,20 +60,6 @@
 	icon_state = "mshell"
 	projectile_type = /obj/projectile/bullet/shotgun_meteorslug
 
-/obj/item/ammo_casing/shotgun/pulseslug
-	name = "pulse slug"
-	desc = "A delicate device which can be loaded into a shotgun. The primer acts as a button which triggers the gain medium and fires a powerful \
-	energy blast. While the heat and power drain limit it to one use, it can still allow an operator to engage targets that ballistic ammunition \
-	would have difficulty with."
-	icon_state = "pshell"
-	projectile_type = /obj/projectile/beam/pulse/shotgun
-
-/obj/item/ammo_casing/shotgun/frag12
-	name = "FRAG-12 slug"
-	desc = "A high explosive breaching round for a 12 gauge shotgun."
-	icon_state = "heshell"
-	projectile_type = /obj/projectile/bullet/shotgun_frag12
-
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "buckshot shell"
 	desc = "A 12 gauge buckshot shell."
@@ -109,23 +95,6 @@
 	pellets = 10
 	variance = 25
 
-/obj/item/ammo_casing/shotgun/ion
-	name = "ion shell"
-	desc = "An advanced shotgun shell which uses a subspace ansible crystal to produce an effect similar to a standard ion rifle. \
-	The unique properties of the crystal split the pulse into a spread of individually weaker bolts."
-	icon_state = "ionshell"
-	projectile_type = /obj/projectile/ion/weak
-	pellets = 4
-	variance = 35
-
-/obj/item/ammo_casing/shotgun/laserslug
-	name = "scatter laser shell"
-	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package."
-	icon_state = "lshell"
-	projectile_type = /obj/projectile/beam/weak
-	pellets = 6
-	variance = 35
-
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
 	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
@@ -156,3 +125,74 @@
 	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 6) //;HELP OPS IN MAINT
 	reagents.add_reagent(/datum/reagent/toxin/coniine, 6)
 	reagents.add_reagent(/datum/reagent/toxin/sodium_thiopental, 6)
+
+// Energy shells - they can be emp'd for varying effects
+/obj/item/ammo_casing/shotgun/energy
+	name = "lethal scatter shell"
+	desc = "An advanced shotgun shell which uses a sudden discharge of energy to fire a flurry of laser particles."
+	icon_state = "enshell"
+	projectile_type = /obj/projectile/beam/pellet/lethal
+	caliber = CALIBER_SHOTGUN_ENERGY
+	pellets = 4
+	variance = 35
+	var/max_pellets = 4
+
+/obj/item/ammo_casing/shotgun/energy/emp_act(severity)
+	. = ..()
+	if(prob(40/severity) && projectile_type)
+		if(pellets > 1)
+			pellets = rand(1,max_pellets)
+		variance = rand(10,90)
+
+/obj/item/ammo_casing/shotgun/energy/disable
+	name = "nonlethal scatter shell"
+	desc = "An advanced shotgun shell which uses a sudden discharge of energy to fire a flurry of disabling static particles."
+	icon_state = "disshell"
+	projectile_type = /obj/projectile/beam/pellet/disable
+
+/obj/item/ammo_casing/shotgun/energy/net
+	name = "SNATCHERnet shell"
+	desc = "An advanced shotgun shell which flings out holonets to snare targets and teleport them to a pre-designated location. Requires a functioning and activated teleporter hub to teleport to its intended destination."
+	icon_state = "netshell"
+	projectile_type = /obj/projectile/beam/pellet/net
+
+/obj/item/ammo_casing/shotgun/energy/snare
+	name = "TRIPnet shell"
+	desc = "An advanced shotgun shell that hurtles an energy snare at targets, tripping them up and dealing moderate stamina damage."
+	icon_state = "bolashell"
+	projectile_type = /obj/projectile/energy/trap
+	pellets = 0
+	variance = 0
+
+/obj/item/ammo_casing/shotgun/energy/grav
+	name = "gravity blast shell"
+	desc = "An advanced shotgun shell that shoots an extremely fast conflux of gravitational distortions that launchs a target upon impact."
+	icon_state = "bolashell"
+	projectile_type = /obj/projectile/energy/trap
+	pellets = 0
+	variance = 0
+
+/obj/item/ammo_casing/shotgun/energy/ion
+	name = "ion scatter shell"
+	desc = "An advanced shotgun shell which uses a subspace ansible crystal to produce an effect similar to a standard ion rifle. \
+	The unique properties of the crystal split the pulse into a spread of individually weaker bolts."
+	icon_state = "ionshell"
+	projectile_type = /obj/projectile/ion/weak
+
+/obj/item/ammo_casing/shotgun/energy/pulseslug
+	name = "pulse slug shell"
+	desc = "A delicate device which can be loaded into an energy shotgun. The primer acts as a button which triggers the gain medium and fires a powerful \
+	energy blast. While the heat and power drain limit it to one use, it can still allow an operator to engage targets that ballistic ammunition \
+	would have difficulty with."
+	icon_state = "pshell"
+	projectile_type = /obj/projectile/beam/pulse/shotgun
+	pellets = 0
+	variance = 0
+
+/obj/item/ammo_casing/shotgun/energy/frag12
+	name = "FRAG-12 slug"
+	desc = "A high explosive breaching round for an energy shotgun."
+	icon_state = "heshell"
+	projectile_type = /obj/projectile/bullet/shotgun_frag12
+	pellets = 0
+	variance = 0

@@ -127,3 +127,9 @@
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(generator)
 		generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)
+
+/obj/item/forcefield_projector/fast
+	name = "rapid forcefield generator"
+	desc = "Unlike the standard forcefield generator, you don't have to wait around as long for this thing to put down forcefields. This comes at a cost of max capacitiy, however."
+	max_fields = 1
+	creation_time = 0.3 SECONDS

@@ -1,23 +1,23 @@
-/obj/projectile/energy/net
+/obj/projectile/beam/pellet/net
 	name = "energy netting"
 	icon_state = "e_netting"
-	damage = 10
+	damage = 3.5
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 
-/obj/projectile/energy/net/Initialize(mapload)
+/obj/projectile/beam/pellet/net/Initialize(mapload)
 	. = ..()
 	SpinAnimation()
 
-/obj/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/beam/pellet/net/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
 			new /obj/effect/nettingportal(Tloc)
 	..()
 
-/obj/projectile/energy/net/on_range()
+/obj/projectile/beam/pellet/net/on_range()
 	do_sparks(1, TRUE, src)
 	..()
 
@@ -61,7 +61,8 @@
 /obj/projectile/energy/trap
 	name = "energy snare"
 	icon_state = "e_snare"
-	nodamage = TRUE
+	damage = 20
+	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 4
 
@@ -76,25 +77,3 @@
 /obj/projectile/energy/trap/on_range()
 	new /obj/item/restraints/legcuffs/beartrap/energy(loc)
 	..()
-
-/obj/projectile/energy/trap/cyborg
-	name = "Energy Bola"
-	icon_state = "e_snare"
-	nodamage = TRUE
-	paralyze = 0
-	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 10
-
-/obj/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = FALSE)
-	if(!ismob(target) || blocked >= 100)
-		do_sparks(1, TRUE, src)
-		qdel(src)
-	if(iscarbon(target))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
-		B.spring_trap(null, target)
-	QDEL_IN(src, 10)
-	. = ..()
-
-/obj/projectile/energy/trap/cyborg/on_range()
-	do_sparks(1, TRUE, src)
-	qdel(src)

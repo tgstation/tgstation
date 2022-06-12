@@ -502,14 +502,14 @@
 					/obj/item/storage/belt/bandolier)
 	crate_name = "combat shotguns crate"
 
-/datum/supply_pack/security/armory/dragnet
-	name = "DRAGnet Crate"
-	desc = "Contains three \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, a recent breakthrough in law enforcement prisoner management technology. Requires armory access to open."
-	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/gun/energy/e_gun/dragnet,
-					/obj/item/gun/energy/e_gun/dragnet,
-					/obj/item/gun/energy/e_gun/dragnet)
-	crate_name = "\improper DRAGnet crate"
+/datum/supply_pack/security/armory/energy
+	name = "Deltra HX62-S Crate"
+	desc = "Contains two Deltra HX62-S automatic energy weapons, able to produce holobarriers to protect the user or block chokepoints. Requires Armory access to open."
+	cost = CARGO_CRATE_VALUE * 20
+	contains = list(/obj/item/gun/energy/laser/deltra,
+					/obj/item/gun/energy/laser/deltra)
+	crate_name = "\improper Deltra HX62-s crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"

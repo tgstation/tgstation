@@ -81,10 +81,11 @@
 	uniform = /obj/item/clothing/under/syndicate/camo
 	suit = /obj/item/clothing/suit/armor/laserproof
 	head = /obj/item/clothing/head/beret/durathread
-	belt = /obj/item/gun/energy/laser/scatter
+	belt = /obj/item/gun/ballistic/shotgun/automatic/meltra
 	gloves = /obj/item/clothing/gloves/combat
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
 	/obj/item/storage/box/flashbangs = 1,
 	/obj/item/shield/riot/tele = 1,
+	/obj/item/storage/box/lethal_energy = 1,
 	/obj/item/storage/box/survival/security)

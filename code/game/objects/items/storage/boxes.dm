@@ -914,6 +914,33 @@
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 
+/obj/item/storage/box/lethal_energy
+	name = "box of advanced energy scattershot"
+	desc = "A box full of advanced lethal energy scattershot laser shells."
+	icon_state = "lasershot_box"
+
+/obj/item/storage/box/lethal_energy/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_casing/shotgun/energy(src)
+
+/obj/item/storage/box/nonlethal_energy
+	name = "box of advanced disabling scattershot"
+	desc = "A box full of advanced nonlethal energy scattershot disabler shells."
+	icon_state = "disableshot_box"
+
+/obj/item/storage/box/nonlethal_energy/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_casing/shotgun/energy/disable(src)
+
+/obj/item/storage/box/snareshot
+	name = "box of advanced TRIPnet shells"
+	desc = "A box full of advanced nonlethal energy shotgun shells. These snap a snare around the legs of any target it hits."
+	icon_state = "snareshot_box"
+
+/obj/item/storage/box/snareshot/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_casing/shotgun/energy/snare(src)
+
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"
 	desc = "The latest set of collectable action figures."

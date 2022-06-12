@@ -634,8 +634,8 @@
 "hT" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate/secure/gear,
-/obj/item/ammo_casing/shotgun/ion,
-/obj/item/ammo_casing/shotgun/pulseslug,
+/obj/item/ammo_casing/shotgun/energy/ion,
+/obj/item/ammo_casing/shotgun/energy/pulseslug,
 /obj/item/ammo_casing/shotgun/dragonsbreath,
 /obj/item/ammo_casing/shotgun/stunslug,
 /obj/item/ammo_casing/shotgun/stunslug,

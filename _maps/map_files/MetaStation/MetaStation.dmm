@@ -8183,8 +8183,8 @@
 /area/station/science/mixing/launch)
 "daO" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/riot,
-/obj/item/gun/ballistic/shotgun/riot{
+/obj/item/gun/ballistic/shotgun/meltra,
+/obj/item/gun/ballistic/shotgun/meltra{
 	pixel_y = 6
 	},
 /obj/item/gun/ballistic/shotgun/riot{
@@ -9570,8 +9570,10 @@
 /area/station/hallway/primary/starboard)
 "dAr" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/storage/box/snareshot,
+/obj/item/storage/box/snareshot,
+/obj/item/storage/box/nonlethal_energy,
+/obj/item/storage/box/nonlethal_energy,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},

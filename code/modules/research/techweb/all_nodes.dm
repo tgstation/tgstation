@@ -52,10 +52,10 @@
 		"roll",
 		"salestagger",
 		"sec_38",
+		"sec_snareshell",
+		"sec_disshell",
+		"sec_gravshell",
 		"sec_Islug",
-		"sec_beanbag_slug",
-		"sec_dart",
-		"sec_rshot",
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
@@ -699,6 +699,7 @@
 	prereq_ids = list("bluespace_travel", "syndicate_basic")
 	design_ids = list(
 		"desynchronizer",
+		"sec_netshell"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
