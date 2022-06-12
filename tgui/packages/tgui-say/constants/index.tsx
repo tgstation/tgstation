@@ -4,7 +4,7 @@ export const CHANNELS: string[] = ['Say', 'Radio', 'Me', 'OOC'];
 type WindowSize = Record<string, number>;
 
 /** Window sizes in pixels */
-export const SIZE: WindowSize = {
+export const WINDOW_SIZES: WindowSize = {
   small: 30,
   medium: 50,
   large: 70,

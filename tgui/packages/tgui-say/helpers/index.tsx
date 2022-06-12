@@ -1,4 +1,4 @@
-import { SIZE } from '../constants/constants';
+import { WINDOW_SIZES } from '../constants';
 import { KEY_0, KEY_Z } from 'common/keycodes';
 import { classes } from 'common/react';
 
@@ -37,9 +37,9 @@ export const windowLoad = () => {
  * Parameters:
  *  size - The size of the window in pixels. Optional.
  */
-export const windowSet = (size: number = SIZE.small) => {
-  Byond.winset('tgui_say', { size: `${SIZE.width}x${size}` });
-  Byond.winset('tgui_say.browser', { size: `${SIZE.width}x${size}` });
+export const windowSet = (size: number = WINDOW_SIZES.small) => {
+  Byond.winset('tgui_say', { size: `${WINDOW_SIZES.width}x${size}` });
+  Byond.winset('tgui_say.browser', { size: `${WINDOW_SIZES.width}x${size}` });
 };
 
 /** Private functions */
@@ -47,11 +47,11 @@ export const windowSet = (size: number = SIZE.small) => {
 const setOpen = () => {
   Byond.winset('tgui_say', {
     'is-visible': true,
-    size: `${SIZE.width}x${SIZE.small}`,
+    size: `${WINDOW_SIZES.width}x${WINDOW_SIZES.small}`,
   });
   Byond.winset('tgui_say.browser', {
     'is-visible': true,
-    size: `${SIZE.width}x${SIZE.small}`,
+    size: `${WINDOW_SIZES.width}x${WINDOW_SIZES.small}`,
   });
 };
 
@@ -59,7 +59,7 @@ const setOpen = () => {
 const setClosed = () => {
   Byond.winset('tgui_say', {
     'is-visible': false,
-    size: `${SIZE.width}x${SIZE.small}`,
+    size: `${WINDOW_SIZES.width}x${WINDOW_SIZES.small}`,
   });
   Byond.winset('map', {
     focus: true,
