@@ -278,7 +278,7 @@
 /area/awaymission/cabin)
 "aR" = (
 /obj/machinery/door/window/right/directional/west{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/structure/fireplace,
 /obj/effect/decal/cleanable/dirt,
@@ -299,7 +299,7 @@
 /area/awaymission/cabin)
 "aT" = (
 /obj/machinery/door/window/left/directional/east{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/structure/fireplace,
 /obj/effect/decal/cleanable/dirt,
@@ -308,7 +308,7 @@
 "aU" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/right/directional/west{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -320,7 +320,7 @@
 "aW" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/left/directional/east{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -372,7 +372,7 @@
 /area/awaymission/cabin)
 "bg" = (
 /obj/machinery/door/window/left/directional/west{
-	name = "manager's desk"
+	name = "Manager's Desk"
 	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -1242,7 +1242,7 @@
 "eq" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "garage_cabin";
-	name = "garage door"
+	name = "Garage Door"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating/snowed/snow_cabin,
@@ -2122,7 +2122,7 @@
 /area/awaymission/cabin)
 "hg" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "janitor closet"
+	name = "Janitor Closet"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -2238,7 +2238,7 @@
 /area/awaymission/cabin)
 "hy" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "heater storage"
+	name = "Heater Storage"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -4650,7 +4650,7 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/mob/living/simple_animal/hostile/statue{
+/mob/living/simple_animal/hostile/netherworld/statue{
 	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman.";
 	faction = list("statue","mining");
 	health = 5000;

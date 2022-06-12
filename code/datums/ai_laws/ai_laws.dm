@@ -1,5 +1,87 @@
 #define AI_LAWS_ASIMOV "asimov"
 
+/**
+ * A getter that sets up the round default if it has not been yet.
+ *
+ * round_default_lawset is what is considered the default for the round. Aka, new AI and other silicons would get this.
+ * You might recognize the fact that 99% of the time it is asimov.
+ *
+ * This requires config, so it is generated at the first request to use this var.
+ */
+/proc/get_round_default_lawset()
+	var/static/round_default_lawset
+	if(!round_default_lawset)
+		round_default_lawset = setup_round_default_laws()
+	return  round_default_lawset
+
+//different settings for configged defaults
+
+/// Always make the round default asimov
+#define CONFIG_ASIMOV 0
+/// Set to a custom lawset defined by another config value
+#define CONFIG_CUSTOM 1
+/// Set to a completely random ai law subtype, good, bad, it cares not. Careful with this one
+#define CONFIG_RANDOM 2
+/// Set to a configged weighted list of lawtypes in the config. This lets server owners pick from a pool of sane laws, it is also the same process for ian law rerolls.
+#define CONFIG_WEIGHTED 3
+
+///first called when something wants round default laws for the first time in a round, considers config
+///returns a law datum that GLOB._round_default_lawset will be set to.
+/proc/setup_round_default_laws()
+	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
+
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		return pick_weighted_lawset()
+
+	switch(CONFIG_GET(number/default_laws))
+		if(CONFIG_ASIMOV)
+			return /datum/ai_laws/default/asimov
+		if(CONFIG_CUSTOM)
+			return /datum/ai_laws/custom
+		if(CONFIG_RANDOM)
+			var/list/randlaws = list()
+			for(var/lpath in subtypesof(/datum/ai_laws))
+				var/datum/ai_laws/L = lpath
+				if(initial(L.id) in law_ids)
+					randlaws += lpath
+			var/datum/ai_laws/lawtype
+			if(randlaws.len)
+				lawtype = pick(randlaws)
+			else
+				lawtype = pick(subtypesof(/datum/ai_laws/default))
+
+			return lawtype
+		if(CONFIG_WEIGHTED)
+			return pick_weighted_lawset()
+
+///returns a law datum based off of config. will never roll asimov as the weighted datum if the station has a unique AI.
+/proc/pick_weighted_lawset()
+	var/datum/ai_laws/lawtype
+	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		law_weights -= AI_LAWS_ASIMOV
+	while(!lawtype && law_weights.len)
+		var/possible_id = pick_weight(law_weights)
+		lawtype = lawid_to_type(possible_id)
+		if(!lawtype)
+			law_weights -= possible_id
+			WARNING("Bad lawid in game_options.txt: [possible_id]")
+
+	if(!lawtype)
+		WARNING("No LAW_WEIGHT entries.")
+		lawtype = /datum/ai_laws/default/asimov
+
+	return lawtype
+
+///returns the law datum with the lawid in question, law boards and law datums should share this id.
+/proc/lawid_to_type(lawid)
+	var/all_ai_laws = subtypesof(/datum/ai_laws)
+	for(var/al in all_ai_laws)
+		var/datum/ai_laws/ai_law = al
+		if(initial(ai_law.id) == lawid)
+			return ai_law
+	return null
+
 /datum/ai_laws
 	var/name = "Unknown Laws"
 	var/zeroth = null
@@ -11,7 +93,7 @@
 	var/mob/living/silicon/owner
 	var/id = DEFAULT_AI_LAWID
 
-/datum/ai_laws/Destroy(force=FALSE, ...)
+/datum/ai_laws/Destroy(force = FALSE, ...)
 	if(!QDELETED(owner)) //Stopgap to help with laws randomly being lost. This stack_trace will hopefully help find the real issues.
 		if(force) //Unless we're forced...
 			stack_trace("AI law datum for [owner] has been forcefully destroyed incorrectly; the owner variable should be cleared first!")
@@ -20,14 +102,6 @@
 		return QDEL_HINT_LETMELIVE
 	owner = null
 	return ..()
-
-/datum/ai_laws/proc/lawid_to_type(lawid)
-	var/all_ai_laws = subtypesof(/datum/ai_laws)
-	for(var/al in all_ai_laws)
-		var/datum/ai_laws/ai_law = al
-		if(initial(ai_law.id) == lawid)
-			return ai_law
-	return null
 
 /datum/ai_laws/pai
 	name = "pAI Directives"
@@ -57,56 +131,9 @@
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_laws_config()
-	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
-
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
-		pick_weighted_lawset()
-		return
-
-	switch(CONFIG_GET(number/default_laws))
-		if(0)
-			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-		if(1)
-			var/datum/ai_laws/templaws = new /datum/ai_laws/custom()
-			inherent = templaws.inherent
-		if(2)
-			var/list/randlaws = list()
-			for(var/lpath in subtypesof(/datum/ai_laws))
-				var/datum/ai_laws/L = lpath
-				if(initial(L.id) in law_ids)
-					randlaws += lpath
-			var/datum/ai_laws/lawtype
-			if(randlaws.len)
-				lawtype = pick(randlaws)
-			else
-				lawtype = pick(subtypesof(/datum/ai_laws/default))
-
-			var/datum/ai_laws/templaws = new lawtype()
-			inherent = templaws.inherent
-
-		if(3)
-			pick_weighted_lawset()
-
-/datum/ai_laws/proc/pick_weighted_lawset()
-	var/datum/ai_laws/lawtype
-	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
-		law_weights -= AI_LAWS_ASIMOV
-	while(!lawtype && law_weights.len)
-		var/possible_id = pick_weight(law_weights)
-		lawtype = lawid_to_type(possible_id)
-		if(!lawtype)
-			law_weights -= possible_id
-			WARNING("Bad lawid in game_options.txt: [possible_id]")
-
-	if(!lawtype)
-		WARNING("No LAW_WEIGHT entries.")
-		lawtype = /datum/ai_laws/default/asimov
-
-	var/datum/ai_laws/templaws = new lawtype()
-	inherent = templaws.inherent
+	var/datum/ai_laws/default_laws = get_round_default_lawset()
+	default_laws = new default_laws()
+	inherent = default_laws.inherent
 
 /datum/ai_laws/proc/get_law_amount(groups)
 	var/law_amount = 0
@@ -150,39 +177,63 @@
 
 	supplied[number + 1] = law
 
-/datum/ai_laws/proc/replace_random_law(law,groups)
-	var/replaceable_groups = list()
-	if(zeroth && (LAW_ZEROTH in groups))
+/**
+ * Removes a random law and replaces it with the new one
+ *
+ * Args:
+ *  law - The law that is being uploaded
+ * 	remove_law_groups - A list of law categories that can be deleted from
+ *  insert_law_group - The law category that the law will be inserted into
+**/
+/datum/ai_laws/proc/replace_random_law(law, remove_law_groups, insert_law_group)
+	var/list/replaceable_groups = list()
+	if(zeroth && (LAW_ZEROTH in remove_law_groups))
 		replaceable_groups[LAW_ZEROTH] = 1
-	if(ion.len && (LAW_ION in groups))
+	if(ion.len && (LAW_ION in remove_law_groups))
 		replaceable_groups[LAW_ION] = ion.len
-	if(hacked.len && (LAW_HACKED in groups))
+	if(hacked.len && (LAW_HACKED in remove_law_groups))
 		replaceable_groups[LAW_ION] = hacked.len
-	if(inherent.len && (LAW_INHERENT in groups))
+	if(inherent.len && (LAW_INHERENT in remove_law_groups))
 		replaceable_groups[LAW_INHERENT] = inherent.len
-	if(supplied.len && (LAW_SUPPLIED in groups))
+	if(supplied.len && (LAW_SUPPLIED in remove_law_groups))
 		replaceable_groups[LAW_SUPPLIED] = supplied.len
+
+	if(replaceable_groups.len == 0) // unable to replace any laws
+		to_chat(usr, span_alert("Unable to upload law to [owner ? owner : "the AI core"]."))
+		return
+
 	var/picked_group = pick_weight(replaceable_groups)
 	switch(picked_group)
 		if(LAW_ZEROTH)
-			. = zeroth
+			zeroth = null
+		if(LAW_ION)
+			var/i = rand(1, ion.len)
+			ion -= ion[i]
+		if(LAW_HACKED)
+			var/i = rand(1, hacked.len)
+			hacked -= ion[i]
+		if(LAW_INHERENT)
+			var/i = rand(1, inherent.len)
+			inherent -= inherent[i]
+		if(LAW_SUPPLIED)
+			var/i = rand(1, supplied.len)
+			supplied -= supplied[i]
+
+	switch(insert_law_group)
+		if(LAW_ZEROTH)
 			set_zeroth_law(law)
 		if(LAW_ION)
 			var/i = rand(1, ion.len)
-			. = ion[i]
-			ion[i] = law
+			ion.Insert(i, law)
 		if(LAW_HACKED)
 			var/i = rand(1, hacked.len)
-			. = hacked[i]
-			hacked[i] = law
+			hacked.Insert(i, law)
 		if(LAW_INHERENT)
 			var/i = rand(1, inherent.len)
-			. = inherent[i]
-			inherent[i] = law
+			inherent.Insert(i, law)
 		if(LAW_SUPPLIED)
 			var/i = rand(1, supplied.len)
-			. = supplied[i]
-			supplied[i] = law
+			supplied.Insert(i, law)
 
 /datum/ai_laws/proc/shuffle_laws(list/groups)
 	var/list/laws = list()
@@ -301,3 +352,7 @@
 	return data
 
 #undef AI_LAWS_ASIMOV
+#undef CONFIG_ASIMOV
+#undef CONFIG_CUSTOM
+#undef CONFIG_RANDOM
+#undef CONFIG_WEIGHTED

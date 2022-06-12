@@ -102,14 +102,14 @@
 	html = replacetextEx(html, "<!-- tgui:assets -->\n", inline_assets_str)
 	// Inject inline HTML
 	if (inline_html)
-		html = replacetextEx(html, "<!-- tgui:inline-html -->", inline_html)
+		html = replacetextEx(html, "<!-- tgui:inline-html -->", isfile(inline_html) ? file2text(inline_html) : inline_html)
 	// Inject inline JS
 	if (inline_js)
-		inline_js = "<script>\n'use strict';\n[inline_js]\n</script>"
+		inline_js = "<script>\n'use strict';\n[isfile(inline_js) ? file2text(inline_js) : inline_js]\n</script>"
 		html = replacetextEx(html, "<!-- tgui:inline-js -->", inline_js)
 	// Inject inline CSS
 	if (inline_css)
-		inline_css = "<style>\n[inline_css]\n</style>"
+		inline_css = "<style>\n[isfile(inline_css) ? file2text(inline_css) : inline_css]\n</style>"
 		html = replacetextEx(html, "<!-- tgui:inline-css -->", inline_css)
 	// Open the window
 	client << browse(html, "window=[id];[options]")
@@ -132,6 +132,9 @@
 		inline_html = initial_inline_html,
 		inline_js = initial_inline_js,
 		inline_css = initial_inline_css)
+	// Resend assets
+	for(var/datum/asset/asset in sent_assets)
+		send_asset(asset)
 
 /**
  * public
@@ -312,6 +315,18 @@
 	message_queue = null
 
 /**
+ * public
+ *
+ * Replaces the inline HTML content.
+ *
+ * required inline_html string HTML to inject
+ */
+/datum/tgui_window/proc/replace_html(inline_html = "")
+	client << output(url_encode(inline_html), is_browser \
+		? "[id]:replaceHtml" \
+		: "[id].browser:replaceHtml")
+
+/**
  * private
  *
  * Callback for handling incoming tgui messages.
@@ -353,11 +368,7 @@
 		if("openLink")
 			client << link(href_list["url"])
 		if("cacheReloaded")
-			// Reinitialize
 			reinitialize()
-			// Resend the assets
-			for(var/asset in sent_assets)
-				send_asset(asset)
 
 /datum/tgui_window/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, id) && ..()

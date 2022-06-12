@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - spellcheck: "security mod theme no longer mentions being shockproof"
+  - bugfix: "fixes naked outfit giving people the ninja modsuit"

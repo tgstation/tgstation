@@ -184,6 +184,11 @@
 /obj/effect/anomaly/grav/high/proc/setup_grav_field()
 	grav_field = new(src, 7, TRUE, rand(0, 3))
 
+/obj/effect/anomaly/grav/high/detonate()
+	for(var/obj/machinery/gravity_generator/main/the_generator in GLOB.machines)
+		if(is_station_level(the_generator.z))
+			the_generator.blackout()
+
 /obj/effect/anomaly/grav/high/Destroy()
 	QDEL_NULL(grav_field)
 	. = ..()

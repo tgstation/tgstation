@@ -181,9 +181,9 @@
 /area/ruin/pizzeria)
 "fa" = (
 /obj/machinery/door/airlock{
-	name = "Kitchen";
-	req_access_txt = "28"
+	name = "Kitchen"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/iron/white/smooth_large,
 /area/ruin/pizzeria/kitchen)
 "fo" = (
@@ -797,9 +797,9 @@
 "AA" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock{
-	name = "Kitchen";
-	req_access_txt = "28"
+	name = "Kitchen"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
 /turf/open/floor/iron/white/smooth_large,
 /area/ruin/pizzeria/kitchen)
@@ -1663,9 +1663,9 @@
 "Ym" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
-	name = "Maintenance Access";
-	req_access_txt = "28"
+	name = "Maintenance Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
 /turf/open/floor/iron/freezer,
 /area/ruin/pizzeria)

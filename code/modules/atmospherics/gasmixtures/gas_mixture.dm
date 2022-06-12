@@ -443,8 +443,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		sharer_heat_capacity = sharer_heat_capacity || sharer.heat_capacity(ARCHIVE)
 
 		if((sharer_heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
-			var/heat = conduction_coefficient*temperature_delta* \
-				(self_heat_capacity*sharer_heat_capacity/(self_heat_capacity+sharer_heat_capacity))
+			// coefficient applied first because some turfs have very big heat caps.
+			var/heat = CALCULATE_CONDUCTION_ENERGY(conduction_coefficient * temperature_delta, sharer_heat_capacity, self_heat_capacity)
 
 			temperature = max(temperature - heat/self_heat_capacity, TCMB)
 			sharer_temperature = max(sharer_temperature + heat/sharer_heat_capacity, TCMB)

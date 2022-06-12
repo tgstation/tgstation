@@ -39,7 +39,7 @@
 	id = "escape_cockpit_windows";
 	name = "Cockpit Window Blast Doors";
 	pixel_x = -7;
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -259,7 +259,7 @@
 	id = "escape_cockpit_blast";
 	name = "Cockpit Airlock Blast Doors";
 	pixel_y = -26;
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /obj/effect/turf_decal/raven/two,
 /turf/open/floor/iron/dark,
@@ -481,7 +481,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Holding Area"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/brig)
 "bl" = (
@@ -2079,7 +2079,7 @@
 	pixel_x = 5;
 	pixel_y = 32;
 	req_access = null;
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)

@@ -12,6 +12,7 @@
 	attack_verb_simple = list("whip", "lash", "discipline")
 	max_integrity = 300
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
+	w_class = WEIGHT_CLASS_BULKY
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
@@ -653,6 +654,7 @@
 		/obj/item/lightreplacer,
 		/obj/item/melee/flyswatter,
 		/obj/item/paint/paint_remover,
+		/obj/item/plunger,
 		/obj/item/pushbroom,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
@@ -833,6 +835,5 @@
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,
 		/obj/item/seeds,
-		
 		/obj/item/shovel/spade,
 		))

@@ -556,17 +556,13 @@
 	dir = 2;
 	icon_state = "left";
 	name = "Curator Desk Door";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"io" = (
-/obj/structure/lattice,
-/turf/closed/mineral,
 /area/shuttle/escape)
 "it" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -1082,7 +1078,7 @@
 	base_state = "left";
 	icon_state = "left";
 	name = "Secure Art Exhibit";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1287,7 +1283,7 @@
 	dir = 1;
 	icon_state = "right";
 	name = "Coffin Storage";
-	req_one_access_txt = "22"
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1664,7 +1660,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
 	name = "Coffin Storage";
-	req_one_access_txt = "22"
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1705,9 +1701,9 @@
 /area/shuttle/escape)
 "yA" = (
 /obj/machinery/door/morgue{
-	name = "Private Exhibit";
-	req_access_txt = "37"
+	name = "Private Exhibit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/library,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -2217,7 +2213,7 @@
 "ED" = (
 /obj/machinery/door/window/right/directional/north{
 	name = "Secure Art Exhibit";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -2997,7 +2993,7 @@
 "OH" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Monastery Maintenance";
-	req_one_access_txt = "22;24;10;11;37"
+	req_access = list("service","maint_tunnels")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3439,7 +3435,7 @@
 /obj/machinery/door/window/right/directional/north{
 	dir = 2;
 	name = "Curator Desk Door";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -3960,7 +3956,7 @@
 "Zh" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 4;
-	req_one_access_txt = "63"
+	req_access = list("security")
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
@@ -5313,7 +5309,7 @@ Ho
 Ho
 Ho
 Ho
-io
+Ho
 JG
 JG
 JG
@@ -5400,7 +5396,7 @@ JG
 JG
 JG
 Ho
-io
+Ho
 Ho
 Ho
 Ho
@@ -5473,9 +5469,9 @@ JG
 Ho
 Ho
 Ho
-io
 Ho
-io
+Ho
+Ho
 JG
 PB
 JG
@@ -5568,7 +5564,7 @@ PB
 JG
 Ho
 Ho
-io
+Ho
 Ho
 Ho
 Ho
@@ -6147,7 +6143,7 @@ zE
 PB
 PB
 PB
-io
+Ho
 Ho
 Ho
 JG
@@ -6556,7 +6552,7 @@ nr
 PB
 PB
 PB
-io
+Ho
 Ho
 Ho
 Pb
@@ -6800,7 +6796,7 @@ PB
 PB
 PB
 PB
-io
+Ho
 Ho
 Ho
 Ho
@@ -7036,7 +7032,7 @@ JG
 PB
 Ho
 Ho
-io
+Ho
 Ho
 PB
 JG
@@ -7115,14 +7111,14 @@ JG
 PB
 JG
 Ho
-io
 Ho
 Ho
 Ho
 Ho
-io
 Ho
-io
+Ho
+Ho
+Ho
 Ho
 Ho
 Ho
@@ -7194,7 +7190,7 @@ Ho
 JG
 JG
 JG
-io
+Ho
 Ho
 Ho
 Ho

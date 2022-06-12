@@ -9,6 +9,7 @@
 	preview_outfit = /datum/outfit/thief
 	antag_hud_name = "thief"
 	ui_name = "AntagInfoThief"
+	count_against_dynamic_roll_chance = FALSE
 	///assoc list of strings set up for the flavor of the thief.
 	var/list/thief_flavor
 	///if added by an admin, they can choose a thief flavor
@@ -170,3 +171,8 @@
 	thief.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 	thief.update_hair()
 	thief.update_body()
+
+	// This outfit is used by the assets SS, which is ran before the atoms SS
+	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
+		thief.wear_mask?.update_greyscale()
+		thief.update_inv_wear_mask()

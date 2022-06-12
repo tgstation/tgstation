@@ -18,8 +18,6 @@
 	var/base_state = "tube"
 	///Is the light on?
 	var/on = FALSE
-	///compared to the var/on for static calculations
-	var/on_gs = FALSE
 	///Amount of power used
 	var/static_power_used = 0
 	///Luminosity when on, also used in power calculation
@@ -66,6 +64,8 @@
 	var/bulb_emergency_pow_mul = 0.75
 	///The minimum value for the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5
+	///Power usage - W per unit of luminosity
+	var/power_consumption_rate = 20
 
 /obj/machinery/light/Move()
 	if(status != LIGHT_BROKEN)
@@ -202,16 +202,24 @@
 		use_power = IDLE_POWER_USE
 		set_light(l_range = 0)
 	update_appearance()
-
-	if(on != on_gs)
-		on_gs = on
-		if(on)
-			static_power_used = brightness * 20 //20W per unit luminosity
-			addStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
-		else
-			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
-
+	update_current_power_usage()
 	broken_sparks(start_only=TRUE)
+
+/obj/machinery/light/update_current_power_usage()
+	if(!on && static_power_used > 0) //Light is off but still powered
+		removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
+		static_power_used = 0
+	else if(on) //Light is on, just recalculate usage
+		var/static_power_used_new = 0
+		var/area/local_area = get_area(src)
+		if (nightshift_enabled && !local_area?.fire)
+			static_power_used_new = nightshift_brightness * nightshift_light_power * power_consumption_rate
+		else
+			static_power_used_new = brightness * bulb_power * power_consumption_rate
+		if(static_power_used != static_power_used_new) //Consumption changed - update
+			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
+			static_power_used = static_power_used_new
+			addStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 
 /obj/machinery/light/update_atom_colour()
 	..()
@@ -470,9 +478,9 @@
 	var/mob/living/carbon/human/electrician = user
 
 	if(istype(electrician))
-		var/obj/item/organ/stomach/maybe_stomach = electrician.getorganslot(ORGAN_SLOT_STOMACH)
-		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
-			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
+		var/obj/item/organ/internal/stomach/maybe_stomach = electrician.getorganslot(ORGAN_SLOT_STOMACH)
+		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
+			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
 			if(stomach.drain_time > world.time)
 				return
 			to_chat(electrician, span_notice("You start channeling some power through the [fitting] into your body."))

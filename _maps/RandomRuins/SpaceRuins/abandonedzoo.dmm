@@ -43,9 +43,9 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aD" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Bio Containment";
-	req_one_access_txt = "47"
+	name = "Bio Containment"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/science/research,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -140,18 +140,22 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "be" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/frame/machine,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bf" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/engineering,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bh" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bi" = (
@@ -309,6 +313,11 @@
 "bX" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
+"eY" = (
+/obj/effect/turf_decal/tile/green/fourcorners,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/abandonedzoo)
 "gE" = (
 /mob/living/simple_animal/hostile/bee,
 /turf/open/floor/grass,
@@ -435,12 +444,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
-"wi" = (
-/obj/machinery/power/terminal,
-/obj/effect/turf_decal/tile/green/fourcorners,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/abandonedzoo)
 "Ap" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid,
@@ -461,9 +464,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "GX" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light/directional/south,
 /obj/structure/cable,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "Ig" = (
@@ -670,7 +673,7 @@ ac
 at
 LD
 oS
-oS
+Ni
 be
 at
 ac
@@ -690,8 +693,8 @@ ac
 qX
 at
 aT
+oS
 Ni
-wi
 bf
 at
 qX
@@ -711,8 +714,8 @@ at
 at
 at
 uA
-Ni
 oS
+Ni
 GX
 at
 at
@@ -732,7 +735,7 @@ OR
 aG
 aN
 aV
-Ni
+oS
 oS
 bh
 bm
@@ -749,12 +752,12 @@ aa
 aa
 aa
 ag
-Ni
+eY
 Ni
 YJ
 Ni
-Ni
 oS
+Ni
 Ni
 Ni
 Ni
@@ -774,8 +777,8 @@ Ni
 Ni
 Ni
 Ni
-Ni
 oS
+Ni
 Ni
 Ni
 Ni
@@ -795,8 +798,8 @@ Ct
 aI
 aP
 aW
-Ni
 oS
+Ni
 bi
 bn
 br
@@ -816,8 +819,8 @@ at
 at
 at
 bQ
-Ni
 oS
+Ni
 ZP
 at
 at
@@ -837,8 +840,8 @@ ac
 qX
 at
 aY
-Ni
 oS
+Ni
 bk
 at
 sT
@@ -858,8 +861,8 @@ aA
 ac
 at
 aZ
-Ni
 oS
+Ni
 bl
 at
 ac
@@ -879,8 +882,8 @@ PF
 ac
 at
 at
-Ti
 iX
+Ti
 at
 at
 ac

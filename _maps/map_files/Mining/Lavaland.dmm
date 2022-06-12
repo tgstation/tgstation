@@ -188,14 +188,14 @@
 /obj/machinery/button/door/directional/north{
 	id = "labor";
 	name = "Labor Camp Lockdown";
-	req_access_txt = "2"
+	req_access = list("brig")
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "ba" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "labor";
-	name = "labor camp blast door"
+	name = "Labor Camp Blast Door"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -1496,8 +1496,7 @@
 /area/mine/living_quarters)
 "iE" = (
 /obj/machinery/door/airlock/external/glass{
-	name = "Labor Camp External Airlock";
-	req_access = null
+	name = "Labor Camp External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -2712,7 +2711,7 @@
 /area/mine/production)
 "wk" = (
 /obj/structure/closet/secure_closet/engineering_welding{
-	req_access = list(54)
+	req_access = list("mining_station")
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown{
@@ -2748,8 +2747,7 @@
 /area/mine/laborcamp)
 "wK" = (
 /obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock";
-	req_access = null
+	name = "Mining External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron,
@@ -2780,8 +2778,7 @@
 /area/mine/laborcamp)
 "xU" = (
 /obj/machinery/door/airlock/external/glass{
-	name = "Labor Camp External Airlock";
-	req_access = null
+	name = "Labor Camp External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
@@ -2824,12 +2821,12 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "zo" = (
-/obj/machinery/computer/prisoner,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/structure/cable,
+/obj/machinery/computer/prisoner/management,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "zA" = (
@@ -3057,7 +3054,6 @@
 "Dt" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock";
-	req_access = null;
 	space_dir = 2
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{

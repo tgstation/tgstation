@@ -724,7 +724,7 @@
 	var/brand = initial(drug_container_type.name)
 	quirk_holder.mind.add_memory(MEMORY_QUIRK_DRUG, list(DETAIL_FAV_BRAND = brand), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
 	// smoker lungs have 25% less health and healing
-	var/obj/item/organ/lungs/smoker_lungs = quirk_holder.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/smoker_lungs = quirk_holder.getorganslot(ORGAN_SLOT_LUNGS)
 	if (smoker_lungs && !(smoker_lungs.organ_flags & ORGAN_SYNTHETIC)) // robotic lungs aren't affected
 		smoker_lungs.maxHealth = smoker_lungs.maxHealth * 0.75
 		smoker_lungs.healing_factor = smoker_lungs.healing_factor * 0.75
@@ -895,3 +895,12 @@
 		return TRUE
 
 	return FALSE
+
+/datum/quirk/illiterate
+	name = "Illiterate"
+	desc = "You dropped out of school and are unable to read or write. This affects reading, writing, using computers and other electronics."
+	icon = "graduation-cap"
+	value = -8
+	mob_trait = TRAIT_ILLITERATE
+	medical_record_text = "Patient is not literate."
+	hardcore_value = 8

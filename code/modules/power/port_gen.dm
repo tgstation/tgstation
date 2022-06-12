@@ -278,4 +278,4 @@
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 
 /obj/machinery/power/port_gen/pacman/pre_loaded
-	sheets = 50
+	sheets = 15

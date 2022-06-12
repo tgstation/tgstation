@@ -16,6 +16,7 @@
 		TRAIT_CAN_STRIP,
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
+		TRAIT_LITERATE,
 	)
 	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much
@@ -29,7 +30,7 @@
 	burnmod = 1.25
 	heatmod = 1.5
 
-	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
+	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
 	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
 	species_language_holder = /datum/language_holder/mushroom

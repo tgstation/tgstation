@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - balance: "The default pirate ship now has a cell charger to recharge suit cells"
