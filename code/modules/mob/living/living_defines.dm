@@ -151,7 +151,6 @@
 
 	///a list of all status effects the mob has
 	var/list/status_effects
-	var/druggy = 0
 	var/list/implants = null
 
 	///used for database logging
