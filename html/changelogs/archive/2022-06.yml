@@ -449,3 +449,29 @@
       administration team of this change so they can diagnose it properly from there.
   tf-4:
   - balance: Pre-loaded PACMAN generators now have 15 plasma sheets, instead of 50.
+2022-06-12:
+  JohnFulpWillard:
+  - bugfix: The Warp whistle can be used more than once again.
+  Melbert:
+  - bugfix: Fixes Novaflowers not lighting targets on fire.
+  - code_imp: Reduces some copy+paste and cleans up some unique plant genes code.
+  - bugfix: Ranged attacks hitting mech equipment no longer ignores mech armor
+  - bugfix: Melee attacks now damage mech equipment
+  - bugfix: Mech equipment is now properly disabled at 0% health
+  Mothblocks:
+  - bugfix: Fixed thieves/opportunists icon.
+  Son-of-Space:
+  - bugfix: Several pairs of external airlocks without cycle link helpers have had
+      them added on TramStation
+  YakumoChen:
+  - bugfix: Fixed a symmetry issue with the lava clown puzzle where a lone chasm tile
+      wasn't connected with its fellow chasms.
+  san7890:
+  - bugfix: Chaplains, CMOs, and Psychologists can now all rejoice that they start
+      in their offices in Tram now, rather than take the shuttle.
+  - bugfix: Abductors should now hopefully spawn in on their little alien pod rather
+      than on the station's arrivals shuttle.
+  timothymtorres:
+  - rscadd: Add disease resistance to spaceacillin.  It now gives 50% disease progression
+      slowdown, 75% to block disease infection, 75% to block zombie infection when
+      attacked, and 50% alien larva growth slowdown.

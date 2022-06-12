@@ -1,4 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - bugfix: "Several pairs of external airlocks without cycle link helpers have had them added on TramStation"
