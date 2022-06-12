@@ -1,9 +1,3 @@
-/// Helper to reset the glasses dummy (wears_the_glasses) back to it's original position, clear knockdown, and return glasses (if gone)
-#define SET_GLASSES_WEARER \
-	wears_the_glasses.forceMove(right_of_shover); \
-	wears_the_glasses.SetKnockdown(0); \
-	if(!wears_the_glasses.glasses){ wears_the_glasses.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES); }
-
 /// Test that the knockoff component will properly cause something
 /// with it applied to be knocked off when it should be.
 /datum/unit_test/knockoff_component
@@ -25,7 +19,7 @@
 
 	// Position shover (bottom left) and the shovee (1 tile right of bottom left, no wall behind them)
 	shoves_the_guy.forceMove(run_loc_floor_bottom_left)
-	SET_GLASSES_WEARER
+	set_glasses_wearer(wears_the_glasses, right_of_shover, glasses)
 
 	TEST_ASSERT(wears_the_glasses.glasses == glasses, "Dummy failed to equip the glasses.")
 
@@ -36,7 +30,7 @@
 	TEST_ASSERT(!wears_the_glasses.IsKnockdown(), "Dummy was knocked down when being disarmed shouldn't have been.")
 	TEST_ASSERT(wears_the_glasses.glasses == glasses, "Dummy lost their glasses even thought they were disarmed targeting the wrong slot.")
 
-	SET_GLASSES_WEARER
+	set_glasses_wearer(wears_the_glasses, right_of_shover, glasses)
 
 	// Test disarm, targeting eyes
 	// A disarm targeting eyes should not knockdown but should lose glasses
@@ -45,7 +39,7 @@
 	TEST_ASSERT(!wears_the_glasses.IsKnockdown(), "Dummy was knocked down when being disarmed shouldn't have been.")
 	TEST_ASSERT(wears_the_glasses.glasses != glasses, "Dummy kept their glasses, even though they were shoved targeting the correct zone.")
 
-	SET_GLASSES_WEARER
+	set_glasses_wearer(wears_the_glasses, right_of_shover, glasses)
 
 	// Test Knockdown()
 	// Any amount of positive Kockdown should lose glasses
@@ -53,7 +47,7 @@
 	TEST_ASSERT(wears_the_glasses.IsKnockdown(), "Dummy wasn't knocked down after Knockdown() was called.")
 	TEST_ASSERT(wears_the_glasses.glasses != glasses, "Dummy kept their glasses, even though they knocked down by Knockdown().")
 
-	SET_GLASSES_WEARER
+	set_glasses_wearer(wears_the_glasses, right_of_shover, glasses)
 
 	// Test AdjustKnockdown()
 	// Any amount of positive Kockdown should lose glasses
@@ -61,7 +55,7 @@
 	TEST_ASSERT(wears_the_glasses.IsKnockdown(), "Dummy wasn't knocked down after AdjustKnockdown() was called.")
 	TEST_ASSERT(wears_the_glasses.glasses != glasses, "Dummy kept their glasses, even though they knocked down by AdjustKnockdown().")
 
-	SET_GLASSES_WEARER
+	set_glasses_wearer(wears_the_glasses, right_of_shover, glasses)
 
 	// Test SetKnockdown()
 	// Any amount of positive Kockdown should lose glasses
@@ -69,7 +63,7 @@
 	TEST_ASSERT(wears_the_glasses.IsKnockdown(), "Dummy wasn't knocked down after SetKnockdown() was called.")
 	TEST_ASSERT(wears_the_glasses.glasses != glasses, "Dummy kept their glasses, even though they knocked down by SetKnockdown().")
 
-	SET_GLASSES_WEARER
+	set_glasses_wearer(wears_the_glasses, right_of_shover, glasses)
 
 	// Test a negative value applied of Knockdown (AdjustKnockdown, SetKnockdown, and Knockdown should all act the same here)
 	// Any amount of negative Kockdown should not cause the glasses to be lost
@@ -84,3 +78,10 @@
 	shoves_the_guy.zone_selected = BODY_ZONE_CHEST
 	shoves_the_guy.disarm(wears_the_glasses)
 	TEST_ASSERT(wears_the_glasses.glasses != glasses, "Dummy kept their glasses, even though were disarm shoved into a wall.")
+
+/// Helper to reset the glasses dummy back to it's original position, clear knockdown, and return glasses (if gone)
+/datum/unit_test/knockoff_component/proc/set_glasses_wearer(mob/living/carbon/human/wearer, turf/reset_to, obj/item/clothing/glasses/reset_worn)
+	wearer.forceMove(reset_to)
+	wearer.SetKnockdown(0 SECONDS)
+	if(!wearer.glasses)
+		wearer.equip_to_slot_if_possible(reset_worn, ITEM_SLOT_EYES)
