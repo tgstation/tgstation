@@ -38,6 +38,7 @@
 	greyscale_config = /datum/greyscale_config/tape_piece
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn
 	greyscale_colors = "#B2B2B2"
+	moth_snack = null
 
 /obj/item/clothing/mask/muzzle/tape/attack(mob/living/M, mob/living/user, params)
 	if(!mob_can_equip(M, user, ITEM_SLOT_MASK))
