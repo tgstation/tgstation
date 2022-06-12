@@ -501,11 +501,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
  * Returns: cause of the cascade, for logging
  */
 /obj/machinery/power/supermatter_crystal/proc/check_cascade_requirements()
-	if(!anomaly_event)
-		return
-
 	if(admin_cascade)
 		return CASCADING_ADMIN
+
+	if(!anomaly_event)
+		return FALSE
 
 	if(has_destabilizing_crystal)
 		return CASCADING_DESTAB_CRYSTAL
