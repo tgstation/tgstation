@@ -1,3 +1,5 @@
+#define MAX_PILL_NAME_LENGTH 30
+
 ///We take a constant input of reagents, and produce a pill once a set volume is reached
 /obj/machinery/plumbing/pill_press
 	name = "chemical press"
@@ -136,7 +138,10 @@
 		if("change_current_volume")
 			current_volume = clamp(text2num(params["volume"]), min_volume, max_volume)
 		if("change_product_name")
-			product_name = html_encode(params["name"])
+			var/formatted_name = html_encode(params["name"])
+			if (length(formatted_name) > MAX_PILL_NAME_LENGTH)
+				return
+			product_name = formatted_name
 		if("change_product")
 			product = params["product"]
 			if (product == "pill")
@@ -148,3 +153,5 @@
 			current_volume = clamp(current_volume, min_volume, max_volume)
 		if("change_patch_style")
 			patch_style = params["patch_style"]
+
+#undef MAX_PILL_NAME_LENGTH
