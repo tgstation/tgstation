@@ -173,9 +173,20 @@
  * Setup for the cascade delamination
  */
 /datum/supermatter_delamination/proc/start_supermatter_cascade()
+	// buncha shuttle manipulation incoming
+
+	// set timer to infinity, so shuttle never arrives
 	SSshuttle.emergency.setTimer(INFINITY)
+	// disallow shuttle recalls, so people cannot cheese the timer
 	SSshuttle.emergency_no_recall = TRUE
+	// set supermatter cascade to true, to prevent auto evacuation due to no way of calling the shuttle
 	SSshuttle.supermatter_cascade = TRUE
+	// This logic is to keep uncalled shuttles uncalled
+	// In SSshuttle, there is not much of a way to prevent shuttle calls, unless we mess with admin panel vars
+	// SHUTTLE_STRANDED is different here, because it *can* block the shuttle from being called, however if we don't register a hostile
+	// environment, it gets unset immediately. Internally, it gets the count of all reasons for HEs and then checks to see if it is zero
+	// and the shuttle is in stranded mode, then frees it with an announcement.
+	// This is a botched solution to a problem that could be solved with a small change in shuttle code, however
 	if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
 		SSshuttle.emergency.mode = SHUTTLE_STRANDED
 		SSshuttle.registerHostileEnvironment(src)
@@ -208,7 +219,7 @@
  */
 /datum/supermatter_delamination/proc/create_cascade_ambience()
 	if(SSsecurity_level.current_level != SEC_LEVEL_DELTA)
-		SSsecurity_level.set_level(SEC_LEVEL_DELTA) // skip the announcement and shuttle timer adjustment
+		SSsecurity_level.set_level(SEC_LEVEL_DELTA) // skip the announcement and shuttle timer adjustment in set_security_level()
 	make_maint_all_access()
 	break_lights_on_station()
 
@@ -238,6 +249,9 @@
 
 	addtimer(CALLBACK(src, .proc/announce_beginning), 5 SECONDS)
 
+/**
+ * Logs the deletion of the bluespace rift, and starts countdown to the end of the round.
+ */
 /datum/supermatter_delamination/proc/deleted_portal()
 	SIGNAL_HANDLER
 	message_admins("[cascade_rift] deleted at [get_area_name(cascade_rift.loc)]. [ADMIN_JMP(cascade_rift.loc)]")
@@ -251,13 +265,19 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE) // if the shuttle is enroute to centcom, we let the shuttle end the round
 		addtimer(CALLBACK(src, .proc/the_end), 1 MINUTES)
 
-// this function is for flavor and to let people know that we reached the halfway point
+/**
+ * Announces the halfway point to the end.
+ */
 /datum/supermatter_delamination/proc/announce_gravitation_shift()
 	priority_announce("Reports indicate formation of crystalline seeds following resonance shift event. \
 		Rapid expansion of crystal mass proportional to rising gravitational force. \
 		Matter collapse due to gravitational pull foreseeable.",
 		"Nanotrasen Star Observation Association")
 
+/**
+ * This proc manipulates the shuttle if it's enroute to centcom, to remain in hyperspace. Otherwise, it just plays an announcement if
+ * the shuttle was in any other state except stranded (idle)
+ */
 /datum/supermatter_delamination/proc/announce_shuttle_gone()
 	// say goodbye to that shuttle of yours
 	if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE)
@@ -300,7 +320,7 @@
 		[Gibberish("Good luck--", FALSE, 25)]")
 
 
-/// filters all living mobs that are in an area
+///filters all living mobs that are in an area
 /proc/mobs_in_area_type(list/area/checked_areas)
 	var/list/mobs_in_area = list()
 	for(var/mob/living/mob as anything in GLOB.mob_living_list)
