@@ -1,4 +1,7 @@
-/datum/unit_test/aaa/Run()
+/// Unit test that forces various slips on a mob and checks return values and mob state to see if the slip has likely been successful.
+/datum/unit_test/slips
+
+/datum/unit_test/slips/Run()
 	// Test just forced slipping, which calls turf slip code as well.
 	var/mob/living/carbon/human/mso = allocate(/mob/living/carbon/human)
 
