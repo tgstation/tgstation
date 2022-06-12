@@ -285,9 +285,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	LAZYADD(actions, action)
 	RegisterSignal(action, COMSIG_PARENT_QDELETING, .proc/on_action_deleted)
 	if(ismob(loc))
+		// We're being held or are equipped by someone while adding an action?
+		// Then they should also probably be granted the action, given it's in a correct slot
 		var/mob/holder = loc
-		if(!slot_flags || holder.get_item_by_slot(slot_flags) == src)
-			give_item_action(action, loc)
+		give_item_action(action, holder, holder.get_slot_by_item(src))
 
 	return action
 
