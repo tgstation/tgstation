@@ -38,7 +38,15 @@
 	greyscale_config = /datum/greyscale_config/tape_piece
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn
 	greyscale_colors = "#B2B2B2"
-	moth_snack = FALSE
+
+/obj/item/clothing/mask/muzzle/tape/attack(mob/living/M, mob/living/user, params)
+	if(!mob_can_equip(M, user, ITEM_SLOT_MASK))
+		to_chat(user, span_notice("They are already wearing somthing on their face."))
+		return
+	balloon_alert(user, "taping mouth")
+	if(!do_after(user, equip_delay_other, target = M))
+		return
+	M.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
 
 /obj/item/clothing/mask/muzzle/tape/super
 	name = "super tape piece"
