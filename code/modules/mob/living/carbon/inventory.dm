@@ -12,7 +12,8 @@
 			return handcuffed
 		if(ITEM_SLOT_LEGCUFFED)
 			return legcuffed
-	return null
+
+	return ..()
 
 /mob/living/carbon/get_slot_by_item(obj/item/looking_for)
 	if(looking_for == back)
