@@ -285,10 +285,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	LAZYADD(actions, action)
 	RegisterSignal(action, COMSIG_PARENT_QDELETING, .proc/on_action_deleted)
 	if(ismob(loc))
-		// If we're adding an item action to something currently equipped,
-		// grant them the item action. This disregards slot checks (currently),
-		// but in most cases that shouldn't matter.
-		give_item_action(action, loc)
+		var/mob/holder = loc
+		if(!slot_flags || holder.get_item_by_slot(slot_flags) == src)
+			give_item_action(action, loc)
 
 	return action
 
