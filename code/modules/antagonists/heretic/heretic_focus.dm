@@ -12,12 +12,11 @@
 	RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/on_drop)
 
 	var/obj/item/item_target = target
-	// If our loc is a living mob, it's possible we already have it equippied
-	if(isliving(item_target.loc))
-		var/mob/living/wearer = item_target.loc
-		// We're not being held, that means we're PROBABLY equipped. Give the trait out.
-		if(!(target in wearer.held_items))
-			ADD_TRAIT(item_target.loc, TRAIT_ALLOW_HERETIC_CASTING, ELEMENT_TRAIT(target))
+	// If our loc is a mob, it's possible we already have it equippied
+	if(ismob(item_target.loc))
+		var/mob/wearer = item_target.loc
+		if(!item_target.slot_flags || wearer.get_item_by_slot(item_target.slot_flags) == item_target)
+			ADD_TRAIT(wearer, TRAIT_ALLOW_HERETIC_CASTING, ELEMENT_TRAIT(target))
 
 /datum/element/heretic_focus/Detach(obj/item/source)
 	. = ..()
