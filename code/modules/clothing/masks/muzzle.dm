@@ -40,9 +40,6 @@
 	greyscale_colors = "#B2B2B2"
 	moth_snack = FALSE
 
-/obj/item/clothing/mask/muzzle/tape/attack(mob/living/M, mob/living/user, params)
-	..()
-
 /obj/item/clothing/mask/muzzle/tape/super
 	name = "super tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. This one has extra strengh."
