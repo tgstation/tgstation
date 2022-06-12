@@ -26,6 +26,19 @@
 	if(!sword_color_icon)
 		sword_color_icon = pick("red", "blue", "green", "purple")
 
+/obj/item/melee/energy/sword/holographic/make_transformable()
+	AddComponent(/datum/component/transforming, \
+		force_on = active_force, \
+		throwforce_on = active_throwforce, \
+		throw_speed_on = 4, \
+		sharpness_on = active_sharpness, \
+		hitsound_on = active_hitsound, \
+		w_class_on = active_w_class, \
+		attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
+		attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+
 /obj/item/melee/energy/sword/holographic/green
 	sword_color_icon = "green"
 
