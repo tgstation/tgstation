@@ -448,9 +448,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	final_countdown = TRUE
 	update_appearance()
 
+	var/cascading = cascade_initiated
+
 	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure."
 
-	if(check_cascade_requirements())
+	if(cascading)
 		speaking += " Harmonic frequency limits exceeded. Causality destabilization field could not be engaged."
 	else
 		speaking += " Emergency causality destabilization field has been activated."
@@ -458,7 +460,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
 	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
 		if(damage < explosion_point) // Cutting it a bit close there engineers
-			if(check_cascade_requirements())
+			if(cascading)
 				radio.talk_into(src, "[safe_alert] Harmonic frequency restored within emergency bounds. Anti-resonance filter initiated.", common_channel)
 			else
 				radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
@@ -469,7 +471,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			sleep(10)
 			continue
 		else if(i > 50)
-			if(check_cascade_requirements())
+			if(cascading)
 				speaking = "[DisplayTimeText(i, TRUE)] remain before resonance-induced stabilization."
 			else
 				speaking = "[DisplayTimeText(i, TRUE)] remain before causality stabilization."
@@ -483,7 +485,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/delamination_event()
 	var/can_spawn_anomalies = is_station_level(loc.z) && is_main_engine && anomaly_event
 
-	var/is_cascading = !!check_cascade_requirements()
+	var/is_cascading = !!cascade_initiated
 
 	new /datum/supermatter_delamination(power, combined_gas, get_turf(src), explosion_power, gasmix_power_ratio, can_spawn_anomalies, is_cascading)
 	qdel(src)

@@ -189,15 +189,17 @@
 	call_explosion()
 	create_cascade_ambience()
 	warn_crew()
+
 	var/rift_loc = pick_rift_location()
 	new /obj/crystal_mass(supermatter_turf)
 
 	var/list/mass_loc_candidates = GLOB.generic_event_spawns.Copy()
 	mass_loc_candidates.Remove(rift_loc) // this should now actually get rid of stalemates
 	for(var/i in 1 to rand(4,6))
+		var/list/loc_list = mass_loc_candidates.Copy()
 		var/mass_loc
 		do
-			mass_loc = pick_n_take(mass_loc_candidates)
+			mass_loc = pick_n_take(loc_list)
 		while(get_dist(mass_loc, rift_loc) < MIN_RIFT_SAFE_DIST)
 		new /obj/crystal_mass(get_turf(mass_loc))
 
@@ -207,12 +209,12 @@
 /datum/supermatter_delamination/proc/create_cascade_ambience()
 	if(SSsecurity_level.current_level != SEC_LEVEL_DELTA)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA) // skip the announcement and shuttle timer adjustment
-	break_lights_on_station()
 	make_maint_all_access()
+	break_lights_on_station()
 
 /**
  * Picks a random location for the rift
- * Returns: ref to eve
+ * Returns: ref to rift location
  */
 /datum/supermatter_delamination/proc/pick_rift_location()
 	var/rift_spawn = pick(GLOB.generic_event_spawns)
@@ -253,7 +255,7 @@
 /datum/supermatter_delamination/proc/announce_gravitation_shift()
 	priority_announce("Reports indicate formation of crystalline seeds following resonance shift event. \
 		Rapid expansion of crystal mass proportional to rising gravitational force. \
-		Matter collapse due to gravitational pull likely.",
+		Matter collapse due to gravitational pull foreseeable.",
 		"Nanotrasen Star Observation Association")
 
 /datum/supermatter_delamination/proc/announce_shuttle_gone()
@@ -273,7 +275,7 @@
 				shake_camera(mob, 3 SECONDS * 0.25, 1) // properly emulate lateShuttleMove() behaviour
 			mob.Paralyze(3 SECONDS, TRUE)
 
-/**s
+/**
  * Announces the last message to the station, frees the shuttle from purgatory if applicable
  */
 /datum/supermatter_delamination/proc/last_message()
@@ -297,6 +299,8 @@
 		[Gibberish("Retrieval of survivors will be conducted upon recovery of necessary facilities.", FALSE, 5)] \
 		[Gibberish("Good luck--", FALSE, 25)]")
 
+
+/// filters all living mobs that are in an area
 /proc/mobs_in_area_type(list/area/checked_areas)
 	var/list/mobs_in_area = list()
 	for(var/mob/living/mob as anything in GLOB.mob_living_list)
@@ -321,7 +325,7 @@
 /datum/supermatter_delamination/proc/break_lights_on_station()
 	for(var/obj/machinery/light/light_to_break in GLOB.machines)
 		if(prob(35))
-			light_to_break.set_cascade_light()
+			light_to_break.set_major_emergency_light()
 			continue
 		light_to_break.break_light_tube()
 
