@@ -25,18 +25,13 @@ import { ModalState } from '../types';
 
 /** Primary class for the TGUI say modal. */
 export class TguiSay extends Component<{}, ModalState> {
-  protected channelDebounce = debounce(
-    (mode) => Byond.sendMessage('thinking', mode),
-    400
-  );
-  protected forceDebounce = debounce(
-    (entry) => Byond.sendMessage('force', entry),
-    1000,
-    true
-  );
+  /** Local fields */
   protected historyCounter: number;
   protected innerRef: RefObject<HTMLInputElement> = createRef();
   protected maxLength: number;
+  protected radioPrefix: string;
+  protected value: string;
+
   /** Event handlers. */
   protected onArrowKeys = handleArrowKeys.bind(this);
   protected onBackspaceDelete = handleBackspaceDelete.bind(this);
@@ -53,10 +48,21 @@ export class TguiSay extends Component<{}, ModalState> {
   protected onReset = handleReset.bind(this);
   protected onSetSize = handleSetSize.bind(this);
   protected onViewHistory = handleViewHistory.bind(this);
-  protected radioPrefix: string;
+
+  /** Timers */
+  protected channelDebounce = debounce(
+    (mode) => Byond.sendMessage('thinking', mode),
+    400
+  );
+  protected forceDebounce = debounce(
+    (entry) => Byond.sendMessage('force', entry),
+    1000,
+    true
+  );
   protected typingThrottle = throttle(() => Byond.sendMessage('typing'), 4000);
-  protected value: string;
-  state: ModalState = {
+
+  /** State */
+  public state: ModalState = {
     buttonContent: '',
     channel: -1,
     edited: false,
