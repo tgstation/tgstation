@@ -716,12 +716,6 @@
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
-"cu" = (
-/obj/effect/turf_decal{
-	dir = 9
-	},
-/turf/open/floor/plating/damaged/medium,
-/area/ruin/space/has_grav/hellfactory)
 "cv" = (
 /obj/effect/turf_decal{
 	dir = 1
@@ -735,13 +729,6 @@
 	},
 /obj/item/stack/tile/iron/base,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/hellfactory)
-"cx" = (
-/obj/effect/turf_decal{
-	dir = 1
-	},
-/obj/effect/turf_decal/caution/stand_clear/white,
-/turf/open/floor/plating/damaged/medium,
 /area/ruin/space/has_grav/hellfactory)
 "cy" = (
 /obj/effect/turf_decal{
@@ -776,36 +763,6 @@
 "cE" = (
 /obj/structure/sign/warning/docking,
 /turf/closed/wall/rust,
-/area/ruin/space/has_grav/hellfactory)
-"cF" = (
-/obj/effect/turf_decal/delivery/white,
-/obj/machinery/door/poddoor,
-/turf/open/floor/plating/damaged/medium,
-/area/ruin/space/has_grav/hellfactory)
-"cG" = (
-/obj/effect/turf_decal/delivery/white,
-/obj/effect/turf_decal/delivery/red,
-/obj/item/stack/tile/iron/base,
-/obj/machinery/door/poddoor,
-/turf/open/floor/plating/damaged/medium,
-/area/ruin/space/has_grav/hellfactory)
-"cH" = (
-/obj/effect/turf_decal/delivery/white,
-/obj/structure/grille/broken,
-/obj/machinery/door/poddoor,
-/turf/open/floor/plating/damaged/medium,
-/area/ruin/space/has_grav/hellfactory)
-"cI" = (
-/obj/effect/turf_decal/delivery/white,
-/obj/effect/turf_decal/delivery/red,
-/obj/machinery/door/poddoor,
-/turf/open/floor/plating/damaged/medium,
-/area/ruin/space/has_grav/hellfactory)
-"cJ" = (
-/obj/effect/turf_decal/delivery/white,
-/obj/item/stack/tile/iron/base,
-/obj/machinery/door/poddoor,
-/turf/open/floor/plating/damaged/medium,
 /area/ruin/space/has_grav/hellfactory)
 "cK" = (
 /obj/machinery/power/port_gen/pacman,
@@ -856,6 +813,12 @@
 /obj/structure/window,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
+"eH" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/item/stack/tile/iron/base,
+/obj/machinery/door/poddoor,
+/turf/open/floor/plating/damaged/medium,
+/area/ruin/space/has_grav/hellfactory)
 "hk" = (
 /obj/machinery/atmospherics/components/tank/water_vapor{
 	dir = 8
@@ -891,6 +854,12 @@
 /area/ruin/space/has_grav/hellfactory)
 "oJ" = (
 /turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/hellfactory)
+"oK" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/structure/grille/broken,
+/obj/machinery/door/poddoor,
+/turf/open/floor/plating/damaged/medium,
 /area/ruin/space/has_grav/hellfactory)
 "oV" = (
 /obj/structure/sign/warning/cold_temp{
@@ -949,10 +918,27 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/holofloor/wood,
 /area/ruin/space/has_grav/hellfactory)
+"Bs" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/turf_decal/delivery/red,
+/obj/machinery/door/poddoor,
+/turf/open/floor/plating/damaged/medium,
+/area/ruin/space/has_grav/hellfactory)
 "BC" = (
 /obj/machinery/light/floor,
 /obj/effect/turf_decal/bot_white/left,
 /turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/hellfactory)
+"Eb" = (
+/obj/effect/turf_decal{
+	dir = 9
+	},
+/turf/open/floor/plating/damaged/medium,
+/area/ruin/space/has_grav/hellfactory)
+"Ej" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/poddoor,
+/turf/open/floor/plating/damaged/medium,
 /area/ruin/space/has_grav/hellfactory)
 "EJ" = (
 /obj/structure/sign/poster/random/directional/west,
@@ -971,6 +957,20 @@
 "GU" = (
 /obj/structure/sign/warning/chem_diamond,
 /turf/closed/wall,
+/area/ruin/space/has_grav/hellfactory)
+"Kv" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/turf_decal/delivery/red,
+/obj/item/stack/tile/iron/base,
+/obj/machinery/door/poddoor,
+/turf/open/floor/plating/damaged/medium,
+/area/ruin/space/has_grav/hellfactory)
+"Kx" = (
+/obj/effect/turf_decal{
+	dir = 1
+	},
+/obj/effect/turf_decal/caution/stand_clear/white,
+/turf/open/floor/plating/damaged/medium,
 /area/ruin/space/has_grav/hellfactory)
 "Ns" = (
 /obj/structure/closet/crate,
@@ -1288,8 +1288,8 @@ by
 by
 by
 co
-cu
-cF
+Eb
+Ej
 aa
 aa
 aa
@@ -1316,7 +1316,7 @@ ry
 by
 by
 cv
-cG
+Kv
 aa
 aa
 aa
@@ -1343,7 +1343,7 @@ oJ
 Wh
 by
 cw
-cH
+oK
 aa
 aa
 aa
@@ -1369,8 +1369,8 @@ oJ
 uL
 by
 Wh
-cx
-cI
+Kx
+Bs
 aa
 aa
 aa
@@ -1397,7 +1397,7 @@ cz
 cC
 cP
 cy
-cJ
+eH
 aa
 aa
 aa
