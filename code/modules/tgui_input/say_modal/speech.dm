@@ -31,13 +31,9 @@
  *  boolean - on success or failure
  */
 /datum/tgui_say/proc/delegate_speech(entry, channel)
-	if(!client)
-		return FALSE
 	if(channel == OOC_CHANNEL)
 		client.ooc(entry)
 		return TRUE
-	if(!client.mob)
-		return FALSE
 	switch(channel)
 		if(RADIO_CHANNEL)
 			client.mob.say_verb(";" + entry)
@@ -62,7 +58,7 @@
  * Makes the player force say what's in their current input box.
  */
 /mob/living/carbon/human/proc/force_say()
-	if(!client || !client.mob || !client.tgui_say || !client.tgui_say.window_open)
+	if(!client?.tgui_say?.window_open)
 		return FALSE
 	client.tgui_say.force_say()
 	if(client.typing_indicators)

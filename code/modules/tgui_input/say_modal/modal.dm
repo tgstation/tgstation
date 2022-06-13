@@ -65,8 +65,6 @@
  * typing and thinking indicators.
  */
 /datum/tgui_say/proc/load()
-	if(!client || !client.mob)
-		return FALSE
 	window_open = FALSE
 	winset(client, "tgui_say", "is-visible=false")
 	/// Sanity check in case the server ever changes MAX_LEN_MESSAGE
@@ -85,8 +83,6 @@
  * payload - A list containing the channel the window was opened in.
  */
 /datum/tgui_say/proc/open(payload)
-	if(!client || !client.mob)
-		return FALSE
 	if(!payload || !payload["channel"])
 		CRASH("No channel provided to open TGUI-Say")
 	window_open = TRUE
@@ -103,8 +99,6 @@
  * regardless of preference. Logs the event.
  */
 /datum/tgui_say/proc/close()
-	if(!client || !client.mob)
-		return FALSE
 	window_open = FALSE
 	stop_thinking()
 	if(client.typing_indicators)
