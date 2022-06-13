@@ -83,7 +83,7 @@
  * payload - A list containing the channel the window was opened in.
  */
 /datum/tgui_say/proc/open(payload)
-	if(!payload || !payload["channel"])
+	if(!payload?["channel"])
 		CRASH("No channel provided to open TGUI-Say")
 	window_open = TRUE
 	if(payload["channel"] != OOC_CHANNEL)

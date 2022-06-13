@@ -46,3 +46,11 @@ export type State = {
   edited: boolean;
   size: number;
 };
+
+export type DragzoneProps = {
+  channel: string;
+  top: boolean;
+  right: boolean;
+  bottom: boolean;
+  left: boolean;
+};

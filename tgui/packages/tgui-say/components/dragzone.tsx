@@ -1,15 +1,8 @@
 import { dragStartHandler } from 'tgui/drag';
-
-type Props = {
-  channel: string;
-  top: boolean;
-  right: boolean;
-  bottom: boolean;
-  left: boolean;
-};
+import { DragzoneProps } from '../types';
 
 /** Creates a draggable edge. Props Req: Location */
-export const Dragzone = (props: Partial<Props>) => {
+export const Dragzone = (props: Partial<DragzoneProps>) => {
   const { channel } = props;
   if (!channel) return null;
   const direction

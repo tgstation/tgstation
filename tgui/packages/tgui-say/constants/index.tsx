@@ -1,17 +1,13 @@
 /** Radio channels */
 export const CHANNELS: string[] = ['Say', 'Radio', 'Me', 'OOC'];
 
-type WindowSize = Record<string, number>;
-
 /** Window sizes in pixels */
-export const WINDOW_SIZES: WindowSize = {
+export const WINDOW_SIZES: Record<string, number> = {
   small: 30,
   medium: 50,
   large: 70,
   width: 231,
 };
-
-type RadioPrefix = Record<string, { id: string; label: string }>;
 
 /**
  * Radio prefixes.
@@ -19,7 +15,7 @@ type RadioPrefix = Record<string, { id: string; label: string }>;
  * id - string. css class identifier.
  * label - string. button label.
  */
-export const RADIO_PREFIXES: RadioPrefix = {
+export const RADIO_PREFIXES: Record<string, { id: string; label: string }> = {
   ':a ': {
     id: 'hive',
     label: 'Hive',
