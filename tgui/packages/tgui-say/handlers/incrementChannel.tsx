@@ -20,7 +20,8 @@ export const handleIncrementChannel = function (this: Modal) {
       channel: 0,
     });
   } else {
-    if (channel === 1) {
+    if (channel === 2) {
+      // Disables thinking indicator for OOC channel
       this.timers.channelDebounce({ mode: false });
     }
     this.setState({
