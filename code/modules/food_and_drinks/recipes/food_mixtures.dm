@@ -220,7 +220,7 @@
 /datum/chemical_reaction/food/curd_cheese/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/food/curd_cheese(location)
+		new /obj/item/food/cheese/curd_cheese(location)
 
 /datum/chemical_reaction/food/mozzarella
 	required_reagents = list(/datum/reagent/consumable/milk = 10, /datum/reagent/consumable/cream = 10)
@@ -232,7 +232,7 @@
 /datum/chemical_reaction/food/mozzarella/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/food/mozzarella(location)
+		new /obj/item/food/cheese/mozzarella(location)
 
 /datum/chemical_reaction/food/cornmeal_batter
 	results = list(/datum/reagent/consumable/cornmeal_batter = 35)

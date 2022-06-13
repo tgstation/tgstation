@@ -55247,7 +55247,7 @@
 "oUc" = (
 /obj/machinery/door/window/left/directional/north{
 	name = "Crate Return Access";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/effect/turf_decal/loading_area{
 	dir = 1
@@ -76399,7 +76399,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/right/directional/south{
 	name = "Delivery Office Desk";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/structure/desk_bell{
 	pixel_x = 7
@@ -80490,7 +80490,7 @@
 	},
 /obj/machinery/door/window/right/directional/north{
 	name = "Incoming Mail";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
