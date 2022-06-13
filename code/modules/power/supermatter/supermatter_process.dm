@@ -135,7 +135,7 @@
 	animate(time = 2 SECONDS, size = 10, loop=-1, flags = ANIMATION_PARALLEL)
 	animated = TRUE
 
-/obj/machinery/power/supermatter_crystal/proc/check_special_delamination()
+/obj/machinery/power/supermatter_crystal/proc/check_special_delamination() // In priority of devastation.
 	if(cascade_initiated) // Supermatter cascade goal.
 		return "cascade"
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)// Singularity
