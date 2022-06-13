@@ -27,7 +27,7 @@ export const windowClose = () => {
 /** Some QoL to hide the window on load. Doesn't log this event */
 export const windowLoad = () => {
   Byond.winset('tgui_say', {
-    pos: '694,602',
+    pos: '848,500',
   });
   setClosed();
 };

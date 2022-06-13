@@ -1,30 +1,14 @@
 import { TextArea } from 'tgui/components';
 import { CHANNELS, RADIO_PREFIXES, WINDOW_SIZES } from '../constants';
 import { Dragzone } from '../components/dragzone';
-import { handlers } from '../handlers';
+import { eventHandlerMap } from '../handlers';
 import { getCss, timers } from '../helpers';
 import { Component, createRef } from 'inferno';
 import { Modal, State } from '../types';
 
 /** Primary class for the TGUI say modal. */
 export class TguiSay extends Component<{}, State> {
-  protected events: Modal['events'] = {
-    onArrowKeys: handlers.handleArrowKeys.bind(this),
-    onBackspaceDelete: handlers.handleBackspaceDelete.bind(this),
-    onClick: handlers.handleClick.bind(this),
-    onComponentMount: handlers.handleComponentMount.bind(this),
-    onComponentUpdate: handlers.handleComponentUpdate.bind(this),
-    onEnter: handlers.handleEnter.bind(this),
-    onEscape: handlers.handleEscape.bind(this),
-    onForce: handlers.handleForce.bind(this),
-    onIncrementChannel: handlers.handleIncrementChannel.bind(this),
-    onInput: handlers.handleInput.bind(this),
-    onKeyDown: handlers.handleKeyDown.bind(this),
-    onRadioPrefix: handlers.handleRadioPrefix.bind(this),
-    onReset: handlers.handleReset.bind(this),
-    onSetSize: handlers.handleSetSize.bind(this),
-    onViewHistory: handlers.handleViewHistory.bind(this),
-  };
+  protected events: Modal['events'] = eventHandlerMap(this);
   protected fields: Modal['fields'] = {
     historyCounter: 0,
     innerRef: createRef(),
@@ -39,7 +23,6 @@ export class TguiSay extends Component<{}, State> {
     size: WINDOW_SIZES.SMALL,
   };
   protected timers: Modal['timers'] = timers;
-
 
   componentDidMount() {
     this.events.onComponentMount();
@@ -62,19 +45,17 @@ export class TguiSay extends Component<{}, State> {
       <div
         className={getCss('window', prefixOrChannel, size)}
         $HasKeyedChildren>
-        <Dragzone horizontal />
+        <Dragzone channel={prefixOrChannel} top />
         <div className="window__content" $HasKeyedChildren>
-          <Dragzone vertical />
-          {size < WINDOW_SIZES.medium && (
-            <button
-              className={getCss('button', prefixOrChannel)}
-              onclick={onClick}
-              type="submit">
-              {buttonContent}
-            </button>
-          )}
+          <Dragzone channel={prefixOrChannel} left />
+          <button
+            className={getCss('button', prefixOrChannel)}
+            onclick={onClick}
+            type="submit">
+            {buttonContent}
+          </button>
           <TextArea
-            className={getCss('input', prefixOrChannel)}
+            className={getCss('textarea', prefixOrChannel)}
             dontUseTabForIndent
             innerRef={innerRef}
             maxLength={maxLength}
@@ -85,9 +66,9 @@ export class TguiSay extends Component<{}, State> {
             selfClear
             value={edited && value}
           />
-          <Dragzone vertical />
+          <Dragzone channel={prefixOrChannel} right />
         </div>
-        <Dragzone horizontal />
+        <Dragzone channel={prefixOrChannel} bottom />
       </div>
     );
   }

@@ -1,16 +1,27 @@
 import { dragStartHandler } from 'tgui/drag';
 
-interface Props {
-  horizontal: boolean;
-  vertical: boolean;
-}
+type Props = {
+  channel: string;
+  top: boolean;
+  right: boolean;
+  bottom: boolean;
+  left: boolean;
+};
 
-/** Creates a draggable edge. Props Req: horizontal or vertical. */
+/** Creates a draggable edge. Props Req: Location */
 export const Dragzone = (props: Partial<Props>) => {
+  const { channel } = props;
+  if (!channel) return null;
   const direction
-    = (props.horizontal && 'horizontal') || (props.vertical && 'vertical');
+    = (props.top && 'top')
+    || (props.right && 'right')
+    || (props.bottom && 'bottom')
+    || (props.left && 'left');
 
   return (
-    <div className={`dragzone-${direction}`} onmousedown={dragStartHandler} />
+    <div
+      className={`dragzone-${direction}-${channel}`}
+      onmousedown={dragStartHandler}
+    />
   );
 };

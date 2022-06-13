@@ -342,7 +342,7 @@ window "statwindow"
 window "tgui_say"
 	elem "tgui_say"
 		type = MAIN
-		pos = 694,602
+		pos = 848,500
 		size = 231x30
 		anchor1 = 50,50
 		anchor2 = 50,50

@@ -4,13 +4,13 @@
 
 .button {
   background-color: colors.$button;
-  border: thin solid darken(colors.$button, 10%);
+  border: thin solid;
   border-radius: 2px;
   color: colors.$background;
-  font-family: inherit;
+  font-family: 'Consolas', monospace;
   font-weight: bold;
   font-size: 0.9rem;
-  height: 1.5rem;
+  height: 100%;
   padding: 0;
   text-align: center;
   vertical-align: middle;
@@ -26,7 +26,7 @@
 $color in colors.$channel-map {
   .button-#{$channel} {
     color: $color;
-    border-color: $color;
+    border-color: darken($color, 10%);
 
     &:hover {
       border-color: lighten($color, 10%);
@@ -34,5 +34,3 @@ $color in colors.$channel-map {
     }
   }
 }
-
-;

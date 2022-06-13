@@ -1,11 +1,46 @@
-////////////////////////////////////////////////
-// Drag zone style
+@use 'sass:color';
+@use './colors.scss';
+
 .dragzone-horizontal {
-  height: 4px;
+  color: transparent;
+  height: 5px;
   width: 100%;
 }
 
 .dragzone-vertical {
+  color: transparent;
   height: 100%;
-  width: 3px;
+  position: absolute;
+  top: 0;
+  width: 5px;
+}
+
+@each $channel,
+$color in colors.$channel-map {
+  $darkened: darken($color, 20%);
+
+  .dragzone-bottom-#{$channel} {
+    @extend .dragzone-horizontal;
+    border-left: 2px solid $darkened;
+    border-right: 2px solid $darkened;
+  }
+
+  .dragzone-left-#{$channel} {
+    @extend .dragzone-vertical;
+    left: 0;
+    border-left: 2px solid $darkened;
+  }
+
+  .dragzone-right-#{$channel} {
+    @extend .dragzone-vertical;
+    right: 0;
+    border-right: 2px solid $darkened;
+  }
+
+  .dragzone-top-#{$channel} {
+    @extend .dragzone-horizontal;
+    border-left: 2px solid $darkened;
+    border-right: 2px solid $darkened;
+    border-top: 2px solid $darkened;
+  }
 }

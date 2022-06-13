@@ -15,17 +15,15 @@
   background: colors.$background;
   display: flex;
   flex-direction: column;
-  font-family: 'Consolas', monospace;
-  margin: 0 auto;
   max-width: 231px;
-  position: relative;
   width: 100%;
 }
 
 .window__content {
   display: flex;
   flex-direction: row;
-  flex-grow: 1;
+  height: 100%;
+  padding: 1px 0 1px 5px;
 }
 
 /** Window sizes */
@@ -45,10 +43,6 @@
 @each $channel,
 $color in colors.$channel-map {
   .window-#{$channel} {
-    border-left: 2px solid darken($color, 20%);
-    border-right: 2px solid darken($color, 20%);
-    border-top: 2px solid darken($color, 20%);
-
     &:after {
       animation: gradient 10s linear infinite;
       background: linear-gradient(to right,

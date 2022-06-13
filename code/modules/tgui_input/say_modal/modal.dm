@@ -50,7 +50,7 @@
  * string - A JSON encoded message to open the modal OR normal chat.
  */
 /client/proc/tgui_say_create_open_command(channel)
-	if(!prefs.read_preference(/datum/preference/toggle/tgui_input))
+	if(!prefs?.read_preference(/datum/preference/toggle/tgui_input))
 		return lowertext(channel)
 	var/message = TGUI_CREATE_MESSAGE("open", list(
 		channel = channel,
@@ -64,7 +64,7 @@
  */
 /datum/tgui_say/proc/load()
 	if(!client || !client.mob)
-		CRASH("TGUI-Say loaded on null client or mob")
+		return FALSE
 	window_open = FALSE
 	winset(client, "tgui_say", "is-visible=false")
 	/// Sanity check in case the server ever changes MAX_LEN_MESSAGE
@@ -84,7 +84,7 @@
  */
 /datum/tgui_say/proc/open(payload)
 	if(!client || !client.mob)
-		CRASH("TGUI-Say opened on null client or mob")
+		return FALSE
 	if(!payload || !payload["channel"])
 		CRASH("No channel provided to open TGUI-Say")
 	window_open = TRUE
@@ -102,7 +102,7 @@
  */
 /datum/tgui_say/proc/close()
 	if(!client || !client.mob)
-		CRASH("TGUI-Say closed on null client or mob")
+		return FALSE
 	window_open = FALSE
 	stop_thinking()
 	if(client.typing_indicators)
