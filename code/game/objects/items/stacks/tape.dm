@@ -23,7 +23,8 @@
 	if(user.get_inactive_held_item() == src)
 		if(is_zero_amount(delete_if_zero = TRUE))
 			return
-		user.put_in_hands(new tape_gag)
+		var/new_tape_gag = new tape_gag(src)
+		user.put_in_hands(new_tape_gag)
 		use(1)
 		to_chat(user, span_notice("You rip off a piece of tape."))
 		return TRUE
