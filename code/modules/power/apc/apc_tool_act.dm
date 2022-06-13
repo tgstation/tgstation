@@ -33,18 +33,18 @@
 		return
 	has_electronics = APC_ELECTRONICS_MISSING
 	if(machine_stat & BROKEN)
-		user.visible_message(span_notice("[user.name] breaks the power control board inside [name]!")
+		user.visible_message(span_notice("[user.name] breaks the power control board inside [name]!"), \
 			span_hear("You hear a crack."))
 		balloon_alert(user, "charred board breaks")
 		return
 	else if(obj_flags & EMAGGED)
 		obj_flags &= ~EMAGGED
 		user.visible_message(span_notice("[user.name] discards an emagged power control board from [name]!"))
-		balloon_alert(user, "emagged board discarted")
+		balloon_alert(user, "emagged board discarded")
 		return
 	else if(malfhack)
 		user.visible_message(span_notice("[user.name] discards a strangely programmed power control board from [name]!"))
-		balloon_alert(user, "hacked board discarted")
+		balloon_alert(user, "reprogrammed board discarded")
 		malfai = null
 		malfhack = 0
 		return
