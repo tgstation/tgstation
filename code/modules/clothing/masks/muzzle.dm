@@ -41,6 +41,8 @@
 	moth_snack = null
 
 /obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, params)
+	if(attacker.zone_selected != BODY_ZONE_PRECISE_MOUTH)
+		return ..()
 	if(victim.is_mouth_covered(head_only = TRUE))
 		to_chat(attacker, span_notice("[victim.name]'s mouth is covered."))
 		return
