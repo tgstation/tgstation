@@ -179,8 +179,10 @@
 // The Secura!
 /obj/item/gun/energy/laser/deltra
 	name = "\improper Deltra HX62-S"
-	desc = "The Deltra is the pinnacle of projected kinetics technology. Capable of producing forcefield barriers to protect the wielder without compromising shooting capabilites, this weapon proves exceptionally useful in riot suppression, terrorist insurgencies and inquisitorial purges."
+	desc = "The Aussec Deltra is the pinnacle of projected kinetics technology. Capable of producing forcefield barriers to protect the wielder without compromising shooting capabilites, this weapon proves exceptionally useful in riot suppression, terrorist insurgencies and inquisitorial purges."
 	icon_state = "deltra"
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	worn_icon_state = "deltra"
@@ -188,13 +190,13 @@
 	shaded_charge = TRUE
 	ammo_x_offset = 1
 	weapon_weight = WEAPON_HEAVY
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = list(/obj/item/ammo_casing/energy/deltra)
 	var/obj/item/forcefield_projector/fast/forcebarrier //The forcefield projector that our weapon uses on right click. It charges and functions independent of the weapon.
 
 /obj/item/gun/energy/laser/deltra/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 1 SECONDS, TRUE, 0.3, 0.1)
+	AddComponent(/datum/component/automatic_fire, 1.2 SECONDS, TRUE, 0.3, 0.1)
 	forcebarrier = new /obj/item/forcefield_projector/fast(src)
 
 /obj/item/gun/energy/laser/deltra/examine(mob/user)

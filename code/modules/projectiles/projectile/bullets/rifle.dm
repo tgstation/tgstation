@@ -43,7 +43,7 @@
 /obj/projectile/bullet/hardlight
 	name = "hardlight bullet"
 	icon_state = "hardlight"
-	damage = 20
+	damage = 15
 	sharpness = NONE //You're being hit by a blunt bolt of energy, not a pointy bullet with normal kinetics
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	embedding = null

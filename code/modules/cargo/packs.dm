@@ -490,25 +490,23 @@
 	contains = list(/obj/item/storage/box/chemimp)
 	crate_name = "chemical implant crate"
 
-/datum/supply_pack/security/armory/ballistic
-	name = "Combat Shotguns Crate"
-	desc = "For when the enemy absolutely needs to be replaced with lead. Contains three Aussec-designed Combat Shotguns, and three Shotgun Bandoliers. Requires Armory access to open."
+/datum/supply_pack/security/armory/Meltra
+	name = "Meltra Shotguns Crate"
+	desc = "The standard issue Meltra accelerator shotguns were stolen and/or misplaced? Need backup? No problem! Aussec has you covered with two brand-new Meltra Accelerator Shotguns, and three Bandoliers. Requires Armory access to open."
 	cost = CARGO_CRATE_VALUE * 17.5
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat,
-					/obj/item/gun/ballistic/shotgun/automatic/combat,
-					/obj/item/gun/ballistic/shotgun/automatic/combat,
-					/obj/item/storage/belt/bandolier,
+	contains = list(/obj/item/gun/ballistic/shotgun/automatic/meltra,
+					/obj/item/gun/ballistic/shotgun/automatic/meltra,
 					/obj/item/storage/belt/bandolier,
 					/obj/item/storage/belt/bandolier)
-	crate_name = "combat shotguns crate"
+	crate_name = "\improper Meltra shotgun crate"
 
-/datum/supply_pack/security/armory/energy
+/datum/supply_pack/security/armory/deltra
 	name = "Deltra HX62-S Crate"
-	desc = "Contains two Deltra HX62-S automatic energy weapons, able to produce holobarriers to protect the user or block chokepoints. Requires Armory access to open."
-	cost = CARGO_CRATE_VALUE * 20
+	desc = "Contains two premium Deltra HX62-S automatic energy weapons, able to produce holobarriers to protect the user or block chokepoints. Requires Armory access to open."
+	cost = CARGO_CRATE_VALUE * 50
 	contains = list(/obj/item/gun/energy/laser/deltra,
 					/obj/item/gun/energy/laser/deltra)
-	crate_name = "\improper Deltra HX62-s crate"
+	crate_name = "\improper Deltra HX62-S crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/energy
@@ -559,6 +557,15 @@
 					/obj/item/ammo_box/c38/trac,
 					/obj/item/ammo_box/c38/trac)
 	crate_name = "tracking implant crate"
+
+/datum/supply_pack/security/armory/voidshot
+	name = "Voidshot Crate"
+	desc = "Contains three boxes of voidshot energy shells, used by Meltra accelerator shotguns. Requires Armory access to open."
+	cost = CARGO_CRATE_VALUE * 4.5
+	contains = list(/obj/item/storage/box/voidshot,
+					/obj/item/storage/box/voidshot,
+					/obj/item/storage/box/voidshot)
+	crate_name = "voidshot ammo crate"
 
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"
@@ -614,7 +621,9 @@
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/head/helmet/rus_ushanka,
 					/obj/item/clothing/suit/armor/vest/russian_coat,
-					/obj/item/gun/ballistic/rifle/boltaction,
+					/obj/item/gun/ballistic/rifle/boltaction/pipegun/a762,
+					/obj/item/gun/ballistic/rifle/boltaction/pipegun/a762,
+					/obj/item/gun/ballistic/rifle/boltaction/ramshackle,
 					/obj/item/gun/ballistic/rifle/boltaction)
 	crate_name = "surplus military crate"
 

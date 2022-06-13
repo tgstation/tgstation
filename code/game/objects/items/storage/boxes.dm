@@ -918,6 +918,7 @@
 	name = "box of advanced energy scattershot"
 	desc = "A box full of advanced lethal energy scattershot laser shells."
 	icon_state = "lasershot_box"
+	illustration = null
 
 /obj/item/storage/box/lethal_energy/PopulateContents()
 	for(var/i in 1 to 6)
@@ -927,6 +928,7 @@
 	name = "box of advanced disabling scattershot"
 	desc = "A box full of advanced nonlethal energy scattershot disabler shells."
 	icon_state = "disableshot_box"
+	illustration = null
 
 /obj/item/storage/box/nonlethal_energy/PopulateContents()
 	for(var/i in 1 to 6)
@@ -936,10 +938,21 @@
 	name = "box of advanced TRIPnet shells"
 	desc = "A box full of advanced nonlethal energy shotgun shells. These snap a snare around the legs of any target it hits."
 	icon_state = "snareshot_box"
+	illustration = null
 
 /obj/item/storage/box/snareshot/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/energy/snare(src)
+
+/obj/item/storage/box/voidshot
+	name = "box of advanced voidshot shells"
+	desc = "A box full of advanced lethal energy shotgun shells. These lethal pellets leave gaping wounds by teleporting small pockets of mass from struck targets. This can result in the occasional meat chunk being flung through some poor Nanotrasen intern's bathroom window due to a programming oversight."
+	icon_state = "voidshot_box"
+	illustration = null
+
+/obj/item/storage/box/voidshot/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/ammo_casing/shotgun/energy/void(src)
 
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"

@@ -143,6 +143,30 @@
 		if(pellets > 1)
 			pellets = rand(1,max_pellets)
 		variance = rand(10,90)
+		if(prob(1))
+			projectile_type = /obj/projectile/magic/party_popper //HAPPY BIRTHDAY!!
+
+/obj/projectile/magic/party_popper //honk
+	name = "party popper"
+	antimagic_charge_cost = 0
+	hitsound = 'sound/items/bikehorn.ogg'
+	hitsound_wall = 'sound/items/bikehorn.ogg'
+	range = 1
+
+/obj/projectile/magic/party_popper/Range()
+	..()
+	do_sparks(2, TRUE, src)
+	playsound(src, 'sound/items/bikehorn.ogg', 60, TRUE)
+	qdel(src)
+
+/obj/item/ammo_casing/shotgun/energy/void
+	name = "voidshot scatter shell"
+	desc = "An advanced shotgun shell which uses small pellets of charged bluespace particles to warp flesh and bone."
+	icon_state = "vshell"
+	projectile_type = /obj/projectile/beam/pellet/voidshot
+	pellets = 5
+	variance = 10
+	max_pellets = 5
 
 /obj/item/ammo_casing/shotgun/energy/disable
 	name = "nonlethal scatter shell"
@@ -159,17 +183,17 @@
 /obj/item/ammo_casing/shotgun/energy/snare
 	name = "TRIPnet shell"
 	desc = "An advanced shotgun shell that hurtles an energy snare at targets, tripping them up and dealing moderate stamina damage."
-	icon_state = "bolashell"
+	icon_state = "snarehell"
 	projectile_type = /obj/projectile/energy/trap
-	pellets = 0
+	pellets = 1
 	variance = 0
 
 /obj/item/ammo_casing/shotgun/energy/grav
 	name = "gravity blast shell"
 	desc = "An advanced shotgun shell that shoots an extremely fast conflux of gravitational distortions that launchs a target upon impact."
-	icon_state = "bolashell"
+	icon_state = "gravshell"
 	projectile_type = /obj/projectile/energy/trap
-	pellets = 0
+	pellets = 1
 	variance = 0
 
 /obj/item/ammo_casing/shotgun/energy/ion
@@ -186,7 +210,7 @@
 	would have difficulty with."
 	icon_state = "pshell"
 	projectile_type = /obj/projectile/beam/pulse/shotgun
-	pellets = 0
+	pellets = 1
 	variance = 0
 
 /obj/item/ammo_casing/shotgun/energy/frag12
@@ -194,5 +218,5 @@
 	desc = "A high explosive breaching round for an energy shotgun."
 	icon_state = "heshell"
 	projectile_type = /obj/projectile/bullet/shotgun_frag12
-	pellets = 0
+	pellets = 1
 	variance = 0

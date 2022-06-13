@@ -123,5 +123,5 @@
 /obj/item/ammo_casing/energy/deltra
 	projectile_type = /obj/projectile/bullet/hardlight
 	select_name = "hardlight"
-	e_cost = 34
+	e_cost = 25
 	fire_sound = 'sound/weapons/thermalpistol.ogg'

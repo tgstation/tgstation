@@ -220,10 +220,10 @@
 
 /obj/projectile/beam/gravblast
 	name = "gravity blast"
-	icon_state = "ka_tracer"
-	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
-	damage = 10
-	damage_type = STAMINA
+	icon_state = "void_pellet"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	damage = 15
+	damage_type = BRUTE
 	armor_flag = ENERGY
 	light_color = COLOR_PALE_PURPLE_GRAY
 	speed = 0.2 //ZOOM
@@ -231,7 +231,7 @@
 /obj/projectile/beam/gravblast/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(ismovable(target) && isliving(target))
-		var/atom/movable/our_shot_target = target
+		var/atom/our_shot_target = target
 		var/atom/throw_target = get_edge_target_turf(our_shot_target, get_dir(src, get_step_away(our_shot_target, src)))
 		our_shot_target.safe_throw_at(throw_target, 3, 2, force = MOVE_FORCE_EXTREMELY_STRONG)
 
@@ -267,19 +267,39 @@
 /obj/projectile/beam/pellet/lethal
 	name = "energized pellet"
 	icon_state = "laser_pellet"
-	damage = 5
+	damage = 10 // * 4 = 40 burn; can do very well into armor.
 	wound_bonus = 5
 	bare_wound_bonus = 5
 	wound_falloff_tile = -2.5
 	speed = 0.5
 	speed_dropoff = 0.3
 	speed_dropoff_tiles = 5
-	armour_penetration = 20
+	armour_penetration = 30 //Roughly 0% resistance into a secvest, very good for actually hitting armored targets
+
+/obj/projectile/beam/pellet/voidshot
+	name = "voidshot pellet"
+	icon_state = "void_pellet"
+	damage = 7 // * 5 pellets = 35 brute; not accounting for armor weakness
+	damage_type = BRUTE
+	armor_flag = ENERGY
+	reflectable = FALSE
+	wound_bonus = 6
+	bare_wound_bonus = 10
+	wound_falloff_tile = -1.5
+	weak_against_armour = TRUE //turns most secvests into 80% resistance AKA not very good against an actually armored target unless limb aiming for wounds
+	speed = 0.5
+	speed_dropoff = 0.3
+	speed_dropoff_tiles = 5
+	ricochets_max = 2
+	ricochet_chance = 100
+	ricochet_decay_damage = 0.9
+	light_color = COLOR_PALE_PURPLE_GRAY
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 
 /obj/projectile/beam/pellet/disable
 	name = "static pellet"
 	icon_state = "disabler_pellet"
-	damage = 5
+	damage = 7.5 // * 4 = 30 stamina; equivalent to a disabler into an unarmored target, but against armored targets, does much better.
 	damage_type = STAMINA
 	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
@@ -292,4 +312,4 @@
 	speed = 0.5
 	speed_dropoff = 0.3
 	speed_dropoff_tiles = 5
-	armour_penetration = 20
+	armour_penetration = 30 //Roughly 0% resistance into a secvest, very good for actually hitting armored targets

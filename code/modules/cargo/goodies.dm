@@ -46,11 +46,11 @@
 	contains = list(/obj/item/knife/combat/survival)
 
 /datum/supply_pack/goody/ballistic_single
-	name = "Combat Shotgun Single-Pack"
-	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."
+	name = "Meltra Shotgun Single-Pack"
+	desc = "Electronic firearms, for the modern spaceman. Contains one Aussec-designed Meltra Shotgun, and one Shotgun Bandolier."
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat, /obj/item/storage/belt/bandolier)
+	contains = list(/obj/item/gun/ballistic/shotgun/automatic/meltra, /obj/item/storage/belt/bandolier)
 
 /datum/supply_pack/goody/energy_single
 	name = "Energy Gun Single-Pack"

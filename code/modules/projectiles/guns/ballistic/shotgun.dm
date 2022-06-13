@@ -122,7 +122,7 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/meltra
 	name = "\improper Meltra accelerator shotgun"
-	desc = "The Meltra utilizes bluespace rifling to reduce friction and drag significantly, propelling bullets at much faster speeds than conventional shots. This requires some ramp up. On the first shot, or without battery charge, the gun is much weaker than most shotguns of a similar class due to poorer rifling."
+	desc = "The Aussec Meltra utilizes bluespace rifling to reduce friction and drag significantly, propelling bullets at much faster speeds than conventional shots. This requires some ramp up. On the first shot, or without battery charge, the gun is much weaker than most shotguns of a similar class due to poorer rifling."
 	icon_state = "meltra"
 	inhand_icon_state = "meltra"
 	worn_icon_state = "meltra"
@@ -142,12 +142,12 @@
 	var/cell_type = /obj/item/stock_parts/cell
 
 	///Vars for tracking power expenditure
-	var/charged_shot = FALSE //This is TRUE on a successful shot, so that when our gun is fired, it reduces charge in the cell on subsequent shots. No charge, and our gun stops empowering shots.
-	var/shot_cell_cost = 100 //Essentially 10 shots before the gun stops being able to fire empowered shots.
+	var/charged_shot = FALSE //This becomes TRUE if our gun is able to successfully use battery charge, which empowers the gun for 10 seconds (does standard damage).
+	var/shot_cell_cost = 200 //Effectively 5 empowerments from full battery.
 	//Our damage multipliers, which replace the projectile_damage_multiplier var.
 	var/empowered_damage_multiplier = 1.0 //when our gun has charge, we fire at full strength
 	var/normal_damage_multiplier = 0.5 //Our unempowered charge
-	var/cooldown_reset_time = 10 SECONDS
+	var/cooldown_reset_time = 5 SECONDS //How long it takes before the shotgun needs to consume more charge, can probably magdump an entire shotgun in this time
 	var/timerid
 
 /obj/item/gun/ballistic/shotgun/automatic/meltra/Initialize(mapload)
@@ -175,17 +175,16 @@
 	. = ..()
 	if(!.)
 		return
-	if(reduce_cell_charge(shot_cell_cost))
+	if(!charged_shot && reduce_cell_charge(shot_cell_cost))
 		charged_shot = TRUE
 		timerid = addtimer(CALLBACK(src, .proc/handle_reset, FALSE), cooldown_reset_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, TRUE)
 	if(charged_shot)
 		handle_empowerment()
 
 /obj/item/gun/ballistic/shotgun/automatic/meltra/proc/handle_empowerment()
 	if(projectile_damage_multiplier < empowered_damage_multiplier)
 		projectile_damage_multiplier = empowered_damage_multiplier
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, TRUE)
-	charged_shot = FALSE
 
 /obj/item/gun/ballistic/shotgun/automatic/meltra/proc/handle_reset(deltimer)
 	projectile_damage_multiplier = normal_damage_multiplier

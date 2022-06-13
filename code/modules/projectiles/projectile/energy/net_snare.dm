@@ -1,10 +1,9 @@
 /obj/projectile/beam/pellet/net
 	name = "energy netting"
 	icon_state = "e_netting"
-	damage = 3.5
+	damage = 5
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 10
 
 /obj/projectile/beam/pellet/net/Initialize(mapload)
 	. = ..()
@@ -61,10 +60,10 @@
 /obj/projectile/energy/trap
 	name = "energy snare"
 	icon_state = "e_snare"
-	damage = 20
+	damage = 25
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 4
+	range = 10
 
 /obj/projectile/energy/trap/on_hit(atom/target, blocked = FALSE)
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
