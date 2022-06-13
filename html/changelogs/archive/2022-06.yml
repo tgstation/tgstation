@@ -328,3 +328,191 @@
   - config: Add every AI lawset to game_options config
   - config: Rebalance AI lawsets in game_options config
   - bugfix: Lawsets overflow to behave correctly
+2022-06-09:
+  13spacemen:
+  - qol: Fuel and water tanks have examine hints now
+  ATHATH:
+  - rscadd: Cloaks, like surgical drapes and bedsheets, can now initiate surgeries.
+      This change affects both head of staff cloaks and skill capes.
+  Guillaume Prata:
+  - rscadd: Gravity generator blackout is a new random event to spice the rounds.
+  - balance: High intensity gravitational anomalies that don't get neutralized in
+      time will trigger a gravity generator blackout.
+  Iamgoofball:
+  - balance: The Quartermaster is now a Head of Staff, and answers directly to the
+      Captain now.
+  - balance: This comes with all the stuff a Head of Staff normally has, like command
+      access, a telebaton, and a silver ID.
+  - balance: This also comes with no longer being eligible for Head Revolutionary,
+      and being a target for the Revolution.
+  - balance: Thanks to a savvy contract with the Space Teamsters, non-humans are allowed
+      to be Quartermasters still.
+  - balance: The HoP is no longer the lead of Supply, nor does he have access to Supply.
+  - balance: The Warden now carries the torch for pretender royal metabolism, as the
+      last remaining pseudo-head.
+  - code_imp: Removes a hack from the NT IRN code.
+  Iatots:
+  - rscdel: you can't hold bread slices in your mouth (head) anymore.
+  - rscadd: you can hold griddled toast in your mouth (mask).
+  Jakkie Sergal:
+  - rscadd: Added darker floor decals.
+  Jolly:
+  - bugfix: A small bit of Kilos arrivals area define was touched up and fixed. Asteroid
+      rock is not consider part of the station, sorry folks.
+  - qol: On Icebox, some of the warning tapes have been properly rounded off with
+      corners.
+  - bugfix: On Icebox, a vent and scrubber has been added to the primary hall the
+      arrival shuttle drops crew members off at. This should also stop this portion
+      of the hall from having atmos specific issues.
+  Melbert:
+  - bugfix: Dead bodies shouldn't keep jittering for ages.
+  - qol: Research servers are now a bit more clear about why they aren't generating
+      research points. Check the console for more info. If in doubt, turn them off
+      and on again (i'm not kidding).
+  - code_imp: Removed a buncha old, deprecated / unused R&D server code related to
+      them making heat.
+  Pickle-Coding:
+  - bugfix: Fixes bzformation not working.
+  SmArtKar:
+  - bugfix: Fire hallucinations are no longer invisible
+  TehZombehz for the sprites, san7890:
+  - rscadd: For some reason, Donk Co. suddenly found a crate full of alien-themed
+      plushies in their warehouse. They immediately started loading up their arcade
+      machines full of them.
+  Wallem:
+  - rscadd: For the brave smokers out there, legends tell of a new lighting technique
+      involving molten stone from the planet's core. Only the brave are advised to
+      attempt this.
+  Watermelon914:
+  - balance: Traitor objectives have a significantly reduced reputation reduction,
+      making it more viable to gain reputation beyond the expected reputation.
+  robbertapir:
+  - bugfix: You can no longer create negative amounts of alloys in the ORM
+  - bugfix: sechud/medhud buttons in examines now time out after 1 minute. This means
+      that a single examine will no longer allow you to track someone's identity and/or
+      health for the rest of the round.
+  timothymtorres:
+  - rscadd: Add hallucinogen poison to frog attacks
+  zxaber:
+  - rscadd: The Concealed Weapon Bay is available again for traitor Roboticists and
+      Research Directors.
+2022-06-10:
+  Jolly:
+  - bugfix: On Tram, in sec, the floating pepper spray refiller has been removed from
+      the armory. You guys have enough, stop hogging it damnit!
+  - bugfix: On Tram, in the under tram, steam vents should no longer spontaneously
+      appear in walls.
+  PositiveEntropy:
+  - imageadd: Resprites the Captain's Antique Laser Gun!
+  ReinaCoder:
+  - bugfix: The QM now has a miniature e-gun in their locker on kilo like the other
+      heads!
+  tf-4:
+  - bugfix: Donksoft toy vendors no longer bluescreen.
+2022-06-11:
+  JohnFulpWillard:
+  - bugfix: Space Dragons' expiring no longer deletes the people they had already
+      eaten.
+  LemonInTheDark:
+  - rscadd: Weather effects will now be a bit more subtle in darkness, hopefully this
+      looks nicer
+  - imageadd: I've done some resprites to snow and non smoothing lava
+  MTandi:
+  - qol: Portable pump In/Out button text replaced with source and destination.
+  Maurukas:
+  - bugfix: A manually edited APC in the deepstorage ruin has been replaced with an
+      APC of the appropriate type.
+  Melbert:
+  - refactor: Gunlight / Helmetlight behavior is now a component.
+  - qol: Gunlight / Helmetlight now uses balloon alerts.
+  Mothblocks:
+  - spellcheck: Asimov++ no longer includes "In the case of conflict, the majority
+      order rules."
+  RandomGamer123:
+  - bugfix: Fixes the layer of a scrubber in Icebox engineering
+  Watermelon914:
+  - bugfix: Skip time button on the steal objective now has a fast forward icon.
+  YakumoChen:
+  - qol: Changed the position of light tubes in certain surgery rooms to not be directly
+      over a surgery bed. No more smashing lights with your saw by accident!
+  - qol: Aspiring AIs can now listen in on patient talk in Meta's primary surgery
+      room. Or you could listen to the soothing sounds of the the crew dying from
+      the comfort of a surgery bed when comms are down too, I guess.
+  msgerbs:
+  - bugfix: There is no longer a random pipe in the wall in Metastation's Xenobiology
+      department.
+  san7890:
+  - config: Hey, server operators! Title music playing at the lobby screen is now
+      DISABLED by default in the config settings (game_options.txt). If you are not
+      hearing any title music, be sure to adjust your config. If you're a player reading
+      this and are sorely missing out on those soulful tunes, please notify your server's
+      administration team of this change so they can diagnose it properly from there.
+  tf-4:
+  - balance: Pre-loaded PACMAN generators now have 15 plasma sheets, instead of 50.
+2022-06-12:
+  JohnFulpWillard:
+  - bugfix: The Warp whistle can be used more than once again.
+  Melbert:
+  - bugfix: Fixes Novaflowers not lighting targets on fire.
+  - code_imp: Reduces some copy+paste and cleans up some unique plant genes code.
+  - bugfix: Ranged attacks hitting mech equipment no longer ignores mech armor
+  - bugfix: Melee attacks now damage mech equipment
+  - bugfix: Mech equipment is now properly disabled at 0% health
+  Mothblocks:
+  - bugfix: Fixed thieves/opportunists icon.
+  Son-of-Space:
+  - bugfix: Several pairs of external airlocks without cycle link helpers have had
+      them added on TramStation
+  YakumoChen:
+  - bugfix: Fixed a symmetry issue with the lava clown puzzle where a lone chasm tile
+      wasn't connected with its fellow chasms.
+  san7890:
+  - bugfix: Chaplains, CMOs, and Psychologists can now all rejoice that they start
+      in their offices in Tram now, rather than take the shuttle.
+  - bugfix: Abductors should now hopefully spawn in on their little alien pod rather
+      than on the station's arrivals shuttle.
+  timothymtorres:
+  - rscadd: Add disease resistance to spaceacillin.  It now gives 50% disease progression
+      slowdown, 75% to block disease infection, 75% to block zombie infection when
+      attacked, and 50% alien larva growth slowdown.
+2022-06-13:
+  Fikou:
+  - bugfix: floating now stops slips just as well as flying
+  - spellcheck: security mod theme no longer mentions being shockproof
+  - bugfix: fixes naked outfit giving people the ninja modsuit
+  JohnFulpWillard:
+  - bugfix: Ore silos can once again be synced to machines on the station on other
+      z levels, for multi-z maps.
+  MTandi:
+  - bugfix: Night shift lights now properly save power
+  - qol: APC buttons now have tooltips
+  Melbert:
+  - bugfix: Earthsblood makes you see colors again.
+  Mothblocks:
+  - bugfix: Fixed Dynamic midrounds spawning heavies significantly earlier than they're
+      supposed to
+  Rhials:
+  - bugfix: Jobs are no longer closed when the nuke detonates off-station.
+  Son-of-Space:
+  - bugfix: Fixed overlapping objects on a tile in the foyer of the IceBox bar.
+  - bugfix: Some manual varedits on objects with cargo shipping access were fixed
+      to work again.
+  - bugfix: A set of unpowered airlocks by the cooling loop on TramStation are now
+      powered.
+  - bugfix: A rack stuck in a wall on the listening station ruin was removed from
+      the wall.
+  cacogen:
+  - balance: The default pirate ship now has a cell charger to recharge suit cells
+  castawaynont:
+  - balance: The Space Ninja's MODsuit has a storage module now.
+  kawoppi:
+  - balance: removed JaniDrobe refill from the General Wardrobes Supply Crate and
+      moved it to its own supply crate
+  - balance: adjusted General Wardrobes Supply Crate price due to it containing one
+      less refill
+  robbertapir:
+  - bugfix: stundprods and teleprods now stun again
+  - bugfix: igniters now work again
+  vincentiusvin:
+  - bugfix: fix h2/trit fires being too hot, outputting funny numbers, generally being
+      weird.

@@ -3184,9 +3184,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"aTN" = (
-/turf/closed/mineral/random/labormineral,
-/area/station/hallway/secondary/entry)
 "aTR" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/recharge_floor,
@@ -4534,7 +4531,7 @@
 /obj/machinery/door/window/right/directional/west{
 	dir = 4;
 	name = "Cargo Desk";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/item/flashlight,
 /turf/open/floor/plating,
@@ -5253,7 +5250,7 @@
 /obj/machinery/door/window/left/directional/west{
 	dir = 4;
 	name = "Mailroom Desk";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/effect/landmark/start/hangover,
 /obj/structure/desk_bell{
@@ -9469,7 +9466,7 @@
 /obj/machinery/door/window/left/directional/west{
 	dir = 2;
 	name = "Cargo Desk";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -22031,7 +22028,7 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/door/window/right/directional/south{
 	name = "Cargo Disposal";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -23969,7 +23966,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/spawner/random/structure/crate,
 /mob/living/simple_animal/chicken{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0);
+	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_tox"=0,"max_tox"=1,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0);
 	desc = "A timeless classic.";
 	name = "Kentucky"
 	},
@@ -25934,7 +25931,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 2;
 	name = "Cargo Delivery Access";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -26089,7 +26086,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 2;
 	name = "Cargo Delivery Access";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/delivery,
@@ -48721,7 +48718,7 @@
 "nFN" = (
 /obj/machinery/igniter/incinerator_ordmix,
 /mob/living/simple_animal/chicken{
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0);
+	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_tox"=0,"max_tox"=1,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0);
 	desc = "A timeless classic.";
 	name = "Kentucky"
 	},
@@ -52637,7 +52634,7 @@
 /obj/machinery/door/window/right/directional/south{
 	dir = 4;
 	name = "Mail Chute";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -56400,7 +56397,7 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/door/window/left/directional/south{
 	name = "Cargo Disposal";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "packageSort2";
@@ -60892,7 +60889,7 @@
 /obj/machinery/door/window/left/directional/west{
 	dir = 4;
 	name = "Cargo Desk";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/item/clipboard{
 	pixel_x = 3;
@@ -64806,7 +64803,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "A station exclusive. Consumption may result in seizures, blindness, drunkenness, or even death.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 30);
+	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko=30);
 	name = "Kilo-Kocktail";
 	pixel_x = 5;
 	pixel_y = 5
@@ -79422,12 +79419,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/greater)
-"wpd" = (
-/obj/machinery/door/window/right/directional/east{
-	pixel_y = 32
-	},
-/turf/open/misc/asteroid/airless,
-/area/space/nearstation)
 "wpe" = (
 /obj/machinery/power/emitter/welded{
 	dir = 4
@@ -82480,6 +82471,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/iron/dark,
 /area/station/cargo/qm)
 "xcV" = (
@@ -85011,7 +85003,7 @@
 /obj/machinery/door/window/left/directional/west{
 	dir = 1;
 	name = "Crate Return Door";
-	req_access = list("mail_sorting")
+	req_access = list("shipping")
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -103060,7 +103052,7 @@ aaa
 aaa
 aaa
 agt
-wpd
+aeU
 aeU
 aeu
 aeu
@@ -125498,7 +125490,7 @@ gBp
 kmM
 hGX
 mkk
-aTN
+aeu
 bPP
 bUN
 bUN
@@ -125755,7 +125747,7 @@ oMG
 clZ
 itC
 rCi
-aTN
+aeu
 fIn
 bUN
 bUN
