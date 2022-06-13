@@ -125,8 +125,8 @@
 /turf/open/floor/break_tile()
 	if(broken)
 		return
-	update_overlays()
 	broken = TRUE
+	update_appearance()
 /turf/open/floor/update_overlays()
     . = ..()
     if(broken)
