@@ -40,14 +40,17 @@
 	greyscale_colors = "#B2B2B2"
 	moth_snack = null
 
-/obj/item/clothing/mask/muzzle/tape/attack(mob/living/M, mob/living/user, params)
-	if(!mob_can_equip(M, user, ITEM_SLOT_MASK))
-		to_chat(user, span_notice("They are already wearing somthing on their face."))
+/obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, params)
+	if(victim.is_mouth_covered(head_only = TRUE))
+		to_chat(attacker, span_notice("[victim.name]'s mouth is covered."))
 		return
-	balloon_alert(user, "taping mouth...")
-	if(!do_after(user, equip_delay_other, target = M))
+	if(!mob_can_equip(victim, attacker, ITEM_SLOT_MASK))
+		to_chat(attacker, span_notice("[victim.name] is already wearing somthing on their face."))
 		return
-	M.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
+	balloon_alert(attacker, "taping mouth...")
+	if(!do_after(attacker, equip_delay_other, target = victim))
+		return
+	victim.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
 
 /obj/item/clothing/mask/muzzle/tape/super
 	name = "super tape piece"
