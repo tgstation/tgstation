@@ -129,7 +129,7 @@
 	broken = TRUE
 /turf/open/floor/update_overlays()
     . = ..()
-    if(damaged)
+    if(broken)
         . += mutable_appearance('icons/turf/floors.dmi', pick(broken_states))
 
 /turf/open/floor/burn_tile()
