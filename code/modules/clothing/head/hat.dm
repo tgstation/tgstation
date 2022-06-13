@@ -27,6 +27,7 @@
 	name = "space police cap"
 	desc = "A blue cap for patrolling the daily beat."
 	icon_state = "policecap_families"
+	inhand_icon_state = "policecap_families"
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
