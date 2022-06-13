@@ -748,8 +748,8 @@ GLOBAL_LIST_EMPTY(colored_images)
 	#else
 	data["display_max"] = FALSE
 	#endif
-	var/atom/movable/screen/plane_master/plane = user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
-	data["showing_user"] = (plane.alpha == 255)
+	for(var/atom/movable/screen/plane_master/plane in user.hud_used.get_true_plane_masters(ATMOS_GROUP_PLANE))
+		data["showing_user"] = (plane.alpha == 255)
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -787,14 +787,14 @@ GLOBAL_LIST_EMPTY(colored_images)
 					group.hide_turfs()
 			return TRUE
 		if("toggle_user_display")
-			for(var/plane_val in TRUE_PLANE_TO_OFFSETS(ATMOS_GROUP_PLANE))
-				var/atom/movable/screen/plane_master/plane = ui.user.hud_used.plane_masters["[plane_val]"]
-				if(!plane.alpha)
-					if(ui.user.client)
-						ui.user.client.images += GLOB.colored_images
-					plane.alpha = 255
+			var/mob/user = ui.user
+			for(var/atom/movable/screen/plane_master/plane_master in user.hud_used.get_true_plane_masters(ATMOS_GROUP_PLANE))
+				if(!plane_master.alpha)
+					if(user.client)
+						user.client.images += GLOB.colored_images
+					plane_master.alpha = 255
 				else
-					if(ui.user.client)
-						ui.user.client.images -= GLOB.colored_images
-					plane.alpha = 0
+					if(user.client)
+						user.client.images -= GLOB.colored_images
+					plane_master.alpha = 0
 			return TRUE

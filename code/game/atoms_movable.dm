@@ -965,7 +965,7 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_turf, new_turf, same_z_layer)
 
 	// If our turfs are on different z "layers", recalc our planes
-	if(same_z_layer)
+	if(!same_z_layer)
 		SET_PLANE(src, PLANE_TO_TRUE(src.plane), new_turf)
 		// a TON of overlays use planes, and thus require offsets
 		// so we do this. sucks to suck

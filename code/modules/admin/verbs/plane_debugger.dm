@@ -1,7 +1,10 @@
 /// Used for testing/debugger plane masters and their associated rendering plates
 /datum/plane_master_debug
 	var/datum/admins/owner
-	var/list/depth_stack
+	/// Assoc list of plane master group key -> its depth stack
+	var/list/depth_stack = list()
+	/// The current plane master group we're viewing
+	var/current_group = PLANE_GROUP_MAIN
 
 /datum/plane_master_debug/New(datum/admins/owner)
 	src.owner = owner
@@ -40,7 +43,7 @@
 	// Used to ensure the incoming_relays list is filled, even if the relay's generated before the plane's processed
 	var/list/pending_relays = list()
 
-	var/list/our_planes = owner?.owner?.mob?.hud_used?.plane_masters
+	var/list/our_planes = owner?.owner?.mob?.hud_used?.get_planes_from(current_group)
 	for(var/plane_string as anything in our_planes)
 		var/list/this_plane = list()
 		var/atom/movable/screen/plane_master/plane = our_planes[plane_string]
@@ -128,12 +131,12 @@
 		target_plane["incoming_filters"] += our_ref
 
 	// Only load this once. Prevents leaving off orphaned components
-	if(!depth_stack)
-		depth_stack = treeify(plane_info, relay_deets, filter_connections)
+	if(!depth_stack[current_group])
+		depth_stack[current_group] = treeify(plane_info, relay_deets, filter_connections)
 
 	// We will use this js side to arrange our plane masters and such
 	// It's essentially a stack of where they should be displayed
-	data["depth_stack"] = depth_stack
+	data["depth_stack"] = depth_stack[current_group]
 	return data
 
 // Reading this in the queue tells the search to increase the depth, and then push another increase command to the end of the stack
@@ -218,15 +221,13 @@
 		return
 
 	var/datum/hud/our_hud = owner?.owner?.mob?.hud_used
-	var/list/our_planes = our_hud?.plane_masters
+	var/list/our_planes = our_hud?.get_planes_from(current_group)
 	if(!our_planes) // Nothing to act on
 		return
 
 	switch(action)
 		if("refresh")
-			QDEL_LIST_ASSOC_VAL(our_planes)
-			our_hud.build_plane_masters(0, SSmapping.max_plane_offset)
-			our_hud.show_hud(our_hud.hud_version)
+			our_hud.refresh_all_groups()
 		if("connect_relay")
 			var/source_plane = params["source"]
 			var/target_plane = params["target"]

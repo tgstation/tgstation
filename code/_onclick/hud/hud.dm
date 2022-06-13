@@ -47,7 +47,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/screenoverlays = list() //the screen objects used as whole screen overlays (flash, damageoverlay, etc...)
 	var/list/inv_slots[SLOTS_AMT] // /atom/movable/screen/inventory objects, ordered by their slot ID.
 	var/list/hand_slots // /atom/movable/screen/inventory/hand objects, assoc list of "[held_index]" = object
-	var/list/atom/movable/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
+
+	/// Assoc list of key => "plane master groups"
+	/// This is normally just the main window, but it'll occasionally contain things like spyglasses windows
+	var/list/datum/plane_master_group/master_groups = list()
 	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
 	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
 
@@ -105,7 +108,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	hand_slots = list()
 
-	build_plane_masters(0, SSmapping.max_plane_offset)
+	var/datum/plane_master_group/main = new(PLANE_GROUP_MAIN)
+	main.attach_to(src)
 
 	var/datum/preferences/preferences = owner?.client?.prefs
 	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
@@ -177,7 +181,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	alien_queen_finder = null
 	combo_display = null
 
-	QDEL_LIST_ASSOC_VAL(plane_masters)
+	QDEL_LIST_ASSOC_VAL(master_groups)
 	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
 	QDEL_LIST(screenoverlays)
 	mymob = null
@@ -188,15 +192,53 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/on_plane_increase(datum/source, old_max_offset, new_max_offset)
 	SIGNAL_HANDLER
-	build_plane_masters(old_max_offset + 1, new_max_offset)
+	build_plane_groups(old_max_offset + 1, new_max_offset)
 
-/datum/hud/proc/build_plane_masters(starting_offset, ending_offset)
-	for(var/mytype in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate)
-		for(var/plane_offset in starting_offset to ending_offset)
-			var/atom/movable/screen/plane_master/instance = new mytype(plane_offset)
-			plane_masters["[instance.plane]"] = instance
-			instance.set_hud(src)
-			instance.show_to(mymob)
+/datum/hud/proc/refresh_all_groups()
+	for(var/group_key in master_groups)
+		var/datum/plane_master_group/group = master_groups[group_key]
+		group.refresh_hud()
+
+/datum/hud/proc/build_plane_groups(starting_offset, ending_offset)
+	for(var/group_key in master_groups)
+		var/datum/plane_master_group/group = master_groups[group_key]
+		group.build_plane_masters(starting_offset, ending_offset)
+
+/// Returns a list of all plane masters that match the input plane
+/datum/hud/proc/get_plane_masters(plane)
+	var/plane_key = "[plane]"
+	var/list/atom/movable/screen/plane_master/masters = list()
+
+	for(var/group_key in master_groups)
+		var/datum/plane_master_group/group = master_groups[group_key]
+		var/atom/movable/screen/plane_master/master = group.plane_masters[plane_key]
+		if(master)
+			masters += master
+
+	return masters
+
+/// Returns a list of all plane masters that match the input true plane (ignores z layer offsets)
+/datum/hud/proc/get_true_plane_masters(true_plane)
+	var/list/atom/movable/screen/plane_master/masters = list()
+	for(var/plane in TRUE_PLANE_TO_OFFSETS(true_plane))
+		masters += get_plane_masters(plane)
+	return masters
+
+/datum/hud/proc/get_planes_from(plane_group)
+	var/datum/plane_master_group/group = master_groups[plane_group]
+	return group.plane_masters
+
+/datum/hud/proc/get_plane_group(key)
+	return master_groups[key]
+
+/// Returns all "true" (ignoring z offsets) planes matching the input from the passed in plane group
+/datum/hud/proc/get_true_planes_from(plane_group, true_plane)
+	var/datum/plane_master_group/group = master_groups[plane_group]
+	var/list/atom/movable/screen/plane_master/masters = list()
+	for(var/plane in TRUE_PLANE_TO_OFFSETS(true_plane))
+		masters += group.plane_masters["[plane]"]
+
+	return masters
 
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
@@ -294,11 +336,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	return TRUE
 
 /datum/hud/proc/plane_masters_update()
-	// Plane masters are always shown to OUR mob, never to observers
-	for(var/thing in plane_masters)
-		var/atom/movable/screen/plane_master/PM = plane_masters[thing]
-		PM.show_to(mymob)
-		mymob.client.screen += PM
+	for(var/group_key in master_groups)
+		var/datum/plane_master_group/group = master_groups[group_key]
+		// Plane masters are always shown to OUR mob, never to observers
+		group.refresh_hud()
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	. = ..()

@@ -104,8 +104,7 @@
 /obj/item/multitool/ai_detect/proc/show_hud(mob/user)
 	if(!user || !hud_type)
 		return
-	for(var/plane in TRUE_PLANE_TO_OFFSETS(CAMERA_STATIC_PLANE))
-		var/atom/movable/screen/plane_master/camera_static/ai_detect_plane = user.hud_used.plane_masters["[plane]"]
+	for(var/atom/movable/screen/plane_master/ai_detect_plane in user.hud_used.get_true_plane_masters(CAMERA_STATIC_PLANE))
 		ai_detect_plane.alpha = 64
 	var/datum/atom_hud/hud = GLOB.huds[hud_type]
 	if(!hud.hud_users[user])
@@ -116,8 +115,7 @@
 /obj/item/multitool/ai_detect/proc/remove_hud(mob/user)
 	if(!user || !hud_type)
 		return
-	for(var/plane in TRUE_PLANE_TO_OFFSETS(CAMERA_STATIC_PLANE))
-		var/atom/movable/screen/plane_master/camera_static/ai_detect_plane = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
+	for(var/atom/movable/screen/plane_master/ai_detect_plane in user.hud_used.get_true_plane_masters(CAMERA_STATIC_PLANE))
 		ai_detect_plane.alpha = 255
 	var/datum/atom_hud/hud = GLOB.huds[hud_type]
 	hud.hide_from(user)

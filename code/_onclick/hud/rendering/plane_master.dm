@@ -1,3 +1,5 @@
+// I hate this place
+INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master
 	screen_loc = "CENTER"
 	icon_state = "blank"
@@ -9,8 +11,11 @@
 	/// Plaintext and basic html are fine to use here.
 	/// I'll bonk you if I find you putting "lmao stuff" in here, make this useful.
 	var/documentation = ""
-	var/true_alpha = 0
+	var/true_alpha = 255
 	var/alpha_enabled = TRUE
+
+	/// The plane master group we're a member of, our "home"
+	var/datum/plane_master_group/home
 
 	var/offset
 	var/real_plane
@@ -25,21 +30,31 @@
 	/// list of current relays this plane is utilizing to render
 	var/list/atom/movable/render_plane_relay/relays = list()
 
-/atom/movable/screen/plane_master/New(offset = 0)
+/atom/movable/screen/plane_master/New(datum/plane_master_group/home, offset = 0)
 	src.offset = offset
+	true_alpha = alpha
 	real_plane = plane
+
+	set_home(home)
 	update_offset()
 	if(!documentation && !(istype(src, /atom/movable/screen/plane_master) || istype(src, /atom/movable/screen/plane_master/rendering_plate)))
 		stack_trace("Plane master created without a description. Document how your thing works so people will know in future, and we can display it in the debug menu")
 	return ..()
 
 /atom/movable/screen/plane_master/Destroy()
-	if(hud)
+	if(home)
 		// NOTE! We do not clear ourselves from client screens
 		// We relay on whoever qdel'd us to reset our hud, and properly purge us
-		hud.plane_masters -= "[plane]"
+		home.plane_masters -= "[plane]"
+		home = null
 	. = ..()
 	QDEL_LIST(relays)
+
+/atom/movable/screen/plane_master/proc/set_home(datum/plane_master_group/home)
+	src.home = home
+	if(home.map)
+		screen_loc = "[home.map]:[screen_loc]"
+		assigned_map = home.map
 
 /atom/movable/screen/plane_master/proc/update_offset()
 	name = "[initial(name)] #[offset]"
@@ -70,9 +85,12 @@
 	if(length(render_relay_planes))
 		relay_render_to_plane(mymob)
 
-/atom/movable/screen/plane_master/proc/set_hud(datum/hud/new_hud)
-	SHOULD_CALL_PARENT(TRUE)
-	hud = new_hud
+/atom/movable/screen/plane_master/proc/hide_from(mob/oldmob)
+	var/client/their_client = oldmob.client
+	if(!their_client)
+		return
+	their_client.screen -= src
+	their_client.screen -= relays
 
 ///Things rendered on "openspace"; holes in multi-z
 ///This applies that shadow that openspace tiles get
@@ -225,19 +243,33 @@
 	mymob.overlay_fullscreen("lighting_backdrop_lit", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
 	mymob.overlay_fullscreen("lighting_backdrop_unlit", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
 
+/atom/movable/screen/plane_master/lighting/hide_from(mob/oldmob)
+	. = ..()
+	oldmob.clear_fullscreen("lighting_backdrop_lit")
+	oldmob.clear_fullscreen("lighting_backdrop_unlit")
+
 // Sorry, this is a bit annoying
 // Basically, we only want the lighting plane we can actually see to attempt to render
 // If we don't our lower plane gets totally overriden by the black void of the upper plane
-/atom/movable/screen/plane_master/lighting/set_hud(datum/hud/new_hud)
-	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED)
+/atom/movable/screen/plane_master/lighting/show_to(mob/mymob)
 	. = ..()
-	RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+	var/datum/hud/hud = home.our_hud
+	if(hud)
+		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+	offset_change(hud.current_plane_offset)
+
+/atom/movable/screen/plane_master/lighting/hide_from(mob/mymob)
+	var/datum/hud/hud = home.our_hud
+	if(hud)
+		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
 
 /atom/movable/screen/plane_master/lighting/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
+	offset_change(new_offset)
+
+/atom/movable/screen/plane_master/lighting/proc/offset_change(mob_offset)
 	// Offsets stack down remember. This implies that we're above the mob's view plane, and shouldn't render
-	if(offset < new_offset)
+	if(offset < mob_offset)
 		disable_alpha()
 	else
 		enable_alpha()

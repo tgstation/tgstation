@@ -1119,10 +1119,7 @@
 /mob/proc/sync_lighting_plane_alpha()
 	if(!hud_used)
 		return
-	for(var/plane in TRUE_PLANE_TO_OFFSETS(LIGHTING_PLANE))
-		var/atom/movable/screen/plane_master/lighting/light_plane = hud_used.plane_masters["[plane]"]
-		if (!light_plane)
-			continue
+	for(var/atom/movable/screen/plane_master/lighting/light_plane in hud_used.get_true_planes_from(PLANE_GROUP_MAIN, LIGHTING_PLANE))
 		light_plane.set_alpha(lighting_alpha)
 
 ///Update the mouse pointer of the attached client in this mob

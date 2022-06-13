@@ -21,12 +21,15 @@
 		C.parallax_layers.len = C.parallax_layers_max
 
 	C.screen |= (C.parallax_layers)
-	for(var/plane in TRUE_PLANE_TO_OFFSETS(PLANE_SPACE))
-		var/atom/movable/screen/plane_master/PM = screenmob.hud_used.plane_masters["[plane]"]
+	// We only draw from the main group here because as of now all submaps will have non existant relays
+	// And thus will just end up with weird fullwhite tiles
+	// If the relay thing is ever fixed, https://www.byond.com/forum/post/2797107, make sure we generate a set of parrallax layers for each group
+	// Cause of screen loc reasons
+	for(var/atom/movable/screen/plane_master/plane_master in screenmob.hud_used.get_true_planes_from(PLANE_GROUP_MAIN, PLANE_SPACE))
 		if(screenmob != mymob)
 			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
-			C.screen += PM
-		PM.color = list(
+			C.screen += plane_master
+		plane_master.color = list(
 			0, 0, 0, 0,
 			0, 0, 0, 0,
 			0, 0, 0, 0,
@@ -49,12 +52,11 @@
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
 	C.screen -= (C.parallax_layers_cached)
-	for(var/plane in TRUE_PLANE_TO_OFFSETS(PLANE_SPACE))
-		var/atom/movable/screen/plane_master/PM = screenmob.hud_used.plane_masters["[plane]"]
+	for(var/atom/movable/screen/plane_master/plane_master in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
 		if(screenmob != mymob)
 			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
-			C.screen += PM
-		PM.color = initial(PM.color)
+			C.screen += plane_master
+		plane_master.color = initial(plane_master.color)
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref(mob/viewmob)
