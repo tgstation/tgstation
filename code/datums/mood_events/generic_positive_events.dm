@@ -24,11 +24,6 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
-/datum/mood_event/tailpulled
-	description = "I love getting my tail pulled!"
-	mood_change = 1
-	timeout = 2 MINUTES
-
 /datum/mood_event/arcade
 	description = "I beat the arcade game!"
 	mood_change = 3
