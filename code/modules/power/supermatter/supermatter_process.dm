@@ -126,7 +126,8 @@
 		playsound(src, SFX_SM_CALM, max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
 	var/next_sound = round((100 - aggression) * 5)
 	last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
-/obj/machinery/power/supermatter_crystal/proc/animate_the_sm()
+
+/obj/machinery/power/supermatter_crystal/proc/animate_the_sm() // Start the loop
 	filters = filter(type="rays", size = clamp(power/30, 0, 125), color = SUPERMATTER_COLOUR, factor = 0.6, density = 12)
 	animate(filters[1], time = 10 SECONDS, offset = 10, loop=-1)
 	animate(time = 10 SECONDS, offset = 0, loop=-1)
@@ -149,12 +150,11 @@
 		set_light((initial(light_range) + power/200), initial(light_power) + power/1000, SUPERMATTER_COLOUR, TRUE)
 
 		filters = filter(type="rays", size = clamp(power/30, 0, 125), color = SUPERMATTER_COLOUR, factor = clamp(damage/600, 1, 10), density = clamp(damage/10, 12, 100))
-		// If we did this every tick we'd be crashing peoples clients all day.
 
-		if(!animated)
+		if(!animated)// If we did this every tick we'd be crashing peoples clients all day.
 			animate_the_sm()
 
-	if(damage && final_countdown && !check_special_delamination())
+	if(damage && final_countdown && !check_special_delamination()) // Let's jump to a special effect if we can.
 		set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_COLOUR, TRUE)
 		filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
 	switch(check_special_delamination())
