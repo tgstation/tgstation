@@ -132,6 +132,48 @@ jobs:
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ matrix.map }}
+      - name: Upload screenshot tests
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_artifacts_${{ matrix.map }}
+          path: data/screenshots_new/
+          retention-days: 1
+
+  compare_screenshots:
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && always()"
+    needs: [run_all_tests]
+    name: Compare Screenshot Tests
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      # If we ever add more artifacts, this is going to break, but it'll be obvious.
+      - name: Download screenshot tests
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+      - name: ls -R
+        run: ls -R artifacts
+      - name: Setup screenshot comparison
+        run: npm i
+        working-directory: tools/screenshot-test-comparison
+      - name: Run screenshot comparison
+        run: node tools/screenshot-test-comparison/index.js artifacts code/modules/unit_tests/screenshots artifacts/screenshot_comparisons
+      # workflow_run does not give you the PR it ran on,
+      # even through the thing literally named "matching pull requests".
+      # However, in GraphQL, you can check if the check suite was ran
+      # by a specific PR, so trusting the (user controlled) action here is okay,
+      # as long as we check it later in show_screenshot_test_results
+      - name: Save PR ID
+        if: failure() && github.event.pull_request
+        run: |
+          echo ${{ github.event.pull_request.number }} > artifacts/screenshot_comparisons/pull_request_number.txt
+      - name: Upload bad screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: bad-screenshots
+          path: artifacts/screenshot_comparisons
 
   test_windows:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
