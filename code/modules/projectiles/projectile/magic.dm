@@ -15,17 +15,17 @@
 	. = ..()
 
 	if(isliving(target))
-		var/mob/living/target = target
-		if(target.can_block_magic(antimagic_flags, antimagic_charge_cost))
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+		var/mob/living/victim = target
+		if(victim.can_block_magic(antimagic_flags, antimagic_charge_cost))
+			visible_message(span_warning("[src] fizzles on contact with [victim]!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
 	if(istype(target, /obj/machinery/hydroponics)) // even plants can block antimagic
-		var/obj/machinery/hydroponics/target = target
-		if(!target.myseed)
+		var/obj/machinery/hydroponics/plant_tray = target
+		if(!plant_tray.myseed)
 			return
-		if(target.myseed.get_gene(/datum/plant_gene/trait/anti_magic))
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+		if(plant_tray.myseed.get_gene(/datum/plant_gene/trait/anti_magic))
+			visible_message(span_warning("[src] fizzles on contact with [plant_tray]!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/projectile/magic/death
@@ -36,22 +36,22 @@
 	. = ..()
 
 	if(isliving(target))
-		var/mob/living/target = target
-		if(target.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
-				target.grab_ghost(force = TRUE) // even suicides
-				to_chat(target, span_notice("You rise with a start, you're undead!!!"))
-			else if(target.stat != DEAD)
-				to_chat(target, span_notice("You feel great!"))
+		var/mob/living/victim = target
+		if(victim.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
+			if(victim.revive(full_heal = TRUE, admin_revive = TRUE))
+				victim.grab_ghost(force = TRUE) // even suicides
+				to_chat(victim, span_notice("You rise with a start, you're undead!!!"))
+			else if(victim.stat != DEAD)
+				to_chat(victim, span_notice("You feel great!"))
 			return
-		target.death()
+		victim.death()
 
 	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/target = target
-		if(!target.myseed)
+		var/obj/machinery/hydroponics/plant_tray = target
+		if(!plant_tray.myseed)
 			return
-		target.set_weedlevel(0) // even the weeds perish
-		target.plantdies()
+		plant_tray.set_weedlevel(0) // even the weeds perish
+		plant_tray.plantdies()
 
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -64,23 +64,23 @@
 	. = ..()
 
 	if(isliving(target))
-		var/mob/living/target = target
+		var/mob/living/victim = target
 
-		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-			target.death()
+		if(victim.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+			victim.death()
 			return
 
-		if(target.revive(full_heal = TRUE, admin_revive = TRUE))
-			target.grab_ghost(force = TRUE) // even suicides
-			to_chat(target, span_notice("You rise with a start, you're alive!!!"))
-		else if(target.stat != DEAD)
-			to_chat(target, span_notice("You feel great!"))
+		if(victim.revive(full_heal = TRUE, admin_revive = TRUE))
+			victim.grab_ghost(force = TRUE) // even suicides
+			to_chat(victim, span_notice("You rise with a start, you're alive!!!"))
+		else if(victim.stat != DEAD)
+			to_chat(victim, span_notice("You feel great!"))
 
 	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/target = target
-		if(!target.myseed)
+		var/obj/machinery/hydroponics/plant_tray = target
+		if(!plant_tray.myseed)
 			return
-		target.set_plant_health(target.myseed.endurance, forced = TRUE)
+		plant_tray.set_plant_health(plant_tray.myseed.endurance, forced = TRUE)
 
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -167,14 +167,14 @@
 	. = ..()
 
 	if(isliving(target))
-		var/mob/living/target = target
-		target.wabbajack()
+		var/mob/living/victim = target
+		victim.wabbajack()
 
 	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/target = target
-		if(!target.myseed)
+		var/obj/machinery/hydroponics/plant_tray = target
+		if(!plant_tray.myseed)
 			return
-		target.polymorph()
+		plant_tray.polymorph()
 
 /obj/projectile/magic/animate
 	name = "bolt of animation"
