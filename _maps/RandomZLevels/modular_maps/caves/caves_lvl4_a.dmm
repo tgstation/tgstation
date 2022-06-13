@@ -182,6 +182,16 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
+"fd" = (
+/obj/structure/clockcult_tower/source,
+/turf/open/floor/bronze/filled,
+/area/template_noop)
+"fm" = (
+/obj/structure/clockcult_tower{
+	id = "clock2"
+	},
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "ft" = (
 /obj/structure/table/bronze,
 /turf/open/floor/iron/chapel{
@@ -232,6 +242,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
+"gU" = (
+/obj/structure/clockcult_tower/source{
+	id = "clock2"
+	},
+/turf/open/floor/bronze/filled,
+/area/template_noop)
 "gX" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze,
@@ -246,6 +262,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
+"hl" = (
+/obj/structure/clockcult_tower{
+	id = "clock3"
+	},
+/turf/open/floor/bronze,
+/area/template_noop)
 "hs" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -307,6 +329,11 @@
 /obj/structure/sign/warning/engine_safety/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ratvar/barracks)
+"jT" = (
+/obj/structure/fluff/clockwork/alloy_shards/small,
+/obj/structure/clockcult_tower,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "jZ" = (
 /obj/machinery/door/airlock/bronze,
 /obj/structure/cable,
@@ -353,6 +380,13 @@
 /obj/item/stack/sheet/bronze,
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
+"mS" = (
+/obj/item/stack/sheet/bronze,
+/obj/structure/clockcult_tower{
+	id = "clock3"
+	},
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "mW" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -389,6 +423,15 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
+"nL" = (
+/obj/structure/table/bronze,
+/obj/item/keycard{
+	desc = "An encrypted card with a small description reading 'Used for bypassing first-level lockdowns in emergency scenarios'.";
+	name = "lesser cog";
+	puzzle_id = "clockcult1"
+	},
+/turf/open/floor/bronze/filled,
+/area/template_noop)
 "nX" = (
 /turf/open/floor/iron/chapel{
 	dir = 10
@@ -462,6 +505,10 @@
 	},
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
+"si" = (
+/obj/structure/clockcult_tower,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "sn" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -563,12 +610,30 @@
 /obj/item/bedsheet/orange,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
+"wW" = (
+/obj/structure/clockcult_tower/source{
+	id = "clock4"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"xh" = (
+/obj/structure/clockcult_tower/source{
+	id = "clock3"
+	},
+/turf/open/floor/bronze/filled,
+/area/template_noop)
 "xr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron_dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
+/area/template_noop)
+"xs" = (
+/obj/structure/clockcult_tower{
+	id = "clock4"
+	},
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "xB" = (
 /obj/effect/turf_decal/stripes/box,
@@ -616,10 +681,9 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ratvar/barracks)
 "yV" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock"
-	},
-/turf/open/floor/plating,
+/obj/structure/lattice,
+/obj/structure/clockcult_tower,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "ze" = (
 /obj/machinery/door/airlock/bronze/seethru,
@@ -683,6 +747,12 @@
 	},
 /turf/open/floor/bronze/filled,
 /area/template_noop)
+"Bh" = (
+/obj/structure/clockcult_tower{
+	id = "clock3"
+	},
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "Bk" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -725,6 +795,11 @@
 "Cf" = (
 /obj/structure/fluff/clockwork/fallen_armor,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"CV" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/obj/structure/clockcult_tower,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "Dl" = (
 /turf/open/floor/iron/chapel{
@@ -796,6 +871,15 @@
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
+"FS" = (
+/obj/structure/table/bronze,
+/obj/item/keycard{
+	desc = "An encrypted card with a small description reading 'Used for bypassing first-level lockdowns in emergency scenarios'.";
+	name = "lesser cog";
+	puzzle_id = "clockcult3"
+	},
+/turf/open/floor/bronze/filled,
+/area/template_noop)
 "Gc" = (
 /obj/structure/fluff/clockwork/fallen_armor,
 /turf/open/floor/bronze/filled/lavaland,
@@ -866,8 +950,7 @@
 	health = 235;
 	maxHealth = 235;
 	name = "Brother Charles";
-	speak = list("Let not the heretic suffer to live, for they will server a great purpose for His Eminence in their afterlife.","Do you not feel guilt for bringing your filth upon these sacred grounds?","Shimmering bronze and cleansing steam, we are all just cogs in His Grand Design.");
-	speak_chance = 25
+	speak = list("Let not the heretic suffer to live, for they will server a great purpose for His Eminence in their afterlife.","Do you not feel guilt for bringing your filth upon these sacred grounds?","Shimmering bronze and cleansing steam, we are all just cogs in His Grand Design.")
 	},
 /turf/open/floor/bronze/filled,
 /area/template_noop)
@@ -889,6 +972,10 @@
 "Jw" = (
 /obj/structure/girder/bronze,
 /turf/open/floor/bronze/filled,
+/area/template_noop)
+"Jz" = (
+/obj/structure/clockcult_tower/target,
+/turf/open/floor/bronze/flat,
 /area/template_noop)
 "JL" = (
 /obj/effect/spawner/structure/window/bronze,
@@ -1004,6 +1091,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ratvar/barracks)
+"QC" = (
+/obj/machinery/door/airlock/bronze,
+/turf/open/floor/bronze/filled,
+/area/template_noop)
 "QH" = (
 /obj/structure/chair/pew/right{
 	dir = 8
@@ -1033,12 +1124,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
+"Se" = (
+/obj/structure/clockcult_tower,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 "SD" = (
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
 "SN" = (
 /turf/closed/wall,
+/area/template_noop)
+"Te" = (
+/obj/machinery/door/airlock/bronze,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "Tp" = (
 /turf/open/floor/iron/chapel,
@@ -1096,11 +1195,13 @@
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "Wc" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 8
-	},
 /turf/open/floor/iron,
-/area/awaymission/caves/misc/ratvar/barracks)
+/area/template_noop)
+"Wh" = (
+/obj/structure/lattice,
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/clockminer,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 "Wq" = (
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
@@ -1163,6 +1264,15 @@
 /obj/structure/closet,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
+"Xk" = (
+/obj/structure/table/bronze,
+/obj/item/keycard{
+	desc = "An encrypted card with a small description reading 'Used for bypassing first-level lockdowns in emergency scenarios'.";
+	name = "lesser cog";
+	puzzle_id = "clockcult2"
+	},
+/turf/open/floor/bronze/filled,
+/area/template_noop)
 "Xw" = (
 /obj/machinery/atmospherics/components/tank/oxygen,
 /turf/open/floor/bronze/filled,
@@ -2824,7 +2934,7 @@ nX
 fW
 ft
 WK
-fW
+xh
 fW
 JL
 BF
@@ -3538,7 +3648,7 @@ BF
 BF
 BF
 BF
-BF
+xs
 BF
 aD
 aD
@@ -3566,7 +3676,7 @@ BF
 SN
 KG
 SN
-SN
+aO
 ht
 nX
 fW
@@ -3691,7 +3801,7 @@ BF
 KG
 Mt
 Bm
-yV
+aO
 eU
 uA
 fW
@@ -3816,9 +3926,9 @@ bG
 SN
 SN
 gX
-JL
-yV
-SN
+hl
+aO
+aO
 Jw
 KG
 JL
@@ -3904,6 +4014,7 @@ BF
 BF
 BF
 BF
+xs
 BF
 BF
 BF
@@ -3920,8 +4031,7 @@ BF
 BF
 BF
 BF
-BF
-BF
+xs
 aD
 aD
 aD
@@ -4021,7 +4131,7 @@ Fk
 aD
 aD
 aD
-aD
+xs
 BF
 BF
 BF
@@ -4145,7 +4255,7 @@ md
 Fk
 Fk
 aD
-BF
+aD
 BF
 BF
 BF
@@ -4304,7 +4414,7 @@ BF
 BF
 BF
 BF
-BF
+xs
 aU
 aU
 aU
@@ -4808,7 +4918,7 @@ BF
 BF
 BF
 BF
-BF
+xs
 aD
 aD
 aD
@@ -4891,7 +5001,7 @@ aU
 aU
 aU
 aU
-aU
+wW
 aU
 aU
 aU
@@ -5064,7 +5174,7 @@ aD
 aD
 aD
 aD
-aU
+Bh
 aU
 aU
 Xy
@@ -6057,11 +6167,11 @@ BF
 BF
 BF
 BF
-BF
+xs
 aD
 aD
-BF
-BF
+aD
+Bh
 BF
 BF
 BF
@@ -7052,13 +7162,13 @@ BF
 BF
 BF
 BF
-BF
+xs
 KG
 Fk
 Fk
 aD
 aD
-BF
+Bh
 BF
 BF
 BF
@@ -7419,7 +7529,7 @@ BF
 BF
 BF
 BF
-aU
+xs
 Xy
 Xy
 aU
@@ -8179,7 +8289,7 @@ Nt
 aK
 aD
 BF
-aD
+Bh
 uB
 KG
 KG
@@ -8538,7 +8648,7 @@ BF
 BF
 BF
 aU
-aU
+xs
 Xy
 KG
 aU
@@ -8550,7 +8660,7 @@ aD
 aD
 mv
 OT
-aD
+Bh
 aD
 LM
 rg
@@ -9018,11 +9128,11 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
+aI
+aI
+aI
+aI
+aI
 BF
 BF
 BF
@@ -9143,13 +9253,13 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
+aI
+DF
+DF
+DF
+aI
+aI
+aI
 aI
 aI
 dU
@@ -9170,7 +9280,7 @@ BF
 BF
 BF
 BF
-BF
+Bh
 BF
 aD
 aD
@@ -9205,7 +9315,7 @@ aU
 aU
 aU
 aU
-BF
+si
 BF
 aU
 aU
@@ -9268,17 +9378,17 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
 aI
 DF
 DF
-JL
+DF
+DF
+DF
+DF
+aI
+DF
+DF
+DF
 DF
 DF
 aI
@@ -9287,7 +9397,7 @@ aD
 ta
 BF
 aD
-mv
+mS
 aD
 aU
 aU
@@ -9393,18 +9503,18 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
+aI
+DF
+DF
+DF
+DF
+DF
+DF
 DF
 DF
 aj
 DF
-DF
+Jz
 DF
 Ft
 aD
@@ -9417,9 +9527,9 @@ aD
 aD
 aD
 Hp
-aK
-Zz
+Wh
 aD
+Zz
 aD
 aD
 aD
@@ -9446,7 +9556,7 @@ BF
 BF
 BF
 BF
-aa
+BF
 KG
 aU
 aU
@@ -9459,12 +9569,12 @@ BF
 BF
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-aU
+SN
+KG
+SN
+KG
+KG
+SN
 aU
 aU
 aU
@@ -9518,17 +9628,17 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
 aI
 DF
 DF
-JL
+DF
+DF
+DF
+DF
+aI
+DF
+DF
+DF
 DF
 DF
 aI
@@ -9537,7 +9647,7 @@ ta
 aD
 BF
 aD
-ta
+jT
 aD
 aU
 aU
@@ -9566,15 +9676,15 @@ BF
 BF
 BF
 BF
+si
 BF
 BF
 BF
 BF
 BF
 BF
-aa
+si
 aU
-aU
 BF
 BF
 BF
@@ -9584,12 +9694,12 @@ BF
 BF
 BF
 aU
-aU
-aU
-aU
-aU
-Xy
-aU
+SN
+fW
+Wc
+fW
+fW
+SN
 aU
 aU
 aU
@@ -9643,13 +9753,13 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
+aI
+DF
+DF
+DF
+aI
+aI
+aI
 aI
 aI
 dU
@@ -9670,7 +9780,7 @@ aU
 aU
 BF
 BF
-aD
+si
 aD
 aD
 aD
@@ -9685,21 +9795,12 @@ aD
 aU
 aU
 aU
-aU
+Se
 BF
 BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-aa
-aU
 BF
 BF
 BF
@@ -9709,12 +9810,21 @@ BF
 BF
 BF
 aU
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
 aU
-aU
-aa
-aa
-aU
-aU
+KG
+Wc
+fd
+fW
+fW
+KG
 xr
 xr
 xr
@@ -9768,11 +9878,11 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
+aI
+aI
+aI
+aI
+aI
 BF
 BF
 BF
@@ -9834,11 +9944,11 @@ BF
 BF
 BP
 hd
-BP
-aa
-aa
-aa
-aa
+qy
+fW
+fW
+fW
+fW
 qy
 bh
 qy
@@ -9961,8 +10071,8 @@ BP
 lf
 BP
 BP
-BP
-qy
+Wq
+Wq
 qy
 qy
 TJ
@@ -10086,7 +10196,7 @@ BP
 GW
 BP
 Zl
-Wc
+lq
 Wq
 Zl
 qy
@@ -10180,7 +10290,7 @@ aK
 aD
 cg
 aD
-aK
+yV
 aU
 aU
 aU
@@ -10288,7 +10398,7 @@ BF
 BF
 BF
 BF
-aU
+fm
 aU
 aU
 aU
@@ -10303,8 +10413,8 @@ aD
 aK
 BF
 nl
-KG
-KG
+aD
+aD
 aU
 aU
 WT
@@ -10425,7 +10535,7 @@ BF
 BF
 aK
 aD
-OT
+CV
 BF
 BF
 BF
@@ -11041,7 +11151,7 @@ BF
 BF
 BF
 BF
-aU
+fm
 aU
 Xy
 ib
@@ -11293,8 +11403,8 @@ BF
 BF
 BF
 BF
-aa
-aa
+BF
+BF
 aU
 aU
 tS
@@ -11422,7 +11532,7 @@ BF
 BF
 BF
 BF
-BF
+fm
 KG
 aD
 aD
@@ -11560,11 +11670,11 @@ BF
 BF
 aU
 aU
-aU
-aU
-aU
-aU
-BF
+KG
+KG
+KG
+KG
+KG
 BF
 BF
 BF
@@ -11684,13 +11794,13 @@ BF
 BF
 BF
 BF
-BF
-aU
-aU
-aU
-aU
-BF
-BF
+KG
+KG
+fW
+fW
+fW
+KG
+KG
 BF
 BF
 BF
@@ -11809,13 +11919,13 @@ BF
 BF
 BF
 BF
-BF
-BF
-aU
-aU
-aU
-aU
-aU
+KG
+fW
+fW
+fW
+fW
+fW
+KG
 BF
 BF
 BF
@@ -11934,13 +12044,13 @@ BF
 BF
 BF
 BF
-BF
-BF
-aU
-aU
-aU
-aU
-aU
+KG
+fW
+fW
+nL
+fW
+fW
+KG
 BF
 BF
 BF
@@ -12059,13 +12169,13 @@ BF
 BF
 BF
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+KG
+fW
+fW
+fW
+fW
+fW
+KG
 BF
 BF
 BF
@@ -12184,13 +12294,13 @@ aU
 aU
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+KG
+KG
+fW
+fW
+fW
+KG
+KG
 aU
 BF
 BF
@@ -12310,11 +12420,11 @@ BF
 BF
 aU
 aU
-aU
-aU
-aU
-aU
-aU
+KG
+KG
+QC
+KG
+KG
 aU
 aU
 aU
@@ -12436,9 +12546,9 @@ BF
 BF
 BF
 BF
-BF
-aU
-aU
+KG
+fW
+KG
 aU
 aU
 aU
@@ -12548,11 +12658,11 @@ BF
 BF
 BF
 BF
-BF
+eb
 aD
 aD
 aD
-aD
+eb
 BF
 BF
 BF
@@ -12561,9 +12671,9 @@ BF
 BF
 BF
 BF
-BF
-BF
-aU
+KG
+QC
+KG
 aU
 aU
 aU
@@ -12672,12 +12782,13 @@ BF
 BF
 BF
 BF
-BF
+fm
 KG
-UJ
-aD
-aD
+Fk
+Fk
+Fk
 KG
+aD
 BF
 BF
 BF
@@ -12685,9 +12796,8 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
+aU
+aU
 aU
 aU
 aU
@@ -12800,7 +12910,7 @@ BF
 BF
 BF
 aU
-aU
+KB
 aD
 aU
 aU
@@ -12809,10 +12919,10 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
 aU
+aU
+aU
+KB
 aU
 aU
 aU
@@ -12932,9 +13042,9 @@ aU
 aU
 BF
 BF
-BF
-BF
-BF
+aU
+aU
+aU
 aU
 aU
 aU
@@ -13422,7 +13532,7 @@ BF
 BF
 aU
 aU
-aU
+fm
 aU
 aU
 aU
@@ -13549,9 +13659,9 @@ aU
 aU
 aU
 aU
-aU
-aU
-aU
+aI
+fW
+KG
 aU
 aU
 aU
@@ -13672,13 +13782,13 @@ KG
 aD
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+aI
+aI
+aI
+fW
+aI
+aI
+aI
 aU
 aU
 aU
@@ -13797,16 +13907,16 @@ aD
 aD
 aU
 aU
+aI
+fW
+aI
+fW
+aI
+fW
+aI
 aU
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-Xy
-Xy
 aU
 aU
 BF
@@ -13922,16 +14032,16 @@ aD
 aD
 aU
 aU
+aI
+fW
+fW
+fW
+fW
+fW
+aI
 aU
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-Xy
-ib
 Xy
 Xy
 aU
@@ -14046,17 +14156,17 @@ aD
 aD
 aD
 aU
+aI
+aI
+fW
+fW
+fW
+fW
+fW
+aI
+aI
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-Xy
-Xy
 aU
 aU
 aU
@@ -14157,7 +14267,7 @@ BF
 BF
 KG
 aD
-aD
+md
 aD
 aD
 BF
@@ -14171,15 +14281,15 @@ BF
 KG
 aD
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+aI
+fW
+fW
+fW
+fW
+fW
+fW
+fW
+aI
 aU
 aU
 BF
@@ -14296,15 +14406,15 @@ BF
 aU
 aD
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+aI
+fW
+fW
+fW
+fW
+fW
+fW
+fW
+aI
 aU
 aU
 BF
@@ -14421,15 +14531,15 @@ BF
 BF
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+aI
+fW
+fW
+fW
+gU
+fW
+fW
+fW
+aI
 aU
 aU
 BF
@@ -14530,9 +14640,9 @@ BF
 BF
 BF
 BF
-aU
-aU
-aU
+KG
+QC
+KG
 aU
 BF
 BF
@@ -14546,15 +14656,15 @@ BF
 BF
 aU
 aU
-Xy
-ib
-Xy
-Xy
-aU
-aU
-aU
-aU
-aU
+aI
+fW
+fW
+fW
+fW
+fW
+fW
+fW
+aI
 aU
 aU
 BF
@@ -14655,9 +14765,9 @@ BF
 BF
 BF
 BF
-aU
-aU
-aU
+KG
+fW
+KG
 aU
 BF
 BF
@@ -14671,15 +14781,15 @@ BF
 BF
 BF
 aU
-aU
-Xy
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+aI
+fW
+fW
+fW
+fW
+fW
+fW
+fW
+aI
 BF
 BF
 BF
@@ -14779,13 +14889,11 @@ BF
 BF
 BF
 BF
-BF
-aU
-aU
-aU
-aU
-BF
-BF
+KG
+KG
+QC
+KG
+KG
 BF
 BF
 BF
@@ -14796,15 +14904,17 @@ BF
 BF
 BF
 BF
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+BF
+BF
+aI
+aI
+fW
+fW
+fW
+fW
+fW
+aI
+aI
 BF
 BF
 BF
@@ -14903,32 +15013,32 @@ BF
 BF
 BF
 BF
+KG
+KG
+fW
+fW
+fW
+KG
+KG
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
 BF
 BF
 aU
-aU
-aU
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+aI
+aI
+aI
+aI
+aI
+aI
+aI
 aU
 BF
 BF
@@ -15025,19 +15135,19 @@ BF
 BF
 BF
 BF
+aD
 BF
 BF
+KG
+fW
+fW
+fW
+fW
+fW
+KG
 BF
 BF
-BF
-aU
-aU
-aU
-BF
-BF
-BF
-BF
-BF
+aD
 BF
 BF
 BF
@@ -15149,21 +15259,21 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-BF
-aU
-aU
-aU
-BF
-BF
-BF
-BF
-BF
-BF
+aD
+iT
+aD
+aD
+KG
+fW
+fW
+FS
+fW
+fW
+KG
+aD
+aD
+iT
+aD
 BF
 BF
 BF
@@ -15275,19 +15385,19 @@ BF
 BF
 BF
 BF
+aD
 BF
 BF
+KG
+fW
+fW
+fW
+fW
+fW
+KG
 BF
 BF
-BF
-aU
-aU
-aU
-BF
-BF
-BF
-BF
-BF
+aD
 BF
 BF
 BF
@@ -15403,13 +15513,13 @@ BF
 BF
 BF
 BF
-BF
-BF
-aU
-aU
-aU
-BF
-BF
+KG
+KG
+fW
+fW
+fW
+KG
+KG
 BF
 BF
 BF
@@ -15529,29 +15639,16 @@ BF
 BF
 BF
 BF
-BF
-BF
-aU
-aU
-BF
-BF
-BF
-BF
+KG
+KG
+KG
+KG
+KG
 BF
 BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-aU
-aU
-aU
-aU
-aU
 BF
 BF
 BF
@@ -15562,6 +15659,19 @@ BF
 BF
 aU
 aU
+aU
+aU
+aU
+BF
+BF
+BF
+BF
+BF
+KG
+KG
+KG
+KG
+KG
 aU
 wf
 aU
@@ -15676,18 +15786,18 @@ aU
 aU
 aU
 aU
-aU
+aD
 BF
 BF
 BF
 BF
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+KG
+KG
+fW
+fW
+fW
+KG
+KG
 aU
 aU
 aa
@@ -15800,19 +15910,19 @@ BF
 aU
 aU
 aU
-aU
-aU
+aD
+aD
 BF
 BF
-BF
-BF
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+KG
+KG
+KG
+fW
+fW
+fW
+fW
+fW
+KG
 aU
 aU
 aU
@@ -15924,20 +16034,20 @@ BF
 BF
 BF
 aU
-aU
-aU
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-aU
-aU
-aU
-aU
-aU
+aD
+md
+aD
+aD
+aD
+Te
+aD
+QC
+fW
+fW
+Xk
+fW
+fW
+KG
 aU
 aU
 aU
@@ -16050,19 +16160,19 @@ BF
 BF
 aU
 aU
-aU
+aD
+aD
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-aU
-aU
-aU
-aU
-aU
+KG
+KG
+KG
+fW
+fW
+fW
+fW
+fW
+KG
 aU
 aU
 aa
@@ -16181,13 +16291,13 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-aU
-aU
-aU
-aU
+KG
+KG
+fW
+fW
+fW
+KG
+KG
 aU
 aa
 aa
@@ -16307,11 +16417,11 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
+KG
+KG
+KG
+KG
+KG
 BF
 aU
 aU
@@ -16434,7 +16544,7 @@ BF
 BF
 BF
 BF
-BF
+fW
 BF
 BF
 BF
@@ -16559,7 +16669,7 @@ BF
 BF
 BF
 BF
-BF
+aD
 BF
 BF
 BF
@@ -16683,9 +16793,9 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
+aD
+iT
+aD
 BF
 BF
 BF
@@ -16788,21 +16898,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 BF
 BF
 BF
@@ -16810,6 +16905,21 @@ BF
 BF
 BF
 BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+aD
 BF
 BF
 BF
@@ -16929,17 +17039,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
 BF
 BF
 BF

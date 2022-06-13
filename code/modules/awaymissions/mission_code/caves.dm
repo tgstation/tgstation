@@ -7,6 +7,72 @@
 	name = "strange field"
 	invisibility = INVISIBILITY_MAXIMUM
 
+/obj/structure/clockcult_tower
+	name = "energy relay"
+	desc = "A strange bronze tower capable of transmitting energy through other towers."
+	icon = 'icons/mob/simple_human.dmi'
+	icon_state = "clockminer"
+	density = TRUE
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/beam_range = 10
+	var/id = "clock1" //so we can have multiple towers close without fighting over where we should link up
+	var/obj/structure/clockcult_tower/linking_to //reference of tower we're currently linking up to
+	var/datum/beam/tower_beam = null //keeping track of the beam we make
+	var/are_we_linked = FALSE //whether or not our tower is being connected to by another tower
+
+/obj/structure/clockcult_tower/proc/link_up() //find nearby tower, create beam to tower
+	are_we_linked = TRUE
+	for(var/obj/structure/clockcult_tower/T in urange(10, src))
+		if(!T.are_we_linked && T.id == id)
+			linking_to = T
+			linking_to.link_up()
+			Beam(linking_to, icon_state="medbeam", time = INFINITY, maxdistance = beam_range, beam_type = /obj/effect/ebeam/medical)
+			return
+		if(istype(T, /obj/structure/clockcult_tower/target))
+			var/obj/structure/clockcult_tower/target/B = T
+			linking_to = B
+			B.active_beams++
+			Beam(linking_to, icon_state="medbeam", time = INFINITY, maxdistance = beam_range, beam_type = /obj/effect/ebeam/medical)
+
+/obj/structure/clockcult_tower/proc/break_link() //break the beam fully, normally only for when you break the source tower so it propagates down the line
+	if(tower_beam)
+		QDEL_NULL(tower_beam)
+	linking_to.break_link()
+	linking_to = null
+	for(var/mob/living/nearby_mob in urange(8, src))
+		to_chat(nearby_mob, span_warning("The beam powers down!"))
+
+/obj/structure/clockcult_tower/source
+	name = "energy generator"
+	desc = "A strange bronze tower capable of transmitting energy through other towers."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	max_integrity = 200
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 50, ACID = 50)
+
+/obj/structure/clockcult_tower/source/Initialize(mapload)
+	. = ..()
+	sleep(10 SECONDS) //this matters where its getting loaded atm since the whole map isn't loaded in instantly and can cause towers to get missed
+	link_up()
+
+/obj/structure/clockcult_tower/source/Destroy()
+	if(linking_to)
+		break_link()
+	. = ..()
+
+/obj/structure/clockcult_tower/target
+	name = "energy consumer"
+	desc = "A strange bronze tower capable of sucking up energy beams to power something really cool."
+	var/active_beams = 0 //how many beams attached to us, will do something when it hits 0
+
+/obj/structure/clockcult_tower/target/link_up()
+	return
+
+/obj/structure/clockcult_tower/target/break_link()
+	active_beams--
+	if(active_beams < 1)
+		say("oye i die..")
+
 //Mech used by the clockwork miners
 /obj/vehicle/sealed/mecha/working/ripley/mk2/clockcult
 	icon_state = "ripleyclockcult"
@@ -61,9 +127,10 @@
 	icon_living = "clockminer"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
-	speak_chance = 100
-	emote_taunt = list("Uvf Tenpvbhf Yvtug jvyy qnja hcba guvf qnex jbeyq bapr zber! Bear witness, Heretic!", "I will show you His Gracious One's guiding light, either willing or by force!", 
+	speak_chance = 25
+	speak = list("Uvf Tenpvbhf Yvtug jvyy qnja hcba guvf qnex jbeyq bapr zber! Bear witness, Heretic!", "I will show you His Gracious One's guiding light, either willing or by force!", 
 			"Znl Uvf Tenpvbhf Yvtug fuvar bire zr va guvf onggyr. Prepare to be enlightened, Heretic!", "You dare tread upon His Gracious One's sacred resting grounds??")
+	var/death_phrase_chance = 25
 	var/death_phrases = list("Ratvar... forgive me", "So.. close...", "Where is His Light? Its so.. dark...", "You've forsaken us.. Heretic...")
 	turns_per_move = 5
 	speed = 2
@@ -89,7 +156,7 @@
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
 /mob/living/simple_animal/hostile/clockminer/death()
-	if(prob(25))
+	if(prob(death_phrase_chance))
 		say(pick(death_phrases))
 		..()
 
