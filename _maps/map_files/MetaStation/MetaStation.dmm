@@ -13409,11 +13409,6 @@
 	icon_state = "right";
 	name = "Reception Window"
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Brig Control Desk";
-	req_access = list("armory")
-	},
 /obj/item/paper,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -13421,6 +13416,11 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "briglockdown";
 	name = "Warden Desk Shutters"
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Brig Control Desk";
+	req_access = list("armory")
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
