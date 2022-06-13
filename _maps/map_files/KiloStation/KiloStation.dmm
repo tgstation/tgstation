@@ -79419,12 +79419,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/greater)
-"wpd" = (
-/obj/machinery/door/window/right/directional/east{
-	pixel_y = 32
-	},
-/turf/open/misc/asteroid/airless,
-/area/space/nearstation)
 "wpe" = (
 /obj/machinery/power/emitter/welded{
 	dir = 4
@@ -103058,7 +103052,7 @@ aaa
 aaa
 aaa
 agt
-wpd
+aeU
 aeU
 aeu
 aeu
