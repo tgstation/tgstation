@@ -22,7 +22,6 @@
 	var/apply_type = PATCH
 	var/apply_method = "spray" //the thick gel is sprayed and then dries into patch like film.
 	var/self_delay = 30
-	var/squirt_mode = 0
 	custom_price = PAYCHECK_CREW * 2
 	unique_reskin = list(
 		"Blue" = "medigel_blue",
@@ -33,15 +32,8 @@
 		"Purple" = "medigel_purple"
 	)
 
-/obj/item/reagent_containers/medigel/attack_self(mob/user)
-	squirt_mode = !squirt_mode
-	return ..()
-
-/obj/item/reagent_containers/medigel/attack_self_secondary(mob/user)
-	squirt_mode = !squirt_mode
-	return ..()
-
 /obj/item/reagent_containers/medigel/mode_change_message(mob/user)
+	var/squirt_mode = amount_per_transfer_from_this == initial(amount_per_transfer_from_this)
 	to_chat(user, span_notice("You will now apply the medigel's contents in [squirt_mode ? "extended sprays":"short bursts"]. You'll now use [amount_per_transfer_from_this] units per use."))
 
 /obj/item/reagent_containers/medigel/attack(mob/M, mob/user, def_zone)
