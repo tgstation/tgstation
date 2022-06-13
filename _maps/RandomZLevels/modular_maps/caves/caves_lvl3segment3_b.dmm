@@ -268,6 +268,25 @@
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
 /area/template_noop)
+"qO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/step_trigger/teleport_fancy{
+	locationx = 248;
+	locationy = 10;
+	name = "teleport to ratvar level";
+	uses = 0
+	},
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"rR" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/cogscarab,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 "vh" = (
 /turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,
 /area/template_noop)
@@ -305,22 +324,15 @@
 /obj/structure/flora/rock,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"GY" = (
-/obj/structure/ladder/unbreakable{
-	height = 1;
-	id = "cavesfinale"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
-"HM" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
 "HN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"Le" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "RD" = (
 /obj/structure/stone_tile/block{
@@ -334,10 +346,12 @@
 	},
 /turf/open/indestructible/boss,
 /area/template_noop)
-"VX" = (
+"Xc" = (
 /mob/living/simple_animal/hostile/ocular_warden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/filled/lavaland,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "YE" = (
 /obj/structure/flora/ash/tall_shroom,
@@ -4203,7 +4217,7 @@ gj
 gj
 vh
 wq
-VX
+Xc
 aA
 aA
 ag
@@ -4261,7 +4275,7 @@ aA
 aA
 aA
 HN
-HN
+Le
 HN
 aA
 YE
@@ -4293,9 +4307,9 @@ aA
 aA
 aA
 HN
-HN
-GY
-HM
+Le
+qO
+rR
 HN
 aA
 aA
@@ -4327,7 +4341,7 @@ gj
 aA
 YE
 HN
-HN
+Le
 HN
 YE
 aA
@@ -4335,7 +4349,7 @@ gj
 vh
 vh
 wq
-VX
+Xc
 aA
 aA
 aA

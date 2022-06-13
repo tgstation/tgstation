@@ -21,11 +21,6 @@
 "g" = (
 /turf/closed/mineral/volcanic/lava_land_surface/hardened,
 /area/template_noop)
-"h" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
 "i" = (
 /obj/item/stack/sheet/bone,
 /turf/open/misc/asteroid/basalt/wasteland,
@@ -86,6 +81,12 @@
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 "z" = (
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -107,12 +108,11 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "E" = (
-/obj/structure/ladder/unbreakable{
-	height = 1;
-	id = "cavesfinale"
-	},
+/mob/living/simple_animal/hostile/ocular_warden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/filled/lavaland,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "G" = (
 /obj/structure/flora/ash/cap_shroom,
@@ -147,6 +147,13 @@
 /obj/structure/fluff/clockwork/alloy_shards,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/cogscarab,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 "R" = (
 /mob/living/simple_animal/hostile/ant,
 /obj/structure/flora/rock/pile,
@@ -155,11 +162,6 @@
 "S" = (
 /mob/living/simple_animal/hostile/ant,
 /turf/open/misc/asteroid/basalt/wasteland,
-/area/template_noop)
-"T" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "U" = (
 /obj/structure/flora/rock/pile,
@@ -177,6 +179,18 @@
 /area/template_noop)
 "Y" = (
 /turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/step_trigger/teleport_fancy{
+	locationx = 248;
+	locationy = 10;
+	name = "teleport to ratvar level";
+	uses = 0
+	},
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 
 (1,1,1) = {"
@@ -3837,7 +3851,7 @@ t
 Y
 l
 B
-T
+E
 g
 g
 g
@@ -3865,7 +3879,7 @@ Y
 U
 Y
 g
-T
+E
 M
 Y
 I
@@ -4000,7 +4014,7 @@ A
 B
 B
 k
-B
+y
 B
 O
 A
@@ -4032,9 +4046,9 @@ A
 A
 z
 B
-B
-E
-h
+y
+Z
+Q
 B
 A
 g
@@ -4066,7 +4080,7 @@ A
 z
 z
 B
-B
+y
 B
 A
 A

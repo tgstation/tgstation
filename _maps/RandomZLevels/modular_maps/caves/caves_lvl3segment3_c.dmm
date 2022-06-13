@@ -120,19 +120,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
+"gK" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 "hh" = (
 /obj/structure/girder,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/iron,
 /turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
-"hy" = (
-/obj/structure/ladder/unbreakable{
-	height = 1;
-	id = "cavesfinale"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "ic" = (
 /obj/structure/fluff/clockwork/alloy_shards,
@@ -259,11 +257,6 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
-"xj" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
 "xX" = (
 /obj/structure/lattice/lava{
 	base_icon_state = "lattice";
@@ -347,10 +340,24 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
-"Jy" = (
-/mob/living/simple_animal/hostile/ocular_warden,
+"Jp" = (
+/mob/living/simple_animal/hostile/cogscarab,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/filled/lavaland,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"JG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/step_trigger/teleport_fancy{
+	locationx = 248;
+	locationy = 10;
+	name = "teleport to ratvar level";
+	uses = 0
+	},
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "Kd" = (
 /obj/structure/lattice/lava{
@@ -387,6 +394,13 @@
 "RG" = (
 /obj/structure/flora/ash/leaf_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Sa" = (
+/mob/living/simple_animal/hostile/ocular_warden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "Sd" = (
 /turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,
@@ -4200,13 +4214,13 @@ Sd
 Sd
 Sd
 Sd
-Jy
+Sa
 aa
 aa
 mK
 mK
 aa
-Jy
+Sa
 aa
 aa
 Sd
@@ -4312,7 +4326,7 @@ Sd
 Sd
 Sd
 HJ
-Jy
+Sa
 aA
 aA
 GN
@@ -4334,7 +4348,7 @@ qZ
 aA
 aA
 mK
-mK
+gK
 mK
 mK
 mK
@@ -4366,9 +4380,9 @@ Sd
 aA
 aA
 mK
-mK
-hy
-xj
+gK
+JG
+Jp
 mK
 aA
 aA
@@ -4400,7 +4414,7 @@ Sd
 aA
 aA
 mK
-mK
+gK
 mK
 aA
 aA
@@ -4444,7 +4458,7 @@ Sd
 Sd
 Sd
 HJ
-Jy
+Sa
 aA
 BN
 Sd

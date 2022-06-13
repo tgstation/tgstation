@@ -6,12 +6,6 @@
 /obj/structure/fluff/clockwork/clockgolem_remains,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"aj" = (
-/obj/structure/sign/warning{
-	name = "collect 4 things, open door to arena"
-	},
-/turf/open/floor/bronze/flat,
-/area/template_noop)
 "at" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -69,15 +63,6 @@
 /obj/machinery/door/airlock/bronze/seethru,
 /turf/open/floor/bronze/filled,
 /area/template_noop)
-"bh" = (
-/obj/machinery/door/airlock/bronze/seethru,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/bronze/filled,
-/area/awaymission/caves/misc/ratvar/barracks)
 "bm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -105,14 +90,6 @@
 /obj/structure/fluff/clockwork/alloy_shards,
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
-"bV" = (
-/mob/living/simple_animal/hostile/ocular_warden{
-	dir = 8
-	},
-/turf/open/floor/iron/chapel{
-	dir = 8
-	},
-/area/template_noop)
 "cg" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/bronze,
@@ -128,6 +105,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ratvar/barracks)
+"dc" = (
+/mob/living/simple_animal/hostile/ocular_warden{
+	dir = 8
+	},
+/obj/machinery/light/warm/directional/east,
+/turf/open/floor/bronze/flat,
+/area/template_noop)
 "di" = (
 /obj/machinery/power/rtg/lavaland,
 /obj/structure/cable,
@@ -136,11 +120,17 @@
 "dz" = (
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ratvar/barracks)
-"dU" = (
-/obj/machinery/door/puzzle/keycard{
-	puzzle_id = "clockcult"
+"dR" = (
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/turf/open/floor/bronze/flat,
+/area/awaymission/caves/misc/ratvar/barracks)
+"dS" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/obj/structure/clockcult_tower,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "dY" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -148,14 +138,21 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
-"eb" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
 "es" = (
 /obj/structure/fluff/clockwork/alloy_shards,
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"ev" = (
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/clockminer,
+/turf/open/floor/bronze/filled,
+/area/template_noop)
+"ez" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium,
+/mob/living/simple_animal/hostile/cogscarab,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "eC" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -164,6 +161,10 @@
 /obj/machinery/atmospherics/components/tank/oxygen,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
+"eF" = (
+/mob/living/simple_animal/hostile/ocular_warden,
+/turf/open/floor/bronze/flat,
+/area/template_noop)
 "eR" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -182,16 +183,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
-"fd" = (
-/obj/structure/clockcult_tower/source,
-/turf/open/floor/bronze/filled,
-/area/template_noop)
-"fm" = (
-/obj/structure/clockcult_tower{
-	id = "clock2"
-	},
-/turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
 "ft" = (
 /obj/structure/table/bronze,
 /turf/open/floor/iron/chapel{
@@ -217,11 +208,6 @@
 /obj/machinery/door/airlock/bronze/seethru,
 /turf/open/floor/bronze/filled,
 /area/template_noop)
-"gk" = (
-/obj/machinery/door/airlock/bronze/seethru,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze,
-/area/template_noop)
 "gF" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -234,19 +220,11 @@
 /obj/item/stack/sheet/bronze,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"gJ" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 8
+"gT" = (
+/obj/structure/dead_ratvar,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/obj/machinery/light/warm/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/awaymission/caves/misc/ratvar/barracks)
-"gU" = (
-/obj/structure/clockcult_tower/source{
-	id = "clock2"
-	},
-/turf/open/floor/bronze/filled,
 /area/template_noop)
 "gX" = (
 /obj/effect/decal/cleanable/dirt,
@@ -282,14 +260,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ratvar/barracks)
-"hS" = (
-/obj/machinery/door/airlock/bronze/seethru,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/filled,
-/area/awaymission/caves/misc/ratvar/barracks)
 "hX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -321,28 +291,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
-"jF" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/turf/open/floor/bronze/filled,
-/area/template_noop)
 "jJ" = (
 /obj/structure/sign/warning/engine_safety/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ratvar/barracks)
-"jT" = (
-/obj/structure/fluff/clockwork/alloy_shards/small,
-/obj/structure/clockcult_tower,
-/turf/open/floor/bronze/filled/lavaland,
+"ki" = (
+/obj/machinery/door/airlock/bronze/seethru,
+/turf/open/floor/bronze/filled,
 /area/template_noop)
-"jZ" = (
-/obj/machinery/door/airlock/bronze,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/ratvar/barracks)
-"kk" = (
-/obj/structure/dead_ratvar,
-/obj/structure/lattice,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+"kO" = (
+/obj/structure/clockcult_tower{
+	id = "clock4"
+	},
+/turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
 "lf" = (
 /obj/effect/decal/cleanable/dirt,
@@ -378,13 +339,6 @@
 /area/awaymission/caves/misc/ratvar/barracks)
 "mv" = (
 /obj/item/stack/sheet/bronze,
-/turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
-"mS" = (
-/obj/item/stack/sheet/bronze,
-/obj/structure/clockcult_tower{
-	id = "clock3"
-	},
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "mW" = (
@@ -423,6 +377,13 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
+"nK" = (
+/obj/structure/lattice,
+/obj/structure/girder/bronze,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 "nL" = (
 /obj/structure/table/bronze,
 /obj/item/keycard{
@@ -460,6 +421,11 @@
 /obj/structure/chair/pew/right,
 /turf/open/floor/bronze/filled,
 /area/template_noop)
+"pJ" = (
+/obj/structure/fans/tiny/invisible,
+/obj/structure/clockcult_tower/target,
+/turf/open/floor/bronze/flat,
+/area/awaymission/caves/misc/ratvar)
 "pL" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -471,6 +437,12 @@
 /obj/structure/lattice,
 /mob/living/simple_animal/hostile/cogscarab,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"pR" = (
+/mob/living/simple_animal/hostile/ocular_warden,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "qy" = (
 /turf/closed/wall/mineral/bronze,
@@ -487,6 +459,25 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/awaymission/caves/misc/ratvar/barracks)
+"qM" = (
+/obj/structure/clockcult_tower{
+	id = "clock4"
+	},
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"qN" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/bronze/seethru{
+	name = "Cydydw Unjuhdqb Qyhbesa"
+	},
+/turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
 "qX" = (
 /mob/living/simple_animal/hostile/cogscarab,
@@ -517,6 +508,22 @@
 	name = "Mining External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled,
+/area/awaymission/caves/misc/ratvar/barracks)
+"sp" = (
+/obj/structure/sign/warning{
+	name = "collect 4 things, open door to arena"
+	},
+/turf/open/floor/bronze/flat,
+/area/awaymission/caves/misc/ratvar)
+"sz" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/bronze/seethru{
+	name = "Cydydw Unjuhdqb Qyhbesa"
+	},
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
 "sE" = (
@@ -560,11 +567,6 @@
 	dir = 6
 	},
 /area/template_noop)
-"uB" = (
-/obj/structure/lattice,
-/obj/structure/girder/bronze,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
 "uE" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -578,6 +580,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
+"vK" = (
+/obj/machinery/door/airlock/bronze/seethru{
+	name = "Cydydw Unjuhdqb Qyhbesa"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/bronze/filled,
+/area/awaymission/caves/misc/ratvar/barracks)
 "vR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -585,11 +599,6 @@
 	},
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
-"vS" = (
-/obj/structure/fluff/clockwork/alloy_shards/medium,
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
 "wf" = (
 /obj/item/food/grown/banana{
 	desc = "shh... its a secret. 6 of 6.";
@@ -610,11 +619,19 @@
 /obj/item/bedsheet/orange,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
-"wW" = (
-/obj/structure/clockcult_tower/source{
-	id = "clock4"
+"wL" = (
+/obj/machinery/door/puzzle/keycard{
+	puzzle_id = "clockcult"
 	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/floor/bronze/flat,
+/area/awaymission/caves/misc/ratvar)
+"wU" = (
+/obj/structure/clockcult_tower{
+	id = "clock3"
+	},
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "xh" = (
 /obj/structure/clockcult_tower/source{
@@ -628,12 +645,6 @@
 /turf/open/floor/catwalk_floor/iron_dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/template_noop)
-"xs" = (
-/obj/structure/clockcult_tower{
-	id = "clock4"
-	},
-/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "xB" = (
 /obj/effect/turf_decal/stripes/box,
@@ -652,9 +663,24 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
+"xG" = (
+/obj/machinery/door/airlock/bronze/seethru{
+	name = "Xyi Ucydudsu'i Jucfbu"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze,
+/area/template_noop)
 "xI" = (
 /obj/structure/fluff/clockwork/alloy_shards/large,
 /turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"xU" = (
+/obj/structure/clockcult_tower{
+	id = "clock2"
+	},
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "yu" = (
 /mob/living/simple_animal/hostile/cogscarab,
@@ -680,26 +706,11 @@
 /obj/machinery/suit_storage_unit/mining,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ratvar/barracks)
-"yV" = (
-/obj/structure/lattice,
-/obj/structure/clockcult_tower,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+"zt" = (
+/obj/structure/table/bronze,
+/obj/item/toy/plush/ratplush,
+/turf/open/floor/bronze/filled,
 /area/template_noop)
-"ze" = (
-/obj/machinery/door/airlock/bronze/seethru,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/bronze/filled,
-/area/awaymission/caves/misc/ratvar/barracks)
-"zy" = (
-/obj/machinery/door/airlock/bronze,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/bronze/filled,
-/area/awaymission/caves/misc/ratvar/barracks)
 "zL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/bronze/filled,
@@ -716,10 +727,6 @@
 /obj/machinery/power/rtg/lavaland,
 /obj/structure/cable,
 /turf/open/floor/bronze/filled,
-/area/template_noop)
-"Au" = (
-/obj/structure/table/bronze,
-/turf/open/floor/bronze/flat,
 /area/template_noop)
 "AQ" = (
 /obj/structure/chair/pew/left{
@@ -748,11 +755,12 @@
 /turf/open/floor/bronze/filled,
 /area/template_noop)
 "Bh" = (
-/obj/structure/clockcult_tower{
-	id = "clock3"
+/obj/structure/cable,
+/obj/machinery/door/airlock/bronze{
+	name = "Byvu Ikffehj Qssuii"
 	},
-/turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ratvar/barracks)
 "Bk" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -796,10 +804,10 @@
 /obj/structure/fluff/clockwork/fallen_armor,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"CV" = (
-/obj/structure/fluff/clockwork/clockgolem_remains,
-/obj/structure/clockcult_tower,
-/turf/open/floor/bronze/filled/lavaland,
+"CK" = (
+/mob/living/simple_animal/hostile/ocular_warden,
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/bronze/flat,
 /area/template_noop)
 "Dl" = (
 /turf/open/floor/iron/chapel{
@@ -817,16 +825,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ratvar/barracks)
-"DF" = (
-/turf/open/floor/bronze/flat,
-/area/template_noop)
-"DQ" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/template_noop)
 "DY" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
@@ -835,6 +833,14 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/awaymission/caves/misc/ratvar/barracks)
+"Ef" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/bronze{
+	name = "Rqhhqsai"
+	},
+/turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
 "Em" = (
 /obj/machinery/airalarm/directional/west,
@@ -861,15 +867,13 @@
 /obj/structure/barricade/sandbags,
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
-"Ft" = (
-/obj/machinery/door/airlock/bronze,
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/bronze/flat,
-/area/template_noop)
-"FB" = (
-/obj/machinery/door/airlock/bronze,
-/obj/machinery/atmospherics/pipe/layer_manifold,
-/turf/open/floor/bronze/filled,
+"Fs" = (
+/obj/structure/clockcult_tower/source{
+	pixel_y = -16
+	},
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/awaymission/caves/misc/ratvar/barracks)
 "FS" = (
 /obj/structure/table/bronze,
@@ -924,6 +928,12 @@
 /obj/structure/fluff/clockwork/alloy_shards/small,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"HA" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 "HM" = (
 /obj/structure/chair/pew,
 /mob/living/simple_animal/hostile/clockminer,
@@ -936,6 +946,14 @@
 /obj/structure/closet,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
+"IN" = (
+/obj/structure/clockcult_tower/source{
+	id = "clock2"
+	},
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 "IY" = (
 /turf/open/floor/plating,
 /area/template_noop)
@@ -973,19 +991,15 @@
 /obj/structure/girder/bronze,
 /turf/open/floor/bronze/filled,
 /area/template_noop)
-"Jz" = (
-/obj/structure/clockcult_tower/target,
-/turf/open/floor/bronze/flat,
+"JJ" = (
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/template_noop)
 "JL" = (
 /obj/effect/spawner/structure/window/bronze,
 /turf/open/floor/bronze,
 /area/template_noop)
-"JQ" = (
-/obj/machinery/light/warm/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/filled,
-/area/awaymission/caves/misc/ratvar/barracks)
 "KB" = (
 /mob/living/simple_animal/hostile/clockminer,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -993,6 +1007,13 @@
 "KG" = (
 /turf/closed/wall/mineral/bronze,
 /area/template_noop)
+"La" = (
+/obj/machinery/door/airlock/bronze{
+	name = "Byvu Ikffehj Qssuii"
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/turf/open/floor/bronze/filled,
+/area/awaymission/caves/misc/ratvar/barracks)
 "Lt" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -1019,6 +1040,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
+"Mj" = (
+/obj/structure/clockcult_tower,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 "Mt" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/bronze,
@@ -1031,6 +1058,12 @@
 /obj/structure/table/bronze,
 /turf/open/floor/iron/chapel,
 /area/template_noop)
+"ME" = (
+/obj/machinery/light/warm/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/xeno_mining/directional/west,
+/turf/open/floor/bronze/filled,
+/area/awaymission/caves/misc/ratvar/barracks)
 "MI" = (
 /obj/modular_map_connector,
 /turf/closed/indestructible/rock,
@@ -1046,10 +1079,17 @@
 /obj/structure/closet,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
+"Ow" = (
+/turf/open/floor/bronze/flat,
+/area/awaymission/caves/misc/ratvar)
 "OD" = (
 /obj/structure/table/bronze,
 /obj/item/toy/clockwork_watch,
 /turf/open/floor/bronze/filled,
+/area/template_noop)
+"OK" = (
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/clockminer,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "ON" = (
 /obj/machinery/power/terminal{
@@ -1081,6 +1121,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
+"PM" = (
+/obj/machinery/door/airlock/bronze{
+	name = "Fybbqh Qssuii"
+	},
+/turf/open/floor/bronze/filled,
+/area/awaymission/caves/misc/ratvar/barracks)
+"PN" = (
+/obj/machinery/door/airlock/bronze{
+	name = "Rqhhqsai"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/bronze/filled,
+/area/awaymission/caves/misc/ratvar/barracks)
 "Qc" = (
 /obj/structure/chair/pew/right{
 	dir = 8
@@ -1095,6 +1149,17 @@
 /obj/machinery/door/airlock/bronze,
 /turf/open/floor/bronze/filled,
 /area/template_noop)
+"QD" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/bronze/seethru{
+	name = "Cydydw Unjuhdqb Qyhbesa"
+	},
+/turf/open/floor/bronze/filled,
+/area/awaymission/caves/misc/ratvar/barracks)
 "QH" = (
 /obj/structure/chair/pew/right{
 	dir = 8
@@ -1103,11 +1168,21 @@
 	dir = 9
 	},
 /area/template_noop)
+"QO" = (
+/obj/structure/table/bronze,
+/turf/open/floor/bronze/flat,
+/area/awaymission/caves/misc/ratvar)
 "QV" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
+"Rw" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium,
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 "RF" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/light/small/directional/south,
@@ -1124,10 +1199,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
-"Se" = (
-/obj/structure/clockcult_tower,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
 "SD" = (
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/bronze/filled,
@@ -1142,6 +1213,15 @@
 "Tp" = (
 /turf/open/floor/iron/chapel,
 /area/template_noop)
+"TI" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/light/warm/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/xeno_mining/directional/west,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/ratvar/barracks)
 "TJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
@@ -1190,17 +1270,25 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
+"UW" = (
+/turf/closed/indestructible/riveted{
+	base_icon_state = "clockwork_wall";
+	desc = "A huge chunk of bronze, decorated like gears and cogs. It seems particularly impervious to normal types of damage.";
+	icon = 'icons/turf/walls/clockwork_wall.dmi';
+	icon_state = "clockwork_wall-0";
+	name = "clockwork wall"
+	},
+/area/awaymission/caves/misc/ratvar)
 "Vh" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
-"Wc" = (
-/turf/open/floor/iron,
-/area/template_noop)
-"Wh" = (
-/obj/structure/lattice,
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/clockminer,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+"Wi" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "His Eminence's Temple"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/template_noop)
 "Wq" = (
 /turf/open/floor/bronze/filled,
@@ -1302,16 +1390,6 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
-"YK" = (
-/obj/machinery/door/airlock/bronze/seethru,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/bronze/filled,
-/area/awaymission/caves/misc/ratvar/barracks)
 "YS" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/under/misc/patriotsuit,
@@ -1328,6 +1406,14 @@
 	},
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
+"Zj" = (
+/obj/structure/clockcult_tower/source{
+	id = "clock4"
+	},
+/turf/open/floor/bronze/flat{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 "Zl" = (
 /mob/living/simple_animal/hostile/ocular_warden,
 /turf/open/floor/bronze/filled,
@@ -2928,7 +3014,7 @@ BF
 BF
 KG
 KG
-jF
+CK
 ht
 nX
 fW
@@ -3523,7 +3609,7 @@ aD
 aD
 aD
 aD
-aD
+JJ
 aD
 aD
 aD
@@ -3647,9 +3733,9 @@ aD
 BF
 BF
 BF
-BF
-xs
-BF
+JJ
+qM
+JJ
 aD
 aD
 aD
@@ -3684,7 +3770,7 @@ AQ
 tL
 TT
 Qc
-bV
+dc
 KG
 SN
 As
@@ -3766,14 +3852,14 @@ aD
 aD
 aD
 aD
+JJ
 BF
 BF
 BF
 BF
 BF
 BF
-BF
-BF
+JJ
 BF
 BF
 BF
@@ -3788,7 +3874,7 @@ aD
 aD
 BF
 BF
-eb
+pR
 KG
 aD
 aU
@@ -3876,7 +3962,7 @@ aU
 aU
 aD
 KG
-eb
+pR
 BF
 BF
 BF
@@ -3890,6 +3976,9 @@ aD
 aD
 BF
 KG
+JJ
+qM
+JJ
 BF
 BF
 BF
@@ -3903,10 +3992,7 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-aD
+JJ
 aD
 aD
 aD
@@ -4009,19 +4095,14 @@ aD
 aD
 aD
 aD
-aD
-BF
-BF
-BF
-BF
-xs
+JJ
 BF
 BF
 BF
 BF
 BF
-BF
-BF
+kO
+JJ
 BF
 BF
 BF
@@ -4031,8 +4112,13 @@ BF
 BF
 BF
 BF
-xs
-aD
+BF
+BF
+BF
+BF
+JJ
+qM
+JJ
 aD
 aD
 aD
@@ -4049,7 +4135,7 @@ Xy
 aU
 Wx
 Dn
-gk
+xG
 gX
 Bm
 aO
@@ -4131,11 +4217,11 @@ Fk
 aD
 aD
 aD
-xs
+aD
 BF
-BF
-BF
-BF
+JJ
+qM
+JJ
 BF
 BF
 BF
@@ -4175,7 +4261,7 @@ aU
 aU
 Vh
 Eo
-DQ
+Wi
 SN
 IY
 KG
@@ -4259,7 +4345,7 @@ aD
 BF
 BF
 BF
-BF
+JJ
 BF
 BF
 BF
@@ -4288,7 +4374,7 @@ aD
 BF
 BF
 BF
-eb
+pR
 KG
 aD
 aU
@@ -4379,7 +4465,7 @@ aU
 aD
 aU
 KG
-eb
+pR
 BF
 BF
 BF
@@ -4413,9 +4499,9 @@ KG
 BF
 BF
 BF
-BF
-xs
-aU
+JJ
+qM
+JJ
 aU
 aU
 Xy
@@ -4503,7 +4589,7 @@ aU
 aU
 aU
 aU
-BF
+JJ
 BF
 BF
 BF
@@ -4539,7 +4625,7 @@ BF
 BF
 BF
 BF
-BF
+JJ
 aU
 aU
 Xy
@@ -4620,7 +4706,6 @@ aU
 aU
 aU
 aU
-Xy
 aU
 aU
 aU
@@ -4628,8 +4713,9 @@ aU
 aU
 aU
 aU
-BF
-BF
+JJ
+qM
+JJ
 BF
 BF
 BF
@@ -4741,7 +4827,6 @@ BF
 BF
 aU
 aU
-Xy
 aU
 aU
 aU
@@ -4754,6 +4839,7 @@ aU
 aU
 aU
 aU
+JJ
 BF
 BF
 BF
@@ -4866,14 +4952,14 @@ BF
 BF
 aU
 aU
-Xy
-Xy
 aU
-aU
-aU
-aU
-aU
-aU
+KG
+KG
+KG
+KG
+KG
+KG
+KG
 aU
 aU
 aU
@@ -4917,9 +5003,9 @@ BF
 BF
 BF
 BF
-BF
-xs
-aD
+JJ
+qM
+JJ
 aD
 aD
 aD
@@ -4991,17 +5077,17 @@ BF
 BF
 aU
 aU
-Xy
-Xy
 aU
+KG
+fW
+fW
+fW
+fW
+fW
+KG
+KG
+KG
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-wW
 aU
 aU
 aU
@@ -5043,13 +5129,13 @@ BF
 BF
 BF
 BF
+JJ
 BF
-BF
 aD
 aD
 aD
 aD
-aU
+JJ
 aU
 aU
 aU
@@ -5063,7 +5149,7 @@ aU
 aD
 Fk
 Fk
-eb
+pR
 aU
 aU
 aU
@@ -5114,21 +5200,21 @@ BF
 BF
 BF
 BF
+KG
+KG
+KG
+KG
+KG
+eF
+fW
+fW
+fW
+QC
+fW
+QC
 aU
-Xy
-Xy
-ib
-Xy
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-Xy
 aU
 BF
 BF
@@ -5173,9 +5259,9 @@ BF
 aD
 aD
 aD
-aD
-Bh
-aU
+JJ
+wU
+JJ
 aU
 Xy
 aU
@@ -5238,24 +5324,24 @@ BF
 BF
 BF
 BF
-BF
+KG
+KG
+fW
+fW
+fW
+KG
+KG
+fW
+fW
+fW
+KG
+KG
+KG
 aU
 aU
-Xy
-Xy
-Xy
 aU
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-Xy
-ib
-Xy
-Xy
 aU
 aU
 aU
@@ -5299,7 +5385,7 @@ aD
 aD
 aD
 KG
-BF
+JJ
 BF
 BF
 BF
@@ -5363,23 +5449,23 @@ BF
 BF
 BF
 BF
-BF
+KG
+fW
+fW
+fW
+fW
+fW
+ki
+fW
+oY
+fW
+fW
+KG
 aU
 aU
 aU
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-Xy
-Xy
 aU
 aU
 aU
@@ -5485,23 +5571,23 @@ BF
 BF
 BF
 aU
-Xy
 aU
 aU
 aU
+KG
+fW
+fW
+JJ
+fW
+fW
+JL
+fW
+zt
+oY
+fW
+JL
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+JJ
 aU
 aU
 aU
@@ -5559,7 +5645,7 @@ BF
 BF
 BF
 BF
-eb
+pR
 Xy
 aU
 aU
@@ -5613,21 +5699,21 @@ aU
 aU
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-Xy
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+KG
+fW
+JJ
+Zj
+JJ
+fW
+JL
+fW
+ev
+fW
+fW
+JL
+JJ
+qM
+JJ
 aU
 aU
 BF
@@ -5738,20 +5824,20 @@ aU
 aU
 aU
 aU
+KG
+fW
+fW
+JJ
+fW
+fW
+JL
+fW
+zt
+oY
+fW
+JL
 aU
-aU
-aU
-aU
-Xy
-Xy
-Xy
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+JJ
 aU
 aU
 aU
@@ -5862,19 +5948,19 @@ BF
 BF
 aU
 aU
-Xy
-Xy
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+KG
+fW
+fW
+fW
+fW
+fW
+ki
+fW
+oY
+fW
+fW
+KG
 aU
 aU
 aU
@@ -5988,19 +6074,19 @@ BF
 BF
 BF
 BF
-BF
-BF
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+KG
+KG
+fW
+fW
+fW
+KG
+KG
+fW
+fW
+fW
+KG
+KG
+KG
 aU
 aU
 BF
@@ -6041,12 +6127,12 @@ BF
 BF
 BF
 BF
-BF
-BF
+JJ
 aD
 aD
 aD
-BF
+aD
+JJ
 BF
 BF
 BF
@@ -6113,21 +6199,21 @@ BF
 BF
 BF
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
-aU
+BF
+KG
+KG
+KG
+KG
+KG
+eF
+fW
+fW
+fW
+QC
+fW
+QC
 aU
 Xy
-aU
-aU
-Xy
 BF
 BF
 BF
@@ -6165,14 +6251,14 @@ BF
 BF
 BF
 BF
-BF
-BF
-xs
+JJ
+qM
+JJ
 aD
 aD
-aD
-Bh
-BF
+JJ
+wU
+JJ
 BF
 BF
 BF
@@ -6242,15 +6328,15 @@ aU
 aU
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-aU
-Xy
-Xy
-aU
+KG
+fW
+fW
+fW
+fW
+fW
+KG
+KG
+KG
 aU
 aU
 BF
@@ -6291,12 +6377,12 @@ BF
 BF
 BF
 BF
-BF
+JJ
 aD
 aD
 aD
 BF
-BF
+JJ
 BF
 BF
 BF
@@ -6367,13 +6453,13 @@ aU
 aU
 aU
 aU
-aU
-aU
-aU
-aU
-aU
-Xy
-Xy
+KG
+KG
+KG
+KG
+KG
+KG
+KG
 aU
 aU
 aU
@@ -6496,12 +6582,12 @@ aU
 aU
 aU
 aU
-Xy
 aU
 aU
 aU
 aU
-Xy
+aU
+aU
 BF
 BF
 BF
@@ -6620,9 +6706,9 @@ aU
 aU
 aU
 aU
-Xy
-Xy
-Xy
+aU
+aU
+aU
 aU
 aU
 aU
@@ -6744,12 +6830,12 @@ aU
 aU
 aU
 aU
-Xy
-Xy
-ib
-Xy
-Xy
-Xy
+aU
+aU
+aU
+aU
+aU
+aU
 BF
 BF
 BF
@@ -6870,9 +6956,9 @@ aU
 aU
 aU
 aU
-Xy
-Xy
-Xy
+aU
+aU
+aU
 BF
 BF
 BF
@@ -6996,7 +7082,31 @@ aU
 aU
 aU
 aU
-Xy
+aU
+aU
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+aU
+BF
+BF
+BF
+aU
+aU
+BF
+BF
+BF
+BF
 aU
 BF
 BF
@@ -7011,39 +7121,15 @@ BF
 BF
 BF
 BF
-aU
 BF
 BF
-BF
-aU
-aU
-BF
-BF
-BF
-BF
-aU
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-eb
+JJ
+pR
 aD
 aD
 aD
 aD
-BF
+JJ
 BF
 BF
 BF
@@ -7161,15 +7247,15 @@ BF
 BF
 BF
 BF
-BF
-xs
+JJ
+qM
 KG
 Fk
 Fk
 aD
-aD
-Bh
-BF
+JJ
+wU
+JJ
 BF
 BF
 BF
@@ -7282,18 +7368,18 @@ BF
 BF
 BF
 BF
-aU
+Xy
 aU
 aU
 BF
 BF
-aU
+JJ
 aU
 aD
 Fk
 Fk
 aD
-BF
+JJ
 BF
 BF
 BF
@@ -7404,7 +7490,7 @@ BF
 BF
 BF
 BF
-BF
+JJ
 aU
 aU
 aU
@@ -7418,7 +7504,7 @@ aD
 aD
 Fk
 Fk
-eb
+pR
 BF
 BF
 BF
@@ -7528,9 +7614,9 @@ BF
 BF
 BF
 BF
-BF
-xs
-Xy
+JJ
+qM
+JJ
 Xy
 aU
 BF
@@ -7654,7 +7740,7 @@ BF
 BF
 BF
 BF
-aU
+JJ
 aU
 mW
 aU
@@ -8164,7 +8250,7 @@ hZ
 Xy
 aD
 BF
-BF
+JJ
 BF
 BF
 BF
@@ -8288,9 +8374,9 @@ WT
 Nt
 aK
 aD
-BF
-Bh
-uB
+JJ
+wU
+nK
 KG
 KG
 aU
@@ -8414,7 +8500,7 @@ aU
 aD
 Zz
 aD
-aD
+JJ
 aD
 aU
 Cf
@@ -8523,8 +8609,8 @@ BF
 BF
 BF
 aU
-aU
-aU
+JJ
+Xy
 KG
 aD
 nl
@@ -8535,7 +8621,7 @@ BF
 BF
 aD
 aK
-aK
+JJ
 aD
 aD
 aD
@@ -8647,9 +8733,9 @@ BF
 BF
 BF
 BF
-aU
-xs
-Xy
+JJ
+qM
+JJ
 KG
 aU
 Nt
@@ -8659,9 +8745,9 @@ aD
 aD
 aD
 mv
-OT
-Bh
-aD
+HA
+wU
+JJ
 LM
 rg
 aD
@@ -8773,7 +8859,7 @@ BF
 BF
 BF
 BF
-aU
+JJ
 aU
 KG
 qX
@@ -8785,7 +8871,7 @@ BF
 BF
 aD
 aD
-kk
+gT
 aK
 WP
 aD
@@ -8889,9 +8975,9 @@ BF
 BF
 BF
 BF
-aI
-aI
-aI
+UW
+UW
+UW
 BF
 BF
 BF
@@ -9011,12 +9097,12 @@ BF
 BF
 BF
 BF
-aI
-aI
-aI
-aI
-Au
-aI
+UW
+UW
+UW
+UW
+QO
+UW
 BF
 BF
 BF
@@ -9128,25 +9214,25 @@ BF
 BF
 BF
 BF
-aI
-aI
-aI
-aI
+UW
+UW
+UW
+UW
+UW
+BF
+BF
+BF
+UW
+QO
+UW
+UW
+wL
+UW
 aI
 BF
 BF
 BF
-aI
-Au
-aI
-aI
-dU
-aI
-aI
-BF
-BF
-BF
-BF
+JJ
 aD
 BF
 aU
@@ -9155,7 +9241,7 @@ aU
 aU
 BF
 BF
-BF
+JJ
 BF
 aD
 aD
@@ -9197,7 +9283,7 @@ aU
 aU
 aU
 BF
-BF
+aU
 aU
 aU
 Xy
@@ -9253,35 +9339,35 @@ BF
 BF
 BF
 BF
-aI
-DF
-DF
-DF
-aI
-aI
-aI
-aI
-aI
-dU
-aI
-DF
-DF
-aI
+UW
+Ow
+Ow
+Ow
+UW
+UW
+UW
+UW
+UW
+wL
+UW
+Ow
+Ow
+UW
 Zz
 aD
 aD
-BF
-BF
-aD
+JJ
+wU
+JJ
 aU
 aU
 aU
 BF
 BF
 BF
-BF
-Bh
-BF
+JJ
+wU
+JJ
 aD
 aD
 aD
@@ -9315,13 +9401,13 @@ aU
 aU
 aU
 aU
-si
-BF
-aU
-aU
-aU
 aU
 BF
+aU
+aU
+aU
+aU
+aU
 aU
 aU
 aU
@@ -9378,26 +9464,26 @@ BF
 BF
 BF
 BF
-aI
-DF
-DF
-DF
-DF
-DF
-DF
-aI
-DF
-DF
-DF
-DF
-DF
-aI
+UW
+Ow
+Ow
+Ow
+Ow
+Ow
+Ow
+UW
+Ow
+Ow
+Ow
+Ow
+Ow
+UW
 aD
 aD
 ta
 BF
+JJ
 aD
-mS
 aD
 aU
 aU
@@ -9405,7 +9491,7 @@ aU
 aD
 aD
 aD
-aD
+JJ
 aD
 aD
 aD
@@ -9503,31 +9589,31 @@ BF
 BF
 BF
 BF
-aI
-DF
-DF
-DF
-DF
-DF
-DF
-DF
-DF
-aj
-DF
-Jz
-DF
-Ft
+UW
+Ow
+Ow
+Ow
+Ow
+Ow
+Ow
+Ow
+Ow
+sp
+Ow
+Ow
+Ow
+pJ
 aD
 aD
 aD
 aD
 aD
 aD
-aD
+OK
 aD
 aD
 Hp
-Wh
+aK
 aD
 Zz
 aD
@@ -9569,12 +9655,12 @@ BF
 BF
 aU
 aU
-SN
-KG
-SN
-KG
-KG
-SN
+BP
+qy
+BP
+qy
+qy
+BP
 aU
 aU
 aU
@@ -9628,26 +9714,26 @@ BF
 BF
 BF
 BF
-aI
-DF
-DF
-DF
-DF
-DF
-DF
-aI
-DF
-DF
-DF
-DF
-DF
-aI
+UW
+Ow
+Ow
+Ow
+Ow
+Ow
+Ow
+UW
+Ow
+Ow
+Ow
+Ow
+Ow
+UW
 aD
 ta
 aD
 BF
-aD
-jT
+JJ
+ta
 aD
 aU
 aU
@@ -9655,7 +9741,7 @@ aU
 aU
 aK
 aK
-aD
+JJ
 aD
 aD
 aD
@@ -9669,21 +9755,7 @@ BF
 BF
 aD
 aU
-vS
-aU
-BF
-BF
-BF
-BF
-BF
-si
-BF
-BF
-BF
-BF
-BF
-BF
-si
+ez
 aU
 BF
 BF
@@ -9692,14 +9764,28 @@ BF
 BF
 BF
 BF
+JJ
+BF
+BF
+BF
+BF
 BF
 aU
-SN
-fW
-Wc
-fW
-fW
-SN
+BF
+BF
+JJ
+BF
+BF
+BF
+BF
+BF
+aU
+BP
+Wq
+dR
+dR
+Wq
+BP
 aU
 aU
 aU
@@ -9753,35 +9839,35 @@ BF
 BF
 BF
 BF
-aI
-DF
-DF
-DF
-aI
-aI
-aI
-aI
-aI
-dU
-aI
-DF
-DF
-aI
+UW
+Ow
+Ow
+Ow
+UW
+UW
+UW
+UW
+UW
+wL
+UW
+Ow
+Ow
+UW
 aD
 aD
 Zz
-BF
-BF
-aD
+JJ
+Mj
+JJ
 mW
 BI
 aU
 aU
 aU
 BF
-BF
-si
-aD
+JJ
+Mj
+JJ
 aD
 aD
 aU
@@ -9793,38 +9879,38 @@ aD
 aD
 aD
 aU
-aU
-aU
-Se
+JJ
+Mj
+JJ
 BF
 BF
 BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-aU
-BF
-BF
-BF
-BF
+JJ
+Mj
+JJ
 BF
 BF
 BF
 BF
 aU
-KG
-Wc
-fd
-fW
-fW
-KG
+BF
+JJ
+Mj
+JJ
+BF
+BF
+BF
+BF
+aU
+qy
+dR
+Fs
+dR
+dR
+qy
 xr
 xr
 xr
@@ -9878,25 +9964,25 @@ BF
 BF
 BF
 BF
-aI
-aI
-aI
-aI
+UW
+UW
+UW
+UW
+UW
+BF
+BF
+BF
+UW
+QO
+UW
+UW
+wL
+UW
 aI
 BF
 BF
 BF
-aI
-Au
-aI
-aI
-dU
-aI
-aI
-BF
-BF
-BF
-BF
+JJ
 aD
 aU
 aU
@@ -9905,7 +9991,7 @@ aD
 aU
 aU
 BF
-BF
+JJ
 BF
 aK
 aD
@@ -9919,8 +10005,16 @@ BF
 aU
 aU
 aU
+JJ
 aU
-aU
+BF
+BF
+BF
+BF
+BF
+BF
+BF
+JJ
 BF
 BF
 BF
@@ -9929,15 +10023,7 @@ BF
 BF
 BF
 BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
-BF
+JJ
 BF
 BF
 BF
@@ -9945,12 +10031,12 @@ BF
 BP
 hd
 qy
-fW
-fW
-fW
-fW
+Wq
+dR
+dR
+Wq
 qy
-bh
+qN
 qy
 xr
 aU
@@ -10011,12 +10097,12 @@ BF
 BF
 BF
 BF
-aI
-aI
-aI
-aI
-Au
-aI
+UW
+UW
+UW
+UW
+QO
+UW
 BF
 BF
 BF
@@ -10071,8 +10157,8 @@ BP
 lf
 BP
 BP
-Wq
-Wq
+PM
+PM
 qy
 qy
 TJ
@@ -10139,9 +10225,9 @@ BF
 BF
 BF
 BF
-aI
-aI
-aI
+UW
+UW
+UW
 BF
 BF
 BF
@@ -10150,7 +10236,7 @@ BF
 aU
 Xy
 YX
-aU
+Xy
 cg
 aD
 aK
@@ -10166,7 +10252,7 @@ xI
 aD
 aD
 aD
-aD
+aU
 aU
 Xy
 aU
@@ -10200,7 +10286,7 @@ lq
 Wq
 Zl
 qy
-ze
+QD
 qy
 xr
 Dn
@@ -10273,7 +10359,7 @@ BF
 BF
 BF
 BF
-Xy
+JJ
 aU
 aU
 aU
@@ -10290,8 +10376,8 @@ aK
 aD
 cg
 aD
-yV
-aU
+si
+aD
 aU
 aU
 aU
@@ -10319,12 +10405,12 @@ BP
 BP
 qy
 Wv
-gJ
+TI
 lq
 Nd
 Wq
 Wq
-JQ
+ME
 jh
 BP
 BP
@@ -10397,9 +10483,9 @@ BF
 BF
 BF
 BF
-BF
-fm
-aU
+JJ
+xU
+JJ
 aU
 aU
 aU
@@ -10410,12 +10496,12 @@ BF
 BF
 aD
 aD
-aK
+JJ
 BF
 nl
 aD
 aD
-aU
+aD
 aU
 WT
 aU
@@ -10523,8 +10609,8 @@ BF
 BF
 BF
 BF
-BF
-BF
+JJ
+aU
 aU
 aU
 gG
@@ -10534,9 +10620,9 @@ aU
 BF
 BF
 aK
-aD
-CV
-BF
+JJ
+dS
+JJ
 BF
 BF
 BF
@@ -10660,7 +10746,7 @@ BF
 aU
 aU
 aD
-aD
+JJ
 aU
 BF
 BF
@@ -10817,7 +10903,7 @@ XX
 sE
 Jj
 yN
-zy
+Ef
 Yf
 Yf
 Ey
@@ -10826,7 +10912,7 @@ sE
 cn
 Yf
 Yf
-zy
+PN
 Yf
 Yf
 sE
@@ -11026,7 +11112,7 @@ BF
 BF
 BF
 BF
-aU
+JJ
 tS
 aU
 Xy
@@ -11150,9 +11236,9 @@ BF
 BF
 BF
 BF
-BF
-fm
-aU
+JJ
+xU
+JJ
 Xy
 ib
 Xy
@@ -11276,7 +11362,7 @@ BF
 BF
 BF
 BF
-BF
+JJ
 aU
 Xy
 Xy
@@ -11321,7 +11407,7 @@ BP
 BP
 zU
 qy
-jZ
+Bh
 qy
 qy
 at
@@ -11407,7 +11493,7 @@ BF
 BF
 aU
 aU
-tS
+Rw
 aD
 aD
 aD
@@ -11531,8 +11617,8 @@ BF
 BF
 BF
 BF
-BF
-fm
+JJ
+xU
 KG
 aD
 aD
@@ -11568,7 +11654,7 @@ aa
 qy
 eV
 PG
-FB
+La
 Mx
 XX
 mX
@@ -11657,7 +11743,7 @@ BF
 BF
 BF
 BF
-BF
+JJ
 BF
 aD
 aD
@@ -11672,7 +11758,7 @@ aU
 aU
 KG
 KG
-KG
+JL
 KG
 KG
 BF
@@ -11697,7 +11783,7 @@ qy
 Wq
 BP
 BP
-jZ
+Bh
 qy
 at
 qy
@@ -12044,13 +12130,13 @@ BF
 BF
 BF
 BF
-KG
+JL
 fW
 fW
 nL
 fW
 fW
-KG
+JL
 BF
 BF
 BF
@@ -12197,7 +12283,7 @@ BP
 qy
 XX
 sn
-YK
+vK
 XX
 BP
 BP
@@ -12572,7 +12658,7 @@ BP
 BP
 cO
 UR
-hS
+sz
 XX
 qy
 qy
@@ -12657,12 +12743,12 @@ BF
 BF
 BF
 BF
-BF
-eb
+JJ
+pR
 aD
 aD
 aD
-eb
+pR
 BF
 BF
 BF
@@ -12781,8 +12867,8 @@ BF
 BF
 BF
 BF
-BF
-fm
+JJ
+xU
 KG
 Fk
 Fk
@@ -12907,11 +12993,11 @@ BF
 BF
 BF
 BF
-BF
+JJ
 BF
 aU
 KB
-aD
+aU
 aU
 aU
 aU
@@ -13405,7 +13491,7 @@ BF
 BF
 BF
 BF
-BF
+JJ
 BF
 aU
 aU
@@ -13529,10 +13615,10 @@ BF
 BF
 BF
 BF
-BF
+JJ
+xU
+JJ
 aU
-aU
-fm
 aU
 aU
 aU
@@ -13655,7 +13741,7 @@ BF
 BF
 BF
 BF
-aU
+JJ
 aU
 aU
 aU
@@ -13695,11 +13781,11 @@ BF
 BF
 BF
 BF
-eb
+pR
 aD
 aD
 aD
-eb
+pR
 BF
 BF
 BF
@@ -14160,7 +14246,7 @@ aI
 aI
 fW
 fW
-fW
+ev
 fW
 fW
 aI
@@ -14405,12 +14491,12 @@ BF
 BF
 aU
 aD
-aU
+JJ
 aI
 fW
 fW
 fW
-fW
+JJ
 fW
 fW
 fW
@@ -14529,14 +14615,14 @@ BF
 BF
 BF
 BF
-aU
-aU
+JJ
+xU
 aI
 fW
 fW
-fW
-gU
-fW
+JJ
+IN
+JJ
 fW
 fW
 aI
@@ -14655,12 +14741,12 @@ BF
 BF
 BF
 aU
-aU
+JJ
 aI
 fW
 fW
 fW
-fW
+JJ
 fW
 fW
 fW
@@ -15263,13 +15349,13 @@ aD
 iT
 aD
 aD
-KG
+JL
 fW
 fW
 FS
 fW
 fW
-KG
+JL
 aD
 aD
 iT
@@ -15641,7 +15727,7 @@ BF
 BF
 KG
 KG
-KG
+JL
 KG
 KG
 BF
@@ -16047,7 +16133,7 @@ fW
 Xk
 fW
 fW
-KG
+JL
 aU
 aU
 aU
@@ -16419,7 +16505,7 @@ BF
 BF
 KG
 KG
-KG
+JL
 KG
 KG
 BF
