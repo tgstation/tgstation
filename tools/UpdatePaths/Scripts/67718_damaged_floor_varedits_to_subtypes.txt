@@ -1,165 +1,166 @@
 #comment We previously had all floors be var_edited to show a specific "damaged" icon. This will repath any applicable floors to the new subtype variant.
 #comment A very good majority of these do not show up on modern /tg/ maps (at the time of creation), but I will include everything touched in this Pull Request for convenience to uptainers/downstreams.
 #comment The new subtypes should all match up to their old variants.
+#comment We skip setting the icon_state (since the whole point of this is to move away from setting icon_state into a subtype). We also skip re-adding the broken variable, since some mappers manually added that. This is now made redundant.
 
 #comment Not all subtypes of floor use the same exact icon_state (like abductor plating versus regular plating), so we should explicitly define the ones that we want to swap out.
 
-/turf/open/floor/plating{icon_state="platingdmg3"} : /turf/open/floor/plating/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/plating{icon_state="platingdmg1"} : /turf/open/floor/plating/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/plating{icon_state="platingdmg2"} : /turf/open/floor/plating/damaged/heavy{@OLD;icon_state=@SKIP}
-/turf/open/floor/plating{icon_state="panelscorched"} : /turf/open/floor/plating/damaged/scorched{@OLD;icon_state=@SKIP}
+/turf/open/floor/plating{icon_state="platingdmg3"} : /turf/open/floor/plating/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/plating{icon_state="platingdmg1"} : /turf/open/floor/plating/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/plating{icon_state="platingdmg2"} : /turf/open/floor/plating/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/plating{icon_state="panelscorched"} : /turf/open/floor/plating/damaged/scorched{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/airless/plating{icon_state="platingdmg3"} : /turf/open/floor/plating/airless/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/airless/plating{icon_state="platingdmg1"} : /turf/open/floor/plating/airless/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/airless/plating{icon_state="platingdmg2"} : /turf/open/floor/plating/airless/damaged/heavy{@OLD;icon_state=@SKIP}
-/turf/open/floor/airless/plating{icon_state="panelscorched"} : /turf/open/floor/plating/airless/damaged/scorched{@OLD;icon_state=@SKIP}
+/turf/open/floor/airless/plating{icon_state="platingdmg3"} : /turf/open/floor/plating/airless/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/airless/plating{icon_state="platingdmg1"} : /turf/open/floor/plating/airless/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/airless/plating{icon_state="platingdmg2"} : /turf/open/floor/plating/airless/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/airless/plating{icon_state="panelscorched"} : /turf/open/floor/plating/airless/damaged/scorched{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/lowpressure/plating{icon_state="platingdmg3"} : /turf/open/floor/plating/lowpressure/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/lowpressure/plating{icon_state="platingdmg1"} : /turf/open/floor/plating/lowpressure/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/lowpressure/plating{icon_state="platingdmg2"} : /turf/open/floor/plating/lowpressure/damaged/heavy{@OLD;icon_state=@SKIP}
-/turf/open/floor/lowpressure/plating{icon_state="panelscorched"} : /turf/open/floor/plating/lowpressure/damaged/scorched{@OLD;icon_state=@SKIP}
+/turf/open/floor/lowpressure/plating{icon_state="platingdmg3"} : /turf/open/floor/plating/lowpressure/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/lowpressure/plating{icon_state="platingdmg1"} : /turf/open/floor/plating/lowpressure/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/lowpressure/plating{icon_state="platingdmg2"} : /turf/open/floor/plating/lowpressure/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/lowpressure/plating{icon_state="panelscorched"} : /turf/open/floor/plating/lowpressure/damaged/scorched{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/icemoon/plating{icon_state="platingdmg3"} : /turf/open/floor/plating/icemoon/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/icemoon/plating{icon_state="platingdmg1"} : /turf/open/floor/plating/icemoon/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/icemoon/plating{icon_state="platingdmg2"} : /turf/open/floor/plating/icemoon/damaged/heavy{@OLD;icon_state=@SKIP}
-/turf/open/floor/icemoon/plating{icon_state="panelscorched"} : /turf/open/floor/plating/icemoon/damaged/scorched{@OLD;icon_state=@SKIP}
+/turf/open/floor/icemoon/plating{icon_state="platingdmg3"} : /turf/open/floor/plating/icemoon/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/icemoon/plating{icon_state="platingdmg1"} : /turf/open/floor/plating/icemoon/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/icemoon/plating{icon_state="platingdmg2"} : /turf/open/floor/plating/icemoon/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/icemoon/plating{icon_state="panelscorched"} : /turf/open/floor/plating/icemoon/damaged/scorched{@OLD;icon_state=@SKIP;broken=@SKIP}
 
 #comment Standard Iron flooring
 
-/turf/open/floor/iron{icon_state="damaged1"} : /turf/open/floor/iron/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron{icon_state="damaged2"} : /turf/open/floor/iron/damaged/light{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron{icon_state="damaged3"} : /turf/open/floor/iron/damaged/high{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron{icon_state="damaged4"} : /turf/open/floor/iron/damaged/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron{icon_state="damaged5"} : /turf/open/floor/iron/damaged/heavy{@OLD;icon_state=@SKIP}
+/turf/open/floor/iron{icon_state="damaged1"} : /turf/open/floor/iron/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron{icon_state="damaged2"} : /turf/open/floor/iron/damaged/light{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron{icon_state="damaged3"} : /turf/open/floor/iron/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron{icon_state="damaged4"} : /turf/open/floor/iron/damaged/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron{icon_state="damaged5"} : /turf/open/floor/iron/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/iron{icon_state="floorscorched1"} : /turf/open/floor/iron/damaged/burnt/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron{icon_state="floorscorched2"} : /turf/open/floor/iron/damaged/burnt/heavy{@OLD;icon_state=@SKIP}
+/turf/open/floor/iron{icon_state="floorscorched1"} : /turf/open/floor/iron/damaged/burnt/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron{icon_state="floorscorched2"} : /turf/open/floor/iron/damaged/burnt/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/iron/airless{icon_state="damaged1"} : /turf/open/floor/iron/airless/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/airless{icon_state="damaged2"} : /turf/open/floor/iron/airless/damaged/light{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/airless{icon_state="damaged3"} : /turf/open/floor/iron/airless/damaged/high{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/airless{icon_state="damaged4"} : /turf/open/floor/iron/airless/damaged/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/airless{icon_state="damaged5"} : /turf/open/floor/iron/airless/damaged/heavy{@OLD;icon_state=@SKIP}
+/turf/open/floor/iron/airless{icon_state="damaged1"} : /turf/open/floor/iron/airless/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/airless{icon_state="damaged2"} : /turf/open/floor/iron/airless/damaged/light{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/airless{icon_state="damaged3"} : /turf/open/floor/iron/airless/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/airless{icon_state="damaged4"} : /turf/open/floor/iron/airless/damaged/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/airless{icon_state="damaged5"} : /turf/open/floor/iron/airless/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/iron/airless{icon_state="floorscorched1"} : /turf/open/floor/iron/airless/damaged/burnt/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/airless{icon_state="floorscorched2"} : /turf/open/floor/iron/airless/damaged/burnt/heavy{@OLD;icon_state=@SKIP}
+/turf/open/floor/iron/airless{icon_state="floorscorched1"} : /turf/open/floor/iron/airless/damaged/burnt/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/airless{icon_state="floorscorched2"} : /turf/open/floor/iron/airless/damaged/burnt/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/iron/telecomms{icon_state="damaged1"} : /turf/open/floor/iron/telecomms/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/telecomms{icon_state="damaged2"} : /turf/open/floor/iron/telecomms/damaged/light{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/telecomms{icon_state="damaged3"} : /turf/open/floor/iron/telecomms/damaged/high{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/telecomms{icon_state="damaged4"} : /turf/open/floor/iron/telecomms/damaged/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/telecomms{icon_state="damaged5"} : /turf/open/floor//iron/telecomms/damaged/heavy{@OLD;icon_state=@SKIP}
+/turf/open/floor/iron/telecomms{icon_state="damaged1"} : /turf/open/floor/iron/telecomms/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/telecomms{icon_state="damaged2"} : /turf/open/floor/iron/telecomms/damaged/light{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/telecomms{icon_state="damaged3"} : /turf/open/floor/iron/telecomms/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/telecomms{icon_state="damaged4"} : /turf/open/floor/iron/telecomms/damaged/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/telecomms{icon_state="damaged5"} : /turf/open/floor//iron/telecomms/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/iron/telecomms{icon_state="floorscorched1"} : /turf/open/floor/iron/telecomms/damaged/burnt/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/telecomms{icon_state="floorscorched2"} : /turf/open/floor/iron/telecomms/damaged/burnt/heavy{@OLD;icon_state=@SKIP}
+/turf/open/floor/iron/telecomms{icon_state="floorscorched1"} : /turf/open/floor/iron/telecomms/damaged/burnt/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/telecomms{icon_state="floorscorched2"} : /turf/open/floor/iron/telecomms/damaged/burnt/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/iron/icemoon{icon_state="damaged1"} : /turf/open/floor/iron/icemoon/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/icemoon{icon_state="damaged2"} : /turf/open/floor/iron/icemoon/damaged/light{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/icemoon{icon_state="damaged3"} : /turf/open/floor/iron/icemoon/damaged/high{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/icemoon{icon_state="damaged4"} : /turf/open/floor/iron/icemoon/damaged/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/icemoon{icon_state="damaged5"} : /turf/open/floor/iron/icemoon/damaged/heavy{@OLD;icon_state=@SKIP}
+/turf/open/floor/iron/icemoon{icon_state="damaged1"} : /turf/open/floor/iron/icemoon/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/icemoon{icon_state="damaged2"} : /turf/open/floor/iron/icemoon/damaged/light{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/icemoon{icon_state="damaged3"} : /turf/open/floor/iron/icemoon/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/icemoon{icon_state="damaged4"} : /turf/open/floor/iron/icemoon/damaged/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/icemoon{icon_state="damaged5"} : /turf/open/floor/iron/icemoon/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/iron/icemoon{icon_state="floorscorched1"} : /turf/open/floor/iron/icemoon/damaged/burnt/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/iron/icemoon{icon_state="floorscorched2"} : /turf/open/floor/iron/icemoon/damaged/burnt/heavy{@OLD;icon_state=@SKIP}
+/turf/open/floor/iron/icemoon{icon_state="floorscorched1"} : /turf/open/floor/iron/icemoon/damaged/burnt/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/iron/icemoon{icon_state="floorscorched2"} : /turf/open/floor/iron/icemoon/damaged/burnt/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
 
 #comment Onto wooden flooring.
 
-/turf/open/floor/wood{icon_state="wood-broken"} : /turf/open/floor/wood/damaged/heavy{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood{icon_state="wood-broken2"} : /turf/open/floor/wood/damaged/high{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood{icon_state="wood-broken3"} : /turf/open/floor/wood/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood{icon_state="wood-broken4"} : /turf/open/floor/wood/damaged/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood{icon_state="wood-broken5"} : /turf/open/floor/wood/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood{icon_state="wood-broken6"} : /turf/open/floor/wood/damaged/light{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood{icon_state="wood-broken7"} : /turf/open/floor/wood/damaged/low{@OLD;icon_state=@SKIP}
+/turf/open/floor/wood{icon_state="wood-broken"} : /turf/open/floor/wood/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood{icon_state="wood-broken2"} : /turf/open/floor/wood/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood{icon_state="wood-broken3"} : /turf/open/floor/wood/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood{icon_state="wood-broken4"} : /turf/open/floor/wood/damaged/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood{icon_state="wood-broken5"} : /turf/open/floor/wood/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood{icon_state="wood-broken6"} : /turf/open/floor/wood/damaged/light{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood{icon_state="wood-broken7"} : /turf/open/floor/wood/damaged/low{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/wood/tile{icon_state="wood_tile-broken"} : /turf/open/floor/wood/tile/damaged/high{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood/tile{icon_state="wood_tile-broken2"} : /turf/open/floor/wood/tile/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood/tile{icon_state="wood_tile-broken3"} : /turf/open/floor/wood/tile/damaged/mild{@OLD;icon_state=@SKIP}
+/turf/open/floor/wood/tile{icon_state="wood_tile-broken"} : /turf/open/floor/wood/tile/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood/tile{icon_state="wood_tile-broken2"} : /turf/open/floor/wood/tile/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood/tile{icon_state="wood_tile-broken3"} : /turf/open/floor/wood/tile/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken"} : /turf/open/floor/wood/parquet/damaged/high{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken2"} : /turf/open/floor/wood/parquet/damaged/light{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken3"} : /turf/open/floor/wood/parquet/damaged/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken4"} : /turf/open/floor/wood/parquet/damaged/heavy{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken5"} : /turf/open/floor/wood/parquet/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken6"} : /turf/open/floor/wood/parquet/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken7"} : /turf/open/floor/wood/parquet/damaged/low{@OLD;icon_state=@SKIP}
+/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken"} : /turf/open/floor/wood/parquet/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken2"} : /turf/open/floor/wood/parquet/damaged/light{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken3"} : /turf/open/floor/wood/parquet/damaged/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken4"} : /turf/open/floor/wood/parquet/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken5"} : /turf/open/floor/wood/parquet/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken6"} : /turf/open/floor/wood/parquet/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood/parquet{icon_state="wood_parquet-broken7"} : /turf/open/floor/wood/parquet/damaged/low{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/wood/large{icon_state="wood_large-broken"} : /turf/open/floor/wood/large/damaged/high{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood/large{icon_state="wood_large-broken2"} : /turf/open/floor/wood/large/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/wood/large{icon_state="wood_large-broken3"} : /turf/open/floor/wood/large/damaged/mild{@OLD;icon_state=@SKIP}
+/turf/open/floor/wood/large{icon_state="wood_large-broken"} : /turf/open/floor/wood/large/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood/large{icon_state="wood_large-broken2"} : /turf/open/floor/wood/large/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/wood/large{icon_state="wood_large-broken3"} : /turf/open/floor/wood/large/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
 
 #comment Fuck, I lost my glasses.
 
-/turf/open/floor/glass{icon_state=glass-damaged1} : /turf/open/floor/glass/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/glass{icon_state=glass-damaged2} : /turf/open/floor/glass/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/glass{icon_state=glass-damaged3} : /turf/open/floor/glass/damaged/high{@OLD;icon_state=@SKIP}
+/turf/open/floor/glass{icon_state=glass-damaged1} : /turf/open/floor/glass/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/glass{icon_state=glass-damaged2} : /turf/open/floor/glass/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/glass{icon_state=glass-damaged3} : /turf/open/floor/glass/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/glass/reinforced{icon_state=reinf_glass-damaged1} : /turf/open/floor/glass/reinforced/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/glass/reinforced{icon_state=reinf_glass-damaged2} : /turf/open/floor/glass/reinforced/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/glass/reinforced{icon_state=reinf_glass-damaged3} : /turf/open/floor/glass/reinforced/damaged/high{@OLD;icon_state=@SKIP}
+/turf/open/floor/glass/reinforced{icon_state=reinf_glass-damaged1} : /turf/open/floor/glass/reinforced/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/glass/reinforced{icon_state=reinf_glass-damaged2} : /turf/open/floor/glass/reinforced/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/glass/reinforced{icon_state=reinf_glass-damaged3} : /turf/open/floor/glass/reinforced/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
 
 #comment They're minerals, Marie!
 
-/turf/open/floor/mineral/plasma{icon_state=plasma_dam} : /turf/open/floor/mineral/plasma/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/gold{icon_state=gold_dam} : /turf/open/floor/mineral/gold/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/silver{icon_state=silver_dam} : /turf/open/floor/mineral/silver/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/bananium{icon_state=bananium_dam} : /turf/open/floor/mineral/bananium/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/diamond{icon_state=diamond_dam} : /turf/open/floor/mineral/diamond/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/uranium{icon_state=uranium_dam} : /turf/open/floor/mineral/uranium/damaged{@OLD;icon_state=@SKIP}
+/turf/open/floor/mineral/plasma{icon_state=plasma_dam} : /turf/open/floor/mineral/plasma/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/gold{icon_state=gold_dam} : /turf/open/floor/mineral/gold/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/silver{icon_state=silver_dam} : /turf/open/floor/mineral/silver/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/bananium{icon_state=bananium_dam} : /turf/open/floor/mineral/bananium/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/diamond{icon_state=diamond_dam} : /turf/open/floor/mineral/diamond/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/uranium{icon_state=uranium_dam} : /turf/open/floor/mineral/uranium/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
 
 #comment Titanium and Plastitanium
 
-/turf/open/floor/mineral/titanium{icon_state="titanium_dam1"} : /turf/open/floor/mineral/titanium/damaged/light{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/titanium{icon_state="titanium_dam2"} : /turf/open/floor/mineral/titanium/damaged/heavy{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/titanium{icon_state="titanium_dam3"} : /turf/open/floor/mineral/titanium/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/titanium{icon_state="titanium_dam4"} : /turf/open/floor/mineral/titanium/damaged/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/titanium{icon_state="titanium_dam5"} : /turf/open/floor/mineral/titanium/damaged/high{@OLD;icon_state=@SKIP}
+/turf/open/floor/mineral/titanium{icon_state="titanium_dam1"} : /turf/open/floor/mineral/titanium/damaged/light{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/titanium{icon_state="titanium_dam2"} : /turf/open/floor/mineral/titanium/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/titanium{icon_state="titanium_dam3"} : /turf/open/floor/mineral/titanium/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/titanium{icon_state="titanium_dam4"} : /turf/open/floor/mineral/titanium/damaged/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/titanium{icon_state="titanium_dam5"} : /turf/open/floor/mineral/titanium/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/mineral/titanium/tiled{icon_state="titanium_dam1_old"} : /turf/open/floor/mineral/titanium/damaged/light{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/titanium/tiled{icon_state="titanium_dam2_old"} : /turf/open/floor/mineral/titanium/damaged/high{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/titanium/tiled{icon_state="titanium_dam3_old"} : /turf/open/floor/mineral/titanium/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/titanium/tiled{icon_state="titanium_dam4_old"} : /turf/open/floor/mineral/titanium/damaged/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/titanium/tiled{icon_state="titanium_dam5_old"} : /turf/open/floor/mineral/titanium/damaged/heavy{@OLD;icon_state=@SKIP}
+/turf/open/floor/mineral/titanium/tiled{icon_state="titanium_dam1_old"} : /turf/open/floor/mineral/titanium/damaged/light{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/titanium/tiled{icon_state="titanium_dam2_old"} : /turf/open/floor/mineral/titanium/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/titanium/tiled{icon_state="titanium_dam3_old"} : /turf/open/floor/mineral/titanium/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/titanium/tiled{icon_state="titanium_dam4_old"} : /turf/open/floor/mineral/titanium/damaged/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/titanium/tiled{icon_state="titanium_dam5_old"} : /turf/open/floor/mineral/titanium/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/mineral/plastitanium{icon_state="plastitanium_dam1"} : /turf/open/floor/mineral/plastitanium/damaged/light{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/plastitanium{icon_state="plastitanium_dam2"} : /turf/open/floor/mineral/plastitanium/damaged/high{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/plastitanium{icon_state="plastitanium_dam3"} : /turf/open/floor/mineral/plastitanium/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/plastitanium{icon_state="plastitanium_dam4"} : /turf/open/floor/mineral/plastitanium/damaged/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/mineral/plastitanium{icon_state="plastitanium_dam5"} : /turf/open/floor/mineral/plastitanium/damaged/heavy{@OLD;icon_state=@SKIP}
+/turf/open/floor/mineral/plastitanium{icon_state="plastitanium_dam1"} : /turf/open/floor/mineral/plastitanium/damaged/light{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/plastitanium{icon_state="plastitanium_dam2"} : /turf/open/floor/mineral/plastitanium/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/plastitanium{icon_state="plastitanium_dam3"} : /turf/open/floor/mineral/plastitanium/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/plastitanium{icon_state="plastitanium_dam4"} : /turf/open/floor/mineral/plastitanium/damaged/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/mineral/plastitanium{icon_state="plastitanium_dam5"} : /turf/open/floor/mineral/plastitanium/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
 
 #comment Match up the carpets.
 
-/turf/open/floor/carpet{icon_state="damaged"} : /turf/open/floor/carpet/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/carpet/black{icon_state="damaged"} : /turf/open/floor/carpet/black/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/carpet/blue{icon_state="damaged"} : /turf/open/floor/carpet/blue/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/carpet/cyan{icon_state="damaged"} : /turf/open/floor/carpet/cyan/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/carpet/green{icon_state="damaged"} : /turf/open/floor/carpet/green/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/carpet/orange{icon_state="damaged"} : /turf/open/floor/carpet/orange/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/carpet/purple{icon_state="damaged"} : /turf/open/floor/carpet/purple/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/carpet/red{icon_state="damaged"} : /turf/open/floor/carpet/red/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/carpet/royalblack{icon_state="damaged"} : /turf/open/floor/carpet/royalblack/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/carpet/royalblue{icon_state="damaged"} : /turf/open/floor/carpet/royalblue/damaged{@OLD;icon_state=@SKIP}
+/turf/open/floor/carpet{icon_state="damaged"} : /turf/open/floor/carpet/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/carpet/black{icon_state="damaged"} : /turf/open/floor/carpet/black/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/carpet/blue{icon_state="damaged"} : /turf/open/floor/carpet/blue/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/carpet/cyan{icon_state="damaged"} : /turf/open/floor/carpet/cyan/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/carpet/green{icon_state="damaged"} : /turf/open/floor/carpet/green/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/carpet/orange{icon_state="damaged"} : /turf/open/floor/carpet/orange/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/carpet/purple{icon_state="damaged"} : /turf/open/floor/carpet/purple/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/carpet/red{icon_state="damaged"} : /turf/open/floor/carpet/red/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/carpet/royalblack{icon_state="damaged"} : /turf/open/floor/carpet/royalblack/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/carpet/royalblue{icon_state="damaged"} : /turf/open/floor/carpet/royalblue/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
 
 #comment Blood Cult floors
 
-/turf/open/floor/cult{icon_state="cultdamage"} : /turf/open/floor/cult/damaged/light{@OLD;icon_state=@SKIP}
-/turf/open/floor/cult{icon_state="cultdamage2"} : /turf/open/floor/cult/damaged/heavy{@OLD;icon_state=@SKIP}
-/turf/open/floor/cult{icon_state="cultdamage3"} : /turf/open/floor/cult/damaged/low{@OLD;icon_state=@SKIP}
-/turf/open/floor/cult{icon_state="cultdamage4"} : /turf/open/floor/cult/damaged/mild{@OLD;icon_state=@SKIP}
-/turf/open/floor/cult{icon_state="cultdamage5"} : /turf/open/floor/cult/damaged/moderate{@OLD;icon_state=@SKIP}
-/turf/open/floor/cult{icon_state="cultdamage6"} : /turf/open/floor/cult/damaged/medium{@OLD;icon_state=@SKIP}
-/turf/open/floor/cult{icon_state="cultdamage7"} : /turf/open/floor/cult/damaged/high{@OLD;icon_state=@SKIP}
+/turf/open/floor/cult{icon_state="cultdamage"} : /turf/open/floor/cult/damaged/light{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/cult{icon_state="cultdamage2"} : /turf/open/floor/cult/damaged/heavy{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/cult{icon_state="cultdamage3"} : /turf/open/floor/cult/damaged/low{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/cult{icon_state="cultdamage4"} : /turf/open/floor/cult/damaged/mild{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/cult{icon_state="cultdamage5"} : /turf/open/floor/cult/damaged/moderate{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/cult{icon_state="cultdamage6"} : /turf/open/floor/cult/damaged/medium{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/cult{icon_state="cultdamage7"} : /turf/open/floor/cult/damaged/high{@OLD;icon_state=@SKIP;broken=@SKIP}
 
 #comment Miscellaneous floors
 
-/turf/open/floor/plastic{icon_state="plastic-damaged1"} : /turf/open/floor/plastic/damaged/molten{@OLD;icon_state=@SKIP}
-/turf/open/floor/plastic{icon_state="plastic-damaged2"} : /turf/open/floor/plastic/damaged/slashed{@OLD;icon_state=@SKIP}
+/turf/open/floor/plastic{icon_state="plastic-damaged1"} : /turf/open/floor/plastic/damaged/molten{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/plastic{icon_state="plastic-damaged2"} : /turf/open/floor/plastic/damaged/slashed{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/eighties{icon_state="eighties_damaged} : /turf/open/floor/eighties/damaged{@OLD;icon_state=@SKIP}
-/turf/open/floor/eighties/red{icon_state="eightiesred_damaged} : /turf/open/floor/eighties/red/damaged{@OLD;icon_state=@SKIP}
+/turf/open/floor/eighties{icon_state="eighties_damaged} : /turf/open/floor/eighties/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
+/turf/open/floor/eighties/red{icon_state="eightiesred_damaged} : /turf/open/floor/eighties/red/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/bamboo{icon_state=damaged} : /turf/open/floor/bamboo/damaged{@OLD;icon_state=@SKIP}
+/turf/open/floor/bamboo{icon_state=damaged} : /turf/open/floor/bamboo/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/grass{icon_state=sand} : /turf/open/floor/grass/damaged{@OLD;icon_state=@SKIP}
+/turf/open/floor/grass{icon_state=sand} : /turf/open/floor/grass/damaged{@OLD;icon_state=@SKIP;broken=@SKIP}
 
-/turf/open/floor/fake_snow{icon_state=snow_dug} : /turf/open/floor/fake_snow/dug{@OLD;icon_state=@SKIP}
+/turf/open/floor/fake_snow{icon_state=snow_dug} : /turf/open/floor/fake_snow/dug{@OLD;icon_state=@SKIP;broken=@SKIP}
