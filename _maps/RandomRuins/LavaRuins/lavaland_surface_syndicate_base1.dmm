@@ -1963,9 +1963,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken4"
-	},
+/turf/open/floor/wood/damaged/moderate,
 /area/ruin/syndicate_lava_base/bar)
 "lk" = (
 /obj/structure/table/wood,

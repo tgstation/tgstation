@@ -74,9 +74,7 @@
 /area/ruin/space/has_grav)
 "kA" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/open/floor/plating/damaged/medium,
 /area/ruin/space/has_grav)
 "lj" = (
 /obj/structure/cable,

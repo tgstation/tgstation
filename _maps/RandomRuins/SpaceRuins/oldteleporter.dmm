@@ -16,15 +16,11 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "f" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/turf/open/floor/iron/airless/damaged/light,
 /area/ruin/space/oldteleporter)
 "g" = (
 /obj/structure/light_construct/small/directional/north,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/turf/open/floor/iron/airless/damaged/high,
 /area/ruin/space/oldteleporter)
 "h" = (
 /obj/machinery/computer/teleporter{
@@ -50,9 +46,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "m" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
+/turf/open/floor/iron/airless/damaged/moderate,
 /area/ruin/space/oldteleporter)
 "n" = (
 /obj/machinery/power/apc/auto_name/directional/south,

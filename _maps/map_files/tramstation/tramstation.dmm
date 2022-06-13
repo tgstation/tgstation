@@ -3057,9 +3057,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/turf/open/floor/wood/damaged/medium,
 /area/station/commons/vacant_room/office)
 "bnt" = (
 /obj/structure/chair/office{
@@ -19935,9 +19933,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "gPI" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
+/turf/open/floor/wood/damaged/low,
 /area/station/commons/vacant_room/office)
 "gPL" = (
 /turf/open/floor/engine,
@@ -23429,9 +23425,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
-	},
+/turf/open/floor/wood/damaged/heavy,
 /area/station/commons/vacant_room/office)
 "ial" = (
 /turf/open/floor/iron,
