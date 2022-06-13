@@ -262,6 +262,26 @@
 					span_notice("You slap [slapped] in the face!"),
 					span_hear("You hear a slap."),
 				)
+	else if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
+		if(user == slapped)
+			user.visible_message(
+				span_notice("[user] slaps their own ass, looking pretty fruity."),
+				span_notice("You slap your ass."),
+				span_hear("You hear a slap."),
+			)
+		else
+			if(slapped.IsSleeping() || slapped.IsUnconscious())
+				user.visible_message(
+					span_notice("[user] slaps [slapped] square on the ass! That's pretty weird..."),
+					span_notice("You slap [slapped] on the ass!"),
+					span_hear("You hear an unusually unsettling slap.")
+				)
+			else
+				user.visible_message(
+					span_danger("[user] slaps [slapped] on the ass!"),
+					span_notice("You slap [slapped] on the ass!"),
+					span_hear("You hear a slap."),
+				)
 	else
 		user.visible_message(
 			span_danger("[user] slaps [slapped]!"),
