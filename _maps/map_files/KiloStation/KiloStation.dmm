@@ -42481,11 +42481,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/fore)
-"lTD" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/station/solars/starboard/fore)
 "lTM" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -133137,7 +133132,7 @@ hyB
 hyB
 hyB
 qzg
-lTD
+qzg
 qzg
 hyB
 hyB
@@ -133395,7 +133390,7 @@ pyg
 pyg
 qzg
 qzg
-lTD
+qzg
 pyg
 pyg
 pyg
