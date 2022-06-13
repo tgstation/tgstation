@@ -230,8 +230,8 @@
 
 /obj/projectile/beam/gravblast/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(ismovable(target) && isliving(target))
-		var/atom/our_shot_target = target
+	if(isliving(target))
+		var/mob/living/our_shot_target = target
 		var/atom/throw_target = get_edge_target_turf(our_shot_target, get_dir(src, get_step_away(our_shot_target, src)))
 		our_shot_target.safe_throw_at(throw_target, 3, 2, force = MOVE_FORCE_EXTREMELY_STRONG)
 

@@ -111,32 +111,6 @@
 		process_fire(user, user, FALSE)
 		. = TRUE
 
-/obj/item/gun/ballistic/rifle/boltaction/ramshackle
-	name = "\improper Mosin Nagant Type 53"
-	desc = "This absolutely ancient gun looks like it dates long before the space era. Where did the Space Russians find this thing? It feels quite moist, and looks like it needs significant retooling. Maybe you could scrap a modular receiver to fix it up."
-	desc = "An extremely sawn-off Mosin Nagant Type 53, popularly known as an \"Obrez\". \
-		There was probably a reason it wasn't manufactured this short to begin with, and it isn't helped by the rusted internals."
-	projectile_damage_multiplier = 0.5
-
-/obj/item/gun/ballistic/rifle/boltaction/ramshackle/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/weaponcrafting/receiver))
-		balloon_alert(user, "replacing receiver parts...")
-		if(!do_after(user, 3 SECONDS))
-			balloon_alert(user, "interrupted!")
-			return
-		if(sawn_off)
-			desc = "An extremely sawn-off Mosin Nagant Type 53, popularly known as an \"Obrez\". \
-				There was probably a reason it wasn't manufactured this short to begin with."
-			projectile_damage_multiplier = 1
-		else
-			desc = "This absolutely ancient gun looks like it dates long before the space era. Where did the Space Russians find this thing? It feels slightly moist."
-			sawn_desc = "An extremely sawn-off Mosin Nagant Type 53, popularly known as an \"Obrez\". \
-				There was probably a reason it wasn't manufactured this short to begin with."
-			projectile_damage_multiplier = 1
-		balloon_alert(user, "parts replaced!")
-		qdel(item)
-	. = ..()
-
 /obj/item/gun/ballistic/rifle/boltaction/harpoon
 	name = "ballistic harpoon gun"
 	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
@@ -197,13 +171,6 @@
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber()
 	. = ..()
 	do_sparks(1, TRUE, src)
-
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/a762
-	name = "\improper Moldy Nougat"
-	desc = "According to the serial number, this was manufactorued by the Kalashnikov Concern. But the amount of maintenance tar holding this thing together makes you think this was thrown into the surplus crate by a mischievous assistant..."
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/a762
-	initial_caliber = CALIBER_A762
-	alternative_caliber = CALIBER_SHOTGUN
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
 	name = "\improper Regal Pipegun"

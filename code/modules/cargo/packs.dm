@@ -621,9 +621,7 @@
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/head/helmet/rus_ushanka,
 					/obj/item/clothing/suit/armor/vest/russian_coat,
-					/obj/item/gun/ballistic/rifle/boltaction/pipegun/a762,
-					/obj/item/gun/ballistic/rifle/boltaction/pipegun/a762,
-					/obj/item/gun/ballistic/rifle/boltaction/ramshackle,
+					/obj/item/gun/ballistic/rifle/boltaction,
 					/obj/item/gun/ballistic/rifle/boltaction)
 	crate_name = "surplus military crate"
 

@@ -12,10 +12,6 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/improvised
 	max_ammo = 1
 
-/obj/item/ammo_box/magazine/internal/boltaction/pipegun/a762
-	caliber = CALIBER_A762
-	ammo_type = /obj/item/ammo_casing/a762
-
 /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	name = "regal pipegun internal magazine"
 	max_ammo = 3
