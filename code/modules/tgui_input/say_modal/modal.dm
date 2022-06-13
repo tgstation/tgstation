@@ -51,6 +51,8 @@
  */
 /client/proc/tgui_say_create_open_command(channel)
 	if(!prefs?.read_preference(/datum/preference/toggle/tgui_input))
+		if(channel == RADIO_CHANNEL)
+			channel = SAY_CHANNEL
 		return lowertext(channel)
 	var/message = TGUI_CREATE_MESSAGE("open", list(
 		channel = channel,
