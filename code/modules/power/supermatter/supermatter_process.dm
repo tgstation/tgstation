@@ -157,6 +157,7 @@
 	if(damage && final_countdown && !check_special_delamination()) // Let's jump to a special effect if we can.
 		set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_COLOUR, TRUE)
 		filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+
 	switch(check_special_delamination())
 		if("cascade")
 			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_CASCADE_COLOUR, TRUE)
