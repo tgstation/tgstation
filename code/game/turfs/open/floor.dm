@@ -23,7 +23,7 @@
 	var/broken = FALSE
 	var/burnt = FALSE
 	/// Path of the tile that this floor drops
-	var/floor_tile = null 
+	var/floor_tile = null
 	var/list/broken_states
 	var/list/burnt_states
 
@@ -125,8 +125,12 @@
 /turf/open/floor/break_tile()
 	if(broken)
 		return
-	icon_state = pick(broken_states)
-	broken = 1
+	update_overlays()
+	broken = TRUE
+/turf/open/floor/update_overlays()
+    . = ..()
+    if(damaged)
+        . += mutable_appearance('icons/turf/floors.dmi', pick(broken_states))
 
 /turf/open/floor/burn_tile()
 	if(broken || burnt)
