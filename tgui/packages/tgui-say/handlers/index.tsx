@@ -14,14 +14,15 @@ import { handleReset } from './reset';
 import { handleSetSize } from './setSize';
 import { handleViewHistory } from './viewHistory';
 import { Modal } from '../types';
-import { TguiSay } from '../interfaces/TguiSay';
+
+type HandlerMap = (parent: Modal) => Modal["events"];
 
 /**
  * Maps all TGUI say events with their associated handlers.
  *
  * return -- object: events
  */
-export const eventHandlerMap = (parent: TguiSay): Modal['events'] => {
+export const eventHandlerMap: HandlerMap = (parent)=> {
   return {
     onArrowKeys: handleArrowKeys.bind(parent),
     onBackspaceDelete: handleBackspaceDelete.bind(parent),

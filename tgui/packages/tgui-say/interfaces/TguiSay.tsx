@@ -8,21 +8,21 @@ import { Modal, State } from '../types';
 
 /** Primary class for the TGUI say modal. */
 export class TguiSay extends Component<{}, State> {
-  protected events: Modal['events'] = eventHandlerMap(this);
-  protected fields: Modal['fields'] = {
+  events: Modal['events'] = eventHandlerMap(this);
+  fields: Modal['fields'] = {
     historyCounter: 0,
     innerRef: createRef(),
     maxLength: 1024,
     radioPrefix: '',
     value: '',
   };
-  public state: Modal['state'] = {
+  state: Modal['state'] = {
     buttonContent: '',
     channel: -1,
     edited: false,
     size: WINDOW_SIZES.SMALL,
   };
-  protected timers: Modal['timers'] = timers;
+  timers: Modal['timers'] = timers;
 
   componentDidMount() {
     this.events.onComponentMount();
