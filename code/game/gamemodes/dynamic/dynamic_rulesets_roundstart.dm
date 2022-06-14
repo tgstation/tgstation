@@ -140,7 +140,7 @@
 		ntagent.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= ntagent
 	return TRUE
-	
+
 //////////////////////////////////////////
 //                                      //
 //           BLOOD BROTHERS             //
