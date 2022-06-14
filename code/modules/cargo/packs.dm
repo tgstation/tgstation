@@ -2803,7 +2803,7 @@
 
 /datum/supply_pack/misc/fishing_portal
 	name = "Fishing Portal Generator Crate"
-	desc = "Not enough fish near your location ? Fishing portal has your back."
+	desc = "Not enough fish near your location? Fishing portal has your back."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/machinery/fishing_portal_generator)
 	crate_name = "fishing portal crate"

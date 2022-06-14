@@ -85,7 +85,7 @@
 
 /datum/fishing_challenge/proc/handle_click()
 	if(phase == WAIT_PHASE) //Reset wait
-		lure.balloon_alert(user, "MISS")
+		lure.balloon_alert(user, "miss!")
 		start_baiting_phase()
 	else if(phase == BITING_PHASE)
 		start_minigame_phase()
@@ -123,7 +123,7 @@
 		if(reward_path != FISHING_DUD)
 			playsound(lure, 'sound/effects/bigsplash.ogg', 100)
 	else
-		user.balloon_alert(user,"It got away...")
+		user.balloon_alert(user, "it got away")
 	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_COMPLETED, user, win, perfect_win)
 	qdel(src)
 
@@ -141,7 +141,7 @@
 	phase = BITING_PHASE
 	// Trashing animation
 	playsound(lure, 'sound/effects/fish_splash.ogg', 100)
-	lure.balloon_alert(user,"!!!")
+	lure.balloon_alert(user, "!!!")
 	animate(lure, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
 	// Setup next phase

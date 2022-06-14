@@ -221,7 +221,7 @@
 	if(!client)
 		return
 	if(mouse_event_macro_set)
-		remove_mouse_macro();
+		remove_mouse_macro()
 	if(can_be_suspended && can_be_suspended())
 		log_tgui(client,
 			context = "[id]/close (suspending)",
@@ -388,12 +388,12 @@
 
 	for(var/mouseMacro in byondToTguiEventMap)
 		var/command_template = ".output CONTROL PAYLOAD"
-		var/debug_message = TGUI_CREATE_MESSAGE(byondToTguiEventMap[mouseMacro], null)
+		var/event_message = TGUI_CREATE_MESSAGE(byondToTguiEventMap[mouseMacro], null)
 		var target_control = is_browser \
 			? "[id]:update" \
 			: "[id].browser:update"
 		var/with_id = replacetext(command_template, "CONTROL", target_control)
-		var/full_command = replacetext(with_id, "PAYLOAD", debug_message)
+		var/full_command = replacetext(with_id, "PAYLOAD", event_message)
 
 		var/list/params = list()
 		params["parent"] = "default" //Technically this is external to tgui but whatever

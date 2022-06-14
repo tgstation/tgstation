@@ -102,6 +102,7 @@
 	if(!length(trait_descriptions))
 		trait_descriptions += "This fish exhibits no special behavior."
 	.["traits"] = trait_descriptions
+	return .
 
 /obj/item/book/fish_catalog/ui_assets(mob/user)
 	return list(

@@ -19,17 +19,17 @@
 
 /obj/item/bait_can/proc/retrieve_bait(user)
 	if(!COOLDOWN_FINISHED(src, bait_removal_cooldown))
-		to_chat(user, span_notice("No bait left, try again in a moment.")) //I can't think of generic ic reason.
+		user.balloon_alert(user, "wait a bit") //I can't think of generic ic reason.
 		return
 	COOLDOWN_START(src, bait_removal_cooldown, cooldown_time)
-	var/obj/fresh_bait = new bait_type(src)
-	return fresh_bait
+	return new bait_type(src)
 
 /obj/item/bait_can/worm
-	name = "can o worm"
+	name = "can o' worm"
+	desc = "this can got worms."
 	bait_type = /obj/item/food/bait/worm
 
 /obj/item/bait_can/worm/premium
-	name = "can o worm deluxe"
-	desc = "worms in this can are extra fancy"
+	name = "can o' worm deluxe"
+	desc = "this can got fancy worms."
 	bait_type = /obj/item/food/bait/worm/premium

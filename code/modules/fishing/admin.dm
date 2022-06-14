@@ -34,8 +34,7 @@
 	.["spot_types"] = subtypesof(/datum/fish_source) + spot_keys
 
 /datum/fishing_calculator/ui_data(mob/user)
-	. = ..()
-	.["info"] = current_table
+	return list("info" = current_table)
 
 /datum/fishing_calculator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

@@ -23,24 +23,24 @@
 
 /datum/component/fishing_spot/proc/handle_cast(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
-	. = NONE
 	if(try_start_fishing(rod,user))
 		return FISHING_ROD_CAST_HANDLED
+	return NONE
 
 /datum/component/fishing_spot/proc/handle_attackby(datum/source, obj/item/item, mob/user, params)
 	SIGNAL_HANDLER
-	. = NONE
 	if(try_start_fishing(item,user))
 		return COMPONENT_NO_AFTERATTACK
+	return NONE
 
 /datum/component/fishing_spot/proc/try_start_fishing(obj/item/possibly_rod, mob/user)
 	SIGNAL_HANDLER
 	var/obj/item/fishing_rod/rod = possibly_rod
 	if(istype(rod))
 		if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.currently_hooked_item)
-			to_chat(user, span_notice("You're not good enough to fish in two places at once."))
+			user.balloon_alert(user, "already fishing")
 			return COMPONENT_NO_AFTERATTACK
-		var/denial_reason =  fish_source.can_fish(rod, user)
+		var/denial_reason = fish_source.can_fish(rod, user)
 		if(denial_reason)
 			to_chat(user, span_warning(denial_reason))
 			return COMPONENT_NO_AFTERATTACK

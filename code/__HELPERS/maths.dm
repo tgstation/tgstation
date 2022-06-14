@@ -1,4 +1,4 @@
-///Calculate the angle between two points and the west|east coordinate
+///Calculate the angle between two movables and the west|east coordinate
 /proc/get_angle(atom/movable/start, atom/movable/end)//For beams.
 	if(!start || !end)
 		return 0
@@ -14,6 +14,7 @@
 	else if(dx < 0)
 		. += 360
 
+/// Angle between two arbitrary points and horizontal line same as [/proc/get_angle]
 /proc/get_angle_raw(start_x, start_y, start_pixel_x, start_pixel_y, end_x, end_y, end_pixel_x, end_pixel_y)
 	var/dy
 	var/dx

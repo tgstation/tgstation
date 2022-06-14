@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 	/// If a key from fish_table is present here, that fish is availible in limited quantity and is reduced by one on successful fishing
 	var/list/fish_counts = list()
 	/// Text shown as baloon alert when you roll a dud in the table
-	var/duds = list("You catch absolutely nothing", "The hook is empty")
+	var/duds = list("it was nothing", "the hook is empty")
 	/// Baseline difficulty for fishing in this spot
 	var/fishing_difficulty = FISHING_DEFAULT_DIFFICULTY
 	/// How the spot type is described in fish catalog section about fish sources, will be skipped if null
@@ -92,9 +92,9 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 				//fish caught signal if needed goes here and/or fishing achievements
 			//Try to put it in hand
 			fisherman.put_in_hands(reward)
-			fisherman.balloon_alert(fisherman,"You caught [reward]!")
+			fisherman.balloon_alert(fisherman, "caught [reward]!")
 		else //If someone adds fishing out carp/chests/singularities or whatever just plop it down on the fisher's turf
-			fisherman.balloon_alert(fisherman,"You fish out something !")
+			fisherman.balloon_alert(fisherman, "caught something!")
 			new reward_path(get_turf(fisherman))
 	else if (reward_path == FISHING_DUD)
 		//baloon alert instead
