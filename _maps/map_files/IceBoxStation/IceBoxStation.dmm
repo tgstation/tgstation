@@ -62525,6 +62525,7 @@
 "tYs" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/firedoor/border_only,
+/obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/iron/cafeteria{
 	dir = 8
 	},
