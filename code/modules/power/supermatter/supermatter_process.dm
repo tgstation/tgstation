@@ -79,7 +79,7 @@
 		animate(time = 9, transform = matrix())
 
 	else
-		if(warp)
+		if(warp && !check_special_delamination()) // Remove the singularity effects, too
 			vis_contents -= warp
 			warp = null
 		cascade_initiated = FALSE
@@ -143,34 +143,53 @@
 	if(power > POWER_PENALTY_THRESHOLD) // Tesla delamination
 		return "tesla"
 	else
-		return
+		return null
+
 /obj/machinery/power/supermatter_crystal/proc/handle_crystal_effects(tick)
+	if(!check_special_delamination())
+		if(power || damage && !final_countdown)
+			set_light((initial(light_range) + power/200), initial(light_power) + power/1000, (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), TRUE)
 
-	if(power || damage && !final_countdown)
-		set_light((initial(light_range) + power/200), initial(light_power) + power/1000, SUPERMATTER_COLOUR, TRUE)
+			filters = filter(type="rays", size = clamp(power/30, 0, 125), color = (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), factor = clamp(damage/600, 1, 10), density = clamp(damage/10, 12, 100))
 
-		filters = filter(type="rays", size = clamp(power/30, 0, 125), color = SUPERMATTER_COLOUR, factor = clamp(damage/600, 1, 10), density = clamp(damage/10, 12, 100))
+			if(!animated)// If we did this every tick we'd be crashing peoples clients all day.
+				animate_the_sm()
 
-		if(!animated)// If we did this every tick we'd be crashing peoples clients all day.
-			animate_the_sm()
-
-	if(damage && final_countdown && !check_special_delamination()) // Let's jump to a special effect if we can.
-		set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_COLOUR, TRUE)
-		filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+		if(damage && final_countdown) // Let's jump to a special effect if we can.
+			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), TRUE)
+			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
 
 	switch(check_special_delamination())
 		if("cascade")
 			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_CASCADE_COLOUR, TRUE)
 			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_CASCADE_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
 			return
+
 		if("singularity")
-			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_SINGULARITY_COLOUR, TRUE)
+			if(!warp)
+				warp = new(src)
+				vis_contents += warp
+				animate(warp, time = 20*0.1*3, transform = matrix().Scale(0.5,0.5))
+				animate(time = 20*0.1*7, transform = matrix())
+
+			if(DT_PROB(1, 5))
+				set_light(initial(light_range) + clamp(damage*power, 10, 50), 3, SUPERMATTER_SINGULARITY_COLOUR, TRUE)
+
 			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_SINGULARITY_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
 			return
+
 		if("tesla")
 			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_TESLA_COLOUR, TRUE)
 			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_TESLA_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
 			return
+/// Sucks ALL the objects into the supermatter. Really cool with the singularity.
+/obj/machinery/power/supermatter_crystal/proc/supermatter_pull_delamination(turf, radius = 20)
+	turf = get_turf(loc)
+	if(!turf)
+		return
+	for(var/atom/movable/AM in range(turf, radius))
+		step_towards(AM, turf)
+
 
 /obj/machinery/power/supermatter_crystal/proc/deal_damage(datum/gas_mixture/removed)
 	var/has_holes = FALSE
