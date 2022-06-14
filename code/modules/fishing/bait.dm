@@ -17,7 +17,7 @@
 	if(fresh_bait)
 		user.put_in_hands(fresh_bait)
 
-/obj/item/bait_can/proc/retrieve_bait(user)
+/obj/item/bait_can/proc/retrieve_bait(mob/user)
 	if(!COOLDOWN_FINISHED(src, bait_removal_cooldown))
 		user.balloon_alert(user, "wait a bit") //I can't think of generic ic reason.
 		return
