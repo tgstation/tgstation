@@ -138,6 +138,7 @@
 #include "security_officer_distribution.dm"
 #include "serving_tray.dm"
 #include "siunit.dm"
+#include "slips.dm"
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
 #include "species_config_sanity.dm"
