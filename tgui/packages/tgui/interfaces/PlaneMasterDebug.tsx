@@ -122,6 +122,9 @@ type Connection = {
 };
 
 type PlaneDebugData = {
+  our_group: string,
+  present_groups: string[],
+  enable_group_view: boolean,
   relay_info: AssocRelays,
   plane_info: AssocPlane,
   filter_connect: AssocFilters,
@@ -642,6 +645,12 @@ const DrawAbovePlane = (props, context) => {
     context, "showInfo", false);
   const [readPlane, setReadPlane] = useLocalState(
     context, "readPlane", "");
+
+  const { act, data } = useBackend<PlaneDebugData>(context);
+  // Plane groups don't use relays right now, because of a byond bug
+  // This exists mostly so enabling viewing them is easy and simple
+  const { enable_group_view } = data;
+
   return (
     <>
       {!!readPlane && <PlaneWindow />}
@@ -651,6 +660,7 @@ const DrawAbovePlane = (props, context) => {
           <RefreshButton />
         </>
       )}
+      {!!enable_group_view && <GroupDropdown />}
       {!!showAdd && <AddModal />}
       {!!showInfo && <InfoModal />}
     </>
@@ -775,6 +785,31 @@ const InfoButton = (props, context) => {
       icon="exclamation"
       onClick={() => setShowInfo(true)}
       tooltip="Info about what this window is/why it exists" />
+  );
+};
+
+const GroupDropdown = (props, context) => {
+  const { act, data } = useBackend<PlaneDebugData>(context);
+  const { our_group,
+    present_groups } = data;
+
+  return (
+    <Box
+      top={"30px"}
+      left={"28px"}
+      position={"absolute"}>
+      <Tooltip
+        content="Plane masters are stored in groups, based off where they came from. MAIN is the main group, but if you open something that displays atoms in a new window, it'll show up here"
+        position="right">
+        <Dropdown
+          options={present_groups}
+          selected={our_group}
+          displayText={our_group}
+          onSelected={(value) => act("set_group", {
+            target_group: value,
+          })} />
+      </Tooltip>
+    </Box>
   );
 };
 

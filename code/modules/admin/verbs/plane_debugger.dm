@@ -27,6 +27,27 @@
 
 /datum/plane_master_debug/ui_data()
 	var/list/data = list()
+
+	var/datum/hud/our_hud = owner.owner.mob.hud_used
+	var/list/our_groups = our_hud.master_groups
+	if(!our_groups[current_group])
+		// We assume we'll always have at least one group
+		current_group = our_groups[length(our_hud.master_groups)]
+
+	var/list/groups = list()
+	for(var/key in our_groups)
+		groups += key
+
+	// Ok so like
+	// Right now, there are no groups except MAIN that actually uh, use relays
+	// You know, the thing this viewer is for
+	// It's becuase relays on submaps are hyper yorked https://www.byond.com/forum/post/2797107
+	// So um, we disable this feature for now. If lummy ever fixes it and we start using relay'd groups, enable this
+	// Thanks, I love you, xoxo ~~Lemon
+	data["enable_group_view"] = FALSE
+	data["our_group"] = current_group
+	data["present_groups"] = groups
+
 	var/list/plane_info = list()
 	data["plane_info"] = plane_info
 	var/list/relay_deets = list()
@@ -43,7 +64,7 @@
 	// Used to ensure the incoming_relays list is filled, even if the relay's generated before the plane's processed
 	var/list/pending_relays = list()
 
-	var/list/our_planes = owner?.owner?.mob?.hud_used?.get_planes_from(current_group)
+	var/list/our_planes = our_hud?.get_planes_from(current_group)
 	for(var/plane_string as anything in our_planes)
 		var/list/this_plane = list()
 		var/atom/movable/screen/plane_master/plane = our_planes[plane_string]
@@ -221,13 +242,16 @@
 		return
 
 	var/datum/hud/our_hud = owner?.owner?.mob?.hud_used
-	var/list/our_planes = our_hud?.get_planes_from(current_group)
-	if(!our_planes) // Nothing to act on
+	var/datum/plane_master_group/group = our_hud?.master_groups[current_group]
+	if(!group) // Nothing to act on
 		return
+	var/list/our_planes = group.plane_masters
 
 	switch(action)
 		if("refresh")
-			our_hud.refresh_all_groups()
+			group.rebuild_hud()
+		if("set_group")
+			current_group = params["target_group"]
 		if("connect_relay")
 			var/source_plane = params["source"]
 			var/target_plane = params["target"]

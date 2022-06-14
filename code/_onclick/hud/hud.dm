@@ -194,11 +194,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	SIGNAL_HANDLER
 	build_plane_groups(old_max_offset + 1, new_max_offset)
 
-/datum/hud/proc/refresh_all_groups()
-	for(var/group_key in master_groups)
-		var/datum/plane_master_group/group = master_groups[group_key]
-		group.refresh_hud()
-
 /datum/hud/proc/build_plane_groups(starting_offset, ending_offset)
 	for(var/group_key in master_groups)
 		var/datum/plane_master_group/group = master_groups[group_key]

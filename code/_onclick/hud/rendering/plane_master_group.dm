@@ -43,6 +43,11 @@
 	hide_hud()
 	show_hud()
 
+/datum/plane_master_group/proc/rebuild_hud()
+	QDEL_LIST_ASSOC_VAL(plane_masters)
+	build_plane_masters(0, SSmapping.max_plane_offset)
+	show_hud()
+
 /datum/plane_master_group/proc/hide_hud()
 	for(var/thing in plane_masters)
 		var/atom/movable/screen/plane_master/plane = plane_masters[thing]
@@ -83,5 +88,7 @@
 	if(instance.blend_mode_override)
 		instance.blend_mode = instance.blend_mode_override
 
+// Should really be using relays and show to and such, but https://www.byond.com/forum/post/2797107 and what it does to relays using CENTER break that
+// I hate it here
 /datum/plane_master_group/popup/show_plane(atom/movable/screen/plane_master/plane)
 	our_hud.mymob.client.register_map_obj(plane)
