@@ -1,4 +1,0 @@
-author: "tf-4"
-delete-after: True
-changes: 
-  - balance: "Pre-loaded PACMAN generators now have 15 plasma sheets, instead of 50."

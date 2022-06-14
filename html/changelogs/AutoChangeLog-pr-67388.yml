@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - rscadd: "Add dyslexia (illiteracy quirk) as a genetic mutation."
+  - rscadd: "Add illiteracy as a effect for confusion disease symptom."

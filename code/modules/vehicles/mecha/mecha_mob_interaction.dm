@@ -4,7 +4,7 @@
 	if(HAS_TRAIT(M, TRAIT_PRIMITIVE)) //no lavalizards either.
 		to_chat(M, span_warning("The knowledge to use this device eludes you!"))
 		return
-	log_message("[M] tries to move into [src].", LOG_MECHA)
+	log_message("[M] tried to move into [src].", LOG_MECHA)
 	if(dna_lock && M.has_dna())
 		var/mob/living/carbon/entering_carbon = M
 		if(entering_carbon.dna.unique_enzymes != dna_lock)
