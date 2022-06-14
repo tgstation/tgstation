@@ -1029,21 +1029,21 @@
 	build_path = /obj/machinery/chem_master/condimaster
 
 /obj/item/circuitboard/machine/deep_fryer
-	name = "circuit board (Deep Fryer)"
+	name = "Deep Fryer (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/deepfryer
 	req_components = list(/obj/item/stock_parts/micro_laser = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/griddle
-	name = "circuit board (Griddle)"
+	name = "Griddle (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/griddle
 	req_components = list(/obj/item/stock_parts/micro_laser = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/oven
-	name = "circuit board (Oven)"
+	name = "Oven (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/oven
 	req_components = list(/obj/item/stock_parts/micro_laser = 1)
