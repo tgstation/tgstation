@@ -78,7 +78,7 @@
 	splint_factor = 0.4
 	merge_type = /obj/item/stack/sticky_tape/super
 	greyscale_colors = "#4D4D4D#75433F"
-	tape_gag = /obj/item/clothing/mask/muzzle/tape
+	tape_gag = /obj/item/clothing/mask/muzzle/tape/super
 
 /obj/item/stack/sticky_tape/pointy
 	name = "pointy tape"
@@ -90,7 +90,7 @@
 	merge_type = /obj/item/stack/sticky_tape/pointy
 	greyscale_config = /datum/greyscale_config/tape/spikes
 	greyscale_colors = "#E64539#808080#AD2F45"
-	tape_gag = /obj/item/clothing/mask/muzzle/tape
+	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy
 
 /obj/item/stack/sticky_tape/pointy/super
 	name = "super pointy tape"
@@ -100,7 +100,7 @@
 	conferred_embed = EMBED_POINTY_SUPERIOR
 	merge_type = /obj/item/stack/sticky_tape/pointy/super
 	greyscale_colors = "#8C0A00#4F4F4F#300008"
-	tape_gag = /obj/item/clothing/mask/muzzle/tape
+	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy/super
 
 /obj/item/stack/sticky_tape/surgical
 	name = "surgical tape"
@@ -113,4 +113,4 @@
 	custom_price = PAYCHECK_CREW
 	merge_type = /obj/item/stack/sticky_tape/surgical
 	greyscale_colors = "#FFFFFF#BD6A62"
-	tape_gag = /obj/item/clothing/mask/muzzle/tape
+	tape_gag = /obj/item/clothing/mask/muzzle/tape/surgical
