@@ -207,7 +207,7 @@
 /datum/crafting_recipe/food/pesto
 	name = "Pesto"
 	reqs = list(
-		/obj/item/food/firm_cheese_slice = 1,
+		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/datum/reagent/consumable/salt = 5,
 		/obj/item/food/grown/herbs = 2,
 		/obj/item/food/grown/garlic = 1,

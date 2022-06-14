@@ -141,6 +141,7 @@
 	if(riftTimer >= maxRiftTimer)
 		to_chat(src, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
 		destroy_rifts()
+		empty_contents()
 		playsound(src, 'sound/magic/demon_dies.ogg', 100, TRUE)
 		QDEL_NULL(src)
 

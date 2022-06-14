@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - spellcheck: "Adjusted description of moths eating clothes in preferences menu to better reflect their current behavior."
