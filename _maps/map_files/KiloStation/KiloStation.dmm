@@ -38057,6 +38057,10 @@
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
+"kIp" = (
+/obj/structure/sign/guide/xenobio_guide,
+/turf/closed/wall/rust,
+/area/station/science/xenobiology)
 "kIz" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/delivery,
@@ -76271,7 +76275,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/sign/guide/xenobio_guide/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "vzy" = (
@@ -125117,7 +125120,7 @@ uLt
 wpw
 aQl
 xNu
-uXM
+kIp
 doy
 hbe
 doy

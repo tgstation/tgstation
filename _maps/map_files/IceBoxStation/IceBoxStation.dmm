@@ -62087,7 +62087,6 @@
 	name = "Xenobio Pen 1 Blast Door";
 	req_access = list("xenobiology")
 	},
-/obj/structure/sign/guide/xenobio_guide/directional/south,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "tRX" = (
@@ -72147,6 +72146,7 @@
 	dir = 9;
 	network = list("ss13","rd","xeno")
 	},
+/obj/structure/sign/guide/xenobio_guide/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "wZC" = (

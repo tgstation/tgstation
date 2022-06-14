@@ -6051,6 +6051,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"coC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/guide/xenobio_guide/directional/north,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "coI" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating{
@@ -30035,8 +30044,7 @@
 	pixel_y = 8
 	},
 /obj/item/pen/fountain{
-	pixel_x = 6;
-	pixel_y = 0
+	pixel_x = 6
 	},
 /obj/item/pen/blue{
 	pixel_x = -5;
@@ -67698,7 +67706,6 @@
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/structure/sign/guide/xenobio_guide/directional/east,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "xLu" = (
@@ -115155,7 +115162,7 @@ xiL
 xiL
 idA
 xVu
-faD
+coC
 iWc
 xVu
 pXo
