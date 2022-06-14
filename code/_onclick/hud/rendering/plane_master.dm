@@ -11,13 +11,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// Plaintext and basic html are fine to use here.
 	/// I'll bonk you if I find you putting "lmao stuff" in here, make this useful.
 	var/documentation = ""
+	/// Our real alpha value, so alpha can persist through being hidden/shown
 	var/true_alpha = 255
+	/// Tracks if we're using our true alpha, or being manipulated in some other way
 	var/alpha_enabled = TRUE
 
 	/// The plane master group we're a member of, our "home"
 	var/datum/plane_master_group/home
 
+	/// Our offset from our "true" plane, see below
 	var/offset
+	/// When rendering multiz, lower levels get their own set of plane masters
+	/// Real plane here represents the "true" plane value of something, ignoring the offset required to handle lower levels
 	var/real_plane
 
 	//--rendering relay vars--
@@ -50,12 +55,16 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	. = ..()
 	QDEL_LIST(relays)
 
+/// Sets the plane group that owns us, it also determines what screen we render to
 /atom/movable/screen/plane_master/proc/set_home(datum/plane_master_group/home)
 	src.home = home
 	if(home.map)
 		screen_loc = "[home.map]:[screen_loc]"
 		assigned_map = home.map
 
+/// Updates our "offset", basically what layer of multiz we're meant to render
+/// Top is 0, goes up as you go down
+/// It's taken into account by render targets and relays, so we gotta make sure they're on the same page
 /atom/movable/screen/plane_master/proc/update_offset()
 	name = "[initial(name)] #[offset]"
 	SET_PLANE_W_SCALAR(src, real_plane, offset)
@@ -85,6 +94,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(length(render_relay_planes))
 		relay_render_to_plane(mymob)
 
+/// Hides a plane master from the passeed in mob
+/// Do your effect cleanup here
 /atom/movable/screen/plane_master/proc/hide_from(mob/oldmob)
 	var/client/their_client = oldmob.client
 	if(!their_client)

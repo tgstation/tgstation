@@ -194,46 +194,33 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	SIGNAL_HANDLER
 	build_plane_groups(old_max_offset + 1, new_max_offset)
 
+/// Creates the required plane masters to fill out new z layers (because each "level" of multiz gets its own plane master set)
 /datum/hud/proc/build_plane_groups(starting_offset, ending_offset)
 	for(var/group_key in master_groups)
 		var/datum/plane_master_group/group = master_groups[group_key]
 		group.build_plane_masters(starting_offset, ending_offset)
 
-/// Returns a list of all plane masters that match the input plane
-/datum/hud/proc/get_plane_masters(plane)
+/// Returns the plane master that match the input plane from the passed in group
+/datum/hud/proc/get_plane_master(plane, group_key = PLANE_GROUP_MAIN)
 	var/plane_key = "[plane]"
-	var/list/atom/movable/screen/plane_master/masters = list()
+	var/datum/plane_master_group/group = master_groups[group_key]
+	return group.plane_masters[plane_key]
 
-	for(var/group_key in master_groups)
-		var/datum/plane_master_group/group = master_groups[group_key]
-		var/atom/movable/screen/plane_master/master = group.plane_masters[plane_key]
-		if(master)
-			masters += master
-
-	return masters
-
-/// Returns a list of all plane masters that match the input true plane (ignores z layer offsets)
-/datum/hud/proc/get_true_plane_masters(true_plane)
+/// Returns a list of all plane masters that match the input true plane, drawn from the passed in group (ignores z layer offsets)
+/datum/hud/proc/get_true_plane_masters(true_plane, group_key = PLANE_GROUP_MAIN)
 	var/list/atom/movable/screen/plane_master/masters = list()
 	for(var/plane in TRUE_PLANE_TO_OFFSETS(true_plane))
-		masters += get_plane_masters(plane)
+		masters += get_plane_masters(plane, group)
 	return masters
 
-/datum/hud/proc/get_planes_from(plane_group)
-	var/datum/plane_master_group/group = master_groups[plane_group]
+/// Returns all the planes belonging to the passed in group key
+/datum/hud/proc/get_planes_from(group_key)
+	var/datum/plane_master_group/group = master_groups[group_key]
 	return group.plane_masters
 
+/// Returns the corresponding plane group datum if one exists
 /datum/hud/proc/get_plane_group(key)
 	return master_groups[key]
-
-/// Returns all "true" (ignoring z offsets) planes matching the input from the passed in plane group
-/datum/hud/proc/get_true_planes_from(plane_group, true_plane)
-	var/datum/plane_master_group/group = master_groups[plane_group]
-	var/list/atom/movable/screen/plane_master/masters = list()
-	for(var/plane in TRUE_PLANE_TO_OFFSETS(true_plane))
-		masters += group.plane_masters["[plane]"]
-
-	return masters
 
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)

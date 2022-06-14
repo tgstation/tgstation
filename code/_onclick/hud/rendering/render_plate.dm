@@ -134,6 +134,7 @@
 	render_relay_planes -= target_plane
 	rebuild_relays()
 
+/// Gets the relay atom we're using to connect to the target plane, if one exists
 /atom/movable/screen/plane_master/proc/get_relay_to(target_plane)
 	for(var/atom/movable/render_plane_relay/relay in relays)
 		if(relay.plane == target_plane)
@@ -141,6 +142,8 @@
 
 	return null
 
+/// Basically, trigger a full hud rebuild so our relays will be added to the screen
+/// I hate hud code
 /atom/movable/screen/plane_master/proc/rebuild_relays()
 	relays = list()
 	var/datum/hud/hud = home.our_hud

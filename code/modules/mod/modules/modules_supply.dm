@@ -229,8 +229,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/list/plane_masters = mod.wearer.hud_used.get_planes_from(PLANE_GROUP_MAIN)
-	var/atom/game_renderer = plane_masters["[RENDER_PLANE_GAME]"]
+	var/atom/game_renderer = mod.wearer.hud_used.get_plane_master(RENDER_PLANE_GAME)
 	var/matrix/render_matrix = matrix(game_renderer.transform)
 	render_matrix.Scale(1.25, 1.25)
 	animate(game_renderer, launch_time, flags = SINE_EASING|EASE_IN, transform = render_matrix)

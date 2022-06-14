@@ -91,7 +91,7 @@
 	var/datum/plane_master_group/planes = cam_screen.display_to(holder)
 
 	if(!renderLighting)
-		for(var/atom/movable/screen/plane_master/instance in holder.mob.hud_used.get_true_planes_from(planes.key, LIGHTING_PLANE))
+		for(var/atom/movable/screen/plane_master/instance in holder.mob.hud_used.get_true_plane_masters(LIGHTING_PLANE, planes.key))
 			instance.set_alpha(100)
 
 	cam_background = new

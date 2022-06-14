@@ -25,7 +25,7 @@
 	// And thus will just end up with weird fullwhite tiles
 	// If the relay thing is ever fixed, https://www.byond.com/forum/post/2797107, make sure we generate a set of parrallax layers for each group
 	// Cause of screen loc reasons
-	for(var/atom/movable/screen/plane_master/plane_master in screenmob.hud_used.get_true_planes_from(PLANE_GROUP_MAIN, PLANE_SPACE))
+	for(var/atom/movable/screen/plane_master/plane_master in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
 		if(screenmob != mymob)
 			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
 			C.screen += plane_master

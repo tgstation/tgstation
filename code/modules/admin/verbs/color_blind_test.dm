@@ -64,11 +64,11 @@
 	// Sorry...
 	if(selected_type)
 		colorblind_planes.remove_filter(selected_type)
-		for(var/atom/movable/screen/plane_master/parralax as anything in colorblind_planes.get_plane(PLANE_SPACE_PARALLAX))
+		for(var/atom/movable/screen/plane_master/parralax as anything in remove_from.get_true_plane_masters(PLANE_SPACE_PARALLAX))
 			parralax.blend_mode = initial(parralax.blend_mode)
 	selected_type = selected
 	if(selected_type)
 		var/list/matrix = color_matrixes[selected_type]
 		colorblind_planes.add_filter(selected_type, 0, color_matrix_filter(matrix))
-		for(var/atom/movable/screen/plane_master/parralax as anything in colorblind_planes.get_plane(PLANE_SPACE_PARALLAX))
+		for(var/atom/movable/screen/plane_master/parralax as anything in remove_from.get_true_plane_masters(PLANE_SPACE_PARALLAX))
 			parralax.blend_mode = BLEND_DEFAULT

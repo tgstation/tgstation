@@ -29,15 +29,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 
 	return returned_planes
 
-/atom/movable/plane_master_controller/proc/get_plane(plane)
-	var/list/returned_planes = list()
-	returned_planes += owner_hud.get_plane_masters(plane)
-	if(!length(returned_planes)) //If we looked for a hud that isn't instanced, just keep going
-		stack_trace("[plane] isn't a valid plane master layer for [owner_hud.type], are you sure it exists in the first place?")
-		return
-
-	return returned_planes
-
 ///Full override so we can just use filterrific
 /atom/movable/plane_master_controller/add_filter(name, priority, list/params)
 	. = ..()
