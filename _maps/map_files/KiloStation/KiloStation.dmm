@@ -9308,9 +9308,9 @@
 	},
 /area/station/maintenance/port/greater)
 "cLo" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
 /area/station/solars/port/aft)
 "cLq" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -14776,9 +14776,9 @@
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "eoD" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
 /area/station/solars/starboard/aft)
 "eoM" = (
 /obj/machinery/door/poddoor/preopen{
@@ -26938,9 +26938,9 @@
 	},
 /area/station/maintenance/disposal)
 "hyB" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
 /area/station/solars/starboard/fore)
 "hyJ" = (
 /obj/effect/turf_decal/bot,
@@ -28478,10 +28478,10 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "hTs" = (
-/obj/structure/lattice/catwalk,
 /obj/effect/landmark/carpspawn,
 /obj/structure/cable,
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
 /area/station/solars/starboard/fore)
 "hTz" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -32383,6 +32383,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"iTC" = (
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/station/solars/port/fore)
 "iTL" = (
 /obj/structure/chair{
 	dir = 4
@@ -36410,10 +36415,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
-"kfp" = (
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
-/area/station/solars/starboard/aft)
 "kgc" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37939,10 +37940,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "kFo" = (
-/obj/structure/lattice/catwalk,
 /obj/effect/landmark/carpspawn,
 /obj/structure/cable,
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
 /area/station/solars/starboard/aft)
 "kFx" = (
 /obj/effect/decal/cleanable/dirt,
@@ -63866,10 +63867,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
-"rZl" = (
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
-/area/station/solars/starboard/fore)
 "rZE" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -78841,10 +78838,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/bridge)
-"whD" = (
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
-/area/station/solars/port/aft)
 "whP" = (
 /obj/machinery/vending/engivend,
 /obj/effect/turf_decal/tile/neutral{
@@ -86076,10 +86069,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
-"yeb" = (
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
-/area/station/solars/port/fore)
 "yef" = (
 /obj/item/target/clown,
 /obj/effect/turf_decal/stripes/line{
@@ -97638,7 +97627,7 @@ acm
 aaa
 acm
 aaa
-mMv
+iTC
 cmU
 cmU
 cmU
@@ -97895,7 +97884,7 @@ hpG
 hpG
 ala
 hpG
-mMv
+iTC
 hpG
 hpG
 hpG
@@ -98152,7 +98141,7 @@ mMv
 mMv
 mMv
 mMv
-yeb
+tpp
 mMv
 mMv
 mMv
@@ -98409,7 +98398,7 @@ hpG
 hpG
 hpG
 hpG
-yeb
+tpp
 hpG
 hpG
 hpG
@@ -98661,17 +98650,17 @@ aaQ
 acm
 acm
 aaa
-yeb
+tpp
 ckk
 aaa
 aaa
 ckk
-yeb
+tpp
 ckk
 aaa
 aaa
 ckk
-yeb
+tpp
 cmU
 cmU
 aeU
@@ -98923,7 +98912,7 @@ hpG
 hpG
 hpG
 lDc
-yeb
+tpp
 tpp
 hpG
 hpG
@@ -99174,19 +99163,19 @@ aaa
 aeo
 aaa
 cmU
-mMv
-mMv
-mMv
-mMv
-mMv
-yeb
-yeb
-yeb
-mMv
-mMv
-mMv
-mMv
-mMv
+iTC
+iTC
+iTC
+iTC
+iTC
+tpp
+tpp
+tpp
+iTC
+iTC
+iTC
+iTC
+iTC
 cmU
 aeU
 aeU
@@ -99437,7 +99426,7 @@ hpG
 hpG
 hpG
 tpp
-yeb
+tpp
 tpp
 hpG
 hpG
@@ -99689,17 +99678,17 @@ vku
 aeU
 cmU
 cmU
-yeb
+tpp
 ckk
 aaa
 aaa
 ckk
-yeb
+tpp
 ckk
 aaa
 aaa
 ckk
-yeb
+tpp
 cmU
 cmU
 aUz
@@ -99763,7 +99752,7 @@ cmU
 cmU
 cmU
 cmU
-whD
+awn
 cmU
 cmU
 cmU
@@ -99951,7 +99940,7 @@ hpG
 hpG
 hpG
 hpG
-yeb
+tpp
 hpG
 hpG
 hpG
@@ -100020,7 +100009,7 @@ aeU
 aeU
 aeU
 cmU
-whD
+awn
 cmU
 aeU
 aeU
@@ -100203,17 +100192,17 @@ aeu
 aof
 aUz
 cmU
-mMv
-mMv
-mMv
-mMv
-mMv
-yeb
-mMv
-mMv
-mMv
-mMv
-mMv
+iTC
+iTC
+iTC
+iTC
+iTC
+tpp
+iTC
+iTC
+iTC
+iTC
+iTC
 cmU
 aeU
 rYc
@@ -100277,7 +100266,7 @@ aeu
 aeU
 aeU
 cmU
-whD
+awn
 cmU
 aeU
 aeU
@@ -100465,7 +100454,7 @@ hpG
 hpG
 hpG
 hpG
-yeb
+tpp
 hpG
 hpG
 hpG
@@ -100534,7 +100523,7 @@ aeu
 aeu
 rkn
 aDS
-whD
+awn
 bFI
 aeU
 coy
@@ -100722,7 +100711,7 @@ cmU
 cmU
 cmU
 aDS
-yeb
+tpp
 bFI
 cmU
 cmU
@@ -100979,7 +100968,7 @@ aeU
 coy
 woH
 aDS
-yeb
+tpp
 bFI
 rkn
 aeU
@@ -101236,7 +101225,7 @@ aeU
 aeU
 coy
 aDS
-mMv
+iTC
 bFI
 aeU
 aeu
@@ -101493,7 +101482,7 @@ aeU
 aeU
 aeU
 aDS
-mMv
+iTC
 bFI
 aeu
 aeu
@@ -127793,7 +127782,7 @@ aeu
 aeu
 aeU
 aDS
-kfp
+nNb
 bFI
 rkn
 coy
@@ -128050,7 +128039,7 @@ aeU
 aeU
 aUz
 aDS
-kfp
+nNb
 bFI
 aeU
 aeU
@@ -128307,7 +128296,7 @@ cmU
 cmU
 cmU
 aDS
-kfp
+nNb
 bFI
 cmU
 cmU
@@ -128564,7 +128553,7 @@ gix
 gix
 gix
 gix
-kfp
+nNb
 kgD
 kgD
 kgD
@@ -128821,7 +128810,7 @@ eoD
 eoD
 eoD
 eoD
-kfp
+nNb
 eoD
 eoD
 eoD
@@ -129078,7 +129067,7 @@ kgD
 gix
 gix
 gix
-kfp
+nNb
 kgD
 kgD
 kgD
@@ -129330,17 +129319,17 @@ pcC
 aeU
 cmU
 cmU
-kfp
+nNb
 ckk
 aaa
 aaa
 ckk
-kfp
+nNb
 ckk
 aaa
 aaa
 ckk
-kfp
+nNb
 aaa
 aaa
 aaQ
@@ -129592,7 +129581,7 @@ gix
 kgD
 kgD
 nNb
-kfp
+nNb
 nNb
 kgD
 kgD
@@ -129848,9 +129837,9 @@ eoD
 eoD
 eoD
 eoD
-kfp
-kfp
-kfp
+nNb
+nNb
+nNb
 eoD
 eoD
 eoD
@@ -130106,7 +130095,7 @@ kgD
 kgD
 gix
 nNb
-kfp
+nNb
 nNb
 gix
 gix
@@ -130358,17 +130347,17 @@ acm
 aaa
 acm
 aaa
-kfp
+nNb
 ckk
 aaa
 aaa
 ckk
-kfp
+nNb
 ckk
 aaa
 aaa
 ckk
-kfp
+nNb
 aaa
 aaa
 aeo
@@ -130620,7 +130609,7 @@ kgD
 kgD
 kgD
 kgD
-kfp
+nNb
 gix
 gix
 gix
@@ -130877,7 +130866,7 @@ eoD
 kFo
 eoD
 eoD
-kfp
+nNb
 eoD
 eoD
 eoD
@@ -131564,7 +131553,7 @@ cmU
 cmU
 cmU
 aDS
-rZl
+qzg
 bFI
 cmU
 cmU
@@ -131821,7 +131810,7 @@ pyg
 pyg
 pyg
 pyg
-rZl
+qzg
 pyg
 pyg
 pyg
@@ -132078,7 +132067,7 @@ hTs
 hyB
 hyB
 hyB
-rZl
+qzg
 hyB
 hyB
 hyB
@@ -132335,7 +132324,7 @@ pyg
 pyg
 pyg
 pyg
-rZl
+qzg
 pyg
 pyg
 pyg
@@ -132587,17 +132576,17 @@ aaa
 aeo
 aaa
 aaa
-rZl
+qzg
 ckk
 aaa
 aaa
 ckk
-rZl
+qzg
 ckk
 aaa
 aaa
 ckk
-rZl
+qzg
 cmU
 cmU
 aUz
@@ -132849,7 +132838,7 @@ pyg
 pyg
 pyg
 qzg
-rZl
+qzg
 qzg
 pyg
 pyg
@@ -133105,9 +133094,9 @@ hyB
 hyB
 hyB
 hyB
-rZl
-rZl
-rZl
+qzg
+qzg
+qzg
 hyB
 hyB
 hyB
@@ -133363,7 +133352,7 @@ pyg
 pyg
 pyg
 qzg
-rZl
+qzg
 qzg
 pyg
 pyg
@@ -133615,17 +133604,17 @@ aaa
 aaQ
 aaa
 aaa
-rZl
+qzg
 ckk
 aaa
 aaa
 ckk
-rZl
+qzg
 ckk
 aaa
 aaa
 ckk
-rZl
+qzg
 cmU
 cmU
 aeU
@@ -133877,7 +133866,7 @@ pyg
 pyg
 pyg
 pyg
-rZl
+qzg
 pyg
 pyg
 pyg
@@ -134134,7 +134123,7 @@ hyB
 hyB
 hyB
 hyB
-rZl
+qzg
 hyB
 hyB
 hyB
