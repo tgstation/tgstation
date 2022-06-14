@@ -779,7 +779,26 @@
 /// The amount of threat injected by a hack, if chosen.
 #define HACK_THREAT_INJECTION_AMOUNT 15
 
-/*
+/// Begin the process of hacking into the comms console to call in a threat.
+/obj/machinery/computer/communications/proc/try_hack_console(mob/living/hacker, duration = 30 SECONDS)
+	if(!can_hack())
+		return FALSE
+
+	AI_notify_hack()
+	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack)))
+		return FALSE
+
+	hack_console(hacker)
+	return TRUE
+
+/// Checks if this console is hackable. Used as a callback during try_hack_console's doafter as well.
+/obj/machinery/computer/communications/proc/can_hack()
+	if(machine_stat & (NOPOWER|BROKEN))
+		return FALSE
+
+	return TRUE
+
+/**
  * The communications console hack,
  * called by certain antagonist actions.
  *
