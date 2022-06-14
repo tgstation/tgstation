@@ -12,3 +12,12 @@
 
 /obj/structure/sign/gym/mirrored/right
 	icon_state = "gymmirror-right"
+
+/obj/structure/sign/guide/xenobio_guide
+	name = "\improper Slime geneology sign"
+	sign_change_name = "Xenobiology guide"
+	desc = "A sign depicting the slime mutation map."
+	icon_state = "xenobio-guide"
+	is_editable = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/guide/xenobio_guide, 32)
