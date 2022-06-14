@@ -421,13 +421,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Holds the areas themselves, which ends up meaning it holds any overlays/effects we apply to areas. NOT snow or rad storms, those go on above lighting"
 	plane = AREA_PLANE
 
-/atom/movable/screen/plane_master/radtext
-	name = "Radtext"
-	documentation = "This used to hold the little radiation readout overlays we poped up on stuff, but mothblocks removed those without removing this.\
-		<br>LEMON todo: remove this plane and bully moth"
-	plane = RAD_TEXT_PLANE
-	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-
 /atom/movable/screen/plane_master/balloon_chat
 	name = "Balloon chat"
 	documentation = "Holds ballon chat images, those little text bars that pop up for a second when you do some things. NOT runechat."
