@@ -1,0 +1,4 @@
+author: "robbertapir"
+delete-after: True
+changes: 
+  - bugfix: "the flavor text for changing the transfer amount on the medical gel is no longer backwards"
