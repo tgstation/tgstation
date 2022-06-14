@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Ranged attacks hitting mech equipment no longer ignores mech armor"
-  - bugfix: "Melee attacks now damage mech equipment"
-  - bugfix: "Mech equipment is now properly disabled at 0% health"
