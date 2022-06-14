@@ -20,6 +20,7 @@
 
 	overfloor_placed = TRUE
 
+	/// Determines the type of damage overlay that will be used for the tile
 	var/damaged_dmi = 'icons/turf/damaged.dmi'
 	var/broken = FALSE
 	var/burnt = FALSE
