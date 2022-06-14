@@ -146,7 +146,7 @@
 
 	item_to_retrieve.loc?.visible_message(span_warning("[item_to_retrieve] suddenly disappears!"))
 
-	if(caster.put_in_hands(item_to_retrieve))
+	if(isitem(item_to_retrieve) && caster.put_in_hands(item_to_retrieve))
 		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears in [caster]'s hand!"))
 	else
 		item_to_retrieve.forceMove(caster.drop_location())
