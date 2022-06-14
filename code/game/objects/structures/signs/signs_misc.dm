@@ -14,7 +14,7 @@
 	icon_state = "gymmirror-right"
 
 /obj/structure/sign/guide/xenobio_guide
-	name = "\improper Slime geneology sign"
+	name = "\improper Slime genealogy sign"
 	sign_change_name = "Xenobiology guide"
 	desc = "A sign depicting the slime mutation map."
 	icon_state = "xenobio-guide"
