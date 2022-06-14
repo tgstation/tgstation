@@ -39,3 +39,8 @@
 
 /turf/open/misc/ice/icemoon/no_planet_atmos
 	planetary_atmos = FALSE
+
+/turf/open/misc/ice/temperate
+	baseturfs = /turf/open/misc/ice/temperate
+	desc = "Somehow, it is not melting under these conditions. Must be some very thick ice. Just as slippery too."
+	initial_gas_mix = "o2=22;n2=82;TEMP=255.37" //it works with /turf/open/misc/asteroid/snow/temperatre
