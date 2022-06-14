@@ -516,3 +516,8 @@
   vincentiusvin:
   - bugfix: fix h2/trit fires being too hot, outputting funny numbers, generally being
       weird.
+2022-06-14:
+  Son-of-Space:
+  - bugfix: A rogue windoor in a wall on Kilostation by the chapel in space was terminated
+  robbertapir:
+  - bugfix: Regal rats can now heal by eating all types of cheese, not just cheddar.
