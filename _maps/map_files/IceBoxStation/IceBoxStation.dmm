@@ -11334,7 +11334,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/icemoon/underground/explored)
+/area/station/maintenance/starboard/lesser)
 "dCk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -11641,6 +11641,7 @@
 	dir = 1
 	},
 /obj/structure/chair,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
 "dHw" = (
@@ -25913,9 +25914,6 @@
 /obj/item/flashlight/lamp,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"irj" = (
-/turf/closed/wall,
-/area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "irp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -26946,7 +26944,7 @@
 "iJn" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/plating,
-/area/icemoon/underground/explored)
+/area/station/maintenance/starboard/lesser)
 "iJv" = (
 /obj/machinery/computer/mechpad,
 /obj/machinery/light/small/directional/north,
@@ -34657,6 +34655,7 @@
 	pixel_x = -4
 	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/toy/figure/chef,
 /turf/open/floor/plating/snowed/temperatre,
 /area/station/service/kitchen/coldroom)
 "lec" = (
@@ -38018,7 +38017,7 @@
 	},
 /obj/structure/table/wood,
 /turf/open/floor/plating,
-/area/icemoon/underground/explored)
+/area/station/maintenance/starboard/lesser)
 "mlC" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -55309,7 +55308,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/iron/large,
 /area/station/service/kitchen/diner)
 "rKQ" = (
@@ -182806,11 +182805,11 @@ lvt
 lvt
 xMq
 xMq
-gFX
-gFX
-irj
-irj
-gFX
+jre
+jre
+jre
+jre
+jre
 xMq
 tiY
 aIB
