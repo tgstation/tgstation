@@ -34,8 +34,8 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	max_ammo = 6
 
-/obj/item/ammo_box/magazine/internal/shot/meltra
-	name = "meltra internal magazine"
+/obj/item/ammo_box/magazine/internal/shot/blaster
+	name = "blaster internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/energy/disable
 	caliber = CALIBER_SHOTGUN_ENERGY
 	max_ammo = 6

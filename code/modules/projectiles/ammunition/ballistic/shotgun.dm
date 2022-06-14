@@ -183,7 +183,7 @@
 /obj/item/ammo_casing/shotgun/energy/snare
 	name = "TRIPnet shell"
 	desc = "An advanced shotgun shell that hurtles an energy snare at targets, tripping them up and dealing moderate stamina damage."
-	icon_state = "snarehell"
+	icon_state = "snareshell"
 	projectile_type = /obj/projectile/energy/trap
 	pellets = 1
 	variance = 0

@@ -70,6 +70,7 @@
 	name ="frag12 slug"
 	damage = 15
 	paralyze = 10
+	speed = 0.3
 
 /obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()

@@ -3,6 +3,7 @@
 	icon_state = "e_netting"
 	damage = 5
 	damage_type = STAMINA
+	speed = 0.3
 	hitsound = 'sound/weapons/taserhit.ogg'
 
 /obj/projectile/beam/pellet/net/Initialize(mapload)
@@ -63,6 +64,7 @@
 	damage = 25
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
+	speed = 0.3
 	range = 10
 
 /obj/projectile/energy/trap/on_hit(atom/target, blocked = FALSE)

@@ -176,7 +176,7 @@
 	icon_state = "cryopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
 
-// The Secura!
+// The Deltra!
 /obj/item/gun/energy/laser/deltra
 	name = "\improper Deltra HX62-S"
 	desc = "The Aussec Deltra is the pinnacle of projected kinetics technology. Capable of producing forcefield barriers to protect the wielder without compromising shooting capabilites, this weapon proves exceptionally useful in riot suppression, terrorist insurgencies and inquisitorial purges."

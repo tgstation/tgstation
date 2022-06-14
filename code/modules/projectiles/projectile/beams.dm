@@ -119,6 +119,7 @@
 
 /obj/projectile/beam/pulse/shotgun
 	damage = 30
+	speed = 0.3
 
 /obj/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"
@@ -271,7 +272,7 @@
 	wound_bonus = 5
 	bare_wound_bonus = 5
 	wound_falloff_tile = -2.5
-	speed = 0.5
+	speed = 0.3
 	speed_dropoff = 0.3
 	speed_dropoff_tiles = 5
 	armour_penetration = 30 //Roughly 0% resistance into a secvest, very good for actually hitting armored targets
@@ -287,7 +288,7 @@
 	bare_wound_bonus = 10
 	wound_falloff_tile = -1.5
 	weak_against_armour = TRUE //turns most secvests into 80% resistance AKA not very good against an actually armored target unless limb aiming for wounds
-	speed = 0.5
+	speed = 0.3
 	speed_dropoff = 0.3
 	speed_dropoff_tiles = 5
 	ricochets_max = 2
@@ -309,7 +310,7 @@
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
-	speed = 0.5
+	speed = 0.3
 	speed_dropoff = 0.3
 	speed_dropoff_tiles = 5
 	armour_penetration = 30 //Roughly 0% resistance into a secvest, very good for actually hitting armored targets

@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/automatic/sniper_rifle,
 	/obj/item/gun/ballistic/rocketlauncher,
 	/obj/item/gun/medbeam,
-	/obj/item/gun/ballistic/shotgun/automatic/meltra,
+	/obj/item/gun/ballistic/shotgun/blaster,
 	/obj/item/gun/energy/laser/deltra,
 	/obj/item/gun/energy/laser/thermal,
 	/obj/item/gun/energy/laser/thermal/inferno,

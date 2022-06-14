@@ -118,16 +118,16 @@
 		return
 	rack()
 
-//The Meltra
+//The Riot Blaster
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra
-	name = "\improper Meltra accelerator shotgun"
-	desc = "The Aussec Meltra utilizes bluespace rifling to reduce friction and drag significantly, propelling bullets at much faster speeds than conventional shots. This requires some ramp up. On the first shot, or without battery charge, the gun is much weaker than most shotguns of a similar class due to poorer rifling."
-	icon_state = "meltra"
+/obj/item/gun/ballistic/shotgun/blaster
+	name = "riot blaster energy shotgun"
+	desc = "The Aussec riot blaster energy shotgun utilizes bluespace rifling to reduce friction and drag significantly, propelling bullets at much faster speeds than conventional shots. This requires power upkeep."
+	icon_state = "meltra" //To be replaced, don't stress this being misnamed.
 	inhand_icon_state = "meltra"
 	worn_icon_state = "meltra"
 	fire_delay = 8
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/meltra
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/blaster
 	can_modify_ammo = TRUE
 	initial_caliber = CALIBER_SHOTGUN_ENERGY
 	alternative_caliber = CALIBER_SHOTGUN
@@ -150,28 +150,28 @@
 	var/cooldown_reset_time = 5 SECONDS //How long it takes before the shotgun needs to consume more charge, can probably magdump an entire shotgun in this time
 	var/timerid
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/Initialize(mapload)
+/obj/item/gun/ballistic/shotgun/blaster/Initialize(mapload)
 	. = ..()
 	if(cell_type)
 		cell = new cell_type(src)
 	else
 		cell = new(src)
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/Destroy()
+/obj/item/gun/ballistic/shotgun/blaster/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
 	. = ..()
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/get_cell()
+/obj/item/gun/ballistic/shotgun/blaster/get_cell()
 	return cell
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/examine(mob/user)
+/obj/item/gun/ballistic/shotgun/blaster/examine(mob/user)
 	. = ..()
 	if(cell)
 		. += span_notice("\The [src] is [round(cell.percent())]% charged.")
 	. += span_notice("\The [src] has a fire power strength of [round(100*projectile_damage_multiplier)]%.")
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
+/obj/item/gun/ballistic/shotgun/blaster/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	. = ..()
 	if(!.)
 		return
@@ -182,23 +182,23 @@
 	if(charged_shot)
 		handle_empowerment()
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/proc/handle_empowerment()
+/obj/item/gun/ballistic/shotgun/blaster/proc/handle_empowerment()
 	if(projectile_damage_multiplier < empowered_damage_multiplier)
 		projectile_damage_multiplier = empowered_damage_multiplier
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/proc/handle_reset(deltimer)
+/obj/item/gun/ballistic/shotgun/blaster/proc/handle_reset(deltimer)
 	projectile_damage_multiplier = normal_damage_multiplier
 	charged_shot = FALSE
 	playsound(src.loc, 'sound/weapons/gun/general/empty_alarm.ogg', 60, TRUE)
 	if(deltimer && timerid)
 		deltimer(timerid)
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/proc/reduce_cell_charge(cell_deduction)
+/obj/item/gun/ballistic/shotgun/blaster/proc/reduce_cell_charge(cell_deduction)
 	if(!cell)
 		return
 	return cell.use(cell_deduction)
 
-/obj/item/gun/ballistic/shotgun/automatic/meltra/emp_act(severity)
+/obj/item/gun/ballistic/shotgun/blaster/emp_act(severity)
 	. = ..()
 	if (!cell)
 		return

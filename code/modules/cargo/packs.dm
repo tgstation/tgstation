@@ -494,8 +494,8 @@
 	name = "Meltra Shotguns Crate"
 	desc = "The standard issue Meltra accelerator shotguns were stolen and/or misplaced? Need backup? No problem! Aussec has you covered with two brand-new Meltra Accelerator Shotguns, and three Bandoliers. Requires Armory access to open."
 	cost = CARGO_CRATE_VALUE * 17.5
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/meltra,
-					/obj/item/gun/ballistic/shotgun/automatic/meltra,
+	contains = list(/obj/item/gun/ballistic/shotgun/blaster,
+					/obj/item/gun/ballistic/shotgun/blaster,
 					/obj/item/storage/belt/bandolier,
 					/obj/item/storage/belt/bandolier)
 	crate_name = "\improper Meltra shotgun crate"

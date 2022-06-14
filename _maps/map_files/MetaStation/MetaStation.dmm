@@ -8117,8 +8117,8 @@
 /area/station/service/lawoffice)
 "daO" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/meltra,
-/obj/item/gun/ballistic/shotgun/meltra{
+/obj/item/gun/ballistic/shotgun/blaster,
+/obj/item/gun/ballistic/shotgun/blaster{
 	pixel_y = 6
 	},
 /obj/item/gun/ballistic/shotgun/riot{

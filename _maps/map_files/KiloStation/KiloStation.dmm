@@ -2036,8 +2036,8 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/ballistic/shotgun/meltra,
-/obj/item/gun/ballistic/shotgun/meltra{
+/obj/item/gun/ballistic/shotgun/blaster,
+/obj/item/gun/ballistic/shotgun/blaster{
 	pixel_x = 3;
 	pixel_y = -3
 	},

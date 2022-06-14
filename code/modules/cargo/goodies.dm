@@ -45,12 +45,12 @@
 	cost = PAYCHECK_COMMAND * 1.75
 	contains = list(/obj/item/knife/combat/survival)
 
-/datum/supply_pack/goody/ballistic_single
-	name = "Meltra Shotgun Single-Pack"
-	desc = "Electronic firearms, for the modern spaceman. Contains one Aussec-designed Meltra Shotgun, and one Shotgun Bandolier."
+/datum/supply_pack/goody/blaster_single
+	name = "Riot Blaster Shotgun Single-Pack"
+	desc = "Electronic firearms, for the modern spaceman. Contains one Aussec-designed Riot Blaster Energy Shotgun, and one Shotgun Bandolier."
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/meltra, /obj/item/storage/belt/bandolier)
+	contains = list(/obj/item/gun/ballistic/shotgun/blaster, /obj/item/storage/belt/bandolier)
 
 /datum/supply_pack/goody/energy_single
 	name = "Energy Gun Single-Pack"
