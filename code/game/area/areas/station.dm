@@ -547,6 +547,10 @@
 	name = "\improper Cafeteria"
 	icon_state = "cafeteria"
 
+/area/station/service/barber
+	name = "\improper Barber"
+	icon_state = "cafeteria" // sue me
+
 /area/station/service/kitchen
 	name = "\improper Kitchen"
 	icon_state = "kitchen"
