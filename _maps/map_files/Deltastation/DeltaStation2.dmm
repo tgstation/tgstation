@@ -24186,11 +24186,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
-"gpS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/bed,
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
 "gpW" = (
 /obj/structure/cable,
 /turf/open/floor/circuit/red,
@@ -125553,7 +125548,7 @@ hww
 oQO
 qhB
 rTo
-gpS
+uFT
 iXB
 pYK
 szb
