@@ -48,12 +48,14 @@ export class TguiSay extends Component<{}, State> {
         <Dragzone channel={prefixOrChannel} top />
         <div className="window__content" $HasKeyedChildren>
           <Dragzone channel={prefixOrChannel} left />
-          <button
-            className={getCss('button', prefixOrChannel)}
-            onclick={onClick}
-            type="submit">
-            {buttonContent}
-          </button>
+          {!!prefixOrChannel && (
+            <button
+              className={getCss('button', prefixOrChannel)}
+              onclick={onClick}
+              type="submit">
+              {buttonContent}
+            </button>
+          )}
           <TextArea
             className={getCss('textarea', prefixOrChannel)}
             dontUseTabForIndent

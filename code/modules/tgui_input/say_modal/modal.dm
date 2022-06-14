@@ -3,18 +3,13 @@
 
 /**
  * Creates a JSON encoded message to open TGUI say modals properly.
- * If the user has tgui inputs turned off, opens the standard input.
  *
  * Arguments:
  * channel - The channel to open the modal in.
  * Returns:
- * string - A JSON encoded message to open the modal OR normal chat.
+ * string - A JSON encoded message to open the modal.
  */
 /client/proc/tgui_say_create_open_command(channel)
-	if(!prefs?.read_preference(/datum/preference/toggle/tgui_input))
-		if(channel == RADIO_CHANNEL)
-			channel = SAY_CHANNEL
-		return lowertext(channel)
 	var/message = TGUI_CREATE_MESSAGE("open", list(
 		channel = channel,
 	))
@@ -67,7 +62,7 @@
  */
 /datum/tgui_say/proc/load()
 	window_open = FALSE
-	winset(client, "tgui_say", "is-visible=false")
+	winshow(client, "tgui_say", FALSE)
 	/// Sanity check in case the server ever changes MAX_LEN_MESSAGE
 	window.send_message("maxLength", list(
 		maxLength = max_length,
@@ -85,7 +80,7 @@
  */
 /datum/tgui_say/proc/open(payload)
 	if(!payload?["channel"])
-		CRASH("No channel provided to open TGUI-Say")
+		CRASH("No channel provided to an open TGUI-Say")
 	window_open = TRUE
 	if(payload["channel"] != OOC_CHANNEL)
 		start_thinking()
