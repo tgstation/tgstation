@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Pill names now have a cap at 42 characters to prevent chat spam."
