@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/get_true_plane_masters(true_plane, group_key = PLANE_GROUP_MAIN)
 	var/list/atom/movable/screen/plane_master/masters = list()
 	for(var/plane in TRUE_PLANE_TO_OFFSETS(true_plane))
-		masters += get_plane_masters(plane, group)
+		masters += get_plane_master(plane, group_key)
 	return masters
 
 /// Returns all the planes belonging to the passed in group key
