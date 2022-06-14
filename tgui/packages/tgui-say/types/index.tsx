@@ -34,17 +34,17 @@ type Fields = {
   value: string;
 };
 
-type Timers = {
-  channelDebounce: ({ mode: boolean }) => void;
-  forceDebounce: ({ channel: number, entry: string }) => void;
-  typingThrottle: () => void;
-};
-
 export type State = {
   buttonContent: string | number;
   channel: number;
   edited: boolean;
   size: number;
+};
+
+type Timers = {
+  channelDebounce: ({ mode: boolean }) => void;
+  forceDebounce: ({ channel: number, entry: string }) => void;
+  typingThrottle: () => void;
 };
 
 export type DragzoneProps = {
@@ -53,4 +53,32 @@ export type DragzoneProps = {
   right: boolean;
   bottom: boolean;
   left: boolean;
+};
+
+export type RadioPrefixes = Record<subChannel, channelData>;
+
+type subChannel =
+  | ':a '
+  | ':b '
+  | ':c '
+  | ':e '
+  | ':m '
+  | ':n '
+  | ':o '
+  | ':s '
+  | ':t '
+  | ':u '
+  | ':v '
+  | ':y ';
+
+type channelData = {
+  id: string;
+  label: string;
+};
+
+export type WindowSizes = {
+  small: number;
+  medium: number;
+  large: number;
+  width: number;
 };

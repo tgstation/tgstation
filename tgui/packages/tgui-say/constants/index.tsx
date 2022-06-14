@@ -1,8 +1,10 @@
+import { RadioPrefixes, WindowSizes } from '../types';
+
 /** Radio channels */
 export const CHANNELS: string[] = ['Say', 'Radio', 'Me', 'OOC'];
 
 /** Window sizes in pixels */
-export const WINDOW_SIZES: Record<string, number> = {
+export const WINDOW_SIZES: WindowSizes = {
   small: 30,
   medium: 50,
   large: 70,
@@ -15,7 +17,7 @@ export const WINDOW_SIZES: Record<string, number> = {
  * id - string. css class identifier.
  * label - string. button label.
  */
-export const RADIO_PREFIXES: Record<string, { id: string; label: string }> = {
+export const RADIO_PREFIXES: RadioPrefixes = {
   ':a ': {
     id: 'hive',
     label: 'Hive',

@@ -20,7 +20,7 @@ export class TguiSay extends Component<{}, State> {
     buttonContent: '',
     channel: -1,
     edited: false,
-    size: WINDOW_SIZES.SMALL,
+    size: WINDOW_SIZES.small,
   };
   timers: Modal['timers'] = timers;
 
