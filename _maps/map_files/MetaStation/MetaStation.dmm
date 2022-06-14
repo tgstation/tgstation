@@ -61687,6 +61687,7 @@
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/structure/sign/guide/xenobio_guide/directional/east,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "vEc" = (

@@ -63810,6 +63810,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
+"vwG" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/structure/sign/guide/xenobio_guide/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/science/xenobiology)
 "vwL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -116080,7 +116087,7 @@ ofJ
 gcm
 ttq
 fIy
-fIy
+vwG
 atO
 ljv
 dUO

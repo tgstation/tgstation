@@ -18428,7 +18428,7 @@
 /obj/item/folder/blue,
 /obj/item/clothing/under/rank/centcom/commander,
 /obj/item/clothing/head/centhat{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0);
+	armor = list("melee"=0,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0);
 	desc = "A replica hat of a Central Commander's attire. It has a small tag on it saying, 'It's good to be emperor.'";
 	name = "Replica CentCom hat"
 	},
@@ -31546,7 +31546,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 15);
+	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing=15);
 	name = "Delta-Down";
 	pixel_x = 5;
 	pixel_y = 5
@@ -34968,10 +34968,7 @@
 	name = "xenobiology camera";
 	network = list("ss13","xeno","rd")
 	},
-/obj/structure/sign/warning/deathsposal{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/delivery,
+/obj/structure/sign/guide/xenobio_guide/directional/east,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "jBE" = (
@@ -54986,7 +54983,7 @@
 /obj/item/folder/red,
 /obj/item/toy/gun,
 /obj/item/clothing/head/beret/sec{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0);
+	armor = list("melee"=0,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0);
 	desc = "A replica beret resembling that of a special operations officer under Nanotrasen.";
 	name = "replica officer's beret"
 	},
