@@ -337,3 +337,35 @@
 	projectile.damage /= damage_multiplier
 	projectile.speed /= speed_multiplier
 	projectile.cut_overlay(projectile_effect)
+
+///Active Sonar - Displays a hud circle on the turf of any living creatures in the given radius
+/obj/item/mod/module/active_sonar
+	name = "MOD active sonar"
+	desc = "Ancient tech from the 20th century, this module uses sonic waves to detect living creatures within the user's radius. \
+	Its loud ping is much harder to hide in an indoor station than in the outdoor operations it was designed for."
+	icon_state = "projectile_dampener"
+	module_type = MODULE_USABLE
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	complexity = 3
+	incompatible_modules = list(/obj/item/mod/module/active_sonar)
+	cooldown_time = 15 SECONDS
+	/// Radius of the sonar.
+	var/sonar_radius = 7
+
+/obj/item/mod/module/active_sonar/on_use()
+	. = ..()
+	if(!.)
+		return
+	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	if(!do_after(mod.wearer, 1 SECONDS))
+		return
+	var/creatures_detected = 0
+	for(var/mob/living/creature in range(sonar_radius, mod.wearer))
+		if(creature == mod.wearer)
+			continue
+		var/obj/effect/temp_visual/sonar_ping/ping_visual = /obj/effect/temp_visual/sonar_ping
+		new ping_visual(creature.loc)
+		ping_visual.add_mind(mod.wearer)
+		creatures_detected++
+	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE) // Should be audible for the whole sonar distance
+	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [creatures_detected] living beings nearby!"))
