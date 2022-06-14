@@ -1,44 +1,5 @@
-/**
- * The tgui say modal. This initializes an input window which hides until
- * the user presses one of the speech hotkeys. Once something is entered, it will
- * delegate the speech to the proper channel.
- */
-/datum/tgui_say
-	/// The user who opened the window
-	var/client/client
-	/// Injury phrases to blurt out
-	var/list/hurt_phrases = list("GACK!", "GLORF!", "OOF!", "AUGH!", "OW!", "URGH!", "HRNK!")
-	/// Max message length
-	var/max_length = MAX_MESSAGE_LEN
-	/// The modal window
-	var/datum/tgui_window/window
-	/// Boolean for whether the tgui_say was opened by the user.
-	var/window_open
-
-/** Assigned window to the client */
+/** Assigned say modal of the client */
 /client/var/datum/tgui_say/tgui_say
-
-/** Creates the new input window to exist in the background. */
-/datum/tgui_say/New(client/client, id)
-	src.client = client
-	window = new(client, id)
-	window.subscribe(src, .proc/on_message)
-	window.is_browser = TRUE
-
-/**
- * Injects the scripts and styling into the window,
- * then feeds it props for the chat channel and max message length.
- */
-/datum/tgui_say/proc/initialize()
-	set waitfor = FALSE
-	// Sleep to defer initialization to after client constructor
-	sleep(3 SECONDS)
-	window.initialize(
-			strict_mode = TRUE,
-			fancy = TRUE,
-			inline_css = file("tgui/public/tgui-say.bundle.css"),
-			inline_js = file("tgui/public/tgui-say.bundle.js"),
-	);
 
 /**
  * Creates a JSON encoded message to open TGUI say modals properly.
@@ -60,9 +21,49 @@
 	return "\".output tgui_say.browser:update [message]\""
 
 /**
+ * The tgui say modal. This initializes an input window which hides until
+ * the user presses one of the speech hotkeys. Once something is entered, it will
+ * delegate the speech to the proper channel.
+ */
+/datum/tgui_say
+	/// The user who opened the window
+	var/client/client
+	/// Injury phrases to blurt out
+	var/list/hurt_phrases = list("GACK!", "GLORF!", "OOF!", "AUGH!", "OW!", "URGH!", "HRNK!")
+	/// Max message length
+	var/max_length = MAX_MESSAGE_LEN
+	/// The modal window
+	var/datum/tgui_window/window
+	/// Boolean for whether the tgui_say was opened by the user.
+	var/window_open
+
+/** Creates the new input window to exist in the background. */
+/datum/tgui_say/New(client/client, id)
+	src.client = client
+	window = new(client, id)
+	window.subscribe(src, .proc/on_message)
+	window.is_browser = TRUE
+
+/**
+ * After a brief period, injects the scripts into
+ * the window to listen for open commands.
+ */
+/datum/tgui_say/proc/initialize()
+	set waitfor = FALSE
+	// Sleep to defer initialization to after client constructor
+	sleep(3 SECONDS)
+	window.initialize(
+			strict_mode = TRUE,
+			fancy = TRUE,
+			inline_css = file("tgui/public/tgui-say.bundle.css"),
+			inline_js = file("tgui/public/tgui-say.bundle.js"),
+	);
+
+/**
  * Ensures nothing funny is going on window load.
- * Minimizes the winddow, sets max length, closes all
- * typing and thinking indicators.
+ * Minimizes the window, sets max length, closes all
+ * typing and thinking indicators. This is triggered
+ * as soon as the window sends the "ready" message.
  */
 /datum/tgui_say/proc/load()
 	window_open = FALSE
@@ -76,7 +77,7 @@
 
 /**
  * Sets the window as "opened" server side, though it is already
- * visible to the user. We do this to set local vars &&
+ * visible to the user. We do this to set local vars &
  * start typing (if enabled and in an IC channel). Logs the event.
  *
  * Arguments:

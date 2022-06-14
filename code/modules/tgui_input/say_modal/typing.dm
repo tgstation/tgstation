@@ -44,7 +44,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 
 /** Sets the mob as "thinking" - with indicator and variable thinking_IC */
 /datum/tgui_say/proc/start_thinking()
-	if(!window_open || !client.typing_indicators)
+	if(!window_open || !client.typing_indicators || client.mob.stat != CONSCIOUS)
 		return FALSE
 	/// Special exemptions
 	if(isabductor(client.mob))
@@ -62,7 +62,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
  */
 /datum/tgui_say/proc/start_typing()
 	client.mob.remove_thinking_indicator()
-	if(!window_open || !client.typing_indicators || !client.mob.thinking_IC)
+	if(!window_open || !client.typing_indicators || !client.mob.thinking_IC || client.mob.stat != CONSCIOUS)
 		return FALSE
 	client.mob.create_typing_indicator()
 	addtimer(CALLBACK(src, .proc/stop_typing), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)

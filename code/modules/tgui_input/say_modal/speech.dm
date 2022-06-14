@@ -58,7 +58,7 @@
  * Makes the player force say what's in their current input box.
  */
 /mob/living/carbon/human/proc/force_say()
-	if(!client?.tgui_say?.window_open)
+	if(stat != CONSCIOUS || !client?.tgui_say?.window_open)
 		return FALSE
 	client.tgui_say.force_say()
 	if(client.typing_indicators)
