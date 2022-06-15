@@ -1,0 +1,4 @@
+author: "YakumoChen"
+delete-after: True
+changes: 
+  - qol: "Conveyor switches now tell you the speed setting of belts when examined. You can change the speed with a multitool!"

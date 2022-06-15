@@ -356,9 +356,8 @@
 /area/ruin/powered/clownplanet)
 "bj" = (
 /obj/structure/mineral_door/wood,
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/ruin/powered/clownplanet)
 "bk" = (
 /obj/effect/spawner/random/vending/snackvend,
