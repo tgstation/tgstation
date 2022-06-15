@@ -3069,10 +3069,6 @@
 "aZf" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/pen{
-	pixel_x = 1;
-	pixel_y = 9
-	},
 /turf/open/floor/wood,
 /area/station/maintenance/aft/greater)
 "aZk" = (
@@ -5252,10 +5248,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "bHU" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/aft/greater)
@@ -9288,11 +9280,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "cUz" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/sign/poster/random/directional/west,
-/obj/effect/mapping_helpers/burnt_floor,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/lesser)
 "cVc" = (
@@ -14124,12 +14112,8 @@
 /area/station/maintenance/starboard/aft)
 "etf" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/bookcase/random,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/bookcase/random,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "eth" = (
@@ -19786,13 +19770,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "ggp" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "ggG" = (
@@ -26489,6 +26470,8 @@
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "ijM" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage)
 "ijT" = (
@@ -29257,22 +29240,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "jdH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/duct,
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 8
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
@@ -30340,9 +30314,8 @@
 /area/station/service/chapel/office)
 "jvE" = (
 /obj/effect/turf_decal/weather/snow,
-/turf/open/floor/plating/icemoon{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "jvL" = (
 /obj/structure/cable,
@@ -36761,9 +36734,6 @@
 /area/station/hallway/primary/starboard)
 "lsA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
@@ -38210,14 +38180,6 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "lSv" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -11;
-	pixel_y = 7
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/table,
 /obj/item/paper_bin{
 	pixel_x = -11;
@@ -40710,6 +40672,10 @@
 "mJL" = (
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/light/small/directional/south,
+/obj/structure/cable/layer3,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "mJO" = (
@@ -43382,9 +43348,8 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "nAN" = (
 /obj/effect/turf_decal/tile/brown{
@@ -46549,11 +46514,10 @@
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "owB" = (
-/obj/effect/turf_decal/tile/blue{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/cable,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -48241,12 +48205,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
-"oYe" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/iron/grimy,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "oYi" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/table,
@@ -49645,6 +49603,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 4
 	},
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/mix)
 "ptx" = (
@@ -55544,10 +55503,6 @@
 /obj/structure/sign/poster/random/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/sign/poster/random/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
@@ -59705,6 +59660,9 @@
 /area/station/command/heads_quarters/ce)
 "sCS" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "sCY" = (
@@ -67482,6 +67440,7 @@
 "vbm" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "vbn" = (
@@ -75238,6 +75197,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "xvy" = (
@@ -246839,7 +246799,7 @@ swF
 xws
 eRH
 sMp
-oYe
+orK
 nSF
 pnR
 pnR
