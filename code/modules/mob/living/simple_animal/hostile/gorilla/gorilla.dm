@@ -121,7 +121,7 @@
 	desc = "Cargo's pet gorilla."
 	maxHealth = 200
 	health = 200
-	faction = list(FACTION_STATION)
+	faction = list(FACTION_STATION, "neutral", "monkey", "jungle")
 	gold_core_spawnable = NO_SPAWN
 	unique_name = FALSE
 	/// Whether we're currently being polled over
