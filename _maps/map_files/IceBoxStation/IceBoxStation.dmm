@@ -8802,6 +8802,13 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/service/chapel)
+"cPu" = (
+/obj/machinery/light/directional/east,
+/obj/structure/sign/warning/fire{
+	pixel_y = 32
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/science/ordnance/office)
 "cPE" = (
 /turf/open/floor/iron/smooth_half{
 	dir = 1
@@ -16840,6 +16847,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "fsO" = (
@@ -27117,12 +27126,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/locker)
-"iLd" = (
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/science/ordnance/office)
 "iLe" = (
 /obj/item/radio/intercom/directional/north,
 /obj/structure/table/glass,
@@ -38138,8 +38141,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "mna" = (
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "mnj" = (
@@ -54663,8 +54666,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "rAm" = (
-/obj/effect/spawner/random/vending/snackvend,
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "rAr" = (
@@ -55188,8 +55191,8 @@
 /area/station/maintenance/aft/greater)
 "rHr" = (
 /obj/machinery/firealarm/directional/north,
-/obj/item/kirbyplants/random,
 /obj/machinery/light/small/directional/north,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "rHz" = (
@@ -256179,7 +256182,7 @@ eIC
 trK
 fsN
 krY
-iLd
+xLq
 xLq
 aoo
 rYZ
@@ -256436,7 +256439,7 @@ whP
 mOc
 mkx
 krY
-ezJ
+cPu
 xLq
 iba
 gas
