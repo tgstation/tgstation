@@ -291,12 +291,13 @@
 		minor_announce("ERROR: Corruption detected in navigation protocols. Connection with Transponder #XCC-P5831-ES13 lost. \
 				Backup exit route protocol decrypted. Calibrating route...",
 			"Emergency Shuttle", TRUE) // wait out until the rift on the station gets destroyed and the final message plays
-		var/list/shuttle_areas = list(/area/shuttle/escape)
-		var/list/mobs = mobs_in_area_type(shuttle_areas)
-		for(var/mob/living/mob as anything in mobs)
-			if(mob.client)
-				shake_camera(mob, 3 SECONDS * 0.25, 1) // properly emulate lateShuttleMove() behaviour
-			mob.Paralyze(3 SECONDS, TRUE)
+        var/list/mobs = mobs_in_area_type(list(/area/shuttle/escape))
+        for(var/mob/living/mob as anything in mobs) // emulate mob/living/lateShuttleMove() behaviour
+            if(mob.buckled)
+                continue
+            if(mob.client)
+                shake_camera(mob, 3 SECONDS * 0.25, 1)
+            mob.Paralyze(3 SECONDS, TRUE)
 
 /**
  * Announces the last message to the station, frees the shuttle from purgatory if applicable
