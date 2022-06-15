@@ -8,7 +8,11 @@ export const handleSetSize = function (this: Modal, value: number) {
   if (value > LINE_LENGTHS.medium && size !== WINDOW_SIZES.large) {
     this.setState({ size: WINDOW_SIZES.large });
     windowSet(WINDOW_SIZES.large);
-  } else if (value <= LINE_LENGTHS.medium && value > LINE_LENGTHS.small && size !== WINDOW_SIZES.medium) {
+  } else if (
+    value <= LINE_LENGTHS.medium &&
+    value > LINE_LENGTHS.small &&
+    size !== WINDOW_SIZES.medium
+  ) {
     this.setState({ size: WINDOW_SIZES.medium });
     windowSet(WINDOW_SIZES.medium);
   } else if (value <= LINE_LENGTHS.small && size !== WINDOW_SIZES.small) {
