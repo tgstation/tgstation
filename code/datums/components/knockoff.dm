@@ -34,6 +34,13 @@
 		return
 	if(!wearer.dropItemToGround(item))
 		return
+
+	// unique item check so that we can handle them differently
+	if(CALLBACK(src, .proc/unique_item_check, item, /obj/item/toy/basketball))
+		wearer.visible_message(span_boldwarning("[attacker] swats the [item.name] out of [wearer]'s hand!"),span_userdanger("[attacker] steals your [item.name]!"))
+		playsound(item, 'sound/items/dodgeball.ogg', 50, TRUE)
+		return
+
 	wearer.visible_message(span_warning("[attacker] knocks off [wearer]'s [item.name]!"),span_userdanger("[attacker] knocks off your [item.name]!"))
 
 ///Tries to knockoff the item when user is knocked down
@@ -69,3 +76,9 @@
 
 	UnregisterSignal(M, COMSIG_HUMAN_DISARM_HIT)
 	UnregisterSignal(M, COMSIG_LIVING_STATUS_KNOCKDOWN)
+
+/datum/component/knockoff/proc/unique_item_check(obj/item/our_item, obj/item/unique_item)
+	if(!QDELETED(our_item))
+		if(istype(our_item, unique_item))
+			return TRUE
+	return FALSE
