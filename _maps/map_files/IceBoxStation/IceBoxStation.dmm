@@ -44553,11 +44553,9 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/command/nuke_storage)
 "old" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "tech_storage"
-	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "olf" = (
