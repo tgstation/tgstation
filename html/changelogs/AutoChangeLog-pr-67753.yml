@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Chameleon neckties will no longer give you a missing-texture cape and a big ERROR icon by default. Trust me when I tell you this wasn't actually a good thing."
