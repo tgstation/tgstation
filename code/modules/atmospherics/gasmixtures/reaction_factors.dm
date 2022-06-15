@@ -185,7 +185,7 @@
 		"Energy" = "[PN_HYDROGEN_CONVERSION_ENERGY] joules of energy is absorbed per reaction rate",
 	)
 
-/datum/gas_reaction/proto_nitrate_tritium_response/init_factors() // Fixed reaction rate
+/datum/gas_reaction/proto_nitrate_tritium_response/init_factors()
 	factor = list(
 		/datum/gas/tritium = "Tritium is consumed at 1 reaction rate.",
 		/datum/gas/proto_nitrate = "Proto nitrate is consumed at 0.01 reaction rate.",
@@ -194,7 +194,7 @@
 		"Radiation" = "This reaction emits radiation proportional to the reaction rate.",
 	)
 
-/datum/gas_reaction/proto_nitrate_bz_response/init_factors() // Fixed reaction rate
+/datum/gas_reaction/proto_nitrate_bz_response/init_factors()
 	factor = list(
 		/datum/gas/proto_nitrate = "[MINIMUM_MOLE_COUNT] moles of proto-nitrate needs to be present for the reaction to occur",
 		/datum/gas/bz = "BZ is consumed at 1 reaction rate.",
@@ -204,4 +204,5 @@
 		"Energy" = "[PN_BZASE_ENERGY] joules of energy is released per reaction rate",
 		"Radiation" = "This reaction emits radiation proportional to the reaction rate.",
 		"Hallucinations" = "This reaction can cause various carbon based lifeforms in the vicinity to hallucinate.",
+		"Nuclear Particles" = "This reaction emits extremely high energy nuclear particles, up to [PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM] per reaction rate.",
 	)
