@@ -217,6 +217,8 @@
 		while(get_dist(mass_loc, rift_loc) < MIN_RIFT_SAFE_DIST)
 		new /obj/crystal_mass(get_turf(mass_loc))
 
+	SSsupermatter_cascade.cascade_initiated = TRUE
+
 /**
  * Adds a bit of spiciness to the cascade by breaking lights and turning emergency maint access on
  */
@@ -315,7 +317,6 @@
 			shuttle_msg = Gibberish(shuttle_msg, TRUE, 15)
 		minor_announce(shuttle_msg, "Emergency Shuttle", TRUE)
 		SSshuttle.emergency.setTimer(15 SECONDS)
-		SSticker.news_report = SUPERMATTER_CASCADE
 
 /**
  * Announce detail about the event, as well as rift location
