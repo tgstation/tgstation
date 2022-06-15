@@ -76846,11 +76846,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "uJB" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
-	pixel_x = -3;
-	pixel_y = 15
-	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
 	pixel_x = -6;
 	pixel_y = 3
@@ -76863,24 +76858,10 @@
 	pixel_y = 5
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
-	pixel_x = -3;
-	pixel_y = 15
-	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
 	pixel_x = -6;
 	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	desc = "Whatever it is, it reeks of foul, putrid froth.";
-	list_reagents = list(/datum/reagent/consumable/ethanol/bacchus_blessing=15);
-	name = "Delta-Down";
-	pixel_x = 5;
-	pixel_y = 5
 	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
