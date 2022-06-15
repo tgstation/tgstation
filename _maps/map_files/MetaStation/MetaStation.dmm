@@ -36847,7 +36847,7 @@
 /area/station/security/execution/education)
 "ncv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/white/line{

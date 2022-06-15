@@ -109,7 +109,7 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "bT" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 4;
 	resistance_flags = 64
 	},
@@ -343,7 +343,7 @@
 /turf/open/floor/iron,
 /area/centcom/ctf)
 "gO" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 8;
 	resistance_flags = 64
 	},

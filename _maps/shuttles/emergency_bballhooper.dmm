@@ -3,7 +3,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 8;
 	name = "Hopping Jezzertons"
 	},
@@ -855,7 +855,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 4;
 	name = "A La Penners"
 	},
