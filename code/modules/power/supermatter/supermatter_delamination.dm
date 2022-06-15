@@ -184,12 +184,15 @@
 	// This logic is to keep uncalled shuttles uncalled
 	// In SSshuttle, there is not much of a way to prevent shuttle calls, unless we mess with admin panel vars
 	// SHUTTLE_STRANDED is different here, because it *can* block the shuttle from being called, however if we don't register a hostile
-	// environment, it gets unset immediately. Internally, it gets the count of all reasons for HEs and then checks to see if it is zero
-	// and the shuttle is in stranded mode, then frees it with an announcement.
-	// This is a botched solution to a problem that could be solved with a small change in shuttle code, however
-	if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
-		SSshuttle.emergency.mode = SHUTTLE_STRANDED
-		SSshuttle.registerHostileEnvironment(src)
+    // environment, it gets unset immediately. Internally, it checks if the count of HEs is zero
+    // and that the shuttle is in stranded mode, then frees it with an announcement.
+    // This is a botched solution to a problem that could be solved with a small change in shuttle code, however-
+    if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
+        SSshuttle.emergency.mode = SHUTTLE_STRANDED
+        SSshuttle.registerHostileEnvironment(src)
+    // set hijack completion timer to infinity, so that you cant prematurely end the round with a hijack
+    for(var/obj/machinery/computer/emergency_shuttle/console in GLOB.machines)
+        console.hijack_completion_flight_time_set = INFINITY
 
 	for(var/mob/player as anything in GLOB.player_list)
 		if(!isdead(player))
@@ -318,7 +321,6 @@
 		All personnel are hereby required to enter the rift by any means available.\n\n\
 		[Gibberish("Retrieval of survivors will be conducted upon recovery of necessary facilities.", FALSE, 5)] \
 		[Gibberish("Good luck--", FALSE, 25)]")
-
 
 /**
  * Ends the round
