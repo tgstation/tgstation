@@ -263,3 +263,5 @@
 #define PN_BZASE_NUCLEAR_PARTICLE_DIVISOR 5
 /// The maximum amount of nuclear particles that can be produced from proto-nitrate breaking down BZ.
 #define PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM 12
+/// How much radiation in consumed amount does a nuclear particle take from radiation when proto-nitrate breaks down BZ.
+#define PN_BZASE_NUCLEAR_PARTICLE_RADIATION_ENERGY_CONVERSION 2.5
