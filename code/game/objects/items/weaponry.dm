@@ -455,6 +455,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = IGNORES_BLIND_REQUIREMENTS
 	custom_materials = list(/datum/material/iron = 600)
 
 /obj/item/cane/white/Initialize(mapload)

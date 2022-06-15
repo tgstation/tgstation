@@ -549,8 +549,8 @@
 
 	//you can examine things you're holding directly, but you can't examine other things if your hands are full
 	/// the item in our active hand
-	var/active_item = get_active_held_item()
-	if(active_item && active_item != examined_thing)
+	var/obj/item/active_item = get_active_held_item()
+	if(active_item && active_item != examined_thing && !(active_item.item_flags & IGNORES_BLIND_REQUIREMENTS))
 		to_chat(src, span_warning("Your hands are too full to examine this!"))
 		return FALSE
 
