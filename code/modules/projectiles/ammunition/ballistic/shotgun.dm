@@ -163,10 +163,23 @@
 	name = "voidshot scatter shell"
 	desc = "An advanced shotgun shell which uses small pellets of charged bluespace particles to warp flesh and bone."
 	icon_state = "vshell"
-	projectile_type = /obj/projectile/beam/pellet/voidshot
+	projectile_type = /obj/projectile/beam/pellet/voidshot //could change!
 	pellets = 5
 	variance = 10
 	max_pellets = 5
+
+/obj/item/ammo_casing/shotgun/energy/void/Initialize(mapload)
+	. = ..()
+	var/bullet_randomizer = rand(1,3)
+
+	switch(bullet_randomizer)
+		if(1)
+			projectile_type = /obj/projectile/beam/pellet/voidshot
+		if(2)
+			projectile_type = /obj/projectile/beam/pellet/voidshot/sharp
+		if(3)
+			projectile_type = /obj/projectile/beam/pellet/voidshot/pointy
+
 
 /obj/item/ammo_casing/shotgun/energy/disable
 	name = "nonlethal scatter shell"

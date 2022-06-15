@@ -131,22 +131,21 @@
 	can_modify_ammo = TRUE
 	initial_caliber = CALIBER_SHOTGUN_ENERGY
 	alternative_caliber = CALIBER_SHOTGUN
-	alternative_ammo_misfires = TRUE
-	can_misfire = FALSE
-	misfire_probability = 0
-	misfire_percentage_increment = 25
 	projectile_damage_multiplier = 0.50
 
-	///Our cell for keeping our shotgun charged
+	///What cell are we using
 	var/obj/item/stock_parts/cell/cell
 	var/cell_type = /obj/item/stock_parts/cell
 
-	///Vars for tracking power expenditure
+	///Is our gun charged
 	var/charged_shot = FALSE //This becomes TRUE if our gun is able to successfully use battery charge, which empowers the gun for 10 seconds (does standard damage).
+	///How much battery charge does our shotgun use
 	var/shot_cell_cost = 200 //Effectively 5 empowerments from full battery.
-	//Our damage multipliers, which replace the projectile_damage_multiplier var.
-	var/empowered_damage_multiplier = 1.0 //when our gun has charge, we fire at full strength
-	var/normal_damage_multiplier = 0.5 //Our unempowered charge
+	///Empowered damage multiplier
+	var/empowered_damage_multiplier = 1.0
+	///The multiplier for what our weapon resets too once depowered
+	var/normal_damage_multiplier = 0.5
+	///The cooldown timer
 	var/cooldown_reset_time = 5 SECONDS //How long it takes before the shotgun needs to consume more charge, can probably magdump an entire shotgun in this time
 	var/timerid
 

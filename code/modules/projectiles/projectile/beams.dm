@@ -280,22 +280,30 @@
 /obj/projectile/beam/pellet/voidshot
 	name = "voidshot pellet"
 	icon_state = "void_pellet"
-	damage = 7 // * 5 pellets = 35 brute; not accounting for armor weakness
+	damage = 3 // * 5 pellets = 15 brute
 	damage_type = BRUTE
 	armor_flag = ENERGY
+	sharpness = NONE
 	reflectable = FALSE
-	wound_bonus = 6
-	bare_wound_bonus = 10
-	wound_falloff_tile = -1.5
-	weak_against_armour = TRUE //turns most secvests into 80% resistance AKA not very good against an actually armored target unless limb aiming for wounds
+	wound_bonus = 10 //Should be a total of 65 wounding power at point blank
+	bare_wound_bonus = 12
+	damage_dropoff_per_tile = 0 //unlike the other pellets, this one is mostly for wounds and not damage, so it does very consistent damage overall at all ranges
+	wound_falloff_tile = -3 // Out from the first tile, the wounding power will be 50, and continue to decrease rapidly
 	speed = 0.3
 	speed_dropoff = 0.3
 	speed_dropoff_tiles = 5
 	ricochets_max = 2
 	ricochet_chance = 100
 	ricochet_decay_damage = 0.9
+	range = 8
 	light_color = COLOR_PALE_PURPLE_GRAY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+
+/obj/projectile/beam/pellet/voidshot/sharp
+	sharpness = SHARP_EDGED
+
+/obj/projectile/beam/pellet/voidshot/pointy
+	sharpness = SHARP_POINTY
 
 /obj/projectile/beam/pellet/disable
 	name = "static pellet"

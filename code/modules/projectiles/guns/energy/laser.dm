@@ -203,12 +203,13 @@
 	. = ..()
 	if(forcebarrier) //just in case something happens
 		. += span_notice("Right-click to use the forcefield projector.")
-		. += span_notice("Alt-click to drop the forcefield barriers.")
+		. += span_notice("Right-click [src] to drop the forcefield barriers.")
 		. += span_notice("It is currently sustaining [LAZYLEN(forcebarrier.current_fields)]/[forcebarrier.max_fields] fields, and it's [round((forcebarrier.shield_integrity/forcebarrier.max_shield_integrity)*100)]% charged.")
 
-/obj/item/gun/energy/laser/deltra/AltClick(mob/user)
+/obj/item/gun/energy/laser/deltra/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(forcebarrier)
 		forcebarrier.attack_self(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	else
 		. = ..()
 
