@@ -10141,6 +10141,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
 "djH" = (
@@ -13845,7 +13846,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
-/area/icemoon/underground/explored)
+/area/station/maintenance/starboard/lesser)
 "esE" = (
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -14366,15 +14367,8 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_y = 0;
-	pixel_x = 5
-	},
-/obj/item/clothing/mask/breath{
-	pixel_y = 0;
-	pixel_x = -4
-	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/pickaxe,
 /obj/item/toy/figure/chef,
 /turf/open/floor/plating/snowed/temperatre,
 /area/station/service/kitchen/coldroom)
@@ -39441,6 +39435,13 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"mLd" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/station/maintenance/starboard/lesser)
 "mLl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -47916,7 +47917,8 @@
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/cafeteria,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "ppK" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -48176,6 +48178,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/structure/flora/bush/snow/style_random,
 /turf/open/misc/asteroid/snow/temperatre,
 /area/station/service/kitchen/coldroom)
 "ptx" = (
@@ -51076,6 +51079,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 6
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/large,
 /area/station/service/kitchen/diner)
 "qoY" = (
@@ -51510,7 +51514,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/textured_half,
+/turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "qwB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -177153,8 +177157,8 @@ dMS
 xMq
 xMq
 nfG
-udC
-udC
+xMq
+xMq
 btU
 btU
 btU
@@ -177408,10 +177412,10 @@ dMS
 otj
 dMS
 xMq
-udC
-udC
-udC
-udC
+xMq
+xMq
+xMq
+xMq
 btU
 kCR
 btU
@@ -177665,9 +177669,9 @@ nDX
 nCJ
 dMS
 xMq
-udC
-udC
-udC
+xMq
+xMq
+xMq
 btU
 btU
 sGf
@@ -177922,9 +177926,9 @@ dMS
 nCJ
 dMS
 xMq
-udC
-udC
-udC
+xMq
+xMq
+xMq
 btU
 idr
 qSe
@@ -178179,9 +178183,9 @@ dMS
 nCJ
 dMS
 xMq
-udC
-udC
-udC
+xMq
+xMq
+xMq
 btU
 oYm
 kht
@@ -179720,7 +179724,7 @@ pkg
 hoS
 csA
 cAN
-oRA
+cAN
 oRA
 xMq
 btU
@@ -181261,10 +181265,10 @@ bqN
 rou
 xJS
 jre
-udC
-udC
-udC
-xMq
+oRA
+oRA
+oRA
+oRA
 xMq
 xMq
 xMq
@@ -181518,12 +181522,12 @@ jre
 jre
 jre
 jre
-udC
-udC
-udC
-udC
-udC
-udC
+oRA
+oRA
+oRA
+oRA
+oRA
+oRA
 xMq
 xMq
 jUB
@@ -181775,12 +181779,12 @@ wSs
 wSs
 wSs
 jre
-udC
-udC
-udC
-udC
-udC
-udC
+oRA
+oRA
+oRA
+oRA
+oRA
+oRA
 udC
 xMq
 xDb
@@ -182032,11 +182036,11 @@ vTp
 jre
 jqv
 jre
-udC
-udC
-udC
-udC
-udC
+oRA
+oRA
+oRA
+oRA
+oRA
 udC
 udC
 xMq
@@ -182285,18 +182289,18 @@ kWa
 djH
 jre
 jre
-gFX
+jre
 jre
 uiv
 jre
+oRA
+oRA
+oRA
 udC
 udC
 udC
 udC
 udC
-udC
-udC
-xMq
 xDb
 xtR
 ukz
@@ -182800,9 +182804,9 @@ jre
 jre
 jre
 xMq
-tiY
+mLd
 aIB
-tiY
+mLd
 iDt
 iDt
 udC
