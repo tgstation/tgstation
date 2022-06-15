@@ -70580,7 +70580,7 @@
 /area/mine/explored)
 "xTZ" = (
 /obj/item/stack/ore/glass,
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/misc/asteroid,
 /area/station/security/prison/workout)
 "xUb" = (

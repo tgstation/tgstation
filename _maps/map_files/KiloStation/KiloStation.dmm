@@ -5863,7 +5863,7 @@
 /area/station/maintenance/port/fore)
 "bMw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "bMF" = (
