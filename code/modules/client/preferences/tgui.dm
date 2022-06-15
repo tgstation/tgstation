@@ -53,7 +53,7 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "tgui_say_light_mode"
 	savefile_identifier = PREFERENCE_PLAYER
-	default_value = TRUE
+	default_value = FALSE
 
 /datum/preference/toggle/tgui_say_light_mode/apply_to_client(client/client)
 	client.tgui_say?.load()

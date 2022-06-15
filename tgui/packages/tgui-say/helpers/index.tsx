@@ -76,11 +76,13 @@ let savedMessages: string[] = [];
 /** Returns the chat history at specified index */
 export const getHistoryAt = (index: number): string =>
   savedMessages[savedMessages.length - index];
+
 /**
  * The length of chat history.
  * I am absolutely being excessive, but whatever
  */
 export const getHistoryLength = (): number => savedMessages.length;
+
 /**
  * Stores entries in the chat history.
  * Deletes old entries if the list is too long.
