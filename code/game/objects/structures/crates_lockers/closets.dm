@@ -251,11 +251,11 @@
 
 /obj/structure/closet/proc/open(mob/living/user, force = FALSE)
 	if(!can_open(user, force))
-		return
+		return FALSE
 	if(opened)
-		return
+		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLOSET_PRE_OPEN, user, force) & BLOCK_OPEN)
-		return
+		return FALSE
 	welded = FALSE
 	locked = FALSE
 	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
