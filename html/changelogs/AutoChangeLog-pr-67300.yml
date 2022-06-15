@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a weird edge case where anything that would prevent a storage closet or locker from opening would instead cause stealth implant boxes to delete the player inside them."

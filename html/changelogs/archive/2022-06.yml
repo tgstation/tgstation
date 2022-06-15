@@ -521,3 +521,33 @@
   - bugfix: A rogue windoor in a wall on Kilostation by the chapel in space was terminated
   robbertapir:
   - bugfix: Regal rats can now heal by eating all types of cheese, not just cheddar.
+2022-06-15:
+  Iamgoofball:
+  - spellcheck: Nanotrasen has lost the rights to several popular confectionaries,
+      and has created "original" replacements.
+  Mothblocks:
+  - spellcheck: Adjusted description of moths eating clothes in preferences menu to
+      better reflect their current behavior.
+  SuperNovaa41:
+  - bugfix: Pill names now have a cap at 42 characters to prevent chat spam.
+  Timberpoes:
+  - bugfix: Fixes slips being broken again.
+  - bugfix: Fixes a weird edge case where anything that would prevent a storage closet
+      or locker from opening would instead cause stealth implant boxes to delete the
+      player inside them.
+  UDaV73rus, Tokoriso, dragomagol:
+  - rscadd: welding now has an animation!
+  dragomagol:
+  - bugfix: Renamed a few circuit boards to explain what frame they need
+  private-tristan:
+  - bugfix: kilostation solars no longer have plating and catwalks on the same tile
+  robbertapir:
+  - bugfix: the flavor text for changing the transfer amount on the medical gel is
+      no longer backwards
+  san7890:
+  - bugfix: Chameleon neckties will no longer give you a missing-texture cape and
+      a big ERROR icon by default. Trust me when I tell you this wasn't actually a
+      good thing.
+  timothymtorres:
+  - rscadd: Add dyslexia (illiteracy quirk) as a genetic mutation.
+  - rscadd: Add illiteracy as a effect for confusion disease symptom.

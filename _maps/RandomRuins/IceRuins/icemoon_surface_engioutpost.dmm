@@ -548,14 +548,8 @@
 /obj/item/mod/control/pre_equipped/engineering,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
-/turf/open/floor/iron{
-	icon_state = "damaged3"
-	},
-/area/ruin/planetengi)
-"cM" = (
-/turf/open/floor/iron{
-	icon_state = "damaged2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "cN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
@@ -609,9 +603,8 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "cW" = (
-/turf/open/floor/iron{
-	icon_state = "damaged1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "cX" = (
 /obj/structure/cable,
@@ -623,9 +616,8 @@
 "cY" = (
 /obj/item/stack/sheet/plasmarglass,
 /obj/item/card/id/advanced/engioutpost,
-/turf/open/floor/iron{
-	icon_state = "damaged4"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "cZ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
@@ -677,9 +669,8 @@
 /area/ruin/planetengi)
 "dk" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/turf/open/floor/iron{
-	icon_state = "damaged5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "dl" = (
 /obj/effect/mob_spawn/corpse/human/engineer/mod,
@@ -1149,7 +1140,7 @@ bH
 bZ
 cj
 bB
-cM
+cW
 cY
 dj
 cG
