@@ -12,7 +12,7 @@ export const WINDOW_SIZES = {
 /** Line lengths for autoexpand */
 export const LINE_LENGTHS = {
   small: 20,
-  medium: 40,
+  medium: 35,
 } as const;
 
 /**
