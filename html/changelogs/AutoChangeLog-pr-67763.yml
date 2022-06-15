@@ -1,0 +1,4 @@
+author: "Striders13"
+delete-after: True
+changes: 
+  - bugfix: "fixed a windoor in metastation warden's office being layered incorrectly"
