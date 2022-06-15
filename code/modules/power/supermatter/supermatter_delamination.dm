@@ -320,18 +320,6 @@
 		[Gibberish("Good luck--", FALSE, 25)]")
 
 
-///filters all living mobs that are in an area
-/proc/mobs_in_area_type(list/area/checked_areas)
-	var/list/mobs_in_area = list()
-	for(var/mob/living/mob as anything in GLOB.mob_living_list)
-		if(QDELETED(mob))
-			continue
-		for(var/area in checked_areas)
-			if(istype(get_area(mob), area))
-				mobs_in_area += mob
-				break
-	return mobs_in_area
-
 /**
  * Ends the round
  */
