@@ -22,6 +22,32 @@
 	microwaved_type = null
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = GRAIN
+	///Type of donkpocket that we will turn back into when we cool down!
+	var/donkpocket_basetype = /obj/item/food/donkpocket
+	///Tracks how long till we cool down!
+	var/cooldown_cooldown
+
+/obj/item/food/donkpocket/warm/examine(mob/user)
+	. = ..()
+	var/time_left = COOLDOWN_TIMELEFT(src, cooldown_cooldown)
+	if(time_left < 1.5 MINUTES)
+		. += "[src] is getting cold!"
+	else if(time_left < 3 MINUTES)
+		. += "[src] is still warm!"
+	else if(time_left < 5 MINUTES)
+		. += "[src] is quite hot!"
+	else
+		. += "[src] is steaming hot!"
+
+/obj/item/food/donkpocket/warm/Initialize(mapload)
+	. = ..()
+	COOLDOWN_START(src, cooldown_cooldown, 7 MINUTES)
+	addtimer(CALLBACK(src, .proc/cooldown_and_revert_to_basetype), 7 MINUTES)
+
+///Changes the item back to its not warm state.
+/obj/item/food/donkpocket/warm/proc/cooldown_and_revert_to_basetype()
+	new donkpocket_basetype(loc)
+	qdel(src)
 
 ///Override for fast-burning food
 /obj/item/food/donkpocket/warm/MakeBakeable()
@@ -51,6 +77,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/medicine/omnizine = 2, /datum/reagent/consumable/capsaicin = 5)
 	tastes = list("meat" = 2, "dough" = 2, "weird spices" = 2)
 	foodtypes = GRAIN
+	donkpocket_basetype = /obj/item/food/donkpocket/spicy
 
 /obj/item/food/donkpocket/teriyaki
 	name = "\improper Teriyaki-pocket"
@@ -68,6 +95,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/medicine/omnizine = 2, /datum/reagent/consumable/soysauce = 2)
 	tastes = list("meat" = 2, "dough" = 2, "soy sauce" = 2)
 	foodtypes = GRAIN
+	donkpocket_basetype = /obj/item/food/donkpocket/teriyaki
 
 /obj/item/food/donkpocket/pizza
 	name = "\improper Pizza-pocket"
@@ -85,6 +113,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/medicine/omnizine = 2, /datum/reagent/consumable/tomatojuice = 2)
 	tastes = list("meat" = 2, "dough" = 2, "melty cheese"= 2)
 	foodtypes = GRAIN
+	donkpocket_basetype = /obj/item/food/donkpocket/pizza
 
 /obj/item/food/donkpocket/honk
 	name = "\improper Honk-pocket"
@@ -102,6 +131,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 2, /datum/reagent/consumable/banana = 4, /datum/reagent/consumable/laughter = 6)
 	tastes = list("dough" = 2, "children's antibiotics" = 1)
 	foodtypes = GRAIN
+	donkpocket_basetype = /obj/item/food/donkpocket/honk
 
 /obj/item/food/donkpocket/berry
 	name = "\improper Berry-pocket"
@@ -119,6 +149,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 2, /datum/reagent/consumable/berryjuice = 3)
 	tastes = list("dough" = 2, "warm jam" = 2)
 	foodtypes = GRAIN
+	donkpocket_basetype = /obj/item/food/donkpocket/berry
 
 /obj/item/food/donkpocket/gondola
 	name = "\improper Gondola-pocket"
@@ -136,3 +167,4 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/medicine/omnizine = 2, /datum/reagent/gondola_mutation_toxin = 10)
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
 	foodtypes = GRAIN
+	donkpocket_basetype = /obj/item/food/donkpocket/gondola
