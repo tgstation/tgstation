@@ -58,9 +58,8 @@
 /turf/template_noop,
 /area/template_noop)
 "ak" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "an" = (
 /obj/structure/lattice,
@@ -248,11 +247,6 @@
 	},
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter2)
-"bd" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
-/area/shuttle/caravan/freighter3)
 "bg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
@@ -269,18 +263,16 @@
 	dir = 4
 	},
 /obj/effect/gibspawner/human,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "bi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter2)
 "bl" = (
 /mob/living/simple_animal/hostile/carp,
@@ -346,9 +338,8 @@
 /obj/item/stack/cable_coil{
 	amount = 1
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "fZ" = (
 /turf/closed/wall/mineral/titanium,
@@ -473,9 +464,8 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter3)
 "gW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -528,9 +518,8 @@
 	id = "caravantrade2_cargo_port";
 	name = "Cargo Blast Door"
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "hp" = (
 /obj/effect/decal/cleanable/dirt,
@@ -545,9 +534,8 @@
 	id = "caravantrade2_cargo_port";
 	name = "Cargo Blast Door"
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "hr" = (
 /obj/machinery/door/poddoor/preopen{
@@ -614,22 +602,14 @@
 	},
 /area/shuttle/caravan/freighter3)
 "hB" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter3)
 "hQ" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter2)
-"hS" = (
-/obj/effect/turf_decal/bot_white,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
 /area/shuttle/caravan/freighter2)
 "hT" = (
 /obj/effect/turf_decal/bot_white,
@@ -644,9 +624,8 @@
 "hU" = (
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter2)
 "hV" = (
 /obj/effect/turf_decal/bot_white,
@@ -701,9 +680,8 @@
 /area/shuttle/caravan/freighter3)
 "ia" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter3)
 "ib" = (
 /obj/effect/turf_decal/box/white/corners{
@@ -718,9 +696,8 @@
 "ic" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter3)
 "id" = (
 /obj/effect/turf_decal/box/white/corners,
@@ -756,9 +733,8 @@
 	dir = 8
 	},
 /obj/item/shard,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter3)
 "io" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -784,9 +760,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "is" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter2)
 "it" = (
 /obj/effect/decal/cleanable/dirt,
@@ -799,9 +774,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter2)
 "iv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -820,31 +794,27 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
 	},
-/turf/open/floor/iron/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter2)
 "iy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/broken_flooring{
 	icon_state = "pile"
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "iz" = (
 /obj/item/shard,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "iA" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "iB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -856,9 +826,8 @@
 "iC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter3)
 "iD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -937,9 +906,8 @@
 "jb" = (
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter3)
 "jc" = (
 /obj/effect/turf_decal/bot_white,
@@ -1057,9 +1025,8 @@
 /area/shuttle/caravan/freighter2)
 "jK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter2)
 "jL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1072,9 +1039,8 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter2)
 "jN" = (
-/turf/open/floor/iron/airless{
-	icon_state = "floorscorched1"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter2)
 "jO" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1158,15 +1124,13 @@
 /obj/item/tank/internals/oxygen,
 /obj/item/radio,
 /obj/item/clothing/mask/gas,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter2)
 "kd" = (
 /obj/structure/grille/broken,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "ke" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1224,9 +1188,8 @@
 /area/ruin/unpowered)
 "lD" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "tH" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -3564,7 +3527,7 @@ aa
 aa
 aa
 ho
-hS
+hU
 aP
 iU
 jq
@@ -5335,7 +5298,7 @@ hw
 ib
 iB
 ja
-bd
+ak
 aa
 aa
 aa

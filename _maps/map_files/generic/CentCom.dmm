@@ -4087,6 +4087,12 @@
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
+"lD" = (
+/obj/machinery/computer/camera_advanced/abductor{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "lE" = (
 /obj/structure/table/optable/abductor,
 /obj/item/surgical_drapes{
@@ -5924,6 +5930,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
+"qJ" = (
+/obj/machinery/abductor/console{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "qK" = (
 /obj/machinery/air_sensor{
 	chamber_id = "nukiebase";
@@ -6018,6 +6030,12 @@
 /obj/structure/railing,
 /turf/open/lava/plasma/ice_moon,
 /area/centcom/syndicate_mothership/control)
+"rg" = (
+/obj/machinery/abductor/console{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "ri" = (
 /obj/effect/turf_decal/stripes/full,
 /turf/open/floor/mineral/titanium/yellow,
@@ -6310,6 +6328,12 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
+"si" = (
+/obj/machinery/abductor/experiment{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "sk" = (
 /turf/open/floor/plating/icemoon,
 /area/centcom/syndicate_mothership/control)
@@ -6393,6 +6417,12 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
+"sw" = (
+/obj/machinery/computer/camera_advanced/abductor{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "sx" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -6855,6 +6885,12 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
+"tP" = (
+/obj/machinery/abductor/experiment{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "tR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8124,6 +8160,12 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
+"xO" = (
+/obj/machinery/computer/camera_advanced/abductor{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "xP" = (
 /obj/docking_port/stationary{
 	dwidth = 25;
@@ -8829,6 +8871,12 @@
 	},
 /turf/open/floor/grass,
 /area/centcom/wizard_station)
+"zR" = (
+/obj/machinery/abductor/experiment{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "zS" = (
 /obj/structure/table/reinforced,
 /obj/item/food/grown/tea/astra{
@@ -9337,6 +9385,12 @@
 /obj/machinery/vending/clothing,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
+"Bl" = (
+/obj/machinery/abductor/console{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "Bm" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/weldingtool/experimental,
@@ -9626,9 +9680,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
 "BQ" = (
-/obj/effect/landmark/abductor/scientist{
-	team_number = 3
-	},
+/obj/effect/landmark/abductor/scientist,
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
 "BR" = (
@@ -11128,6 +11180,12 @@
 /obj/machinery/recharger,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
+"Ge" = (
+/obj/machinery/abductor/pad{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "Gf" = (
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -11151,6 +11209,10 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"Gk" = (
+/obj/effect/landmark/abductor/agent,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "Gl" = (
 /obj/effect/turf_decal/siding/wideplating/dark,
 /obj/structure/chair/sofa/bench,
@@ -11644,6 +11706,12 @@
 "HN" = (
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
+"HP" = (
+/obj/effect/landmark/abductor/scientist{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "HQ" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -12228,6 +12296,12 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"JC" = (
+/obj/machinery/abductor/pad{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "JD" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomehea";
@@ -12297,6 +12371,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden/layer2,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
+"JS" = (
+/obj/machinery/abductor/pad{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "JT" = (
 /obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -13414,6 +13494,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"Nz" = (
+/obj/effect/landmark/abductor/scientist{
+	team_number = 3
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "NB" = (
 /obj/structure/chair/greyscale{
 	dir = 4
@@ -13524,6 +13610,12 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/centcom/central_command_areas/holding)
+"NT" = (
+/obj/effect/landmark/abductor/agent{
+	team_number = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "NU" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom"
@@ -13548,6 +13640,12 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
+"NY" = (
+/obj/effect/landmark/abductor/agent{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "NZ" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -15530,6 +15628,12 @@
 /obj/item/clothing/accessory/medal/gold,
 /turf/open/floor/iron/grimy,
 /area/centcom/tdome/observation)
+"Tm" = (
+/obj/effect/landmark/abductor/scientist{
+	team_number = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
 "Tn" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -19018,7 +19122,7 @@ aa
 aa
 ko
 kL
-Be
+sw
 lC
 lY
 ms
@@ -19075,7 +19179,7 @@ aa
 aa
 ko
 kL
-Be
+xO
 lC
 lY
 ms
@@ -19102,7 +19206,7 @@ aa
 aa
 ko
 kL
-Be
+lD
 lC
 lY
 ms
@@ -19274,66 +19378,9 @@ aa
 aa
 aa
 kp
-Au
+si
 li
-BQ
-li
-mt
-nc
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-kp
-Au
-li
-BQ
-li
-mt
-nc
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-kp
-Au
-li
-BQ
+Tm
 li
 mt
 nc
@@ -19359,6 +19406,63 @@ aa
 aa
 kp
 Au
+li
+Nz
+li
+mt
+nc
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kp
+zR
+li
+HP
+li
+mt
+nc
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kp
+tP
 li
 BQ
 li
@@ -19531,7 +19635,7 @@ aa
 aa
 aa
 kq
-Av
+qJ
 li
 lE
 li
@@ -19588,7 +19692,7 @@ aa
 aa
 aa
 kq
-Av
+rg
 li
 lE
 li
@@ -19615,7 +19719,7 @@ aa
 aa
 aa
 kq
-Av
+Bl
 li
 lE
 li
@@ -19788,42 +19892,12 @@ aa
 aa
 aa
 kr
-Aw
+Ge
 li
-BR
-li
-mv
-ne
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-kr
-Aw
-li
-BR
+NY
 li
 mv
 ne
-aa
-aa
-aa
 aa
 aa
 aa
@@ -19871,10 +19945,40 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
 kr
-Aw
+JC
 li
-BR
+NT
+li
+mv
+ne
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kr
+JS
+li
+Gk
 li
 mv
 ne
