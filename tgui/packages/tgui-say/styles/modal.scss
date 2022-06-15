@@ -11,15 +11,20 @@
   }
 }
 
-.window {
-  background: colors.$background;
+.modal {
+  background-color: colors.$background;
   display: flex;
   flex-direction: column;
   max-width: 231px;
   width: 100%;
 }
 
-.window__content {
+.modal-lightMode {
+  @extend .modal;
+  background-color: colors.$lightMode;
+}
+
+.modal__content {
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -27,22 +32,22 @@
 }
 
 /** Window sizes */
-.window-30 {
+.modal-30 {
   height: 30px;
 }
 
-.window-50 {
+.modal-50 {
   height: 50px;
 }
 
-.window-70 {
+.modal-70 {
   height: 70px;
 }
 
 /** Creates an animated border for each channel */
 @each $channel,
 $color in colors.$channel-map {
-  .window-#{$channel} {
+  .modal-#{$channel} {
     &:after {
       animation: gradient 10s linear infinite;
       background: linear-gradient(to right,

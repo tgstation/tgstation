@@ -44,3 +44,30 @@ $color in colors.$channel-map {
     border-top: 2px solid $darkened;
   }
 }
+
+/** Lightmode static theme */
+.dragzone-bottom-lightMode {
+  @extend .dragzone-horizontal;
+  border-left: 2px solid colors.$lightBorder;
+  border-right: 2px solid colors.$lightBorder;
+  border-bottom: 2px solid colors.$lightBorder;
+}
+
+.dragzone-left-lightMode {
+  @extend .dragzone-vertical;
+  left: 0;
+  border-left: 2px solid colors.$lightBorder;
+}
+
+.dragzone-right-lightMode {
+  @extend .dragzone-vertical;
+  right: 0;
+  border-right: 2px solid colors.$lightBorder;
+}
+
+.dragzone-top-lightMode {
+  @extend .dragzone-horizontal;
+  border-left: 2px solid colors.$lightBorder;
+  border-right: 2px solid colors.$lightBorder;
+  border-top: 2px solid colors.$lightBorder;
+}

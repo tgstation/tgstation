@@ -1,4 +1,4 @@
-import { WINDOW_SIZES } from '../constants';
+import { CHANNELS, RADIO_PREFIXES, WINDOW_SIZES } from '../constants';
 import { KEY_0, KEY_Z } from 'common/keycodes';
 import { classes } from 'common/react';
 import { debounce, throttle } from 'common/timer';
@@ -93,25 +93,51 @@ export const storeChat = (message: string): void => {
 };
 
 /** Miscellaneous */
-/** Returns modular css classes */
+
+/**
+ * Returns modular css classes.
+ *
+ * Parameters:
+ * element - required string. The element selector.
+ * theme - optional string. The theme to apply.
+ * options - optional string | number. Adds another css selector.
+ */
 export const getCss = (
   element: string,
-  channel?: string,
-  size?: number
+  theme?: string,
+  options?: string | number
 ): string =>
   classes([
     element,
-    valueExists(channel) && `${element}-${channel}`,
-    valueExists(size) && `${element}-${size}`,
+    valueExists(theme) && `${element}-${theme}`,
+    valueExists(options) && `${element}-${options}`,
   ]);
+
+/**
+ * Returns a string that represents the css selector to use.
+ * Light mode takes precedence over radioPrefixes,
+ * radioPrefixes takes precedence over channel.
+ *
+ * Parameters:
+ * lightMode - boolean. If true, returns the light mode selector.
+ * radioPrefix - string. If not empty, returns the radio prefix selector.
+ * channel - number. The channel to use.
+ */
+export const getTheme = (
+  lightMode: boolean,
+  radioPrefix: string,
+  channel: number
+): string => {
+  return (
+    (lightMode && 'lightMode')
+    || RADIO_PREFIXES[radioPrefix]?.id
+    || CHANNELS[channel]?.toLowerCase()
+  );
+};
 
 /** Checks keycodes for alpha/numeric characters */
 export const isAlphanumeric = (keyCode: number): boolean =>
   keyCode >= KEY_0 && keyCode <= KEY_Z;
-
-/** Checks if a parameter is null or undefined. Returns bool */
-export const valueExists = (param: any): boolean =>
-  param !== null && param !== undefined;
 
 /** Timers: Prevents overloading the server, throttles messages */
 export const timers = {
@@ -123,3 +149,7 @@ export const timers = {
   ),
   typingThrottle: throttle(() => Byond.sendMessage('typing'), 4000),
 };
+
+/** Checks if a parameter is null or undefined. Returns bool */
+export const valueExists = (param: any): boolean =>
+  param !== null && param !== undefined;

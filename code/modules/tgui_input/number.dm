@@ -63,8 +63,6 @@
 	/// The title of the TGUI window
 	var/title
 
-
-
 /datum/tgui_input_number/New(mob/user, message, title, default, max_value, min_value, timeout, round_value)
 	src.default = default
 	src.max_value = max_value

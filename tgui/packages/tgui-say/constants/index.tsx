@@ -1,15 +1,19 @@
-import { RadioPrefixes, WindowSizes } from '../types';
-
 /** Radio channels */
-export const CHANNELS: string[] = ['Say', 'Radio', 'Me', 'OOC'];
+export const CHANNELS = ['Say', 'Radio', 'Me', 'OOC'] as const;
 
 /** Window sizes in pixels */
-export const WINDOW_SIZES: WindowSizes = {
+export const WINDOW_SIZES = {
   small: 30,
   medium: 50,
   large: 70,
   width: 231,
-};
+} as const;
+
+/** Line lengths for autoexpand */
+export const LINE_LENGTHS = {
+  small: 20,
+  medium: 40,
+} as const;
 
 /**
  * Radio prefixes.
@@ -17,7 +21,7 @@ export const WINDOW_SIZES: WindowSizes = {
  * id - string. css class identifier.
  * label - string. button label.
  */
-export const RADIO_PREFIXES: RadioPrefixes = {
+export const RADIO_PREFIXES = {
   ':a ': {
     id: 'hive',
     label: 'Hive',
@@ -66,4 +70,4 @@ export const RADIO_PREFIXES: RadioPrefixes = {
     id: 'centcom',
     label: 'CCom',
   },
-};
+} as const;

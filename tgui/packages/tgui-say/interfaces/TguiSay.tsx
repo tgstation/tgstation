@@ -1,8 +1,8 @@
 import { TextArea } from 'tgui/components';
-import { CHANNELS, RADIO_PREFIXES, WINDOW_SIZES } from '../constants';
+import { WINDOW_SIZES } from '../constants';
 import { Dragzone } from '../components/dragzone';
 import { eventHandlerMap } from '../handlers';
-import { getCss, timers } from '../helpers';
+import { getCss, getTheme, timers } from '../helpers';
 import { Component, createRef } from 'inferno';
 import { Modal, State } from '../types';
 
@@ -12,6 +12,7 @@ export class TguiSay extends Component<{}, State> {
   fields: Modal['fields'] = {
     historyCounter: 0,
     innerRef: createRef(),
+    lightMode: false,
     maxLength: 1024,
     radioPrefix: '',
     value: '',
@@ -36,28 +37,25 @@ export class TguiSay extends Component<{}, State> {
 
   render() {
     const { onClick, onEnter, onEscape, onKeyDown, onInput } = this.events;
-    const { innerRef, maxLength, radioPrefix, value } = this.fields;
+    const { innerRef, lightMode, maxLength, radioPrefix, value } = this.fields;
     const { buttonContent, channel, edited, size } = this.state;
-    const prefixOrChannel: string
-      = RADIO_PREFIXES[radioPrefix]?.id || CHANNELS[channel]?.toLowerCase();
+    const theme = getTheme(lightMode, radioPrefix, channel);
 
     return (
-      <div
-        className={getCss('window', prefixOrChannel, size)}
-        $HasKeyedChildren>
-        <Dragzone channel={prefixOrChannel} top />
-        <div className="window__content" $HasKeyedChildren>
-          <Dragzone channel={prefixOrChannel} left />
-          {!!prefixOrChannel && (
+      <div className={getCss('modal', theme, size)} $HasKeyedChildren>
+        <Dragzone theme={theme} top />
+        <div className="modal__content" $HasKeyedChildren>
+          <Dragzone theme={theme} left />
+          {!!theme && (
             <button
-              className={getCss('button', prefixOrChannel)}
+              className={getCss('button', theme)}
               onclick={onClick}
               type="submit">
               {buttonContent}
             </button>
           )}
           <TextArea
-            className={getCss('textarea', prefixOrChannel)}
+            className={getCss('textarea', theme)}
             dontUseTabForIndent
             innerRef={innerRef}
             maxLength={maxLength}
@@ -68,9 +66,9 @@ export class TguiSay extends Component<{}, State> {
             selfClear
             value={edited && value}
           />
-          <Dragzone channel={prefixOrChannel} right />
+          <Dragzone theme={theme} right />
         </div>
-        <Dragzone channel={prefixOrChannel} bottom />
+        <Dragzone theme={theme} bottom />
       </div>
     );
   }

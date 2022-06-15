@@ -10,6 +10,11 @@
   margin-top: 2px;
 }
 
+.textarea-lightMode {
+  @extend .textarea;
+  color: black;
+}
+
 /** Creates an input for each channel */
 @each $channel,
 $color in colors.$channel-map {

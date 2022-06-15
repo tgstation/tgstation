@@ -21,6 +21,17 @@
   }
 }
 
+.button-lightMode {
+  @extend .button;
+  background-color: colors.$lightBorder;
+  border: none;
+  color: black;
+
+  &:hover {
+    background-color: colors.$lightHover;
+  }
+}
+
 /** Creates a button for each channel */
 @each $channel,
 $color in colors.$channel-map {

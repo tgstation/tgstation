@@ -29,6 +29,7 @@ type Events = {
 type Fields = {
   historyCounter: number;
   innerRef: RefObject<HTMLInputElement>;
+  lightMode: boolean;
   maxLength: number;
   radioPrefix: string;
   value: string;
@@ -48,37 +49,9 @@ type Timers = {
 };
 
 export type DragzoneProps = {
-  channel: string;
+  theme: string;
   top: boolean;
   right: boolean;
   bottom: boolean;
   left: boolean;
-};
-
-export type RadioPrefixes = Record<subChannel, channelData>;
-
-type subChannel =
-  | ':a '
-  | ':b '
-  | ':c '
-  | ':e '
-  | ':m '
-  | ':n '
-  | ':o '
-  | ':s '
-  | ':t '
-  | ':u '
-  | ':v '
-  | ':y ';
-
-type channelData = {
-  id: string;
-  label: string;
-};
-
-export type WindowSizes = {
-  small: number;
-  medium: number;
-  large: number;
-  width: number;
 };

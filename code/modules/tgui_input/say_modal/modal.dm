@@ -63,8 +63,8 @@
 /datum/tgui_say/proc/load()
 	window_open = FALSE
 	winshow(client, "tgui_say", FALSE)
-	/// Sanity check in case the server ever changes MAX_LEN_MESSAGE
-	window.send_message("maxLength", list(
+	window.send_message("props", list(
+		lightMode = client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
 		maxLength = max_length,
 	))
 	stop_thinking()

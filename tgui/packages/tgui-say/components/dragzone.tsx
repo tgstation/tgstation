@@ -3,8 +3,8 @@ import { DragzoneProps } from '../types';
 
 /** Creates a draggable edge. Props Req: Location */
 export const Dragzone = (props: Partial<DragzoneProps>) => {
-  const { channel } = props;
-  if (!channel) return null;
+  const { theme } = props;
+  if (!theme) return null;
   const direction
     = (props.top && 'top')
     || (props.right && 'right')
@@ -13,7 +13,7 @@ export const Dragzone = (props: Partial<DragzoneProps>) => {
 
   return (
     <div
-      className={`dragzone-${direction}-${channel}`}
+      className={`dragzone-${direction}-${theme}`}
       onmousedown={dragStartHandler}
     />
   );

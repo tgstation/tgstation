@@ -4,8 +4,9 @@ import { Modal } from '../types';
 
 /** Attach listeners, sets window size just in case */
 export const handleComponentMount = function (this: Modal) {
-  Byond.subscribeTo('maxLength', (data) => {
+  Byond.subscribeTo('props', (data) => {
     this.fields.maxLength = data.maxLength;
+    this.fields.lightMode = !!data.lightMode;
   });
   Byond.subscribeTo('force', () => {
     this.events.onForce();
