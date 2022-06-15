@@ -356,15 +356,15 @@
 	. = ..()
 	if(!.)
 		return
+	balloon_alert(mod.wearer, "readying sonar...")
 	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	if(!do_after(mod.wearer, 1 SECONDS))
+	if(!do_after(mod.wearer, 1.1 SECONDS))
 		return
 	var/creatures_detected = 0
 	for(var/mob/living/creature in range(sonar_radius, mod.wearer))
 		if(creature == mod.wearer)
 			continue
-		var/obj/effect/temp_visual/sonar_ping/ping_visual = /obj/effect/temp_visual/sonar_ping
-		new ping_visual(creature.loc)
+		var/obj/effect/temp_visual/sonar_ping/ping_visual = new /obj/effect/temp_visual/sonar_ping(creature.loc)
 		ping_visual.add_mind(mod.wearer)
 		creatures_detected++
 	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE) // Should be audible for the whole sonar distance

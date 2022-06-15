@@ -549,28 +549,26 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 	randomdir = FALSE
-	plane = UNDER_HUD_PLANE
 	/// The image shown to modsuit users
 	var/image/modsuit_image
 	/// The person in the modsuit at the moment
-	var/mob/living/mod_man
-	/// The icon state applied to the image created for this influence.
+	var/datum/weakref/mod_man
+	/// The icon state applied to the image created for this ping.
 	var/real_icon_state = "sonar_ping"
 
 /obj/effect/temp_visual/sonar_ping/Initialize(mapload)
 	. = ..()
-	modsuit_image = image(icon, src, real_icon_state, OBJ_LAYER)
+	modsuit_image = image(icon, src, real_icon_state, UNDER_HUD_PLANE)
 
 /obj/effect/temp_visual/sonar_ping/Destroy()
-	remove_mind(mod_man)
+	remove_mind(mod_man.resolve())
 	// Null both so we don't shit the bed when we delete
-	mod_man = null
 	modsuit_image = null
 	return ..()
 
 /// Add the image to the modsuit wearer's screen
 /obj/effect/temp_visual/sonar_ping/proc/add_mind(mob/living/looker)
-	mod_man = looker
+	mod_man = WEAKREF(looker)
 	looker?.client?.images |= modsuit_image
 
 /// Remove the image from the modsuit wearer's screen
