@@ -187,12 +187,12 @@
     // environment, it gets unset immediately. Internally, it checks if the count of HEs is zero
     // and that the shuttle is in stranded mode, then frees it with an announcement.
     // This is a botched solution to a problem that could be solved with a small change in shuttle code, however-
-    if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
-        SSshuttle.emergency.mode = SHUTTLE_STRANDED
-        SSshuttle.registerHostileEnvironment(src)
+	if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
+		SSshuttle.emergency.mode = SHUTTLE_STRANDED
+		SSshuttle.registerHostileEnvironment(src)
     // set hijack completion timer to infinity, so that you cant prematurely end the round with a hijack
-    for(var/obj/machinery/computer/emergency_shuttle/console in GLOB.machines)
-        console.hijack_completion_flight_time_set = INFINITY
+	for(var/obj/machinery/computer/emergency_shuttle/console in GLOB.machines)
+		console.hijack_completion_flight_time_set = INFINITY
 
 	for(var/mob/player as anything in GLOB.player_list)
 		if(!isdead(player))
@@ -291,13 +291,13 @@
 		minor_announce("ERROR: Corruption detected in navigation protocols. Connection with Transponder #XCC-P5831-ES13 lost. \
 				Backup exit route protocol decrypted. Calibrating route...",
 			"Emergency Shuttle", TRUE) // wait out until the rift on the station gets destroyed and the final message plays
-        var/list/mobs = mobs_in_area_type(list(/area/shuttle/escape))
-        for(var/mob/living/mob as anything in mobs) // emulate mob/living/lateShuttleMove() behaviour
-            if(mob.buckled)
-                continue
-            if(mob.client)
-                shake_camera(mob, 3 SECONDS * 0.25, 1)
-            mob.Paralyze(3 SECONDS, TRUE)
+		var/list/mobs = mobs_in_area_type(list(/area/shuttle/escape))
+		for(var/mob/living/mob as anything in mobs) // emulate mob/living/lateShuttleMove() behaviour
+			if(mob.buckled)
+				continue
+			if(mob.client)
+				shake_camera(mob, 3 SECONDS * 0.25, 1)
+			mob.Paralyze(3 SECONDS, TRUE)
 
 /**
  * Announces the last message to the station, frees the shuttle from purgatory if applicable
@@ -307,8 +307,13 @@
 		To the remaining survivors of [station_name()], farewell.", FALSE, 5)]")
 
 	if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
-		minor_announce("Navigation protocol set to backup route. Reorienting bluespace vessel to exit vector. ETA 15 seconds.",
-			"Emergency Shuttle", TRUE)
+		// special message for hijacks
+		var/shuttle_msg = "Navigation protocol set to [SSshuttle.emergency.is_hijacked() ? "\[ERROR\]" : "backup route"]. \
+			Reorienting bluespace vessel to exit vector. ETA 15 seconds."
+		// garble the special message
+		if(SSshuttle.emergency.is_hijacked())
+			shuttle_msg = Gibberish(shuttle_msg, TRUE, 15)
+		minor_announce(shuttle_msg, "Emergency Shuttle", TRUE)
 		SSshuttle.emergency.setTimer(15 SECONDS)
 		SSticker.news_report = SUPERMATTER_CASCADE
 
