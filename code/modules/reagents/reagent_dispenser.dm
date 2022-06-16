@@ -82,6 +82,7 @@
 		reagents.expose(get_turf(src), TOUCH, amount_to_leak / max(amount_to_leak, reagents.total_volume))
 		reagents.remove_reagent(reagent_id, amount_to_leak)
 		return TRUE
+	return FALSE
 
 /obj/structure/reagent_dispensers/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -96,6 +97,7 @@
 /obj/structure/reagent_dispensers/Moved(atom/OldLoc, Dir)
 	. = ..()
 	tank_leak()
+
 /obj/structure/reagent_dispensers/watertank
 	name = "water tank"
 	desc = "A water tank."
