@@ -79,7 +79,7 @@
 
 /datum/lua_editor/ui_static_data(mob/user)
 	var/list/data = list()
-	var/raw_documentation = file2text("code/modules/admin/verbs/lua/README.md")
+	var/raw_documentation = file2text('code/modules/admin/verbs/lua/README.md')
 	var/escaped_documentation = replacetext(raw_documentation, "_", "\\_") // the markdown parser doesn't play nice with the unescaped underscores
 	data["documentation"] = parsemarkdown_basic(escaped_documentation)
 	return data
@@ -220,11 +220,11 @@
 			var/list/log_entry = current_state.log[log_entry_index]
 			var/thing_to_debug = traverse_list(params["tableIndices"], log_entry["param"])
 			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
-			return
+			return FALSE
 		if("vvGlobal")
 			var/thing_to_debug = traverse_list(params["indices"], current_state.globals)
 			INVOKE_ASYNC(usr.client, /client.proc/debug_variables, thing_to_debug)
-			return
+			return FALSE
 		if("clearArgs")
 			arguments.Cut()
 			return TRUE
