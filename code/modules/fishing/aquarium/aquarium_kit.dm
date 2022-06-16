@@ -1,4 +1,3 @@
-
 ///Fish feed can
 /obj/item/fish_feed
 	name = "fish feed can"
@@ -58,57 +57,6 @@
 	. = ..()
 	var/fish_type = pick(/obj/item/fish/dwarf_moonfish, /obj/item/fish/gunner_jellyfish, /obj/item/fish/needlefish, /obj/item/fish/armorfish)
 	new fish_type(src)
-
-///Book detailing where to get the fish and their properties.
-/obj/item/book/fish_catalog
-	name = "Fish Encyclopedia"
-	desc = "Indexes all fish known to mankind (and related species)."
-	icon_state = "fishbook"
-	starting_content = "Lot of fish stuff" //book wrappers could use cleaning so this is not necessary
-
-/obj/item/book/fish_catalog/on_read(mob/user)
-	ui_interact(user)
-
-/obj/item/book/fish_catalog/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "FishCatalog", name)
-		ui.open()
-
-/obj/item/book/fish_catalog/ui_static_data(mob/user)
-	. = ..()
-	var/static/fish_info
-	if(!fish_info)
-		fish_info = list()
-		for(var/_fish_type in subtypesof(/obj/item/fish))
-			var/obj/item/fish/fish = _fish_type
-			var/list/fish_data = list()
-			if(!initial(fish.show_in_catalog))
-				continue
-			fish_data["name"] = initial(fish.name)
-			fish_data["desc"] = initial(fish.desc)
-			fish_data["fluid"] = initial(fish.required_fluid_type)
-			fish_data["temp_min"] = initial(fish.required_temperature_min)
-			fish_data["temp_max"] = initial(fish.required_temperature_max)
-			fish_data["icon"] = sanitize_css_class_name("[initial(fish.icon)][initial(fish.icon_state)]")
-			fish_data["color"] = initial(fish.color)
-			fish_data["source"] = initial(fish.available_in_random_cases) ? "[AQUARIUM_COMPANY] Fish Packs" : "Unknown"
-			var/datum/reagent/food_type = initial(fish.food)
-			if(food_type != /datum/reagent/consumable/nutriment)
-				fish_data["feed"] = initial(food_type.name)
-			else
-				fish_data["feed"] = "[AQUARIUM_COMPANY] Fish Feed"
-			fish_info += list(fish_data)
-		// TODO: Custom entries
-
-	.["fish_info"] = fish_info
-	.["sponsored_by"] = AQUARIUM_COMPANY
-
-/obj/item/book/fish_catalog/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/fish)
-	)
 
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
