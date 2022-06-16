@@ -201,3 +201,9 @@ Temporary Items
 aux*.dll
 libaux*.so
 aux*.pdb
+
+# JavaScript tools
+**/node_modules
+
+# Screenshot tests
+/artifacts
