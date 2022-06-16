@@ -173,7 +173,6 @@
 					PBT.throw_at(throw_target, pb_knockback, 2)
 			else if(!tk_firing(user))
 				user.visible_message(span_danger("[user] fires [src]!"), \
-								span_danger("You fire [src]!"), \
 								span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE)
 
 /obj/item/gun/emp_act(severity)
