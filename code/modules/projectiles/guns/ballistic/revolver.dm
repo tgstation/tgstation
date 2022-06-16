@@ -188,18 +188,41 @@
 
 		spun = FALSE
 
+		var/zone = check_zone(user.zone_selected)
+		var/obj/item/bodypart/affecting = H.get_bodypart(zone)
+		var/is_target_face = zone == BODY_ZONE_HEAD || zone == BODY_ZONE_PRECISE_EYES || zone == BODY_ZONE_PRECISE_MOUTH
+		var/loaded_rounds = get_ammo(FALSE, FALSE) // check before it is fired
+
+		if(loaded_rounds && is_target_face)
+			add_memory_in_range(
+				user,
+				7,
+				MEMORY_RUSSIAN_ROULETTE,
+				list(
+					DETAIL_PROTAGONIST = user,
+					DETAIL_LOADED_ROUNDS = loaded_rounds,
+					DETAIL_BODYPART = affecting.name,
+					DETAIL_OUTCOME = (chambered ? "lost" : "won")
+				),
+				story_value = chambered ? STORY_VALUE_SHIT : max(STORY_VALUE_NONE, loaded_rounds), // the more bullets, the greater the story (but losing is always SHIT)
+				memory_flags = MEMORY_CHECK_BLINDNESS,
+				protagonist_memory_flags = NONE
+			)
+
 		if(chambered)
 			var/obj/item/ammo_casing/AC = chambered
 			if(AC.fire_casing(user, user, params, distro = 0, quiet = 0, zone_override = null, spread = 0, fired_from = src))
 				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
-				var/zone = check_zone(user.zone_selected)
-				var/obj/item/bodypart/affecting = H.get_bodypart(zone)
-				if(zone == BODY_ZONE_HEAD || zone == BODY_ZONE_PRECISE_EYES || zone == BODY_ZONE_PRECISE_MOUTH)
+				if(is_target_face)
 					shoot_self(user, affecting)
 				else
 					user.visible_message(span_danger("[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!"), span_userdanger("You cowardly fire [src] at your [affecting.name]!"), span_hear("You hear a gunshot!"))
 				chambered = null
+				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "russian_roulette_lose", /datum/mood_event/russian_roulette_lose)
 				return
+
+		if(loaded_rounds && is_target_face)
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
 
 		user.visible_message(span_danger("*click*"))
 		playsound(src, dry_fire_sound, 30, TRUE)

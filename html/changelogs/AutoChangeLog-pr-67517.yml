@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - refactor: "Gunlight / Helmetlight behavior is now a component."
+  - qol: "Gunlight / Helmetlight now uses balloon alerts."
