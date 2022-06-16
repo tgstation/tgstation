@@ -160,15 +160,15 @@
 		if(message)
 			if(tk_firing(user))
 				visible_message(
-								span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),
-								blind_message = span_hear("You hear a gunshot!"),
-								vision_distance = COMBAT_MESSAGE_RANGE
+						span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),
+						blind_message = span_hear("You hear a gunshot!"),
+						vision_distance = COMBAT_MESSAGE_RANGE
 				)
 			else if(pointblank)
 				user.visible_message(
-									span_danger("[user] fires [src] point blank at [pbtarget]!"),
-									span_danger("You fire [src] point blank at [pbtarget]!"),
-									span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget
+						span_danger("[user] fires [src] point blank at [pbtarget]!"),
+						span_danger("You fire [src] point blank at [pbtarget]!"),
+						span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget
 				)
 				to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
 				if(pb_knockback > 0 && ismob(pbtarget))
@@ -177,10 +177,10 @@
 					PBT.throw_at(throw_target, pb_knockback, 2)
 			else if(!tk_firing(user))
 				user.visible_message(
-									span_danger("[user] fires [src]!"),
-									blind_message = span_hear("You hear a gunshot!"),
-									vision_distance = COMBAT_MESSAGE_RANGE,
-									ignored_mobs = user
+						span_danger("[user] fires [src]!"),
+						blind_message = span_hear("You hear a gunshot!"),
+						vision_distance = COMBAT_MESSAGE_RANGE,
+						ignored_mobs = user
 				)
 
 /obj/item/gun/emp_act(severity)
