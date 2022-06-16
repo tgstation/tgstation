@@ -17841,17 +17841,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
-"fzZ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/obj/machinery/status_display/ai/directional/north,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/hfr_room)
 "fAo" = (
 /obj/structure/table/wood,
 /obj/item/clothing/under/suit/red,
@@ -22199,10 +22188,14 @@
 /area/station/engineering/supermatter/room)
 "gSu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "atmoshfr"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "gSy" = (
@@ -25373,13 +25366,13 @@
 "hTt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 9
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "hTw" = (
@@ -25582,10 +25575,15 @@
 /area/station/medical/virology)
 "hXd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 5
-	},
 /obj/structure/cable,
+/obj/machinery/button/door/directional/east{
+	id = "Atmospherics HFR Shutters";
+	name = "Atmospherics HFR Shutters";
+	req_access = list("atmospherics")
+	},
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "hXk" = (
@@ -39523,6 +39521,13 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"mqj" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/hfr_room)
 "mqq" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -52614,12 +52619,12 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "qrI" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 9
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "qrY" = (
@@ -54577,10 +54582,14 @@
 /area/station/medical/virology)
 "qXP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "Atmospherics HFR Shutters"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "qXY" = (
@@ -55419,6 +55428,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/department/medical/morgue)
+"rmk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/hfr_room)
 "rmn" = (
 /obj/structure/chair/stool/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -60232,11 +60249,11 @@
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
@@ -68163,6 +68180,17 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/security/brig)
+"vmy" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/status_display/ai/directional/north,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/hfr_room)
 "vmA" = (
 /obj/structure/fluff/tram_rail{
 	pixel_y = 17
@@ -180453,7 +180481,7 @@ xUe
 hjM
 hXd
 qXP
-xHs
+rmk
 nMg
 xVd
 hrL
@@ -180709,8 +180737,8 @@ nxM
 nxM
 hjM
 hjM
-fzZ
-xHs
+qXd
+vmy
 uXM
 icv
 dTt
@@ -180967,7 +180995,7 @@ oiT
 mco
 hjM
 qrI
-xHs
+mqj
 qUc
 ppw
 qkm
