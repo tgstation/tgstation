@@ -204,4 +204,3 @@ Temporary Items
 aux*.dll
 libaux*.so
 aux*.pdb
-aux*/target
