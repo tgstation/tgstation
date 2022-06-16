@@ -59,18 +59,22 @@ function SS13.register_signal(datum, signal, func)
 	if not callback then
 		callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first", path)
 		callback:call_proc("RegisterSignal", datum, signal, "Invoke")
+		SS13.signal_handlers[ref][signal].callback = callback
 	end
 	return callback
 end
 
-function SS13.unregister_signal(datum, callback, signal)
+function SS13.unregister_signal(datum, signal)
 	if not callback then return end
 	if not SS13.signal_handlers then return end
 	local ref = dm.global_proc("REF", datum)
 	if not SS13.signal_handlers[ref] then return end
-	SS13.signal_handlers[ref][signal] = nil
-	callback:call_proc("UnregisterSignal", datum, signal)
-	dm.global_proc("qdel", callback)
+	local callback = SS13.signal_handlers[ref][signal].callback
+	if callback then
+		callback:call_proc("UnregisterSignal", datum, signal)
+		dm.global_proc("qdel", callback)
+	end
+	SS13.signal_handlers[ref][signal] = {}
 end
 
 return SS13
