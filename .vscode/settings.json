@@ -25,11 +25,5 @@
 	"[scss]": {
 		"editor.rulers": [80]
 	},
-	"Lua.diagnostics.globals": [
-		"__sleep_queue",
-		"__yield_table",
-		"dm",
-		"env",
-		"sleep"
-	]
+	"Lua.diagnostics.enable": false
 }
