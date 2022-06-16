@@ -15,21 +15,21 @@
 	///Determines the typepath of what the object folds into
 	var/foldabletype = /obj/item/wheelchair
 	///Determines wether the wheelchair has a bell on it or not
-	var/bell_attatched = FALSE
+	var/bell_attached
 
 /obj/vehicle/ridden/wheelchair/generate_actions()
-	if(!bell_attatched)
+	if(!bell_attached)
 		return
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/ridden/wheelchair/bell, VEHICLE_CONTROL_DRIVE)
 
-/obj/vehicle/ridden/wheelchair/proc/attatch_bell()
-	bell_attatched = TRUE
+/obj/vehicle/ridden/wheelchair/proc/attach_bell(obj/structure/desk_bell/bell)
+	bell_attached = bell
 	src.generate_actions()
 	icon_state = "wheelchair_bell"
-	desc += "There is a small bell attatched to the handle."
+	desc += "There is a small bell attached to the handle."
 
-/obj/vehicle/ridden/wheelchair/gold/attatch_bell()
+/obj/vehicle/ridden/wheelchair/gold/attach_bell()
 	..()
 	icon_state = "gold_wheelchair_bell"
 
@@ -127,9 +127,9 @@
 	usr.visible_message(span_notice("[usr] collapses [src]."), span_notice("You collapse [src]."))
 	var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
 	usr.put_in_hands(wheelchair_folded)
-	if(bell_attatched)
+	if(bell_attached)
 		new /obj/structure/desk_bell (get_turf(src))
-		usr.visible_message(span_notice("The bell attatched falls off!"))
+		usr.visible_message(span_notice("The bell attached falls off!"))
 	qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
