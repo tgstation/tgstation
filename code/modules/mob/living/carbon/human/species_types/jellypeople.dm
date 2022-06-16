@@ -8,8 +8,8 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_LITERATE,
 		TRAIT_TOXINLOVER,
+		TRAIT_LITERATE,
 	)
 	mutantlungs = /obj/item/organ/internal/lungs/slime
 	meat = /obj/item/food/meat/slab/human/mutant/slime
