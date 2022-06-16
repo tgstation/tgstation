@@ -22,6 +22,7 @@
 	var/are_we_linked = FALSE //whether or not our tower is being connected to by another tower
 
 /obj/structure/clockcult_tower/proc/link_up() //find nearby tower, create beam to tower
+	sleep(5 SECONDS) //this matters where its getting loaded atm since the whole map isn't loaded in instantly and can cause towers to get missed
 	are_we_linked = TRUE
 	for(var/obj/structure/clockcult_tower/T in urange(10, src))
 		if(!T.are_we_linked && T.id == id)
@@ -52,7 +53,6 @@
 
 /obj/structure/clockcult_tower/source/Initialize(mapload)
 	. = ..()
-	sleep(10 SECONDS) //this matters where its getting loaded atm since the whole map isn't loaded in instantly and can cause towers to get missed
 	link_up()
 
 /obj/structure/clockcult_tower/source/Destroy()
@@ -200,6 +200,48 @@
 		"A ssshiny machine livesss deep in thessse cavesss, makesss good metal for better toolsss for the tribe. I pay good price for any ssspare ssshiny you come acrosssss..",
 		"I would appreciate you avoiding the needlessss ssslaughter of my kin, but I underssstand sssome of them are more... prone to violent outbreaksss againssst your kind."
 	)
+
+/mob/living/simple_animal/hostile/retaliate/trader/scared_officer
+	name = "Rachael Cleeves"
+	desc = "A hired security officer who did NOT get paid enough for this."
+	speak_emote = list("whinces")
+	speech_span = SPAN_SANS
+	sell_sound = 'sound/voice/hiss2.ogg'
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
+	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	itemrejectphrase = "..How does this help me in this situation?"
+	itemsellcancelphrase = "What a ssshame, you know where to find me if you happen to... change your mind."
+	itemsellacceptphrase = "Thisss will make a great trinket for the brood mother..."
+	interestedphrase = "You.. I see you have ssshiny. Why not participate in some Nanotrasssen-approved capitalisssm?"
+	buyphrase = "..Cool, cool. You'll come back with reinforcements, right?"
+	nocashphrase = "Listen man.. I may be desperate but I still need a paycheck."
+	//TODO: More items in this list that make sense for the mission
+	products = list(
+		/obj/item/spear/bonespear = 150,
+		/obj/item/skeleton_key = 3000,
+		/obj/item/shovel/serrated = 150
+	)
+	wanted_items = list(
+		/obj/item/stack/sheet/mineral/snow = 150,
+		/obj/item/stack/sheet/bone = 10,
+		/obj/item/stack/sheet/bronze = 5,
+		/obj/item/food/meat/slab/goliath = 10,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 15,
+	)
+	icon_state = "ashtrader"
+	gender = MALE
+	loot = list(/obj/effect/decal/remains/human)
+	lore = list(
+		"How the FUCK did you manage to make it this far alive?? I've been living in this crevice for over a week, sneaking food from the mess hall while they're out doing.. whatever the hell they're doing.",
+		"You have no idea how greatful I am to see another person who hasn't gone insane. You're not insane, right?",
+		"...You wouldn't happen to have one of those mining jaunters, would you?",
+		"Nanotrasen is aware of what is actually going on here, right? You're part of the rescue team, right?? Right???",
+		"Listen, if you got any spare ammo or weapons I'll buy it off you. I know it's bad out there but I'd like a chance of survival if they find me in here.",
+		"I know it seems bad right now, but trust me, its gonna get a lot worse."
+	)
+
 
 
 //Mob corpse spawns, outfits, and ID cards
