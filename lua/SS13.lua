@@ -36,8 +36,7 @@ end
 function SS13.wait(time, timer)
 	local index = #__yield_table + 1
 	local callback = SS13.new("/datum/callback", SS13.SSlua, "queue_resume", SS13.state, index)
-	local source, line = debug.info(1, "sl")
-	local timedevent = dm.global_proc("_addtimer", callback, time*10, 8, timer, source, line+1)
+	local timedevent = dm.global_proc("_addtimer", callback, time*10, 8, timer, debug.info(1, "sl"))
 	coroutine.yield()
 	dm.global_proc("deltimer", timedevent, timer)
 end
