@@ -551,3 +551,30 @@
   timothymtorres:
   - rscadd: Add dyslexia (illiteracy quirk) as a genetic mutation.
   - rscadd: Add illiteracy as a effect for confusion disease symptom.
+2022-06-16:
+  Fikou:
+  - bugfix: unrestricted wizard healing staff no longer tells you you are weak
+  Pickle-Coding:
+  - spellcheck: The chat will no longer lie by saying you shoved yourself into the
+      closet when someone shoves you into a closet.
+  PositiveEntropy, WJohnston, Dragomagol, LemonInTheDark, Riggle:
+  - imageadd: Resprites most variety of tiles into a better shaded version!
+  - code_imp: Damaged floors are now damaged overlays, meaning that most tiles should
+      properly display a damaged state!
+  ReinaCoder:
+  - imageadd: The riot helmet has been resprited!
+  SovietJenga:
+  - balance: Moves the botanogenetic shears into the botany research node and locks
+      it behind a botany experiment
+  - balance: Removes the advanced engineering node requirement from the botany node
+  Striders13:
+  - bugfix: fixed a windoor in metastation warden's office being layered incorrectly
+  YakumoChen:
+  - qol: Conveyor switches now tell you the speed setting of belts when examined.
+      You can change the speed with a multitool!
+  alphanerdd:
+  - bugfix: updates donk pocket box examine text to be more accurate
+  private-tristan:
+  - bugfix: icebox science has a scidrobe again!
+  timothymtorres:
+  - code_imp: Add atmospheric technician gas meter text tip
