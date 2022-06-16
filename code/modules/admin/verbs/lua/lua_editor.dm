@@ -29,47 +29,53 @@
 	return GLOB.debug_state
 
 /// Returns a copy of the list where any element that is a datum or the world is converted into a ref
-/proc/refify_list(list/L)
-	. = list()
-	for(var/i in 1 to L.len)
-		var/key = L[i]
+/proc/refify_list(list/target_list)
+	var/list/ret = list()
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
 		var/new_key = key
-		if(isdatum(key) || isworld(key))
+		if(isdatum(key))
 			new_key = "[key] [REF(key)]"
+		else if(key == world)
+			new_key = "world [REF(world)]"
 		else if(islist(key))
 			new_key = refify_list(key)
 		var/value
-		if(istext(key) || islist(key) || isdatum(key) || isworld(key))
-			value = L[key]
-		if(isdatum(value) || isworld(key))
+		if(istext(key) || islist(key) || isdatum(key) || key == world)
+			value = target_list[key]
+		if(isdatum(value))
 			value = "[value] [REF(value)]"
+		else if(value == world)
+			value = "world [REF(world)]"
 		else if(islist(value))
 			value = refify_list(value)
 		var/list/to_add = list(new_key)
 		if(value)
 			to_add[new_key] = value
-		. += to_add
+		ret += to_add
+	return ret
 
 /**
  * Converts a list into a list of assoc lists of the form ("key" = key, "value" = value)
  * so that list keys that are themselves lists can be fully json-encoded
  */
-/proc/kvpify_list(list/L, depth = INFINITY)
-	. = list()
-	for(var/i in 1 to L.len)
-		var/key = L[i]
+/proc/kvpify_list(list/target_list, depth = INFINITY)
+	var/list/ret = list()
+	for(var/i in 1 to target_list.len)
+		var/key = target_list[i]
 		var/new_key = key
 		if(islist(key) && depth)
 			new_key = kvpify_list(key, depth-1)
 		var/value
-		if(istext(key) || islist(key) || isdatum(key) || isworld(key))
-			value = L[key]
+		if(istext(key) || islist(key) || isdatum(key) || key == world)
+			value = target_list[key]
 		if(islist(value) && depth)
 			value = kvpify_list(value, depth-1)
 		if(value)
-			. += list(list("key" = new_key, "value" = value))
+			ret += list(list("key" = new_key, "value" = value))
 		else
-			. += list(list("key" = i, "value" = new_key))
+			ret += list(list("key" = i, "value" = new_key))
+	return ret
 
 /datum/lua_editor/ui_static_data(mob/user)
 	var/list/data = list()
