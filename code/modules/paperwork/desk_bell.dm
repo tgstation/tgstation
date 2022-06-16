@@ -106,3 +106,19 @@
 /obj/structure/desk_bell/speed_demon
 	desc = "The cornerstone of any customer service job. This one's been modified for hyper-performance."
 	ring_cooldown_length = 0
+
+/obj/structure/desk_bell/MouseDrop(obj/over_object, src_location, over_location)
+	if((!istype(over_object, /obj/vehicle/ridden/wheelchair)))
+		return
+	if(!Adjacent(over_object) || !Adjacent(usr))
+		return
+	var/obj/vehicle/ridden/wheelchair/target = over_object
+	if(target.bell_attatched)
+		to_chat(usr, "[target] already has a bell attatched!")
+		return
+	usr.balloon_alert(usr, "Attatching bell...")
+	if(!do_after(usr, 5))
+		return
+	target.attatch_bell()
+	qdel(src)
+	return ..()

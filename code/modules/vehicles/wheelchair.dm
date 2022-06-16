@@ -14,6 +14,25 @@
 	var/image/wheels_overlay
 	///Determines the typepath of what the object folds into
 	var/foldabletype = /obj/item/wheelchair
+	///Determines wether the wheelchair has a bell on it or not
+	var/bell_attatched = FALSE
+
+/obj/vehicle/ridden/wheelchair/generate_actions()
+	if(!bell_attatched)
+		return
+	. = ..()
+	initialize_controller_action_type(/datum/action/vehicle/ridden/wheelchair/bell, VEHICLE_CONTROL_DRIVE)
+
+/obj/vehicle/ridden/wheelchair/proc/attatch_bell()
+	bell_attatched = TRUE
+	src.generate_actions()
+	icon_state = "wheelchair_bell"
+	desc += "There is a small bell attatched to the handle."
+
+/obj/vehicle/ridden/wheelchair/gold/attatch_bell()
+	..()
+	icon_state = "gold_wheelchair_bell"
+
 
 /obj/vehicle/ridden/wheelchair/Initialize(mapload)
 	. = ..()
@@ -108,6 +127,9 @@
 	usr.visible_message(span_notice("[usr] collapses [src]."), span_notice("You collapse [src]."))
 	var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
 	usr.put_in_hands(wheelchair_folded)
+	if(bell_attatched)
+		new /obj/structure/desk_bell (get_turf(src))
+		usr.visible_message(span_notice("The bell attatched falls off!"))
 	qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
@@ -117,3 +139,5 @@
 	var/obj/vehicle/ridden/wheelchair/wheelchair_unfolded = new unfolded_type(location)
 	wheelchair_unfolded.add_fingerprint(user)
 	qdel(src)
+
+
