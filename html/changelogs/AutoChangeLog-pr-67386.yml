@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - bugfix: "Fixed locate weakpoint do_after being 3 seconds instead of intended 30. Also you can no longer roll locate weakpoint until you get at least 20 minutes of progression via objectives"
