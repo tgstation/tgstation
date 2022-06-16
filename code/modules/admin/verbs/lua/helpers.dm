@@ -8,17 +8,17 @@
  * the called proc had as its return value at the moment it slept. This may not
  * be desired behavior, so this datum exists to wrap these procs.
  */
-/datum/promise
+/datum/auxtools_promise
 	var/datum/callback/callback
 	var/return_value
 	var/runtime_message
 	var/status = PROMISE_PENDING
 
-/datum/promise/New(...)
+/datum/auxtools_promise/New(...)
 	callback = CALLBACK(arglist(args))
 	perform()
 
-/datum/promise/proc/perform()
+/datum/auxtools_promise/proc/perform()
 	set waitfor = 0
 	try
 		return_value = callback.Invoke()
@@ -26,3 +26,7 @@
 	catch(var/exception/e)
 		runtime_message = e.name
 		status = PROMISE_REJECTED
+
+#undef PROMISE_PENDING
+#undef PROMISE_RESOLVED
+#undef PROMISE_REJECTED
