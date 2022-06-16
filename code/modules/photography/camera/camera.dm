@@ -41,7 +41,7 @@
 	var/can_customise = TRUE
 	var/default_picture_name
 	///Whether the camera should print pictures immediately when a picture is taken.
-	var/print_picture = TRUE
+	var/print_picture_on_snap = TRUE
 
 /obj/item/camera/Initialize(mapload)
 	. = ..()
@@ -223,19 +223,20 @@
 
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
-	if(print_picture)
+	if(print_picture_on_snap)
 		printpicture(user, picture)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
-	var/obj/item/photo/p = new(get_turf(src), picture)
-	if(user && in_range(src, user)) //needed because of TK
-		if(!ispAI(user))
-			user.put_in_hands(p)
-			pictures_left--
-			to_chat(user, span_notice("[pictures_left] photos left."))
-		var/customise = "No"
-		if(can_customise)
-			customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
+	if(!user)
+		return
+	pictures_left--
+	var/turf/current_turf = get_turf(src)
+	var/obj/item/photo/new_photo = new(get_turf(src), picture)
+	if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
+		to_chat(user, span_notice("[pictures_left] photos left."))
+
+	if(can_customise)
+		var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
 		if(customise == "Yes")
 			var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
 			var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
@@ -246,11 +247,10 @@
 				picture.picture_desc = "[desc1] - [picture.picture_desc]"
 			if(caption)
 				picture.caption = caption
-		else
-			if(default_picture_name)
-				picture.picture_name = default_picture_name
+	else if(default_picture_name)
+		picture.picture_name = default_picture_name
 
-	p.set_picture(picture, TRUE, TRUE)
+	new_photo.set_picture(picture, TRUE, TRUE)
 	if(CONFIG_GET(flag/picture_logging_camera))
 		picture.log_to_file()
 
