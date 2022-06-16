@@ -26,12 +26,8 @@
 /obj/vehicle/ridden/wheelchair/proc/attach_bell(obj/structure/desk_bell/bell)
 	bell_attached = bell
 	src.generate_actions()
-	icon_state = "wheelchair_bell"
+	add_overlay("wheelchair_bell")
 	desc += "There is a small bell attached to the handle."
-
-/obj/vehicle/ridden/wheelchair/gold/attach_bell()
-	..()
-	icon_state = "gold_wheelchair_bell"
 
 
 /obj/vehicle/ridden/wheelchair/Initialize(mapload)
