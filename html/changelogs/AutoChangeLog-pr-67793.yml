@@ -1,0 +1,4 @@
+author: "bob-b-b"
+delete-after: True
+changes: 
+  - bugfix: "Fixes infiltrator toolbox not fitting all suit parts"
