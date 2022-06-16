@@ -30,7 +30,7 @@
 	if(!owner)
 		return
 
-	if(IS_HERETIC(grant_to))
+	if(IS_HERETIC(owner))
 		RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), .proc/on_focus_lost)
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/Remove(mob/remove_from)
@@ -60,7 +60,7 @@
 
 	if(!isliving(on_who))
 		return
-
+	// Delete existing
 	if(blade_effect)
 		stack_trace("[type] had an existing blade effect in on_activation. This might be an exploit, and should be investigated.")
 		UnregisterSignal(blade_effect, COMSIG_PARENT_QDELETING)
