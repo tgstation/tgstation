@@ -54,7 +54,7 @@
 			/area/station/engineering/lobby,
 			/area/station/engineering/storage,
 			/area/station/science/lobby,
-			/area/station/science/test_area,
+			/area/station/science/ordnance/bomb,
 			/area/station/security/prison,
 		))
 
