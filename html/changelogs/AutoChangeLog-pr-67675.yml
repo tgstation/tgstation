@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Some heretic focuses apply more consistently now."
+  - bugfix: "Furious Steel should go away more often than not now."
