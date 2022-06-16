@@ -234,7 +234,7 @@
 	set_welding(!welding)
 	if(welding)
 		if(get_fuel() >= 1)
-			to_chat(user, span_notice("You switch [src] on."))
+			balloon_alert(user, "welder is lit")
 			playsound(loc, activation_sound, 50, TRUE)
 			force = 15
 			damtype = BURN
@@ -242,10 +242,10 @@
 			update_appearance()
 			START_PROCESSING(SSobj, src)
 		else
-			to_chat(user, span_warning("You need more fuel!"))
+			balloon_alert(user, "need more fuel!")
 			switched_off(user)
 	else
-		to_chat(user, span_notice("You switch [src] off."))
+		balloon_alert(user, "welder is off")
 		playsound(loc, deactivation_sound, 50, TRUE)
 		switched_off(user)
 
