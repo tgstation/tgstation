@@ -31,7 +31,10 @@ export const Log = (props, context) => {
         case "yielded":
           message = (
             <>
-              <b>{name}</b> yielded.
+              <b>{name}</b> yielded{
+                param.length ? ` ${param.length} value${param.length > 1 ? "s" : ""}`
+                  : ""
+              }.
               {param.length ? (
                 <ListMapper
                   list={param}
@@ -50,18 +53,23 @@ export const Log = (props, context) => {
         case "finished":
           message = (
             <>
-              <b>{name}</b> returned.
-              {param.length ? (
-                <ListMapper
-                  list={param}
-                  skipNulls
-                  name="Return Value"
-                  collapsible
-                  vvAct={(path) => act("vvReturnValue", {
-                    entryIndex: i+1,
-                    tableIndices: path,
-                  })} />
-              ) : (<br />)}
+              <b>{name}</b> returned{
+                param.length ? ` ${param.length} value${param.length > 1 ? "s" : ""}`
+                  : ""
+              }.
+              <Box color="default">
+                {param.length ? (
+                  <ListMapper
+                    list={param}
+                    skipNulls
+                    name="Return Value"
+                    collapsible
+                    vvAct={(path) => act("vvReturnValue", {
+                      entryIndex: i+1,
+                      tableIndices: path,
+                    })} />
+                ) : (<br />)}
+              </Box>
             </>
           );
           messageColor = "green";
