@@ -3,5 +3,7 @@
 
 LUA_PATH ?
 LUA_PATH ?.lua
+LUA_PATH ?.luau
 LUA_PATH lua/?
 LUA_PATH lua/?.lua
+LUA_PATH lua/?.luau
