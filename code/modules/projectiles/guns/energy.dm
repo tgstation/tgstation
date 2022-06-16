@@ -34,6 +34,18 @@
 	///set to true so the gun is given an empty cell
 	var/dead_cell = FALSE
 
+/obj/item/gun/energy/fire_sounds()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/shot_cost_percent = FLOOR(clamp(shot.e_cost / cell.maxcharge, 0, 1) * 100, 1)
+	var/batt_percent = FLOOR(clamp(cell.charge / cell.maxcharge, 0, 1) * 100, 1)
+	var/max_shots = round(100/shot_cost_percent)
+	var/shots_left = round(batt_percent/shot_cost_percent)
+	var/frequency_to_use = sin((90/max_shots) * shots_left)
+	if(suppressed)
+		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = frequency_to_use)
+	else
+		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use)
+
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
 	if(!(. & EMP_PROTECT_CONTENTS))
@@ -59,6 +71,7 @@
 		START_PROCESSING(SSobj, src)
 	update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/energy/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_energy)
@@ -91,10 +104,6 @@
 			readout += "a theoretically infinite number of shots on [span_warning("[for_ammo.select_name]")] mode."
 
 	return readout.Join("\n") // Sending over the singular string, rather than the whole list
-
-/obj/item/gun/energy/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/energy/proc/update_ammo_types()
 	var/obj/item/ammo_casing/energy/shot
@@ -214,8 +223,8 @@
 	if(modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		if(single_shot_type_overlay)
-			. += "[icon_state]_[shot.select_name]"
-		overlay_icon_state += "_[shot.select_name]"
+			. += "[icon_state]_[initial(shot.select_name)]"
+		overlay_icon_state += "_[initial(shot.select_name)]"
 
 	var/ratio = get_charge_ratio()
 	if(ratio == 0 && display_empty)

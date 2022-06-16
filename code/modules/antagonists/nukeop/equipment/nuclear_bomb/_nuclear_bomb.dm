@@ -527,8 +527,6 @@ GLOBAL_VAR(station_nuke_source)
 		SSticker.roundend_check_paused = FALSE
 		return
 
-	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
-
 	var/detonation_status
 	var/turf/bomb_location = get_turf(src)
 	var/area/nuke_area = get_area(bomb_location)
@@ -549,6 +547,7 @@ GLOBAL_VAR(station_nuke_source)
 
 		// Confirming good hits, the nuke hit the station
 		else
+			SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
 			detonation_status = DETONATION_HIT_STATION
 			GLOB.station_was_nuked = TRUE
 
@@ -559,12 +558,6 @@ GLOBAL_VAR(station_nuke_source)
 	// The nuke was somewhere wacky - deep space, mining z, centcom? Whatever
 	else
 		detonation_status = DETONATION_MISSED_STATION
-
-	/*
-	if(detonation_status < NUKE_MISS_STATION)
-		SSshuttle.registerHostileEnvironment(src)
-		SSshuttle.lockdown = TRUE
-	*/
 
 	// Missing the station will register a hostile environment, until it actually explodes
 	if(detonation_status == DETONATION_MISSED_STATION)

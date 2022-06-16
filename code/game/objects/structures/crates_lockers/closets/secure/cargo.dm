@@ -10,7 +10,7 @@
 	new /obj/item/clothing/under/rank/cargo/qm(src)
 	new /obj/item/clothing/under/rank/cargo/qm/skirt(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
-	new /obj/item/radio/headset/headset_cargo(src)
+	new /obj/item/radio/headset/heads/qm(src)
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/megaphone/cargo(src)

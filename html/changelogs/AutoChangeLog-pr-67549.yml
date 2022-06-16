@@ -1,0 +1,5 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - soundadd: "Energy and Magic gunfire sound pitch now varies based on how much ammo is left."
+  - soundadd: "Ballistic gunfire now has a low-ammo click sound."
