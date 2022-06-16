@@ -35,42 +35,44 @@ GLOBAL_LIST_INIT(preset_fish_sources,init_fishing_configurations())
 /datum/fish_source/proc/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman)
 	. = fishing_difficulty
 
+	if(!ispath(result,/obj/item/fish))
+		// In the future non-fish rewards can have variable difficulty calculated here
+		return
+
 	var/list/fish_list_properties = collect_fish_properties()
+	var/obj/item/fish/caught_fish = result
+	// Baseline fish difficulty
+	. += initial(caught_fish.fishing_difficulty_modifier)
+	. += rod.difficulty_modifier
 
-	if(ispath(result,/obj/item/fish))
-		var/obj/item/fish/caught_fish = result
-		// Baseline fish difficulty
-		. += initial(caught_fish.fishing_difficulty_modifier)
-		. += rod.difficulty_modifier
+	if(rod.bait)
+		var/obj/item/bait = rod.bait
+		//Fav bait makes it easier
+		var/list/fav_bait = fish_list_properties[caught_fish][NAMEOF(caught_fish, favorite_bait)]
+		for(var/bait_identifer in fav_bait)
+			if(is_matching_bait(bait, bait_identifer))
+				. += FAV_BAIT_DIFFICULTY_MOD
+				break
+		//Disliked bait makes it harder
+		var/list/disliked_bait = fish_list_properties[caught_fish][NAMEOF(caught_fish, disliked_bait)]
+		for(var/bait_identifer in disliked_bait)
+			if(is_matching_bait(bait, bait_identifer))
+				. += DISLIKED_BAIT_DIFFICULTY_MOD
+				break
 
-		if(rod.bait)
-			var/obj/item/bait = rod.bait
-			//Fav bait makes it easier
-			var/list/fav_bait = fish_list_properties[caught_fish][NAMEOF(caught_fish, favorite_bait)]
-			for(var/bait_identifer in fav_bait)
-				if(is_matching_bait(bait, bait_identifer))
-					. += FAV_BAIT_DIFFICULTY_MOD
-					break
-			//Disliked bait makes it harder
-			var/list/disliked_bait = fish_list_properties[caught_fish][NAMEOF(caught_fish, disliked_bait)]
-			for(var/bait_identifer in disliked_bait)
-				if(is_matching_bait(bait, bait_identifer))
-					. += DISLIKED_BAIT_DIFFICULTY_MOD
-					break
+	// Matching/not matching fish traits and equipment
+	var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fishing_traits)]
 
-		// Matching/not matching fish traits and equipment
-		var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fishing_traits)]
+	var/additive_mod = 0
+	var/multiplicative_mod = 1
+	for(var/fish_trait in fish_traits)
+		var/datum/fishing_trait/trait = new fish_trait
+		var/list/mod = trait.difficulty_mod(rod, fisherman)
+		additive_mod += mod[ADDITIVE_FISHING_MOD]
+		multiplicative_mod *= mod[MULTIPLICATIVE_FISHING_MOD]
 
-		var/additive_mod = 0
-		var/multiplicative_mod = 1
-		for(var/fish_trait in fish_traits)
-			var/datum/fishing_trait/trait = new fish_trait
-			var/list/mod = trait.difficulty_mod(rod, fisherman)
-			additive_mod += mod[ADDITIVE_FISHING_MOD]
-			multiplicative_mod *= mod[MULTIPLICATIVE_FISHING_MOD]
-
-		. += additive_mod
-		. *= multiplicative_mod
+	. += additive_mod
+	. *= multiplicative_mod
 
 /// In case you want more complex rules for specific spots
 /datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)

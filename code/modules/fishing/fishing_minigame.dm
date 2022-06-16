@@ -115,7 +115,7 @@
 		if(phase == MINIGAME_PHASE)
 			used_rod.consume_bait()
 	if(win)
-		//validate timings to have at least basic abuse prevention, though it's kinda impossible task here
+		// validate timings to have at least basic abuse prevention, though it's kinda impossible task here
 		// 140 from minimum completion bar fill time
 		var/minimum_time = start_time + MINIMUM_MINIGAME_DURATION
 		if(world.time < minimum_time)

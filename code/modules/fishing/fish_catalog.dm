@@ -9,7 +9,6 @@
 	ui_interact(user)
 
 /obj/item/book/fish_catalog/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "FishCatalog", name)
@@ -20,7 +19,7 @@
 	var/static/fish_info
 	if(!fish_info)
 		fish_info = list()
-		for(var/_fish_type in subtypesof(/obj/item/fish))
+		for(var/_fish_type as anything in subtypesof(/obj/item/fish))
 			var/obj/item/fish/fish = _fish_type
 			var/list/fish_data = list()
 			if(!initial(fish.show_in_catalog))

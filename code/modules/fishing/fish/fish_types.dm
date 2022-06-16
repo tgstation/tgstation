@@ -205,7 +205,7 @@
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 3
 
-/obj/item/fish/emulsijack/process(delta_time = SSOBJ_DT)
+/obj/item/fish/emulsijack/process(delta_time)
 	var/emulsified = FALSE
 	var/obj/structure/aquarium/aquarium = loc
 	if(istype(aquarium))

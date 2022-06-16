@@ -3,7 +3,7 @@
 	set name = "Fishing Calculator"
 	set category = "Debug"
 
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_DEBUG))
 		return
 	var/datum/fishing_calculator/ui = new(usr)
 	ui.ui_interact(usr)

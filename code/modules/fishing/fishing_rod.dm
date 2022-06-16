@@ -91,13 +91,13 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/fishing_rod/pre_attack(atom/A, mob/living/user, params)
+/obj/item/fishing_rod/pre_attack(atom/targeted_atom, mob/living/user, params)
 	. = ..()
 	/// Reel in if able
 	if(currently_hooked_item)
 		reel(user)
 		return TRUE
-	SEND_SIGNAL(A, COMSIG_PRE_FISHING)
+	SEND_SIGNAL(targeted_atom, COMSIG_PRE_FISHING)
 
 /// Generates the fishing line visual from the current user to the target and updates inhands
 /obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, target_py = null)
@@ -106,7 +106,7 @@
 		return
 	var/beam_color = line?.line_color || default_line_color
 	var/datum/beam/fishing_line/fishing_line_beam = new(user, target, icon_state = "fishing_line", beam_color = beam_color, override_target_pixel_y = target_py)
-	fishing_line_beam.lefthand = user.get_held_index_of_item(src) % 2 != 0
+	fishing_line_beam.lefthand = user.get_held_index_of_item(src) % 2 == 1
 	RegisterSignal(fishing_line_beam, COMSIG_BEAM_BEFORE_DRAW, .proc/check_los)
 	RegisterSignal(fishing_line_beam, COMSIG_PARENT_QDELETING, .proc/clear_line)
 	fishing_lines += fishing_line_beam
@@ -130,13 +130,13 @@
 	QDEL_LIST(fishing_lines)
 
 /// Hooks the item
-/obj/item/fishing_rod/proc/hook_item(mob/user, atom/movable/target)
+/obj/item/fishing_rod/proc/hook_item(mob/user, atom/target_atom)
 	if(currently_hooked_item)
 		return
-	if(!can_be_hooked(target))
+	if(!can_be_hooked(target_atom))
 		return
-	currently_hooked_item = target
-	hooked_item_fishing_line = create_fishing_line(target)
+	currently_hooked_item = target_atom
+	hooked_item_fishing_line = create_fishing_line(target_atom)
 	RegisterSignal(hooked_item_fishing_line, COMSIG_FISHING_LINE_SNAPPED, .proc/clear_hooked_item)
 
 /// Checks what can be hooked
@@ -184,14 +184,14 @@
 		cast_projectile.fire()
 
 /// Called by hook projectile when hitting things
-/obj/item/fishing_rod/proc/hook_hit(atom/movable/A)
+/obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile)
 	var/mob/user = loc
 	if(!istype(user))
 		return
-	if(SEND_SIGNAL(A, COMSIG_FISHING_ROD_CAST, src, user) & FISHING_ROD_CAST_HANDLED)
+	if(SEND_SIGNAL(atom_hit_by_hook_projectile, COMSIG_FISHING_ROD_CAST, src, user) & FISHING_ROD_CAST_HANDLED)
 		return
 	/// If you can't fish in it, try hooking it
-	hook_item(user, A)
+	hook_item(user, atom_hit_by_hook_projectile)
 
 /obj/item/fishing_rod/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -388,7 +388,7 @@
 /obj/item/fishing_rod/tech/use_slot(slot, mob/user, obj/item/new_item)
 	if(slot == ROD_SLOT_BAIT)
 		return
-	. = ..()
+	return ..()
 
 #undef ROD_SLOT_BAIT
 #undef ROD_SLOT_LINE
@@ -407,9 +407,9 @@
 	var/obj/item/fishing_rod/owner
 	var/datum/beam/our_line
 
-/obj/projectile/fishing_cast/Impact(atom/A)
+/obj/projectile/fishing_cast/Impact(atom/hit_atom)
 	. = ..()
-	owner.hook_hit(A)
+	owner.hook_hit(hit_atom)
 	qdel(src)
 
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)

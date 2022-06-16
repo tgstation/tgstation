@@ -15,8 +15,8 @@
 	RegisterSignal(target, COMSIG_PRE_FISHING, .proc/create_fishing_spot)
 
 /datum/element/lazy_fishing_spot/Detach(datum/target)
-	. = ..()
 	UnregisterSignal(target, COMSIG_PRE_FISHING)
+	return ..()
 
 /datum/element/lazy_fishing_spot/proc/create_fishing_spot(datum/source)
 	SIGNAL_HANDLER
