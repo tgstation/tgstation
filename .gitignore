@@ -201,12 +201,3 @@ Temporary Items
 aux*.dll
 libaux*.so
 aux*.pdb
-
-# Autowiki
-/tools/autowiki/node_modules
-
-# JavaScript tools
-**/node_modules
-
-# Screenshot tests
-/artifacts
