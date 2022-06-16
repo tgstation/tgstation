@@ -37,7 +37,6 @@
 	QDEL_NULL(tentacle_slap)
 
 /mob/living/simple_animal/hostile/vatbeast/proc/tamed(mob/living/tamer)
-	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
 	faction = list("neutral")
@@ -115,4 +114,3 @@
 	our_action.StartCooldown()
 
 	return TRUE
-

@@ -15,77 +15,38 @@
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
-	var/can_flashlight = FALSE //if a flashlight can be mounted. if it has a flashlight and this is false, it is permanently attached.
-	var/obj/item/flashlight/seclite/attached_light
-	var/datum/action/item_action/toggle_helmet_flashlight/alight
-
 /obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
-	if(attached_light)
-		alight = new(src)
-
-
-/obj/item/clothing/head/helmet/Destroy()
-	var/obj/item/flashlight/seclite/old_light = set_attached_light(null)
-	if(old_light)
-		qdel(old_light)
-	return ..()
-
-
-/obj/item/clothing/head/helmet/examine(mob/user)
-	. = ..()
-	if(attached_light)
-		. += "It has \a [attached_light] [can_flashlight ? "" : "permanently "]mounted on it."
-		if(can_flashlight)
-			. += span_info("[attached_light] looks like it can be <b>unscrewed</b> from [src].")
-	else if(can_flashlight)
-		. += "It has a mounting point for a <b>seclite</b>."
-
-
-/obj/item/clothing/head/helmet/handle_atom_del(atom/A)
-	if(A == attached_light)
-		set_attached_light(null)
-		update_helmlight()
-		update_appearance()
-		QDEL_NULL(alight)
-		qdel(A)
-	return ..()
-
-
-///Called when attached_light value changes.
-/obj/item/clothing/head/helmet/proc/set_attached_light(obj/item/flashlight/seclite/new_attached_light)
-	if(attached_light == new_attached_light)
-		return
-	. = attached_light
-	attached_light = new_attached_light
-	if(attached_light)
-		attached_light.set_light_flags(attached_light.light_flags | LIGHT_ATTACHED)
-		if(attached_light.loc != src)
-			attached_light.forceMove(src)
-	else if(.)
-		var/obj/item/flashlight/seclite/old_attached_light = .
-		old_attached_light.set_light_flags(old_attached_light.light_flags & ~LIGHT_ATTACHED)
-		if(old_attached_light.loc == src)
-			old_attached_light.forceMove(get_turf(src))
-
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/helmet/sec
-	can_flashlight = TRUE
 
-/obj/item/clothing/head/helmet/sec/attackby(obj/item/I, mob/user, params)
-	if(issignaler(I))
-		var/obj/item/assembly/signaler/S = I
-		if(attached_light) //Has a flashlight. Player must remove it, else it will be lost forever.
-			to_chat(user, span_warning("The mounted flashlight is in the way, remove it first!"))
-			return
+/obj/item/clothing/head/helmet/sec/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
-		if(S.secured)
-			qdel(S)
-			var/obj/item/bot_assembly/secbot/A = new
-			user.put_in_hands(A)
-			to_chat(user, span_notice("You add the signaler to the helmet."))
-			qdel(src)
-			return
+/obj/item/clothing/head/helmet/sec/attackby(obj/item/attacking_item, mob/user, params)
+	if(issignaler(attacking_item))
+		var/obj/item/assembly/signaler/attached_signaler = attacking_item
+		// There's a flashlight in us. Remove it first, or it'll be lost forever!
+		var/obj/item/flashlight/seclite/blocking_us = locate() in src
+		if(blocking_us)
+			to_chat(user, span_warning("[blocking_us] is in the way, remove it first!"))
+			return TRUE
+
+		if(!attached_signaler.secured)
+			to_chat(user, span_warning("Secure [attached_signaler] first!"))
+			return TRUE
+
+		to_chat(user, span_notice("You add [attached_signaler] to [src]."))
+
+		qdel(attached_signaler)
+		var/obj/item/bot_assembly/secbot/secbot_frame = new(loc)
+		user.put_in_hands(secbot_frame)
+
+		qdel(src)
+		return TRUE
+
 	return ..()
 
 /obj/item/clothing/head/helmet/alt
@@ -94,8 +55,11 @@
 	icon_state = "helmetalt"
 	inhand_icon_state = "helmetalt"
 	armor = list(MELEE = 15, BULLET = 60, LASER = 10, ENERGY = 10, BOMB = 40, BIO = 0, FIRE = 50, ACID = 50, WOUND = 5)
-	can_flashlight = TRUE
 	dog_fashion = null
+
+/obj/item/clothing/head/helmet/alt/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
 /obj/item/clothing/head/helmet/marine
 	name = "tactical combat helmet"
@@ -106,14 +70,11 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	can_flashlight = TRUE
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/marine/Initialize(mapload)
-	set_attached_light(new /obj/item/flashlight/seclite)
-	update_helmlight()
-	update_appearance()
 	. = ..()
+	AddComponent(/datum/component/seclite_attachable, starting_light = new /obj/item/flashlight/seclite(src), light_icon_state = "flight")
 
 /obj/item/clothing/head/helmet/marine/security
 	name = "marine heavy helmet"
@@ -158,20 +119,27 @@
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
-	if(can_toggle && !user.incapacitated())
-		if(world.time > cooldown + toggle_cooldown)
-			cooldown = world.time
-			up = !up
-			flags_1 ^= visor_flags
-			flags_inv ^= visor_flags_inv
-			flags_cover ^= visor_flags_cover
-			icon_state = "[initial(icon_state)][up ? "up" : ""]"
-			to_chat(user, span_notice("[up ? alt_toggle_message : toggle_message] \the [src]."))
+	. = ..()
+	if(.)
+		return
+	if(!can_toggle)
+		return
 
-			user.update_inv_head()
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.head_update(src, forced = 1)
+	if(user.incapacitated() || world.time <= cooldown + toggle_cooldown)
+		return
+
+	cooldown = world.time
+	up = !up
+	flags_1 ^= visor_flags
+	flags_inv ^= visor_flags_inv
+	flags_cover ^= visor_flags_cover
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
+	to_chat(user, span_notice("[up ? alt_toggle_message : toggle_message] \the [src]."))
+
+	user.update_inv_head()
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		carbon_user.head_update(src, forced = TRUE)
 
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"
@@ -405,191 +373,3 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-
-//monkey sentience caps
-
-/obj/item/clothing/head/helmet/monkey_sentience
-	name = "monkey mind magnification helmet"
-	desc = "A fragile, circuitry embedded helmet for boosting the intelligence of a monkey to a higher level. You see several warning labels..."
-
-	icon_state = "monkeymind"
-	inhand_icon_state = "monkeymind"
-	strip_delay = 100
-	var/mob/living/carbon/human/magnification = null ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please stop))
-	var/polling = FALSE///if the helmet is currently polling for targets (special code for removal)
-	var/light_colors = 1 ///which icon state color this is (red, blue, yellow)
-
-/obj/item/clothing/head/helmet/monkey_sentience/Initialize(mapload)
-	. = ..()
-	light_colors = rand(1,3)
-	update_appearance()
-
-/obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
-	. = ..()
-	. += span_boldwarning("---WARNING: REMOVAL OF HELMET ON SUBJECT MAY LEAD TO:---")
-	. += span_warning("BLOOD RAGE")
-	. += span_warning("BRAIN DEATH")
-	. += span_warning("PRIMAL GENE ACTIVATION")
-	. += span_warning("GENETIC MAKEUP MASS SUSCEPTIBILITY")
-	. += span_boldnotice("Ask your CMO if mind magnification is right for you.")
-
-/obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
-	. = ..()
-	icon_state = "[initial(icon_state)][light_colors][magnification ? "up" : null]"
-
-/obj/item/clothing/head/helmet/monkey_sentience/equipped(mob/user, slot)
-	. = ..()
-	if(slot != ITEM_SLOT_HEAD)
-		return
-	if(!ismonkey(user) || user.ckey)
-		var/mob/living/something = user
-		to_chat(something, span_boldnotice("You feel a stabbing pain in the back of your head for a moment."))
-		something.apply_damage(5,BRUTE,BODY_ZONE_HEAD,FALSE,FALSE,FALSE) //notably: no damage resist (it's in your helmet), no damage spread (it's in your helmet)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-		return
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		say("ERROR: Central Command has temporarily outlawed monkey sentience helmets in this sector. NEAREST LAWFUL SECTOR: 2.537 million light years away.")
-		return
-	magnification = user //this polls ghosts
-	visible_message(span_warning("[src] powers up!"))
-	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
-	polling = TRUE
-	var/list/candidates = poll_candidates_for_mob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, magnification, POLL_IGNORE_SENTIENCE_POTION)
-	polling = FALSE
-	if(!magnification)
-		return
-	if(!candidates.len)
-		UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
-		magnification = null
-		visible_message(span_notice("[src] falls silent and drops on the floor. Maybe you should try again later?"))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-		user.dropItemToGround(src)
-		return
-	var/mob/picked = pick(candidates)
-	magnification.key = picked.key
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
-	to_chat(magnification, span_notice("You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!"))
-	var/policy = get_policy(ROLE_MONKEY_HELMET)
-	if(policy)
-		to_chat(magnification, policy)
-	icon_state = "[icon_state]up"
-
-/obj/item/clothing/head/helmet/monkey_sentience/Destroy()
-	disconnect()
-	return ..()
-
-/obj/item/clothing/head/helmet/monkey_sentience/proc/disconnect()
-	if(!magnification) //not put on a viable head
-		return
-	if(!polling)//put on a viable head, but taken off after polling finished.
-		if(magnification.client)
-			to_chat(magnification, span_userdanger("You feel your flicker of sentience ripped away from you, as everything becomes dim..."))
-			magnification.ghostize(FALSE)
-		if(prob(10))
-			switch(rand(1,4))
-				if(1) //blood rage
-					magnification.ai_controller.blackboard[BB_MONKEY_AGGRESSIVE] = TRUE
-				if(2) //brain death
-					magnification.apply_damage(500,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
-				if(3) //primal gene (gorilla)
-					magnification.gorillize()
-				if(4) //genetic mass susceptibility (gib)
-					magnification.gib()
-	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
-	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	visible_message(span_warning("[src] fizzles and breaks apart!"))
-	magnification = null
-	new /obj/effect/decal/cleanable/ash/crematorium(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
-
-/obj/item/clothing/head/helmet/monkey_sentience/dropped(mob/user)
-	. = ..()
-	if(magnification || polling)
-		qdel(src)//runs disconnect code
-
-/obj/item/clothing/head/helmet/monkey_sentience/proc/make_fall_off()
-	SIGNAL_HANDLER
-	if(magnification)
-		visible_message(span_warning("[src] falls off of [magnification]'s head as it changes shape!"))
-		magnification.dropItemToGround(src)
-
-//LightToggle
-
-/obj/item/clothing/head/helmet/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/clothing/head/helmet/update_icon_state()
-	if(attached_light)
-		var/state = "[initial(icon_state)]"
-		if(attached_light.on)
-			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
-		else
-			state += "-flight" //etc.
-		icon_state = state
-	return ..()
-
-/obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
-	if(istype(action, alight))
-		toggle_helmlight()
-	else
-		..()
-
-/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/flashlight/seclite))
-		var/obj/item/flashlight/seclite/S = I
-		if(can_flashlight && !attached_light)
-			if(!user.transferItemToLoc(S, src))
-				return
-			to_chat(user, span_notice("You click [S] into place on [src]."))
-			set_attached_light(S)
-			update_appearance()
-			update_helmlight()
-			alight = new(src)
-			if(loc == user)
-				alight.Grant(user)
-		return
-	return ..()
-
-/obj/item/clothing/head/helmet/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(can_flashlight && attached_light) //if it has a light but can_flashlight is false, the light is permanently attached.
-		I.play_tool_sound(src)
-		to_chat(user, span_notice("You unscrew [attached_light] from [src]."))
-		attached_light.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
-			user.put_in_hands(attached_light)
-
-		var/obj/item/flashlight/removed_light = set_attached_light(null)
-		update_helmlight()
-		removed_light.update_brightness(user)
-		update_appearance()
-		user.update_inv_head()
-		QDEL_NULL(alight)
-		return TRUE
-
-/obj/item/clothing/head/helmet/proc/toggle_helmlight()
-	set name = "Toggle Helmetlight"
-	set category = "Object"
-	set desc = "Click to toggle your helmet's attached flashlight."
-
-	if(!attached_light)
-		return
-
-	var/mob/user = usr
-	if(user.incapacitated())
-		return
-	attached_light.on = !attached_light.on
-	attached_light.update_brightness()
-	to_chat(user, span_notice("You toggle the helmet light [attached_light.on ? "on":"off"]."))
-
-	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
-	update_helmlight()
-
-/obj/item/clothing/head/helmet/proc/update_helmlight()
-	if(attached_light)
-		update_appearance()
-
-	update_action_buttons()
