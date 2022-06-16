@@ -158,9 +158,24 @@
 
 /datum/component/storage/concrete/pockets/void_cloak
 	quickdraw = TRUE
+	max_combined_w_class = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
 	max_items = 3
 
 /datum/component/storage/concrete/pockets/void_cloak/Initialize()
 	. = ..()
-	var/static/list/exception_cache = typecacheof(list(/obj/item/clothing/neck/heretic_focus, /obj/item/codex_cicatrix))
+	set_holdable(list(
+		/obj/item/ammo_box/a762/lionhunter,
+		/obj/item/bodypart, // Bodyparts are often used in rituals. They're also often normal sized, so you can only fit one.
+		/obj/item/clothing/neck/eldritch_amulet,
+		/obj/item/clothing/neck/heretic_focus,
+		/obj/item/codex_cicatrix,
+		/obj/item/eldritch_potion,
+		/obj/item/food/grown/poppy, // Used to regain a Living Heart.
+		/obj/item/melee/rune_carver,
+		/obj/item/melee/sickly_blade, // Normal sized, so you can only fit one.
+		/obj/item/organ, // Organs are also often used in rituals.
+		/obj/item/reagent_containers/glass/beaker/eldritch,
+	))
+
+	var/static/list/exception_cache = typecacheof(list(/obj/item/bodypart, /obj/item/melee/sickly_blade))
 	exception_hold = exception_cache

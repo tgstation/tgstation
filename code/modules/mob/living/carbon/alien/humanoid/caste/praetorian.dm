@@ -12,10 +12,10 @@
 	. = ..()
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/create_internal_organs()
-	internal_organs += new /obj/item/organ/alien/plasmavessel/large
-	internal_organs += new /obj/item/organ/alien/resinspinner
-	internal_organs += new /obj/item/organ/alien/acid
-	internal_organs += new /obj/item/organ/alien/neurotoxin
+	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
+	internal_organs += new /obj/item/organ/internal/alien/resinspinner
+	internal_organs += new /obj/item/organ/internal/alien/acid
+	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
 	..()
 
 /obj/effect/proc_holder/alien/royal/praetorian/evolve
@@ -26,7 +26,7 @@
 	action_icon_state = "alien_evolve_praetorian"
 
 /obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/alien/humanoid/user)
-	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
+	var/obj/item/organ/internal/alien/hivenode/node = user.getorgan(/obj/item/organ/internal/alien/hivenode)
 	if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
 		to_chat(user, span_warning("Without the hivemind, you would be unfit to rule as queen!"))
 		return FALSE

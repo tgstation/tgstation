@@ -271,7 +271,7 @@
 
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
-	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with. Also reduces infection in serious burns."
+	description = "Spaceacillin will provide limited resistance against disease and parasites. Also reduces infection in serious burns."
 	color = "#E1F2E6"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	ph = 8.1
@@ -657,12 +657,12 @@
 		return
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
-	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return
 	improve_eyesight(owner, eyes)
 
-/datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/owner, obj/item/organ/eyes/eyes)
+/datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/owner, obj/item/organ/internal/eyes/eyes)
 	delta_light = creation_purity*30
 	if(eyes.lighting_alpha)
 		eyes.lighting_alpha -= delta_light
@@ -671,29 +671,29 @@
 	eyes.see_in_dark += 3
 	owner.update_sight()
 
-/datum/reagent/medicine/oculine/proc/restore_eyesight(mob/living/carbon/owner, obj/item/organ/eyes/eyes)
+/datum/reagent/medicine/oculine/proc/restore_eyesight(mob/living/carbon/owner, obj/item/organ/internal/eyes/eyes)
 	eyes.lighting_alpha += delta_light
 	eyes.see_in_dark -= 3
 	owner.update_sight()
 
 /datum/reagent/medicine/oculine/proc/on_gained_organ(mob/owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!istype(organ, /obj/item/organ/eyes))
+	if(!istype(organ, /obj/item/organ/internal/eyes))
 		return
-	var/obj/item/organ/eyes/eyes = organ
+	var/obj/item/organ/internal/eyes/eyes = organ
 	improve_eyesight(owner, eyes)
 
 /datum/reagent/medicine/oculine/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!istype(organ, /obj/item/organ/eyes))
+	if(!istype(organ, /obj/item/organ/internal/eyes))
 		return
-	var/obj/item/organ/eyes/eyes = organ
+	var/obj/item/organ/internal/eyes/eyes = organ
 	restore_eyesight(prev_owner, eyes)
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.adjust_blindness(-2 * REM * delta_time * normalise_creation_purity())
 	owner.adjust_blurriness(-2 * REM * delta_time * normalise_creation_purity())
-	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return ..()
 	var/fix_prob = 10
@@ -713,7 +713,7 @@
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/owner)
-	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return
 	restore_eyesight(owner, eyes)
@@ -746,7 +746,7 @@
 		message = composer.compose_message(owner, message_language, message, , spans, message_mods)
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	var/obj/item/organ/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)
 	if(!ears)
 		return ..()
 	ears.adjustEarDamage(-4 * REM * delta_time * normalise_creation_purity(), -4 * REM * delta_time * normalise_creation_purity())
@@ -1154,7 +1154,7 @@
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time, 150)
 		if(DT_PROB(5, delta_time))
 			M.say(pick("Yeah, well, you know, that's just, like, uh, your opinion, man.", "Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?", "It ain't me, it ain't me...", "Make love, not war!", "Stop, hey, what's that sound? Everybody look what's going down...", "Do you believe in magic in a young girl's heart?"), forced = /datum/reagent/medicine/earthsblood)
-	M.druggy = clamp(M.druggy + (10 * REM * delta_time), 0, 15 * REM * delta_time) //See above
+	M.adjust_timed_status_effect(20 SECONDS * REM * delta_time, /datum/status_effect/drugginess, max_duration = 30 SECONDS * REM * delta_time)
 	..()
 	. = TRUE
 
@@ -1560,10 +1560,10 @@
 			M.adjustOxyLoss(rand(3, 4))
 
 		if(prob(50))
-			var/obj/item/organ/lungs/our_lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
+			var/obj/item/organ/internal/lungs/our_lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 			our_lungs.applyOrganDamage(1)
 		else
-			var/obj/item/organ/heart/our_heart = M.getorganslot(ORGAN_SLOT_HEART)
+			var/obj/item/organ/internal/heart/our_heart = M.getorganslot(ORGAN_SLOT_HEART)
 			our_heart.applyOrganDamage(1)
 
 // i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood

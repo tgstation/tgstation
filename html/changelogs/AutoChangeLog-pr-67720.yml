@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Items getting knocked off (glasses and cigars), bad omens, and spaghetti falling from pockets should trigger on most knockdowns again like they used to."
+  - code_imp: "Cleaned up the knockoff component a bit. Also unit tests it."

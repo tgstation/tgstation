@@ -143,9 +143,8 @@
 /obj/structure/girder{
 	damage_deflection = 22
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/powered/beach)
 "cm" = (
 /obj/structure/fluff/beach_umbrella/engine,
@@ -713,9 +712,8 @@
 "yk" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/ruin/powered/beach)
 "yN" = (
 /obj/machinery/vending/dinnerware,
@@ -1004,9 +1002,8 @@
 /obj/item/toy/beach_ball/holoball/dodgeball,
 /obj/item/toy/beach_ball/holoball/dodgeball,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/powered/beach)
 "Hn" = (
 /obj/machinery/light/directional/south,
@@ -1378,11 +1375,6 @@
 	},
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
-"Ui" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/ruin/powered/beach)
 "Uk" = (
 /obj/structure/sign/barsign,
 /turf/closed/wall/mineral/wood/nonmetal,
@@ -1400,9 +1392,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/ruin/powered/beach)
 "Vl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1437,9 +1428,8 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "Wa" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/powered/beach)
 "Wd" = (
 /obj/structure/table/wood,
@@ -1644,7 +1634,7 @@ Wa
 as
 pE
 mh
-Ui
+Wa
 gs
 VI
 VI
