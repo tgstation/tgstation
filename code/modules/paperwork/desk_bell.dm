@@ -119,6 +119,6 @@
 	usr.balloon_alert(usr, "attaching bell...")
 	if(!do_after(usr, 5))
 		return
-	target.attach_bell()
+	target.attach_bell(src)
 	qdel(src)
 	return ..()
