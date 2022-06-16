@@ -55,11 +55,11 @@ function SS13.register_signal(datum, signal, func)
 	end
 	local path = {"SS13", "signal_handlers", ref, signal, "func"}
 	local callback = SS13.signal_handlers[ref][signal].callback
-	if not callback then
-		callback = SS13.new("/datum/callback", SS13.state, "call_function", path)
-	end
 	SS13.signal_handlers[ref][signal].func = func
-	callback:call_proc("RegisterSignal", datum, signal, "Invoke")
+	if not callback then
+		callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first", path)
+		callback:call_proc("RegisterSignal", datum, signal, "Invoke")
+	end
 	return callback
 end
 

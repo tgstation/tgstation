@@ -49,13 +49,7 @@ GLOBAL_PROTECT(lua_usr)
 	log += list(result)
 	// We want to return the return value(s) of executed code
 	if(result["status"] == "finished" || result["status"] == "yielded")
-		if(!length(result["param"]))
-			return
-		// Is there a meaningful difference between returning multiple values and returning a single list?
-		else if(length(result["param"]) == 1)
-			return result["param"][1]
-		else
-			return result["param"]
+		return result["param"]
 
 /datum/lua_state/proc/load_script(script)
 	message_admins("[key_name(usr)] executed [length(script)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(src, log.len+1)]")
@@ -90,6 +84,11 @@ GLOBAL_PROTECT(lua_usr)
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	return handle_result(result)
+
+/datum/lua_state/proc/call_function_return_first(function, ...)
+	var/list/return_values = call_function(arglist(args))
+	if(length(return_values))
+		return return_values[1]
 
 /datum/lua_state/proc/awaken()
 	GLOB.IsLuaCall = TRUE
