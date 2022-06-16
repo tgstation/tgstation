@@ -2470,9 +2470,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/rack,
-/obj/effect/spawner/random/clothing/costume,
-/obj/item/clothing/mask/balaclava,
+/obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
 "bdQ" = (
@@ -15675,10 +15673,8 @@
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "fsZ" = (
-/obj/machinery/vending/clothing,
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
+/obj/structure/table,
+/obj/item/clothing/mask/balaclava,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "fte" = (
@@ -40031,6 +40027,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
 "nqu" = (
@@ -63492,13 +63489,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/rack,
-/obj/effect/spawner/random/clothing/costume,
-/obj/effect/spawner/random/bureaucracy/briefcase{
-	spawn_loot_count = 2;
-	spawn_loot_split = 1
-	},
 /obj/structure/sign/poster/official/random/directional/west,
+/obj/machinery/vending/clothing,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
 "vsh" = (
@@ -154854,7 +154846,7 @@ ook
 yiM
 gBW
 yiM
-fsZ
+fpg
 jsO
 ddh
 mQp
@@ -158208,7 +158200,7 @@ qOF
 fwF
 ufO
 rEZ
-eMY
+fsZ
 eMY
 ufO
 wcy
