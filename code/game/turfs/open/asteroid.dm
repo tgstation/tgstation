@@ -71,7 +71,7 @@
 		if(!isturf(user.loc))
 			return
 
-		balloon_alert(user, "start digging...")
+		balloon_alert(user, "digging...")
 
 		if(W.use_tool(src, user, 40, volume=50))
 			if(!can_dig(user))
