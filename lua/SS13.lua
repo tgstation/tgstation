@@ -5,7 +5,7 @@ SS13.SSlua = dm.global_vars:get_var("SSlua")
 SS13.global_proc = "some_magic_bullshit"
 
 local states = SS13.SSlua:get_var("states"):to_table()
-for _, state in pairs(states) do
+for _, state in states do
 	if state:get_var("internal_id") == dm.state_id then
 		SS13.state = state
 		break
@@ -13,9 +13,7 @@ for _, state in pairs(states) do
 end
 
 function SS13.new(type, ...)
-	local args = table.pack(...)
-	args["n"] = nil
-	local datum = dm.global_proc("_new", type, args)
+	local datum = dm.global_proc("_new", type, {...})
 	local references = SS13.state:get_var("references")
 	references:add(datum)
 	return datum
@@ -28,21 +26,20 @@ function SS13.await(thing_to_call, proc_to_call, ...)
 	if thing_to_call == SS13.global_proc then
 		proc_to_call = "/proc/" .. proc_to_call
 	end
-	local args = table.pack(thing_to_call, proc_to_call, ...)
-	args["n"] = nil
-	local promise = SS13.new("/datum/promise", table.unpack(args))
+	local promise = SS13.new("/datum/auxtools_promise", thing_to_call, proc_to_call, ...)
 	while promise:get_var("status") == 0 do
 		sleep()
 	end
 	return promise:get_var("return_value"), promise:get_var("runtime_message")
 end
 
-function SS13.wait(time, _timer)
+function SS13.wait(time, timer)
 	local index = #__yield_table + 1
 	local callback = SS13.new("/datum/callback", SS13.SSlua, "queue_resume", SS13.state, index)
-	local timer = dm.global_proc("_addtimer", callback, time*10, 8, _timer, "lua/SS13.lua", 43)
+	local source, line = debug.info(1, "sl")
+	local timedevent = dm.global_proc("_addtimer", callback, time*10, 8, timer, source, line+1)
 	coroutine.yield()
-	dm.global_proc("deltimer", timer, _timer or nil)
+	dm.global_proc("deltimer", timedevent, timer)
 end
 
 function SS13.register_signal(datum, signal, func)

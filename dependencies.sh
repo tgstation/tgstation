@@ -24,4 +24,4 @@ export PYTHON_VERSION=3.7.9
 export AUXLUA_REPO=Y0SH1M4S73R/auxlua
 
 #auxlua git tag
-export AUXLUA_VERSION=0.1.0-beta.2
+export AUXLUA_VERSION=0.1.0
