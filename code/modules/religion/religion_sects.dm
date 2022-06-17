@@ -399,7 +399,7 @@
 	///places you can spar in. rites can be used to expand this list with new arenas!
 	var/list/arenas = list(
 		"Recreation Area" = /area/station/commons/fitness/recreation,
-		"Chapel" = /area/station/service/chapel
+		"Chapel" = /area/station/service/chapel,
 	)
 	///how many matches you've lost with holy stakes. 3 = excommunication
 	var/matches_lost = 0
