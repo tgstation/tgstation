@@ -168,7 +168,7 @@
 
 /obj/item/soulstone/attack(mob/living/carbon/human/M, mob/living/user)
 	if(!role_check(user))
-		user.Unconscious(100)
+		user.Unconscious(10 SECONDS)
 		to_chat(user, span_userdanger("Your body is wracked with debilitating pain!"))
 		return
 	if(spent)
@@ -176,6 +176,8 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
+	if(M == user)
+		return
 	if(IS_CULTIST(M) && IS_CULTIST(user))
 		to_chat(user, span_cultlarge("\"Come now, do not capture your bretheren's soul.\""))
 		return
@@ -314,6 +316,10 @@
 
 ///captures a shade that was previously released from a soulstone.
 /obj/item/soulstone/proc/capture_shade(mob/living/simple_animal/shade/shade, mob/user)
+	if(user && !role_check(user))
+		user.Unconscious(10 SECONDS)
+		to_chat(user, span_userdanger("Your body is wracked with debilitating pain!"))
+		return
 	if(contents.len)
 		to_chat(user, "[span_userdanger("Capture failed!")]: [src] is full! Free an existing soul to make room.")
 		return FALSE
