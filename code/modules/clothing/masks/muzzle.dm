@@ -39,7 +39,6 @@
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn
 	greyscale_colors = "#B2B2B2"
 	item_flags = NOBLUDGEON
-	moth_snack = null
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
