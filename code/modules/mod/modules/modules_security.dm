@@ -348,9 +348,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
-	cooldown_time = 15 SECONDS
-	/// Radius of the sonar.
-	var/sonar_radius = 7
+	cooldown_time = 30 SECONDS
 
 /obj/item/mod/module/active_sonar/on_use()
 	. = ..()
@@ -361,11 +359,10 @@
 	if(!do_after(mod.wearer, 1.1 SECONDS))
 		return
 	var/creatures_detected = 0
-	for(var/mob/living/creature in range(sonar_radius, mod.wearer))
+	for(var/mob/living/creature in range(7, mod.wearer))
 		if(creature == mod.wearer)
 			continue
-		var/obj/effect/temp_visual/sonar_ping/ping_visual = new /obj/effect/temp_visual/sonar_ping(creature.loc)
-		ping_visual.add_mind(mod.wearer)
+		new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature)
 		creatures_detected++
-	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE) // Should be audible for the whole sonar distance
+	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE) // Should be audible for the radius of the sonar
 	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [creatures_detected] living beings nearby!"))

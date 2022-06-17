@@ -551,24 +551,26 @@
 	randomdir = FALSE
 	/// The image shown to modsuit users
 	var/image/modsuit_image
-	/// The person in the modsuit at the moment
+	/// The person in the modsuit at the moment, really just used to remove this from their screen
 	var/datum/weakref/mod_man
 	/// The icon state applied to the image created for this ping.
 	var/real_icon_state = "sonar_ping"
 
-/obj/effect/temp_visual/sonar_ping/Initialize(mapload)
+/obj/effect/temp_visual/sonar_ping/Initialize(mapload, mob/living/looker, mob/living/creature)
 	. = ..()
-	modsuit_image = image(icon, src, real_icon_state, UNDER_HUD_PLANE)
+	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
+	modsuit_image.plane = ABOVE_LIGHTING_PLANE
+	mod_man = WEAKREF(looker)
+	add_mind(looker)
 
 /obj/effect/temp_visual/sonar_ping/Destroy()
 	remove_mind(mod_man.resolve())
-	// Null both so we don't shit the bed when we delete
+	// Null so we don't shit the bed when we delete
 	modsuit_image = null
 	return ..()
 
 /// Add the image to the modsuit wearer's screen
 /obj/effect/temp_visual/sonar_ping/proc/add_mind(mob/living/looker)
-	mod_man = WEAKREF(looker)
 	looker?.client?.images |= modsuit_image
 
 /// Remove the image from the modsuit wearer's screen

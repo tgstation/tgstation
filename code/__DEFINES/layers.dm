@@ -189,7 +189,6 @@
 
 //-------------------- HUD ---------------------
 //HUD layer defines
-#define UNDER_HUD_PLANE 999
 #define HUD_PLANE 1000
 #define ABOVE_HUD_PLANE 1100
 
