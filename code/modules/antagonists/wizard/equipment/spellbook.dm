@@ -686,9 +686,9 @@
 /obj/item/spellbook/attack_self(mob/user)
 	if(!owner)
 		to_chat(user, span_notice("You bind the spellbook to yourself."))
-		owner = user
+		owner = user.mind
 		return
-	if(user != owner)
+	if(user.mind != owner)
 		if(user.mind.special_role == ROLE_WIZARD_APPRENTICE)
 			to_chat(user, "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not.")
 		else
