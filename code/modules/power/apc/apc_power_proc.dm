@@ -16,7 +16,7 @@
 
 /obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
 	if(last_nightshift_switch > world.time - 100) //~10 seconds between each toggle to prevent spamming
-		to_chat(usr, span_warning("[src]'s night lighting circuit breaker is still cycling!"))
+		balloon_alert(user, "night breaker is cycling!")
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(!nightshift_lights)

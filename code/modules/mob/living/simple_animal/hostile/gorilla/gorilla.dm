@@ -32,7 +32,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)
-	faction = list("jungle")
+	faction = list("monkey", "jungle")
 	robust_searching = TRUE
 	stat_attack = HARD_CRIT
 	minbodytemp = 270
@@ -110,17 +110,18 @@
 	return FALSE
 
 /mob/living/simple_animal/hostile/gorilla/proc/oogaooga()
-	oogas++
-	if(oogas >= rand(2,6))
+	oogas -= 1
+	if(oogas <= 0)
+		oogas = rand(2,6)
 		playsound(src, 'sound/creatures/gorilla.ogg', 50)
-		oogas = 0
+
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic
 	name = "Cargorilla" // Overriden, normally
 	desc = "Cargo's pet gorilla."
 	maxHealth = 200
 	health = 200
-	faction = list(FACTION_STATION)
+	faction = list("neutral", "monkey", "jungle")
 	gold_core_spawnable = NO_SPAWN
 	unique_name = FALSE
 	/// Whether we're currently being polled over

@@ -397,10 +397,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
-"bc" = (
-/obj/structure/sink/kitchen/directional/south,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/has_grav/deepstorage/kitchen)
 "bd" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -661,10 +657,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
-"bR" = (
-/obj/structure/sink/directional/west,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage/hydroponics)
 "bS" = (
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/light,
@@ -875,11 +867,6 @@
 "cp" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage)
-"cq" = (
-/obj/machinery/shower/directional/east,
-/obj/item/soap,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/deepstorage)
 "cr" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/freezer,
@@ -1076,18 +1063,7 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
-"cM" = (
-/obj/machinery/shower/directional/east,
-/obj/structure/window/reinforced/plasma,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/deepstorage)
 "cN" = (
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/deepstorage)
-"cO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/sink/directional/west,
-/obj/structure/mirror/directional/east,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cP" = (
@@ -2707,6 +2683,10 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+"hC" = (
+/obj/structure/sink/kitchen/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/deepstorage/kitchen)
 "hT" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
@@ -2745,6 +2725,11 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"oN" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/ten_k/directional/east,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "po" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -2773,6 +2758,10 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"un" = (
+/obj/structure/sink/directional/west,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
 "uG" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Pharmacy"
@@ -2816,14 +2805,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
-"Az" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/ten_k{
-	name = "Pharmacy APC";
-	pixel_x = 25
-	},
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/pharmacy)
 "AI" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/dropper{
@@ -2852,6 +2833,11 @@
 /obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"DL" = (
+/obj/machinery/shower/directional/east,
+/obj/structure/window/reinforced/plasma,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/deepstorage)
 "EP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden{
 	dir = 4
@@ -2903,6 +2889,17 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
+"Oj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sink/directional/west,
+/obj/structure/mirror/directional/east,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/deepstorage)
+"QF" = (
+/obj/machinery/shower/directional/east,
+/obj/item/soap,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/deepstorage)
 "Rs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -3798,7 +3795,7 @@ gy
 gG
 gF
 xI
-Az
+oN
 JV
 gF
 ab
@@ -4195,8 +4192,8 @@ bb
 bw
 bM
 af
-cq
-cM
+QF
+DL
 cX
 cp
 hg
@@ -4243,7 +4240,7 @@ ah
 ar
 aA
 af
-bc
+hC
 bu
 bN
 af
@@ -4300,7 +4297,7 @@ bx
 bO
 af
 cs
-cO
+Oj
 cZ
 dq
 cu
@@ -4661,7 +4658,7 @@ ab
 aQ
 bj
 bC
-bR
+un
 sL
 cy
 aQ
