@@ -375,7 +375,6 @@
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/anomaly_locked/kinesis/plus,
-		/obj/item/mod/module/active_sonar,
 	)
 
 //these exist for the prefs menu
