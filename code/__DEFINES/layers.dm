@@ -186,6 +186,8 @@
 #define RUNECHAT_PLANE 501
 /// Plane for balloon text (text that fades up)
 #define BALLOON_CHAT_PLANE 502
+/// Bubble for typing indicators
+#define TYPING_LAYER 500
 
 //-------------------- HUD ---------------------
 //HUD layer defines
