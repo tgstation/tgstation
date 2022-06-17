@@ -1983,12 +1983,14 @@
 		if(!state_to_view)
 			return
 		var/datum/lua_editor/editor = new(state_to_view)
-		editor.ui_interact(usr)
 		var/log_index = href_list["log_index"]
 		if(log_index)
 			log_index = text2num(log_index)
-		if(!log_index || state_to_view.log.len < log_index)
-			return
-		var/list/log_entry = state_to_view.log[log_index]
-		if(log_entry["chunk"])
-			tgui_alert_async(usr, log_entry["chunk"])
+		if(log_index <= state_to_view.log.len)
+			var/list/log_entry = state_to_view.log[log_index]
+			if(log_entry["chunk"])
+				LAZYINITLIST(editor.tgui_shared_states)
+				editor.tgui_shared_states["viewedChunk"] = "\"[log_entry["chunk"]]\""
+				editor.tgui_shared_states["modal"] = "\"viewChunk\""
+		editor.ui_interact(usr)
+		editor.tgui_shared_states = null

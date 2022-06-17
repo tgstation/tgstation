@@ -58,9 +58,6 @@ GLOBAL_PROTECT(lua_usr)
 		return result["param"]
 
 /datum/lua_state/proc/load_script(script)
-	message_admins("[key_name(usr)] executed [length(script)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(src, log.len+1)]")
-	log_lua("[key_name(usr)] executed the following lua code:\n[script]")
-
 	GLOB.IsLuaCall = TRUE
 	var/tmp_usr = GLOB.lua_usr
 	GLOB.lua_usr = usr
@@ -72,7 +69,10 @@ GLOBAL_PROTECT(lua_usr)
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "input")
 	result["chunk"] = script
-	return handle_result(result)
+	. = handle_result(result)
+
+	message_admins("[key_name(usr)] executed [length(script)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(src, log.len)]")
+	log_lua("[key_name(usr)] executed the following lua code:\n[script]")
 
 /datum/lua_state/proc/call_function(function, ...)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
