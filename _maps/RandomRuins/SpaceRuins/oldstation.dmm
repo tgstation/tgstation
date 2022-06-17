@@ -603,8 +603,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/left/directional/west,
 /obj/machinery/shower/directional/west{
-	can_refill = 0;
-	can_toggle_refill = 0
+	has_water_reclaimer = 0
 	},
 /obj/item/soap/nanotrasen,
 /turf/open/floor/iron/white,
@@ -5871,8 +5870,7 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "wq" = (
 /obj/machinery/shower/directional/west{
-	can_refill = 0;
-	can_toggle_refill = 0
+	has_water_reclaimer = 0
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/vault,
@@ -8839,8 +8837,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/right/directional/west,
 /obj/machinery/shower/directional/west{
-	can_refill = 0;
-	can_toggle_refill = 0
+	has_water_reclaimer = 0
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
