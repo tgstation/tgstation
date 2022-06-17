@@ -348,7 +348,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
-	cooldown_time = 30 SECONDS
+	cooldown_time = 25 SECONDS
 
 /obj/item/mod/module/active_sonar/on_use()
 	. = ..()
@@ -359,7 +359,7 @@
 	if(!do_after(mod.wearer, 1.1 SECONDS))
 		return
 	var/creatures_detected = 0
-	for(var/mob/living/creature in range(7, mod.wearer))
+	for(var/mob/living/creature in range(9, mod.wearer))
 		if(creature == mod.wearer || creature.stat == DEAD)
 			continue
 		new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature)
