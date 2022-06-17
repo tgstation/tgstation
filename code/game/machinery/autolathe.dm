@@ -33,6 +33,7 @@
 							"Tools",
 							"Electronics",
 							"Construction",
+							"Material",
 							"T-Comm",
 							"Security",
 							"Machinery",
