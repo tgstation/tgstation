@@ -687,6 +687,8 @@
 
 /obj/item/spellbook/attack_self(mob/user)
 	if(!owner)
+		if(!user.mind)
+			return
 		to_chat(user, span_notice("You bind the spellbook to yourself."))
 		owner = user.mind
 		return
