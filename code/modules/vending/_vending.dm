@@ -1340,6 +1340,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	add_overlay(panel_type)
 	//and references the deity
 	name = "[GLOB.deity]'s Consecrated Vendor"
+	max_integrity = 700
+	max_loaded_items = 40
 	desc = "A vending machine created by [GLOB.deity]."
 	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
 	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
