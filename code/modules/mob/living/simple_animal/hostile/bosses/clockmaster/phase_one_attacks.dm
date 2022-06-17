@@ -17,57 +17,39 @@
 
 /datum/action/boss/turret_summon/Trigger(trigger_flags)
 	if(..())
-		SEND_GLOBAL_SIGNAL(COMSIG_ACTION_TRIGGER_ID,src)
+		for(var/obj/effect/landmark/ocularwarden_turret_spawn/spawner in GLOB.landmarks_list)
+			if(spawner.id == id)
+				spawner.SpawnTurret()
 
 /obj/effect/landmark/ocularwarden_turret_spawn
 	name = "occular warden tower spawner for the cool clock cult arena"
 	var/id = "clockmasterocularwarden"
 
-/obj/effect/landmark/ocularwarden_turret_spawn/Initialize(mapload)
-	. = ..()
-	RegisterSignal(SSdcs,COMSIG_ACTION_TRIGGER_ID, .proc/OnActionActivation)
-
 //Spawns a turret on the landmark's turf if no turret exists there currently.
-/obj/effect/landmark/ocularwarden_turret_spawn/proc/OnActionActivation(datum/source,datum/action/boss/turret_summon/boss)
-	SIGNAL_HANDLER
+/obj/effect/landmark/ocularwarden_turret_spawn/proc/SpawnTurret()
+	var/turf/turret_tile = get_turf(src)
+	if(!(locate(/mob/living/simple_animal/hostile/clockwork/ocular_warden) in turret_tile))
+		new /mob/living/simple_animal/hostile/clockwork/ocular_warden(turret_tile)
 
-	if(boss.id == id)
-		var/turf/turret_tile = get_turf(src)
-		if(!(locate(/mob/living/simple_animal/hostile/ocular_warden) in turret_tile))
-			new /mob/living/simple_animal/hostile/ocular_warden(turret_tile)
-
-
-/mob/living/simple_animal/hostile/ocular_warden
+/mob/living/simple_animal/hostile/clockwork/ocular_warden
 	name = "ocular warden"
 	desc = "A pristine bronze machine with a giant beady eye. It stares at you menancingly."
-	icon = 'icons/mob/mob.dmi'
 	icon_state = "ocular_warden"
 	icon_state = "ocular_warden"
-	icon_dead = "drone_clock_dead"
+	icon_dead = "shade_dead"
 	ranged = TRUE
 	rapid = 1
 	rapid_fire_delay = 4
 	stop_automated_movement = TRUE
 	projectiletype = /obj/projectile/temp/ocularwarden
-	speak_chance = 0
-	stat_attack = HARD_CRIT
 	maxHealth = 35
 	health = 35
-	rapid_melee = 2
-	attack_verb_continuous = "slashes at"
-	attack_verb_simple = "slash at"
+	rapid_melee = 0
+	attack_verb_continuous = "stares at"
+	attack_verb_simple = "stare at"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
-	deathmessage = "breaks apart into various metallic debris!"
-	combat_mode = TRUE
-	gender = NEUTER
-	mob_biotypes = MOB_ROBOTIC
-	speech_span = SPAN_ROBOT
-	loot = list(/obj/effect/decal/cleanable/robot_debris)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	faction = list("clockwork")
-	del_on_death = 1
 
-/mob/living/simple_animal/hostile/ocular_warden/Move(atom/newloc)//stop moving please
+/mob/living/simple_animal/hostile/clockwork/ocular_warden/Move(atom/newloc)//stop moving please
 	return FALSE
 
 /obj/projectile/temp/ocularwarden
@@ -77,7 +59,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		if(IS_CULTIST(M))
+		if(IS_CULTIST(M)) //dont come waltzing into a ratvar fight as a cultist and not expect some beef
 			M.adjust_bodytemperature(-20)
 			to_chat(M, span_warning("You feel a chilling gaze strike you to your very core, as if Ratvar himself is staring you down intently."))
 
@@ -91,6 +73,7 @@
 	boss_type = /mob/living/simple_animal/hostile/boss/clockmaster
 	say_when_triggered = "Step into the cleansing steam, burn away your sins for your slights against His Gracious Light!"
 	var/vents_active = FALSE
+	var/list/nearby_vents = list()
 	var/id = "clockmastersteamvent"
 
 /datum/action/boss/steam_traps/IsAvailable()
@@ -103,10 +86,15 @@
 
 /datum/action/boss/steam_traps/Trigger(trigger_flags)
 	if(..())
-		SEND_GLOBAL_SIGNAL(COMSIG_ACTION_TRIGGER_ID,src)
+		for(var/obj/structure/clockwork_vent/nearby_vent in urange(16, src))
+			nearby_vent.VentEnable()
+			vents_active = TRUE
+			addtimer(CALLBACK(src, .proc/vent_disabled), 15 SECONDS)
 
+/datum/action/boss/steam_traps/proc/vent_disabled()
+	vents_active = FALSE
 
-/obj/structure/steamvent
+/obj/structure/clockwork_vent
 	name = "steam pit"
 	desc = "An exhaust hole covered by a protective metal grate."
 	icon = 'icons/obj/structures.dmi'
@@ -118,23 +106,19 @@
 	var/id = "clockmastersteamvent"
 	var/active = FALSE
 
-/obj/structure/steamvent/Initialize(mapload)
+/obj/structure/clockwork_vent/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs,COMSIG_ACTION_TRIGGER_ID, .proc/OnActionActivation)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/structure/steamvent/proc/OnActionActivation(datum/source,datum/action/boss/steam_traps/boss)
-	SIGNAL_HANDLER
+/obj/structure/clockwork_vent/proc/VentEnable()
+	active = TRUE
+	icon_state = "vent_on"
+	addtimer(CALLBACK(src, .proc/VentDisable), 15 SECONDS)
 
-	if(!active && boss.id == id)
-		active = TRUE
-		icon_state = "vent_on"
-		addtimer(CALLBACK(src, .proc/VentDisable), 300)
-
-/obj/structure/steamvent/proc/on_entered(datum/source, atom/movable/AM)
+/obj/structure/clockwork_vent/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 
 	if(active && isliving(AM))
@@ -144,7 +128,7 @@
 		L.adjustFireLoss(rand(10,15))
 		L.throw_at(throw_target, 4, 1)
 
-/obj/structure/steamvent/proc/VentDisable()
+/obj/structure/clockwork_vent/proc/VentDisable()
 	active = FALSE
 	icon_state = "vent_off"
 
@@ -175,7 +159,7 @@
 		var/directions = GLOB.cardinals.Copy()
 		for(var/i in 1 to 4)
 			var/mob/living/target = boss
-			var/atom/active_cogscarab = new /mob/living/simple_animal/hostile/cogscarab(get_step(target,pick_n_take(directions)))
+			var/atom/active_cogscarab = new /mob/living/simple_animal/hostile/clockwork/cogscarab(get_step(target,pick_n_take(directions)))
 			RegisterSignal(active_cogscarab, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/lost_cogscarab)
 			summoned_cogscarabs++
 	else
@@ -187,18 +171,14 @@
 	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	summoned_cogscarabs--
 
-/mob/living/simple_animal/hostile/cogscarab
+/mob/living/simple_animal/hostile/clockwork/cogscarab
 	name = "cogscarab"
 	desc = "A station maintenance drone adorned in intricate bronze detailing. Its front sensor glows an eery red."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_clock"
 	icon_living = "drone_clock"
 	icon_dead = "drone_clock_dead"
-	speak_chance = 0
-	turns_per_move = 5
 	speed = 2
-	stat_attack = HARD_CRIT
-	robust_searching = 1
 	maxHealth = 17
 	health = 17
 	harm_intent_damage = 3
@@ -208,12 +188,3 @@
 	attack_verb_continuous = "slashes at"
 	attack_verb_simple = "slash at"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
-	deathmessage = "breaks apart into various metallic debris!"
-	combat_mode = TRUE
-	gender = NEUTER
-	mob_biotypes = MOB_ROBOTIC
-	speech_span = SPAN_ROBOT
-	loot = list(/obj/effect/decal/cleanable/robot_debris)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	faction = list("clockwork")
-	del_on_death = 1

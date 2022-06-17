@@ -88,7 +88,7 @@
 		shake_camera(nearby_mob, 2, 3)
 		nearby_mob.Paralyze(25 SECONDS)
 		//killing nearby clockcult mobs to prevent players from getting owned during the monologue
-		if(istype(nearby_mob, /mob/living/simple_animal/hostile/ocular_warden) || istype(nearby_mob, /mob/living/simple_animal/hostile/cogscarab))
+		if(istype(nearby_mob, /mob/living/simple_animal/hostile/clockwork))
 			nearby_mob.gib()
 		RemoveAbilities()
 		to_chat(nearby_mob, span_warning("You feel yourself tense up at the sound of [src]!"))
@@ -140,7 +140,7 @@
 /mob/living/simple_animal/hostile/boss/clockmaster/phase_two
 	name = "Justicar of Bronze"
 	desc = "How can you kill a god? What a grand and intoxicating innocence."
-	boss_abilities = list(/datum/action/boss/turret_summon, /datum/action/boss/steam_traps, /datum/action/boss/cogscarab_swarm)
+	boss_abilities = list(/datum/action/boss/steam_blast, /datum/action/boss/spinning_bronze, /datum/action/boss/marauder_swarm)
 	speech_span = SPAN_RATVAR
 
 /mob/living/simple_animal/hostile/boss/clockmaster/phase_two/tell_them_my_evil_plan()

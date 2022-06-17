@@ -3,15 +3,11 @@
 	config_file = "strings/modular_maps/Caves.toml"
 
 //Map objects
-/obj/structure/fans/tiny/invisible/caves
-	name = "strange field"
-	invisibility = INVISIBILITY_MAXIMUM
-
 /obj/structure/clockcult_tower
 	name = "energy relay"
 	desc = "A strange bronze tower capable of transmitting energy through other towers."
-	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "clockminer"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "clocktower_on"
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -28,19 +24,21 @@
 		if(!T.are_we_linked && T.id == id)
 			linking_to = T
 			linking_to.link_up()
-			Beam(linking_to, icon_state="medbeam", time = INFINITY, maxdistance = beam_range, beam_type = /obj/effect/ebeam/medical)
+			tower_beam = src.Beam(linking_to, icon_state="medbeam", time = INFINITY, maxdistance = beam_range, beam_type = /obj/effect/ebeam/medical)
 			return
 		if(istype(T, /obj/structure/clockcult_tower/target))
 			var/obj/structure/clockcult_tower/target/B = T
 			linking_to = B
 			B.active_beams++
-			Beam(linking_to, icon_state="medbeam", time = INFINITY, maxdistance = beam_range, beam_type = /obj/effect/ebeam/medical)
+			tower_beam = src.Beam(linking_to, icon_state="medbeam", time = INFINITY, maxdistance = beam_range, beam_type = /obj/effect/ebeam/medical)
 
 /obj/structure/clockcult_tower/proc/break_link() //break the beam fully, normally only for when you break the source tower so it propagates down the line
 	if(tower_beam)
 		QDEL_NULL(tower_beam)
+		tower_beam = null
 	linking_to.break_link()
 	linking_to = null
+	icon_state = "clocktower_off"
 	for(var/mob/living/nearby_mob in urange(8, src))
 		to_chat(nearby_mob, span_warning("The beam powers down!"))
 
@@ -72,6 +70,7 @@
 	active_beams--
 	if(active_beams < 1)
 		say("oye i die..")
+		qdel()
 
 //Mech used by the clockwork miners
 /obj/vehicle/sealed/mecha/working/ripley/mk2/clockcult
@@ -160,6 +159,48 @@
 		say(pick(death_phrases))
 		..()
 
+/mob/living/simple_animal/hostile/clockminer/spear
+	name = "Clockwork Spearman Servant"
+	desc = "A miner adorned with shining bronze armor, wielding a bronze spear. They look particularly angry with you."
+	icon_state = "clockminer_spear"
+	icon_living = "clockminer_spear"
+	melee_damage_lower = 15
+	melee_damage_upper = 18
+	attack_verb_continuous = "stabs"
+	attack_verb_simple = "stab"
+	attack_sound = 'sound/weapons/rapierhit.ogg'
+
+/mob/living/simple_animal/hostile/clockwork
+	name = "animated bronze fragments"
+	desc = "Chunks of bronze animated by vibrant dancing fire."
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "anime_fragment"
+	icon_living = "anime_fragment"
+	icon_dead = "shade_dead"
+	speak_chance = 0
+	turns_per_move = 5
+	speed = 3
+	stat_attack = HARD_CRIT
+	robust_searching = 1
+	maxHealth = 35
+	health = 35
+	harm_intent_damage = 3
+	melee_damage_lower = 6
+	melee_damage_upper = 9
+	rapid_melee = 2
+	attack_verb_continuous = "slashes at"
+	attack_verb_simple = "slash at"
+	attack_sound = 'sound/weapons/pierce.ogg'
+	deathmessage = "breaks apart into various metallic debris!"
+	combat_mode = TRUE
+	gender = NEUTER
+	mob_biotypes = MOB_ROBOTIC
+	speech_span = SPAN_ROBOT
+	loot = list(/obj/effect/decal/cleanable/robot_debris)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	faction = list("clockwork")
+	del_on_death = 1
+
 /mob/living/simple_animal/hostile/retaliate/trader/ashwalker
 	name = "Sells-The-Wares"
 	desc = "An assshwalker who recognizesss a good businessssss opportunity when ssshe ssseesss it."
@@ -200,48 +241,6 @@
 		"A ssshiny machine livesss deep in thessse cavesss, makesss good metal for better toolsss for the tribe. I pay good price for any ssspare ssshiny you come acrosssss..",
 		"I would appreciate you avoiding the needlessss ssslaughter of my kin, but I underssstand sssome of them are more... prone to violent outbreaksss againssst your kind."
 	)
-
-/mob/living/simple_animal/hostile/retaliate/trader/scared_officer
-	name = "Rachael Cleeves"
-	desc = "A hired security officer who did NOT get paid enough for this."
-	speak_emote = list("whinces")
-	speech_span = SPAN_SANS
-	sell_sound = 'sound/voice/hiss2.ogg'
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	sentience_type = SENTIENCE_HUMANOID
-	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	itemrejectphrase = "..How does this help me in this situation?"
-	itemsellcancelphrase = "What a ssshame, you know where to find me if you happen to... change your mind."
-	itemsellacceptphrase = "Thisss will make a great trinket for the brood mother..."
-	interestedphrase = "You.. I see you have ssshiny. Why not participate in some Nanotrasssen-approved capitalisssm?"
-	buyphrase = "..Cool, cool. You'll come back with reinforcements, right?"
-	nocashphrase = "Listen man.. I may be desperate but I still need a paycheck."
-	//TODO: More items in this list that make sense for the mission
-	products = list(
-		/obj/item/spear/bonespear = 150,
-		/obj/item/skeleton_key = 3000,
-		/obj/item/shovel/serrated = 150
-	)
-	wanted_items = list(
-		/obj/item/stack/sheet/mineral/snow = 150,
-		/obj/item/stack/sheet/bone = 10,
-		/obj/item/stack/sheet/bronze = 5,
-		/obj/item/food/meat/slab/goliath = 10,
-		/obj/item/stack/sheet/animalhide/goliath_hide = 15,
-	)
-	icon_state = "ashtrader"
-	gender = MALE
-	loot = list(/obj/effect/decal/remains/human)
-	lore = list(
-		"How the FUCK did you manage to make it this far alive?? I've been living in this crevice for over a week, sneaking food from the mess hall while they're out doing.. whatever the hell they're doing.",
-		"You have no idea how greatful I am to see another person who hasn't gone insane. You're not insane, right?",
-		"...You wouldn't happen to have one of those mining jaunters, would you?",
-		"Nanotrasen is aware of what is actually going on here, right? You're part of the rescue team, right?? Right???",
-		"Listen, if you got any spare ammo or weapons I'll buy it off you. I know it's bad out there but I'd like a chance of survival if they find me in here.",
-		"I know it seems bad right now, but trust me, its gonna get a lot worse."
-	)
-
 
 
 //Mob corpse spawns, outfits, and ID cards

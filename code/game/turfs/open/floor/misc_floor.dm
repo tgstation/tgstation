@@ -144,13 +144,30 @@
 	icon_state = "clockwork_floor"
 	floor_tile = /obj/item/stack/tile/bronze
 
+/turf/open/floor/bronze/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/bronze/lavaland
+	planetary_atmos = TRUE
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/open/floor/bronze/flat
 	icon_state = "reebe"
 	floor_tile = /obj/item/stack/tile/bronze/flat
 
+/turf/open/floor/bronze/flat/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/bronze/flat/lavaland
+	planetary_atmos = TRUE
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/open/floor/bronze/filled
 	icon_state = "clockwork_floor_filled"
 	floor_tile = /obj/item/stack/tile/bronze/filled
+
+/turf/open/floor/bronze/filled/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/bronze/filled/lavaland
 	planetary_atmos = TRUE
