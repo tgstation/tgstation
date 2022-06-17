@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - bugfix: "Rocks will no longer grow into Tramstation's bar maintenance"
