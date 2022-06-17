@@ -114,7 +114,7 @@
 		return
 	var/obj/vehicle/ridden/wheelchair/target = over_object
 	if(target.bell_attached)
-		to_chat(usr, "[target] already has [target.bell_attached]!")
+		usr.balloon_alert(usr, "already has a bell!")
 		return
 	usr.balloon_alert(usr, "attaching bell...")
 	if(!do_after(usr, 5))

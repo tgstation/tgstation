@@ -14,7 +14,7 @@
 	var/image/wheels_overlay
 	///Determines the typepath of what the object folds into
 	var/foldabletype = /obj/item/wheelchair
-	///Determines wether the wheelchair has a bell on it or not
+	///Determines whether the wheelchair has a bell on it or not
 	var/bell_attached
 
 /obj/vehicle/ridden/wheelchair/generate_actions()
@@ -125,7 +125,7 @@
 	usr.put_in_hands(wheelchair_folded)
 	if(bell_attached)
 		new /obj/structure/desk_bell (get_turf(src))
-		usr.visible_message(span_notice("The bell attached falls off!"))
+		usr.visible_message(span_notice("[bell_attached] falls off!"))
 	qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
