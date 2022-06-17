@@ -343,7 +343,7 @@
 	name = "MOD active sonar"
 	desc = "Ancient tech from the 20th century, this module uses sonic waves to detect living creatures within the user's radius. \
 	Its loud ping is much harder to hide in an indoor station than in the outdoor operations it was designed for."
-	icon_state = "projectile_dampener"
+	icon_state = "active_sonar"
 	module_type = MODULE_USABLE
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	complexity = 3
@@ -360,7 +360,7 @@
 		return
 	var/creatures_detected = 0
 	for(var/mob/living/creature in range(7, mod.wearer))
-		if(creature == mod.wearer)
+		if(creature == mod.wearer || creature.stat == DEAD)
 			continue
 		new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature)
 		creatures_detected++
