@@ -27,6 +27,10 @@
 	/// objects with these flags won't burn.
 	var/immunity_resistance_flags = LAVA_PROOF
 
+/turf/open/lava/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_LAVALAND_LAVA)
+
 /turf/open/lava/ex_act(severity, target)
 	return
 

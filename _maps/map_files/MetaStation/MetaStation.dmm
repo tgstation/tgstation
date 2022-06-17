@@ -38082,7 +38082,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/reagent_containers/glass/rag,
 /obj/structure/table,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "nxF" = (
@@ -44665,7 +44664,6 @@
 	dir = 5
 	},
 /obj/effect/landmark/start/medical_doctor,
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "pSw" = (
@@ -45545,8 +45543,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/random/engineering/tank,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/reagent_dispensers/plumbed,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "qhW" = (
@@ -53627,17 +53625,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
-"sTH" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron,
-/area/station/service/bar)
 "sTN" = (
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/iron/white,
@@ -63235,7 +63222,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "wjQ" = (
@@ -102239,7 +102225,7 @@ qpM
 bGJ
 vrF
 tju
-sTH
+uiK
 uiK
 loh
 nxH

@@ -90,15 +90,10 @@ const InputArea = (props, context) => {
       autoSelect
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
-      onKeyDown={(event) => {
-        const keyCode = window.event ? event.which : event.keyCode;
-        if (keyCode === KEY_ENTER) {
-          act('submit', { entry: input });
-          event.preventDefault();
-        }
-        if (keyCode === KEY_ESCAPE) {
-          act('cancel');
-        }
+      onEscape={() => act('cancel')}
+      onEnter={(event) => {
+        act('submit', { entry: input });
+        event.preventDefault();
       }}
       onInput={(_, value) => onType(value)}
       placeholder="Type something..."
