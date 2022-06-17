@@ -315,8 +315,8 @@
 	return TRUE //it'll probably get someone ;)
 
 ///captures a shade that was previously released from a soulstone.
-/obj/item/soulstone/proc/capture_shade(mob/living/simple_animal/shade/shade, mob/user)
-	if(user && !role_check(user))
+/obj/item/soulstone/proc/capture_shade(mob/living/simple_animal/shade/shade, mob/living/user)
+	if(isliving(user) && !role_check(user))
 		user.Unconscious(10 SECONDS)
 		to_chat(user, span_userdanger("Your body is wracked with debilitating pain!"))
 		return
