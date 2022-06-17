@@ -73,6 +73,7 @@ As an Atmospheric Technician, your backpack firefighter tank can launch resin. T
 As an Atmospheric Technician, your ATMOS holofan projector blocks gases while allowing objects to pass through. With it, you can quickly contain gas spills, fires and hull breaches.
 As an Atmospheric Technician, burning a plasma/oxygen mix inside the incinerator will not only produce power, but also gases such as tritium, water vapor and carbon dioxide.
 As an Atmospheric Technician, you can change the layer of a pipe by clicking with it on a wrenched pipe or other atmos component of the desired layer.
+As an Atmospheric Technician, pay attention to gas pipe meters. The meter will change color in response to temperature and the bar will increase and get thicker in response to higher pressures.
 As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the station. Sometimes it means making use of the armory to handle a blob, sometimes it means being ruthless during a revolution or cult.
 As the Head of Security, you can call for executions or forced cyborgization, but may require the Captain's approval.
 As the Head of Security, don't let the power go to your head. You may have high access, great equipment, and a miniature army at your side, but being a terrible person without a good reason is grounds for banning.

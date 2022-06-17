@@ -409,3 +409,172 @@
       heads!
   tf-4:
   - bugfix: Donksoft toy vendors no longer bluescreen.
+2022-06-11:
+  JohnFulpWillard:
+  - bugfix: Space Dragons' expiring no longer deletes the people they had already
+      eaten.
+  LemonInTheDark:
+  - rscadd: Weather effects will now be a bit more subtle in darkness, hopefully this
+      looks nicer
+  - imageadd: I've done some resprites to snow and non smoothing lava
+  MTandi:
+  - qol: Portable pump In/Out button text replaced with source and destination.
+  Maurukas:
+  - bugfix: A manually edited APC in the deepstorage ruin has been replaced with an
+      APC of the appropriate type.
+  Melbert:
+  - refactor: Gunlight / Helmetlight behavior is now a component.
+  - qol: Gunlight / Helmetlight now uses balloon alerts.
+  Mothblocks:
+  - spellcheck: Asimov++ no longer includes "In the case of conflict, the majority
+      order rules."
+  RandomGamer123:
+  - bugfix: Fixes the layer of a scrubber in Icebox engineering
+  Watermelon914:
+  - bugfix: Skip time button on the steal objective now has a fast forward icon.
+  YakumoChen:
+  - qol: Changed the position of light tubes in certain surgery rooms to not be directly
+      over a surgery bed. No more smashing lights with your saw by accident!
+  - qol: Aspiring AIs can now listen in on patient talk in Meta's primary surgery
+      room. Or you could listen to the soothing sounds of the the crew dying from
+      the comfort of a surgery bed when comms are down too, I guess.
+  msgerbs:
+  - bugfix: There is no longer a random pipe in the wall in Metastation's Xenobiology
+      department.
+  san7890:
+  - config: Hey, server operators! Title music playing at the lobby screen is now
+      DISABLED by default in the config settings (game_options.txt). If you are not
+      hearing any title music, be sure to adjust your config. If you're a player reading
+      this and are sorely missing out on those soulful tunes, please notify your server's
+      administration team of this change so they can diagnose it properly from there.
+  tf-4:
+  - balance: Pre-loaded PACMAN generators now have 15 plasma sheets, instead of 50.
+2022-06-12:
+  JohnFulpWillard:
+  - bugfix: The Warp whistle can be used more than once again.
+  Melbert:
+  - bugfix: Fixes Novaflowers not lighting targets on fire.
+  - code_imp: Reduces some copy+paste and cleans up some unique plant genes code.
+  - bugfix: Ranged attacks hitting mech equipment no longer ignores mech armor
+  - bugfix: Melee attacks now damage mech equipment
+  - bugfix: Mech equipment is now properly disabled at 0% health
+  Mothblocks:
+  - bugfix: Fixed thieves/opportunists icon.
+  Son-of-Space:
+  - bugfix: Several pairs of external airlocks without cycle link helpers have had
+      them added on TramStation
+  YakumoChen:
+  - bugfix: Fixed a symmetry issue with the lava clown puzzle where a lone chasm tile
+      wasn't connected with its fellow chasms.
+  san7890:
+  - bugfix: Chaplains, CMOs, and Psychologists can now all rejoice that they start
+      in their offices in Tram now, rather than take the shuttle.
+  - bugfix: Abductors should now hopefully spawn in on their little alien pod rather
+      than on the station's arrivals shuttle.
+  timothymtorres:
+  - rscadd: Add disease resistance to spaceacillin.  It now gives 50% disease progression
+      slowdown, 75% to block disease infection, 75% to block zombie infection when
+      attacked, and 50% alien larva growth slowdown.
+2022-06-13:
+  Fikou:
+  - bugfix: floating now stops slips just as well as flying
+  - spellcheck: security mod theme no longer mentions being shockproof
+  - bugfix: fixes naked outfit giving people the ninja modsuit
+  JohnFulpWillard:
+  - bugfix: Ore silos can once again be synced to machines on the station on other
+      z levels, for multi-z maps.
+  MTandi:
+  - bugfix: Night shift lights now properly save power
+  - qol: APC buttons now have tooltips
+  Melbert:
+  - bugfix: Earthsblood makes you see colors again.
+  Mothblocks:
+  - bugfix: Fixed Dynamic midrounds spawning heavies significantly earlier than they're
+      supposed to
+  Rhials:
+  - bugfix: Jobs are no longer closed when the nuke detonates off-station.
+  Son-of-Space:
+  - bugfix: Fixed overlapping objects on a tile in the foyer of the IceBox bar.
+  - bugfix: Some manual varedits on objects with cargo shipping access were fixed
+      to work again.
+  - bugfix: A set of unpowered airlocks by the cooling loop on TramStation are now
+      powered.
+  - bugfix: A rack stuck in a wall on the listening station ruin was removed from
+      the wall.
+  cacogen:
+  - balance: The default pirate ship now has a cell charger to recharge suit cells
+  castawaynont:
+  - balance: The Space Ninja's MODsuit has a storage module now.
+  kawoppi:
+  - balance: removed JaniDrobe refill from the General Wardrobes Supply Crate and
+      moved it to its own supply crate
+  - balance: adjusted General Wardrobes Supply Crate price due to it containing one
+      less refill
+  robbertapir:
+  - bugfix: stundprods and teleprods now stun again
+  - bugfix: igniters now work again
+  vincentiusvin:
+  - bugfix: fix h2/trit fires being too hot, outputting funny numbers, generally being
+      weird.
+2022-06-14:
+  Son-of-Space:
+  - bugfix: A rogue windoor in a wall on Kilostation by the chapel in space was terminated
+  robbertapir:
+  - bugfix: Regal rats can now heal by eating all types of cheese, not just cheddar.
+2022-06-15:
+  Iamgoofball:
+  - spellcheck: Nanotrasen has lost the rights to several popular confectionaries,
+      and has created "original" replacements.
+  Mothblocks:
+  - spellcheck: Adjusted description of moths eating clothes in preferences menu to
+      better reflect their current behavior.
+  SuperNovaa41:
+  - bugfix: Pill names now have a cap at 42 characters to prevent chat spam.
+  Timberpoes:
+  - bugfix: Fixes slips being broken again.
+  - bugfix: Fixes a weird edge case where anything that would prevent a storage closet
+      or locker from opening would instead cause stealth implant boxes to delete the
+      player inside them.
+  UDaV73rus, Tokoriso, dragomagol:
+  - rscadd: welding now has an animation!
+  dragomagol:
+  - bugfix: Renamed a few circuit boards to explain what frame they need
+  private-tristan:
+  - bugfix: kilostation solars no longer have plating and catwalks on the same tile
+  robbertapir:
+  - bugfix: the flavor text for changing the transfer amount on the medical gel is
+      no longer backwards
+  san7890:
+  - bugfix: Chameleon neckties will no longer give you a missing-texture cape and
+      a big ERROR icon by default. Trust me when I tell you this wasn't actually a
+      good thing.
+  timothymtorres:
+  - rscadd: Add dyslexia (illiteracy quirk) as a genetic mutation.
+  - rscadd: Add illiteracy as a effect for confusion disease symptom.
+2022-06-16:
+  Fikou:
+  - bugfix: unrestricted wizard healing staff no longer tells you you are weak
+  Pickle-Coding:
+  - spellcheck: The chat will no longer lie by saying you shoved yourself into the
+      closet when someone shoves you into a closet.
+  PositiveEntropy, WJohnston, Dragomagol, LemonInTheDark, Riggle:
+  - imageadd: Resprites most variety of tiles into a better shaded version!
+  - code_imp: Damaged floors are now damaged overlays, meaning that most tiles should
+      properly display a damaged state!
+  ReinaCoder:
+  - imageadd: The riot helmet has been resprited!
+  SovietJenga:
+  - balance: Moves the botanogenetic shears into the botany research node and locks
+      it behind a botany experiment
+  - balance: Removes the advanced engineering node requirement from the botany node
+  Striders13:
+  - bugfix: fixed a windoor in metastation warden's office being layered incorrectly
+  YakumoChen:
+  - qol: Conveyor switches now tell you the speed setting of belts when examined.
+      You can change the speed with a multitool!
+  alphanerdd:
+  - bugfix: updates donk pocket box examine text to be more accurate
+  private-tristan:
+  - bugfix: icebox science has a scidrobe again!
+  timothymtorres:
+  - code_imp: Add atmospheric technician gas meter text tip

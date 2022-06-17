@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Space Dragons' expiring no longer deletes the people they had already eaten."
