@@ -90,7 +90,7 @@ export const LuaEditor = (props, context) => {
               </Section>
             </Stack.Item>
             <Stack.Item grow>
-              <Section fill width="100%">
+              <Section fill height="95%" width="100%">
                 <Tabs>
                   <Tabs.Tab
                     selected={activeTab === "globals"}
@@ -112,7 +112,7 @@ export const LuaEditor = (props, context) => {
                     Log
                   </Tabs.Tab>
                 </Tabs>
-                <Section scrollable width="100%">
+                <Section fill scrollable width="100%">
                   {tabContent}
                 </Section>
               </Section>
