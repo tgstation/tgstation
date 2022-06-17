@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "A rack stuck in a wall on the listening station ruin was removed from the wall."
