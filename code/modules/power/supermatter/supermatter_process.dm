@@ -88,7 +88,8 @@
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
 	if(power_changes)
-		power_loss = power < POWERLOSS_LINEAR_THRESHOLD ? ((power / POWERLOSS_CUBIC_DIVISOR) ** 3) : (POWERLOSS_LINEAR_OFFSET + POWERLOSS_LINEAR_RATE * (power - POWERLOSS_LINEAR_THRESHOLD))
+		///The power that is getting lost this tick.
+		var/power_loss = power < POWERLOSS_LINEAR_THRESHOLD ? ((power / POWERLOSS_CUBIC_DIVISOR) ** 3) : (POWERLOSS_LINEAR_OFFSET + POWERLOSS_LINEAR_RATE * (power - POWERLOSS_LINEAR_THRESHOLD))
 		power_loss *= powerloss_inhibitor * (1 - (PSYCHOLOGIST_POWERLOSS_REDUCTION * psyCoeff))
 		power = max(power - power_loss, 0)
 	//After this point power is lowered

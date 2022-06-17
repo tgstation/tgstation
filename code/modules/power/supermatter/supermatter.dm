@@ -266,8 +266,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/cascade_initiated = FALSE
 	///Reference to the warp effect
 	var/atom/movable/supermatter_warp_effect/warp
-	///How much power the supermatter is losing.
-	var/power_loss = 0
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
