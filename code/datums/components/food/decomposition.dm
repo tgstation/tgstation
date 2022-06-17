@@ -73,7 +73,7 @@
 
 	var/turf/open/open_turf = food.loc
 
-	if(!istype(open_turf) || istype(open_turf, /turf/open/lava) || istype(open_turf, /turf/open/misc/asteroid)) //Are we actually in a valid open turf?
+	if(!istype(open_turf) || islava(open_turf) || istype(open_turf, /turf/open/misc/asteroid)) //Are we actually in a valid open turf?
 		remove_timer()
 		return
 
