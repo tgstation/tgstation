@@ -150,7 +150,7 @@
 /obj/item/clothing/suit/armor/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out jets of flame!"))
 	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
-	for(var/mob/living/carbon/carbon_victim in range(6, owner))
+	for(var/mob/living/carbon/carbon_victim in range(6, get_turf(src)))
 		if(carbon_victim != owner)
 			carbon_victim.adjust_fire_stacks(8)
 			carbon_victim.ignite_mob()
@@ -392,7 +392,6 @@
 	var/static/list/r_arms
 	var/static/list/l_legs
 	var/static/list/r_legs
-	var/static/list/organs
 
 /obj/item/clothing/suit/armor/reactive/delimbering/Initialize(mapload)
 	. = ..()
@@ -408,8 +407,6 @@
 		l_legs = typesof(/obj/item/bodypart/l_leg)
 	if(!r_legs)
 		r_legs = typesof(/obj/item/bodypart/r_leg)
-	if(!organs)
-		organs = subtypesof(/obj/item/organ)
 
 /obj/item/clothing/suit/armor/reactive/delimbering/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -428,7 +425,7 @@
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/delimbering/proc/delimber_pulse(mob/living/carbon/human/owner, can_hit_owner = FALSE)
-	for(var/mob/living/carbon/nearby in range(range, src))
+	for(var/mob/living/carbon/nearby in range(range, get_turf(src)))
 		if(!can_hit_owner && nearby == owner)
 			continue
 		if(nearby.run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [src]!") >= 100)
@@ -452,8 +449,5 @@
 		var/obj/item/bodypart/new_part = new picked_part()
 		new_part.replace_limb(nearby, TRUE)
 		qdel(picked_user_part)
-		var/obj/item/organ/picked_organ = pick(organs)
-		var/obj/item/organ/new_organ = new picked_organ
-		new_organ.Insert(nearby, TRUE, FALSE)
 		nearby.update_body(TRUE)
 		balloon_alert(nearby, "something has changed about you")

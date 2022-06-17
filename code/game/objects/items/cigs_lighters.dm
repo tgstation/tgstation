@@ -171,7 +171,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
-	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), list(ITEM_SLOT_MASK)) //90% to knock off when wearing a mask
+	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 	AddElement(/datum/element/update_icon_updates_onmob)
 	icon_state = icon_off
 	inhand_icon_state = inhand_icon_off
@@ -303,7 +303,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
-	var/obj/item/organ/lungs/lungs = smoker.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/lungs = smoker.getorganslot(ORGAN_SLOT_LUNGS)
 	if(lungs && !(lungs.organ_flags & ORGAN_SYNTHETIC))
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
 		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm*smoker_resistance)
@@ -585,6 +585,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 0
 	chem_volume = 200 // So we can fit densified chemicals plants
 	list_reagents = null
+	w_class = WEIGHT_CLASS_SMALL
 	///name of the stuff packed inside this pipe
 	var/packeditem
 
@@ -910,10 +911,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape
 	name = "\improper E-Cigarette"
 	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: Do not fill with flammable materials.\""//<<< i'd vape to that.
-	icon = 'icons/obj/clothing/masks.dmi'
-	icon_state = "red_vape"
+	icon_state = "vape"
+	worn_icon_state = "vape_worn"
+	greyscale_config = /datum/greyscale_config/vape
+	greyscale_config_worn = /datum/greyscale_config/vape/worn
+	greyscale_colors = "#2e2e2e"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 	/// The capacity of the vape.
 	var/chem_volume = 100
@@ -926,14 +931,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	/// Whether the vape has been overloaded to spread smoke.
 	var/super = FALSE
 
-/obj/item/clothing/mask/vape/Initialize(mapload, param_color)
+/obj/item/clothing/mask/vape/Initialize(mapload)
 	. = ..()
 	create_reagents(chem_volume, NO_REACT)
 	reagents.add_reagent(/datum/reagent/drug/nicotine, 50)
-	if(!param_color)
-		param_color = pick("red","blue","black","white","green","purple","yellow","orange")
-	icon_state = "[param_color]_vape"
-	inhand_icon_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!"))//it doesn't give you cancer, it is cancer
@@ -945,30 +946,34 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(user, span_notice("You open the cap on [src]."))
 		reagents.flags |= OPENCONTAINER
 		if(obj_flags & EMAGGED)
-			add_overlay("vapeopen_high")
+			icon_state = "vape_open_high"
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_high)
 		else if(super)
-			add_overlay("vapeopen_med")
+			icon_state = "vape_open_med"
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_med)
 		else
-			add_overlay("vapeopen_low")
+			icon_state = "vape_open_low"
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_low)
 	else
 		screw = FALSE
 		to_chat(user, span_notice("You close the cap on [src]."))
 		reagents.flags &= ~(OPENCONTAINER)
-		cut_overlays()
+		icon_state = initial(icon_state)
+		set_greyscale(new_config = initial(greyscale_config))
 
 /obj/item/clothing/mask/vape/multitool_act(mob/living/user, obj/item/tool)
 	. = TRUE
 	if(screw && !(obj_flags & EMAGGED))//also kinky
 		if(!super)
-			cut_overlays()
 			super = TRUE
 			to_chat(user, span_notice("You increase the voltage of [src]."))
-			add_overlay("vapeopen_med")
+			icon_state = "vape_open_med"
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_med)
 		else
-			cut_overlays()
 			super = FALSE
 			to_chat(user, span_notice("You decrease the voltage of [src]."))
-			add_overlay("vapeopen_low")
+			icon_state = "vape_open_low"
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_low)
 
 	if(screw && (obj_flags & EMAGGED))
 		to_chat(user, span_warning("[src] can't be modified!"))
@@ -976,11 +981,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
 	if(screw)
 		if(!(obj_flags & EMAGGED))
-			cut_overlays()
 			obj_flags |= EMAGGED
 			super = FALSE
 			to_chat(user, span_warning("You maximize the voltage of [src]."))
-			add_overlay("vapeopen_high")
+			icon_state = "vape_open_high"
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_high)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
 			sp.set_up(5, 1, src)
 			sp.start()
@@ -1056,7 +1061,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	COOLDOWN_START(src, drag_cooldown, dragtime)
 	if(obj_flags & EMAGGED)
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(4, location = loc, carry = reagents, efficiency = 24)
+		puff.set_up(4, holder = src, location = loc, carry = reagents, efficiency = 24)
 		puff.start()
 		if(prob(5)) //small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, FALSE)
@@ -1070,7 +1075,39 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			return
 	else if(super)
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(1, location = loc, carry = reagents, efficiency = 24)
+		puff.set_up(1, holder = src, location = loc, carry = reagents, efficiency = 24)
 		puff.start()
 
 	handle_reagents()
+
+/obj/item/clothing/mask/vape/red
+	greyscale_colors = "#A02525"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/blue
+	greyscale_colors = "#294A98"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/purple
+	greyscale_colors = "#9900CC"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/green
+	greyscale_colors = "#3D9829"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/yellow
+	greyscale_colors = "#DAC20E"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/orange
+	greyscale_colors = "#da930e"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/black
+	greyscale_colors = "#2e2e2e"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/white
+	greyscale_colors = "#DCDCDC"
+	flags_1 = NONE

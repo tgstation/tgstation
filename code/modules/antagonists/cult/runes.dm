@@ -387,6 +387,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/teleport/Destroy()
 	LAZYREMOVE(GLOB.teleport_runes, src)
+	if(inner_portal)
+		QDEL_NULL(inner_portal)
+	if(outer_portal)
+		QDEL_NULL(outer_portal)
 	return ..()
 
 /obj/effect/rune/teleport/invoke(list/invokers)
@@ -485,8 +489,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	addtimer(CALLBACK(src, .proc/close_portal), 600, TIMER_UNIQUE)
 
 /obj/effect/rune/teleport/proc/close_portal()
-	qdel(inner_portal)
-	qdel(outer_portal)
+	QDEL_NULL(inner_portal)
+	QDEL_NULL(outer_portal)
 	desc = initial(desc)
 	set_light_range(0)
 	update_light()
@@ -905,7 +909,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /mob/living/carbon/human/cult_ghost/getorganszone(zone, subzones = 0)
 	. = ..()
-	for(var/obj/item/organ/brain/B in .) //they're not that smart, really
+	for(var/obj/item/organ/internal/brain/B in .) //they're not that smart, really
 		. -= B
 
 

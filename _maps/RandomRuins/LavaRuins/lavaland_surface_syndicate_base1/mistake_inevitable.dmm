@@ -10,7 +10,7 @@
 "be" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south{
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
@@ -19,7 +19,7 @@
 	id = "lavalandsyndi_mistake";
 	name = "Chemistry Blast Door Control";
 	pixel_y = 26;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -51,9 +51,9 @@
 /area/ruin/syndicate_lava_base/testlab)
 "eq" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Supermatter";
-	req_access_txt = "150"
+	name = "Supermatter"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "eZ" = (
@@ -89,7 +89,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "gX" = (
 /obj/machinery/airalarm/directional/north{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/item/stock_parts/matter_bin/bluespace,
 /obj/item/stock_parts/matter_bin/bluespace,
@@ -163,9 +163,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/door/airlock/hatch{
-	name = "Experimentation Lab";
-	req_access_txt = "150"
+	name = "Experimentation Lab"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /obj/modular_map_connector,
@@ -288,7 +288,7 @@
 "HC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/airalarm/directional/south{
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)

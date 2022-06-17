@@ -1,4 +1,4 @@
-/// The chance for a manifest or crate to be created with errors
+/// The chance for a manifest or crate to be created with errors 
 #define MANIFEST_ERROR_CHANCE 5
 
 // MANIFEST BITFLAGS
@@ -6,7 +6,7 @@
 #define MANIFEST_ERROR_NAME (1 << 0)
 /// Determines if contents will be deleted from the manifest but still be present in the crate
 #define MANIFEST_ERROR_CONTENTS (1 << 1)
-/// Determines if contents will be deleted from the crate but still be present in the manifest
+/// Determines if contents will be deleted from the crate but still be present in the manifest 
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
@@ -29,14 +29,11 @@
 		errors |= MANIFEST_ERROR_ITEM
 		investigate_log("Supply order #[order_id] generated with incorrect contents shipped.", INVESTIGATE_CARGO)
 
-/obj/item/paper/fluff/jobs/cargo/requisition
-	var/authorization_stamps
-	var/order_id = 0
+/obj/item/paper/fluff/jobs/cargo/manifest/proc/is_approved()
+	return stamped?.len && !is_denied()
 
-/obj/item/paper/fluff/jobs/cargo/requisition/Initialize(mapload, id, authorization_stamps)
-	. = ..()
-	src.authorization_stamps = authorization_stamps
-	order_id = id
+/obj/item/paper/fluff/jobs/cargo/manifest/proc/is_denied()
+	return stamped && ("stamp-deny" in stamped)
 
 /datum/supply_order
 	var/id
@@ -50,8 +47,6 @@
 	var/datum/supply_pack/pack
 	var/datum/bank_account/paying_account
 	var/obj/item/coupon/applied_coupon
-	/// list of stamps that can approve this requisition for bonus credits
-	var/authorization_stamps
 
 /datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason, paying_account, department_destination, coupon)
 	id = SSshuttle.order_number++
@@ -65,76 +60,70 @@
 	src.applied_coupon = coupon
 
 /datum/supply_order/proc/generateRequisition(turf/T)
-	var/obj/item/paper/fluff/jobs/cargo/requisition/requisition = new(T, id, pack.authorization_stamps)
+	var/obj/item/paper/P = new(T)
 
-	var/jobs_that_can_approve = list()
-	for(var/stamp in pack.authorization_stamps)
-		jobs_that_can_approve += pack.authorization_stamps[stamp]
-	jobs_that_can_approve = english_list(jobs_that_can_approve, and_text = " or ")
-
-	requisition.name = "requisition form - #[id] ([pack.name])"
-	requisition.info += "<h2>[station_name()] Supply Requisition</h2>"
-	requisition.info += "<hr/>"
-	requisition.info += "Order #[id]<br/>"
-	requisition.info += "Time of Order: [station_time_timestamp()]<br/>"
-	requisition.info += "Item: [pack.name]<br/>"
-	requisition.info += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
-	requisition.info += "Authorization Required: [jobs_that_can_approve]<br/>"
-	requisition.info += "Requested by: [orderer]<br/>"
+	P.name = "requisition form - #[id] ([pack.name])"
+	P.info += "<h2>[station_name()] Supply Requisition</h2>"
+	P.info += "<hr/>"
+	P.info += "Order #[id]<br/>"
+	P.info += "Time of Order: [station_time_timestamp()]<br/>"
+	P.info += "Item: [pack.name]<br/>"
+	P.info += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
+	P.info += "Requested by: [orderer]<br/>"
 	if(paying_account)
-		requisition.info += "Paid by: [paying_account.account_holder]<br/>"
-	requisition.info += "Rank: [orderer_rank]<br/>"
-	requisition.info += "Comment: [reason]<br/>"
+		P.info += "Paid by: [paying_account.account_holder]<br/>"
+	P.info += "Rank: [orderer_rank]<br/>"
+	P.info += "Comment: [reason]<br/>"
 
-	requisition.update_appearance()
-	return requisition
+	P.update_appearance()
+	return P
 
 /datum/supply_order/proc/generateManifest(obj/container, owner, packname, cost) //generates-the-manifests.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest = new(null, id, cost)
+	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(null, id, cost)
 
-	var/station_name = (manifest.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
+	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
-	manifest.name = "shipping manifest - [packname?"#[id] ([pack.name])":"(Grouped Item Crate)"]"
-	manifest.info += "<h2>[command_name()] Shipping Manifest</h2>"
-	manifest.info += "<hr/>"
+	P.name = "shipping manifest - [packname?"#[id] ([pack.name])":"(Grouped Item Crate)"]"
+	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
+	P.info += "<hr/>"
 	if(owner && !(owner == "Cargo"))
-		manifest.info += "Direct purchase from [owner]<br/>"
-		manifest.name += " - Purchased by [owner]"
-	manifest.info += "Order[packname?"":"s"]: [id]<br/>"
-	manifest.info += "Destination: [station_name]<br/>"
+		P.info += "Direct purchase from [owner]<br/>"
+		P.name += " - Purchased by [owner]"
+	P.info += "Order[packname?"":"s"]: [id]<br/>"
+	P.info += "Destination: [station_name]<br/>"
 	if(packname)
-		manifest.info += "Item: [packname]<br/>"
-	manifest.info += "Contents: <br/>"
-	manifest.info += "<ul>"
-	for(var/atom/movable/AM in container.contents - manifest)
-		if((manifest.errors & MANIFEST_ERROR_CONTENTS))
+		P.info += "Item: [packname]<br/>"
+	P.info += "Contents: <br/>"
+	P.info += "<ul>"
+	for(var/atom/movable/AM in container.contents - P)
+		if((P.errors & MANIFEST_ERROR_CONTENTS))
 			if(prob(50))
-				manifest.info += "<li>[AM.name]</li>"
+				P.info += "<li>[AM.name]</li>"
 			else
 				continue
-		manifest.info += "<li>[AM.name]</li>"
-	manifest.info += "</ul>"
-	manifest.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
+		P.info += "<li>[AM.name]</li>"
+	P.info += "</ul>"
+	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
 
-	if(manifest.errors & MANIFEST_ERROR_ITEM)
+	if(P.errors & MANIFEST_ERROR_ITEM)
 		if(istype(container, /obj/structure/closet/crate/secure) || istype(container, /obj/structure/closet/crate/large))
-			manifest.errors &= ~MANIFEST_ERROR_ITEM
+			P.errors &= ~MANIFEST_ERROR_ITEM
 		else
 			var/lost = max(round(container.contents.len / 10), 1)
 			while(--lost >= 0)
 				qdel(pick(container.contents))
 
-	manifest.update_appearance()
-	manifest.forceMove(container)
+	P.update_appearance()
+	P.forceMove(container)
 
 	if(istype(container, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/crate = container
-		crate.manifest = manifest
-		crate.update_appearance()
+		var/obj/structure/closet/crate/C = container
+		C.manifest = P
+		C.update_appearance()
 	else
-		container.contents += manifest
+		container.contents += P
 
-	return manifest
+	return P
 
 /datum/supply_order/proc/generate(atom/A)
 	var/account_holder

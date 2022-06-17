@@ -290,6 +290,8 @@
  * Can be overriden to set or pass in additional vars of the status effect.
  */
 /datum/heretic_knowledge/mark/proc/create_mark(mob/living/source, mob/living/target)
+	if(target.stat == DEAD)
+		return
 	return target.apply_status_effect(mark_type)
 
 /**
@@ -371,7 +373,7 @@
 /datum/heretic_knowledge/curse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
-		fingerprints[requirements.return_fingerprints()] = 1
+		fingerprints[GET_ATOM_FINGERPRINTS(requirements)] = 1
 	list_clear_nulls(fingerprints)
 
 	// No fingerprints? No ritual
@@ -487,15 +489,15 @@
 /datum/heretic_knowledge/knowledge_ritual/New()
 	. = ..()
 	var/static/list/potential_organs = list(
-		/obj/item/organ/appendix,
-		/obj/item/organ/tail,
-		/obj/item/organ/eyes,
-		/obj/item/organ/tongue,
-		/obj/item/organ/ears,
-		/obj/item/organ/heart,
-		/obj/item/organ/liver,
-		/obj/item/organ/stomach,
-		/obj/item/organ/lungs,
+		/obj/item/organ/internal/appendix,
+		/obj/item/organ/external/tail,
+		/obj/item/organ/internal/eyes,
+		/obj/item/organ/internal/tongue,
+		/obj/item/organ/internal/ears,
+		/obj/item/organ/internal/heart,
+		/obj/item/organ/internal/liver,
+		/obj/item/organ/internal/stomach,
+		/obj/item/organ/internal/lungs,
 	)
 
 	var/static/list/potential_easy_items = list(

@@ -366,6 +366,13 @@
 	px_y = 12
 	max_stamina_damage = 50
 	can_be_disabled = TRUE
+	/// We store this here to generate our icon key more easily.
+	var/left_leg_mask_key
+	/// The associated list of all the left leg mask keys associated to their cached left leg masks.
+	/// It's static, so it's shared between all the left legs there is. Be careful.
+	/// Why? Both legs share the same layer for rendering, and since we don't want to do redraws on
+	/// each dir changes, we're doing it with a mask instead, which we cache for efficiency reasons.
+	var/static/list/left_leg_mask_cache = list()
 
 
 /obj/item/bodypart/r_leg/set_owner(new_owner)

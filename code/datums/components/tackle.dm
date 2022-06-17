@@ -288,9 +288,10 @@
 			defense_mod += 2
 
 		if(islizard(T))
-			if(!T.getorganslot(ORGAN_SLOT_TAIL)) // lizards without tails are off-balance
+			var/obj/item/organ/external/tail/el_tail = T.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+			if(!el_tail) // lizards without tails are off-balance
 				defense_mod -= 1
-			else if(T.dna.species.is_wagging_tail()) // lizard tail wagging is robust and can swat away assailants!
+			else if(el_tail.wag_flags & WAG_WAGGING) // lizard tail wagging is robust and can swat away assailants!
 				defense_mod += 1
 
 	// OF-FENSE
@@ -424,7 +425,7 @@
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
 			user.adjustStaminaLoss(30, updating_health=FALSE)
 			user.adjustBruteLoss(30)
-			user.add_confusion(15)
+			user.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
@@ -436,7 +437,7 @@
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
 			user.adjustStaminaLoss(30, updating_health=FALSE)
 			user.adjustBruteLoss(10)
-			user.add_confusion(10)
+			user.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
 			user.Knockdown(30)
 			shake_camera(user, 3, 4)
 

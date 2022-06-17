@@ -395,7 +395,7 @@
 	required_reagents = list(/datum/reagent/consumable/dr_gibb = 5, /datum/reagent/consumable/ice = 5, /datum/reagent/consumable/cream = 5)
 
 /datum/chemical_reaction/drink/triple_citrus
-	results = list(/datum/reagent/consumable/triple_citrus = 5)
+	results = list(/datum/reagent/consumable/triple_citrus = 3)
 	required_reagents = list(/datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/orangejuice = 1)
 	optimal_ph_min = 0//Our reaction is very acidic, so lets shift our range
 
@@ -764,3 +764,29 @@
 	results = list(/datum/reagent/consumable/ethanol/helianthus = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/toxin/mindbreaker = 1)
 	mix_message = "The drink lets out a soft enlightening laughter..."
+
+
+/datum/chemical_reaction/drink/strawberry_banana
+	results = list(/datum/reagent/consumable/strawberry_banana = 3)
+	required_reagents = list(/datum/reagent/consumable/berryjuice = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/consumable/banana = 1)
+
+/datum/chemical_reaction/drink/berry_blast
+	results = list(/datum/reagent/consumable/berry_blast = 3)
+	required_reagents = list(/datum/reagent/consumable/berryjuice = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/consumable/cream = 1)
+
+/datum/chemical_reaction/drink/funky_monkey
+	results = list(/datum/reagent/consumable/funky_monkey = 3)
+	required_reagents = list(/datum/reagent/consumable/coco = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/consumable/banana = 1)
+
+/datum/chemical_reaction/drink/green_giant
+	results = list(/datum/reagent/consumable/green_giant = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol/creme_de_menthe = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/consumable/limejuice = 1)
+
+/datum/chemical_reaction/drink/melon_baller
+	results = list(/datum/reagent/consumable/melon_baller = 3)
+	required_reagents = list(/datum/reagent/consumable/watermelonjuice = 1, /datum/reagent/consumable/ethanol/creme_de_menthe = 1, /datum/reagent/consumable/milk = 1)
+
+/datum/chemical_reaction/drink/vanilla_dream
+	results = list(/datum/reagent/consumable/vanilla_dream = 3)
+	required_reagents = list(/datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/consumable/cream = 1)
+

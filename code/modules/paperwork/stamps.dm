@@ -17,10 +17,6 @@
 	user.visible_message(span_suicide("[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead."))
 	return (OXYLOSS)
 
-/obj/item/stamp/denied
-	name = "\improper DENIED rubber stamp"
-	icon_state = "stamp-deny"
-
 /obj/item/stamp/qm
 	name = "quartermaster's rubber stamp"
 	icon_state = "stamp-qm"
@@ -60,6 +56,11 @@
 	name = "chief medical officer's rubber stamp"
 	icon_state = "stamp-cmo"
 	dye_color = DYE_CMO
+
+/obj/item/stamp/denied
+	name = "\improper DENIED rubber stamp"
+	icon_state = "stamp-deny"
+	dye_color = DYE_REDCOAT
 
 /obj/item/stamp/clown
 	name = "clown's rubber stamp"

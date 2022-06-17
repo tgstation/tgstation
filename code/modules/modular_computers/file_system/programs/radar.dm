@@ -258,6 +258,7 @@
 	available_on_ntnet = TRUE
 	program_icon = "broom"
 	size = 2
+	detomatix_resistance = DETOMATIX_RESIST_MINOR
 
 /datum/computer_file/program/radar/custodial_locator/find_atom()
 	return locate(selected) in GLOB.janitor_devices

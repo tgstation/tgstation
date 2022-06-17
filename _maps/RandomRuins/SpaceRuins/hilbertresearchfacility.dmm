@@ -13,9 +13,9 @@
 "av" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
-	name = "secured door";
-	req_access_txt = "207"
+	name = "Secured Door"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
 "az" = (
@@ -272,7 +272,7 @@
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "he" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "hk" = (
@@ -786,13 +786,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"sa" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/space/basic,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "sj" = (
 /turf/open/floor/circuit/green/anim,
@@ -2349,7 +2342,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Yi" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "Ym" = (
@@ -5179,7 +5172,7 @@ Ba
 Ba
 Ba
 Ba
-sa
+Ba
 Ok
 Bo
 Iy

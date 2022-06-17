@@ -64,7 +64,7 @@
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
 			mmi = new (src)
-			mmi.brain = new /obj/item/organ/brain(mmi)
+			mmi.brain = new /obj/item/organ/internal/brain(mmi)
 			mmi.brain.organ_flags |= ORGAN_FROZEN
 			mmi.brain.name = "[real_name]'s brain"
 			mmi.name = "[initial(mmi.name)]: [real_name]"
@@ -1003,3 +1003,7 @@
 
 	cut_overlay(GLOB.fire_appearances[fire_icon])
 	return null
+
+/// Draw power from the robot
+/mob/living/silicon/robot/proc/draw_power(power_to_draw)
+	cell?.use(power_to_draw)

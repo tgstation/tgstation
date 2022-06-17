@@ -1,7 +1,7 @@
 // Approved manifest.
-// +70 credits flat.
+// +80 credits flat.
 /datum/export/manifest_correct
-	cost = CARGO_CRATE_VALUE * 0.35
+	cost = CARGO_CRATE_VALUE * 0.4
 	k_elasticity = 0
 	unit_name = "approved manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
@@ -36,6 +36,7 @@
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = O
 	return ..() + M.order_cost
 
+
 // Erroneously approved manifest.
 // Substracts the package cost.
 /datum/export/manifest_error
@@ -55,6 +56,7 @@
 /datum/export/manifest_error/get_cost(obj/O)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = O
 	return -M.order_cost
+
 
 // Erroneously denied manifest.
 // Substracts the package cost minus the cost of crate.

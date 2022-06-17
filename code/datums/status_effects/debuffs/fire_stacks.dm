@@ -220,6 +220,7 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	cache_stacks()
 	update_overlay()
+	return TRUE
 
 /**
  * Handles mob extinguishing, should be the only way to set on_fire to FALSE
@@ -234,6 +235,12 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
 	cache_stacks()
 	update_overlay()
+	if(!iscarbon(owner))
+		return
+
+	for(var/obj/item/equipped in owner.get_equipped_items())
+		equipped.wash(CLEAN_TYPE_ACID)
+		equipped.extinguish()
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)

@@ -79,7 +79,7 @@
 				teleammount++
 				var/smoke_range = max(round(4 - teleammount), 0)
 				var/datum/effect_system/fluid_spread/smoke/smoke = new
-				smoke.set_up(smoke_range, location = stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+				smoke.set_up(smoke_range, holder = src, location = stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 				smoke.start()
 
 /obj/projectile/magic/safety
@@ -100,7 +100,7 @@
 	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin_turf, destination_turf))
 			var/datum/effect_system/fluid_spread/smoke/smoke = new
-			smoke.set_up(0, location = t)
+			smoke.set_up(0, holder = src, location = t)
 			smoke.start()
 
 /obj/projectile/magic/door
@@ -161,7 +161,7 @@
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
 				var/mob/living/L = P.petrified_mob
-				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
+				var/mob/living/simple_animal/hostile/netherworld/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
 				if(owner)
 					S.faction = list("[REF(owner)]")
@@ -447,7 +447,7 @@
 	qdel(chain)
 	. = ..()
 
-/obj/projectile/magic/aoe/fireball
+/obj/projectile/magic/fireball
 	name = "bolt of fireball"
 	icon_state = "fireball"
 	damage = 10
@@ -460,7 +460,7 @@
 	var/exp_flash = 3
 	var/exp_fire = 2
 
-/obj/projectile/magic/aoe/fireball/on_hit(mob/living/target)
+/obj/projectile/magic/fireball/on_hit(mob/living/target)
 	. = ..()
 	if(ismob(target))
 		//between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately

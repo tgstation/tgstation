@@ -517,3 +517,55 @@
 	name = "Material Airlock"
 	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
 	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'
+
+/datum/greyscale_config/vape
+	name = "Vape"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/vape.json'
+
+/datum/greyscale_config/vape/worn
+	name = "Worn Vape"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+	json_config = 'code/datums/greyscale/json_configs/vape_worn.json'
+
+/datum/greyscale_config/vape/open_low
+	name = "Open Vape Low"
+	json_config = 'code/datums/greyscale/json_configs/vape_open_low.json'
+
+/datum/greyscale_config/vape/open_med
+	name = "Open Vape Medium"
+	json_config = 'code/datums/greyscale/json_configs/vape_open_med.json'
+
+/datum/greyscale_config/vape/open_high
+	name = "Open Vape High"
+	json_config = 'code/datums/greyscale/json_configs/vape_open_high.json'
+
+/datum/greyscale_config/ties
+	name = "Ties"
+	icon_file = 'icons/obj/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ties.json'
+
+/datum/greyscale_config/ties_worn
+	name = "Worn Ties"
+	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ties_worn.json'
+
+/datum/greyscale_config/heck_suit
+	name = "H.E.C.K. Suit"
+	icon_file = 'icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_suit.json'
+
+/datum/greyscale_config/heck_suit/worn
+	name = "H.E.C.K. Suit Worn"
+	icon_file = 'icons/mob/clothing/suit.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_suit_worn.json'
+
+/datum/greyscale_config/heck_helmet
+	name = "H.E.C.K. Helmet"
+	icon_file = 'icons/obj/clothing/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_helmet.json'
+
+/datum/greyscale_config/heck_helmet/worn
+	name = "H.E.C.K. Helmet Worn"
+	icon_file = 'icons/mob/clothing/head.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_helmet_worn.json'

@@ -64,6 +64,7 @@ These are the few directives we have for project maintainers.
     - Try to get secondary maintainer approval before merging if you are able to.
   - PRs with empty commits intended to generate a changelog.
 - Do not merge PRs that contain content from the [banned content list](./CONTRIBUTING.md#banned-content).
+- Do not close PRs purely for breaking a template if the same information is contained without it.
 
 These are not steadfast rules as maintainers are expected to use their best judgement when operating.
 
@@ -87,6 +88,7 @@ Things you **CAN** do:
 
 Things you **CAN'T** do:
 * [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
+* Close issues purely for breaking a template if the same information is contained without it.
 
 </details>
 
@@ -189,3 +191,9 @@ Unless overridden or a non standard git binary is used the line ending settings 
 Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.
 
 Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.
+
+## Using the Maintainer Role Ping in Discord
+
+This role `@Maintainer` is pingable as a compromise reached with the server host MrStonedOne over the auto-stale system we presently have in the codebase. It should be used only to ping Maintainers when your PR has had the "Stale" label applied. Using it before then can be met with escalating timeouts and referral to /tg/station's Discord moderators for further infractions.
+
+Feel free to engage and obtain general feedback in the Coding General channel without the role ping before your PR goes stale to build interest and get reviews.

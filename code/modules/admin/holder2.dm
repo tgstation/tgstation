@@ -29,6 +29,9 @@ GLOBAL_PROTECT(href_token)
 
 	var/href_token
 
+	/// Link from the database pointing to the admin's feedback forum
+	var/cached_feedback_link
+
 	var/deadmined
 
 	var/datum/filter_editor/filteriffic
@@ -165,11 +168,39 @@ GLOBAL_PROTECT(href_token)
 		owner.holder = null
 		owner = null
 
+/// Returns the feedback forum thread for the admin holder's owner, as according to DB.
+/datum/admins/proc/feedback_link()
+	// This intentionally does not follow the 10-second maximum TTL rule,
+	// as this can be reloaded through the Reload-Admins verb.
+	if (cached_feedback_link == NO_FEEDBACK_LINK)
+		return null
+
+	if (!isnull(cached_feedback_link))
+		return cached_feedback_link
+
+	if (!SSdbcore.IsConnected())
+		return FALSE
+
+	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
+
+	if(!feedback_query.Execute())
+		log_sql("Error retrieving feedback link for [src]")
+		qdel(feedback_query)
+		return FALSE
+
+	if(!feedback_query.NextRow())
+		qdel(feedback_query)
+		return FALSE // no feedback link exists
+
+	cached_feedback_link = feedback_query.item[1] || NO_FEEDBACK_LINK
+	qdel(feedback_query)
+
+	return cached_feedback_link
+
 /datum/admins/proc/check_for_rights(rights_required)
 	if(rights_required && !(rights_required & rank_flags()))
 		return FALSE
 	return TRUE
-
 
 /datum/admins/proc/check_if_greater_rights_than_holder(datum/admins/other)
 	if(!other)

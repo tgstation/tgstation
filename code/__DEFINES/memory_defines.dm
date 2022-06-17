@@ -102,6 +102,8 @@
 #define MEMORY_PLAYING_52_PICKUP "playing_52_pickup"
 /// A memory of playing cards with others
 #define MEMORY_PLAYING_CARDS "playing_cards"
+/// A memory of playing russian roulette
+#define MEMORY_RUSSIAN_ROULETTE "russian_roulette"
 
 
 /**
@@ -163,4 +165,7 @@
 #define DETAIL_DEALER "DEALER"
 #define DETAIL_HELD_CARD_ITEM "HELD_CARD_ITEM" // could either be a singlecard, cardhand, or a deck
 
-
+// Russian Roulette
+#define DETAIL_LOADED_ROUNDS "LOADED_ROUNDS"
+#define DETAIL_BODYPART "BODYPART"
+#define DETAIL_OUTCOME "OUTCOME"

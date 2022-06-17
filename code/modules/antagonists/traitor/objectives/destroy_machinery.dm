@@ -23,6 +23,7 @@
 		JOB_CHIEF_ENGINEER = /obj/machinery/rnd/production/protolathe/department/engineering,
 		JOB_HEAD_OF_PERSONNEL = /obj/machinery/rnd/production/techfab/department/service,
 		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
+		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
 	)
 	/// Whether this can bypass the maximum_allowed value or not
 	var/allow_more_than_max = FALSE
@@ -49,7 +50,7 @@
 	if(!length(applicable_jobs))
 		return FALSE
 	var/list/obj/machinery/possible_machines = list()
-	while(length(possible_machines) <= 0)
+	while(length(possible_machines) <= 0 && length(applicable_jobs) > 0)
 		var/target_head = pick(applicable_jobs)
 		var/obj/machinery/machine_to_find = applicable_jobs[target_head]
 		applicable_jobs -= target_head

@@ -42,6 +42,7 @@
 	cycle_id = "ladder-external"
 	},
 /obj/effect/turf_decal/sand/plating,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
 "q" = (
@@ -75,12 +76,15 @@
 /area/template_noop)
 "z" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "External Ladder Access";
-	req_one_access_txt = "12"
+	name = "External Ladder Access"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/mid)
 "B" = (
@@ -111,6 +115,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
 "N" = (

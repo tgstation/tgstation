@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 /obj/structure/marker_beacon
 	name = "marker beacon"
 	desc = "A Prism-brand path illumination device. It is anchored in place and glowing steadily."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/marker.dmi'
 	icon_state = "marker"
 	layer = BELOW_OPEN_DOOR_LAYER
 	armor = list(MELEE = 50, BULLET = 75, LASER = 75, ENERGY = 75, BOMB = 25, BIO = 0, FIRE = 25, ACID = 0)

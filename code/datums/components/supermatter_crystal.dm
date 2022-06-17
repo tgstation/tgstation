@@ -110,7 +110,7 @@
 			)
 			return
 
-		var/obj/item/organ/tongue/licking_tongue = user.getorganslot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/internal/tongue/licking_tongue = user.getorganslot(ORGAN_SLOT_TONGUE)
 		if(licking_tongue)
 			dust_mob(source, user,
 				span_danger("As [user] hesitantly leans in and licks [atom_source] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash!"),
@@ -190,7 +190,7 @@
 	SIGNAL_HANDLER
 	if(tool_act_callback)
 		tool_act_callback.Invoke(user, tool)
-		return
+		return COMPONENT_BLOCK_TOOL_ATTACK
 	attackby_hit(source, tool, user)
 
 /datum/component/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)

@@ -145,7 +145,7 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	for(var/obj/item/mod/module/module as anything in modules)
-		if(!module.active)
+		if(!module.active || module.allowed_inactive)
 			continue
 		module.on_deactivation(display_message = FALSE)
 	activating = TRUE

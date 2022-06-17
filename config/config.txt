@@ -157,9 +157,6 @@ LOG_PICTURES
 ## log virus and actions
 LOG_VIRUS
 
-## log cloning actions
-LOG_CLONING
-
 ## log shuttle actions
 LOG_SHUTTLE
 
@@ -168,6 +165,9 @@ LOG_TOOLS
 
 ## Log all timers on timer auto reset
 # LOG_TIMERS_ON_BUCKET_RESET
+
+## log speech indicators
+LOG_SPEECH_INDICATORS
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
