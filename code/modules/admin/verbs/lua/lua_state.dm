@@ -37,16 +37,22 @@ GLOBAL_PROTECT(lua_usr)
 	internal_id = __lua_new_state()
 
 /datum/lua_state/proc/handle_result(result)
-
 	// If this is a sleep, we need to add it to the subsystem's list of sleeps to run in the next fire
 	if(result["status"] == "sleeping")
 		SSlua.sleeps += src
-		// We only want to add the result to the state log if there is any meaningful information
-		// (particularly chunk source code), otherwise we'll get an unnecessarily flooded log at best
-		// or an OOM error at worst
-		if(!result["chunk"])
-			return
-	log += list(result)
+	var/append_to_log = TRUE
+	if(log.len)
+		var/list/last_entry = peek(log)
+		if(last_entry["status"] == result["status"] \
+			&& last_entry["chunk"] == result["chunk"] \
+			&& last_entry["name"] == result["name"] \
+			&& ((last_entry["param"] == result["param"]) || deep_compare_list(last_entry["param"], result["param"])))
+			if(!last_entry["repeats"])
+				last_entry["repeats"] = 0
+			last_entry["repeats"]++
+			append_to_log = FALSE
+	if(append_to_log)
+		log += list(result)
 	// We want to return the return value(s) of executed code
 	if(result["status"] == "finished" || result["status"] == "yielded")
 		return result["param"]
@@ -71,7 +77,6 @@ GLOBAL_PROTECT(lua_usr)
 /datum/lua_state/proc/call_function(function, ...)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
 	var/msg = "[key_name(usr)] called the lua function \"[function]\" with arguments: [english_list(call_args)]"
-	message_admins("[msg] [ADMIN_LUAVIEW(src)]")
 	log_lua(msg)
 
 	var/tmp_usr = GLOB.lua_usr
@@ -103,7 +108,6 @@ GLOBAL_PROTECT(lua_usr)
 /datum/lua_state/proc/resume(index, ...)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
 	var/msg = "[key_name(usr)] resumed a lua coroutine with arguments: [english_list(call_args)]"
-	message_admins("[msg] [ADMIN_LUAVIEW(src)]")
 	log_lua(msg)
 
 	GLOB.IsLuaCall = TRUE

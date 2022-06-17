@@ -14,7 +14,7 @@ export const Log = (props, context) => {
   ));
   return (
     mappedLog.map((element, i) => {
-      const { name, status, param, chunk } = element;
+      const { name, status, param, chunk, repeats } = element;
       let message;
       let messageColor;
       switch (status) {
@@ -111,6 +111,17 @@ export const Log = (props, context) => {
             color={messageColor}>
             {message}
           </Box>
+          {repeats && (
+            <Box
+              inline
+              px="0.25rem"
+              mt="0.25rem"
+              style={{
+                'border-radius': '0.5em',
+              }}
+              backgroundColor={messageColor}>
+              x{repeats + 1}
+            </Box>)}
         </>
       );
     })
