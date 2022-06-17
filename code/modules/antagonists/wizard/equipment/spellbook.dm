@@ -647,7 +647,9 @@
 	/// Determines if this spellbook can refund anything.
 	var/can_refund = TRUE
 
-	var/mob/living/carbon/human/owner
+	/// The mind that first used the book. Automatically assigned when a wizard spawns.
+	var/datum/mind/owner
+
 	var/list/entries = list()
 
 /obj/item/spellbook/examine(mob/user)
