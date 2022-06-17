@@ -1,3 +1,6 @@
+/// The minimum number of ghosts and players needed before handing out objective.
+#define MIN_PLAYERS_FOR_OBJECTIVE 35
+
 /datum/traitor_objective_category/locate_weakpoint
 	name = "Locate And Destroy Weakpoint"
 	objectives = list(
@@ -8,7 +11,7 @@
 	name = "Triangulate station's structural weakpoint and detonate an explosive charge nearby."
 	description = "You will be given a handheld device that you'll need to use in %AREA1% and %AREA2% in order to triangulate the station's structural weakpoint and detonate an explosive charge there. Warning: Once you start scanning either one of the areas, station's AI will be alerted."
 
-	progression_minimum = 45 MINUTES
+	progression_minimum = 50 MINUTES
 	progression_reward = list(15 MINUTES, 20 MINUTES)
 	telecrystal_reward = list(3, 5)
 
@@ -26,6 +29,12 @@
 /datum/traitor_objective/locate_weakpoint/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	////if(handler.get_completion_progression(/datum/traitor_objective) < progression_objectives_minimum)
 	////	return FALSE
+
+	// Check how many alive players + dead players there are.
+	// If the 35+ requirement is not met objective wont pop up,
+	var/num_players = length(GLOB.alive_player_list) + length(GLOB.dead_player_list)
+	if(num_players < MIN_PLAYERS_FOR_OBJECTIVE)
+		return FALSE
 
 	if(!SStraitor.station_weakpoints || !LAZYLEN(SStraitor.station_weakpoints)) //This means that the weakpoint has already been hit
 		return FALSE
