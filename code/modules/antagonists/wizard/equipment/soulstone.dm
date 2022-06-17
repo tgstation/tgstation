@@ -295,7 +295,7 @@
 		var/datum/antagonist/cult/cultist = IS_CULTIST(user)
 		if(cultist)
 			var/datum/team/cult/cult_team = cultist.get_team()
-			if(cult_team.is_sacrifice_target(victim.mind))
+			if(victim.mind && cult_team.is_sacrifice_target(victim.mind))
 				to_chat(user, span_cult("<b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\""))
 				return FALSE
 
