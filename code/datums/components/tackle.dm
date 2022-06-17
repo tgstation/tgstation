@@ -80,6 +80,14 @@
 	if(!A || !(isturf(A) || isturf(A.loc)))
 		return
 
+	if(HAS_TRAIT(user, TRAIT_MOVE_FLOATING))
+		to_chat(user, span_warning("You can't tackle while floating!"))
+		return
+
+	if(HAS_TRAIT(user, TRAIT_NEGATES_GRAVITY))
+		to_chat(user, span_warning("You're magnetically attached to the floor and cannot tackle!"))
+		return
+
 	if(HAS_TRAIT(user, TRAIT_HULK))
 		to_chat(user, span_warning("You're too angry to remember how to tackle!"))
 		return
@@ -370,8 +378,18 @@
 		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot)))
 			oopsie_mod -= 6
 
+	if(ismoth(sacker))
+		var/obj/item/organ/external/wings/moth/sacker_wing = sacker.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(!sacker_wing || sacker_wing.burnt) // moths without wing/burnt ones can't tackle properly
+			attack_mod -= 2
+		else
+			attack_mod += 2 // healthy wings are used as extra propulsion
+
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
+
+	if(isflyperson(user))
+		oopsie_mod += 6 //flies don't take smacking into a window/wall easily
 
 	var/oopsie = rand(danger_zone, 100)
 	if(oopsie >= 94 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
