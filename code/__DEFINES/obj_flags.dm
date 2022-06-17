@@ -42,7 +42,7 @@
 /// Has contextual screentips when HOVERING OVER OTHER objects
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
 /// Item still allows you to examine items while blind and actively held.
-#define IGNORES_BLIND_REQUIREMENTS (1 << 20)
+#define BLIND_TOOL (1 << 20)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
