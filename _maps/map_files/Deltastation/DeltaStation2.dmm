@@ -51774,7 +51774,7 @@
 "nrQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -64819,6 +64819,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/auxlab/firing_range)
+"qJF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "qJH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -66208,6 +66213,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "rej" = (
@@ -66532,6 +66538,14 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
+"rhM" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/maintenance/port)
 "rhV" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small/directional/south,
@@ -124994,7 +125008,7 @@ nZh
 gJz
 wIm
 ree
-uFe
+rhM
 vWk
 vWk
 vWk
@@ -125249,12 +125263,12 @@ vWk
 vFY
 vWk
 vWk
-cOV
-nrQ
 hqg
-amP
-nTp
-jYk
+nrQ
+cOV
+qJF
+iLZ
+mCD
 iLZ
 vMu
 iLZ
