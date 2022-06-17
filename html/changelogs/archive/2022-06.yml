@@ -578,3 +578,63 @@
   - bugfix: icebox science has a scidrobe again!
   timothymtorres:
   - code_imp: Add atmospheric technician gas meter text tip
+2022-06-17:
+  13spacemen:
+  - bugfix: Reagent dispensers will actually remove reagents upon leaking
+  AnturK:
+  - rscadd: Added fishing, fishing rods and other fishing equipment.
+  - rscadd: Fishing related cargo crates & private packs.
+  - rscadd: Fishing technology and designs
+  Fikou:
+  - qol: gps and ore bag modsuit modules are now usable when suit is off
+  Guillaume Prata:
+  - qol: APC construction/repairs/deconstruction uses balloon alerts now.
+  - bugfix: The circuit board of the Book Inventory Management Console now use the
+      correct name extension (Computer Board) instead of (Machine Board)
+  Iamgoofball:
+  - soundadd: Energy and Magic gunfire sound pitch now varies based on how much ammo
+      is left.
+  - soundadd: Ballistic gunfire now has a low-ammo click sound.
+  Melbert:
+  - bugfix: Items getting knocked off (glasses and cigars), bad omens, and spaghetti
+      falling from pockets should trigger on most knockdowns again like they used
+      to.
+  - code_imp: Cleaned up the knockoff component a bit. Also unit tests it.
+  - bugfix: Some heretic focuses apply more consistently now.
+  - bugfix: Furious Steel should go away more often than not now.
+  - bugfix: Fixes the fireman carry "body stuck to you forever" curse
+  ReinaCoder:
+  - imageadd: The chaplain's jumpsuit and skirt has been resprited.
+  SmArtKar:
+  - bugfix: Fixed locate weakpoint do_after being 3 seconds instead of intended 30.
+      Also you can no longer roll locate weakpoint until you get at least 20 minutes
+      of progression via objectives
+  SomethingFish:
+  - bugfix: Fixes mothic garlic pizza not producing the correct slice on slicing
+  Thunder12345:
+  - bugfix: The security office on Tramstation now has an air alarm
+  - bugfix: The water supply to Metastation's restrooms has been restored
+  - bugfix: Rocks will no longer grow into Tramstation's bar maintenance
+  - bugfix: A camera in IceBox's tech storage is now properly named
+  Twaticus, Wallemations:
+  - rscadd: '4 new emojis added to the joy mask! Check the AutoDrobe tweak: You can
+      now use internals with the joy/emotion mask'
+  atteria:
+  - imageadd: 3/4 sprites for MULEBots
+  bob-b-b:
+  - bugfix: fixed grav gen being overridable/overloadable
+  - bugfix: Fixes infiltrator toolbox not fitting all suit parts
+  distributivgesetz:
+  - rscadd: Added new moodlet for cascades, for more FLAVAH!
+  - bugfix: Rifts should now spawn at least 30 turfs from the nearest mass, and now
+      no longer stalemates.
+  - bugfix: Rift code is now no longer just copypasted supermatter bump code! Godmode
+      players, rejoice, you can actually leave the station now.
+  - bugfix: Made shuttle behaviour more predictable, escape shuttle can no longer
+      end the round prematurely during a cascade, it will stall out in hyperspace
+      instead.
+  - bugfix: Supermatter warp effect should be removed correctly now.
+  - bugfix: Fixed emergency lights not giving off red light.
+  - bugfix: Bluespace rifts pick a safe turf in CentCom dock now.
+  - spellcheck: Improves almost all messages that play during a cascade.
+  - admin: Better logging about resonance cascade-related actions.
