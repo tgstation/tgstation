@@ -321,7 +321,7 @@ rules:
   ## Enforce consistent spacing before and after commas
   comma-spacing: [error, { before: false, after: true }]
   ## Enforce consistent comma style
-  # comma-style: [error, last]
+  comma-style: [error, last]
   ## Enforce consistent spacing inside computed property brackets
   computed-property-spacing: [error, never]
   ## Enforce consistent naming when capturing the current execution context
@@ -352,15 +352,15 @@ rules:
   ## Enforce the location of arrow function bodies
   # implicit-arrow-linebreak: error
   ## Enforce consistent indentation
-  # indent: [error, tab, { SwitchCase: 1 }]
+  indent: [error, tab, { SwitchCase: 1 }]
   ## Enforce the consistent use of either double or single quotes in JSX
   ## attributes
   # jsx-quotes: [error, prefer-double]
   ## Enforce consistent spacing between keys and values in object literal
   ## properties
-  # key-spacing: [error, { beforeColon: false, afterColon: true }]
+  key-spacing: [error, { beforeColon: false, afterColon: true }]
   ## Enforce consistent spacing before and after keywords
-  # keyword-spacing: [error, { before: true, after: true }]
+  keyword-spacing: [error, { before: true, after: true }]
   ## Enforce position of line comments
   # line-comment-position: error
   ## Enforce consistent linebreak style
