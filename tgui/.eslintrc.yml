@@ -13,9 +13,12 @@ plugins:
   - radar
   - react
   - unused-imports
+  - prettier
 settings:
   react:
     version: '16.10'
+extends:
+  - prettier
 rules:
   ## Possible Errors
   ## ----------------------------------------
