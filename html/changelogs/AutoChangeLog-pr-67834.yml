@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Kilostation's Xenobiology is no longer roundstart on firelocks, and the security medical post now has a scrubber."
