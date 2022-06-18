@@ -465,7 +465,7 @@ rules:
   ## Require or disallow assignment operator shorthand where possible
   # operator-assignment: error
   ## Enforce consistent linebreak style for operators
-  # operator-linebreak: [error, before]
+  operator-linebreak: [error, before]
   ## Require or disallow padding within blocks
   # padded-blocks: error
   ## Require or disallow padding lines between statements
