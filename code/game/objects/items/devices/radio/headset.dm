@@ -86,6 +86,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	return ..()
 
 /obj/item/radio/headset/proc/learn_language()
+	SIGNAL_HANDLER
 	if(!istype(loc, /mob/living/carbon))
 		return
 	var/list/language_list = list()
@@ -95,10 +96,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		language_list += keyslot2.translated_language
 
 	var/mob/living/carbon/person = loc
-	for(var/iterator in language_list)
-		person.grant_language(iterator, TRUE, FALSE, LANGUAGE_RADIOKEY)
+	for(var/language in language_list)
+		person.grant_language(language, understood = TRUE, spoken = FALSE, LANGUAGE_RADIOKEY)
 
 /obj/item/radio/headset/proc/unlearn_language()
+	SIGNAL_HANDLER
 	if(!istype(loc, /mob/living/carbon))
 		return
 	var/list/language_list = list()
@@ -108,8 +110,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		language_list += keyslot2.translated_language
 
 	var/mob/living/carbon/person = loc
-	for(var/iterator in language_list)
-		person.remove_language(iterator, TRUE, FALSE, LANGUAGE_RADIOKEY)
+	for(var/language in language_list)
+		person.remove_language(language, understood = TRUE, spoken = FALSE, LANGUAGE_RADIOKEY)
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
