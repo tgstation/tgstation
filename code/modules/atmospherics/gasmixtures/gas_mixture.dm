@@ -540,23 +540,18 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 
 /**
- * Takes the amount of the gas you want to PP as an argument
- * So I don't have to do some hacky switches/defines/magic strings
+ * Returns the partial pressure of the gas in the breath based on BREATH_VOLUME
  * eg:
- * Plas_PP = get_partial_pressure(gas_mixture.plasma)
- * O2_PP = get_partial_pressure(gas_mixture.oxygen)
- * get_breath_partial_pressure(gas_pp) --> gas_pp/total_moles()*breath_pp = pp
- * get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
+ * Plas_PP = get_breath_partial_pressure(gas_mixture.gases[/datum/gas/plasma][MOLES])
+ * O2_PP = get_breath_partial_pressure(gas_mixture.gases[/datum/gas/oxygen][MOLES])
+ * get_breath_partial_pressure(gas_mole_count) --> PV = nRT, P = nRT/V
  *
  * 10/20*5 = 2.5
  * 10 = 2.5/5*20
  */
 
-/datum/gas_mixture/proc/get_breath_partial_pressure(gas_pressure)
-	return (gas_pressure * R_IDEAL_GAS_EQUATION * temperature) / BREATH_VOLUME
-///inverse
-/datum/gas_mixture/proc/get_true_breath_pressure(partial_pressure)
-	return (partial_pressure * BREATH_VOLUME) / (R_IDEAL_GAS_EQUATION * temperature)
+/datum/gas_mixture/proc/get_breath_partial_pressure(gas_mole_count)
+	return (gas_mole_count * R_IDEAL_GAS_EQUATION * temperature) / BREATH_VOLUME
 
 /**
  * Counts how much pressure will there be if we impart MOLAR_ACCURACY amounts of our gas to the output gasmix.

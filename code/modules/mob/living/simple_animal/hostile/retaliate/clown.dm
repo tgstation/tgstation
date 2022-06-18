@@ -457,7 +457,6 @@
 	flick("glutton_mouth", src)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/tamed(mob/living/tamer)
-	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 

@@ -429,9 +429,8 @@
 /obj/structure/sign/warning/vacuum{
 	pixel_x = 32
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "Pi" = (
 /obj/effect/turf_decal/tile/dark{
