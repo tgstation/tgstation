@@ -1130,7 +1130,7 @@
 
 /mob/living/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
-	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, args) & COMPONENT_CANT_TRACK)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
 		return FALSE
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -1280,7 +1280,7 @@
 				/mob/living/simple_animal/hostile/carp,
 				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/hostile/mushroom,
-				/mob/living/simple_animal/hostile/statue,
+				/mob/living/simple_animal/hostile/netherworld/statue,
 				/mob/living/simple_animal/hostile/retaliate/bat,
 				/mob/living/simple_animal/hostile/retaliate/goat,
 				/mob/living/simple_animal/hostile/killertomato,

@@ -544,6 +544,6 @@
 	active_power_usage = 0
 	idle_power_usage = 0
 	locked = TRUE
-	req_access_txt = "100"
+	req_access = list("science")
 	welded = TRUE
 	use_power = NO_POWER_USE

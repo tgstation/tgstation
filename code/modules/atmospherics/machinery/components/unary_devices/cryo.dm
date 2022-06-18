@@ -90,6 +90,7 @@
 	var/efficiency = 1
 	var/sleep_factor = 0.00125
 	var/unconscious_factor = 0.001
+	/// Our approximation of a mob's heat capacity.
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.3
 
@@ -304,10 +305,10 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
 
-			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
+			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * CALCULATE_CONDUCTION_ENERGY(temperature_delta, heat_capacity, air_heat_capacity)
 
-			air1.temperature = clamp(air1.temperature - heat / air_heat_capacity, TCMB, MAX_TEMPERATURE)
 			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
+			air1.temperature = clamp(air1.temperature - heat / air_heat_capacity, TCMB, MAX_TEMPERATURE)
 
 			//lets have the core temp match the body temp in humans
 			if(ishuman(mob_occupant))
@@ -448,19 +449,22 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		data["occupant"]["name"] = mob_occupant.name
-		switch(mob_occupant.stat)
-			if(CONSCIOUS)
-				data["occupant"]["stat"] = "Conscious"
-				data["occupant"]["statstate"] = "good"
-			if(SOFT_CRIT)
-				data["occupant"]["stat"] = "Conscious"
-				data["occupant"]["statstate"] = "average"
-			if(UNCONSCIOUS, HARD_CRIT)
-				data["occupant"]["stat"] = "Unconscious"
-				data["occupant"]["statstate"] = "average"
-			if(DEAD)
-				data["occupant"]["stat"] = "Dead"
-				data["occupant"]["statstate"] = "bad"
+		if(mob_occupant.stat == DEAD)
+			data["occupant"]["stat"] = "Dead"
+			data["occupant"]["statstate"] = "bad"
+		else if (HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
+			data["occupant"]["stat"] = "Unconscious"
+			data["occupant"]["statstate"] = "good"
+		else 
+			data["occupant"]["stat"] = "Conscious"
+			data["occupant"]["statstate"] = "bad"
+			
+		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
+		if(mob_occupant.bodytemperature < T0C) // Green if the mob can actually be healed by cryoxadone.
+			data["occupant"]["temperaturestatus"] = "good"
+		else
+			data["occupant"]["temperaturestatus"] = "bad"
+
 		data["occupant"]["health"] = round(mob_occupant.health, 1)
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
 		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
@@ -468,13 +472,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		data["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
 		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
 		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
-		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
-		if(mob_occupant.bodytemperature < TCRYO)
-			data["occupant"]["temperaturestatus"] = "good"
-		else if(mob_occupant.bodytemperature < T0C)
-			data["occupant"]["temperaturestatus"] = "average"
-		else
-			data["occupant"]["temperaturestatus"] = "bad"
 
 	var/datum/gas_mixture/air1 = airs[1]
 	data["cellTemperature"] = round(air1.temperature, 1)

@@ -171,7 +171,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
-	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), list(ITEM_SLOT_MASK)) //90% to knock off when wearing a mask
+	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 	AddElement(/datum/element/update_icon_updates_onmob)
 	icon_state = icon_off
 	inhand_icon_state = inhand_icon_off
@@ -303,7 +303,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
-	var/obj/item/organ/lungs/lungs = smoker.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/lungs = smoker.getorganslot(ORGAN_SLOT_LUNGS)
 	if(lungs && !(lungs.organ_flags & ORGAN_SYNTHETIC))
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
 		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm*smoker_resistance)
@@ -585,6 +585,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 0
 	chem_volume = 200 // So we can fit densified chemicals plants
 	list_reagents = null
+	w_class = WEIGHT_CLASS_SMALL
 	///name of the stuff packed inside this pipe
 	var/packeditem
 
@@ -1060,7 +1061,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	COOLDOWN_START(src, drag_cooldown, dragtime)
 	if(obj_flags & EMAGGED)
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(4, location = loc, carry = reagents, efficiency = 24)
+		puff.set_up(4, holder = src, location = loc, carry = reagents, efficiency = 24)
 		puff.start()
 		if(prob(5)) //small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, FALSE)
@@ -1074,7 +1075,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			return
 	else if(super)
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(1, location = loc, carry = reagents, efficiency = 24)
+		puff.set_up(1, holder = src, location = loc, carry = reagents, efficiency = 24)
 		puff.start()
 
 	handle_reagents()

@@ -10,6 +10,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	throwforce = 20
 	throw_speed = 4
+	demolition_mod = 0.75
 	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
@@ -153,8 +154,14 @@
 	if(iseffect(AM)) //and no accidentally wasting your moment of glory on graffiti
 		return
 	user.say("[war_cry]", forced="spear warcry")
-	explosive.forceMove(AM)
-	explosive.detonate(lanced_by=user)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		living_user.set_resting(new_resting = TRUE, silent = TRUE, instant = TRUE)
+		living_user.Move(get_turf(AM))
+		explosive.forceMove(get_turf(living_user))
+		explosive.detonate(lanced_by=user)
+		if(!QDELETED(living_user))
+			living_user.set_resting(new_resting = FALSE, silent = TRUE, instant = TRUE)
 	qdel(src)
 
 //GREY TIDE

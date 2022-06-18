@@ -1,5 +1,0 @@
-author: "Dorsidwarf"
-delete-after: True
-changes: 
-  - rscadd: "Replaced table-crafting fried eggs with good old-fashioned frying on the chef's griddle."
-  - bugfix: "Changed the double-yolk sprite that only the fried-egg (And not foods using it) had to a single."

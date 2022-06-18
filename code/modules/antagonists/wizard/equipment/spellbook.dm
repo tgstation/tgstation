@@ -88,7 +88,7 @@
 	return FALSE
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/spellbook/book) //return point value or -1 for failure
-	var/area/wizard_station/A = GLOB.areas_by_type[/area/wizard_station]
+	var/area/centcom/wizard_station/A = GLOB.areas_by_type[/area/centcom/wizard_station]
 	if(!(user in A.contents))
 		to_chat(user, span_warning("You can only refund spells at the wizard lair!"))
 		return -1
@@ -495,7 +495,7 @@
 /datum/spellbook_entry/item/warpwhistle
 	name = "Warp Whistle"
 	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the beginning of every use."
-	item_path = /obj/item/warpwhistle
+	item_path = /obj/item/warp_whistle
 	category = "Mobility"
 	cost = 1
 

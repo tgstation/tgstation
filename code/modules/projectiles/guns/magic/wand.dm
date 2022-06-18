@@ -38,7 +38,7 @@
 	if(target == user)
 		if(no_den_usage)
 			var/area/A = get_area(user)
-			if(istype(A, /area/wizard_station))
+			if(istype(A, /area/centcom/wizard_station))
 				to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
 				return
 			else
@@ -170,7 +170,7 @@
 /obj/item/gun/magic/wand/teleport/zap_self(mob/living/user)
 	if(do_teleport(user, user, 10, channel = TELEPORT_CHANNEL_MAGIC))
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(3, location = user.loc)
+		smoke.set_up(3, holder = src, location = user.loc)
 		smoke.start()
 		charges--
 	..()
@@ -193,7 +193,7 @@
 	if(do_teleport(user, destination, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin, destination))
 			var/datum/effect_system/fluid_spread/smoke/smoke = new
-			smoke.set_up(0, location = t)
+			smoke.set_up(0, holder = src, location = t)
 			smoke.start()
 	..()
 

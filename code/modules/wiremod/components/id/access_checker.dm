@@ -1,6 +1,6 @@
 /obj/item/circuit_component/compare/access
 	display_name = "Access Checker"
-	desc = "Performs a basic comparison between two numerical lists, with additional functions that help in using it to check access on IDs."
+	desc = "Performs a basic comparison between two lists of strings, with additional functions that help in using it to check access on IDs."
 	category = "ID"
 
 	input_port_amount = 0 //Uses custom ports for its comparisons
@@ -26,8 +26,8 @@
 	. += create_ui_notice("When \"Check Any\" is false, returns true only if \"Access To Check\" contains ALL values in \"Required Access\".", "orange", "info")
 
 /obj/item/circuit_component/compare/access/populate_custom_ports()
-	subject_accesses = add_input_port("Access To Check", PORT_TYPE_LIST(PORT_TYPE_NUMBER))
-	required_accesses = add_input_port("Required Access", PORT_TYPE_LIST(PORT_TYPE_NUMBER))
+	subject_accesses = add_input_port("Access To Check", PORT_TYPE_LIST(PORT_TYPE_STRING))
+	required_accesses = add_input_port("Required Access", PORT_TYPE_LIST(PORT_TYPE_STRING))
 	check_any = add_input_port("Check Any", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/compare/access/save_data_to_list(list/component_data)
@@ -110,7 +110,7 @@
 		if("set")
 			var/list/required_accesses_list = required_accesses.value
 			var/list/new_accesses_value = LAZYCOPY(required_accesses_list)
-			var/access = text2num(params["access"])
+			var/access = params["access"]
 			if (!(access in new_accesses_value))
 				new_accesses_value += access
 			else

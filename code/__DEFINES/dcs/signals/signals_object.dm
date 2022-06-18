@@ -116,6 +116,12 @@
 #define COMSIG_ITEM_DROPPED "item_drop"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
+
+/// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
+#define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
+	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	#define COMPONENT_ACTION_HANDLED (1<<0)
+
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
 ///from base of obj/item/hit_reaction(): (list/args)
@@ -290,6 +296,21 @@
 #define COMSIG_GUN_CHAMBER_PROCESSED "gun_chamber_processed"
 ///called in /obj/item/gun/ballistic/process_chamber (casing)
 #define COMSIG_CASING_EJECTED "casing_ejected"
+
+// Jetpack things
+// Please kill me
+
+//called in /obj/item/tank/jetpack/proc/turn_on() : ()
+#define COMSIG_JETPACK_ACTIVATED "jetpack_activated"
+	#define JETPACK_ACTIVATION_FAILED (1<<0)
+//called in /obj/item/tank/jetpack/proc/turn_off() : ()
+#define COMSIG_JETPACK_DEACTIVATED "jetpack_deactivated"
+
+//called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
+#define COMSIG_THRUSTER_ACTIVATED "jetmodule_activated"
+	#define THRUSTER_ACTIVATION_FAILED (1<<0)
+//called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
+#define COMSIG_THRUSTER_DEACTIVATED "jetmodule_deactivated"
 
 // /obj/effect/proc_holder/spell signals
 

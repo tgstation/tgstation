@@ -1,7 +1,7 @@
 import { filter, uniqBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend } from '../../backend';
-import { Box, Button, Divider, Dropdown, LabeledList } from '../../components';
+import { Box, Button, Divider, Dropdown, LabeledList, Stack } from '../../components';
 import { CHROMOSOME_NEVER, CHROMOSOME_NONE, CHROMOSOME_USED, MUT_COLORS, MUT_EXTRA } from './constants';
 
 /**
@@ -141,108 +141,138 @@ export const MutationInfo = (props, context) => {
         </LabeledList.Item>
       </LabeledList>
       <Divider />
-      <Box>
-        {mutation.Source === 'disk' && (
-          <MutationCombiner
-            disabled={!hasDisk
+      <Stack vertical>
+        <Stack.Item>
+          {mutation.Source === 'disk' && (
+            <MutationCombiner
+              disabled={!hasDisk
               || diskCapacity <= 0
               || diskReadOnly}
-            mutations={combinedMutations}
-            source={mutation} />
-        )}
-        {mutation.Source === 'console' && (
-          <MutationCombiner
-            mutations={combinedMutations}
-            source={mutation} />
-        )}
-        {['occupant', 'disk', 'console'].includes(mutation.Source) && (
-          <>
-            <Dropdown
-              width="240px"
-              options={advInjectors.map(injector => injector.name)}
-              disabled={advInjectors.length === 0 || !mutation.Active}
-              selected="Add to advanced injector"
-              onSelected={value => act('add_advinj_mut', {
-                mutref: mutation.ByondRef,
-                advinj: value,
-                source: mutation.Source,
-              })} />
-            <Button
-              icon="syringe"
-              disabled={!isInjectorReady || !mutation.Active}
-              content="Print Activator"
-              onClick={() => act('print_injector', {
-                mutref: mutation.ByondRef,
-                is_activator: 1,
-                source: mutation.Source,
-              })} />
-            <Button
-              icon="syringe"
-              disabled={!isInjectorReady || !mutation.Active}
-              content="Print Mutator"
-              onClick={() => act('print_injector', {
-                mutref: mutation.ByondRef,
-                is_activator: 0,
-                source: mutation.Source,
-              })} />
-            <Button
-              icon="syringe"
-              disabled={!mutation.Active || !isCrisprReady}
-              content={`CRISPR [${crisprCharges}]`}
-              onClick={() => act('crispr', {
-                mutref: mutation.ByondRef,
-                source: mutation.Source,
-              })} />
-          </>
-        )}
-      </Box>
-      {['disk', 'occupant'].includes(mutation.Source) && (
-        <Button
-          icon="save"
-          disabled={savedToConsole
+              mutations={combinedMutations}
+              source={mutation} />
+          )}
+          {mutation.Source === 'console' && (
+            <MutationCombiner
+              mutations={combinedMutations}
+              source={mutation} />
+          )}
+        </Stack.Item>
+        <Stack.Item>
+          {['occupant', 'disk', 'console'].includes(mutation.Source) && (
+            <Stack vertical>
+              <Stack.Item>
+                <Dropdown
+                  width="240px"
+                  options={advInjectors.map(injector => injector.name)}
+                  disabled={advInjectors.length === 0 || !mutation.Active}
+                  selected="Add to advanced injector"
+                  onSelected={value => act('add_advinj_mut', {
+                    mutref: mutation.ByondRef,
+                    advinj: value,
+                    source: mutation.Source,
+                  })} />
+              </Stack.Item>
+              <Stack.Item>
+                <Stack>
+                  <Stack.Item>
+                    <Button
+                      icon="syringe"
+                      disabled={!isInjectorReady || !mutation.Active}
+                      onClick={() => act('print_injector', {
+                        mutref: mutation.ByondRef,
+                        is_activator: 1,
+                        source: mutation.Source,
+                      })} >
+                      Print Activator
+                    </Button>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="syringe"
+                      disabled={!isInjectorReady || !mutation.Active}
+                      onClick={() => act('print_injector', {
+                        mutref: mutation.ByondRef,
+                        is_activator: 0,
+                        source: mutation.Source,
+                      })} >Print Mutator
+                    </Button>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="syringe"
+                      disabled={!mutation.Active || !isCrisprReady}
+                      onClick={() => act('crispr', {
+                        mutref: mutation.ByondRef,
+                        source: mutation.Source,
+                      })}>
+                      CRISPR [{crisprCharges}]
+                    </Button>
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+            </Stack>
+          )}
+        </Stack.Item>
+        <Stack.Item>
+          <Stack>
+            {['disk', 'occupant'].includes(mutation.Source) && (
+              <Stack.Item>
+                <Button
+                  icon="save"
+                  disabled={savedToConsole
             || !mutation.Active}
-          content="Save to Console"
-          onClick={() => act('save_console', {
-            mutref: mutation.ByondRef,
-            source: mutation.Source,
-          })} />
-      )}
-      {['console', 'occupant'].includes(mutation.Source) && (
-        <Button
-          icon="save"
-          disabled={savedToDisk
+                  content="Save to Console"
+                  onClick={() => act('save_console', {
+                    mutref: mutation.ByondRef,
+                    source: mutation.Source,
+                  })} />
+              </Stack.Item>
+            )}
+            {['console', 'occupant'].includes(mutation.Source) && (
+              <Stack.Item>
+                <Button
+                  icon="save"
+                  disabled={savedToDisk
             || !hasDisk
             || diskCapacity <= 0
             || diskReadOnly
             || !mutation.Active}
-          content="Save to Disk"
-          onClick={() => act('save_disk', {
-            mutref: mutation.ByondRef,
-            source: mutation.Source,
-          })} />
-      )}
-      {['console', 'disk', 'injector'].includes(mutation.Source) && (
-        <Button
-          icon="times"
-          color="red"
-          content={`Delete from ${mutation.Source}`}
-          onClick={() => act(`delete_${mutation.Source}_mut`, {
-            mutref: mutation.ByondRef,
-          })} />
-      )}
-      {(mutation.Class === MUT_EXTRA || !!mutation.Scrambled
+                  content="Save to Disk"
+                  onClick={() => act('save_disk', {
+                    mutref: mutation.ByondRef,
+                    source: mutation.Source,
+                  })} />
+              </Stack.Item>
+            )}
+            {['console', 'disk', 'injector'].includes(mutation.Source) && (
+              <Stack.Item>
+                <Button
+                  icon="times"
+                  color="red"
+                  content={`Delete from ${mutation.Source}`}
+                  onClick={() => act(`delete_${mutation.Source}_mut`, {
+                    mutref: mutation.ByondRef,
+                  })} />
+              </Stack.Item>
+            )}
+            {(mutation.Class === MUT_EXTRA || !!mutation.Scrambled
         && mutation.Source === 'occupant')
         && (
-          <Button
-            content="Nullify"
-            onClick={() => act('nullify', {
-              mutref: mutation.ByondRef,
-            })} />
+          <Stack.Item>
+            <Button
+              content="Nullify"
+              onClick={() => act('nullify', {
+                mutref: mutation.ByondRef,
+              })} />
+          </Stack.Item>
         )}
-      <Divider />
-      <ChromosomeInfo
-        disabled={mutation.Source !== 'occupant'}
-        mutation={mutation} />
+          </Stack>
+          <Divider />
+          <ChromosomeInfo
+            disabled={mutation.Source !== 'occupant'}
+            mutation={mutation} />
+        </Stack.Item>
+      </Stack>
     </>
   );
 };

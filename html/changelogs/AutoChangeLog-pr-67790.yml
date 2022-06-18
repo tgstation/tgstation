@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - balance: "AI Gorillas are now allied to AI monkeys, and AI Cargorillas won't try (and fail) to wail on crewmembers."

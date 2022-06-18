@@ -6,20 +6,22 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_RESISTHEAT,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_NOFIRE,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE,
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NODISMEMBER,
 	)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
-	mutant_organs = list(/obj/item/organ/adamantine_resonator)
+	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
+	mutanttongue = /obj/item/organ/internal/vocal_cords/adamantine
 	speedmod = 2
 	payday_modifier = 0.75
 	armor = 55
@@ -87,7 +89,8 @@
 	name = "Adamantine Golem"
 	id = SPECIES_GOLEM_ADAMANTINE
 	meat = /obj/item/food/meat/slab/human/mutant/golem/adamantine
-	mutant_organs = list(/obj/item/organ/adamantine_resonator, /obj/item/organ/vocal_cords/adamantine)
+	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
+	mutanttongue = /obj/item/organ/internal/vocal_cords/adamantine
 	fixed_mut_color = "#44eedd"
 	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems. Your unique mineral makeup makes you immune to most types of magic."
 	prefix = "Adamantine"
@@ -113,15 +116,16 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NODISMEMBER,
 	)
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you burn easily. Be careful, if you get hot enough while burning, you'll blow up!"
 	heatmod = 0 //fine until they blow up
@@ -298,7 +302,7 @@
 	id = SPECIES_GOLEM_ALIEN
 	fixed_mut_color = "#333333"
 	meat = /obj/item/stack/sheet/mineral/abductor
-	mutanttongue = /obj/item/organ/tongue/abductor
+	mutanttongue = /obj/item/organ/internal/tongue/abductor
 	speedmod = 1 //faster
 	info_text = "As an <span class='danger'>Alloy Golem</span>, you are made of advanced alien materials: you are faster and regenerate over time. You are, however, only able to be heard by other alloy golems."
 	prefix = "Alien"
@@ -323,15 +327,16 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_NOBREATH,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
 		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
+		TRAIT_LITERATE,
+		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESISTHIGHPRESSURE,
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	armor = 30
@@ -591,18 +596,19 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_RESISTHEAT,
-		TRAIT_NOBREATH,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE,
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_CLUMSY,
-		TRAIT_RADIMMUNE,
 		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
+		TRAIT_LITERATE,
+		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
+		TRAIT_NOFIRE,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
 	)
 	punchdamagelow = 0
 	punchdamagehigh = 1
@@ -629,7 +635,7 @@
 	COOLDOWN_START(src, honkooldown, 0)
 	COOLDOWN_START(src, banana_cooldown, banana_delay)
 	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
-	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, SPECIES_TRAIT)
 
@@ -637,7 +643,7 @@
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
 
-	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		REMOVE_TRAIT(liver, TRAIT_COMEDY_METABOLISM, SPECIES_TRAIT)
 
@@ -699,18 +705,19 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_NOFLASH,
-		TRAIT_RESISTHEAT,
-		TRAIT_NOBREATH,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE,
 		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
 		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
+		TRAIT_LITERATE,
+		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
+		TRAIT_NOFIRE,
+		TRAIT_NOFLASH,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTHEAT,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESISTHIGHPRESSURE,
 	)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	prefix = "Runic"
@@ -777,15 +784,16 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_RESISTCOLD,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NODISMEMBER,
-		TRAIT_CHUNKYFINGERS,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	armor = 15 //feels no pain, but not too resistant
@@ -949,17 +957,18 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_RESISTHEAT,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_NOFIRE,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE,
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NODISMEMBER,
 		TRAIT_VENTCRAWLER_NUDE,
 	)
 	prefix = "Plastic"
@@ -976,7 +985,7 @@
 	fixed_mut_color = "#cd7f32"
 	info_text = "As a <span class='danger'>Bronze Golem</span>, you are very resistant to loud noises, and make loud noises if something hard hits you, however this ability does hurt your hearing."
 	special_step_sounds = list('sound/machines/clockcult/integration_cog_install.ogg', 'sound/magic/clockwork/fellowship_armory.ogg' )
-	mutantears = /obj/item/organ/ears/bronze
+	mutantears = /obj/item/organ/internal/ears/bronze
 	examine_limb_id = SPECIES_GOLEM
 	var/last_gong_time = 0
 	var/gong_cooldown = 150
@@ -1048,16 +1057,17 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_NOFLASH,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NODISMEMBER,
-		TRAIT_NOFLASH,
 	)
 	attack_verb = "whips"
 	attack_sound = 'sound/weapons/whip.ogg'
@@ -1113,15 +1123,16 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NODISMEMBER,
 		TRAIT_STRONG_GRABBER,
 	)
 	prefix = "Leather"
@@ -1140,16 +1151,17 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_NOFLASH,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NODISMEMBER,
-		TRAIT_NOFLASH,
 	)
 	info_text = "As a <span class='danger'>Durathread Golem</span>, your strikes will cause those your targets to start choking, but your woven body won't withstand fire as well."
 	bodypart_overrides = list(
@@ -1175,26 +1187,27 @@
 	toxic_food = null
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,HAS_BONE)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutanttongue = /obj/item/organ/tongue/bone
-	mutantstomach = /obj/item/organ/stomach/bone
+	mutanttongue = /obj/item/organ/internal/tongue/bone
+	mutantstomach = /obj/item/organ/internal/stomach/bone
 	sexes = FALSE
 	fixed_mut_color = null
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_NOFLASH,
-		TRAIT_RESISTHEAT,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_FAKEDEATH,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
+		TRAIT_NOFIRE,
+		TRAIT_NODISMEMBER,
+		TRAIT_NOFLASH,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE,
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NODISMEMBER,
-		TRAIT_FAKEDEATH,
 	)
 	species_language_holder = /datum/language_holder/golem/bone
 	info_text = "As a <span class='danger'>Bone Golem</span>, You have a powerful spell that lets you chill your enemies with fear, and milk heals you! Just make sure to watch our for bone-hurting juice."
@@ -1295,15 +1308,16 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NODISMEMBER,
 	)
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem/snow,
@@ -1361,15 +1375,16 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_NOFLASH,
-		TRAIT_RESISTHEAT,
-		TRAIT_NOBREATH,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_NOFIRE,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_NODISMEMBER,
 		TRAIT_CHUNKYFINGERS,
+		TRAIT_GENELESS,
+		TRAIT_LITERATE,
+		TRAIT_NOBREATH,
+		TRAIT_NODISMEMBER,
+		TRAIT_NOFIRE,
+		TRAIT_NOFLASH,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTHEAT,
+		TRAIT_RESISTHIGHPRESSURE,
 	)
 	examine_limb_id = SPECIES_GOLEM
 
