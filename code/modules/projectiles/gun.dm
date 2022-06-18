@@ -146,15 +146,17 @@
 	visible_message(span_warning("*click*"), vision_distance = COMBAT_MESSAGE_RANGE)
 	playsound(src, dry_fire_sound, 30, TRUE)
 
-
-/obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
-	if(recoil && !tk_firing(user))
-		shake_camera(user, recoil + 1, recoil)
-
+/obj/item/gun/proc/fire_sounds()
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
+
+/obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
+	if(recoil && !tk_firing(user))
+		shake_camera(user, recoil + 1, recoil)
+	fire_sounds()
+	if(!suppressed)
 		if(message)
 			if(tk_firing(user))
 				visible_message(span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"), \
