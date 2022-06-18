@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 	var/mob/living/carbon/person = loc
 	for(var/language in language_list)
-		person.grant_language(language, understood = TRUE, spoken = FALSE, LANGUAGE_RADIOKEY)
+		person.grant_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
 /obj/item/radio/headset/proc/unlearn_language()
 	SIGNAL_HANDLER
@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 	var/mob/living/carbon/person = loc
 	for(var/language in language_list)
-		person.remove_language(language, understood = TRUE, spoken = FALSE, LANGUAGE_RADIOKEY)
+		person.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
