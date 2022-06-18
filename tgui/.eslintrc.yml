@@ -286,7 +286,7 @@ rules:
   ## Disallow the use of undefined as an identifier
   # no-undefined: error
   ## Disallow unused variables
-  # no-unused-vars: error
+  no-unused-vars: error
   ## Disallow the use of variables before they are defined
   # no-use-before-define: error
 
