@@ -545,38 +545,21 @@
 	head = /obj/item/clothing/head/helmet/space/beret
 
 /datum/outfit/centcom/ert/marine
-	name = "Marine Commander"
+	name = "Marine Trooper"
 
-	id = /obj/item/card/id/advanced/centcom/ert
+	id = /obj/item/card/id/advanced/centcom/ert/security
 	suit = /obj/item/clothing/suit/armor/vest/marine
 	suit_store = /obj/item/gun/ballistic/automatic/wt550
 	back = /obj/item/shield/riot
-	belt = /obj/item/storage/belt/military/assault/full
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
+	belt = /obj/item/storage/belt/military/assault/ert/wt550ammo
 	l_pocket = /obj/item/knife/combat
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
 	uniform = /obj/item/clothing/under/rank/centcom/military
 	mask = /obj/item/clothing/mask/gas/sechailer
 	head = /obj/item/clothing/head/helmet/marine
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 
 /datum/outfit/centcom/ert/marine/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-	var/obj/item/radio/headset = equipper.ears
-	headset.keyslot = new /obj/item/encryptionkey/heads/captain
-	headset.recalculateChannels()
-
-/datum/outfit/centcom/ert/marine/security
-	name = "Marine Heavy"
-
-	id = /obj/item/card/id/advanced/centcom/ert/security
-	suit = /obj/item/clothing/suit/armor/vest/marine/security
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	head = /obj/item/clothing/head/helmet/marine/security
-
-/datum/outfit/centcom/ert/marine/security/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)
@@ -586,22 +569,47 @@
 	headset.keyslot = new /obj/item/encryptionkey/heads/hos
 	headset.recalculateChannels()
 
+/datum/outfit/centcom/ert/marine/commander
+	name = "Marine Commander"
+
+	id = /obj/item/card/id/advanced/centcom/ert
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
+	back = /obj/item/storage/backpack/ert/marine
+	mask = null
+	backpack_contents = list(
+		/obj/item/storage/box/survival/security/radio = 1,
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/megaphone = 1,
+		/obj/item/grenade/c4 = 2,
+	)
+
+/datum/outfit/centcom/ert/marine/security/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/obj/item/radio/headset = equipper.ears
+	headset.keyslot = new /obj/item/encryptionkey/heads/captain
+	headset.recalculateChannels()
+
 /datum/outfit/centcom/ert/marine/medic
 	name = "Marine Medic"
 
 	id = /obj/item/card/id/advanced/centcom/ert/medical
 	suit = /obj/item/clothing/suit/armor/vest/marine/medic
 	suit_store = /obj/item/storage/belt/holster/detective/full/ert
-	back = /obj/item/storage/backpack/ert/medical
-	l_pocket = /obj/item/healthanalyzer
-	head = /obj/item/clothing/head/helmet/marine/medic
+	uniform = /obj/item/clothing/under/rank/centcom/military/medical
+	mask = null
+	back = /obj/item/storage/backpack/ert/marine
 	backpack_contents = list(
-		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/storage/box/survival/security/radio = 1,
 		/obj/item/storage/medkit/regular = 1,
 		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/defibrillator/compact/loaded = 1,
+		/obj/item/roller = 1,
 	)
-	belt = /obj/item/storage/belt/medical/paramedic
-	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
+	belt = /obj/item/storage/belt/military/assault/ert/medical
 
 /datum/outfit/centcom/ert/marine/medic/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
 	..()
@@ -617,13 +625,12 @@
 	name = "Marine Engineer"
 
 	id = /obj/item/card/id/advanced/centcom/ert/engineer
-	suit = /obj/item/clothing/suit/armor/vest/marine/engineer
 	suit_store = /obj/item/gun/ballistic/shotgun/lethal
 	head = /obj/item/clothing/head/helmet/marine/engineer
 	back = /obj/item/deployable_turret_folded
 	uniform = /obj/item/clothing/under/rank/centcom/military/eng
-	belt = /obj/item/storage/belt/utility/full/powertools/rcd
-	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	belt = /obj/item/storage/belt/military/assault/ert/tools
+	glasses = /obj/item/clothing/glasses/welding
 
 /datum/outfit/centcom/ert/marine/engineer/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
 	..()

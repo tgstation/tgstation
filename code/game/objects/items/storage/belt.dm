@@ -569,15 +569,15 @@
 		/obj/item/ammo_box/magazine/wt550m9 = 4,
 		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
 	)
-	generate_items_inside(items_insde,src)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/belt/military/assault/ert/tools/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/screwdriver = 1,
-		/obj/item/wrench = 1,
-		/obj/item/weldingtool = 1,
-		/obj/item/crowbar = 1,
-		/obj/item/wirecutters = 1,
+		/obj/item/screwdriver/caravan = 1,
+		/obj/item/wrench/caravan = 1,
+		/obj/item/weldingtool/experimental = 1,
+		/obj/item/crowbar/red/caravan = 1,
+		/obj/item/wirecutters/caravan = 1,
 		/obj/item/multitool = 1,
 	)
 	generate_items_inside(items_inside,src)

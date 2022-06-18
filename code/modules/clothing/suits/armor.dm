@@ -41,14 +41,6 @@
 	heat_protection = CHEST|GROIN
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/obj/item/clothing/suit/armor/vest/marine/security
-	name = "large tactical armor vest"
-	icon_state = "marine_security"
-
-/obj/item/clothing/suit/armor/vest/marine/engineer
-	name = "tactical utility armor vest"
-	icon_state = "marine_engineer"
-
 /obj/item/clothing/suit/armor/vest/marine/medic
 	name = "tactical medic's armor vest"
 	icon_state = "marine_medic"
