@@ -17,7 +17,6 @@ settings:
   react:
     version: '16.10'
 rules:
-
   ## Possible Errors
   ## ----------------------------------------
   ## Enforce “for” loop update clause moving the counter in the right
@@ -308,13 +307,16 @@ rules:
   ## Enforce or disallow capitalization of the first letter of a comment
   # capitalized-comments: error
   ## Require or disallow trailing commas
-  comma-dangle: [error, {
-    arrays: always-multiline,
-    objects: always-multiline,
-    imports: always-multiline,
-    exports: always-multiline,
-    functions: only-multiline, ## Optional on functions
-  }]
+  comma-dangle: [
+      error,
+      {
+        arrays: always-multiline,
+        objects: always-multiline,
+        imports: always-multiline,
+        exports: always-multiline,
+        functions: only-multiline, ## Optional on functions
+      },
+    ]
   ## Enforce consistent spacing before and after commas
   comma-spacing: [error, { before: false, after: true }]
   ## Enforce consistent comma style
@@ -369,15 +371,18 @@ rules:
   ## Enforce a maximum depth that blocks can be nested
   # max-depth: error
   ## Enforce a maximum line length
-  max-len: [error, {
-    code: 80,
-    ## Ignore imports
-    ignorePattern: '^(import\s.+\sfrom\s|.*require\()',
-    ignoreUrls: true,
-    ignoreRegExpLiterals: true,
-    ignoreStrings: true,
-    ignoreTemplateLiterals: true,
-  }]
+  max-len: [
+      error,
+      {
+        code: 80,
+        ## Ignore imports
+        ignorePattern: '^(import\s.+\sfrom\s|.*require\()',
+        ignoreUrls: true,
+        ignoreRegExpLiterals: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+      },
+    ]
   ## Enforce a maximum number of lines per file
   # max-lines: error
   ## Enforce a maximum number of line of code in a function
@@ -457,7 +462,7 @@ rules:
   ## Require or disallow assignment operator shorthand where possible
   # operator-assignment: error
   ## Enforce consistent linebreak style for operators
-  operator-linebreak: [error, before]
+  # operator-linebreak: [error, before]
   ## Require or disallow padding within blocks
   # padded-blocks: error
   ## Require or disallow padding lines between statements
@@ -482,11 +487,8 @@ rules:
   ## Enforce consistent spacing before blocks
   space-before-blocks: [error, always]
   ## Enforce consistent spacing before function definition opening parenthesis
-  space-before-function-paren: [error, {
-    anonymous: always,
-    named: never,
-    asyncArrow: always,
-  }]
+  space-before-function-paren:
+    [error, { anonymous: always, named: never, asyncArrow: always }]
   ## Enforce consistent spacing inside parentheses
   space-in-parens: [error, never]
   ## Require spacing around infix operators
@@ -708,9 +710,7 @@ rules:
   ## Enforce event handler naming conventions in JSX
   react/jsx-handler-names: error
   ## Validate JSX indentation (fixable)
-  react/jsx-indent: [error, tab, {
-    checkAttributes: true,
-  }]
+  react/jsx-indent: [error, tab, { checkAttributes: true }]
   ## Validate props indentation in JSX (fixable)
   react/jsx-indent-props: [error, tab]
   ## Validate JSX has key prop when in array or iterator
