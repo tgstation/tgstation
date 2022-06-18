@@ -1,7 +1,7 @@
 {
 	"eslint.nodePath": "./tgui/.yarn/sdks",
 	"eslint.workingDirectories": ["./tgui"],
-	"prettier.prettierPath": "./tgui/.yarn/sdks/prettier",
+	"prettier.prettierPath": "./tgui/.yarn/sdks/prettier/index.js",
 	"typescript.tsdk": "./tgui/.yarn/sdks/typescript/lib",
 	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"search.exclude": {

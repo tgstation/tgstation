@@ -349,7 +349,7 @@ rules:
   ## Enforce the location of arrow function bodies
   # implicit-arrow-linebreak: error
   ## Enforce consistent indentation
-  indent: [error, 2, { SwitchCase: 1 }]
+  indent: [error, tab, { SwitchCase: 1 }]
   ## Enforce the consistent use of either double or single quotes in JSX
   ## attributes
   jsx-quotes: [error, prefer-double]
@@ -708,11 +708,11 @@ rules:
   ## Enforce event handler naming conventions in JSX
   react/jsx-handler-names: error
   ## Validate JSX indentation (fixable)
-  react/jsx-indent: [error, 2, {
+  react/jsx-indent: [error, tab, {
     checkAttributes: true,
   }]
   ## Validate props indentation in JSX (fixable)
-  react/jsx-indent-props: [error, 2]
+  react/jsx-indent-props: [error, tab]
   ## Validate JSX has key prop when in array or iterator
   react/jsx-key: error
   ## Validate JSX maximum depth
