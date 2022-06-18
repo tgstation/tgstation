@@ -23,13 +23,6 @@
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/ridden/wheelchair/bell, VEHICLE_CONTROL_DRIVE)
 
-/obj/vehicle/ridden/wheelchair/proc/attach_bell(obj/structure/desk_bell/bell)
-	bell_attached = bell
-	src.generate_actions()
-	add_overlay("wheelchair_bell")
-	desc += "There is a small bell attached to the handle."
-
-
 /obj/vehicle/ridden/wheelchair/Initialize(mapload)
 	. = ..()
 	make_ridable()
@@ -135,3 +128,9 @@
 	var/obj/vehicle/ridden/wheelchair/wheelchair_unfolded = new unfolded_type(location)
 	wheelchair_unfolded.add_fingerprint(user)
 	qdel(src)
+
+/obj/vehicle/ridden/wheelchair/proc/attach_bell(obj/structure/desk_bell/bell)
+	bell_attached = bell
+	src.generate_actions()
+	add_overlay("wheelchair_bell")
+	desc += "There is a small bell attached to the handle."
