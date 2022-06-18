@@ -108,7 +108,7 @@ handles linking back and forth.
 			return COMPONENT_BLOCK_TOOL_ATTACK
 		var/turf/silo_turf = get_turf(M.buffer)
 		var/turf/user_loc = get_turf(user)
-		if(user_loc.z != silo_turf.z)
+		if(!is_valid_z_level(silo_turf, user_loc))
 			to_chat(user, span_warning("[parent] is too far away to get a connection signal!"))
 			return COMPONENT_BLOCK_TOOL_ATTACK
 		if (silo)
@@ -130,11 +130,8 @@ handles linking back and forth.
 		return
 
 	var/turf/silo_turf = get_turf(silo)
-	if(is_station_level(silo_turf.z) && is_station_level(new_turf.z)) // if we're both on "station", regardless of multi-z, we'll pass by.
-		return
-	if(silo_turf.z == new_turf.z)
-		return
-	disconnect_from(silo)
+	if(!is_valid_z_level(silo_turf, new_turf))
+		disconnect_from(silo)
 
 /datum/component/remote_materials/proc/on_hold()
 	return silo?.holds["[get_area(parent)]/[category]"]

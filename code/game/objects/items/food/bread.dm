@@ -13,7 +13,6 @@
 
 /obj/item/food/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
-	slot_flags = ITEM_SLOT_HEAD
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	eat_time = 0.5 SECONDS
@@ -299,7 +298,7 @@
 /obj/item/food/raw_frenchtoast
 	name = "raw french toast"
 	desc = "A slice of bread soaked in a beaten egg mixture. Put it on a griddle to start cooking!."
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "raw_frenchtoast"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2,)
 	tastes = list("raw egg" = 2, "soaked bread" = 1)
@@ -312,7 +311,7 @@
 /obj/item/food/frenchtoast
 	name = "french toast"
 	desc = "A slice of bread soaked in an egg mixture and grilled until golden-brown. Drizzled with syrup!."
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "frenchtoast"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2,)
 	tastes = list("french toast" = 1, "syrup" = 1, "golden deliciousness" = 1)
