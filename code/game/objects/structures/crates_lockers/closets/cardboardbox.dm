@@ -1,4 +1,3 @@
-#define SNAKE_SPAM_TICKS 600 //how long between cardboard box openings that trigger the '!'
 /obj/structure/closet/cardboard
 	name = "large cardboard box"
 	desc = "Just a box..."
@@ -20,8 +19,13 @@
 	door_anim_time = 0 // no animation
 	var/move_speed_multiplier = 1
 	var/move_delay = FALSE
-	var/egged = 0
 	can_install_electronics = FALSE
+
+	/// Cooldown controlling when the box can trigger the Metal Gear Solid-style '!' alert.
+	COOLDOWN_DECLARE(alert_cooldown)
+
+	/// How much time must pass before the box can trigger the next Metal Gear Solid-style '!' alert.
+	var/time_between_alerts = 60 SECONDS
 
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
 	if(opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
@@ -38,25 +42,33 @@
 	move_delay = FALSE
 
 /obj/structure/closet/cardboard/open(mob/living/user, force = FALSE)
-	if(opened || !can_open(user, force))
-		return FALSE
-	var/list/alerted = null
-	if(egged < world.time)
-		var/mob/living/Snake = null
-		for(var/mob/living/L in src.contents)
-			Snake = L
-			break
-		if(Snake)
-			alerted = viewers(7,src)
-	..()
-	if(LAZYLEN(alerted))
-		egged = world.time + SNAKE_SPAM_TICKS
-		for(var/mob/living/L in alerted)
-			if(!L.stat)
-				if(!L.incapacitated(IGNORE_RESTRAINTS))
-					L.face_atom(src)
-				L.do_alert_animation()
-		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
+	var/do_alert = (COOLDOWN_FINISHED(src, alert_cooldown) && (locate(/mob/living) in contents))
+
+	if(!do_alert)
+		return ..()
+
+	// Cache the list before we open the box.
+	var/list/alerted = viewers(7, src)
+
+	// There are no mobs to alert?
+	if(!(locate(/mob/living) in alerted))
+		return ..()
+
+	. = ..()
+
+	// Box didn't open?
+	if(!.)
+		return
+
+	COOLDOWN_START(src, alert_cooldown, time_between_alerts)
+
+	for(var/mob/living/alerted_mob in alerted)
+		if(alerted_mob.stat == CONSCIOUS)
+			if(!alerted_mob.incapacitated(IGNORE_RESTRAINTS))
+				alerted_mob.face_atom(src)
+			alerted_mob.do_alert_animation()
+
+	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()
@@ -65,7 +77,6 @@
 	flick_overlay_view(alert_image, src, 8)
 	alert_image.alpha = 0
 	animate(alert_image, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
-
 
 /obj/structure/closet/cardboard/metal
 	name = "large metal box"
@@ -81,4 +92,3 @@
 	open_sound_volume = 35
 	close_sound_volume = 50
 	material_drop = /obj/item/stack/sheet/plasteel
-#undef SNAKE_SPAM_TICKS

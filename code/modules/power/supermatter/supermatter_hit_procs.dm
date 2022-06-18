@@ -89,20 +89,24 @@
 		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
 
 		if(!anomaly_event)
-			to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on a Shard."))
+			to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on \a [name]."))
 			return
 
 		if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT)
-			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to a Supermatter src that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
+			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to \a [name] that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
 			return
 
-		to_chat(user, span_notice("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
+		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
 		if(do_after(user, 3 SECONDS, src))
-			to_chat(user, span_notice("You attach \the [destabilizing_crystal] to \the [src]."))
+			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)]")
+			log_game("[key_name(user)] attached [destabilizing_crystal] to the supermatter at [AREACOORD(src)]")
+			investigate_log("[key_name(user)] attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
+			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
 			has_destabilizing_crystal = TRUE
 			cascade_initiated = TRUE
 			damage += 100
 			matter_power += 500
+			addtimer(CALLBACK(src, .proc/announce_incoming_cascade), 2 MINUTES)
 			qdel(destabilizing_crystal)
 		return
 

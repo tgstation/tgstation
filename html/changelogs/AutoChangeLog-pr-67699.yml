@@ -1,4 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - bugfix: "Some manual varedits on objects with cargo shipping access were fixed to work again."
