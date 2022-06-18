@@ -564,7 +564,9 @@
 	add_mind(looker)
 
 /obj/effect/temp_visual/sonar_ping/Destroy()
-	remove_mind(mod_man.resolve())
+	var/mob/living/previous_user = mod_man.resolve()
+	if(previous_user)
+		remove_mind(previous_user)
 	// Null so we don't shit the bed when we delete
 	modsuit_image = null
 	return ..()
