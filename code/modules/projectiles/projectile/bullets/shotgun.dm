@@ -1,21 +1,25 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
+	icon_state = "pellet"
 	damage = 50
 	sharpness = SHARP_POINTY
 	wound_bonus = 0
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
+	icon_state = "pellet"
 	sharpness = SHARP_EDGED
 	wound_bonus = 80
 
 /obj/projectile/bullet/shotgun_slug/pulverizer
 	name = "pulverizer slug" // admin only, can crush bones
+	icon_state = "pellet"
 	sharpness = NONE
 	wound_bonus = 80
 
 /obj/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
+	icon_state = "pellet"
 	damage = 10
 	stamina = 55
 	wound_bonus = 20
@@ -24,15 +28,18 @@
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
+	icon_state = "pellet"
 	damage = 20
 
 /obj/projectile/bullet/incendiary/shotgun/no_trail
 	name = "precision incendiary slug"
+	icon_state = "pellet"
 	damage = 35
 	leaves_fire_trail = FALSE
 
 /obj/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
+	icon_state = "pellet"
 	damage = 5
 
 /obj/projectile/bullet/shotgun_stunslug
@@ -68,6 +75,7 @@
 
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
+	icon_state = "pellet"
 	damage = 15
 	paralyze = 10
 
@@ -77,6 +85,7 @@
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/pellet
+	icon_state = "pellet"
 	var/tile_dropoff = 0.45
 	var/tile_dropoff_s = 0.25
 
@@ -141,4 +150,5 @@
 // Mech Scattershot
 
 /obj/projectile/bullet/scattershot
+	icon_state = "pellet"
 	damage = 24
