@@ -108,7 +108,7 @@
 	ring_cooldown_length = 0
 
 /obj/structure/desk_bell/MouseDrop(obj/over_object, src_location, over_location)
-	if((!istype(over_object, /obj/vehicle/ridden/wheelchair)))
+	if(!istype(over_object, /obj/vehicle/ridden/wheelchair))
 		return
 	if(!Adjacent(over_object) || !Adjacent(usr))
 		return
