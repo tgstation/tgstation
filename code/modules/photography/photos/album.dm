@@ -111,6 +111,11 @@
 	icon_state = "album_blue"
 	persistence_id = "chapel"
 
+/obj/item/storage/photo_album/listeningstation
+	name = "photo album (Listening Station)"
+	icon_state = "album_red"
+	persistence_id = "listeningstation"
+
 /obj/item/storage/photo_album/prison
 	name = "photo album (Prison)"
 	icon_state = "album_blue"

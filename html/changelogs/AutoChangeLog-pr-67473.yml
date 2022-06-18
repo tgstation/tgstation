@@ -1,6 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Fix drones not being able to use computers or vault."
-  - bugfix: "Fix monkeys being able to read or write.  They are now illiterate however they can gain literacy through the Clever mutation."
-  - bugfix: "Fix illiterate mobs being able to receive tablet messages in their chat log."

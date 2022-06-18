@@ -297,3 +297,16 @@
 
 	mood_change *= card_players
 	return ..()
+
+/datum/mood_event/russian_roulette_win
+	description = "I gambled my life and won! I'm lucky to be alive..."
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/russian_roulette_win/add_effects(loaded_rounds)
+	mood_change = 2 ** loaded_rounds
+
+/datum/mood_event/fishing
+	description = "Fishing is relaxing."
+	mood_change = 5
+	timeout = 3 MINUTES

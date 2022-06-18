@@ -609,10 +609,8 @@
 		hostile situations. These suits have been layered with plating worthy enough for fires or corrosive environments, \
 		and come with composite cushioning and an advanced honeycomb structure underneath the hull to ensure protection \
 		against broken bones or possible avulsions. The suit's legs have been given more rugged actuators, \
-		allowing the suit to do more work in carrying the weight. Lastly, these have been given a shock-absorbing \
-		insulating layer on the gauntlets, making sure the user isn't under risk of electricity. \
-		However, the systems used in these suits are more than a few years out of date, \
-		leading to an overall lower capacity for modules."
+		allowing the suit to do more work in carrying the weight. However, the systems used in these suits are more than \
+		a few years out of date, leading to an overall lower capacity for modules."
 	default_skin = "security"
 	armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 25, BIO = 100, FIRE = 75, ACID = 75, WOUND = 15)
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 3

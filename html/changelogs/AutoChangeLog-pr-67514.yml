@@ -1,4 +1,0 @@
-author: "CocaColaTastesGood"
-delete-after: True
-changes: 
-  - bugfix: "Fixes stack multiplier exploit"

@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Unholy water's stun length reduction effect is now as potent as it was intended to be. Its strength was previously half as strong as it was intended to be due to a copy+paste error."

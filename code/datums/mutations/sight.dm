@@ -15,7 +15,6 @@
 		return
 	owner.cure_nearsighted(GENETIC_MUTATION)
 
-
 ///Blind makes you blind. Who knew?
 /datum/mutation/human/blind
 	name = "Blindness"
@@ -47,7 +46,6 @@
 	energy_coeff = 1
 	power = /obj/effect/proc_holder/spell/self/thermal_vision_activate
 
-
 /datum/mutation/human/thermal/modify()
 	if(!power)
 		return FALSE
@@ -55,7 +53,6 @@
 	modified_power.eye_damage = 10 * GET_MUTATION_SYNCHRONIZER(src)
 	modified_power.thermal_duration = 10 * GET_MUTATION_POWER(src)
 	modified_power.charge_max = (25 * GET_MUTATION_ENERGY(src)) SECONDS
-
 
 /obj/effect/proc_holder/spell/self/thermal_vision_activate
 	name = "Activate Thermal Vision"
@@ -80,8 +77,6 @@
 	addtimer(CALLBACK(src, .proc/thermal_vision_deactivate), thermal_duration SECONDS)
 
 /obj/effect/proc_holder/spell/self/thermal_vision_activate/proc/thermal_vision_deactivate(mob/user = usr)
-
-
 	if(!HAS_TRAIT_FROM(user,TRAIT_THERMAL_VISION, GENETIC_MUTATION))
 		return
 
@@ -174,3 +169,20 @@
 	name = "beam"
 	icon = 'icons/effects/genetics.dmi'
 	icon_state = "eyelasers"
+
+/datum/mutation/human/illiterate
+	name = "Illiterate"
+	desc = "Causes a severe case of Aphasia that prevents reading or writing."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='danger'>You feel unable to read or write.</span>"
+	text_lose_indication = "<span class='danger'>You feel able to read and write again.</span>"
+
+/datum/mutation/human/illiterate/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	ADD_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
+
+/datum/mutation/human/illiterate/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)

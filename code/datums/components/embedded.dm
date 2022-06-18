@@ -142,7 +142,7 @@
 
 	if(harmful && prob(pain_chance_current))
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
-		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.plaintext_zone]] hurts!"))
+		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.plaintext_zone] hurts!"))
 
 	var/fall_chance_current = DT_PROB_RATE(fall_chance / 100, delta_time) * 100
 	if(victim.body_position == LYING_DOWN)

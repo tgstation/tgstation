@@ -1,13 +1,12 @@
-///The machine pumps from the internal source to the turf
-#define PUMP_OUT "out"
-///The machine pumps from the turf to the internal tank
-#define PUMP_IN "in"
 ///Maximum settable pressure
 #define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 25)
 ///Minimum settable pressure
 #define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
 ///Defaul pressure, used in the UI to reset the settings
 #define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
+///What direction is the machine pumping (into pump/port or out to the tank/area)?
+#define PUMP_IN TRUE
+#define PUMP_OUT FALSE
 
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
@@ -20,7 +19,7 @@
 	var/pressure_limit = 50000
 	///Is the machine on?
 	var/on = FALSE
-	///What direction is the machine pumping (in or out)?
+	///What direction is the machine pumping (into pump/port or out to the tank/area)?
 	var/direction = PUMP_OUT
 	///Player configurable, sets what's the release pressure
 	var/target_pressure = ONE_ATMOSPHERE
@@ -58,14 +57,16 @@
 	excited = TRUE
 
 	var/turf/local_turf = get_turf(src)
+
 	var/datum/gas_mixture/sending
 	var/datum/gas_mixture/receiving
-	if(direction == PUMP_OUT) // Hook up the internal pump.
-		sending = (holding ? holding.return_air() : air_contents)
-		receiving = (holding ? air_contents : local_turf.return_air())
+
+	if (holding) //Work with tank when inserted, otherwise - with area
+		sending = (direction == PUMP_IN ? holding.return_air() : air_contents)
+		receiving = (direction == PUMP_IN ? air_contents : holding.return_air())
 	else
-		sending = (holding ? air_contents : local_turf.return_air())
-		receiving = (holding ? holding.return_air() : air_contents)
+		sending = (direction == PUMP_IN ? local_turf.return_air() : air_contents)
+		receiving = (direction == PUMP_IN ? air_contents : local_turf.return_air())
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
 		air_update_turf(FALSE, FALSE) // Update the environment if needed.
@@ -107,8 +108,8 @@
 /obj/machinery/portable_atmospherics/pump/ui_data()
 	var/data = list()
 	data["on"] = on
-	data["direction"] = direction == PUMP_IN ? TRUE : FALSE
-	data["connected"] = connected_port ? TRUE : FALSE
+	data["direction"] = direction
+	data["connected"] = !!connected_port
 	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["target_pressure"] = round(target_pressure ? target_pressure : 0)
 	data["default_pressure"] = round(PUMP_DEFAULT_PRESSURE)

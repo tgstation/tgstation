@@ -40,3 +40,8 @@
 /proc/log_telecomms(text)
 	if (CONFIG_GET(flag/log_telecomms))
 		WRITE_LOG(GLOB.world_telecomms_log, "TCOMMS: [text]")
+
+/// Logging for speech indicators.
+/proc/log_speech_indicators(text)
+	if (CONFIG_GET(flag/log_speech_indicators))
+		WRITE_LOG(GLOB.world_speech_indicators_log, "SPEECH INDICATOR: [text]")
