@@ -1281,3 +1281,11 @@
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 500)
 	build_path = /obj/item/electronics/tracker
 	category = list("initial", "Electronics", "Construction")
+
+/datum/design/fishing_rod_basic
+	name = "Fishing Rod"
+	id = "fishing_rod"
+	build_type = AUTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
+	build_path = /obj/item/fishing_rod
+	category = list("initial", "Misc", "Equipment")
