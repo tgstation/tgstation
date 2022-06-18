@@ -1,5 +1,6 @@
 root: true
 parser: '@typescript-eslint/parser'
+extends: prettier
 parserOptions:
   ecmaVersion: 2020
   sourceType: module
@@ -13,12 +14,9 @@ plugins:
   - radar
   - react
   - unused-imports
-  - prettier
 settings:
   react:
     version: '16.10'
-extends:
-  - prettier
 rules:
   ## Possible Errors
   ## ----------------------------------------
@@ -465,7 +463,7 @@ rules:
   ## Require or disallow assignment operator shorthand where possible
   # operator-assignment: error
   ## Enforce consistent linebreak style for operators
-  operator-linebreak: [error, before]
+  # operator-linebreak: [error, before]
   ## Require or disallow padding within blocks
   # padded-blocks: error
   ## Require or disallow padding lines between statements
@@ -700,7 +698,7 @@ rules:
   react/jsx-closing-tag-location: error
   ## Enforce or disallow newlines inside of curly braces in JSX attributes and
   ## expressions (fixable)
-  react/jsx-curly-newline: error
+  # react/jsx-curly-newline: error
   ## Enforce or disallow spaces inside of curly braces in JSX attributes and
   ## expressions (fixable)
   react/jsx-curly-spacing: error
@@ -713,7 +711,7 @@ rules:
   ## Enforce event handler naming conventions in JSX
   react/jsx-handler-names: error
   ## Validate JSX indentation (fixable)
-  react/jsx-indent: [error, tab, { checkAttributes: true }]
+  # react/jsx-indent: [error, tab, { checkAttributes: true }]
   ## Validate props indentation in JSX (fixable)
   react/jsx-indent-props: [error, tab]
   ## Validate JSX has key prop when in array or iterator
