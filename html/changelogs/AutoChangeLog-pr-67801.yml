@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "A white cane, an indicator that the wielder is blind, can now be bought and crafted from medical vendors and iron rods respectively."
