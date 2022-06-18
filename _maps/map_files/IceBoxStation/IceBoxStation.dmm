@@ -1576,7 +1576,7 @@
 /obj/structure/chair/sofa/left{
 	dir = 1;
 	name = "The Regular's Sofa";
-	desc = ""Hey,didyouknowyoucangetapineappleonyourburgerhere?""
+	desc = "Hey, did you know you can get a pineapple on your burger here?"
 	},
 /turf/open/floor/stone,
 /area/station/commons/lounge)
@@ -69162,7 +69162,7 @@
 "whO" = (
 /obj/structure/chair/sofa/right{
 	dir = 1;
-	desc = ""Hey,didyouknowyoucangetapineappleonyourburgerhere?"";
+	desc = "Hey, did you know you can get a pineapple on your burger here?";
 	name = "The Regular's Sofa"
 	},
 /obj/effect/landmark/start/hangover,
@@ -180991,7 +180991,7 @@ jre
 hvv
 tvj
 fQw
-jre
+ksK
 scH
 scH
 scH
