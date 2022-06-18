@@ -47,6 +47,7 @@
 	rename_team = "Marine Squad"
 	polldesc = "an 'elite' Nanotrasen Strike Team"
 	opendoors = FALSE
+	code = "Grey"
 
 /datum/ert/centcom_official
 	code = "Green"

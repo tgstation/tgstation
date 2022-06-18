@@ -371,20 +371,20 @@
 
 /datum/antagonist/ert/marine
 	name = "Marine Commander"
-	outfit = /datum/outfit/centcom/ert/marine
-	role = "Commander"
+	outfit = /datum/outfit/centcom/ert/marine/commander
+	role = "Cmdr."
 
 /datum/antagonist/ert/marine/security
-	name = "Marine Heavy"
-	outfit = /datum/outfit/centcom/ert/marine/security
-	role = "Trooper"
+	name = "Marine Trooper"
+	outfit = /datum/outfit/centcom/ert/marine
+	role = "Pvt."
 
 /datum/antagonist/ert/marine/engineer
 	name = "Marine Engineer"
 	outfit = /datum/outfit/centcom/ert/marine/engineer
-	role = "Engineer"
+	role = "LtCpl."
 
 /datum/antagonist/ert/marine/medic
 	name = "Marine Medic"
 	outfit = /datum/outfit/centcom/ert/marine/medic
-	role = "Medical Officer"
+	role = "LtCpl."
