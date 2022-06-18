@@ -257,7 +257,10 @@ Used by the AI doomsday and the self-destruct nuke.
 	// load the maps
 	for (var/P in parsed_maps)
 		var/datum/parsed_map/pm = P
-		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
+		var/bounds = pm.bounds
+		var/x_offset = bounds ? ROUND_UP(255 / 2 - bounds[MAP_MAXX] / 2) : 1
+		var/y_offset = bounds ? ROUND_UP(255 / 2 - bounds[MAP_MAXY] / 2) : 1
+		if (!pm.load(x_offset, y_offset, start_z + parsed_maps[P], no_changeturf = TRUE))
 			errorList |= pm.original_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
