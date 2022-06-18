@@ -211,7 +211,7 @@
 	if(SSshuttle.emergency.hijack_status >= HIJACKED)
 		to_chat(user, span_warning("The emergency shuttle is already loaded with a corrupt navigational payload. What more do you want from it?"))
 		return
-	if(hijack_last_stage_increase >= world.time + hijack_stage_cooldown)
+	if(hijack_last_stage_increase >= world.time - hijack_stage_cooldown)
 		say("Error - Catastrophic software error detected. Input is currently on timeout.")
 		return
 	hijack_hacking = TRUE

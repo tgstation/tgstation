@@ -902,12 +902,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/openspace/icemoon/keep_below,
 /area/station/security/execution/education)
-"arl" = (
-/obj/machinery/firealarm/directional/north,
-/obj/machinery/light/small/directional/north,
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/dark,
-/area/station/science/breakroom)
 "aro" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8808,6 +8802,13 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/service/chapel)
+"cPu" = (
+/obj/machinery/light/directional/east,
+/obj/structure/sign/warning/fire{
+	pixel_y = 32
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/science/ordnance/office)
 "cPE" = (
 /turf/open/floor/iron/smooth_half{
 	dir = 1
@@ -14680,6 +14681,12 @@
 	dir = 1
 	},
 /area/station/service/hydroponics)
+"eJs" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/camera/autoname/directional/north,
+/turf/open/floor/plating,
+/area/station/engineering/storage/tech)
 "eJv" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -16002,6 +16009,20 @@
 "feJ" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/security/armory/upper)
+"feP" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/action/spell/smoke/lesser{
+	name = "mysterious old book of cloud-chasing"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/nullrod{
+	pixel_x = 4
+	},
+/turf/open/floor/cult,
+/area/station/service/chapel/office)
 "feQ" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
@@ -16842,6 +16863,14 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/execution/education)
+"fsN" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/science/breakroom)
 "fsO" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -24329,11 +24358,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
 /area/station/security/brig/upper)
-"hQp" = (
-/obj/structure/cable,
-/obj/effect/spawner/random/vending/snackvend,
-/turf/open/floor/iron/dark,
-/area/station/science/breakroom)
 "hQt" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -38122,6 +38146,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
+"mna" = (
+/obj/structure/cable,
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/iron/dark,
+/area/station/science/breakroom)
 "mnj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -44532,14 +44561,6 @@
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/command/nuke_storage)
-"old" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "tech_storage"
-	},
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/engineering/storage/tech)
 "olf" = (
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
@@ -47957,20 +47978,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/production)
-"pqm" = (
-/obj/structure/table/wood,
-/obj/item/book/granter/action/spell/smoke/lesser{
-	name = "mysterious old book of cloud-chasing"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/holywater{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/nullrod{
-	pixel_x = 4
-	},
-/turf/open/floor/cult,
-/area/station/service/chapel/office)
 "pqu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -54656,6 +54663,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"rAm" = (
+/obj/item/radio/intercom/directional/south,
+/obj/machinery/vending/wardrobe/science_wardrobe,
+/turf/open/floor/iron/dark,
+/area/station/science/breakroom)
 "rAr" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -55175,6 +55187,12 @@
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"rHr" = (
+/obj/machinery/firealarm/directional/north,
+/obj/machinery/light/small/directional/north,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/station/science/breakroom)
 "rHz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -68517,14 +68535,6 @@
 "vWr" = (
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"vWt" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/science/breakroom)
 "vWz" = (
 /turf/closed/wall,
 /area/mine/storage)
@@ -70483,11 +70493,6 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
-"wCO" = (
-/obj/item/radio/intercom/directional/south,
-/obj/machinery/vending/wardrobe/science_wardrobe,
-/turf/open/floor/iron/dark,
-/area/station/science/breakroom)
 "wCV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -71450,13 +71455,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"wRC" = (
-/obj/machinery/light/directional/east,
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/science/ordnance/office)
 "wRJ" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plating,
@@ -188292,7 +188290,7 @@ fsO
 tBs
 tWc
 tBs
-pqm
+feP
 wrX
 umF
 cUk
@@ -234078,7 +234076,7 @@ iYV
 iuv
 dnq
 paM
-old
+eJs
 gdP
 cCt
 gdP
@@ -254381,7 +254379,7 @@ aju
 gPY
 qWu
 fbl
-wCO
+rAm
 krY
 awa
 awa
@@ -254892,7 +254890,7 @@ qNn
 pOf
 gNi
 krY
-arl
+rHr
 bUa
 fbl
 nHf
@@ -255923,7 +255921,7 @@ gpj
 oQn
 iBl
 wgL
-hQp
+mna
 krY
 xLq
 xLq
@@ -256180,7 +256178,7 @@ oXJ
 fbl
 eIC
 trK
-vWt
+fsN
 krY
 xLq
 xLq
@@ -256439,7 +256437,7 @@ whP
 mOc
 mkx
 krY
-wRC
+cPu
 xLq
 iba
 gas
