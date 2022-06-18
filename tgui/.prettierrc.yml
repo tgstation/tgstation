@@ -1,8 +1,10 @@
 arrowParens: always
+breakLongMethodChains: true
 endOfLine: lf
 importFormatting: oneline
 jsxBracketSameLine: true
 jsxSingleQuote: false
+offsetTernaryExpressions: true
 printWidth: 72
 proseWrap: preserve
 quoteProps: preserve
