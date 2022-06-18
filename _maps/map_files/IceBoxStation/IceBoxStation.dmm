@@ -61244,9 +61244,7 @@
 	},
 /area/mine/living_quarters)
 "tFI" = (
-/obj/structure/table{
-	name = s
-	},
+/obj/structure/table,
 /obj/machinery/microwave{
 	pixel_y = 5
 	},
