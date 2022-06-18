@@ -63,30 +63,21 @@
 
 /obj/item/clothing/head/helmet/marine
 	name = "tactical combat helmet"
-	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else."
-	icon_state = "marine_command"
+	desc = "A thick plated, black painted helmet, the only difference between an open casket and closed casket funeral."
+	icon_state = "marine"
 	inhand_icon_state = "helmetalt"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 30, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 40, ACID = 50, WOUND = 20)
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	dog_fashion = null
+	dog_fashion = /datum/dog_fashion/head/marine
 
 /obj/item/clothing/head/helmet/marine/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, starting_light = new /obj/item/flashlight/seclite(src), light_icon_state = "flight")
 
-/obj/item/clothing/head/helmet/marine/security
-	name = "marine heavy helmet"
-	icon_state = "marine_security"
-
 /obj/item/clothing/head/helmet/marine/engineer
-	name = "marine utility helmet"
 	icon_state = "marine_engineer"
-
-/obj/item/clothing/head/helmet/marine/medic
-	name = "marine medic helmet"
-	icon_state = "marine_medic"
+	desc = "A thick plated, black painted helmet with an added screen over the left eye. Supposedly it would link to a heavy weapon of some sort, but it seems to be missing a battery."
 
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"

@@ -51,12 +51,17 @@
 
 /obj/item/clothing/under/rank/centcom/military
 	name = "tactical combat uniform"
-	desc = "A dark colored uniform worn by CentCom's conscripted military forces."
+	desc = "A grey colored uniform usually seen on unspecialized combat troops."
 	icon_state = "military"
 	inhand_icon_state = "bl_suit"
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
 
 /obj/item/clothing/under/rank/centcom/military/eng
 	name = "tactical engineering uniform"
-	desc = "A dark colored uniform worn by CentCom's regular military engineers."
+	desc = "A grey colored uniform with toughened knee pads and brown striping to indicate the wearer might be an engineer."
 	icon_state = "military_eng"
+
+/obj/item/clothing/under/rank/centcom/military/medical
+	name = "tactical medic uniform"
+	desc = "A grey colored uniform with bright white and red striping to indicate who to go to when your blood is no longer in your body."
+	icon_state = "military_med"

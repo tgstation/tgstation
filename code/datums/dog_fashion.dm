@@ -206,3 +206,9 @@
 
 /datum/dog_fashion/head/blumpkin/lit
 	obj_icon_state = "blumpkin1"
+
+/datum/dog_fashion/head/marine
+	name = "Private REAL_NAME"
+	desc = "The only one you can rely on in case a grenade needs throwing back."
+	obj_icon_state = "marine"
+	speak = list("YAP", "Woof Woof Woof, OORAH!", "Bark Bark Bark, OORAH!", "AUUUUUU")

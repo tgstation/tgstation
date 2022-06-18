@@ -221,6 +221,12 @@
 	name = "emergency response team clown backpack"
 	desc = "A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team."
 	icon_state = "ert_clown"
+
+/obj/item/storage/backpack/ert/marine
+	name = "tactical reponse team backpack"
+	desc = "A spacious backpack with at least two pockets, usually worn by the marines of an Emergency Response Team."
+	icon_state = "ert_marine"
+
 /*
  * Satchel Types
  */
