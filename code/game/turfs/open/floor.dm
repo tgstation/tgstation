@@ -20,10 +20,12 @@
 
 	overfloor_placed = TRUE
 
+	/// Determines the type of damage overlay that will be used for the tile
+	var/damaged_dmi = 'icons/turf/damaged.dmi'
 	var/broken = FALSE
 	var/burnt = FALSE
 	/// Path of the tile that this floor drops
-	var/floor_tile = null 
+	var/floor_tile = null
 	var/list/broken_states
 	var/list/burnt_states
 
@@ -125,17 +127,24 @@
 /turf/open/floor/break_tile()
 	if(broken)
 		return
-	icon_state = pick(broken_states)
-	broken = 1
+	broken = TRUE
+	update_appearance()
 
 /turf/open/floor/burn_tile()
-	if(broken || burnt)
+	if(burnt)
 		return
-	if(LAZYLEN(burnt_states))
-		icon_state = pick(burnt_states)
-	else
-		icon_state = pick(broken_states)
-	burnt = 1
+	burnt = TRUE
+	update_appearance()
+
+/turf/open/floor/update_overlays()
+	. = ..()
+	if(broken)
+		. += mutable_appearance(damaged_dmi, pick(broken_states))
+	else if(burnt)
+		if(LAZYLEN(burnt_states))
+			. += mutable_appearance(damaged_dmi, pick(burnt_states))
+		else
+			. += mutable_appearance(damaged_dmi, pick(broken_states))
 
 /// Things seem to rely on this actually returning plating. Override it if you have other baseturfs.
 /turf/open/floor/proc/make_plating(force = FALSE)

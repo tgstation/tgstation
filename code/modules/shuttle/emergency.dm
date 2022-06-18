@@ -211,7 +211,7 @@
 	if(SSshuttle.emergency.hijack_status >= HIJACKED)
 		to_chat(user, span_warning("The emergency shuttle is already loaded with a corrupt navigational payload. What more do you want from it?"))
 		return
-	if(hijack_last_stage_increase >= world.time + hijack_stage_cooldown)
+	if(hijack_last_stage_increase >= world.time - hijack_stage_cooldown)
 		say("Error - Catastrophic software error detected. Input is currently on timeout.")
 		return
 	hijack_hacking = TRUE
@@ -246,7 +246,9 @@
 		if(HIJACKED)
 			msg = "SYSTEM OVERRIDE - Resetting course to \[[scramble_message_replace_chars("###########", 100)]\] \
 			([scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]) \
-			{AUTH - ROOT (uid: 0)}.</font>[SSshuttle.emergency.mode == SHUTTLE_ESCAPE ? "Diverting from existing route - Bluespace exit in [hijack_completion_flight_time_set/10] seconds." : ""]"
+			{AUTH - ROOT (uid: 0)}.</font>\
+			[SSshuttle.emergency.mode == SHUTTLE_ESCAPE ? "Diverting from existing route - Bluespace exit in \
+			[hijack_completion_flight_time_set >= INFINITY ? "[scramble_message_replace_chars("\[ERROR\]")]" : hijack_completion_flight_time_set/10] seconds." : ""]"
 	minor_announce(scramble_message_replace_chars(msg, replaceprob = 10), "Emergency Shuttle", TRUE)
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
