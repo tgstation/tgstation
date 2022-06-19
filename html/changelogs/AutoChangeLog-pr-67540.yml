@@ -1,0 +1,5 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - admin: "Added a way for administrators to globally disable circuit component sound emitters."
+  - balance: "Further limited the sound emitter component so that maximum volume is reduced and pitch is capped between -50 and 50"
