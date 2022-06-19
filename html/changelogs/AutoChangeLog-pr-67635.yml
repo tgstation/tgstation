@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes: 
+  - qol: "food now shows its type on examine"

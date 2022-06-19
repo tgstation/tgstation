@@ -676,3 +676,34 @@
   theOOZ:
   - imageadd: Adds an inhand sprite for the atmos gasmask
   - imageadd: Updates the medical duffelbag inhand sprite
+2022-06-19:
+  ArcaneMusic:
+  - rscadd: A white cane, an indicator that the wielder is blind, can now be bought
+      and crafted from medical vendors and iron rods respectively.
+  FernandoJ8:
+  - bugfix: the randomize_human proc now gives non-humans a name that matches their
+      species
+  Guillaume Prata:
+  - qol: Airlock painter, extinguishers, geiger counter, holosign projectors, inducers
+      and welding tools use balloon alerts on some of their more spammy/error actions
+      and have some useless `to_chat` messages removed.
+  - qol: Health and Gene analyzers give a balloon alert on a successful scan.
+  JohnFulpWillard:
+  - bugfix: the Chaplain's sparring sect now works on Kilostation again.
+  - bugfix: Kilostation's Xenobiology is no longer roundstart on firelocks, and the
+      security medical post now has a scrubber.
+  Pickle-Coding:
+  - balance: Changes supermatter powerloss function. It will transition to linear
+      powerloss function at 5.88076GeV, and the linear powerloss function has been
+      offset so that the transition between the two functions is completely smooth.
+  - balance: Changes powerloss inhibition (both CO2 and psychologist effect) to change
+      the rate of powerloss instead of changing the rate of both functions then comparing
+      them to which one should be used.
+  - rscadd: Gas canisters and other portable atmospheric machinery can now be packaged
+      with wrapping paper.
+  - rscadd: Replaces chat messages with balloon alerts for package wrapping related
+      failures.
+  Toastgoats:
+  - qol: Meta and Tram have autodrobes in dorms now.
+  bob-b-b:
+  - balance: Increased greed vending machine integrity and max items
