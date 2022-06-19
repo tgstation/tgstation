@@ -378,7 +378,7 @@
 //Delimbering
 
 /obj/item/clothing/suit/armor/reactive/delimbering
-	name = "reactive delimbering armor"
+	name = "reactive bioscrambling armor"
 	desc = "An experimental suit of armor with sensitive detectors hooked up to a biohazard release valve. It scrambles the bodies of those around."
 	cooldown_message = span_danger("The connection is currently out of sync... Recalibrating.")
 	emp_message = span_warning("You feel the armor squirm.")

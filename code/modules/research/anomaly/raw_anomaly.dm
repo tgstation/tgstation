@@ -57,8 +57,8 @@
 	icon_state = "rawcore_bluespace"
 
 /obj/item/raw_anomaly_core/delimber
-	name = "raw delimber core"
-	desc = "The raw core of a delimber anomaly, it squirms."
+	name = "raw bioscrambler core"
+	desc = "The raw core of a bioscrambler anomaly, it squirms."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/delimber
 	icon_state = "rawcore_delimber"
 

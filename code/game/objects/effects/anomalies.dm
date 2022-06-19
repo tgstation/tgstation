@@ -429,7 +429,7 @@
 				SSexplosions.lowturf += T
 
 /obj/effect/anomaly/delimber
-	name = "delimber anomaly"
+	name = "bioscrambler anomaly"
 	icon_state = "delimber_anomaly"
 	aSignal = /obj/item/assembly/signaler/anomaly/delimber
 	immortal = TRUE
