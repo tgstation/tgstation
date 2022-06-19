@@ -929,7 +929,7 @@
 /atom/movable/proc/doMove(atom/destination)
 	. = FALSE
 	var/atom/oldloc = loc
-	var/is_multi_tile = bound_width > 32 || bound_height > 32
+	var/is_multi_tile = bound_width > world.icon_size || bound_height > world.icon_size
 	if(destination)
 		///zMove already handles whether a pull from another movable should be broken.
 		if(pulledby && !currently_z_moving)

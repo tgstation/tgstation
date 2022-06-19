@@ -320,19 +320,21 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	for(var/z in min_z to max_z)
 		//This must be safe way to border tile to tile move of bordered platforms, that excludes platform overlapping.
-		if( going & WEST )
+		if(going & WEST)
 			//Go along the X axis from min to max, from left to right
 			for(var/x in min_x to max_x)
-				if( going & NORTH )
+				if(going & NORTH)
 					//Go along the Y axis from max to min, from up to down
 					for(var/y in max_y to min_y step -1)
 						var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 						lift_platform?.travel(going)
-				else if (going & SOUTH)
+
+				else if(going & SOUTH)
 					//Go along the Y axis from min to max, from down to up
 					for(var/y in min_y to max_y)
 						var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 						lift_platform?.travel(going)
+
 				else
 					for(var/y in min_y to max_y)
 						var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
@@ -340,7 +342,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		else
 			//Go along the X axis from max to min, from right to left
 			for(var/x in max_x to min_x step -1)
-				if( going & NORTH )
+				if(going & NORTH)
 					//Go along the Y axis from max to min, from up to down
 					for(var/y in max_y to min_y step -1)
 						var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))

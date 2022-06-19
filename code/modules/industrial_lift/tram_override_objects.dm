@@ -8,16 +8,11 @@
  * it will make the tram more expensive to move and we dont want that because we dont want to return to the days where
  * the tram took a third of the tick per movement when its just carrying its default mapped in objects
  */
-
-/obj/structure/grille/tram
-
 /obj/structure/grille/tram/Initialize(mapload)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	//atmos_sensitive applies connect_loc which 1. reacts to movement in order to 2. unregister and register signals to
 	//the old and new locs. we dont want that, pretend these grilles and windows are plastic or something idk
-
-/obj/structure/window/reinforced/shuttle/tram
 
 /obj/structure/window/reinforced/shuttle/tram/Initialize(mapload, direct)
 	. = ..()
