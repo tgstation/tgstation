@@ -140,7 +140,7 @@
 	Master.StopLoadingMap()
 
 // Do not call except via load() above.
-/datum/parsed_map/proc/_load_impl(x_offset = 0, y_offset = 0, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	PRIVATE_PROC(TRUE)
 	var/list/areaCache = list()
 	var/list/modelCache = build_cache(no_changeturf)
@@ -153,7 +153,7 @@
 	var/has_expanded_world_maxy = FALSE
 
 	for(var/datum/grid_set/gset as anything in gridSets)
-		var/ycrd = gset.ycrd + y_offset
+		var/ycrd = gset.ycrd + y_offset - 1
 		var/zcrd = gset.zcrd + z_offset - 1
 		if(!cropMap && ycrd > world.maxy)
 			world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
@@ -173,7 +173,7 @@
 				--ycrd
 				continue
 			if(ycrd <= world.maxy && ycrd >= 1)
-				var/xcrd = gset.xcrd + x_offset
+				var/xcrd = gset.xcrd + x_offset - 1
 				for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
 					if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper) //Same as above.
 						++xcrd
