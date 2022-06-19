@@ -407,7 +407,7 @@ Macros are, in essence, direct copy and pastes into the code. They are one of th
 This section will assume you understand the following concepts:
 
 ### Language - Hygienic
-We say a macro is [**hygienic**](https://en.wikipedia.org/wiki/Hygienic_macro) if, generally, it does not rely on input not given to it directly through the call site, and does not effect the call site outside of it in a way that could not be easily reused somewhere else.
+We say a macro is [**hygienic**](https://en.wikipedia.org/wiki/Hygienic_macro) if, generally, it does not rely on input not given to it directly through the call site, and does not affect the call site outside of it in a way that could not be easily reused somewhere else.
 
 An example of a non-hygienic macro is:
 
