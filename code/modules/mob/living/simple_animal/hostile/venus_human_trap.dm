@@ -63,7 +63,6 @@
 	QDEL_LIST(vines)
 	QDEL_NULL(countdown)
 	if(spawner) // anti harddel checks
-		spawner.flower_bud = null
 		if(!QDELETED(spawner))
 			qdel(spawner)
 		spawner = null
