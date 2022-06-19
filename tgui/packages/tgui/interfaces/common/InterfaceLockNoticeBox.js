@@ -16,43 +16,41 @@ import { Button, Flex, NoticeBox } from '../../components';
  * it's preferred to stick to defaults.
  */
 export const InterfaceLockNoticeBox = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    siliconUser = data.siliconUser,
-    locked = data.locked,
-    onLockStatusChange = () => act('lock'),
-    accessText = 'an ID card',
-  } = props;
-  // For silicon users
-  if (siliconUser) {
-    return (
-      <NoticeBox color="grey">
-        <Flex align="center">
-          <Flex.Item>
-            Interface lock status:
-          </Flex.Item>
-          <Flex.Item grow={1} />
-          <Flex.Item>
-            <Button
-              m={0}
-              color={locked ? 'red' : 'green'}
-              icon={locked ? 'lock' : 'unlock'}
-              content={locked ? 'Locked' : 'Unlocked'}
-              onClick={() => {
-                if (onLockStatusChange) {
-                  onLockStatusChange(!locked);
-                }
-              }} />
-          </Flex.Item>
-        </Flex>
-      </NoticeBox>
-    );
-  }
-  // For everyone else
-  return (
-    <NoticeBox>
-      Swipe {accessText}{' '}
-      to {locked ? 'unlock' : 'lock'} this interface.
-    </NoticeBox>
-  );
+	const { act, data } = useBackend(context);
+	const {
+		siliconUser = data.siliconUser,
+		locked = data.locked,
+		onLockStatusChange = () => act('lock'),
+		accessText = 'an ID card',
+	} = props;
+	// For silicon users
+	if (siliconUser) {
+		return (
+			<NoticeBox color="grey">
+				<Flex align="center">
+					<Flex.Item>Interface lock status:</Flex.Item>
+					<Flex.Item grow={1} />
+					<Flex.Item>
+						<Button
+							m={0}
+							color={locked ? 'red' : 'green'}
+							icon={locked ? 'lock' : 'unlock'}
+							content={locked ? 'Locked' : 'Unlocked'}
+							onClick={() => {
+								if (onLockStatusChange) {
+									onLockStatusChange(!locked);
+								}
+							}}
+						/>
+					</Flex.Item>
+				</Flex>
+			</NoticeBox>
+		);
+	}
+	// For everyone else
+	return (
+		<NoticeBox>
+			Swipe {accessText} to {locked ? 'unlock' : 'lock'} this interface.
+		</NoticeBox>
+	);
 };
