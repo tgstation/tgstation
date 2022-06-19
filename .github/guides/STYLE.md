@@ -492,7 +492,7 @@ When a macro can't be hygienic, such as in the case where a macro is preferred t
 
 As usual, exceptions exist--for instance, accessing a global like a subsystem within a macro is generally acceptable.
 
-### ...but if you must be hygienic, try to restrict the scope.
+### ...but if you must be unhygienic, try to restrict the scope.
 
 This guideline can make some code look extremely noisy if you are writing a large proc, or using the macro a large amount of times.
 
