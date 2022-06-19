@@ -415,8 +415,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	if(SSmapping.level_trait(T.z, ZTRAIT_STATION))
 		for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 			z_list += z
-		else
-			z_list += T.z
+	else
+		z_list += T.z
 	for(var/z in z_list)
 		if(!GLOB.gravity_generators["[z]"])
 			GLOB.gravity_generators["[z]"] = list()
