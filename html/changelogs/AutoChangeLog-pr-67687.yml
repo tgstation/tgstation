@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - qol: "The Cursed Dufflebag now tells nearby people when it takes a bite out of someone."
+  - balance: "The Cursed Dufflebag takes any food poisoned by any means, instead of just burnt messes."
+  - balance: "The Cursed Dufflebag deals out slightly less wounds now to people wearing armor and protection."
+  - balance: "The Cursed Dufflebag deals less damage if the mob it's attached to is dead, and doesn't heal if so."
+  - bugfix: "The Cursed Dufflebag no longer permanently makes you a pacifist and clumsy."
