@@ -64,6 +64,9 @@
 	. = ..()
 	if(has_buckled_mobs())
 		. += wheels_overlay
+	if(bell_attached)
+		. += "wheelchair_bell"
+
 
 /// I assign the ridable element in this so i don't have to fuss with hand wheelchairs and motor wheelchairs having different subtypes
 /obj/vehicle/ridden/wheelchair/proc/make_ridable()
@@ -129,8 +132,15 @@
 	wheelchair_unfolded.add_fingerprint(user)
 	qdel(src)
 
+
+///attaches bell to the wheelchair
 /obj/vehicle/ridden/wheelchair/proc/attach_bell(obj/structure/desk_bell/bell)
 	bell_attached = bell
-	src.generate_actions()
-	add_overlay("wheelchair_bell")
-	desc += "There is a small bell attached to the handle."
+	bell.forceMove(src)
+	generate_actions()
+	update_appearance()
+
+/obj/vehicle/ridden/wheelchair/examine(mob/user)
+	. =..()
+	if(bell_attached)
+		. += "there is a bell attached to the handle."

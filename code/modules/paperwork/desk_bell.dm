@@ -120,5 +120,4 @@
 	if(!do_after(usr, 0.5 SECONDS))
 		return
 	target.attach_bell(src)
-	qdel(src)
 	return ..()
