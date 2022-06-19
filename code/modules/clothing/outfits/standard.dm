@@ -333,9 +333,9 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/spellbook/spellbook = locate() in wizard.back
-	if(spellbook)
-		spellbook.owner = wizard.mind
+	var/obj/item/spellbook/new_spellbook = locate() in wizard.back
+	if(new_spellbook)
+		new_spellbook.owner = wizard.mind
 
 /datum/outfit/wizard/apprentice
 	name = "Wizard Apprentice"

@@ -698,7 +698,7 @@
 		else
 			to_chat(user, span_warning("The [name] does not recognize you as its owner and refuses to open!"))
 		return
-	. = ..()
+	return ..()
 
 /obj/item/spellbook/attackby(obj/item/O, mob/user, params)
 	if(!can_refund)
