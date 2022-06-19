@@ -12,6 +12,7 @@ const GeneticMakeupBufferInfo = (props, context) => {
 	if (!makeup) {
 		return <Box color="average">No stored subject data.</Box>;
 	}
+
 	return (
 		<>
 			<GeneticMakeupInfo makeup={makeup} />
@@ -133,7 +134,7 @@ const GeneticMakeupBufferInfo = (props, context) => {
 	);
 };
 
-const GeneticMakeupBuffers = (props, context) => {
+const GeneticMakeupBuffers = (_, context) => {
 	const { data, act } = useBackend(context);
 	const {
 		diskHasMakeup,
@@ -190,6 +191,7 @@ const GeneticMakeupBuffers = (props, context) => {
 		);
 		elements.push(element);
 	}
+
 	return (
 		<Section title="Genetic Makeup Buffers">
 			{!!geneticMakeupCooldown && (
@@ -205,9 +207,10 @@ const GeneticMakeupBuffers = (props, context) => {
 	);
 };
 
-const PulseEmitterProbs = (props, context) => {
+const PulseEmitterProbs = (_, context) => {
 	const { data } = useBackend(context);
 	const { stdDevAcc, stdDevStr } = data;
+
 	return (
 		<Section title="Probabilities" minHeight="100%">
 			<LabeledList>
@@ -261,6 +264,7 @@ const PulseBoard = (props, context) => {
 			buffer = [];
 		}
 	}
+
 	return (
 		<Section title={'Unique ' + name} minHeight="100%" position="relative">
 			<Box mx="-1px">{blocks}</Box>
@@ -268,9 +272,10 @@ const PulseBoard = (props, context) => {
 	);
 };
 
-const PulseSettings = (props, context) => {
+const PulseSettings = (_, context) => {
 	const { data, act } = useBackend(context);
 	const { pulseStrength, pulseDuration } = data;
+
 	return (
 		<Section title="Emitter Configuration" minHeight="100%">
 			<LabeledList>
@@ -310,12 +315,13 @@ const PulseSettings = (props, context) => {
 };
 
 export const DnaConsoleEnzymes = (props, context) => {
-	const { data, act } = useBackend(context);
+	const { data } = useBackend(context);
 	const { isScannerConnected } = data;
 	const { subjectBlock, type, name } = props;
 	if (!isScannerConnected) {
 		return <Section color="bad">DNA Scanner is not connected.</Section>;
 	}
+
 	return (
 		<>
 			<Stack mb={1}>

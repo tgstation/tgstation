@@ -283,6 +283,7 @@ export const useBackend = <TData>(context: any) => {
 /**
  * A tuple that contains the state and a setter function for it.
  */
+// eslint-disable-next-line no-unused-vars
 type StateWithSetter<T> = [T, (nextState: T) => void];
 
 /**

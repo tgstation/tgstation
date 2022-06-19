@@ -5,7 +5,7 @@ import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 import { MutationInfo } from './MutationInfo';
 import { STORAGE_CONS_SUBMODE_CHROMOSOMES, STORAGE_CONS_SUBMODE_MUTATIONS, STORAGE_DISK_SUBMODE_ENZYMES, STORAGE_DISK_SUBMODE_MUTATIONS, STORAGE_MODE_ADVINJ, STORAGE_MODE_CONSOLE, STORAGE_MODE_DISK } from './constants';
 
-export const DnaConsoleStorage = (props, context) => {
+export const DnaConsoleStorage = (_, context) => {
 	const { data, act } = useBackend(context);
 	const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view;
 	const { diskMakeupBuffer, diskHasMakeup } = data;
@@ -43,7 +43,7 @@ export const DnaConsoleStorage = (props, context) => {
 	);
 };
 
-const DnaConsoleAdvancedInjectors = (props, context) => {
+const DnaConsoleAdvancedInjectors = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { maxAdvInjectors, isInjectorReady } = data;
 	const advInjectors = data.storage.injector ?? [];
@@ -102,7 +102,7 @@ const DnaConsoleAdvancedInjectors = (props, context) => {
 	);
 };
 
-const StorageButtons = (props, context) => {
+const StorageButtons = (_, context) => {
 	const { data, act } = useBackend(context);
 	const { hasDisk } = data;
 	const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view;

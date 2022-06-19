@@ -1,7 +1,8 @@
 import { Button, Stack, Box } from '../../components';
 
-export const CircuitInfo = (props, context) => {
-	const { name, desc, notices, ...rest } = props;
+export const CircuitInfo = (props) => {
+	const { desc, notices, ...rest } = props;
+
 	return (
 		<Box {...rest}>
 			<Stack fill vertical justify="space-around">

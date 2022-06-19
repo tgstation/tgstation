@@ -3,9 +3,10 @@ import { Button, LabeledList } from '../../components';
 import { OperatorData } from './data';
 import { toFixed } from 'common/math';
 
-export const PowerModulesPane = (props, context) => {
+export const PowerModulesPane = (_, context) => {
 	const { act, data } = useBackend<OperatorData>(context);
 	const { mech_equipment, mineral_material_amount } = data;
+
 	return (
 		<LabeledList>
 			{mech_equipment['power'].map((module, i) => (

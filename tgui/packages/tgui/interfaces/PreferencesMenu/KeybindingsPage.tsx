@@ -58,11 +58,13 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
  */
 const DOM_KEY_LOCATION_NUMPAD = 3;
 
+// eslint-disable-next-line no-unused-vars
 const sortKeybindings = sortBy(([_, keybinding]: [string, Keybinding]) => {
 	return keybinding.name;
 });
 
 const sortKeybindingsByCategory = sortBy(
+	// eslint-disable-next-line no-unused-vars
 	([category, _]: [string, Record<string, Keybinding>]) => {
 		return category;
 	}
@@ -98,6 +100,7 @@ const formatKeyboardEvent = (event: KeyboardEvent): string => {
 const moveToBottom = (entries: [string, unknown][], findCategory: string) => {
 	entries.push(
 		entries.splice(
+			// eslint-disable-next-line no-unused-vars
 			entries.findIndex(([category, _]) => {
 				return category === findCategory;
 			}),

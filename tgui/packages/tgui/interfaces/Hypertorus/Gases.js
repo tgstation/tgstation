@@ -118,7 +118,7 @@ const GasList = (props, context) => {
 	);
 };
 
-export const HypertorusGases = (props, context) => {
+export const HypertorusGases = (_, context) => {
 	const { data } = useBackend(context);
 
 	const { fusion_gases, moderator_gases } = data;

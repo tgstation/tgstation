@@ -187,7 +187,6 @@ const constraintPosition = (pos, size) => {
 export const dragStartHandler = event => {
   logger.log('drag start');
   dragging = true;
-  let windowPosition = getWindowPosition();
   dragPointOffset = vecSubtract(
     [event.screenX, event.screenY],
     getWindowPosition());

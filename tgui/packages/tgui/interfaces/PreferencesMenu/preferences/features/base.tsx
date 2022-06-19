@@ -39,6 +39,7 @@ export type FeatureValueProps<
 > = {
 	act: typeof sendAct;
 	featureId: string;
+	// eslint-disable-next-line no-unused-vars
 	handleSetValue: (newValue: TSending) => void;
 	serverData: TServerData | undefined;
 	shrink?: boolean;
@@ -151,6 +152,7 @@ export const StandardizedDropdown = (props: {
 	choices: string[];
 	disabled?: boolean;
 	displayNames: Record<string, InfernoNode>;
+	// eslint-disable-next-line no-unused-vars
 	onSetValue: (newValue: string) => void;
 	value: string;
 }) => {

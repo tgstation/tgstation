@@ -48,7 +48,8 @@ export const MaintMode = (props, context) => {
 };
 
 const MainPanel = (props, context) => {
-	const { act, data } = useBackend<MaintData>(context);
+	const { data } = useBackend<MaintData>(context);
+	// eslint-disable-next-line no-unused-vars
 	const [screen, setPanel] = useLocalState(
 		context,
 		'screen',
@@ -79,7 +80,8 @@ const MainPanel = (props, context) => {
 };
 
 const MaintEnabled = (props, context) => {
-	const { act, data } = useBackend<MaintData>(context);
+	const { act } = useBackend<MaintData>(context);
+	// eslint-disable-next-line no-unused-vars
 	const [screen, setPanel] = useLocalState(
 		context,
 		'screen',
@@ -229,7 +231,7 @@ const AccessPanel = (props, context) => {
 					</Stack.Item>
 				</Stack>
 			</Stack.Item>
-			{operation_req_access.map((code, i) => (
+			{operation_req_access.map((code) => (
 				<Stack.Item key={code.name}>
 					<Stack fill>
 						<Stack.Item grow={1}>
@@ -252,7 +254,7 @@ const AccessPanel = (props, context) => {
 					</Stack>
 				</Stack.Item>
 			))}
-			{idcard_access.map((code, i) => (
+			{idcard_access.map((code) => (
 				<Stack.Item key={code.name}>
 					<Stack fill>
 						<Stack.Item grow={1}>

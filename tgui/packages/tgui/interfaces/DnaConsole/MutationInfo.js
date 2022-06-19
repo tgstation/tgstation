@@ -15,7 +15,7 @@ const isSameMutation = (a, b) => {
 
 const ChromosomeInfo = (props, context) => {
 	const { mutation, disabled } = props;
-	const { data, act } = useBackend(context);
+	const { act } = useBackend(context);
 	if (mutation.CanChromo === CHROMOSOME_NEVER) {
 		return <Box color="label">No compatible chromosomes</Box>;
 	}
@@ -57,7 +57,7 @@ const ChromosomeInfo = (props, context) => {
 
 const MutationCombiner = (props, context) => {
 	const { mutations = [], source } = props;
-	const { act, data } = useBackend(context);
+	const { act } = useBackend(context);
 
 	const brefFromName = (name) => {
 		return mutations.find((mutation) => mutation.Name === name)?.ByondRef;
@@ -112,6 +112,7 @@ export const MutationInfo = (props, context) => {
 		uniqBy((mutation) => mutation.Name),
 		filter((x) => x.Name !== mutation.Name),
 	])([...diskMutations, ...mutationStorage]);
+
 	return (
 		<>
 			<LabeledList>

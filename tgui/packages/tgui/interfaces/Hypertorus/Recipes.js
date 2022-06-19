@@ -98,7 +98,7 @@ const activeChange = {
 };
 
 const MemoRow = (props) => {
-	const { active, children, key, ...rest } = props;
+	const { active, children, ...rest } = props;
 	return (
 		<Table.Row
 			className={`hypertorus-recipes__row${
@@ -174,7 +174,7 @@ export const HypertorusRecipes = (props) => {
 				</MemoRow>
 				{selectable_fuels
 					.filter((d) => d.id)
-					.map((recipe, index) => {
+					.map((recipe) => {
 						const active = recipe.id === selected_fuel_id;
 						return (
 							<MemoRow key={recipe.id} active={active}>

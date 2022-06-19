@@ -13,6 +13,7 @@ type SkinToneServerData = FeatureChoicedServerData & {
 };
 
 const sortHexValues = sortBy<[string, HexValue]>(
+	// eslint-disable-next-line no-unused-vars
 	([_, hexValue]) => -hexValue.lightness
 );
 

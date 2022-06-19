@@ -128,17 +128,17 @@ window.addEventListener('focusin', e => {
   }
 });
 
-window.addEventListener('focusout', e => {
+window.addEventListener('focusout', () => {
   lastVisitedNode = null;
   setWindowFocus(false, true);
 });
 
-window.addEventListener('blur', e => {
+window.addEventListener('blur', () => {
   lastVisitedNode = null;
   setWindowFocus(false, true);
 });
 
-window.addEventListener('beforeunload', e => {
+window.addEventListener('beforeunload', () => {
   setWindowFocus(false);
 });
 

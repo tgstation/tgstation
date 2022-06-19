@@ -19,7 +19,9 @@ export const suspendRenderer = () => {
 };
 
 type CreateRenderer = <T extends unknown[] = [unknown]>(
+  // eslint-disable-next-line no-unused-vars
   getVNode?: (...args: T) => any,
+  // eslint-disable-next-line no-unused-vars
 ) => (...args: T) => void;
 
 export const createRenderer: CreateRenderer = (getVNode) => (...args) => {

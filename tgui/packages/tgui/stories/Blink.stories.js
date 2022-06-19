@@ -7,16 +7,14 @@
 import { Blink, Section } from '../components';
 
 export const meta = {
-  title: 'Blink',
-  render: () => <Story />,
+	title: 'Blink',
+	render: () => <Story />,
 };
 
-const Story = (props, context) => {
-  return (
-    <Section>
-      <Blink>
-        Blink
-      </Blink>
-    </Section>
-  );
+const Story = () => {
+	return (
+		<Section>
+			<Blink>Blink</Blink>
+		</Section>
+	);
 };

@@ -23,7 +23,7 @@ const ComboKnob = (props, context) => {
 		...rest
 	} = props;
 
-	const { act, data } = useBackend(context);
+	const { act } = useBackend(context);
 
 	const iconProps = {};
 	if (flipIcon) {
@@ -87,8 +87,9 @@ const ComboKnob = (props, context) => {
 	);
 };
 
-export const HypertorusSecondaryControls = (props, context) => {
-	const { act, data } = useBackend(context);
+export const HypertorusSecondaryControls = (_, context) => {
+	const { data } = useBackend(context);
+
 	return (
 		<Section title="Reactor Control">
 			<LabeledControls justify="space-around" wrap>
@@ -151,9 +152,10 @@ export const HypertorusSecondaryControls = (props, context) => {
 	);
 };
 
-export const HypertorusWasteRemove = (props, context) => {
+export const HypertorusWasteRemove = (_, context) => {
 	const { act, data } = useBackend(context);
-	const filterTypes = data.filter_types || [];
+	const { filter_types = [] } = data;
+
 	return (
 		<Section title="Output Control">
 			<LabeledList>
@@ -203,7 +205,7 @@ export const HypertorusWasteRemove = (props, context) => {
 							Filter from moderator mix:
 						</>
 					}>
-					{filterTypes.map((filter) => (
+					{filter_types.map((filter) => (
 						<Button
 							key={filter.gas_id}
 							icon={filter.enabled ? 'check-square-o' : 'square-o'}

@@ -18,4 +18,4 @@ export const HoverHelp = (props) => (
 );
 
 // When no hover help is available, but we want a placeholder for spacing
-export const HelpDummy = (props) => <Icon name="" width="12px" mr="6px" />;
+export const HelpDummy = () => <Icon name="" width="12px" mr="6px" />;

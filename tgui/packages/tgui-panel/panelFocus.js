@@ -18,30 +18,30 @@ const MIN_SELECTION_DISTANCE = 10;
 const deferredFocusMap = () => setImmediate(() => focusMap());
 
 export const setupPanelFocusHacks = () => {
-  let focusStolen = false;
-  let clickStartPos = null;
-  window.addEventListener('focusin', e => {
-    focusStolen = canStealFocus(e.target);
-  });
-  window.addEventListener('mousedown', e => {
-    clickStartPos = [e.screenX, e.screenY];
-  });
-  window.addEventListener('mouseup', e => {
-    if (clickStartPos) {
-      const clickEndPos = [e.screenX, e.screenY];
-      const dist = vecLength(vecSubtract(clickEndPos, clickStartPos));
-      if (dist >= MIN_SELECTION_DISTANCE) {
-        focusStolen = true;
-      }
-    }
-    if (!focusStolen) {
-      deferredFocusMap();
-    }
-  });
-  globalEvents.on('keydown', key => {
-    if (key.isModifierKey()) {
-      return;
-    }
-    deferredFocusMap();
-  });
+	let focusStolen = false;
+	let clickStartPos = null;
+	window.addEventListener('focusin', (e) => {
+		focusStolen = canStealFocus(e.target);
+	});
+	window.addEventListener('mousedown', (e) => {
+		clickStartPos = [e.screenX, e.screenY];
+	});
+	window.addEventListener('mouseup', (e) => {
+		if (clickStartPos) {
+			const clickEndPos = [e.screenX, e.screenY];
+			const dist = vecLength(vecSubtract(clickEndPos, clickStartPos));
+			if (dist >= MIN_SELECTION_DISTANCE) {
+				focusStolen = true;
+			}
+		}
+		if (!focusStolen) {
+			deferredFocusMap();
+		}
+	});
+	globalEvents.on('keydown', (key) => {
+		if (key.isModifierKey()) {
+			return;
+		}
+		deferredFocusMap();
+	});
 };

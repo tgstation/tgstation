@@ -16,10 +16,10 @@ export const pingReply = createAction('ping/reply');
 export const pingSoft = createAction('ping/soft');
 
 export const pingSuccess = createAction('ping/success', (ping) => ({
-  payload: {
-    lastId: ping.id,
-    roundtrip: (Date.now() - ping.sentAt) * 0.5,
-  },
+	payload: {
+		lastId: ping.id,
+		roundtrip: (Date.now() - ping.sentAt) * 0.5,
+	},
 }));
 
 export const pingFail = createAction('ping/fail');

@@ -32,7 +32,7 @@ export class ObjectComponent extends Component {
 		window.addEventListener('mouseup', this.handleStopDrag);
 	}
 
-	handleStopDrag(e) {
+	handleStopDrag() {
 		const { dragPos } = this.state;
 		const { index, act = () => _ } = this.props;
 		if (dragPos) {
@@ -91,7 +91,6 @@ export class ObjectComponent extends Component {
 			color = 'blue',
 			removable,
 			ui_buttons,
-			locations,
 			onPortUpdated = noop,
 			onPortLoaded = noop,
 			onPortMouseDown = noop,

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { BooleanLike, classes } from 'common/react';
 import { Component } from 'inferno';
 import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox, Dimmer, Icon } from '../../components';

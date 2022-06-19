@@ -61,7 +61,7 @@ export const relayMiddleware = store => {
     });
   }
   return next => action => {
-    const { type, payload, relayed } = action;
+    const { type, relayed } = action;
     if (type === openExternalBrowser.type) {
       window.open(location.href + '?external', '_blank');
       return;

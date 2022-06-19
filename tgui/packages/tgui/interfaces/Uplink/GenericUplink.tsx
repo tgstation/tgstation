@@ -6,7 +6,7 @@ type GenericUplinkProps = {
 	currency?: string | JSX.Element;
 	categories: string[];
 	items: Item[];
-
+	// eslint-disable-next-line no-unused-vars
 	handleBuy: (item: Item) => void;
 };
 
@@ -101,10 +101,11 @@ export type ItemListProps = {
 	compactMode: BooleanLike;
 	items: Item[];
 
+	// eslint-disable-next-line no-unused-vars
 	handleBuy: (item: Item) => void;
 };
 
-const ItemList = (props: ItemListProps, context: any) => {
+const ItemList = (props: ItemListProps) => {
 	const { compactMode, items, handleBuy } = props;
 	return (
 		<Stack vertical>
@@ -117,7 +118,7 @@ const ItemList = (props: ItemListProps, context: any) => {
 							<Button
 								content={item.cost}
 								disabled={item.disabled}
-								onClick={(e) => handleBuy(item)}
+								onClick={() => handleBuy(item)}
 							/>
 						}>
 						{compactMode ? null : item.desc}

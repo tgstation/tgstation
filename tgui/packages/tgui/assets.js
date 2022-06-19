@@ -11,7 +11,7 @@ export const resolveAsset = name => (
   loadedMappings[name] || name
 );
 
-export const assetMiddleware = store => next => action => {
+export const assetMiddleware = () => next => action => {
   const { type, payload } = action;
   if (type === 'asset/stylesheet') {
     Byond.loadCss(payload);

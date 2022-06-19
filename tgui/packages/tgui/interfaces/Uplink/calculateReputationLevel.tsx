@@ -121,7 +121,6 @@ export const calculateReputationLevel = (
 	progression_points: number,
 	textOnly: boolean
 ) => {
-	const minutes = progression_points / 600;
 	const displayedProgression = calculateProgression(progression_points);
 	const reputation = getReputation(progression_points);
 	if (textOnly) {

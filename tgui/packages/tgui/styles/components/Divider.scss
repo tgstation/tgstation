@@ -10,18 +10,18 @@ $thickness: base.em(2px) !default;
 $spacing: 0.5em;
 
 .Divider--horizontal {
-  margin: $spacing 0;
+	margin: $spacing 0;
 
-  &:not(.Divider--hidden) {
-    border-top: $thickness solid $color;
-  }
+	&:not(.Divider--hidden) {
+		border-top: $thickness solid $color;
+	}
 }
 
 .Divider--vertical {
-  height: 100%;
-  margin: 0 $spacing;
+	height: 100%;
+	margin: 0 $spacing;
 
-  &:not(.Divider--hidden) {
-    border-left: $thickness solid $color;
-  }
+	&:not(.Divider--hidden) {
+		border-left: $thickness solid $color;
+	}
 }

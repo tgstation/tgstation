@@ -11,7 +11,7 @@ export const loadChat = createAction('chat/load');
 export const rebuildChat = createAction('chat/rebuild');
 export const updateMessageCount = createAction('chat/updateMessageCount');
 export const addChatPage = createAction('chat/addPage', () => ({
-  payload: createPage(),
+	payload: createPage(),
 }));
 export const changeChatPage = createAction('chat/changePage');
 export const updateChatPage = createAction('chat/updatePage');

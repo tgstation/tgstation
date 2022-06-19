@@ -9,9 +9,10 @@ import { UtilityModulesPane } from './UtilityModulesPane';
 import { PowerModulesPane } from './PowerModulesPane';
 import { ArmPane } from './ArmPane';
 
-export const OperatorMode = (props, context) => {
-	const { act, data } = useBackend<OperatorData>(context);
+export const OperatorMode = (_, context) => {
+	const { data } = useBackend<OperatorData>(context);
 	const { left_arm_weapon, right_arm_weapon, mech_view } = data;
+
 	return (
 		<Stack fill>
 			<Stack.Item grow>

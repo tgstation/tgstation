@@ -32,6 +32,7 @@ const hotKeysAcquired = [
 const keyState: Record<string, boolean> = {};
 
 // Custom listeners for key events
+// eslint-disable-next-line no-unused-vars
 const keyListeners: ((key: KeyEvent) => void)[] = [];
 
 /**
@@ -201,6 +202,7 @@ export const setupHotKeys = () => {
  * @returns A callback to stop listening
  */
 export const listenForKeyEvents = (
+  // eslint-disable-next-line no-unused-vars
   callback: (key: KeyEvent) => void,
 ): () => void => {
   keyListeners.push(callback);

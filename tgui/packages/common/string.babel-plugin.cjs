@@ -19,55 +19,55 @@
 /**
  * Removes excess whitespace and indentation from the string.
  */
-const multiline = str => {
-  const lines = str.split('\n');
-  // Determine base indentation
-  let minIndent;
-  for (let line of lines) {
-    for (let indent = 0; indent < line.length; indent++) {
-      const char = line[indent];
-      if (char !== ' ') {
-        if (minIndent === undefined || indent < minIndent) {
-          minIndent = indent;
-        }
-        break;
-      }
-    }
-  }
-  if (!minIndent) {
-    minIndent = 0;
-  }
-  // Remove this base indentation and trim the resulting string
-  // from both ends.
-  return lines
-    .map(line => line.substr(minIndent).trimRight())
-    .join('\n')
-    .trim();
+const multiline = (str) => {
+	const lines = str.split('\n');
+	// Determine base indentation
+	let minIndent;
+	for (let line of lines) {
+		for (let indent = 0; indent < line.length; indent++) {
+			const char = line[indent];
+			if (char !== ' ') {
+				if (minIndent === undefined || indent < minIndent) {
+					minIndent = indent;
+				}
+				break;
+			}
+		}
+	}
+	if (!minIndent) {
+		minIndent = 0;
+	}
+	// Remove this base indentation and trim the resulting string
+	// from both ends.
+	return lines
+		.map((line) => line.substr(minIndent).trimRight())
+		.join('\n')
+		.trim();
 };
 
-const StringPlugin = ref => {
-  return {
-    visitor: {
-      TaggedTemplateExpression: path => {
-        if (path.node.tag.name === 'multiline') {
-          const { quasi } = path.node;
-          if (quasi.expressions.length > 0) {
-            throw new Error('Multiline tag does not support expressions!');
-          }
-          if (quasi.quasis.length > 1) {
-            throw new Error('Quasis is longer than 1');
-          }
-          const { value } = quasi.quasis[0];
-          value.raw = multiline(value.raw);
-          value.cooked = multiline(value.cooked);
-          path.replaceWith(quasi);
-        }
-      },
-    },
-  };
+const StringPlugin = () => {
+	return {
+		visitor: {
+			TaggedTemplateExpression: (path) => {
+				if (path.node.tag.name === 'multiline') {
+					const { quasi } = path.node;
+					if (quasi.expressions.length > 0) {
+						throw new Error('Multiline tag does not support expressions!');
+					}
+					if (quasi.quasis.length > 1) {
+						throw new Error('Quasis is longer than 1');
+					}
+					const { value } = quasi.quasis[0];
+					value.raw = multiline(value.raw);
+					value.cooked = multiline(value.cooked);
+					path.replaceWith(quasi);
+				}
+			},
+		},
+	};
 };
 
 module.exports = {
-  __esModule: true,
-  default: StringPlugin,
+	__esModule: true,
+	default: StringPlugin,
 };

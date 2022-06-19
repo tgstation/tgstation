@@ -18,7 +18,7 @@ const binaryInsertPreference = binaryInsertWith<PreferenceChild>(
 
 const sortByName = sortBy<[string, PreferenceChild[]]>(([name]) => name);
 
-export const GamePreferencesPage = (props, context) => {
+export const GamePreferencesPage = (_, context) => {
 	const { act, data } = useBackend<PreferencesMenuData>(context);
 
 	const gamePreferences: Record<string, PreferenceChild[]> = {};

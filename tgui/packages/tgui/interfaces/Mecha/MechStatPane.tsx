@@ -3,7 +3,7 @@ import { Stack, Button, Section, Box, ProgressBar, LabeledList } from '../../com
 import { KelvinZeroCelcius, OperatorData } from './data';
 import { toFixed } from 'common/math';
 
-export const MechStatPane = (props, context) => {
+export const MechStatPane = (_, context) => {
 	const { act, data } = useBackend<OperatorData>(context);
 	const {
 		name,
@@ -18,6 +18,7 @@ export const MechStatPane = (props, context) => {
 		mechflag_keys,
 		port_connected,
 	} = data;
+
 	return (
 		<Stack fill vertical>
 			<Stack.Item>
@@ -129,9 +130,10 @@ const GetTempFormat = (temp) => {
 	);
 };
 
-const EnviromentalAir = (props, context) => {
-	const { act, data } = useBackend<OperatorData>(context);
+const EnviromentalAir = (_, context) => {
+	const { data } = useBackend<OperatorData>(context);
 	const { airtank_pressure, airtank_temp } = data;
+
 	if (airtank_temp === null) {
 		return <Box>No air tank detected</Box>;
 	} else {
@@ -148,9 +150,10 @@ const EnviromentalAir = (props, context) => {
 	}
 };
 
-const DNABody = (props, context) => {
+const DNABody = (_, context) => {
 	const { act, data } = useBackend<OperatorData>(context);
 	const { dna_lock } = data;
+
 	if (dna_lock === null) {
 		return (
 			<LabeledList>
@@ -184,9 +187,10 @@ const DNABody = (props, context) => {
 	}
 };
 
-const PowerBar = (props, context) => {
-	const { act, data } = useBackend<OperatorData>(context);
+const PowerBar = (_, context) => {
+	const { data } = useBackend<OperatorData>(context);
 	const { power_level, power_max } = data;
+
 	if (power_max === null) {
 		return <Box content={'No Power cell installed!'} />;
 	} else {

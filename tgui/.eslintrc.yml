@@ -482,11 +482,11 @@ rules:
   ## Enforce consistent spacing before blocks
   space-before-blocks: [error, always]
   ## Enforce consistent spacing before function definition opening parenthesis
-  space-before-function-paren: [error, {
-    anonymous: always,
-    named: never,
-    asyncArrow: always,
-  }]
+  # space-before-function-paren: [error, {
+  #   anonymous: always,
+  #   named: never,
+  #   asyncArrow: always,
+  # }]
   ## Enforce consistent spacing inside parentheses
   space-in-parens: [error, never]
   ## Require spacing around infix operators

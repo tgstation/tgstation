@@ -5,7 +5,7 @@ import { Modal } from '../types';
  * Input value only triggers a rerender on setEdited.
  */
 export const handleInput = function (this: Modal, _, value: string) {
-  this.fields.value = value;
-  this.events.onRadioPrefix();
-  this.events.onSetSize(value.length);
+	this.fields.value = value;
+	this.events.onRadioPrefix();
+	this.events.onSetSize(value.length);
 };

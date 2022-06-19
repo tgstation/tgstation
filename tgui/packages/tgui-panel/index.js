@@ -27,87 +27,90 @@ perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
 
 const store = configureStore({
-  reducer: combineReducers({
-    audio: audioReducer,
-    chat: chatReducer,
-    game: gameReducer,
-    ping: pingReducer,
-    settings: settingsReducer,
-  }),
-  middleware: {
-    pre: [
-      chatMiddleware,
-      pingMiddleware,
-      telemetryMiddleware,
-      settingsMiddleware,
-      audioMiddleware,
-      gameMiddleware,
-    ],
-  },
+	reducer: combineReducers({
+		audio: audioReducer,
+		chat: chatReducer,
+		game: gameReducer,
+		ping: pingReducer,
+		settings: settingsReducer,
+	}),
+	middleware: {
+		pre: [
+			chatMiddleware,
+			pingMiddleware,
+			telemetryMiddleware,
+			settingsMiddleware,
+			audioMiddleware,
+			gameMiddleware,
+		],
+	},
 });
 
 const renderApp = createRenderer(() => {
-  const { Panel } = require('./Panel');
-  return (
-    <StoreProvider store={store}>
-      <Panel />
-    </StoreProvider>
-  );
+	const { Panel } = require('./Panel');
+	return (
+		<StoreProvider store={store}>
+			<Panel />
+		</StoreProvider>
+	);
 });
 
 const setupApp = () => {
-  // Delay setup
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupApp);
-    return;
-  }
+	// Delay setup
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupApp);
+		return;
+	}
 
-  setupGlobalEvents({
-    ignoreWindowFocus: true,
-  });
-  setupPanelFocusHacks();
-  captureExternalLinks();
+	setupGlobalEvents({
+		ignoreWindowFocus: true,
+	});
+	setupPanelFocusHacks();
+	captureExternalLinks();
 
-  // Re-render UI on store updates
-  store.subscribe(renderApp);
+	// Re-render UI on store updates
+	store.subscribe(renderApp);
 
-  // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+	// Dispatch incoming messages as store actions
+	Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
-  // Unhide the panel
-  Byond.winset('output', {
-    'is-visible': false,
-  });
-  Byond.winset('browseroutput', {
-    'is-visible': true,
-    'is-disabled': false,
-    'pos': '0x0',
-    'size': '0x0',
-  });
+	// Unhide the panel
+	Byond.winset('output', {
+		'is-visible': false,
+	});
+	Byond.winset('browseroutput', {
+		'is-visible': true,
+		'is-disabled': false,
+		'pos': '0x0',
+		'size': '0x0',
+	});
 
-  // Resize the panel to match the non-browser output
-  Byond.winget('output').then(output => {
-    Byond.winset('browseroutput', {
-      'size': output.size,
-    });
-  });
+	// Resize the panel to match the non-browser output
+	Byond.winget('output').then((output) => {
+		Byond.winset('browseroutput', {
+			'size': output.size,
+		});
+	});
 
-  // Enable hot module reloading
-  if (module.hot) {
-    setupHotReloading();
-    module.hot.accept([
-      './audio',
-      './chat',
-      './game',
-      './Notifications',
-      './Panel',
-      './ping',
-      './settings',
-      './telemetry',
-    ], () => {
-      renderApp();
-    });
-  }
+	// Enable hot module reloading
+	if (module.hot) {
+		setupHotReloading();
+		module.hot.accept(
+			[
+				'./audio',
+				'./chat',
+				'./game',
+				'./Notifications',
+				'./Panel',
+				'./ping',
+				'./settings',
+				'./telemetry',
+			],
+			() => {
+				renderApp();
+			}
+		);
+	}
 };
 
 setupApp();

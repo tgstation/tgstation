@@ -11,7 +11,7 @@
 		"tgui:analyze": "webpack --analyze",
 		"tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
 		"tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
-		"tgui:prettier": "prettierx --check packages/tgui/interfaces",
+		"tgui:prettier": "prettierx --check packages",
 		"tgui:sonar": "eslint packages --ext .js,.cjs,.ts,.tsx -c .eslintrc-sonar.yml",
 		"tgui:tsc": "tsc",
 		"tgui:test": "jest --watch",

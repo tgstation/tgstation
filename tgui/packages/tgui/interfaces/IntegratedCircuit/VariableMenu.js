@@ -176,7 +176,7 @@ export class VariableMenu extends Component {
 	}
 }
 
-const IconButton = (props, context) => {
+const IconButton = (props) => {
 	return (
 		<Stack fill align="center">
 			<Stack.Item grow basis="content">

@@ -35,35 +35,35 @@ $bg-lightness: -15% !default;
 $fg-lightness: 10% !default;
 
 @function bg($color) {
-  @return color.scale($color, $lightness: $bg-lightness);
+	@return color.scale($color, $lightness: $bg-lightness);
 }
 
 @function fg($color) {
-  @return color.scale($color, $lightness: $fg-lightness);
+	@return color.scale($color, $lightness: $fg-lightness);
 }
 
 // Mappings of color names
 
 $_gen_map: (
-  'black': $black,
-  'white': $white,
-  'red': $red,
-  'orange': $orange,
-  'yellow': $yellow,
-  'olive': $olive,
-  'green': $green,
-  'teal': $teal,
-  'blue': $blue,
-  'violet': $violet,
-  'purple': $purple,
-  'pink': $pink,
-  'brown': $brown,
-  'grey': $grey,
-  'light-grey': $light-grey,
-  'good': $good,
-  'average': $average,
-  'bad': $bad,
-  'label': $label,
+	'black': $black,
+	'white': $white,
+	'red': $red,
+	'orange': $orange,
+	'yellow': $yellow,
+	'olive': $olive,
+	'green': $green,
+	'teal': $teal,
+	'blue': $blue,
+	'violet': $violet,
+	'purple': $purple,
+	'pink': $pink,
+	'brown': $brown,
+	'grey': $grey,
+	'light-grey': $light-grey,
+	'good': $good,
+	'average': $average,
+	'bad': $bad,
+	'label': $label,
 );
 
 // Foreground color names for which to generate a color map
@@ -73,14 +73,20 @@ $bg-map-keys: map.keys($_gen_map) !default;
 
 $fg-map: ();
 @each $color-name in $fg-map-keys {
-  $fg-map: map-merge($fg-map, (
-    $color-name: fg(map.get($_gen_map, $color-name)),
-  ));
+	$fg-map: map-merge(
+		$fg-map,
+		(
+			$color-name: fg(map.get($_gen_map, $color-name)),
+		)
+	);
 }
 
 $bg-map: ();
 @each $color-name in $bg-map-keys {
-  $bg-map: map-merge($bg-map, (
-    $color-name: bg(map.get($_gen_map, $color-name)),
-  ));
+	$bg-map: map-merge(
+		$bg-map,
+		(
+			$color-name: bg(map.get($_gen_map, $color-name)),
+		)
+	);
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Component, InfernoNode } from 'inferno';
 import { resolveAsset } from '../../assets';
 import { fetchRetry } from '../../http';

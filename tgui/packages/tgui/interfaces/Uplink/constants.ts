@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export enum ObjectiveState {
 	Inactive = 1,
 	Active = 2,

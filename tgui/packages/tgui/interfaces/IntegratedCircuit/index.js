@@ -115,7 +115,7 @@ export class IntegratedCircuit extends Component {
 
 	// mouse up called whilst over a port. This means we can check if selectedPort
 	// exists and do perform some actions if it does.
-	handlePortUp(portIndex, componentId, port, isOutput, event) {
+	handlePortUp(portIndex, componentId, port, isOutput) {
 		const { act, data: uiData } = useBackend(this.context);
 		const { selectedPort } = this.state;
 		if (!selectedPort) {
@@ -175,7 +175,7 @@ export class IntegratedCircuit extends Component {
 		}));
 	}
 
-	handlePortRelease(event) {
+	handlePortRelease() {
 		window.removeEventListener('mouseup', this.handlePortRelease);
 
 		// This will let players release their mouse when dragging
@@ -238,7 +238,7 @@ export class IntegratedCircuit extends Component {
 		}
 	}
 
-	handleMouseUp(event) {
+	handleMouseUp() {
 		const { act } = useBackend(this.context);
 		const { backgroundX, backgroundY } = this.state;
 		if (backgroundX && backgroundY) {
@@ -500,15 +500,15 @@ export class IntegratedCircuit extends Component {
 							<VariableMenu
 								variables={variables}
 								types={global_basic_types}
-								onClose={(event) => this.setState({ variableMenuOpen: false })}
-								onAddVariable={(name, type, asList, event) =>
+								onClose={() => this.setState({ variableMenuOpen: false })}
+								onAddVariable={(name, type, asList) =>
 									act('add_variable', {
 										variable_name: name,
 										variable_datatype: type,
 										is_list: asList,
 									})
 								}
-								onRemoveVariable={(name, event) =>
+								onRemoveVariable={(name) =>
 									act('remove_variable', {
 										variable_name: name,
 									})
@@ -537,7 +537,7 @@ export class IntegratedCircuit extends Component {
 								components={
 									(stored_designs && Object.keys(stored_designs)) || []
 								}
-								onClose={(event) => this.setState({ componentMenuOpen: false })}
+								onClose={() => this.setState({ componentMenuOpen: false })}
 								onMouseDownComponent={this.handleMouseDownComponent}
 								showAll={is_admin}
 							/>

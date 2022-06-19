@@ -3,10 +3,11 @@ import { Button, NumberInput, LabeledList } from '../../components';
 import { OperatorData } from './data';
 import { toFixed } from 'common/math';
 
-export const RadioPane = (props, context) => {
+export const RadioPane = (_, context) => {
 	const { act, data } = useBackend<OperatorData>(context);
 	const { microphone, speaker, minfreq, maxfreq, frequency } =
 		data.mech_electronics;
+
 	return (
 		<LabeledList>
 			<LabeledList.Item label="Microphone">

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { exhaustiveCheck } from 'common/exhaustive';
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Stack } from '../../components';

@@ -6,6 +6,7 @@ export const PageButton = <P extends unknown>(props: {
 	page: P;
 	otherActivePages?: P[];
 
+	// eslint-disable-next-line no-unused-vars
 	setPage: (page: P) => void;
 
 	children?: InfernoNode;

@@ -6,13 +6,13 @@
   */
 
 .Paper {
-  &__Stamp {
-    position: absolute;
-    pointer-events: none;
-    user-select: none;
-  }
-  &__Page {
-    word-break: break-word;
-    word-wrap: break-word;
-  }
+	&__Stamp {
+		position: absolute;
+		pointer-events: none;
+		user-select: none;
+	}
+	&__Page {
+		word-break: break-word;
+		word-wrap: break-word;
+	}
 }

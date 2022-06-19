@@ -47,8 +47,8 @@ export const configureStore = (options = {}) => {
   return store;
 };
 
-const loggingMiddleware = store => next => action => {
-  const { type, payload } = action;
+const loggingMiddleware = () => next => action => {
+  const { type } = action;
   if (type === 'update' || type === 'backend/update') {
     logger.debug('action', { type });
   }
