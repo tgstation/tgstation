@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/dropped(mob/user, silent)
 	. = ..()
 	for(var/language in language_list)
-		remove_from.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
+		user.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
@@ -385,7 +385,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	var/mob/mob_loc = loc
 	if(istype(mob_loc) && mob_loc.get_item_by_slot(slot_flags) == src)
 		for(var/language in old_language_list)
-			remove_from.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
+			mob_loc.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
 		grant_headset_langauges(mob_loc)
 
