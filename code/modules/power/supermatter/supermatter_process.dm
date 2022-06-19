@@ -136,7 +136,7 @@
 	animated = TRUE
 
 /obj/machinery/power/supermatter_crystal/proc/check_special_delamination() // In priority of devastation.
-	if(cascade_initiated) // Supermatter cascade goal.
+	if(cascade_initiated) // Supermatter cascade totter goal.
 		return "cascade"
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)// Singularity
 		return "singularity"
@@ -183,13 +183,18 @@
 			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_TESLA_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
 			return
 /// Sucks ALL the objects into the supermatter. Really cool with the singularity.
-/obj/machinery/power/supermatter_crystal/proc/supermatter_pull_delamination(turf, radius = 20)
+/obj/machinery/power/supermatter_crystal/proc/supermatter_pull_delamination(turf, radius = 20, singularity)
 	turf = get_turf(loc)
 	if(!turf)
 		return
-	for(var/atom/movable/AM in range(turf, radius))
-		step_towards(AM, turf)
-
+	if(singularity)
+		for(var/atom/movable/atom_movable in range(turf, radius))
+			step_towards(atom_movable, turf)
+	else
+		for(var/atom/movable/atom_movable in range(turf, power/50))// 4000 EER (no gas oxygen rich delam) = 80 Tiles
+			if(atom_movable.anchored)
+				continue
+			step_towards(atom_movable, turf)
 
 /obj/machinery/power/supermatter_crystal/proc/deal_damage(datum/gas_mixture/removed)
 	var/has_holes = FALSE

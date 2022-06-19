@@ -462,7 +462,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			speaking = "[i*0.1]..."
 		radio.talk_into(src, speaking, common_channel)
-		supermatter_pull_delamination()
+
+		if(check_special_delamination() == "singularity")
+			supermatter_pull_delamination(singularity = TRUE)
+		else
+			supermatter_pull_delamination() // We won't pull unwrenched things.
+
 		sleep(10)
 
 	delamination_event()
@@ -507,7 +512,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
-	for(var/atom/movable/movable_atom in orange(pull_range,center))
+	for(var/atom/movable/movable_atom in orange(pull_range, center))
 		if((movable_atom.anchored || movable_atom.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)) //move resist memes.
 			if(istype(movable_atom, /obj/structure/closet))
 				var/obj/structure/closet/closet = movable_atom
