@@ -14,8 +14,8 @@
 	var/image/wheels_overlay
 	///Determines the typepath of what the object folds into
 	var/foldabletype = /obj/item/wheelchair
-	///Determines whether the wheelchair has a bell on it or not
-	var/bell_attached
+	///Bell attached to the wheelchair, if we have one.
+	var/obj/structure/desk_bell/bell_attached
 
 /obj/vehicle/ridden/wheelchair/generate_actions()
 	if(!bell_attached)
