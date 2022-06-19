@@ -1,4 +1,0 @@
-author: "YakumoChen"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a symmetry issue with the lava clown puzzle where a lone chasm tile wasn't connected with its fellow chasms."

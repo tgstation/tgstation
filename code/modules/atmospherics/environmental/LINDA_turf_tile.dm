@@ -650,7 +650,8 @@ Then we space some of our heat, and think about if we should stop conducting.
 	if(heat_capacity <= 0 || abs(delta_temperature) <= MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		return
 	// Heat should be positive in most cases
-	var/heat = thermal_conductivity * CALCULATE_CONDUCTION_ENERGY(delta_temperature, HEAT_CAPACITY_VACUUM, heat_capacity)
+	// coefficient applied first because some turfs have very big heat caps.
+	var/heat = CALCULATE_CONDUCTION_ENERGY(thermal_conductivity * delta_temperature, HEAT_CAPACITY_VACUUM, heat_capacity)
 	temperature -= heat / heat_capacity
 
 /turf/open/proc/temperature_share_open_to_solid(turf/sharer)

@@ -9,12 +9,12 @@ import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
 import { toInputValue } from './Input';
-import { KEY_ESCAPE } from 'common/keycodes';
+import { KEY_ENTER, KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
 
 export class TextArea extends Component {
   constructor(props, context) {
     super(props, context);
-    this.textareaRef = createRef();
+    this.textareaRef = props.innerRef || createRef();
     this.fillerRef = createRef();
     this.state = {
       editing: false,
@@ -54,19 +54,47 @@ export class TextArea extends Component {
     };
     this.handleKeyDown = e => {
       const { editing } = this.state;
-      const { onKeyDown } = this.props;
-      if (e.keyCode === KEY_ESCAPE) {
+      const { onChange, onInput, onEnter, onKeyDown } = this.props;
+      if (e.keyCode === KEY_ENTER) {
         this.setEditing(false);
-        e.target.value = toInputValue(this.props.value);
-        e.target.blur();
+        if (onChange) {
+          onChange(e, e.target.value);
+        }
+        if (onInput) {
+          onInput(e, e.target.value);
+        }
+        if (onEnter) {
+          onEnter(e, e.target.value);
+        }
+        if (this.props.selfClear) {
+          e.target.value = '';
+          e.target.blur();
+        }
+        return;
+      }
+      if (e.keyCode === KEY_ESCAPE) {
+        if (this.props.onEscape) {
+          this.props.onEscape(e);
+
+        }
+        this.setEditing(false);
+        if (this.props.selfClear) {
+          e.target.value = '';
+        } else {
+          e.target.value = toInputValue(this.props.value);
+          e.target.blur();
+        }
         return;
       }
       if (!editing) {
         this.setEditing(true);
       }
+      if (onKeyDown) {
+        onKeyDown(e, e.target.value);
+      }
       if (!dontUseTabForIndent) {
         const keyCode = e.keyCode || e.which;
-        if (keyCode === 9) {
+        if (keyCode === KEY_TAB) {
           e.preventDefault();
           const { value, selectionStart, selectionEnd } = e.target;
           e.target.value = (
@@ -75,9 +103,6 @@ export class TextArea extends Component {
           );
           e.target.selectionEnd = selectionStart + 1;
         }
-      }
-      if (onKeyDown) {
-        onKeyDown(e, e.target.value);
       }
     };
     this.handleFocus = e => {
@@ -104,7 +129,6 @@ export class TextArea extends Component {
     if (input) {
       input.value = toInputValue(nextValue);
     }
-
     if (this.props.autoFocus || this.props.autoSelect) {
       setTimeout(() => {
         input.focus();
@@ -117,11 +141,10 @@ export class TextArea extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { editing } = this.state;
     const prevValue = prevProps.value;
     const nextValue = this.props.value;
     const input = this.textareaRef.current;
-    if (input && !editing && prevValue !== nextValue) {
+    if (input && typeof nextValue === "string" && prevValue !== nextValue) {
       input.value = toInputValue(nextValue);
     }
   }
