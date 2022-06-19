@@ -33,13 +33,13 @@
 	worn_icon_state = "tape_piece_worn"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
+	clothing_flags = INEDIBLE
 	equip_delay_other = 40
 	strip_delay = 40
 	greyscale_config = /datum/greyscale_config/tape_piece
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn
 	greyscale_colors = "#B2B2B2"
 	item_flags = NOBLUDGEON
-	moth_snack = null
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
