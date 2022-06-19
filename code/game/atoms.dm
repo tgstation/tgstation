@@ -1781,7 +1781,9 @@
  * Returns true if this atom has gravity for the passed in turf
  *
  * Sends signals [COMSIG_ATOM_HAS_GRAVITY] and [COMSIG_TURF_HAS_GRAVITY], both can force gravity with
- * the forced gravity var
+ * the forced gravity var.
+ *
+ * micro-optimized to hell because this proc is very hot, being called several times per movement every movement.
  *
  * Gravity situations:
  * * No gravity if you're not in a turf
