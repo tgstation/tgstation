@@ -121,6 +121,8 @@ const PatientStateView = (props, context) => {
               {procedure.next_step}
               {procedure.chems_needed && (
                 <>
+                  <br />
+                  <br />
                   <b>Required Chemicals:</b>
                   <br />
                   {procedure.chems_needed}
@@ -132,6 +134,8 @@ const PatientStateView = (props, context) => {
                 {procedure.alternative_step}
                 {procedure.alt_chems_needed && (
                   <>
+                    <br />
+                    <br />
                     <b>Required Chemicals:</b>
                     <br />
                     {procedure.alt_chems_needed}
