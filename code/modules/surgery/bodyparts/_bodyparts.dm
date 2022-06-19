@@ -704,6 +704,8 @@
 
 	. = list()
 
+	// LEMON TODO: there are cases where this fails, fix them
+	var/atom/location = loc || owner
 	var/image_dir = 0
 	if(dropped)
 		image_dir = SOUTH
@@ -729,7 +731,7 @@
 			limb.icon_state = "[animal_origin]_[body_zone]"
 
 		if(blocks_emissive)
-			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, src, alpha = limb.alpha)
+			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
 			limb.overlays += limb_em_block
 		return
@@ -772,12 +774,12 @@
 
 	//EMISSIVE CODE START
 	if(blocks_emissive)
-		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, src, alpha = limb.alpha)
+		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, alpha = limb.alpha)
 		limb_em_block.dir = image_dir
 		limb.overlays += limb_em_block
 
 		if(aux_zone)
-			var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, src, alpha = aux.alpha)
+			var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, alpha = aux.alpha)
 			aux_em_block.dir = image_dir
 			aux.overlays += aux_em_block
 

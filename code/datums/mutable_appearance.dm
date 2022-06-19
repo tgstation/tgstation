@@ -18,6 +18,9 @@
 		else
 			// otherwise if you're setting plane you better have the guts to back it up
 			var/turf/our_turf = get_turf(offset_spokesman)
+			// Null passed in, here we go
+			if(!our_turf)
+				stack_trace("Null location passed in as an offset spokesman for a mutable appearance, ya done fucked up")
 			plane = MUTATE_PLANE(plane, our_turf)
 	var/mutable_appearance/MA = new()
 	MA.icon = icon
