@@ -66,7 +66,7 @@
 	held_items[module_num] = item_module
 	item_module.equipped(src, ITEM_SLOT_HANDS)
 	item_module.mouse_opacity = initial(item_module.mouse_opacity)
-	SET_PLANE(item_module, ABOVE_HUD_PLANE, get_turf(src))
+	SET_PLANE_EXPLICIT(item_module, ABOVE_HUD_PLANE, src)
 	item_module.forceMove(src)
 
 	if(istype(item_module, /obj/item/borg/sight))

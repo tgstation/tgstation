@@ -55,7 +55,7 @@
 			if(observe.client)
 				observe.client.screen -= I
 	I.forceMove(src)
-	SET_PLANE(I, ABOVE_HUD_PLANE, get_turf(src))
+	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
 

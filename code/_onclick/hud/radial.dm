@@ -250,7 +250,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			E.add_overlay(choices_icons[choice_id])
 		if (choice_datum?.info)
 			var/obj/effect/abstract/info/info_button = new(E, choice_datum.info)
-			SET_PLANE(info_button, ABOVE_HUD_PLANE, get_turf(anchor)))
+			SET_PLANE_EXPLICIT(info_button, ABOVE_HUD_PLANE, anchor)
 			info_button.layer = RADIAL_CONTENT_LAYER
 			E.vis_contents += info_button
 
@@ -294,7 +294,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 	var/mutable_appearance/MA = new /mutable_appearance(to_extract_from)
 	if(MA)
-		SET_PLANE(MA, ABOVE_HUD_PLANE, get_turf(anchor)))
+		SET_PLANE_EXPLICIT(MA, ABOVE_HUD_PLANE, anchor)
 		MA.layer = RADIAL_CONTENT_LAYER
 		MA.appearance_flags |= RESET_TRANSFORM
 	return MA
@@ -313,7 +313,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	current_user = M.client
 	//Blank
 	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing", layer = RADIAL_BACKGROUND_LAYER)
-	SET_PLANE(menu_holder, ABOVE_HUD_PLANE, get_turf(M))
+	SET_PLANE_EXPLICIT(menu_holder, ABOVE_HUD_PLANE, M)
 	menu_holder.appearance_flags |= KEEP_APART|RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	menu_holder.vis_contents += elements + close_button
 	current_user.images += menu_holder

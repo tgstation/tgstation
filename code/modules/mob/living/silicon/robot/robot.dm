@@ -22,7 +22,7 @@
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	SET_PLANE(robot_modules_background, HUD_PLANE, get_turf(src))
+	SET_PLANE_EXPLICIT(robot_modules_background, HUD_PLANE, src)
 
 	inv1 = new /atom/movable/screen/robot/module1()
 	inv2 = new /atom/movable/screen/robot/module2()

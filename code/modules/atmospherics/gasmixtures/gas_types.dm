@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 		gas_info[META_GAS_DESC] = initial(gas.desc)
 		.[gas_path] = gas_info
 
-/proc/generate_gas_overlays(old_offset, new_offset, gas_type)
+/proc/generate_gas_overlays(old_offset, new_offset, datum/gas/gas_type)
 	var/list/to_return = list()
 	for(var/i in 0 to SSmapping.max_plane_offset)
 		var/fill = list()

@@ -558,7 +558,6 @@ Moving interrupts
 	if(!content_ma)
 		return
 	var/turf/our_turf = get_turf(src)
-	var/list/new_overlays = list()
 	for(var/mutable_appearance/appearance as anything in content_ma.overlays)
 		// MA's stored in the overlays list are not actually mutable, they've been flattened
 		// We're gonna unflatten em so we can modify them

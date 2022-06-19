@@ -237,7 +237,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	to_animate += image('icons/obj/machines/gateway.dmi', light_state)
 	var/image/glowing_light = image('icons/obj/machines/gateway.dmi', light_state)
 	glowing_light.color = GLOB.emissive_color
-	SET_PLANE(glowing_light, EMISSIVE_PLANE, get_turf(src))
+	SET_PLANE_EXPLICIT(glowing_light, EMISSIVE_PLANE, src)
 	to_animate += glowing_light
 	return to_animate
 
