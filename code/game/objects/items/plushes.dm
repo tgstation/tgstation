@@ -715,3 +715,8 @@
 		'sound/weapons/egloves.ogg' = 2,
 		'sound/weapons/cablecuff.ogg' = 1,
 	)
+
+/obj/item/toy/plush/amongus
+	name = "crewmate plushie"
+	desc = "A plushie depicting a crewmate of a spaceship. It looks quite drippy..."
+	icon_state = "amongdrip"
