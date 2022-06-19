@@ -575,7 +575,7 @@
 	var/static/items_inside = list(
 		/obj/item/screwdriver/caravan = 1,
 		/obj/item/wrench/caravan = 1,
-		/obj/item/weldingtool/experimental = 1,
+		/obj/item/weldingtool/largetank = 1,
 		/obj/item/crowbar/red/caravan = 1,
 		/obj/item/wirecutters/caravan = 1,
 		/obj/item/multitool = 1,

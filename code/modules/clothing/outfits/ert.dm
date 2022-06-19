@@ -583,7 +583,7 @@
 		/obj/item/grenade/c4 = 2,
 	)
 
-/datum/outfit/centcom/ert/marine/security/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
+/datum/outfit/centcom/ert/marine/commander/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)
