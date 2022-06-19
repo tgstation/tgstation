@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - balance: "Hacking the command console and winning revs no longer adds midround threat. Instead, it'll force a heavy ruleset to spawn, and barring that, will spawn a dangerous random event."

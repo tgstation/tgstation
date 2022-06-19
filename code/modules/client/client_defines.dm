@@ -251,3 +251,6 @@
 
 	/// If this client has been fully initialized or not
 	var/fully_created = FALSE
+
+	/// Does this client have typing indicators enabled?
+	var/typing_indicators = FALSE
