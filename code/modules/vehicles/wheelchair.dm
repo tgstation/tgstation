@@ -143,4 +143,4 @@
 /obj/vehicle/ridden/wheelchair/examine(mob/user)
 	. =..()
 	if(bell_attached)
-		. += "there is a bell attached to the handle."
+		. += span_notice("There is \a [bell_attached] attached to the handle.")
