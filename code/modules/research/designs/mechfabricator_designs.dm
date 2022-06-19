@@ -1388,3 +1388,10 @@
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/uranium = 1000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/mod/module/anomaly_locked/kinesis
 	department_type = MODULE_ENGINEERING
+
+/datum/design/module/projectile_dampener
+	name = "MOD Module: Projectile Dampener"
+	id = "mod_projectile_dampener"
+	materials = list(/datum/material/iron = 1000, /datum/material/bluespace = 500)
+	build_path = /obj/item/mod/module/projectile_dampener
+	department_type = MODULE_SECURITY
