@@ -120,8 +120,7 @@
 	var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
 	usr.put_in_hands(wheelchair_folded)
 	if(bell_attached)
-		new /obj/structure/desk_bell (get_turf(src))
-		usr.visible_message(span_notice("[bell_attached] falls off!"))
+		remove_bell()
 	qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
@@ -144,3 +143,15 @@
 	. =..()
 	if(bell_attached)
 		. += span_notice("There is \a [bell_attached] attached to the handle.")
+
+/obj/vehicle/ridden/wheelchair/Destroy()
+	if(bell_attached)
+		remove_bell()
+	. = ..()
+
+/obj/vehicle/ridden/wheelchair/proc/remove_bell()
+	bell_attached.forceMove(get_turf(src))
+	usr.visible_message(span_notice("[bell_attached] falls off!"))
+	bell_attached = null
+	update_appearance()
+
