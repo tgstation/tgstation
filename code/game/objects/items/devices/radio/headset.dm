@@ -90,11 +90,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	for(var/language in language_list)
 		grant_to.grant_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
-/// Removes all the languages this headset allowed the mob to understand via installed chips.
-/obj/item/radio/headset/proc/remove_headset_langauges(mob/remove_from)
-	for(var/language in language_list)
-		remove_from.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
-
 /obj/item/radio/headset/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!(slot_flags & slot))
@@ -104,7 +99,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/dropped(mob/user, silent)
 	. = ..()
-	remove_headset_langauges(user)
+	for(var/language in language_list)
+		remove_from.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
@@ -377,17 +373,19 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		for(var/ch_name in channels)
 			secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
+	var/list/old_language_list = language_list?.Copy()
+	language_list = list()
+	if(keyslot?.translated_language)
+		language_list += keyslot.translated_language
+	if(keyslot2?.translated_language)
+		language_list += keyslot2.translated_language
+
 	// If we're equipped on a mob, we should make sure all the languages
 	// learned from our installed key chips are all still accurate
 	var/mob/mob_loc = loc
 	if(istype(mob_loc) && mob_loc.get_item_by_slot(slot_flags) == src)
-		remove_headset_langauges(mob_loc)
-
-		language_list = list()
-		if(keyslot?.translated_language)
-			language_list += keyslot.translated_language
-		if(keyslot2?.translated_language)
-			language_list += keyslot2.translated_language
+		for(var/language in old_language_list)
+			remove_from.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
 		grant_headset_langauges(mob_loc)
 
