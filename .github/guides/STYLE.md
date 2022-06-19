@@ -509,7 +509,7 @@ In this case, if your macro is only used by one proc, define the macro in that p
 	#undef MY_NECESSARY_MACRO
 ```
 
-### Don't perform side effects/perform unhygienic actions in an unsuspecting macro
+### Don't perform work in an unsuspecting macro
 
 Suppose we have the following macro:
 
