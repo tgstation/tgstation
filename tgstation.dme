@@ -2279,6 +2279,7 @@
 #include "code\modules\antagonists\traitor\objectives\destroy_heirloom.dm"
 #include "code\modules\antagonists\traitor\objectives\destroy_item.dm"
 #include "code\modules\antagonists\traitor\objectives\destroy_machinery.dm"
+#include "code\modules\antagonists\traitor\objectives\eyesnatching.dm"
 #include "code\modules\antagonists\traitor\objectives\hack_comm_console.dm"
 #include "code\modules\antagonists\traitor\objectives\kidnapping.dm"
 #include "code\modules\antagonists\traitor\objectives\kill_pet.dm"
