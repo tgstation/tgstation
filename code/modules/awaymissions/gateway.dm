@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 			return FALSE
 	return TRUE
 
-/obj/machinery/gateway/proc/animate_light_overlays(light_state, toggle)
+/obj/machinery/gateway/proc/show_light_overlays(light_state, toggle)
 	if(!toggle)
 		return list()
 
@@ -237,14 +237,14 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	to_animate += image('icons/obj/machines/gateway.dmi', light_state)
 	var/image/glowing_light = image('icons/obj/machines/gateway.dmi', light_state)
 	glowing_light.color = GLOB.emissive_color
-	glowing_light.plane = EMISSIVE_PLANE
+	SET_PLANE(glowing_light, EMISSIVE_PLANE, get_turf(src))
 	to_animate += glowing_light
 	return to_animate
 
 /obj/machinery/gateway/update_overlays()
 	. = ..()
-	. += animate_light_overlays("portal_light", teleportion_possible)
-	. += animate_light_overlays("portal_effect", transport_active)
+	. += show_light_overlays("portal_light", teleportion_possible)
+	. += show_light_overlays("portal_effect", transport_active)
 
 /obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return

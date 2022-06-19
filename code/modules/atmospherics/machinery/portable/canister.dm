@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	cut_overlay(window)
 	window = image(icon, icon_state="window-base", layer=FLOAT_LAYER)
 	var/list/window_overlays = list()
-	for(var/visual in air_contents.return_visuals())
+	for(var/visual in air_contents.return_visuals(get_turf(src)))
 		var/image/new_visual = image(visual, layer=FLOAT_LAYER)
 		new_visual.filters = alpha_filter
 		window_overlays += new_visual

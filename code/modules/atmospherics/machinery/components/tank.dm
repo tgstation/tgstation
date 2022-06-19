@@ -270,7 +270,7 @@
 	window = image(icon, icon_state = "window-bg", layer = FLOAT_LAYER)
 
 	var/list/new_underlays = list()
-	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals())
+	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
 		var/image/new_underlay = image(gas.icon, icon_state = gas.icon_state, layer = FLOAT_LAYER)
 		new_underlay.filters = alpha_mask_filter(icon = icon(icon, icon_state = "window-bg"))
 		new_underlays += new_underlay

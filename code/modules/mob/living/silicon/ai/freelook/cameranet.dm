@@ -28,7 +28,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /datum/cameranet/proc/update_offsets(new_offset)
 	for(var/i in length(obscured_images) to new_offset)
 		var/image/obscured = new('icons/effects/cameravis.dmi')
-		obscured.plane = CAMERA_STATIC_PLANE
+		SET_PLANE_W_SCALAR(obscured, CAMERA_STATIC_PLANE, i)
 		obscured.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
 		obscured.override = TRUE
 		obscured_images += obscured

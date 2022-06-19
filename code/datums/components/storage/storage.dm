@@ -375,13 +375,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+cols-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
 	var/cx = screen_start_x
 	var/cy = screen_start_y
+	var/atom/real_location = real_location()
 	if(islist(numerical_display_contents))
 		for(var/type in numerical_display_contents)
 			var/datum/numbered_display/ND = numerical_display_contents[type]
 			ND.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			ND.sample_object.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
 			ND.sample_object.maptext = MAPTEXT("<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>")
-			ND.sample_object.plane = ABOVE_HUD_PLANE
+			SET_PLANE(ND.sample_object, ABOVE_HUD_PLANE, get_turf(real_location))
 			cx++
 			if(cx - screen_start_x >= cols)
 				cx = screen_start_x
@@ -389,14 +390,13 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 				if(cy - screen_start_y >= rows)
 					break
 	else
-		var/atom/real_location = real_location()
 		for(var/obj/O in real_location)
 			if(QDELETED(O))
 				continue
 			O.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			O.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
 			O.maptext = ""
-			O.plane = ABOVE_HUD_PLANE
+			SET_PLANE(O, ABOVE_HUD_PLANE, get_turf(real_location))
 			cx++
 			if(cx - screen_start_x >= cols)
 				cx = screen_start_x
@@ -472,7 +472,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(QDELETED(O))
 			continue
 		O.screen_loc = "[cx],[cy]"
-		O.plane = ABOVE_HUD_PLANE
+		SET_PLANE(O, ABOVE_HUD_PLANE, get_turf(real_location))
 		cx++
 		if(cx > mx)
 			cx = tx

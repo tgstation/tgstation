@@ -692,6 +692,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		GLOB.cryo_overlays_cover_on += create_cryo_overlay(offset, "cover-on")
 		GLOB.cryo_overlays_cover_off += create_cryo_overlay(offset, "cover-off")
 
+	for(var/gas_type in GLOB.meta_gas_info)
+		var/list/gas_info = GLOB.meta_gas_info[gas_type]
+		if(initial(gas_type.moles_visible) != null)
+			gas_info[META_GAS_OVERLAY] += generate_gas_overlays(gen_from, new_offset, gas_type)
+
 /datum/controller/subsystem/mapping/proc/create_plane_offsets(gen_from, new_offset)
 	for(var/plane_offset in gen_from to new_offset)
 		for(var/atom/movable/screen/plane_master/subsystem_type as anything in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate)

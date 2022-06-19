@@ -1267,7 +1267,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			slots_free += ui_storage2
 	if(slots_free.len)
 		halitem.screen_loc = pick(slots_free)
-		halitem.plane = ABOVE_HUD_PLANE
+		SET_PLANE(halitem, ABOVE_HUD_PLANE, get_turf(C))
 		switch(rand(1,6))
 			if(1) //revolver
 				halitem.icon = 'icons/obj/guns/ballistic.dmi'

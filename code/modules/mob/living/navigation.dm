@@ -72,7 +72,6 @@
 		var/turf/current_turf = path[i]
 		var/image/path_image = image(icon = 'icons/effects/navigation.dmi', layer = HIGH_PIPE_LAYER, loc = current_turf)
 		SET_PLANE(path_image, GAME_PLANE, current_turf)
-		path_image.plane = GAME_PLANE
 		path_image.color = COLOR_CYAN
 		path_image.alpha = 0
 		var/dir_1 = 0

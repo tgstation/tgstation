@@ -233,7 +233,7 @@
 				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
 			else
 				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-			A.plane = ABOVE_HUD_PLANE
+			SET_PLANE(A, ABOVE_HUD_PLANE, get_turf(viewer)))
 
 			x++
 			if(x == 4)

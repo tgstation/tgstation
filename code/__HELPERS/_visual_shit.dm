@@ -4,6 +4,7 @@
 /// Lets imagine we know how many z levels are stacked on top of each other
 /// If we know that, we can autogenerate plane masters to sit on top/below them
 /// We only need as many plane masters as the maximum of all z level stacks
+#define SET_PLANE_IMPLICIT(thing, new_value) (SET_PLANE(thing, new_value, get_turf(thing))
 #define SET_PLANE(thing, new_value, z_reference) (thing.plane = MUTATE_PLANE(new_value, z_reference))
 #define SET_PLANE_W_SCALAR(thing, new_value, multiplier) (thing.plane = GET_NEW_PLANE(new_value, multiplier))
 

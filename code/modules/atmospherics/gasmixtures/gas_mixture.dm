@@ -124,9 +124,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return max(0, volume)
 
 /// Gets the gas visuals for everything in this mixture
-/datum/gas_mixture/proc/return_visuals()
+/datum/gas_mixture/proc/return_visuals(turf/z_context)
 	var/list/output
-	GAS_OVERLAYS(gases, output)
+	GAS_OVERLAYS(gases, output, z_context)
 	return output
 
 /// Calculate thermal energy in joules
@@ -666,7 +666,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/gas_pressure_quadratic(a, b, c, lower_limit, upper_limit)
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		solution = max(SolveQuadratic(a, b, c)) 
+		solution = max(SolveQuadratic(a, b, c))
 		if(solution > lower_limit && solution < upper_limit) //SolveQuadratic can return empty lists so be careful here
 			return solution
 	stack_trace("Failed to solve pressure quadratic equation. A: [a]. B: [b]. C:[c]. Current value = [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")
