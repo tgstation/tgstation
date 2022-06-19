@@ -384,9 +384,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	// learned from our installed key chips are all still accurate
 	var/mob/mob_loc = loc
 	if(istype(mob_loc) && mob_loc.get_item_by_slot(slot_flags) == src)
+		// Remove all the languages we may not be able to know anymore
 		for(var/language in old_language_list)
 			mob_loc.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
+		// And grant all the languages we definitely should know now
 		grant_headset_langauges(mob_loc)
 
 /obj/item/radio/headset/AltClick(mob/living/user)
