@@ -1,0 +1,5 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "Airlock painter, extinguishers, geiger counter, holosign projectors, inducers and welding tools use balloon alerts on some of their more spammy/error actions and have some useless `to_chat` messages removed."
+  - qol: "Health and Gene analyzers give a balloon alert on a successful scan."
