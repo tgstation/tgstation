@@ -144,4 +144,3 @@
 	. =..()
 	if(bell_attached)
 		. += span_notice("There is \a [bell_attached] attached to the handle.")
-p
