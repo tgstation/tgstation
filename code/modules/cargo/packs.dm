@@ -2042,6 +2042,26 @@
 					)
 	crate_name = "grilling fuel kit crate"
 
+/datum/supply_pack/organic/tiziran_supply
+	name = "Tiziran Supply Box"
+	desc = "A packaged box of supplies from the heart of the Lizard Empire. Contains a selection of Tiziran ingredients and basic foods."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/storage/box/tiziran_goods,
+					/obj/item/storage/box/tiziran_cans,
+					/obj/item/storage/box/tiziran_meats)
+	crate_name = "\improper Tiziran Supply box"
+	crate_type = /obj/structure/closet/crate/cardboard/tiziran
+
+/datum/supply_pack/organic/mothic_supply
+	name = "Mothic Supply Box"
+	desc = "A packaged box of surplus supplies from the Mothic Fleet. Contains a selection of Mothic ingredients and basic foods."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/storage/box/mothic_goods,
+					/obj/item/storage/box/mothic_cans_sauces,
+					/obj/item/storage/box/mothic_rations)
+	crate_name = "\improper Mothic Supply box"
+	crate_type = /obj/structure/closet/crate/cardboard/mothic
+
 //////////////////////////////////////////////////////////////////////////////
 ////////////////////////////// Livestock /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -2780,6 +2800,14 @@
 		crate_value -= uplink_item.cost
 		new uplink_item.item(C)
 
+
+/datum/supply_pack/misc/fishing_portal
+	name = "Fishing Portal Generator Crate"
+	desc = "Not enough fish near your location? Fishing portal has your back."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/machinery/fishing_portal_generator)
+	crate_name = "fishing portal crate"
+
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// General Vending Restocks /////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -2933,12 +2961,11 @@
 
 /datum/supply_pack/vending/wardrobes/general
 	name = "General Wardrobes Supply Crate"
-	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe, JaniDrobe, ChapDrobe."
-	cost = CARGO_CRATE_VALUE * 7.5
+	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe and ChapDrobe."
+	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/vending_refill/wardrobe/curator_wardrobe,
 					/obj/item/vending_refill/wardrobe/bar_wardrobe,
 					/obj/item/vending_refill/wardrobe/chef_wardrobe,
-					/obj/item/vending_refill/wardrobe/jani_wardrobe,
 					/obj/item/vending_refill/wardrobe/chap_wardrobe)
 	crate_name = "general wardrobes vendor refills"
 
@@ -2948,6 +2975,13 @@
 	cost = CARGO_CRATE_VALUE * 1.5
 	contains = list(/obj/item/vending_refill/wardrobe/hydro_wardrobe)
 	crate_name = "hydrobe supply crate"
+
+/datum/supply_pack/vending/wardrobes/janitor
+	name = "JaniDrobe Supply Crate"
+	desc = "This crate contains a refill for the JaniDrobe."
+	cost = CARGO_CRATE_VALUE * 1.5
+	contains = list(/obj/item/vending_refill/wardrobe/jani_wardrobe)
+	crate_name = "janidrobe supply crate"
 
 /datum/supply_pack/vending/wardrobes/medical
 	name = "Medical Wardrobe Supply Crate"

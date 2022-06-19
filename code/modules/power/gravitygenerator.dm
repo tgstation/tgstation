@@ -443,6 +443,13 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		setting = value
 		shake_everyone()
 
+/obj/machinery/gravity_generator/main/proc/blackout()
+	charge_count = 0
+	breaker = FALSE
+	set_power()
+	disable()
+	investigate_log("was turned off by blackout event or a gravity anomaly detonation.", INVESTIGATE_GRAVITY)
+
 // Misc
 
 /obj/item/paper/guides/jobs/engi/gravity_gen

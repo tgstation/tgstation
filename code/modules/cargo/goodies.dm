@@ -167,3 +167,27 @@
 	desc = "A complete meal package for the terminally lazy. Contains one Ready-Donk meal."
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/food/ready_donk)
+
+/datum/supply_pack/goody/fishing_toolbox
+	name = "Fishing toolbox"
+	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/storage/toolbox/fishing)
+
+/datum/supply_pack/goody/fishing_hook_set
+	name = "Fishing Hooks Set"
+	desc = "Set of various fishing hooks."
+	cost = PAYCHECK_CREW
+	contains = list(/obj/item/storage/box/fishing_hooks)
+
+/datum/supply_pack/goody/fishing_line_set
+	name = "Fishing Lines Set"
+	desc = "Set of various fishing lines."
+	cost = PAYCHECK_CREW
+	contains = list(/obj/item/storage/box/fishing_lines)
+
+/datum/supply_pack/goody/premium_bait
+	name = "Deluxe fishing bait"
+	desc = "When the standard variety is not good enough for you."
+	cost = PAYCHECK_CREW
+	contains = list(/obj/item/bait_can/worm/premium)

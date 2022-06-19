@@ -7,6 +7,7 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_LITERATE,
 		TRAIT_PLANT_SAFE,
 	)
 	external_organs = list(

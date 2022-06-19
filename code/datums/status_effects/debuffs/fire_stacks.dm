@@ -220,6 +220,7 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	cache_stacks()
 	update_overlay()
+	return TRUE
 
 /**
  * Handles mob extinguishing, should be the only way to set on_fire to FALSE

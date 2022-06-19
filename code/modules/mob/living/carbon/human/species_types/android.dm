@@ -6,21 +6,22 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_NOMETABOLISM,
-		TRAIT_TOXIMMUNE,
-		TRAIT_RESISTHEAT,
-		TRAIT_NOBREATH,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_NOFIRE,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NOHUNGER,
-		TRAIT_LIMBATTACHMENT,
-		TRAIT_NOCLONELOSS,
 		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_GENELESS,
+		TRAIT_LIMBATTACHMENT,
+		TRAIT_LITERATE,
+		TRAIT_NOBREATH,
+		TRAIT_NOCLONELOSS,
+		TRAIT_NOFIRE,
+		TRAIT_NOHUNGER,
+		TRAIT_NOMETABOLISM,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_TOXIMMUNE,
 	)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
@@ -44,21 +45,3 @@
 	. = ..()
 	// Androids don't eat, hunger or metabolise foods. Let's do some cleanup.
 	C.set_safe_hunger_level()
-
-/datum/species/android/replace_body(mob/living/carbon/target, datum/species/new_species)
-	. = ..()
-	var/skintone
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		skintone = human_target.skin_tone
-
-	for(var/obj/item/bodypart/limb as anything in target.bodyparts)
-		if(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST)
-			limb.is_dimorphic = TRUE
-		limb.skin_tone ||= skintone
-		limb.limb_id = SPECIES_HUMAN
-		limb.should_draw_greyscale = TRUE
-		limb.name = "human [limb.plaintext_zone]"
-		limb.update_limb()
-		limb.brute_reduction = 5
-		limb.burn_reduction = 4

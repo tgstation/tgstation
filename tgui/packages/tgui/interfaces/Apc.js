@@ -187,6 +187,7 @@ const ApcContent = (props, context) => {
             label="Cover Lock"
             buttons={(
               <Button
+                tooltip="APC cover can be pried open with a crowbar."
                 icon={data.coverLocked ? 'lock' : 'unlock'}
                 content={data.coverLocked ? 'Engaged' : 'Disengaged'}
                 disabled={locked}
@@ -196,6 +197,7 @@ const ApcContent = (props, context) => {
             label="Emergency Lighting"
             buttons={(
               <Button
+                tooltip="Lights use internal power cell when there is no power available."
                 icon="lightbulb-o"
                 content={data.emergencyLights ? 'Enabled' : 'Disabled'}
                 disabled={locked}
@@ -205,6 +207,7 @@ const ApcContent = (props, context) => {
             label="Night Shift Lighting"
             buttons={(
               <Button
+                tooltip="Dim lights to reduce power consumption."
                 icon="lightbulb-o"
                 content={data.nightshiftLights ? 'Enabled' : 'Disabled'}
                 onClick={() => act('toggle_nightshift')} />

@@ -24,6 +24,11 @@
 		JOB_CAPTAIN = /mob/living/simple_animal/pet/fox/renault,
 		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/simple_animal/pet/cat/runtime,
 		JOB_CHIEF_ENGINEER = /mob/living/simple_animal/parrot/poly,
+		JOB_QUARTERMASTER = list(
+			/mob/living/simple_animal/sloth/citrus,
+			/mob/living/simple_animal/sloth/paperwork,
+			/mob/living/simple_animal/hostile/gorilla/cargo_domestic,
+		)
 	)
 	/// The head that we are targetting
 	var/datum/job/target

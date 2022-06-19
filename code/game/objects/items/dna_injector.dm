@@ -461,6 +461,14 @@
 /obj/item/dnainjector/antiwebbing
 	name = "\improper DNA injector (Anti-Webbing)"
 	remove_mutations = list(/datum/mutation/human/webbing)
+	
+/obj/item/dnainjector/illiterate
+	name = "\improper DNA injector (Illiterate)"
+	add_mutations = list(/datum/mutation/human/illiterate)
+
+/obj/item/dnainjector/antiilliterate
+	name = "\improper DNA injector (Anti-Illiterate)"
+	remove_mutations = list(/datum/mutation/human/illiterate)
 
 /obj/item/dnainjector/timed
 	var/duration = 600
