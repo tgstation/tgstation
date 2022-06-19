@@ -55,7 +55,6 @@
 	. = ..()
 	update_icons()
 
-// LEMON TODO ANY HERE
 /mob/living/carbon/alien/humanoid/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	var/cuff_icon = "aliencuff"

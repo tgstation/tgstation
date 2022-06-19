@@ -30,7 +30,6 @@
 	return ..()
 
 
-// Lemon todo: and here...
 /obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
 	. = ..()
 	if(isinhands)

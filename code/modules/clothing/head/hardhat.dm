@@ -106,7 +106,6 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-// Lemon todo: and here
 /obj/item/clothing/head/hardhat/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
@@ -199,7 +198,6 @@
 		return
 	update_icon(UPDATE_OVERLAYS)
 
-// Lemon todo and here
 /obj/item/clothing/head/hardhat/pumpkinhead/update_overlays()
 	. = ..()
 	if(light_on)

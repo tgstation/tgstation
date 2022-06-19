@@ -663,7 +663,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	species_human.apply_overlay(BODY_LAYER)
 	handle_mutant_bodyparts(species_human)
 
-// lemon todo: SON OF A BITCH
 /**
  * Handles the mutant bodyparts of a human
  *

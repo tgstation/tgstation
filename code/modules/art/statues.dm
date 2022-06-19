@@ -529,7 +529,6 @@ Moving interrupts
 	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, GAME_PLANE_UPPER, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_UPPER, GAME_PLANE_UPPER_FOV_HIDDEN, FLOOR_PLANE)
 
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
-	// Lemon todo: convert this to use new MA overlay pattern
 	var/list/overlays_to_remove = list()
 	for(var/mutable_appearance/special_overlay as anything in content_ma.overlays)
 		if(PLANE_TO_TRUE(special_overlay.plane) in plane_whitelist)

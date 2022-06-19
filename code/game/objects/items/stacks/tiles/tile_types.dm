@@ -376,7 +376,6 @@
 	. += neon_overlay
 	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, src, alpha = emissive_alpha)
 
-// LEMON todo: figure out how to proc this when our parent changes z level
 /obj/item/stack/tile/carpet/neon/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands || !neon_inhand_icon_state)

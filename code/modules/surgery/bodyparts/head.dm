@@ -166,7 +166,6 @@
 
 	return ..()
 
-// lemon todo: SET ME FREEEEEE
 #define SET_OVERLAY_VALUE(X,Y,Z) if(X) X.Y = Z
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()

@@ -490,7 +490,6 @@
 	apply_overlay(HEAD_LAYER)
 
 
-// Lemon todo: and here
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
@@ -530,7 +529,6 @@
 
 
 
-// Lemon todo: and HERE
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
 //"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
