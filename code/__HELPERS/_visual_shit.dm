@@ -12,7 +12,7 @@
 // Global todos:
 // Figure out the damn worn emissives
 // Try and make turf vis contents work, somehow (Start with the det's eye things, they're a good testcase)
-// Right now they do not like seeing lower planes, not sure why
+// Most of these are done, do a second pass on vis contents uses in case you missed osmething
 // Human overlays "might" need to fully recalc every time they move up/down a z level
 // I am not sure. Might need to automate handling this cheaply
 // I might be fucked
@@ -21,7 +21,7 @@
 // Add a shit ton of documentation, preferablely to the whole rendering pipeline
 // Run on live to make sure this isn't too laggy for some reason
 // Test to see if it fixes the wallening bug
-// Do something about darkness being fucking cursed (potentially use layers to stick the darkness plane in its proper place on all levels? maybe? (yes, you can do this, with multiple render targets))
+// Do something about darkness being fucking cursed (potentially use layers to stick the darkness plane in its proper place on all levels? maybe? (yes, you can do this, with multiple render targets, but I don't know if it works or not))
 #define GET_NEW_PLANE(new_value, multiplier) ((new_value) - (PLANE_RANGE * (multiplier)))
 #define MUTATE_PLANE(new_value, z_reference) (GET_NEW_PLANE(new_value, GET_TURF_PLANE_OFFSET(z_reference)))
 #define GET_TURF_PLANE_OFFSET(z_reference) ((isatom(z_reference) && SSmapping.max_plane_offset) ? GET_Z_PLANE_OFFSET(z_reference.z) : 0)

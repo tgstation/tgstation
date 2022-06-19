@@ -529,6 +529,7 @@ Moving interrupts
 	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, GAME_PLANE_UPPER, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_UPPER, GAME_PLANE_UPPER_FOV_HIDDEN, FLOOR_PLANE)
 
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
+	// Lemon todo: convert this to use new MA overlay pattern
 	var/list/overlays_to_remove = list()
 	for(var/mutable_appearance/special_overlay as anything in content_ma.overlays)
 		if(PLANE_TO_TRUE(special_overlay.plane) in plane_whitelist)
@@ -560,11 +561,14 @@ Moving interrupts
 	var/turf/our_turf = get_turf(src)
 	var/list/new_overlays = list()
 	for(var/mutable_appearance/appearance as anything in content_ma.overlays)
-		SET_PLANE(appearance, PLANE_TO_TRUE(appearance.plane), our_turf)
-		new_overlays += appearance
-	content_ma.overlays -= new_overlays
-	// Semi cargo cult, overlays will only update on add/remove, since they don't get checked constantly like vis contents do
-	content_ma.overlays += new_overlays
+		// MA's stored in the overlays list are not actually mutable, they've been flattened
+		// We're gonna unflatten em so we can modify them
+		// Lemon todo: look into how carbon updating works, copy that behavior here
+		content_ma.overlays -= appearance
+		var/mutable_appearance/new_lad = new()
+		new_lad.appearance = appearance
+		SET_PLANE(new_lad, PLANE_TO_TRUE(new_lad.plane), our_turf)
+		content_ma.overlays += new_lad
 
 /obj/structure/statue/custom/update_overlays()
 	. = ..()
