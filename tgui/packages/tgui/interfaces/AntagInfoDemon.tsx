@@ -26,9 +26,10 @@ type Info = {
 	objectives: Objective[];
 };
 
-export const AntagInfoDemon = (props, context) => {
+export const AntagInfoDemon = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { fluff, objectives, explain_attack } = data;
+
 	return (
 		<Window width={620} height={356} theme="syndicate">
 			<Window.Content style={{ 'background-image': 'none' }}>
@@ -88,9 +89,10 @@ export const AntagInfoDemon = (props, context) => {
 	);
 };
 
-const ObjectivePrintout = (props, context) => {
+const ObjectivePrintout = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { objectives } = data;
+
 	return (
 		<Stack vertical>
 			<Stack.Item bold>

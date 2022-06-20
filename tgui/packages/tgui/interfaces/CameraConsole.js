@@ -27,6 +27,7 @@ export const prevNextCamera = (cameras, activeCamera) => {
  */
 export const selectCameras = (cameras, searchText = '') => {
 	const testSearch = createSearch(searchText, (camera) => camera.name);
+
 	return flow([
 		// Null camera filter
 		filter((camera) => camera?.name),
@@ -37,7 +38,7 @@ export const selectCameras = (cameras, searchText = '') => {
 	])(cameras);
 };
 
-export const CameraConsole = (props, context) => {
+export const CameraConsole = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { mapRef, activeCamera } = data;
 	const cameras = selectCameras(data.cameras);
@@ -45,6 +46,7 @@ export const CameraConsole = (props, context) => {
 		cameras,
 		activeCamera
 	);
+
 	return (
 		<Window width={870} height={708}>
 			<div className="CameraConsole__left">
@@ -89,11 +91,12 @@ export const CameraConsole = (props, context) => {
 	);
 };
 
-export const CameraConsoleContent = (props, context) => {
+export const CameraConsoleContent = (_, context) => {
 	const { act, data } = useBackend(context);
 	const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
 	const { activeCamera } = data;
 	const cameras = selectCameras(data.cameras, searchText);
+
 	return (
 		<Flex direction={'column'} height="100%">
 			<Flex.Item>

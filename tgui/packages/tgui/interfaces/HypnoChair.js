@@ -2,16 +2,19 @@ import { useBackend } from '../backend';
 import { Button, Icon, Input, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-export const HypnoChair = (props, context) => {
+const INTERROGATION_INFO = `The Enhanced Interrogation Chamber is designed to induce a deep-rooted
+trance trigger into the subject. Once the procedure is complete, by
+using the implanted trigger phrase, the authorities are able to ensure
+immediate and complete obedience and truthfulness.`;
+
+export const HypnoChair = (_, context) => {
 	const { act, data } = useBackend(context);
+
 	return (
 		<Window width={375} height={480}>
 			<Window.Content>
 				<Section title="Information" backgroundColor="#450F44">
-					The Enhanced Interrogation Chamber is designed to induce a deep-rooted
-					trance trigger into the subject. Once the procedure is complete, by
-					using the implanted trigger phrase, the authorities are able to ensure
-					immediate and complete obedience and truthfulness.
+					{INTERROGATION_INFO}
 				</Section>
 				<Section title="Occupant Information" textAlign="center">
 					<LabeledList>

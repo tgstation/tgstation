@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
-export const DisposalUnit = (props, context) => {
+export const DisposalUnit = (_, context) => {
 	const { act, data } = useBackend(context);
 	let stateColor;
 	let stateText;
@@ -19,6 +19,7 @@ export const DisposalUnit = (props, context) => {
 		stateColor = 'bad';
 		stateText = 'Off';
 	}
+
 	return (
 		<Window width={300} height={180}>
 			<Window.Content>

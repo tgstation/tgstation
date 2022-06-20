@@ -8,9 +8,14 @@ const logScale = (value) => Math.log2(16 + Math.max(0, value)) - 4;
 
 export const Crystallizer = (_, context) => {
 	const { act, data } = useBackend(context);
-	const selectedRecipes = data.selected_recipes || [];
-	const gasTypes = data.internal_gas_data || [];
-	const { requirements, internal_temperature, progress_bar, selected } = data;
+	const {
+		requirements,
+		internal_temperature,
+		progress_bar,
+		selected,
+		selected_recipes = [],
+		internal_gas_data = [],
+	} = data;
 
 	return (
 		<Window width={500} height={600}>
@@ -26,7 +31,7 @@ export const Crystallizer = (_, context) => {
 							/>
 						</LabeledList.Item>
 						<LabeledList.Item label="Recipe">
-							{selectedRecipes.map((recipe) => (
+							{selected_recipes.map((recipe) => (
 								<Button
 									key={recipe.id}
 									selected={recipe.id === selected}
@@ -91,7 +96,7 @@ export const Crystallizer = (_, context) => {
 				</Section>
 				<Section title="Gases">
 					<LabeledList>
-						{gasTypes.map((gas) => (
+						{internal_gas_data.map((gas) => (
 							<LabeledList.Item key={gas.name} label={getGasLabel(gas.name)}>
 								<ProgressBar
 									color={getGasColor(gas.name)}

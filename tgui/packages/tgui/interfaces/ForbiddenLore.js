@@ -4,7 +4,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
 
-export const ForbiddenLore = (props, context) => {
+export const ForbiddenLore = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { charges } = data;
 	const to_know = flow([
@@ -13,6 +13,7 @@ export const ForbiddenLore = (props, context) => {
 			(to_know) => to_know.path === 'Side'
 		),
 	])(data.to_know || []);
+
 	return (
 		<Window width={500} height={900}>
 			<Window.Content scrollable>

@@ -17,11 +17,12 @@ const dangerMap = {
 	},
 };
 
-export const AiAirlock = (props, context) => {
+export const AiAirlock = (_, context) => {
 	const { act, data } = useBackend(context);
 	const statusMain = dangerMap[data.power.main] || dangerMap[0];
 	const statusBackup = dangerMap[data.power.backup] || dangerMap[0];
 	const statusElectrify = dangerMap[data.shock] || dangerMap[0];
+
 	return (
 		<Window width={500} height={390}>
 			<Window.Content>

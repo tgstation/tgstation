@@ -12,7 +12,7 @@ export const Gateway = () => {
 	);
 };
 
-const GatewayContent = (props, context) => {
+const GatewayContent = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		gateway_present = false,
@@ -20,6 +20,7 @@ const GatewayContent = (props, context) => {
 		current_target = null,
 		destinations = [],
 	} = data;
+
 	if (!gateway_present) {
 		return (
 			<Section>

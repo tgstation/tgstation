@@ -68,6 +68,7 @@ export const ApprenticeContract = () => {
 const ApprenticeSelection = (props, context) => {
 	const { act } = useBackend(context);
 	const { iconName, fluffName, schoolTitle, assetName, blurb } = props;
+
 	return (
 		<Section>
 			<Stack align="middle" fill>

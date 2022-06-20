@@ -107,7 +107,7 @@ const searchFilter = (search, allparts) => {
 	return searchResults;
 };
 
-export const ExosuitFabricator = (props, context) => {
+export const ExosuitFabricator = (_, context) => {
 	const { act, data } = useBackend(context);
 	const queue = data.queue || [];
 	const materialAsObj = materialArrayToObj(data.materials || []);
@@ -120,6 +120,7 @@ export const ExosuitFabricator = (props, context) => {
 		'display_mats',
 		false
 	);
+
 	return (
 		<Window title="Exosuit Fabricator" width={1100} height={640}>
 			<Window.Content>
@@ -186,7 +187,7 @@ export const ExosuitFabricator = (props, context) => {
 	);
 };
 
-const PartSets = (props, context) => {
+const PartSets = (_, context) => {
 	const { data } = useBackend(context);
 	const partSets = data.partSets || [];
 	const buildableParts = data.buildableParts || {};
@@ -195,6 +196,7 @@ const PartSets = (props, context) => {
 		'part_tab',
 		partSets.length ? buildableParts[0] : ''
 	);
+
 	return partSets
 		.filter((set) => buildableParts[set])
 		.map((set) => (
@@ -316,6 +318,7 @@ const PartCategory = (props, context) => {
 	const { buildingPart } = data;
 	const { parts, name, forceShow, placeholder } = props;
 	const [displayMatCost] = useSharedState(context, 'display_mats', false);
+
 	if (!forceShow && parts.length === 0) {
 		return null;
 	}
@@ -395,9 +398,9 @@ const PartCategory = (props, context) => {
 
 const Queue = (props, context) => {
 	const { act, data } = useBackend(context);
-	const { isProcessingQueue } = data;
-	const queue = data.queue || [];
+	const { isProcessingQueue, queue = [] } = data;
 	const { queueMaterials, missingMaterials, textColors } = props;
+
 	return (
 		<Stack fill vertical>
 			<Stack.Item grow>
@@ -457,6 +460,7 @@ const Queue = (props, context) => {
 
 const QueueMaterials = (props) => {
 	const { queueMaterials, missingMaterials } = props;
+
 	return (
 		<Stack wrap>
 			{Object.keys(queueMaterials).map((material) => (
@@ -502,7 +506,7 @@ const QueueList = (props, context) => {
 	));
 };
 
-const BeingBuilt = (props, context) => {
+const BeingBuilt = (_, context) => {
 	const { data } = useBackend(context);
 	const { buildingPart, storedPart } = data;
 

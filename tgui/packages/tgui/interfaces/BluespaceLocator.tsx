@@ -68,7 +68,7 @@ const TeleporterBeacons = (_, context) => {
 	);
 };
 
-const TrackingImplants = (props, context) => {
+const TrackingImplants = (_, context) => {
 	const { data } = useBackend<Data>(context);
 	const { trackimplants } = data;
 

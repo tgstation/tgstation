@@ -18,9 +18,10 @@ type Ability = {
 	can_purchase: boolean;
 };
 
-export const CellularEmporium = (props, context) => {
+export const CellularEmporium = (_, context) => {
 	const { act, data } = useBackend<CellularEmporiumContext>(context);
 	const { can_readapt, genetic_points_remaining } = data;
+
 	return (
 		<Window width={900} height={480}>
 			<Window.Content>
@@ -51,7 +52,7 @@ export const CellularEmporium = (props, context) => {
 	);
 };
 
-const AbilityList = (props, context) => {
+const AbilityList = (_, context) => {
 	const { act, data } = useBackend<CellularEmporiumContext>(context);
 	const { abilities, genetic_points_remaining } = data;
 

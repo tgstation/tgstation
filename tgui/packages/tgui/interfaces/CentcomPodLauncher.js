@@ -18,7 +18,7 @@ const useCompact = (context) => {
 	return [compact, toggleCompact];
 };
 
-export const CentcomPodLauncher = (props, context) => {
+export const CentcomPodLauncher = (_, context) => {
 	const [compact] = useCompact(context);
 	return (
 		<Window
@@ -30,7 +30,7 @@ export const CentcomPodLauncher = (props, context) => {
 	);
 };
 
-const CentcomPodLauncherContent = (props, context) => {
+const CentcomPodLauncherContent = (_, context) => {
 	const [compact] = useCompact(context);
 	return (
 		<Window.Content>
@@ -410,7 +410,7 @@ const EFFECTS_ALL = [
 	},
 ];
 
-const ViewTabHolder = (props, context) => {
+const ViewTabHolder = (_, context) => {
 	const { act, data } = useBackend(context);
 	const [tabPageIndex, setTabPageIndex] = useLocalState(
 		context,
@@ -419,6 +419,7 @@ const ViewTabHolder = (props, context) => {
 	);
 	const { mapRef } = data;
 	const TabPageComponent = TABPAGES[tabPageIndex].component();
+
 	return (
 		<Section
 			fill
@@ -515,8 +516,9 @@ const TabPod = () => {
 	);
 };
 
-const TabBay = (props, context) => {
+const TabBay = (_, context) => {
 	const { act, data } = useBackend(context);
+
 	return (
 		<>
 			<Button
@@ -534,8 +536,9 @@ const TabBay = (props, context) => {
 	);
 };
 
-const TabDrop = (props, context) => {
+const TabDrop = (_, context) => {
 	const { act, data } = useBackend(context);
+
 	return (
 		<>
 			<Button
@@ -553,9 +556,10 @@ const TabDrop = (props, context) => {
 	);
 };
 
-const PodStatusPage = (props, context) => {
+const PodStatusPage = (_, context) => {
 	const { act, data } = useBackend(context);
 	const [compact, toggleCompact] = useCompact(context);
+
 	return (
 		<Section fill width="100%">
 			<Stack>
@@ -671,13 +675,14 @@ const PodStatusPage = (props, context) => {
 	);
 };
 
-const ReverseMenu = (props, context) => {
+const ReverseMenu = (_, context) => {
 	const { act, data } = useBackend(context);
 	const [tabPageIndex, setTabPageIndex] = useLocalState(
 		context,
 		'tabPageIndex',
 		1
 	);
+
 	return (
 		<Section
 			fill
@@ -962,9 +967,10 @@ class PresetsPage extends Component {
 	}
 }
 
-const LaunchPage = (props, context) => {
+const LaunchPage = (_, context) => {
 	const [compact] = useCompact(context);
 	const { act, data } = useBackend(context);
+
 	return (
 		<Button
 			fluid
@@ -984,8 +990,9 @@ const LaunchPage = (props, context) => {
 	);
 };
 
-const StylePage = (props, context) => {
+const StylePage = (_, context) => {
 	const { act, data } = useBackend(context);
+
 	return (
 		<Section
 			fill
@@ -1085,8 +1092,9 @@ const Bays = (_, context) => {
 	);
 };
 
-const Timing = (props, context) => {
+const Timing = (_, context) => {
 	const { act, data } = useBackend(context);
+
 	return (
 		<Section
 			fill
@@ -1132,6 +1140,7 @@ const Timing = (props, context) => {
 const DelayHelper = (props, context) => {
 	const { act, data } = useBackend(context);
 	const { delay_list, reverse = false } = props;
+
 	return (
 		<LabeledControls wrap>
 			{delay_list.map((delay, i) => (
@@ -1167,7 +1176,7 @@ const DelayHelper = (props, context) => {
 	);
 };
 
-const Sounds = (props, context) => {
+const Sounds = (_, context) => {
 	const { act, data } = useBackend(context);
 	return (
 		<Section

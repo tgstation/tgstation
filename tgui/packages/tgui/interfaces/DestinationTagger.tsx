@@ -33,7 +33,7 @@ const sortDestinations = (locations: string[]): DestinationInfo[] => {
 	])(locations);
 };
 
-export const DestinationTagger = (props, context) => {
+export const DestinationTagger = (_, context) => {
 	const { act, data } = useBackend<DestinationTaggerData>(context);
 	const { locations, currentTag } = data;
 

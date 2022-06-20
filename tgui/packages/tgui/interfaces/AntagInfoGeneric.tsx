@@ -17,9 +17,10 @@ type Info = {
 	objectives: Objective[];
 };
 
-export const AntagInfoGeneric = (props, context) => {
+export const AntagInfoGeneric = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { antag_name } = data;
+
 	return (
 		<Window width={620} height={250}>
 			<Window.Content>
@@ -38,9 +39,10 @@ export const AntagInfoGeneric = (props, context) => {
 	);
 };
 
-const ObjectivePrintout = (props, context) => {
+const ObjectivePrintout = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { objectives } = data;
+
 	return (
 		<Stack vertical>
 			<Stack.Item bold>Your objectives:</Stack.Item>

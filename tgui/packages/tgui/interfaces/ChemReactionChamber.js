@@ -3,9 +3,18 @@ import { AnimatedNumber, Box, Button, Input, LabeledList, NumberInput, Section, 
 import { Window } from '../layouts';
 import { round, toFixed } from 'common/math';
 
-export const ChemReactionChamber = (props, context) => {
+export const ChemReactionChamber = (_, context) => {
 	const { act, data } = useBackend(context);
-
+	const {
+		emptying,
+		temperature,
+		ph,
+		targetTemp,
+		isReacting,
+		reagents = [],
+		reagentAcidic,
+		reagentAlkaline,
+	} = data;
 	const [reagentName, setReagentName] = useLocalState(
 		context,
 		'reagentName',
@@ -16,17 +25,6 @@ export const ChemReactionChamber = (props, context) => {
 		'reagentQuantity',
 		1
 	);
-
-	const {
-		emptying,
-		temperature,
-		ph,
-		targetTemp,
-		isReacting,
-		reagentAcidic,
-		reagentAlkaline,
-	} = data;
-	const reagents = data.reagents || [];
 
 	return (
 		<Window width={290} height={400}>

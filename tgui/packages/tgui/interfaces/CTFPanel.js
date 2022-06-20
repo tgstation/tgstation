@@ -2,10 +2,10 @@ import { useBackend } from '../backend';
 import { Box, Button, Section, Flex, Stack, Divider } from '../components';
 import { Window } from '../layouts';
 
-export const CTFPanel = (props, context) => {
+export const CTFPanel = (_, context) => {
 	const { act, data } = useBackend(context);
-	const teams = data.teams || [];
-	const enabled = data.enabled || [];
+	const { teams = [], enabled = [] } = data;
+
 	return (
 		<Window title="CTF Panel" width={700} height={600}>
 			<Window.Content scrollable>

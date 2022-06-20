@@ -11,6 +11,7 @@ export const BloodFilter = (_, context) => {
 	const { data } = useBackend<Data>(context);
 	const { whitelist = [] } = data;
 	const [chemName, setChemName] = useLocalState(context, 'chemName', '');
+
 	return (
 		<Window width={500} height={300}>
 			<Window.Content scrollable>

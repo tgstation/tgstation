@@ -58,6 +58,7 @@ export const AntagInfoBrainwashed = () => {
 const ObjectivePrintout = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { objectives } = data;
+
 	return (
 		<Stack fill vertical>
 			<Stack.Item bold textColor="#61e4b9">

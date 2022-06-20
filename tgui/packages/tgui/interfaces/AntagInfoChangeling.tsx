@@ -46,9 +46,10 @@ type Info = {
 	objectives: Objective[];
 };
 
-const ObjectivePrintout = (props, context) => {
+const ObjectivePrintout = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { objectives } = data;
+
 	return (
 		<Stack vertical>
 			<Stack.Item bold>Your current objectives:</Stack.Item>
@@ -64,9 +65,10 @@ const ObjectivePrintout = (props, context) => {
 	);
 };
 
-const IntroductionSection = (props, context) => {
+const IntroductionSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { hive_name, objectives } = data;
+
 	return (
 		<Section
 			fill
@@ -134,7 +136,7 @@ const AbilitiesSection = () => {
 	);
 };
 
-const MemoriesSection = (props, context) => {
+const MemoriesSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { memories, stolen_antag_info } = data;
 	const [selectedMemory, setSelectedMemory] = useSharedState(
@@ -147,6 +149,7 @@ const MemoriesSection = (props, context) => {
 		const memory = memories[index];
 		memoryMap[memory.name] = memory;
 	}
+
 	return (
 		<Section
 			fill
@@ -190,9 +193,10 @@ const MemoriesSection = (props, context) => {
 	);
 };
 
-const VictimPatternsSection = (props, context) => {
+const VictimPatternsSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { stolen_antag_info } = data;
+
 	return (
 		<Section
 			fill

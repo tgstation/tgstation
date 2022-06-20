@@ -3,8 +3,9 @@ import { useBackend } from '../backend';
 import { Box, Button, Grid, Section, Table, Tooltip } from '../components';
 import { Window } from '../layouts';
 
-export const ComputerFabricator = (props, context) => {
+export const ComputerFabricator = (_, context) => {
 	const { act, data } = useBackend(context);
+
 	return (
 		<Window title="Personal Computer Vendor" width={500} height={400}>
 			<Window.Content>
@@ -31,8 +32,9 @@ export const ComputerFabricator = (props, context) => {
 
 // This had a pretty gross backend so this was unfortunately one of the
 // best ways of doing it.
-const CfStep1 = (props, context) => {
+const CfStep1 = (_, context) => {
 	const { act } = useBackend(context);
+
 	return (
 		<Section title="Step 1" minHeight="306px">
 			<Box mt={5} bold textAlign="center" fontSize="40px">
@@ -76,8 +78,9 @@ const CfStep1 = (props, context) => {
 	);
 };
 
-const CfStep2 = (props, context) => {
+const CfStep2 = (_, context) => {
 	const { act, data } = useBackend(context);
+
 	return (
 		<Section
 			title="Step 2: Customize your device"
@@ -351,8 +354,9 @@ const CfStep2 = (props, context) => {
 	);
 };
 
-const CfStep3 = (props, context) => {
+const CfStep3 = (_, context) => {
 	const { act, data } = useBackend(context);
+
 	return (
 		<Section title="Step 3: Payment" minHeight="282px">
 			<Box italic textAlign="center" fontSize="20px">

@@ -3,7 +3,7 @@ import { Button, LabeledList, Section, ProgressBar, Flex, Box, Table, Collapsibl
 import { Window } from '../layouts';
 import { capitalize } from 'common/string';
 
-export const Autolathe = (props, context) => {
+export const Autolathe = (_, context) => {
 	const { act, data } = useBackend(context);
 	// Extract `health` and `color` variables from the `data` object.
 	const {
@@ -22,6 +22,7 @@ export const Autolathe = (props, context) => {
 	const filteredmaterials = materials.filter(
 		(material) => material.mineral_amount > 0
 	);
+
 	return (
 		<Window title="Autolathe" width={600} height={600}>
 			<Window.Content scrollable>

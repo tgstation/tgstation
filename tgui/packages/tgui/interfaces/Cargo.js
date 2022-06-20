@@ -35,12 +35,11 @@ export const Cargo = () => {
 	);
 };
 
-export const CargoContent = (props, context) => {
+export const CargoContent = (_, context) => {
 	const { data } = useBackend(context);
 	const [tab, setTab] = useSharedState(context, 'tab', 'catalog');
-	const { requestonly } = data;
-	const cart = data.cart || [];
-	const requests = data.requests || [];
+	const { cart = [], requests = [], requestonly } = data;
+
 	return (
 		<Box>
 			<CargoStatus />
@@ -86,7 +85,7 @@ export const CargoContent = (props, context) => {
 	);
 };
 
-const CargoStatus = (props, context) => {
+const CargoStatus = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		department,
@@ -308,10 +307,9 @@ export const CargoCatalog = (props, context) => {
 	);
 };
 
-const CargoRequests = (props, context) => {
+const CargoRequests = (_, context) => {
 	const { act, data } = useBackend(context);
-	const { requestonly, can_send, can_approve_requests } = data;
-	const requests = data.requests || [];
+	const { requests = [], requestonly, can_send, can_approve_requests } = data;
 	// Labeled list reimplementation to squeeze extra columns out of it
 
 	return (
@@ -375,10 +373,9 @@ const CargoRequests = (props, context) => {
 	);
 };
 
-const CargoCartButtons = (props, context) => {
+const CargoCartButtons = (_, context) => {
 	const { act, data } = useBackend(context);
-	const { requestonly, can_send, can_approve_requests } = data;
-	const cart = data.cart || [];
+	const { cart = [], requestonly, can_send, can_approve_requests } = data;
 	const total = cart.reduce((total, entry) => total + entry.cost, 0);
 	if (requestonly || !can_send || !can_approve_requests) {
 		return null;
@@ -402,7 +399,7 @@ const CargoCartButtons = (props, context) => {
 	);
 };
 
-const CargoCart = (props, context) => {
+const CargoCart = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { requestonly, away, docked, location, can_send } = data;
 	const cart = data.cart || [];

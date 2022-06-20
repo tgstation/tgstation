@@ -4,7 +4,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Flex, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-export const AtmosControlPanel = (props, context) => {
+export const AtmosControlPanel = (_, context) => {
 	const { act, data } = useBackend(context);
 	const groups = flow([
 		map((group, i) => ({
@@ -14,6 +14,7 @@ export const AtmosControlPanel = (props, context) => {
 		})),
 		sortBy((group) => group.id),
 	])(data.excited_groups);
+
 	return (
 		<Window title="SSAir Control Panel" width={900} height={500}>
 			<Section m={1}>

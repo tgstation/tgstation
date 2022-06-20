@@ -48,10 +48,10 @@ const ScanSelectionSection = (_, context) => {
 		site_data,
 	} = data;
 	const site = site_data;
-
 	const point_cost = scan_power > 0 ? formatTime(point_scan_eta, 'short') : '∞';
 	const deep_cost = scan_power > 0 ? formatTime(deep_scan_eta, 'short') : '∞';
 	const scan_available = !point_scan_complete || !deep_scan_complete;
+
 	return (
 		<Stack vertical fill>
 			<Stack.Item grow>

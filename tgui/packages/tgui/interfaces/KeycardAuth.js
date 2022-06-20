@@ -2,8 +2,9 @@ import { useBackend } from '../backend';
 import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
 
-export const KeycardAuth = (props, context) => {
+export const KeycardAuth = (_, context) => {
 	const { act, data } = useBackend(context);
+
 	return (
 		<Window width={375} height={125}>
 			<Window.Content>

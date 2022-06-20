@@ -8,7 +8,7 @@ import { Window } from '../layouts';
 
 const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
 
-export const Gps = (props, context) => {
+export const Gps = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { currentArea, currentCoords, globalmode, power, tag, updating } = data;
 	const signals = flow([
@@ -31,6 +31,7 @@ export const Gps = (props, context) => {
 			(signal) => signal.entrytag
 		),
 	])(data.signals || []);
+
 	return (
 		<Window title="Global Positioning System" width={470} height={700}>
 			<Window.Content scrollable>

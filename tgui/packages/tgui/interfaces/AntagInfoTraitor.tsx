@@ -41,9 +41,10 @@ type Info = {
 	objectives: Objective[];
 };
 
-const ObjectivePrintout = (props, context) => {
+const ObjectivePrintout = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { objectives } = data;
+
 	return (
 		<Stack vertical>
 			<Stack.Item bold>Your current objectives:</Stack.Item>
@@ -59,9 +60,10 @@ const ObjectivePrintout = (props, context) => {
 	);
 };
 
-const IntroductionSection = (props, context) => {
+const IntroductionSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { intro } = data;
+
 	return (
 		<Section fill title="Intro" scrollable>
 			<Stack vertical fill>
@@ -74,9 +76,10 @@ const IntroductionSection = (props, context) => {
 	);
 };
 
-const EmployerSection = (props, context) => {
+const EmployerSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { allies, goal } = data;
+
 	return (
 		<Section
 			fill
@@ -118,10 +121,11 @@ const EmployerSection = (props, context) => {
 	);
 };
 
-const UplinkSection = (props, context) => {
+const UplinkSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { has_uplink, uplink_intro, uplink_unlock_info, code, failsafe_code } =
 		data;
+
 	return (
 		<Section title="Uplink" mb={!has_uplink && -1}>
 			<Stack fill>
@@ -151,9 +155,10 @@ const UplinkSection = (props, context) => {
 	);
 };
 
-const CodewordsSection = (props, context) => {
+const CodewordsSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { has_codewords, phrases, responses } = data;
+
 	return (
 		<Section title="Codewords" mb={!has_codewords && -1}>
 			<Stack fill>
@@ -197,9 +202,10 @@ const CodewordsSection = (props, context) => {
 	);
 };
 
-export const AntagInfoTraitor = (props, context) => {
+export const AntagInfoTraitor = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { theme } = data;
+
 	return (
 		<Window width={620} height={580} theme={theme}>
 			<Window.Content>

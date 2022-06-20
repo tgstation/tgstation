@@ -2,9 +2,10 @@ import { useBackend } from '../backend';
 import { Button, NoticeBox, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-export const GulagItemReclaimer = (props, context) => {
+export const GulagItemReclaimer = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { mobs = [] } = data;
+
 	return (
 		<Window width={325} height={400}>
 			<Window.Content scrollable>

@@ -2,8 +2,9 @@ import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 import { Window } from '../layouts';
 
-export const BrigTimer = (props, context) => {
+export const BrigTimer = (_, context) => {
 	const { act, data } = useBackend(context);
+
 	return (
 		<Window width={300} height={138}>
 			<Window.Content scrollable>

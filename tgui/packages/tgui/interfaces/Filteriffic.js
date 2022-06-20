@@ -8,6 +8,7 @@ import { Window } from '../layouts';
 const FilterIntegerEntry = (props, context) => {
 	const { value, name, filterName } = props;
 	const { act } = useBackend(context);
+
 	return (
 		<NumberInput
 			value={value}
@@ -31,6 +32,7 @@ const FilterFloatEntry = (props, context) => {
 	const { value, name, filterName } = props;
 	const { act } = useBackend(context);
 	const [step, setStep] = useLocalState(context, `${filterName}-${name}`, 0.01);
+
 	return (
 		<>
 			<NumberInput

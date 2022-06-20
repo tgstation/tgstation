@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Section, LabeledList, NumberInput } from '../components';
 import { Window } from '../layouts';
 
-export const MassDriverControl = (props, context) => {
+export const MassDriverControl = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { connected, minutes, seconds, timing, power, poddoor } = data;
 

@@ -13,10 +13,11 @@ export const AnomalyRefinery = () => {
 	);
 };
 
-const AnomalyRefineryContent = (props, context) => {
+const AnomalyRefineryContent = (_, context) => {
 	const { act, data } = useBackend(context);
 	const [currentTab, changeTab] = useSharedState(context, 'exploderTab', 1);
 	const { core, valvePresent, active } = data;
+
 	return (
 		<Stack vertical fill>
 			{currentTab === 1 && <CoreCompressorContent />}
@@ -58,10 +59,11 @@ const AnomalyRefineryContent = (props, context) => {
 	);
 };
 
-const CoreCompressorContent = (props, context) => {
+const CoreCompressorContent = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { core, requiredRadius, gasList, valveReady, active, valvePresent } =
 		data;
+
 	return (
 		<>
 			<Stack.Item grow>
@@ -159,9 +161,10 @@ const CoreCompressorContent = (props, context) => {
 		</>
 	);
 };
-const BombProcessorContent = (props, context) => {
+const BombProcessorContent = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { gasList, reactionIncrement } = data;
+
 	return (
 		<>
 			<Stack.Item grow>

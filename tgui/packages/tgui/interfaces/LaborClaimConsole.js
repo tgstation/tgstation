@@ -3,9 +3,10 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-export const LaborClaimConsole = (props, context) => {
+export const LaborClaimConsole = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { can_go_home, id_points, ores, status_info, unclaimed_points } = data;
+
 	return (
 		<Window width={315} height={440}>
 			<Window.Content>

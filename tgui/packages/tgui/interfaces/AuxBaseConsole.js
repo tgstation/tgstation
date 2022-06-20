@@ -3,10 +3,11 @@ import { Button, NoticeBox, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
 import { ShuttleConsoleContent } from './ShuttleConsole';
 
-export const AuxBaseConsole = (props, context) => {
+export const AuxBaseConsole = (_, context) => {
 	const { data } = useBackend(context);
 	const [tab, setTab] = useSharedState(context, 'tab', 1);
 	const { type, blind_drop, turrets = [] } = data;
+
 	return (
 		<Window
 			width={turrets.length ? 620 : 350}
@@ -44,9 +45,10 @@ const STATUS_COLOR_KEYS = {
 	'All Clear': 'good',
 };
 
-export const AuxBaseConsoleContent = (props, context) => {
+export const AuxBaseConsoleContent = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { turrets = [] } = data;
+
 	return (
 		<Section
 			title={'Turret Control'}

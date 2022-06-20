@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
-export const ChemPress = (props, context) => {
+export const ChemPress = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		current_volume,
@@ -15,6 +15,7 @@ export const ChemPress = (props, context) => {
 		patch_style,
 		patch_styles = [],
 	} = data;
+
 	return (
 		<Window width={300} height={227}>
 			<Window.Content>

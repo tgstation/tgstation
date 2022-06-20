@@ -8,7 +8,7 @@ import { Window } from '../layouts';
 
 const mappedTopMargin = '2%';
 
-export const BluespaceSender = (props, context) => {
+export const BluespaceSender = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { gas_transfer_rate } = data;
 	const bluespace_network_gases = flow([
@@ -19,6 +19,7 @@ export const BluespaceSender = (props, context) => {
 		1,
 		...bluespace_network_gases.map((gas) => gas.amount)
 	);
+
 	return (
 		<Window title="Bluespace Sender" width={500} height={600}>
 			<Window.Content>

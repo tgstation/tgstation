@@ -14,7 +14,7 @@ export const BountyBoard = () => {
 	);
 };
 
-export const BountyBoardContent = (props, context) => {
+export const BountyBoardContent = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { requests = [], applicants = [], bountyValue, user } = data;
 	const color = 'rgba(13, 13, 213, 0.7)';

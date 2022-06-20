@@ -147,7 +147,7 @@ type ToolData = {
 	icon: string;
 };
 
-export const ExodroneConsole = (props, context) => {
+export const ExodroneConsole = (_, context) => {
 	const { data } = useBackend<ExodroneConsoleData>(context);
 	const { signal_lost } = data;
 
@@ -169,7 +169,7 @@ export const ExodroneConsole = (props, context) => {
 	);
 };
 
-const SignalLostModal = (props, context) => {
+const SignalLostModal = (_, context) => {
 	const { act } = useBackend(context);
 	return (
 		<Modal
@@ -250,7 +250,7 @@ const DroneSelectionSection = (
 	);
 };
 
-const ToolSelectionModal = (props, context) => {
+const ToolSelectionModal = (_, context) => {
 	const { act, data } = useBackend<ExodroneConsoleData>(context);
 	const { all_tools = {} } = data;
 
@@ -887,7 +887,7 @@ const DroneScreen = (props: { drone: ActiveDrone & DroneData }) => {
 	}
 };
 
-const ExodroneConsoleContent = (props, context) => {
+const ExodroneConsoleContent = (_, context) => {
 	const { data } = useBackend<ExodroneConsoleData>(context);
 
 	if (!data.drone) {

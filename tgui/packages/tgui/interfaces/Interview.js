@@ -2,7 +2,7 @@ import { Button, TextArea, Section, BlockQuote, NoticeBox } from '../components'
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 
-export const Interview = (props, context) => {
+export const Interview = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		welcome_message,

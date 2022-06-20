@@ -12,15 +12,17 @@ type Chamber = {
 	output_info?: { active: boolean; amount: number };
 };
 
-export const AtmosControlConsole = (props, context) => {
-	const { act, data } = useBackend<{
-		chambers: Chamber[];
-		maxInput: number;
-		maxOutput: number;
-		reconnecting: boolean;
-		control: boolean;
-	}>(context);
-	const chambers = data.chambers || [];
+type Data = {
+	chambers: Chamber[];
+	maxInput: number;
+	maxOutput: number;
+	reconnecting: boolean;
+	control: boolean;
+};
+
+export const AtmosControlConsole = (_, context) => {
+	const { act, data } = useBackend<Data>(context);
+	const { chambers = [] } = data;
 	const [chamberId, setChamberId] = useLocalState(
 		context,
 		'chamberId',
@@ -31,6 +33,7 @@ export const AtmosControlConsole = (props, context) => {
 			? chambers[0]
 			: chambers.find((chamber) => chamber.id === chamberId);
 	const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks(context);
+
 	return (
 		<Window width={550} height={350}>
 			<Window.Content scrollable>

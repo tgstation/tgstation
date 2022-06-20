@@ -3,9 +3,10 @@ import { NoticeBox } from '../components';
 import { Window } from '../layouts';
 import { LaunchpadControl } from './LaunchpadConsole';
 
-export const LaunchpadRemote = (props, context) => {
+export const LaunchpadRemote = (_, context) => {
 	const { data } = useBackend(context);
 	const { has_pad, pad_closed } = data;
+
 	return (
 		<Window
 			title="Briefcase Launchpad Remote"

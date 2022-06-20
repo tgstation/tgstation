@@ -2,10 +2,11 @@ import { useBackend } from '../backend';
 import { Box, Button, Divider, LabeledList, Flex, Section } from '../components';
 import { Window } from '../layouts';
 
-export const Clipboard = (props, context) => {
+export const Clipboard = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { pen, integrated_pen, top_paper, top_paper_ref, paper, paper_ref } =
 		data;
+
 	return (
 		<Window title="Clipboard" width={400} height={500}>
 			<Window.Content backgroundColor="#704D25" scrollable>

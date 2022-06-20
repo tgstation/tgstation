@@ -18,9 +18,10 @@ export const EightBallVote = (props, context) => {
 	);
 };
 
-const EightBallVoteQuestion = (props, context) => {
+const EightBallVoteQuestion = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { question, answers = [] } = data;
+
 	return (
 		<Section>
 			<Box bold textAlign="center" fontSize="16px" m={1}>

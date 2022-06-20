@@ -205,6 +205,7 @@ export const Canvas = (props, context) => {
 	const scaled_height = height * data.px_per_unit;
 	const average_plaque_height = 90;
 	const palette_height = 36;
+
 	return (
 		<Window
 			width={scaled_width + 72}

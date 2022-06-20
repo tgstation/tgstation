@@ -14,9 +14,10 @@ type Info = {
 	nationColor: string;
 };
 
-export const AntagInfoSeparatist = (props, context) => {
+export const AntagInfoSeparatist = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { nationColor } = data;
+
 	return (
 		<Window width={620} height={450}>
 			<Window.Content backgroundColor={nationColor}>
@@ -33,9 +34,10 @@ export const AntagInfoSeparatist = (props, context) => {
 	);
 };
 
-const IntroductionObjectives = (props, context) => {
+const IntroductionObjectives = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { nation } = data;
+
 	return (
 		<Section fill>
 			<Stack vertical>
@@ -50,9 +52,10 @@ const IntroductionObjectives = (props, context) => {
 	);
 };
 
-const FrequentlyAskedQuestions = (props, context) => {
+const FrequentlyAskedQuestions = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { nation } = data;
+
 	return (
 		<Section fill>
 			<Stack vertical>
@@ -89,9 +92,10 @@ const FrequentlyAskedQuestions = (props, context) => {
 	);
 };
 
-const ObjectivePrintout = (props, context) => {
+const ObjectivePrintout = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { nation, objectives } = data;
+
 	return (
 		<Stack vertical>
 			<Stack.Item bold>{nation}&apos;s objectives:</Stack.Item>

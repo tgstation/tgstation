@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { BlockQuote, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
-export const Intellicard = (props, context) => {
+export const Intellicard = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		name,
@@ -15,6 +15,7 @@ export const Intellicard = (props, context) => {
 		laws = [],
 	} = data;
 	const offline = isDead || isBraindead;
+
 	return (
 		<Window width={500} height={500}>
 			<Window.Content scrollable>

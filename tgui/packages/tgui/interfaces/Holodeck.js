@@ -2,11 +2,16 @@ import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 import { Window } from '../layouts';
 
-export const Holodeck = (props, context) => {
+export const Holodeck = (_, context) => {
 	const { act, data } = useBackend(context);
-	const { can_toggle_safety, emagged, program } = data;
-	const default_programs = data.default_programs || [];
-	const emag_programs = data.emag_programs || [];
+	const {
+		can_toggle_safety,
+		emagged,
+		program,
+		default_programs = [],
+		emag_programs = [],
+	} = data;
+
 	return (
 		<Window width={400} height={500}>
 			<Window.Content scrollable>

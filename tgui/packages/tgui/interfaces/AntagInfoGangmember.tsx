@@ -9,9 +9,10 @@ type Info = {
 	gang_clothes: string[];
 };
 
-export const AntagInfoGangmember = (props, context) => {
+export const AntagInfoGangmember = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { gang_name, antag_name } = data;
+
 	return (
 		<Window width={620} height={500}>
 			<Window.Content
@@ -50,9 +51,10 @@ export const AntagInfoGangmember = (props, context) => {
 	);
 };
 
-const GangClothesPrintout = (props, context) => {
+const GangClothesPrintout = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { gang_name, gang_clothes } = data;
+
 	return (
 		<Stack vertical>
 			<Stack.Item>
@@ -99,9 +101,10 @@ const GangPhonePrintout = () => {
 	);
 };
 
-const GangObjectivePrintout = (props, context) => {
+const GangObjectivePrintout = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { gang_objective } = data;
+
 	return (
 		<Stack vertical>
 			<Stack.Item bold fontSize="16px">

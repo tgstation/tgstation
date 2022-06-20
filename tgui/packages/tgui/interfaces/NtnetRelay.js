@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Box, Button, ProgressBar, Section, AnimatedNumber } from '../components';
 import { Window } from '../layouts';
 
-const OUTAGE_WARNING = `This system is suffering temporary outage due to overflow of
-traffic buffers. Until buffered traffic is processed, all
+const OUTAGE_WARNING = `This system is suffering temporary outage due to
+overflow of traffic buffers. Until buffered traffic is processed, all
 further requests will be dropped. Frequent occurences of this
 error may indicate insufficient hardware capacity of your
 network. Please contact your network planning department for

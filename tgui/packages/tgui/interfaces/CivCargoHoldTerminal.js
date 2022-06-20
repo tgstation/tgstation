@@ -8,6 +8,7 @@ export const CivCargoHoldTerminal = (props, context) => {
 		data;
 	const in_text = 'Welcome valued employee.';
 	const out_text = 'To begin, insert your ID into the console.';
+
 	return (
 		<Window width={580} height={375}>
 			<Window.Content scrollable>

@@ -30,7 +30,7 @@ type DecalPainterData = {
 	current_custom_color: string;
 };
 
-export const DecalPainter = (props, context) => {
+export const DecalPainter = (_, context) => {
 	const { act, data } = useBackend<DecalPainterData>(context);
 
 	const custom_color_selected = !data.color_list.some(

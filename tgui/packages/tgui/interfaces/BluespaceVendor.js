@@ -7,7 +7,7 @@ import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section, Stack 
 import { getGasColor, getGasLabel } from '../constants';
 import { Window } from '../layouts';
 
-export const BluespaceVendor = (props, context) => {
+export const BluespaceVendor = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { tank_filling_amount } = data;
 	const bluespace_network_gases = flow([
@@ -18,6 +18,7 @@ export const BluespaceVendor = (props, context) => {
 		1,
 		...bluespace_network_gases.map((gas) => gas.amount)
 	);
+
 	return (
 		<Window title="Bluespace Vendor" width={500} height={600}>
 			<Window.Content>

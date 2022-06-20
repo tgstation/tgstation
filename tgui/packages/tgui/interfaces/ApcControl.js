@@ -6,7 +6,7 @@ import { Box, Button, Dimmer, Flex, Icon, Table, Tabs } from '../components';
 import { Window } from '../layouts';
 import { AreaCharge, powerRank } from './PowerMonitor';
 
-export const ApcControl = (props, context) => {
+export const ApcControl = (_, context) => {
 	const { data } = useBackend(context);
 	return (
 		<Window title="APC Controller" width={550} height={500}>
@@ -16,7 +16,7 @@ export const ApcControl = (props, context) => {
 	);
 };
 
-const ApcLoggedOut = (props, context) => {
+const ApcLoggedOut = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { emagged } = data;
 	const text = emagged === 1 ? 'Open' : 'Log In';
@@ -32,10 +32,11 @@ const ApcLoggedOut = (props, context) => {
 	);
 };
 
-const ApcLoggedIn = (props, context) => {
+const ApcLoggedIn = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { restoring } = data;
 	const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
+
 	return (
 		<>
 			<Tabs>
@@ -83,7 +84,7 @@ const ApcLoggedIn = (props, context) => {
 	);
 };
 
-const ControlPanel = (props, context) => {
+const ControlPanel = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { emagged, logging } = data;
 	const [sortByField, setSortByField] = useLocalState(
@@ -91,6 +92,7 @@ const ControlPanel = (props, context) => {
 		'sortByField',
 		null
 	);
+
 	return (
 		<Flex>
 			<Flex.Item>
@@ -134,7 +136,7 @@ const ControlPanel = (props, context) => {
 	);
 };
 
-const ApcControlScene = (props, context) => {
+const ApcControlScene = (_, context) => {
 	const { data, act } = useBackend(context);
 
 	const [sortByField] = useLocalState(context, 'sortByField', null);
@@ -153,6 +155,7 @@ const ApcControlScene = (props, context) => {
 				(apc) => -parseFloat(apc.load)
 			),
 	])(data.apcs);
+
 	return (
 		<Table>
 			<Table.Row header>
@@ -229,7 +232,7 @@ const ApcControlScene = (props, context) => {
 	);
 };
 
-const LogPanel = (props, context) => {
+const LogPanel = (_, context) => {
 	const { data } = useBackend(context);
 
 	const logs = flow([
@@ -255,6 +258,7 @@ const AreaStatusColorButton = (props) => {
 	const { target, status, apc, act } = props;
 	const power = Boolean(status & 2);
 	const mode = Boolean(status & 1);
+
 	return (
 		<Button
 			icon={mode ? 'sync' : 'power-off'}

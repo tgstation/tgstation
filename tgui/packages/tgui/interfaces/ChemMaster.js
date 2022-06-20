@@ -2,7 +2,7 @@ import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-export const ChemMaster = (props, context) => {
+export const ChemMaster = (_, context) => {
 	const { data } = useBackend(context);
 	const { screen } = data;
 	return (
@@ -14,7 +14,7 @@ export const ChemMaster = (props, context) => {
 	);
 };
 
-const ChemMasterContent = (props, context) => {
+const ChemMasterContent = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		screen,
@@ -223,7 +223,7 @@ const PackagingControlsItem = (props) => {
 	);
 };
 
-const PackagingControls = (props, context) => {
+const PackagingControls = (_, context) => {
 	const { act, data } = useBackend(context);
 	const [pillAmount, setPillAmount] = useSharedState(context, 'pillAmount', 1);
 	const [patchAmount, setPatchAmount] = useSharedState(
@@ -395,7 +395,7 @@ const PackagingControls = (props, context) => {
 	);
 };
 
-const AnalysisResults = (props, context) => {
+const AnalysisResults = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { analyzeVars } = data;
 	return (

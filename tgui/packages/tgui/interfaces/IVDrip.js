@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, NumberInput, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-export const IVDrip = (props, context) => {
+export const IVDrip = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		transferRate,
@@ -14,6 +14,7 @@ export const IVDrip = (props, context) => {
 		beakerAttached,
 		useInternalStorage,
 	} = data;
+
 	return (
 		<Window width={380} height={230}>
 			<Window.Content>

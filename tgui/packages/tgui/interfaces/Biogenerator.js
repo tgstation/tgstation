@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 
 const MAX_SEARCH_RESULTS = 25;
 
-export const Biogenerator = (props, context) => {
+export const Biogenerator = (_, context) => {
 	const { data } = useBackend(context);
 	const { beaker, processing } = data;
 	return (
@@ -26,7 +26,7 @@ export const Biogenerator = (props, context) => {
 	);
 };
 
-export const BiogeneratorContent = (props, context) => {
+export const BiogeneratorContent = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { biomass, can_process, categories = [] } = data;
 	const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
@@ -49,6 +49,7 @@ export const BiogeneratorContent = (props, context) => {
 		categories.find((category) => category.name === selectedCategory)?.items ||
 		// If none of that results in a list, return an empty list
 		[];
+
 	return (
 		<Section
 			title={
@@ -129,6 +130,7 @@ const ItemList = (props, context) => {
 			setAmount,
 		};
 	});
+
 	return items.map((item) => (
 		<Table.Row key={item.id}>
 			<Table.Cell>

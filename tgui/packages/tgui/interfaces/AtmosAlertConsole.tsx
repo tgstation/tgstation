@@ -7,7 +7,7 @@ type Data = {
 	minor: string[];
 };
 
-export const AtmosAlertConsole = (props, context) => {
+export const AtmosAlertConsole = (_, context) => {
 	const { act, data } = useBackend<Data>(context);
 	const { priority = [], minor = [] } = data;
 

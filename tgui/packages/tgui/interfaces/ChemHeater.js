@@ -6,7 +6,7 @@ import { COLORS } from '../constants';
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
 
-export const ChemHeater = (props, context) => {
+export const ChemHeater = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		targetTemp,
@@ -25,6 +25,7 @@ export const ChemHeater = (props, context) => {
 		beakerContents = [],
 		activeReactions = [],
 	} = data;
+
 	return (
 		<Window width={330} height={tutorialMessage ? 680 : 350}>
 			<Window.Content scrollable>

@@ -54,7 +54,7 @@ const malfMap = {
 	},
 };
 
-const ApcContent = (props, context) => {
+const ApcContent = (_, context) => {
 	const { act, data } = useBackend(context);
 	const locked = data.locked && !data.siliconUser;
 	const externalPowerStatus =
@@ -81,6 +81,7 @@ const ApcContent = (props, context) => {
 			</NoticeBox>
 		);
 	}
+
 	return (
 		<>
 			<InterfaceLockNoticeBox />

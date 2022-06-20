@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
-export const GulagTeleporterConsole = (props, context) => {
+export const GulagTeleporterConsole = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		teleporter,
@@ -17,6 +17,7 @@ export const GulagTeleporterConsole = (props, context) => {
 		goal = 0,
 		prisoner = {},
 	} = data;
+
 	return (
 		<Window width={350} height={295}>
 			<Window.Content>

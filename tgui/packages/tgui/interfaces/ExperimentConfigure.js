@@ -97,7 +97,7 @@ export const TechwebServer = (props, context) => {
 	);
 };
 
-export const ExperimentConfigure = (props, context) => {
+export const ExperimentConfigure = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { always_active, has_start_callback } = data;
 	let servers = data.servers ?? [];

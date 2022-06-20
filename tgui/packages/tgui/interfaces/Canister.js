@@ -11,7 +11,7 @@ const formatPressure = (value) => {
 	return formatSiUnit(value * 1000, 1, 'Pa');
 };
 
-export const Canister = (props, context) => {
+export const Canister = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		portConnected,
@@ -29,6 +29,7 @@ export const Canister = (props, context) => {
 		holdingTankFragPressure,
 		restricted,
 	} = data;
+
 	return (
 		<Window width={350} height={275}>
 			<Window.Content>

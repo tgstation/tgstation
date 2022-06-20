@@ -2,9 +2,10 @@ import { useBackend } from '../backend';
 import { Button, Section, LabeledList } from '../components';
 import { Window } from '../layouts';
 
-export const InfraredEmitter = (props, context) => {
+export const InfraredEmitter = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { on, visible } = data;
+
 	return (
 		<Window width={225} height={110}>
 			<Window.Content>

@@ -11,7 +11,7 @@ const commandJobs = [
 	'Chief Medical Officer',
 ];
 
-export const CrewManifest = (props, context) => {
+export const CrewManifest = (_, context) => {
 	const {
 		data: { manifest, positions },
 	} = useBackend(context);

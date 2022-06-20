@@ -252,7 +252,7 @@ export const CheckoutEntries = (_, context) => {
 	);
 };
 
-const CheckoutModal = (props, context) => {
+const CheckoutModal = (_, context) => {
 	const { act, data } = useBackend(context);
 
 	const { checking_out } = data;
@@ -341,7 +341,7 @@ const CheckoutModal = (props, context) => {
 	);
 };
 
-export const Archive = (props, context) => {
+export const Archive = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { can_connect, can_db_request, page_count, our_page } = data;
 	if (!can_connect) {
@@ -378,7 +378,7 @@ export const Archive = (props, context) => {
 	);
 };
 
-export const SearchAndDisplay = (props, context) => {
+export const SearchAndDisplay = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		search_categories = [],
@@ -609,7 +609,7 @@ export const Upload = (_, context) => {
 	);
 };
 
-const UploadModal = (props, context) => {
+const UploadModal = (_, context) => {
 	const { act, data } = useBackend(context);
 
 	const { upload_categories, default_category, can_db_request } = data;
@@ -668,7 +668,7 @@ const UploadModal = (props, context) => {
 	);
 };
 
-export const Print = (props, context) => {
+export const Print = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { deity, religion, bible_name, bible_sprite, posters } = data;
 	const [selectedPoster, setSelectedPoster] = useLocalState(

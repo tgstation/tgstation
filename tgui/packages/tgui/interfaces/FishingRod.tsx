@@ -61,7 +61,7 @@ const FishingRodSlot = (props: FishingSlotProps, context) => {
 	);
 };
 
-export const FishingRod = (props, context) => {
+export const FishingRod = (_, context) => {
 	const { data } = useBackend<FishingRodData>(context);
 
 	return (

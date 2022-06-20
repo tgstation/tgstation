@@ -13,6 +13,7 @@ export const GasAnalyzerContent = (_, context) => {
 	const { data } = useBackend<GasAnalyzerData>(context);
 	const { gasmixes } = data;
 	const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks(context);
+
 	return (
 		<>
 			{gasmixes.map((gasmix) => (

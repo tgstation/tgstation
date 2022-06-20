@@ -3,8 +3,9 @@ import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 import { GenericUplink } from './Uplink/GenericUplink';
 
-export const AbductorConsole = (props, context) => {
+export const AbductorConsole = (_, context) => {
 	const [tab, setTab] = useSharedState(context, 'tab', 1);
+
 	return (
 		<Window theme="abductor" width={600} height={532}>
 			<Window.Content scrollable>
@@ -36,7 +37,7 @@ export const AbductorConsole = (props, context) => {
 	);
 };
 
-const Abductsoft = (props, context) => {
+const Abductsoft = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { experiment, points, credits, categories } = data;
 
@@ -81,14 +82,13 @@ const Abductsoft = (props, context) => {
 	);
 };
 
-const EmergencyTeleporter = (props, context) => {
+const EmergencyTeleporter = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { pad, gizmo } = data;
 
 	if (!pad) {
 		return <NoticeBox danger>No Telepad Detected</NoticeBox>;
 	}
-
 	return (
 		<Section
 			title="Emergency Teleport"
@@ -114,14 +114,13 @@ const EmergencyTeleporter = (props, context) => {
 	);
 };
 
-const VestSettings = (props, context) => {
+const VestSettings = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { vest, vest_mode, vest_lock } = data;
 
 	if (!vest) {
 		return <NoticeBox danger>No Agent Vest Detected</NoticeBox>;
 	}
-
 	return (
 		<Section
 			title="Agent Vest Settings"

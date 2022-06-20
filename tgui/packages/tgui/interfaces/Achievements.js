@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Flex, Icon, Table, Tabs } from '../components';
+import { Box, Icon, Stack, Table, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const Achievements = (props, context) => {
@@ -13,6 +13,7 @@ export const Achievements = (props, context) => {
 	const achievements = data.achievements.filter(
 		(x) => x.category === selectedCategory
 	);
+
 	return (
 		<Window title="Achievements" width={540} height={680}>
 			<Window.Content scrollable>
@@ -53,6 +54,7 @@ const AchievementTable = (props) => {
 const Achievement = (props) => {
 	const { achievement } = props;
 	const { name, desc, icon_class, value, score } = achievement;
+
 	return (
 		<Table.Row key={name}>
 			<Table.Cell collapsing>
@@ -75,7 +77,7 @@ const Achievement = (props) => {
 	);
 };
 
-const HighScoreTable = (props, context) => {
+const HighScoreTable = (_, context) => {
 	const { data } = useBackend(context);
 	const { highscore: highscores, user_ckey } = data;
 	const [highScoreIndex, setHighScoreIndex] = useLocalState(
@@ -91,9 +93,10 @@ const HighScoreTable = (props, context) => {
 		ckey: key,
 		value: highscore.scores[key],
 	}));
+
 	return (
-		<Flex>
-			<Flex.Item>
+		<Stack>
+			<Stack.Item>
 				<Tabs vertical>
 					{highscores.map((highscore, i) => (
 						<Tabs.Tab
@@ -104,8 +107,8 @@ const HighScoreTable = (props, context) => {
 						</Tabs.Tab>
 					))}
 				</Tabs>
-			</Flex.Item>
-			<Flex.Item grow={1} basis={0}>
+			</Stack.Item>
+			<Stack.Item grow>
 				<Table>
 					<Table.Row header>
 						<Table.Cell textAlign="center">#</Table.Cell>
@@ -128,7 +131,7 @@ const HighScoreTable = (props, context) => {
 						</Table.Row>
 					))}
 				</Table>
-			</Flex.Item>
-		</Flex>
+			</Stack.Item>
+		</Stack>
 	);
 };

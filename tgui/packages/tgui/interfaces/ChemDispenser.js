@@ -5,7 +5,7 @@ import { useBackend, useLocalState } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
-export const ChemDispenser = (props, context) => {
+export const ChemDispenser = (_, context) => {
 	const { act, data } = useBackend(context);
 	const recording = !!data.recordingRecipe;
 	const { recipeReagents = [] } = data;

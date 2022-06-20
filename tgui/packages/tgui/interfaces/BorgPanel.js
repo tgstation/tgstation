@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
-export const BorgPanel = (props, context) => {
+export const BorgPanel = (_, context) => {
 	const { act, data } = useBackend(context);
 	const borg = data.borg || {};
 	const cell = data.cell || {};

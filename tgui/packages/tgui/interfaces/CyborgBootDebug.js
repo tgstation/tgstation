@@ -33,9 +33,10 @@ const TOOLTIP_LAWSYNC = multiline`
   it's laws with it's master AI.
 `;
 
-export const CyborgBootDebug = (props, context) => {
+export const CyborgBootDebug = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { designation, master, lawsync, aisync, locomotion, panel } = data;
+
 	return (
 		<Window width={master?.length > 26 ? 537 : 440} height={289}>
 			<Window.Content>

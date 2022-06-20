@@ -3,7 +3,7 @@ import { AnimatedNumber, Box, Button, Modal, Section, Stack, Tabs } from '../com
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
-export const BlackMarketUplink = (props, context) => {
+export const BlackMarketUplink = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		categories = [],
@@ -13,6 +13,7 @@ export const BlackMarketUplink = (props, context) => {
 		viewing_market,
 		viewing_category,
 	} = data;
+
 	return (
 		<Window width={670} height={480} theme="hackerman">
 			<ShipmentSelector />
@@ -93,7 +94,7 @@ export const BlackMarketUplink = (props, context) => {
 	);
 };
 
-const ShipmentSelector = (props, context) => {
+const ShipmentSelector = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { buying, ltsrbt_built, money } = data;
 	if (!buying) {
@@ -106,6 +107,7 @@ const ShipmentSelector = (props, context) => {
 			description,
 		};
 	});
+
 	return (
 		<Modal textAlign="center">
 			<Stack mb={1}>

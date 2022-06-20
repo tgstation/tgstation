@@ -39,9 +39,10 @@ type Info = {
 	categories: any[];
 };
 
-const ObjectivePrintout = (props, context) => {
+const ObjectivePrintout = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { objectives } = data;
+
 	return (
 		<Stack vertical>
 			<Stack.Item bold>Your prime objectives:</Stack.Item>
@@ -57,9 +58,10 @@ const ObjectivePrintout = (props, context) => {
 	);
 };
 
-const IntroductionSection = (props, context) => {
+const IntroductionSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { intro } = data;
+
 	return (
 		<Section fill title="Intro" scrollable>
 			<Stack vertical fill>
@@ -72,9 +74,10 @@ const IntroductionSection = (props, context) => {
 	);
 };
 
-const FlavorSection = (props, context) => {
+const FlavorSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { allies, goal } = data;
+
 	return (
 		<Section
 			fill
@@ -127,9 +130,10 @@ const FlavorSection = (props, context) => {
 	);
 };
 
-const CodewordsSection = (props, context) => {
+const CodewordsSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { has_codewords, phrases, responses } = data;
+
 	return (
 		<Section title="Codewords" mb={!has_codewords && -1}>
 			<Stack fill>
@@ -173,7 +177,7 @@ const CodewordsSection = (props, context) => {
 	);
 };
 
-export const AntagInfoMalf = (props, context) => {
+export const AntagInfoMalf = (_, context) => {
 	const { act, data } = useBackend<Info>(context);
 	const { processingTime, categories } = data;
 	const [antagInfoTab, setAntagInfoTab] = useLocalState(
@@ -198,6 +202,7 @@ export const AntagInfoMalf = (props, context) => {
 			});
 		}
 	}
+
 	return (
 		<Window
 			width={660}

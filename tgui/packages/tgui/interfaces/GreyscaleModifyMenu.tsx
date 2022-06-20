@@ -55,8 +55,9 @@ const DirectionAbbreviation: Record<Direction, string> = {
 	[Direction.NorthWest]: 'NW',
 };
 
-const ConfigDisplay = (props, context) => {
+const ConfigDisplay = (_, context) => {
 	const { act, data } = useBackend<GreyscaleMenuData>(context);
+
 	return (
 		<Section title="Designs">
 			<LabeledList>
@@ -74,9 +75,10 @@ const ConfigDisplay = (props, context) => {
 	);
 };
 
-const ColorDisplay = (props, context) => {
+const ColorDisplay = (_, context) => {
 	const { act, data } = useBackend<GreyscaleMenuData>(context);
-	const colors = data.colors || [];
+	const { colors = [] } = data;
+
 	return (
 		<Section title="Colors">
 			<LabeledList>
@@ -157,6 +159,7 @@ const PreviewCompassSelect = () => {
 const SingleDirection = (props, context) => {
 	const { dir } = props;
 	const { data, act } = useBackend<GreyscaleMenuData>(context);
+
 	return (
 		<Flex.Item grow={1} basis={0}>
 			<Button

@@ -152,9 +152,10 @@ const GuideSection = () => {
 	);
 };
 
-const InformationSection = (props, context) => {
+const InformationSection = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { charges, total_sacrifices, ascended } = data;
+
 	return (
 		<Stack.Item>
 			<Stack vertical fill>
@@ -188,7 +189,7 @@ const InformationSection = (props, context) => {
 	);
 };
 
-const ObjectivePrintout = (props, context) => {
+const ObjectivePrintout = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { objectives } = data;
 	return (
@@ -210,7 +211,7 @@ const ObjectivePrintout = (props, context) => {
 	);
 };
 
-const ResearchedKnowledge = (props, context) => {
+const ResearchedKnowledge = (_, context) => {
 	const { data } = useBackend<KnowledgeInfo>(context);
 	const { learnedKnowledge } = data;
 
@@ -235,7 +236,7 @@ const ResearchedKnowledge = (props, context) => {
 	);
 };
 
-const KnowledgeShop = (props, context) => {
+const KnowledgeShop = (_, context) => {
 	const { data, act } = useBackend<KnowledgeInfo>(context);
 	const { learnableKnowledge } = data;
 
@@ -270,7 +271,7 @@ const KnowledgeShop = (props, context) => {
 	);
 };
 
-const ResearchInfo = (props, context) => {
+const ResearchInfo = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { charges } = data;
 
@@ -297,7 +298,7 @@ const ResearchInfo = (props, context) => {
 	);
 };
 
-export const AntagInfoHeretic = (props, context) => {
+export const AntagInfoHeretic = (_, context) => {
 	const { data } = useBackend<Info>(context);
 	const { ascended } = data;
 

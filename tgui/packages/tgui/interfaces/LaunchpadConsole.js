@@ -4,6 +4,7 @@ import { Window } from '../layouts';
 
 const LaunchpadButtonPad = (props, context) => {
 	const { act } = useBackend(context);
+
 	return (
 		<Grid width="1px">
 			<Grid.Column>
@@ -119,6 +120,7 @@ export const LaunchpadControl = (props, context) => {
 	const { topLevel } = props;
 	const { act, data } = useBackend(context);
 	const { x, y, pad_name, range } = data;
+
 	return (
 		<Section
 			title={
@@ -218,9 +220,10 @@ export const LaunchpadControl = (props, context) => {
 	);
 };
 
-export const LaunchpadConsole = (props, context) => {
+export const LaunchpadConsole = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { launchpads = [], selected_id } = data;
+
 	return (
 		<Window width={475} height={260}>
 			<Window.Content scrollable>

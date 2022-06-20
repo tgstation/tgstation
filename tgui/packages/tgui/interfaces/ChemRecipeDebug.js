@@ -29,6 +29,7 @@ export const ChemRecipeDebug = (props, context) => {
 		activeReactions = [],
 		queuedReactions = [],
 	} = data;
+
 	return (
 		<Window width={450} height={850}>
 			<Window.Content scrollable>

@@ -50,7 +50,7 @@ const BookListing = (_, context) => {
 	);
 };
 
-const SearchAndDisplay = (props, context) => {
+const SearchAndDisplay = (_, context) => {
 	const { act, data } = useBackend(context);
 	const {
 		can_db_request,
@@ -68,6 +68,7 @@ const SearchAndDisplay = (props, context) => {
 		})),
 		sortBy((record) => record.key),
 	])(data.pages);
+
 	return (
 		<Section>
 			<Stack justify="space-between">
