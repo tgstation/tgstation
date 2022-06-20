@@ -135,7 +135,7 @@ const AirAlarmControl = (_, context) => {
 
 const AirAlarmControlHome = (_, context) => {
 	const { act, data } = useBackend(context);
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [screen, setScreen] = useLocalState(context, 'screen');
 	const { mode, atmos_alarm } = data;
 

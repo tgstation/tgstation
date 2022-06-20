@@ -3,7 +3,6 @@ import { windowLoad, windowOpen } from '../helpers';
 import { Modal } from '../types';
 
 /** Attach listeners, sets window size just in case */
-// eslint-disable-next-line no-unused-vars
 export const handleComponentMount = function (this: Modal) {
 	Byond.subscribeTo('props', (data) => {
 		this.fields.maxLength = data.maxLength;

@@ -6,7 +6,6 @@ import { Modal } from '../types';
  * 2. Backspacing while empty resets any radio subchannels
  * 3. Ensures backspace and delete calculate window size
  */
-// eslint-disable-next-line no-unused-vars
 export const handleBackspaceDelete = function (this: Modal) {
 	const { buttonContent, channel } = this.state;
 	const { radioPrefix, value } = this.fields;

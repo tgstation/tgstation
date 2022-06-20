@@ -38,13 +38,12 @@ type Gas = {
 
 const GasSearchBar = (props: {
 	title: InfernoNode;
-	// eslint-disable-next-line no-unused-vars
 	onChange: (inputValue: string) => void;
 	activeInput: boolean;
-	// eslint-disable-next-line no-unused-vars
 	setActiveInput: (toggle: boolean) => void;
 }) => {
 	const { title, onChange, activeInput, setActiveInput } = props;
+
 	return (
 		<Flex align="center">
 			<Flex.Item grow>
@@ -67,7 +66,7 @@ const GasSearchBar = (props: {
 	);
 };
 
-const GasHandbook = (props, context) => {
+const GasHandbook = (_, context) => {
 	const { data } = useBackend<{ gasInfo: Gas[] }>(context);
 	const { gasInfo } = data;
 	const [activeGasId, setActiveGasId] = useLocalState(
@@ -75,7 +74,7 @@ const GasHandbook = (props, context) => {
 		'activeGasId',
 		''
 	);
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [activeReactionId, setActiveReactionId] = useLocalState(
 		context,
 		'activeReactionId',
@@ -87,6 +86,7 @@ const GasHandbook = (props, context) => {
 		false
 	);
 	const relevantGas = gasInfo.find((gas) => gas.id === activeGasId);
+
 	return (
 		<Section
 			title={
@@ -126,10 +126,10 @@ const GasHandbook = (props, context) => {
 	);
 };
 
-const ReactionHandbook = (props, context) => {
+const ReactionHandbook = (_, context) => {
 	const { data } = useBackend<{ reactionInfo: Reaction[] }>(context);
 	const { reactionInfo } = data;
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [activeGasId, setActiveGasId] = useLocalState(
 		context,
 		'activeGasId',
@@ -148,6 +148,7 @@ const ReactionHandbook = (props, context) => {
 	const relevantReaction = reactionInfo?.find(
 		(reaction) => reaction.id === activeReactionId
 	);
+
 	return (
 		<Section
 			title={
@@ -225,13 +226,13 @@ export const AtmosHandbookContent = (props: { vertical?: boolean }) => {
 };
 
 export const atmosHandbookHooks = (context) => {
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [activeGasId, setActiveGasId] = useLocalState(
 		context,
 		'activeGasId',
 		''
 	);
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [activeReactionId, setActiveReactionId] = useLocalState(
 		context,
 		'activeReactionId',

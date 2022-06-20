@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BooleanLike } from 'common/react';
 import { Box, Button, NumberInput, Flex } from '../../components';
 import { classes } from 'common/react';

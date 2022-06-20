@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /**
  * This folder represents the antagonists you can choose in the preferences
  * menu.

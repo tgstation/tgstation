@@ -226,7 +226,6 @@ export const PersonalCrafting = (_, context) => {
 
 type CraftingList_ = {
 	recipes: Recipe[];
-	// eslint-disable-next-line react/no-unused-prop-types
 	compact?: boolean;
 };
 

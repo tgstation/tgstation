@@ -54,7 +54,6 @@ type VirusInfoProps = {
 
 type TabsProps = {
 	tab: number;
-	// eslint-disable-next-line no-unused-vars
 	tabHandler: (tab: number) => void;
 };
 

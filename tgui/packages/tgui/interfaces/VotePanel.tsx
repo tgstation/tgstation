@@ -3,13 +3,9 @@ import { Box, Icon, Stack, Button, Section, NoticeBox, LabeledList, Collapsible 
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 
-// eslint-disable-next-line no-unused-vars
 enum VoteConfig {
-	// eslint-disable-next-line no-unused-vars
 	None = -1,
-	// eslint-disable-next-line no-unused-vars
 	Disabled = 0,
-	// eslint-disable-next-line no-unused-vars
 	Enabled = 1,
 }
 

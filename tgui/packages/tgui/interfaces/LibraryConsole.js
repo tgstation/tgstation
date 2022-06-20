@@ -256,7 +256,7 @@ const CheckoutModal = (_, context) => {
 	const { act, data } = useBackend(context);
 
 	const { checking_out } = data;
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [checkoutBook, setCheckoutBook] = useLocalState(
 		context,
 		'CheckoutBook',
@@ -613,7 +613,7 @@ const UploadModal = (_, context) => {
 	const { act, data } = useBackend(context);
 
 	const { upload_categories, default_category, can_db_request } = data;
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [uploadToDB, setUploadToDB] = useLocalState(context, 'UploadDB', false);
 	const [uploadCategory, setUploadCategory] = useLocalState(
 		context,

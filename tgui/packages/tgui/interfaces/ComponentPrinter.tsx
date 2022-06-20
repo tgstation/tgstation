@@ -7,7 +7,7 @@ import { Box, Button, Input, Section, Stack, Tabs } from '../components';
 const CATEGORY_ALL = 'All';
 
 const searchFor = (searchText) =>
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	createSearch(searchText, ([_, thing]) => thing.name + thing.description);
 
 const getCategory = (category: string[]) => {
@@ -137,7 +137,7 @@ export const ComponentPrinter = (_, context) => {
 
 										{Object.entries(data.designs)
 											.filter(
-												// eslint-disable-next-line no-unused-vars
+												// eslint-disable-next-line @typescript-eslint/no-unused-vars
 												([_, design]) =>
 													currentCategory === CATEGORY_ALL ||
 													design.categories.indexOf(currentCategory) !== -1

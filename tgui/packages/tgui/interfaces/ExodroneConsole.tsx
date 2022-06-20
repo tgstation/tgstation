@@ -150,8 +150,7 @@ type ToolData = {
 export const ExodroneConsole = (_, context) => {
 	const { data } = useBackend<ExodroneConsoleData>(context);
 	const { signal_lost } = data;
-
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [choosingTools, setChoosingTools] = useLocalState(
 		context,
 		'choosingTools',
@@ -253,8 +252,7 @@ const DroneSelectionSection = (
 const ToolSelectionModal = (_, context) => {
 	const { act, data } = useBackend<ExodroneConsoleData>(context);
 	const { all_tools = {} } = data;
-
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [choosingTools, setChoosingTools] = useLocalState(
 		context,
 		'choosingTools',
@@ -392,7 +390,7 @@ const EquipmentGrid = (
 ) => {
 	const { act } = useBackend<ExodroneConsoleData>(context);
 	const { cargo, configurable } = props.drone;
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [choosingTools, setChoosingTools] = useLocalState(
 		context,
 		'choosingTools',
@@ -527,13 +525,13 @@ const TravelTargetSelectionScreen = (
 			return target_site.distance * drone_travel_coefficent;
 		}
 	};
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [choosingTools, setChoosingTools] = useLocalState(
 		context,
 		'choosingTools',
 		false
 	);
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [TravelDimmerShown, setTravelDimmerShown] = useLocalState(
 		context,
 		'TravelDimmerShown',

@@ -61,7 +61,6 @@ type SortingOption = {
 	// It is expected to return a negative value
 	// if first argument is less than second argument,
 	// zero if they're equal and a positive value otherwise.
-	// eslint-disable-next-line no-unused-vars
 	sort: (a: Objective, b: Objective) => number;
 };
 

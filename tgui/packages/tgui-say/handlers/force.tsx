@@ -3,7 +3,6 @@ import { windowSet } from '../helpers';
 import { Modal } from '../types';
 
 /** Sends the current input to byond and purges it */
-// eslint-disable-next-line no-unused-vars
 export const handleForce = function (this: Modal) {
 	const { channel, size } = this.state;
 	const { radioPrefix, value } = this.fields;

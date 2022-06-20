@@ -191,11 +191,8 @@ export class CircuitSignalHandler extends Component<
 }
 
 type EntryProps = {
-	// eslint-disable-next-line no-unused-vars
 	onRemove: (e: MouseEvent) => any;
-	// eslint-disable-next-line no-unused-vars
 	onEnter: (e: MouseEvent, value: string) => any;
-	// eslint-disable-next-line no-unused-vars
 	onSetOption?: (type: string) => any;
 	name: string;
 	current_option: string;

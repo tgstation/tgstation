@@ -12,7 +12,6 @@ type Props = {
 	title: string;
 	list: string[];
 	reagentName: string;
-	// eslint-disable-next-line no-unused-vars
 	onReagentInput: (str: string) => void;
 };
 

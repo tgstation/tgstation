@@ -130,7 +130,7 @@ export const AppTechweb = (_, context) => {
 export const TechwebContent = (_, context) => {
 	const { act, data } = useRemappedBackend(context);
 	const { points, points_last_tick, sec_protocols, t_disk, d_disk } = data;
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [techwebRoute, setTechwebRoute] = useLocalState(
 		context,
 		'techwebRoute',
@@ -308,7 +308,7 @@ const TechwebDiskMenu = (props, context) => {
 	const { act, data } = useRemappedBackend(context);
 	const { diskType } = props;
 	const { t_disk, d_disk } = data;
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [techwebRoute, setTechwebRoute] = useLocalState(
 		context,
 		'techwebRoute',
@@ -492,7 +492,7 @@ const TechNodeDetail = (props, context) => {
 		'nodeDetailTabIndex',
 		0
 	);
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [techwebRoute, setTechwebRoute] = useLocalState(
 		context,
 		'techwebRoute',
@@ -570,13 +570,13 @@ const TechNode = (props, context) => {
 		required_experiments,
 		discount_experiments,
 	} = node_cache[id];
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [techwebRoute, setTechwebRoute] = useLocalState(
 		context,
 		'techwebRoute',
 		null
 	);
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [tabIndex, setTabIndex] = useLocalState(
 		context,
 		'nodeDetailTabIndex',

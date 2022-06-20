@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { BooleanLike, classes } from 'common/react';
 import { Component } from 'inferno';
 import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox, Dimmer, Icon } from '../../components';
@@ -85,7 +84,7 @@ export class ObjectiveMenu extends Component<
 		}
 	}
 
-	handleMouseUp(event: MouseEvent) {
+	handleMouseUp() {
 		if (dragClickTimer > Date.now()) {
 			return;
 		}
@@ -104,7 +103,7 @@ export class ObjectiveMenu extends Component<
 		});
 	}
 
-	handleObjectiveAdded(event: MouseEvent) {
+	handleObjectiveAdded() {
 		const { draggingObjective } = this.state as ObjectiveMenuState;
 		if (!draggingObjective) {
 			return;
@@ -299,12 +298,12 @@ const ObjectiveFunction = (
 				objective.objective_state === ObjectiveState.Active
 			}
 			grow={grow}
-			handleCompletion={(event) => {
+			handleCompletion={() => {
 				if (handleCompletion) {
 					handleCompletion(objective);
 				}
 			}}
-			handleAbort={(event) => {
+			handleAbort={() => {
 				if (handleAbort) {
 					handleAbort(objective);
 				}
@@ -350,7 +349,7 @@ type ObjectiveElementProps = {
 	handleAbort: (event: MouseEvent) => void;
 };
 
-const ObjectiveElement = (props: ObjectiveElementProps, context) => {
+const ObjectiveElement = (props: ObjectiveElementProps) => {
 	const {
 		name,
 		reputation,
@@ -366,7 +365,6 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
 		originalProgression,
 		grow,
 		finalObjective,
-		...rest
 	} = props;
 
 	const objectiveFinished =

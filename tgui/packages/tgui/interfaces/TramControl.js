@@ -57,7 +57,7 @@ const BrokenTramDimmer = () => {
 export const TramControl = (_, context) => {
 	const { act, data } = useBackend(context);
 	const { broken, moving, destinations, tram_location } = data;
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [transitIndex, setTransitIndex] = useLocalState(
 		context,
 		'transit-index',
@@ -127,7 +127,6 @@ const Destination = (props) => {
 		const selected = transitIndex === destinations.indexOf(dest);
 		return here ? 'blue' : selected ? 'green' : 'transparent';
 	};
-	// eslint-disable-next-line no-unused-vars
 	const [transitIndex, setTransitIndex] = useLocalState(
 		context,
 		'transit-index',

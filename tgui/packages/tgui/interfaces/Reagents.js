@@ -132,7 +132,7 @@ export const Reagents = (props, context) => {
 
 const TagBox = (props, context) => {
 	const { act, data } = useBackend(context);
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [page, setPage] = useLocalState(context, 'page', 1);
 	const { bitflags } = props;
 	const { selectedBitflags } = data;

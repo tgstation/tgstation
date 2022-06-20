@@ -91,7 +91,7 @@ const EnscribedName = (_, context) => {
 const lineHeightToc = '34.6px';
 
 const TableOfContents = () => {
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
 
 	return (

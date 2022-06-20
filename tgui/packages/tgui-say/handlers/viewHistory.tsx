@@ -3,7 +3,6 @@ import { getHistoryAt, getHistoryLength } from '../helpers';
 import { Modal } from '../types';
 
 /**  Sets the input value to chat history at index historyCounter. */
-// eslint-disable-next-line no-unused-vars
 export const handleViewHistory = function (this: Modal) {
 	const { channel } = this.state;
 	const { historyCounter } = this.fields;

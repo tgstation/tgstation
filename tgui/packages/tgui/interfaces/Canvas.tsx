@@ -6,7 +6,6 @@ import { Box, Button, Flex } from '../components';
 import { Window } from '../layouts';
 
 type PaintCanvasProps = Partial<{
-	// eslint-disable-next-line no-unused-vars
 	onCanvasModifiedHandler: (data: PointData[]) => void;
 	value: string[][];
 	width: number;

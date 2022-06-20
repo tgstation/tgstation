@@ -6,7 +6,6 @@ import { Modal } from '../types';
  * If the user switches between IC/OOC, messages Byond to toggle thinking
  * indicators.
  */
-// eslint-disable-next-line no-unused-vars
 export const handleIncrementChannel = function (this: Modal) {
 	const { channel } = this.state;
 	const { radioPrefix } = this.fields;

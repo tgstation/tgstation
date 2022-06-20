@@ -208,11 +208,8 @@ const SLOTS: Record<
 	},
 };
 
-// eslint-disable-next-line no-unused-vars
 enum ObscuringLevel {
-	// eslint-disable-next-line no-unused-vars
 	Completely = 1,
-	// eslint-disable-next-line no-unused-vars
 	Hidden = 2,
 }
 

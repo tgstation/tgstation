@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { RefObject } from 'inferno';
 
 export type Modal = {

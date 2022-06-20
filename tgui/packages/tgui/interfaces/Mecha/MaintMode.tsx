@@ -17,13 +17,14 @@ const MECHA_MAINT_PANELS = {
 	},
 };
 
-export const MaintMode = (props, context) => {
+export const MaintMode = (_, context) => {
 	const [screen, setPanel] = useLocalState(
 		context,
 		'screen',
 		MECHA_MAINT_PANELS.main
 	);
 	const Component = screen.component();
+
 	return (
 		<Stack fill vertical>
 			<Stack.Item>
@@ -47,9 +48,9 @@ export const MaintMode = (props, context) => {
 	);
 };
 
-const MainPanel = (props, context) => {
+const MainPanel = (_, context) => {
 	const { data } = useBackend<MaintData>(context);
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [screen, setPanel] = useLocalState(
 		context,
 		'screen',
@@ -79,14 +80,15 @@ const MainPanel = (props, context) => {
 	);
 };
 
-const MaintEnabled = (props, context) => {
+const MaintEnabled = (_, context) => {
 	const { act } = useBackend<MaintData>(context);
-	// eslint-disable-next-line no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [screen, setPanel] = useLocalState(
 		context,
 		'screen',
 		MECHA_MAINT_PANELS.main
 	);
+
 	return (
 		<>
 			<Stack.Item>
@@ -129,9 +131,10 @@ const MaintEnabled = (props, context) => {
 	);
 };
 
-const StockPartsPanel = (props, context) => {
+const StockPartsPanel = (_, context) => {
 	const { act, data } = useBackend<MaintData>(context);
 	const { cell, scanning, capacitor } = data;
+
 	return (
 		<Stack fill vertical>
 			<Stack.Item>
@@ -186,9 +189,10 @@ const StockPartsPanel = (props, context) => {
 	);
 };
 
-const AccessPanel = (props, context) => {
+const AccessPanel = (_, context) => {
 	const { act, data } = useBackend<MaintData>(context);
 	const { idcard_access, operation_req_access } = data;
+
 	return (
 		<Stack fill vertical>
 			<Stack.Item>

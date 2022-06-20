@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import { InfernoNode, SFC } from 'inferno';

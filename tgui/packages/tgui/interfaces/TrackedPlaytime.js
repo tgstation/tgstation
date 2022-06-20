@@ -62,7 +62,7 @@ export const TrackedPlaytime = (_, context) => {
 	);
 };
 
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const sortByPlaytime = sortBy(([_, playtime]) => -playtime);
 
 const PlaytimeSection = (props) => {

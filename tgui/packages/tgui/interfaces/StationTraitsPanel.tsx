@@ -23,11 +23,8 @@ type StationTraitsData = {
 	valid_station_traits: ValidStationTrait[];
 };
 
-// eslint-disable-next-line no-unused-vars
 enum Tab {
-	// eslint-disable-next-line no-unused-vars
 	SetupFutureStationTraits,
-	// eslint-disable-next-line no-unused-vars
 	ViewStationTraits,
 }
 

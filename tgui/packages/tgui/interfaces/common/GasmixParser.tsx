@@ -13,12 +13,10 @@ export type Gasmix = {
 
 type GasmixParserProps = {
 	gasmix: Gasmix;
-	// eslint-disable-next-line no-unused-vars
 	gasesOnClick?: (gas_id: string) => void;
 	temperatureOnClick?: () => void;
 	volumeOnClick?: () => void;
 	pressureOnClick?: () => void;
-	// eslint-disable-next-line no-unused-vars
 	reactionOnClick?: (reaction_id: string) => void;
 	// Whether we need to show the number of the reaction or not
 	detailedReactions?: boolean;

@@ -8,7 +8,6 @@ import { Modal } from '../types';
  * Exemptions: Channel is OOC, value is too short,
  * Not a valid radio pref, or value is already the radio pref.
  */
-// eslint-disable-next-line no-unused-vars
 export const handleRadioPrefix = function (this: Modal) {
 	const { channel } = this.state;
 	const { radioPrefix, value } = this.fields;

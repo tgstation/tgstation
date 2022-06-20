@@ -6,7 +6,6 @@ type GenericUplinkProps = {
 	currency?: string | JSX.Element;
 	categories: string[];
 	items: Item[];
-	// eslint-disable-next-line no-unused-vars
 	handleBuy: (item: Item) => void;
 };
 
@@ -100,8 +99,6 @@ export type Item<ItemData = {}> = {
 export type ItemListProps = {
 	compactMode: BooleanLike;
 	items: Item[];
-
-	// eslint-disable-next-line no-unused-vars
 	handleBuy: (item: Item) => void;
 };
 

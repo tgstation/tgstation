@@ -113,7 +113,7 @@ export const Orbit = (_, context) => {
 
 	const orbitMostRelevant = (searchText) => {
 		for (const source of [
-			// eslint-disable-next-line no-unused-vars
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			sortedAntagonists.map(([_, antags]) => antags),
 			alive,
 			ghosts,

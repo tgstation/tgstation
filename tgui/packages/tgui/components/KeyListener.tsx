@@ -3,11 +3,8 @@ import { KeyEvent } from '../events';
 import { listenForKeyEvents } from '../hotkeys';
 
 type KeyListenerProps = Partial<{
-	// eslint-disable-next-line no-unused-vars
 	onKey: (key: KeyEvent) => void;
-	// eslint-disable-next-line no-unused-vars
 	onKeyDown: (key: KeyEvent) => void;
-	// eslint-disable-next-line no-unused-vars
 	onKeyUp: (key: KeyEvent) => void;
 }>;
 
