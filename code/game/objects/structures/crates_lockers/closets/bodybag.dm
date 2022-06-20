@@ -15,7 +15,6 @@
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
 	cutting_tool = null // Bodybags are not deconstructed by cutting
-	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	drag_slowdown = 0
 	has_closed_overlay = FALSE
 	var/foldedbag_path = /obj/item/bodybag
@@ -45,7 +44,9 @@
 		else
 			name = initial(name)
 		return
-	else if((interact_tool.tool_behaviour == TOOL_WIRECUTTER) && tagged)
+	if(!tagged)
+		return
+	if(interact_tool.tool_behaviour == TOOL_WIRECUTTER || interact_tool.get_sharpness())
 		to_chat(user, span_notice("You cut the tag off [src]."))
 		name = "body bag"
 		tagged = FALSE
@@ -56,24 +57,17 @@
 	if(tagged)
 		. += "bodybag_label"
 
-/obj/structure/closet/body_bag/open(mob/living/user, force = FALSE)
-	. = ..()
-	if(.)
-		mouse_drag_pointer = MOUSE_INACTIVE_POINTER
-
 /obj/structure/closet/body_bag/close()
 	. = ..()
 	if(.)
 		set_density(FALSE)
-		mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-/obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
+/obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
-		if(!attempt_fold(usr))
-			return
-		perform_fold(usr)
-		qdel(src)
+	if(!attempt_fold(usr))
+		return
+	perform_fold(usr)
+	qdel(src)
 
 		/**
 		  * Checks to see if we can fold. Return TRUE to actually perform the fold and delete.
