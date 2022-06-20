@@ -707,3 +707,45 @@
   - qol: Meta and Tram have autodrobes in dorms now.
   bob-b-b:
   - balance: Increased greed vending machine integrity and max items
+2022-06-20:
+  ArcaneMusic:
+  - rscadd: Added several new goodie items to purchase through cargo, including translation
+      keys, mutadone autoinjectors, and a full RLD.
+  - code_imp: documented research_nodes and radios.
+  LemonInTheDark:
+  - code_imp: WAHHHH LIGHTING HAS CHANGED just backend mind. Please report any bugs
+  MTandi:
+  - bugfix: Fixed recycler bug that deleted the output stack because it was merged
+      with the input stack
+  - bugfix: Fixed recycler bug where it deleted stacks of 50 because it didn't have
+      enough space by removing recycle bins that reset its internal space from infinity
+      to the level of matter bin part
+  - qol: food now shows its type on examine
+  Melbert:
+  - qol: The Cursed Dufflebag now tells nearby people when it takes a bite out of
+      someone.
+  - balance: The Cursed Dufflebag takes any food poisoned by any means, instead of
+      just burnt messes.
+  - balance: The Cursed Dufflebag deals out slightly less wounds now to people wearing
+      armor and protection.
+  - balance: The Cursed Dufflebag deals less damage if the mob it's attached to is
+      dead, and doesn't heal if so.
+  - bugfix: The Cursed Dufflebag no longer permanently makes you a pacifist and clumsy.
+  - code_imp: Diggable component was changed to the Diggable element.
+  Mothblocks:
+  - bugfix: Fixed revolutions blaring alerts for a few seconds after winning.
+  - balance: Hacking the command console and winning revs no longer adds midround
+      threat. Instead, it'll force a heavy ruleset to spawn, and barring that, will
+      spawn a dangerous random event.
+  Paxilmaniac:
+  - qol: liquid plasma now points out in examine text that plasma can be collected
+      from it with a beaker
+  - bugfix: liquid plasma will now cool down gasses inside of heat exchanger pipes
+      to 100K instead of heat them to 5000K
+  SmArtKar:
+  - bugfix: Locate weakpoint objective now works again.
+  Watermelon914:
+  - admin: Added a way for administrators to globally disable circuit component sound
+      emitters.
+  - balance: Further limited the sound emitter component so that maximum volume is
+      reduced and pitch is capped between -50 and 50
