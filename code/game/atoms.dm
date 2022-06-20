@@ -1952,6 +1952,8 @@
 	return TRUE
 
 /atom/MouseEntered(location, control, params)
+	if(flags_1 & INITIALIZED_1)
+		usr.MouseEnteredOn(src, location, control, params)
 	SSmouse_entered.hovers[usr.client] = src
 
 /// Fired whenever this atom is the most recent to be hovered over in the tick.
