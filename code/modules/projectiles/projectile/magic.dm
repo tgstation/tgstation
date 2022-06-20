@@ -424,8 +424,7 @@
 				continue
 			if(nearby_guy == firer)
 				continue
-			//if(nearby_guy.can_block_magic(antimagic_flags, charge_cost = 0))
-			//	continue
+			// Bump handles anti-magic checks for us, conveniently.
 			return Bump(nearby_guy)
 
 	return ..()
@@ -483,7 +482,7 @@
 	tesla_zap(src, zap_range, zap_power, zap_flags)
 
 /obj/projectile/magic/aoe/lightning/Destroy()
-	qdel(chain)
+	QDEL_NULL(chain)
 	return ..()
 
 /obj/projectile/magic/aoe/lightning/no_zap
@@ -513,7 +512,7 @@
 		var/mob/living/mob_target = target
 		// between this 10 burn, the 10 brute, the explosion brute, and the onfire burn,
 		// you are at about 65 damage if you stop drop and roll immediately
-		mob_target.take_overall_damage(0, 10)
+		mob_target.take_overall_damage(burn = 10)
 
 	var/turf/target_turf = get_turf(target)
 
@@ -563,13 +562,17 @@
 
 /obj/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
 	. = ..()
-	var/turf/T = get_turf(src)
-	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
-	new /obj/effect/temp_visual/cult/sac(T)
-	for(var/obj/O in range(src,1))
-		if(O.density && !istype(O, /obj/structure/destructible/cult))
-			O.take_damage(90, BRUTE, MELEE, 0)
-			new /obj/effect/temp_visual/cult/turf/floor(get_turf(O))
+	var/turf/target_turf = get_turf(src)
+	playsound(target_turf, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
+	new /obj/effect/temp_visual/cult/sac(target_turf)
+	for(var/obj/adjacent_object in range(1, src))
+		if(!adjacent_object.density)
+			continue
+		if(istype(adjacent_object, /obj/structure/destructible/cult)
+			continue
+
+		adjacent_object.take_damage(90, BRUTE, MELEE, 0)
+		new /obj/effect/temp_visual/cult/turf/floor(get_turf(adjacent_object))
 
 //still magic related, but a different path
 
