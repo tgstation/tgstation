@@ -6,7 +6,6 @@
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
 	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
-	vary_fire_sound = FALSE
 	fire_sound_volume = 90
 	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
 	casing_ejector = FALSE
@@ -37,6 +36,20 @@
 /obj/item/gun/ballistic/revolver/AltClick(mob/user)
 	..()
 	spin()
+
+/obj/item/gun/ballistic/revolver/fire_sounds()
+	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo(TRUE, FALSE)) // fucking REVOLVERS
+	var/click_frequency_to_use = 1 - frequency_to_use * 0.75
+	var/play_click = sqrt(magazine?.max_ammo) > get_ammo(TRUE, FALSE)
+	if(suppressed)
+		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		if(play_click)
+			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
+	else
+		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
+		if(play_click)
+			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
+
 
 /obj/item/gun/ballistic/revolver/verb/spin()
 	set name = "Spin Chamber"

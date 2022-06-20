@@ -592,7 +592,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return FALSE
 
 /// An experimental proc to allow admins to call rules on the fly or have rules call other rules.
-/datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced = FALSE)
+/datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced = FALSE, ignore_cost = FALSE)
 	var/datum/dynamic_ruleset/midround/new_rule
 	if(ispath(ruletype))
 		new_rule = new ruletype() // You should only use it to call midround rules though.
@@ -618,10 +618,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					return FALSE
 
 	var/population = GLOB.alive_player_list.len
-	if((new_rule.acceptable(population, threat_level) && new_rule.cost <= mid_round_budget) || forced)
+	if((new_rule.acceptable(population, threat_level) && (ignore_cost || new_rule.cost <= mid_round_budget)) || forced)
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
-			spend_midround_budget(new_rule.cost, threat_log, "[worldtime2text()]: Forced rule [new_rule.name]")
+			if (!ignore_cost)
+				spend_midround_budget(new_rule.cost, threat_log, "[worldtime2text()]: Forced rule [new_rule.name]")
 			new_rule.pre_execute(population)
 			if (new_rule.execute()) // This should never fail since ready() returned 1
 				if(new_rule.flags & HIGH_IMPACT_RULESET)

@@ -14,18 +14,27 @@ SUBSYSTEM_DEF(research)
 	var/datum/design/error_design/error_design
 
 	//ERROR LOGGING
-	var/list/invalid_design_ids = list() //associative id = number of times
-	var/list/invalid_node_ids = list() //associative id = number of times
-	var/list/invalid_node_boost = list() //associative id = error message
+	///associative id = number of times
+	var/list/invalid_design_ids = list()
+	///associative id = number of times
+	var/list/invalid_node_ids = list()
+	///associative id = error message
+	var/list/invalid_node_boost = list()
 
 	var/list/obj/machinery/rnd/server/servers = list()
 
-	var/list/techweb_nodes_starting = list() //associative id = TRUE
-	var/list/techweb_categories = list() //category name = list(node.id = TRUE)
-	var/list/techweb_boost_items = list() //associative double-layer path = list(id = list(point_type = point_discount))
-	var/list/techweb_nodes_hidden = list() //Node ids that should be hidden by default.
-	var/list/techweb_nodes_experimental = list() //Node ids that are exclusive to the BEPIS.
-	var/list/techweb_point_items = list( //path = list(point type = value)
+	///associative id = TRUE
+	var/list/techweb_nodes_starting = list()
+	///category name = list(node.id = TRUE)
+	var/list/techweb_categories = list()
+	///associative double-layer path = list(id = list(point_type = point_discount))
+	var/list/techweb_boost_items = list()
+	///Node ids that should be hidden by default.
+	var/list/techweb_nodes_hidden = list()
+	///Node ids that are exclusive to the BEPIS.
+	var/list/techweb_nodes_experimental = list()
+	///path = list(point type = value)
+	var/list/techweb_point_items = list(
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	)
 	var/list/errored_datums = list()
