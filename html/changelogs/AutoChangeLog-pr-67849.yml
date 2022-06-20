@@ -1,0 +1,5 @@
+author: "Cursor, sprites by Crumpaloo."
+delete-after: True
+changes: 
+  - imageadd: "The Cargorilla has found clothing in their size."
+  - rscadd: "Updated the Cargorilla's description to match their new look."
