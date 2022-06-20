@@ -56,7 +56,6 @@
 
 	var/image/I = image('icons/turf/overlays.dmi', T, overlaystate)
 	SET_PLANE(I, ABOVE_LIGHTING_PLANE, T)
-	I.plane = ABOVE_LIGHTING_PLANE
 	preview += I
 	BM.holder.images += preview
 	return T

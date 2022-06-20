@@ -172,14 +172,14 @@
 "aF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "restroom"
+	name = "Restroom"
 	},
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "mech bay"
+	name = "Mech Bay"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -282,9 +282,9 @@
 "aW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "Cockpit";
-	req_access_txt = "109"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)

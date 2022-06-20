@@ -17,7 +17,7 @@
 	id = "caravansyndicate3_bolt_starboard";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	req_access_txt = "150";
+	req_access = list("syndicate");
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark,
@@ -44,8 +44,7 @@
 /obj/machinery/door/airlock/hatch{
 	id_tag = "caravansyndicate3_bolt_port";
 	name = "External Airlock";
-	normalspeed = 0;
-	req_access_txt = "150"
+	normalspeed = 0
 	},
 /obj/docking_port/mobile{
 	dir = 2;
@@ -58,6 +57,7 @@
 	width = 15
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "ha" = (
@@ -110,7 +110,7 @@
 	name = "Bridge Blast Door Control";
 	pixel_x = -16;
 	pixel_y = 5;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/button/door{
 	id = "caravansyndicate3_bolt_bridge";
@@ -118,7 +118,7 @@
 	normaldoorcontrol = 1;
 	pixel_x = -16;
 	pixel_y = -5;
-	req_access_txt = "150";
+	req_access = list("syndicate");
 	specialfunctions = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -232,7 +232,7 @@
 	id = "caravansyndicate3_bolt_port";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	req_access_txt = "150";
+	req_access = list("syndicate");
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark,
@@ -254,13 +254,13 @@
 /area/shuttle/caravan/syndicate3)
 "Da" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Ready Room";
-	req_access_txt = "150"
+	name = "Ready Room"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "Dt" = (
@@ -353,8 +353,7 @@
 	lethal = 1;
 	name = "Shuttle turret control";
 	pixel_y = 34;
-	req_access = null;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -371,12 +370,12 @@
 /obj/machinery/door/airlock/hatch{
 	id_tag = "caravansyndicate3_bolt_starboard";
 	name = "External Airlock";
-	normalspeed = 0;
-	req_access_txt = "150"
+	normalspeed = 0
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "Lq" = (
@@ -397,13 +396,13 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/hatch{
 	id_tag = "caravansyndicate3_bolt_bridge";
-	name = "Bridge";
-	req_access_txt = "150"
+	name = "Bridge"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "NH" = (

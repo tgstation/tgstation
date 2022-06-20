@@ -41,10 +41,12 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "P" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "V" = (
@@ -52,10 +54,17 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
+"W" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
 
 (1,1,1) = {"
 g
-P
+W
 E
 E
 I

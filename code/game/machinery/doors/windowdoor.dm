@@ -180,8 +180,8 @@
 		return TRUE
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
-/obj/machinery/door/window/CanAStarPass(obj/item/card/id/ID, to_dir)
-	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
+/obj/machinery/door/window/CanAStarPass(obj/item/card/id/ID, to_dir, no_id = FALSE)
+	return !density || (dir != to_dir) || (check_access(ID) && hasPower() && !no_id)
 
 /obj/machinery/door/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
@@ -432,7 +432,7 @@
 
 /obj/machinery/door/window/brigdoor/security/holding
 	name = "holding cell door"
-	req_one_access = list(ACCESS_BRIG_ENTRANCE) //lawyer also gets brig_entrance
+	req_one_access = list(ACCESS_SECURITY)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/left, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/right, 0)

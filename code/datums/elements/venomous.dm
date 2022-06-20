@@ -1,7 +1,7 @@
 /**
  * Venomous element; which makes the attacks of the simplemob attached poison the enemy.
  *
- * Used for spiders and bees!
+ * Used for spiders, frogs, and bees!
  */
 /datum/element/venomous
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH

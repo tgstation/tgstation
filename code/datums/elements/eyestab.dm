@@ -80,7 +80,7 @@
 
 	log_combat(user, target, "attacked", "[item.name]", "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
-	var/obj/item/organ/eyes/eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = target.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
 

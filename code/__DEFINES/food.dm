@@ -16,6 +16,7 @@
 #define NUTS (1<<15)
 #define SEAFOOD (1<<16)
 #define ORANGES (1<<17)
+#define BUGS (1<<18)
 
 /// A list of food type names, in order of their flags
 #define FOOD_FLAGS list( \
@@ -37,6 +38,30 @@
 	"NUTS", \
 	"SEAFOOD", \
 	"ORANGES", \
+	"BUGS", \
+)
+
+/// IC meaning (more or less) for food flags
+#define FOOD_FLAGS_IC list( \
+	"Meat", \
+	"Vegetables", \
+	"Raw food", \
+	"Junk food", \
+	"Grain", \
+	"Fruits", \
+	"Dairy products", \
+	"Fried food", \
+	"Alcohol", \
+	"Sugary food", \
+	"Gross food", \
+	"Toxic food", \
+	"Pineapples", \
+	"Breakfast food", \
+	"Clothing", \
+	"Nuts", \
+	"Seafood", \
+	"Oranges", \
+	"Bugs", \
 )
 
 #define DRINK_NICE 1

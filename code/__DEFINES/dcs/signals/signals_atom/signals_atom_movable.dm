@@ -13,9 +13,15 @@
 #define COMSIG_MOVABLE_CROSS_OVER "movable_cross_am"
 ///from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_BUMP "movable_bump"
-///from base of atom/movable/newtonian_move(): (inertia_direction)
+///from base of atom/movable/newtonian_move(): (inertia_direction, start_delay)
 #define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
 	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)
+///from datum/component/drift/apply_initial_visuals(): ()
+#define COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT "movable_drift_visual_attempt"
+	#define DRIFT_VISUAL_FAILED (1<<0)
+///from datum/component/drift/allow_final_movement(): ()
+#define COMSIG_MOVABLE_DRIFT_BLOCK_INPUT "movable_drift_block_input"
+	#define DRIFT_ALLOW_INPUT (1<<0)
 ///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
 #define COMSIG_MOVABLE_IMPACT "movable_impact"
 	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH (1<<0) //if true, flip if the impact will push what it hits
@@ -81,6 +87,6 @@
 #define COMSIG_BUCKLED_CAN_Z_MOVE "ridden_pre_can_z_move"
 	#define COMPONENT_RIDDEN_STOP_Z_MOVE 1
 	#define COMPONENT_RIDDEN_ALLOW_Z_MOVE 2
-/// from base of atom/movable/Process_Spacemove(): (movement_dir)
+/// from base of atom/movable/Process_Spacemove(): (movement_dir, continuous_move)
 #define COMSIG_MOVABLE_SPACEMOVE "spacemove"
 	#define COMSIG_MOVABLE_STOP_SPACEMOVE (1<<0)

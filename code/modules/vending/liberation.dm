@@ -18,7 +18,7 @@
 		/obj/item/gun/ballistic/shotgun/automatic/combat = 2,
 		/obj/item/gun/ballistic/automatic/gyropistol = 1,
 		/obj/item/gun/ballistic/shotgun = 2,
-		/obj/item/gun/ballistic/automatic/ar = 2
+		/obj/item/gun/ballistic/automatic/ar = 2,
 	)
 	premium = list(
 		/obj/item/ammo_box/magazine/smgm9mm = 2,
@@ -26,12 +26,12 @@
 		/obj/item/ammo_box/magazine/m45 = 2,
 		/obj/item/ammo_box/magazine/m75 = 2,
 		/obj/item/food/cheesyfries = 5,
-		/obj/item/food/burger/baconburger = 5 //Premium burgers for the premium section
+		/obj/item/food/burger/baconburger = 5, //Premium burgers for the premium section
 		)
 	contraband = list(
 		/obj/item/clothing/under/misc/patriotsuit = 3,
 		/obj/item/bedsheet/patriot = 5,
-		/obj/item/food/burger/superbite = 3
+		/obj/item/food/burger/superbite = 3,
 	) //U S A
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF

@@ -721,33 +721,15 @@ Striking a noncultist, however, will tear their flesh."}
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/halberd/halberd_act
-	var/wielded = FALSE // track wielded status on item
-
-/obj/item/melee/cultblade/halberd/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
 /obj/item/melee/cultblade/halberd/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
 	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
 
-/// triggered on wield of two handed item
-/obj/item/melee/cultblade/halberd/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/melee/cultblade/halberd/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
-
 /obj/item/melee/cultblade/halberd/update_icon_state()
-	icon_state = wielded ? "[base_icon_state]1" : "[base_icon_state]0"
-	inhand_icon_state = wielded ? "[base_icon_state]1" : "[base_icon_state]0"
+	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"
+	inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"
 	return ..()
 
 /obj/item/melee/cultblade/halberd/Destroy()
@@ -785,7 +767,7 @@ Striking a noncultist, however, will tear their flesh."}
 	qdel(src)
 
 /obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		final_block_chance *= 2
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)

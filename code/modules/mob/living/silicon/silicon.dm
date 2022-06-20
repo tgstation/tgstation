@@ -65,8 +65,7 @@
 	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
-
-
+	ADD_TRAIT(src, TRAIT_LITERATE, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
@@ -85,13 +84,13 @@
 	modularInterface.saved_identification = real_name || name
 	if(istype(src, /mob/living/silicon/robot))
 		modularInterface.saved_job = "Cyborg"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated/borg)
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/robot)
 	if(istype(src, /mob/living/silicon/ai))
 		modularInterface.saved_job = "AI"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated)
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
 	if(istype(src, /mob/living/silicon/pai))
 		modularInterface.saved_job = "pAI Messenger"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated)
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
@@ -403,9 +402,6 @@
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
 		return aicamera.selectpicture(user)
-
-/mob/living/silicon/is_literate()
-	return TRUE
 
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE

@@ -213,6 +213,7 @@
 	name = "brew of day and night"
 	desc = "You should never see this"
 	icon = 'icons/obj/eldritch.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	/// When a heretic examines a mawed crucible, shows a list of possible potions by name + includes this tip to explain what it does.
 	var/crucible_tip = "Doesn't do anything."
 	/// Typepath to the status effect this applies

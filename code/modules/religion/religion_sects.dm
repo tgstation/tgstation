@@ -158,7 +158,7 @@
 
 	//first we determine if we can charge them
 	var/did_we_charge = FALSE
-	var/obj/item/organ/stomach/ethereal/eth_stomach = blessed.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/ethereal/eth_stomach = blessed.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(eth_stomach))
 		eth_stomach.adjust_charge(60)
 		did_we_charge = TRUE
@@ -399,7 +399,7 @@
 	///places you can spar in. rites can be used to expand this list with new arenas!
 	var/list/arenas = list(
 		"Recreation Area" = /area/station/commons/fitness/recreation,
-		"Chapel" = /area/station/service/chapel
+		"Chapel" = /area/station/service/chapel,
 	)
 	///how many matches you've lost with holy stakes. 3 = excommunication
 	var/matches_lost = 0

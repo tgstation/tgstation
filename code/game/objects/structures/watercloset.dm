@@ -273,8 +273,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/sink/Initialize(mapload, bolt)
 	. = ..()
+	create_reagents(100, NO_REACT)
 	if(has_water_reclaimer)
-		create_reagents(100, NO_REACT)
 		reagents.add_reagent(dispensedreagent, 100)
 	AddComponent(/datum/component/plumbing/simple_demand, bolt)
 

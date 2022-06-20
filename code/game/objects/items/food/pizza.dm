@@ -356,19 +356,10 @@
 	. = ..()
 
 // Ant Pizza, now with more ants.
-/obj/item/food/pizza/ants
-	name = "\improper Ant Party pizza"
-	desc = "/// Filled with bugs, remember to fix"
-	icon_state = "antpizza"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/ants = 25, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "insects" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | GROSS
-	slice_type = /obj/item/food/pizzaslice/ants
-	boxtag = "Anthill Deluxe"
-
 /obj/item/food/pizzaslice/ants
 	name = "\improper Ant Party pizza slice"
 	desc = "The key to a perfect slice of pizza is not to overdo it with the ants."
 	icon_state = "antpizzaslice"
+	food_reagents = list(/datum/reagent/ants = 5, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "insects" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | GROSS
+	foodtypes = GRAIN | VEGETABLES | DAIRY | BUGS

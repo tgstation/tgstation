@@ -97,9 +97,6 @@
 /// log virology data
 /datum/config_entry/flag/log_virus
 
-/// log cloning actions.
-/datum/config_entry/flag/log_cloning
-
 /// log assets
 /datum/config_entry/flag/log_asset
 
@@ -133,6 +130,9 @@
 
 /// log telecomms messages
 /datum/config_entry/flag/log_telecomms
+
+/// log speech indicators(started/stopped speaking)
+/datum/config_entry/flag/log_speech_indicators
 
 /// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 /datum/config_entry/flag/log_twitter

@@ -260,6 +260,7 @@
 	* * callback the callback to call on timer finish
 	* * wait deciseconds to run the timer for
 	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+	* * timer_subsystem the subsystem to insert this timer into
 */
 #define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
 

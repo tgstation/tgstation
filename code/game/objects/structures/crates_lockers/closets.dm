@@ -251,11 +251,11 @@
 
 /obj/structure/closet/proc/open(mob/living/user, force = FALSE)
 	if(!can_open(user, force))
-		return
+		return FALSE
 	if(opened)
-		return
+		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLOSET_PRE_OPEN, user, force) & BLOCK_OPEN)
-		return
+		return FALSE
 	welded = FALSE
 	locked = FALSE
 	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
@@ -715,7 +715,7 @@
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
-		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		span_userdanger("You're shoved into \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (locker/crate)")
 	return COMSIG_CARBON_SHOVE_HANDLED

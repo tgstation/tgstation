@@ -3,7 +3,7 @@
 /atom/movable/screen/alert/status_effect/determined
 	name = "Determined"
 	desc = "The serious wounds you've sustained have put your body into fight-or-flight mode! Now's the time to look for an exit!"
-	icon_state = "regenerative_core"
+	icon_state = "wounded"
 
 /datum/status_effect/determined
 	id = "determined"

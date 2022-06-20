@@ -12,6 +12,7 @@
 	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
 	max_integrity = 200
 	integrity_failure = 0.25
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_LITERACY
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///Name of the logged in user.

@@ -324,8 +324,10 @@
 			span_userdanger("The siren pierces your hearing and confuses you!"), \
 			span_danger("The siren pierces your hearing!"))
 		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
-			if(carbon.get_ear_protection() == FALSE)
-				carbon.add_confusion(6)
+			if(carbon.get_ear_protection())
+				continue
+			carbon.adjust_timed_status_effect(6 SECONDS, /datum/status_effect/confusion)
+
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
@@ -339,17 +341,14 @@
 			var/bang_effect = carbon.soundbang_act(2, 0, 0, 5)
 			switch(bang_effect)
 				if(1)
-					carbon.add_confusion(5)
+					carbon.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
 					carbon.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter)
-					carbon.Jitter(10)
+					carbon.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
 				if(2)
 					carbon.Paralyze(40)
-					carbon.add_confusion(10)
+					carbon.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
 					carbon.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/stutter)
-					carbon.Jitter(25)
+					carbon.adjust_timed_status_effect(50 SECONDS, /datum/status_effect/jitter)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.log_message("used an emagged Cyborg Harm Alarm in [AREACOORD(user)]", LOG_ATTACK)
-
-
-

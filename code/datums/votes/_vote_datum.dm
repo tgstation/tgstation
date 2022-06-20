@@ -162,7 +162,7 @@
 	if(override_question)
 		returned_text += span_bold(override_question)
 	else
-		returned_text += span_bold("[capitalize(name)]")
+		returned_text += span_bold("[capitalize(name)] Vote")
 
 	for(var/option in choices)
 		returned_text += "\n[span_bold(option)]: [choices[option]]"
@@ -188,7 +188,7 @@
 		for(var/a_winner in all_winners)
 			returned_text += "\n\t[a_winner]"
 
-	returned_text += span_bold("Vote Result: [real_winner]")
+	returned_text += span_bold("\nVote Result: [real_winner]")
 	return returned_text
 
 /**

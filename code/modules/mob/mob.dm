@@ -43,6 +43,10 @@
 	ghostize() //False, since we're deleting it currently
 	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
 		mind.set_current(null)
+
+	if(mock_client)
+		mock_client.mob = null
+
 	return ..()
 
 
@@ -546,8 +550,11 @@
 
 	//you can examine things you're holding directly, but you can't examine other things if your hands are full
 	/// the item in our active hand
-	var/active_item = get_active_held_item()
-	if(active_item && active_item != examined_thing)
+	var/obj/item/active_item = get_active_held_item()
+	var/boosted = FALSE
+	if(active_item.item_flags & BLIND_TOOL)
+		boosted = TRUE
+	if(active_item && active_item != examined_thing && !(active_item.item_flags & BLIND_TOOL))
 		to_chat(src, span_warning("Your hands are too full to examine this!"))
 		return FALSE
 
@@ -567,6 +574,8 @@
 
 	/// how long it takes for the blind person to find the thing they're examining
 	var/examine_delay_length = rand(1 SECONDS, 2 SECONDS)
+	if(boosted)
+		examine_delay_length = 0.5 SECONDS
 	if(client?.recent_examines && client?.recent_examines[ref(examined_thing)]) //easier to find things we just touched
 		examine_delay_length = 0.33 SECONDS
 	else if(isobj(examined_thing))
@@ -898,7 +907,7 @@
 			LAZYREMOVE(mob_spell_list, S)
 			qdel(S)
 	if(client)
-		client << output(null, "statbrowser:check_spells")
+		client.stat_panel.send_message("check_spells")
 
 /**
  * Checks to see if the mob can cast normal magic spells.
@@ -1093,9 +1102,7 @@
 			var/obj/item/modular_computer/tablet/pda/PDA = A
 			if(PDA.saved_identification == oldname)
 				PDA.saved_identification = newname
-				var/obj/item/computer_hardware/identifier/display = PDA.all_components[MC_IDENTIFY]
-				if(display)
-					display.UpdateDisplay()
+				PDA.UpdateDisplay()
 				if(!search_id)
 					break
 				search_pda = 0
@@ -1151,7 +1158,7 @@
 
 /// This mob is abile to read books
 /mob/proc/is_literate()
-	return FALSE
+	return HAS_TRAIT(src, TRAIT_LITERATE) && !HAS_TRAIT(src, TRAIT_ILLITERATE)
 
 /// Can this mob write
 /mob/proc/can_write(obj/writing_instrument)
@@ -1159,7 +1166,11 @@
 		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 
 	if(!is_literate())
-		to_chat(src, span_warning("You don't know how to write."))
+		to_chat(src, span_warning("You try to write, but don't know how to spell anything!"))
+		return FALSE
+
+	if(!has_light_nearby() && !has_nightvision())
+		to_chat(src, span_warning("It's too dark in here to write anything!"))
 		return FALSE
 
 	var/obj/item/pen/pen = writing_instrument
@@ -1187,12 +1198,12 @@
 	return mob_location.get_lumcount() > light_amount
 
 /// Can this mob read
-/mob/proc/can_read(obj/O)
+/mob/proc/can_read(obj/O, check_for_light = TRUE)
 	if(!is_literate())
 		to_chat(src, span_warning("You try to read [O], but can't comprehend any of it."))
 		return FALSE
 
-	if(!has_light_nearby() && !has_nightvision())
+	if(check_for_light && !has_light_nearby() && !has_nightvision())
 		to_chat(src, span_warning("It's too dark in here to read!"))
 		return FALSE
 

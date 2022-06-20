@@ -120,28 +120,24 @@
 	///RPG job names, for the memes
 	var/rpg_title
 
+	/// Does this job ignore human authority?
+	var/ignore_human_authority = FALSE
+
 
 /datum/job/New()
 	. = ..()
-	var/list/jobs_changes = get_map_changes()
-	if(!jobs_changes)
-		return
-	if(isnum(jobs_changes["spawn_positions"]))
-		spawn_positions = jobs_changes["spawn_positions"]
-	if(isnum(jobs_changes["total_positions"]))
-		total_positions = jobs_changes["total_positions"]
-
-/// Loads up map configs if necessary and returns job changes for this job.
-/datum/job/proc/get_map_changes()
-	var/string_type = "[type]"
-	var/list/splits = splittext(string_type, "/")
-	var/endpart = splits[splits.len]
-
 	var/list/job_changes = SSmapping.config.job_changes
-	if(!(endpart in job_changes))
-		return list()
+	if(!job_changes[title])
+		return TRUE
 
-	return job_changes[endpart]
+	var/list/job_positions_edits = job_changes[title]
+	if(!job_positions_edits)
+		return TRUE
+
+	if(isnum(job_positions_edits["spawn_positions"]))
+		spawn_positions = job_positions_edits["spawn_positions"]
+	if(isnum(job_positions_edits["total_positions"]))
+		total_positions = job_positions_edits["total_positions"]
 
 
 /// Executes after the mob has been spawned in the map. Client might not be yet in the mob, and is thus a separate variable.
@@ -151,7 +147,7 @@
 	for(var/trait in mind_traits)
 		ADD_TRAIT(spawned.mind, trait, JOB_TRAIT)
 
-	var/obj/item/organ/liver/liver = spawned.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/liver = spawned.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		for(var/trait in liver_traits)
 			ADD_TRAIT(liver, trait, JOB_TRAIT)
@@ -230,10 +226,31 @@
 /datum/job/proc/config_check()
 	return TRUE
 
+/**
+ * # map_check
+ *
+ * Checks the map config for job changes
+ * If they have 0 spawn and total positions in the config, the job is entirely removed from occupations prefs for the round.
+ */
 /datum/job/proc/map_check()
-	var/list/job_changes = get_map_changes()
-	if(!job_changes)
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!job_changes[title]) //no edits made
+		return TRUE
+
+	var/list/job_positions_edits = job_changes[title]
+	if(!job_positions_edits)
+		return TRUE
+
+	var/available_roundstart = TRUE
+	var/available_latejoin = TRUE
+	if(!isnull(job_positions_edits["spawn_positions"]) && (job_positions_edits["spawn_positions"] == 0))
+		available_roundstart = FALSE
+	if(!isnull(job_positions_edits["total_positions"]) && (job_positions_edits["total_positions"] == 0))
+		available_latejoin = FALSE
+
+	if(!available_roundstart && !available_latejoin) //map config disabled the job
 		return FALSE
+
 	return TRUE
 
 /datum/job/proc/radio_help_message(mob/M)
@@ -320,10 +337,7 @@
 	if(istype(PDA))
 		PDA.saved_identification = H.real_name
 		PDA.saved_job = J.title
-
-		var/obj/item/computer_hardware/identifier/id = PDA.all_components[MC_IDENTIFY]
-		if(id)
-			id.UpdateDisplay()
+		PDA.UpdateDisplay()
 
 
 /datum/outfit/job/get_chameleon_disguise_info()
@@ -430,6 +444,10 @@
 		return // Disconnected while checking for the appearance ban.
 
 	var/require_human = CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+	if(require_human)
+		var/all_authority_require_human = CONFIG_GET(flag/enforce_human_authority_on_everyone)
+		if(!all_authority_require_human && job.ignore_human_authority)
+			require_human = FALSE
 
 	src.job = job.title
 

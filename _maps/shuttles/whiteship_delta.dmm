@@ -998,7 +998,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "cc" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "cd" = (

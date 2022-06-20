@@ -377,3 +377,8 @@
 /obj/machinery/pdapainter/engineering
 	name = "\improper Engineering PDA & ID Painter"
 	target_dept = REGION_ENGINEERING
+
+/// Supply departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.
+/obj/machinery/pdapainter/supply
+	name = "\improper Supply PDA & ID Painter"
+	target_dept = REGION_SUPPLY

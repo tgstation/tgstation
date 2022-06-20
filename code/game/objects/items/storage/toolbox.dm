@@ -11,6 +11,7 @@
 	throwforce = 12
 	throw_speed = 2
 	throw_range = 7
+	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron = 500)
 	attack_verb_continuous = list("robusts")
@@ -37,6 +38,10 @@
 	if(has_latches)
 		. += latches
 
+/obj/item/storage/toolbox/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/toolbox/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -96,6 +101,11 @@
 	desc = "It's seen better days."
 	force = 5
 	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/toolbox/mechanical/old/heirloom/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
@@ -270,6 +280,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 24
 	STR.set_holdable(list(
 		/obj/item/clothing/head/helmet/infiltrator,
 		/obj/item/clothing/suit/armor/vest/infiltrator,

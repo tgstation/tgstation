@@ -28,35 +28,56 @@
 
 /datum/round_event/aurora_caelus/start()
 	for(var/area in GLOB.sortedAreas)
-		var/area/A = area
-		if(A.area_flags & AREA_USES_STARLIGHT)
-			for(var/turf/open/space/S in A)
-				S.set_light(S.light_range * 3, S.light_power * 0.5)
+		var/area/affected_area = area
+		if(affected_area.area_flags & AREA_USES_STARLIGHT)
+			for(var/turf/open/space/spess in affected_area)
+				spess.set_light(spess.light_range * 3, spess.light_power * 0.5)
+		if(istype(affected_area, /area/station/service/kitchen))
+			for(var/turf/open/kitchen in affected_area)
+				kitchen.set_light(1, 0.75)
+			if(!prob(1) && !SSevents.holidays?[APRIL_FOOLS])
+				continue
+			var/obj/machinery/oven/roast_ruiner = locate() in affected_area
+			if(roast_ruiner)
+				roast_ruiner.balloon_alert_to_viewers("oh egads!")
+				var/turf/ruined_roast = get_turf(roast_ruiner)
+				ruined_roast.atmos_spawn_air("plasma=100;TEMP=1000")
+			for(var/mob/living/carbon/human/seymour as anything in GLOB.human_list)
+				if(seymour.mind && istype(seymour.mind.assigned_role, /datum/job/cook))
+					seymour.say("My roast is ruined!!!", forced = "ruined roast")
+					seymour.emote("scream")
+				
 
 /datum/round_event/aurora_caelus/tick()
 	if(activeFor % 5 == 0)
 		aurora_progress++
 		var/aurora_color = aurora_colors[aurora_progress]
 		for(var/area in GLOB.sortedAreas)
-			var/area/A = area
-			if(A.area_flags & AREA_USES_STARLIGHT)
-				for(var/turf/open/space/S in A)
-					S.set_light(l_color = aurora_color)
+			var/area/affected_area = area
+			if(affected_area.area_flags & AREA_USES_STARLIGHT)
+				for(var/turf/open/space/spess as anything in affected_area)
+					spess.set_light(l_color = aurora_color)
+			if(istype(affected_area, /area/station/service/kitchen))
+				for(var/turf/open/kitchen_floor in affected_area)
+					kitchen_floor.set_light(l_color = aurora_color)
 
 /datum/round_event/aurora_caelus/end()
 	for(var/area in GLOB.sortedAreas)
-		var/area/A = area
-		if(A.area_flags & AREA_USES_STARLIGHT)
-			for(var/turf/open/space/S in A)
-				fade_to_black(S)
+		var/area/affected_area = area
+		if(affected_area.area_flags & AREA_USES_STARLIGHT)
+			for(var/turf/open/space/spess in affected_area)
+				fade_to_black(spess)
+		if(istype(affected_area, /area/station/service/kitchen))
+			for(var/turf/open/superturfentent in affected_area)
+				fade_to_black(superturfentent)
 	priority_announce("The aurora caelus event is now ending. Starlight conditions will slowly return to normal. When this has concluded, please return to your workplace and continue work as normal. Have a pleasant shift, [station_name()], and thank you for watching with us.",
 	sound = 'sound/misc/notice2.ogg',
 	sender_override = "Nanotrasen Meteorology Division")
 
-/datum/round_event/aurora_caelus/proc/fade_to_black(turf/open/space/S)
+/datum/round_event/aurora_caelus/proc/fade_to_black(turf/open/space/spess)
 	set waitfor = FALSE
-	var/new_light = initial(S.light_range)
-	while(S.light_range > new_light)
-		S.set_light(S.light_range - 0.2)
+	var/new_light = initial(spess.light_range)
+	while(spess.light_range > new_light)
+		spess.set_light(spess.light_range - 0.2)
 		sleep(30)
-	S.set_light(new_light, initial(S.light_power), initial(S.light_color))
+	spess.set_light(new_light, initial(spess.light_power), initial(spess.light_color))

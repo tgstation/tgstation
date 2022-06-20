@@ -281,7 +281,7 @@
 			if(usr.has_unlimited_silicon_privilege)
 				bot_cover_flags ^= BOT_COVER_LOCKED
 				. = TRUE
-		if("power")
+		if("on")
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
 			else if(bot_cover_flags & BOT_COVER_OPEN)
@@ -488,7 +488,7 @@
 	if(!last_move || isspaceturf(oldLoc)) //if we didn't sucessfully move, or if our old location was a spaceturf.
 		return
 	var/obj/effect/decal/cleanable/blood/tracks/B = new(oldLoc)
-	B.add_blood_DNA(return_blood_DNA())
+	B.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	B.setDir(direct)
 	bloodiness--
 

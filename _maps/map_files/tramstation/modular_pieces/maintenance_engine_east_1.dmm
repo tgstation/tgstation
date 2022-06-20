@@ -41,12 +41,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "Q" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "U" = (

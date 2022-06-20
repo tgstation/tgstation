@@ -14,6 +14,7 @@
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
 import { setupDrag } from './drag';
+import { globalEvents } from './events';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
@@ -138,6 +139,14 @@ export const backendMiddleware = store => {
       return;
     }
 
+    if (type === "byond/mousedown") {
+      globalEvents.emit("byond/mousedown");
+    }
+
+    if (type === "byond/mouseup") {
+      globalEvents.emit("byond/mouseup");
+    }
+
     if (type === 'backend/suspendStart' && !suspendInterval) {
       logger.log(`suspending (${Byond.windowId})`);
       // Keep sending suspend messages until it succeeds.
@@ -248,7 +257,7 @@ type BackendState<TData> = {
   shared: Record<string, any>,
   suspending: boolean,
   suspended: boolean,
-}
+};
 
 /**
  * Selects a backend-related slice of Redux state
@@ -258,12 +267,9 @@ export const selectBackend = <TData>(state: any): BackendState<TData> => (
 );
 
 /**
- * A React hook (sort of) for getting tgui state and related functions.
+ * Get data from tgui backend.
  *
- * This is supposed to be replaced with a real React Hook, which can only
- * be used in functional components.
- *
- * You can make
+ * Includes the `act` function for performing DM actions.
  */
 export const useBackend = <TData>(context: any) => {
   const { store } = context;
