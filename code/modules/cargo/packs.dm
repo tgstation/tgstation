@@ -1,25 +1,44 @@
 /datum/supply_pack
+	/// The name of the supply pack, as listed on th cargo purchasing UI.
 	var/name = "Crate"
+	/// The group that the supply pack is sorted into within the cargo purchasing UI.
 	var/group = ""
+	/// Is this cargo supply pack visible to the cargo purchasing UI.
 	var/hidden = FALSE
+	/// Is this supply pack purchasable outside of the standard purchasing band? Contraband is available by multitooling the cargo purchasing board.
 	var/contraband = FALSE
 	/// Cost of the crate. DO NOT GO ANY LOWER THAN X1.4 the "CARGO_CRATE_VALUE" value if using regular crates, or infinite profit will be possible!
 	var/cost = CARGO_CRATE_VALUE * 1.4
+	/// What access is required to open the crate when spawned?
 	var/access = FALSE
+	/// Who can view this supply_pack and with what access.
 	var/access_view = FALSE
+	/// If someone with any of the following accesses in a list can open this cargo pack crate.
 	var/access_any = FALSE
+	/// A list of items that are spawned in the crate of the supply pack.
 	var/list/contains = null
+	/// What is the name of the crate that is spawned with the crate's contents??
 	var/crate_name = "crate"
+	/// When spawning a gas canistor, what kind of gas type are we spawning?
 	var/id
-	var/desc = ""//no desc by default
+	/// The description shown on the cargo purchasing UI. No desc by default.
+	var/desc = ""
+	/// What typepath of crate do you spawn?
 	var/crate_type = /obj/structure/closet/crate
-	var/dangerous = FALSE // Should we message admins?
-	var/special = FALSE //Event/Station Goals/Admin enabled packs
+	/// Should we message admins?
+	var/dangerous = FALSE
+	/// Event/Station Goals/Admin enabled packs
+	var/special = FALSE
+	/// When a cargo pack can be unlocked by special events (as seen in special), this toggles if it's been enabled in the round yet (For example, after the station alert, we can now enable buying the station goal pack).
 	var/special_enabled = FALSE
-	var/DropPodOnly = FALSE //only usable by the Bluespace Drop Pod via the express cargo console
-	var/special_pod //If this pack comes shipped in a specific pod when launched from the express console
+	/// Only usable by the Bluespace Drop Pod via the express cargo console
+	var/drop_pod_only = FALSE
+	/// If this pack comes shipped in a specific pod when launched from the express console
+	var/special_pod
+	/// Was this spawned through an admin proc?
 	var/admin_spawned = FALSE
-	var/goody = FALSE //Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the 700 min doesn't apply
+	/// Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the 700 min doesn't apply
+	var/goody = FALSE
 
 /datum/supply_pack/New()
 	id = type
@@ -2154,7 +2173,7 @@
 	access_view = ACCESS_HOS
 	contains = list(/mob/living/simple_animal/crab)
 	crate_name = "look sir free crabs"
-	DropPodOnly = TRUE
+	drop_pod_only = TRUE
 
 /datum/supply_pack/critter/crab/generate()
 	. = ..()
@@ -2706,7 +2725,7 @@
 	desc = "Presenting the New Nanotrasen-Brand Bluespace Supplypod! Transport cargo with grace and ease! Call today and we'll shoot over a demo unit for just 300 credits!"
 	cost = CARGO_CRATE_VALUE * 0.6 //Empty pod, so no crate refund
 	contains = list()
-	DropPodOnly = TRUE
+	drop_pod_only = TRUE
 	crate_type = null
 	special_pod = /obj/structure/closet/supplypod/bluespacepod
 
@@ -2799,6 +2818,14 @@
 			continue
 		crate_value -= uplink_item.cost
 		new uplink_item.item(C)
+
+
+/datum/supply_pack/misc/fishing_portal
+	name = "Fishing Portal Generator Crate"
+	desc = "Not enough fish near your location? Fishing portal has your back."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/machinery/fishing_portal_generator)
+	crate_name = "fishing portal crate"
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// General Vending Restocks /////////////////////////////
@@ -2953,12 +2980,11 @@
 
 /datum/supply_pack/vending/wardrobes/general
 	name = "General Wardrobes Supply Crate"
-	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe, JaniDrobe, ChapDrobe."
-	cost = CARGO_CRATE_VALUE * 7.5
+	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe and ChapDrobe."
+	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/vending_refill/wardrobe/curator_wardrobe,
 					/obj/item/vending_refill/wardrobe/bar_wardrobe,
 					/obj/item/vending_refill/wardrobe/chef_wardrobe,
-					/obj/item/vending_refill/wardrobe/jani_wardrobe,
 					/obj/item/vending_refill/wardrobe/chap_wardrobe)
 	crate_name = "general wardrobes vendor refills"
 
@@ -2968,6 +2994,13 @@
 	cost = CARGO_CRATE_VALUE * 1.5
 	contains = list(/obj/item/vending_refill/wardrobe/hydro_wardrobe)
 	crate_name = "hydrobe supply crate"
+
+/datum/supply_pack/vending/wardrobes/janitor
+	name = "JaniDrobe Supply Crate"
+	desc = "This crate contains a refill for the JaniDrobe."
+	cost = CARGO_CRATE_VALUE * 1.5
+	contains = list(/obj/item/vending_refill/wardrobe/jani_wardrobe)
+	crate_name = "janidrobe supply crate"
 
 /datum/supply_pack/vending/wardrobes/medical
 	name = "Medical Wardrobe Supply Crate"

@@ -7,7 +7,6 @@
 	semi_auto = TRUE
 	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
 	fire_sound_volume = 90
-	vary_fire_sound = FALSE
 	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
 	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
 	var/select = 1 ///fire selector position. 1 = semi, 2 = burst. anything past that can vary between guns.
@@ -340,7 +339,6 @@
 	worn_icon_state = null
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	fire_sound_volume = 90
-	vary_fire_sound = FALSE
 	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'

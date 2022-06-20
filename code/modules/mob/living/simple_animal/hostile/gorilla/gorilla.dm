@@ -32,7 +32,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)
-	faction = list("jungle")
+	faction = list("monkey", "jungle")
 	robust_searching = TRUE
 	stat_attack = HARD_CRIT
 	minbodytemp = 270
@@ -121,7 +121,7 @@
 	desc = "Cargo's pet gorilla."
 	maxHealth = 200
 	health = 200
-	faction = list(FACTION_STATION)
+	faction = list("neutral", "monkey", "jungle")
 	gold_core_spawnable = NO_SPAWN
 	unique_name = FALSE
 	/// Whether we're currently being polled over

@@ -520,6 +520,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	puzzle_id = "hilbert_office"
 
 /datum/outfit/doctorhilbert
+	name = "Doctor Hilbert"
 	id = /obj/item/card/id/advanced/silver
 	uniform = /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
 	shoes = /obj/item/clothing/shoes/sneakers/brown

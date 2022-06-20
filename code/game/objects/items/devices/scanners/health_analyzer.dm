@@ -70,8 +70,8 @@
 		to_chat(user, "<span class='info'>[M]'s biological structure is too complex for the health analyzer.")
 		return
 
-	user.visible_message(span_notice("[user] analyzes [M]'s vitals."), \
-						span_notice("You analyze [M]'s vitals."))
+	user.visible_message(span_notice("[user] analyzes [M]'s vitals."))
+	balloon_alert(user, "analyzing vitals")
 
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
