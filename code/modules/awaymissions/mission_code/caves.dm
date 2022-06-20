@@ -171,8 +171,8 @@
 	attack_sound = 'sound/weapons/rapierhit.ogg'
 
 /mob/living/simple_animal/hostile/clockwork
-	name = "animated bronze fragments"
-	desc = "Chunks of bronze animated by vibrant dancing fire."
+	name = "anima fragment"
+	desc = "A shell of bronze held aloft by twirling spirtual energy."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "anime_fragment"
 	icon_living = "anime_fragment"
@@ -200,6 +200,23 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("clockwork")
 	del_on_death = 1
+
+/mob/living/simple_animal/hostile/clockwork/marauder
+	name = "clockwork marauder"
+	desc = "A hulking bronze shell held aloft by twirling spirtual energy, wielding a sword and shield."
+	icon_state = "clockwork_marauder"
+	icon_living = "clockwork_marauder"
+	icon_dead = "shade_dead"
+	turns_per_move = 5
+	speed = 4
+	maxHealth = 75
+	health = 75
+	melee_damage_lower = 12
+	melee_damage_upper = 15
+	rapid_melee = 2
+	attack_verb_continuous = "stabs at"
+	attack_verb_simple = "stab at"
+	attack_sound = 'sound/weapons/rapierhit.ogg'
 
 /mob/living/simple_animal/hostile/retaliate/trader/ashwalker
 	name = "Sells-The-Wares"

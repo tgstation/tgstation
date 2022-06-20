@@ -86,7 +86,7 @@
 
 /datum/action/boss/steam_traps/Trigger(trigger_flags)
 	if(..())
-		for(var/obj/structure/clockwork_vent/nearby_vent in urange(16, src))
+		for(var/obj/structure/clockwork_vent/nearby_vent in urange(16, boss))
 			nearby_vent.VentEnable()
 			vents_active = TRUE
 			addtimer(CALLBACK(src, .proc/vent_disabled), 15 SECONDS)
@@ -99,6 +99,7 @@
 	desc = "An exhaust hole covered by a protective metal grate."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "vent_off"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = FALSE
 	opacity = FALSE
 	plane = FLOOR_PLANE

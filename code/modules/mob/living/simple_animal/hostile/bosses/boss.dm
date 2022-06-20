@@ -11,6 +11,7 @@
 	var/datum/boss_active_timed_battle/atb
 	var/point_regen_delay = 1
 	var/assign_abilities = TRUE //in case you want the bosses to not immediately gain their abilities for whatever reason
+	var/mid_ability = FALSE //in case you want to check to see if a boss in the middle of an abiltiy (i.e to prevent them from triggering another ability)
 
 
 /mob/living/simple_animal/hostile/boss/Initialize(mapload)
@@ -56,6 +57,7 @@
 	var/boss_type = /mob/living/simple_animal/hostile/boss
 	var/needs_target = TRUE //Does the boss need to have a target? (Only matters for the AI)
 	var/say_when_triggered = "" //What does the boss Say() when the ability triggers?
+	var/active_ability = FALSE //if you don't want an ability triggering during 
 
 /datum/action/boss/Trigger(trigger_flags)
 	. = ..()

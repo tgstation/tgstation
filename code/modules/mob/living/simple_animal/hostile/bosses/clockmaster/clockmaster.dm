@@ -1,8 +1,49 @@
-//TODO: cult item interactions, make boss do more damage to cult item weilders and take more damage from cult items
+/**
+ *Clockmaster
+ *
+ *Clockmaster only spawns at the very end of the caves away mission on the 4th floor. He, along with a recently converted following of miners, are attempting to resurrect the once
+ *long forgotten Rat-Var from his ashen resting place. Keeps some distance from the player and shoots a projectile that pierces armor. Has a pre-battle monologue with nearby
+ *players before the fight actually begins. Cultists present during this fight take additional damage from all of his attacks but also deal more damage. If a cultist is present
+ *during the first dialogue interaction, he will remark about this but not give away who the cultist actually is.
+ *
+ *He has 2 phases, each with their own unique attacks (located in phase_one_attacks.dm and phase_two_attacks.dm respectively)
+ *
+ *PHASE ONE:
+ *Raise Ocular Warden - Summons 4 ocular warden turrets at predefined locations, dealing cold damage. The clockmaster shoots a projectile that deals bonus damage to people who
+ *are suffering from extreme temperatures in either direction. Can trigger ability again to replenish lost turrets even if ones are still active.
+ *
+ *Steam Vent Trap - Activates the vents scattered around the arena, blowing scorching steam out of them. Running into these vests while active throws you in a random direction and
+ *causes burn damage. Will disable after 30 seconds.
+ *
+ *Cogscarab Swarm - Summons 4 cogscarabs to act as trash mobs to draw attention off him. Can have up to 8 cogscarabs at a time.
+ *
+ *When Clockmaster gets to half health on his first phase, he will trigger a mid-combat dialogue where he summons shields around himself and destroys any active clockwork mobs. 
+ *All nearby players are stunned for the duration of the dialogue as he spawns in the phase two version of himself.
+ *If you kill all of the smaller ones it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
+ *
+ *PHASE TWO:
+ *Sevtug's Wrath - Summons a square around him and stops moving, if a player is caught in this square after 4 seconds they are thrown back and take toxin/brain damage, as well as
+ *given 30 seconds of hallucinations. The boss takes half damage during this attack since he cannot move or use other abilities during it.
+ *
+ *Nzcrentr's Retribution - Marks a random nearby player as a target and draws a beam between them to distinguish who was chosen. The boss then will rapidly charge towards the
+ *victim in a straight line trying to hit them. If he hits, throw the player back and cause major brute damage. Can miss the target since he aims for the floor below the mob
+ *instead of the mob itself.
+ *
+ *Inath-Neq's Undying Legion - Summons 8 clockwork marauders in the corners of the arena and places a shield around themselves. The shield will not go down until all marauders
+ *are fully dead. Deadlier version of cogscarab swarm. Cannot use other abilities during this attack.
+ *
+ *Steam Vent Trap - Same as the first phase's ability.
+ *
+ *Difficulty: Medium-Hard (advised to bring a couple friends or your own deathsquad suit)
+ *
+ *SHITCODE AHEAD. YOU WERE WARNED.
+ */
+
 /mob/living/simple_animal/hostile/boss/clockmaster
 	name = "Clockwork Priest"
 	desc = "A man who has gone mad with the promise of great power from a dead god."
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_BOSS
 	boss_abilities = list(/datum/action/boss/turret_summon, /datum/action/boss/steam_traps, /datum/action/boss/cogscarab_swarm)
 	assign_abilities = FALSE
 	faction = list("clockwork")
@@ -20,13 +61,18 @@
 	health = 2000
 	maxHealth = 2000
 	speed = 1
-	loot = list(/obj/effect/temp_visual/paperwiz_dying)
+	loot = list()
 	projectiletype = /obj/projectile/energy/inferno
 	projectilesound = 'sound/weapons/emitter.ogg'
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	var/is_in_phase_2 = FALSE //are we past the health threshold and gone through our mid-way monologue?
 	var/have_i_explained_my_evil_plan = FALSE //have we gone through our introduction monologue?
 	var/is_there_a_cult_in_here = FALSE //if we noticed there was a cultist amongඞ the initial group during the introduction
+
+/mob/living/simple_animal/hostile/boss/clockmaster/Move(atom/newloc)//STOP MOVING if you're doing the cool moves okay?
+	. = ..()
+	if(mid_ability)
+		return FALSE
 
 /mob/living/simple_animal/hostile/boss/clockmaster/proc/monologue_camera_shake() //i use this enough to where i feel obligated to make it a separate proc
 	for(var/mob/living/nearby_mob in urange(16, src))
@@ -64,7 +110,7 @@
 /obj/structure/emergency_shield/clockmaster_plot_armor
 	name = "plot armor"
 	desc = "A shield summoned by the Clockpriest so you can't interrupt his evil monologue."
-	max_integrity = 10000
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon_state = "shield-red"
 
 /mob/living/simple_animal/hostile/boss/clockmaster/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -99,26 +145,31 @@
 	if(is_there_a_cult_in_here)//bro seriously did you think he wouldn't notice??
 		say("Let alone when that WRETCHED Blood Mother DARES to show herself here through the mark on her heretical dogs.")
 		sleep(4 SECONDS)
-		say("Have you come to finish the job? To try and finally snuff out my divine light and rust away my carapace to blow away in the wind?")
+		say("Have you come to finish the job? To fully banish his divine light to eternal damnation on that Celestial Derelict?")
 		sleep(5 SECONDS)
 		monologue_camera_shake()
-		say("WELL, YOU CAN FORGET IT, WRETCH.")
+		say("WELL, YOU CAN FORGET IT WRETCH!")
 		sleep(3 SECONDS)
+		say("Far too long has his divine prescence been left here to rust among the ash, but NO LONGER!")
+		sleep(4 SECONDS)
+		say("Before I return you to the filth from wence you came, let your wretched blood mother know this one as a parting message:")
+		sleep(5 SECONDS)
 		monologue_camera_shake()
-		say("I WILL NOT BE LEFT TO ROT IN THIS HELLSCAPE BY THE LIKES OF YOU!")
-		sleep(3 SECONDS)
-		monologue_camera_shake()
-		say("NOW BARE WITNESS, HERETIC! AND LET HER KNOW THIS AS I TEAR YOU FROM YOUR MORTAL COIL:")
-		sleep(3 SECONDS)
-		monologue_camera_shake()
-		say("I AM COMING FOR HER NEXT.")
+		say("WE ARE COMING FOR HER NEXT.")
 		sleep(3 SECONDS)
 	else
-		say("I will just simply have to take over from here, lest I let you sully my chances of recreation.")
+		say("I will just simply have to take over from here, lest I let you sully his chance at proper recreation.")
 		sleep(5 SECONDS)
 		say("Now, bare witness to true divine power!")
 		sleep(3 SECONDS)
 	monologue_camera_shake()
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "placeholder_clockmaster"
+	pixel_x = -16
+	base_pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
+	playsound(src, 'sound/magic/clockwork/ratvar_rises.ogg', 100)
 	say("Rhedpu qdt ijuqc, qzeydut yd wbehyeki kdyied!")
 	sleep(3 SECONDS)
 	monologue_camera_shake()
@@ -126,24 +177,35 @@
 	sleep(3 SECONDS)
 	monologue_camera_shake()
 	say("Buj cu qhyiu edsu cehu, qdt sbuqdiu jxu mehbt ev jxyi VYBJX!!")
-	sleep(3 SECONDS)
+	sleep(5 SECONDS)
 	monologue_camera_shake()
 	say("Y. QC. HUDUMUT!")
-	sleep(2 SECONDS)
+	sleep(3 SECONDS)
 	for(var/obj/structure/emergency_shield/clockmaster_plot_armor/plot_armor in urange(1, src))
 		plot_armor.Destroy()
 	new /mob/living/simple_animal/hostile/boss/clockmaster/phase_two(get_turf(src))
 	gib()
 
 
-//TODO: actually make the abilities for his 2nd stage
+//TODO: make cool sprite based on nezbere
 /mob/living/simple_animal/hostile/boss/clockmaster/phase_two
-	name = "Justicar of Bronze"
-	desc = "How can you kill a god? What a grand and intoxicating innocence."
-	boss_abilities = list(/datum/action/boss/steam_blast, /datum/action/boss/spinning_bronze, /datum/action/boss/marauder_swarm)
+	name = "Punished Nezbere"
+	desc = "A zealot follower and former General to an ancient machine god, now desperate to bring back his former deity by any means neccesary."
+	boss_abilities = list(/datum/action/boss/brain_blast, /datum/action/boss/spinning_bronze, /datum/action/boss/marauder_swarm, /datum/action/boss/steam_traps)
 	speech_span = SPAN_RATVAR
+	minimum_distance = 0
+	retreat_distance = 0
+	speed = 3
 
 /mob/living/simple_animal/hostile/boss/clockmaster/phase_two/tell_them_my_evil_plan()
 	have_i_explained_my_evil_plan = TRUE
 	say("y'all mfers dead af lmao")
 	AssignAbilities()
+
+//phase 2 has an attack that throws the mob, if he happens to get launched by a steam vent and hit someone too that'd be pretty funny
+/mob/living/simple_animal/hostile/boss/clockmaster/phase_two/throw_impact(mob/living/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(istype(hit_atom))
+		playsound(src, attack_sound, 100, TRUE)
+		hit_atom.apply_damage(22, wound_bonus = CANT_WOUND)
+		hit_atom.safe_throw_at(get_step(src, get_dir(src, hit_atom)), 2)
