@@ -676,7 +676,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "garlic" = 1, "butter" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
-	slice_type = /obj/item/food/pizzaslice/mothic_pesto
+	slice_type = /obj/item/food/pizzaslice/mothic_garlic
 	boxtag = "Garlic Bread alla Moffuchi"
 
 /obj/item/food/pizzaslice/mothic_garlic

@@ -1,3 +1,6 @@
+///Minimum distance that a crystal mass must have from the rift
+#define MIN_RIFT_SAFE_DIST 30
+
 /datum/supermatter_delamination
 	///Power amount of the SM at the moment of death
 	var/supermatter_power = 0
@@ -170,76 +173,168 @@
  * Setup for the cascade delamination
  */
 /datum/supermatter_delamination/proc/start_supermatter_cascade()
-	SSshuttle.registerHostileEnvironment(src)
+	// buncha shuttle manipulation incoming
+
+	// set timer to infinity, so shuttle never arrives
+	SSshuttle.emergency.setTimer(INFINITY)
+	// disallow shuttle recalls, so people cannot cheese the timer
+	SSshuttle.emergency_no_recall = TRUE
+	// set supermatter cascade to true, to prevent auto evacuation due to no way of calling the shuttle
 	SSshuttle.supermatter_cascade = TRUE
+	// This logic is to keep uncalled shuttles uncalled
+	// In SSshuttle, there is not much of a way to prevent shuttle calls, unless we mess with admin panel vars
+	// SHUTTLE_STRANDED is different here, because it *can* block the shuttle from being called, however if we don't register a hostile
+	// environment, it gets unset immediately. Internally, it checks if the count of HEs is zero
+	// and that the shuttle is in stranded mode, then frees it with an announcement.
+	// This is a botched solution to a problem that could be solved with a small change in shuttle code, however-
+	if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
+		SSshuttle.emergency.mode = SHUTTLE_STRANDED
+		SSshuttle.registerHostileEnvironment(src)
+	// set hijack completion timer to infinity, so that you cant prematurely end the round with a hijack
+	for(var/obj/machinery/computer/emergency_shuttle/console in GLOB.machines)
+		console.hijack_completion_flight_time_set = INFINITY
+
+	for(var/mob/player as anything in GLOB.player_list)
+		if(!isdead(player))
+			to_chat(player, span_boldannounce("Everything around you is resonating with a powerful energy. This can't be good."))
+			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, "cascade", /datum/mood_event/cascade)
+		SEND_SOUND(player, 'sound/magic/charge.ogg')
+
 	call_explosion()
 	create_cascade_ambience()
-	pick_rift_location()
 	warn_crew()
+
+	var/rift_loc = pick_rift_location()
 	new /obj/crystal_mass(supermatter_turf)
+
+	var/list/mass_loc_candidates = GLOB.generic_event_spawns.Copy()
+	mass_loc_candidates.Remove(rift_loc) // this should now actually get rid of stalemates
 	for(var/i in 1 to rand(4,6))
-		new /obj/crystal_mass(get_turf(pick(GLOB.generic_event_spawns)))
+		var/list/loc_list = mass_loc_candidates.Copy()
+		var/mass_loc
+		do
+			mass_loc = pick_n_take(loc_list)
+		while(get_dist(mass_loc, rift_loc) < MIN_RIFT_SAFE_DIST)
+		new /obj/crystal_mass(get_turf(mass_loc))
+
+	SSsupermatter_cascade.cascade_initiated = TRUE
 
 /**
  * Adds a bit of spiciness to the cascade by breaking lights and turning emergency maint access on
  */
 /datum/supermatter_delamination/proc/create_cascade_ambience()
-	break_lights_on_station()
+	if(SSsecurity_level.current_level != SEC_LEVEL_DELTA)
+		SSsecurity_level.set_level(SEC_LEVEL_DELTA) // skip the announcement and shuttle timer adjustment in set_security_level()
 	make_maint_all_access()
+	break_lights_on_station()
 
 /**
  * Picks a random location for the rift
+ * Returns: ref to rift location
  */
 /datum/supermatter_delamination/proc/pick_rift_location()
-	var/turf/rift_location = get_turf(pick(GLOB.generic_event_spawns))
-	cascade_rift = new /obj/cascade_portal(rift_location)
+	var/rift_spawn = pick(GLOB.generic_event_spawns)
+	var/turf/rift_turf = get_turf(rift_spawn)
+	cascade_rift = new /obj/cascade_portal(rift_turf)
+	message_admins("Exit rift created at [get_area_name(rift_turf)]. [ADMIN_JMP(cascade_rift)]")
+	log_game("Bluespace Exit Rift was created at [get_area_name(rift_turf)].")
+	cascade_rift.investigate_log("created at [get_area_name(rift_turf)].", INVESTIGATE_ENGINE)
 	RegisterSignal(cascade_rift, COMSIG_PARENT_QDELETING, .proc/deleted_portal)
+	return rift_spawn
 
 /**
  * Warns the crew about the cascade start and the rift location
  */
 /datum/supermatter_delamination/proc/warn_crew()
-	for(var/mob/player as anything in GLOB.alive_player_list)
-		to_chat(player, span_boldannounce("You feel a strange presence in the air around you. You feel unsafe."))
+	priority_announce("A Type-C resonance shift event has occurred in your sector. Scans indicate local oscillation flux affecting spatial and gravitational substructure. \
+		Multiple resonance hotspots have formed. Please standby.", "Nanotrasen Star Observation Association", ANNOUNCER_SPANOMALIES)
 
-	priority_announce("Unknown harmonance affecting local spatial substructure, all nearby matter is starting to crystallize.", "Central Command Higher Dimensional Affairs", 'sound/misc/bloblarm.ogg')
-	priority_announce("There's been a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those required for emergency shuttle navigation. \
-		We can only reasonably conclude that a supermatter cascade has been initiated on or near your station. \
-		Evacuation is no longer possible by conventional means; however, we managed to open a rift near the [get_area_name(cascade_rift)]. \
-		All personnel are hereby advised to enter the rift using all means available. Retrieval of survivors will be conducted upon recovery of necessary facilities. \
-		Good l\[\[###!!!-")
+	if(SSshuttle.emergency.mode != SHUTTLE_STRANDED)
+		addtimer(CALLBACK(src, .proc/announce_shuttle_gone), 2 SECONDS)
 
+	addtimer(CALLBACK(src, .proc/announce_beginning), 5 SECONDS)
 
-	addtimer(CALLBACK(src, .proc/delta), 10 SECONDS)
-
+/**
+ * Logs the deletion of the bluespace rift, and starts countdown to the end of the round.
+ */
 /datum/supermatter_delamination/proc/deleted_portal()
 	SIGNAL_HANDLER
+	message_admins("[cascade_rift] deleted at [get_area_name(cascade_rift.loc)]. [ADMIN_JMP(cascade_rift.loc)]")
+	log_game("[cascade_rift] was deleted.")
+	cascade_rift.investigate_log("was deleted.", INVESTIGATE_ENGINE)
 
-	priority_announce("The rift has been destroyed, we can no longer help you...", "Warning", 'sound/misc/bloblarm.ogg')
+	priority_announce("[Gibberish("The rift has been destroyed, we can no longer help you.", FALSE, 5)]")
 
+	addtimer(CALLBACK(src, .proc/announce_gravitation_shift), 25 SECONDS)
 	addtimer(CALLBACK(src, .proc/last_message), 50 SECONDS)
-
-	addtimer(CALLBACK(src, .proc/the_end), 1 MINUTES)
+	if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE) // if the shuttle is enroute to centcom, we let the shuttle end the round
+		addtimer(CALLBACK(src, .proc/the_end), 1 MINUTES)
 
 /**
- * Increases the security level to the highest level
+ * Announces the halfway point to the end.
  */
-/datum/supermatter_delamination/proc/delta()
-	set_security_level("delta")
-	sound_to_playing_players('sound/misc/notice1.ogg')
+/datum/supermatter_delamination/proc/announce_gravitation_shift()
+	priority_announce("Reports indicate formation of crystalline seeds following resonance shift event. \
+		Rapid expansion of crystal mass proportional to rising gravitational force. \
+		Matter collapse due to gravitational pull foreseeable.",
+		"Nanotrasen Star Observation Association")
 
 /**
- * Announces the last message to the station
+ * This proc manipulates the shuttle if it's enroute to centcom, to remain in hyperspace. Otherwise, it just plays an announcement if
+ * the shuttle was in any other state except stranded (idle)
+ */
+/datum/supermatter_delamination/proc/announce_shuttle_gone()
+	// say goodbye to that shuttle of yours
+	if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE)
+		priority_announce("Fatal error occurred in emergency shuttle uplink during transit. Unable to reestablish connection.",
+			"Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
+	else
+	// except if you are on it already, then you are safe c:
+		minor_announce("ERROR: Corruption detected in navigation protocols. Connection with Transponder #XCC-P5831-ES13 lost. \
+				Backup exit route protocol decrypted. Calibrating route...",
+			"Emergency Shuttle", TRUE) // wait out until the rift on the station gets destroyed and the final message plays
+		var/list/mobs = mobs_in_area_type(list(/area/shuttle/escape))
+		for(var/mob/living/mob as anything in mobs) // emulate mob/living/lateShuttleMove() behaviour
+			if(mob.buckled)
+				continue
+			if(mob.client)
+				shake_camera(mob, 3 SECONDS * 0.25, 1)
+			mob.Paralyze(3 SECONDS, TRUE)
+
+/**
+ * Announces the last message to the station, frees the shuttle from purgatory if applicable
  */
 /datum/supermatter_delamination/proc/last_message()
-	priority_announce("To the remaining survivors of [station_name()], We're sorry.", " ", 'sound/misc/bloop.ogg')
+	priority_announce("[Gibberish("All attempts at evacuation have now ceased, and all assets have been retrieved from your sector.\n \
+		To the remaining survivors of [station_name()], farewell.", FALSE, 5)]")
+
+	if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
+		// special message for hijacks
+		var/shuttle_msg = "Navigation protocol set to [SSshuttle.emergency.is_hijacked() ? "\[ERROR\]" : "backup route"]. \
+			Reorienting bluespace vessel to exit vector. ETA 15 seconds."
+		// garble the special message
+		if(SSshuttle.emergency.is_hijacked())
+			shuttle_msg = Gibberish(shuttle_msg, TRUE, 15)
+		minor_announce(shuttle_msg, "Emergency Shuttle", TRUE)
+		SSshuttle.emergency.setTimer(15 SECONDS)
+
+/**
+ * Announce detail about the event, as well as rift location
+ */
+/datum/supermatter_delamination/proc/announce_beginning()
+	priority_announce("We have been hit by a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those \
+		required for shuttle navigation. We can only reasonably conclude that a supermatter cascade is occurring on or near your station.\n\n\
+		Evacuation is no longer possible by conventional means; however, we managed to open a rift near the [get_area_name(cascade_rift)]. \
+		All personnel are hereby required to enter the rift by any means available.\n\n\
+		[Gibberish("Retrieval of survivors will be conducted upon recovery of necessary facilities.", FALSE, 5)] \
+		[Gibberish("Good luck--", FALSE, 25)]")
 
 /**
  * Ends the round
  */
 /datum/supermatter_delamination/proc/the_end()
 	SSticker.news_report = SUPERMATTER_CASCADE
-	SSticker.force_ending = 1
+	SSticker.force_ending = TRUE
 
 /**
  * Break the lights on the station, have 35% of them be set to emergency
@@ -247,7 +342,8 @@
 /datum/supermatter_delamination/proc/break_lights_on_station()
 	for(var/obj/machinery/light/light_to_break in GLOB.machines)
 		if(prob(35))
-			light_to_break.emergency_mode = TRUE
-			light_to_break.update_appearance()
+			light_to_break.set_major_emergency_light()
 			continue
 		light_to_break.break_light_tube()
+
+#undef MIN_RIFT_SAFE_DIST

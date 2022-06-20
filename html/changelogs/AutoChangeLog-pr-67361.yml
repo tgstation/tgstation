@@ -1,0 +1,6 @@
+author: "MTandi"
+delete-after: True
+changes: 
+  - rscadd: "Oldstation: Added a lootbox for every role"
+  - rscadd: "Oldstation: Added 1 diamond ore spawn and 1 gibtonite spawn to asteroids"
+  - rscdel: "Oldstation: Removed redundant cable, pen, free pipe dispensers and the box of firing pins"
