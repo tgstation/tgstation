@@ -59,6 +59,9 @@
 /obj/item/food/doughslice/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/bun, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
 
+/obj/item/food/doughslice/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/bait/doughball, 5, 30)
+
 /obj/item/food/bun
 	name = "bun"
 	desc = "A base for any self-respecting burger."

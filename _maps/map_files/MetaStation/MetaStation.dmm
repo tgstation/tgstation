@@ -32404,12 +32404,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "lxv" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Secure tech_storage"
-	},
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "lxw" = (
@@ -38082,7 +38080,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/reagent_containers/glass/rag,
 /obj/structure/table,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "nxF" = (
@@ -44665,7 +44662,6 @@
 	dir = 5
 	},
 /obj/effect/landmark/start/medical_doctor,
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "pSw" = (
@@ -45545,8 +45541,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/random/engineering/tank,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/reagent_dispensers/plumbed,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "qhW" = (
@@ -47053,6 +47049,11 @@
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"qJH" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/iron/dark,
+/area/station/commons/locker)
 "qJU" = (
 /obj/structure/sign/map/right{
 	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
@@ -53627,17 +53628,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
-"sTH" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron,
-/area/station/service/bar)
 "sTN" = (
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/iron/white,
@@ -63235,7 +63225,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "wjQ" = (
@@ -102239,7 +102228,7 @@ qpM
 bGJ
 vrF
 tju
-sTH
+uiK
 uiK
 loh
 nxH
@@ -104274,7 +104263,7 @@ pJE
 pJE
 nFn
 uUl
-wLx
+qJH
 qXB
 wzK
 psZ

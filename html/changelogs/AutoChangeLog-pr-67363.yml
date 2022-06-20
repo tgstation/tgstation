@@ -1,5 +1,0 @@
-author: "SovietJenga"
-delete-after: True
-changes: 
-  - balance: "Moves the botanogenetic shears into the botany research node and locks it behind a botany experiment"
-  - balance: "Removes the advanced engineering node requirement from the botany node"

@@ -719,3 +719,15 @@
 	build_path = /obj/item/plate/oven_tray
 	category = list("initial","Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/////////////////////////////////////////
+/////////Fishing Equipment///////////////
+/////////////////////////////////////////
+
+/datum/design/fishing_rod_tech
+	name = "Advanced Fishing Rod"
+	id = "fishing_rod_tech"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/uranium = 1000, /datum/material/plastic = 2000)
+	build_path = /obj/item/fishing_rod/tech
+	category = list("Equipment")

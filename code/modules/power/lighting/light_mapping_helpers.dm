@@ -30,7 +30,7 @@
 /obj/machinery/light/red
 	bulb_colour = "#FF3232"
 	nightshift_allowed = FALSE
-	no_emergency = TRUE
+	no_low_power = TRUE
 	brightness = 4
 	bulb_power = 0.7
 
@@ -72,7 +72,7 @@
 
 /obj/machinery/light/small/red
 	bulb_colour = "#FF3232"
-	no_emergency = TRUE
+	no_low_power = TRUE
 	nightshift_allowed = FALSE
 	brightness = 2
 	bulb_power = 0.8

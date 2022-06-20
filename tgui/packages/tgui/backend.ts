@@ -14,6 +14,7 @@
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
 import { setupDrag } from './drag';
+import { globalEvents } from './events';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
@@ -136,6 +137,14 @@ export const backendMiddleware = store => {
     if (type === 'ping') {
       Byond.sendMessage('ping/reply');
       return;
+    }
+
+    if (type === "byond/mousedown") {
+      globalEvents.emit("byond/mousedown");
+    }
+
+    if (type === "byond/mouseup") {
+      globalEvents.emit("byond/mouseup");
     }
 
     if (type === 'backend/suspendStart' && !suspendInterval) {
