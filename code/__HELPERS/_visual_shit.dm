@@ -4,7 +4,13 @@
 /// Lets imagine we know how many z levels are stacked on top of each other
 /// If we know that, we can autogenerate plane masters to sit on top/below them
 /// We only need as many plane masters as the maximum of all z level stacks
-#define SET_PLANE_IMPLICIT(thing, new_value) (SET_PLANE(thing, new_value, get_turf(thing))
+#define SET_PLANE_IMPLICIT(thing, new_value) (SET_PLANE_EXPLICIT(thing, new_value, thing))
+#define SET_PLANE_EXPLICIT(thing, new_value, source) do {\
+		var/turf/_our_turf = get_turf(source);\
+		SET_PLANE(thing, new_value, _our_turf);\
+	}\
+	while (FALSE)
+
 #define SET_PLANE(thing, new_value, z_reference) (thing.plane = MUTATE_PLANE(new_value, z_reference))
 #define SET_PLANE_W_SCALAR(thing, new_value, multiplier) (thing.plane = GET_NEW_PLANE(new_value, multiplier))
 
@@ -23,7 +29,7 @@
 // Run on live to make sure this isn't too laggy for some reason
 // Test to see if it fixes the wallening bug
 // Do something about darkness being fucking cursed (potentially use layers to stick the darkness plane in its proper place on all levels? maybe? (yes, you can do this, with multiple render targets, but I don't know if it works or not))
-#define GET_NEW_PLANE(new_value, multiplier) ((new_value) - (PLANE_RANGE * (multiplier)))
+#define GET_NEW_PLANE(new_value, multiplier) (SSmapping.plane_offset_blacklist?["[new_value]"] ? new_value : (new_value) - (PLANE_RANGE * (multiplier)))
 #define MUTATE_PLANE(new_value, z_reference) (GET_NEW_PLANE(new_value, GET_TURF_PLANE_OFFSET(z_reference)))
 #define GET_TURF_PLANE_OFFSET(z_reference) ((isatom(z_reference) && SSmapping.max_plane_offset) ? GET_Z_PLANE_OFFSET(z_reference.z) : 0)
 #define GET_Z_PLANE_OFFSET(z) (SSmapping.z_level_to_plane_offset[z])

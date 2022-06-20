@@ -73,8 +73,10 @@
 
 /// Actually generate our plane masters, in some offset range (where offset is the z layers to render to, because each "layer" in a multiz stack gets its own plane master cube)
 /datum/plane_master_group/proc/build_plane_masters(starting_offset, ending_offset)
-	for(var/mytype in get_plane_types())
+	for(var/atom/movable/screen/plane_master/mytype as anything in get_plane_types())
 		for(var/plane_offset in starting_offset to ending_offset)
+			if(plane_offset != 0 && !initial(mytype.allows_offsetting))
+				continue
 			var/atom/movable/screen/plane_master/instance = new mytype(src, plane_offset)
 			plane_masters["[instance.plane]"] = instance
 			prep_plane_instance(instance)

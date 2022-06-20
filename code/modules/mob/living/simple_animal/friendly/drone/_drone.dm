@@ -29,7 +29,7 @@
 	speed = 0
 	healable = 0
 	density = FALSE
-	pass_flags = PASSTABLE | PASSMOB
+	pass_flags = PASSTABLE | PASSMOB | SEE_BLACKNESS
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER

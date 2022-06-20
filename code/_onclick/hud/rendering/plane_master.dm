@@ -19,6 +19,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// The plane master group we're a member of, our "home"
 	var/datum/plane_master_group/home
 
+	/// If our plane master allows for offsetting
+	/// Mostly used for planes that really don't need to be duplicated, like the hud planes
+	var/allows_offsetting = TRUE
 	/// Our offset from our "true" plane, see below
 	var/offset
 	/// When rendering multiz, lower levels get their own set of plane masters
@@ -222,13 +225,45 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "This is quite fiddly, so bear with me. By default (in byond) everything in the game is rendered onto plane 0. It's the default plane. \
 		<br>But, because we've moved everything we control off plane 0, all that's left is stuff byond internally renders. \
 		<br>What we're doing here is using plane 0 to capture \"Blackness\", or the mask that hides tiles. Note, this only works if our mob has the SEE_PIXELS or SEE_BLACKNESS sight flags.\
-		<br>Most of our mobs don't, but if they did we could then use this plane master to manipulate darkness, or use it to mask things. V useful."
+		<br>We relay this plane master (on plane 0) down to other copies of itself, depending on the layer your mob is on at the moment."
 	plane = BLACKNESS_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	color = list(null, null, null, "#0000", "#000f")
+	// Lemon todo: this breaks the plane master, look into why. it's prob just the alpha
+//	color = list(null, null, null, "#0000", "#000f")
 	blend_mode = BLEND_MULTIPLY
 	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR | PIXEL_SCALE
 	//byond internal end
+
+/atom/movable/screen/plane_master/blackness/show_to(mob/mymob)
+	. = ..()
+	if(offset != 0)
+		// You aren't the source? don't change yourself
+		return
+	var/datum/hud/hud = home.our_hud
+	if(hud)
+		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+	offset_change(0, hud.current_plane_offset)
+
+/atom/movable/screen/plane_master/blackness/hide_from(mob/mymob)
+	if(offset != 0)
+		return
+	var/datum/hud/hud = home.our_hud
+	if(hud)
+		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+
+/atom/movable/screen/plane_master/blackness/proc/on_offset_change(datum/source, old_offset, new_offset)
+	SIGNAL_HANDLER
+	offset_change(old_offset, new_offset)
+
+/atom/movable/screen/plane_master/blackness/proc/offset_change(old_offset, new_offset)
+	// Basically, the rule here is the blackness we harvest from the mob using the SEE_BLACKNESS flag will be relayed to the darkness
+	// Plane that we're actually on
+	if(old_offset != 0) // If our old target wasn't just ourselves
+		remove_relay_from(GET_NEW_PLANE(plane, old_offset))
+
+	if(new_offset != 0)
+		add_relay_to(GET_NEW_PLANE(plane, new_offset))
+
 
 ///Contains all lighting objects
 /atom/movable/screen/plane_master/lighting
@@ -254,22 +289,17 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	mymob.overlay_fullscreen("lighting_backdrop_lit", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
 	mymob.overlay_fullscreen("lighting_backdrop_unlit", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
 
-/atom/movable/screen/plane_master/lighting/hide_from(mob/oldmob)
-	. = ..()
-	oldmob.clear_fullscreen("lighting_backdrop_lit")
-	oldmob.clear_fullscreen("lighting_backdrop_unlit")
-
-// Sorry, this is a bit annoying
-// Basically, we only want the lighting plane we can actually see to attempt to render
-// If we don't our lower plane gets totally overriden by the black void of the upper plane
-/atom/movable/screen/plane_master/lighting/show_to(mob/mymob)
-	. = ..()
+	// Sorry, this is a bit annoying
+	// Basically, we only want the lighting plane we can actually see to attempt to render
+	// If we don't our lower plane gets totally overriden by the black void of the upper plane
 	var/datum/hud/hud = home.our_hud
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
 	offset_change(hud.current_plane_offset)
 
-/atom/movable/screen/plane_master/lighting/hide_from(mob/mymob)
+/atom/movable/screen/plane_master/lighting/hide_from(mob/oldmob)
+	oldmob.clear_fullscreen("lighting_backdrop_lit")
+	oldmob.clear_fullscreen("lighting_backdrop_unlit")
 	var/datum/hud/hud = home.our_hud
 	if(hud)
 		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
@@ -450,15 +480,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Contains anything that want to be rendered on the hud. Typically is just screen elements."
 	plane = HUD_PLANE
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
+	allows_offsetting = FALSE
 
 /atom/movable/screen/plane_master/above_hud
 	name = "Above HUD"
 	documentation = "Anything that wants to be drawn ABOVE the rest of the hud. Typically close buttons and other elements that need to be always visible. Think preventing draggable action button memes."
 	plane = ABOVE_HUD_PLANE
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
+	allows_offsetting = FALSE
 
 /atom/movable/screen/plane_master/splashscreen
 	name = "Splashscreen"
 	documentation = "Anything that's drawn above LITERALLY everything else. Think cinimatics and the well, spashscreen."
 	plane = SPLASHSCREEN_PLANE
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
+	allows_offsetting = FALSE

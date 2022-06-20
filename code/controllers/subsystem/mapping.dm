@@ -36,6 +36,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/plane_offset_to_true
 	/// Assoc list of true string plane values to a list of all potential offset planess
 	var/list/true_to_offset_planes
+	/// List of planes that do not allow for offsetting
+	var/list/plane_offset_blacklist
 	/// The largest plane offset we've generated so far
 	var/max_plane_offset = 0
 
@@ -80,6 +82,7 @@ SUBSYSTEM_DEF(mapping)
 			config = old_config
 	plane_offset_to_true = list()
 	true_to_offset_planes = list()
+	plane_offset_blacklist = list()
 	create_plane_offsets(0, 0)
 	initialize_biomes()
 	loadWorld()
@@ -699,13 +702,21 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/create_plane_offsets(gen_from, new_offset)
 	for(var/plane_offset in gen_from to new_offset)
-		for(var/atom/movable/screen/plane_master/subsystem_type as anything in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate)
-			var/plane_to_use = initial(subsystem_type.plane)
+		for(var/atom/movable/screen/plane_master/master_type as anything in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate)
+			var/plane_to_use = initial(master_type.plane)
 			var/string_real = "[plane_to_use]"
+
 			var/offset_plane = GET_NEW_PLANE(plane_to_use, plane_offset)
 			var/string_plane = "[offset_plane]"
 
+			if(!initial(master_type.allows_offsetting))
+				plane_offset_blacklist[string_plane] = TRUE
+				if(plane_offset != 0)
+					continue
+
 			plane_offset_to_true[string_plane] = plane_to_use
+
 			if(!true_to_offset_planes[string_real])
 				true_to_offset_planes[string_real] = list()
+
 			true_to_offset_planes[string_real] |= offset_plane

@@ -59,7 +59,7 @@
 	melee_damage_upper = 10
 	maxHealth = 65
 	health = 65
-	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
+	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_BLACKNESS
 	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/eyes)
 	spells_to_add = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,
@@ -362,7 +362,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS
+	sight = SEE_TURFS|SEE_BLACKNESS
 	spells_to_add = list(
 		/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small,
 		/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short,
@@ -402,7 +402,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS
+	sight = SEE_TURFS|SEE_BLACKNESS
 	spells_to_add = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash,
 		/obj/effect/proc_holder/spell/pointed/cleave,
@@ -420,7 +420,7 @@
 	health = 150
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_MOBS
+	sight = SEE_MOBS|SEE_BLACKNESS
 	spells_to_add = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash,
 		/obj/effect/proc_holder/spell/targeted/shapeshift/eldritch,
