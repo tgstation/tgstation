@@ -32404,12 +32404,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "lxv" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Secure tech_storage"
-	},
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "lxw" = (

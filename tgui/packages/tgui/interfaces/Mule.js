@@ -36,7 +36,7 @@ export const Mule = (_, context) => {
 								icon={on ? 'power-off' : 'times'}
 								content={on ? 'On' : 'Off'}
 								selected={on}
-								onClick={() => act('power')}
+								onClick={() => act('on')}
 							/>
 						)
 					}>
