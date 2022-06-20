@@ -1,11 +1,35 @@
-import { useBackend, useSharedState } from '../backend';
+import { BooleanLike } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
 import { Button, NoticeBox, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
 import { ShuttleConsoleContent } from './ShuttleConsole';
 
+type Data = {
+	type: string;
+	blind_drop: BooleanLike;
+	turrets: Turret[];
+};
+
+type Turret = {
+	ref: string;
+	key: string;
+	name: string;
+	integrity: number;
+	status: string;
+	direction: string;
+	distance: number;
+};
+
+const STATUS_COLOR_KEYS = {
+	'ERROR': 'bad',
+	'Disabled': 'bad',
+	'Firing': 'average',
+	'All Clear': 'good',
+} as const;
+
 export const AuxBaseConsole = (_, context) => {
-	const { data } = useBackend(context);
-	const [tab, setTab] = useSharedState(context, 'tab', 1);
+	const { data } = useBackend<Data>(context);
+	const [tab, setTab] = useLocalState(context, 'tab', 1);
 	const { type, blind_drop, turrets = [] } = data;
 
 	return (
@@ -38,15 +62,8 @@ export const AuxBaseConsole = (_, context) => {
 	);
 };
 
-const STATUS_COLOR_KEYS = {
-	'ERROR': 'bad',
-	'Disabled': 'bad',
-	'Firing': 'average',
-	'All Clear': 'good',
-};
-
 export const AuxBaseConsoleContent = (_, context) => {
-	const { act, data } = useBackend(context);
+	const { act, data } = useBackend<Data>(context);
 	const { turrets = [] } = data;
 
 	return (

@@ -3,6 +3,10 @@ import { useBackend } from '../backend';
 import { Box, Stack } from '../components';
 import { Window } from '../layouts';
 
+const THERMOMETER_IMAGE = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhE\
+UgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEVya3UjIyN3S/1dAAAAAXRSTlMAQObYZgAAAAFiS0\
+dEAIgFHUgAAAAMSURBVAjXY2hgcAAAAcQAwUlFKkkAAAAASUVORK5CYII=')`;
+
 export class Thermometer extends Component {
 	componentDidMount() {
 		Byond.winset(Byond.windowId, {
@@ -26,8 +30,7 @@ export class Thermometer extends Component {
 					justify="space-around"
 					backgroundColor="#242322"
 					style={{
-						'background-image':
-							"url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEVya3UjIyN3S/1dAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAMSURBVAjXY2hgcAAAAcQAwUlFKkkAAAAASUVORK5CYII=')",
+						'background-image': THERMOMETER_IMAGE,
 					}}>
 					<Stack.Item ml={1}>
 						<ThermometerIcon

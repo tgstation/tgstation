@@ -1,15 +1,24 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
+type Data = {
+	enabled: BooleanLike;
+	lethal: BooleanLike;
+	locked: BooleanLike;
+	shootCyborgs: BooleanLike;
+	siliconUser: BooleanLike;
+};
+
 export const TurretControl = (_, context) => {
-	const { act, data } = useBackend(context);
-	const locked = data.locked && !data.siliconUser;
-	const { enabled, lethal, shootCyborgs } = data;
+	const { act, data } = useBackend<Data>(context);
+	const { enabled, lethal, locked, siliconUser, shootCyborgs } = data;
+	const isLocked = locked && !siliconUser;
 
 	return (
-		<Window width={305} height={data.siliconUser ? 168 : 164}>
+		<Window width={305} height={siliconUser ? 168 : 164}>
 			<Window.Content>
 				<InterfaceLockNoticeBox />
 				<Section>
@@ -19,7 +28,7 @@ export const TurretControl = (_, context) => {
 								icon={enabled ? 'power-off' : 'times'}
 								content={enabled ? 'Enabled' : 'Disabled'}
 								selected={enabled}
-								disabled={locked}
+								disabled={isLocked}
 								onClick={() => act('power')}
 							/>
 						</LabeledList.Item>
@@ -28,7 +37,7 @@ export const TurretControl = (_, context) => {
 								icon={lethal ? 'exclamation-triangle' : 'minus-circle'}
 								content={lethal ? 'Lethal' : 'Stun'}
 								color={lethal ? 'bad' : 'average'}
-								disabled={locked}
+								disabled={isLocked}
 								onClick={() => act('mode')}
 							/>
 						</LabeledList.Item>
@@ -37,7 +46,7 @@ export const TurretControl = (_, context) => {
 								icon={shootCyborgs ? 'check' : 'times'}
 								content={shootCyborgs ? 'Yes' : 'No'}
 								selected={shootCyborgs}
-								disabled={locked}
+								disabled={isLocked}
 								onClick={() => act('shoot_silicons')}
 							/>
 						</LabeledList.Item>

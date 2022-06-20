@@ -3,8 +3,21 @@ import { Box, Button, Section, Table } from '../components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
+type Data = {
+	materials: Material[];
+};
+
+type Material = {
+	type: string;
+	name: string;
+	amount: number;
+};
+
+const OREBOX_INFO = `All ores will be placed in here when you are wearing a
+mining stachel on your belt or in a pocket while dragging the ore box.`;
+
 export const OreBox = (_, context) => {
-	const { act, data } = useBackend(context);
+	const { act, data } = useBackend<Data>(context);
 	const { materials } = data;
 
 	return (
@@ -34,8 +47,7 @@ export const OreBox = (_, context) => {
 				</Section>
 				<Section>
 					<Box>
-						All ores will be placed in here when you are wearing a mining
-						stachel on your belt or in a pocket while dragging the ore box.
+						{OREBOX_INFO}
 						<br />
 						Gibtonite is not accepted.
 					</Box>
