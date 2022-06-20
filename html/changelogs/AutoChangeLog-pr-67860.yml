@@ -1,0 +1,4 @@
+author: "SmoSmoSmoSmok"
+delete-after: True
+changes: 
+  - bugfix: "mulebots can be turned on/off"
