@@ -132,7 +132,7 @@
 	description = "We're making a better version of space drugs, send us a core to help us replicate its effects."
 	wanted_types = list(/obj/item/assembly/signaler/anomaly/hallucination = TRUE)
 
-/datum/bounty/item/science/ref_anomaly/delimber
+/datum/bounty/item/science/ref_anomaly/bioscrambler
 	name = "Refined Bioscrambler Core"
 	description = "Our janitor lizard lost all their limbs, send us a bioscrambler core to replace them."
-	wanted_types = list(/obj/item/assembly/signaler/anomaly/delimber = TRUE)
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/bioscrambler = TRUE)
