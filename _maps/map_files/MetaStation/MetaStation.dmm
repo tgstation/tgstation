@@ -13349,7 +13349,7 @@
 "eUi" = (
 /obj/structure/table,
 /obj/item/storage/bag/plants,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 10
@@ -16306,7 +16306,7 @@
 /obj/structure/closet/crate/hydroponics,
 /obj/item/shovel/spade,
 /obj/item/wrench,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/item/cultivator,
 /obj/item/wirecutters,
 /obj/machinery/airalarm/directional/south,
@@ -16353,7 +16353,7 @@
 /obj/item/hatchet,
 /obj/item/cultivator,
 /obj/item/crowbar,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/item/plant_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -21256,7 +21256,7 @@
 	dir = 4
 	},
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -29715,7 +29715,7 @@
 /obj/item/cultivator,
 /obj/item/crowbar,
 /obj/item/plant_analyzer,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
@@ -31199,7 +31199,7 @@
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/plant_analyzer,
 /obj/item/cultivator,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/structure/rack,
 /obj/item/vending_refill/hydroseeds,
 /turf/open/floor/plating,
@@ -32443,7 +32443,7 @@
 /area/station/medical/break_room)
 "lxJ" = (
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -53725,7 +53725,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
@@ -57836,7 +57836,7 @@
 /obj/item/crowbar,
 /obj/machinery/light/directional/north,
 /obj/item/plant_analyzer,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)

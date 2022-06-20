@@ -11391,7 +11391,7 @@
 	pixel_y = 30
 	},
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/cable,
@@ -49771,7 +49771,7 @@
 /obj/structure/rack,
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/cultivator,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/item/plant_analyzer,
 /obj/structure/sign/poster/contraband/kudzu{
 	pixel_y = -32
@@ -54513,7 +54513,7 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "oJx" = (
@@ -62316,7 +62316,7 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "qOk" = (
@@ -64940,7 +64940,7 @@
 	req_access = list("kitchen")
 	},
 /obj/item/storage/bag/plants,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "rES" = (
@@ -72003,7 +72003,7 @@
 /obj/item/wirecutters,
 /obj/effect/turf_decal/box,
 /obj/machinery/firealarm/directional/north,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "tsU" = (
@@ -73877,7 +73877,7 @@
 /area/station/science/genetics)
 "tPD" = (
 /obj/machinery/biogenerator,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "tPE" = (
@@ -86822,7 +86822,7 @@
 /obj/effect/turf_decal/trimline/green/end{
 	dir = 1
 	},
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/turf_decal/trimline/green/mid_joiner{
 	dir = 8
 	},

@@ -4313,7 +4313,7 @@
 	dir = 4;
 	pixel_x = -12
 	},
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "bHP" = (
@@ -4456,7 +4456,7 @@
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "bJp" = (
@@ -7788,7 +7788,7 @@
 "cIG" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
@@ -47386,7 +47386,7 @@
 /obj/item/hatchet,
 /obj/item/plant_analyzer,
 /obj/item/cultivator,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -50948,7 +50948,7 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "rdO" = (
