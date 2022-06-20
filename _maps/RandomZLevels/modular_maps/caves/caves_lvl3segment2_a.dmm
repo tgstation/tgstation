@@ -72,7 +72,7 @@
 "Ws" = (/obj/effect/decal/remains/human,/turf/open/misc/asteroid/basalt/wasteland,/area/template_noop)
 "Wv" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block{dir = 8},/obj/structure/mineral_door/transparent,/turf/open/indestructible/boss,/area/template_noop)
 "XX" = (/obj/structure/stone_tile/slab,/mob/living/simple_animal/hostile/mimic/crate{faction = list("mimic","skeleton")},/obj/item/keycard/office{puzzle_id = "justwipedouttomatotown"'; icon = 'icons/obj/cult/items_and_weapons.dmi'; icon_state = "render"; name = "ritualistic blade"; desc = "A blade used in various rituals. This one has markings on it that seem to match the surrounding necropolis walls."},/turf/open/indestructible/boss,/area/template_noop)
-"YT" = (/obj/structure/stone_tile/slab,/obj/structure/spider/stickyweb,/mob/living/simple_animal/hostile/giant_spider/hunter{atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)},/turf/open/indestructible/boss,/area/template_noop)
+"YT" = (/obj/structure/stone_tile/slab/cracked,/obj/structure/closet/crate,/turf/open/indestructible/boss,/area/template_noop)
 "ZO" = (/obj/structure/stone_tile/slab,/obj/effect/decal/cleanable/cobweb,/obj/structure/table/wood,/turf/open/indestructible/boss,/area/template_noop)
 
 (1,1,1) = {"

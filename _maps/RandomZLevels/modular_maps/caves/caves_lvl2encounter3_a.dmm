@@ -5,7 +5,7 @@
 "f" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "i" = (/obj/item/pickaxe,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "j" = (/turf/open/chasm/lavaland,/area/template_noop)
-"k" = (/obj/item/organ/alien/plasmavessel,/obj/structure/alien/weeds,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"k" = (/obj/item/organ/internal/alien/plasmavessel,/obj/structure/alien/weeds,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "l" = (/obj/structure/alien/resin/wall,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
 "o" = (/turf/closed/wall,/area/template_noop)
 "q" = (/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)

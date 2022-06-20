@@ -4,9 +4,6 @@ directory = "_maps/RandomZLevels/modular_maps/caves/"
 [rooms.caves_lvl2bridge1]
 modules = ["caves_lvl2bridge1_broken.dmm", "caves_lvl2bridge1_unbroken.dmm"]
 
-[rooms.ass]
-modules = ["ass1.dmm", "ass2.dmm"]
-
 [rooms.caves_lvl2bridge2]
 modules = ["caves_lvl2bridge2_broken.dmm", "caves_lvl2bridge2_unbroken.dmm"]
 
