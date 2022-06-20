@@ -29,12 +29,11 @@
  * Effects after completing unwrapping
  */
 /obj/item/delivery/proc/post_unwrap_contents(mob/user)
-	var/turf/turf_loc = get_turf(user || src)
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-	new /obj/effect/decal/cleanable/wrapping(turf_loc)
+	new /obj/effect/decal/cleanable/wrapping(loc)
 
 	for(var/atom/movable/movable_content as anything in contents)
-		movable_content.forceMove(turf_loc)
+		movable_content.forceMove(loc)
 
 	qdel(src)
 
