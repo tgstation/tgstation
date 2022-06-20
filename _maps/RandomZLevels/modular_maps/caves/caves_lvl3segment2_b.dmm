@@ -47,6 +47,7 @@
 "ie" = (/turf/closed/wall/mineral/abductor,/area/awaymission/caves/misc/ayylmao/office)
 "io" = (/turf/closed/indestructible/riveted{base_icon_state = "alienvault"; icon = 'icons/turf/walls.dmi'; icon_state = "alienvault"},/area/awaymission/caves/misc/ayylmao/holding_cell)
 "iq" = (/obj/structure/table/abductor,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
+"ir" = (/mob/living/simple_animal/hostile/ashwalker{name = "Cannot-Be-Contained"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
 "iu" = (/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/turf_decal/siding/purple/corner{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
 "iw" = (/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
 "iI" = (/obj/effect/turf_decal/siding/purple{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
@@ -110,7 +111,6 @@
 "wC" = (/mob/living/simple_animal/hostile/russian/ranged/trooper,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
 "wD" = (/obj/effect/turf_decal/siding/purple/corner{dir = 1},/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
 "wI" = (/obj/structure/table/abductor,/obj/item/oar{name = "Exhibit 4312mJ - Ore"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"wQ" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/statue,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
 "wR" = (/obj/structure/table/abductor,/obj/effect/turf_decal/tile/purple/fourcorners,/obj/item/paper_bin/carbon,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
 "xj" = (/obj/structure/chair/office/tactical{dir = 8},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
 "xl" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
@@ -145,6 +145,7 @@
 "Ga" = (/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao)
 "Gh" = (/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
 "Gj" = (/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
+"Gn" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/netherworld/statue,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
 "GG" = (/obj/structure/toilet{dir = 4; name = "Exhibit 4524Aj - ToyLet"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
 "GH" = (/obj/effect/turf_decal/delivery/white,/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao)
 "GZ" = (/obj/machinery/door/firedoor,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
@@ -189,7 +190,6 @@
 "OT" = (/obj/structure/table/abductor,/obj/effect/turf_decal/siding/purple{dir = 10},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
 "OV" = (/obj/structure/table/abductor,/obj/item/retractor/alien,/obj/item/hemostat/alien,/obj/item/surgicaldrill/alien,/obj/item/cautery/alien,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
 "Pb" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 1},/obj/effect/turf_decal/siding/purple{dir = 9},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Pp" = (/mob/living/simple_animal/hostile/ashwalker,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
 "PF" = (/obj/effect/turf_decal/siding/purple{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
 "PI" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/giant_spider/hunter,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
 "PL" = (/obj/effect/turf_decal/siding/purple{dir = 9},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
@@ -262,7 +262,7 @@ aaZZMnVKMnMnMnsSZZZZZZZZZZZZZZZZZZZZZZZZaaMnZBefENENpNTvMnaaaaaaaaaaaaaaaaMnefEN
 aaZZMnVKMnZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaMnZBeCtNuTlOLLMnaaaaaaaaaaaaaaaaMnQCENlNMnaaaaaaaaaaaaaaaaMnZBeCtNuTlOlaMnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaMnefENpNUoaaaaaaZZZZZZaaaaaTaTaaaaaaZZZZZZZZZZZZZZZZZZaaaaaaoTaxaxwdvDLWLWLWJowdaxaxaxoToTaa
 aaZZsSVKgQZZZZZZZZZZZZZZZZZZZZZZZZZZaaioioioioioefpNioioioioioaaaaioioioioioefENpNioioioioioaaaaioioioioioefpNioioioioioaaaaioioioioioaaaaioioioioioaaMnMnMnQvENpNUoUoUoaaZZZZZZaaaaaTaTaTaaaaaaZZZZZZZZZZZZZZZZaaaaaaaxaxaxwdwdLWLWhKwdwdoTaxaxoTaxaa
 aasSgQVKMnZZZZZZZZZZZZZZZZZZZZZZZZZZaaioUCLBowioefpNioGhLBGhioaaaaioUCLBowioefENpNioGhLBGhioaaaaioGhLBGhioefpNioGhLBGhioaaaaioGhLBGhioaaaaioUCLBowioaaMnNATBefENpNTBhYUoaaZZZZZZaaaaaaaTaTaaaaaaZZZZZZZZZZZZZZZZaaaaaaaaaxaxaxwdwddjwdwdaxoToTaxaxaxaa
-aaZNVKVKMnaaaaaaaaaaMnMnMnaaMnMnMnaaaaiohGVXGhioefpNioGhbzGhioaaaaiohGwCGhioefENpNioGhLSGhioaaaaioGhxDGhioefpNioGheiGhioaaaaioGhRMGhioaaaaiohGPpGhioaaMnMnMneCdzlOUoUoUoaaZZZZZZaaaaaaaTaTaaaaaaaaZZZZZZZZZZZZZZaaaaaaCLoToTaxaxaxaxaxaxaxCLoTaxaxaxaa
+aaZNVKVKMnaaaaaaaaaaMnMnMnaaMnMnMnaaaaiohGVXGhioefpNioGhbzGhioaaaaiohGwCGhioefENpNioGhLSGhioaaaaioGhxDGhioefpNioGheiGhioaaaaioGhRMGhioaaaaiohGirGhioaaMnMnMneCdzlOUoUoUoaaZZZZZZaaaaaaaTaTaaaaaaaaZZZZZZZZZZZZZZaaaaaaCLoToTaxaxaxaxaxaxaxCLoTaxaxaxaa
 aasSVKgQMnaaaaaaaaaaMntnMnaaMnwIMnaaaaioutMPcCioEccDiocCMPcCioaaaaioutMPcCioefENpNiocCMPcCioaaaaiocCMPcCioEccDiocCMPcCioaaaaiocCMPcCioaaaaioutMPcCioaaaaaaMnMndNMnUoaaaaaaZZZZZZaaaaaaaTaTaTaaaaaaZZZZZZZZZZZZZZaaaaaaoTaxaxaxaxaxaxaxaxaxoToTaxaxaxaa
 aaMnVKMnsAsAsAsAsAMnMnTBMnMnMnTBMnMnMnioyqcnyqioqtRHioyqcnyqioMnMnioyqcnyqioqtGZRHioyqcnyqioMnMnioyqcnyqioqtRHioyqcnyqioMnMnioyqcnyqioMnMnioyqcnyqioMnMnMnMnZTsFzIUoaaZZZZZZZZZZaaaaaTaTaTaTaTaTaTZZZZZZZZZZZZZZaaaxaTaTaTaTaTaTaxaxaxaxaxaxaxaxaxaxaa
 aaMnVKsSsAAhsOLJsAZTDXDXqwDXDXDXDXDXDXqwDXsFDXYZpTdbqwDXsFDXDXDXYZqwDXsFDXrXpTENdbrXDXsFDXUKDXDXDXDXsFDXqwpTdbYZDXsFDXqwDXDXDXDXsFDXUKDXDXDXDXsFDXqwYZDXDXDXpTENpNUoaaZZZZZZZZZZaaaaaaaTaTaTaaaaaaZZZZZZZZZZZZZZaaaTaTaTaTaTaTaTaTaxaxaxwdwdwdwdwdaxaa
@@ -271,7 +271,7 @@ aaMnVKgQsAQCENmEEZThENENENENENENENENENENENENENENENENENENENENENENENENENENENGZENEN
 aasSVKVKtwekhrDMTBefENuThrhrhrhrnwhrhrhrhrzAhrnwhrhrWatNENuTAihrhrhrhrzAhrvVtNENuTvVhrzAhrhrhrhrnwhrzAhrhrhrhrnwhrzAhrhrhrhrnwhrzAhrhrhrhrnwhrzAhrhrhrhrhrnwZOgQXeUoaaZZZZZZZZaaaaaaaaaaaTaTaTaaaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxdjLWLWelLWOVwdaa
 aasSsSMnsACHjJCHsAQCENlNMnMnMnMnMnMnMnioyqcpyqioMnMnioBPBPBPioMnMnioyqcpyqioeChrlOioyqcpyqioMnMnioyqcpyqioMnMnioyqcpyqioMnMnioyqcpyqioMnMnioyqcpyqioMnMnMnMnMnbiUoUoaaZZZZZZZZaaaaaaaaaaaTaTaTaaaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxwdhKLWLWLWJYwdaa
 aaZZZZZZsAsAsAsAsAqtGZRHMnaaaaaaaaaaaaioiILDcNioaaaaioGhGhGhioaaaaioiILDiIioMnTBMniocNLDiIioaaaaioiILDiIioaaaaioiILDiIioaaaaioiILDiIioaaaaioiILDiIioVKVKVKVKVKVKUoaaaaZZZZZZZZaaaTaTaTaTaTaTaTaTaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxwdwdDAqxedwdwdaa
-aaaaaaZZZZZZaaUoUoZuGaSaUoUoaaaaaaaaaaioGhbTeSioaaaaioGhwQGhioaaaaioGhVeGhioMngzMnioeSKNGhioaaaaioGhPIGhioaaaaioGhxlGhioaaaaioGhweGhioaaaaioGhcLGhioVKMnMnMnPZMnUoUoUoUoZZZZZZaaaaaaaaaaaTaTaTaTaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxaxwdwdwdwdwdaxaa
+aaaaaaZZZZZZaaUoUoZuGaSaUoUoaaaaaaaaaaioGhbTeSioaaaaioGhGnGhioaaaaioGhVeGhioMngzMnioeSKNGhioaaaaioGhPIGhioaaaaioGhxlGhioaaaaioGhweGhioaaaaioGhcLGhioVKMnMnMnPZMnUoUoUoUoZZZZZZaaaaaaaaaaaTaTaTaTaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxaxwdwdwdwdwdaxaa
 aaZZZZZZZZZZaaUoZTpTgQdbzIUoaaaaaaaaaaioPYKZUCioaaaaioGhKZGhioaaaaioGhKZGhioMnMnMnioUCKZowioaaaaioGhKZGhioaaaaioGhKZGhioaaaaioGhKZGhioaaaaioGhKZGhioVKMnjVNgDcpsgEdaNmUoZZZZZZaaaaaaaaaaaTaTaTaaaaZZZZZZZZZZZZZZaxaTaTaTaTaTaTaTaTaxaxaxaxaxaxaxaxaaaa
 aaZZZZZZZZZZaaUoefgQgQgQOqUoMnMnMnMnMnioioioioioMnMnioioioioioMnMnioioioioioQaqkmhioioioioioMnMnioioioioioMnMnioioioioioMnMnioioioioioMnMnioioioioioVKMnMdDcAEAEDcUoUoUoZZZZZZaaaaaaaaaaaTaTaTaaaaZZZZZZZZZZZZZZaxaxaTaTaTaTaTaTaxaxoTaxaxaxaxaxaaaaaa
 aaZZZZZZZZZZaaUoZmoWMeoWKjplVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKMnEabRohbRDcdaNmUoZZZZZZaaaaaaaaaaaaaTaaaaaaZZZZZZZZZZZZZZaaaaaaaaaaaaaaaxaxoToToTaxaaaaaaaaaaaa
