@@ -12,7 +12,6 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(20,100)
 
-
 /obj/item/reagent_containers/glass/watering_can/wood
 	name = "wood watering can"
 	desc = "An old metal-made watering can but shoddily painted to look like it was made of wood for some dubious reason..."
