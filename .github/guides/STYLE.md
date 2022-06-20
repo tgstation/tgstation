@@ -402,7 +402,7 @@ set_invincible(FALSE) // Fine! Boolean parameters don't always need to be named.
 
 ## Macros
 
-Macros are, in essence, direct copy and pastes into the code. They are one of the few zero cost abstractions we have in DM, and you will see them often.
+Macros are, in essence, direct copy and pastes into the code. They are one of the few zero cost abstractions we have in DM, and you will see them often. Macros have strange syntax requirements, so if you see lots of backslashes and semicolons and braces that you wouldn't normally see, that is why.
 
 This section will assume you understand the following concepts:
 
@@ -439,7 +439,7 @@ This, however, performs a side effect of updating the health:
 
 Now that you're caught up on the terms, let's get into the guidelines.
 
-### Put macro bodies inside parentheses where possible.
+### Put macro segments inside parentheses where possible.
 This will save you from bugs down the line with operator precedence.
 
 For example, the following macro:
@@ -462,6 +462,13 @@ This is [a real bug that tends to come up](https://github.com/tgstation/tgstatio
 ```dm
 // Phew!
 #define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION (T20C + 10)
+```
+
+The same goes for arguments passed to a macro...
+
+```
+// Guarantee 
+#define CALCULATE_TEMPERATURE(base) (T20C + (##base))
 ```
 
 ### Be hygienic where reasonably possible
@@ -491,6 +498,104 @@ When a macro can't be hygienic, such as in the case where a macro is preferred t
 ```
 
 As usual, exceptions exist--for instance, accessing a global like a subsystem within a macro is generally acceptable.
+
+### Preserve hygiene using double underscores (`__`) and `do...while (FALSE)`
+
+Some macros will want to create variables for themselves, and not the consumer. For instance, consider this macro:
+
+```dm
+#define HOW_LONG(proc_to_call) \
+	var/current_time = world.time; \
+	##proc_to_call(); \
+	world.log << "That took [world.time - current_time] deciseconds to complete.";
+```
+
+There are two problems here.
+
+One is that it is unhygienic. The `current_time` variable is leaking into the call site.
+
+The second is that this will create weird errors if `current_time` is a variable that already exists, for instance:
+
+```dm
+var/current_time = world.time
+
+HOW_LONG(make_soup) // This will error!
+```
+
+If this seems unlikely to you, then also consider that this:
+
+```dm
+HOW_LONG(make_soup)
+HOW_LONG(eat_soup)
+```
+
+...will also error, since they are both declaring the same variable!
+
+There is a way to solve both of these, and it is through both the `do...while (FALSE)` pattern and by using `__` for variable names.
+
+This code would change to look like:
+
+```dm
+#define HOW_LONG(proc_to_call) \
+	do { \
+		var/__current_time = world.time; \
+		##proc_to_call(); \
+		world.log << "That took [world.time - current_time] deciseconds to complete."; \
+	} while (FALSE)
+```
+
+The point of the `do...while (FALSE)` here is to **create another scope**. It is impossible for `__current_time` to be used outside of the define itself. If you haven't seen `do...while` syntax before, it is just saying "do this while the condition is true", and by passing `FALSE`, we ensure it will only run once.
+
+### Keep anything you use more than once in variables
+
+Remember that macros are just pastes. This means that, if you're not thinking, you can end up [creating some really weird macros by reusing variables](https://github.com/tgstation/tgstation/pull/55074).
+
+```dm
+#define TEST_ASSERT_EQUAL(a, b) \
+ 	if ((##a) != (##b)) { \
+		return Fail("Expected [##a] to be equal to [##b]."); \
+	}
+```
+
+This code may look benign, but consider the following code:
+
+```dm
+/// Deal damage to the mob, and return their new health
+/mob/living/proc/attack_mob(damage)
+	health -= damage
+	say("Ouch!")
+	return health
+
+// Later, in a test, assuming mobs start at 100 health
+TEST_ASSERT_EQUAL(victim.attack_mob(20), 60)
+```
+
+We're only dealing 20 damage to the mob, so it'll have 80 health left. But the test will fail, and report `Expected 60 to be equal to 60.`
+
+Uh oh! That's because this compiled to:
+
+```dm
+if ((victim.attack_mob(20)) != 60)
+	return Fail("Expected [victim.attack_mob(20)] to be equal to [60].")
+```
+
+It's running the proc twice!
+
+To fix this, we need to make sure the proc only runs once, by creating a variable for it, and using our `do...while (FALSE)` pattern we learned earlier.
+
+```dm
+#define TEST_ASSERT_EQUAL(a, b) \
+	do { \
+		var/__a_value = ##a;
+		var/__b_value = ##b;
+
+		if (__a_value != __b_value) { \
+			return Fail("Expected [__a_value] to be equal to [__b_value]."); \
+		} \
+	} while (FALSE)
+```
+
+Now our code correctly reports `Expected 80 to be equal to 60`.
 
 ### ...but if you must be unhygienic, try to restrict the scope.
 
@@ -566,7 +671,38 @@ It is often preferable for your `#define` and `#undef` to surround the code that
 // My other corn code
 ```
 
-If you want other files to use macros, put them in somewhere such as a file in `__DEFINES`.
+If you want other files to use macros, put them in somewhere such as a file in `__DEFINES`. That way, the files are included in a consistent order:
+
+```dm
+#include "__DEFINES/my_defines.dm" // Will always be included first, because of the underscores
+#include "game/my_object.dm" // This will be able to consistently use defines put in my_defines.dm
+```
+
+### Use `##` to help with ambiguities
+
+Especially with complex macros, it might not be immediately obvious what's part of the macro and what isn't.
+
+```dm
+#define CALL_PROC_COMPLEX(source, proc_name) \
+	if (source.is_ready()) { \
+		source.proc_name(); \
+	}
+```
+
+`source` and `proc_name` are both going to be directly pasted in, but they look just like any other normal code, and so it makes reading this macro a bit harder.
+
+Consider instead:
+
+```dm
+#define CALL_PROC_COMPLEX(source, proc_name) \
+	if (##source.is_ready()) { \
+		##source.##proc_name(); \
+	}
+```
+
+`##` will paste in the define parameter directly, and makes it more clear what belongs to the macro.
+
+This is the most subjective of all the guidelines here, as it might just create visual noise in very simple macros, so use your best judgment.
 
 ### For impure/unhygienic defines, use procs/normal code when reasonable
 
