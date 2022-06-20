@@ -14512,6 +14512,13 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
+"eAR" = (
+/obj/machinery/light/directional/east,
+/obj/structure/sign/warning/fire{
+	pixel_y = 32
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/science/ordnance/office)
 "eAS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -17331,6 +17338,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "fsO" = (
@@ -28004,12 +28013,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/locker)
-"iLd" = (
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/science/ordnance/office)
 "iLe" = (
 /obj/item/radio/intercom/directional/north,
 /obj/structure/table/glass,
@@ -39302,8 +39305,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "mna" = (
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "mnj" = (
@@ -56208,8 +56211,8 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "rAm" = (
-/obj/effect/spawner/random/vending/snackvend,
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "rAr" = (
@@ -179947,7 +179950,7 @@ hjM
 hjM
 hjM
 kcO
-kcO
+hjM
 hjM
 ycY
 rQG
@@ -258334,7 +258337,7 @@ eIC
 trK
 fsN
 krY
-iLd
+xLq
 xLq
 aoo
 rYZ
@@ -258591,7 +258594,7 @@ whP
 mOc
 mkx
 krY
-ezJ
+eAR
 xLq
 iba
 gas
