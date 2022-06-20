@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, createRef } from 'inferno';
 import { resolveAsset } from '../assets';
 import { Box } from './Box';

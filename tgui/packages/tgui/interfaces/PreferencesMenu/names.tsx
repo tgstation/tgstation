@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { binaryInsertWith, sortBy } from 'common/collections';
 import { useLocalState } from '../../backend';
 import { Box, Button, FitText, Icon, Input, LabeledList, Modal, Section, Stack, TrackOutsideClicks } from '../../components';
@@ -62,13 +61,14 @@ export const MultiNameInput = (
 								title="Alternate names">
 								<LabeledList>
 									{sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(
+										// eslint-disable-next-line @typescript-eslint/no-unused-vars
 										([_, names], index, collection) => (
 											<>
 												{names.map(({ key, name }) => {
 													let content;
 
 													if (currentlyEditingName === key) {
-														const updateName = (event, value) => {
+														const updateName = (_, value) => {
 															props.handleUpdateName(key, value);
 
 															setCurrentlyEditingName(null);

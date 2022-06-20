@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { StatelessComponent } from 'inferno';
 import { Box, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk } from './data';
@@ -150,6 +149,7 @@ export const QuirksPage = (props, context) => {
 				} = data.quirks;
 
 				const quirks = Object.entries(quirkInfo);
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				quirks.sort(([_, quirkA], [__, quirkB]) => {
 					if (quirkA.value === quirkB.value) {
 						return quirkA.name > quirkB.name ? 1 : -1;
@@ -249,6 +249,7 @@ export const QuirksPage = (props, context) => {
 											act('give_quirk', { quirk: quirk.name });
 										}}
 										quirks={quirks
+											// eslint-disable-next-line @typescript-eslint/no-unused-vars
 											.filter(([quirkName, _]) => {
 												return selectedQuirks.indexOf(quirkName) === -1;
 											})
@@ -302,6 +303,7 @@ export const QuirksPage = (props, context) => {
 											act('remove_quirk', { quirk: quirk.name });
 										}}
 										quirks={quirks
+											// eslint-disable-next-line @typescript-eslint/no-unused-vars
 											.filter(([quirkName, _]) => {
 												return selectedQuirks.indexOf(quirkName) !== -1;
 											})

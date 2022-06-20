@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Dropdown, Icon } from '../../components';
 import { RandomSetting } from './data';
 import { exhaustiveCheck } from 'common/exhaustive';
