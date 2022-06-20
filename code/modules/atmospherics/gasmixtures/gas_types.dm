@@ -25,11 +25,11 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	var/list/to_return = list()
 	for(var/i in 0 to SSmapping.max_plane_offset)
 		var/fill = list()
-		to_return[i + 1] = fill
+		to_return += list(fill)
 		for(var/j in 1 to TOTAL_VISIBLE_STATES)
-			var/obj/effect/overlay/gas/gas =  new (initial(gas_type.gas_overlay), log(4, (i+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255)
+			var/obj/effect/overlay/gas/gas =  new (initial(gas_type.gas_overlay), log(4, (j+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255)
 			SET_PLANE_W_SCALAR(gas, gas.plane, i)
-			fill[j] = gas
+			fill += gas
 	return to_return
 
 /proc/gas_id2path(id)

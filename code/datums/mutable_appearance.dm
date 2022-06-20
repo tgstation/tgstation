@@ -13,14 +13,17 @@
 /proc/mutable_appearance(icon, icon_state = "", layer = FLOAT_LAYER, atom/offset_spokesman, plane = FLOAT_PLANE, alpha = 255, appearance_flags = NONE, offset_const)
 	if(plane != FLOAT_PLANE)
 		// Essentially, we allow users that only want one static offset to pass one in
-		if(offset_const)
+		if(!isnull(offset_const))
 			plane = GET_NEW_PLANE(plane, offset_const)
 		else
 			// otherwise if you're setting plane you better have the guts to back it up
 			var/turf/our_turf = get_turf(offset_spokesman)
 			// Null passed in, here we go
-			if(!our_turf)
-				stack_trace("Null location passed in as an offset spokesman for a mutable appearance, ya done fucked up")
+		// Lemon todo: this is too often done intentionally
+		// Maybe we should just have things pass in 0 if it's intentional?
+		// IDK maybe this is a bad check, it's caught things for me in the past tho
+		//	if(!our_turf)
+		//		stack_trace("Null location passed in as an offset spokesman for a mutable appearance, ya done fucked up")
 			plane = MUTATE_PLANE(plane, our_turf)
 	var/mutable_appearance/MA = new()
 	MA.icon = icon
