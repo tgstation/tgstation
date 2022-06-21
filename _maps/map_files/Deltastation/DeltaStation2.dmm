@@ -49644,6 +49644,9 @@
 /obj/effect/spawner/random/aimodule/harmful{
 	pixel_y = -16
 	},
+/obj/item/ai_module/reset/purge{
+	pixel_y = 11
+	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "nwY" = (
