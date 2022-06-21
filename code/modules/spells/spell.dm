@@ -203,7 +203,6 @@
 		if(ispAI(owner) || (isAI(owner) && istype(owner.loc, /obj/item/aicard)))
 			return FALSE
 
-
 	return TRUE
 
 /**
@@ -281,7 +280,7 @@
 	if(owner)
 		SEND_SIGNAL(owner, COMSIG_MOB_CAST_SPELL, src, cast_on)
 		if(owner.ckey)
-			owner.log_message("cast the spell [name][cast_on != owner ? " on [cast_on]":""].", LOG_ATTACK)
+			owner.log_message("cast the spell [name][cast_on != owner ? " on / at [cast_on]":""].", LOG_ATTACK)
 
 /**
  * Actions done after the main cast is finished.

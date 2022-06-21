@@ -149,6 +149,7 @@
 	if(!cast_on_hand_hit(hand, victim, caster))
 		return
 
+	log_combat(caster, victim, "cast the touch spell [name] on", hand)
 	spell_feedback()
 	remove_hand(caster)
 
@@ -160,6 +161,7 @@
 	switch(secondary_result)
 		// Continue will remove the hand here and stop
 		if(SECONDARY_ATTACK_CONTINUE_CHAIN)
+			log_combat(caster, victim, "cast the touch spell [name] on", hand, "(secondary / alt cast)")
 			invocation()
 			if(sound)
 				playsound(get_turf(owner), sound, 50, TRUE)
