@@ -482,7 +482,7 @@ Consider the previously mentioned non-hygienic macro:
 This relies on "max_health", but it is not obviously clear what the source is. This will also become worse if we *do* want to change where we get the source from. This would be preferential as:
 
 ```dm
-#define GET_HEALTH(source, health_percent) (##health_percent * ##source.max_health)
+#define GET_HEALTH(source, health_percent) ((##health_percent) * (##source).max_health)
 ```
 
 When a macro can't be hygienic, such as in the case where a macro is preferred to do something like define a variable, it should still do its best to rely only on input given to it:
