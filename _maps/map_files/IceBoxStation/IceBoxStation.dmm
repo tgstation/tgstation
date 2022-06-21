@@ -69375,10 +69375,7 @@
 	c_tag = "ai_upload West";
 	network = list("aiupload")
 	},
-/obj/item/ai_module/reset{
-	pixel_y = 8;
-	pixel_x = 2
-	},
+/obj/item/ai_module/supplied/freeform,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "wjL" = (

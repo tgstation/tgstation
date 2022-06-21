@@ -9238,7 +9238,6 @@
 /area/station/command/bridge)
 "dvk" = (
 /obj/structure/table,
-/obj/item/ai_module/reset,
 /obj/machinery/light/directional/west,
 /obj/machinery/status_display/ai/directional/west,
 /obj/machinery/flasher/directional/south{
@@ -9248,6 +9247,7 @@
 	pixel_y = 8;
 	pixel_x = 2
 	},
+/obj/item/ai_module/supplied/freeform,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "dvn" = (
