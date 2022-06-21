@@ -140,6 +140,7 @@
 		to_chat(user, span_warning("You need to take that [target.name] off before cleaning it!"))
 	else if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message(span_notice("[user] begins to scrub \the [target.name] out with [src]."), span_warning("You begin to scrub \the [target.name] out with [src]..."))
+		target.add_overlay(GLOB.cleaning_bubbles)
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, span_notice("You scrub \the [target.name] out."))
 			var/obj/effect/decal/cleanable/cleanies = target
@@ -157,6 +158,7 @@
 		return
 	else if(istype(target, /obj/structure/window))
 		user.visible_message(span_notice("[user] begins to clean \the [target.name] with [src]..."), span_notice("You begin to clean \the [target.name] with [src]..."))
+		target.add_overlay(GLOB.cleaning_bubbles)
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, span_notice("You clean \the [target.name]."))
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -171,6 +173,7 @@
 			decreaseUses(user)
 	else
 		user.visible_message(span_notice("[user] begins to clean \the [target.name] with [src]..."), span_notice("You begin to clean \the [target.name] with [src]..."))
+		target.add_overlay(GLOB.cleaning_bubbles)
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, span_notice("You clean \the [target.name]."))
 			if(user && isturf(target))
@@ -180,6 +183,7 @@
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)
+	target.cut_overlay(GLOB.cleaning_bubbles)
 	return
 
 /obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)

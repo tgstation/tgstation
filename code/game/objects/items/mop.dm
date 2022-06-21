@@ -66,9 +66,11 @@
 		var/clean_speedies = 1
 		if(user.mind)
 			clean_speedies = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
+		T.add_overlay(GLOB.cleaning_bubbles)
 		if(do_after(user, mopspeed*clean_speedies, target = T))
 			to_chat(user, span_notice("You finish mopping."))
 			clean(T, user)
+		T.cut_overlay(GLOB.cleaning_bubbles)
 
 /obj/item/mop/cyborg/Initialize(mapload)
 	. = ..()
