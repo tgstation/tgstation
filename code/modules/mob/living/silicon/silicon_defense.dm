@@ -45,7 +45,7 @@
 /mob/living/silicon/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
 	if(!L.combat_mode)
 		visible_message(span_notice("[L.name] rubs its head against [src]."))
 

@@ -402,9 +402,12 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 
-/obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
+/obj/structure/ladder/unbreakable/rune/show_initial_fluff_message(mob/user, going_up)
+	user.visible_message(span_notice("[user] starts activating \the [src]."), span_notice("You start activating \the [src]."))
+
+/obj/structure/ladder/unbreakable/rune/show_final_fluff_message(mob/user, going_up)
 	user.visible_message(span_notice("[user] activates \the [src]."), span_notice("You activate \the [src]."))
 
 /obj/structure/ladder/unbreakable/rune/use(mob/user, is_ghost=FALSE)
-	if(is_ghost || !IS_WIZARD(user))
+	if(!IS_WIZARD(user))
 		..()

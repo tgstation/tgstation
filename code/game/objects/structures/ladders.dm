@@ -9,8 +9,8 @@
 	var/obj/structure/ladder/down   //the ladder below this one
 	var/obj/structure/ladder/up     //the ladder above this one
 	var/crafted = FALSE
-	/// Optional travel time for ladder in deciseconds
-	var/travel_time = 0
+	/// travel time for ladder in deciseconds
+	var/travel_time = 1 SECONDS
 
 /obj/structure/ladder/Initialize(mapload, obj/structure/ladder/up, obj/structure/ladder/down)
 	..()
@@ -70,25 +70,122 @@
 		visible_message(span_danger("[src] is torn to pieces by the gravitational pull!"))
 		qdel(src)
 
-/obj/structure/ladder/proc/travel(going_up, mob/user, is_ghost, obj/structure/ladder/ladder)
+/obj/structure/ladder/proc/use(mob/user, going_up = TRUE)
+	if(!in_range(src, user) || DOING_INTERACTION(user, DOAFTER_SOURCE_CLIMBING_LADDER))
+		return
+
+	if(!up && !down)
+		to_chat(user, span_warning("[src] doesn't seem to lead anywhere!"))
+		return
+	if(going_up ? !up : !down)
+		to_chat(user, span_warning("[src] doesn't lead any further [going_up ? "up" : "down"]!"))
+		return
+	if(travel_time)
+		INVOKE_ASYNC(src, .proc/start_travelling, user, going_up)
+	else
+		travel(user, going_up)
+	add_fingerprint(user)
+
+/obj/structure/ladder/proc/start_travelling(mob/user, going_up)
+	show_initial_fluff_message(user, going_up)
+	if(do_after(user, travel_time, target = src, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER))
+		travel(user, going_up)
+
+/obj/structure/ladder/proc/show_initial_fluff_message(mob/user, going_up)
+	if(going_up)
+		user.visible_message(span_notice("[user] starts climbing up [src]."), span_notice("You start climbing up [src]."))
+	else
+		user.visible_message(span_notice("[user] starts climbing down [src]."), span_notice("You start climbing down [src]."))
+
+/obj/structure/ladder/proc/travel(mob/user, going_up, is_ghost = FALSE)
+	var/obj/structure/ladder/ladder = going_up ? up : down
+	if(!ladder)
+		to_chat(user, span_warning("[src] doesn't seem to lead anywhere that way!"))
+		return
 	var/response = SEND_SIGNAL(user, COMSIG_LADDER_TRAVEL, src, ladder, going_up)
 	if(response & LADDER_TRAVEL_BLOCK)
 		return
 
 	if(!is_ghost)
-		ladder.add_fingerprint(user)
-		if(!do_after(user, travel_time, target = src))
-			return
-		show_fluff_message(going_up, user)
+		show_final_fluff_message(user, going_up)
 
 	var/turf/target = get_turf(ladder)
 	user.zMove(target = target, z_move_flags = ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
-	ladder.use(user) //reopening ladder radial menu ahead
 
-/obj/structure/ladder/proc/use(mob/user, is_ghost=FALSE)
-	if (!is_ghost && !in_range(src, user))
+/obj/structure/ladder/proc/show_final_fluff_message(mob/user, going_up)
+	if(going_up)
+		user.visible_message(span_notice("[user] climbs up [src]."), span_notice("You climb up [src]."))
+	else
+		user.visible_message(span_notice("[user] climbs down [src]."), span_notice("You climb down [src]."))
+
+/obj/structure/ladder/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
 		return
+	use(user)
 
+/obj/structure/ladder/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	use(user, going_up = FALSE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+//Not be called when right clicking as a monkey. attack_hand_secondary() handles that.
+/obj/structure/ladder/attack_paw(mob/user, list/modifiers)
+	use(user)
+	return TRUE
+
+/obj/structure/ladder/attack_alien(mob/user, list/modifiers)
+	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	use(user, going_up = !is_right_clicking)
+	return TRUE
+
+/obj/structure/ladder/attack_larva(mob/user, list/modifiers)
+	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	use(user, going_up = !is_right_clicking)
+	return TRUE
+
+/obj/structure/ladder/attack_animal(mob/user, list/modifiers)
+	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	use(user, going_up = !is_right_clicking)
+	return TRUE
+
+/obj/structure/ladder/attack_slime(mob/user, list/modifiers)
+	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	use(user, going_up = !is_right_clicking)
+	return TRUE
+
+/obj/structure/ladder/attackby(obj/item/item, mob/user, params)
+	use(user)
+	return TRUE
+
+/obj/structure/ladder/attackby_secondary(obj/item/item, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	use(user, going_up = FALSE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/ladder/attack_robot(mob/living/silicon/robot/user)
+	if(user.Adjacent(src))
+		use(user)
+	return TRUE
+
+/obj/structure/ladder/attack_robot_secondary(mob/living/silicon/robot/user)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !user.Adjacent(src))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	use(user, going_up = FALSE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
+/obj/structure/ladder/attack_ghost(mob/dead/observer/user)
+	ghost_use(user)
+	return ..()
+
+///Ghosts use the byond default popup menu function on right click, so we're sticking with old radials for them.
+/obj/structure/ladder/proc/ghost_use(mob/user)
 	var/list/tool_list = list()
 	if (up)
 		tool_list["Up"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
@@ -98,64 +195,14 @@
 		to_chat(user, span_warning("[src] doesn't seem to lead anywhere!"))
 		return
 
-	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user, is_ghost), require_near = !is_ghost, tooltips = TRUE)
-	if (!is_ghost && !in_range(src, user))
-		return  // nice try
+	var/result = show_radial_menu(user, src, tool_list, tooltips = TRUE)
 	switch(result)
 		if("Up")
-			travel(TRUE, user, is_ghost, up)
+			travel(user, TRUE, TRUE)
 		if("Down")
-			travel(FALSE, user, is_ghost, down)
+			travel(user, FALSE, TRUE)
 		if("Cancel")
 			return
-
-	if(!is_ghost)
-		add_fingerprint(user)
-
-/obj/structure/ladder/proc/check_menu(mob/user, is_ghost)
-	if(user.incapacitated() || (!user.Adjacent(src) && !is_ghost))
-		return FALSE
-	return TRUE
-
-/obj/structure/ladder/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	use(user)
-
-/obj/structure/ladder/attack_paw(mob/user, list/modifiers)
-	return use(user)
-
-/obj/structure/ladder/attack_alien(mob/user, list/modifiers)
-	return use(user)
-
-/obj/structure/ladder/attack_larva(mob/user)
-	return use(user)
-
-/obj/structure/ladder/attack_animal(mob/user)
-	return use(user)
-
-/obj/structure/ladder/attack_slime(mob/user)
-	return use(user)
-
-/obj/structure/ladder/attackby(obj/item/W, mob/user, params)
-	return use(user)
-
-/obj/structure/ladder/attack_robot(mob/living/silicon/robot/R)
-	if(R.Adjacent(src))
-		return use(R)
-
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/structure/ladder/attack_ghost(mob/dead/observer/user)
-	use(user, TRUE)
-	return ..()
-
-/obj/structure/ladder/proc/show_fluff_message(going_up, mob/user)
-	if(going_up)
-		user.visible_message(span_notice("[user] climbs up [src]."), span_notice("You climb up [src]."))
-	else
-		user.visible_message(span_notice("[user] climbs down [src]."), span_notice("You climb down [src]."))
-
 
 // Indestructible away mission ladders which link based on a mapped ID and height value rather than X/Y/Z.
 /obj/structure/ladder/unbreakable

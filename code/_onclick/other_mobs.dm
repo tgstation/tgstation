@@ -157,9 +157,9 @@
 /mob/living/carbon/alien/larva/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
 		return
-	attack_target.attack_larva(src)
+	attack_target.attack_larva(src, modifiers)
 
-/atom/proc/attack_larva(mob/user)
+/atom/proc/attack_larva(mob/user, list/modifiers)
 	return
 
 
@@ -172,9 +172,9 @@
 		return
 	if(isturf(attack_target))
 		return ..()
-	attack_target.attack_slime(src)
+	attack_target.attack_slime(src, modifiers)
 
-/atom/proc/attack_slime(mob/user)
+/atom/proc/attack_slime(mob/user, list/modifiers)
 	return
 
 

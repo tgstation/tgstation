@@ -199,7 +199,7 @@
 		return TRUE
 
 
-/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(..()) //successful slime attack
 		if(M.powerlevel > 0)
 			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
