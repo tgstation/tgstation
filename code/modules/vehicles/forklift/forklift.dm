@@ -52,12 +52,22 @@
 	RegisterSignal(M, COMSIG_MOUSE_SCROLL_ON, .proc/on_scroll_wheel)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_click)
 	RegisterSignal(M, COMSIG_MOUSE_ENTERED_ON, .proc/on_mouse_entered)
+	RegisterSignal(M, COMSIG_MOB_SAY, .proc/fortnite_check)
 	var/datum/forklift_module/new_module = new starting_module_path
 	new_module.my_forklift = src
 	selected_modules[M] = new_module
 
+// Officially requested by the headcoder.
+/obj/vehicle/ridden/forklift/proc/fortnite_check(mob/source, list/speech_args)
+	SIGNAL_HANDLER
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(findtext(message, "fortnite"))
+		source.balloon_alert_to_viewers("smited by God for [source.p_their()] crimes!")
+		var/mob/living/living_mob = source
+		living_mob.gib(TRUE) // no coming back from fortnite
+
 /obj/vehicle/ridden/forklift/remove_occupant(mob/M)
-	UnregisterSignal(M, list(COMSIG_MOUSE_SCROLL_ON, COMSIG_MOB_CLICKON, COMSIG_MOUSE_ENTERED_ON))
+	UnregisterSignal(M, list(COMSIG_MOUSE_SCROLL_ON, COMSIG_MOB_CLICKON, COMSIG_MOUSE_ENTERED_ON, COMSIG_MOB_SAY))
 	qdel(selected_modules[M])
 	..()
 
