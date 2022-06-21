@@ -2,8 +2,13 @@ import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import { Input, Section, Button } from '../components';
 
-export const NtosStatus = (props, context) => {
-	const { act, data } = useBackend(context);
+type Data = {
+	upper: string;
+	lower: string;
+};
+
+export const NtosStatus = (_, context) => {
+	const { act, data } = useBackend<Data>(context);
 	const { upper, lower } = data;
 
 	return (
@@ -13,7 +18,7 @@ export const NtosStatus = (props, context) => {
 					<Input
 						fluid
 						value={upper}
-						onChange={(e, value) =>
+						onChange={(_, value) =>
 							act('stat_update', {
 								position: 'upper',
 								text: value,
@@ -24,7 +29,7 @@ export const NtosStatus = (props, context) => {
 					<Input
 						fluid
 						value={lower}
-						onChange={(e, value) =>
+						onChange={(_, value) =>
 							act('stat_update', {
 								position: 'lower',
 								text: value,

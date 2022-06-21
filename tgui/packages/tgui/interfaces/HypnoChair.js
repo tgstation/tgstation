@@ -2,10 +2,10 @@ import { useBackend } from '../backend';
 import { Button, Icon, Input, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-const INTERROGATION_INFO = `The Enhanced Interrogation Chamber is designed to induce a deep-rooted
-trance trigger into the subject. Once the procedure is complete, by
-using the implanted trigger phrase, the authorities are able to ensure
-immediate and complete obedience and truthfulness.`;
+const INTERROGATION_INFO = `The Enhanced Interrogation Chamber is designed to
+induce a deep-rooted trance trigger into the subject. Once the procedure is
+complete, by using the implanted trigger phrase, the authorities are able to
+ensure immediate and complete obedience and truthfulness.`;
 
 export const HypnoChair = (_, context) => {
 	const { act, data } = useBackend(context);

@@ -1,10 +1,16 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { NoticeBox } from '../components';
 import { Window } from '../layouts';
 import { LaunchpadControl } from './LaunchpadConsole';
 
+type Data = {
+	has_pad: BooleanLike;
+	pad_closed: BooleanLike;
+};
+
 export const LaunchpadRemote = (_, context) => {
-	const { data } = useBackend(context);
+	const { data } = useBackend<Data>(context);
 	const { has_pad, pad_closed } = data;
 
 	return (

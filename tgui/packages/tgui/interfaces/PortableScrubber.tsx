@@ -1,12 +1,24 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 import { getGasLabel } from '../constants';
 import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
 
+type Data = {
+	filter_types: Filter[];
+};
+
+type Filter = {
+	id: string;
+	enabled: BooleanLike;
+	gas_id: string;
+	gas_name: string;
+};
+
 export const PortableScrubber = (_, context) => {
-	const { act, data } = useBackend(context);
-	const filter_types = data.filter_types || [];
+	const { act, data } = useBackend<Data>(context);
+	const { filter_types = [] } = data;
 
 	return (
 		<Window width={320} height={396}>

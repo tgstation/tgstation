@@ -5,25 +5,25 @@ import { AnimatedNumber, Box, Button, Flex, Icon, Input, LabeledList, NoticeBox,
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
-const DEPARTMENT_ORDERS = `Each department on the station will order crates from their own personal
-consoles. These orders are ENTIRELY FREE! They do not come out of
-cargo&apos;s budget, and rather put the consoles on cooldown. So
+const DEPARTMENT_ORDERS = `Each department on the station will order crates
+from their own personal consoles. These orders are ENTIRELY FREE! They do not
+come out of cargo&apos;s budget, and rather put the consoles on cooldown. So
 here&apos;s where you come in: The ordered crates will show up on your
 supply console, and you need to deliver the crates to the orderers.
 You&apos;ll actually be paid the full value of the department crate on
 delivery if the crate was not tampered with, making the system a good
 source of income.`;
 
-const MULE_BOTS = `MULEbots are slow but loyal delivery bots that will get crates delivered
-with minimal technician effort required. It is slow, though, and can be
-tampered with while en route.`;
+const MULE_BOTS = `MULEbots are slow but loyal delivery bots that will get
+crates delivered with minimal technician effort required. It is slow, though,
+and can be tampered with while en route.`;
 
-const DISPOSALS_DELIVERY_SYSTEM = `In addition to MULEs and hand-deliveries, you can also make use of the
-disposals mailing system. Note that a break in the disposal piping could
-cause your package to be lost (this hardly ever happens), so this is not
-always the most secure ways to deliver something. You can wrap up a
-piece of paper and mail it the same way if you (or someone at the desk)
-wants to mail a letter.`;
+const DISPOSALS_DELIVERY_SYSTEM = `In addition to MULEs and hand-deliveries,
+you can also make use of the disposals mailing system. Note that a break in
+the disposal piping could cause your package to be lost (this hardly ever
+happens), so this is not always the most secure ways to deliver something.
+You can wrap up a piece of paper and mail it the same way if you (or someone
+at the desk) wants to mail a letter.`;
 
 export const Cargo = () => {
 	return (

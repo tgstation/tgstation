@@ -2,14 +2,18 @@ import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
 import { Stack, Input, Section } from '../components';
 
+type Data = {
+	note: string;
+};
+
 export const NtosNotepad = (_, context) => {
-	const { act, data } = useBackend(context);
+	const { act, data } = useBackend<Data>(context);
 	const { note } = data;
 
 	return (
 		<NtosWindow width={600} height={800}>
 			<NtosWindow.Content>
-				<Stack fill vertical direction="column" justify="space-between">
+				<Stack fill vertical justify="space-between">
 					<Stack.Item>
 						<Stack grow>
 							<Section>{note}</Section>
@@ -20,7 +24,7 @@ export const NtosNotepad = (_, context) => {
 							<Input
 								value={note}
 								fluid
-								onEnter={(e, value) =>
+								onEnter={(_, value) =>
 									act('UpdateNote', {
 										newnote: value,
 									})

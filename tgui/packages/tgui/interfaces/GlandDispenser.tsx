@@ -2,8 +2,18 @@ import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 import { Window } from '../layouts';
 
+type Data = {
+	glands: Gland[];
+};
+
+type Gland = {
+	id: string;
+	color: string;
+	amount: number;
+};
+
 export const GlandDispenser = (_, context) => {
-	const { act, data } = useBackend(context);
+	const { act, data } = useBackend<Data>(context);
 	const { glands = [] } = data;
 
 	return (

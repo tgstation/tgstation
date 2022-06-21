@@ -1,9 +1,15 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, Section, LabeledList } from '../components';
 import { Window } from '../layouts';
 
+type Data = {
+	on: BooleanLike;
+	visible: BooleanLike;
+};
+
 export const InfraredEmitter = (_, context) => {
-	const { act, data } = useBackend(context);
+	const { act, data } = useBackend<Data>(context);
 	const { on, visible } = data;
 
 	return (
