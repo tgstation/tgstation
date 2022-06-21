@@ -1176,9 +1176,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/bmpship/aft)
-"OF" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/template_noop)
 "OZ" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
 /obj/effect/mapping_helpers/broken_floor,
@@ -2251,9 +2248,9 @@ UA
 UA
 Yl
 di
-OF
-OF
-OF
+fp
+fp
+fp
 fp
 Gf
 yB

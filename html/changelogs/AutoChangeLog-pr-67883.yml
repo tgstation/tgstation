@@ -1,0 +1,4 @@
+author: "Capsandi"
+delete-after: True
+changes: 
+  - bugfix: "some walls in the crashed ship ruin, they are no longer full-bright"
