@@ -75,7 +75,7 @@
 		  * Checks to see if we can fold. Return TRUE to actually perform the fold and delete.
 			*
 		  * Arguments:
-		  * * the_folder - over_object of MouseDrop aka user
+		  * * the_folder - aka user
 		  */
 /obj/structure/closet/body_bag/proc/attempt_fold(mob/living/carbon/human/the_folder)
 	. = FALSE
@@ -95,7 +95,7 @@
 		* Performs the actual folding. Deleting is automatic, please do not include.
 		*
 		* Arguments:
-		* * the_folder - over_object of MouseDrop aka user
+		* * the_folder - aka user
 		*/
 /obj/structure/closet/body_bag/proc/perform_fold(mob/living/carbon/human/the_folder)
 	visible_message(span_notice("[the_folder] folds up [src]."))
