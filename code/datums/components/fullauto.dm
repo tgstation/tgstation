@@ -11,9 +11,16 @@
 	var/autofire_shot_delay = 0.3 SECONDS //Time between individual shots.
 	var/mouse_status = AUTOFIRE_MOUSEUP //This seems hacky but there can be two MouseDown() without a MouseUp() in between if the user holds click and uses alt+tab, printscreen or similar.
 
+	//windup autofire vars
+	var/windup_autofire = FALSE //Whether the delay between shots increases over time, simulating a spooling weapon. Resets when you stop firing.
+	var/current_windup_reduction = 0 //the reduction to shot delay for windup. Resets when you stop firing to 0.
+	var/windup_autofire_reduction_multiplier = 0.3 //the percentage of autfire_shot_delay that is added to current_windup_reduction. In the default example, every shot reduces the shot delay by 30%.
+	var/windup_autofire_cap = 0.3 //How high of a reduction that current_windup_reduction can reach. In the default example, the delay between shots would be 30% of the original fire delay.
+	var/windup_spindown = 3 SECONDS //How long it takes for weapons that have spooled-up to reset back to the original firing speed
+	var/timerid
 	COOLDOWN_DECLARE(next_shot_cd)
 
-/datum/component/automatic_fire/Initialize(_autofire_shot_delay)
+/datum/component/automatic_fire/Initialize(_autofire_shot_delay, _windup_autofire, _windup_autofire_reduction_multiplier, _windup_autofire_cap, _windup_spindown)
 	. = ..()
 	if(!isgun(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -21,6 +28,11 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/wake_up)
 	if(_autofire_shot_delay)
 		autofire_shot_delay = _autofire_shot_delay
+	if(_windup_autofire)
+		src.windup_autofire = _windup_autofire
+		src.windup_autofire_reduction_multiplier = _windup_autofire_reduction_multiplier
+		src.windup_autofire_cap = _windup_autofire_cap
+		src.windup_spindown = _windup_spindown
 	if(autofire_stat == AUTOFIRE_STAT_IDLE && ismob(gun.loc))
 		var/mob/user = gun.loc
 		wake_up(src, user)
@@ -233,6 +245,10 @@
 		return FALSE
 	shooter.face_atom(target)
 	var/next_delay = autofire_shot_delay
+	if(windup_autofire)
+		next_delay = clamp(next_delay - current_windup_reduction, round(autofire_shot_delay * windup_autofire_cap), autofire_shot_delay)
+		current_windup_reduction = (current_windup_reduction + round(autofire_shot_delay * windup_autofire_reduction_multiplier))
+		timerid = addtimer(CALLBACK(src, .proc/windup_reset, FALSE), windup_spindown, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	if(HAS_TRAIT(shooter, TRAIT_DOUBLE_TAP))
 		next_delay = round(next_delay * 0.5)
 	COOLDOWN_START(src, next_shot_cd, next_delay)
@@ -240,6 +256,11 @@
 		return TRUE
 	stop_autofiring()
 	return FALSE
+
+/datum/component/automatic_fire/proc/windup_reset(deltimer)
+	current_windup_reduction = initial(current_windup_reduction)
+	if(deltimer && timerid)
+		deltimer(timerid)
 
 // Gun procs.
 
