@@ -179,6 +179,9 @@
 	smasher.break_an_arm(arm)
 
 /turf/closed/wall/attack_hand(mob/user, list/modifiers)
+	balloon_alert(user, "searching...")
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
 	. = ..()
 	if(.)
 		return

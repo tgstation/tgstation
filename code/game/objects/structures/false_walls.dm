@@ -34,6 +34,9 @@
 	air_update_turf(TRUE, TRUE)
 
 /obj/structure/falsewall/attack_hand(mob/user, list/modifiers)
+	balloon_alert(user, "[src.density ? "searching..." : "closing..."]")
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
 	if(opening)
 		return
 	. = ..()
@@ -100,6 +103,8 @@
 	if(!isfloorturf(loc_turf))
 		to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
 	user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
 	ChangeToWall()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
