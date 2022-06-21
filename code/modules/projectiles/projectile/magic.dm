@@ -568,7 +568,7 @@
 	for(var/obj/adjacent_object in range(1, src))
 		if(!adjacent_object.density)
 			continue
-		if(istype(adjacent_object, /obj/structure/destructible/cult)
+		if(istype(adjacent_object, /obj/structure/destructible/cult))
 			continue
 
 		adjacent_object.take_damage(90, BRUTE, MELEE, 0)
