@@ -412,7 +412,7 @@ We say a macro is [**hygienic**](https://en.wikipedia.org/wiki/Hygienic_macro) i
 An example of a non-hygienic macro is:
 
 ```dm
-#define GET_HEALTH(health_percent) (##health_percent * max_health)
+#define GET_HEALTH(health_percent) ((##health_percent) * max_health)
 ```
 
 In here, we rely on the external `max_health` value.
@@ -438,6 +438,9 @@ This, however, performs a side effect of updating the health:
 ```
 
 Now that you're caught up on the terms, let's get into the guidelines.
+
+### Naming
+With little exception, macros should be SCREAMING_SNAKE_CASE.
 
 ### Put macro segments inside parentheses where possible.
 This will save you from bugs down the line with operator precedence.
@@ -476,7 +479,7 @@ The same goes for arguments passed to a macro...
 Consider the previously mentioned non-hygienic macro:
 
 ```dm
-#define GET_HEALTH(health_percent) (##health_percent * max_health)
+#define GET_HEALTH(health_percent) ((##health_percent) * max_health)
 ```
 
 This relies on "max_health", but it is not obviously clear what the source is. This will also become worse if we *do* want to change where we get the source from. This would be preferential as:
