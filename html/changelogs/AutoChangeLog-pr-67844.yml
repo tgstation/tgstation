@@ -1,0 +1,4 @@
+author: "CoffeeDragon16"
+delete-after: True
+changes: 
+  - bugfix: "switching bodies, such as becoming a lich or mindswapping will no longer revoke a wizard's access to their spell book"
