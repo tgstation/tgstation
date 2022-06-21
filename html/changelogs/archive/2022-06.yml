@@ -749,3 +749,23 @@
       emitters.
   - balance: Further limited the sound emitter component so that maximum volume is
       reduced and pitch is capped between -50 and 50
+2022-06-21:
+  Cursor, sprites by Crumpaloo.:
+  - imageadd: The Cargorilla has found clothing in their size.
+  - rscadd: Updated the Cargorilla's description to match their new look.
+  GoldenAlpharex:
+  - bugfix: Fixed a runtime related to the TGUI white mode preference that would happen
+      every time someone would connect to the server.
+  JohnFulpWillard:
+  - bugfix: The Traitor eye snatching objective will now appear in-game.
+  MTandi:
+  - rscadd: 'Oldstation: Added a lootbox for every role'
+  - rscadd: 'Oldstation: Added 1 diamond ore spawn and 1 gibtonite spawn to asteroids'
+  - rscdel: 'Oldstation: Removed redundant cable, pen, free pipe dispensers and the
+      box of firing pins'
+  Pepsilawn:
+  - bugfix: The Lavaland Mafia map now displays safer flooring over empty space.
+  SmoSmoSmoSmok:
+  - bugfix: mulebots can be turned on/off
+  Thunder12345:
+  - bugfix: A camera in Meta's tech storage is now properly named

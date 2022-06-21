@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a runtime related to the TGUI white mode preference that would happen every time someone would connect to the server."
