@@ -5509,6 +5509,13 @@
 	},
 /turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
+"caR" = (
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/camera/autoname/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/engineering/storage/tech)
 "cbg" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -7097,6 +7104,22 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/security/brig)
+"cGO" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/action/spell/smoke/lesser{
+	name = "mysterious old book of cloud-chasing"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/nullrod{
+	pixel_x = 4
+	},
+/obj/item/organ/internal/heart,
+/obj/item/soulstone/anybody/chaplain,
+/turf/open/floor/cult,
+/area/station/service/chapel/office)
 "cGS" = (
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/camera/directional/west{
@@ -20602,18 +20625,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/service/lawoffice)
-"hCH" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/landmark/navigate_destination/bar,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/reagent_containers/glass/rag,
-/obj/structure/table,
-/turf/open/floor/iron,
-/area/station/service/bar)
 "hCK" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/effect/turf_decal/siding/purple{
@@ -21865,13 +21876,6 @@
 /obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
-"hYt" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 5
-	},
-/obj/effect/landmark/start/medical_doctor,
-/turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
 "hYA" = (
 /obj/item/assembly/timer{
 	pixel_x = -3;
@@ -21967,22 +21971,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"iam" = (
-/obj/structure/table/wood,
-/obj/item/book/granter/action/spell/smoke/lesser{
-	name = "mysterious old book of cloud-chasing"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/holywater{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/nullrod{
-	pixel_x = 4
-	},
-/obj/item/organ/internal/heart,
-/obj/item/soulstone/anybody/chaplain,
-/turf/open/floor/cult,
-/area/station/service/chapel/office)
 "iar" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -32438,15 +32426,6 @@
 /obj/item/cigbutt,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"lxv" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Secure tech_storage"
-	},
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/engineering/storage/tech)
 "lxw" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -37309,11 +37288,6 @@
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/station/security/office)
-"nla" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/vending/autodrobe/all_access,
-/turf/open/floor/iron/dark,
-/area/station/commons/locker)
 "nlE" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/south,
@@ -38096,6 +38070,18 @@
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/wood,
 /area/station/service/library)
+"nxA" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/landmark/navigate_destination/bar,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/reagent_containers/glass/rag,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/service/bar)
 "nxF" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -44671,6 +44657,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/security/prison)
+"pSl" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/effect/landmark/start/medical_doctor,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "pSw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -45544,6 +45537,14 @@
 	dir = 1
 	},
 /area/station/engineering/atmos/pumproom)
+"qhR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/reagent_dispensers/plumbed,
+/turf/open/floor/plating,
+/area/station/maintenance/fore)
 "qhW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -46624,14 +46625,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
-"qCf" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/reagent_dispensers/plumbed,
-/turf/open/floor/plating,
-/area/station/maintenance/fore)
 "qCh" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L10"
@@ -47056,6 +47049,11 @@
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"qJH" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/iron/dark,
+/area/station/commons/locker)
 "qJU" = (
 /obj/structure/sign/map/right{
 	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
@@ -59809,17 +59807,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
-"vam" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/item/clothing/head/that,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/table,
-/turf/open/floor/iron,
-/area/station/service/bar)
 "vaB" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -63229,6 +63216,17 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"wjK" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/item/clothing/head/that,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/service/bar)
 "wjQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -90687,7 +90685,7 @@ xFp
 bMY
 sSp
 pgP
-hYt
+pSl
 eUN
 jpU
 jpU
@@ -91234,7 +91232,7 @@ tSw
 tAH
 ifQ
 tSw
-iam
+cGO
 vQg
 oCb
 gCA
@@ -101936,7 +101934,7 @@ pNR
 upe
 gwd
 ilh
-qCf
+qhR
 xAR
 ilh
 tzD
@@ -102487,7 +102485,7 @@ hkG
 tbq
 aLk
 pAr
-vam
+wjK
 cqI
 cFU
 pTS
@@ -102744,7 +102742,7 @@ vgb
 tbq
 pof
 owi
-hCH
+nxA
 dfp
 wYn
 pTS
@@ -104265,7 +104263,7 @@ pJE
 pJE
 nFn
 uUl
-nla
+qJH
 qXB
 wzK
 psZ
@@ -105554,7 +105552,7 @@ ool
 dVb
 eWW
 tCS
-lxv
+caR
 gMp
 lkW
 xww

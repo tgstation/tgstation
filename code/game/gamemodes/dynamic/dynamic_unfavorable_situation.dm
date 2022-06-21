@@ -3,6 +3,11 @@
 /// It tries to spawn a heavy midround if possible, otherwise it will trigger a "bad" random event after a short period.
 /// Calling this function will not use up any threat.
 /datum/game_mode/dynamic/proc/unfavorable_situation()
+	SHOULD_NOT_SLEEP(TRUE)
+
+	INVOKE_ASYNC(src, .proc/_unfavorable_situation)
+
+/datum/game_mode/dynamic/proc/_unfavorable_situation()
 	var/static/list/unfavorable_random_events = list(
 		/datum/round_event_control/immovable_rod,
 		/datum/round_event_control/meteor_wave,

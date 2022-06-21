@@ -54,7 +54,7 @@ GLOBAL_DATUM_INIT(typing_indicator, /mutable_appearance, mutable_appearance('ico
 
 /** Removes typing/thinking indicators and flags the mob as not thinking */
 /datum/tgui_say/proc/stop_thinking()
-	client.mob.remove_all_indicators()
+	client.mob?.remove_all_indicators()
 
 /**
  * Handles the user typing. After a brief period of inactivity,

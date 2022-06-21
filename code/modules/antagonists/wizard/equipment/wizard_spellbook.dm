@@ -16,8 +16,8 @@
 	var/full_random_bonus = 5
 	/// Determines if this spellbook can refund anything.
 	var/refunds_allowed = TRUE
-	/// A ref to the owner of the book
-	var/mob/living/carbon/human/owner
+	/// The mind that first used the book. Automatically assigned when a wizard spawns.
+	var/datum/mind/owner
 	/// A list to all spellbook entries within
 	var/list/entries = list()
 
@@ -52,16 +52,6 @@
 
 	return COMPONENT_ITEM_BURNT_OUT
 
-/// Clears our reference when our owner is deleted.
-/// Also destroys the book itself, to prevent other people from binding it to them.
-/obj/item/spellbook/proc/destroy_book_on_owner_deletion(datum/source)
-	SIGNAL_HANDLER
-
-	owner = null
-	visible_message(span_warning("[src] suddenly combusts, burning into a pile of cinders!"))
-	new /obj/effect/decal/cleanable/ash(get_turf(src))
-	qdel(src)
-
 /obj/item/spellbook/examine(mob/user)
 	. = ..()
 	if(owner)
@@ -71,14 +61,15 @@
 
 /obj/item/spellbook/attack_self(mob/user)
 	if(!owner)
+		if(!user.mind)
+			return
 		to_chat(user, span_notice("You bind [src] to yourself."))
-		owner = user
-		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/destroy_book_on_owner_deletion)
+		owner = user.mind
 		return
 
-	if(user != owner)
+	if(user.mind != owner)
 		if(user.mind?.special_role == ROLE_WIZARD_APPRENTICE)
-			to_chat(user, "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not.")
+			to_chat(user, span_warning("If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."))
 		else
 			to_chat(user, span_warning("[src] does not recognize you as its owner and refuses to open!"))
 		return
