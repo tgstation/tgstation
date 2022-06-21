@@ -9244,6 +9244,10 @@
 /obj/machinery/flasher/directional/south{
 	id = "AI"
 	},
+/obj/item/ai_module/reset{
+	pixel_y = 8;
+	pixel_x = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "dvn" = (
