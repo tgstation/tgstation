@@ -18,7 +18,7 @@
 //Makes it so you can add rice to the sheet
 /obj/item/food/seaweedsheet/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/food/salad/boiledrice))
-		/obj/item/food/salad/boiledrice/boiledrice = item
+		var/obj/item/food/salad/boiledrice/boiledrice = item
 		var/obj/item/food/makisheet/new_item = new(usr.loc)
 		boiledrice.use(1)
 		to_chat(user, span_notice("You spread the rice onto the [src]."))
