@@ -96,6 +96,9 @@
 	if(!density)
 		to_chat(user, span_warning("You can't reach, close it first!"))
 		return
+	balloon_alert(user, "tighting bolts...")
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
 	var/turf/loc_turf = get_turf(src)
 	if(loc_turf.density)
 		to_chat(user, span_warning("[src] is blocked!"))
@@ -103,15 +106,14 @@
 	if(!isfloorturf(loc_turf))
 		to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
-	if(!do_after(user, 2 SECONDS, target = src))
-		return
 	user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
 	ChangeToWall()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
 /obj/structure/falsewall/welder_act(mob/living/user, obj/item/tool)
-	if(tool.use_tool(src, user, 0 SECONDS, volume=50))
+	balloon_alert(user, "slicing down...")
+	if(tool.use_tool(src, user, 5 SECONDS, volume=50))
 		dismantle(user, TRUE)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return

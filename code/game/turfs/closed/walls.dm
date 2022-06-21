@@ -247,7 +247,7 @@
 		if(!I.tool_start_check(user, amount=0))
 			return FALSE
 
-		to_chat(user, span_notice("You begin slicing through the outer plating..."))
+		balloon_alert(user, "slicing down...")
 		if(I.use_tool(src, user, slicing_duration, volume=100))
 			if(iswallturf(src))
 				to_chat(user, span_notice("You remove the outer plating."))
@@ -255,6 +255,13 @@
 			return TRUE
 
 	return FALSE
+
+//Exists to prevent spam clicking on walls with a screwdriver to find false walls
+/turf/closed/wall/screwdriver_act(mob/living/user, obj/item/tool)
+	balloon_alert(user, "tighting bolts...")
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
+	balloon_alert(user, "already tightened!")
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	..()
