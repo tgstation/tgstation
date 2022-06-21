@@ -1,3 +1,4 @@
+import { KEY_BACKSPACE, KEY_DELETE, KEY_DOWN, KEY_TAB, KEY_UP } from 'common/keycodes';
 import { isAlphanumeric, getHistoryLength } from '../helpers';
 import { Modal } from '../types';
 
@@ -15,19 +16,19 @@ export const handleKeyDown = function (
 ) {
 	const { channel } = this.state;
 	const { radioPrefix } = this.fields;
-	if (event.key === 'Up' || event.key === 'Down') {
+	if (event.keyCode === KEY_UP || event.keyCode === KEY_DOWN) {
 		event.preventDefault();
 		if (getHistoryLength()) {
-			this.events.onArrowKeys(event.key, value);
+			this.events.onArrowKeys(event.keyCode, value);
 		}
 		return;
 	}
-	if (event.key === 'Tab') {
+	if (event.keyCode === KEY_TAB) {
 		event.preventDefault();
 		this.events.onIncrementChannel();
 		return;
 	}
-	if (event.key === 'Delete' || event.key === 'Backspace') {
+	if (event.keyCode === KEY_DELETE || event.keyCode === KEY_BACKSPACE) {
 		this.events.onBackspaceDelete();
 		return;
 	}
