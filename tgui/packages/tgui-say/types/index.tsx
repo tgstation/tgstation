@@ -9,7 +9,7 @@ export type Modal = {
 };
 
 type Events = {
-	onArrowKeys: (direction: string) => void;
+	onArrowKeys: (direction: string, value: string) => void;
 	onBackspaceDelete: () => void;
 	onClick: () => void;
 	onEscape: () => void;
@@ -28,10 +28,11 @@ type Events = {
 
 type Fields = {
 	historyCounter: number;
-	innerRef: RefObject<HTMLInputElement>;
+	innerRef: RefObject<HTMLTextAreaElement>;
 	lightMode: boolean;
 	maxLength: number;
 	radioPrefix: string;
+	tempHistory: string;
 	value: string;
 };
 

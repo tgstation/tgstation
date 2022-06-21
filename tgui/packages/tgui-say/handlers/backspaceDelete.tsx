@@ -18,5 +18,5 @@ export const handleBackspaceDelete = function (this: Modal) {
 		this.fields.radioPrefix = '';
 		this.setState({ buttonContent: CHANNELS[channel] });
 	}
-	this.events.onSetSize(value.length);
+	this.events.onSetSize(value?.length);
 };

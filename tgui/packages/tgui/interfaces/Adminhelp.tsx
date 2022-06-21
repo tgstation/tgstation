@@ -10,7 +10,7 @@ type AdminhelpData = {
 	urgentAhelpPromptMessage: string;
 };
 
-export const Adminhelp = (props, context) => {
+export const Adminhelp = (_, context) => {
 	const { act, data } = useBackend<AdminhelpData>(context);
 	const {
 		adminCount,
@@ -33,8 +33,8 @@ export const Adminhelp = (props, context) => {
 		'ahelp_message',
 		''
 	);
-
 	const confirmationText = 'alert admins';
+
 	return (
 		<Window title="Create Adminhelp" theme="admin" height={300} width={500}>
 			<Window.Content

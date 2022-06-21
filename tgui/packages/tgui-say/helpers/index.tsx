@@ -138,8 +138,8 @@ export const getTheme = (
 };
 
 /** Checks keycodes for alpha/numeric characters */
-export const isAlphanumeric = (code: string): boolean =>
-	Number(code) >= KEY_0 && Number(code) <= KEY_Z;
+export const isAlphanumeric = (keyCode: number): boolean =>
+	keyCode >= KEY_0 && keyCode <= KEY_Z;
 
 /** Timers: Prevents overloading the server, throttles messages */
 export const timers = {

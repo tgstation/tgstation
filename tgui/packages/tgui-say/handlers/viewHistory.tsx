@@ -13,7 +13,9 @@ export const handleViewHistory = function (this: Modal) {
 		}
 		this.setState({ buttonContent: historyCounter, edited: true });
 	} else {
-		this.fields.value = '';
+		/** Restores any saved history */
+		this.fields.value = this.fields.tempHistory;
+		this.fields.tempHistory = '';
 		this.setState({
 			buttonContent: CHANNELS[channel],
 			edited: true,
