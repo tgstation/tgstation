@@ -7,13 +7,11 @@
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
-	icon_state = "pellet"
 	sharpness = SHARP_EDGED
 	wound_bonus = 80
 
 /obj/projectile/bullet/shotgun_slug/pulverizer
 	name = "pulverizer slug" // admin only, can crush bones
-	icon_state = "pellet"
 	sharpness = NONE
 	wound_bonus = 80
 
@@ -33,13 +31,11 @@
 
 /obj/projectile/bullet/incendiary/shotgun/no_trail
 	name = "precision incendiary slug"
-	icon_state = "pellet"
 	damage = 35
 	leaves_fire_trail = FALSE
 
 /obj/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
-	icon_state = "pellet"
 	damage = 5
 
 /obj/projectile/bullet/shotgun_stunslug
