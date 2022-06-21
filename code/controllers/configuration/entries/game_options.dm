@@ -398,3 +398,4 @@
 	min_val = 0
 	integer = FALSE
 
+/datum/config_entry/flag/disallow_circuit_sounds
