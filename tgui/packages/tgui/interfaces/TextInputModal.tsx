@@ -83,12 +83,13 @@ const InputArea = (props, context) => {
 	const { act, data } = useBackend<TextInputData>(context);
 	const { max_length, multiline } = data;
 	const { input, onType } = props;
+	const dynamicHeight = multiline || input.length >= 30 ? '100%' : '1.8rem';
 
 	return (
 		<TextArea
 			autoFocus
 			autoSelect
-			height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
+			height={dynamicHeight}
 			maxLength={max_length}
 			onEscape={() => act('cancel')}
 			onEnter={(event) => {
