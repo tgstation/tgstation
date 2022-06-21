@@ -11,7 +11,7 @@ import { Modal } from '../types';
 export const handleRadioPrefix = function (this: Modal) {
 	const { channel } = this.state;
 	const { radioPrefix, value } = this.fields;
-	if (channel > 1 || value.length < 3) {
+	if (channel > 1 || !value || value.length < 3) {
 		return;
 	}
 	const nextPrefix = value.slice(0, 3)?.toLowerCase();

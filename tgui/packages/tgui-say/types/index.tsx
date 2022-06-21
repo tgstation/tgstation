@@ -9,7 +9,7 @@ export type Modal = {
 };
 
 type Events = {
-	onArrowKeys: (direction: number) => void;
+	onArrowKeys: (direction: string) => void;
 	onBackspaceDelete: () => void;
 	onClick: () => void;
 	onEscape: () => void;

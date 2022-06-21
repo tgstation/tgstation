@@ -14,7 +14,7 @@ export const handleBackspaceDelete = function (this: Modal) {
 		this.fields.historyCounter = 0;
 		this.setState({ buttonContent: CHANNELS[channel] });
 	}
-	if (!value.length && radioPrefix) {
+	if (!value?.length && radioPrefix) {
 		this.fields.radioPrefix = '';
 		this.setState({ buttonContent: CHANNELS[channel] });
 	}

@@ -7,5 +7,5 @@ import { Modal } from '../types';
 export const handleInput = function (this: Modal, _, value: string) {
 	this.fields.value = value;
 	this.events.onRadioPrefix();
-	this.events.onSetSize(value.length);
+	this.events.onSetSize(value?.length);
 };

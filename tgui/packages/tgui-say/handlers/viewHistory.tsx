@@ -12,13 +12,12 @@ export const handleViewHistory = function (this: Modal) {
 			this.timers.typingThrottle();
 		}
 		this.setState({ buttonContent: historyCounter, edited: true });
-		this.events.onSetSize(0);
 	} else {
 		this.fields.value = '';
 		this.setState({
 			buttonContent: CHANNELS[channel],
 			edited: true,
 		});
-		this.events.onSetSize(0);
 	}
+	this.events.onSetSize(this.fields.value?.length);
 };

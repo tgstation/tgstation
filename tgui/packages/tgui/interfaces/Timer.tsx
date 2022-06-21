@@ -58,7 +58,7 @@ const TimerContent = (_, context) => {
 				icon="backward"
 				disabled={timing}
 				onClick={() => act('input', { adjust: -1 })}
-			/>{' '}
+			/>
 			{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}{' '}
 			<Button
 				icon="forward"

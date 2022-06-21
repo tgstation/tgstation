@@ -1,4 +1,3 @@
-import { KEY_BACKSPACE, KEY_DELETE, KEY_DOWN, KEY_TAB, KEY_UP } from 'common/keycodes';
 import { isAlphanumeric, getHistoryLength } from '../helpers';
 import { Modal } from '../types';
 
@@ -12,24 +11,21 @@ import { Modal } from '../types';
 export const handleKeyDown = function (this: Modal, event: KeyboardEvent) {
 	const { channel } = this.state;
 	const { radioPrefix } = this.fields;
-	if (!event.keyCode) {
-		return; // Really doubt it, but...
-	}
-	if (isAlphanumeric(event.keyCode)) {
+	if (isAlphanumeric(event.code)) {
 		if (channel !== 3 && radioPrefix !== ':b ') {
 			this.timers.typingThrottle();
 		}
 	}
-	if (event.keyCode === KEY_UP || event.keyCode === KEY_DOWN) {
+	if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
 		if (getHistoryLength()) {
-			this.events.onArrowKeys(event.keyCode);
+			this.events.onArrowKeys(event.key);
 		}
 	}
-	if (event.keyCode === KEY_DELETE || event.keyCode === KEY_BACKSPACE) {
+	if (event.key === 'Delete' || event.key === 'Backspace') {
 		this.events.onBackspaceDelete();
 	}
-	if (event.keyCode === KEY_TAB) {
-		this.events.onIncrementChannel();
+	if (event.key === 'Tab') {
 		event.preventDefault();
+		this.events.onIncrementChannel();
 	}
 };
