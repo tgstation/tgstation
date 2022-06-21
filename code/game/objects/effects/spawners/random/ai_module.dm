@@ -23,7 +23,6 @@
 		/obj/item/ai_module/core/full/nutimov,
 		/obj/item/ai_module/core/full/drone,
 		/obj/item/ai_module/core/full/custom, // uses lawsets from config/silicon_laws.txt (defaults to asmiov if no lawsets)
-		/obj/item/ai_module/supplied/freeform,
 	)
 
 /obj/effect/spawner/random/aimodule/neutral
