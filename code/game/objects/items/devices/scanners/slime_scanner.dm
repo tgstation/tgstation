@@ -51,4 +51,4 @@
 	if(T.effectmod)
 		to_render += "\n[span_notice("Core mutation in progress: [T.effectmod]")]\
 					  \n[span_notice("Progress in core mutation: [T.applied] / [SLIME_EXTRACT_CROSSING_REQUIRED]")]"
-	to_chat(user, to_render + "\n========================")
+	to_chat(user, examine_block(to_render + "\n========================"))

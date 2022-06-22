@@ -74,19 +74,19 @@
  */
 /obj/item/plant_analyzer/proc/do_plant_stats_scan(atom/scan_target, mob/user)
 	if(istype(scan_target, /obj/machinery/hydroponics))
-		to_chat(user, scan_tray_stats(scan_target))
+		to_chat(user, examine_block(scan_tray_stats(scan_target)))
 		return TRUE
 	if(istype(scan_target, /obj/structure/glowshroom))
 		var/obj/structure/glowshroom/shroom_plant = scan_target
-		to_chat(user, scan_plant_stats(shroom_plant.myseed))
+		to_chat(user, examine_block(scan_plant_stats(shroom_plant.myseed)))
 		return TRUE
 	if(istype(scan_target, /obj/item/graft))
-		to_chat(user, get_graft_text(scan_target))
+		to_chat(user, examine_block(get_graft_text(scan_target)))
 		return TRUE
 	if(isitem(scan_target))
 		var/obj/item/scanned_object = scan_target
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
-			to_chat(user, scan_plant_stats(scanned_object))
+			to_chat(user, examine_block(scan_plant_stats(scanned_object)))
 			return TRUE
 	if(isliving(scan_target))
 		var/mob/living/L = scan_target
@@ -107,19 +107,19 @@
  */
 /obj/item/plant_analyzer/proc/do_plant_chem_scan(atom/scan_target, mob/user)
 	if(istype(scan_target, /obj/machinery/hydroponics))
-		to_chat(user, scan_tray_chems(scan_target))
+		to_chat(user, examine_block(scan_tray_chems(scan_target)))
 		return TRUE
 	if(istype(scan_target, /obj/structure/glowshroom))
 		var/obj/structure/glowshroom/shroom_plant = scan_target
-		to_chat(user, scan_plant_chems(shroom_plant.myseed))
+		to_chat(user, examine_block(scan_plant_chems(shroom_plant.myseed)))
 		return TRUE
 	if(istype(scan_target, /obj/item/graft))
-		to_chat(user, get_graft_text(scan_target))
+		to_chat(user, examine_block(get_graft_text(scan_target)))
 		return TRUE
 	if(isitem(scan_target))
 		var/obj/item/scanned_object = scan_target
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
-			to_chat(user, scan_plant_chems(scanned_object))
+			to_chat(user, examine_block(scan_plant_chems(scanned_object)))
 			return TRUE
 	if(isliving(scan_target))
 		var/mob/living/L = scan_target
@@ -223,7 +223,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object)
-	var/returned_message = "*---------*\nThis is [span_name("\a [scanned_object]")].\n"
+	var/returned_message = "This is [span_name("\a [scanned_object]")].\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
