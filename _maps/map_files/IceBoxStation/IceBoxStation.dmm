@@ -3900,6 +3900,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
+"bnG" = (
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/structure/sign/warning/fire/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "bnJ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -3918,7 +3923,9 @@
 /area/station/science/research)
 "bnL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/closed/wall/r_wall,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "bnM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -4043,10 +4050,10 @@
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "bpR" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/general/visible{
+/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/pink/visible/layer5{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "bpT" = (
@@ -5331,6 +5338,7 @@
 /obj/effect/turf_decal/trimline/red/filled/end{
 	dir = 4
 	},
+/obj/machinery/light/small/red/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "bJc" = (
@@ -17913,6 +17921,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "fBC" = (
@@ -21944,11 +21953,6 @@
 	dir = 8
 	},
 /area/station/science/research)
-"gPK" = (
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/structure/sign/warning/fire/directional/south,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/project)
 "gPR" = (
 /obj/effect/turf_decal/trimline/green/filled/warning,
 /obj/machinery/duct,
@@ -23184,8 +23188,9 @@
 /turf/open/floor/sepia,
 /area/station/security/prison/rec)
 "hjR" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
-/turf/closed/wall/r_wall,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "hkb" = (
 /obj/structure/table/wood,
@@ -26619,12 +26624,12 @@
 "ioO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "atmoshfr"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "Atmospherics HFR Shutters"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
@@ -29978,11 +29983,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"jrX" = (
-/obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/item/radio/intercom/directional/south,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/project)
 "jrZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -31119,7 +31119,6 @@
 /area/station/cargo/storage)
 "jKy" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/newscaster/directional/south,
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
@@ -35653,6 +35652,10 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit/departure_lounge)
+"lbs" = (
+/obj/structure/sign/warning/fire/directional/north,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "lbC" = (
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/camera{
@@ -40364,6 +40367,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
+"mFv" = (
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/newscaster/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "mFE" = (
 /turf/closed/wall,
 /area/station/medical/surgery/aft)
@@ -41105,6 +41113,10 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"mSL" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/engineering/atmos/project)
 "mSM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -41918,7 +41930,6 @@
 "neu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "neC" = (
@@ -58083,10 +58094,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"sdX" = (
-/obj/machinery/disposal/bin,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/department/medical/morgue)
 "seA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -61155,6 +61162,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"taN" = (
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "taV" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
@@ -70379,6 +70391,12 @@
 "vVH" = (
 /turf/closed/wall,
 /area/station/security/prison/safe)
+"vVO" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/general/visible{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "vVP" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -76096,6 +76114,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"xJw" = (
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "xJF" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
@@ -179947,7 +179970,7 @@ jJV
 hjM
 hjM
 hjM
-sdX
+hjM
 hjM
 hjM
 ycY
@@ -181262,12 +181285,12 @@ foW
 ljL
 ljL
 lii
-lub
+bnG
 lub
 wbk
 ccg
 iZO
-lub
+taN
 seX
 kHr
 udC
@@ -181525,7 +181548,7 @@ azB
 bbs
 bWK
 bWK
-lub
+xJw
 kHr
 udC
 udC
@@ -181782,8 +181805,8 @@ fiA
 ncl
 bWK
 bWK
-gPK
-kHr
+lub
+mSL
 iDt
 udC
 udC
@@ -182040,7 +182063,7 @@ bWK
 bWK
 bWK
 jKy
-kHr
+mSL
 iDt
 iDt
 udC
@@ -182555,7 +182578,7 @@ bWK
 bWK
 lub
 kHr
-iDt
+lbs
 iDt
 iDt
 iDt
@@ -182810,7 +182833,7 @@ rEx
 eDj
 bWK
 bWK
-jrX
+lub
 kHr
 iDt
 hpx
@@ -183066,7 +183089,7 @@ slD
 tNi
 asM
 knX
-lub
+mFv
 rbY
 ffe
 alM
@@ -241396,7 +241419,7 @@ hHN
 wAB
 jkW
 laV
-wAB
+vVO
 eBT
 qKK
 hpI
