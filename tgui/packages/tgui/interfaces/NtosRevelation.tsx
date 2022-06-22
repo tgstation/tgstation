@@ -1,9 +1,15 @@
 import { Section, Button, LabeledList } from '../components';
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { BooleanLike } from 'common/react';
+
+type Data = {
+	armed: BooleanLike;
+};
 
 export const NtosRevelation = (_, context) => {
-	const { act, data } = useBackend(context);
+	const { act, data } = useBackend<Data>(context);
+	const { armed } = data;
 
 	return (
 		<NtosWindow width={400} height={250} theme="syndicate">
@@ -12,7 +18,7 @@ export const NtosRevelation = (_, context) => {
 					<Button.Input
 						fluid
 						content="Obfuscate Name..."
-						onCommit={(e, value) =>
+						onCommit={(_, value) =>
 							act('PRG_obfuscate', {
 								new_name: value,
 							})
@@ -24,8 +30,8 @@ export const NtosRevelation = (_, context) => {
 							label="Payload Status"
 							buttons={
 								<Button
-									content={data.armed ? 'ARMED' : 'DISARMED'}
-									color={data.armed ? 'bad' : 'average'}
+									content={armed ? 'ARMED' : 'DISARMED'}
+									color={armed ? 'bad' : 'average'}
 									onClick={() => act('PRG_arm')}
 								/>
 							}
@@ -37,7 +43,7 @@ export const NtosRevelation = (_, context) => {
 						content="ACTIVATE"
 						textAlign="center"
 						color="bad"
-						disabled={!data.armed}
+						disabled={!armed}
 					/>
 				</Section>
 			</NtosWindow.Content>

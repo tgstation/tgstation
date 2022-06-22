@@ -22,17 +22,24 @@ const stakelist = [
 ] as const;
 
 const weaponblurb = [
-	'You will fight with your fists only. Any weapons will be considered a violation.',
-	'You can only fight with ceremonial weapons. You will be at a severe disadvantage without one!',
-	'You can fight with weapons, or fists if you have none. Ranged weapons are a violation.',
-	'You can fight with any and all weapons as you please. Try not to kill them, okay?',
+	`You will fight with your fists only. Any weapons will be
+    considered a violation.`,
+	`You can only fight with ceremonial weapons. You will be at a
+    severe disadvantage without one!`,
+	`You can fight with weapons, or fists if you have none.
+    Ranged weapons are a violation.`,
+	`You can fight with any and all weapons as you please.
+    Try not to kill them, okay?`,
 ] as const;
 
 const stakesblurb = [
-	"No stakes, just for fun. Who doesn't love some recreational sparring?",
-	"A match for the chaplain's deity. The Chaplain suffers large consequences for failure, but advances their sect by winning.",
-	'A match with money on the line. Whomever wins takes all the money of whomever loses.',
-	"A lethal match with the loser's soul becoming under ownership of the winner.",
+	`No stakes, just for fun. Who doesn't love some recreational sparring?`,
+	`A match for the chaplain's deity. The Chaplain suffers large
+    consequences for failure, but advances their sect by winning.`,
+	`A match with money on the line. Whomever wins takes all the
+    money of whomever loses.`,
+	`A lethal match with the loser's soul becoming under ownership
+    of the winner.`,
 ] as const;
 
 type Info = {

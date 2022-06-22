@@ -94,9 +94,7 @@ const TerminalDisplay = (props, context) => {
 	const is_owner = owner === user?.name;
 	const cannot_pay =
 		is_owner || !user || user?.balance < 1 || user?.balance < force_fee;
-	const decodedName = name.replace(/&#(\d+);/g, (_, dec) => {
-		return String.fromCharCode(dec);
-	});
+	const decodedName = getDecodedString(name);
 
 	return (
 		<Section
@@ -174,9 +172,7 @@ const SetupDisplay = (props, context) => {
 	const { act, data } = useBackend<HoloPayData>(context);
 	const { available_logos = [], force_fee, max_fee, name, shop_logo } = data;
 	const { onClick } = props;
-	const decodedName = name.replace(/&#(\d+);/g, (_, dec) => {
-		return String.fromCharCode(dec);
-	});
+	const decodedName = getDecodedString(name);
 
 	return (
 		<Section
@@ -236,3 +232,9 @@ const SetupDisplay = (props, context) => {
 		</Section>
 	);
 };
+
+/** Turns any HTML formatting into a readable string. */
+const getDecodedString = (str: string) =>
+	str.replace(/&#(\d+);/g, (_, dec) => {
+		return String.fromCharCode(dec);
+	});
