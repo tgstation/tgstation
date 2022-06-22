@@ -72,6 +72,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/obj/machinery/gravity_generator/main/main_part
 
 /obj/machinery/gravity_generator/part/Destroy()
+	set_broken()
 	if(main_part)
 		QDEL_NULL(main_part)
 	return ..()
