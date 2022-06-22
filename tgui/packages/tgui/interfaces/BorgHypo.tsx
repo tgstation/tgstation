@@ -24,10 +24,13 @@ export const BorgHypo = (_, context) => {
     reagents,
     selectedReagent,
   } = data;
+
+  const dynamicHeight = (reagents.length * 25) + 60;
+
   return (
     <Window
       width={450}
-      height={(reagents.length * 25) + 60}
+      height={dynamicHeight}
       theme={theme}
     >
       <Window.Content>

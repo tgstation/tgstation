@@ -25,14 +25,15 @@ export const BorgShaker = (_, context) => {
     alcohols,
     selectedReagent,
   } = data;
+
+  const dynamicHeight = Math.ceil(sodas.length / 4) * 23
+    + Math.ceil(alcohols.length / 4) * 23
+    + 140;
+
   return (
     <Window
       width={650}
-      height={
-        Math.ceil(sodas.length / 4) * 23
-          + Math.ceil(alcohols.length / 4) * 23
-          + 140
-      }
+      height={dynamicHeight}
       theme={theme}
     >
       <Window.Content>
