@@ -2,89 +2,90 @@ import { Component, createRef, RefObject } from 'inferno';
 
 const DEFAULT_ACCEPTABLE_DIFFERENCE = 5;
 
-export class FitText extends Component<
-	{
-		acceptableDifference?: number;
-		maxWidth: number;
-		maxFontSize: number;
-		native?: HTMLAttributes<HTMLDivElement>;
-	},
-	{
-		fontSize: number;
-	}
-> {
-	ref: RefObject<HTMLDivElement> = createRef();
-	state = {
-		fontSize: 0,
-	};
+type Props = {
+  acceptableDifference?: number;
+  maxWidth: number;
+  maxFontSize: number;
+  native?: HTMLAttributes<HTMLDivElement>;
+};
 
-	constructor() {
-		super();
+type State = {
+  fontSize: number;
+};
 
-		this.resize = this.resize.bind(this);
+export class FitText extends Component<Props, State> {
+  ref: RefObject<HTMLDivElement> = createRef();
+  state: State = {
+    fontSize: 0,
+  };
 
-		window.addEventListener('resize', this.resize);
-	}
+  constructor() {
+    super();
 
-	componentDidUpdate(prevProps) {
-		if (prevProps.children !== this.props.children) {
-			this.resize();
-		}
-	}
+    this.resize = this.resize.bind(this);
 
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.resize);
-	}
+    window.addEventListener('resize', this.resize);
+  }
 
-	resize() {
-		const element = this.ref.current;
-		if (!element) {
-			return;
-		}
+  componentDidUpdate(prevProps) {
+    if (prevProps.children !== this.props.children) {
+      this.resize();
+    }
+  }
 
-		const maxWidth = this.props.maxWidth;
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize);
+  }
 
-		let start = 0;
-		let end = this.props.maxFontSize;
+  resize() {
+    const element = this.ref.current;
+    if (!element) {
+      return;
+    }
 
-		for (let _ = 0; _ < 10; _++) {
-			const middle = Math.round((start + end) / 2);
-			element.style.fontSize = `${middle}px`;
+    const maxWidth = this.props.maxWidth;
 
-			const difference = element.offsetWidth - maxWidth;
+    let start = 0;
+    let end = this.props.maxFontSize;
 
-			if (difference > 0) {
-				end = middle;
-			} else if (
-				difference <
-				(this.props.acceptableDifference ?? DEFAULT_ACCEPTABLE_DIFFERENCE)
-			) {
-				start = middle;
-			} else {
-				break;
-			}
-		}
+    for (let _ = 0; _ < 10; _++) {
+      const middle = Math.round((start + end) / 2);
+      element.style.fontSize = `${middle}px`;
 
-		this.setState({
-			fontSize: Math.round((start + end) / 2),
-		});
-	}
+      const difference = element.offsetWidth - maxWidth;
 
-	componentDidMount() {
-		this.resize();
-	}
+      if (difference > 0) {
+        end = middle;
+      } else if (
+        difference <
+        (this.props.acceptableDifference ?? DEFAULT_ACCEPTABLE_DIFFERENCE)
+      ) {
+        start = middle;
+      } else {
+        break;
+      }
+    }
 
-	render() {
-		return (
-			<span
-				ref={this.ref}
-				style={{
-					'font-size': `${this.state.fontSize}px`,
-					...(typeof this.props.native?.style === 'object' &&
-						this.props.native.style),
-				}}>
-				{this.props.children}
-			</span>
-		);
-	}
+    this.setState({
+      fontSize: Math.round((start + end) / 2),
+    });
+  }
+
+  componentDidMount() {
+    this.resize();
+  }
+
+  render() {
+    return (
+      <span
+        ref={this.ref}
+        style={{
+          'font-size': `${this.state.fontSize}px`,
+          ...(typeof this.props.native?.style === 'object' &&
+            this.props.native.style),
+        }}>
+        {this.props.children}
+      </span>
+    );
+  }
 }

@@ -9,10 +9,10 @@ export const BLOB_MECHANICAL_DESCRIPTION = multiline`
 `;
 
 const Blob: Antagonist = {
-	key: 'blob',
-	name: 'Blob',
-	description: [BLOB_MECHANICAL_DESCRIPTION],
-	category: Category.Midround,
+  key: 'blob',
+  name: 'Blob',
+  description: [BLOB_MECHANICAL_DESCRIPTION],
+  category: Category.Midround,
 };
 
 export default Blob;

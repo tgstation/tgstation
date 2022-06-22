@@ -6,20 +6,20 @@
  */
 
 .IconStack > .Icon {
-	position: absolute;
-	width: 100%;
-	text-align: center;
+  position: absolute;
+  width: 100%;
+  text-align: center;
 }
 
 .IconStack {
-	position: relative;
-	display: inline-block;
-	height: 1.2em;
-	line-height: 2em;
-	vertical-align: middle;
+  position: relative;
+  display: inline-block;
+  height: 1.2em;
+  line-height: 2em;
+  vertical-align: middle;
 
-	&:after {
-		color: transparent;
-		content: '.';
-	}
+  &:after {
+    color: transparent;
+    content: '.';
+  }
 }

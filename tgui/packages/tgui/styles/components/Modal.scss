@@ -8,7 +8,7 @@
 $background-color: base.$color-bg !default;
 
 .Modal {
-	background-color: $background-color;
-	max-width: calc(100% - 1rem);
-	padding: 1rem;
+  background-color: $background-color;
+  max-width: calc(100% - 1rem);
+  padding: 1rem;
 }

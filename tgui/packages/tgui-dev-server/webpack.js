@@ -18,7 +18,7 @@ const logger = createLogger('webpack');
  * @param {any} config
  * @return {WebpackCompiler}
  */
-export const createCompiler = async options => {
+export const createCompiler = async (options) => {
   const compiler = new WebpackCompiler();
   await compiler.setup(options);
   return compiler;
@@ -57,7 +57,7 @@ class WebpackCompiler {
       logger.log('compiling');
     });
     // Start reloading when it's finished
-    compiler.hooks.done.tap('tgui-dev-server', async stats => {
+    compiler.hooks.done.tap('tgui-dev-server', async (stats) => {
       // Load source maps
       await loadSourceMaps(this.bundleDir);
       // Reload cache
@@ -77,7 +77,7 @@ class WebpackCompiler {
       stats
         .toString(this.config.devServer.stats)
         .split('\n')
-        .forEach(line => logger.log(line));
+        .forEach((line) => logger.log(line));
     });
   }
 }

@@ -7,36 +7,36 @@ import { ServerData } from './data';
 let fetchServerData: Promise<ServerData> | undefined;
 
 export class ServerPreferencesFetcher extends Component<
-	{
-		render: (serverData: ServerData | undefined) => InfernoNode;
-	},
-	{
-		serverData?: ServerData;
-	}
+  {
+    render: (serverData: ServerData | undefined) => InfernoNode;
+  },
+  {
+    serverData?: ServerData;
+  }
 > {
-	state = {
-		serverData: undefined,
-	};
+  state = {
+    serverData: undefined,
+  };
 
-	componentDidMount() {
-		this.populateServerData();
-	}
+  componentDidMount() {
+    this.populateServerData();
+  }
 
-	async populateServerData() {
-		if (!fetchServerData) {
-			fetchServerData = fetchRetry(resolveAsset('preferences.json')).then(
-				(response) => response.json()
-			);
-		}
+  async populateServerData() {
+    if (!fetchServerData) {
+      fetchServerData = fetchRetry(resolveAsset('preferences.json')).then(
+        (response) => response.json()
+      );
+    }
 
-		const preferencesData: ServerData = await fetchServerData;
+    const preferencesData: ServerData = await fetchServerData;
 
-		this.setState({
-			serverData: preferencesData,
-		});
-	}
+    this.setState({
+      serverData: preferencesData,
+    });
+  }
 
-	render() {
-		return this.props.render(this.state.serverData);
-	}
+  render() {
+    return this.props.render(this.state.serverData);
+  }
 }

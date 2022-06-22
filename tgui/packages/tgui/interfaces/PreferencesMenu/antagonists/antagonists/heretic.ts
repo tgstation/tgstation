@@ -7,17 +7,17 @@ export const HERETIC_MECHANICAL_DESCRIPTION = multiline`
    `;
 
 const Heretic: Antagonist = {
-	key: 'heretic',
-	name: 'Heretic',
-	description: [
-		multiline`
+  key: 'heretic',
+  name: 'Heretic',
+  description: [
+    multiline`
       Forgotten, devoured, gutted. Humanity has forgotten the eldritch forces
       of decay, but the mansus veil has weakened. We will make them taste fear
       again...
     `,
-		HERETIC_MECHANICAL_DESCRIPTION,
-	],
-	category: Category.Roundstart,
+    HERETIC_MECHANICAL_DESCRIPTION,
+  ],
+  category: Category.Roundstart,
 };
 
 export default Heretic;

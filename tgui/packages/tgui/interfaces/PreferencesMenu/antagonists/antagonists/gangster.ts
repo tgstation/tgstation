@@ -7,10 +7,10 @@ export const GANGSTER_MECHANICAL_DESCRIPTION = multiline`
    `;
 
 const Gangster: Antagonist = {
-	key: 'gangster',
-	name: 'Family Leader',
-	description: [GANGSTER_MECHANICAL_DESCRIPTION],
-	category: Category.Roundstart,
+  key: 'gangster',
+  name: 'Family Leader',
+  description: [GANGSTER_MECHANICAL_DESCRIPTION],
+  category: Category.Roundstart,
 };
 
 export default Gangster;

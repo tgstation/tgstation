@@ -1,4 +1,4 @@
 import { useLocalState } from '../../backend';
 
 export const useRandomToggleState = (context) =>
-	useLocalState(context, 'randomToggle', false);
+  useLocalState(context, 'randomToggle', false);

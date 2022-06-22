@@ -18,14 +18,14 @@
  );
 
 .theme-admin {
-	// Atomic classes
-	@include meta.load-css('../atomic/color.scss');
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss');
 
-	// Layouts
-	@include meta.load-css('../layouts/Layout.scss');
-	@include meta.load-css('../layouts/Window.scss');
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
 
-	.Layout__content {
-		background-image: url('../../assets/bg-admin.svg');
-	}
+  .Layout__content {
+    background-image: url('../../assets/bg-admin.svg');
+  }
 }

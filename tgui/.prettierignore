@@ -1,14 +1,15 @@
-/.yarn/**
+## NPM
 /**/node_modules
-/**/*.bundle.*
-/**/*.chunk.*
-/**/*.hot-update.*
-/packages/inferno/**
-/packages/common/**
-/packages/tgfont/**
-/packages/tgui/*.*
-/packages/tgui/debug/**
-/packages/tgui-bench/**
-/packages/tgui-dev-server/**
-/packages/tgui-panel/**
-/packages/tgui-polyfill/**
+
+## Yarn
+/.yarn
+/yarn.lock
+/.pnp.*
+
+/docs
+/public
+/packages/tgui-polyfill
+/packages/tgfont/static
+**/*.json
+**/*.yml
+**/*.md

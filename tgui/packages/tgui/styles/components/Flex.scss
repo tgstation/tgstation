@@ -4,28 +4,28 @@
  */
 
 .Flex {
-	display: -ms-flexbox;
-	display: flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .Flex--inline {
-	display: inline-flex;
+  display: inline-flex;
 }
 
 .Flex--iefix {
-	display: block;
+  display: block;
 }
 
 .Flex--iefix.Flex--inline {
-	display: inline-block;
+  display: inline-block;
 }
 
 .Flex__item--iefix {
-	display: inline-block;
+  display: inline-block;
 }
 
 .Flex--iefix--column {
-	& > .Flex__item--iefix {
-		display: block;
-	}
+  & > .Flex__item--iefix {
+    display: block;
+  }
 }

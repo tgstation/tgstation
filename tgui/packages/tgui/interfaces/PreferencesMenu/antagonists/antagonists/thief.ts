@@ -7,15 +7,15 @@ export const THIEF_MECHANICAL_DESCRIPTION = multiline`
     `;
 
 const Thief: Antagonist = {
-	key: 'thief',
-	name: 'Thief',
-	description: [
-		`You're working at a state of the art research station, yet you're
+  key: 'thief',
+  name: 'Thief',
+  description: [
+    `You're working at a state of the art research station, yet you're
     running into financial issues. Nobody will miss a couple expensive doodads,
     right?`,
-		THIEF_MECHANICAL_DESCRIPTION,
-	],
-	category: Category.Roundstart,
+    THIEF_MECHANICAL_DESCRIPTION,
+  ],
+  category: Category.Roundstart,
 };
 
 export default Thief;

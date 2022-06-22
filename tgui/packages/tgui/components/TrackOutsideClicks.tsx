@@ -1,33 +1,35 @@
 import { Component, createRef } from 'inferno';
 
-export class TrackOutsideClicks extends Component<{
-	onOutsideClick: () => void;
-}> {
-	ref = createRef<HTMLDivElement>();
+type Props = {
+  onOutsideClick: () => void;
+};
 
-	constructor() {
-		super();
+export class TrackOutsideClicks extends Component<Props> {
+  ref = createRef<HTMLDivElement>();
 
-		this.handleOutsideClick = this.handleOutsideClick.bind(this);
+  constructor() {
+    super();
 
-		document.addEventListener('click', this.handleOutsideClick);
-	}
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
 
-	componentWillUnmount() {
-		document.removeEventListener('click', this.handleOutsideClick);
-	}
+    document.addEventListener('click', this.handleOutsideClick);
+  }
 
-	handleOutsideClick(event: MouseEvent) {
-		if (!(event.target instanceof Node)) {
-			return;
-		}
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleOutsideClick);
+  }
 
-		if (this.ref.current && !this.ref.current.contains(event.target)) {
-			this.props.onOutsideClick();
-		}
-	}
+  handleOutsideClick(event: MouseEvent) {
+    if (!(event.target instanceof Node)) {
+      return;
+    }
 
-	render() {
-		return <div ref={this.ref}>{this.props.children}</div>;
-	}
+    if (this.ref.current && !this.ref.current.contains(event.target)) {
+      this.props.onOutsideClick();
+    }
+  }
+
+  render() {
+    return <div ref={this.ref}>{this.props.children}</div>;
+  }
 }

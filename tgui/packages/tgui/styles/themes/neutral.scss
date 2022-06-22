@@ -19,32 +19,32 @@ $neutral: #ffb300;
  );
 
 .theme-neutral {
-	// Components
-	@include meta.load-css(
-		'../components/Button.scss',
-		$with: (
-			'color-default': color.scale($neutral, $lightness: -30%),
-			'color-transparent-text': color.scale($neutral, $lightness: 30%)
-		)
-	);
-	@include meta.load-css(
-		'../components/ProgressBar.scss',
-		$with: (
-			'color-default-fill': $neutral,
-			'background-color': rgba(0, 0, 0, 0.5)
-		)
-	);
-	@include meta.load-css('../components/Section.scss');
+  // Components
+  @include meta.load-css(
+    '../components/Button.scss',
+    $with: (
+      'color-default': color.scale($neutral, $lightness: -30%),
+      'color-transparent-text': color.scale($neutral, $lightness: 30%)
+    )
+  );
+  @include meta.load-css(
+    '../components/ProgressBar.scss',
+    $with: (
+      'color-default-fill': $neutral,
+      'background-color': rgba(0, 0, 0, 0.5)
+    )
+  );
+  @include meta.load-css('../components/Section.scss');
 
-	// Layouts
-	@include meta.load-css('../layouts/Layout.scss');
-	@include meta.load-css('../layouts/Window.scss');
-	@include meta.load-css(
-		'../layouts/TitleBar.scss',
-		$with: ('background-color': color.scale($neutral, $lightness: -25%))
-	);
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css(
+    '../layouts/TitleBar.scss',
+    $with: ('background-color': color.scale($neutral, $lightness: -25%))
+  );
 
-	.Layout__content {
-		background-image: url('../../assets/bg-neutral.svg');
-	}
+  .Layout__content {
+    background-image: url('../../assets/bg-neutral.svg');
+  }
 }
