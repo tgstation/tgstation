@@ -72,9 +72,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/obj/machinery/gravity_generator/main/main_part
 
 /obj/machinery/gravity_generator/part/Destroy()
-	set_broken()
-	if(main_part)
-		QDEL_NULL(main_part)
+	main_part = null
 	return ..()
 
 /obj/machinery/gravity_generator/part/attackby(obj/item/weapon, mob/user, params)
@@ -166,11 +164,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
 	QDEL_NULL(soundloop)
 	QDEL_NULL(gravity_field)
+	QDEL_LIST(generator_parts)
 	update_list()
-	for(var/obj/machinery/gravity_generator/part/internal_parts as anything in generator_parts)
-		internal_parts.main_part = null
-		if(!QDESTROYING(internal_parts))
-			qdel(internal_parts)
 	return ..()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
