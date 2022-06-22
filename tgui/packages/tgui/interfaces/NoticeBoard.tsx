@@ -1,10 +1,16 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section } from '../components';
+import { Box, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
+type Data = {
+	allowed: BooleanLike;
+	items: { ref: string; name: string }[];
+};
+
 export const NoticeBoard = (_, context) => {
-	const { act, data } = useBackend(context);
-	const { allowed, items = {} } = data;
+	const { act, data } = useBackend<Data>(context);
+	const { allowed, items = [] } = data;
 
 	return (
 		<Window width={425} height={176}>
@@ -17,16 +23,15 @@ export const NoticeBoard = (_, context) => {
 					</Section>
 				) : (
 					items.map((item) => (
-						<Flex
+						<Stack
 							key={item.ref}
 							color="black"
 							backgroundColor="white"
-							style={{ padding: '2px 2px 0 2px' }}
-							mb={0.5}>
-							<Flex.Item align="center" grow={1}>
+							style={{ padding: '2px 2px 0 2px' }}>
+							<Stack.Item align="center" grow>
 								<Box align="center">{item.name}</Box>
-							</Flex.Item>
-							<Flex.Item>
+							</Stack.Item>
+							<Stack.Item>
 								<Button
 									icon="eye"
 									onClick={() => act('examine', { ref: item.ref })}
@@ -36,8 +41,8 @@ export const NoticeBoard = (_, context) => {
 									disabled={!allowed}
 									onClick={() => act('remove', { ref: item.ref })}
 								/>
-							</Flex.Item>
-						</Flex>
+							</Stack.Item>
+						</Stack>
 					))
 				)}
 			</Window.Content>

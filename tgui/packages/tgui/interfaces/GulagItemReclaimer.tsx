@@ -1,10 +1,16 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, NoticeBox, Section, Table } from '../components';
 import { Window } from '../layouts';
 
+type Data = {
+	can_reclaim: BooleanLike;
+	mobs: { mob: string; name: string }[];
+};
+
 export const GulagItemReclaimer = (_, context) => {
-	const { act, data } = useBackend(context);
-	const { mobs = [] } = data;
+	const { act, data } = useBackend<Data>(context);
+	const { can_reclaim, mobs = [] } = data;
 
 	return (
 		<Window width={325} height={400}>
@@ -19,7 +25,7 @@ export const GulagItemReclaimer = (_, context) => {
 									<Table.Cell textAlign="right">
 										<Button
 											content="Retrieve Items"
-											disabled={!data.can_reclaim}
+											disabled={!can_reclaim}
 											onClick={() =>
 												act('release_items', {
 													mobref: mob.mob,

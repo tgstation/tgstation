@@ -4,8 +4,8 @@ import { Button, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosCrewManifest = (_, context) => {
-	const { act, data } = useBackend(context);
-	const { have_printer, manifest = {} } = data;
+	const { act, data } = useBackend < Data > context;
+	const { have_printer, manifest = [] } = data;
 
 	return (
 		<NtosWindow width={400} height={480}>

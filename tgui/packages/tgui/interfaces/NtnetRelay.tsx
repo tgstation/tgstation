@@ -1,6 +1,14 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Button, ProgressBar, Section, AnimatedNumber } from '../components';
 import { Window } from '../layouts';
+
+type Data = {
+	enabled: BooleanLike;
+	dos_capacity: number;
+	dos_overload: number;
+	dos_crashed: BooleanLike;
+};
 
 const OUTAGE_WARNING = `This system is suffering temporary outage due to
 overflow of traffic buffers. Until buffered traffic is processed, all
@@ -10,7 +18,7 @@ network. Please contact your network planning department for
 instructions on how to resolve this issue.`;
 
 export const NtnetRelay = (_, context) => {
-	const { act, data } = useBackend(context);
+	const { act, data } = useBackend<Data>(context);
 	const { enabled, dos_capacity, dos_overload, dos_crashed } = data;
 
 	return (
