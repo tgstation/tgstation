@@ -3,7 +3,12 @@
 	k_elasticity = 0
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
-	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden, /obj/structure/closet/crate/mail)
+	exclude_types = list(
+		/obj/structure/closet/crate/coffin,
+		/obj/structure/closet/crate/large,
+		/obj/structure/closet/crate/mail,
+		/obj/structure/closet/crate/wooden,
+		)
 
 /datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
 	. = ..()
