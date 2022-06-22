@@ -8,6 +8,17 @@
 /mob/living/simple_animal/hostile/ant,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
+"c" = (
+/obj/effect/mine/explosive{
+	range_heavy = 0
+	},
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/sandbags,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "e" = (
 /obj/structure/bed/nest,
 /obj/item/stack/sheet/bone,
@@ -33,12 +44,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
-"l" = (
-/obj/effect/mine/explosive{
-	range_heavy = 0
-	},
-/turf/open/misc/asteroid/basalt/wasteland,
-/area/template_noop)
 "m" = (
 /turf/closed/indestructible/riveted,
 /area/template_noop)
@@ -46,6 +51,9 @@
 /mob/living/simple_animal/hostile/ant,
 /obj/structure/flora/ash/cap_shroom,
 /turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
+"o" = (
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "p" = (
 /obj/structure/flora/rock,
@@ -65,13 +73,18 @@
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "t" = (
-/obj/structure/fluff/clockwork/alloy_shards,
-/turf/open/misc/asteroid/basalt/wasteland,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/clockwork/ocular_warden,
+/turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
 "u" = (
 /obj/effect/decal/remains/human,
 /obj/structure/flora/ash/cap_shroom,
 /turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
+"v" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "w" = (
 /obj/structure/flora/rock,
@@ -83,9 +96,8 @@
 /area/template_noop)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/mob/living/simple_animal/hostile/clockwork/cogscarab,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "z" = (
 /obj/structure/flora/rock/pile,
@@ -107,9 +119,22 @@
 /obj/modular_map_connector,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"E" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"F" = (
+/mob/living/simple_animal/hostile/clockwork,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "G" = (
 /obj/structure/flora/ash/cap_shroom,
 /turf/open/misc/asteroid/basalt/wasteland,
+/area/template_noop)
+"H" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "I" = (
 /obj/structure/barricade/sandbags,
@@ -128,9 +153,15 @@
 /obj/structure/bed/nest,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
-"M" = (
-/obj/structure/fluff/clockwork/clockgolem_remains,
-/turf/open/misc/asteroid/basalt/wasteland,
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/step_trigger/teleport_fancy{
+	locationx = 248;
+	locationy = 10;
+	name = "teleport to ratvar level";
+	uses = 0
+	},
+/turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
 "N" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
@@ -153,6 +184,10 @@
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
 "W" = (
 /obj/item/stack/sheet/bone,
 /obj/structure/flora/ash/cap_shroom,
@@ -165,18 +200,6 @@
 /area/template_noop)
 "Y" = (
 /turf/open/misc/asteroid/basalt/wasteland,
-/area/template_noop)
-"Z" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/step_trigger/teleport_fancy{
-	locationx = 248;
-	locationy = 10;
-	name = "teleport to ratvar level";
-	uses = 0
-	},
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
 /area/template_noop)
 
 (1,1,1) = {"
@@ -3179,7 +3202,7 @@ Y
 g
 g
 g
-Y
+B
 g
 "}
 (92,1,1) = {"
@@ -3209,7 +3232,7 @@ Y
 g
 g
 Y
-g
+j
 g
 g
 Y
@@ -3241,8 +3264,8 @@ g
 Y
 g
 g
-Y
-g
+d
+j
 g
 g
 Y
@@ -3273,11 +3296,11 @@ G
 g
 Y
 g
-g
+j
 Y
+j
 g
-g
-g
+j
 Y
 g
 "}
@@ -3307,11 +3330,11 @@ g
 Y
 g
 g
-Y
+B
 g
 g
-g
-Y
+j
+d
 g
 "}
 (96,1,1) = {"
@@ -3340,10 +3363,10 @@ g
 Y
 g
 g
-Y
+B
 g
 g
-g
+j
 Y
 g
 "}
@@ -3373,11 +3396,11 @@ g
 Y
 g
 g
-Y
+B
 g
 g
-g
-Y
+j
+B
 g
 "}
 (98,1,1) = {"
@@ -3405,12 +3428,12 @@ Y
 Y
 Y
 g
+j
+B
+j
 g
-Y
 g
-g
-g
-Y
+B
 g
 "}
 (99,1,1) = {"
@@ -3438,12 +3461,12 @@ W
 X
 Y
 g
+j
+o
+j
 g
-Y
 g
-g
-g
-Y
+B
 g
 "}
 (100,1,1) = {"
@@ -3471,12 +3494,12 @@ G
 G
 Y
 g
+j
+o
+j
 g
-Y
-g
-g
-g
-Y
+j
+B
 g
 "}
 (101,1,1) = {"
@@ -3504,12 +3527,12 @@ a
 Y
 Y
 g
+j
+B
+j
 g
-Y
-g
-g
-g
-Y
+j
+B
 g
 "}
 (102,1,1) = {"
@@ -3537,12 +3560,12 @@ Y
 g
 Y
 g
+j
+F
+j
 g
-Y
 g
-g
-g
-Y
+B
 g
 "}
 (103,1,1) = {"
@@ -3570,12 +3593,12 @@ g
 g
 g
 g
+j
+B
 g
 Y
-g
 Y
-S
-Y
+B
 g
 "}
 (104,1,1) = {"
@@ -3603,11 +3626,11 @@ g
 g
 g
 g
-U
+E
+B
 Y
-Y
-Y
-Y
+B
+B
 U
 g
 "}
@@ -3631,15 +3654,15 @@ Y
 g
 g
 g
+j
+j
 g
 g
-g
-g
-g
-Y
-Y
-Y
-Y
+j
+B
+B
+B
+B
 g
 g
 g
@@ -3663,14 +3686,14 @@ g
 Y
 g
 g
-Y
-Y
+o
+o
+j
 g
-g
-U
-Y
-Y
-Y
+E
+B
+B
+B
 U
 Y
 g
@@ -3695,14 +3718,14 @@ g
 g
 Y
 g
-Y
-Y
-Y
-Y
-Y
-Y
-l
-g
+B
+B
+B
+o
+o
+o
+c
+j
 g
 g
 g
@@ -3727,20 +3750,20 @@ Y
 g
 g
 Y
-g
-Y
-Y
-g
-g
-g
-U
-Y
-g
-Y
-Y
+j
+B
+B
+j
 g
 g
+E
+o
+j
+o
+o
 g
+j
+j
 g
 "}
 (109,1,1) = {"
@@ -3760,20 +3783,20 @@ Y
 g
 g
 Y
-g
+j
+B
 Y
+j
 Y
-g
-Y
-g
-g
-Y
-Y
-Y
-Y
-Y
-Y
-g
+j
+j
+o
+o
+o
+o
+o
+o
+j
 g
 "}
 (110,1,1) = {"
@@ -3794,19 +3817,19 @@ g
 g
 Y
 g
-S
+B
 g
 g
 Y
-g
-Y
-l
-Y
-Y
-Y
-Y
-Y
-Y
+j
+o
+c
+o
+o
+o
+o
+o
+o
 g
 "}
 (111,1,1) = {"
@@ -3827,17 +3850,17 @@ g
 g
 Y
 g
-Y
-g
-Y
-Y
-g
-Y
-t
-Y
-l
 B
-y
+g
+Y
+Y
+g
+o
+v
+o
+c
+B
+t
 g
 g
 g
@@ -3865,9 +3888,9 @@ Y
 U
 Y
 g
-y
-M
-Y
+t
+H
+o
 I
 I
 j
@@ -3925,9 +3948,9 @@ Y
 g
 g
 Y
-g
-Y
-g
+j
+B
+j
 g
 Y
 g
@@ -3959,8 +3982,8 @@ g
 g
 Y
 g
-Y
-g
+F
+j
 g
 g
 g
@@ -3968,7 +3991,7 @@ A
 B
 B
 B
-B
+y
 C
 A
 A
@@ -3993,14 +4016,14 @@ g
 Y
 g
 Y
-g
+j
 g
 g
 A
 B
 B
 k
-y
+V
 B
 O
 A
@@ -4031,10 +4054,10 @@ A
 A
 A
 z
-B
 y
-Z
-y
+V
+L
+V
 B
 A
 g
@@ -4057,7 +4080,7 @@ Y
 g
 g
 Y
-g
+j
 Y
 g
 z
@@ -4066,7 +4089,7 @@ A
 z
 z
 B
-y
+V
 B
 A
 A
@@ -4090,8 +4113,8 @@ Y
 g
 g
 Y
-g
-Y
+j
+B
 g
 g
 A
@@ -4099,7 +4122,7 @@ A
 A
 C
 B
-B
+y
 A
 A
 z
@@ -4123,7 +4146,7 @@ Y
 g
 g
 Y
-g
+j
 Y
 U
 j

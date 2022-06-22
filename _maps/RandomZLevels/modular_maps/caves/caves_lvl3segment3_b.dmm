@@ -40,10 +40,6 @@
 "ai" = (
 /turf/closed/indestructible/necropolis,
 /area/template_noop)
-"aj" = (
-/mob/living/simple_animal/hostile/asteroid/elite/legionnaire,
-/turf/open/indestructible/necropolis,
-/area/template_noop)
 "ak" = (
 /obj/structure/necropolis_arch,
 /obj/structure/necropolis_gate/locked,
@@ -253,10 +249,34 @@
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"iV" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/mob/living/simple_animal/hostile/clockwork,
+/turf/open/indestructible/boss,
+/area/template_noop)
+"lW" = (
+/mob/living/simple_animal/hostile/clockwork/cogscarab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 "mL" = (
 /obj/structure/flora/rock/pile,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"nN" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
+"pj" = (
+/obj/structure/stone_tile/slab,
+/mob/living/simple_animal/hostile/clockwork,
+/turf/open/indestructible/boss,
 /area/template_noop)
 "pu" = (
 /obj/structure/stone_tile/block{
@@ -268,17 +288,9 @@
 /obj/structure/stone_tile,
 /turf/open/indestructible/boss,
 /area/template_noop)
-"qO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/step_trigger/teleport_fancy{
-	locationx = 248;
-	locationy = 10;
-	name = "teleport to ratvar level";
-	uses = 0
-	},
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+"sP" = (
+/obj/item/storage/toolbox/fishing,
+/turf/open/indestructible/necropolis,
 /area/template_noop)
 "vh" = (
 /turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,
@@ -290,6 +302,25 @@
 /obj/structure/barricade/sandbags,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"ze" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/step_trigger/teleport_fancy{
+	locationx = 248;
+	locationy = 10;
+	name = "teleport to ratvar level";
+	uses = 0
+	},
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
+"zx" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/clockwork/cogscarab,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"Ad" = (
+/mob/living/simple_animal/hostile/clockwork,
+/turf/open/indestructible/necropolis,
 /area/template_noop)
 "Ae" = (
 /mob/living/simple_animal/hostile/skeleton{
@@ -321,11 +352,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
-"Le" = (
+"Ko" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
+/mob/living/simple_animal/hostile/clockwork/ocular_warden,
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
+"LR" = (
+/obj/effect/mine/explosive{
+	range_heavy = 0
 	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "RD" = (
 /obj/structure/stone_tile/block{
@@ -338,6 +375,12 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
+/area/template_noop)
+"XX" = (
+/mob/living/simple_animal/hostile/asteroid/elite/legionnaire{
+	name = "Big Jim"
+	},
+/turf/open/indestructible/necropolis,
 /area/template_noop)
 "YE" = (
 /obj/structure/flora/ash/tall_shroom,
@@ -1965,7 +2008,7 @@ ai
 al
 ao
 al
-al
+sP
 al
 aa
 aa
@@ -2807,7 +2850,7 @@ al
 al
 aY
 aR
-aj
+XX
 al
 al
 al
@@ -3876,12 +3919,12 @@ vh
 vh
 vh
 ai
-ai
+wq
 aA
 al
-aA
+HN
 al
-ai
+wq
 ai
 vh
 vh
@@ -3908,13 +3951,13 @@ vh
 vh
 vh
 vh
-ai
-ai
-aA
+wq
+wq
+HN
 al
 gj
 al
-ai
+wq
 ai
 vh
 vh
@@ -3948,7 +3991,7 @@ al
 DG
 al
 YE
-ai
+wq
 vh
 vh
 ar
@@ -3975,13 +4018,13 @@ vh
 vh
 vh
 vh
-ai
+wq
+HN
+Ad
 aA
-al
 aA
-aA
-aA
-ag
+HN
+wq
 vh
 vh
 ar
@@ -4008,10 +4051,10 @@ vh
 vh
 vh
 vh
-vh
-gj
-YE
-aA
+wq
+mL
+BS
+HN
 aA
 YE
 aA
@@ -4041,7 +4084,7 @@ aM
 aM
 vh
 vh
-vh
+wq
 aA
 aH
 AD
@@ -4078,7 +4121,7 @@ vh
 aW
 pu
 AD
-pu
+iV
 aW
 gj
 vh
@@ -4175,7 +4218,7 @@ aM
 aM
 aM
 aM
-aH
+pj
 AD
 aH
 aM
@@ -4195,17 +4238,17 @@ aM
 aM
 aM
 aA
-aA
-aA
+HN
+HN
 YE
 gj
 gj
 gj
 vh
 wq
-Le
-aA
-aA
+Ko
+HN
+HN
 ag
 aW
 RD
@@ -4223,13 +4266,13 @@ aM
 vh
 vh
 vh
-vh
-vh
+wq
+wq
 DG
 aA
 YE
 HN
-aA
+HN
 ad
 aA
 gj
@@ -4237,7 +4280,7 @@ DG
 mL
 yK
 HN
-aA
+HN
 aA
 aA
 cj
@@ -4255,17 +4298,17 @@ aM
 aM
 vh
 vh
-vh
+wq
 aA
 aA
 aA
 aA
 HN
-Le
+nN
+zx
 HN
-aA
-YE
-aA
+BS
+HN
 mL
 HN
 yK
@@ -4273,8 +4316,8 @@ HN
 HN
 ad
 YE
-aA
-aA
+HN
+HN
 gj
 cj
 aA
@@ -4287,30 +4330,30 @@ ar
 aM
 aM
 vh
-vh
-aA
+wq
 aA
 aA
 aA
 HN
-Le
-qO
-Le
+zx
+nN
+ze
+nN
 HN
-aA
-aA
-aA
+HN
+HN
+HN
 Zf
 yK
 BS
 HN
-aA
-cj
-aA
+HN
+LR
+HN
 aA
 DG
-vh
-vh
+wq
+wq
 vh
 vh
 vh
@@ -4322,27 +4365,27 @@ aM
 vh
 vh
 aA
-aA
-gj
-aA
-YE
 HN
-Le
+gj
 HN
 YE
-aA
+HN
+nN
+HN
+YE
+HN
 gj
-vh
+wq
 vh
 wq
-Le
+Ko
 aA
 aA
 aA
-vh
-vh
-vh
-vh
+wq
+wq
+wq
+wq
 vh
 vh
 vh
@@ -4354,25 +4397,25 @@ aM
 aM
 vh
 vh
-vh
-aA
-aA
-aA
+wq
+HN
+HN
+HN
 ad
 aA
 HN
 aA
+lW
+HN
+HN
+vh
+vh
+vh
+vh
 aA
 aA
 vh
-vh
-vh
-vh
-vh
-aA
-aA
-vh
-vh
+wq
 vh
 vh
 vh
