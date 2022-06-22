@@ -551,9 +551,9 @@
 	/// the item in our active hand
 	var/obj/item/active_item = get_active_held_item()
 	var/boosted = FALSE
-	if(active_item.item_flags & BLIND_TOOL)
+	if(active_item?.item_flags & BLIND_TOOL)
 		boosted = TRUE
-	if(active_item && active_item != examined_thing && !(active_item.item_flags & BLIND_TOOL))
+	if((active_item && active_item != examined_thing) && (active_item && !(active_item?.item_flags & BLIND_TOOL)))
 		to_chat(src, span_warning("Your hands are too full to examine this!"))
 		return FALSE
 
