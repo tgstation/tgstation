@@ -1,0 +1,6 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - rscadd: "Nanotrasen has now installed an HFR Room and an Atmospherics Project Room on IceBoxStation. The Atmospherics Storage Room has also had catwalks installed in to accomodate these rooms uninstalled around it."
+  - rscadd: "The Atmospherics Loop on IceBoxStation has undergone some minor modifications to accomodate \"feeding\" these new rooms. Notably, there is now a \"minor\" loop on the lower Z-Level that you can push and pull gases towards to your (probable) heart's content."
+  - rscadd: "The AI Satellite, Incinerator, and some sections of Maintenance have been shuffled around on IceBoxStation to accomodate these changes."
