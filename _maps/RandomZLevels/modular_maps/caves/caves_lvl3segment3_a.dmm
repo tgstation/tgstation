@@ -107,13 +107,6 @@
 /obj/modular_map_connector,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"E" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/template_noop)
 "G" = (
 /obj/structure/flora/ash/cap_shroom,
 /turf/open/misc/asteroid/basalt/wasteland,
@@ -146,13 +139,6 @@
 "O" = (
 /obj/structure/fluff/clockwork/alloy_shards,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"Q" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
 /area/template_noop)
 "R" = (
 /mob/living/simple_animal/hostile/ant,
@@ -273,7 +259,7 @@ g
 g
 g
 g
-Y
+g
 Y
 Y
 Y
@@ -3851,7 +3837,7 @@ t
 Y
 l
 B
-E
+y
 g
 g
 g
@@ -3879,7 +3865,7 @@ Y
 U
 Y
 g
-E
+y
 M
 Y
 I
@@ -4048,7 +4034,7 @@ z
 B
 y
 Z
-Q
+y
 B
 A
 g

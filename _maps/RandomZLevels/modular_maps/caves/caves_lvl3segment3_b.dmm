@@ -280,13 +280,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
-"rR" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/template_noop)
 "vh" = (
 /turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,
 /area/template_noop)
@@ -345,13 +338,6 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss,
-/area/template_noop)
-"Xc" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
 /area/template_noop)
 "YE" = (
 /obj/structure/flora/ash/tall_shroom,
@@ -552,7 +538,7 @@ ai
 ai
 ai
 ai
-al
+ai
 al
 al
 al
@@ -4217,7 +4203,7 @@ gj
 gj
 vh
 wq
-Xc
+Le
 aA
 aA
 ag
@@ -4309,7 +4295,7 @@ aA
 HN
 Le
 qO
-rR
+Le
 HN
 aA
 aA
@@ -4349,7 +4335,7 @@ gj
 vh
 vh
 wq
-Xc
+Le
 aA
 aA
 aA

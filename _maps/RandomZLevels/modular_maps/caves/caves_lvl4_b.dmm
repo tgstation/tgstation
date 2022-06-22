@@ -45,10 +45,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
-"cA" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/turf/open/floor/bronze/flat,
-/area/template_noop)
 "cF" = (
 /turf/open/floor/iron/chapel{
 	dir = 10
@@ -74,10 +70,6 @@
 /turf/open/floor/bronze/flat{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/template_noop)
-"dV" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "eJ" = (
 /turf/open/floor/bronze/filled,
@@ -239,10 +231,6 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
-"mW" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/filled,
-/area/awaymission/caves/misc/ratvar/barracks)
 "nh" = (
 /obj/structure/lattice/lava{
 	base_icon_state = "lattice";
@@ -255,10 +243,6 @@
 /area/template_noop)
 "nB" = (
 /turf/open/lava/smooth/lava_land_surface,
-/area/template_noop)
-"nI" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/filled,
 /area/template_noop)
 "nJ" = (
 /obj/structure/chair/sofa/corp/right,
@@ -446,14 +430,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/template_noop)
-"wp" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"xo" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/turf/open/floor/bronze/flat,
-/area/awaymission/caves/misc/ratvar/barracks)
 "xZ" = (
 /turf/open/floor/bronze/flat,
 /area/template_noop)
@@ -527,12 +503,6 @@
 /obj/modular_map_connector,
 /turf/closed/indestructible/rock,
 /area/template_noop)
-"Df" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/template_noop)
 "Do" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold,
@@ -574,11 +544,6 @@
 /turf/open/floor/bronze/flat{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/template_noop)
-"HU" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/obj/structure/fluff/clockwork/alloy_shards/small,
-/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "Ia" = (
 /obj/structure/fluff/clockwork/alloy_shards/large,
@@ -898,7 +863,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/cogscarab,
 /turf/open/floor/plating,
 /area/template_noop)
 "YG" = (
@@ -2780,7 +2744,7 @@ MD
 xZ
 Vu
 xZ
-nI
+MD
 bD
 lz
 lz
@@ -2873,7 +2837,7 @@ Pj
 RQ
 pI
 QC
-xo
+QC
 QC
 qF
 gm
@@ -2901,7 +2865,7 @@ nB
 Mf
 Mf
 bD
-nI
+MD
 MD
 xZ
 MD
@@ -2918,7 +2882,7 @@ nB
 nB
 nB
 nB
-Dy
+nB
 Dy
 Dy
 Dy
@@ -3272,7 +3236,7 @@ nB
 nB
 nB
 nB
-Df
+ur
 gC
 gC
 XM
@@ -3650,7 +3614,7 @@ lz
 lz
 lz
 lz
-Df
+ur
 Mf
 Mf
 Mf
@@ -4498,7 +4462,7 @@ eJ
 eJ
 eJ
 QC
-xo
+QC
 QC
 or
 Mf
@@ -5125,7 +5089,7 @@ eJ
 eJ
 QC
 eJ
-mW
+eJ
 eJ
 oI
 lz
@@ -5371,10 +5335,10 @@ Mf
 lz
 oI
 eJ
-mW
+eJ
 eJ
 QC
-mW
+eJ
 eJ
 eJ
 oI
@@ -5768,7 +5732,7 @@ Dy
 Mf
 Mf
 Mf
-Df
+ur
 gC
 gC
 lz
@@ -6022,7 +5986,7 @@ lz
 lz
 lz
 lz
-Df
+ur
 lz
 nB
 nB
@@ -7250,7 +7214,7 @@ Mf
 Mf
 lz
 lz
-dV
+lz
 lz
 Mf
 Mf
@@ -7872,7 +7836,7 @@ Mf
 Mf
 Mf
 lz
-dV
+lz
 ur
 Mf
 jK
@@ -8249,10 +8213,10 @@ lz
 lz
 lz
 aa
-dV
 lz
 lz
-dV
+lz
+lz
 lz
 lz
 lz
@@ -8495,7 +8459,7 @@ ZJ
 ur
 lz
 lz
-dV
+lz
 lz
 lz
 lz
@@ -8865,7 +8829,7 @@ lz
 lz
 lz
 lz
-HU
+RP
 uy
 lz
 Mf
@@ -9001,7 +8965,7 @@ lz
 lz
 lz
 lz
-dV
+lz
 Mf
 Mf
 Mf
@@ -9254,7 +9218,7 @@ lz
 Ap
 lz
 lz
-dV
+lz
 Il
 lz
 lz
@@ -9615,7 +9579,7 @@ Mf
 Mf
 Mf
 Mf
-wp
+Mf
 Mf
 jX
 Mf
@@ -9744,13 +9708,13 @@ Mf
 Mf
 Jq
 sw
-dV
+lz
 Mf
 lz
 lz
 lz
 lz
-dV
+lz
 hE
 sw
 Mf
@@ -10372,7 +10336,7 @@ Mf
 sw
 RP
 lz
-dV
+lz
 lz
 lz
 Mf
@@ -11015,11 +10979,11 @@ Mf
 Mf
 ur
 Xx
-Df
+ur
 lz
 lz
 lz
-Df
+ur
 Mf
 pk
 Dy
@@ -13493,14 +13457,14 @@ Dy
 Dy
 Dy
 Bj
-cA
+xZ
 cF
 MD
 LE
 Cs
 MD
 aS
-cA
+xZ
 Bj
 Dy
 Dy
@@ -14514,13 +14478,13 @@ ve
 lz
 lz
 lz
-Df
+ur
 lz
 lz
 hh
 lz
 lz
-Df
+ur
 lz
 lz
 lz
@@ -14620,7 +14584,7 @@ Dy
 Dy
 bD
 ig
-nI
+MD
 YG
 Pr
 MD
@@ -14748,7 +14712,7 @@ MD
 MD
 xZ
 Me
-nI
+MD
 MD
 bD
 pk

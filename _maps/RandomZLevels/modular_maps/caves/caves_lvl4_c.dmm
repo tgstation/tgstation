@@ -136,15 +136,7 @@
 "bv" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/red/directional/south,
-/mob/living/simple_animal/hostile/cogscarab,
 /turf/open/floor/iron/white,
-/area/template_noop)
-"bB" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/iron,
 /area/template_noop)
 "bD" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -610,14 +602,6 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"gX" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/iron,
-/area/template_noop)
 "hk" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/vending/autodrobe/all_access,
@@ -685,12 +669,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/iron/dark,
-/area/template_noop)
-"ie" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/iron,
 /area/template_noop)
 "ih" = (
 /turf/open/misc/asteroid/snow/icemoon,
@@ -823,7 +801,6 @@
 	icon = 'icons/obj/power.dmi';
 	icon_state = "apc0";
 	name = "!ERROR! APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /turf/open/floor/plating,
@@ -886,7 +863,6 @@
 /turf/open/floor/plating,
 /area/template_noop)
 "ke" = (
-/mob/living/simple_animal/hostile/cogscarab,
 /obj/structure/fluff{
 	desc = "Has a valve and pump attached to it.";
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
@@ -1237,10 +1213,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/bronze/filled,
 /area/template_noop)
-"pq" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/flat,
-/area/template_noop)
 "pt" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -1509,7 +1481,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/cogscarab,
 /turf/open/floor/iron,
 /area/template_noop)
 "ss" = (
@@ -1635,7 +1606,6 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 6
 	},
-/mob/living/simple_animal/hostile/cogscarab,
 /turf/open/floor/glass/reinforced,
 /area/template_noop)
 "tM" = (
@@ -1784,8 +1754,7 @@
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "alarmp";
 	name = "air alarm";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/bronze/flat,
 /area/template_noop)
@@ -2072,10 +2041,6 @@
 /obj/machinery/photocopier,
 /turf/open/floor/iron,
 /area/template_noop)
-"yo" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/filled,
-/area/template_noop)
 "yq" = (
 /obj/machinery/vending/wardrobe/cargo_wardrobe,
 /obj/effect/turf_decal/tile/brown/fourcorners,
@@ -2097,11 +2062,6 @@
 	name = "Emergency Storage";
 	req_access = list("command")
 	},
-/turf/open/floor/iron/dark,
-/area/template_noop)
-"yt" = (
-/obj/machinery/door/firedoor,
-/mob/living/simple_animal/hostile/cogscarab,
 /turf/open/floor/iron/dark,
 /area/template_noop)
 "yx" = (
@@ -2526,8 +2486,7 @@
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "alarmp";
 	name = "air alarm";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/iron,
 /area/template_noop)
@@ -2590,13 +2549,6 @@
 	pixel_y = -10
 	},
 /turf/open/floor/bronze/flat,
-/area/template_noop)
-"Eh" = (
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 1
-	},
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/iron,
 /area/template_noop)
 "Ei" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2858,10 +2810,6 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"Hk" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/iron,
-/area/template_noop)
 "Hp" = (
 /turf/open/floor/iron/dark,
 /area/template_noop)
@@ -3111,14 +3059,6 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"Kn" = (
-/obj/structure/fans/tiny/invisible/caves,
-/turf/open/indestructible/binary{
-	light_color = "#4A9629";
-	light_power = 0.75;
-	light_range = 2
-	},
-/area/template_noop)
 "Ks" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -3278,11 +3218,6 @@
 	uses = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"Ml" = (
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/iron,
 /area/template_noop)
 "Mm" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -3537,7 +3472,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple,
-/mob/living/simple_animal/hostile/cogscarab,
 /turf/open/floor/iron,
 /area/template_noop)
 "PN" = (
@@ -3972,7 +3906,6 @@
 	icon = 'icons/obj/power.dmi';
 	icon_state = "apc0";
 	name = "!ERROR! APC";
-	pixel_x = 0;
 	pixel_y = -25
 	},
 /turf/open/floor/iron,
@@ -6326,7 +6259,7 @@ Jq
 sP
 Td
 Sv
-bB
+xU
 lG
 Pm
 Pm
@@ -7326,7 +7259,7 @@ Nr
 PN
 Sv
 uG
-Eh
+Ql
 lG
 Pm
 Pm
@@ -8706,7 +8639,7 @@ Pm
 Pm
 Sf
 pJ
-Hk
+Gp
 Ff
 Gp
 lB
@@ -8834,7 +8767,7 @@ Pm
 Ff
 mv
 Ff
-Ml
+lB
 hK
 hK
 hK
@@ -9869,7 +9802,7 @@ Pm
 BJ
 bl
 zp
-gX
+ge
 zQ
 eP
 rO
@@ -10602,7 +10535,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -10726,9 +10659,9 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -10851,13 +10784,13 @@ CN
 Pm
 Pm
 Pm
-Kn
+Pm
 DL
-Kn
 Pm
 Pm
 Pm
-Kn
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -10871,7 +10804,7 @@ PI
 Rx
 zp
 kH
-yt
+JD
 rV
 zp
 FS
@@ -10975,15 +10908,15 @@ Pm
 Ff
 Pm
 Pm
-Kn
+Pm
 rw
 EQ
 Vs
-Kn
 Pm
-Kn
+Pm
+Pm
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -11100,15 +11033,15 @@ Ff
 mv
 Ff
 CN
-Kn
-rw
-rw
-rw
-Kn
 Pm
-Kn
-Kn
-Kn
+rw
+rw
+rw
+Pm
+Pm
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -11225,16 +11158,16 @@ Pm
 Ff
 Pm
 Pm
-Kn
+Pm
 Vs
 rw
 rw
-Kn
-Kn
+Pm
+Pm
 Vs
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -11349,7 +11282,7 @@ Pm
 Pm
 CN
 Pm
-Kn
+Pm
 Vs
 rw
 rw
@@ -11359,8 +11292,8 @@ rw
 EQ
 Vs
 Vs
-Kn
-Kn
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -11472,9 +11405,9 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Vs
 EQ
 rw
@@ -11486,7 +11419,7 @@ EQ
 Vs
 bi
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -11596,7 +11529,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
@@ -11611,11 +11544,11 @@ Vs
 bi
 yc
 bi
-Kn
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -11718,10 +11651,10 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Vs
 uT
 EQ
@@ -11741,7 +11674,7 @@ Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -11842,7 +11775,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
@@ -11866,10 +11799,10 @@ Vs
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -11964,10 +11897,10 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 EQ
 rw
 rw
@@ -11995,7 +11928,7 @@ Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -12089,7 +12022,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
@@ -12120,9 +12053,9 @@ Vs
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -12215,9 +12148,9 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
@@ -12248,7 +12181,7 @@ Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -12343,10 +12276,10 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
@@ -12370,9 +12303,9 @@ Vs
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -12464,12 +12397,12 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
@@ -12491,10 +12424,10 @@ Vs
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -12589,7 +12522,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 dN
 Vs
@@ -12616,7 +12549,7 @@ rw
 rw
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -12714,7 +12647,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 bi
 bi
 bi
@@ -12741,7 +12674,7 @@ rw
 rw
 rw
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -12862,10 +12795,10 @@ rw
 rw
 rw
 EQ
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -12989,7 +12922,7 @@ Pm
 Pm
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -13114,7 +13047,7 @@ EQ
 Pm
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -13212,9 +13145,9 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 bi
 bi
 bi
@@ -13239,10 +13172,10 @@ rw
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -13336,7 +13269,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
@@ -13368,7 +13301,7 @@ Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -13462,9 +13395,9 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
@@ -13493,10 +13426,10 @@ Pm
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -13590,12 +13523,12 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
@@ -13622,7 +13555,7 @@ Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -13721,8 +13654,8 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
+Pm
+Pm
 Vs
 Vs
 EQ
@@ -13746,7 +13679,7 @@ rw
 Vs
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -13843,11 +13776,11 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
+Pm
 EQ
 Vs
 rw
@@ -13868,9 +13801,9 @@ rw
 rw
 Vs
 Vs
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -13964,10 +13897,10 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
@@ -13991,8 +13924,8 @@ Vs
 rw
 rw
 rw
-Kn
-Kn
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -14088,7 +14021,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
@@ -14115,7 +14048,7 @@ Pm
 Vs
 EQ
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -14213,7 +14146,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
@@ -14238,8 +14171,8 @@ rw
 Vs
 Vs
 Vs
-Kn
-Kn
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -14339,10 +14272,10 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Vs
 Vs
 bi
@@ -14363,7 +14296,7 @@ EQ
 Vs
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -14468,11 +14401,11 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
+Pm
 EQ
 rw
 rw
@@ -14486,8 +14419,8 @@ Vs
 Af
 Vs
 bi
-Kn
-Kn
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -14597,7 +14530,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 EQ
 Vs
@@ -14723,7 +14656,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 EQ
@@ -14732,9 +14665,9 @@ rw
 rw
 Vs
 Vs
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 bi
 Pm
 Pm
@@ -14848,7 +14781,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 EQ
@@ -14857,7 +14790,7 @@ Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -14974,14 +14907,14 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
+Pm
+Pm
 Vs
 rw
 EQ
 Vs
-Kn
-Kn
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -15100,12 +15033,12 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 rw
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -15212,10 +15145,10 @@ zp
 xK
 pg
 WU
-yo
 pM
 pM
-pq
+pM
+Ff
 WU
 Pm
 Pm
@@ -15225,12 +15158,12 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 CP
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -15350,12 +15283,12 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -15464,7 +15397,7 @@ pg
 WU
 te
 pM
-yo
+pM
 Ff
 Pm
 CN
@@ -15476,10 +15409,10 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -15583,7 +15516,7 @@ rH
 oq
 kp
 Jx
-ie
+cf
 XM
 hK
 PZ
@@ -15601,10 +15534,10 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -15726,9 +15659,9 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -15832,7 +15765,7 @@ cH
 gz
 Hu
 hK
-yo
+pM
 cf
 XM
 hK
@@ -15851,8 +15784,8 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -17529,8 +17462,8 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -17655,7 +17588,7 @@ Vs
 Vs
 Pm
 ea
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -17766,21 +17699,21 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Vs
-Kn
 Pm
-Kn
-Kn
-Kn
-Kn
-Kn
+Vs
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
 Vs
 DL
 Vs
 Vs
 ea
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -17890,22 +17823,22 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
-Kn
+Pm
 Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Vs
 Vs
 Vs
 Vs
 ea
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -18015,21 +17948,21 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
-Kn
-Kn
+Pm
+Pm
 Vs
 Vs
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -18140,26 +18073,26 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
-Kn
+Pm
 Vs
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Vs
 Vs
 ea
-Kn
-Kn
 Pm
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -18265,14 +18198,14 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
 Vs
 Vs
-Kn
-Kn
+Pm
+Pm
 Vs
 Vs
 Vs
@@ -18282,10 +18215,10 @@ Vs
 ea
 ea
 ea
-Kn
+Pm
 ea
 ea
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -18390,14 +18323,14 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
-Kn
-Kn
+Pm
+Pm
 Vs
 ea
 ea
@@ -18407,10 +18340,10 @@ ea
 ea
 ea
 ea
-Kn
+Pm
 ea
 ea
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -18517,25 +18450,25 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
 Vs
-Kn
-Kn
+Pm
+Pm
 ea
 ea
-Kn
+Pm
 ea
 ea
 ea
 ea
 ea
-Kn
+Pm
 ea
 ea
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -18643,27 +18576,27 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Vs
-Vs
-Kn
-Kn
-Kn
-ea
-Kn
-ea
-ea
-ea
-ea
-ea
-ea
-ea
-ea
-Kn
 Pm
-Kn
-Kn
+Pm
+Vs
+Vs
+Pm
+Pm
+Pm
+ea
+Pm
+ea
+ea
+ea
+ea
+ea
+ea
+ea
+ea
+Pm
+Pm
+Pm
+Pm
 Pm
 Pm
 Pm
@@ -18769,14 +18702,14 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 ea
 ea
 ea
@@ -18786,10 +18719,10 @@ ea
 ea
 ea
 ea
-Kn
+Pm
 ea
 ea
-Kn
+Pm
 Pm
 Pm
 Pm
@@ -18894,32 +18827,32 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Vs
-Vs
-Vs
-Kn
-Kn
-Kn
-Kn
-ea
-ea
-Kn
-ea
-ea
-ea
-ea
-ea
-Kn
-ea
-ea
-Kn
 Pm
-Kn
-Kn
 Pm
-Kn
+Vs
+Vs
+Vs
+Pm
+Pm
+Pm
+Pm
+ea
+ea
+Pm
+ea
+ea
+ea
+ea
+ea
+Pm
+ea
+ea
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
 jr
 "}
 (115,1,1) = {"
@@ -19019,20 +18952,20 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
 ea
 ea
 ea
@@ -19040,10 +18973,10 @@ ea
 ea
 ea
 ea
-Kn
+Pm
 ea
-Kn
-Kn
+Pm
+Pm
 ea
 HN
 "}
@@ -19142,33 +19075,33 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Vs
-Kn
-Vs
-Vs
+Pm
 Vs
 Vs
 Vs
-Kn
-Kn
+Vs
+Vs
+Pm
+Pm
 ea
 ea
-Kn
-ea
-ea
-ea
-ea
-ea
+Pm
 ea
 ea
 ea
 ea
 ea
-Kn
-Kn
+ea
+ea
+ea
+ea
+ea
+Pm
+Pm
 ea
 HN
 "}
@@ -19267,33 +19200,33 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 VR
 Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Vs
 Vs
 Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Vs
 ea
 ea
 ea
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 ea
 ea
 ea
-Kn
-Kn
+Pm
+Pm
 ea
 HN
 "}
@@ -19392,16 +19325,16 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
@@ -19409,10 +19342,10 @@ Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 ea
 ea
-Kn
+Pm
 ea
 ea
 ea
@@ -19519,14 +19452,14 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
 Vs
 Vs
 Vs
 Vs
 Vs
-Kn
+Pm
 Vs
 Vs
 Vs
@@ -19534,13 +19467,13 @@ Vs
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
 ea
 ea
 ea
@@ -19644,27 +19577,27 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 Vs
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Ce
 Vs
 Vs
 Vs
-Kn
+Pm
 Vs
 Vs
 Vs
-Kn
+Pm
 Vs
 Vs
 ea
@@ -19769,16 +19702,16 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 ea
 ea
 ea
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 Vs
 Vs
-Kn
+Pm
 Vs
 Vs
 Vs
@@ -19894,17 +19827,17 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
+Pm
+Pm
 ea
-Kn
-Kn
+Pm
+Pm
 ea
-Kn
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
+Pm
 Vs
 Vs
 Vs
@@ -20020,14 +19953,14 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 ea
 ea
-Kn
+Pm
 ea
 ea
 ea
-Kn
+Pm
 Vs
 Vs
 Vs
@@ -20144,15 +20077,15 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 ea
 ea
 ea
 ea
 ea
 ea
-Kn
-Kn
+Pm
+Pm
 ea
 Vs
 Vs
@@ -20269,15 +20202,15 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 ea
 ea
 ea
 ea
 ea
-Kn
+Pm
 ea
 ea
 ea
@@ -20396,10 +20329,10 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 ea
 ea
 ea
@@ -20408,7 +20341,7 @@ ea
 ea
 ea
 Vs
-Kn
+Pm
 Vs
 Vs
 Vs
@@ -20519,9 +20452,9 @@ Pm
 Pm
 Pm
 Pm
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
 ea
 ea
 ea
@@ -20532,10 +20465,10 @@ ea
 ea
 ea
 ea
-Kn
-Kn
-Kn
-Kn
+Pm
+Pm
+Pm
+Pm
 ea
 Vs
 Vs
@@ -20644,7 +20577,7 @@ Pm
 Pm
 Pm
 Pm
-Kn
+Pm
 ea
 ea
 ea
@@ -20659,7 +20592,7 @@ ea
 ea
 ea
 ea
-Kn
+Pm
 ea
 ea
 ea

@@ -340,13 +340,6 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
-"Jp" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/template_noop)
 "JG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/step_trigger/teleport_fancy{
@@ -394,13 +387,6 @@
 "RG" = (
 /obj/structure/flora/ash/leaf_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"Sa" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
 /area/template_noop)
 "Sd" = (
 /turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,
@@ -652,7 +638,7 @@ Sd
 Sd
 Sd
 Sd
-aA
+Sd
 aA
 aA
 aA
@@ -4214,13 +4200,13 @@ Sd
 Sd
 Sd
 Sd
-Sa
+gK
 aa
 aa
 mK
 mK
 aa
-Sa
+gK
 aa
 aa
 Sd
@@ -4326,7 +4312,7 @@ Sd
 Sd
 Sd
 HJ
-Sa
+gK
 aA
 aA
 GN
@@ -4382,7 +4368,7 @@ aA
 mK
 gK
 JG
-Jp
+gK
 mK
 aA
 aA
@@ -4458,7 +4444,7 @@ Sd
 Sd
 Sd
 HJ
-Sa
+gK
 aA
 BN
 Sd

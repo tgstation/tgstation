@@ -119,9 +119,6 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ratvar/barracks)
 "dc" = (
-/mob/living/simple_animal/hostile/ocular_warden{
-	dir = 8
-	},
 /obj/machinery/light/warm/directional/east,
 /turf/open/floor/bronze/flat,
 /area/template_noop)
@@ -160,10 +157,6 @@
 /obj/machinery/atmospherics/components/tank/oxygen,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
-"eF" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/turf/open/floor/bronze/flat,
-/area/template_noop)
 "eR" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -472,17 +465,6 @@
 /obj/structure/table/bronze,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
-"pN" = (
-/obj/structure/lattice,
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"pR" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/template_noop)
 "qy" = (
 /turf/closed/wall/mineral/bronze,
 /area/awaymission/caves/misc/ratvar/barracks)
@@ -518,10 +500,6 @@
 	},
 /turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
-"qX" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
 "rg" = (
 /obj/structure/fluff/clockwork/blind_eye,
 /turf/open/floor/bronze/filled/lavaland,
@@ -728,17 +706,11 @@
 	},
 /area/template_noop)
 "yu" = (
-/mob/living/simple_animal/hostile/cogscarab,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/ratvar/barracks)
-"yB" = (
-/obj/structure/fluff/clockwork/blind_eye,
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
 "yN" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -862,7 +834,6 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "CK" = (
-/mob/living/simple_animal/hostile/ocular_warden,
 /obj/machinery/light/warm/directional/north,
 /turf/open/floor/bronze/flat,
 /area/template_noop)
@@ -978,12 +949,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/awaymission/caves/misc/ratvar/barracks)
-"GF" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/bronze/filled,
 /area/awaymission/caves/misc/ratvar/barracks)
 "GW" = (
 /obj/machinery/door/airlock/external/glass{
@@ -1130,10 +1095,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/awaymission/caves/misc/ratvar/barracks)
-"Lx" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/turf/open/floor/bronze/flat,
 /area/awaymission/caves/misc/ratvar/barracks)
 "LK" = (
 /obj/structure/chair/pew/left,
@@ -1594,14 +1555,6 @@
 /turf/open/floor/bronze/flat{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/template_noop)
-"Zl" = (
-/mob/living/simple_animal/hostile/ocular_warden,
-/turf/open/floor/bronze/filled,
-/area/awaymission/caves/misc/ratvar/barracks)
-"Zz" = (
-/mob/living/simple_animal/hostile/cogscarab,
-/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "ZJ" = (
 /obj/machinery/door/airlock/bronze,
@@ -2865,7 +2818,7 @@ BF
 BF
 BF
 BF
-aa
+BF
 aa
 aa
 aa
@@ -3608,10 +3561,10 @@ BF
 BP
 GW
 BP
-Zl
+Wq
 lq
 Wq
-Zl
+Wq
 qy
 QD
 qy
@@ -4067,7 +4020,7 @@ aD
 aD
 BF
 BF
-pR
+JJ
 KG
 aD
 aU
@@ -4155,7 +4108,7 @@ aU
 aU
 aD
 KG
-pR
+JJ
 BF
 BF
 BF
@@ -4487,7 +4440,7 @@ Wq
 Wq
 Wq
 Wq
-GF
+Yf
 tB
 BP
 BC
@@ -4567,7 +4520,7 @@ aD
 BF
 BF
 BF
-pR
+JJ
 KG
 aD
 aU
@@ -4658,7 +4611,7 @@ aU
 aD
 aU
 KG
-pR
+JJ
 BF
 BF
 BF
@@ -5342,7 +5295,7 @@ aU
 aD
 Fk
 Fk
-pR
+JJ
 aU
 aU
 aU
@@ -5398,7 +5351,7 @@ KG
 KG
 KG
 KG
-eF
+JG
 fW
 fW
 fW
@@ -5838,7 +5791,7 @@ BF
 BF
 BF
 BF
-pR
+JJ
 Xy
 aU
 aU
@@ -6398,7 +6351,7 @@ KG
 KG
 KG
 KG
-eF
+JG
 fW
 fW
 fW
@@ -7317,7 +7270,7 @@ BF
 BF
 BF
 JJ
-pR
+JJ
 aD
 aD
 aD
@@ -7697,7 +7650,7 @@ aD
 aD
 Fk
 Fk
-pR
+JJ
 BF
 BF
 BF
@@ -7817,7 +7770,7 @@ aU
 aU
 aU
 aK
-qX
+aU
 aU
 md
 aD
@@ -8307,7 +8260,7 @@ BF
 Xy
 Xy
 aU
-qX
+aU
 aU
 aU
 BF
@@ -8691,7 +8644,7 @@ aD
 aK
 aU
 aD
-Zz
+aD
 aD
 JJ
 aD
@@ -9055,7 +9008,7 @@ BF
 JJ
 aU
 KG
-qX
+aU
 aU
 aU
 BF
@@ -9316,7 +9269,7 @@ aD
 aD
 aK
 aK
-Zz
+aD
 xI
 aD
 aD
@@ -9546,7 +9499,7 @@ UW
 Ow
 Ow
 UW
-Zz
+aD
 aD
 aD
 JJ
@@ -9693,7 +9646,7 @@ aU
 aD
 LM
 aD
-Zz
+aD
 aD
 aD
 aD
@@ -9808,7 +9761,7 @@ aD
 Hp
 aK
 aD
-Zz
+aD
 aD
 aD
 aD
@@ -10048,7 +10001,7 @@ Ow
 UW
 aD
 aD
-Zz
+aD
 JJ
 Mj
 JJ
@@ -10303,7 +10256,7 @@ BF
 BF
 aU
 aU
-qX
+aU
 aK
 aD
 aD
@@ -10315,7 +10268,7 @@ aD
 aD
 aK
 aK
-pN
+aK
 ta
 bT
 BF
@@ -10822,7 +10775,7 @@ BF
 BF
 aU
 aU
-qX
+aU
 aU
 BF
 BF
@@ -11063,7 +11016,7 @@ aU
 BF
 aD
 aD
-yB
+rg
 aD
 aD
 BF
@@ -11182,7 +11135,7 @@ BF
 aU
 aU
 aU
-qX
+aU
 es
 aU
 BF
@@ -11224,7 +11177,7 @@ qy
 BP
 BP
 qy
-Lx
+rA
 Nd
 Nd
 BP
@@ -12937,11 +12890,11 @@ BF
 BF
 BF
 JJ
-pR
+JJ
 aD
 aD
 aD
-pR
+JJ
 JG
 BF
 BF
@@ -13974,11 +13927,11 @@ BF
 BF
 BF
 BF
-pR
+JJ
 aD
 aD
 aD
-pR
+JJ
 BF
 BF
 BF
