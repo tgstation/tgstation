@@ -30,7 +30,7 @@
 		AB.boss = src
 		AB.Grant(src)
 		boss_abilities += AB
-		atb.assign_abilities(boss_abilities)
+	atb.assign_abilities(boss_abilities)
 
 /mob/living/simple_animal/hostile/boss/proc/RemoveAbilities()
 	qdel(atb)
