@@ -3,11 +3,11 @@
 	description = "Distribute supplies to the departments that ordered them, \
 		collect empty crates, load and unload the supply shuttle, \
 		ship bounty cubes."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
+	department_head = list(JOB_QUARTERMASTER)
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2
-	supervisors = "the quartermaster and the head of personnel"
+	supervisors = "the quartermaster"
 	selection_color = "#dcba97"
 	exp_granted_type = EXP_TYPE_CREW
 
