@@ -93,10 +93,6 @@
 /obj/structure/cable,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"aK" = (
-/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "aM" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "lavaland_living_east_maint"
@@ -438,14 +434,6 @@
 	dir = 4
 	},
 /area/mine/lounge)
-"cN" = (
-/obj/effect/spawner/random/trash/garbage{
-	spawn_loot_count = 3;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/trash/food_packaging,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "cQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/south,
@@ -1198,6 +1186,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
+"hy" = (
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "hB" = (
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
@@ -3558,6 +3554,10 @@
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
+"ul" = (
+/obj/item/crowbar/large/emergency,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "uq" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -3702,6 +3702,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
+"vk" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_loot_count = 3;
+	spawn_random_offset = 1
+	},
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "vm" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
@@ -4412,6 +4420,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/quarters)
+"zS" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "zU" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4594,10 +4606,6 @@
 	dir = 8
 	},
 /area/mine/laborcamp/production)
-"BB" = (
-/obj/item/crowbar/large/emergency,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "BC" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -8243,11 +8251,7 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
 "YM" = (
-/obj/structure/disposaloutlet,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/structure/lattice/catwalk,
+/obj/structure/barricade/wooden,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "YR" = (
@@ -10212,12 +10216,12 @@ aj
 pU
 pU
 aj
-pU
+aj
 uU
 uU
 uU
-aK
-BB
+zS
+ul
 uU
 aj
 aj
@@ -10469,12 +10473,12 @@ pU
 aj
 pU
 aj
-aj
+pU
 pU
 pU
 uU
 uU
-aK
+zS
 uU
 uU
 aj
@@ -10726,8 +10730,8 @@ aj
 aj
 aj
 aj
-aj
-aj
+YM
+pU
 aj
 pU
 uU
@@ -10983,7 +10987,7 @@ pU
 aj
 aj
 aj
-aj
+tF
 aj
 aj
 aj
@@ -11240,7 +11244,7 @@ pU
 pU
 pU
 aj
-aj
+tF
 aj
 aj
 aj
@@ -11497,7 +11501,7 @@ uU
 pU
 pU
 pU
-pU
+YM
 pU
 aj
 aj
@@ -32059,9 +32063,9 @@ zh
 eX
 wU
 RL
-YM
+hy
 pU
-cN
+vk
 FH
 aj
 aj
