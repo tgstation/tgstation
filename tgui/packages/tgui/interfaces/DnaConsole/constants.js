@@ -8,11 +8,11 @@ export const CONSOLE_MODE_SEQUENCER = 'sequencer';
 export const CONSOLE_MODE_STORAGE = 'storage';
 
 export const GENE_COLORS = {
-  A: 'green',
-  T: 'green',
-  G: 'blue',
-  C: 'blue',
-  X: 'grey',
+	A: 'green',
+	T: 'green',
+	G: 'blue',
+	C: 'blue',
+	X: 'grey',
 };
 
 export const MUT_NORMAL = 1;
@@ -42,9 +42,9 @@ const POSITIVE = 1;
 const NEGATIVE = 2;
 const MINOR_NEGATIVE = 4;
 export const MUT_COLORS = {
-  [POSITIVE]: 'good',
-  [NEGATIVE]: 'bad',
-  [MINOR_NEGATIVE]: 'average',
+	[POSITIVE]: 'good',
+	[NEGATIVE]: 'bad',
+	[MINOR_NEGATIVE]: 'average',
 };
 
 export const CLEAR_GENE = 0;

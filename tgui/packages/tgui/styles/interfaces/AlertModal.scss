@@ -6,23 +6,23 @@
 @use '../colors.scss';
 
 .AlertModal__Message {
-  text-align: center;
-  justify-content: center;
+	text-align: center;
+	justify-content: center;
 }
 
 .AlertModal__Buttons {
-  justify-content: center;
+	justify-content: center;
 }
 
 .AlertModal__Loader {
-  width: 100%;
-  position: relative;
-  height: 4px;
+	width: 100%;
+	position: relative;
+	height: 4px;
 }
 
 .AlertModal__LoaderProgress {
-  position: absolute;
-  transition: background-color 500ms ease-out, width 500ms ease-out;
-  background-color: colors.bg(colors.$primary);
-  height: 100%;
+	position: absolute;
+	transition: background-color 500ms ease-out, width 500ms ease-out;
+	background-color: colors.bg(colors.$primary);
+	height: 100%;
 }
