@@ -1,0 +1,13 @@
+/.yarn/**
+/**/node_modules
+/**/*.bundle.*
+/**/*.chunk.*
+/**/*.hot-update.*
+/packages/inferno/**
+/packages/common/**
+/packages/tgfont/**
+/packages/tgui-polyfill/**
+/packages/tgui-dev-server/**
+/packages/tgui-bench/**
+/packages/tgui/*.*
+/packages/tgui/debug/**
