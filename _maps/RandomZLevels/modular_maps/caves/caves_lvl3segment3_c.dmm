@@ -44,6 +44,11 @@
 /obj/effect/gibspawner/human/bodypartless,
 /turf/open/indestructible/necropolis,
 /area/template_noop)
+"fl" = (
+/mob/living/simple_animal/hostile/clockwork,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "fA" = (
 /obj/structure/stone_tile/block/burnt{
 	dir = 4
@@ -120,17 +125,27 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
-"gK" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/template_noop)
 "hh" = (
 /obj/structure/girder,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/iron,
 /turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"hE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/step_trigger/teleport_fancy{
+	locationx = 248;
+	locationy = 10;
+	name = "teleport to ratvar level";
+	uses = 0
+	},
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
+"hH" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/clockwork/cogscarab,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "ic" = (
 /obj/structure/fluff/clockwork/alloy_shards,
@@ -173,6 +188,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
+"mj" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/clockwork,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "ml" = (
 /turf/closed/wall/rust,
 /area/template_noop)
@@ -202,6 +222,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
+"pt" = (
+/obj/structure/flora/ash/tall_shroom,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "pC" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -210,6 +235,11 @@
 /obj/item/stock_parts/cell/empty,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"pF" = (
+/obj/structure/flora/rock,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "qu" = (
 /obj/structure/fluff/clockwork/fallen_armor,
@@ -257,6 +287,11 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
+"xA" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/clockwork/cogscarab,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "xX" = (
 /obj/structure/lattice/lava{
 	base_icon_state = "lattice";
@@ -267,6 +302,11 @@
 	dir = 4
 	},
 /turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"yr" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "yv" = (
 /obj/structure/railing{
@@ -287,6 +327,10 @@
 /obj/structure/flora/ash/seraka,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"EW" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
 "Fh" = (
 /turf/closed/indestructible/necropolis,
 /area/template_noop)
@@ -303,13 +347,6 @@
 /area/template_noop)
 "Gx" = (
 /obj/structure/flora/ash/cacti,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"GN" = (
-/obj/structure/flora/rock/pile,
-/obj/effect/mine/explosive{
-	range_heavy = 0
-	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "GZ" = (
@@ -340,18 +377,6 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
-"JG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/step_trigger/teleport_fancy{
-	locationx = 248;
-	locationy = 10;
-	name = "teleport to ratvar level";
-	uses = 0
-	},
-/turf/open/floor/bronze/flat{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/template_noop)
 "Kd" = (
 /obj/structure/lattice/lava{
 	base_icon_state = "lattice";
@@ -365,6 +390,11 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"LQ" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/clockwork/ocular_warden,
+/turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
 "Nd" = (
 /obj/item/food/grown/banana{
@@ -439,6 +469,13 @@
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
+"WJ" = (
+/obj/effect/mine/explosive{
+	range_heavy = 0
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
 "Yu" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
@@ -457,6 +494,14 @@
 	dir = 6
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Zl" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/mine/explosive{
+	range_heavy = 0
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 
 (1,1,1) = {"
@@ -3733,7 +3778,7 @@ Sd
 Sd
 Sd
 Sd
-qZ
+yr
 qZ
 aA
 aa
@@ -3767,7 +3812,7 @@ Sd
 Sd
 Sd
 aS
-qZ
+yr
 aa
 aa
 aa
@@ -3798,9 +3843,9 @@ Sd
 Sd
 Sd
 Sd
-Sd
+HJ
 qZ
-qZ
+yr
 aa
 aa
 aa
@@ -3872,7 +3917,7 @@ aa
 aa
 aa
 aA
-aA
+mK
 aA
 aA
 qZ
@@ -3900,7 +3945,7 @@ Sd
 Sd
 Sd
 aA
-aA
+mK
 aA
 aA
 aa
@@ -3932,14 +3977,14 @@ ag
 Sd
 Sd
 Sd
-Sd
+HJ
+fl
+mK
+mK
+mK
 aA
 aA
-aA
-aA
-aA
-aA
-aA
+fl
 aA
 qZ
 qZ
@@ -3962,17 +4007,17 @@ ar
 Sd
 Sd
 aA
+HJ
 Sd
 Sd
+HJ
+mK
+mK
+mK
 Sd
 Sd
 aA
-aA
-aA
-Sd
-Sd
-aA
-Ag
+pt
 VV
 Ag
 aA
@@ -3993,20 +4038,20 @@ ar
 (108,1,1) = {"
 ar
 Sd
-Sd
+HJ
 qZ
 Sd
 Sd
 Sd
 Sd
-Sd
+HJ
 Sd
 aa
 aa
 aa
 VV
-aA
-aA
+mK
+mK
 aA
 aA
 aa
@@ -4039,7 +4084,7 @@ aa
 aa
 aA
 qZ
-aA
+mK
 aA
 aa
 aa
@@ -4062,7 +4107,7 @@ Sd
 qZ
 qZ
 aA
-Sd
+HJ
 Sd
 aa
 aa
@@ -4093,9 +4138,9 @@ ar
 ar
 Sd
 aA
-qZ
+yr
 aA
-Sd
+HJ
 Sd
 Sd
 aa
@@ -4105,7 +4150,7 @@ aa
 aa
 qu
 aA
-aA
+mK
 aA
 aa
 aa
@@ -4128,7 +4173,7 @@ Sd
 Sd
 aA
 aA
-Sd
+HJ
 Sd
 Sd
 Sd
@@ -4138,7 +4183,7 @@ Sd
 aa
 aA
 aA
-VV
+WJ
 aa
 aa
 aa
@@ -4151,7 +4196,7 @@ Sd
 Sd
 Sd
 Sd
-aA
+mK
 Fh
 ar
 "}
@@ -4161,7 +4206,7 @@ Sd
 Sd
 aA
 aA
-aA
+mK
 Sd
 Sd
 aa
@@ -4171,7 +4216,7 @@ aa
 aa
 qZ
 mK
-aA
+mK
 aa
 aa
 aa
@@ -4183,7 +4228,7 @@ aa
 Sd
 Sd
 Sd
-Sd
+HJ
 aA
 Fh
 ar
@@ -4193,20 +4238,20 @@ ar
 Sd
 Sd
 aA
-aA
-aA
-aA
+mK
+mK
+mK
 Sd
 Sd
 Sd
 Sd
-gK
+LQ
 aa
 aa
 mK
 mK
 aa
-gK
+LQ
 aa
 aa
 Sd
@@ -4215,9 +4260,9 @@ aa
 aa
 Sd
 Sd
-Sd
+HJ
 aA
-VV
+WJ
 Sd
 ar
 "}
@@ -4225,14 +4270,14 @@ ar
 ar
 Sd
 Sd
-Sd
+HJ
 aA
-aA
-aA
-aA
-aA
-Sd
-Sd
+mK
+mK
+mK
+mK
+HJ
+HJ
 Sd
 HJ
 mb
@@ -4248,7 +4293,7 @@ Sd
 Sd
 Sd
 Sd
-Sd
+HJ
 aA
 BN
 Sd
@@ -4261,21 +4306,21 @@ Sd
 Sd
 aA
 aA
+yr
 qZ
-qZ
+mK
 aA
 aA
-aA
-aA
-aA
+mK
+mK
 mK
 ic
 mK
 aA
 aA
-Sd
-Sd
-Sd
+HJ
+HJ
+HJ
 Sd
 Sd
 Sd
@@ -4283,7 +4328,7 @@ Sd
 aA
 BN
 aA
-qZ
+yr
 Sd
 ar
 "}
@@ -4293,30 +4338,30 @@ Sd
 Sd
 Sd
 Sd
-Sd
+HJ
 qZ
 aS
-qZ
-aI
-aA
-aA
+yr
+bh
+mK
+mK
+mK
+hH
 mK
 bh
 mK
-bh
+mK
 mK
 aA
-aA
-aA
-Sd
-Sd
-Sd
 HJ
-gK
+HJ
+HJ
+HJ
+LQ
 aA
 aA
-GN
-qZ
+Zl
+yr
 Sd
 ar
 "}
@@ -4330,27 +4375,27 @@ Sd
 aA
 qZ
 qZ
-qZ
-aA
-aA
-mK
-gK
+yr
 mK
 mK
 mK
-aA
-aA
-aA
-aA
+EW
+mK
+mK
+mK
+mK
+mK
+mK
+mK
 mK
 mK
 mb
 aA
-aA
+mK
+yr
+pF
 qZ
-aS
-qZ
-Sd
+HJ
 ar
 "}
 (119,1,1) = {"
@@ -4361,29 +4406,29 @@ Sd
 Sd
 Sd
 Sd
-Sd
-Sd
-aA
-aA
-mK
-gK
-JG
-gK
-mK
-aA
-aA
-aA
-aA
+HJ
+HJ
 aA
 mK
 mK
+EW
+hE
+EW
+xA
+mK
+mK
+mK
+mK
+mK
+mK
+mj
 mb
 mK
-aA
+mK
 qZ
 qZ
 qZ
-Sd
+HJ
 ar
 "}
 (120,1,1) = {"
@@ -4395,20 +4440,20 @@ Sd
 Sd
 Sd
 Sd
-Sd
-Sd
+HJ
+HJ
 aA
 aA
+xA
+EW
 mK
-gK
 mK
-aA
-aA
-aA
-aA
-Sd
-Sd
-Sd
+mK
+mK
+mK
+HJ
+HJ
+HJ
 mK
 mb
 BN
@@ -4437,17 +4482,17 @@ mK
 aA
 aA
 Sd
-Sd
-Sd
-Sd
-Sd
+HJ
+HJ
+HJ
 Sd
 Sd
 HJ
-gK
+HJ
+LQ
 aA
 BN
-Sd
+HJ
 Sd
 Sd
 ar
@@ -4465,9 +4510,9 @@ Sd
 Sd
 Sd
 Sd
-Sd
-Sd
-Sd
+HJ
+HJ
+HJ
 Sd
 Sd
 Sd
