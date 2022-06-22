@@ -769,3 +769,15 @@
   - bugfix: mulebots can be turned on/off
   Thunder12345:
   - bugfix: A camera in Meta's tech storage is now properly named
+2022-06-22:
+  Capsandi:
+  - bugfix: some walls in the crashed ship ruin, they are no longer full-bright
+  CoffeeDragon16:
+  - bugfix: switching bodies, such as becoming a lich or mindswapping will no longer
+      revoke a wizard's access to their spell book
+  Paxilmaniac:
+  - rscadd: Glass floor tiles can now be made out of both plasma glass, and reinforced
+      plasma glass
+  Pepsilawn:
+  - bugfix: Kilostation's Greater Port Maintenance has had a missing area patched
+      up.
