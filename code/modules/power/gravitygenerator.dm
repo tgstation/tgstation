@@ -72,6 +72,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/obj/machinery/gravity_generator/main/main_part
 
 /obj/machinery/gravity_generator/part/Destroy()
+	UnregisterSignal(main_part, COMSIG_ATOM_UPDATED_ICON)
 	main_part = null
 	return ..()
 
