@@ -140,7 +140,7 @@
 	last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 
 /obj/machinery/power/supermatter_crystal/proc/animate_the_sm() // Start the loop
-	filters = filter(type="rays", size = clamp(power/30, 0, 125), color = SUPERMATTER_COLOUR, factor = 0.6, density = 12)
+	add_filter("rays", 1, list(type="rays", size = clamp(power/30, 0, 125), color = SUPERMATTER_COLOUR, factor = 0.6, density = 12))
 	animate(filters[1], time = 10 SECONDS, offset = 10, loop=-1)
 	animate(time = 10 SECONDS, offset = 0, loop=-1)
 	animate(filters[1], time = 2 SECONDS, size = 80, loop=-1, flags = ANIMATION_PARALLEL)
@@ -149,15 +149,15 @@
 
 /obj/machinery/power/supermatter_crystal/proc/check_special_delamination() // In priority of devastation.
 	if(cascade_initiated) // Supermatter cascade totter goal.
-		return "cascade"
+		return CASCADE_DELAMINATION
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)// Singularity
-		return "singularity"
+		return SINGULARITY_DELAMINATION
 	if(power > POWER_PENALTY_THRESHOLD) // Tesla delamination
-		return "tesla"
+		return TESLA_DELAMINATION
 	else
 		return null
 
-/obj/machinery/power/supermatter_crystal/proc/handle_crystal_effects(tick)
+/obj/machinery/power/supermatter_crystal/proc/handle_crystal_effects()
 	if(!check_special_delamination())
 		if(power || damage && !final_countdown)
 			set_light((initial(light_range) + power/200), initial(light_power) + power/1000, (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), TRUE)
@@ -172,25 +172,27 @@
 			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
 
 	switch(check_special_delamination())
-		if("cascade")
+		if(CASCADE_DELAMINATION)
 			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_CASCADE_COLOUR, TRUE)
 			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_CASCADE_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
 			return
 
-		if("singularity")
+		if(SINGULARITY_DELAMINATION)
+			var/rays_filter = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+			var/outline_filter = filter(type = "outline", size = 1, color = SUPERMATTER_SINGULARITY_LIGHT_COLOUR)
+
 			if(!warp)
 				warp = new(src)
 				vis_contents += warp
-				animate(warp, time = 20*0.1*3, transform = matrix().Scale(0.5,0.5))
-				animate(time = 20*0.1*7, transform = matrix())
+				animate(warp, time = 20*0.1*3, transform = matrix().Scale(0.5,0.5), loop = 1)
+				animate(time = 20*0.1*7, transform = matrix(), loop = 1)
 
-			if(DT_PROB(1, 5))
-				set_light(initial(light_range) + clamp(damage*power, 10, 50), 3, SUPERMATTER_SINGULARITY_COLOUR, TRUE)
 
-			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_SINGULARITY_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+			set_light(initial(light_range) + clamp(damage*power, 10, 50), 3, SUPERMATTER_SINGULARITY_LIGHT_COLOUR, TRUE)
+			filters = list(rays_filter, outline_filter)
 			return
 
-		if("tesla")
+		if(TESLA_DELAMINATION)
 			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_TESLA_COLOUR, TRUE)
 			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_TESLA_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
 			return
