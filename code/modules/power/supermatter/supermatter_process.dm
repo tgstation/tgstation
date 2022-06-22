@@ -158,6 +158,7 @@
 		return null
 
 /obj/machinery/power/supermatter_crystal/proc/handle_crystal_effects()
+	var/list/filters_to_add = list()
 	if(!check_special_delamination())
 		if(power || damage && !final_countdown)
 			set_light((initial(light_range) + power/200), initial(light_power) + power/1000, (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), TRUE)
@@ -168,14 +169,18 @@
 				animate_the_sm()
 
 		if(damage && final_countdown) // Let's jump to a special effect if we can.
+			var/rays_filter = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+			var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field")
+			var/causality_filter = filter(type="layer", icon = causality_field, flags = FILTER_OVERLAY)
 			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), TRUE)
-			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+			filters_to_add |= list(rays_filter, causality_filter)
 
 	switch(check_special_delamination())
+
 		if(CASCADE_DELAMINATION)
 			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_CASCADE_COLOUR, TRUE)
-			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_CASCADE_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
-			return
+			filters_to_add |= filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_CASCADE_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+
 
 		if(SINGULARITY_DELAMINATION)
 			var/rays_filter = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_SINGULARITY_RAYS_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
@@ -189,13 +194,24 @@
 
 
 			set_light(initial(light_range) + clamp(damage*power, 10, 50), 3, SUPERMATTER_SINGULARITY_LIGHT_COLOUR, TRUE)
-			filters = list(rays_filter, outline_filter)
-			return
+			filters_to_add |=  list(rays_filter, outline_filter)
+			if(final_countdown)
+				var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field")
+				var/causality_filter = filter(type="layer", icon = causality_field, flags = FILTER_OVERLAY)
+				filters_to_add |= causality_filter
 
 		if(TESLA_DELAMINATION)
+			var/rays_filter = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_TESLA_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
+			var/icon/ball = new/icon('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball")
+			var/tesla_filter = filter(type="layer", icon = ball, flags = FILTER_UNDERLAY)
 			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_TESLA_COLOUR, TRUE)
-			filters = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_TESLA_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
-			return
+			filters_to_add |= list(rays_filter, tesla_filter)
+			if(final_countdown)
+				var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field")
+				var/causality_filter = filter(type="layer", icon = causality_field, flags = FILTER_OVERLAY)
+				filters_to_add |= causality_filter
+	filters = filters_to_add
+
 /// Sucks ALL the objects into the supermatter. Really cool with the singularity.
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull_delamination(turf, radius = 20, singularity)
 	turf = get_turf(loc)
