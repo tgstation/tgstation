@@ -32,7 +32,7 @@
 		boss_abilities += AB
 	atb.assign_abilities(boss_abilities)
 
-/mob/living/simple_animal/hostile/boss/proc/RemoveAbilities()
+/mob/living/simple_animal/hostile/boss/Destroy()
 	qdel(atb)
 	atb = null
 	for(var/ab in boss_abilities)
@@ -41,9 +41,6 @@
 		AB.Remove(src)
 		qdel(AB)
 	boss_abilities.Cut()
-
-/mob/living/simple_animal/hostile/boss/Destroy()
-	RemoveAbilities()
 	return ..()
 
 
@@ -57,7 +54,6 @@
 	var/boss_type = /mob/living/simple_animal/hostile/boss
 	var/needs_target = TRUE //Does the boss need to have a target? (Only matters for the AI)
 	var/say_when_triggered = "" //What does the boss Say() when the ability triggers?
-	var/active_ability = FALSE //if you don't want an ability triggering during 
 
 /datum/action/boss/Trigger(trigger_flags)
 	. = ..()

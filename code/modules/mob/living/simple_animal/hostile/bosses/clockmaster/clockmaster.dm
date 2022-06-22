@@ -136,9 +136,9 @@
 		//killing nearby clockcult mobs to prevent players from getting owned during the monologue
 		if(istype(nearby_mob, /mob/living/simple_animal/hostile/clockwork))
 			nearby_mob.gib()
-		RemoveAbilities()
 		to_chat(nearby_mob, span_warning("You feel yourself tense up at the sound of [src]!"))
 	say("ENOUGH!")
+	mid_ability = TRUE
 	sleep(3 SECONDS)
 	say("I should of known relying on a mere mortal was a foolish endevour, such feeble creations cannot be trusted with divine work.")
 	sleep(5 SECONDS)

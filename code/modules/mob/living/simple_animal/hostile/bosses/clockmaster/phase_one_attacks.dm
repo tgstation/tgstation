@@ -13,6 +13,8 @@
 	. = ..()
 	if(!.)
 		return FALSE
+	if(boss.mid_ability)
+		return FALSE
 	return TRUE
 
 /datum/action/boss/turret_summon/Trigger(trigger_flags)
@@ -79,6 +81,8 @@
 /datum/action/boss/steam_traps/IsAvailable()
 	. = ..()
 	if(!.)
+		return FALSE
+	if(boss.mid_ability)
 		return FALSE
 	if(vents_active)
 		return FALSE
@@ -150,6 +154,8 @@
 /datum/action/boss/cogscarab_swarm/IsAvailable()
 	. = ..()
 	if(!.)
+		return FALSE
+	if(boss.mid_ability)
 		return FALSE
 	if(summoned_cogscarabs >= max_cogscarabs)
 		return FALSE
