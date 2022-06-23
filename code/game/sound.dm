@@ -53,7 +53,7 @@
 	var/sound/S = sound(get_sfx(soundin))
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
-	var/list/listeners
+	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
 
 	. = list()//output everything that successfully heard the sound
 
@@ -61,13 +61,12 @@
 	var/turf/below_turf = SSmapping.get_turf_below(turf_source)
 
 	if(ignore_walls)
-		listeners = SSspatial_grid.orthogonal_range_search(turf_source, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, maxdistance)
 
 		if(above_turf && istransparentturf(above_turf))
-			listeners += SSspatial_grid.orthogonal_range_search(above_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, maxdistance)
+			listeners += SSmobs.clients_by_zlevel[above_turf.z]
 
 		if(below_turf && istransparentturf(turf_source))
-			listeners += SSspatial_grid.orthogonal_range_search(below_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, maxdistance)
+			listeners += SSmobs.clients_by_zlevel[below_turf.z]
 
 		for(var/mob/listening_mob as anything in listeners)
 			if(get_dist(listening_mob, turf_source) <= maxdistance)
