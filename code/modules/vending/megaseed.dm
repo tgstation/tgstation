@@ -31,6 +31,7 @@
 		/obj/item/seeds/korta_nut = 3,
 		/obj/item/seeds/lemon = 3,
 		/obj/item/seeds/lime = 3,
+		/obj/item/seeds/olive = 3,
 		/obj/item/seeds/onion = 3,
 		/obj/item/seeds/orange = 3,
 		/obj/item/seeds/peas = 3,
@@ -50,7 +51,7 @@
 		/obj/item/seeds/tower = 3,
 		/obj/item/seeds/watermelon = 3,
 		/obj/item/seeds/wheat = 3,
-		/obj/item/seeds/whitebeet = 3
+		/obj/item/seeds/whitebeet = 3,
 	)
 	contraband = list(
 		/obj/item/seeds/amanita = 2,
@@ -61,10 +62,10 @@
 		/obj/item/seeds/reishi = 2,
 		/obj/item/seeds/cannabis = 3,
 		/obj/item/seeds/starthistle = 2,
-		/obj/item/seeds/random = 2
+		/obj/item/seeds/random = 2,
 	)
 	premium = list(
-		/obj/item/reagent_containers/spray/waterflower = 1
+		/obj/item/reagent_containers/spray/waterflower = 1,
 	)
 	refill_canister = /obj/item/vending_refill/hydroseeds
 	default_price = PAYCHECK_LOWER

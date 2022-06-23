@@ -60,6 +60,48 @@
 		desc += " This one has a rating of [display_energy(maxcharge)][prob(10) ? ", and you should not swallow it" : ""]." //joke works better if it's not on every cell
 	update_appearance()
 
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
+	var/static/list/loc_connections = list(
+		COMSIG_ITEM_MAGICALLY_CHARGED = .proc/on_magic_charge,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/**
+ * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
+ *
+ * If we, or the item we're located in, is subject to the charge spell, gain some charge back
+ */
+/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	// This shouldn't be running if we're not being held by a mob,
+	// or if we're not within an object being held by a mob, but just in case...
+	if(!ismovable(loc))
+		return
+
+	. = COMPONENT_ITEM_CHARGED
+
+	if(prob(80))
+		maxcharge -= 200
+
+	if(maxcharge <= 1) // Div by 0 protection
+		maxcharge = 1
+		. |= COMPONENT_ITEM_BURNT_OUT
+
+	charge = maxcharge
+	update_appearance()
+
+	// Guns need to process their chamber when we've been charged
+	if(isgun(loc))
+		var/obj/item/gun/gun_loc = loc
+		gun_loc.process_chamber()
+
+	// The thing we're in might have overlays or icon states for whether the cell is charged
+	if(!ismob(loc))
+		loc.update_appearance()
+
+	return .
+
 /obj/item/stock_parts/cell/create_reagents(max_vol, flags)
 	. = ..()
 	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
@@ -173,12 +215,12 @@
 /obj/item/stock_parts/cell/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/internal/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 
-		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
 
 			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
-			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
+			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
 			if((stomach.drain_time > world.time) || !stomach)
 				return
 			if(charge < CELL_POWER_DRAIN)
@@ -270,6 +312,13 @@
 /obj/item/stock_parts/cell/pulse/pistol //10 pulse shots
 	name = "pulse pistol power cell"
 	maxcharge = 2000
+
+/obj/item/stock_parts/cell/ninja
+	name = "black power cell"
+	icon_state = "bscell"
+	maxcharge = 10000
+	custom_materials = list(/datum/material/glass=60)
+	chargerate = 2000
 
 /obj/item/stock_parts/cell/high
 	name = "high-capacity power cell"

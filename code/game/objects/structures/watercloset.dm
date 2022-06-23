@@ -273,8 +273,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/sink/Initialize(mapload, bolt)
 	. = ..()
+	create_reagents(100, NO_REACT)
 	if(has_water_reclaimer)
-		create_reagents(100, NO_REACT)
 		reagents.add_reagent(dispensedreagent, 100)
 	AddComponent(/datum/component/plumbing/simple_demand, bolt)
 
@@ -437,7 +437,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/sink/proc/begin_reclamation()
 	if(!reclaiming)
 		reclaiming = TRUE
-		START_PROCESSING(SSfluids, src)
+		START_PROCESSING(SSplumbing, src)
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"

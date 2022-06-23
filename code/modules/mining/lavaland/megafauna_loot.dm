@@ -265,7 +265,7 @@
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	hoodtype = /obj/item/clothing/head/hooded/hostile_environment
-	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -275,16 +275,21 @@
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/pickaxe)
+	greyscale_colors = "#4d4d4d#808080"
+	greyscale_config = /datum/greyscale_config/heck_suit
+	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
+	AddComponent(/datum/component/gags_recolorable)
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(delta_time)
 	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(istype(wearer) && DT_PROB(1, delta_time)) //cursed by bubblegum
-		if(DT_PROB(7.5, delta_time))
+		if(prob(7.5))
 			new /datum/hallucination/oh_yeah(wearer)
 			to_chat(wearer, span_colossus("<b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b>"))
 		else
@@ -295,7 +300,7 @@
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -305,12 +310,17 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSMOUTH
 	actions_types = list()
+	greyscale_colors = "#4d4d4d#808080#ff3300"
+	greyscale_config = /datum/greyscale_config/heck_helmet
+	greyscale_config_worn = /datum/greyscale_config/heck_helmet/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	AddComponent(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
 	AddElement(/datum/element/radiation_protected_clothing)
+	AddComponent(/datum/component/gags_recolorable)
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
@@ -340,19 +350,6 @@
 	to_chat(user, span_notice("You heal from the corpse of [butchered]."))
 	var/datum/client_colour/color = user.add_client_colour(/datum/client_colour/bloodlust)
 	QDEL_IN(color, 1 SECONDS)
-
-/obj/item/clothing/head/hooded/hostile_environment/update_overlays()
-	. = ..()
-	var/mutable_appearance/glass_overlay = mutable_appearance(icon, "hostile_env_glass")
-	glass_overlay.appearance_flags = RESET_COLOR
-	. += glass_overlay
-
-/obj/item/clothing/head/hooded/hostile_environment/worn_overlays(mutable_appearance/standing, isinhands)
-	. = ..()
-	if(!isinhands)
-		var/mutable_appearance/glass_overlay = mutable_appearance('icons/mob/clothing/head.dmi', "hostile_env_glass")
-		glass_overlay.appearance_flags = RESET_COLOR
-		. += glass_overlay
 
 #define MAX_BLOOD_LEVEL 100
 
@@ -725,7 +722,8 @@
 		if(1)
 			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities."))
 			consumer.dna.features = list("mcolor" = "#A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
-			consumer.eye_color = "#FEE5A3"
+			consumer.eye_color_left = "#FEE5A3"
+			consumer.eye_color_right = "#FEE5A3"
 			consumer.set_species(/datum/species/lizard)
 		if(2)
 			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))
@@ -1048,6 +1046,7 @@
 		for(var/mob/living/hit_mob in turf)
 			to_chat(hit_mob, span_userdanger("You've been struck by lightning!"))
 			hit_mob.electrocute_act(15 * (isanimal(hit_mob) ? 3 : 1) * (turf == target ? 2 : 1) * (boosted ? 2 : 1), src, flags = SHOCK_TESLA|SHOCK_NOSTUN)
+
 		for(var/obj/hit_thing in turf)
 			hit_thing.take_damage(20, BURN, ENERGY, FALSE)
 	playsound(target, 'sound/magic/lightningbolt.ogg', 100, TRUE)

@@ -21,10 +21,10 @@
 	is_dimorphic = TRUE
 
 	var/mob/living/brain/brainmob //The current occupant.
-	var/obj/item/organ/brain/brain //The brain organ
-	var/obj/item/organ/eyes/eyes
-	var/obj/item/organ/ears/ears
-	var/obj/item/organ/tongue/tongue
+	var/obj/item/organ/internal/brain/brain //The brain organ
+	var/obj/item/organ/internal/eyes/eyes
+	var/obj/item/organ/internal/ears/ears
+	var/obj/item/organ/internal/tongue/tongue
 
 	/// Do we show the information about missing organs upon being examined? Defaults to TRUE, useful for Dullahan heads.
 	var/show_organs_on_examine = TRUE
@@ -221,7 +221,7 @@
 				hair_hidden = TRUE
 		///HAIR CHECKS END
 
-		if(!hair_hidden && !owner.getorgan(/obj/item/organ/brain) && !(NOBLOOD in species_flags_list))
+		if(!hair_hidden && !owner.getorgan(/obj/item/organ/internal/brain) && !(NOBLOOD in species_flags_list))
 			show_debrained = TRUE
 		else
 			show_debrained = FALSE
@@ -335,14 +335,17 @@
 			. += lips_overlay
 
 		// eyes
-		var/image/eyes_overlay = image('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
-		. += eyes_overlay
-		if(eyes)
-			eyes_overlay.icon_state = eyes.eye_icon_state
-
-			if(eyes.eye_color)
-				eyes_overlay.color = eyes.eye_color
-
+		if(eyes) // This is a bit of copy/paste code from eyes.dm:generate_body_overlay
+			var/image/eye_left = image('icons/mob/human_face.dmi', "[eyes.eye_icon_state]_l", -BODY_LAYER, SOUTH)
+			var/image/eye_right = image('icons/mob/human_face.dmi', "[eyes.eye_icon_state]_r", -BODY_LAYER, SOUTH)
+			if(eyes.eye_color_left)
+				eye_left.color = eyes.eye_color_left
+			if(eyes.eye_color_right)
+				eye_right.color = eyes.eye_color_right
+			. += eye_left
+			. += eye_right
+		else
+			. += image('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 	else
 		if(!facial_hair_hidden && facial_overlay && (FACEHAIR in species_flags_list))
 			facial_overlay.alpha = hair_alpha

@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - qol: "IceBoxStation is now contained in one map file, instead of three. This is good for mapping. If things on IceBox break, please make an issue report."

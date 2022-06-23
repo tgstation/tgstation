@@ -203,10 +203,10 @@
 	STR.max_items = 100
 	STR.set_holdable(list(
 		/obj/item/food/grown,
-		/obj/item/seeds,
+		/obj/item/graft,
 		/obj/item/grown,
 		/obj/item/reagent_containers/honeycomb,
-		/obj/item/graft,
+		/obj/item/seeds,
 		))
 ////////
 
@@ -265,7 +265,7 @@
 			),
 		list(
 			/obj/item/stack/sheet/mineral/sandstone,
-			/obj/item/stack/sheet/mineral/wood
+			/obj/item/stack/sheet/mineral/wood,
 			))
 	STR.max_combined_stack_amount = 300
 
@@ -304,8 +304,8 @@
 	STR.display_numerical_stacking = FALSE
 	STR.set_holdable(list(
 		/obj/item/book,
+		/obj/item/spellbook,
 		/obj/item/storage/book,
-		/obj/item/spellbook
 		))
 
 /*
@@ -331,19 +331,19 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 	STR.set_holdable(list(
+		/obj/item/clothing/mask/cigarette,
+		/obj/item/food,
+		/obj/item/kitchen,
+		/obj/item/lighter,
+		/obj/item/organ,
 		/obj/item/plate,
 		/obj/item/reagent_containers/food,
 		/obj/item/reagent_containers/glass,
-		/obj/item/clothing/mask/cigarette,
-		/obj/item/storage/fancy,
+		/obj/item/rollingpaper,
 		/obj/item/storage/box/gum,
 		/obj/item/storage/box/matches,
-		/obj/item/food,
+		/obj/item/storage/fancy,
 		/obj/item/trash,
-		/obj/item/lighter,
-		/obj/item/rollingpaper,
-		/obj/item/kitchen,
-		/obj/item/organ,
 		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	STR.insert_preposition = "on"
 	STR.max_items = 7
@@ -421,14 +421,14 @@
 	STR.max_items = 50
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/chem_pack,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/food/drinks/waterbottle,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/food/drinks/waterbottle,
 		/obj/item/reagent_containers/medigel,
+		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/chem_pack
 		))
 
 /*
@@ -450,16 +450,16 @@
 	STR.max_items = 25
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
-		/obj/item/reagent_containers/syringe,
+		/obj/item/bodypart,
+		/obj/item/food/monkeycube,
+		/obj/item/healthanalyzer,
+		/obj/item/organ,
+		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/hypospray/medipen,
-		/obj/item/food/monkeycube,
-		/obj/item/organ,
-		/obj/item/bodypart,
-		/obj/item/healthanalyzer
+		/obj/item/reagent_containers/syringe,
 		))
 
 /*
@@ -481,17 +481,17 @@
 	STR.max_items = 25
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
-		/obj/item/slime_extract,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/bodypart,
 		/obj/item/food/deadmouse,
 		/obj/item/food/monkeycube,
 		/obj/item/organ,
-		/obj/item/bodypart,
 		/obj/item/petri_dish,
-		/obj/item/swab
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/slime_extract,
+		/obj/item/swab,
 		))
 
 /*
@@ -515,14 +515,14 @@
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
-		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/assembly,
-		/obj/item/stock_parts,
-		/obj/item/reagent_containers/glass/beaker,
-		/obj/item/stack/cable_coil,
 		/obj/item/circuitboard,
 		/obj/item/electronics,
-		/obj/item/wallframe/camera
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/stack/cable_coil,
+		/obj/item/stack/ore/bluespace_crystal,
+		/obj/item/stock_parts,
+		/obj/item/wallframe/camera,
 		))
 
 /obj/item/storage/bag/harpoon_quiver

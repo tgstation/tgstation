@@ -27,7 +27,7 @@
 	var/appears_dead = FALSE
 	if (stat == DEAD)
 		appears_dead = TRUE
-		if(getorgan(/obj/item/organ/brain))
+		if(getorgan(/obj/item/organ/internal/brain))
 			. += span_deadsay("[t_He] [t_is] limp and unresponsive, with no signs of life.")
 		else if(get_bodypart(BODY_ZONE_HEAD))
 			. += span_deadsay("It appears that [t_his] brain is missing...")
@@ -96,9 +96,9 @@
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
 
-	if(fire_stacks > 0)
+	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
 		msg += "[t_He] [t_is] covered in something flammable.\n"
-	if(fire_stacks < 0)
+	if(has_status_effect(/datum/status_effect/fire_handler/wet_stacks))
 		msg += "[t_He] look[p_s()] a little soaked.\n"
 
 	if(pulledby?.grab_state)

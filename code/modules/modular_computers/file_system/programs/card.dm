@@ -4,7 +4,7 @@
 	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
-	transfer_access = list(ACCESS_HEADS)
+	transfer_access = list(ACCESS_COMMAND)
 	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
@@ -59,7 +59,7 @@
 	var/list/managers = SSid_access.sub_department_managers_tgui
 	for(var/access_as_text in managers)
 		var/list/info = managers[access_as_text]
-		var/access = text2num(access_as_text)
+		var/access = access_as_text
 		if((access in id_card.access) && ((target_dept in info["regions"]) || !target_dept))
 			region_access |= info["regions"]
 			job_templates |= info["templates"]

@@ -645,20 +645,22 @@ Then we space some of our heat, and think about if we should stop conducting.
 /turf/proc/radiate_to_spess() //Radiate excess tile heat to space
 	if(temperature <= T0C) //Considering 0 degC as te break even point for radiation in and out
 		return
-	var/delta_temperature = (temperature_archived - TCMB) //hardcoded space temperature
+	// Because we keep losing energy, makes more sense for us to be the T2 here.
+	var/delta_temperature = temperature_archived - TCMB //hardcoded space temperature
 	if(heat_capacity <= 0 || abs(delta_temperature) <= MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		return
-	var/heat = thermal_conductivity * delta_temperature * \
-		(heat_capacity * HEAT_CAPACITY_VACUUM / (heat_capacity + HEAT_CAPACITY_VACUUM))
-	temperature -= heat/heat_capacity
+	// Heat should be positive in most cases
+	// coefficient applied first because some turfs have very big heat caps.
+	var/heat = CALCULATE_CONDUCTION_ENERGY(thermal_conductivity * delta_temperature, HEAT_CAPACITY_VACUUM, heat_capacity)
+	temperature -= heat / heat_capacity
 
 /turf/open/proc/temperature_share_open_to_solid(turf/sharer)
 	sharer.temperature = air.temperature_share(null, sharer.thermal_conductivity, sharer.temperature, sharer.heat_capacity)
 
 /turf/proc/share_temperature_mutual_solid(turf/sharer, conduction_coefficient) //This is all just heat sharing, don't get freaked out
-	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
-	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && heat_capacity && sharer.heat_capacity)
-		var/heat = conduction_coefficient * delta_temperature * \
-			(heat_capacity * sharer.heat_capacity / (heat_capacity + sharer.heat_capacity)) //The larger the combined capacity the less is shared
-		temperature -= heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
-		sharer.temperature += heat / sharer.heat_capacity
+	var/delta_temperature = sharer.temperature_archived - temperature_archived
+	if(abs(delta_temperature) <= MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER || !heat_capacity || !sharer.heat_capacity)
+		return
+	var/heat = conduction_coefficient * CALCULATE_CONDUCTION_ENERGY(delta_temperature, heat_capacity, sharer.heat_capacity)
+	temperature += heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
+	sharer.temperature -= heat / sharer.heat_capacity

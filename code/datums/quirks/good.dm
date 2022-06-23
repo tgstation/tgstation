@@ -76,7 +76,7 @@
 
 /datum/quirk/item_quirk/clown_enjoyer/add()
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.add_hud_to(quirk_holder)
+	fan.show_to(quirk_holder)
 
 /datum/quirk/item_quirk/mime_fan
 	name = "Mime Fan"
@@ -93,7 +93,7 @@
 
 /datum/quirk/item_quirk/mime_fan/add()
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.add_hud_to(quirk_holder)
+	fan.show_to(quirk_holder)
 
 /datum/quirk/freerunning
 	name = "Freerunning"
@@ -166,7 +166,7 @@
 
 /datum/quirk/night_vision/proc/refresh_quirk_holder_eyes()
 	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
-	var/obj/item/organ/eyes/eyes = human_quirk_holder.getorgan(/obj/item/organ/eyes)
+	var/obj/item/organ/internal/eyes/eyes = human_quirk_holder.getorgan(/obj/item/organ/internal/eyes)
 	if(!eyes || eyes.lighting_alpha)
 		return
 	// We've either added or removed TRAIT_NIGHT_VISION before calling this proc. Just refresh the eyes.

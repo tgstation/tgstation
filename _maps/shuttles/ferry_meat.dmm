@@ -122,9 +122,9 @@
 /area/shuttle/transport)
 "v" = (
 /obj/machinery/door/airlock/freezer{
-	name = "Meat Tradeship Backroom";
-	req_access_txt = "28"
+	name = "Meat Tradeship Backroom"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "w" = (

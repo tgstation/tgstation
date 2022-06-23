@@ -174,7 +174,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		turret_gun.forceMove(src)
 		stored_gun = turret_gun
 
-	RegisterSignal(stored_gun, COMSIG_PARENT_PREQDELETED, .proc/null_gun)
+	RegisterSignal(stored_gun, COMSIG_PARENT_QDELETING, .proc/null_gun)
 	var/list/gun_properties = stored_gun.get_turret_properties()
 
 	//required properties
@@ -889,15 +889,17 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!mapload)
 		return
 
-	if(control_area)
-		control_area = get_area_instance_from_text(control_area)
-		if(control_area == null)
-			control_area = get_area(src)
-			stack_trace("Bad control_area path for [src], [src.control_area]")
-	else if(!control_area)
-		control_area = get_area(src)
+	// The actual area that control_area refers to
+	var/area/control_area_instance
 
-	for(var/obj/machinery/porta_turret/T in control_area)
+	if(control_area)
+		control_area_instance = get_area_instance_from_text(control_area)
+		if(!control_area_instance)
+			log_mapping("Bad control_area path for [src] at [AREACOORD(src)]: [control_area]")
+	if(!control_area_instance)
+		control_area_instance = get_area(src)
+
+	for(var/obj/machinery/porta_turret/T in control_area_instance)
 		turrets |= WEAKREF(T)
 
 /obj/machinery/turretid/examine(mob/user)

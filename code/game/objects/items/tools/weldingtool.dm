@@ -120,6 +120,11 @@
 	dyn_explosion(src, plasmaAmount/5, explosion_cause = src) // 20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
 
+/obj/item/weldingtool/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+	target.add_overlay(GLOB.welding_sparks)
+	. = ..()
+	target.cut_overlay(GLOB.welding_sparks)
+
 /obj/item/weldingtool/attack(mob/living/carbon/human/attacked_humanoid, mob/living/user)
 	if(!istype(attacked_humanoid))
 		return ..()
@@ -145,7 +150,7 @@
 	if(isOn() && !QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
 		handle_fuel_and_temps(1, user)
 		var/mob/living/attacked_mob = attacked_atom
-		if(attacked_mob.IgniteMob())
+		if(attacked_mob.ignite_mob())
 			message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
 			log_game("[key_name(user)] set [key_name(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
 
@@ -164,7 +169,7 @@
 
 		if(!QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
 			var/mob/living/attacked_mob = attacked_atom
-			if(attacked_mob.IgniteMob())
+			if(attacked_mob.ignite_mob())
 				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
 				log_game("[key_name(user)] set [key_name(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
 
@@ -229,7 +234,6 @@
 	set_welding(!welding)
 	if(welding)
 		if(get_fuel() >= 1)
-			to_chat(user, span_notice("You switch [src] on."))
 			playsound(loc, activation_sound, 50, TRUE)
 			force = 15
 			damtype = BURN
@@ -237,10 +241,9 @@
 			update_appearance()
 			START_PROCESSING(SSobj, src)
 		else
-			to_chat(user, span_warning("You need more fuel!"))
+			balloon_alert(user, "no fuel!")
 			switched_off(user)
 	else
-		to_chat(user, span_notice("You switch [src] off."))
 		playsound(loc, deactivation_sound, 50, TRUE)
 		switched_off(user)
 
@@ -381,6 +384,7 @@
 	change_icons = FALSE
 	can_off_process = TRUE
 	light_range = 1
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.5
 	var/last_gen = 0
 	var/nextrefueltick = 0

@@ -10,18 +10,19 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_RESISTCOLD,
-		TRAIT_RADIMMUNE,
 		TRAIT_GENELESS,
-		TRAIT_NOHUNGER,
 		TRAIT_HARDLY_WOUNDED,
+		TRAIT_LITERATE,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_NOHUNGER,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
-	mutantlungs = /obj/item/organ/lungs/plasmaman
-	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
-	mutantliver = /obj/item/organ/liver/plasmaman
-	mutantstomach = /obj/item/organ/stomach/bone/plasmaman
+	mutantlungs = /obj/item/organ/internal/lungs/plasmaman
+	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
+	mutantliver = /obj/item/organ/internal/liver/plasmaman
+	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
 	burnmod = 1.5
 	heatmod = 1.5
 	brutemod = 1.5
@@ -64,7 +65,7 @@
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	var/atmos_sealed = TRUE
-	if(CanIgniteMob(H))
+	if(HAS_TRAIT(H, TRAIT_NOFIRE))
 		atmos_sealed = FALSE
 	else if(!isclothing(H.wear_suit) || !(H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE))
 		atmos_sealed = FALSE
@@ -99,7 +100,7 @@
 					H.adjust_fire_stacks(0.25 * delta_time)
 					if(!H.on_fire && H.fire_stacks > 0)
 						H.visible_message(span_danger("[H]'s body reacts with the atmosphere and bursts into flames!"),span_userdanger("Your body reacts with the atmosphere and bursts into flame!"))
-					H.IgniteMob()
+					H.ignite_mob()
 					internal_fire = TRUE
 
 	else if(H.fire_stacks)
@@ -116,7 +117,6 @@
 	if(internal_fire)
 		no_protection = TRUE
 	. = ..()
-
 
 /datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	if(job.plasmaman_outfit)

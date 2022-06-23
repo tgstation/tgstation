@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/burn/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
 		target.adjust_fire_stacks(1 * power_multiplier)
-		target.IgniteMob()
+		target.ignite_mob()
 
 /// This command heats the listeners up like boiling water.
 /datum/voice_of_god_command/hot

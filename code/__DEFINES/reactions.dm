@@ -138,8 +138,8 @@
 // BZ:
 /// The maximum temperature BZ can form at. Deliberately set lower than the minimum burn temperature for most combustible gases in an attempt to prevent long fuse singlecaps.
 #define BZ_FORMATION_MAX_TEMPERATURE (FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 60) // Yes, someone used this as a bomb timer. I hate players.
-/// The amount of energy ~2.5 moles of BZ forming from N2O and plasma releases.
-#define BZ_FORMATION_ENERGY FIRE_CARBON_ENERGY_RELEASED
+/// The amount of energy 1 mole of BZ forming from N2O and plasma releases.
+#define BZ_FORMATION_ENERGY 80000
 
 // Pluoxium:
 /// The minimum temperature pluoxium can form from carbon dioxide, oxygen, and tritium at.
@@ -169,8 +169,6 @@
 // Freon:
 /// The minimum temperature freon can form from plasma, CO2, and BZ at.
 #define FREON_FORMATION_MIN_TEMPERATURE FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
-/// A scaling divisor for the rate of freon formation relative to mix temperature.
-#define FREON_FORMATION_TEMP_DIVISOR (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10)
 /// The amount of energy 2.5 moles of freon forming from plasma, CO2, and BZ consumes.
 #define FREON_FORMATION_ENERGY 100
 

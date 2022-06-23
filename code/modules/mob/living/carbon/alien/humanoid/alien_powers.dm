@@ -317,14 +317,14 @@ Doesn't work on other aliens/AI.*/
 
 
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
 		return 0
 	return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
 		return FALSE
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)

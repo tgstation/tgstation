@@ -7,7 +7,7 @@
 						  /mob/living/simple_animal/hostile/asteroid/polarbear = 30, /obj/structure/spawner/ice_moon/polarbear = 3, \
 						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10, \
 						  /mob/living/simple_animal/hostile/asteroid/lobstrosity = 15)
-	flora_spawn_list = list(/obj/structure/flora/tree/pine = 2, /obj/structure/flora/rock/icy = 2, /obj/structure/flora/rock/pile/icy = 2, /obj/structure/flora/grass/both = 6, /obj/structure/flora/ash/chilly = 2)
+	flora_spawn_list = list(/obj/structure/flora/tree/pine/style_random = 2, /obj/structure/flora/rock/icy/style_random = 2, /obj/structure/flora/rock/pile/icy/style_random = 2, /obj/structure/flora/grass/both/style_random = 6, /obj/structure/flora/ash/chilly = 2)
 	///Note that this spawn list is also in the lavaland generator
 	feature_spawn_list = list(/obj/structure/geyser/wittel = 6, /obj/structure/geyser/random = 2, /obj/structure/geyser/plasma_oxide = 10, /obj/structure/geyser/protozine = 10, /obj/structure/geyser/hollowwater = 10)
 
@@ -28,4 +28,4 @@
 						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /obj/structure/spawner/ice_moon/demonic_portal/snowlegion = 3, \
 						  SPAWN_MEGAFAUNA = 2)
 	megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/colossus = 1)
-	flora_spawn_list = list(/obj/structure/flora/rock/icy = 6, /obj/structure/flora/rock/pile/icy = 6, /obj/structure/flora/ash/chilly = 1)
+	flora_spawn_list = list(/obj/structure/flora/rock/icy/style_random = 6, /obj/structure/flora/rock/pile/icy/style_random = 6, /obj/structure/flora/ash/chilly = 1)

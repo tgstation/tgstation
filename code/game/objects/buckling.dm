@@ -131,7 +131,7 @@
 	if(.)
 		if(resistance_flags & ON_FIRE) //Sets the mob on fire if you buckle them to a burning atom/movableect
 			M.adjust_fire_stacks(1)
-			M.IgniteMob()
+			M.ignite_mob()
 
 /**
  * Set a mob as unbuckled from src

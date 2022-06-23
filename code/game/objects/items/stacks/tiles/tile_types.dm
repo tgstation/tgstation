@@ -1,6 +1,6 @@
 /**
  * TILE STACKS
- * 
+ *
  * Allows us to place a turf on a plating.
  */
 /obj/item/stack/tile
@@ -65,7 +65,7 @@
 
 /**
  * Place our tile on a plating, or replace it.
- * 
+ *
  * Arguments:
  * * target_plating - Instance of the plating we want to place on. Replaced during sucessful executions.
  * * user - The mob doing the placing.
@@ -970,6 +970,19 @@
 /obj/item/stack/tile/fakepit/loaded
 	amount = 30
 
+/obj/item/stack/tile/fakeice
+	name = "fake ice"
+	singular_name = "fake ice tile"
+	desc = "A piece of tile with a convincing ice pattern."
+	icon_state = "tile_ice"
+	inhand_icon_state = "tile-diamond"
+	turf_type = /turf/open/floor/fakeice
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fakeice
+
+/obj/item/stack/tile/fakeice/loaded
+	amount = 30
+
 //High-traction
 /obj/item/stack/tile/noslip
 	name = "high-traction floor tile"
@@ -1249,3 +1262,21 @@
 
 /obj/item/stack/tile/rglass/sixty
 	amount = 60
+
+/obj/item/stack/tile/glass/plasma
+	name = "plasma glass floor"
+	singular_name = "plasma glass floor tile"
+	desc = "Plasma glass window floors, for when... Whatever is down there is too scary for normal glass."
+	icon_state = "tile_pglass"
+	turf_type = /turf/open/floor/glass/plasma
+	merge_type = /obj/item/stack/tile/glass/plasma
+	mats_per_unit = list(/datum/material/alloy/plasmaglass = MINERAL_MATERIAL_AMOUNT * 0.25)
+
+/obj/item/stack/tile/rglass/plasma
+	name = "reinforced plasma glass floor"
+	singular_name = "reinforced plasma glass floor tile"
+	desc = "Reinforced plasma glass window floors, because whatever's downstairs should really stay down there."
+	icon_state = "tile_rpglass"
+	turf_type = /turf/open/floor/glass/reinforced/plasma
+	merge_type = /obj/item/stack/tile/rglass/plasma
+	mats_per_unit = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.125, /datum/material/alloy/plasmaglass = MINERAL_MATERIAL_AMOUNT * 0.25)

@@ -163,25 +163,59 @@
 	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	tick_interval = initial(tick_interval)
 
+#define HEALING_SLEEP_DEFAULT 0.2
+
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
-		var/healing = -0.2
+		var/healing = HEALING_SLEEP_DEFAULT
+
+		// having high spirits helps us recover
+		var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
+		if(mood != null)
+			switch(mood.sanity_level)
+				if(SANITY_LEVEL_GREAT)
+					healing = 0.2
+				if(SANITY_LEVEL_NEUTRAL)
+					healing = 0.1
+				if(SANITY_LEVEL_DISTURBED)
+					healing = 0
+				if(SANITY_LEVEL_UNSTABLE)
+					healing = 0
+				if(SANITY_LEVEL_CRAZY)
+					healing = -0.1
+				if(SANITY_LEVEL_INSANE)
+					healing = -0.2
+
+		var/turf/rest_turf = get_turf(owner)
+		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
+
+		// sleeping with a blindfold or in the dark helps us rest
+		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, BLINDFOLD_TRAIT) || is_sleeping_in_darkness)
+			healing += 0.1
+
+		// sleeping with earmuffs helps blockout the noise as well
+		if(HAS_TRAIT_FROM(src, TRAIT_DEAF, CLOTHING_TRAIT))
+			healing += 0.1
+
+		// check for beds
 		if((locate(/obj/structure/bed) in owner.loc))
-			healing -= 0.3
+			healing += 0.2
 		else if((locate(/obj/structure/table) in owner.loc))
-			healing -= 0.1
+			healing += 0.1
+
+		// don't forget the bedsheet
 		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
 			if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
 				continue
-			healing -= 0.1
+			healing += 0.1
 			break //Only count the first bedsheet
-		if(health_ratio > 0.8)
-			owner.adjustBruteLoss(healing)
-			owner.adjustFireLoss(healing)
-			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
-		owner.adjustStaminaLoss(healing)
 
+		if(healing > 0 && health_ratio > 0.8)
+			owner.adjustBruteLoss(-1 * healing)
+			owner.adjustFireLoss(-1 * healing)
+			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE)
+		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
 
@@ -191,6 +225,8 @@
 
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
+
+#undef HEALING_SLEEP_DEFAULT
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -228,7 +264,8 @@
 	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
-	animate(filter, radius = 32, time = 15, size = 0, loop = -1)
+	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(radius = 32, time = 1.5 SECONDS, size = 0)
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.update_bodypart_bleed_overlays()
@@ -251,44 +288,6 @@
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
 
-//GOLEM GANG
-
-//OTHER DEBUFFS
-/datum/status_effect/strandling //get it, strand as in durathread strand + strangling = strandling hahahahahahahahahahhahahaha i want to die
-	id = "strandling"
-	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /atom/movable/screen/alert/status_effect/strandling
-
-/datum/status_effect/strandling/on_apply()
-	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
-	return ..()
-
-/datum/status_effect/strandling/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
-	return ..()
-
-/datum/status_effect/strandling/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] to be being choked by some durathread strands. You may be able to <b>cut</b> them off.")
-
-/atom/movable/screen/alert/status_effect/strandling
-	name = "Choking strand"
-	desc = "A magical strand of Durathread is wrapped around your neck, preventing you from breathing! Click this icon to remove the strand."
-	icon_state = "his_grace"
-	alerttooltipstyle = "hisgrace"
-
-/atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-
-	to_chat(owner, span_notice("You attempt to remove the durathread strand from around your neck."))
-	if(do_after(owner, 3.5 SECONDS, owner))
-		if(isliving(owner))
-			var/mob/living/living_owner = owner
-			to_chat(living_owner, span_notice("You succesfuly remove the durathread strand."))
-			living_owner.remove_status_effect(/datum/status_effect/strandling)
-
-//OTHER DEBUFFS
 /datum/status_effect/pacify
 	id = "pacify"
 	status_type = STATUS_EFFECT_REPLACE
@@ -512,21 +511,57 @@
 
 /datum/status_effect/eldritch/blade/on_apply()
 	. = ..()
+	RegisterSignal(owner, COMSIG_MOVABLE_PRE_THROW, .proc/on_pre_throw)
 	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTED, .proc/on_teleport)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /datum/status_effect/eldritch/blade/on_remove()
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_TELEPORTED, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(owner, list(
+		COMSIG_MOVABLE_PRE_THROW,
+		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_MOVED,
+	))
+
 	return ..()
 
-/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area
+/// Checks if the movement from moving_from to going_to leaves our [var/locked_to] area. Returns TRUE if so.
+/datum/status_effect/eldritch/blade/proc/is_escaping_locked_area(atom/moving_from, atom/going_to)
+	if(!locked_to)
+		return FALSE
+
+	// If moving_from isn't in our locked area, it means they've
+	// somehow completely escaped, so we'll opt not to act on them.
+	if(get_area(moving_from) != locked_to)
+		return FALSE
+
+	// If going_to is in our locked area,
+	// they're just moving within the area like normal.
+	if(get_area(going_to) == locked_to)
+		return FALSE
+
+	return TRUE
+
+/// Signal proc for [COMSIG_MOVABLE_PRE_THROW] that prevents people from escaping our locked area via throw.
+/datum/status_effect/eldritch/blade/proc/on_pre_throw(mob/living/source, list/throw_args)
+	SIGNAL_HANDLER
+
+	var/atom/throw_dest = throw_args[1]
+	if(!is_escaping_locked_area(source, throw_dest))
+		return
+
+	var/mob/thrower = throw_args[4]
+	if(istype(thrower))
+		to_chat(thrower, span_hypnophrase("An otherworldly force prevents you from throwing [source] out of [get_area_name(locked_to)]!"))
+
+	to_chat(source, span_hypnophrase("An otherworldly force prevents you from being thrown out of [get_area_name(locked_to)]!"))
+
+	return COMPONENT_CANCEL_THROW
+
+/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area.
 /datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
 	SIGNAL_HANDLER
 
-	if(!locked_to)
-		return
-
-	if(get_area(destination) == locked_to)
+	if(!is_escaping_locked_area(source, destination))
 		return
 
 	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
@@ -538,32 +573,20 @@
 /datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
 
-	if(!locked_to)
+	// Let's not mess with heretics dragging a potential victim.
+	if(ismob(source.pulledby) && IS_HERETIC(source.pulledby))
 		return
 
-	if(get_area(source) == locked_to)
+	// If the movement's forced, just let it happen regardless.
+	if(forced || !is_escaping_locked_area(old_loc, source))
 		return
 
 	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
 
+	var/turf/further_behind_old_loc = get_edge_target_turf(old_loc, REVERSE_DIR(movement_dir))
+
 	source.Stun(1 SECONDS)
-	source.throw_at(old_loc, 5, 1)
-
-/// A status effect used for specifying confusion on a living mob.
-/// Created automatically with /mob/living/set_confusion.
-/datum/status_effect/confusion
-	id = "confusion"
-	alert_type = null
-	var/strength
-
-/datum/status_effect/confusion/tick()
-	strength -= 1
-	if (strength <= 0)
-		owner.remove_status_effect(/datum/status_effect/confusion)
-		return
-
-/datum/status_effect/confusion/proc/set_strength(new_strength)
-	strength = new_strength
+	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -859,8 +882,11 @@
 	if(prob(40))
 		var/obj/item/I = H.get_active_held_item()
 		if(I && H.dropItemToGround(I))
-			H.visible_message(span_notice("[H]'s hand convulses, and they drop their [I.name]!"),span_userdanger("Your hand convulses violently, and you drop what you were holding!"))
-			H.jitteriness += 5
+			H.visible_message(
+				span_notice("[H]'s hand convulses, and they drop their [I.name]!"),
+				span_userdanger("Your hand convulses violently, and you drop what you were holding!"),
+			)
+			H.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/jitter)
 
 /atom/movable/screen/alert/status_effect/convulsing
 	name = "Shaky Hands"
@@ -980,7 +1006,7 @@
 			human_owner.vomit()
 		if(20 to 30)
 			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-			human_owner.Jitter(50)
+			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 		if(30 to 40)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 5)
 		if(40 to 50)
@@ -996,7 +1022,7 @@
 		if(90 to 95)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
-			human_owner.add_confusion(12)
+			human_owner.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/confusion)
 
 /datum/status_effect/amok
 	id = "amok"

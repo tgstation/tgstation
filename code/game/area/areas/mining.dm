@@ -1,6 +1,7 @@
 /**********************Mine areas**************************/
 
 /area/mine
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | CULT_PERMITTED
@@ -97,6 +98,7 @@
 /**********************Lavaland Areas**************************/
 
 /area/lavaland
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
@@ -151,6 +153,7 @@
 /**********************Ice Moon Areas**************************/
 
 /area/icemoon
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
@@ -223,6 +226,10 @@
 
 /area/icemoon/underground/unexplored/rivers/deep
 	map_generator = /datum/map_generator/cave_generator/icemoon/deep
+
+/area/icemoon/underground/unexplored/rivers/deep/shoreline //use this for when you don't want mobs to spawn in certain areas in the "deep" portions. Think adjacent to rivers or station structures.
+	icon_state = "shore"
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | NO_ALERTS
 
 /area/icemoon/underground/explored // ruins can't spawn here
 	name = "Icemoon Underground"

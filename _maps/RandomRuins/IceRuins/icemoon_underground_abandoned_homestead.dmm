@@ -31,16 +31,9 @@
 	},
 /area/ruin/powered/shuttle)
 "ht" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"hM" = (
-/obj/structure/barricade/wooden/crude/snow,
-/turf/open/floor/wood{
-	icon_state = "wood-broken7";
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/powered/shuttle)
 "kj" = (
 /obj/structure/railing{
 	color = "#8a7453";
@@ -89,7 +82,7 @@
 /turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "tD" = (
-/obj/structure/flora/rock/pile/icy,
+/obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "uc" = (
@@ -103,13 +96,6 @@
 	pixel_y = 11
 	},
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/powered/shuttle)
-"uA" = (
-/obj/structure/barricade/wooden/snowed,
-/turf/open/floor/wood{
-	icon_state = "wood-broken6";
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -232,7 +218,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "Fg" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "FS" = (
@@ -254,8 +240,8 @@
 /area/ruin/powered/shuttle)
 "Hy" = (
 /obj/structure/barricade/wooden/crude/snow,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood{
-	icon_state = "wood-broken";
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -287,7 +273,7 @@
 /obj/structure/railing{
 	color = "#8a7453"
 	},
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Nz" = (
@@ -361,17 +347,10 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
-"Ux" = (
-/obj/structure/barricade/wooden/snowed,
-/turf/open/floor/wood{
-	icon_state = "wood-broken3";
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/powered/shuttle)
 "Vf" = (
 /obj/structure/barricade/wooden/snowed,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood{
-	icon_state = "wood-broken";
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -434,7 +413,7 @@ Sv
 ol
 ol
 ol
-hM
+Hy
 ol
 mq
 mq
@@ -550,7 +529,7 @@ ol
 cP
 Hv
 ng
-uA
+Vf
 zd
 bf
 bf
@@ -616,7 +595,7 @@ Ht
 ol
 ol
 ol
-Ux
+Vf
 ol
 ol
 ol

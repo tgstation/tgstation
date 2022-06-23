@@ -115,7 +115,7 @@
 	opacity = FALSE
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
-	req_access = list(ACCESS_ENGINE)
+	req_access = list(ACCESS_ENGINEERING)
 	max_integrity = 100
 	var/active = FALSE
 	var/list/deployed_shields

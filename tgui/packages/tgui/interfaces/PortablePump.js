@@ -7,12 +7,15 @@ export const PortablePump = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     direction,
+    connected,
     holding,
     target_pressure,
     default_pressure,
     min_pressure,
     max_pressure,
   } = data;
+  const pump_or_port = connected ? "Port" : "Pump";
+  const area_or_tank = holding ? "Tank" : "Area";
   return (
     <Window
       width={300}
@@ -20,12 +23,15 @@ export const PortablePump = (props, context) => {
       <Window.Content>
         <PortableBasicInfo />
         <Section
-          title="Pump"
+          title="Pumping"
           buttons={(
             <Button
-              icon={direction ? 'sign-in-alt' : 'sign-out-alt'}
-              content={direction ? 'In' : 'Out'}
-              selected={direction}
+              content={
+                direction
+                  ? area_or_tank + ' → ' + pump_or_port
+                  : pump_or_port + ' → ' + area_or_tank
+              }
+              color={!direction && !holding ? 'caution' : null}
               onClick={() => act('direction')} />
           )}>
           <LabeledList>

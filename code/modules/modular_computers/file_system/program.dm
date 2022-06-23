@@ -43,6 +43,8 @@
 	var/alert_silenced = FALSE
 	/// Whether to highlight our program in the main screen. Intended for alerts, but loosely available for any need to notify of changed conditions. Think Windows task bar highlighting. Available even if alerts are muted.
 	var/alert_pending = FALSE
+	/// How well this program will help combat detomatix viruses.
+	var/detomatix_resistance = NONE
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
@@ -75,7 +77,7 @@
 	return 0
 
 /**
- *Runs when the device is used to attack an atom in non-combat mode.
+ *Runs when the device is used to attack an atom in non-combat mode using right click (secondary).
  *
  *Simulates using the device to read or scan something. Tap is called by the computer during pre_attack
  *and sends us all of the related info. If we return TRUE, the computer will stop the attack process
@@ -231,7 +233,7 @@
 				return TRUE
 			if("PC_minimize")
 				var/mob/user = usr
-				if(!computer.active_program || !computer.all_components[MC_CPU])
+				if(!computer.active_program)
 					return
 
 				computer.idle_threads.Add(computer.active_program)

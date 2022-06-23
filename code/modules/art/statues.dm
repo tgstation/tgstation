@@ -286,7 +286,7 @@
 	AddElement(/datum/element/eyestab)
 	AddElement(/datum/element/wall_engraver)
 	//deals 200 damage to statues, meaning you can actually kill one in ~250 hits
-	AddElement(/datum/element/bane, /mob/living/simple_animal/hostile/statue, damage_multiplier = 40)
+	AddElement(/datum/element/bane, /mob/living/simple_animal/hostile/netherworld/statue, damage_multiplier = 40)
 
 /obj/item/chisel/Destroy()
 	prepared_block = null
@@ -507,7 +507,7 @@ Moving interrupts
 	name = "custom statue"
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
-	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_TOGETHER //Added keep together in case targets has weird layering
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_TOGETHER | LONG_GLIDE //Added keep together in case targets has weird layering
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	/// primary statue overlay
 	var/mutable_appearance/content_ma

@@ -46,6 +46,7 @@
 #define UNIT_TEST_FAILED 1
 #define UNIT_TEST_SKIPPED 2
 
+#define TEST_PRE 0
 #define TEST_DEFAULT 1
 #define TEST_DEL_WORLD INFINITY
 
@@ -91,22 +92,30 @@
 #include "emoting.dm"
 #include "food_edibility_check.dm"
 #include "gas_transfer.dm"
+#include "get_turf_pixel.dm"
 #include "greyscale_config.dm"
 #include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
 #include "holidays.dm"
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
+#include "hydroponics_validate_genes.dm"
 #include "keybinding_init.dm"
+#include "knockoff_component.dm"
 #include "load_map_security.dm"
 #include "machine_disassembly.dm"
+#include "mapping.dm"
+#include "mecha_damage.dm"
 #include "medical_wounds.dm"
 #include "merge_type.dm"
 #include "metabolizing.dm"
+#include "mob_faction.dm"
 #include "mob_spawn.dm"
 #include "modsuit.dm"
 #include "modular_map_loader.dm"
+#include "novaflower_burn.dm"
 #include "ntnetwork_tests.dm"
+#include "nuke_cinematic.dm"
 #include "objectives.dm"
 #include "outfit_sanity.dm"
 #include "paintings.dm"
@@ -124,9 +133,13 @@
 #include "reagent_recipe_collisions.dm"
 #include "resist.dm"
 #include "say.dm"
+#include "screenshot_antag_icons.dm"
+#include "screenshot_basic.dm"
+#include "screenshot_humanoids.dm"
 #include "security_officer_distribution.dm"
 #include "serving_tray.dm"
 #include "siunit.dm"
+#include "slips.dm"
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
 #include "species_config_sanity.dm"

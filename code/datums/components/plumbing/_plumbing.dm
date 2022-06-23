@@ -22,10 +22,10 @@
 	var/recipient_reagents_holder
 	///How do we apply the new reagents to the receiver? Generally doesn't matter, but some stuff, like people, does care if its injected or whatevs
 	var/methods
-	///What color is our demand connect? Also it's not auto-colored so you'll have to make new sprites if its anything other than red, blue, yellow or green
-	var/demand_color = "red"
-	///What color is our supply connect? Also, refrain from pointlessly using non-standard colors unless it's really funny or something
-	var/supply_color = "blue"
+	///What color is our demand connect?
+	var/demand_color = COLOR_RED
+	///What color is our supply connect?
+	var/supply_color = COLOR_BLUE
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
 /datum/component/plumbing/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
@@ -35,14 +35,14 @@
 	if(_ducting_layer)
 		ducting_layer = _ducting_layer
 
-	var/atom/movable/AM = parent
-	if(!AM.reagents && !custom_receiver)
+	var/atom/movable/parent_movable = parent
+	if(!parent_movable.reagents && !custom_receiver)
 		return COMPONENT_INCOMPATIBLE
 
-	reagents = AM.reagents
+	reagents = parent_movable.reagents
 	turn_connects = _turn_connects
 
-	set_recipient_reagents_holder(custom_receiver ? custom_receiver : AM.reagents)
+	set_recipient_reagents_holder(custom_receiver ? custom_receiver : parent_movable.reagents)
 
 	if(start)
 		//We're registering here because I need to check whether we start active or not, and this is just easier
@@ -50,14 +50,14 @@
 		RegisterSignal(parent, list(COMSIG_COMPONENT_ADDED), .proc/enable)
 
 /datum/component/plumbing/RegisterWithParent()
-	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
+	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/disable)
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
 	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
 	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays) //called by lateinit on startup
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), .proc/change_ducting_layer)
 
 /datum/component/plumbing/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,COMSIG_OBJ_HIDE, \
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, COMSIG_OBJ_HIDE, \
 	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, COMSIG_COMPONENT_ADDED))
 
 /datum/component/plumbing/Destroy()
@@ -68,7 +68,7 @@
 
 /datum/component/plumbing/process()
 	if(!demand_connects || !reagents)
-		STOP_PROCESSING(SSfluids, src)
+		STOP_PROCESSING(SSplumbing, src)
 		return
 	if(reagents.total_volume < reagents.maximum_volume)
 		for(var/D in GLOB.cardinals)
@@ -76,10 +76,10 @@
 				send_request(D)
 
 ///Can we be added to the ductnet?
-/datum/component/plumbing/proc/can_add(datum/ductnet/D, dir)
+/datum/component/plumbing/proc/can_add(datum/ductnet/ductnet, dir)
 	if(!active)
 		return
-	if(!dir || !D)
+	if(!dir || !ductnet)
 		return FALSE
 	if(num2text(dir) in ducts)
 		return FALSE
@@ -97,15 +97,13 @@
 	if(!ducts.Find(num2text(dir)))
 		return
 	net = ducts[num2text(dir)]
-	for(var/A in net.suppliers)
-		var/datum/component/plumbing/supplier = A
+	for(var/datum/component/plumbing/supplier as anything in net.suppliers)
 		if(supplier.can_give(amount, reagent, net))
 			valid_suppliers += supplier
 	// Need to ask for each in turn very carefully, making sure we get the total volume. This is to avoid a division that would always round down and become 0
 	var/targetVolume = reagents.total_volume + amount
 	var/suppliersLeft = valid_suppliers.len
-	for(var/A in valid_suppliers)
-		var/datum/component/plumbing/give = A
+	for(var/datum/component/plumbing/give as anything in valid_suppliers)
 		var/currentRequest = (targetVolume - reagents.total_volume) / suppliersLeft
 		give.transfer_to(src, currentRequest, reagent, net)
 		suppliersLeft--
@@ -116,9 +114,8 @@
 		return
 
 	if(reagent) //only asked for one type of reagent
-		for(var/A in reagents.reagent_list)
-			var/datum/reagent/R = A
-			if(R.type == reagent)
+		for(var/datum/reagent/contained_reagent as anything in reagents.reagent_list)
+			if(contained_reagent.type == reagent)
 				return TRUE
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE
@@ -133,7 +130,7 @@
 		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = TRUE, methods = methods)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
-/datum/component/plumbing/proc/create_overlays(atom/movable/AM, list/overlays)
+/datum/component/plumbing/proc/create_overlays(atom/movable/parent_movable, list/overlays)
 	SIGNAL_HANDLER
 
 	if(tile_covered || !use_overlays)
@@ -158,39 +155,30 @@
 	var/duct_y = offset
 
 
-	for(var/D in GLOB.cardinals)
+	for(var/direction in GLOB.cardinals)
 		var/color
-		var/direction
-		if(D & initial(demand_connects))
+		if(direction & initial(demand_connects))
 			color = demand_color
-		else if(D & initial(supply_connects))
+		else if(direction & initial(supply_connects))
 			color = supply_color
 		else
 			continue
 
-		var/image/I
+		var/direction_text = dir2text(direction)
+		var/duct_layer = PLUMBING_PIPE_VISIBILE_LAYER + ducting_layer * 0.0003
 
-		switch(D)
-			if(NORTH)
-				direction = "north"
-			if(SOUTH)
-				direction = "south"
-			if(EAST)
-				direction = "east"
-			if(WEST)
-				direction = "west"
-
+		var/image/overlay
 		if(turn_connects)
-			I = image('icons/obj/plumbing/connects.dmi', "[direction]-[color]", layer = AM.layer - 1)
-
+			overlay = image('icons/obj/plumbing/connects.dmi', "[direction_text]-[ducting_layer]", layer = duct_layer)
 		else
-			I = image('icons/obj/plumbing/connects.dmi', "[direction]-[color]-s", layer = AM.layer - 1) //color is not color as in the var, it's just the name of the icon_state
-			I.dir = D
+			overlay = image('icons/obj/plumbing/connects.dmi', "[direction_text]-[ducting_layer]-s", layer = duct_layer)
+			overlay.dir = direction
 
-		I.pixel_x = duct_x
-		I.pixel_y = duct_y
+		overlay.color = color
+		overlay.pixel_x = duct_x
+		overlay.pixel_y = duct_y
 
-		overlays += I
+		overlays += overlay
 
 ///we stop acting like a plumbing thing and disconnect if we are, so we can safely be moved and stuff
 /datum/component/plumbing/proc/disable()
@@ -199,21 +187,23 @@
 	if(!active)
 		return
 
-	STOP_PROCESSING(SSfluids, src)
+	STOP_PROCESSING(SSplumbing, src)
 
-	for(var/A in ducts)
-		var/datum/ductnet/D = ducts[A]
-		D.remove_plumber(src)
+	for(var/duct_dir in ducts)
+		var/datum/ductnet/duct = ducts[duct_dir]
+		duct.remove_plumber(src)
 
 	active = FALSE
 
-	for(var/D in GLOB.cardinals)
-		if(D & (demand_connects | supply_connects))
-			for(var/obj/machinery/duct/duct in get_step(parent, D))
-				if(duct.duct_layer == ducting_layer)
-					duct.remove_connects(turn(D, 180))
-					duct.neighbours.Remove(parent)
-					duct.update_appearance()
+	for(var/direction in GLOB.cardinals)
+		if(!(direction & (demand_connects | supply_connects)))
+			continue
+		for(var/obj/machinery/duct/duct in get_step(parent, direction))
+			if(!(duct.duct_layer & ducting_layer))
+				continue
+			duct.remove_connects(turn(direction, 180))
+			duct.neighbours.Remove(parent)
+			duct.update_appearance()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable(obj/object, datum/component/component)
@@ -225,29 +215,32 @@
 	update_dir()
 	active = TRUE
 
-	var/atom/movable/AM = parent
-	for(var/obj/machinery/duct/D in AM.loc) //Destroy any ducts under us. Ducts also self-destruct if placed under a plumbing machine. machines disable when they get moved
-		if(D.anchored) //that should cover everything
-			D.disconnect_duct()
+	var/atom/movable/parent_movable = parent
+	// Destroy any ducts under us on the same layer.
+	// Ducts also self-destruct if placed under a plumbing machine.
+	// Machines disable when they get moved
+	for(var/obj/machinery/duct/duct in parent_movable.loc)
+		if(duct.anchored && (duct.duct_layer & ducting_layer))
+			duct.disconnect_duct()
 
 	if(demand_connects)
-		START_PROCESSING(SSfluids, src)
+		START_PROCESSING(SSplumbing, src)
 
-	for(var/D in GLOB.cardinals)
+	for(var/direction in GLOB.cardinals)
+		if(!(direction & (demand_connects | supply_connects)))
+			continue
+		for(var/atom/movable/found_atom in get_step(parent, direction))
+			if(istype(found_atom, /obj/machinery/duct))
+				var/obj/machinery/duct/duct = found_atom
+				duct.attempt_connect()
+				continue
 
-		if(D & (demand_connects | supply_connects))
-			for(var/atom/movable/A in get_step(parent, D))
-
-				if(istype(A, /obj/machinery/duct))
-					var/obj/machinery/duct/duct = A
-					duct.attempt_connect()
-				else
-					for(var/datum/component/plumbing/plumber as anything in A.GetComponents(/datum/component/plumbing))
-						if(plumber.ducting_layer == ducting_layer)
-							direct_connect(plumber, D)
+			for(var/datum/component/plumbing/plumber as anything in found_atom.GetComponents(/datum/component/plumbing))
+				if(plumber.ducting_layer & ducting_layer)
+					direct_connect(plumber, direction)
 
 /// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move
-/datum/component/plumbing/proc/toggle_active(obj/O, new_state)
+/datum/component/plumbing/proc/toggle_active(obj/parent_obj, new_state)
 	SIGNAL_HANDLER
 	if(new_state)
 		enable()
@@ -271,45 +264,44 @@
 		demand_connects = initial(demand_connects)
 		supply_connects = initial(supply_connects)
 	else
-		for(var/D in GLOB.cardinals)
-			if(D & initial(demand_connects))
-				new_demand_connects += turn(D, angle)
-			if(D & initial(supply_connects))
-				new_supply_connects += turn(D, angle)
+		for(var/direction in GLOB.cardinals)
+			if(direction & initial(demand_connects))
+				new_demand_connects += turn(direction, angle)
+			if(direction & initial(supply_connects))
+				new_supply_connects += turn(direction, angle)
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
 
 ///Give the direction of a pipe, and it'll return wich direction it originally was when it's object pointed SOUTH
 /datum/component/plumbing/proc/get_original_direction(dir)
-	var/atom/movable/AM = parent
-	return turn(dir, dir2angle(AM.dir) - 180)
+	var/atom/movable/parent_movable = parent
+	return turn(dir, dir2angle(parent_movable.dir) - 180)
 
 //special case in-case we want to connect directly with another machine without a duct
-/datum/component/plumbing/proc/direct_connect(datum/component/plumbing/P, dir)
-	if(!P.active)
+/datum/component/plumbing/proc/direct_connect(datum/component/plumbing/plumbing, dir)
+	if(!plumbing.active)
 		return
 	var/opposite_dir = turn(dir, 180)
-	if(P.demand_connects & opposite_dir && supply_connects & dir || P.supply_connects & opposite_dir && demand_connects & dir) //make sure we arent connecting two supplies or demands
+	if(plumbing.demand_connects & opposite_dir && supply_connects & dir || plumbing.supply_connects & opposite_dir && demand_connects & dir) //make sure we arent connecting two supplies or demands
 		var/datum/ductnet/net = new()
 		net.add_plumber(src, dir)
-		net.add_plumber(P, opposite_dir)
+		net.add_plumber(plumbing, opposite_dir)
 
-/datum/component/plumbing/proc/hide(atom/movable/AM, should_hide)
+/datum/component/plumbing/proc/hide(atom/movable/parent_obj, should_hide)
 	SIGNAL_HANDLER
 
 	tile_covered = should_hide
-	AM.update_appearance()
+	parent_obj.update_appearance()
 
-/datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/O, new_layer = DUCT_LAYER_DEFAULT)
+/datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/changer, new_layer = DUCT_LAYER_DEFAULT)
 	SIGNAL_HANDLER
 	ducting_layer = new_layer
 
-	if(ismovable(parent))
-		var/atom/movable/AM = parent
-		AM.update_appearance()
+	var/atom/movable/parent_movable = parent
+	parent_movable.update_appearance()
 
-	if(O)
-		playsound(O, 'sound/items/ratchet.ogg', 10, TRUE) //sound
+	if(changer)
+		playsound(changer, 'sound/items/ratchet.ogg', 10, TRUE) //sound
 
 	//quickly disconnect and reconnect the network.
 	if(active)
@@ -348,7 +340,7 @@
 	demand_connects = NORTH
 	supply_connects = SOUTH
 
-/datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/O, new_layer)
+/datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/changer, new_layer)
 	return
 
 #define READY 2
