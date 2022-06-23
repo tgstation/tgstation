@@ -243,9 +243,15 @@
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna.species.id != SPECIES_SLIMEPERSON && affected_mob.dna.species.id != SPECIES_STARGAZER && affected_mob.dna.species.id != SPECIES_LUMINESCENT)
+				if(human.dna.species.id != SPECIES_MONKEY && human.dna.species.id != SPECIES_SLIMEPERSON && affected_mob.dna.species.id != SPECIES_STARGAZER && affected_mob.dna.species.id != SPECIES_LUMINESCENT)
 					human.set_species(/datum/species/jelly/slime)
 
+/datum/disease/transformation/slime/do_disease_transformation(mob/living/affected_mob)
+	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
+		var/mob/living/carbon/human/human = affected_mob
+		if(human.dna.species.id != SPECIES_MONKEY)
+			new_form = /mob/living/simple_animal/slime/random
+	..()
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"
