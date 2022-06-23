@@ -213,7 +213,7 @@
 		for(var/datum/reagent/reagent_id in scanned_tray.reagents.reagent_list)
 			if(newline)
 				returned_message += "\n"
-			returned_message += "[span_notice("[reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]")]"
+			returned_message += "[span_notice("&bull; [reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]")]"
 			newline = TRUE
 	else
 		returned_message += "[span_notice("No reagents found.")]"
@@ -356,7 +356,7 @@
 		chem_cap += reagent.volume
 		if(newline)
 			reagents_text += "\n"
-		reagents_text += "[reagent.name]: [amount]"
+		reagents_text += "&bull; [reagent.name]: [amount]"
 		newline = TRUE
 	if(chem_cap > 100)
 		text += "\n[span_danger("Reagent Traits Over 100% Production")]"
