@@ -13,6 +13,10 @@
 	///What label pizza boxes use if this pizza spawns in them.
 	var/boxtag = ""
 
+/obj/item/food/pizza/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)
+
 /obj/item/food/pizza/raw
 	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
 	burns_in_oven = FALSE
