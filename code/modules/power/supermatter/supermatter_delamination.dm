@@ -94,6 +94,7 @@
 		call_explosion()
 		return
 	var/obj/singularity/created_singularity = new(supermatter_turf)
+	created_singularity.expand(STAGE_TWO)
 	created_singularity.energy = 800
 	created_singularity.consume(src)
 	should_spawn_anomalies = FALSE
