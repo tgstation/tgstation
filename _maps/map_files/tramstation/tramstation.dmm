@@ -61838,7 +61838,9 @@
 	pixel_y = 8;
 	pixel_x = 2
 	},
-/obj/item/ai_module/supplied/freeform,
+/obj/item/ai_module/supplied/freeform{
+	pixel_x = -1
+	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "uOW" = (
