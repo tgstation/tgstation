@@ -58,6 +58,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	set_listening(TRUE)
 	recalculateChannels()
 	possibly_deactivate_in_loc()
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/learn_language)
+	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, .proc/unlearn_language)
 
 /obj/item/radio/headset/proc/possibly_deactivate_in_loc()
 	if(ismob(loc))
@@ -82,6 +84,34 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if((headset_user == over) && headset_user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return attack_self(headset_user)
 	return ..()
+
+/obj/item/radio/headset/proc/learn_language()
+	SIGNAL_HANDLER
+	if(!istype(loc, /mob/living/carbon))
+		return
+	var/list/language_list = list()
+	if(keyslot?.translated_language)
+		language_list += keyslot.translated_language
+	if(keyslot2?.translated_language)
+		language_list += keyslot2.translated_language
+
+	var/mob/living/carbon/person = loc
+	for(var/language in language_list)
+		person.grant_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
+
+/obj/item/radio/headset/proc/unlearn_language()
+	SIGNAL_HANDLER
+	if(!istype(loc, /mob/living/carbon))
+		return
+	var/list/language_list = list()
+	if(keyslot?.translated_language)
+		language_list += keyslot.translated_language
+	if(keyslot2?.translated_language)
+		language_list += keyslot2.translated_language
+
+	var/mob/living/carbon/person = loc
+	for(var/language in language_list)
+		person.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 

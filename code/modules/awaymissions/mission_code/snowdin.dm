@@ -173,6 +173,11 @@
 	light_color = LIGHT_COLOR_PURPLE
 	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
 	immunity_resistance_flags = FREEZE_PROOF
+	lava_temperature = 100
+
+/turf/open/lava/plasma/examine(mob/user)
+	. = ..()
+	. += span_info("Some <b>liquid plasma<b> could probably be scooped up with a <b>container</b>.")
 
 /turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
 	var/obj/item/reagent_containers/glass/C = I

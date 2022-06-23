@@ -11,6 +11,13 @@
 	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/on_drop)
 
+	var/obj/item/item_target = target
+	// If our loc is a mob, it's possible we already have it equippied
+	if(ismob(item_target.loc))
+		var/mob/wearer = item_target.loc
+		if(!item_target.slot_flags || wearer.get_item_by_slot(item_target.slot_flags) == item_target)
+			ADD_TRAIT(wearer, TRAIT_ALLOW_HERETIC_CASTING, ELEMENT_TRAIT(target))
+
 /datum/element/heretic_focus/Detach(obj/item/source)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
