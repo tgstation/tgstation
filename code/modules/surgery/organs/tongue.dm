@@ -455,8 +455,7 @@
 	signer.verb_sing = "rythmically signs"
 	signer.verb_yell = "emphatically signs"
 	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
-	RegisterSignal(signer, COMSIG_LIVING_VOCAL_SPEECH_CHECK, .proc/on_vocal_check)
+	RegisterSignal(signer, COMSIG_LIVING_SPEECH_CHECK, .proc/on_speech_check)
 	RegisterSignal(signer, COMSIG_LIVING_TREAT_MESSAGE, .proc/on_treat_message)
 	RegisterSignal(signer, COMSIG_MOVABLE_USING_RADIO, .proc/on_use_radio)
 
@@ -468,12 +467,15 @@
 	speaker.verb_sing = initial(verb_sing)
 	speaker.verb_yell = initial(verb_yell)
 	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	UnregisterSignal(speaker, list(COMSIG_LIVING_VOCAL_SPEECH_CHECK, COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOVABLE_USING_RADIO))
+	UnregisterSignal(speaker, list(COMSIG_LIVING_SPEECH_CHECK, COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOVABLE_USING_RADIO))
 
-/// Signal proc for [COMSIG_LIVING_VOCAL_SPEECH_CHECK]
+/// Signal proc for [COMSIG_LIVING_SPEECH_CHECK]
 /// Sign languagers can always speak regardless of they're mute (as long as they're not mimes)
-/obj/item/organ/tongue/tied/proc/on_vocal_check(mob/living/source, allow_mimes)
+/obj/item/organ/internal/tongue/tied/proc/on_speech_check(mob/living/source, allow_mimes)
 	SIGNAL_HANDLER
+
+	if(source.mind?.miming)
+		return COMPONENT_CANNOT_SPEAK
 
 	switch(check_signables_state())
 		if(SIGN_HANDS_FULL) // Full hands
@@ -481,42 +483,37 @@
 			return COMPONENT_CANNOT_SPEAK
 
 		if(SIGN_ARMLESS) // No arms
-			to_chat(src, span_warning("You can't sign with no hands!"))
+			to_chat(source, span_warning("You can't sign with no hands!"))
 			return COMPONENT_CANNOT_SPEAK
 
-		if(SIGN_TRAIT_BLOCKED) // Hands Blocked or Emote Mute traits
-			to_chat(src, span_warning("You can't sign at the moment!"))
+		if(SIGN_TRAIT_BLOCKED) // Hands blocked or emote mute
+			to_chat(source, span_warning("You can't sign at the moment!"))
 			return COMPONENT_CANNOT_SPEAK
 
 		if(SIGN_CUFFED) // Cuffed
 			source.visible_message("tries to sign, but can't with [source.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
 			return COMPONENT_CANNOT_SPEAK
 
+	// Assuming none of the above fail, sign language users can speak
+	// regardless of being muzzled or mute toxin'd or whatever.
 	return COMPONENT_CAN_ALWAYS_SPEAK
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE] that stars out our message if we only have 1 hand free
-/obj/item/organ/tongue/tied/proc/on_treat_message(mob/living/source, list/message_args)
+/obj/item/organ/internal/tongue/tied/proc/on_treat_message(mob/living/source, list/message_args)
 	SIGNAL_HANDLER
 
 	if(check_signables_state() == SIGN_ONE_HAND)
-		message_args[1] = stars(message_args[1])
+		message_args[TREAT_MESSAGE_MESSAGE] = stars(message_args[TREAT_MESSAGE_MESSAGE])
 
-/// Signal proc for [COMSIG_MOVABLE_USING_RADIO] that disallows us from speaking on comms if we can't sign
-/obj/item/organ/tongue/tied/proc/on_use_radio(atom/movable/source, obj/item/radio/radio, list/speech_arguments)
+/// Signal proc for [COMSIG_MOVABLE_USING_RADIO] that disallows us from speaking on comms if we don't have the special trait
+/// Being unable to sign, or having our message be starred out, is handled by the above two signal procs.
+/obj/item/organ/internal/tongue/tied/proc/on_use_radio(atom/movable/source, obj/item/radio/radio)
 	SIGNAL_HANDLER
 
-	if(!HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS))
-		return COMPONENT_CANNOT_USE_RADIO
-
-	switch(check_signables_state())
-		if(SIGN_ONE_HAND) // One hand full
-			speech_arguments[2] = stars(speech_arguments[2])
-
-		if(SIGN_HANDS_FULL, SIGN_ARMLESS, SIGN_TRAIT_BLOCKED, SIGN_CUFFED)
-			return COMPONENT_CANNOT_USE_RADIO
+	return HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS) ? NONE : COMPONENT_CANNOT_USE_RADIO
 
 /// Checks to see what state this person is in and if they are able to sign or not.
-/obj/item/organ/tongue/tied/proc/check_signables_state()
+/obj/item/organ/internal/tongue/tied/proc/check_signables_state()
 	if(!owner)
 		CRASH("[type] called check_signables_state without an owner.")
 
@@ -534,7 +531,7 @@
 	// Cuffed. Usually will show visual effort to sign
 	if(owner.handcuffed)
 		return SIGN_CUFFED
-
+	// Some generic traits that prevent signing
 	if(HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
 	// One arm gone
@@ -544,12 +541,11 @@
 	return SIGN_OKAY
 
 /obj/item/organ/internal/tongue/tied/modify_speech(datum/source, list/speech_args)
-	//Thank you Jwapplephobia for helping me with the literal hellcode below
+	//Thank you Jwapplephobia for helping me with the literal hellcode below //Shoutout to Jwapplephobia
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/exclamation_found = findtext(message, "!")
 	var/question_found = findtext(message, "?")
-	var/mob/living/carbon/signer = owner
 	new_message = message
 	if(exclamation_found)
 		new_message = replacetext(new_message, "!", ".")
@@ -558,11 +554,11 @@
 	speech_args[SPEECH_MESSAGE] = new_message
 
 	if(exclamation_found && question_found)
-		signer.visible_message(span_notice("[signer] lowers one of [signer.p_their()] eyebrows, raising the other."))
+		owner.visible_message(span_notice("[owner] lowers one of [owner.p_their()] eyebrows, raising the other."))
 	else if(exclamation_found)
-		signer.visible_message(span_notice("[signer] raises [signer.p_their()] eyebrows."))
+		owner.visible_message(span_notice("[owner] raises [owner.p_their()] eyebrows."))
 	else if(question_found)
-		signer.visible_message(span_notice("[signer] lowers [signer.p_their()] eyebrows."))
+		owner.visible_message(span_notice("[owner] lowers [owner.p_their()] eyebrows."))
 
 #undef SIGN_OKAY
 #undef SIGN_ONE_HAND

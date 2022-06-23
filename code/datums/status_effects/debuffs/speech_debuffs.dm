@@ -24,15 +24,13 @@
 /**
  * Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
  *
- * Iterates over all of the characters in the past message
+ * Iterates over all of the characters in the passed message
  * and calls apply_speech() on each.
- *
- * message_args[1] is the original message passed into the signal.
  */
 /datum/status_effect/speech/proc/handle_message(datum/source, list/message_args)
 	SIGNAL_HANDLER
 
-	var/phrase = html_decode(message_args[1])
+	var/phrase = html_decode(message_args[TREAT_MESSAGE_MESSAGE])
 	if(!length(phrase))
 		return
 
@@ -44,7 +42,7 @@
 
 		final_phrase += apply_speech(original_char, original_char)
 
-	message_args[1] = sanitize(final_phrase)
+	message_args[TREAT_MESSAGE_MESSAGE] = sanitize(final_phrase)
 
 /**
  * Applies the speech effects on the past character, changing
@@ -92,7 +90,7 @@
 
 /datum/status_effect/speech/stutter/derpspeech/handle_message(datum/source, list/message_args)
 
-	var/message = html_decode(message_args[1])
+	var/message = html_decode(message_args[TREAT_MESSAGE_MESSAGE])
 
 	message = replacetext(message, " am ", " ")
 	message = replacetext(message, " is ", " ")

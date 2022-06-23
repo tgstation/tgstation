@@ -15,8 +15,7 @@
 	var/speech_sound = 'sound/magic/clockwork/invoke_general.ogg'
 
 /obj/effect/proc_holder/spell/voice_of_god/can_cast(mob/user = usr)
-	// We check can_speak() instead of can_speak_vocal() this can't be used to get around IC mutes and such
-	return user.can_speak(command)
+	return user.can_speak_vocal()
 
 /obj/effect/proc_holder/spell/voice_of_god/choose_targets(mob/user = usr)
 	perform(user=user)

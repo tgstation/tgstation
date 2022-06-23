@@ -182,13 +182,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!can_speak(original_message, ignore_spam, forced))
 		if(mind?.miming)
 			if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
-				to_chat(src, span_warning("You stop yourself from signing in favor of the artform of mimery!"))
+				to_chat(src, span_green("You stop yourself from signing in favor of the artform of mimery!"))
 			else
 				to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
 
 		else
 			to_chat(src, span_warning("You find yourself unable to speak!"))
-
 		return
 
 	var/message_range = 7
@@ -386,15 +385,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/proc/binarycheck()
 	return FALSE
 
-/**
- * Checks if our mob can speak. If they cannot speak for some reason,
- * will likely give them a feedback message as to why.
- *
- * Primarily contains OOC checks (admin muted, config, etc).
- *
- * Used in [proc/say] and other methods of speech (radios) after a mob has inputted something.
- * If you just want to check if a mob is able to speak in character, use [proc/can_speak_vocal] instead.
- */
 /mob/living/can_speak(message, ignore_spam = FALSE, forced = FALSE)
 	if(client?.prefs.muted & MUTE_IC)
 		to_chat(src, span_danger("You cannot speak IC (muted)."))
@@ -402,29 +392,17 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!(ignore_spam || forced) && client?.handle_spam_prevention(message, MUTE_IC))
 		return FALSE
 
-	return can_speak_vocal()
-
-/**
- * Checks if our mob can currently speak, vocally, in general.
- *
- * Primarily contains IC checks (mute trait).
- *
- * Do not include feedback messages here,
- * as this is used as a general check if "Can this mob talk?" in many places.
- *
- * Checked AFTER handling of xeno channels.
- * (Not sure what this comment means but it was here in the past.)
- */
-/mob/living/can_speak_vocal(allow_mimes = FALSE)
-	if(!allow_mimes && mind?.miming)
-		// Mimes are excluded deliberately before the signal, instead of after.
-		return FALSE
-
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_VOCAL_SPEECH_CHECK, allow_mimes)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_SPEECH_CHECK, message, ignore_spam, forced)
 	if(sigreturn & COMPONENT_CAN_ALWAYS_SPEAK)
 		return TRUE
 
 	if(sigreturn & COMPONENT_CANNOT_SPEAK)
+		return FALSE
+
+	return can_speak_vocal()
+
+/mob/living/can_speak_vocal(allow_mimes = FALSE)
+	if(!allow_mimes && mind?.miming)
 		return FALSE
 
 	if(HAS_TRAIT(src, TRAIT_MUTE))

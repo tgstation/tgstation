@@ -35,16 +35,32 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
+
 /**
- * Checks if our movable can speak the message that was passed specifically.
+ * Checks if our movable can speak the passed message.
+ * Primarily contains OOC checks (admin muted, config, etc).
+ *
+ * Used in [proc/say] and other methods of speech (radios) after a movable has inputted some message.
+ * If you just want to check if the movable is able to speak in character, use [proc/can_speak_vocal] instead.
  */
 /atom/movable/proc/can_speak(message, ignore_spam = FALSE, forced = FALSE)
 	return TRUE
 
 /**
- * Checks if our movable can "speak" in general.
+ * Checks if our movable can currently speak, vocally, in general.
+ * Primarily contains IC checks (mute status effect, miming).
+ *
+ * Used in various places to check if a movable is simply able to speak in general,
+ * regardless of OOC status (being muted) and regardless of what they're actually saying.
+ *
+ * Checked AFTER handling of xeno channels.
+ * (I'm not sure what this comment means, but it was here in the past, so I'll maintain it here.)
+ *
+ * allow_mimes - Determines if this check should skip over mimes. (Only matters for living mobs and up.)
+ * If FALSE, this check will always fail if the movable has a mind and is miming.
+ * if TRUE, we will check if the movable can speak REGARDLESS of if they have an active mime vow.
  */
-/atom/movable/proc/can_speak_vocal()
+/atom/movable/proc/can_speak_vocal(allow_mimes = FALSE)
 	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list())
