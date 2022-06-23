@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	return ..()
 
 /// Grants all the languages this headset allows the mob to understand via installed chips.
-/obj/item/radio/headset/proc/grant_headset_langauges(mob/grant_to)
+/obj/item/radio/headset/proc/grant_headset_languages(mob/grant_to)
 	for(var/language in language_list)
 		grant_to.grant_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(!(slot_flags & slot))
 		return
 
-	grant_headset_langauges(user)
+	grant_headset_languages(user)
 
 /obj/item/radio/headset/dropped(mob/user, silent)
 	. = ..()
@@ -389,7 +389,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			mob_loc.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
 		// And grant all the languages we definitely should know now
-		grant_headset_langauges(mob_loc)
+		grant_headset_languages(mob_loc)
 
 /obj/item/radio/headset/AltClick(mob/living/user)
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())
