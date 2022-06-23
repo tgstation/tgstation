@@ -18,7 +18,6 @@
 	var/are_we_linked = FALSE //whether or not our tower is being connected to by another tower
 
 /obj/structure/clockcult_tower/proc/link_up() //find nearby tower, create beam to tower
-	sleep(5 SECONDS) //this matters where its getting loaded atm since the whole map isn't loaded in instantly and can cause towers to get missed
 	are_we_linked = TRUE
 	for(var/obj/structure/clockcult_tower/T in urange(10, src))
 		if(!T.are_we_linked && T.id == id)
@@ -525,29 +524,32 @@
 //Lore terminals
 //TODO: MORE LORE MORE LORE MORE LORE
 /obj/machinery/computer/terminal/caves/robo
-	content = list("MINER-MAIL - #344 - Site Director Richard Evans -> K. Simmers -- I just finished approving your request for additional access to more combat-orienated mecha-based designs. \
-	With the introduction of the concern with the locals, Central has deemed it neccesary to elevate our security contract and will be sending blueprint schematics with relevant printing diagnostics. \
-	I'll be sending you a material list shortly of what'll be required for manufactoring along with the first few designs our security personnel suggested for the mining crew.")
+	content = list("MINER-MAIL - #344 - Site Director Richard Evans -> K. Simmers -- Command has officially approved our request for defense armaments against the local fauna. This means the next shipment	\
+		will include research schematics to assemble combat-oriented exosuits and self-defense equipment designed for the lower pressure environment. Once the defense officer on site walks you	\
+		through the security protocol on safe usage, you'll be authorized to start printing the parts as requested. I'll have one of the miners clear out an opening so you can run more	\
+		proper diagnostic tests with the equipment as needed.")
 
 /obj/machinery/computer/terminal/caves/security
-	content = list("MINER-MAIL - #365 - Security Officer Rachael Cleeves -> R. Evans -- I've been watching the cameras between the posts and I think the miners are up to something. \
-	They've been awfully secluded during off-hours and they get more tight-lipped than usual when I come past for my hourly route. I confiscated a weird chunk of metal one of them brought in without having it checked out first. \
-	Handed it off to Ullman, I think the miners found something valuable and don't want to share with the company..")
+	content = list("MINER-MAIL - #365 - Security Officer Rachael Cleeves -> R. Evans -- Following up my prior report, I have strong reason to believe the miner group is colluding with intention to hide	\
+		something from the research division. They're being more closed off than usual and the few I've pulled aside are pretty tight-tipped about anything new. I have nothing concrete for actual detention	\
+		but I would recommend some ideas in private to resolve this issue. Please see me at your earliest convenience to further dicuss this matter.")
 
 /obj/machinery/computer/terminal/caves/research
-	content = list("MINER-MAIL - #445 - Shaft Miner Jim Joffee -> J. Ullman -- Just checking for an update on that last email I sent about the debris I found on the lower levels. I know these caves are inhabited by those cave lizards, \
-	 but them having bronze metal seems really odd. Don't tell me these lizardbrains are entering the bronze age, they might actually start being a problem.")
+	content = list("MINER-MAIL - #445 - Shaft Miner Jim Joffee -> J. Ullman -- Just checking up on that sample I sent you from the last expedition. The boys are curious whether or not the lizards are actually	\
+	learning how to do more than bang rocks and bone together. James already had to get a spear removed from his shoulder from the previous encounter, last thing we need is a revival of the roman empire by some	\
+	damn ashwalkers.")
 
 /obj/machinery/computer/terminal/caves/research2
-	content = list("MINER-MAIL - #456 - Mineral Specialist J. Ullman -> E. Queef -- Do you know if the time clock down by your office was fixed? \
-	 I'm tired of checking in at the office by the ravine and if I get docked another half point for being a minute late from lunch again they're going to make me sign a dumb fucking paper about being 'IrReSpOnSiBlE' with my breaks. I hate management.")
+	content = list("MINER-MAIL - #456 - Mineral Specialist J. Ullman -> E. Queef -- Do you know if the time clock by your desk works now? If I get another point for clocking in late from lunch I'm going to be	\
+		forced to have a talk about my 'timekeeping skills' with the site director and I'm this close to just asking for a site transfer if we do. Maybe I wouldn't be clocking in late if	\
+		we actually FIXED THE SHIT AROUND HERE! God, I hate this company.")
 
 /obj/machinery/computer/terminal/caves/research3
-	content = list("MINER-MAIL - #420 - Greater Outernet Service Gateway -> W. Zach -- Looking to get absolutely ZOINKED this BLAZER season??? \
+	content = list("MINER-MAIL - #420 - Greater Outernet Service Gateway -> W. Zach -- Looking to get absolutely ZOINKED this BLAZER season??? Well, look NO FURTHER than ZERMA'S ZERKIN' EMPORIUM OF KUSH & BUSH.	\
 	Well, look NO FURTHER than ZERMA'S ZERKIN' EMPORIUM OF KUSH & BUSH. We got strains that'd melt your hydroponic tables! Enter promo code 'ZERKIN20' for 20% off your first intra-space delivery purchase!")
 
 /obj/machinery/computer/terminal/caves/research4
-	content = list("MINER-MAIL - #356 - Site Director Richard Evans -> C. Coffee -- The 3rd quarter is almost over! Please have your self-evaluation sheet submitted to me by the end of the week so we may proper aquire on your strengths and weaknesses in this department. \
+	content = list("MINER-MAIL - #356 - Site Director Richard Evans -> C. Coffee -- The 3rd quarter is almost over! Please have your self-evaluation sheet submitted to me by the end of the week so we may proper aquire on your strengths and weaknesses in this department.	\
 	Please note that your month-end report on the local floral activity is still due at the same time, so please adjust your schedule properly to make sure both reports are submitted within adaquate time.")
 
 /obj/machinery/computer/terminal/caves/research5
@@ -556,7 +558,7 @@
 	 I've asked the QM if anything in previous request logs had anything made of bronze, mostly to see if maybe they're just stealing from our storage bay during off-hours.")
 
 /obj/machinery/computer/terminal/caves/researchbroke1
-	content = list("INFO-SECURE: Your number one source of encrypted text files! ERROR: Terminal set in showcase mode, encryption not available!  -- NOTES: Cycle 20 - Seismic activity in the lower regions has caused fractures to form in the less stable regions of the caves. \
+	content = list("INFO-SECURE: Your number one source of encrypted text files! ERROR: Terminal set in showcase mode, encryption not available! -- NOTES: Cycle 20 - Seismic activity in the lower regions has caused fractures to form in the less stable regions of the caves. \
 	These fractures seem to go hundreds of feet down, to a point where its hard to judge the actual drop. The Site Director has had a few crates of jaunters ordered for personnel safety, as we can't be certain if these rifts will be kept to the lower levels or not. ")
 
 /obj/machinery/computer/terminal/caves/researchbroke2
