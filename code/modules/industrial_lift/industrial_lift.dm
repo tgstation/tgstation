@@ -423,7 +423,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			mover.loc = get_step(mover, movement_direction)
 			their_area.Entered(mover, movement_direction)
 
-			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, FALSE)
+			mover.Moved(mover_old_loc, movement_direction, TRUE, null, FALSE)
 
 	else
 		for(var/atom/movable/mover as anything in movers)
@@ -434,7 +434,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			mover_old_loc = mover.loc
 			mover.loc = get_step(mover, movement_direction)
 
-			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, FALSE)
+			mover.Moved(mover_old_loc, movement_direction, TRUE, null, FALSE)
 
 	return TRUE
 
