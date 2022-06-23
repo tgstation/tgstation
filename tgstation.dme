@@ -1090,6 +1090,7 @@
 #include "code\datums\martial\krav_maga.dm"
 #include "code\datums\martial\mushpunch.dm"
 #include "code\datums\martial\plasma_fist.dm"
+#include "code\datums\martial\proxy_palm.dm"
 #include "code\datums\martial\psychotic_brawl.dm"
 #include "code\datums\martial\sleeping_carp.dm"
 #include "code\datums\martial\wrestling.dm"

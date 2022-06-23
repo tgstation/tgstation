@@ -68,3 +68,13 @@
 	price_max = CARGO_CRATE_VALUE * 15
 	stock_max = 1
 	availability_prob = 40
+
+/datum/market_item/clothing/palm_cloak
+	name = "Palm Cloak"
+	desc = "A leftover dusty scarf like cloak. It is probably ancient so we are selling it for a high price."
+	item = /obj/item/clothing/neck/cloak/palm
+
+	price_min = CARGO_CRATE_VALUE * 5
+	price_max = CARGO_CRATE_VALUE * 10
+	stock_max = 1
+	availability_prob = 30

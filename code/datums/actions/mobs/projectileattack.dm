@@ -296,7 +296,7 @@
 	if(istype(firer, /mob/living/simple_animal/hostile/megafauna/colossus))
 		colossus = firer
 		colossus.say("Perish.", spans = list("colossus", "yell"))
-	
+
 	var/finale_counter = 10
 	for(var/i in 1 to 20)
 		if(finale_counter > 4 && colossus)
@@ -325,3 +325,19 @@
 			colossus.telegraph()
 			colossus.dir_shots.attack_sequence(firer, target)
 		SLEEP_CHECK_DEATH(1 SECONDS, firer)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/wind_clap
+	name = "Wind Clap"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "windblade"
+	background_icon_state = "bg_default"
+	desc = "Fires a wind blade at a target."
+	cooldown_time = 30 SECONDS
+	projectile_type = /obj/projectile/windblade
+	projectile_sound = 'sound/weapons/windclap.ogg'
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/wind_clap/Activate(atom/target_atom)
+	. = ..()
+	playsound(owner, projectile_sound, 50, TRUE, -1)
+	owner.visible_message(span_danger("[owner] fires the proto-kinetic accelerator!"))
+	owner.face_atom(target_atom)
