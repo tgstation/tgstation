@@ -6,7 +6,7 @@
 	spawn_loot_count = 3
 	spawn_loot_split = TRUE
 
-/// AI uploads have the ai_module/reset , ai-module/supplied/freeform , ai_module/reset/purge , and ai_module/core/full/asimov directly mapped in
+/// AI uploads have the ai_module/reset , ai_module/supplied/freeform , ai_module/reset/purge , and ai_module/core/full/asimov directly mapped in
 /obj/effect/spawner/random/aimodule/harmless
 	name = "harmless AI module spawner"
 	loot = list( // These shouldn't allow the AI to start butchering people
