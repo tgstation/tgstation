@@ -118,7 +118,8 @@
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic
 	name = "Cargorilla" // Overriden, normally
-	desc = "Cargo's pet gorilla."
+	icon = 'icons/mob/cargorillia.dmi'
+	desc = "Cargo's pet gorilla. They seem to have an 'I love Mom' tattoo."
 	maxHealth = 200
 	health = 200
 	faction = list("neutral", "monkey", "jungle")
