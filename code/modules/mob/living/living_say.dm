@@ -405,14 +405,15 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return can_speak_vocal()
 
 /**
- * Checks if our mob can currently speak, vocally.
+ * Checks if our mob can currently speak, vocally, in general.
  *
  * Primarily contains IC checks (mute trait).
  *
  * Do not include feedback messages here,
- * as this is used as a general check if "can this mob speak?" in many places.
+ * as this is used as a general check if "Can this mob talk?" in many places.
  *
  * Checked AFTER handling of xeno channels.
+ * (Not sure what this comment means but it was here in the past.)
  */
 /mob/living/can_speak_vocal(allow_mimes = FALSE)
 	if(!allow_mimes && mind?.miming)

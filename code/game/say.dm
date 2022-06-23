@@ -36,11 +36,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
 /**
- * Checks if our movable can speak.
+ * Checks if our movable can speak the message that was passed specifically.
  */
 /atom/movable/proc/can_speak(message, ignore_spam = FALSE, forced = FALSE)
 	return TRUE
 
+/**
+ * Checks if our movable can "speak" in general.
+ */
 /atom/movable/proc/can_speak_vocal()
 	return TRUE
 
