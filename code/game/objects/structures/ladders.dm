@@ -89,10 +89,10 @@
 		return
 
 	if(!up && !down)
-		to_chat(user, span_warning("[src] doesn't seem to lead anywhere!"))
+		user.balloon_alert(span_warning("Doesn't lead anywhere!"))
 		return
 	if(going_up ? !up : !down)
-		to_chat(user, span_warning("[src] doesn't lead any further [going_up ? "up" : "down"]!"))
+		user.balloon_alert(span_warning("Can't go any further [going_up ? "up" : "down"]."))
 		return
 	if(travel_time)
 		INVOKE_ASYNC(src, .proc/start_travelling, user, going_up)
@@ -240,7 +240,7 @@
 ///Ghosts use the byond default popup menu function on right click, so this is going to work a little differently for them.
 /obj/structure/ladder/proc/ghost_use(mob/user)
 	if (!up && !down)
-		to_chat(user, span_warning("[src] doesn't seem to lead anywhere!"))
+		user.balloon_alert(span_warning("It doesn't lead anywhere!"))
 		return
 	if(!up) //only goes down
 		travel(user, FALSE, TRUE)
