@@ -379,24 +379,23 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				overlay_state = "activated"
 
 		if(overlay_state != current_overlay)
-			if(middle)
-				middle.cut_overlays()
+			if(center_part)
+				center_part.cut_overlays()
 				if(overlay_state)
-					middle.add_overlay(overlay_state)
+					center_part.add_overlay(overlay_state)
 				current_overlay = overlay_state
 
 /// Shake everyone on the z level to let them know that gravity was enagaged/disengaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/T = get_turf(src)
 	var/sound/alert_sound = sound('sound/effects/alert.ogg')
-	for(var/i in GLOB.mob_list)
-		var/mob/M = i
-		if(M.z != z && !(SSmapping.level_trait(z, ZTRAITS_STATION) && SSmapping.level_trait(M.z, ZTRAITS_STATION)))
+	for(var/mob/mobs as anything in GLOB.mob_list)
+		if(mobs.z != z && !(SSmapping.level_trait(z, ZTRAITS_STATION) && SSmapping.level_trait(mobs.z, ZTRAITS_STATION)))
 			continue
-		M.update_gravity(M.has_gravity())
-		if(M.client)
-			shake_camera(M, 15, 1)
-			M.playsound_local(T, null, 100, 1, 0.5, S = alert_sound)
+		mobs.update_gravity(mobs.has_gravity())
+		if(mobs.client)
+			shake_camera(mobs, 15, 1)
+			mobs.playsound_local(T, null, 100, 1, 0.5, S = alert_sound)
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)
