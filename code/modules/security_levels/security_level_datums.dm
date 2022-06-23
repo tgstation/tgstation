@@ -40,6 +40,7 @@
 	name = "green"
 	number_level = SEC_LEVEL_GREEN
 	lowering_to_configuration_key = /datum/config_entry/string/alert_green
+	shuttle_call_time_mod
 
 /**
  * BLUE

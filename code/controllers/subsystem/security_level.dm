@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(security_level)
 	name = "Security Level"
 	flags = SS_NO_FIRE
+	init_order = INIT_ORDER_SECURITY_LEVEL
 	/// Currently set security level
 	var/datum/security_level/current_security_level
 	/// A list of initialised security level datums.
@@ -8,8 +9,9 @@ SUBSYSTEM_DEF(security_level)
 
 /datum/controller/subsystem/security_level/Initialize(start_timeofday)
 	. = ..()
-	for(var/datum/security_level/iterating_security_level_type in typesof(/datum/security_level))
-		available_levels[initial(iterating_security_level_type.number_level)] += new iterating_security_level_type
+	for(var/iterating_security_level_type in subtypesof(/datum/security_level))
+		var/datum/security_level/new_security_level = new iterating_security_level_type
+		available_levels[new_security_level.name] = new_security_level
 	current_security_level = available_levels[SEC_LEVEL_GREEN]
 
 /**
@@ -32,9 +34,13 @@ SUBSYSTEM_DEF(security_level)
 
 	announce_security_level(selected_level) // We want to announce BEFORE updating to the new level
 
+	var/old_shuttle_call_time_mod = selected_level.shuttle_call_time_mod // Need this before we set the new one
+
 	SSsecurity_level.current_security_level = selected_level
 
-	if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
+	if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL) // By god this is absolutely shit
+		old_shuttle_call_time_mod = 1 / old_shuttle_call_time_mod
+		SSshuttle.emergency.modTimer(old_shuttle_call_time_mod)
 		SSshuttle.emergency.modTimer(selected_level.shuttle_call_time_mod)
 
 	SEND_SIGNAL(src, COMSIG_SECURITY_LEVEL_CHANGED, new_level)
