@@ -158,18 +158,16 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	. = ..()
 	soundloop = new(src, start_immediately = FALSE)
 	setup_parts()
-	update_list()
 	if(on)
-		soundloop.start()
+		enable()
 		center_part.add_overlay("activated")
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
+	disable()
 	QDEL_NULL(soundloop)
-	QDEL_NULL(gravity_field)
 	QDEL_NULL(center_part)
 	QDEL_LIST(generator_parts)
-	update_list()
 	return ..()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
@@ -313,9 +311,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	on = TRUE
 	update_use_power(ACTIVE_POWER_USE)
 
-	if (!SSticker.IsRoundInProgress())
-		return
-
 	soundloop.start()
 	if (!gravity_in_level())
 		investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
@@ -330,16 +325,13 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	on = FALSE
 	update_use_power(IDLE_POWER_USE)
 
-	if (!SSticker.IsRoundInProgress())
-		return
-
 	soundloop.stop()
+	QDEL_NULL(gravity_field)
 	if (gravity_in_level())
 		investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
 		message_admins("The gravity generator was brought offline with no backup generator. [ADMIN_VERBOSEJMP(src)]")
 		shake_everyone()
 
-	QDEL_NULL(gravity_field)
 	complete_state_update()
 
 /obj/machinery/gravity_generator/main/proc/complete_state_update()
@@ -406,7 +398,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	return FALSE
 
 /obj/machinery/gravity_generator/main/proc/update_list()
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	var/list/z_list = list()
@@ -435,6 +427,19 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	set_power()
 	disable()
 	investigate_log("was turned off by blackout event or a gravity anomaly detonation.", INVESTIGATE_GRAVITY)
+
+/obj/machinery/gravity_generator/main/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	disable()
+
+/obj/machinery/gravity_generator/main/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	. = ..()
+	enable()
+
+//prevents shuttles attempting to rotate this since it messes up sprites
+/obj/machinery/gravity_generator/main/shuttleRotate(rotation, params)
+	params = NONE
+	return ..()
 
 // Misc
 
