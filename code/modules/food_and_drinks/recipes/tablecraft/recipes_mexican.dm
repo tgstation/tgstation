@@ -107,7 +107,7 @@
 	time = 40
 	reqs = list(
 		/obj/item/food/meat/steak/goliath = 1,
-		/obj/item/organ/regenerative_core/legion = 1,
+		/obj/item/organ/internal/regenerative_core/legion = 1,
 		/datum/reagent/consumable/ketchup = 2,
 		/datum/reagent/consumable/capsaicin = 2
 	)
