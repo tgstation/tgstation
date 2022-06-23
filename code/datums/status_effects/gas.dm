@@ -59,7 +59,7 @@
 
 /atom/movable/screen/alert/status_effect/hypernob_protection
 	name = "Hyper-Noblium Protection"
-	desc = "The Hyper-Noblium around your body is protecting it from self-cobustion and fires but you feel sluggish..."
+	desc = "The Hyper-Noblium around your body is protecting it from self-combustion and fires, but you feel sluggish..."
 	icon_state = "hypernob_protection"
 
 /datum/status_effect/hypernob_protection/on_apply()
