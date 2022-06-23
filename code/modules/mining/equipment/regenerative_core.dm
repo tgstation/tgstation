@@ -6,17 +6,17 @@
 	desc = "Inject certain types of monster organs with this stabilizer to preserve their healing powers indefinitely."
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user, proximity)
+/obj/item/hivelordstabilizer/afterattack(obj/item/organ/target_organ, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	var/obj/item/organ/internal/regenerative_core/C = M
-	if(!istype(C, /obj/item/organ/internal/regenerative_core))
+	var/obj/item/organ/internal/regenerative_core/target_core = target_organ
+	if(!istype(target_core, /obj/item/organ/internal/regenerative_core))
 		to_chat(user, span_warning("The stabilizer only works on certain types of monster organs, generally regenerative in nature."))
 		return
 
-	C.preserved()
-	to_chat(user, span_notice("You inject the [M] with the stabilizer. It will no longer go inert."))
+	target_core.preserved()
+	to_chat(user, span_notice("You inject the [target_organ] with the stabilizer. It will no longer go inert."))
 	qdel(src)
 
 /************************Hivelord core*******************/
@@ -73,22 +73,22 @@
 ///Handles applying the core, logging and status/mood events.
 /obj/item/organ/internal/regenerative_core/proc/applyto(atom/target, mob/user)
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
+		var/mob/living/carbon/human/target_human = target
 		if(inert)
 			to_chat(user, span_notice("[src] has decayed and can no longer be used to heal."))
 			return
 		else
-			if(H.stat == DEAD)
+			if(target_human.stat == DEAD)
 				to_chat(user, span_notice("[src] is useless on the dead."))
 				return
-			if(H != user)
-				H.visible_message(span_notice("[user] forces [H] to apply [src]... Black tendrils entangle and reinforce [H.p_them()]!"))
+			if(target_human != user)
+				target_human.visible_message(span_notice("[user] forces [target_human] to apply [src]... Black tendrils entangle and reinforce [H.p_them()]!"))
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
 			else
 				to_chat(user, span_notice("You start to smear [src] on yourself. Disgusting tendrils hold you together and allow you to keep moving, but for how long?"))
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
-			H.apply_status_effect(/datum/status_effect/regenerative_core)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "core", /datum/mood_event/healsbadman) //Now THIS is a miner buff (fixed - nerf)
+			target_human.apply_status_effect(/datum/status_effect/regenerative_core)
+			SEND_SIGNAL(target_human, COMSIG_ADD_MOOD_EVENT, "core", /datum/mood_event/healsbadman) //Now THIS is a miner buff (fixed - nerf)
 			qdel(src)
 
 /obj/item/organ/internal/regenerative_core/afterattack(atom/target, mob/user, proximity_flag)
@@ -100,13 +100,13 @@
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		applyto(user, user)
 
-/obj/item/organ/internal/regenerative_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/internal/regenerative_core/Insert(mob/living/carbon/target_carbon, special = 0, drop_if_replaced = TRUE)
 	. = ..()
 	if(!preserved && !inert)
 		preserved(TRUE)
 		owner.visible_message(span_notice("[src] stabilizes as it's inserted."))
 
-/obj/item/organ/internal/regenerative_core/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/regenerative_core/Remove(mob/living/carbon/target_carbon, special = 0)
 	if(!inert && !special)
 		owner.visible_message(span_notice("[src] rapidly decays as it's removed."))
 		go_inert()
