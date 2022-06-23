@@ -2022,7 +2022,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/turf/open/floor/plating,
 /area/ruin/space/ks13/command/bridge)
 "sf" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -7841,7 +7840,6 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
-/turf/open/floor/plating,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/command/bridge)
 "XY" = (
