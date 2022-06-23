@@ -197,13 +197,13 @@
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 
-			var/new_sec_level = seclevel2num(params["newSecurityLevel"])
+			var/new_sec_level = SSsecurity_level.string_level_to_number(params["newSecurityLevel"])
 			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
 				return
 			if (SSsecurity_level.get_current_level(TRUE) == new_sec_level)
 				return
 
-			set_security_level(new_sec_level)
+			SSsecurity_level.set_level(new_sec_level)
 
 			to_chat(usr, span_notice("Authorization confirmed. Modifying security level."))
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)

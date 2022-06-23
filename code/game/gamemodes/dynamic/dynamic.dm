@@ -341,7 +341,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT)
 		if(SSsecurity_level.get_current_level(TRUE) < SEC_LEVEL_BLUE)
-			set_security_level(SEC_LEVEL_BLUE)
+			SSsecurity_level.set_level(SEC_LEVEL_BLUE)
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())

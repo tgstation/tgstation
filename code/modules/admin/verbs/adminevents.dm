@@ -268,13 +268,20 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/level = input("Select security level to change to","Set Security Level") as null|anything in list("green","blue","red","delta")
-	if(level)
-		set_security_level(level)
+	var/list/formatted_level_list = list()
+	for(var/datum/security_level/iterating_security_level as anything in SSsecurity_level.available_levels)
+		formatted_level_list[iterating_security_level.name] = iterating_security_level.number_level
 
-		log_admin("[key_name(usr)] changed the security level to [level]")
-		message_admins("[key_name_admin(usr)] changed the security level to [level]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Security Level [capitalize(level)]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/level = tgui_input_list(usr, "Select Security Level:", "Set Security Level", formatted_level_list)
+
+	if(!formatted_level_list[level])
+		return
+
+	SSsecurity_level.set_level(formatted_level_list[level])
+
+	log_admin("[key_name(usr)] changed the security level to [level]")
+	message_admins("[key_name_admin(usr)] changed the security level to [level]")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Security Level [capitalize(level)]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/run_weather()
 	set category = "Admin.Events"

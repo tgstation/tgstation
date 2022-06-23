@@ -26,10 +26,10 @@
 
 /datum/security_level/New()
 	. = ..()
-	if(lowering_to_configuration_key)
-		lowering_to_announcement = CONFIG_GET(lowering_to_configuration_key)
+	if(lowering_to_configuration_key) // I'm not sure about you, but isn't there an easier way to do this?
+		lowering_to_announcement = global.config.Get(lowering_to_configuration_key)
 	if(elevating_to_configuration_key)
-		elevating_to_announcemnt = CONFIG_GET(elevating_to_configuration_key)
+		elevating_to_announcemnt = global.config.Get(elevating_to_configuration_key)
 
 /**
  * GREEN

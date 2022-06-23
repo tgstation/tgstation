@@ -451,7 +451,7 @@ GLOBAL_VAR(station_nuke_source)
 	message_admins("\The [src] was armed at [ADMIN_VERBOSEJMP(our_turf)] by [armer ? ADMIN_LOOKUPFLW(armer) : "an unknown user"].")
 	log_game("\The [src] was armed at [loc_name(our_turf)] by [armer ? key_name(armer) : "an unknown user"].")
 
-	previous_level = SSsecurity_level.get_current_level()
+	previous_level = SSsecurity_level.get_current_level(TRUE)
 	detonation_timer = world.time + (timer_set * 10)
 	for(var/obj/item/pinpointer/nuke/syndicate/nuke_pointer in GLOB.pinpointer_list)
 		nuke_pointer.switch_mode_to(TRACK_INFILTRATOR)
@@ -459,7 +459,7 @@ GLOBAL_VAR(station_nuke_source)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_ARMED, src)
 
 	countdown.start()
-	set_security_level("delta")
+	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 	update_appearance()
 
 /// Disarms the nuke, reverting all pinpointers and the security level
@@ -469,7 +469,7 @@ GLOBAL_VAR(station_nuke_source)
 	log_game("\The [src] at [loc_name(our_turf)] was disarmed by [disarmer ? key_name(disarmer) : "an unknown user"].")
 
 	detonation_timer = null
-	set_security_level(previous_level)
+	SSsecurity_level.set_level(previous_level)
 
 	for(var/obj/item/pinpointer/nuke/syndicate/nuke_pointer in GLOB.pinpointer_list)
 		nuke_pointer.switch_mode_to(initial(nuke_pointer.mode))
