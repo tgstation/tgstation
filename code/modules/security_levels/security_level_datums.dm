@@ -13,6 +13,10 @@
 	var/number_level = -1
 	/// The sound that we will play when this security level is set
 	var/sound
+	/// The looping sound that will be played while the security level is set
+	var/looping_sound
+	/// The looping sound interval
+	var/looping_sound_interval
 	/// The shuttle call time modification of this security level
 	var/shuttle_call_time_mod = 0
 	/// Our announcement when lowering to this level
@@ -76,3 +80,7 @@
 	number_level = SEC_LEVEL_DELTA
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
 	shuttle_call_time_mod = 0.25
+	sound = 'sound/items/bikehorn.ogg'
+	looping_sound = 'sound/items/bikehorn.ogg' // testing purposes - REMOVE ME
+	looping_sound_interval = 10 SECONDS
+

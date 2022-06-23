@@ -268,16 +268,12 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/list/formatted_level_list = list()
-	for(var/datum/security_level/iterating_security_level as anything in SSsecurity_level.available_levels)
-		formatted_level_list[iterating_security_level.name] = iterating_security_level.number_level
+	var/level = tgui_input_list(usr, "Select Security Level:", "Set Security Level", SSsecurity_level.available_levels)
 
-	var/level = tgui_input_list(usr, "Select Security Level:", "Set Security Level", formatted_level_list)
-
-	if(!formatted_level_list[level])
+	if(!level)
 		return
 
-	SSsecurity_level.set_level(formatted_level_list[level])
+	SSsecurity_level.set_level(level)
 
 	log_admin("[key_name(usr)] changed the security level to [level]")
 	message_admins("[key_name_admin(usr)] changed the security level to [level]")
