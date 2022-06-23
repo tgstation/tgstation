@@ -1,0 +1,4 @@
+author: "carshalash"
+delete-after: True
+changes: 
+  - bugfix: "Eldritch nightmares were incorrectly added to the gold slime pool"
