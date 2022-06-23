@@ -147,7 +147,7 @@
 /obj/vehicle/ridden/wheelchair/Destroy()
 	if(bell_attached)
 		remove_bell()
-	. = ..()
+	return ..()
 
 /obj/vehicle/ridden/wheelchair/proc/remove_bell()
 	bell_attached.forceMove(get_turf(src))
