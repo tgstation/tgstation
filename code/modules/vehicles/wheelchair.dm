@@ -18,9 +18,9 @@
 	var/obj/structure/desk_bell/bell_attached
 
 /obj/vehicle/ridden/wheelchair/generate_actions()
+	. = ..()
 	if(!bell_attached)
 		return
-	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/ridden/wheelchair/bell, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/ridden/wheelchair/Initialize(mapload)
