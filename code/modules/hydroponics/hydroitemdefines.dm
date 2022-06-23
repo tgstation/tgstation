@@ -167,24 +167,25 @@
  * Returns the formatted message as text.
  */
 /obj/item/plant_analyzer/proc/scan_tray_stats(obj/machinery/hydroponics/scanned_tray)
-	var/returned_message = "*---------*\n"
+	var/returned_message = ""
 	if(scanned_tray.myseed)
-		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
-		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
-		returned_message += "- Plant Health: [span_notice("[scanned_tray.plant_health]")]\n"
+		returned_message += "[span_bold("[scanned_tray.myseed.plantname]")]"
+		returned_message += "\nPlant Age: [span_notice("[scanned_tray.age]")]"
+		returned_message += "\nPlant Health: [span_notice("[scanned_tray.plant_health]")]"
+		returned_message += "<hr>"
 		returned_message += scan_plant_stats(scanned_tray.myseed)
+		returned_message += "<hr>"
 	else
 		returned_message += span_bold("No plant found.\n")
 
-	returned_message += "- Weed level: [span_notice("[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]")]\n"
-	returned_message += "- Pest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]\n"
-	returned_message += "- Toxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]\n"
-	returned_message += "- Water level: [span_notice("[scanned_tray.waterlevel] / [scanned_tray.maxwater]")]\n"
-	returned_message += "- Nutrition level: [span_notice("[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]")]\n"
+	returned_message += "Weed level: [span_notice("[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]")]"
+	returned_message += "\nPest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]"
+	returned_message += "\nToxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]"
+	returned_message += "\nWater level: [span_notice("[scanned_tray.waterlevel] / [scanned_tray.maxwater]")]"
+	returned_message += "\nNutrition level: [span_notice("[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]")]"
 	if(scanned_tray.yieldmod != 1)
-		returned_message += "- Yield modifier on harvest: [span_notice("[scanned_tray.yieldmod]x")]\n"
+		returned_message += "\nYield modifier on harvest: [span_notice("[scanned_tray.yieldmod]x")]"
 
-	returned_message += "*---------*"
 	return span_info(returned_message)
 
 /**
@@ -196,22 +197,27 @@
  * Returns the formatted message as text.
  */
 /obj/item/plant_analyzer/proc/scan_tray_chems(obj/machinery/hydroponics/scanned_tray)
-	var/returned_message = "*---------*\n"
+	var/returned_message = ""
 	if(scanned_tray.myseed)
-		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
-		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
+		returned_message += "[span_bold("[scanned_tray.myseed.plantname]")]"
+		returned_message += "\nPlant Age: [span_notice("[scanned_tray.age]")]"
+		returned_message += "<hr>"
 		returned_message += scan_plant_chems(scanned_tray.myseed)
+		returned_message += "<hr>"
 	else
 		returned_message += span_bold("No plant found.\n")
 
-	returned_message += "- Tray contains:\n"
+	returned_message += "Tray contains:\n"
 	if(scanned_tray.reagents.reagent_list.len)
+		var/newline = FALSE
 		for(var/datum/reagent/reagent_id in scanned_tray.reagents.reagent_list)
-			returned_message += "- [span_notice("[reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]")]\n"
+			if(newline)
+				returned_message += "\n"
+			returned_message += "[span_notice("[reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]")]"
+			newline = TRUE
 	else
-		returned_message += "[span_notice("No reagents found.")]\n"
+		returned_message += "[span_notice("No reagents found.")]"
 
-	returned_message += "*---------*"
 	return span_info(returned_message)
 
 /**
@@ -223,7 +229,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object)
-	var/returned_message = "This is [span_name("\a [scanned_object]")].\n"
+	var/returned_message = "This is [span_name("\a [scanned_object]")]."
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -231,9 +237,8 @@
 	if(our_seed && istype(our_seed))
 		returned_message += get_analyzer_text_traits(our_seed)
 	else
-		returned_message += "*---------*\nNo genes found.\n*---------*"
+		returned_message += "<hr>No genes found."
 
-	returned_message += "\n"
 	return span_info(returned_message)
 
 /**
@@ -245,7 +250,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant_chems(obj/item/scanned_object)
-	var/returned_message = "*---------*\nThis is [span_name("\a [scanned_object]")].\n"
+	var/returned_message = "This is [span_name("\a [scanned_object]")]."
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -255,9 +260,8 @@
 	else if (our_seed.reagents_add?.len) //we have a seed with reagent genes
 		returned_message += get_analyzer_text_chem_genes(our_seed)
 	else
-		returned_message += "*---------*\nNo reagents found.\n*---------*"
+		returned_message += "<hr>No reagents found."
 
-	returned_message += "\n"
 	return span_info(returned_message)
 
 /**
@@ -270,28 +274,28 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_traits(obj/item/seeds/scanned)
 	var/text = ""
 	if(scanned.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-		text += "- Plant type: [span_notice("Weed. Can grow in nutrient-poor soil.")]\n"
+		text += "\nPlant type: [span_notice("Weed. Can grow in nutrient-poor soil.")]"
 	else if(scanned.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-		text += "- Plant type: [span_notice("Mushroom. Can grow in dry soil.")]\n"
+		text += "\nPlant type: [span_notice("Mushroom. Can grow in dry soil.")]"
 	else if(scanned.get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
-		text += "- Plant type: [span_warning("UNKNOWN")] \n"
+		text += "\nPlant type: [span_warning("UNKNOWN")]"
 	else
-		text += "- Plant type: [span_notice("Normal plant")]\n"
+		text += "\nPlant type: [span_notice("Normal plant")]"
 
 	if(scanned.potency != -1)
-		text += "- Potency: [span_notice("[scanned.potency]")]\n"
+		text += "\nPotency: [span_notice("[scanned.potency]")]"
 	if(scanned.yield != -1)
-		text += "- Yield: [span_notice("[scanned.yield]")]\n"
-	text += "- Maturation speed: [span_notice("[scanned.maturation]")]\n"
+		text += "\nYield: [span_notice("[scanned.yield]")]"
+	text += "\nMaturation speed: [span_notice("[scanned.maturation]")]"
 	if(scanned.yield != -1)
-		text += "- Production speed: [span_notice("[scanned.production]")]\n"
-	text += "- Endurance: [span_notice("[scanned.endurance]")]\n"
-	text += "- Lifespan: [span_notice("[scanned.lifespan]")]\n"
-	text += "- Instability: [span_notice("[scanned.instability]")]\n"
-	text += "- Weed Growth Rate: [span_notice("[scanned.weed_rate]")]\n"
-	text += "- Weed Vulnerability: [span_notice("[scanned.weed_chance]")]\n"
+		text += "\nProduction speed: [span_notice("[scanned.production]")]"
+	text += "\nEndurance: [span_notice("[scanned.endurance]")]"
+	text += "\nLifespan: [span_notice("[scanned.lifespan]")]"
+	text += "\nInstability: [span_notice("[scanned.instability]")]"
+	text += "\nWeed Growth Rate: [span_notice("[scanned.weed_rate]")]"
+	text += "\nWeed Vulnerability: [span_notice("[scanned.weed_chance]")]"
 	if(scanned.rarity)
-		text += "- Species Discovery Value: [span_notice("[scanned.rarity]")]\n"
+		text += "\nSpecies Discovery Value: [span_notice("[scanned.rarity]")]"
 	var/all_removable_traits = ""
 	var/all_immutable_traits = ""
 	for(var/datum/plant_gene/trait/traits in scanned.genes)
@@ -302,17 +306,15 @@
 		else
 			all_immutable_traits += "[(all_immutable_traits == "") ? "" : ", "][traits.get_name()]"
 
-	text += "- Plant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]\n"
-	text += "- Core Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]\n"
+	text += "\nPlant Traits: [span_notice("[all_removable_traits? all_removable_traits : "None."]")]"
+	text += "\nCore Plant Traits: [span_notice("[all_immutable_traits? all_immutable_traits : "None."]")]"
 	var/datum/plant_gene/scanned_graft_result = scanned.graft_gene? new scanned.graft_gene : new /datum/plant_gene/trait/repeated_harvest
-	text += "- Grafting this plant would give: [span_notice("[scanned_graft_result.get_name()]")]\n"
+	text += "\nGrafting this plant would give: [span_notice("[scanned_graft_result.get_name()]")]"
 	QDEL_NULL(scanned_graft_result) //graft genes are stored as typepaths so if we want to get their formatted name we need a datum ref - musn't forget to clean up afterwards
-	text += "*---------*"
 	var/unique_text = scanned.get_unique_analyzer_text()
 	if(unique_text)
-		text += "\n"
+		text += "<hr>"
 		text += unique_text
-		text += "\n*---------*"
 	return text
 
 /**
@@ -324,11 +326,14 @@
  */
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_genes(obj/item/seeds/scanned)
 	var/text = ""
-	text += "- Plant Reagent Genes -\n"
-	text += "*---------*\n"
+	text += "\nPlant Reagent Genes"
+	text += "<hr>"
+	var/newline = FALSE
 	for(var/datum/plant_gene/reagent/gene in scanned.genes)
-		text += "- [gene.get_name()] -\n"
-	text += "*---------*"
+		if(newline)
+			text += "\n"
+		text += "[gene.get_name()]"
+		newline = TRUE
 	return text
 
 /**
@@ -341,21 +346,24 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_contents(obj/item/scanned_plant)
 	var/text = ""
 	var/reagents_text = ""
-	text += "- Plant Reagents -\n"
-	text += "Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]\n"
+	text += "\nPlant Reagents"
+	text += "\nMaximum reagent capacity: [scanned_plant.reagents.maximum_volume]"
 	var/chem_cap = 0
+	var/newline = FALSE
 	for(var/_reagent in scanned_plant.reagents.reagent_list)
 		var/datum/reagent/reagent = _reagent
 		var/amount = reagent.volume
 		chem_cap += reagent.volume
-		reagents_text += "\n- [reagent.name]: [amount]"
+		if(newline)
+			reagents_text += "\n"
+		reagents_text += "[reagent.name]: [amount]"
+		newline = TRUE
 	if(chem_cap > 100)
-		text += "- [span_danger("Reagent Traits Over 100% Production")]\n"
+		text += "\n[span_danger("Reagent Traits Over 100% Production")]"
 
 	if(reagents_text)
-		text += "*---------*"
+		text += "<hr>"
 		text += reagents_text
-	text += "\n*---------*"
 	return text
 
 /**
@@ -366,19 +374,18 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/get_graft_text(obj/item/graft/scanned_graft)
-	var/text = "*---------*\n- Plant Graft -\n"
+	var/text = "Plant Graft"
 	if(scanned_graft.parent_name)
-		text += "- Parent Plant: [span_notice("[scanned_graft.parent_name]")] -\n"
+		text += "\nParent Plant: [span_notice("[scanned_graft.parent_name]")]"
 	if(scanned_graft.stored_trait)
-		text += "- Graftable Traits: [span_notice("[scanned_graft.stored_trait.get_name()]")] -\n"
-	text += "*---------*\n"
-	text += "- Yield: [span_notice("[scanned_graft.yield]")]\n"
-	text += "- Production speed: [span_notice("[scanned_graft.production]")]\n"
-	text += "- Endurance: [span_notice("[scanned_graft.endurance]")]\n"
-	text += "- Lifespan: [span_notice("[scanned_graft.lifespan]")]\n"
-	text += "- Weed Growth Rate: [span_notice("[scanned_graft.weed_rate]")]\n"
-	text += "- Weed Vulnerability: [span_notice("[scanned_graft.weed_chance]")]\n"
-	text += "*---------*"
+		text += "\nGraftable Traits: [span_notice("[scanned_graft.stored_trait.get_name()]")]"
+	text += "<hr>"
+	text += "Yield: [span_notice("[scanned_graft.yield]")]"
+	text += "\nProduction speed: [span_notice("[scanned_graft.production]")]"
+	text += "\nEndurance: [span_notice("[scanned_graft.endurance]")]"
+	text += "\nLifespan: [span_notice("[scanned_graft.lifespan]")]"
+	text += "\nWeed Growth Rate: [span_notice("[scanned_graft.weed_rate]")]"
+	text += "\nWeed Vulnerability: [span_notice("[scanned_graft.weed_chance]")]"
 	return span_info(text)
 
 
