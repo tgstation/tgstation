@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(security_level)
  * * new_level The new security level that will become our current level
  */
 /datum/controller/subsystem/security_level/proc/set_level(new_level)
-	new_level = isnum(new_level) ? new_level : security_level_to_number(new_level)
+	new_level = isnum(new_level) ? new_level : string_level_to_number(new_level)
 	if(new_level == current_security_level.number_level) // If we are already at the desired level, do nothing
 		return
 

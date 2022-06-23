@@ -517,7 +517,7 @@
 				data["shuttleCalled"] = FALSE
 				data["shuttleLastCalled"] = FALSE
 				data["aprilFools"] = SSevents.holidays && SSevents.holidays[APRIL_FOOLS]
-				data["alertLevel"] = get_security_level()
+				data["alertLevel"] = SSsecurity_level.get_current_level()
 				data["authorizeName"] = authorize_name
 				data["canLogOut"] = !issilicon(user)
 				data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac(user)

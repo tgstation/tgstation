@@ -321,7 +321,7 @@
 
 /obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signalOrigin, reason, redAlert, set_coefficient=null)
 	if(!isnum(set_coefficient))
-		var/security_num = seclevel2num(get_security_level())
+		var/security_num = SSsecurity_level.get_current_level(TRUE)
 		switch(security_num)
 			if(SEC_LEVEL_GREEN)
 				set_coefficient = 2
