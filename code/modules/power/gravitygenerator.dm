@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	/// List of all gravity generator parts
 	var/list/generator_parts = list()
 	/// The gravity generator part in the very center, the fifth one, where we place the overlays.
-	var/obj/middle = null
+	var/obj/machinery/gravity_generator/part/center_part
 
 	/// Whether the gravity generator is currently active.
 	var/on = TRUE
@@ -161,12 +161,13 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	update_list()
 	if(on)
 		soundloop.start()
-		middle.add_overlay("activated")
+		center_part.add_overlay("activated")
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
 	QDEL_NULL(soundloop)
 	QDEL_NULL(gravity_field)
+	QDEL_NULL(center_part)
 	QDEL_LIST(generator_parts)
 	update_list()
 	return ..()
@@ -182,7 +183,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 			continue
 		var/obj/machinery/gravity_generator/part/part = new(T)
 		if(count == 5) // Middle
-			middle = part
+			center_part = part
 		if(count <= 3) // Their sprite is the top part of the generator
 			part.set_density(FALSE)
 			part.layer = WALL_OBJ_LAYER
@@ -198,7 +199,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	for(var/obj/machinery/gravity_generator/internal_parts as anything in generator_parts)
 		if(!(internal_parts.machine_stat & BROKEN))
 			internal_parts.set_broken()
-	middle.cut_overlays()
+	center_part.cut_overlays()
 	charge_count = 0
 	breaker = FALSE
 	set_power()
