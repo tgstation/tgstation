@@ -3286,7 +3286,7 @@
 /area/station/engineering/atmos)
 "bed" = (
 /obj/structure/industrial_lift{
-	id = "publicElevator"
+	specific_lift_id = "publicElevator"
 	},
 /obj/machinery/light/floor,
 /turf/open/openspace,
