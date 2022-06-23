@@ -18,7 +18,7 @@
  *   Curse of Paralysis
  *
  * Fiery Blade
- * Nightwater's Rebirth
+ * Nightwatcher's Rebirth
  * > Sidepaths:
  *   Ashen Ritual
  *   Rusted Ritual
@@ -116,7 +116,7 @@
 	desc = "Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness. \
 		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
 		It can also be forced onto a heathen, to make them unable to take it off..."
-	gain_text = "The Nightwater was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
+	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/ash,
 		/datum/heretic_knowledge/reroll_targets,
@@ -149,12 +149,12 @@
 	target.ignite_mob()
 
 /datum/heretic_knowledge/spell/flame_birth
-	name = "Nightwater's Rebirth"
-	desc = "Grants you Nightwater's Rebirth, a spell that extinguishes you and \
+	name = "Nightwatcher's Rebirth"
+	desc = "Grants you Nightwatcher's Rebirth, a spell that extinguishes you and \
 		burns all nearby heathens who are currently on fire, healing you for every victim afflicted. \
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
-		The Nightwater was a particular man, always watching."
+		The Nightwatcher was a particular man, always watching."
 	next_knowledge = list(
 		/datum/heretic_knowledge/final/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
@@ -173,7 +173,7 @@
 		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
 		You will also become immune to flames, space, and similar environmental hazards."
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
-		for the Nightwater brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
+		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
 	route = PATH_ASH
 	/// A static list of all traits we apply on ascension.
