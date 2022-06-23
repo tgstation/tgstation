@@ -64,7 +64,7 @@
 				possible_areas -= possible_area
 
 		for(var/i in 1 to 3)
-			weakpoint_areas += pick_n_take(possible_areas)
+			weakpoint_areas[pick_n_take(possible_areas)] = TRUE
 
 	var/area/weakpoint_area1 = weakpoint_areas[1]
 	var/area/weakpoint_area2 = weakpoint_areas[2]

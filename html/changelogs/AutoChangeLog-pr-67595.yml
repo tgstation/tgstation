@@ -1,5 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - qol: "liquid plasma now points out in examine text that plasma can be collected from it with a beaker"
-  - bugfix: "liquid plasma will now cool down gasses inside of heat exchanger pipes to 100K instead of heat them to 5000K"
