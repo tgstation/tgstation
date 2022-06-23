@@ -116,7 +116,7 @@
 "gE" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "caveslvl3garbage";
-	name = "garbage disposal"
+	name = "Garbage Disposal"
 	},
 /obj/machinery/conveyor{
 	dir = 4;
@@ -444,7 +444,7 @@
 "Vt" = (
 /obj/machinery/door/poddoor{
 	id = "caveslvl3garbage";
-	name = "garbage disposal"
+	name = "Garbage Disposal"
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)

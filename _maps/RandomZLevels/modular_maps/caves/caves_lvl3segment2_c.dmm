@@ -1,366 +1,7054 @@
-"aa" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"ac" = (/obj/machinery/computer/scan_consolenew{dir = 4},/obj/effect/turf_decal/tile/neutral/fourcorners,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"ae" = (/obj/structure/closet/crate{name = "bed locker"},/obj/item/clothing/under/syndicate,/obj/item/clothing/shoes/combat,/obj/item/storage/belt/military,/obj/item/clothing/gloves/combat,/obj/effect/turf_decal/trimline/neutral/filled/line,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"an" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"aw" = (/turf/closed/indestructible/riveted,/area/template_noop)
-"ax" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aC" = (/obj/structure/closet/secure_closet/freezer/fridge,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"aI" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aN" = (/turf/closed/indestructible/rock,/area/template_noop)
-"aR" = (/turf/template_noop,/area/template_noop)
-"aS" = (/obj/structure/table/reinforced,/obj/machinery/microwave,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"bj" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"bq" = (/obj/structure/closet/crate{name = "bed locker"},/obj/item/clothing/under/rank/civilian/clown,/obj/item/clothing/shoes/clown_shoes/combat,/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"bR" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 10},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"ch" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate/vault)
-"cC" = (/obj/structure/table,/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/item/radio/off,/obj/item/radio/off,/obj/item/radio/off,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"cU" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/obj/machinery/power/apc/auto_name/directional/west,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"da" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 1},/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"dh" = (/obj/effect/turf_decal/trimline/neutral/filled/corner,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"dy" = (/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/awaymission/caves/misc/syndicate/vault)
-"dz" = (/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"dH" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"dL" = (/obj/structure/lattice/lava{base_icon_state = "lattice"; icon = 'icons/obj/smooth_structures/lattice.dmi'; icon_state = "lattice-255"},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"dZ" = (/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate)
-"eb" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 4},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"ec" = (/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate/barracks)
-"ef" = (/obj/effect/turf_decal/trimline/neutral/line{dir = 4},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"eg" = (/obj/effect/turf_decal/trimline/neutral/line,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"er" = (/obj/effect/turf_decal/trimline/neutral/corner{dir = 8},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"eA" = (/obj/effect/turf_decal/stripes/corner{dir = 4},/obj/structure/window/reinforced/spawner/north,/obj/structure/table,/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/machinery/recharger,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"eF" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/stairs,/area/awaymission/caves/misc/syndicate/gateway)
-"eW" = (/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"eX" = (/obj/structure/chair{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"fc" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"ff" = (/obj/machinery/computer/scan_consolenew{dir = 8},/obj/effect/turf_decal/tile/neutral/fourcorners,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"fm" = (/obj/structure/window/reinforced/spawner/north,/obj/structure/table,/obj/effect/turf_decal/tile/neutral/fourcorners,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"fB" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 5},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 8},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"fM" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/stairs,/area/awaymission/caves/misc/syndicate/gateway)
-"fQ" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 4},/obj/machinery/portable_atmospherics/canister/anesthetic_mix,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"fR" = (/obj/structure/table,/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/effect/spawner/random/engineering/flashlight,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"fS" = (/obj/effect/turf_decal/bot{dir = 1},/obj/structure/closet/firecloset/full,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"fV" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 4},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"fX" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 5},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"gc" = (/obj/structure/railing/corner{dir = 1},/obj/effect/turf_decal/stripes/line{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"gj" = (/obj/effect/turf_decal/tile/neutral/fourcorners,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"gk" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/window/reinforced/spawner/north,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/tank_dispenser/oxygen{oxygentanks = 1},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"gm" = (/obj/structure/window/reinforced/plasma/spawner/east,/obj/structure/rack,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"gC" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/structure/chair{dir = 1},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"gP" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,/obj/effect/turf_decal/stripes/corner,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"gU" = (/obj/structure/chair,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"gZ" = (/obj/effect/turf_decal/trimline/neutral/corner{dir = 1},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"ha" = (/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{dir = 4},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"hg" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"ic" = (/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/machinery/airalarm/directional/north,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"ih" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"iw" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 10},/obj/machinery/airalarm/directional/south,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"iQ" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"iR" = (/obj/effect/turf_decal/stripes/box,/obj/machinery/porta_turret/syndicate/pod{dir = 6},/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate/vault)
-"iX" = (/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 4},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"jd" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 10},/obj/machinery/light/dim/directional/west,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 1},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"jo" = (/obj/machinery/atmospherics/components/tank/oxygen,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate)
-"jw" = (/obj/machinery/dna_scannernew,/obj/effect/turf_decal/tile/neutral/fourcorners,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"jz" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"jD" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"jH" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/machinery/vending/cigarette,/obj/effect/turf_decal/bot,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"jO" = (/obj/machinery/power/terminal{dir = 1},/obj/structure/cable,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate)
-"ko" = (/obj/machinery/atmospherics/components/unary/passive_vent{dir = 1},/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/box,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"kK" = (/obj/structure/closet/secure_closet/freezer/kitchen,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"kW" = (/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/machinery/power/apc/auto_name/directional/north,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"kY" = (/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/awaymission/caves/misc/syndicate/gateway)
-"lh" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"li" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/structure/chair,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"lk" = (/obj/structure/chair,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"lp" = (/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/awaymission/caves/misc/syndicate/genetics)
-"ls" = (/obj/machinery/door/airlock/external/glass{name = "Mining External Airlock"; req_access_txt = "203"},/obj/effect/decal/cleanable/dirt,/obj/effect/mapping_helpers/airlock/access/all/away/generic4,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate/vault)
-"lR" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 5},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"lS" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 9},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"lV" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,/obj/effect/turf_decal/stripes/line,/mob/living/simple_animal/hostile/syndicate/ranged{name = "Syndicate Defense Personnel"},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"mg" = (/obj/machinery/door/airlock{name = "Unisex Shower"},/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"mA" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 1},/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"mO" = (/obj/structure/closet/crate/secure{name = "Gene Storage"},/obj/machinery/light/dim/directional/west,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"mV" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/light/dim/directional/north,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"mW" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"nl" = (/obj/structure/closet/crate{name = "bed locker"},/obj/item/clothing/under/syndicate,/obj/item/clothing/shoes/combat,/obj/item/storage/belt/military,/obj/item/clothing/gloves/combat,/obj/item/clothing/glasses/night,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"nx" = (/obj/structure/railing{dir = 4},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"nK" = (/obj/structure/window/reinforced/spawner/north,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/grass,/area/awaymission/caves/misc/syndicate/genetics)
-"nN" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"nO" = (/obj/machinery/door/airlock/external/glass{name = "Mining External Airlock"; req_access_txt = "203"},/obj/effect/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/effect/mapping_helpers/airlock/access/all/away/generic4,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate/vault)
-"nX" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/layer_manifold,/obj/machinery/door/airlock/hatch{name = "Life Support"},/obj/effect/mapping_helpers/airlock/access/all/away/generic4,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate)
-"oc" = (/obj/structure/table,/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/machinery/light/dim/directional/east,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"op" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/structure/table,/obj/machinery/light/dim/directional/north,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"oF" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"oG" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 1},/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"pc" = (/obj/structure/window/reinforced/plasma/spawner/west,/obj/structure/rack,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"pr" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"pt" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 4},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"pD" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 10},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"pL" = (/obj/structure/table,/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/machinery/light/dim/directional/west,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"pU" = (/obj/effect/turf_decal/trimline/neutral/line{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"pY" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 5},/obj/machinery/airalarm/directional/north,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"qe" = (/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"qi" = (/obj/structure/window/reinforced/spawner/north,/turf/open/floor/grass,/area/awaymission/caves/misc/syndicate/genetics)
-"qA" = (/obj/structure/toilet,/obj/machinery/button/door/directional/west{id = "vbucklover"; name = "Private Stall Toggle"; normaldoorcontrol = 1; specialfunctions = 4},/obj/machinery/light/small/directional/north,/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"qB" = (/obj/machinery/atmospherics/components/unary/cryo_cell{dir = 1},/obj/effect/turf_decal/stripes/line{dir = 6},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"qL" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"qR" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/structure/chair{dir = 1},/mob/living/simple_animal/hostile/retaliate/clown{desc = "Its a living."; dir = 1; faction = list("Syndicate","Clowns"); name = "Clown-4-Hire"},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"rh" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/machinery/door/firedoor,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"rn" = (/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"ry" = (/mob/living/simple_animal/hostile/syndicate/melee/sword,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"rC" = (/obj/effect/turf_decal/trimline/neutral/filled/line,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"rM" = (/obj/structure/table,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"rW" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 6},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"rX" = (/obj/effect/turf_decal/trimline/neutral/filled/line,/obj/machinery/airalarm/directional/south,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"sy" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/stairs,/area/awaymission/caves/misc/syndicate/gateway)
-"sD" = (/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"sF" = (/obj/structure/chair{dir = 1},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"sM" = (/obj/structure/table,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"sO" = (/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/awaymission/caves/misc/syndicate)
-"td" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/mob/living/simple_animal/hostile/syndicate/ranged/smg{dir = 4},/obj/structure/chair/stool/bar/directional/east,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"tj" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 10},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"tn" = (/obj/effect/turf_decal/trimline/neutral/corner{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"tr" = (/obj/machinery/door/airlock/hatch{name = "Syndicate Access"},/obj/effect/turf_decal/trimline/neutral/filled/line,/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/effect/mapping_helpers/airlock/access/all/away/generic4,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/obj/machinery/door/firedoor,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"tt" = (/obj/structure/closet/crate{name = "bed locker"},/obj/item/clothing/under/syndicate,/obj/item/clothing/shoes/combat,/obj/item/storage/belt/military,/obj/item/clothing/gloves/combat,/obj/item/gun/ballistic/automatic/pistol/no_mag,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"tE" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"tI" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/obj/machinery/door/window/left/directional/north{name = "Gateway Access"; req_access_txt = "away_generic4"},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"tK" = (/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"tM" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 8},/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"tP" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"tY" = (/obj/machinery/door/airlock/highsecurity{name = "Gene Vault"},/obj/effect/mapping_helpers/airlock/access/all/away/generic3,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"uc" = (/obj/machinery/atmospherics/components/unary/cryo_cell{dir = 1},/obj/effect/turf_decal/stripes/line{dir = 10},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"ug" = (/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"uh" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"ur" = (/obj/structure/cable,/obj/machinery/power/smes/engineering,/obj/structure/sign/warning/electric_shock/directional/east,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate)
-"us" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"uC" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 6},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"uG" = (/obj/machinery/atmospherics/components/unary/cryo_cell,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"uT" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate/vault)
-"uZ" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 9},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 4},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"vb" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,/obj/effect/turf_decal/stripes/line{dir = 9},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"vc" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 4},/obj/effect/turf_decal/trimline/neutral/corner,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"ve" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 9},/obj/machinery/light/dim/directional/west,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"vt" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/light/small/directional/south,/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"vF" = (/obj/machinery/power/rtg/lavaland,/obj/effect/turf_decal/stripes/line{dir = 10},/obj/structure/cable,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/syndicate)
-"vQ" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 4},/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"vU" = (/obj/effect/turf_decal/trimline/neutral/line{dir = 4},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"vY" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"wt" = (/obj/effect/turf_decal/trimline/neutral/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"xg" = (/obj/structure/table,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"xk" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 4},/obj/machinery/door/window/right/directional/north{name = "Gateway Access"; req_access_txt = "away_generic4"},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"xC" = (/obj/item/soap/syndie,/obj/machinery/light/small/directional/north,/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"xF" = (/obj/structure/sink{dir = 4; pixel_x = -12; pixel_y = 2},/obj/structure/mirror/directional/west,/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 4},/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"xR" = (/obj/machinery/door/airlock/highsecurity{name = "High Security Gene Vault"},/obj/effect/mapping_helpers/airlock/access/all/away/generic3,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"ya" = (/obj/modular_map_root/caves{key = "caves_lvl3segment3"; name = "lvl3segment3"},/turf/template_noop,/area/template_noop)
-"yc" = (/obj/structure/table/reinforced,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"yh" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 6},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"yj" = (/obj/effect/turf_decal/trimline/neutral/corner{dir = 4},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"yk" = (/obj/structure/sink{dir = 4; pixel_x = -12; pixel_y = 2},/obj/structure/mirror/directional/west,/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"yp" = (/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"yA" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 1},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"yS" = (/obj/effect/turf_decal/bot_white,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/gateway)
-"zC" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 4},/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"zK" = (/obj/structure/table/reinforced,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"zO" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"zQ" = (/obj/effect/turf_decal/trimline/neutral/filled/line,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"zT" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 6},/obj/machinery/light/dim/directional/east,/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 8},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Ac" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate)
-"As" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/machinery/door/firedoor,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"Az" = (/obj/structure/closet/crate/secure{name = "Gene Storage"},/obj/machinery/light/dim/directional/north,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"AM" = (/obj/machinery/door/airlock/hatch{name = "Gateway Access"},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 4},/obj/effect/mapping_helpers/airlock/access/all/away/generic4,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/obj/machinery/door/firedoor,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"AU" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"AW" = (/obj/machinery/light/dim/directional/east,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"AX" = (/obj/effect/turf_decal/trimline/neutral/filled/line,/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Ba" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"Bk" = (/obj/machinery/door/airlock/hatch{name = "Syndicate Access"},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/effect/turf_decal/trimline/neutral/filled/line,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/effect/mapping_helpers/airlock/access/all/away/generic4,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/obj/machinery/door/firedoor,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"Bu" = (/obj/structure/cable,/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/awaymission/caves/misc/syndicate)
-"Bz" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"BC" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 9},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 4},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"BE" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"BK" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"Co" = (/obj/effect/turf_decal/stripes/line{dir = 6},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"Cs" = (/obj/machinery/oven,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"Cz" = (/obj/structure/bed{dir = 4},/obj/item/bedsheet/syndie{dir = 4},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"CE" = (/obj/effect/turf_decal/trimline/neutral/filled/line,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"CG" = (/obj/effect/turf_decal/bot{dir = 1},/obj/structure/closet/l3closet/scientist,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"CH" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"CJ" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"CR" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 4},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"De" = (/obj/structure/sink/kitchen{desc = "A sink used for washing one's hands and face."; name = "old sink"; pixel_y = 28},/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"Di" = (/obj/structure/cable,/obj/structure/cable,/obj/machinery/power/smes/engineering,/obj/structure/sign/warning/electric_shock/directional/west,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate)
-"Dn" = (/obj/structure/chair/office/tactical{dir = 4},/mob/living/simple_animal/hostile/syndicate/civilian{name = "Syndicate Gene Scientist"},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 4},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"Dx" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 5},/obj/machinery/light/dim/directional/east,/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"DG" = (/obj/structure/closet/crate{name = "bed locker"},/obj/item/clothing/shoes/combat,/obj/item/clothing/under/syndicate/skirt,/obj/item/storage/belt/military,/obj/item/clothing/gloves/combat,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"DQ" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/structure/table,/obj/machinery/airalarm/directional/south,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"DV" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"DY" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"Ep" = (/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"Eu" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 6},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"EL" = (/obj/structure/rack,/obj/structure/window/reinforced/plasma/spawner/east,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"EN" = (/obj/structure/flora/ash/tall_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"EO" = (/obj/structure/table/reinforced,/obj/effect/turf_decal/trimline/neutral/corner{dir = 1},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"ER" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 8},/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"Fb" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 4},/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 1},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"Fe" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/structure/chair/stool/bar/directional/east,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"Fk" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 1},/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"Fs" = (/obj/effect/turf_decal/stripes/box,/obj/machinery/porta_turret/syndicate/pod{dir = 5},/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate/vault)
-"Fx" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 4},/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"FL" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,/obj/effect/turf_decal/stripes/corner{dir = 8},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"FX" = (/obj/structure/table,/obj/effect/turf_decal/tile/neutral/fourcorners,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"Gn" = (/obj/machinery/light/dim/directional/west,/obj/effect/turf_decal/trimline/neutral/corner{dir = 8},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"Gv" = (/obj/machinery/power/rtg/lavaland,/obj/effect/turf_decal/stripes/line{dir = 8},/obj/structure/cable,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/syndicate)
-"GE" = (/obj/structure/window/reinforced/plasma/spawner/north,/obj/structure/rack,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"GG" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"GT" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 5},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"GW" = (/obj/machinery/door/airlock{id_tag = "vbucklover"; name = "Private Stall"},/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"GZ" = (/obj/structure/chair/office/tactical{dir = 8},/mob/living/simple_animal/hostile/syndicate/civilian{name = "Syndicate Gene Scientist"},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"Hf" = (/obj/structure/window/reinforced/spawner/north,/obj/structure/table,/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/item/storage/belt/utility,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"Hk" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"Ho" = (/obj/machinery/griddle,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"HM" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"HV" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"Id" = (/obj/structure/chair/office/tactical{dir = 4},/mob/living/simple_animal/hostile/syndicate/ranged/shotgun{name = "Syndicate Shotgunner"},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"It" = (/obj/effect/turf_decal/bot{dir = 1},/obj/structure/closet/secure_closet/medical1,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"IF" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/grass,/area/awaymission/caves/misc/syndicate/genetics)
-"IR" = (/obj/structure/railing{dir = 8},/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"Jb" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"Jm" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"Jp" = (/obj/effect/turf_decal/stripes/line{dir = 10},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"Js" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 10},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"Jy" = (/obj/effect/turf_decal/trimline/neutral/filled/line,/obj/machinery/power/apc/auto_name/directional/south,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"Jz" = (/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"JC" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/power/apc/auto_name/directional/north,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"JN" = (/obj/structure/railing/corner{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"JT" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 4},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Kf" = (/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/effect/turf_decal/trimline/neutral/corner{dir = 4},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Ku" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"KH" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 9},/obj/machinery/airalarm/directional/west,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"KN" = (/obj/effect/turf_decal/trimline/neutral/filled/line,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"KP" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 1},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"KX" = (/obj/structure/closet/crate{name = "bed locker"},/obj/item/clothing/under/syndicate,/obj/item/clothing/shoes/combat,/obj/item/storage/belt/military,/obj/item/clothing/gloves/combat,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"KY" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 4},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/obj/machinery/door/airlock/hatch{name = "Gateway Access"},/obj/effect/mapping_helpers/airlock/access/all/away/generic4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/obj/machinery/door/firedoor,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"KZ" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 6},/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 8},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Lb" = (/obj/effect/turf_decal/trimline/neutral/line{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"Ld" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,/obj/effect/turf_decal/stripes/line{dir = 5},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"Lf" = (/obj/structure/window/reinforced/spawner/north,/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 8},/turf/open/floor/grass,/area/awaymission/caves/misc/syndicate/genetics)
-"Ll" = (/obj/effect/turf_decal/trimline/neutral/corner,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"Lo" = (/obj/structure/closet/secure_closet/freezer/meat,/obj/machinery/light/dim/directional/south,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"Lt" = (/obj/structure/fluff{desc = "A gateway frame with no active power source."; icon = 'icons/obj/machines/gateway.dmi'; icon_state = "portal_frame"; name = "inactive gateway"},/obj/effect/turf_decal/bot_white,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/gateway)
-"LS" = (/obj/machinery/atmospherics/components/unary/thermomachine/freezer{dir = 4},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"LT" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"Mm" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 4},/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"MH" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/grass,/area/awaymission/caves/misc/syndicate/genetics)
-"MR" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"MT" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 8},/obj/machinery/portable_atmospherics/canister/anesthetic_mix,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"Na" = (/obj/structure/table/reinforced,/obj/machinery/reagentgrinder,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"Nc" = (/obj/structure/urinal/directional/east,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"NN" = (/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Oa" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Og" = (/obj/machinery/light/dim/directional/east,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"Ou" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"Ow" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 8},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"ON" = (/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"OV" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Pf" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"Pj" = (/obj/machinery/computer/terminal{dir = 8; upperinfo = "COPYRIGHT 2488 SYNDI_CAT-TM - DO NOT REDISTRIBUTE TO NANOTRASEN"},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"Pm" = (/obj/structure/closet/crate{name = "bed locker"},/obj/item/clothing/shoes/combat,/obj/item/clothing/under/syndicate/skirt,/obj/item/storage/belt/military,/obj/item/clothing/gloves/combat,/obj/item/clothing/glasses/night,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"Pv" = (/obj/structure/closet/crate{name = "bed locker"},/obj/item/keycard/syndicate_bio{desc = "A red keycard with a DNA Helix printed in the center."; name = "Syndicate Gene Vault Access Card"; puzzle_id = "freevbucks"},/obj/item/clothing/under/syndicate,/obj/item/clothing/shoes/combat,/obj/item/storage/belt/military,/obj/item/clothing/gloves/combat,/obj/item/ammo_box/magazine/m9mm{pixel_x = 1; pixel_y = -1},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"Py" = (/obj/structure/bed{dir = 8},/obj/item/bedsheet/syndie,/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"PA" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/machinery/vending/dinnerware,/obj/effect/turf_decal/bot,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"PC" = (/obj/machinery/door/puzzle/keycard{name = "Secure Gene Vault"; puzzle_id = "freevbucks"},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/obj/machinery/door/firedoor,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"PM" = (/obj/machinery/light/dim/directional/south,/turf/open/floor/grass,/area/awaymission/caves/misc/syndicate/genetics)
-"PW" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/structure/table,/obj/machinery/light/dim/directional/south,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"Qc" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Qi" = (/obj/machinery/porta_turret/syndicate/pod,/obj/effect/turf_decal/stripes/box,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate)
-"Qj" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 1},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"QC" = (/obj/structure/table/reinforced,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"QM" = (/obj/machinery/light/dim/directional/west,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"QQ" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate)
-"QY" = (/obj/effect/turf_decal/trimline/neutral/filled/corner,/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Ri" = (/obj/structure/railing{dir = 4},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"Rm" = (/obj/structure/bed{dir = 8},/obj/item/bedsheet/syndie,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"Rp" = (/obj/structure/chair/office/tactical{dir = 4},/mob/living/simple_animal/hostile/syndicate/ranged/shotgun{name = "Syndicate Shotgunner"},/obj/machinery/airalarm/directional/west,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"Rv" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"Sf" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/structure/chair/stool/bar/directional/east,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"Sh" = (/obj/structure/railing{dir = 8},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"Sp" = (/obj/structure/table/reinforced,/obj/item/kitchen/rollingpin,/obj/item/reagent_containers/food/condiment/enzyme{layer = 5},/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"Ss" = (/obj/machinery/door/airlock/hatch{name = "Genetics Access"},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 4},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/obj/effect/mapping_helpers/airlock/access/all/away/generic4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/obj/machinery/door/firedoor,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"Sy" = (/obj/machinery/light/dim/directional/west,/obj/effect/turf_decal/trimline/neutral/corner{dir = 1},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"SI" = (/obj/structure/curtain,/obj/machinery/shower{dir = 1},/mob/living/simple_animal/hostile/syndicate/melee{desc = "Death to bad hygiene."; name = "Shower Operative"},/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"SN" = (/obj/structure/bed{dir = 4},/obj/item/bedsheet/syndie{dir = 4},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"SQ" = (/obj/structure/rack,/obj/structure/window/reinforced/plasma/spawner/west,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"Tc" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Th" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Tl" = (/obj/effect/turf_decal/trimline/neutral/filled/line,/obj/machinery/light/dim/directional/south,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Tu" = (/obj/structure/closet/crate{name = "bed locker"},/obj/item/clothing/shoes/combat,/obj/item/clothing/under/syndicate/skirt,/obj/item/storage/belt/military,/obj/item/clothing/gloves/combat,/obj/item/ammo_box/magazine/m9mm{pixel_x = 1; pixel_y = -1},/obj/effect/turf_decal/trimline/neutral/filled/line,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"TL" = (/obj/effect/turf_decal/trimline/neutral/filled/line,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"TM" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Uk" = (/obj/effect/turf_decal/stripes/corner{dir = 1},/obj/structure/window/reinforced/spawner/north,/obj/structure/table,/obj/effect/turf_decal/tile/neutral/fourcorners,/obj/machinery/cell_charger,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"UD" = (/obj/machinery/light/dim/directional/south,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate)
-"UF" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/vault)
-"UQ" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 9},/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/gateway)
-"UZ" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 8},/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 4},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Vl" = (/obj/structure/safe,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"Vr" = (/obj/machinery/power/apc/auto_name/directional/east,/obj/structure/cable,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"Vv" = (/obj/structure/table/reinforced,/obj/effect/turf_decal/trimline/neutral/corner{dir = 8},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/syndicate/vault)
-"Vw" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/atmospherics/pipe/layer_manifold,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"Wb" = (/obj/structure/closet/crate/secure{name = "Gene Storage"},/obj/machinery/light/dim/directional/south,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"Wh" = (/turf/closed/indestructible/syndicate,/area/awaymission/caves/misc/syndicate/vault)
-"Wi" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate/genetics)
-"Wk" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/light/dim/directional/north,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"Wt" = (/obj/structure/dresser,/obj/effect/turf_decal/tile/neutral/fourcorners,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/barracks)
-"WA" = (/obj/machinery/deepfryer,/obj/machinery/airalarm/directional/north,/turf/open/floor/iron/kitchen,/area/awaymission/caves/misc/syndicate)
-"WC" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Xg" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/effect/turf_decal/stripes/corner{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"Xi" = (/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 1},/obj/effect/turf_decal/trimline/neutral/filled/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Xo" = (/obj/machinery/door/airlock{name = "Unisex Restroom"},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/freezer,/area/awaymission/caves/misc/syndicate)
-"Xv" = (/obj/machinery/door/airlock/external/glass{name = "Mining External Airlock"; req_access_txt = "203"},/obj/effect/mapping_helpers/airlock/access/all/away/generic4,/turf/open/floor/plating,/area/awaymission/caves/misc/syndicate/vault)
-"Xw" = (/obj/structure/window/reinforced/plasma/spawner,/obj/structure/rack,/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"XL" = (/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 8},/turf/open/floor/iron/smooth_large,/area/awaymission/caves/misc/syndicate/vault)
-"Ye" = (/obj/structure/window/reinforced/spawner/north,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 4},/turf/open/floor/grass,/area/awaymission/caves/misc/syndicate/genetics)
-"Yo" = (/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate/genetics)
-"YZ" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/structure/table,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"Za" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/effect/turf_decal/trimline/neutral/filled/line,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/structure/cable,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"Zi" = (/obj/effect/turf_decal/tile/bar/opposingcorners,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/awaymission/caves/misc/syndicate)
-"Zp" = (/turf/open/floor/grass,/area/awaymission/caves/misc/syndicate/genetics)
-"ZA" = (/obj/effect/turf_decal/trimline/neutral/filled/line{dir = 1},/obj/machinery/light/dim/directional/north,/turf/open/floor/iron/dark,/area/awaymission/caves/misc/syndicate)
-"ZI" = (/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/awaymission/caves/misc/syndicate/barracks)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"ac" = (
+/obj/machinery/computer/scan_consolenew{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"ae" = (
+/obj/structure/closet/crate{
+	name = "bed locker"
+	},
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/shoes/combat,
+/obj/item/storage/belt/military,
+/obj/item/clothing/gloves/combat,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"an" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"aw" = (
+/turf/closed/indestructible/riveted,
+/area/template_noop)
+"ax" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aC" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"aI" = (
+/obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aN" = (
+/turf/closed/indestructible/rock,
+/area/template_noop)
+"aR" = (
+/turf/template_noop,
+/area/template_noop)
+"aS" = (
+/obj/structure/table/reinforced,
+/obj/machinery/microwave,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"bj" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"bq" = (
+/obj/structure/closet/crate{
+	name = "bed locker"
+	},
+/obj/item/clothing/under/rank/civilian/clown,
+/obj/item/clothing/shoes/clown_shoes/combat,
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"bR" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"ch" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate/vault)
+"cC" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"cU" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"da" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"dh" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"dy" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/awaymission/caves/misc/syndicate/vault)
+"dz" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"dH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"dL" = (
+/obj/structure/lattice/lava{
+	base_icon_state = "lattice";
+	icon = 'icons/obj/smooth_structures/lattice.dmi';
+	icon_state = "lattice-255"
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"dZ" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"eb" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"ec" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate/barracks)
+"ef" = (
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"eg" = (
+/obj/effect/turf_decal/trimline/neutral/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"er" = (
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"eA" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/recharger,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"eF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/stairs,
+/area/awaymission/caves/misc/syndicate/gateway)
+"eW" = (
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"eX" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"fc" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"ff" = (
+/obj/machinery/computer/scan_consolenew{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"fm" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"fB" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"fM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/stairs,
+/area/awaymission/caves/misc/syndicate/gateway)
+"fQ" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"fR" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"fS" = (
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"fV" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"fX" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"gc" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"gj" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"gk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/tank_dispenser/oxygen{
+	oxygentanks = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"gm" = (
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/rack,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"gC" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"gP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"gU" = (
+/obj/structure/chair,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"gZ" = (
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"ha" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"hg" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"ic" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"ih" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"iw" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"iQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"iR" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate/vault)
+"iX" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"jd" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/obj/machinery/light/dim/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"jo" = (
+/obj/machinery/atmospherics/components/tank/oxygen,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"jw" = (
+/obj/machinery/dna_scannernew,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"jz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"jD" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"jH" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"jO" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"ko" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"kK" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"kW" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"kY" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/awaymission/caves/misc/syndicate/gateway)
+"lh" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"li" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"lk" = (
+/obj/structure/chair,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"lp" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/awaymission/caves/misc/syndicate/genetics)
+"ls" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock";
+	req_access_txt = "203"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate/vault)
+"lR" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"lS" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"lV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/effect/turf_decal/stripes/line,
+/mob/living/simple_animal/hostile/syndicate/ranged{
+	name = "Syndicate Defense Personnel"
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"mg" = (
+/obj/machinery/door/airlock{
+	name = "Unisex Shower"
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"mA" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"mO" = (
+/obj/structure/closet/crate/secure{
+	name = "Gene Storage"
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"mV" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"mW" = (
+/obj/structure/flora/ash/stem_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"nl" = (
+/obj/structure/closet/crate{
+	name = "bed locker"
+	},
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/shoes/combat,
+/obj/item/storage/belt/military,
+/obj/item/clothing/gloves/combat,
+/obj/item/clothing/glasses/night,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"nx" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"nK" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"nN" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"nO" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock";
+	req_access_txt = "203"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate/vault)
+"nX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/machinery/door/airlock/hatch{
+	name = "Life Support"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"oc" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"op" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"oF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"oG" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"pc" = (
+/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/rack,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"pr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"pt" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"pD" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"pL" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"pU" = (
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"pY" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"qe" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"qi" = (
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"qA" = (
+/obj/structure/toilet,
+/obj/machinery/button/door/directional/west{
+	id = "vbucklover";
+	name = "Private Stall Toggle";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"qB" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"qL" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"qR" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/retaliate/clown{
+	desc = "Its a living.";
+	dir = 1;
+	faction = list("Syndicate","Clowns");
+	name = "Clown-4-Hire"
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"rh" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"rn" = (
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"ry" = (
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"rC" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"rM" = (
+/obj/structure/table,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"rW" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"rX" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"sy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/stairs,
+/area/awaymission/caves/misc/syndicate/gateway)
+"sD" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"sF" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"sM" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"sO" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/awaymission/caves/misc/syndicate)
+"td" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg{
+	dir = 4
+	},
+/obj/structure/chair/stool/bar/directional/east,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"tj" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"tn" = (
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"tr" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Syndicate Access"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"tt" = (
+/obj/structure/closet/crate{
+	name = "bed locker"
+	},
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/shoes/combat,
+/obj/item/storage/belt/military,
+/obj/item/clothing/gloves/combat,
+/obj/item/gun/ballistic/automatic/pistol/no_mag,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"tE" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"tI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Gateway Access";
+	req_access_txt = "away_generic4"
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"tK" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"tM" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"tP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"tY" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Gene Vault"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"uc" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"ug" = (
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"uh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"ur" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
+/obj/structure/sign/warning/electric_shock/directional/east,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"us" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"uC" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"uG" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"uT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate/vault)
+"uZ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"vb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"vc" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/corner,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"ve" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/machinery/light/dim/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"vt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"vF" = (
+/obj/machinery/power/rtg/lavaland,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/syndicate)
+"vQ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"vU" = (
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"vY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"wt" = (
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"xg" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"xk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/door/window/right/directional/north{
+	name = "Gateway Access";
+	req_access_txt = "away_generic4"
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"xC" = (
+/obj/item/soap/syndie,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"xF" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/structure/mirror/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"xR" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "High Security Gene Vault"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"ya" = (
+/obj/modular_map_root/caves{
+	key = "caves_lvl3segment3";
+	name = "lvl3segment3"
+	},
+/turf/template_noop,
+/area/template_noop)
+"yc" = (
+/obj/structure/table/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"yh" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"yj" = (
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"yk" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/structure/mirror/directional/west,
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"yp" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"yA" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"yS" = (
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/gateway)
+"zC" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"zK" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"zO" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"zQ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"zT" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/machinery/light/dim/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Ac" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"As" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"Az" = (
+/obj/structure/closet/crate/secure{
+	name = "Gene Storage"
+	},
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"AM" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Gateway Access"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"AU" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"AW" = (
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"AX" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Ba" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Bk" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Syndicate Access"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"Bu" = (
+/obj/structure/cable,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/awaymission/caves/misc/syndicate)
+"Bz" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"BC" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"BE" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"BK" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Co" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Cs" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"Cz" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/syndie{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"CE" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"CG" = (
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/closet/l3closet/scientist,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"CH" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"CJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"CR" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"De" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face.";
+	name = "old sink";
+	pixel_y = 28
+	},
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"Di" = (
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
+/obj/structure/sign/warning/electric_shock/directional/west,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"Dn" = (
+/obj/structure/chair/office/tactical{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/syndicate/civilian{
+	name = "Syndicate Gene Scientist"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Dx" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/machinery/light/dim/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"DG" = (
+/obj/structure/closet/crate{
+	name = "bed locker"
+	},
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/under/syndicate/skirt,
+/obj/item/storage/belt/military,
+/obj/item/clothing/gloves/combat,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"DQ" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"DV" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"DY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"Ep" = (
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"Eu" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"EL" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced/plasma/spawner/east,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"EN" = (
+/obj/structure/flora/ash/tall_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"EO" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"ER" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"Fb" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"Fe" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair/stool/bar/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"Fk" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"Fs" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate/vault)
+"Fx" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"FL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"FX" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"Gn" = (
+/obj/machinery/light/dim/directional/west,
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Gv" = (
+/obj/machinery/power/rtg/lavaland,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/syndicate)
+"GE" = (
+/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/rack,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"GG" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"GT" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"GW" = (
+/obj/machinery/door/airlock{
+	id_tag = "vbucklover";
+	name = "Private Stall"
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"GZ" = (
+/obj/structure/chair/office/tactical{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/syndicate/civilian{
+	name = "Syndicate Gene Scientist"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Hf" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/belt/utility,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"Hk" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"Ho" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"HM" = (
+/obj/structure/flora/ash/cacti,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"HV" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Id" = (
+/obj/structure/chair/office/tactical{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/syndicate/ranged/shotgun{
+	name = "Syndicate Shotgunner"
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"It" = (
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/closet/secure_closet/medical1,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"IF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"IR" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"Jb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Jm" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"Jp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Js" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"Jy" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"Jz" = (
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"JC" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"JN" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"JT" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Kf" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Ku" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"KH" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"KN" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"KP" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"KX" = (
+/obj/structure/closet/crate{
+	name = "bed locker"
+	},
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/shoes/combat,
+/obj/item/storage/belt/military,
+/obj/item/clothing/gloves/combat,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"KY" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/door/airlock/hatch{
+	name = "Gateway Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"KZ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Lb" = (
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Ld" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Lf" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Ll" = (
+/obj/effect/turf_decal/trimline/neutral/corner,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Lo" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"Lt" = (
+/obj/structure/fluff{
+	desc = "A gateway frame with no active power source.";
+	icon = 'icons/obj/machines/gateway.dmi';
+	icon_state = "portal_frame";
+	name = "inactive gateway"
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/gateway)
+"LS" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"LT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Mm" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"MH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"MR" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"MT" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Na" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"Nc" = (
+/obj/structure/urinal/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"NN" = (
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Oa" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Og" = (
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"Ou" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Ow" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"ON" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"OV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Pf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"Pj" = (
+/obj/machinery/computer/terminal{
+	dir = 8;
+	upperinfo = "COPYRIGHT 2488 SYNDI_CAT-TM - DO NOT REDISTRIBUTE TO NANOTRASEN"
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Pm" = (
+/obj/structure/closet/crate{
+	name = "bed locker"
+	},
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/under/syndicate/skirt,
+/obj/item/storage/belt/military,
+/obj/item/clothing/gloves/combat,
+/obj/item/clothing/glasses/night,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"Pv" = (
+/obj/structure/closet/crate{
+	name = "bed locker"
+	},
+/obj/item/keycard/syndicate_bio{
+	desc = "A red keycard with a DNA Helix printed in the center.";
+	name = "Syndicate Gene Vault Access Card";
+	puzzle_id = "freevbucks"
+	},
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/shoes/combat,
+/obj/item/storage/belt/military,
+/obj/item/clothing/gloves/combat,
+/obj/item/ammo_box/magazine/m9mm{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"Py" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/syndie,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"PA" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/vending/dinnerware,
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"PC" = (
+/obj/machinery/door/puzzle/keycard{
+	name = "Secure Gene Vault";
+	puzzle_id = "freevbucks"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"PM" = (
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"PW" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"Qc" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Qi" = (
+/obj/machinery/porta_turret/syndicate/pod,
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"Qj" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"QC" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"QM" = (
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"QQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"QY" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Ri" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"Rm" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/syndie,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"Rp" = (
+/obj/structure/chair/office/tactical{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/syndicate/ranged/shotgun{
+	name = "Syndicate Shotgunner"
+	},
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Rv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Sf" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair/stool/bar/directional/east,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"Sh" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"Sp" = (
+/obj/structure/table/reinforced,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"Ss" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Genetics Access"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Sy" = (
+/obj/machinery/light/dim/directional/west,
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"SI" = (
+/obj/structure/curtain,
+/obj/machinery/shower{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/syndicate/melee{
+	desc = "Death to bad hygiene.";
+	name = "Shower Operative"
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"SN" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/syndie{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"SQ" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced/plasma/spawner/west,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"Tc" = (
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Th" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Tl" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Tu" = (
+/obj/structure/closet/crate{
+	name = "bed locker"
+	},
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/under/syndicate/skirt,
+/obj/item/storage/belt/military,
+/obj/item/clothing/gloves/combat,
+/obj/item/ammo_box/magazine/m9mm{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"TL" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"TM" = (
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Uk" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/cell_charger,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"UD" = (
+/obj/machinery/light/dim/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"UF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"UQ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
+"UZ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Vl" = (
+/obj/structure/safe,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"Vr" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Vv" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Vw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"Wb" = (
+/obj/structure/closet/crate/secure{
+	name = "Gene Storage"
+	},
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"Wh" = (
+/turf/closed/indestructible/syndicate,
+/area/awaymission/caves/misc/syndicate/vault)
+"Wi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Wk" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Wt" = (
+/obj/structure/dresser,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"WA" = (
+/obj/machinery/deepfryer,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"WC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Xg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"Xi" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Xo" = (
+/obj/machinery/door/airlock{
+	name = "Unisex Restroom"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"Xv" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock";
+	req_access_txt = "203"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate/vault)
+"Xw" = (
+/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/rack,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"XL" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"Ye" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Yo" = (
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"YZ" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"Za" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"Zi" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"Zp" = (
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"ZA" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"ZI" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/awaymission/caves/misc/syndicate/barracks)
 
 (1,1,1) = {"
-awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaxaxaIaxaxaxawawawawawawawawawawawawawawawawawawawawaw
-aaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaHMaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaxaaaaaaaaaaCHCHaxaxaxaxaaaaaaaaaxaxaxaxOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxOaaxaxaaaaaaaaaaaaaaaaaaaaaaaaandLdLdLdLdLdLdLdLdLananaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaananaxOaaxaxaxaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaN
-aaaaaxaaaxaxTcaxaxaxaxaxaxaxaxaxaaaaaaaaaaaaaxaxaaaaaaaaaaaaaaOaaxaxaxaxaxaxOaOaOaQcOaaxaxaxandLdLdLdLdLdLdLdLdLdLdLZIZIZIZIZIZIZIdLdLanananaxaxOaOaOaOaTMaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaananOaOaaxaxOaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaN
-aaaaaxaaaaaaaxaxaxaxaxaxaxaxaxaxaxaxaxaaaaaaaaaxaxaxaxaxaxaxaxaxaxaxaxanaxaxaxaxOaOaaxprdLandLdLkYkYkYkYkYkYkYdLdLZIZIFXicWtkWFXZIZIdLananananaxaxOaOaaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaanananananQcOaaxaxHMaaaaaaaaaxaaaaaxaaaaaxaaaaaaaaaaaaaaaaaN
-aaaaaxaaaaaxaxOaOaaxaxaaaxaaaaaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaananananananananaxaxaxandLprdLandLkYkYnxySySySShkYkYdLZISNlhlhPybjOwPyZIdLananananaxaxaxaxanaxaxOaOaQcOaTMaxaxaaaaaaaaaaaaaaaaananananananaaaxaxaxaxaaaaaaaxaaaaaxaaaaaxaaaaaaaaaaaaaaaaaN
-aaaaaxaaaaaxOaQcOaaaaaaaaxaaaaaaaaaaaxaxaxaxaxaaaaaaaaaaaaananananananananananaxanandLprdLandLkYCGnxySySySShfSkYdLZIDGEpEpttCJEpPvZIdLanananananananaxananaxTMaxOaaxaxaxaxaxaxaxaxananananananananananaaaxaxaxaxaaaxaxaxaxaxaxaaaaaxaaaaaaaaaaaaaaaaaN
-aaaaaxaxaxaxOaOaaaaaaaaaaxaaaaaxTcaxaxaxaaaaaaaaaaaaaaaaaaanananandLdLdLdLdLdLdLdLdLdLprdLandLkYItRiLtySySIRCGkYdLZICzEpEpCzCJEpRmZIdLananananananananananananaxaxaxanananaxananananananaaaaaaaaaaaaaaaaaxaxaxaxaxaxaxOaaxaxaxaxaxaxaaaaaaaaaaaaaaaaaN
-aaaaaxaxaxaxaxOaaaaaaaaaaaaaaxaxaxaxOaaaaaaaaaaaaaaaaaaaaaanananandLWhWhWhWhWhWhWhWhWhXgdLandLkYQMJNsyeFfMgcOgkYdLZIPmEpEpbqCJEpnlZIdLananananananananananananaxaxananananananananaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxOaOaOaaxaxaxaxaxaxaxaaaaaaaaaaaaaN
-aaaxaxaxaxaxaaaaaaaaaxaxaxaxaxaxaxTcOaaxTcaxaxaaaaanaaanaaanananandLWhgmAzpcdygmAzpcWhDYdLandLkYfmeAtIgkxkUkHfkYdLZICzEpEpRmCJEpRmZIdLananananananananananananaxaxananananananananaaaaaaaaaaaaaxaxaxaxaxaxaxaxaxaaaxOaQcOaaxaxaxaxaxaxaxaxaaaaaaaaaaaN
-aaaxaxaxaxaaaaaaaaaaaaaaaaaaaxaxaxOaOaaaaaaaaaaaaaanaaanaaandLdLdLdLWhAUjztMdyAUjztMWhDYdLandLkYcCUQqLryptfBfRkYsOZITuTLHkKXONTLaeZIdLdLdLdLdLanananananananananaxanananananananananananaaaaaaaaaaaaaaaaaaaxaxOaaaaaaaaaaaaaaaaxaxaxaxaxaxaxaxaxaxaaaN
-aaaxaxaxaxaaaaaaaaaaaaaaaaaxaxaxaxOaQcaxaaaaaaaaaaanaaanaaandLWhWhWhWhdytYdydydytYdyWhDYdLdLdLkYkYpDrXypJyrWkYkYqAZIFXFXJsJmEuFXFXZIsOsOsOsOdLdLananananananananaxanananananananananananananaaaaaaaaaaaaaaOaOaQcaaaaaaaxaxaxaxaxaxaxaxaxaxaaaaaaaaaaaN
-aaaxaxOaaxaaaaaaaxaxaxaxaxaxaxaxaxOaOaaaaaaaaaaaaaanananaaandLWhXwhgdyiRLbgZBKyjLbgZWhlsdydLdLdLkYkYkYAMkYkYkYsOGWZIZIZIecKYecZIZIZIYZopYZsOsOdLdLdLdLdLdLananananananananananananananananananananananaxaxaxOaOaaxaaaaaaaaaaaaOaaxaxaxOaaxaaaaaaaaaaaN
-aaaxOaOaOaaxaaaaaaaaaaaaaxaxaxaxaxaxaxaaaaaaaaaaaaananananandLWhmOjztYpUtntPOutPtPAWWhchdydLdLdLdLdLdZUZsOxCmgdHNcsOBCKuThMmfcZApYsOgCqRgCGGsOsOsOsOsOsOdLdLanananananananananananananananananananananananaxaxaxaxaxanananaaaaOaaxaxaxOaaxaxaxaaaaaaaN
-aaaxaxQcOaaxaaaaaaaaaaaxaxaxaxaxaaaxaaaaaaaaaaanananandLdLdLdLWhGEFkdySyQCJzOuJzJzWhWhXvdydydLdLdLdLdZUZsOSIsOykNcsOMRNNgUsOlkNNvcdZBEBEBEzOrnDeWAHoCssOsOdLanananananananananananananananananananananananaxaxananananananaaaaaaaxaxOaOaaxaaaaaaaaaaaN
-aaaxaxOaOaaxaxaaaaaaaaOaaxaxaxaaaaaxaaaaaaaaanananandLdLWhWhWhWhdydydyRpPjJzOuJzWhWhKHFbfXdydydLdLsOsOJTsOsOsOxFvtXodaNNsMdZxgWCefAsZiPAZiFeycusvYvYERNasOdLanananananananananananananananananananananaxaxaxaxaxaxaaaaaaaxaxaxaxaxaxOaQcaxaaaaaaaaaaaN
-aaaxaaaaaxaxaxaxaxaxaaOaaxaxaxaaaaaxaaanaaaaanananandLWhWhugELAzSQhgdyVvQCJzOuVrWhlSQjeWfVDxdydZdZsOveMmlRsOsOsOsOsOcUNNsMdZrMNNvUrhDVjHBEtdzKmArnrnrnaSsOdLanananananananananananananananaaaaaaaaaaaxaxaxaxaxaxaxaxaaaaaaaaaaaaaxaxOaOaaaaaaaaaaaaaaN
-aaaxaaaaaxaxmWaaaaaaaaTcaxaxaxaaaaaaaaanaaaaanananandLWhVlugugugugjzxRpUtPtPOuJbPCoGPfPfPfiXBkZaZaZaihQivQAXAXAXAXtrXiOVeXsOsFNNKfdZyABEBESfzKkKSpLoaCsOsOdLanananananananananananananananananananananaxaxaxaxaxanananananaaaxaxaxaxaxaxaxaaaaaaaaaaaN
-aaaxaamWmWaxaxaaaaaaaxTcaxaxaaaaaaaaanananaaanananandLWhWhugELWbSQFkdyEOQCJztPJzWhjdBzUFdhuCdydZdZsObRQYzTsOdZdZdZsObRTlCEqerCrCKZsOlililiBEsOsOsOsOsOsOdLdLananananananananaxananananananananananananananaxaxananananananaaaaaaaxaxaxaxaaaaaaaaaaaaaN
-aaaxaamWaxaxaxaaaaaaaxTcaxTcaaaaanananananaaanananandLdLWhWhWhWhdydydyIdPjJztPJzWhWhtjtKuCdydydLdLsOsOebsOsOdLdLdLsOsOsOsOnXsOsOsOsOYZPWDQsOsOdLdLdLdLdLdLanananananananananaxananananananananaaanananananaxaxaxanaaaaaaaaaaaaaaaxaxaxaxaxaxaxaxaaaaaN
-aaaaaaaxaxmWOaaaaaaaaxaxTcTcaaaaanananananaaananananandLdLdLdLWhXwhgdyGnQCJztPJzJzWhWhnOdydydLdLdLdLdZebdZdLdLdLdLdLGvsODiQQursOdLsOsOsOsOsOdLdLananananaxananananananananaxaxananananananananaaaaanananaxaxaxaxanaaaaaaaaaaaxaxaxaxaxaxaaaaaaaaaaaaaN
-aaaaaaaaaxOaOaaaaaaaaxaxTcaaaaaaanananananaaanananananananandLWhmOjztYpUwttPtPtPtPAWWhuTdydLlplplplplpSslplplplplpdLvFBujOQQjOsOdLdLdLdLdLdLdLanananananaxananananananananaxaxanananananaxaxaxaaaaanaxaxaxaxaxaxaaaaaaaaaaaaaxaxHMaxaxaaaaaaaaaaaaaaaN
-aaaaaaaaaxOaQcaaaaaaaxaxTcaaanananananananananananananananandLWhGEFkdyFsegerKPLlegerWhnOdydLlpuZmVnNnNFxJCtEWkGTlpdLdLsOjoAcjosOdLanananananananananananaxananananananananaxaxananananOaaxaxaxaaaaaxaxaxaxaxaxaaaaOaaxaaaaaxOaHMaxaxaxaaaaaaaaaaaaaaaN
-aaaaaaaaaxOaOaaaaaaaaxaxaxaaaaaaanananananananananananananandLWhWhWhWhdytYdydydytYdyWhoFdLlplpHVvbuhuhiQuhuhLdCRlplpdLsOAcUDAcsOdLanananananananananananaxananananananananaxaxananaxQcOaOaOaaxaaaaaaaxaxaaaxaaaaaaOaaaaaaaaxOaOaaxHMaxaaaaaaaaaaaaaaaN
-aaaaaaaxaxaxaaaaaaaaaxaxaxaaaaaaaaaaanananananananananananandLdLdLdLWhzCjzXLdyzCjzXLWhoFdLlpjwHVBauGLTLTLTuGWiCRjwlpdLsOsOsOsOsOdLananananananananananaxaxananananananaxaxaxaxaxaxaxOaOaaxaaaaaaaaaaaaaxaxaxaxaxOaOaQcaxaaOaOaOaaxHMaaaaaaaaaaaaaaaaaN
-aaaxOaaxaxaxaaaaaaaaaaaxaxaxaaaaaaaaananananananananananananananandLWhgmWbpcdygmWbpcWhoFdLlpacGZBaLTMTLSfQLTWiDnfflpdLdLdLdLdLdLdLananananananananananaxaxanananananaxaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxOaaaaaaaaxOaOaHMaxaxaxaxaxaxaxaaaaaN
-aaaxaxOaaxaxaxaaaaaaaaaxOaOaaaaaaaaaaaaaananananananananananananandLWhWhWhWhWhWhWhWhWhVwdLlppLHVJpFLLThaLTgPCoCRoclpdLananananananananananananananananaxaxananaxaxaxaxaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxaxaxaaaaaaaaaxaxaxaaaaaaaaaaaaaaaaaN
-aaaaOaOaaxaxaxaxaxaxaaaxaxQcOaOaaxaaaaaaaaaaananananananananananandLdLdLdLdLdLdLdLdLdLkodLlpgjHVYoucjDlVjDqBRvCRgjlpdLananananananaxanananananananananaxaxanaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxENaaaaaaaaaaaaaaaaaaaxaxaxaxaaaaaaaaaaaaaaaN
-aaaaQcOaaxaxaxaaaaaaaaaxOaOaOaaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanananananananananandLaxdLlplpiwzQzQdzzQsDKNKNyhlplpdLananananananaxanananananananananaxaxanaxaxaxaxaaaaaaaxaaaaaxaaaaaxaaaaaaaaaxaxaxENaxaxaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaN
-aaaaOaaaaxaxaxaaaaaaaaaaaxaxaxaxaxaxaxaxaxaxaaCHCHaxaxOaOaQcaaaaaaaaanananananananandLaxdLdLlplpqiYeMHnKIFLfqilplpdLdLanananananaxaxananananananananaxaxaxOaaxaxaxaxaaaaaaaxaaaaaxaaaxaxaaaaaaaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaN
-aaaaaxaaaxaxaxaaaaaxaxaaaaaaaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxOaOaOaaaaaananananananananaxaxdLdLdLlpZpZpZpZpZpZpZplpdLdLanananananaxOaOaananananananananOaOaOaQcOaaaaaaaaaaaaaaxaaaaaxaaaxaxaaaaaaaxaxaxaxaxENaxaxaxaxaxaxaxaaaaaaaaaxaaaaaaaaaaaaaaaaaaaN
-aaaaaxaaaxaxaxaaaxaxaxENaxaxaxOaaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaaaaaaanananaxanaxaaaaaaaxandLlpZpPMZpZpZpPMZplpdLananananananOaQcOaananananaxaxaxaxaxOaaxaaaaaaaaaxaaaaaaaxaaaaaxaxaxaxaxaxaxaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaN
-aaaaaaaaaxaxaaaaaxOaaxaxaxaxaxQcOaaxaxaxaxaxaxaxaaaxaxaxaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaadLlplplplplplplplplpdLanananananaxaxOaOaaxanaxaxaxaxaxaxaxaaaaaaaaaaaaaxaaaaaxaxaaaaaxOaaxaxaxaxaxaxaxOaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaN
-aaaaaaaaaaaaaaaaaxaxENaxaxaxOaOaOaaxaxaaaaaxaxaaaaaxaaaaaxaxaxaxaxaxaxaxaxaxaxaaaaaaaaaaaaaaaadLdLdLdLdLdLdLdLdLdLanananaxaxaaaaaaaaaaaxaxaxaxaxaaaaaaaaaaaaaaaaaaaxaaaxaxaxaxaxaxaxaxaxaxaxaxOaOaQcOaaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaN
-aaaaaaaaaaaaaaaaaaaxaxaxENaxaaaaaaaaaaaaaaaaaxaaaaaxaaaaaaaaaaaaaaaxaxaxaxaxaxOaOaOaOaaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaQcOaOaOaaxaxaxaxaxaxaxaxaxaxaxOaOaOaOaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaN
-aaaaaaaaaaaaaaaaaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaQcOaOaaxaxaxaxENaxOaOaOaaxaxaxaxaxENENaxaxOaaxaxaxaxaxaxaxaxaxaxaxaxOaOaOaOaaxaxaxaxaxOaaxaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaN
-aRaRaRaRaRaRaRaRaRaRyaaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaaaaaxaxENENOaaxaxaxaxaxaxENENOaOaOaOaOaQcOaaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaR
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(2,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(3,1,1) = {"
+aw
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+Oa
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Oa
+ax
+Oa
+Qc
+Oa
+ax
+ax
+aa
+aa
+aa
+aa
+aR
+"}
+(4,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+Oa
+Oa
+Qc
+Oa
+aa
+aa
+mW
+mW
+ax
+aa
+aa
+aa
+ax
+ax
+Oa
+Oa
+Oa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(5,1,1) = {"
+aw
+aa
+aa
+ax
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+Oa
+Oa
+Oa
+ax
+ax
+mW
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(6,1,1) = {"
+aw
+aa
+aa
+ax
+aa
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+mW
+Oa
+Oa
+Oa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(7,1,1) = {"
+aw
+aa
+aa
+Tc
+ax
+ax
+Oa
+Oa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+mW
+ax
+ax
+Oa
+Oa
+Qc
+Oa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aR
+"}
+(8,1,1) = {"
+aw
+aa
+aa
+ax
+ax
+Oa
+Qc
+Oa
+Oa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(9,1,1) = {"
+aw
+aa
+CH
+ax
+ax
+Oa
+Oa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+ax
+ax
+ax
+aa
+ax
+aR
+"}
+(10,1,1) = {"
+aw
+aa
+CH
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+ax
+ax
+Oa
+ax
+ax
+ax
+aR
+"}
+(11,1,1) = {"
+aw
+aa
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+EN
+ax
+ax
+ya
+"}
+(12,1,1) = {"
+aw
+aa
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+ax
+aa
+ax
+Oa
+Oa
+Tc
+Tc
+Tc
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+EN
+ax
+ax
+ax
+ax
+aR
+"}
+(13,1,1) = {"
+aw
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+ax
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+Tc
+Tc
+Tc
+ax
+ax
+ax
+Oa
+ax
+Oa
+ax
+aa
+ax
+ax
+ax
+EN
+ax
+aR
+"}
+(14,1,1) = {"
+aw
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+ax
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+Tc
+Tc
+aa
+aa
+aa
+aa
+ax
+Oa
+Qc
+Oa
+ax
+aa
+ax
+ax
+ax
+ax
+aa
+aR
+"}
+(15,1,1) = {"
+aw
+ax
+aa
+ax
+ax
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+an
+aa
+aa
+aa
+aa
+Oa
+Oa
+ax
+ax
+ax
+ax
+Oa
+aa
+aa
+aR
+"}
+(16,1,1) = {"
+aw
+ax
+aa
+ax
+ax
+ax
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+an
+aa
+aa
+aa
+aa
+Oa
+ax
+ax
+ax
+Oa
+Qc
+Oa
+aa
+aa
+aR
+"}
+(17,1,1) = {"
+aw
+ax
+aa
+aa
+ax
+ax
+aa
+Tc
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+Oa
+Oa
+aa
+aa
+aR
+"}
+(18,1,1) = {"
+aw
+ax
+aa
+aa
+ax
+ax
+aa
+ax
+ax
+Tc
+Oa
+Oa
+Oa
+ax
+ax
+ax
+ax
+aa
+aa
+an
+an
+an
+an
+an
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aR
+"}
+(19,1,1) = {"
+aw
+ax
+ax
+aa
+ax
+ax
+ax
+ax
+Oa
+Oa
+Oa
+Qc
+Oa
+ax
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aR
+"}
+(20,1,1) = {"
+aw
+aa
+ax
+aa
+aa
+ax
+ax
+ax
+aa
+ax
+aa
+ax
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(21,1,1) = {"
+aw
+aa
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+Tc
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+aa
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(22,1,1) = {"
+aw
+aa
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aR
+"}
+(23,1,1) = {"
+aw
+aa
+Oa
+ax
+aa
+aa
+ax
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+aa
+aR
+"}
+(24,1,1) = {"
+aw
+aa
+aa
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+CH
+ax
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(25,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+CH
+ax
+ax
+aa
+aa
+aa
+aa
+aR
+"}
+(26,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aR
+"}
+(27,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+an
+an
+an
+dL
+dL
+dL
+dL
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(28,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+dL
+dL
+Wh
+Wh
+Wh
+dL
+dL
+an
+an
+an
+an
+an
+an
+an
+aa
+Oa
+ax
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(29,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+an
+dL
+Wh
+Wh
+Vl
+Wh
+Wh
+dL
+an
+an
+an
+an
+an
+an
+an
+aa
+Oa
+ax
+ax
+ax
+ax
+aa
+aa
+aR
+"}
+(30,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+dL
+Wh
+ug
+ug
+ug
+Wh
+dL
+an
+an
+an
+an
+an
+an
+an
+aa
+Qc
+Oa
+ax
+ax
+ax
+aa
+aa
+aR
+"}
+(31,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+an
+an
+an
+an
+an
+dL
+dL
+dL
+dL
+dL
+Wh
+EL
+ug
+EL
+Wh
+dL
+dL
+dL
+dL
+dL
+an
+an
+an
+aa
+aa
+Oa
+ax
+ax
+ax
+aa
+aa
+aR
+"}
+(32,1,1) = {"
+aw
+aa
+aa
+Oa
+ax
+an
+an
+an
+an
+an
+dL
+Wh
+Wh
+Wh
+Wh
+Wh
+Az
+ug
+Wb
+Wh
+Wh
+Wh
+Wh
+Wh
+dL
+an
+an
+an
+aa
+aa
+Oa
+ax
+ax
+ax
+aa
+aa
+aR
+"}
+(33,1,1) = {"
+aw
+aa
+aa
+ax
+ax
+an
+an
+an
+an
+an
+dL
+Wh
+Xw
+mO
+GE
+dy
+SQ
+ug
+SQ
+dy
+Xw
+mO
+GE
+Wh
+dL
+an
+an
+an
+an
+aa
+aa
+aa
+ax
+ax
+aa
+aa
+aR
+"}
+(34,1,1) = {"
+aw
+aa
+aa
+ax
+ax
+an
+an
+dL
+dL
+dL
+dL
+Wh
+hg
+jz
+Fk
+dy
+hg
+jz
+Fk
+dy
+hg
+jz
+Fk
+Wh
+dL
+dL
+dL
+dL
+an
+aa
+aa
+aa
+ax
+ax
+ax
+aa
+aR
+"}
+(35,1,1) = {"
+aw
+aa
+aa
+ax
+ax
+an
+an
+dL
+Wh
+Wh
+Wh
+Wh
+dy
+tY
+dy
+dy
+dy
+xR
+dy
+dy
+dy
+tY
+dy
+Wh
+Wh
+Wh
+Wh
+dL
+an
+an
+an
+aa
+aa
+ax
+ax
+aa
+aR
+"}
+(36,1,1) = {"
+aw
+aa
+aa
+ax
+an
+an
+an
+dL
+Wh
+gm
+AU
+dy
+iR
+pU
+Sy
+Rp
+Vv
+pU
+EO
+Id
+Gn
+pU
+Fs
+dy
+zC
+gm
+Wh
+dL
+an
+an
+an
+an
+aa
+ax
+ax
+aa
+aR
+"}
+(37,1,1) = {"
+aw
+aa
+aa
+ax
+ax
+an
+an
+dL
+Wh
+Az
+jz
+tY
+Lb
+tn
+QC
+Pj
+QC
+tP
+QC
+Pj
+QC
+wt
+eg
+tY
+jz
+Wb
+Wh
+dL
+an
+an
+an
+an
+aa
+ax
+ax
+aa
+aR
+"}
+(38,1,1) = {"
+aw
+aa
+aa
+ax
+ax
+an
+an
+dL
+Wh
+pc
+tM
+dy
+gZ
+tP
+Jz
+Jz
+Jz
+tP
+Jz
+Jz
+Jz
+tP
+er
+dy
+XL
+pc
+Wh
+dL
+an
+an
+an
+an
+aa
+ax
+ax
+aa
+aR
+"}
+(39,1,1) = {"
+aw
+aa
+aa
+Oa
+ax
+ax
+an
+dL
+Wh
+dy
+dy
+dy
+BK
+Ou
+Ou
+Ou
+Ou
+Ou
+tP
+tP
+tP
+tP
+KP
+dy
+dy
+dy
+Wh
+dL
+an
+an
+an
+ax
+aa
+ax
+ax
+aa
+aR
+"}
+(40,1,1) = {"
+aw
+aa
+aa
+Oa
+ax
+ax
+ax
+dL
+Wh
+gm
+AU
+dy
+yj
+tP
+Jz
+Jz
+Vr
+Jb
+Jz
+Jz
+Jz
+tP
+Ll
+dy
+zC
+gm
+Wh
+dL
+an
+an
+an
+an
+aa
+aa
+Oa
+aa
+aR
+"}
+(41,1,1) = {"
+aw
+aa
+ax
+Oa
+Oa
+ax
+an
+dL
+Wh
+Az
+jz
+tY
+Lb
+tP
+Jz
+Wh
+Wh
+PC
+Wh
+Wh
+Jz
+tP
+eg
+tY
+jz
+Wb
+Wh
+dL
+an
+an
+an
+ax
+aa
+aa
+Oa
+aa
+aR
+"}
+(42,1,1) = {"
+aw
+aa
+Oa
+Qc
+Oa
+an
+an
+dL
+Wh
+pc
+tM
+dy
+gZ
+AW
+Wh
+Wh
+lS
+oG
+jd
+Wh
+Wh
+AW
+er
+dy
+XL
+pc
+Wh
+dL
+an
+an
+an
+aa
+aa
+aa
+Oa
+Qc
+aR
+"}
+(43,1,1) = {"
+aw
+aa
+ax
+Oa
+ax
+dL
+dL
+dL
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+KH
+Qj
+Pf
+Bz
+tj
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+dL
+dL
+dL
+ax
+aa
+aa
+aa
+Oa
+Oa
+aa
+"}
+(44,1,1) = {"
+aw
+aa
+ax
+ax
+pr
+pr
+pr
+pr
+Xg
+DY
+DY
+DY
+ls
+ch
+Xv
+Fb
+eW
+Pf
+UF
+tK
+nO
+uT
+nO
+oF
+oF
+oF
+Vw
+ko
+ax
+ax
+ax
+aa
+aa
+aa
+ax
+Oa
+aa
+"}
+(45,1,1) = {"
+aw
+aa
+aa
+ax
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dy
+dy
+dy
+fX
+fV
+Pf
+dh
+uC
+dy
+dy
+dy
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+ax
+aa
+aa
+ax
+ax
+ax
+"}
+(46,1,1) = {"
+aw
+aa
+aa
+ax
+an
+an
+an
+an
+an
+an
+an
+dL
+dL
+dL
+dy
+dy
+Dx
+iX
+uC
+dy
+dy
+dL
+dL
+lp
+lp
+lp
+lp
+lp
+lp
+dL
+dL
+an
+aa
+aa
+ax
+ax
+ax
+"}
+(47,1,1) = {"
+aw
+aa
+aa
+an
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dy
+dy
+Bk
+dy
+dy
+dL
+lp
+lp
+lp
+jw
+ac
+pL
+gj
+lp
+lp
+dL
+dL
+dL
+aa
+aa
+ax
+EN
+"}
+(48,1,1) = {"
+aw
+aa
+aa
+dL
+dL
+kY
+kY
+kY
+kY
+kY
+kY
+kY
+dL
+dL
+dL
+dL
+dZ
+Za
+dZ
+dL
+dL
+lp
+uZ
+HV
+HV
+GZ
+HV
+HV
+iw
+lp
+lp
+lp
+lp
+dL
+aa
+ax
+EN
+"}
+(49,1,1) = {"
+aw
+aa
+aa
+dL
+kY
+kY
+CG
+It
+QM
+fm
+cC
+kY
+kY
+dL
+dL
+dL
+dZ
+Za
+dZ
+dL
+dL
+lp
+mV
+vb
+Ba
+Ba
+Jp
+Yo
+zQ
+qi
+Zp
+Zp
+lp
+dL
+aa
+EN
+Oa
+"}
+(50,1,1) = {"
+aw
+aa
+aa
+dL
+kY
+nx
+nx
+Ri
+JN
+eA
+UQ
+pD
+kY
+dL
+dL
+sO
+sO
+Za
+sO
+sO
+dL
+lp
+nN
+uh
+uG
+LT
+FL
+uc
+zQ
+Ye
+Zp
+PM
+lp
+dL
+aa
+ax
+ax
+"}
+(51,1,1) = {"
+aw
+aa
+aa
+dL
+kY
+yS
+yS
+Lt
+sy
+tI
+qL
+rX
+kY
+dZ
+dZ
+sO
+ve
+ih
+bR
+sO
+dZ
+lp
+nN
+uh
+LT
+MT
+LT
+jD
+dz
+MH
+Zp
+Zp
+lp
+dL
+aa
+Oa
+ax
+"}
+(52,1,1) = {"
+aw
+aa
+aa
+dL
+kY
+yS
+yS
+yS
+eF
+gk
+ry
+yp
+AM
+UZ
+UZ
+JT
+Mm
+Qi
+QY
+eb
+eb
+Ss
+Fx
+iQ
+LT
+LS
+ha
+lV
+zQ
+nK
+Zp
+Zp
+lp
+dL
+aa
+Oa
+ax
+"}
+(53,1,1) = {"
+aw
+aa
+aa
+dL
+kY
+yS
+yS
+yS
+fM
+xk
+pt
+Jy
+kY
+sO
+sO
+sO
+lR
+vQ
+zT
+sO
+dZ
+lp
+JC
+uh
+LT
+fQ
+LT
+jD
+sD
+IF
+Zp
+Zp
+lp
+dL
+aa
+Oa
+ax
+"}
+(54,1,1) = {"
+aw
+aa
+aa
+dL
+kY
+Sh
+Sh
+IR
+gc
+Uk
+fB
+rW
+kY
+xC
+SI
+sO
+sO
+AX
+sO
+sO
+dL
+lp
+tE
+uh
+uG
+LT
+gP
+qB
+KN
+Lf
+Zp
+PM
+lp
+dL
+aa
+ax
+ax
+"}
+(55,1,1) = {"
+aw
+aa
+aa
+dL
+kY
+kY
+fS
+CG
+Og
+Hf
+fR
+kY
+kY
+mg
+sO
+sO
+sO
+AX
+dZ
+dL
+dL
+lp
+Wk
+Ld
+Wi
+Wi
+Co
+Rv
+KN
+qi
+Zp
+Zp
+lp
+dL
+aa
+ax
+ax
+"}
+(56,1,1) = {"
+aw
+aa
+aa
+dL
+dL
+kY
+kY
+kY
+kY
+kY
+kY
+kY
+sO
+dH
+yk
+xF
+sO
+AX
+dZ
+dL
+dL
+lp
+GT
+CR
+CR
+Dn
+CR
+CR
+yh
+lp
+lp
+lp
+lp
+dL
+aa
+ax
+EN
+"}
+(57,1,1) = {"
+aw
+aa
+an
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+sO
+qA
+GW
+Nc
+Nc
+vt
+sO
+AX
+dZ
+dL
+dL
+lp
+lp
+lp
+jw
+ff
+oc
+gj
+lp
+lp
+dL
+dL
+dL
+dL
+aa
+ax
+EN
+"}
+(58,1,1) = {"
+aw
+aa
+dL
+dL
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+sO
+sO
+Xo
+sO
+tr
+sO
+sO
+dL
+dL
+dL
+lp
+lp
+lp
+lp
+lp
+lp
+dL
+dL
+an
+an
+an
+aa
+ax
+Oa
+"}
+(59,1,1) = {"
+aw
+aa
+dL
+ZI
+ZI
+SN
+DG
+Cz
+Pm
+Cz
+Tu
+FX
+ZI
+BC
+MR
+da
+cU
+Xi
+bR
+sO
+Gv
+vF
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+an
+an
+an
+an
+aa
+EN
+Oa
+"}
+(60,1,1) = {"
+aw
+aa
+dL
+ZI
+FX
+lh
+Ep
+Ep
+Ep
+Ep
+TL
+FX
+ZI
+Ku
+NN
+NN
+NN
+OV
+Tl
+sO
+sO
+Bu
+sO
+sO
+sO
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+EN
+Oa
+"}
+(61,1,1) = {"
+aw
+aa
+dL
+ZI
+ic
+lh
+Ep
+Ep
+Ep
+Ep
+Hk
+Js
+ec
+Th
+gU
+sM
+sM
+eX
+CE
+sO
+Di
+jO
+jo
+Ac
+sO
+dL
+an
+an
+an
+an
+an
+an
+an
+ax
+aa
+ax
+Oa
+"}
+(62,1,1) = {"
+aw
+aa
+dL
+ZI
+Wt
+Py
+tt
+Cz
+bq
+Rm
+KX
+Jm
+KY
+Mm
+sO
+dZ
+dZ
+sO
+qe
+nX
+QQ
+QQ
+Ac
+UD
+sO
+dL
+an
+an
+an
+an
+an
+an
+an
+ax
+aa
+ax
+Oa
+"}
+(63,1,1) = {"
+aw
+aa
+dL
+ZI
+kW
+bj
+CJ
+CJ
+CJ
+CJ
+ON
+Eu
+ec
+fc
+lk
+xg
+rM
+sF
+rC
+sO
+ur
+jO
+jo
+Ac
+sO
+dL
+an
+an
+an
+an
+an
+an
+ax
+aa
+aa
+Oa
+Qc
+"}
+(64,1,1) = {"
+aw
+aa
+dL
+ZI
+FX
+Ow
+Ep
+Ep
+Ep
+Ep
+TL
+FX
+ZI
+ZA
+NN
+WC
+NN
+NN
+rC
+sO
+sO
+sO
+sO
+sO
+sO
+dL
+an
+an
+an
+an
+ax
+Oa
+ax
+aa
+aa
+ax
+Oa
+"}
+(65,1,1) = {"
+aw
+aa
+dL
+ZI
+ZI
+Py
+Pv
+Rm
+nl
+Rm
+ae
+FX
+ZI
+pY
+vc
+ef
+vU
+Kf
+KZ
+sO
+dL
+dL
+dL
+dL
+dL
+dL
+an
+an
+an
+ax
+Oa
+Qc
+Oa
+aa
+ax
+ax
+ax
+"}
+(66,1,1) = {"
+aw
+aa
+dL
+dL
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+ZI
+sO
+dZ
+As
+rh
+dZ
+sO
+sO
+sO
+dL
+an
+an
+an
+an
+an
+ax
+ax
+ax
+Oa
+Oa
+Oa
+aa
+aa
+ax
+ax
+"}
+(67,1,1) = {"
+aw
+aa
+an
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+dL
+sO
+YZ
+gC
+BE
+Zi
+DV
+yA
+li
+YZ
+sO
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+aa
+aa
+ax
+ax
+"}
+(68,1,1) = {"
+aw
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+dL
+sO
+op
+qR
+BE
+PA
+jH
+BE
+li
+PW
+sO
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+aa
+ax
+ax
+"}
+(69,1,1) = {"
+aw
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+dL
+sO
+YZ
+gC
+BE
+Zi
+BE
+BE
+li
+DQ
+sO
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+aa
+ax
+ax
+"}
+(70,1,1) = {"
+aw
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+dL
+sO
+sO
+GG
+zO
+Fe
+td
+Sf
+BE
+sO
+sO
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+aa
+ax
+ax
+"}
+(71,1,1) = {"
+aw
+aa
+aa
+ax
+an
+an
+an
+an
+an
+an
+dL
+dL
+sO
+sO
+rn
+yc
+zK
+zK
+sO
+sO
+dL
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+aa
+ax
+ax
+"}
+(72,1,1) = {"
+aw
+aa
+aa
+ax
+ax
+ax
+an
+an
+an
+an
+an
+dL
+dL
+sO
+De
+us
+mA
+kK
+sO
+dL
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+aa
+ax
+ax
+"}
+(73,1,1) = {"
+aw
+aa
+aa
+Oa
+ax
+ax
+an
+an
+an
+an
+an
+an
+dL
+sO
+WA
+vY
+rn
+Sp
+sO
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+aa
+aa
+ax
+ax
+"}
+(74,1,1) = {"
+aw
+aa
+aa
+Oa
+Oa
+ax
+an
+an
+an
+an
+an
+an
+dL
+sO
+Ho
+vY
+rn
+Lo
+sO
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+aa
+aa
+ax
+ax
+"}
+(75,1,1) = {"
+aw
+aa
+aa
+Oa
+Oa
+ax
+ax
+an
+an
+an
+an
+an
+dL
+sO
+Cs
+ER
+rn
+aC
+sO
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+Oa
+ax
+ax
+aa
+aa
+ax
+ax
+"}
+(76,1,1) = {"
+aw
+aa
+aa
+Oa
+ax
+an
+an
+an
+an
+an
+an
+an
+dL
+sO
+sO
+Na
+aS
+sO
+sO
+dL
+an
+an
+an
+an
+ax
+ax
+ax
+ax
+ax
+ax
+Oa
+Oa
+aa
+aa
+aa
+Oa
+ax
+"}
+(77,1,1) = {"
+aw
+aa
+aa
+TM
+ax
+ax
+an
+an
+an
+an
+an
+an
+dL
+dL
+sO
+sO
+sO
+sO
+dL
+dL
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+Oa
+ax
+aa
+aa
+aa
+Oa
+ax
+"}
+(78,1,1) = {"
+aw
+aa
+aa
+ax
+ax
+ax
+ax
+an
+an
+an
+an
+an
+an
+dL
+dL
+dL
+dL
+dL
+dL
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+Oa
+Qc
+aa
+aa
+aa
+Qc
+Oa
+ax
+"}
+(79,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+Oa
+TM
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+Oa
+aa
+aa
+aa
+Oa
+Oa
+ax
+"}
+(80,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+Oa
+ax
+ax
+ax
+ax
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+Oa
+ax
+ax
+"}
+(81,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+Qc
+Oa
+ax
+ax
+ax
+ax
+ax
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+Oa
+ax
+ax
+"}
+(82,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+Oa
+ax
+ax
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+ax
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+"}
+(83,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+TM
+ax
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+"}
+(84,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+ax
+ax
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+aR
+"}
+(85,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+ax
+ax
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+Oa
+aR
+"}
+(86,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aR
+"}
+(87,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+ax
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+aR
+"}
+(88,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+ax
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+aR
+"}
+(89,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+ax
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+ax
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aR
+"}
+(90,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+an
+an
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+Oa
+ax
+ax
+ax
+aR
+"}
+(91,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+an
+an
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+Qc
+Oa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aR
+"}
+(92,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+an
+an
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+Oa
+Oa
+Oa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aR
+"}
+(93,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+an
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ax
+ax
+Oa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+Oa
+aa
+aR
+"}
+(94,1,1) = {"
+aw
+aa
+aa
+aa
+an
+an
+an
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+an
+aa
+an
+an
+an
+an
+ax
+ax
+Oa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+Oa
+aa
+aR
+"}
+(95,1,1) = {"
+aw
+aa
+aa
+aa
+an
+an
+an
+aa
+aa
+aa
+aa
+aa
+an
+an
+an
+an
+aa
+an
+an
+an
+an
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+Oa
+aa
+aR
+"}
+(96,1,1) = {"
+aw
+aa
+an
+aa
+an
+an
+an
+aa
+aa
+ax
+aa
+aa
+an
+an
+an
+an
+aa
+an
+an
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+Oa
+Oa
+aa
+aR
+"}
+(97,1,1) = {"
+ax
+aa
+an
+an
+an
+an
+an
+aa
+aa
+ax
+aa
+aa
+an
+an
+an
+an
+aa
+an
+an
+an
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+Oa
+Oa
+aa
+aR
+"}
+(98,1,1) = {"
+ax
+HM
+ax
+an
+an
+an
+an
+aa
+aa
+ax
+aa
+aa
+an
+an
+an
+an
+aa
+an
+an
+an
+an
+an
+ax
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+Oa
+Qc
+aa
+aa
+aR
+"}
+(99,1,1) = {"
+aI
+ax
+Oa
+Oa
+Qc
+an
+an
+aa
+aa
+ax
+aa
+aa
+an
+an
+an
+an
+ax
+an
+an
+an
+an
+ax
+ax
+ax
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+Oa
+Oa
+aa
+aa
+aR
+"}
+(100,1,1) = {"
+ax
+ax
+ax
+Oa
+Oa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+ax
+an
+an
+ax
+ax
+ax
+an
+an
+an
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+EN
+ax
+ax
+ax
+aa
+ax
+aa
+aa
+aR
+"}
+(101,1,1) = {"
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+ax
+aa
+aa
+ax
+an
+an
+ax
+ax
+ax
+an
+an
+ax
+ax
+ax
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+EN
+ax
+aa
+ax
+aa
+aa
+aR
+"}
+(102,1,1) = {"
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+Oa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+EN
+ax
+aa
+ax
+aa
+aa
+ax
+aa
+aa
+aR
+"}
+(103,1,1) = {"
+aw
+aa
+aa
+Oa
+HM
+ax
+ax
+ax
+ax
+ax
+ax
+Oa
+Oa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+ax
+ax
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+ax
+aa
+aa
+aR
+"}
+(104,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+Oa
+Qc
+Oa
+ax
+an
+ax
+ax
+ax
+an
+ax
+ax
+ax
+aa
+aa
+ax
+ax
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+ax
+aa
+aa
+aR
+"}
+(105,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+aa
+aa
+aa
+ax
+ax
+an
+ax
+ax
+an
+an
+an
+an
+aa
+aa
+aa
+Oa
+ax
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(106,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+ax
+an
+aa
+ax
+an
+an
+aa
+aa
+aa
+Oa
+Oa
+Oa
+Oa
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(107,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+Oa
+Oa
+aa
+aa
+aa
+an
+an
+aa
+aa
+an
+an
+aa
+aa
+aa
+ax
+aa
+Qc
+aa
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(108,1,1) = {"
+aw
+aa
+ax
+ax
+ax
+ax
+ax
+Oa
+Oa
+Qc
+aa
+ax
+aa
+an
+an
+aa
+aa
+an
+an
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(109,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+Oa
+Oa
+aa
+ax
+aa
+an
+an
+ax
+aa
+an
+an
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(110,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+aa
+ax
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+Oa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(111,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+ax
+aa
+aa
+aa
+ax
+aa
+ax
+aa
+aa
+ax
+ax
+Oa
+Oa
+Oa
+Oa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(112,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+Oa
+Oa
+aa
+ax
+aa
+ax
+aa
+aa
+ax
+ax
+HM
+Oa
+Oa
+Oa
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(113,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+HM
+ax
+ax
+ax
+HM
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aR
+"}
+(114,1,1) = {"
+aw
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+HM
+HM
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(115,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+Oa
+Oa
+Oa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+ax
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(116,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+Oa
+Oa
+Oa
+Qc
+Oa
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(117,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+ax
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(118,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(119,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(120,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(121,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(122,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(123,1,1) = {"
+aw
+aa
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aR
 "}
