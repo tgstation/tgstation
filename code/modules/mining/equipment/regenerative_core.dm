@@ -82,7 +82,7 @@
 				to_chat(user, span_notice("[src] is useless on the dead."))
 				return
 			if(target_human != user)
-				target_human.visible_message(span_notice("[user] forces [target_human] to apply [src]... Black tendrils entangle and reinforce [H.p_them()]!"))
+				target_human.visible_message(span_notice("[user] forces [target_human] to apply [src]... Black tendrils entangle and reinforce [target_human.p_them()]!"))
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
 			else
 				to_chat(user, span_notice("You start to smear [src] on yourself. Disgusting tendrils hold you together and allow you to keep moving, but for how long?"))
