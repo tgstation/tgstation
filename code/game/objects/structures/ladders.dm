@@ -23,7 +23,21 @@
 		src.down = down
 		down.up = src
 		down.update_appearance()
+
+	register_context()
+
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/ladder/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(up)
+		context[SCREENTIP_CONTEXT_LMB] = "Climb up"
+	if(down)
+		context[SCREENTIP_CONTEXT_RMB] = "Climb down"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/ladder/examine(mob/user)
+	. = ..()
+	. += span_info("<b>Left-click</b> it to start moving up; <b>Right-click</b> to start moving down.")
 
 /obj/structure/ladder/Destroy(force)
 	GLOB.ladders -= src
@@ -91,11 +105,10 @@
 	if(do_after(user, travel_time, target = src, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER))
 		travel(user, going_up)
 
+/// The message shown when the player starts climbing the ladder
 /obj/structure/ladder/proc/show_initial_fluff_message(mob/user, going_up)
-	if(going_up)
-		user.visible_message(span_notice("[user] starts climbing up [src]."), span_notice("You start climbing up [src]."))
-	else
-		user.visible_message(span_notice("[user] starts climbing down [src]."), span_notice("You start climbing down [src]."))
+	var/up_down = going_up ? "up" : "down"
+	user.balloon_alert_to_viewers("climbing [up_down] [src]", "climbing [up_down] [src]")
 
 /obj/structure/ladder/proc/travel(mob/user, going_up, is_ghost = FALSE)
 	var/obj/structure/ladder/ladder = going_up ? up : down
@@ -106,17 +119,57 @@
 	if(response & LADDER_TRAVEL_BLOCK)
 		return
 
-	if(!is_ghost)
-		show_final_fluff_message(user, going_up)
-
 	var/turf/target = get_turf(ladder)
 	user.zMove(target = target, z_move_flags = ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
 
-/obj/structure/ladder/proc/show_final_fluff_message(mob/user, going_up)
-	if(going_up)
-		user.visible_message(span_notice("[user] climbs up [src]."), span_notice("You climb up [src]."))
+	if(!is_ghost)
+		show_final_fluff_message(user, ladder, going_up)
+
+	// to avoid having players hunt for the pixels of a ladder that goes through several stories and is
+	// partially covered by the sprites of their mobs, a radial menu will be displayed over them.
+	// this way players can keep climbing up or down with ease until they reach an end.
+	if(ladder.up && ladder.down)
+		ladder.show_options(user, is_ghost)
+
+/// The messages shown after the player has finished climbing. Players can see this happen from either src or the destination so we've 2 POVs here
+/obj/structure/ladder/proc/show_final_fluff_message(mob/user, obj/structure/ladder/destination, going_up)
+	var/up_down = going_up ? "up" : "down"
+
+	//POV of players around the source
+	visible_message(span_notice("[user] climbs [up_down] [src]."))
+	//POV of players around the destination
+	user.visible_message(span_notice("[user] climbs [up_down] [destination] from [going_up ? "below" : "above"]."), span_notice("You climb down [src]."))
+	user.balloon_alert_to_viewers("climbed [up_down]", "climbed [up_down]")
+
+/// Shows a radial menu that players can use to climb up and down a stair.
+/obj/structure/ladder/proc/show_options(mob/user, is_ghost = FALSE)
+	var/list/tool_list = list()
+	tool_list["Up"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
+	tool_list["Down"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+
+	var/datum/callback/check_menu
+	if(!is_ghost)
+		check_menu = CALLBACK(src, .proc/check_menu, user)
+	var/result = show_radial_menu(user, src, tool_list, custom_check = check_menu, require_near = !is_ghost, tooltips = TRUE)
+
+	var/going_up
+	switch(result)
+		if("Up")
+			going_up = TRUE
+		if("Down")
+			going_up = FALSE
+		if("Cancel")
+			return
+
+	if(is_ghost || !travel_time)
+		travel(user, going_up, is_ghost)
 	else
-		user.visible_message(span_notice("[user] climbs down [src]."), span_notice("You climb down [src]."))
+		INVOKE_ASYNC(src, .proc/start_travelling, user, going_up)
+
+/obj/structure/ladder/proc/check_menu(mob/user, is_ghost)
+	if(user.incapacitated() || (!user.Adjacent(src)))
+		return FALSE
+	return TRUE
 
 /obj/structure/ladder/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -184,25 +237,17 @@
 	ghost_use(user)
 	return ..()
 
-///Ghosts use the byond default popup menu function on right click, so we're sticking with old radials for them.
+///Ghosts use the byond default popup menu function on right click, so this is going to work a little differently for them.
 /obj/structure/ladder/proc/ghost_use(mob/user)
-	var/list/tool_list = list()
-	if (up)
-		tool_list["Up"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
-	if (down)
-		tool_list["Down"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
-	if (!length(tool_list))
+	if (!up && !down)
 		to_chat(user, span_warning("[src] doesn't seem to lead anywhere!"))
 		return
-
-	var/result = show_radial_menu(user, src, tool_list, tooltips = TRUE)
-	switch(result)
-		if("Up")
-			travel(user, TRUE, TRUE)
-		if("Down")
-			travel(user, FALSE, TRUE)
-		if("Cancel")
-			return
+	if(!up) //only goes down
+		travel(user, FALSE, TRUE)
+	else if(!down) //only goes up
+		travel(user, TRUE, TRUE)
+	else //goes both ways
+		show_options(user, is_ghost = TRUE)
 
 // Indestructible away mission ladders which link based on a mapped ID and height value rather than X/Y/Z.
 /obj/structure/ladder/unbreakable

@@ -402,12 +402,21 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 
+/obj/structure/ladder/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(up)
+		context[SCREENTIP_CONTEXT_LMB] = "Warp up"
+	if(down)
+		context[SCREENTIP_CONTEXT_RMB] = "Warp down"
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/structure/ladder/unbreakable/rune/show_initial_fluff_message(mob/user, going_up)
-	user.visible_message(span_notice("[user] starts activating \the [src]."), span_notice("You start activating \the [src]."))
+	user.balloon_alert_to_viewers("activating [src]", "activating [src]")
 
 /obj/structure/ladder/unbreakable/rune/show_final_fluff_message(mob/user, going_up)
-	user.visible_message(span_notice("[user] activates \the [src]."), span_notice("You activate \the [src]."))
+	visible_message(span_notice("[user] activates [src] and teleports away."))
+	user.visible_message(span_notice("[user] warps in over [src]."), span_notice("You warp in over [src]."))
+	user.balloon_alert_to_viewers("warped in", "warped in")
 
-/obj/structure/ladder/unbreakable/rune/use(mob/user, is_ghost=FALSE)
+/obj/structure/ladder/unbreakable/rune/use(mob/user, going_up = TRUE)
 	if(!IS_WIZARD(user))
 		..()
