@@ -170,7 +170,7 @@
 
 		if(damage && final_countdown) // Let's jump to a special effect if we can.
 			var/rays_filter = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
-			var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field")
+			var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field", frame = rand(1,4))
 			var/causality_filter = filter(type="layer", icon = causality_field, flags = FILTER_OVERLAY)
 			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, (gasmix_power_ratio > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), TRUE)
 			filters_to_add |= list(rays_filter, causality_filter)
@@ -196,18 +196,20 @@
 			set_light(initial(light_range) + clamp(damage*power, 10, 50), 3, SUPERMATTER_SINGULARITY_LIGHT_COLOUR, TRUE)
 			filters_to_add |=  list(rays_filter, outline_filter)
 			if(final_countdown)
-				var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field")
+				var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field", frame = rand(1,4))
 				var/causality_filter = filter(type="layer", icon = causality_field, flags = FILTER_OVERLAY)
-				filters_to_add |= causality_filter
+				var/icon/singulo = new/icon('icons/effects/96x96.dmi', "singularity_s3", frame = rand(1,8))
+				var/singulo_filter = filter(type="layer", icon = singulo, flags = FILTER_UNDERLAY)
+				filters_to_add |= list(causality_filter, singulo_filter)
 
 		if(TESLA_DELAMINATION)
 			var/rays_filter = filter(type="rays", size = clamp((damage/100)*power, 50, 125), color = SUPERMATTER_TESLA_COLOUR, factor = clamp(damage/300, 1, 30), density = clamp(damage/5, 12, 200))
-			var/icon/ball = new/icon('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball")
+			var/icon/ball = new/icon('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball", frame = rand(1,12))
 			var/tesla_filter = filter(type="layer", icon = ball, flags = FILTER_UNDERLAY)
 			set_light(initial(light_range) + clamp(damage*power, 50, 500), 3, SUPERMATTER_TESLA_COLOUR, TRUE)
 			filters_to_add |= list(rays_filter, tesla_filter)
 			if(final_countdown)
-				var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field")
+				var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field", frame = rand(1,4))
 				var/causality_filter = filter(type="layer", icon = causality_field, flags = FILTER_OVERLAY)
 				filters_to_add |= causality_filter
 	filters = filters_to_add
