@@ -14963,9 +14963,6 @@
 	dir = 4
 	},
 /obj/structure/closet/radiation,
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = 32
-	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "eFS" = (
@@ -20996,6 +20993,9 @@
 	dir = 8
 	},
 /obj/structure/closet/radiation,
+/obj/structure/sign/warning/electric_shock{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "gBX" = (
