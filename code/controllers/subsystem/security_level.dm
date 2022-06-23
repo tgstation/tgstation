@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(security_level)
  * Returns the current security level as text
  */
 /datum/controller/subsystem/security_level/proc/get_current_level_as_text()
-	reutrn current_security_level.name
+	return current_security_level.name
 
 /**
  * Converts a text security level to a number
