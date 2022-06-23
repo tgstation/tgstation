@@ -29,7 +29,7 @@ export const BorgHypo = (_, context) => {
 
   return (
     <Window
-      width={450}
+      width={400}
       height={dynamicHeight}
       theme={theme}
     >
