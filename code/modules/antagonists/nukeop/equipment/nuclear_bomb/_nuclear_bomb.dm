@@ -62,7 +62,7 @@ GLOBAL_VAR(station_nuke_source)
 	STOP_PROCESSING(SSobj, core)
 	update_appearance()
 	SSpoints_of_interest.make_point_of_interest(src)
-	previous_level = SSsecurity_level.get_current_level()
+	previous_level = SSsecurity_level.get_current_level_as_text()
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
@@ -451,7 +451,7 @@ GLOBAL_VAR(station_nuke_source)
 	message_admins("\The [src] was armed at [ADMIN_VERBOSEJMP(our_turf)] by [armer ? ADMIN_LOOKUPFLW(armer) : "an unknown user"].")
 	log_game("\The [src] was armed at [loc_name(our_turf)] by [armer ? key_name(armer) : "an unknown user"].")
 
-	previous_level = SSsecurity_level.get_current_level(TRUE)
+	previous_level = SSsecurity_level.get_current_level_as_number()
 	detonation_timer = world.time + (timer_set * 10)
 	for(var/obj/item/pinpointer/nuke/syndicate/nuke_pointer in GLOB.pinpointer_list)
 		nuke_pointer.switch_mode_to(TRACK_INFILTRATOR)

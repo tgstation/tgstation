@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(security_level)
  * This is how everything should change the security level.
  *
  * Arguments:
- * * new_level The new security level that will become our current level
+ * * new_level - The new security level that will become our current level
  */
 /datum/controller/subsystem/security_level/proc/set_level(new_level)
 	new_level = istext(new_level) ? new_level : number_level_to_text(new_level)
@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(security_level)
  * Handles announcements of the newly set security level
  *
  * Arguments:
- * * selected_level The new security level that has been set
+ * * selected_level - The new security level that has been set
  */
 /datum/controller/subsystem/security_level/proc/announce_security_level(datum/security_level/selected_level)
 	if(selected_level.number_level > current_security_level.number_level) // We are elevating to this level.
@@ -75,22 +75,22 @@ SUBSYSTEM_DEF(security_level)
 		sound_to_playing_players(selected_level.sound)
 
 /**
- * Returns the current security level
- *
- * Arguments:
- * * as_number Whether to return the security level as a text or as a number
+ * Returns the current security level as a number
  */
-/datum/controller/subsystem/security_level/proc/get_current_level(as_number)
-	if(as_number)
-		return current_security_level.number_level
-	else
-		return current_security_level.name
+/datum/controller/subsystem/security_level/proc/get_current_level_as_number()
+	return current_security_level.number_level
+
+/**
+ * Returns the current security level as text
+ */
+/datum/controller/subsystem/security_level/proc/get_current_level_as_text()
+	reutrn current_security_level.name
 
 /**
  * Converts a text security level to a number
  *
  * Arguments:
- * * level The text security level to convert
+ * * level - The text security level to convert
  */
 /datum/controller/subsystem/security_level/proc/text_level_to_number(text_level)
 	var/datum/security_level/selected_level = available_levels[text_level]
@@ -100,7 +100,7 @@ SUBSYSTEM_DEF(security_level)
  * Converts a number security level to a text
  *
  * Arguments:
- * * level The number security level to convert
+ * * level - The number security level to convert
  */
 /datum/controller/subsystem/security_level/proc/number_level_to_text(number_level)
 	for(var/iterating_level_text in available_levels)
