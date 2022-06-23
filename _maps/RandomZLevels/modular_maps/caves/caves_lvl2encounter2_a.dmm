@@ -1,45 +1,518 @@
-"a" = (/obj/structure/chair/sofa/bamboo/left,/turf/open/floor/bamboo{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"b" = (/obj/structure/rack,/obj/item/grown/log/bamboo,/obj/item/grown/log/bamboo,/obj/item/seeds/bamboo,/obj/item/food/meat/slab/goliath,/obj/item/food/meat/slab/goliath,/obj/item/food/meat/slab/goliath,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"c" = (/obj/structure/punji_sticks,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"d" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"e" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"f" = (/obj/structure/chair/stool/bamboo,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"g" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"h" = (/obj/structure/mineral_door/wood{name = "little timmy's room :)"},/turf/open/floor/bamboo{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"j" = (/obj/structure/bonfire/prelit,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"o" = (/obj/structure/chair/stool/bamboo,/obj/item/food/meat/steak/goliath,/turf/open/floor/bamboo{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"p" = (/turf/open/floor/bamboo{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"r" = (/mob/living/simple_animal/hostile/asteroid/fugu{desc = "The little timmy rapidly becomes big timmy in order to ward off its prey. Great care should be taken to avoid it while it's in this state as it is nearly invincible, but it cannot maintain its form forever."; name = "little timmy"},/turf/open/floor/bamboo{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"s" = (/obj/structure/stone_tile/block/cracked,/obj/structure/stone_tile/block{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"u" = (/obj/structure/bed/dogbed{name = "little timmy's bed"},/obj/item/toy/plush/goatplushie,/turf/open/floor/bamboo{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"w" = (/turf/closed/wall,/area/template_noop)
-"x" = (/obj/structure/stone_tile/block{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"y" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"B" = (/obj/structure/stone_tile/block/burnt{dir = 1},/obj/structure/stone_tile/block,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"D" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"E" = (/obj/structure/stone_tile/block/cracked{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"G" = (/obj/structure/punji_sticks,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"I" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"K" = (/obj/structure/stone_tile/block/cracked{dir = 1},/obj/item/food/meat/steak/goliath,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"M" = (/obj/structure/stone_tile/block/cracked{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"N" = (/obj/structure/stone_tile/block,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"O" = (/turf/closed/wall/rust,/area/template_noop)
-"Q" = (/obj/structure/flora/ash/leaf_shroom,/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"T" = (/obj/structure/chair/stool/bamboo{dir = 4},/mob/living/simple_animal/hostile/ashwalker{name = "Protects-The-Timmy"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"V" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Y" = (/obj/structure/chair/sofa/bamboo/right,/turf/open/floor/bamboo{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/chair/sofa/bamboo/left,
+/turf/open/floor/bamboo{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"b" = (
+/obj/structure/rack,
+/obj/item/grown/log/bamboo,
+/obj/item/grown/log/bamboo,
+/obj/item/seeds/bamboo,
+/obj/item/food/meat/slab/goliath,
+/obj/item/food/meat/slab/goliath,
+/obj/item/food/meat/slab/goliath,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"c" = (
+/obj/structure/punji_sticks,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"d" = (
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"e" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"f" = (
+/obj/structure/chair/stool/bamboo,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"g" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"h" = (
+/obj/structure/mineral_door/wood{
+	name = "little timmy's room :)"
+	},
+/turf/open/floor/bamboo{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"j" = (
+/obj/structure/bonfire/prelit,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"o" = (
+/obj/structure/chair/stool/bamboo,
+/obj/item/food/meat/steak/goliath,
+/turf/open/floor/bamboo{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"p" = (
+/turf/open/floor/bamboo{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"r" = (
+/mob/living/simple_animal/hostile/asteroid/fugu{
+	desc = "The little timmy rapidly becomes big timmy in order to ward off its prey. Great care should be taken to avoid it while it's in this state as it is nearly invincible, but it cannot maintain its form forever.";
+	name = "little timmy"
+	},
+/turf/open/floor/bamboo{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"s" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"u" = (
+/obj/structure/bed/dogbed{
+	name = "little timmy's bed"
+	},
+/obj/item/toy/plush/goatplushie,
+/turf/open/floor/bamboo{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"w" = (
+/turf/closed/wall,
+/area/template_noop)
+"x" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"y" = (
+/obj/structure/flora/ash/stem_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"B" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/block,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"D" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"E" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"G" = (
+/obj/structure/punji_sticks,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"I" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"K" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/item/food/meat/steak/goliath,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"M" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"N" = (
+/obj/structure/stone_tile/block,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"O" = (
+/turf/closed/wall/rust,
+/area/template_noop)
+"Q" = (
+/obj/structure/flora/ash/leaf_shroom,
+/obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"T" = (
+/obj/structure/chair/stool/bamboo{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/ashwalker{
+	name = "Protects-The-Timmy"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"V" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Y" = (
+/obj/structure/chair/sofa/bamboo/right,
+/turf/open/floor/bamboo{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
 
 (1,1,1) = {"
-IIeeeeeIIIeeeeeeeeeeeeeee
-IeOOwweeeIIeeeeeeeeeeeDDV
-eewrhpYaeeeeeeeeegIIGIIdQ
-eewuwpppoIbeIIIDDDIIIIIII
-eeOwOypKBMIIcDDDVVDcIIeee
-eeeIyyTxjEIIIIGIDDIIIeeee
-eeeeeIgNsNIIeeeIIIIIIVeee
-IIeeeeIIfIIIIeeeeIIIIIIIe
-IIeeeeeeeeeIeeeeeeeeIIIIe
-IIIIeeeeeIIIIeeeeeeeeIIIe
-IIIIeeeeeeeIeeeeeeeeeeeee
-IIIIIeeeeeeeeeeeeeeeeeeee
+I
+I
+e
+e
+e
+e
+e
+I
+I
+I
+I
+I
+"}
+(2,1,1) = {"
+I
+e
+e
+e
+e
+e
+e
+I
+I
+I
+I
+I
+"}
+(3,1,1) = {"
+e
+O
+w
+w
+O
+e
+e
+e
+e
+I
+I
+I
+"}
+(4,1,1) = {"
+e
+O
+r
+u
+w
+I
+e
+e
+e
+I
+I
+I
+"}
+(5,1,1) = {"
+e
+w
+h
+w
+O
+y
+e
+e
+e
+e
+e
+I
+"}
+(6,1,1) = {"
+e
+w
+p
+p
+y
+y
+I
+e
+e
+e
+e
+e
+"}
+(7,1,1) = {"
+e
+e
+Y
+p
+p
+T
+g
+I
+e
+e
+e
+e
+"}
+(8,1,1) = {"
+I
+e
+a
+p
+K
+x
+N
+I
+e
+e
+e
+e
+"}
+(9,1,1) = {"
+I
+e
+e
+o
+B
+j
+s
+f
+e
+e
+e
+e
+"}
+(10,1,1) = {"
+I
+I
+e
+I
+M
+E
+N
+I
+e
+I
+e
+e
+"}
+(11,1,1) = {"
+e
+I
+e
+b
+I
+I
+I
+I
+e
+I
+e
+e
+"}
+(12,1,1) = {"
+e
+e
+e
+e
+I
+I
+I
+I
+I
+I
+I
+e
+"}
+(13,1,1) = {"
+e
+e
+e
+I
+c
+I
+e
+I
+e
+I
+e
+e
+"}
+(14,1,1) = {"
+e
+e
+e
+I
+D
+I
+e
+e
+e
+e
+e
+e
+"}
+(15,1,1) = {"
+e
+e
+e
+I
+D
+G
+e
+e
+e
+e
+e
+e
+"}
+(16,1,1) = {"
+e
+e
+e
+D
+D
+I
+I
+e
+e
+e
+e
+e
+"}
+(17,1,1) = {"
+e
+e
+e
+D
+V
+D
+I
+e
+e
+e
+e
+e
+"}
+(18,1,1) = {"
+e
+e
+g
+D
+V
+D
+I
+I
+e
+e
+e
+e
+"}
+(19,1,1) = {"
+e
+e
+I
+I
+D
+I
+I
+I
+e
+e
+e
+e
+"}
+(20,1,1) = {"
+e
+e
+I
+I
+c
+I
+I
+I
+e
+e
+e
+e
+"}
+(21,1,1) = {"
+e
+e
+G
+I
+I
+I
+I
+I
+I
+e
+e
+e
+"}
+(22,1,1) = {"
+e
+e
+I
+I
+I
+e
+V
+I
+I
+I
+e
+e
+"}
+(23,1,1) = {"
+e
+D
+I
+I
+e
+e
+e
+I
+I
+I
+e
+e
+"}
+(24,1,1) = {"
+e
+D
+d
+I
+e
+e
+e
+I
+I
+I
+e
+e
+"}
+(25,1,1) = {"
+e
+V
+Q
+I
+e
+e
+e
+e
+e
+e
+e
+e
 "}

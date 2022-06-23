@@ -45,7 +45,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_BOSS
 	boss_abilities = list(/datum/action/boss/turret_summon, /datum/action/boss/steam_traps, /datum/action/boss/cogscarab_swarm)
-	assign_abilities = FALSE
+	mid_ability = TRUE //prevents the boss from going hog-wild on spawn since he's got some words for the players
 	faction = list("clockwork")
 	speech_span = SPAN_BRASS
 	del_on_death = TRUE
@@ -68,11 +68,6 @@
 	var/is_in_phase_2 = FALSE //are we past the health threshold and gone through our mid-way monologue?
 	var/have_i_explained_my_evil_plan = FALSE //have we gone through our introduction monologue?
 	var/is_there_a_cult_in_here = FALSE //if we noticed there was a cultist amongඞ the initial group during the introduction
-
-/mob/living/simple_animal/hostile/boss/clockmaster/Move(atom/newloc)//STOP MOVING if you're doing the cool moves okay?
-	. = ..()
-	if(mid_ability)
-		return FALSE
 
 /mob/living/simple_animal/hostile/boss/clockmaster/proc/monologue_camera_shake() //i use this enough to where i feel obligated to make it a separate proc
 	for(var/mob/living/nearby_mob in urange(16, src))
@@ -102,7 +97,7 @@
 	sleep(5 SECONDS)
 	say("Now, do not resist. It will only take a moment.")
 	sleep(3 SECONDS)
-	AssignAbilities()
+	mid_ability = FALSE
 	ranged = TRUE
 	for(var/obj/structure/emergency_shield/clockmaster_plot_armor/plot_armor in urange(1, src))
 		plot_armor.Destroy()
@@ -200,7 +195,7 @@
 /mob/living/simple_animal/hostile/boss/clockmaster/phase_two/tell_them_my_evil_plan()
 	have_i_explained_my_evil_plan = TRUE
 	say("y'all mfers dead af lmao")
-	AssignAbilities()
+	mid_ability = FALSE
 
 //phase 2 has an attack that throws the mob, if he happens to get launched by a steam vent and hit someone too that'd be pretty funny
 /mob/living/simple_animal/hostile/boss/clockmaster/phase_two/throw_impact(mob/living/hit_atom, datum/thrownthing/throwingdatum)

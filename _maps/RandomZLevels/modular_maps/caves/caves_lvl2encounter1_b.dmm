@@ -1,49 +1,548 @@
-"a" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"b" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"c" = (/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"f" = (/obj/effect/mob_spawn/corpse/human/damaged{mob_name = "Grabs-The-Fishy"; mob_species = /datum/species/lizard/ashwalker; outfit = /datum/outfit/ashwalker},/obj/effect/decal/cleanable/blood/old,/obj/item/skeleton_key,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"g" = (/obj/structure/stone_tile/cracked{dir = 1},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"j" = (/obj/item/stack/ore/plasma{amount = 12},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"l" = (/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"r" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile/block/cracked{dir = 9},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"s" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"t" = (/obj/structure/stone_tile/block{dir = 1},/obj/structure/stone_tile/block/cracked,/obj/item/storage/fish_case/syndicate,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"u" = (/obj/item/storage/bag/ore,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"y" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"z" = (/obj/structure/flora/ash/tall_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"A" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"B" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"D" = (/obj/structure/barricade/sandbags,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"F" = (/obj/item/storage/bag/ore,/obj/item/stack/ore/silver{amount = 15},/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"H" = (/obj/item/stack/ore/bluespace_crystal{amount = 7},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"I" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"K" = (/obj/structure/stone_tile/cracked{dir = 4},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"O" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"R" = (/obj/effect/decal/cleanable/blood/old,/obj/item/paicard{desc = "A harm alarm, it seems like it wasn't all that useful after all..."},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"S" = (/obj/item/stack/ore/diamond{amount = 7},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"T" = (/obj/item/food/fishmeat{pixel_x = 4; pixel_y = 3},/obj/item/food/fishmeat,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"U" = (/obj/item/spear/bonespear,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"X" = (/obj/item/emptysandbag,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Y" = (/obj/effect/mob_spawn/corpse/human/miner/explorer{burn_damage = 1000},/obj/item/pickaxe,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Z" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"c" = (
+/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"f" = (
+/obj/effect/mob_spawn/corpse/human/damaged{
+	mob_name = "Grabs-The-Fishy";
+	mob_species = /datum/species/lizard/ashwalker;
+	outfit = /datum/outfit/ashwalker
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/skeleton_key,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"g" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"j" = (
+/obj/item/stack/ore/plasma{
+	amount = 12
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"l" = (
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"r" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block/cracked{
+	dir = 9
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"s" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"t" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/block/cracked,
+/obj/item/storage/fish_case/syndicate,
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"u" = (
+/obj/item/storage/bag/ore,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"y" = (
+/obj/structure/flora/ash/stem_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"z" = (
+/obj/structure/flora/ash/tall_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"A" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"B" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"D" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"F" = (
+/obj/item/storage/bag/ore,
+/obj/item/stack/ore/silver{
+	amount = 15
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"H" = (
+/obj/item/stack/ore/bluespace_crystal{
+	amount = 7
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"I" = (
+/obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"K" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"O" = (
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"R" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/paicard{
+	desc = "A harm alarm, it seems like it wasn't all that useful after all..."
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"S" = (
+/obj/item/stack/ore/diamond{
+	amount = 7
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"T" = (
+/obj/item/food/fishmeat{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/food/fishmeat,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"U" = (
+/obj/item/spear/bonespear,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"X" = (
+/obj/item/emptysandbag,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Y" = (
+/obj/effect/mob_spawn/corpse/human/miner/explorer{
+	burn_damage = 1000
+	},
+/obj/item/pickaxe,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Z" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
 
 (1,1,1) = {"
-AAAbbbbbbbbbbbbbbAss
-AAAbbbbZZZZZZbbbbAAA
-AAabbZZZZZZZZZbbbbbb
-AAabbZZZKtgZZZZbbbbb
-AuAbbZZZKrgAAZZZbbbb
-AAAbbZZZUfAAcAzbbbbb
-AAbbZZATBAsbbbbbbbbb
-AXbbbbAcAAbbbbbbbbbb
-AAAXbbzAIAAsbAAbbbbb
-AAAAAbzzAAAAAAlAbyyb
-AAbBDbzAAAAAAABYjHyb
-AbbDDbABAAAblAARFSAb
-AbbABAAAbbbbBAAlAsbb
-bbbsAAAbbbbAAbAAssbb
-bbbOsAbbAbAAAbbbbbbb
-bbbOObbbAAAAbbbbbbAA
-bbbbbbbbAAAbbbbbbbbb
-bbbbbbbbbbbbbbbbbbbb
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+A
+A
+A
+A
+u
+A
+A
+X
+A
+A
+A
+b
+b
+b
+b
+b
+b
+b
+"}
+(3,1,1) = {"
+A
+A
+a
+a
+A
+A
+b
+b
+A
+A
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(4,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+X
+A
+B
+D
+A
+s
+O
+O
+b
+b
+"}
+(5,1,1) = {"
+b
+b
+b
+b
+b
+b
+Z
+b
+b
+A
+D
+D
+B
+A
+s
+O
+b
+b
+"}
+(6,1,1) = {"
+b
+b
+Z
+Z
+Z
+Z
+Z
+b
+b
+b
+b
+b
+A
+A
+A
+b
+b
+b
+"}
+(7,1,1) = {"
+b
+b
+Z
+Z
+Z
+Z
+A
+A
+z
+z
+z
+A
+A
+A
+b
+b
+b
+b
+"}
+(8,1,1) = {"
+b
+Z
+Z
+Z
+Z
+Z
+T
+c
+A
+z
+A
+B
+A
+b
+b
+b
+b
+b
+"}
+(9,1,1) = {"
+b
+Z
+Z
+K
+K
+U
+B
+A
+I
+A
+A
+A
+b
+b
+A
+A
+A
+b
+"}
+(10,1,1) = {"
+b
+Z
+Z
+t
+r
+f
+A
+A
+A
+A
+A
+A
+b
+b
+b
+A
+A
+b
+"}
+(11,1,1) = {"
+b
+Z
+Z
+g
+g
+A
+s
+b
+A
+A
+A
+A
+b
+b
+A
+A
+A
+b
+"}
+(12,1,1) = {"
+b
+Z
+Z
+Z
+A
+A
+b
+b
+s
+A
+A
+b
+b
+A
+A
+A
+b
+b
+"}
+(13,1,1) = {"
+b
+Z
+Z
+Z
+A
+c
+b
+b
+b
+A
+A
+l
+B
+A
+A
+b
+b
+b
+"}
+(14,1,1) = {"
+b
+b
+Z
+Z
+Z
+A
+b
+b
+A
+A
+A
+A
+A
+b
+b
+b
+b
+b
+"}
+(15,1,1) = {"
+b
+b
+b
+Z
+Z
+z
+b
+b
+A
+l
+B
+A
+A
+A
+b
+b
+b
+b
+"}
+(16,1,1) = {"
+b
+b
+b
+b
+Z
+b
+b
+b
+b
+A
+Y
+R
+l
+A
+b
+b
+b
+b
+"}
+(17,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+F
+A
+s
+b
+b
+b
+b
+"}
+(18,1,1) = {"
+A
+A
+b
+b
+b
+b
+b
+b
+b
+y
+H
+S
+s
+s
+b
+b
+b
+b
+"}
+(19,1,1) = {"
+s
+A
+b
+b
+b
+b
+b
+b
+b
+y
+y
+A
+b
+b
+b
+A
+b
+b
+"}
+(20,1,1) = {"
+s
+A
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+A
+b
+b
 "}

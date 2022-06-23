@@ -1,54 +1,566 @@
-"a" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"b" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"c" = (/obj/effect/decal/cleanable/cobweb/cobweb2,/mob/living/simple_animal/hostile/skeleton,/obj/structure/stone_tile/slab,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"e" = (/obj/item/stack/sheet/bone,/obj/structure/stone_tile/slab,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"f" = (/obj/structure/closet/crate,/obj/item/stack/sheet/hauntium{amount = 30},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"h" = (/obj/structure/stone_tile/block,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"i" = (/mob/living/simple_animal/hostile/mimic/crate{faction = list("mimic", "skeleton")},/obj/item/skeleton_key,/obj/item/skeleton_key,/obj/item/stack/sheet/bone{amount = 20},/obj/structure/stone_tile/slab,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"j" = (/obj/structure/stone_tile/surrounding,/obj/structure/stone_tile/center/cracked,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"k" = (/mob/living/simple_animal/hostile/skeleton,/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/structure/stone_tile/slab,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"l" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"m" = (/mob/living/simple_animal/hostile/skeleton,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"n" = (/mob/living/simple_animal/hostile/mimic/crate{faction = list("mimic", "skeleton")},/obj/item/stack/sheet/runed_metal{amount = 30},/obj/structure/stone_tile/slab,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"o" = (/mob/living/simple_animal/hostile/skeleton,/obj/structure/stone_tile/slab,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"q" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"r" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"t" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"u" = (/obj/structure/stone_tile/block/cracked,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"v" = (/obj/structure/stone_tile/block/cracked{dir = 6},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"w" = (/obj/structure/stone_tile/block{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"z" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"C" = (/obj/structure/mineral_door/iron,/obj/structure/stone_tile/slab,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"D" = (/obj/effect/decal/cleanable/cobweb,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"F" = (/obj/structure/stone_tile/surrounding/burnt,/obj/structure/stone_tile/center/burnt,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"K" = (/obj/structure/stone_tile/block/cracked{dir = 1},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"L" = (/obj/structure/flora/ash/cap_shroom,/obj/effect/decal/cleanable/cobweb,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"M" = (/turf/closed/indestructible/riveted/boss,/area/template_noop)
-"N" = (/obj/structure/stone_tile/block/cracked{dir = 9},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"O" = (/obj/structure/flora/ash/tall_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Q" = (/obj/structure/stone_tile/slab/burnt,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"T" = (/obj/effect/decal/remains/human,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"V" = (/obj/structure/stone_tile/slab,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"W" = (/obj/structure/closet/crate,/obj/item/stack/sheet/bronze/thirty,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"X" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"c" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/mob/living/simple_animal/hostile/skeleton,
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"e" = (
+/obj/item/stack/sheet/bone,
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"f" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/hauntium{
+	amount = 30
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"h" = (
+/obj/structure/stone_tile/block,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"i" = (
+/mob/living/simple_animal/hostile/mimic/crate{
+	faction = list("mimic","skeleton")
+	},
+/obj/item/skeleton_key,
+/obj/item/skeleton_key,
+/obj/item/stack/sheet/bone{
+	amount = 20
+	},
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"j" = (
+/obj/structure/stone_tile/surrounding,
+/obj/structure/stone_tile/center/cracked,
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"k" = (
+/mob/living/simple_animal/hostile/skeleton,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"l" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"m" = (
+/mob/living/simple_animal/hostile/skeleton,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"n" = (
+/mob/living/simple_animal/hostile/mimic/crate{
+	faction = list("mimic","skeleton")
+	},
+/obj/item/stack/sheet/runed_metal{
+	amount = 30
+	},
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"o" = (
+/mob/living/simple_animal/hostile/skeleton,
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"q" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"r" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"t" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"u" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"v" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 6
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"w" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"z" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"C" = (
+/obj/structure/mineral_door/iron,
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"D" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"F" = (
+/obj/structure/stone_tile/surrounding/burnt,
+/obj/structure/stone_tile/center/burnt,
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"K" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"L" = (
+/obj/structure/flora/ash/cap_shroom,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"M" = (
+/turf/closed/indestructible/riveted/boss,
+/area/template_noop)
+"N" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 9
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"O" = (
+/obj/structure/flora/ash/tall_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Q" = (
+/obj/structure/stone_tile/slab/burnt,
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"T" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"V" = (
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"W" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/bronze/thirty,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"X" = (
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 
 (1,1,1) = {"
-qqqbbbbbbbbbMbbbbqzz
-qqbbbbMLXbbikbbOqqqq
-qqbbbzWTXbMeVbOOrbqb
-qqbbbzzVqbbbCMNqqqqb
-qqlbbbMCMMbqVMNQqqbb
-qqlbbwVVtbbqhqqQvMbb
-qqbbTwVttKMqqTqqtbbb
-qqbbqqhqqjFqqqttttbb
-qbbbqqqqaurzzqtqqtqb
-qbbqqqqqttqzrqqqqtbb
-qbbqrzMttVqqqqqqttbb
-qbbqzMMtVVMqqbqbtqbb
-qbbVTbbMMCbqbbbbqqbb
-bbbCMbbDVobqObbbqqbb
-bbMVcbbVVebqObbqqbbb
-bbbVnMbmhbbqbbqOqbqq
-bbbbbbbbfbbbbbbbbbbb
-bbbbbbbbbbbbbbbbbbbb
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+q
+q
+q
+q
+q
+q
+q
+q
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(3,1,1) = {"
+q
+b
+b
+b
+l
+l
+b
+b
+b
+b
+b
+b
+b
+b
+M
+b
+b
+b
+"}
+(4,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+q
+q
+q
+V
+C
+V
+V
+b
+b
+"}
+(5,1,1) = {"
+b
+b
+b
+b
+b
+b
+T
+q
+q
+q
+r
+z
+T
+M
+c
+n
+b
+b
+"}
+(6,1,1) = {"
+b
+b
+z
+z
+b
+w
+w
+q
+q
+q
+z
+M
+b
+b
+b
+M
+b
+b
+"}
+(7,1,1) = {"
+b
+M
+W
+z
+M
+V
+V
+h
+q
+q
+M
+M
+b
+b
+b
+b
+b
+b
+"}
+(8,1,1) = {"
+b
+L
+T
+V
+C
+V
+t
+q
+q
+q
+t
+t
+M
+D
+V
+m
+b
+b
+"}
+(9,1,1) = {"
+b
+X
+X
+q
+M
+t
+t
+q
+a
+t
+t
+V
+M
+V
+V
+h
+f
+b
+"}
+(10,1,1) = {"
+b
+b
+b
+b
+M
+b
+K
+j
+u
+t
+V
+V
+C
+o
+e
+b
+b
+b
+"}
+(11,1,1) = {"
+b
+b
+M
+b
+b
+b
+M
+F
+r
+q
+q
+M
+b
+b
+b
+b
+b
+b
+"}
+(12,1,1) = {"
+b
+i
+e
+b
+q
+q
+q
+q
+z
+z
+q
+q
+q
+q
+q
+q
+b
+b
+"}
+(13,1,1) = {"
+M
+k
+V
+C
+V
+h
+q
+q
+z
+r
+q
+q
+b
+O
+O
+b
+b
+b
+"}
+(14,1,1) = {"
+b
+b
+b
+M
+M
+q
+T
+q
+q
+q
+q
+b
+b
+b
+b
+b
+b
+b
+"}
+(15,1,1) = {"
+b
+b
+O
+N
+N
+q
+q
+t
+t
+q
+q
+q
+b
+b
+b
+q
+b
+b
+"}
+(16,1,1) = {"
+b
+O
+O
+q
+Q
+Q
+q
+t
+q
+q
+q
+b
+b
+b
+q
+O
+b
+b
+"}
+(17,1,1) = {"
+b
+q
+r
+q
+q
+v
+t
+t
+q
+q
+t
+t
+q
+q
+q
+q
+b
+b
+"}
+(18,1,1) = {"
+q
+q
+b
+q
+q
+M
+b
+t
+t
+t
+t
+q
+q
+q
+b
+b
+b
+b
+"}
+(19,1,1) = {"
+z
+q
+q
+q
+b
+b
+b
+b
+q
+b
+b
+b
+b
+b
+b
+q
+b
+b
+"}
+(20,1,1) = {"
+z
+q
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+q
+b
+b
 "}

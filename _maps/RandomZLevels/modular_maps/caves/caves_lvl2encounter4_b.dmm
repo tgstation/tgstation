@@ -1,32 +1,473 @@
-"a" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"b" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"c" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"e" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/end{dir = 8},/obj/structure/railing,/obj/structure/railing{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"i" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"k" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/end{dir = 4},/obj/structure/railing,/obj/structure/railing{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"r" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/railing,/obj/structure/railing{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"s" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/railing,/obj/structure/railing{dir = 1},/mob/living/simple_animal/hostile/ashwalker{name = "Has-The-High-Ground"; speak = list("Isss over, defiler! I hasss the high ground!"); speak_chance = 15},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"x" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"y" = (/obj/structure/marker_beacon/burgundy,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"A" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"F" = (/mob/living/simple_animal/hostile/ashwalker{name = "Defends-The-Bridge"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"G" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"I" = (/obj/structure/barricade/sandbags,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"L" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"N" = (/mob/living/simple_animal/hostile/ashwalker{name = "Stands-Their-Ground"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"P" = (/turf/open/chasm/lavaland,/area/template_noop)
-"R" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"b" = (
+/obj/structure/flora/ash/cacti,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"c" = (
+/obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"i" = (
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/ashwalker{
+	name = "Has-The-High-Ground";
+	speak = list("Isss over, defiler! I hasss the high ground!");
+	speak_chance = 15
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"x" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"y" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"A" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"F" = (
+/mob/living/simple_animal/hostile/ashwalker{
+	name = "Defends-The-Bridge"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"G" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"I" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"L" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"N" = (
+/mob/living/simple_animal/hostile/ashwalker{
+	name = "Stands-Their-Ground"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"P" = (
+/turf/open/chasm/lavaland,
+/area/template_noop)
+"R" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 
 (1,1,1) = {"
-PPPPPPPPPPbPPPPPPPPPPPPPPPPx
-PPPPPPPPPPbPPPPPPPPPPPPPPPPR
-PPPPPPPPPbyPPPPPPPPPLNLPPPPL
-PPPPPPPPPRLPPPPPPPPPLLyRxaII
-PPPPPPPPPLerrrrsrrrrkLLLaaIL
-PPPPPPPPLLLPPPPPPPPPLyAAAAAA
-PPLIILLLyFLPPPPPPPPPLGAAAAAA
-cLLLIAAAiiLAPPPPPAAALGAAAAAA
-LRxAAAAAAiiAAAAAAAGGGGGGGGAA
-AAAAAAAAAALGGGGGGGGGGGGGGGAA
-LLAAAAAAAAGGGGGGGGGGGGGGGGGG
+P
+P
+P
+P
+P
+P
+P
+c
+L
+A
+L
+"}
+(2,1,1) = {"
+P
+P
+P
+P
+P
+P
+P
+L
+R
+A
+L
+"}
+(3,1,1) = {"
+P
+P
+P
+P
+P
+P
+L
+L
+x
+A
+A
+"}
+(4,1,1) = {"
+P
+P
+P
+P
+P
+P
+I
+L
+A
+A
+A
+"}
+(5,1,1) = {"
+P
+P
+P
+P
+P
+P
+I
+I
+A
+A
+A
+"}
+(6,1,1) = {"
+P
+P
+P
+P
+P
+P
+L
+A
+A
+A
+A
+"}
+(7,1,1) = {"
+P
+P
+P
+P
+P
+P
+L
+A
+A
+A
+A
+"}
+(8,1,1) = {"
+P
+P
+P
+P
+P
+P
+L
+A
+A
+A
+A
+"}
+(9,1,1) = {"
+P
+P
+P
+P
+P
+L
+y
+i
+A
+A
+A
+"}
+(10,1,1) = {"
+P
+P
+b
+R
+L
+L
+F
+i
+i
+A
+A
+"}
+(11,1,1) = {"
+b
+b
+y
+L
+e
+L
+L
+L
+i
+L
+G
+"}
+(12,1,1) = {"
+P
+P
+P
+P
+r
+P
+P
+A
+A
+G
+G
+"}
+(13,1,1) = {"
+P
+P
+P
+P
+r
+P
+P
+P
+A
+G
+G
+"}
+(14,1,1) = {"
+P
+P
+P
+P
+r
+P
+P
+P
+A
+G
+G
+"}
+(15,1,1) = {"
+P
+P
+P
+P
+r
+P
+P
+P
+A
+G
+G
+"}
+(16,1,1) = {"
+P
+P
+P
+P
+s
+P
+P
+P
+A
+G
+G
+"}
+(17,1,1) = {"
+P
+P
+P
+P
+r
+P
+P
+P
+A
+G
+G
+"}
+(18,1,1) = {"
+P
+P
+P
+P
+r
+P
+P
+A
+A
+G
+G
+"}
+(19,1,1) = {"
+P
+P
+P
+P
+r
+P
+P
+A
+G
+G
+G
+"}
+(20,1,1) = {"
+P
+P
+P
+P
+r
+P
+P
+A
+G
+G
+G
+"}
+(21,1,1) = {"
+P
+P
+L
+L
+k
+L
+L
+L
+G
+G
+G
+"}
+(22,1,1) = {"
+P
+P
+N
+L
+L
+y
+G
+G
+G
+G
+G
+"}
+(23,1,1) = {"
+P
+P
+L
+y
+L
+A
+A
+A
+G
+G
+G
+"}
+(24,1,1) = {"
+P
+P
+P
+R
+L
+A
+A
+A
+G
+G
+G
+"}
+(25,1,1) = {"
+P
+P
+P
+x
+a
+A
+A
+A
+G
+G
+G
+"}
+(26,1,1) = {"
+P
+P
+P
+a
+a
+A
+A
+A
+G
+G
+G
+"}
+(27,1,1) = {"
+P
+P
+P
+I
+I
+A
+A
+A
+A
+A
+G
+"}
+(28,1,1) = {"
+x
+R
+L
+I
+L
+A
+A
+A
+A
+A
+G
 "}

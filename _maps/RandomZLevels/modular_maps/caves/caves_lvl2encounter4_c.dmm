@@ -1,22 +1,394 @@
-"d" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"e" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"h" = (/turf/open/chasm/lavaland,/area/template_noop)
-"j" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"B" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"E" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"T" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"Z" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"e" = (
+/obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"h" = (
+/turf/open/chasm/lavaland,
+/area/template_noop)
+"j" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"B" = (
+/obj/structure/flora/ash/cacti,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"E" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"T" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"Z" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 
 (1,1,1) = {"
-hhhhhhhhhhhhhhhhhhhhhhhhhhhd
-hhhhhhhhhhhhhhhhhhhhhhhhhhhd
-hhhhhhhhhhhhhhhhhhhhhhhhhhhd
-hhhhhhhhhhhhhhhhhhhhhhhhdZZd
-hhhhhhhhhhhhhhhhhBhhhhhddjZd
-hhhdhhhhhhhhhhhdhdhhddEEEEEE
-hhdZjdBhBhhdZhhdEddEEEEEEEEE
-eddZZEEEEhhdBEEEEEEEEEEEEEEE
-dddEEEEEEEEEEEEEETTTTTTTTTEE
-EEEEEEEEEEEEEETTTTTTTTTTTTEE
-ddEEEEEEEETTTTTTTTTTTTTTTTTT
+h
+h
+h
+h
+h
+h
+h
+e
+d
+E
+d
+"}
+(2,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+d
+d
+E
+d
+"}
+(3,1,1) = {"
+h
+h
+h
+h
+h
+h
+d
+d
+d
+E
+E
+"}
+(4,1,1) = {"
+h
+h
+h
+h
+h
+d
+Z
+Z
+E
+E
+E
+"}
+(5,1,1) = {"
+h
+h
+h
+h
+h
+h
+j
+Z
+E
+E
+E
+"}
+(6,1,1) = {"
+h
+h
+h
+h
+h
+h
+d
+E
+E
+E
+E
+"}
+(7,1,1) = {"
+h
+h
+h
+h
+h
+h
+B
+E
+E
+E
+E
+"}
+(8,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+E
+E
+E
+E
+"}
+(9,1,1) = {"
+h
+h
+h
+h
+h
+h
+B
+E
+E
+E
+E
+"}
+(10,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+E
+E
+E
+"}
+(11,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+E
+E
+T
+"}
+(12,1,1) = {"
+h
+h
+h
+h
+h
+h
+d
+d
+E
+E
+T
+"}
+(13,1,1) = {"
+h
+h
+h
+h
+h
+h
+Z
+B
+E
+E
+T
+"}
+(14,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+E
+E
+E
+T
+"}
+(15,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+E
+E
+T
+T
+"}
+(16,1,1) = {"
+h
+h
+h
+h
+h
+d
+d
+E
+E
+T
+T
+"}
+(17,1,1) = {"
+h
+h
+h
+h
+h
+h
+E
+E
+E
+T
+T
+"}
+(18,1,1) = {"
+h
+h
+h
+h
+B
+d
+d
+E
+T
+T
+T
+"}
+(19,1,1) = {"
+h
+h
+h
+h
+h
+h
+d
+E
+T
+T
+T
+"}
+(20,1,1) = {"
+h
+h
+h
+h
+h
+h
+E
+E
+T
+T
+T
+"}
+(21,1,1) = {"
+h
+h
+h
+h
+h
+d
+E
+E
+T
+T
+T
+"}
+(22,1,1) = {"
+h
+h
+h
+h
+h
+d
+E
+E
+T
+T
+T
+"}
+(23,1,1) = {"
+h
+h
+h
+h
+h
+E
+E
+E
+T
+T
+T
+"}
+(24,1,1) = {"
+h
+h
+h
+h
+d
+E
+E
+E
+T
+T
+T
+"}
+(25,1,1) = {"
+h
+h
+h
+d
+d
+E
+E
+E
+T
+T
+T
+"}
+(26,1,1) = {"
+h
+h
+h
+Z
+j
+E
+E
+E
+T
+T
+T
+"}
+(27,1,1) = {"
+h
+h
+h
+Z
+Z
+E
+E
+E
+E
+E
+T
+"}
+(28,1,1) = {"
+d
+d
+d
+d
+d
+E
+E
+E
+E
+E
+T
 "}

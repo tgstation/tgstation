@@ -1,43 +1,512 @@
-"a" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"b" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"c" = (/obj/structure/barricade/sandbags,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"e" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"f" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"i" = (/obj/item/pickaxe,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"j" = (/turf/open/chasm/lavaland,/area/template_noop)
-"k" = (/obj/item/organ/internal/alien/plasmavessel,/obj/structure/alien/weeds,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"l" = (/obj/structure/alien/resin/wall,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"o" = (/turf/closed/wall,/area/template_noop)
-"q" = (/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"t" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"w" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"x" = (/obj/effect/decal/remains/xeno/larva,/obj/item/toy/toy_xeno,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"y" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"z" = (/obj/modular_map_connector,/obj/structure/marker_beacon/burgundy,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"F" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"J" = (/obj/effect/gibspawner/xeno/bodypartless,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"K" = (/obj/item/emptysandbag,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"L" = (/obj/structure/alien/weeds,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"M" = (/obj/structure/marker_beacon/burgundy,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"O" = (/obj/structure/bed/nest,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"P" = (/obj/effect/decal/remains/human,/obj/effect/gibspawner/human/bodypartless,/obj/item/clothing/suit/xenos,/obj/item/clothing/head/xenos,/obj/structure/alien/weeds,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"R" = (/obj/effect/decal/remains/xeno,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"S" = (/obj/item/xenos_claw,/obj/structure/alien/weeds/node,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"T" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"b" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"c" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"e" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"f" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"i" = (
+/obj/item/pickaxe,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"j" = (
+/turf/open/chasm/lavaland,
+/area/template_noop)
+"k" = (
+/obj/item/organ/internal/alien/plasmavessel,
+/obj/structure/alien/weeds,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"l" = (
+/obj/structure/alien/resin/wall,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"o" = (
+/turf/closed/wall,
+/area/template_noop)
+"q" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"t" = (
+/obj/structure/flora/ash/cacti,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"w" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"x" = (
+/obj/effect/decal/remains/xeno/larva,
+/obj/item/toy/toy_xeno,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"y" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"z" = (
+/obj/modular_map_connector,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"F" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"J" = (
+/obj/effect/gibspawner/xeno/bodypartless,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"K" = (
+/obj/item/emptysandbag,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"L" = (
+/obj/structure/alien/weeds,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"M" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"O" = (
+/obj/structure/bed/nest,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"P" = (
+/obj/effect/decal/remains/human,
+/obj/effect/gibspawner/human/bodypartless,
+/obj/item/clothing/suit/xenos,
+/obj/item/clothing/head/xenos,
+/obj/structure/alien/weeds,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"R" = (
+/obj/effect/decal/remains/xeno,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"S" = (
+/obj/item/xenos_claw,
+/obj/structure/alien/weeds/node,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"T" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 
 (1,1,1) = {"
-Kceeeeejjjjjjjjjjjeejjeee
-zceeeeeytejjjjjjjjjeejjje
-aoaaeeettwejjjejjjjjejjjj
-aaaaqeewweqjeeejjjjjjjjjj
-JxRaeeeeeeejjejjjjjjjjjjj
-OPkayeeeejjjjejjjjjjjjjjj
-LSLaaeeejjjjeejjjjjjjjjjj
-bFlaaaejjjeeeewjjjjjjjjjj
-aLLqaTejjeeeeeejjjjjjjjjj
-aleTeejjeeqeeeeeeeejjjjjj
-aaaeeeeeeaeaaaeeeeeeejjjj
-aaaaaaeTaaaaaaaafieeceMee
-aaaaaaaaaaaaaaaaaaawceKee
-aaaaaaaaaaaaaaaaaaaaoKeee
+K
+z
+a
+a
+J
+O
+L
+b
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+c
+c
+o
+a
+x
+P
+S
+F
+L
+l
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+e
+e
+a
+a
+R
+k
+L
+l
+L
+e
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+e
+e
+a
+a
+a
+a
+a
+a
+q
+T
+e
+a
+a
+a
+"}
+(5,1,1) = {"
+e
+e
+e
+q
+e
+y
+a
+a
+a
+e
+e
+a
+a
+a
+"}
+(6,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+a
+T
+e
+e
+a
+a
+a
+"}
+(7,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+e
+e
+j
+e
+e
+a
+a
+"}
+(8,1,1) = {"
+j
+y
+t
+w
+e
+e
+e
+j
+j
+j
+e
+T
+a
+a
+"}
+(9,1,1) = {"
+j
+t
+t
+w
+e
+e
+j
+j
+j
+e
+e
+a
+a
+a
+"}
+(10,1,1) = {"
+j
+e
+w
+e
+e
+j
+j
+j
+e
+e
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+j
+j
+e
+q
+e
+j
+j
+e
+e
+q
+e
+a
+a
+a
+"}
+(12,1,1) = {"
+j
+j
+j
+j
+j
+j
+j
+e
+e
+e
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+j
+j
+j
+e
+j
+j
+e
+e
+e
+e
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+j
+j
+j
+e
+e
+e
+e
+e
+e
+e
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+j
+j
+e
+e
+j
+j
+j
+w
+e
+e
+e
+a
+a
+a
+"}
+(16,1,1) = {"
+j
+j
+j
+j
+j
+j
+j
+j
+j
+e
+e
+a
+a
+a
+"}
+(17,1,1) = {"
+j
+j
+j
+j
+j
+j
+j
+j
+j
+e
+e
+f
+a
+a
+"}
+(18,1,1) = {"
+j
+j
+j
+j
+j
+j
+j
+j
+j
+e
+e
+i
+a
+a
+"}
+(19,1,1) = {"
+e
+j
+j
+j
+j
+j
+j
+j
+j
+e
+e
+e
+a
+a
+"}
+(20,1,1) = {"
+e
+e
+j
+j
+j
+j
+j
+j
+j
+j
+e
+e
+w
+a
+"}
+(21,1,1) = {"
+j
+e
+e
+j
+j
+j
+j
+j
+j
+j
+e
+c
+c
+o
+"}
+(22,1,1) = {"
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+e
+e
+K
+"}
+(23,1,1) = {"
+e
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+M
+K
+e
+"}
+(24,1,1) = {"
+e
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+e
+e
+e
+"}
+(25,1,1) = {"
+e
+e
+j
+j
+j
+j
+j
+j
+j
+j
+j
+e
+e
+e
 "}

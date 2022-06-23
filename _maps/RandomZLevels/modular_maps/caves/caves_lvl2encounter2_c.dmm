@@ -1,39 +1,479 @@
-"a" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"d" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"e" = (/obj/structure/stone_tile/block/cracked{dir = 4},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"f" = (/obj/structure/stone_tile/block/cracked{dir = 10},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"g" = (/obj/structure/stone_tile/block/cracked{dir = 1},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"h" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"i" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"k" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"q" = (/obj/structure/stone_tile/surrounding_tile/cracked{dir = 1},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"r" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"z" = (/obj/structure/stone_tile/slab,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"A" = (/obj/structure/stone_tile/surrounding/cracked{dir = 1},/obj/structure/stone_tile/center/cracked,/obj/structure/stone_tile/surrounding_tile{dir = 4},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"F" = (/obj/structure/stone_tile/block/burnt{dir = 1},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"H" = (/obj/structure/stone_tile/slab/burnt,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"I" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"L" = (/obj/structure/stone_tile/block/cracked{dir = 6},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"M" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"O" = (/obj/structure/stone_tile/surrounding/cracked,/obj/structure/stone_tile/surrounding_tile,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"P" = (/obj/structure/stone_tile/slab/cracked,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"Q" = (/obj/structure/flora/ash/leaf_shroom,/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"R" = (/obj/effect/decal/cleanable/ash,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"T" = (/obj/effect/step_trigger/teleport_fancy{entersmoke = 1; entersparks = 1; locationx = 78; locationy = 113; uses = 0},/obj/structure/fluff{desc = "You're not sure if walking into this is a great idea..."; icon = 'icons/effects/eldritch.dmi'; icon_state = "pierced_illusion"; name = "fluxating rift"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"W" = (/obj/structure/stone_tile/surrounding_tile/cracked{dir = 6},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"Y" = (/obj/structure/stone_tile/block/burnt,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"d" = (
+/obj/structure/flora/ash/stem_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"e" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"f" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 10
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"g" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"h" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"i" = (
+/obj/structure/flora/ash/cacti,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"k" = (
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"q" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"r" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"z" = (
+/obj/structure/stone_tile/slab,
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"A" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"F" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"H" = (
+/obj/structure/stone_tile/slab/burnt,
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"I" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"L" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 6
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"M" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"O" = (
+/obj/structure/stone_tile/surrounding/cracked,
+/obj/structure/stone_tile/surrounding_tile,
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"P" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"Q" = (
+/obj/structure/flora/ash/leaf_shroom,
+/obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"R" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"T" = (
+/obj/effect/step_trigger/teleport_fancy{
+	entersmoke = 1;
+	entersparks = 1;
+	locationx = 78;
+	locationy = 113;
+	uses = 0
+	},
+/obj/structure/fluff{
+	desc = "You're not sure if walking into this is a great idea...";
+	icon = 'icons/effects/eldritch.dmi';
+	icon_state = "pierced_illusion";
+	name = "fluxating rift"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"W" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 6
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"Y" = (
+/obj/structure/stone_tile/block/burnt,
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
 
 (1,1,1) = {"
-rraaaaarrraaaaaaaaaaaaaaa
-raaaaaaaarraaahaaaaaaaIIM
-aaaaaIIkaaaaahhaaarrrrrrQ
-aaaRIMrrraaaahhrrrrhrrarr
-aarrrTRrraghhhhFrrhhhraaa
-aairrrrrrzzAqWOPHehhhaaaa
-aaaiRrMhfYLhhhhhhhrhhaaaa
-raaaahhhhhhhhhhhrrrhrrkra
-rraaaarrhhrhhhhhaIrhrrMIa
-rrraaaararrahhhaaIMrrrrMa
-rrrraaaaaaaahhaaaaaddrrra
-rrrrraaaaaaaahaaaaaaddrra
+r
+r
+a
+a
+a
+a
+a
+r
+r
+r
+r
+r
+"}
+(2,1,1) = {"
+r
+a
+a
+a
+a
+a
+a
+a
+r
+r
+r
+r
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+r
+i
+a
+a
+a
+r
+r
+r
+"}
+(4,1,1) = {"
+a
+a
+a
+R
+r
+r
+i
+a
+a
+a
+r
+r
+"}
+(5,1,1) = {"
+a
+a
+a
+I
+r
+r
+R
+a
+a
+a
+a
+r
+"}
+(6,1,1) = {"
+a
+a
+I
+M
+T
+r
+r
+h
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+I
+r
+R
+r
+M
+h
+r
+a
+a
+a
+"}
+(8,1,1) = {"
+r
+a
+k
+r
+r
+r
+h
+h
+r
+r
+a
+a
+"}
+(9,1,1) = {"
+r
+a
+a
+r
+r
+r
+f
+h
+h
+a
+a
+a
+"}
+(10,1,1) = {"
+r
+r
+a
+a
+a
+z
+Y
+h
+h
+r
+a
+a
+"}
+(11,1,1) = {"
+a
+r
+a
+a
+g
+z
+L
+h
+r
+r
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+h
+A
+h
+h
+h
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+h
+q
+h
+h
+h
+h
+h
+a
+"}
+(14,1,1) = {"
+a
+a
+h
+h
+h
+W
+h
+h
+h
+h
+h
+h
+"}
+(15,1,1) = {"
+a
+h
+h
+h
+h
+O
+h
+h
+h
+h
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+r
+F
+P
+h
+h
+h
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+r
+r
+H
+h
+r
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+r
+r
+e
+h
+r
+I
+I
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+r
+r
+h
+h
+r
+r
+r
+M
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+r
+h
+h
+h
+h
+h
+h
+r
+d
+a
+"}
+(21,1,1) = {"
+a
+a
+r
+r
+h
+h
+h
+r
+r
+r
+d
+d
+"}
+(22,1,1) = {"
+a
+a
+r
+r
+r
+a
+a
+r
+r
+r
+r
+d
+"}
+(23,1,1) = {"
+a
+I
+r
+a
+a
+a
+a
+k
+M
+r
+r
+r
+"}
+(24,1,1) = {"
+a
+I
+r
+r
+a
+a
+a
+r
+I
+M
+r
+r
+"}
+(25,1,1) = {"
+a
+M
+Q
+r
+a
+a
+a
+a
+a
+a
+a
+a
 "}

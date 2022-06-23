@@ -1,281 +1,6469 @@
-"aa" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"ax" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aA" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/lightgeist,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"aI" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aN" = (/turf/closed/indestructible/rock,/area/template_noop)
-"aR" = (/turf/template_noop,/area/template_noop)
-"aT" = (/turf/open/chasm/lavaland,/area/template_noop)
-"ba" = (/obj/effect/turf_decal/siding/purple/corner,/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"bi" = (/obj/machinery/door/airlock/abductor,/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"bw" = (/obj/effect/spawner/structure/window/plasma,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"bz" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/asteroid/elite/herald,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"bR" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table/abductor,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/ayylmao)
-"bT" = (/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"cn" = (/obj/machinery/door/poddoor{id = "exhibitstorage"},/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"cp" = (/obj/machinery/door/poddoor{id = "exhibitstorage"},/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"cC" = (/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"cD" = (/obj/machinery/door/airlock/abductor,/obj/effect/turf_decal/siding/purple{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"cL" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/faithless,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"cN" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/structure/table/abductor,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"da" = (/obj/effect/spawner/structure/window/plasma,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"db" = (/obj/effect/turf_decal/siding/purple/corner{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"dj" = (/obj/machinery/door/airlock/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"dz" = (/obj/effect/turf_decal/siding/purple/corner,/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"dN" = (/obj/machinery/door/airlock/abductor,/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"ed" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/multitool/abductor,/obj/item/screwdriver/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"ef" = (/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"ei" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/bear/russian,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"ek" = (/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/siding/purple/corner,/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"el" = (/obj/structure/table/optable/abductor,/obj/effect/light_emitter,/obj/item/keycard/hilbert{desc = "A keycard with a strange symbol embedded in the center."; name = "strange keycard"; puzzle_id = "number1victoryroyale"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"eC" = (/obj/effect/turf_decal/siding/purple{dir = 10},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"eF" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/clothing/under/abductor,/obj/item/clothing/shoes/combat,/obj/item/clothing/head/helmet/abductor,/obj/effect/turf_decal/tile/purple/fourcorners,/obj/machinery/light/small/directional/north{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"eS" = (/obj/structure/chair/stool/bar/directional/north,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"fA" = (/obj/machinery/door/puzzle/keycard{open_message = "The door hums ominously and slides open."; puzzle_id = "number1victoryroyale"},/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/purple,/obj/effect/turf_decal/siding/purple{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"gm" = (/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"gt" = (/obj/structure/chair/office/tactical,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"gu" = (/obj/structure/table/abductor,/obj/singularity/academy{name = "Exhibit 0000Sl - BIG SUCK"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"gv" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"gz" = (/obj/structure/table/abductor,/obj/item/veilrender/vealrender{name = "Exhibit 5634Mo - BeefKnife"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"gE" = (/obj/structure/cable,/obj/machinery/power/terminal{dir = 8},/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"gQ" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"hc" = (/obj/structure/table/abductor,/obj/effect/turf_decal/siding/purple{dir = 6},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"hr" = (/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"hG" = (/obj/structure/chair/stool/bar/directional/south,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"hK" = (/obj/structure/table/abductor,/obj/machinery/recharger,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"hQ" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"},/obj/effect/turf_decal/siding/purple{dir = 10},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"hY" = (/obj/structure/table/abductor,/obj/item/melee/baseball_bat{name = "Exhibit 5321nL - Knee Hittur"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"ie" = (/turf/closed/wall/mineral/abductor,/area/awaymission/caves/misc/ayylmao/office)
-"io" = (/turf/closed/indestructible/riveted{base_icon_state = "alienvault"; icon = 'icons/turf/walls.dmi'; icon_state = "alienvault"},/area/awaymission/caves/misc/ayylmao/holding_cell)
-"iq" = (/obj/structure/table/abductor,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"ir" = (/mob/living/simple_animal/hostile/ashwalker{name = "Cannot-Be-Contained"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"iu" = (/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/turf_decal/siding/purple/corner{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"iw" = (/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"iI" = (/obj/effect/turf_decal/siding/purple{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"jl" = (/obj/effect/turf_decal/siding/purple{dir = 10},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"jJ" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/clothing/under/abductor,/obj/item/clothing/shoes/combat,/obj/item/clothing/head/helmet/abductor,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"jV" = (/obj/effect/decal/cleanable/dirt,/obj/structure/rack,/obj/item/stack/cable_coil,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/ayylmao)
-"jX" = (/obj/structure/statue/bananium/clown{name = "Exhibit 5635jG - Hunk"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"kz" = (/turf/closed/indestructible/riveted{base_icon_state = "alienvault"; icon = 'icons/turf/walls.dmi'; icon_state = "alienvault"},/area/template_noop)
-"kM" = (/obj/structure/table/abductor,/obj/structure/fluff{desc = "A highly detailed visualization of a space carp, projected outwards via hologram."; dir = 8; icon = 'icons/mob/carp.dmi'; icon_state = "holocarp"; name = "hologram of a space carp"},/obj/effect/turf_decal/siding/purple,/obj/machinery/light/dim{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"la" = (/obj/structure/bed/pod,/obj/item/bedsheet/cosmos,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"lN" = (/obj/effect/turf_decal/siding/purple{dir = 4},/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"lO" = (/obj/effect/turf_decal/siding/purple{dir = 6},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"lR" = (/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/delivery/white,/obj/effect/decal/cleanable/dirt,/obj/machinery/door/poddoor{id = "exhibitstorage"; name = "Exhibit Exit Lockdown"},/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao)
-"mb" = (/obj/machinery/light/small/directional/north{bulb_colour = "#8142F5"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"mh" = (/obj/effect/decal/cleanable/dirt,/obj/structure/closet/emcloset,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/ayylmao)
-"mz" = (/obj/structure/chair/office/tactical{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"mE" = (/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"nw" = (/obj/effect/turf_decal/siding/purple,/obj/machinery/light/dim{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"oh" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table/abductor,/obj/machinery/cell_charger,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/ayylmao)
-"oi" = (/obj/machinery/door/airlock/abductor,/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"ow" = (/obj/structure/toilet{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"oy" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/lizard,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"oT" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"oW" = (/obj/effect/turf_decal/siding/purple/corner{dir = 8},/obj/effect/turf_decal/siding/purple/corner,/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"oY" = (/obj/machinery/light/small/directional/west{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"pl" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/door/airlock/abductor,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"ps" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/power/smes/engineering,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"pN" = (/obj/effect/turf_decal/siding/purple{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"pT" = (/obj/effect/turf_decal/siding/purple/corner{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"pY" = (/obj/structure/flora/ash/tall_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"qk" = (/obj/effect/decal/cleanable/dirt,/obj/item/toy/plush/rouny,/obj/machinery/light/small/directional/north{bulb_colour = "#8142F5"},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/ayylmao)
-"qo" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 8},/obj/effect/turf_decal/siding/purple{dir = 9},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"qt" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"qw" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"qx" = (/obj/structure/table/abductor,/obj/item/storage/box/alienhandcuffs,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"qJ" = (/obj/structure/chair/office/tactical{dir = 4},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"rG" = (/obj/structure/fluff{desc = "A futuristic looking console. The lock screen is written in a strange font."; icon = 'icons/obj/abductor.dmi'; icon_state = "console"; name = "console"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"rX" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/siding/purple{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"su" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 4},/obj/effect/turf_decal/siding/purple{dir = 6},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"sA" = (/turf/closed/wall/mineral/abductor,/area/awaymission/caves/misc/ayylmao)
-"sC" = (/obj/effect/turf_decal/siding/purple/corner{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"sD" = (/obj/effect/turf_decal/siding/purple{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"sF" = (/obj/effect/turf_decal/siding/purple/corner{dir = 1},/obj/effect/turf_decal/siding/purple/corner{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"sM" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 4},/obj/effect/turf_decal/siding/purple{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"sO" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/machinery/computer/security{name = "exhibit camera console"; network = list("ayylmao")},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"sS" = (/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,/area/awaymission/caves/misc/ayylmao)
-"tn" = (/obj/structure/table/abductor,/obj/item/plunger{name = "Exhibit 9456pL - Suckler"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"tw" = (/obj/structure/falsewall/abductor,/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"tN" = (/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"ut" = (/obj/effect/turf_decal/siding/purple,/obj/structure/table/abductor,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"uu" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/clothing/head/helmet/abductor,/obj/item/crowbar/abductor,/obj/item/clothing/under/abductor,/obj/item/clothing/suit/armor/abductor/vest,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"uJ" = (/obj/item/food/grown/banana{desc = "shh... its a secret. 4 of 6."; name = "secret banana"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"uT" = (/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"vD" = (/obj/structure/fluff{desc = "A man-sized tube with various surgical equipment."; icon = 'icons/obj/abductor.dmi'; icon_state = "experiment-open"; name = "experimentation machine"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"vV" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"wd" = (/turf/closed/wall/mineral/abductor,/area/template_noop)
-"we" = (/obj/structure/bed/dogbed,/obj/structure/fluff{desc = "You're not sure if walking into this is a great idea..."; icon = 'icons/effects/eldritch.dmi'; icon_state = "pierced_illusion"; name = "fluxating rift"},/obj/effect/step_trigger/teleport_fancy{entersmoke = 1; entersparks = 1; locationx = 78; locationy = 113; uses = 0},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"wo" = (/obj/structure/table/optable/abductor,/obj/effect/light_emitter,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"wt" = (/obj/structure/table/abductor,/obj/item/hand_labeler{name = "Exhibit 4523Mn - Namer"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"ww" = (/obj/structure/table/abductor,/obj/effect/turf_decal/tile/purple/fourcorners,/obj/item/pen/invisible,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"wC" = (/mob/living/simple_animal/hostile/russian/ranged/trooper,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"wD" = (/obj/effect/turf_decal/siding/purple/corner{dir = 1},/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"wI" = (/obj/structure/table/abductor,/obj/item/oar{name = "Exhibit 4312mJ - Ore"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"wR" = (/obj/structure/table/abductor,/obj/effect/turf_decal/tile/purple/fourcorners,/obj/item/paper_bin/carbon,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"xj" = (/obj/structure/chair/office/tactical{dir = 8},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"xl" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"xD" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/carp/ranged/chaos,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"xF" = (/obj/structure/table/abductor,/obj/item/mmi/syndie{name = "Exhibit 5432sN - Angry Metal Maker"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"yq" = (/turf/closed/indestructible/fakeglass{icon = 'icons/obj/smooth_structures/rplasma_window.dmi'; icon_state = "rplasma_window-0"},/area/awaymission/caves/misc/ayylmao/holding_cell)
-"zb" = (/obj/structure/fluff{desc = "A tank filled with replacement organs. There appears to be some sort of lock on it."; icon = 'icons/obj/abductor.dmi'; icon_state = "dispenser"; name = "replacement organ storage"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"zA" = (/obj/effect/turf_decal/siding/purple/corner{dir = 8},/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"zI" = (/obj/effect/turf_decal/siding/purple{dir = 5},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"zJ" = (/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Ah" = (/obj/effect/turf_decal/siding/purple{dir = 9},/obj/structure/table/abductor,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Ai" = (/obj/effect/turf_decal/siding/purple,/obj/machinery/light/dim{bulb_colour = "#8142F5"},/obj/structure/sign/warning{desc = "A sign warning you about something particularly scary in this chamber."; name = "WARNING: Angry Marble Man"; pixel_y = -32},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"AE" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/ayylmao)
-"BP" = (/obj/machinery/door/poddoor{id = "exhibitstorage"},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"Cz" = (/obj/structure/fluff{desc = "A strange looking platform used to teleport (un)willing victims."; icon = 'icons/obj/abductor.dmi'; icon_state = "alien-pad-idle"; name = "alien teleport pad"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"CH" = (/obj/effect/turf_decal/siding/purple/end,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"CL" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Dc" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"DA" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/stock_parts/cell/infinite/abductor,/obj/item/wrench/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"DD" = (/obj/effect/turf_decal/siding/purple{dir = 8},/obj/machinery/button/door/directional/north{id = "exhibitstorage"; name = "Exhibit Exit Lockdown Toggle"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"DM" = (/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"DS" = (/obj/structure/railing/corner,/obj/structure/railing/corner{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"DX" = (/obj/effect/turf_decal/siding/purple{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Ea" = (/obj/effect/decal/cleanable/dirt,/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/crowbar/abductor,/obj/item/screwdriver/abductor,/obj/item/weldingtool/abductor,/obj/item/wirecutters/abductor,/obj/item/wrench/abductor,/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/ayylmao)
-"Ec" = (/obj/machinery/door/airlock/abductor,/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"EN" = (/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"EY" = (/obj/structure/table/abductor,/obj/structure/fluff{desc = "A highly detailed visualization of a space carp, projected outwards via hologram."; dir = 4; icon = 'icons/mob/carp.dmi'; icon_state = "holocarp"; name = "hologram of a space carp"},/obj/effect/turf_decal/siding/purple,/obj/machinery/light/dim{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"EZ" = (/obj/machinery/door/airlock/abductor,/obj/effect/turf_decal/siding/purple{dir = 1},/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Fg" = (/obj/structure/table/abductor,/obj/item/toy/plush/awakenedplushie,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Fx" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Fy" = (/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Ga" = (/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao)
-"Gh" = (/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"Gj" = (/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Gn" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/netherworld/statue,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"GG" = (/obj/structure/toilet{dir = 4; name = "Exhibit 4524Aj - ToyLet"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"GH" = (/obj/effect/turf_decal/delivery/white,/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao)
-"GZ" = (/obj/machinery/door/firedoor,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"He" = (/obj/structure/table/abductor,/obj/structure/fluff{desc = "A highly detailed visualization of a space carp, projected outwards via hologram."; icon = 'icons/mob/carp.dmi'; icon_state = "holocarp"; name = "hologram of a space carp"},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Ht" = (/obj/structure/table/abductor,/obj/item/gun/ballistic/automatic/pistol/deagle/gold{name = "Exhibit 4523hJ - Dessert Beagle"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"HN" = (/obj/effect/turf_decal/siding/purple{dir = 5},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"If" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Ih" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/purple/corner{dir = 8},/obj/effect/turf_decal/siding/purple/corner{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"IW" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Jm" = (/obj/modular_map_root/caves{key = "caves_lvl3segment3"; name = "lvl3segment3"},/turf/template_noop,/area/template_noop)
-"Jo" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/wirecutters/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"JA" = (/obj/machinery/door/poddoor{id = "exhibitstorage"},/obj/effect/turf_decal/siding/purple{dir = 1},/obj/effect/turf_decal/siding/purple,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"JT" = (/obj/effect/turf_decal/siding/purple/corner,/obj/effect/turf_decal/siding/purple/corner{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"JW" = (/obj/structure/table/abductor,/obj/structure/cursed_slot_machine{name = "Exhibit 0985Je - Chat Reactor"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"JY" = (/obj/structure/bed/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"Kj" = (/obj/effect/turf_decal/siding/purple,/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"KN" = (/mob/living/simple_animal/hostile/pirate/melee,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"KY" = (/obj/structure/table/abductor,/obj/item/hand_labeler_refill{name = "Exhibit 4562kM - Namer Names"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"KZ" = (/obj/machinery/light/small/directional/south{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"LB" = (/obj/machinery/light/small/directional/north{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"LD" = (/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/turf_decal/siding/purple/corner{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"LJ" = (/obj/structure/table/abductor,/obj/effect/turf_decal/siding/purple{dir = 5},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"LL" = (/obj/structure/bed/pod{dir = 8},/obj/item/bedsheet/cosmos,/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"LS" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/tree,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"LW" = (/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"Md" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/power/apc/auto_name/directional/west{areastring = /area/awaymission/caves/misc/ayylmao/holding_cell},/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"Me" = (/obj/effect/turf_decal/siding/purple,/obj/effect/decal/cleanable/dirt,/obj/machinery/light/dim{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Mn" = (/turf/closed/wall/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"MG" = (/obj/structure/window/reinforced/plasma/fulltile{max_integrity = 10000},/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao/office)
-"MP" = (/obj/effect/turf_decal/siding/purple/corner,/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"Nd" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/purple{dir = 6},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Nf" = (/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Ng" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/north,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"Nm" = (/obj/machinery/power/rtg/abductor,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"Nw" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/purple{dir = 5},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"NA" = (/obj/structure/table/abductor,/obj/item/mop/advanced{name = "Exhibit 4999Mp - Fluff Steck"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"NH" = (/obj/structure/chair/office/tactical,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"NP" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Ol" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Oq" = (/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Oy" = (/obj/structure/table/abductor,/obj/item/melee/skateboard/hoverboard{name = "Exhibit 0003aF - Marty"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"OT" = (/obj/structure/table/abductor,/obj/effect/turf_decal/siding/purple{dir = 10},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"OV" = (/obj/structure/table/abductor,/obj/item/retractor/alien,/obj/item/hemostat/alien,/obj/item/surgicaldrill/alien,/obj/item/cautery/alien,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"Pb" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 1},/obj/effect/turf_decal/siding/purple{dir = 9},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"PF" = (/obj/effect/turf_decal/siding/purple{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"PI" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/giant_spider/hunter,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"PL" = (/obj/effect/turf_decal/siding/purple{dir = 9},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"PY" = (/obj/structure/toilet{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"PZ" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/door/airlock/abductor,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"Qa" = (/obj/effect/decal/cleanable/dirt,/obj/structure/tank_dispenser/oxygen{oxygentanks = 3},/turf/open/floor/iron/smooth,/area/awaymission/caves/misc/ayylmao)
-"Qv" = (/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 8},/obj/effect/turf_decal/siding/purple{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"QC" = (/obj/effect/turf_decal/siding/purple{dir = 8},/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"QH" = (/obj/machinery/light/small/directional/east{bulb_colour = "#8142F5"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"QI" = (/obj/structure/railing{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"QX" = (/obj/effect/turf_decal/siding/purple/corner{dir = 1},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"RC" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"RH" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/siding/purple{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"RM" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/gorilla,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"RR" = (/obj/structure/table/abductor,/obj/structure/chess/whiteknight{name = "Exhibit 1223fG - Marble Neigh"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Sa" = (/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao)
-"SM" = (/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Th" = (/obj/effect/turf_decal/siding/purple/corner{dir = 1},/obj/effect/turf_decal/siding/purple/corner{dir = 8},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Tv" = (/obj/structure/bed/pod,/obj/item/bedsheet/cosmos,/obj/structure/sign/poster/contraband/space_cube{pixel_x = 32},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Tz" = (/obj/effect/turf_decal/siding/purple/corner{dir = 4},/obj/effect/turf_decal/siding/purple/corner,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"TB" = (/obj/effect/spawner/structure/window/plasma,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao)
-"Uo" = (/turf/closed/indestructible/riveted{base_icon_state = "alienvault"; icon = 'icons/turf/walls.dmi'; icon_state = "alienvault"},/area/awaymission/caves/misc/ayylmao)
-"Ut" = (/obj/machinery/holopad,/obj/item/disk/holodisk{name = "placeholder disk"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"UC" = (/obj/structure/bed/abductor,/obj/item/bedsheet/purple,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"UK" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/machinery/light/dim{bulb_colour = "#8142F5"; dir = 1},/obj/machinery/camera/autoname/directional/north{network = list("ayylmao")},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"UU" = (/obj/effect/turf_decal/siding/purple{dir = 6},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Ve" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/asteroid/goldgrub,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"Vl" = (/obj/structure/table/abductor,/obj/effect/turf_decal/siding/purple,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Vp" = (/obj/effect/turf_decal/siding/purple{dir = 4},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"VK" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/ayylmao)
-"VP" = (/obj/structure/table/abductor,/obj/item/hemostat/alien,/obj/item/retractor/alien,/obj/item/circular_saw/alien,/obj/item/scalpel/alien,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"VX" = (/obj/structure/fluff/iced_abductor{name = "Jerry"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/holding_cell)
-"Wa" = (/obj/effect/turf_decal/siding/purple,/obj/structure/sign/warning{desc = "A sign warning you about something particularly scary in this chamber."; name = "WARNING: Angry Marble Man"; pixel_y = -32},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"WX" = (/obj/structure/table/abductor,/obj/item/spear/grey_tide{name = "Exhibit 2234As - Gray Sea"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Xe" = (/obj/effect/turf_decal/siding/purple{dir = 6},/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Xt" = (/obj/effect/spawner/structure/window/plasma,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao/office)
-"YD" = (/obj/structure/table/abductor,/obj/item/gun/magic/wand/resurrection{charges = 1; max_charges = 1; name = "Exhibit 452Jf - Heelies Stick"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"YO" = (/obj/structure/table/abductor,/obj/item/ship_in_a_bottle{name = "Exhibit 5674bO - Lava Log"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"YW" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 1},/obj/structure/railing,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"YZ" = (/obj/effect/turf_decal/siding/purple{dir = 1},/obj/machinery/camera/autoname/directional/north{network = list("ayylmao")},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Zm" = (/obj/effect/turf_decal/siding/purple{dir = 10},/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"Zp" = (/obj/structure/table/abductor,/obj/item/wheelchair/gold{name = "Exhibit 9900Wh - AuChair"},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao/office)
-"Zu" = (/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/delivery/white,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao)
-"Zz" = (/obj/machinery/door/poddoor{id = "exhibitstorage"; name = "Exhibit Exit Lockdown"},/obj/effect/turf_decal/siding/purple{dir = 4},/obj/effect/turf_decal/siding/purple{dir = 8},/obj/effect/turf_decal/delivery/white,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/awaymission/caves/misc/ayylmao)
-"ZB" = (/obj/structure/bed/pod{dir = 4},/obj/item/bedsheet/cosmos{dir = 4},/obj/effect/turf_decal/tile/purple/fourcorners,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"ZN" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/awaymission/caves/misc/ayylmao)
-"ZO" = (/obj/effect/turf_decal/siding/purple,/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"ZT" = (/obj/effect/turf_decal/siding/purple{dir = 9},/turf/open/floor/vault/alien,/area/awaymission/caves/misc/ayylmao)
-"ZZ" = (/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"ax" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aA" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/lightgeist,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"aI" = (
+/obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aN" = (
+/turf/closed/indestructible/rock,
+/area/template_noop)
+"aR" = (
+/turf/template_noop,
+/area/template_noop)
+"aT" = (
+/turf/open/chasm/lavaland,
+/area/template_noop)
+"ba" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"bi" = (
+/obj/machinery/door/airlock/abductor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"bw" = (
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"bz" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/asteroid/elite/herald,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"bR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/abductor,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/ayylmao)
+"bT" = (
+/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"cn" = (
+/obj/machinery/door/poddoor{
+	id = "exhibitstorage"
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"cp" = (
+/obj/machinery/door/poddoor{
+	id = "exhibitstorage"
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"cC" = (
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"cD" = (
+/obj/machinery/door/airlock/abductor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"cL" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/faithless,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"cN" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/structure/table/abductor,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"da" = (
+/obj/effect/spawner/structure/window/plasma,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"db" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"dj" = (
+/obj/machinery/door/airlock/abductor,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"dz" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"dN" = (
+/obj/machinery/door/airlock/abductor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"ed" = (
+/obj/structure/closet{
+	icon_state = "abductor";
+	name = "alien closet"
+	},
+/obj/item/multitool/abductor,
+/obj/item/screwdriver/abductor,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"ef" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"ei" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/bear/russian,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"ek" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"el" = (
+/obj/structure/table/optable/abductor,
+/obj/effect/light_emitter,
+/obj/item/keycard/hilbert{
+	desc = "A keycard with a strange symbol embedded in the center.";
+	name = "strange keycard";
+	puzzle_id = "number1victoryroyale"
+	},
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"eC" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 10
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"eF" = (
+/obj/structure/closet{
+	icon_state = "abductor";
+	name = "alien closet"
+	},
+/obj/item/clothing/under/abductor,
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/head/helmet/abductor,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/light/small/directional/north{
+	bulb_colour = "#8142F5"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"eS" = (
+/obj/structure/chair/stool/bar/directional/north,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"fA" = (
+/obj/machinery/door/puzzle/keycard{
+	open_message = "The door hums ominously and slides open.";
+	puzzle_id = "number1victoryroyale"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"gm" = (
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"gt" = (
+/obj/structure/chair/office/tactical,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"gu" = (
+/obj/structure/table/abductor,
+/obj/singularity/academy{
+	name = "Exhibit 0000Sl - BIG SUCK"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"gv" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"gz" = (
+/obj/structure/table/abductor,
+/obj/item/veilrender/vealrender{
+	name = "Exhibit 5634Mo - BeefKnife"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"gE" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"gQ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"hc" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"hr" = (
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"hG" = (
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"hK" = (
+/obj/structure/table/abductor,
+/obj/machinery/recharger,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"hQ" = (
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5"
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 10
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"hY" = (
+/obj/structure/table/abductor,
+/obj/item/melee/baseball_bat{
+	name = "Exhibit 5321nL - Knee Hittur"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"ie" = (
+/turf/closed/wall/mineral/abductor,
+/area/awaymission/caves/misc/ayylmao/office)
+"io" = (
+/turf/closed/indestructible/riveted{
+	base_icon_state = "alienvault";
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "alienvault"
+	},
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"iq" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"ir" = (
+/mob/living/simple_animal/hostile/ashwalker{
+	name = "Cannot-Be-Contained"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"iu" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"iw" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"iI" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"jl" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 10
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"jJ" = (
+/obj/structure/closet{
+	icon_state = "abductor";
+	name = "alien closet"
+	},
+/obj/item/clothing/under/abductor,
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/head/helmet/abductor,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"jV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/stack/cable_coil,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/ayylmao)
+"jX" = (
+/obj/structure/statue/bananium/clown{
+	name = "Exhibit 5635jG - Hunk"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"kz" = (
+/turf/closed/indestructible/riveted{
+	base_icon_state = "alienvault";
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "alienvault"
+	},
+/area/template_noop)
+"kM" = (
+/obj/structure/table/abductor,
+/obj/structure/fluff{
+	desc = "A highly detailed visualization of a space carp, projected outwards via hologram.";
+	dir = 8;
+	icon = 'icons/mob/carp.dmi';
+	icon_state = "holocarp";
+	name = "hologram of a space carp"
+	},
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"la" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/cosmos,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"lN" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5";
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"lO" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"lR" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor{
+	id = "exhibitstorage";
+	name = "Exhibit Exit Lockdown"
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao)
+"mb" = (
+/obj/machinery/light/small/directional/north{
+	bulb_colour = "#8142F5"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"mh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/ayylmao)
+"mz" = (
+/obj/structure/chair/office/tactical{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"mE" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple/corner,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"nw" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"oh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/abductor,
+/obj/machinery/cell_charger,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/ayylmao)
+"oi" = (
+/obj/machinery/door/airlock/abductor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"ow" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"oy" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/lizard,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"oT" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"oW" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"oY" = (
+/obj/machinery/light/small/directional/west{
+	bulb_colour = "#8142F5"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"pl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/abductor,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"ps" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"pN" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"pT" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"pY" = (
+/obj/structure/flora/ash/tall_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"qk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/rouny,
+/obj/machinery/light/small/directional/north{
+	bulb_colour = "#8142F5"
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/ayylmao)
+"qo" = (
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5";
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"qt" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"qw" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5";
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"qx" = (
+/obj/structure/table/abductor,
+/obj/item/storage/box/alienhandcuffs,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"qJ" = (
+/obj/structure/chair/office/tactical{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"rG" = (
+/obj/structure/fluff{
+	desc = "A futuristic looking console. The lock screen is written in a strange font.";
+	icon = 'icons/obj/abductor.dmi';
+	icon_state = "console";
+	name = "console"
+	},
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"rX" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"su" = (
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5";
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"sA" = (
+/turf/closed/wall/mineral/abductor,
+/area/awaymission/caves/misc/ayylmao)
+"sC" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"sD" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"sF" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"sM" = (
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5";
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"sO" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/machinery/computer/security{
+	name = "exhibit camera console";
+	network = list("ayylmao")
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"sS" = (
+/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,
+/area/awaymission/caves/misc/ayylmao)
+"tn" = (
+/obj/structure/table/abductor,
+/obj/item/plunger{
+	name = "Exhibit 9456pL - Suckler"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"tw" = (
+/obj/structure/falsewall/abductor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"tN" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"ut" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/structure/table/abductor,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"uu" = (
+/obj/structure/closet{
+	icon_state = "abductor";
+	name = "alien closet"
+	},
+/obj/item/clothing/head/helmet/abductor,
+/obj/item/crowbar/abductor,
+/obj/item/clothing/under/abductor,
+/obj/item/clothing/suit/armor/abductor/vest,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"uJ" = (
+/obj/item/food/grown/banana{
+	desc = "shh... its a secret. 4 of 6.";
+	name = "secret banana"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"uT" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"vD" = (
+/obj/structure/fluff{
+	desc = "A man-sized tube with various surgical equipment.";
+	icon = 'icons/obj/abductor.dmi';
+	icon_state = "experiment-open";
+	name = "experimentation machine"
+	},
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"vV" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"wd" = (
+/turf/closed/wall/mineral/abductor,
+/area/template_noop)
+"we" = (
+/obj/structure/bed/dogbed,
+/obj/structure/fluff{
+	desc = "You're not sure if walking into this is a great idea...";
+	icon = 'icons/effects/eldritch.dmi';
+	icon_state = "pierced_illusion";
+	name = "fluxating rift"
+	},
+/obj/effect/step_trigger/teleport_fancy{
+	entersmoke = 1;
+	entersparks = 1;
+	locationx = 78;
+	locationy = 113;
+	uses = 0
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"wo" = (
+/obj/structure/table/optable/abductor,
+/obj/effect/light_emitter,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"wt" = (
+/obj/structure/table/abductor,
+/obj/item/hand_labeler{
+	name = "Exhibit 4523Mn - Namer"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"ww" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/item/pen/invisible,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"wC" = (
+/mob/living/simple_animal/hostile/russian/ranged/trooper,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"wD" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"wI" = (
+/obj/structure/table/abductor,
+/obj/item/oar{
+	name = "Exhibit 4312mJ - Ore"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"wR" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/item/paper_bin/carbon,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"xj" = (
+/obj/structure/chair/office/tactical{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"xl" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"xD" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/carp/ranged/chaos,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"xF" = (
+/obj/structure/table/abductor,
+/obj/item/mmi/syndie{
+	name = "Exhibit 5432sN - Angry Metal Maker"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"yq" = (
+/turf/closed/indestructible/fakeglass{
+	icon = 'icons/obj/smooth_structures/rplasma_window.dmi';
+	icon_state = "rplasma_window-0"
+	},
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"zb" = (
+/obj/structure/fluff{
+	desc = "A tank filled with replacement organs. There appears to be some sort of lock on it.";
+	icon = 'icons/obj/abductor.dmi';
+	icon_state = "dispenser";
+	name = "replacement organ storage"
+	},
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"zA" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple/corner,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"zI" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"zJ" = (
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Ah" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/obj/structure/table/abductor,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Ai" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5"
+	},
+/obj/structure/sign/warning{
+	desc = "A sign warning you about something particularly scary in this chamber.";
+	name = "WARNING: Angry Marble Man";
+	pixel_y = -32
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"AE" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/ayylmao)
+"BP" = (
+/obj/machinery/door/poddoor{
+	id = "exhibitstorage"
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"Cz" = (
+/obj/structure/fluff{
+	desc = "A strange looking platform used to teleport (un)willing victims.";
+	icon = 'icons/obj/abductor.dmi';
+	icon_state = "alien-pad-idle";
+	name = "alien teleport pad"
+	},
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"CH" = (
+/obj/effect/turf_decal/siding/purple/end,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"CL" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Dc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"DA" = (
+/obj/structure/closet{
+	icon_state = "abductor";
+	name = "alien closet"
+	},
+/obj/item/stock_parts/cell/infinite/abductor,
+/obj/item/wrench/abductor,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"DD" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/north{
+	id = "exhibitstorage";
+	name = "Exhibit Exit Lockdown Toggle"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"DM" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"DS" = (
+/obj/structure/railing/corner,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"DX" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Ea" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet{
+	icon_state = "abductor";
+	name = "alien closet"
+	},
+/obj/item/crowbar/abductor,
+/obj/item/screwdriver/abductor,
+/obj/item/weldingtool/abductor,
+/obj/item/wirecutters/abductor,
+/obj/item/wrench/abductor,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/ayylmao)
+"Ec" = (
+/obj/machinery/door/airlock/abductor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"EN" = (
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"EY" = (
+/obj/structure/table/abductor,
+/obj/structure/fluff{
+	desc = "A highly detailed visualization of a space carp, projected outwards via hologram.";
+	dir = 4;
+	icon = 'icons/mob/carp.dmi';
+	icon_state = "holocarp";
+	name = "hologram of a space carp"
+	},
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"EZ" = (
+/obj/machinery/door/airlock/abductor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Fg" = (
+/obj/structure/table/abductor,
+/obj/item/toy/plush/awakenedplushie,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Fx" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple/corner,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Fy" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Ga" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "exhibitstorage"
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao)
+"Gh" = (
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"Gj" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Gn" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/netherworld/statue,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"GG" = (
+/obj/structure/toilet{
+	dir = 4;
+	name = "Exhibit 4524Aj - ToyLet"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"GH" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/poddoor/preopen{
+	id = "exhibitstorage"
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao)
+"GZ" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"He" = (
+/obj/structure/table/abductor,
+/obj/structure/fluff{
+	desc = "A highly detailed visualization of a space carp, projected outwards via hologram.";
+	icon = 'icons/mob/carp.dmi';
+	icon_state = "holocarp";
+	name = "hologram of a space carp"
+	},
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Ht" = (
+/obj/structure/table/abductor,
+/obj/item/gun/ballistic/automatic/pistol/deagle/gold{
+	name = "Exhibit 4523hJ - Dessert Beagle"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"HN" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"If" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Ih" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"IW" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5";
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Jm" = (
+/obj/modular_map_root/caves{
+	key = "caves_lvl3segment3";
+	name = "lvl3segment3"
+	},
+/turf/template_noop,
+/area/template_noop)
+"Jo" = (
+/obj/structure/closet{
+	icon_state = "abductor";
+	name = "alien closet"
+	},
+/obj/item/wirecutters/abductor,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"JA" = (
+/obj/machinery/door/poddoor{
+	id = "exhibitstorage"
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"JT" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"JW" = (
+/obj/structure/table/abductor,
+/obj/structure/cursed_slot_machine{
+	name = "Exhibit 0985Je - Chat Reactor"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"JY" = (
+/obj/structure/bed/abductor,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"Kj" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"KN" = (
+/mob/living/simple_animal/hostile/pirate/melee,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"KY" = (
+/obj/structure/table/abductor,
+/obj/item/hand_labeler_refill{
+	name = "Exhibit 4562kM - Namer Names"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"KZ" = (
+/obj/machinery/light/small/directional/south{
+	bulb_colour = "#8142F5"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"LB" = (
+/obj/machinery/light/small/directional/north{
+	bulb_colour = "#8142F5"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"LD" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"LJ" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"LL" = (
+/obj/structure/bed/pod{
+	dir = 8
+	},
+/obj/item/bedsheet/cosmos,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"LS" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/tree,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"LW" = (
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"Md" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/west{
+	areastring = /area/awaymission/caves/misc/ayylmao/holding_cell
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"Me" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Mn" = (
+/turf/closed/wall/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"MG" = (
+/obj/structure/window/reinforced/plasma/fulltile{
+	max_integrity = 10000
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao/office)
+"MP" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"Nd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Nf" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Ng" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"Nm" = (
+/obj/machinery/power/rtg/abductor,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"Nw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"NA" = (
+/obj/structure/table/abductor,
+/obj/item/mop/advanced{
+	name = "Exhibit 4999Mp - Fluff Steck"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"NH" = (
+/obj/structure/chair/office/tactical,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"NP" = (
+/obj/structure/flora/ash/cacti,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Ol" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple/corner,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Oq" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Oy" = (
+/obj/structure/table/abductor,
+/obj/item/melee/skateboard/hoverboard{
+	name = "Exhibit 0003aF - Marty"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"OT" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 10
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"OV" = (
+/obj/structure/table/abductor,
+/obj/item/retractor/alien,
+/obj/item/hemostat/alien,
+/obj/item/surgicaldrill/alien,
+/obj/item/cautery/alien,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"Pb" = (
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"PF" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"PI" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/giant_spider/hunter,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"PL" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"PY" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"PZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/abductor,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"Qa" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/tank_dispenser/oxygen{
+	oxygentanks = 3
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/ayylmao)
+"Qv" = (
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5";
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"QC" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5";
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"QH" = (
+/obj/machinery/light/small/directional/east{
+	bulb_colour = "#8142F5"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"QI" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"QX" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"RC" = (
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"RH" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"RM" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/gorilla,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"RR" = (
+/obj/structure/table/abductor,
+/obj/structure/chess/whiteknight{
+	name = "Exhibit 1223fG - Marble Neigh"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Sa" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "exhibitstorage"
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao)
+"SM" = (
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Th" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Tv" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/cosmos,
+/obj/structure/sign/poster/contraband/space_cube{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Tz" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple/corner,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"TB" = (
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao)
+"Uo" = (
+/turf/closed/indestructible/riveted{
+	base_icon_state = "alienvault";
+	icon = 'icons/turf/walls.dmi';
+	icon_state = "alienvault"
+	},
+/area/awaymission/caves/misc/ayylmao)
+"Ut" = (
+/obj/machinery/holopad,
+/obj/item/disk/holodisk{
+	name = "placeholder disk"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"UC" = (
+/obj/structure/bed/abductor,
+/obj/item/bedsheet/purple,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"UK" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5";
+	dir = 1
+	},
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ayylmao")
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"UU" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Ve" = (
+/obj/structure/bed/dogbed,
+/mob/living/simple_animal/hostile/asteroid/goldgrub,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"Vl" = (
+/obj/structure/table/abductor,
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Vp" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"VK" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
+"VP" = (
+/obj/structure/table/abductor,
+/obj/item/hemostat/alien,
+/obj/item/retractor/alien,
+/obj/item/circular_saw/alien,
+/obj/item/scalpel/alien,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"VX" = (
+/obj/structure/fluff/iced_abductor{
+	name = "Jerry"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/holding_cell)
+"Wa" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/structure/sign/warning{
+	desc = "A sign warning you about something particularly scary in this chamber.";
+	name = "WARNING: Angry Marble Man";
+	pixel_y = -32
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"WX" = (
+/obj/structure/table/abductor,
+/obj/item/spear/grey_tide{
+	name = "Exhibit 2234As - Gray Sea"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Xe" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Xt" = (
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao/office)
+"YD" = (
+/obj/structure/table/abductor,
+/obj/item/gun/magic/wand/resurrection{
+	charges = 1;
+	max_charges = 1;
+	name = "Exhibit 452Jf - Heelies Stick"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"YO" = (
+/obj/structure/table/abductor,
+/obj/item/ship_in_a_bottle{
+	name = "Exhibit 5674bO - Lava Log"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"YW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"YZ" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ayylmao")
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Zm" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Zp" = (
+/obj/structure/table/abductor,
+/obj/item/wheelchair/gold{
+	name = "Exhibit 9900Wh - AuChair"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Zu" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "exhibitstorage"
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao)
+"Zz" = (
+/obj/machinery/door/poddoor{
+	id = "exhibitstorage";
+	name = "Exhibit Exit Lockdown"
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao)
+"ZB" = (
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/cosmos{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"ZN" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/awaymission/caves/misc/ayylmao)
+"ZO" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"ZT" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"ZZ" = (
+/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,
+/area/template_noop)
 
 (1,1,1) = {"
-aNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaxaxaIaxaxaxaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaN
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaaaaaaakzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxoToTaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaaaieieieieieieaaieieieieieieaaaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaMnMnMnUoUoaaaaaaaaaaaaaaaaaTaaaaaaaaaaaxaxoTCLoTaaaaaaaaaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaaaieYOieieguieaaieRRieieWXieaaaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaMnMnZTDXzIUoUoaaaaaaaaaaaaaTaTaaaaaaaaaxaxaxaxoToTaaaaaaaaaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaaaieXtieieXtieieieXtieieXtieaaaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZMnMnMnqopTENdbzIUoUoUoUoaaoTQIaTaTaTaaaaaaaxaxaaaxaxaxaxaxaxaxaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaieiePLIWPFFxgvgvgvIfPFIWHNieieaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZMnjXbwefENENENpNMnPbNwUoNPaxDSYWYWYWoToToTaxaxaapYaxpYpYpYaxoTaxaxaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaieieiePLQXzJFyUUgtgtgtjlNfzJsCHNieieieaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZMnMnMnefENUtENmEEZIhOlfAaxaxQIaTaTaTaaCLaaaaaaaaaxaxaaaaaaoTCLoTaxaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaieZpXtGjzJzJsDiqiqHeiqiqGjzJzJsDXtxFieaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZMnGGbwefENENENpNMnhQNdUooTNPaaaTaTaTaaaaaaaaaxpYaxaxaaaaaaaaaaoTaxaxaaaaaaZZZZZZZZZZZZZZZZZZZZZZaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaieieiejlNfzJsDSMqJiqxjSMGjzJFyUUieieieaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZMnMnMneCtNENuTsuUoUoUoUoaaaaaaaaaTaaaaZZZZZZZZZZZZZZZZZZZZZZaaoTaxaxaxaaaaZZZZZZZZZZZZZZZZZZZZZZaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaieieieGjzJsCHNSMSMSMPLQXzJsDieieieaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaMnMnGHGHGHUoUoaaaaaaaaaaaaaaaTaTaaZZZZZZZZZZZZZZZZZZZZZZaaaxaxaxaxaaaaZZZZZZZZZZZZZZZZZZZZZZaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaieJWXtGjNHzJsCPFPFPFQXzJNHsDXtYDieaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaMnMndNMnUoaaaaaaZZZZZZaaaTaTaTaaZZZZZZZZZZZZZZZZZZZZZZaaaaaaaxaxaaaaZZZZZZZZZZZZZZZZZZZZZZaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaieieieOTEYVlgmgmbagmgmVlkMhcieieieaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaMnMnMnZTiuzIUoUoUoaaZZZZZZaaaaaTaTaaaaaaZZZZZZZZZZZZZZZZZZaaaaaaaxaxaaaaaaaaaaaxaxRCRCaaaaaaaaaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaaaioioioioioMGoiMGioioioioioaaaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaMnHtTBefENpNTBOyUoaaZZZZZZaaaTaTaTaaaaaaZZZZZZZZZZZZZZZZZZaaaxaxaxoTCLaaaaaaaxaxaxaxRCRCaxaaaaaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaaaaaaaaaaaaaaaaaaaaaioGhGhVpyqZTsFzIyqiwGhGhioaaZZZZZZaaaaaaaaaaaaaaaaaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZaaMnMnMnefENsMUoUoUoaaZZZZZZaaaTaTaTaTaaaaZZZZZZZZZZZZZZZZZZaaaaaxaxaxoTaaaaaxaxaxaxaxaxaxaxaaaaaa
-aaZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaMnMnMnMnMnMnaaaaaaaaaaiooYaATzJAThENJTJAwDoyQHioaaZZZZZZaaMnMnMnMnMnMnaaaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaMnefENpNUoaaaaaaZZZZZZaTaTaTaTaTaaaaZZZZZZZZZZZZZZZZZZaaaaaxaxaxoTaxwdwdwdwdwdaxaxaxaxaaaaaa
-aaZZMngQMnMngQsSZZZZZZZZZZZZZZZZZZZZZZZZaaaaMneFwRFgeFMnaaaaaaaaaaioGhGhVpyqefENpNyqiwGhGhioaaZZZZZZaaMneFwRwweFMnaaaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZaaMnMnMnQvENpNUoUoUoaaZZZZZZaaaTaTaTaTaTaTZZZZZZZZZZZZZZZZZZaaaaoTaxaxaxwdwdzbVPJYwdwdaxaxaxaaaaaa
-aaZZMnVKVKmbuJgQZZZZZZZZZZZZZZZZZZZZZZZZaaMnMnZTDXDXzIMnMnaaaaaaaaioioioioioefENpNioioioioioaaZZZZaaMnMnZTDXDXzIMnMnaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZaaMnwtTBefENpNTBKYUoaaZZZZZZaaaTaTaTaTaaaaZZZZZZZZZZZZZZZZZZaaaaaaoTaxaxwdCzLWLWLWuuwdaxaxaxoTaaaa
-aaZZMnVKMnMnMnsSZZZZZZZZZZZZZZZZZZZZZZZZaaMnZBefENENpNTvMnaaaaaaaaaaaaaaaaMnefENpNMnaaaaaaaaaaZZZZaaMnZBefENENpNlaMnaaaaaaZZZZZZZZZZZZZZZZZZZZZZZZZZaaMnMnMnefENsMUoUoUoaaZZZZZZaaaaaTaTaaaaaaZZZZZZZZZZZZZZZZZZaaaaaaoTaxaxwdrGLWwoLWqxwdaxaxoTCLaaaa
-aaZZMnVKMnZZZZZZZZZZZZZZZZZZZZZZZZZZaaaaaaMnZBeCtNuTlOLLMnaaaaaaaaaaaaaaaaMnQCENlNMnaaaaaaaaaaaaaaaaMnZBeCtNuTlOlaMnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaMnefENpNUoaaaaaaZZZZZZaaaaaTaTaaaaaaZZZZZZZZZZZZZZZZZZaaaaaaoTaxaxwdvDLWLWLWJowdaxaxaxoToTaa
-aaZZsSVKgQZZZZZZZZZZZZZZZZZZZZZZZZZZaaioioioioioefpNioioioioioaaaaioioioioioefENpNioioioioioaaaaioioioioioefpNioioioioioaaaaioioioioioaaaaioioioioioaaMnMnMnQvENpNUoUoUoaaZZZZZZaaaaaTaTaTaaaaaaZZZZZZZZZZZZZZZZaaaaaaaxaxaxwdwdLWLWhKwdwdoTaxaxoTaxaa
-aasSgQVKMnZZZZZZZZZZZZZZZZZZZZZZZZZZaaioUCLBowioefpNioGhLBGhioaaaaioUCLBowioefENpNioGhLBGhioaaaaioGhLBGhioefpNioGhLBGhioaaaaioGhLBGhioaaaaioUCLBowioaaMnNATBefENpNTBhYUoaaZZZZZZaaaaaaaTaTaaaaaaZZZZZZZZZZZZZZZZaaaaaaaaaxaxaxwdwddjwdwdaxoToTaxaxaxaa
-aaZNVKVKMnaaaaaaaaaaMnMnMnaaMnMnMnaaaaiohGVXGhioefpNioGhbzGhioaaaaiohGwCGhioefENpNioGhLSGhioaaaaioGhxDGhioefpNioGheiGhioaaaaioGhRMGhioaaaaiohGirGhioaaMnMnMneCdzlOUoUoUoaaZZZZZZaaaaaaaTaTaaaaaaaaZZZZZZZZZZZZZZaaaaaaCLoToTaxaxaxaxaxaxaxCLoTaxaxaxaa
-aasSVKgQMnaaaaaaaaaaMntnMnaaMnwIMnaaaaioutMPcCioEccDiocCMPcCioaaaaioutMPcCioefENpNiocCMPcCioaaaaiocCMPcCioEccDiocCMPcCioaaaaiocCMPcCioaaaaioutMPcCioaaaaaaMnMndNMnUoaaaaaaZZZZZZaaaaaaaTaTaTaaaaaaZZZZZZZZZZZZZZaaaaaaoTaxaxaxaxaxaxaxaxaxoToTaxaxaxaa
-aaMnVKMnsAsAsAsAsAMnMnTBMnMnMnTBMnMnMnioyqcnyqioqtRHioyqcnyqioMnMnioyqcnyqioqtGZRHioyqcnyqioMnMnioyqcnyqioqtRHioyqcnyqioMnMnioyqcnyqioMnMnioyqcnyqioMnMnMnMnZTsFzIUoaaZZZZZZZZZZaaaaaTaTaTaTaTaTaTZZZZZZZZZZZZZZaaaxaTaTaTaTaTaTaxaxaxaxaxaxaxaxaxaxaa
-aaMnVKsSsAAhsOLJsAZTDXDXqwDXDXDXDXDXDXqwDXsFDXYZpTdbqwDXsFDXDXDXYZqwDXsFDXrXpTENdbrXDXsFDXUKDXDXDXDXsFDXqwpTdbYZDXsFDXqwDXDXDXDXsFDXUKDXDXDXDXsFDXqwYZDXDXDXpTENpNUoaaZZZZZZZZZZaaaaaaaTaTaTaaaaaaZZZZZZZZZZZZZZaaaTaTaTaTaTaTaTaTaxaxaxwdwdwdwdwdaxaa
-aasSVKsSsADDmzpNTBefENENENENENENENENENENENENENENENENENENENENENENENENENENENGZENENENGZENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENpNUoaaZZZZZZZZZZaaaaaaaaaTaTaaaaaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxwdwdvDLWCzwdwdaa
-aaMnVKgQsAQCENmEEZThENENENENENENENENENENENENENENENENENENENENENENENENENENENGZENENENGZENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENENgQpNUoaaZZZZZZZZaaaaaaaaaaaTaTaTaaaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxwdLWLWLWLWzbwdaa
-aasSVKVKtwekhrDMTBefENuThrhrhrhrnwhrhrhrhrzAhrnwhrhrWatNENuTAihrhrhrhrzAhrvVtNENuTvVhrzAhrhrhrhrnwhrzAhrhrhrhrnwhrzAhrhrhrhrnwhrzAhrhrhrhrnwhrzAhrhrhrhrhrnwZOgQXeUoaaZZZZZZZZaaaaaaaaaaaTaTaTaaaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxdjLWLWelLWOVwdaa
-aasSsSMnsACHjJCHsAQCENlNMnMnMnMnMnMnMnioyqcpyqioMnMnioBPBPBPioMnMnioyqcpyqioeChrlOioyqcpyqioMnMnioyqcpyqioMnMnioyqcpyqioMnMnioyqcpyqioMnMnioyqcpyqioMnMnMnMnMnbiUoUoaaZZZZZZZZaaaaaaaaaaaTaTaTaaaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxwdhKLWLWLWJYwdaa
-aaZZZZZZsAsAsAsAsAqtGZRHMnaaaaaaaaaaaaioiILDcNioaaaaioGhGhGhioaaaaioiILDiIioMnTBMniocNLDiIioaaaaioiILDiIioaaaaioiILDiIioaaaaioiILDiIioaaaaioiILDiIioVKVKVKVKVKVKUoaaaaZZZZZZZZaaaTaTaTaTaTaTaTaTaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxwdwdDAqxedwdwdaa
-aaaaaaZZZZZZaaUoUoZuGaSaUoUoaaaaaaaaaaioGhbTeSioaaaaioGhGnGhioaaaaioGhVeGhioMngzMnioeSKNGhioaaaaioGhPIGhioaaaaioGhxlGhioaaaaioGhweGhioaaaaioGhcLGhioVKMnMnMnPZMnUoUoUoUoZZZZZZaaaaaaaaaaaTaTaTaTaaZZZZZZZZZZZZZZaTaTaTaTaTaTaTaTaTaTaxaxwdwdwdwdwdaxaa
-aaZZZZZZZZZZaaUoZTpTgQdbzIUoaaaaaaaaaaioPYKZUCioaaaaioGhKZGhioaaaaioGhKZGhioMnMnMnioUCKZowioaaaaioGhKZGhioaaaaioGhKZGhioaaaaioGhKZGhioaaaaioGhKZGhioVKMnjVNgDcpsgEdaNmUoZZZZZZaaaaaaaaaaaTaTaTaaaaZZZZZZZZZZZZZZaxaTaTaTaTaTaTaTaTaxaxaxaxaxaxaxaxaaaa
-aaZZZZZZZZZZaaUoefgQgQgQOqUoMnMnMnMnMnioioioioioMnMnioioioioioMnMnioioioioioQaqkmhioioioioioMnMnioioioioioMnMnioioioioioMnMnioioioioioMnMnioioioioioVKMnMdDcAEAEDcUoUoUoZZZZZZaaaaaaaaaaaTaTaTaaaaZZZZZZZZZZZZZZaxaxaTaTaTaTaTaTaxaxoTaxaxaxaxaxaaaaaa
-aaZZZZZZZZZZaaUoZmoWMeoWKjplVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKVKMnEabRohbRDcdaNmUoZZZZZZaaaaaaaaaaaaaTaaaaaaZZZZZZZZZZZZZZaaaaaaaaaaaaaaaxaxoToToTaxaaaaaaaaaaaa
-aaaaaaaaaaaaaaUoUolRUoZzUoUoUoMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnMnUoUoUoUoZZZZZZaaaaaaaaaaaaaTaaaaaaZZZZZZZZZZZZZZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aNaaaaaaaaaaaakzaxaxaxaxaxkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaUoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aRaRaRaRaRaRaRaRaRaRJmaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaR
+aN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aN
+aR
+"}
+(2,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+sS
+ZN
+sS
+Mn
+Mn
+sS
+Mn
+sS
+sS
+ZZ
+aa
+ZZ
+ZZ
+ZZ
+aa
+aa
+aR
+"}
+(3,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Mn
+Mn
+Mn
+Mn
+sS
+gQ
+VK
+VK
+VK
+VK
+VK
+VK
+VK
+sS
+ZZ
+aa
+ZZ
+ZZ
+ZZ
+aa
+aa
+aR
+"}
+(4,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+gQ
+VK
+VK
+VK
+VK
+VK
+VK
+gQ
+Mn
+sS
+sS
+gQ
+VK
+Mn
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aR
+"}
+(5,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Mn
+VK
+Mn
+Mn
+gQ
+Mn
+Mn
+Mn
+sA
+sA
+sA
+sA
+tw
+sA
+sA
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aR
+"}
+(6,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Mn
+mb
+Mn
+ZZ
+ZZ
+ZZ
+aa
+aa
+sA
+Ah
+DD
+QC
+ek
+CH
+sA
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aR
+"}
+(7,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+gQ
+uJ
+Mn
+ZZ
+ZZ
+ZZ
+aa
+aa
+sA
+sO
+mz
+EN
+hr
+jJ
+sA
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(8,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+sS
+gQ
+sS
+ZZ
+ZZ
+ZZ
+aa
+aa
+sA
+LJ
+pN
+mE
+DM
+CH
+sA
+Uo
+Uo
+Uo
+Uo
+Uo
+kz
+aR
+"}
+(9,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+sA
+sA
+TB
+EZ
+TB
+sA
+sA
+Uo
+ZT
+ef
+Zm
+Uo
+ax
+aR
+"}
+(10,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+Mn
+ZT
+ef
+Th
+ef
+QC
+qt
+Zu
+pT
+gQ
+oW
+lR
+ax
+aR
+"}
+(11,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Mn
+Mn
+Mn
+DX
+EN
+EN
+EN
+EN
+GZ
+Ga
+gQ
+gQ
+Me
+Uo
+ax
+Jm
+"}
+(12,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Mn
+tn
+TB
+DX
+EN
+EN
+uT
+lN
+RH
+Sa
+db
+gQ
+oW
+Zz
+ax
+aR
+"}
+(13,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Mn
+Mn
+Mn
+qw
+EN
+EN
+hr
+Mn
+Mn
+Uo
+zI
+Oq
+Kj
+Uo
+ax
+aR
+"}
+(14,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+Uo
+Uo
+Uo
+pl
+Uo
+kz
+aR
+"}
+(15,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Mn
+Mn
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Uo
+aa
+aR
+"}
+(16,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Mn
+wI
+TB
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(17,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Mn
+Mn
+Mn
+DX
+EN
+EN
+nw
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(18,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(19,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(20,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+io
+io
+io
+io
+qw
+EN
+EN
+hr
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(21,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+aa
+io
+UC
+hG
+ut
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+PY
+io
+VK
+Mn
+aa
+aR
+"}
+(22,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+Mn
+Mn
+Mn
+io
+LB
+VX
+MP
+cn
+sF
+EN
+EN
+zA
+cp
+LD
+bT
+KZ
+io
+VK
+Mn
+aa
+aR
+"}
+(23,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+Mn
+Mn
+ZB
+ZB
+io
+ow
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+cN
+eS
+UC
+io
+VK
+Mn
+aa
+aR
+"}
+(24,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+eF
+ZT
+ef
+eC
+io
+io
+io
+io
+io
+YZ
+EN
+EN
+nw
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(25,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+wR
+DX
+EN
+tN
+ef
+ef
+ef
+Ec
+qt
+pT
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(26,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+Fg
+DX
+EN
+uT
+pN
+pN
+pN
+cD
+RH
+db
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(27,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+eF
+zI
+pN
+lO
+io
+io
+io
+io
+io
+qw
+EN
+EN
+Wa
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(28,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+Mn
+Mn
+Tv
+LL
+io
+Gh
+Gh
+cC
+yq
+DX
+EN
+EN
+tN
+BP
+Gh
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(29,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+Mn
+Mn
+Mn
+io
+LB
+bz
+MP
+cn
+sF
+EN
+EN
+EN
+BP
+Gh
+Gn
+KZ
+io
+VK
+Mn
+aa
+aR
+"}
+(30,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+io
+Gh
+Gh
+cC
+yq
+DX
+EN
+EN
+uT
+BP
+Gh
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(31,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+aa
+ie
+ie
+ie
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+io
+io
+io
+io
+io
+DX
+EN
+EN
+Ai
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(32,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+aa
+ie
+Zp
+ie
+ie
+ie
+ie
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(33,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+ie
+ie
+Xt
+ie
+ie
+JW
+ie
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Mn
+YZ
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(34,1,1) = {"
+aN
+aa
+ie
+ie
+ie
+ie
+PL
+Gj
+jl
+ie
+Xt
+ie
+io
+io
+io
+io
+io
+aa
+aa
+io
+io
+io
+io
+io
+qw
+EN
+EN
+hr
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(35,1,1) = {"
+aN
+aa
+ie
+YO
+Xt
+PL
+QX
+zJ
+Nf
+Gj
+Gj
+OT
+io
+Gh
+oY
+Gh
+io
+aa
+aa
+io
+UC
+hG
+ut
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(36,1,1) = {"
+aN
+aa
+ie
+ie
+ie
+IW
+zJ
+zJ
+zJ
+zJ
+NH
+EY
+io
+Gh
+aA
+Gh
+io
+aa
+aa
+io
+LB
+wC
+MP
+cn
+sF
+EN
+EN
+zA
+cp
+LD
+Ve
+KZ
+io
+VK
+Mn
+aa
+aR
+"}
+(37,1,1) = {"
+aN
+aa
+ie
+ie
+ie
+PF
+Fy
+sD
+sD
+sC
+zJ
+Vl
+io
+Vp
+Tz
+Vp
+io
+aa
+aa
+io
+ow
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(38,1,1) = {"
+aN
+aa
+ie
+gu
+Xt
+Fx
+UU
+iq
+SM
+HN
+sC
+gm
+io
+yq
+JA
+yq
+io
+Mn
+Mn
+io
+io
+io
+io
+io
+rX
+GZ
+GZ
+vV
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(39,1,1) = {"
+aN
+aa
+ie
+ie
+ie
+gv
+gt
+iq
+qJ
+SM
+PF
+gm
+MG
+ZT
+Th
+ef
+ef
+ef
+QC
+ef
+ef
+ef
+ef
+qt
+pT
+EN
+EN
+tN
+eC
+Mn
+Mn
+Mn
+Qa
+VK
+Mn
+aa
+aR
+"}
+(40,1,1) = {"
+aN
+aa
+aa
+aa
+ie
+gv
+gt
+He
+iq
+SM
+PF
+ba
+oi
+sF
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+GZ
+EN
+EN
+EN
+EN
+hr
+TB
+gz
+Mn
+qk
+VK
+Mn
+aa
+aR
+"}
+(41,1,1) = {"
+aN
+aa
+ie
+ie
+ie
+gv
+gt
+iq
+xj
+SM
+PF
+gm
+MG
+zI
+JT
+pN
+pN
+pN
+lN
+pN
+pN
+pN
+pN
+RH
+db
+EN
+EN
+uT
+lO
+Mn
+Mn
+Mn
+mh
+VK
+Mn
+aa
+aR
+"}
+(42,1,1) = {"
+aN
+aa
+ie
+RR
+Xt
+If
+jl
+iq
+SM
+PL
+QX
+gm
+io
+yq
+JA
+yq
+io
+Mn
+Mn
+io
+io
+io
+io
+io
+rX
+GZ
+GZ
+vV
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(43,1,1) = {"
+aN
+aa
+ie
+ie
+ie
+PF
+Nf
+Gj
+Gj
+QX
+zJ
+Vl
+io
+iw
+wD
+iw
+io
+aa
+aa
+io
+Gh
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+cN
+eS
+UC
+io
+VK
+Mn
+aa
+aR
+"}
+(44,1,1) = {"
+aN
+aa
+ie
+ie
+ie
+IW
+zJ
+zJ
+zJ
+zJ
+NH
+kM
+io
+Gh
+oy
+Gh
+io
+aa
+aa
+io
+LB
+LS
+MP
+cn
+sF
+EN
+EN
+zA
+cp
+LD
+KN
+KZ
+io
+VK
+Mn
+aa
+aR
+"}
+(45,1,1) = {"
+aN
+aa
+ie
+WX
+Xt
+HN
+sC
+zJ
+Fy
+sD
+sD
+hc
+io
+Gh
+QH
+Gh
+io
+aa
+aa
+io
+Gh
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+ow
+io
+VK
+Mn
+aa
+aR
+"}
+(46,1,1) = {"
+aN
+aa
+ie
+ie
+ie
+ie
+HN
+sD
+UU
+ie
+Xt
+ie
+io
+io
+io
+io
+io
+aa
+aa
+io
+io
+io
+io
+io
+UK
+EN
+EN
+hr
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(47,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+ie
+ie
+Xt
+ie
+ie
+YD
+ie
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(48,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+aa
+ie
+xF
+ie
+ie
+ie
+ie
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(49,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+aa
+ie
+ie
+ie
+aa
+aa
+aa
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+io
+io
+io
+io
+DX
+EN
+EN
+nw
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(50,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+io
+Gh
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(51,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+Mn
+Mn
+Mn
+io
+LB
+xD
+MP
+cn
+sF
+EN
+EN
+zA
+cp
+LD
+PI
+KZ
+io
+VK
+Mn
+aa
+aR
+"}
+(52,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+Mn
+Mn
+ZB
+ZB
+io
+Gh
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(53,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+eF
+ZT
+ef
+eC
+io
+io
+io
+io
+io
+qw
+EN
+EN
+hr
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(54,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+wR
+DX
+EN
+tN
+ef
+ef
+ef
+Ec
+qt
+pT
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(55,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+ww
+DX
+EN
+uT
+pN
+pN
+pN
+cD
+RH
+db
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(56,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+eF
+zI
+pN
+lO
+io
+io
+io
+io
+io
+YZ
+EN
+EN
+nw
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(57,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+Mn
+Mn
+Mn
+la
+la
+io
+Gh
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(58,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+Mn
+Mn
+Mn
+io
+LB
+ei
+MP
+cn
+sF
+EN
+EN
+zA
+cp
+LD
+xl
+KZ
+io
+VK
+Mn
+aa
+aR
+"}
+(59,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+aa
+io
+Gh
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(60,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+aa
+io
+io
+io
+io
+io
+qw
+EN
+EN
+hr
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(61,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(62,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(63,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+io
+io
+io
+io
+DX
+EN
+EN
+nw
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(64,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+Gh
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(65,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+LB
+RM
+MP
+cn
+sF
+EN
+EN
+zA
+cp
+LD
+we
+KZ
+io
+VK
+Mn
+aa
+aR
+"}
+(66,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+Gh
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(67,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+io
+io
+io
+io
+UK
+EN
+EN
+hr
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(68,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(69,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+aa
+aa
+aa
+Mn
+VK
+Mn
+aa
+aR
+"}
+(70,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+io
+io
+io
+io
+DX
+EN
+EN
+nw
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(71,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+UC
+hG
+ut
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(72,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+LB
+ir
+MP
+cn
+sF
+EN
+EN
+zA
+cp
+LD
+cL
+KZ
+io
+VK
+Mn
+aa
+aR
+"}
+(73,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+ow
+Gh
+cC
+yq
+DX
+EN
+EN
+hr
+yq
+iI
+Gh
+Gh
+io
+VK
+Mn
+aa
+aR
+"}
+(74,1,1) = {"
+aN
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+io
+io
+io
+io
+io
+qw
+EN
+EN
+hr
+io
+io
+io
+io
+io
+VK
+Mn
+aa
+aR
+"}
+(75,1,1) = {"
+aN
+aa
+aa
+aa
+Mn
+Mn
+Mn
+Mn
+Mn
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Mn
+YZ
+EN
+EN
+hr
+Mn
+VK
+VK
+VK
+VK
+VK
+Mn
+aa
+aR
+"}
+(76,1,1) = {"
+aN
+aa
+aa
+aa
+Mn
+jX
+Mn
+GG
+Mn
+aa
+aa
+Mn
+Mn
+Mn
+aa
+Mn
+Mn
+Mn
+aa
+Mn
+Mn
+Mn
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+VK
+Mn
+Mn
+Mn
+Mn
+Mn
+aa
+aR
+"}
+(77,1,1) = {"
+aN
+aa
+aa
+Mn
+Mn
+bw
+Mn
+bw
+Mn
+Mn
+aa
+Mn
+Ht
+Mn
+aa
+Mn
+wt
+Mn
+aa
+Mn
+NA
+Mn
+aa
+Mn
+DX
+EN
+EN
+hr
+Mn
+VK
+Mn
+jV
+Md
+Ea
+Mn
+aa
+aR
+"}
+(78,1,1) = {"
+aN
+aa
+Mn
+Mn
+qo
+ef
+ef
+ef
+eC
+Mn
+Mn
+Mn
+TB
+Mn
+Mn
+Mn
+TB
+Mn
+Mn
+Mn
+TB
+Mn
+Mn
+Mn
+DX
+EN
+EN
+nw
+Mn
+VK
+Mn
+Ng
+Dc
+bR
+Mn
+aa
+aR
+"}
+(79,1,1) = {"
+aN
+aa
+Mn
+ZT
+pT
+EN
+EN
+EN
+tN
+GH
+Mn
+ZT
+ef
+ef
+ef
+Qv
+ef
+ef
+ef
+Qv
+ef
+eC
+Mn
+ZT
+pT
+EN
+EN
+ZO
+Mn
+VK
+PZ
+Dc
+AE
+oh
+Mn
+aa
+aR
+"}
+(80,1,1) = {"
+aN
+aa
+Mn
+DX
+EN
+EN
+Ut
+EN
+EN
+GH
+dN
+iu
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+dz
+dN
+sF
+EN
+EN
+gQ
+gQ
+bi
+VK
+Mn
+ps
+AE
+bR
+Mn
+aa
+aR
+"}
+(81,1,1) = {"
+aN
+kz
+Uo
+zI
+db
+EN
+EN
+EN
+uT
+GH
+Mn
+zI
+pN
+sM
+pN
+pN
+pN
+sM
+pN
+pN
+pN
+lO
+Mn
+zI
+pN
+pN
+pN
+Xe
+Uo
+Uo
+Uo
+gE
+Dc
+Dc
+Uo
+Uo
+aR
+"}
+(82,1,1) = {"
+aN
+aa
+Uo
+Uo
+zI
+pN
+mE
+pN
+su
+Uo
+Uo
+Uo
+TB
+Uo
+Uo
+Uo
+TB
+Uo
+Uo
+Uo
+TB
+Uo
+Uo
+Uo
+Uo
+Uo
+Uo
+Uo
+Uo
+aa
+Uo
+da
+Uo
+da
+Uo
+aa
+aR
+"}
+(83,1,1) = {"
+aN
+aa
+aa
+Uo
+Uo
+Mn
+EZ
+Mn
+Uo
+Uo
+aa
+Uo
+Oy
+Uo
+aa
+Uo
+KY
+Uo
+aa
+Uo
+hY
+Uo
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Uo
+Nm
+Uo
+Nm
+Uo
+aa
+aR
+"}
+(84,1,1) = {"
+aN
+aa
+aa
+aa
+Uo
+Pb
+Ih
+hQ
+Uo
+aa
+aa
+Uo
+Uo
+Uo
+aa
+Uo
+Uo
+Uo
+aa
+Uo
+Uo
+Uo
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Uo
+Uo
+Uo
+Uo
+Uo
+aa
+aR
+"}
+(85,1,1) = {"
+aN
+aa
+aa
+aa
+Uo
+Nw
+Ol
+Nd
+Uo
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aR
+"}
+(86,1,1) = {"
+aN
+aa
+aa
+aa
+Uo
+Uo
+fA
+Uo
+Uo
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aR
+"}
+(87,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+NP
+ax
+oT
+aa
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aR
+"}
+(88,1,1) = {"
+aN
+aa
+aa
+aa
+oT
+ax
+ax
+NP
+aa
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(89,1,1) = {"
+aN
+aa
+aa
+aa
+QI
+DS
+QI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(90,1,1) = {"
+aN
+aa
+aa
+aT
+aT
+YW
+aT
+aT
+aa
+aa
+aT
+aa
+aT
+aT
+aT
+aT
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(91,1,1) = {"
+aN
+aa
+aT
+aT
+aT
+YW
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+aa
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(92,1,1) = {"
+aN
+aa
+aa
+aa
+aT
+YW
+aT
+aT
+aa
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+aa
+aa
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(93,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+oT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aT
+aT
+aT
+aa
+aa
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+aa
+aa
+aR
+"}
+(94,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+oT
+CL
+aa
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+aR
+"}
+(95,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+oT
+aa
+aa
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aa
+aa
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+aa
+aa
+aR
+"}
+(96,1,1) = {"
+aN
+aa
+aa
+ax
+ax
+ax
+aa
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aT
+aT
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(97,1,1) = {"
+ax
+ax
+ax
+ax
+ax
+ax
+aa
+ax
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(98,1,1) = {"
+ax
+ax
+ax
+ax
+aa
+aa
+aa
+pY
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aR
+"}
+(99,1,1) = {"
+aI
+ax
+oT
+ax
+ax
+pY
+ax
+ax
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aR
+"}
+(100,1,1) = {"
+ax
+oT
+CL
+oT
+ax
+ax
+ax
+ax
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aR
+"}
+(101,1,1) = {"
+ax
+oT
+oT
+oT
+ax
+pY
+aa
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aR
+"}
+(102,1,1) = {"
+ax
+ax
+aa
+aa
+ax
+pY
+aa
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aR
+"}
+(103,1,1) = {"
+aN
+aa
+aa
+aa
+ax
+pY
+aa
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aR
+"}
+(104,1,1) = {"
+aN
+aa
+aa
+aa
+ax
+ax
+oT
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aR
+"}
+(105,1,1) = {"
+aN
+aa
+aa
+aa
+ax
+oT
+CL
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aT
+aT
+aT
+aT
+aT
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(106,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+ax
+oT
+oT
+oT
+ax
+aa
+aa
+ax
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ax
+aa
+aa
+aa
+aR
+"}
+(107,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+aa
+aa
+ax
+ax
+ax
+oT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+aa
+aa
+aR
+"}
+(108,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+oT
+oT
+oT
+ax
+aa
+CL
+oT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+aa
+aa
+aR
+"}
+(109,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+ax
+ax
+ax
+ax
+oT
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+oT
+ax
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+aa
+aa
+aR
+"}
+(110,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+CL
+oT
+oT
+ax
+ax
+ax
+ax
+ax
+ax
+oT
+ax
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+aa
+aa
+aR
+"}
+(111,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ax
+wd
+wd
+wd
+wd
+wd
+ax
+ax
+ax
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+aa
+aa
+aR
+"}
+(112,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+wd
+wd
+Cz
+rG
+vD
+wd
+wd
+ax
+ax
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ax
+aa
+aa
+aR
+"}
+(113,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+ax
+wd
+zb
+LW
+LW
+LW
+LW
+wd
+ax
+ax
+ax
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ax
+ax
+aa
+aa
+aR
+"}
+(114,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+ax
+ax
+wd
+VP
+LW
+wo
+LW
+LW
+dj
+ax
+ax
+ax
+ax
+aT
+aT
+aT
+aT
+aT
+aT
+ax
+ax
+oT
+aa
+aa
+aR
+"}
+(115,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ax
+ax
+ax
+wd
+JY
+LW
+LW
+LW
+hK
+wd
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+oT
+oT
+aa
+aa
+aR
+"}
+(116,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ax
+ax
+ax
+wd
+wd
+uu
+qx
+Jo
+wd
+wd
+ax
+ax
+ax
+ax
+wd
+wd
+dj
+wd
+wd
+ax
+ax
+ax
+oT
+aa
+aa
+aR
+"}
+(117,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+RC
+ax
+ax
+ax
+wd
+wd
+wd
+wd
+wd
+ax
+ax
+ax
+ax
+wd
+wd
+LW
+LW
+hK
+wd
+wd
+ax
+ax
+ax
+aa
+aa
+aR
+"}
+(118,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+RC
+RC
+ax
+ax
+ax
+ax
+ax
+ax
+oT
+oT
+CL
+oT
+ax
+wd
+vD
+LW
+LW
+LW
+DA
+wd
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(119,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+RC
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+oT
+oT
+oT
+ax
+wd
+LW
+LW
+el
+LW
+qx
+wd
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(120,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+ax
+ax
+ax
+ax
+ax
+oT
+ax
+ax
+ax
+ax
+ax
+ax
+wd
+Cz
+LW
+LW
+LW
+ed
+wd
+ax
+ax
+aa
+aa
+aa
+aR
+"}
+(121,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+oT
+CL
+oT
+oT
+ax
+ax
+ax
+ax
+wd
+wd
+zb
+OV
+JY
+wd
+wd
+ax
+aa
+aa
+aa
+aa
+aR
+"}
+(122,1,1) = {"
+aN
+aa
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+oT
+ax
+ax
+ax
+ax
+ax
+ax
+wd
+wd
+wd
+wd
+wd
+ax
+aa
+aa
+aa
+aa
+aa
+aR
+"}
+(123,1,1) = {"
+aN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
 "}

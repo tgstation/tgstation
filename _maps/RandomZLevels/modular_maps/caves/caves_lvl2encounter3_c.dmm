@@ -1,32 +1,466 @@
-"a" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"b" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"c" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"h" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/remains/human,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"i" = (/obj/effect/gibspawner/human/bodypartless,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"k" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"q" = (/obj/effect/decal/remains/human,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"s" = (/mob/living/simple_animal/hostile/asteroid/elite/broodmother,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"t" = (/turf/open/chasm/lavaland,/area/template_noop)
-"w" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"z" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"G" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"K" = (/obj/effect/mob_spawn/corpse/human/damaged{mob_name = "Probably-Dies-First"; mob_species = /datum/species/lizard/ashwalker; outfit = /datum/outfit/ashwalker},/obj/item/spear/bonespear,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"M" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Z" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"b" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"c" = (
+/obj/structure/flora/ash/cacti,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"h" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"i" = (
+/obj/effect/gibspawner/human/bodypartless,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"k" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"q" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"s" = (
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"t" = (
+/turf/open/chasm/lavaland,
+/area/template_noop)
+"w" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"z" = (
+/obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"G" = (
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"K" = (
+/obj/effect/mob_spawn/corpse/human/damaged{
+	mob_name = "Probably-Dies-First";
+	mob_species = /datum/species/lizard/ashwalker;
+	outfit = /datum/outfit/ashwalker
+	},
+/obj/item/spear/bonespear,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"M" = (
+/obj/structure/flora/ash/stem_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Z" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 
 (1,1,1) = {"
-GkGaaaatttttttttttkkttkkk
-zkkkaaaaaaaktttttttkktttk
-aaGbkkaaaaakkkttttttktttt
-aaakkkkwZaakktttttttttttt
-akkkkbkkwackaattttttttttt
-akakkkikbkckaaatttttttttt
-kkaaahkwtKkkaaatttttttttt
-kkwaaaktttkbkkaaatttttttt
-kkZaakkttwskkkkaaattttttt
-akkkkkbkkkkkqkbaakktttttt
-aakkkaawwakaaakkkkkkktttt
-aaakaaaaaaaaaaaakkkkkkkkk
-aaakkkkkkMkMkkkaaaakkkkkk
-aaaaaaMkMMkkaaaaaaaaakkkk
+G
+z
+a
+a
+a
+a
+k
+k
+k
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+k
+k
+a
+a
+k
+k
+k
+k
+k
+k
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+G
+k
+G
+a
+k
+a
+a
+w
+Z
+k
+k
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+k
+b
+k
+k
+k
+a
+a
+a
+k
+k
+k
+k
+a
+"}
+(5,1,1) = {"
+a
+a
+k
+k
+k
+k
+a
+a
+a
+k
+k
+a
+k
+a
+"}
+(6,1,1) = {"
+a
+a
+k
+k
+b
+k
+h
+a
+k
+k
+a
+a
+k
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+k
+k
+i
+k
+k
+k
+b
+a
+a
+k
+M
+"}
+(8,1,1) = {"
+t
+a
+a
+w
+k
+k
+w
+t
+t
+k
+w
+a
+k
+k
+"}
+(9,1,1) = {"
+t
+a
+a
+Z
+w
+b
+t
+t
+t
+k
+w
+a
+k
+M
+"}
+(10,1,1) = {"
+t
+a
+a
+a
+a
+k
+K
+t
+w
+k
+a
+a
+M
+M
+"}
+(11,1,1) = {"
+t
+a
+a
+a
+c
+c
+k
+k
+s
+k
+k
+a
+k
+k
+"}
+(12,1,1) = {"
+t
+k
+k
+k
+k
+k
+k
+b
+k
+k
+a
+a
+M
+k
+"}
+(13,1,1) = {"
+t
+t
+k
+k
+a
+a
+a
+k
+k
+q
+a
+a
+k
+a
+"}
+(14,1,1) = {"
+t
+t
+k
+t
+a
+a
+a
+k
+k
+k
+a
+a
+k
+a
+"}
+(15,1,1) = {"
+t
+t
+t
+t
+t
+a
+a
+a
+k
+b
+k
+a
+k
+a
+"}
+(16,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+k
+a
+a
+a
+"}
+(17,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+k
+k
+a
+a
+"}
+(18,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+a
+k
+k
+k
+a
+a
+"}
+(19,1,1) = {"
+k
+t
+t
+t
+t
+t
+t
+t
+t
+k
+k
+k
+a
+a
+"}
+(20,1,1) = {"
+k
+k
+t
+t
+t
+t
+t
+t
+t
+t
+k
+k
+k
+a
+"}
+(21,1,1) = {"
+t
+k
+k
+t
+t
+t
+t
+t
+t
+t
+k
+k
+k
+a
+"}
+(22,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+k
+k
+k
+"}
+(23,1,1) = {"
+k
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+k
+k
+k
+"}
+(24,1,1) = {"
+k
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+k
+k
+k
+"}
+(25,1,1) = {"
+k
+k
+t
+t
+t
+t
+t
+t
+t
+t
+t
+k
+k
+k
 "}

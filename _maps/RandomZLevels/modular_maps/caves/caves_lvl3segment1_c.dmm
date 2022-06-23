@@ -1,300 +1,8854 @@
-"ad" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"ag" = (/obj/structure/flora/rock/pile,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"ah" = (/obj/modular_map_root/caves{key = "caves_lvl3segment2"; name = "lvl3segment2"},/turf/template_noop,/area/template_noop)
-"ai" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"an" = (/turf/open/indestructible/necropolis,/area/template_noop)
-"ap" = (/obj/effect/decal/remains/human,/turf/open/indestructible/necropolis,/area/template_noop)
-"aq" = (/obj/item/pickaxe/diamond,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"ar" = (/obj/machinery/door/airlock/external/glass{name = "Mining External Airlock"},/obj/effect/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post)
-"as" = (/obj/machinery/mineral/processing_unit{input_dir = 8; output_dir = 4},/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 8; id = "caves_depo3"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter2)
-"at" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"av" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aw" = (/obj/item/food/grown/banana{desc = "shh... its a secret. 3 of 6."; name = "secret banana"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aA" = (/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/labormineral,/area/template_noop)
-"aB" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"aD" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aE" = (/obj/effect/baseturf_helper/lava_land/surface,/turf/closed/indestructible/rock,/area/template_noop)
-"aF" = (/obj/structure/flora/ash/tall_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aI" = (/obj/effect/decal/cleanable/blood/old,/obj/item/storage/bag/ore,/turf/open/indestructible/necropolis,/area/template_noop)
-"aJ" = (/turf/open/chasm/lavaland,/area/template_noop)
-"aK" = (/turf/closed/indestructible/rock,/area/template_noop)
-"aL" = (/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,/area/template_noop)
-"aM" = (/turf/template_noop,/area/template_noop)
-"aN" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aQ" = (/obj/effect/mob_spawn/corpse/goliath{mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher; name = "watcher"},/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aR" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aS" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
-"aV" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aW" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"aX" = (/obj/effect/mob_spawn/corpse/human/miner/explorer/caves{burn_damage = 200; facial_hairstyle = "Moustache (Watson)"; hairstyle = "Pompadour"; mob_name = "Jim Joffee"},/obj/effect/decal/cleanable/blood/old,/obj/item/gun/energy/recharge/kinetic_accelerator,/turf/open/indestructible/necropolis,/area/template_noop)
-"aY" = (/turf/closed/indestructible/necropolis,/area/template_noop)
-"aZ" = (/obj/structure/spawner/lavaland/icewatcher,/turf/open/indestructible/necropolis,/area/template_noop)
-"bf" = (/obj/machinery/door/airlock/external/glass{name = "Mining External Airlock"},/obj/effect/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post)
-"bn" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing/corner{dir = 1},/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"bJ" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/structure/sign/warning{desc = "A sign warning you about how falling into the elevator shaft is a bad idea."; name = "WARNING: Lethal Fall Hazard"; pixel_y = -32},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter1)
-"bL" = (/turf/closed/wall,/area/template_noop)
-"cw" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/loading_area,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"cP" = (/obj/effect/turf_decal/stripes/white/corner{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"dm" = (/obj/machinery/mineral/processing_unit_console{machinedir = 2},/turf/closed/wall,/area/awaymission/caves/misc/mining_post/smelter1)
-"dQ" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter1)
-"ef" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo4"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"ex" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/west,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter2)
-"eA" = (/obj/effect/turf_decal/stripes/white/line,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"eN" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing/corner{dir = 4},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"fk" = (/obj/machinery/power/smes/engineering,/obj/structure/cable,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"fl" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/structure/railing{dir = 8},/obj/structure/railing/corner,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"fy" = (/obj/effect/spawner/structure/window/reinforced,/obj/structure/cable,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"fB" = (/obj/effect/decal/cleanable/dirt,/obj/structure/ore_box,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter2)
-"fE" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"gs" = (/obj/machinery/door/airlock/external/glass{name = "Mining External Airlock"},/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/mining_post)
-"gU" = (/obj/machinery/conveyor{id = "caves_depo1"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post)
-"hl" = (/obj/effect/turf_decal/stripes/white/line{dir = 1},/mob/living/simple_animal/hostile/ashwalker{name = "Disrupts-The-Machine"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"hr" = (/obj/effect/turf_decal/stripes/white/line,/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/east,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"hv" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/trimline/brown/filled/corner{dir = 1},/obj/effect/turf_decal/trimline/brown/filled/corner{dir = 8},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"hF" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 4},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"hL" = (/obj/structure/sign/warning{desc = "A sign warning you about some explosive ordnance. Whether or not you care about this warning is up to you."; name = "WARNING: Explosive Ordnance"; pixel_x = 32},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter1)
-"hR" = (/obj/machinery/conveyor{dir = 10; id = "caves_depo1"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post)
-"hX" = (/obj/effect/turf_decal/stripes/white/line{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"ig" = (/obj/effect/turf_decal/trimline/brown/filled/line{dir = 8},/obj/machinery/light/dim/directional/west,/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"iB" = (/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"iX" = (/obj/machinery/conveyor_switch/oneway{id = "caves_depo1"; name = "mining conveyor"},/obj/effect/turf_decal/trimline/brown/filled/line{dir = 4},/obj/machinery/light/dim/directional/east,/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"iY" = (/obj/effect/turf_decal/stripes/white/line{dir = 10},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"je" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/line,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"jD" = (/obj/effect/turf_decal/stripes/white/line{dir = 8},/obj/structure/railing{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"jH" = (/obj/structure/marker_beacon/yellow,/obj/effect/turf_decal/stripes/white/line,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"jJ" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 1; id = "caves_depo3"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter2)
-"jM" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor_switch/oneway{id = "caves_depo2"; name = "mining conveyor"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"kh" = (/obj/effect/turf_decal/trimline/brown/filled/line{dir = 6},/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"kW" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"lm" = (/obj/effect/turf_decal/stripes/white/line{dir = 5},/mob/living/simple_animal/hostile/ashwalker{name = "Raids-The-Hummies"},/obj/item/crowbar/large,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"lH" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/structure/railing{dir = 8},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter1)
-"mO" = (/obj/machinery/conveyor_switch/oneway{id = "caves_depo5"; name = "mining conveyor"},/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"nq" = (/obj/machinery/computer/pod/old/mass_driver_controller{id = "caveslvldumbjump"; name = "Rapid Mineral Transport Control"; pixel_x = -28},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"nH" = (/turf/closed/wall,/area/awaymission/caves/misc/mining_post/diverter)
-"nK" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor_switch/oneway{id = "caves_depo4"; name = "mining conveyor"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"nM" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 1},/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"od" = (/obj/structure/flora/ash/tall_shroom,/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"oh" = (/obj/effect/turf_decal/stripes/white/corner{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"op" = (/obj/machinery/conveyor{id = "caves_depo2"},/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"oX" = (/obj/structure/flora/rock/pile,/obj/structure/sign/warning{desc = "A sign warning you about some explosive ordnance. Whether or not you care about this warning is up to you."; name = "WARNING: Explosive Ordnance"; pixel_x = 32},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"pE" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter1)
-"pL" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/structure/railing{dir = 4},/obj/structure/railing{dir = 8},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"qA" = (/obj/structure/cable,/obj/structure/railing{dir = 1},/obj/structure/railing,/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"rt" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/line{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/smelter1)
-"rL" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"sq" = (/obj/machinery/atmospherics/components/tank/oxygen,/obj/structure/cable,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"ss" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/machinery/mass_driver{dir = 1; id = "caveslvldumbjump"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"sW" = (/obj/effect/turf_decal/stripes/white/line,/turf/closed/wall,/area/awaymission/caves/misc/mining_post/diverter)
-"sY" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{id = "caves_depo4"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"tc" = (/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"tk" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"tl" = (/obj/effect/turf_decal/stripes/white/line{dir = 10},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"tm" = (/obj/machinery/conveyor{id = "caves_depo1"},/obj/machinery/mineral/stacking_machine{input_dir = 1; output_dir = 2},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post)
-"tt" = (/obj/structure/cable,/obj/structure/railing{dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter2)
-"tA" = (/obj/item/stack/ore/diamond{amount = 4},/obj/item/stack/ore/plasma{amount = 6},/obj/item/stack/ore/silver{amount = 12},/obj/item/stack/ore/gold{amount = 10},/turf/open/indestructible/necropolis,/area/template_noop)
-"tU" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"tV" = (/obj/machinery/conveyor{id = "caves_depo1"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post)
-"ut" = (/obj/machinery/power/rtg,/obj/structure/cable,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"uD" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/mass_driver{dir = 8; id = "caveslvldumbjump3"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"uR" = (/turf/closed/wall,/area/awaymission/caves/misc/mining_post/smelter2)
-"uU" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 1},/obj/structure/railing/corner{dir = 8},/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"vt" = (/obj/effect/turf_decal/trimline/brown/filled/corner,/obj/effect/turf_decal/trimline/brown/filled/corner{dir = 4},/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"ws" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post)
-"wu" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"wF" = (/obj/effect/turf_decal/stripes/line,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/railing{dir = 1},/obj/structure/railing,/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"wN" = (/obj/effect/turf_decal/trimline/brown/filled/line,/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"xf" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/mass_driver{dir = 4; id = "caveslvldumbjump4"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"xm" = (/obj/machinery/conveyor{dir = 1; id = "caves_depo1"},/obj/structure/plasticflaps,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"xs" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo4"},/obj/effect/decal/cleanable/dirt,/obj/machinery/mineral/processing_unit{input_dir = 8; output_dir = 4},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"xV" = (/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"yl" = (/obj/effect/turf_decal/stripes/white/line,/obj/machinery/computer/pod/old/mass_driver_controller{id = "caveslvldumbjump3"; name = "Rapid Mineral Transport Control"; pixel_x = -28},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"yB" = (/obj/effect/decal/cleanable/dirt,/obj/structure/sign/warning/xeno_mining/directional/east,/obj/effect/turf_decal/trimline/brown/filled/line{dir = 4},/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"yC" = (/obj/machinery/atmospherics/pipe/layer_manifold,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"yG" = (/obj/effect/turf_decal/trimline/brown/filled/line{dir = 4},/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"yI" = (/obj/structure/barricade/sandbags,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"yL" = (/obj/effect/turf_decal/stripes/white/line{dir = 6},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/smelter1)
-"yS" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter2)
-"zf" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter2)
-"zz" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"zH" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/corner{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"zL" = (/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"zO" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"zV" = (/obj/structure/marker_beacon/yellow,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Ah" = (/obj/machinery/conveyor{id = "caves_depo4"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"Am" = (/obj/machinery/atmospherics/pipe/layer_manifold,/obj/structure/cable,/obj/machinery/door/airlock/hatch{name = "Life Support Access"},/obj/effect/mapping_helpers/airlock/access/all/away/engineering,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"Br" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo5"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"Bt" = (/obj/effect/turf_decal/loading_area{dir = 4},/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"Bu" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/structure/railing/corner{dir = 4},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter2)
-"BI" = (/obj/structure/cable,/obj/structure/sign/warning/electric_shock/directional/west,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"BM" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"BN" = (/obj/effect/turf_decal/stripes/white/line,/obj/structure/marker_beacon/yellow,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"BU" = (/turf/closed/wall/rust,/area/awaymission/caves/misc/mining_post/smelter2)
-"Cg" = (/obj/machinery/conveyor{dir = 9; id = "caves_depo1"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post)
-"Cn" = (/turf/closed/wall,/area/awaymission/caves/misc/mining_post/smelter1)
-"Cp" = (/obj/effect/turf_decal/stripes/box,/obj/machinery/atmospherics/components/unary/passive_vent{dir = 1},/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"CE" = (/obj/structure/lattice/lava{base_icon_state = "lattice"; icon = 'icons/obj/smooth_structures/lattice.dmi'; icon_state = "lattice-255"},/turf/open/chasm/lavaland,/area/template_noop)
-"CM" = (/obj/machinery/conveyor/inverted{dir = 5; id = "caves_depo1"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post)
-"CP" = (/obj/effect/turf_decal/stripes/white/line,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/smelter1)
-"CR" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/effect/turf_decal/trimline/brown/filled/corner{dir = 4},/obj/effect/turf_decal/trimline/brown/filled/corner{dir = 1},/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"CS" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"CT" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo1"},/obj/structure/plasticflaps,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post)
-"Ds" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/structure/railing/corner{dir = 4},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"DO" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/mass_driver{dir = 8; id = "caveslvldumbjump5"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter2)
-"DU" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter1)
-"Ed" = (/obj/machinery/conveyor{dir = 9; id = "caves_depo5"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"Ee" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/structure/railing{dir = 8},/obj/structure/railing{dir = 4},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"Es" = (/obj/effect/turf_decal/stripes/white/line,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"EA" = (/obj/effect/decal/cleanable/dirt,/obj/structure/sign/warning{desc = "A sign warning you about how falling into the elevator shaft is a bad idea."; name = "WARNING: Lethal Fall Hazard"; pixel_x = 32},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/obj/machinery/light/small/directional/north,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"EQ" = (/obj/structure/lattice/lava{base_icon_state = "lattice"; icon = 'icons/obj/smooth_structures/lattice.dmi'; icon_state = "lattice-255"},/turf/open/chasm/lavaland,/area/awaymission/caves/misc/mining_post/smelter2)
-"ER" = (/obj/effect/turf_decal/stripes/white/line{dir = 9},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/smelter1)
-"EU" = (/obj/machinery/atmospherics/components/tank/oxygen,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"EY" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Gi" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/smelter1)
-"Gj" = (/obj/machinery/conveyor{id = "caves_depo2"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"Gm" = (/obj/effect/turf_decal/stripes/white/line{dir = 8},/obj/structure/marker_beacon/yellow,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Gn" = (/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"Go" = (/turf/closed/wall,/area/awaymission/caves/misc/mining_post)
-"Gw" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"GB" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/light/small/directional/north,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"GG" = (/obj/structure/railing{dir = 1},/obj/structure/railing,/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"GM" = (/obj/structure/ore_box,/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"GU" = (/obj/effect/turf_decal/trimline/brown/filled/line{dir = 10},/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"Hk" = (/obj/structure/flora/ash/tall_shroom,/obj/effect/turf_decal/stripes/white/line{dir = 10},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Hl" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/corner{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"IA" = (/obj/effect/turf_decal/stripes/white/corner{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"IB" = (/obj/effect/turf_decal/trimline/brown/filled/line{dir = 1},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"Js" = (/obj/effect/turf_decal/stripes/white/line{dir = 5},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"JA" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/obj/structure/sign/warning{desc = "A sign warning you about how falling into the elevator shaft is a bad idea."; name = "WARNING: Lethal Fall Hazard"; pixel_y = -32},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"JD" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 9; id = "caves_depo2"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"JE" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor/inverted{dir = 6; id = "caves_depo2"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"JH" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo1"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"Ka" = (/obj/effect/turf_decal/stripes/white/corner{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"Km" = (/obj/effect/mine/explosive{range_heavy = 0},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"KI" = (/obj/machinery/mass_driver{id = "caveslvldumbjump2"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"KK" = (/obj/effect/turf_decal/stripes/white/corner{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"KP" = (/obj/structure/flora/ash/tall_shroom,/obj/effect/turf_decal/stripes/white/line,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"KW" = (/obj/effect/turf_decal/stripes/white/line{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"Lf" = (/obj/effect/turf_decal/trimline/brown/filled/line,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{dir = 1},/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"Lw" = (/obj/machinery/power/terminal{dir = 1},/obj/structure/cable,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"LS" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 8; id = "caves_depo3"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter2)
-"MX" = (/obj/structure/flora/rock,/obj/effect/turf_decal/stripes/white/corner{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Na" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/loading_area,/obj/item/stock_parts/cell/empty,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"Nc" = (/obj/machinery/power/rtg,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"Nw" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post)
-"NM" = (/obj/structure/cable,/obj/structure/railing{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter2)
-"NS" = (/obj/structure/flora/ash/tall_shroom,/obj/effect/turf_decal/stripes/white/line{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"NW" = (/obj/structure/cable,/obj/machinery/light/dim/directional/north,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"Ob" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/machinery/computer/pod/old/mass_driver_controller{id = "caveslvldumbjump5"; name = "Rapid Mineral Transport Control"; pixel_y = 28},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter2)
-"Og" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/structure/sign/warning{desc = "A sign warning you about how falling into the elevator shaft is a bad idea."; name = "WARNING: Lethal Fall Hazard"; pixel_x = 32},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"Oi" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/north,/obj/effect/turf_decal/trimline/brown/filled/line{dir = 1},/obj/effect/turf_decal/trimline/brown/filled/corner,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"OF" = (/obj/structure/cable,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"OL" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"ON" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"Pa" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 9; id = "caves_depo3"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter2)
-"Pe" = (/obj/effect/mine/explosive{range_heavy = 0},/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"PE" = (/obj/effect/turf_decal/stripes/white/line{dir = 5},/mob/living/simple_animal/hostile/ashwalker{name = "Hates-The-Technology"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"PN" = (/turf/closed/wall/rust,/area/template_noop)
-"Qd" = (/obj/effect/turf_decal/trimline/brown/filled/line{dir = 9},/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"QF" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,/obj/structure/cable,/turf/open/floor/plating,/area/awaymission/caves/misc/mining_post)
-"QI" = (/obj/machinery/conveyor{id = "caves_depo2"},/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"Rd" = (/obj/structure/flora/ash/tall_shroom,/obj/effect/turf_decal/stripes/white/line{dir = 5},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Ro" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/line{dir = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Rp" = (/obj/effect/turf_decal/trimline/brown/filled/line{dir = 1},/obj/machinery/airalarm/directional/north,/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"RG" = (/turf/closed/wall/rust,/area/awaymission/caves/misc/mining_post/smelter1)
-"RK" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo5"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"RT" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"RZ" = (/obj/structure/flora/rock/pile,/obj/effect/turf_decal/stripes/white/line{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Sd" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 1; id = "caves_depo2"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"SQ" = (/obj/effect/turf_decal/stripes/white/corner,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Ta" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/mining_post)
-"To" = (/obj/structure/marker_beacon/yellow,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"Tx" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/computer/pod/old/mass_driver_controller{id = "caveslvldumbjump2"; name = "Rapid Mineral Transport Control"; pixel_x = 28},/mob/living/simple_animal/hostile/ashwalker{name = "Breaks-The-Bridge"},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter1)
-"Tz" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/mining_post)
-"TH" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/mineral/processing_unit_console{machinedir = 2},/turf/closed/wall,/area/awaymission/caves/misc/mining_post/smelter2)
-"TJ" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor/inverted{dir = 5; id = "caves_depo4"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"TS" = (/obj/machinery/conveyor/inverted{dir = 6; id = "caves_depo5"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"TZ" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Uk" = (/obj/structure/cable,/obj/structure/railing{dir = 5},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter2)
-"Uo" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor/inverted{dir = 6; id = "caves_depo3"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter2)
-"UA" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo1"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post)
-"Vs" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"VH" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/structure/railing{dir = 8},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"VO" = (/obj/machinery/door/airlock/external/glass{name = "Mining External Airlock"},/obj/effect/decal/cleanable/dirt,/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/catwalk_floor/iron_dark,/area/awaymission/caves/misc/mining_post)
-"VR" = (/obj/machinery/conveyor{dir = 8; id = "caves_depo2"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"VV" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"VY" = (/obj/machinery/conveyor_switch/oneway{id = "caves_depo3"; name = "mining conveyor"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter2)
-"WB" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/loading_area,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter2)
-"WL" = (/turf/closed/wall/r_wall,/area/awaymission/caves/misc/mining_post)
-"WO" = (/obj/effect/turf_decal/trimline/brown/filled/corner,/obj/effect/turf_decal/trimline/brown/filled/corner{dir = 8},/obj/effect/turf_decal/loading_area{dir = 1},/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"WP" = (/obj/machinery/conveyor{dir = 10; id = "caves_depo2"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"Xc" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"Xi" = (/obj/effect/turf_decal/stripes/white/line{dir = 10},/obj/structure/marker_beacon/yellow,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"Xj" = (/obj/effect/turf_decal/trimline/brown/filled/line{dir = 8},/turf/open/floor/iron,/area/awaymission/caves/misc/mining_post)
-"XB" = (/obj/structure/cable,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"YW" = (/obj/machinery/conveyor{dir = 1; id = "caves_depo5"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/smelter1)
-"YX" = (/obj/structure/cable,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/machinery/computer/pod/old/mass_driver_controller{id = "caveslvldumbjump4"; name = "Rapid Mineral Transport Control"; pixel_x = 28},/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/diverter)
-"YZ" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/conveyor{dir = 8; id = "caves_depo2"},/turf/open/floor/plating/lavaland_atmos,/area/awaymission/caves/misc/mining_post/diverter)
-"Zm" = (/obj/structure/railing{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"Zr" = (/obj/effect/turf_decal/stripes/white/line{dir = 5},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/diverter)
-"ZM" = (/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/south{cell_type = null},/obj/effect/decal/cleanable/dirt,/turf/open/floor/catwalk_floor/iron_dark{initial_gas_mix = "LAVALAND_ATMOS"},/area/awaymission/caves/misc/mining_post/smelter1)
-"ZY" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/awaymission/caves/misc/mining_post/smelter1)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/structure/flora/ash/stem_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"ag" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"ah" = (
+/obj/modular_map_root/caves{
+	key = "caves_lvl3segment2";
+	name = "lvl3segment2"
+	},
+/turf/template_noop,
+/area/template_noop)
+"ai" = (
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"an" = (
+/turf/open/indestructible/necropolis,
+/area/template_noop)
+"ap" = (
+/obj/effect/decal/remains/human,
+/turf/open/indestructible/necropolis,
+/area/template_noop)
+"aq" = (
+/obj/item/pickaxe/diamond,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"ar" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post)
+"as" = (
+/obj/machinery/mineral/processing_unit{
+	input_dir = 8;
+	output_dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo3"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"at" = (
+/obj/modular_map_connector,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"av" = (
+/obj/structure/flora/ash/cacti,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aw" = (
+/obj/item/food/grown/banana{
+	desc = "shh... its a secret. 3 of 6.";
+	name = "secret banana"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aA" = (
+/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/labormineral,
+/area/template_noop)
+"aB" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/template_noop)
+"aD" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aE" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/indestructible/rock,
+/area/template_noop)
+"aF" = (
+/obj/structure/flora/ash/tall_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aI" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/storage/bag/ore,
+/turf/open/indestructible/necropolis,
+/area/template_noop)
+"aJ" = (
+/turf/open/chasm/lavaland,
+/area/template_noop)
+"aK" = (
+/turf/closed/indestructible/rock,
+/area/template_noop)
+"aL" = (
+/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/high_chance,
+/area/template_noop)
+"aM" = (
+/turf/template_noop,
+/area/template_noop)
+"aN" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aQ" = (
+/obj/effect/mob_spawn/corpse/goliath{
+	mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher;
+	name = "watcher"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aR" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aS" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/template_noop)
+"aV" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aW" = (
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"aX" = (
+/obj/effect/mob_spawn/corpse/human/miner/explorer/caves{
+	burn_damage = 200;
+	facial_hairstyle = "Moustache (Watson)";
+	hairstyle = "Pompadour";
+	mob_name = "Jim Joffee"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/turf/open/indestructible/necropolis,
+/area/template_noop)
+"aY" = (
+/turf/closed/indestructible/necropolis,
+/area/template_noop)
+"aZ" = (
+/obj/structure/spawner/lavaland/icewatcher,
+/turf/open/indestructible/necropolis,
+/area/template_noop)
+"bf" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post)
+"bn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"bJ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning{
+	desc = "A sign warning you about how falling into the elevator shaft is a bad idea.";
+	name = "WARNING: Lethal Fall Hazard";
+	pixel_y = -32
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter1)
+"bL" = (
+/turf/closed/wall,
+/area/template_noop)
+"cw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"cP" = (
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"dm" = (
+/obj/machinery/mineral/processing_unit_console{
+	machinedir = 2
+	},
+/turf/closed/wall,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"dQ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter1)
+"ef" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"ex" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter2)
+"eA" = (
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"eN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"fk" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"fl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"fy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"fB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/ore_box,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"fE" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"gs" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/mining_post)
+"gU" = (
+/obj/machinery/conveyor{
+	id = "caves_depo1"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post)
+"hl" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/ashwalker{
+	name = "Disrupts-The-Machine"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"hr" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"hv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"hF" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"hL" = (
+/obj/structure/sign/warning{
+	desc = "A sign warning you about some explosive ordnance. Whether or not you care about this warning is up to you.";
+	name = "WARNING: Explosive Ordnance";
+	pixel_x = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter1)
+"hR" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "caves_depo1"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post)
+"hX" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"ig" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"iB" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"iX" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "caves_depo1";
+	name = "mining conveyor"
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"iY" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 10
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"je" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"jD" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"jH" = (
+/obj/structure/marker_beacon/yellow,
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"jJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "caves_depo3"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"jM" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor_switch/oneway{
+	id = "caves_depo2";
+	name = "mining conveyor"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"kh" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"kW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"lm" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 5
+	},
+/mob/living/simple_animal/hostile/ashwalker{
+	name = "Raids-The-Hummies"
+	},
+/obj/item/crowbar/large,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"lH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter1)
+"mO" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "caves_depo5";
+	name = "mining conveyor"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"nq" = (
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "caveslvldumbjump";
+	name = "Rapid Mineral Transport Control";
+	pixel_x = -28
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"nH" = (
+/turf/closed/wall,
+/area/awaymission/caves/misc/mining_post/diverter)
+"nK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor_switch/oneway{
+	id = "caves_depo4";
+	name = "mining conveyor"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"nM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"od" = (
+/obj/structure/flora/ash/tall_shroom,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"oh" = (
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"op" = (
+/obj/machinery/conveyor{
+	id = "caves_depo2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"oX" = (
+/obj/structure/flora/rock/pile,
+/obj/structure/sign/warning{
+	desc = "A sign warning you about some explosive ordnance. Whether or not you care about this warning is up to you.";
+	name = "WARNING: Explosive Ordnance";
+	pixel_x = 32
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"pE" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter1)
+"pL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"qA" = (
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"rt" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"rL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"sq" = (
+/obj/machinery/atmospherics/components/tank/oxygen,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"ss" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/mass_driver{
+	dir = 1;
+	id = "caveslvldumbjump"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"sW" = (
+/obj/effect/turf_decal/stripes/white/line,
+/turf/closed/wall,
+/area/awaymission/caves/misc/mining_post/diverter)
+"sY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	id = "caves_depo4"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"tc" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"tk" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"tl" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 10
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"tm" = (
+/obj/machinery/conveyor{
+	id = "caves_depo1"
+	},
+/obj/machinery/mineral/stacking_machine{
+	input_dir = 1;
+	output_dir = 2
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post)
+"tt" = (
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter2)
+"tA" = (
+/obj/item/stack/ore/diamond{
+	amount = 4
+	},
+/obj/item/stack/ore/plasma{
+	amount = 6
+	},
+/obj/item/stack/ore/silver{
+	amount = 12
+	},
+/obj/item/stack/ore/gold{
+	amount = 10
+	},
+/turf/open/indestructible/necropolis,
+/area/template_noop)
+"tU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"tV" = (
+/obj/machinery/conveyor{
+	id = "caves_depo1"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post)
+"ut" = (
+/obj/machinery/power/rtg,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"uD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "caveslvldumbjump3"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"uR" = (
+/turf/closed/wall,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"uU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"vt" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"ws" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post)
+"wu" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"wF" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"wN" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"xf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "caveslvldumbjump4"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"xm" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "caves_depo1"
+	},
+/obj/structure/plasticflaps,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"xs" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/mineral/processing_unit{
+	input_dir = 8;
+	output_dir = 4
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"xV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"yl" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "caveslvldumbjump3";
+	name = "Rapid Mineral Transport Control";
+	pixel_x = -28
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"yB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/xeno_mining/directional/east,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"yC" = (
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"yG" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"yI" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"yL" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 6
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"yS" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"zf" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter2)
+"zz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"zH" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"zL" = (
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"zO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"zV" = (
+/obj/structure/marker_beacon/yellow,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Ah" = (
+/obj/machinery/conveyor{
+	id = "caves_depo4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"Am" = (
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/structure/cable,
+/obj/machinery/door/airlock/hatch{
+	name = "Life Support Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/engineering,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"Br" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo5"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"Bt" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"Bu" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter2)
+"BI" = (
+/obj/structure/cable,
+/obj/structure/sign/warning/electric_shock/directional/west,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"BM" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"BN" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/structure/marker_beacon/yellow,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"BU" = (
+/turf/closed/wall/rust,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"Cg" = (
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "caves_depo1"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post)
+"Cn" = (
+/turf/closed/wall,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"Cp" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"CE" = (
+/obj/structure/lattice/lava{
+	base_icon_state = "lattice";
+	icon = 'icons/obj/smooth_structures/lattice.dmi';
+	icon_state = "lattice-255"
+	},
+/turf/open/chasm/lavaland,
+/area/template_noop)
+"CM" = (
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "caves_depo1"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post)
+"CP" = (
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"CR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"CS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"CT" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo1"
+	},
+/obj/structure/plasticflaps,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post)
+"Ds" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"DO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "caveslvldumbjump5"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"DU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter1)
+"Ed" = (
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "caves_depo5"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"Ee" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"Es" = (
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"EA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning{
+	desc = "A sign warning you about how falling into the elevator shaft is a bad idea.";
+	name = "WARNING: Lethal Fall Hazard";
+	pixel_x = 32
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"EQ" = (
+/obj/structure/lattice/lava{
+	base_icon_state = "lattice";
+	icon = 'icons/obj/smooth_structures/lattice.dmi';
+	icon_state = "lattice-255"
+	},
+/turf/open/chasm/lavaland,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"ER" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 9
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"EU" = (
+/obj/machinery/atmospherics/components/tank/oxygen,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"EY" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Gi" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"Gj" = (
+/obj/machinery/conveyor{
+	id = "caves_depo2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"Gm" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/structure/marker_beacon/yellow,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Gn" = (
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"Go" = (
+/turf/closed/wall,
+/area/awaymission/caves/misc/mining_post)
+"Gw" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"GB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"GG" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"GM" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"GU" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"Hk" = (
+/obj/structure/flora/ash/tall_shroom,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 10
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Hl" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"IA" = (
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"IB" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"Js" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"JA" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/structure/sign/warning{
+	desc = "A sign warning you about how falling into the elevator shaft is a bad idea.";
+	name = "WARNING: Lethal Fall Hazard";
+	pixel_y = -32
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"JD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "caves_depo2"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"JE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "caves_depo2"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"JH" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo1"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"Ka" = (
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"Km" = (
+/obj/effect/mine/explosive{
+	range_heavy = 0
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"KI" = (
+/obj/machinery/mass_driver{
+	id = "caveslvldumbjump2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"KK" = (
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"KP" = (
+/obj/structure/flora/ash/tall_shroom,
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"KW" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"Lf" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"Lw" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"LS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo3"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"MX" = (
+/obj/structure/flora/rock,
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Na" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area,
+/obj/item/stock_parts/cell/empty,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"Nc" = (
+/obj/machinery/power/rtg,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"Nw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post)
+"NM" = (
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter2)
+"NS" = (
+/obj/structure/flora/ash/tall_shroom,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"NW" = (
+/obj/structure/cable,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"Ob" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "caveslvldumbjump5";
+	name = "Rapid Mineral Transport Control";
+	pixel_y = 28
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter2)
+"Og" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning{
+	desc = "A sign warning you about how falling into the elevator shaft is a bad idea.";
+	name = "WARNING: Lethal Fall Hazard";
+	pixel_x = 32
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"Oi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"OF" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"OL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"ON" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"Pa" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "caves_depo3"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"Pe" = (
+/obj/effect/mine/explosive{
+	range_heavy = 0
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"PE" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 5
+	},
+/mob/living/simple_animal/hostile/ashwalker{
+	name = "Hates-The-Technology"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"PN" = (
+/turf/closed/wall/rust,
+/area/template_noop)
+"Qd" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"QF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
+"QI" = (
+/obj/machinery/conveyor{
+	id = "caves_depo2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"Rd" = (
+/obj/structure/flora/ash/tall_shroom,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Ro" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Rp" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"RG" = (
+/turf/closed/wall/rust,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"RK" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo5"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"RT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"RZ" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Sd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "caves_depo2"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"SQ" = (
+/obj/effect/turf_decal/stripes/white/corner,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Ta" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/mining_post)
+"To" = (
+/obj/structure/marker_beacon/yellow,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"Tx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "caveslvldumbjump2";
+	name = "Rapid Mineral Transport Control";
+	pixel_x = 28
+	},
+/mob/living/simple_animal/hostile/ashwalker{
+	name = "Breaks-The-Bridge"
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter1)
+"Tz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/mining_post)
+"TH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/mineral/processing_unit_console{
+	machinedir = 2
+	},
+/turf/closed/wall,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"TJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "caves_depo4"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"TS" = (
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "caves_depo5"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"TZ" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Uk" = (
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter2)
+"Uo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "caves_depo3"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"UA" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo1"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post)
+"Vs" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"VH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"VO" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/mining_post)
+"VR" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"VV" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"VY" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "caves_depo3";
+	name = "mining conveyor"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"WB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
+"WL" = (
+/turf/closed/wall/r_wall,
+/area/awaymission/caves/misc/mining_post)
+"WO" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"WP" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "caves_depo2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"Xc" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"Xi" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 10
+	},
+/obj/structure/marker_beacon/yellow,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Xj" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
+"XB" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"YW" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "caves_depo5"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"YX" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "caveslvldumbjump4";
+	name = "Rapid Mineral Transport Control";
+	pixel_x = 28
+	},
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/diverter)
+"YZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo2"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"Zm" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"Zr" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
+"ZM" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south{
+	cell_type = null
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/misc/mining_post/smelter1)
+"ZY" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/smelter1)
 
 (1,1,1) = {"
-aEaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaKaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaKaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaAaAaAaAaAaBaBaBaBaBaAaAaAaAaAaAaAaAaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaJaJaBaBaBaBaBaJaJaJaJaBaBaBaBaBaBaBaAaAaAaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaAaAaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaBaAaAaAaAaAaAaAaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaAaAaAaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaBaAaAaAaAaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaAaAaAaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaBaBaBaBaBaBaBaAaAaAaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaBaBaBaSaSaSaSaSaSaSaBaBaBaAaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaBaSaSaSaSaSaSaSaSaSaSaBaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaNSQjHKPeAaBaSaSaSaSaSaSaSaSaSaSaSaSaSaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJZYZYGiCnGwGweNkWkWkWRGhXaNaNaSaSaSaSaSaSaSaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJSQCnCPERGwnKGwGwdmcwNaGwlmeAeAeAeAaSaSaSaSaSaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaJaJaJaJaJaJaJaJaJaJaJaJTZTJefefefefefefxsefefefBrBrBrBrTShXaVaSaSaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaJaJaJaJaJaJaJaJaJaJaJzVTZAhdQdQbJdQdQdQdQdQdQZMpEpEpEpEYWRZaRaVaSaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaJaJaJaJaJaJaJaJaJaNaNodAhdQyLRGGwGwGwGwGwGwCnGMtcXipEYWPEjeHlaBaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaAaBaBaJaJaJaJaJaJaJaJaNaNodsYDUrtaBaBaAaAaAaAaAaAaVaVTZpEEdBrTSRZaNaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaBaBaBaBaBaBaBaBaJaJaJaNaNTZKITxCnaBaAaAaAaAaAaAaAaBaBEYpEpEpEYWJsBNaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaBaBaBaJaJaJaJaJaJaJaJaNaNaJCElHaBaBaAaAaNaNaAaAaAaBaBMXRoHkpEEdBrTSaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaJaJaJaJaJaJaJaJaJaJaJaJaJaJCECEaBaAaBaNaNaNaAaAaAaAaBaRaVodpEpEpEYWaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaBaAaAaAaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaBaNaFaNaNaNaAaAaBaBaBKKhliYpEYWaBaBaAaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaBaBaAaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaBaNaNaNaNaFaBaBaBaBaBaBaNTZpEYWhXaBaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJCEaBaAaAaBaFaNaNaNaNaNaBaBaBaBaNTZpEYWNSaBaBaKaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJCECEaBaAaAaBaBaNaFaNaNaNaBaBaBaBaNTZpEYWRdKPKPaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJCEVHaBaAaAaBaBaNaNaNaNaNaNaNaBaBaBTZpEEdBrBrTSbLaBaBaBaBaAaAaBaBPNeAeAjejeeAeAeAaBaBaBaYaYaBaBaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaBaBaBaBaBaBaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaAaAaAaBaBaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJflaBaBaAaAaNaFaNaBaBaNaNaNaBaBaBTZpEpEpEpEEdBrBrBrBrBrBrBrBrBrBrBrBrBrBrBrBrBraNRKaNaYanaYaYaYaBaBaBaBaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaJaBaBaBaLaLaLaLaLaLaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJCEpLCEaJaAaAaBaBaNaBaBaBaBaNaNaNaNKKtctciYpEpEpEpEhLCnaBaAaAtctctcPetcaBaBaBmOrLanananaNanaNaYaYaYaYaBaBaBaBaBaBaBaBaBaBaBaBaBaAaAaAaAaBaBaJaBaBaBaLaLaLaLaLaLaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJCEaJCEaJaBaBaBaFaNaFaBaBaBaBaBaBaBaNzVaNKKtctctctcyIyIaBaBaBaNaNzVaNaBaBaBaBaBaYzVanaZananapanaNaNaYaYaNaNaNaNaVaVaVaVaNaNaNaBaAaAaAaAaBaJaJaBaBaBaLaLaLaLaLaLaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaAaAaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaNaFaNaBaJaJaJaJaJaJaJaNaNaNaNaNaNaNyIaNzVaBaBaNaNaNaBaBaBaYaYaYaYaYanananananananananananaNaNaNaNaNaVaNaNaNaNaNaBaAaBaBaJaJaJaJaBaBaLaLaLaLaLaLaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaJaJaJaJaJaJaJaVaNaNaNaNaNaNyIaNKmaBaNaNaNaNaDaQaNaXaItAananapananaYanaZanananaNaNaNaNaNaNaNaNaNaNaNaNaNaNaBaJaJaJaJaJaJaJaBaLaLaLaLaLaLaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaJaJaJaJaJaJaJaJaJaJaJaJaNaVoXbLaNaNaNaNaNaNaDaQaDaNaqaNaQaDaNwuanaYaYananaNaNaNaVaVaBaBaBaBaBaNaVaNaNaNaNaNaNaJaJaJaJaJaJaJaBaLaLaLaLaLaLaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJCEaJaJaJaJaJaJaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNzVaNKmaNaNagaNaBaBaDaDaNaVaNaNanananaNaNaNaVaRaVaBaBaBaBaBaBaBaBaBaNaNaNavaJaJaJaJaJaJaJaBaLaLaLaLaLaLaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaBaBaBbLaBaJaJaJaJaJaJaJaVaJaJaJaJaJaJaJaJaJEeCEaJaJaJaJaJaBaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaBaBaBaBaBaBaBaJaJaJaJaJaJaJaJaNaVaBaBaBaAaAaAaBaBaJaJaJaNaNaNaNaJaJaJaJaJaJaJaBaLaLaLaLaLaLaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMGoGoGoGoGoGoaJCEaJaJaJaJaJaJaJaJaVaBaJaJaJaJaJaJaJCEEeCEaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaAaAaBaBaJaJaJaJaJaJaJaJaJaNaNaBaBaBaAaAaAaBaBaJaJaJavaNaNaNaJaJaJaJaJaJaJaJaJaBaLaLaLaBaB
-aKaBaMaMaMaMaMaMaMaMaMaMaMaMaMWLWLWLfkNWsqEUGoaJCEaJaJaJaJaJaJaBaBawaBaBaJaJaJaJaJaJCEEeCEaJaJaJaJaJaJaBaBaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaAaAaBaJaJaJaJaNaNaNavaJaJaJaJaJaBaBaBaBaBaLaLaLaBaB
-aBaBaBaBaBaNaNaNataNaNaNaBaBaBWLNcfyLwGnxVtUGoaJCEaJaJaJaJaJaJaJaJaBaBaJaJaJaJnHnqBMsshFKWaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaAaAaAaBaJaJaJaJaJaNaNaJaJaJaJaBaBaBaLaLaLaLaLaLaLaLaB
-aBaBaBaBaBaBaVaNaNaNaNaVaNaBaBWLWLWLBIGnxVGnGoaJCEaJaJaJaJaJaJaJaJaJaJaJaJaJnHTotkBMopOgnHaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaNaNaNaNaNaJaJaJaJaJaJaJaJaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaJaJaJaJaJaNaNaJaJaJaJaJaJaBaBaBaBaBaBaBaLaLaB
-aBaBaAaAaBaBaVaVaNaNaNaNaNaNaBWLutfyOFGnQFGnGoGoGoGoaJaJaJaJaJaJaJaJaJaJaJaJZmXBXBXBQIVsKWtktkToaNaVaJaJaJaJaJaJaBaJaJaJaJaNaWaNaNaVaVaVaVaVaNaNaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaJaJaJaJaJaNaNaNaVaJaJaJaJaJaJaJaJaJaJaBaBaLaLaB
-aBaBaAaAaBaBaBaNaNaNaNaNaVGoGoWLWLWLGoGoAmGoGoOLEAGoCECECECECECECECECECECECEZmXBVVjMGjVsZrEsEsohaNaNaNaVaNaJaJaJaJaJaNaVaNaNaNaNaWaWaVaVaVaRaNaNaNaNaNaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaJaJaJaJaJaNaNaNaVaJaJaJaJaJaJaJaJaJaJaJaBaBaBaB
-aBaBaAaAaBaiaiaNaNaNaNaNaNGozOGBGoQdIBRpCROiVOTaTzgswFwFwFwFwFwFwFwFwFwFuUnMbnONONXcGjVsVsVsVsKWaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaWaWaNaVaVaVaNaNaNaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJavaNaVaVaJaJaJaJaJaJaJaJaJaJaJaJaBaBaB
-aBaAaAaAaAaBaiaNaNaNaNaNRTbfNwwsarhvzzzzzzyBGoGoGoGoCECECECECECECECECECEsWylEsEshrnHGjYZYZJEYXnHaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaVaRaJaJaJaJaJaJaJaJaJaJaJaJaBaBaB
-aBaAaAaAaAaBaNaNaNaNaNaNRTGoGoGoGoigzLzLCSiXGoCMCTJHJHaJaJaJaJaJaJaJaJaJuDVRVRVRVRVRWPnHtlSdhFCECECECEaJaJaJaJaJaJaJBUCECECEaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNavaVaJaJaJaJaJaJaJaJaJaBaBaBaBaBaB
-aBaAaAaAaAaBaNaVaVaNaVaNRTRTRTRTfEXjzLzLCSvtBttVGoCEaJaJaJaJaJaJaJaJaJaJiBiBiBiBiBiBnHIAJASdDsqAGGGGaJaJaJaJaJaJaJEQObttUkCEaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaJaJaJaJaJaJaBaBaBaBaLaLaLaBaB
-aBaAaAaAaAaBaBaVaVaNaNaNaNaNaNRTfEXjzLzLCSyGfEtmGoaJaJaJaJaJaJaJaJaJaJaJaJtktktktkTotktknHJDYZxfCECEaJaJaJaJaJaJaJDOLSUoNMCEaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaVaNaNaNaJaJaJaJaJaJaBaBaBaBaBaLaLaLaBaB
-aBaAaAaAaAaAaBaRaVaVaNaNaNaNaNyCfEGUWOwNLfkhfEgUGoaJaJaJaJaJaJaJaJaJaJaJaJaJtkaJaJaJaJtkKaiBtcCEaJaJaJaJaJaJaJaJaJtciYjJBujDaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaVaNaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaB
-aBaAaAaAaAaAaBaBaRaVaNaNaNaNaNCpGoGoxmGofEfEGogUGoaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNTZjJzfGmaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaLaLaB
-aBaAaAaAaAaAaAaBaBaVavaNaNaNaNaNaNGoCgUAUAUAUAhRGoaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaNTZjJzfhXaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaLaLaB
-aBaAaAaAaAaAaAaAaBaJaJaJaJaJavavaVGoGoGoGoGoGoGoGoaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaNTZjJzfhXaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaBaBaLaLaB
-aBaAaAaAaAaAaAaAaBaBaJaJaJaJaJaJaJCEaJaJaJaJaJaJCEaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaNTZjJzfJseAcPaNaJaJaJaJaJaJaJaJaJaJaJaJaJaJaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaNaNaBaLaLaB
-aBaAaAaAaAaAaAaAaAaBaBaBaJaJaJaJaJCEaJaJaJaJaJaJCEaJaJaJaJaBaBaBaJaJaJaJaJaJaJaJaJaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaNaNTZjJzfzfzfJseAeAeAjHaJaJaJaJaJaJaJaJaJaJaJaBaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaNaNaNaJaJaJaJaJaJaJaJaJaJaJaJaNaNaBaLaLaB
-aBaAaAaAaAaAaAaAaAaAaAaBaBaBaJaJaJCEaJaJaJaJaJaJCEaJaJaJaJaBaBaBaJaJaJaJaJaJaJaJaJaJaJaBaJaJaJaJaJaJaJaJaJaJaJaJaNaNTZPaUouRexySySySySySBUcPaNaJaJaJaJaJaJaJaJaBaAaAaAaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaVaNaNaJaJaJaJaJaJaJaJaJaJaJaJaNaNaBaLaLaB
-aBaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBCEaJaJaJaJaJaJCEaJaJaBaBaAaAaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaVaRaVaNKKiYjJfBySySVYTHWBWByShXaNaNaNaNaNaNaNaBaBaBaAaAaAaBaBaBaBaBaJaJaJaJaJaJaJaJaJaJaJaNaNaVaNaNaJaJaJaJaJaJaJaJaJaNaVaVaVaNaBaLaLaB
-aBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBbLaBaBaBaBaBaJCEaJaJaBaBaAaAaBaBaBaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaJaNaVaVaVaVaNTZPaLSLSLSLSasLSLSyShXaVaVaVaNaNaNaNaBaAaAaAaAaAaAaAaAaAaAaJaJaJaJaJaJaJaJaJaNaNaNaVaRaVaNaNaJaJaJaJaJaJaJaJaNaVaRaVaBaBaLaLaB
-aBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaBaBbLaBaBaBaBaAaAaAaAaBaBaBaBaBaBaBadadaNaNaNadaNaNaNaNaNaNaNaNaNaNaNaNaNKKtcuRySySySySySySuRzHaRaBaBaBaBaBaBaBaAaAaAaAaAaAaAaAaAaAaBaNaNaNaVaRaVaVaNaNaNaNaNaNaVaNaNaNaNaWaNaWaNaNaNaNaNaNaNaBaBaLaLaB
-aBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaBaBadaNaNaNaNaNaNaNaNaNaNaNaVaVaRaBaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaWaNaNaVaVaNaNaNaNaNaNaVaNaNaNaWaNaNaNaWaNaNaNaNaBaBaBaBaBaLaLaB
-aBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaBaBaBaBaBaBaBaBaNaNaNaNaNaNaNaNaBaBaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaB
-aBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaNaNaNaNaNaBaBaBaBaLaLaLaLaLaLaLaLaLaLaLaLaLaLaBaBaB
-aMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMahaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aE
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aM
+"}
+(2,1,1) = {"
+aK
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(3,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(4,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(5,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(6,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aN
+aB
+aB
+aB
+ai
+aB
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(7,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aN
+aV
+aV
+aB
+ai
+ai
+aN
+aN
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(8,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aN
+aN
+aV
+aN
+aN
+aN
+aN
+aV
+aV
+aR
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(9,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+at
+aN
+aN
+aN
+aN
+aN
+aN
+aV
+aV
+aV
+aR
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(10,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aV
+aV
+aV
+aJ
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(11,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aV
+aN
+aN
+aN
+av
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(12,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aN
+aV
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aJ
+aJ
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(13,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aN
+aN
+aV
+aN
+RT
+RT
+RT
+aN
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(14,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aN
+Go
+Go
+bf
+Go
+RT
+aN
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(15,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aB
+Go
+zO
+Nw
+Go
+RT
+aN
+aN
+aN
+aN
+av
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(16,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+WL
+WL
+WL
+WL
+WL
+GB
+ws
+Go
+RT
+RT
+yC
+Cp
+aN
+av
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(17,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+WL
+Nc
+WL
+ut
+WL
+Go
+ar
+Go
+fE
+fE
+fE
+Go
+aN
+aV
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aA
+aA
+aB
+aM
+"}
+(18,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+Go
+WL
+fy
+WL
+fy
+WL
+Qd
+hv
+ig
+Xj
+Xj
+GU
+Go
+Go
+Go
+CE
+CE
+CE
+CE
+bL
+aB
+aA
+aA
+aB
+aM
+"}
+(19,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+Go
+fk
+Lw
+BI
+OF
+Go
+IB
+zz
+zL
+zL
+zL
+WO
+xm
+Cg
+Go
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aA
+aA
+aB
+aM
+"}
+(20,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+Go
+NW
+Gn
+Gn
+Gn
+Go
+Rp
+zz
+zL
+zL
+zL
+wN
+Go
+UA
+Go
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aA
+aA
+aB
+aM
+"}
+(21,1,1) = {"
+aK
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+Go
+sq
+xV
+xV
+QF
+Am
+CR
+zz
+CS
+CS
+CS
+Lf
+fE
+UA
+Go
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aA
+aA
+aB
+aM
+"}
+(22,1,1) = {"
+aK
+aB
+aB
+aB
+aB
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aA
+aB
+aB
+aB
+aB
+Go
+EU
+tU
+Gn
+Gn
+Go
+Oi
+yB
+iX
+vt
+yG
+kh
+fE
+UA
+Go
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aA
+aA
+aB
+aM
+"}
+(23,1,1) = {"
+aK
+aB
+aA
+aA
+aB
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aA
+aA
+aA
+aB
+aB
+aA
+aB
+aB
+aB
+aB
+Go
+Go
+Go
+Go
+Go
+Go
+VO
+Go
+Go
+Bt
+fE
+fE
+Go
+UA
+Go
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aA
+aA
+aB
+aM
+"}
+(24,1,1) = {"
+aK
+aB
+aA
+aA
+aB
+aB
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aA
+aA
+aA
+aB
+aB
+aJ
+aJ
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+Go
+OL
+Ta
+Go
+CM
+tV
+tm
+gU
+gU
+hR
+Go
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aB
+aM
+"}
+(25,1,1) = {"
+aK
+aA
+aA
+aA
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aJ
+aJ
+aJ
+aB
+aB
+bL
+CE
+CE
+CE
+CE
+Go
+EA
+Tz
+Go
+CT
+Go
+Go
+Go
+Go
+Go
+Go
+CE
+CE
+CE
+CE
+CE
+bL
+aA
+aA
+aB
+aM
+"}
+(26,1,1) = {"
+aK
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aB
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aB
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+Go
+Go
+gs
+Go
+JH
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aB
+aM
+"}
+(27,1,1) = {"
+aK
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+CE
+wF
+CE
+JH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aB
+aM
+"}
+(28,1,1) = {"
+aK
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aJ
+aJ
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+CE
+wF
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aA
+aA
+aB
+aM
+"}
+(29,1,1) = {"
+aK
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+CE
+wF
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aA
+aA
+aB
+aM
+"}
+(30,1,1) = {"
+aK
+aA
+aA
+aA
+aA
+aA
+aB
+aB
+aB
+aB
+aB
+aB
+aJ
+aJ
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+CE
+wF
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(31,1,1) = {"
+aK
+aA
+aA
+aA
+aA
+aA
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+CE
+wF
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(32,1,1) = {"
+aK
+aA
+aA
+aA
+aA
+aA
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+CE
+wF
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aB
+aA
+aA
+aA
+aB
+aM
+"}
+(33,1,1) = {"
+aK
+aA
+aA
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+CE
+wF
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aA
+aA
+aA
+aB
+aM
+"}
+(34,1,1) = {"
+aK
+aA
+aA
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aV
+aV
+aw
+aB
+aJ
+aJ
+CE
+wF
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aA
+aA
+aB
+aM
+"}
+(35,1,1) = {"
+aK
+aA
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aJ
+aJ
+CE
+wF
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aB
+aM
+"}
+(36,1,1) = {"
+aK
+aA
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+CE
+wF
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aB
+aM
+"}
+(37,1,1) = {"
+aK
+aA
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+CE
+uU
+sW
+uD
+iB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aB
+aM
+"}
+(38,1,1) = {"
+aK
+aA
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+CE
+nM
+yl
+VR
+iB
+tk
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aB
+aM
+"}
+(39,1,1) = {"
+aK
+aA
+aA
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+nH
+Zm
+Zm
+bn
+Es
+VR
+iB
+tk
+tk
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aB
+aM
+"}
+(40,1,1) = {"
+aK
+aA
+aA
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+nH
+To
+XB
+XB
+ON
+Es
+VR
+iB
+tk
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aB
+aM
+"}
+(41,1,1) = {"
+aK
+aA
+aA
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+zV
+aN
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+nq
+tk
+XB
+VV
+ON
+hr
+VR
+iB
+tk
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+ad
+aB
+aB
+aB
+aM
+"}
+(42,1,1) = {"
+aK
+aA
+aA
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+SQ
+TZ
+TZ
+od
+od
+TZ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+BM
+BM
+XB
+jM
+Xc
+nH
+VR
+iB
+To
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+ad
+aB
+aB
+aB
+aM
+"}
+(43,1,1) = {"
+aK
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+ZY
+Cn
+TJ
+Ah
+Ah
+sY
+KI
+CE
+CE
+aJ
+aJ
+aJ
+CE
+CE
+aJ
+CE
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+CE
+CE
+ss
+op
+QI
+Gj
+Gj
+Gj
+WP
+nH
+tk
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aN
+aB
+aB
+aB
+aM
+"}
+(44,1,1) = {"
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+ZY
+CP
+ef
+dQ
+dQ
+DU
+Tx
+lH
+CE
+aJ
+aJ
+CE
+CE
+VH
+fl
+pL
+aJ
+aJ
+aJ
+aJ
+CE
+Ee
+Ee
+Ee
+hF
+Og
+Vs
+Vs
+Vs
+YZ
+nH
+IA
+tk
+tk
+aJ
+aB
+aB
+aB
+aB
+aB
+aJ
+aJ
+aN
+aB
+aB
+aB
+aM
+"}
+(45,1,1) = {"
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+SQ
+Gi
+ER
+ef
+dQ
+yL
+rt
+Cn
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+CE
+CE
+aJ
+aJ
+aJ
+aJ
+CE
+CE
+CE
+KW
+nH
+KW
+Zr
+Vs
+YZ
+tl
+JA
+nH
+Ka
+aJ
+aJ
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aN
+aB
+aB
+aB
+aM
+"}
+(46,1,1) = {"
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+jH
+Cn
+Gw
+ef
+bJ
+RG
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+tk
+Es
+Vs
+JE
+Sd
+Sd
+JD
+iB
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+ad
+aB
+aB
+aB
+aM
+"}
+(47,1,1) = {"
+aB
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+KP
+Gw
+nK
+ef
+dQ
+Gw
+aB
+aA
+aA
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+tk
+Es
+Vs
+YX
+hF
+Ds
+YZ
+tc
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aB
+aB
+aB
+aM
+"}
+(48,1,1) = {"
+aB
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+eA
+Gw
+Gw
+ef
+dQ
+Gw
+aA
+aA
+aA
+aN
+aN
+aN
+aB
+aB
+aB
+aA
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+To
+oh
+KW
+nH
+CE
+qA
+xf
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+ad
+aB
+aB
+aM
+"}
+(49,1,1) = {"
+aB
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+eN
+Gw
+ef
+dQ
+Gw
+aA
+aA
+aN
+aN
+aF
+aN
+aF
+aB
+aB
+aN
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aJ
+aJ
+CE
+GG
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aB
+aB
+aM
+"}
+(50,1,1) = {"
+aB
+aA
+aB
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aS
+kW
+dm
+xs
+dQ
+Gw
+aA
+aA
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aF
+aB
+aF
+aN
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aV
+aN
+aJ
+aJ
+CE
+GG
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aB
+aB
+aM
+"}
+(51,1,1) = {"
+aB
+aA
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aS
+kW
+cw
+ef
+dQ
+Gw
+aA
+aA
+aA
+aA
+aN
+aN
+aN
+aF
+aN
+aN
+aN
+aN
+aF
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aJ
+aJ
+CE
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aB
+aB
+aM
+"}
+(52,1,1) = {"
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aS
+aS
+kW
+Na
+ef
+dQ
+Gw
+aA
+aA
+aA
+aA
+aN
+aF
+aN
+aN
+aN
+aB
+aB
+aF
+aN
+aB
+aB
+aB
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aV
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aB
+aB
+aM
+"}
+(53,1,1) = {"
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aS
+aS
+RG
+Gw
+ef
+ZM
+Cn
+aA
+aA
+aA
+aA
+aA
+aB
+aN
+aN
+aN
+aB
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aB
+aB
+aM
+"}
+(54,1,1) = {"
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aS
+aS
+aS
+hX
+lm
+Br
+pE
+GM
+aV
+aB
+aB
+aA
+aA
+aB
+aN
+aN
+aN
+aN
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aB
+aB
+aM
+"}
+(55,1,1) = {"
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aB
+aS
+aS
+aS
+aN
+eA
+Br
+pE
+tc
+aV
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aN
+aN
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aV
+aV
+aN
+aN
+aB
+aB
+aM
+"}
+(56,1,1) = {"
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aB
+aS
+aS
+aS
+aN
+eA
+Br
+pE
+Xi
+TZ
+EY
+MX
+aR
+aB
+aB
+aB
+aB
+aN
+aN
+aN
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aR
+aV
+aN
+aN
+aB
+aB
+aM
+"}
+(57,1,1) = {"
+aB
+aA
+aB
+aJ
+aJ
+aB
+aB
+aS
+aS
+aS
+aS
+eA
+Br
+pE
+pE
+pE
+pE
+Ro
+aV
+aB
+aB
+aB
+aB
+aB
+aB
+aN
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aV
+aV
+aN
+aN
+aB
+aB
+aM
+"}
+(58,1,1) = {"
+aB
+aA
+aB
+aJ
+aB
+aB
+aB
+aS
+aS
+aS
+aS
+eA
+TS
+YW
+YW
+Ed
+pE
+Hk
+od
+KK
+aB
+aB
+aB
+aB
+aB
+aN
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+EQ
+DO
+tc
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aV
+aN
+aN
+aB
+aB
+aM
+"}
+(59,1,1) = {"
+aB
+aA
+aB
+aJ
+aB
+aB
+aB
+aS
+aS
+aS
+aS
+aS
+hX
+RZ
+PE
+Br
+pE
+pE
+pE
+hl
+aN
+aN
+aN
+aB
+aB
+aN
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aN
+aJ
+aJ
+BU
+Ob
+LS
+iY
+TZ
+TZ
+TZ
+TZ
+TZ
+TZ
+KK
+aN
+aN
+aN
+aB
+aB
+aM
+"}
+(60,1,1) = {"
+aB
+aA
+aB
+aJ
+aB
+aB
+aB
+aS
+aS
+aS
+aS
+aS
+aV
+aR
+je
+TS
+YW
+Ed
+pE
+iY
+TZ
+TZ
+TZ
+TZ
+TZ
+KK
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aV
+aJ
+aJ
+CE
+tt
+Uo
+jJ
+jJ
+jJ
+jJ
+jJ
+jJ
+Pa
+iY
+TZ
+KK
+aV
+aB
+aB
+aM
+"}
+(61,1,1) = {"
+aB
+aA
+aB
+aB
+aB
+aB
+aB
+aB
+aS
+aS
+aS
+aS
+aS
+aV
+Hl
+RZ
+Js
+Br
+pE
+pE
+pE
+pE
+pE
+pE
+pE
+tc
+zV
+aN
+aV
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aN
+aJ
+aJ
+CE
+Uk
+NM
+Bu
+zf
+zf
+zf
+zf
+zf
+Uo
+jJ
+Pa
+tc
+aV
+aB
+aB
+aM
+"}
+(62,1,1) = {"
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aB
+aS
+aS
+aS
+aS
+aS
+aB
+aN
+BN
+TS
+YW
+YW
+YW
+YW
+YW
+Ed
+pE
+tc
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aJ
+aJ
+CE
+CE
+CE
+jD
+Gm
+hX
+hX
+Js
+zf
+uR
+fB
+LS
+uR
+aR
+aB
+aB
+aM
+"}
+(63,1,1) = {"
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aB
+aB
+aS
+aS
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+hX
+NS
+Rd
+Br
+pE
+iY
+KK
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aW
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+eA
+zf
+ex
+yS
+LS
+yS
+aB
+aB
+aB
+aM
+"}
+(64,1,1) = {"
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+KP
+Br
+pE
+pE
+tc
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+cP
+Js
+yS
+yS
+LS
+yS
+aB
+aA
+aB
+aM
+"}
+(65,1,1) = {"
+aK
+aB
+aB
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aB
+KP
+TS
+Ed
+pE
+tc
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aW
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+eA
+yS
+VY
+LS
+yS
+aA
+aA
+aB
+aM
+"}
+(66,1,1) = {"
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aB
+bL
+Br
+pE
+tc
+aN
+aN
+aV
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aV
+aW
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+eA
+yS
+TH
+as
+yS
+aA
+aA
+aB
+aM
+"}
+(67,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+Br
+pE
+tc
+aN
+aN
+oX
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aV
+aV
+aW
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+eA
+yS
+WB
+LS
+yS
+aA
+aA
+aB
+aM
+"}
+(68,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+Br
+hL
+yI
+yI
+yI
+bL
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aV
+aV
+aW
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+jH
+yS
+WB
+LS
+yS
+aA
+aA
+aB
+aM
+"}
+(69,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+Br
+Cn
+yI
+aN
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aN
+aV
+aV
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+BU
+yS
+yS
+uR
+aA
+aA
+aB
+aM
+"}
+(70,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+Br
+aB
+aB
+zV
+Km
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aV
+aR
+aV
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+cP
+hX
+hX
+zH
+aA
+aA
+aB
+aM
+"}
+(71,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+Br
+aA
+aB
+aB
+aB
+aN
+zV
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aV
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aV
+aR
+aA
+aA
+aB
+aM
+"}
+(72,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+Br
+aA
+aB
+aB
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aV
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aV
+aB
+aA
+aA
+aB
+aM
+"}
+(73,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+Br
+tc
+aN
+aN
+aN
+aN
+Km
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aV
+aB
+aA
+aA
+aB
+aM
+"}
+(74,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+Br
+tc
+aN
+aN
+aN
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aB
+aA
+aA
+aB
+aM
+"}
+(75,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+PN
+Br
+tc
+zV
+aN
+aN
+aD
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aB
+aA
+aA
+aB
+aM
+"}
+(76,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+eA
+Br
+Pe
+aN
+aB
+aD
+aQ
+ag
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aB
+aA
+aA
+aB
+aM
+"}
+(77,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+eA
+Br
+tc
+aB
+aB
+aQ
+aD
+aN
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aB
+aA
+aA
+aB
+aM
+"}
+(78,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+je
+Br
+aB
+aB
+aB
+aN
+aN
+aB
+aB
+aA
+aA
+aB
+aB
+aB
+aB
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aA
+aA
+aB
+aM
+"}
+(79,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+je
+Br
+aB
+aB
+aY
+aX
+aq
+aB
+aB
+aA
+aA
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(80,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+eA
+Br
+aB
+aB
+aY
+aI
+aN
+aD
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(81,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+eA
+Br
+mO
+aB
+aY
+tA
+aQ
+aD
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(82,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+eA
+Br
+rL
+aY
+aY
+an
+aD
+aN
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(83,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aN
+an
+zV
+aY
+an
+aN
+aV
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(84,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+RK
+an
+an
+an
+ap
+wu
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aB
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(85,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aN
+an
+aZ
+an
+an
+an
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(86,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aY
+aY
+aN
+an
+an
+an
+aY
+an
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(87,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aY
+an
+an
+an
+an
+aY
+aY
+an
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aA
+aB
+aM
+"}
+(88,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aY
+aN
+ap
+an
+an
+an
+an
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aA
+aA
+aA
+aB
+aB
+aM
+"}
+(89,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aY
+aY
+an
+an
+aZ
+an
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aB
+aM
+"}
+(90,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aY
+aY
+aN
+an
+an
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aB
+aB
+aB
+aM
+"}
+(91,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aB
+aY
+aN
+an
+an
+aN
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aW
+aB
+aB
+aM
+"}
+(92,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aB
+aY
+aY
+an
+an
+aN
+aV
+aV
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aB
+aB
+aM
+"}
+(93,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aB
+aB
+aY
+an
+aN
+aV
+aR
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aV
+aN
+aB
+aB
+aM
+"}
+(94,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aB
+aB
+aN
+an
+aN
+aV
+aV
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aR
+aV
+aB
+aB
+aM
+"}
+(95,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aB
+aB
+aN
+aN
+aN
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aV
+aV
+aB
+aB
+aM
+"}
+(96,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aB
+aN
+aN
+aN
+aB
+aB
+aA
+aA
+aA
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aV
+aN
+aN
+aB
+aM
+"}
+(97,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aB
+aN
+aN
+aN
+aB
+aB
+aA
+aA
+aA
+aA
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aN
+aM
+"}
+(98,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aB
+aV
+aN
+aN
+aB
+aB
+aA
+aA
+aA
+aA
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aN
+aN
+aM
+"}
+(99,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aB
+aV
+aN
+aN
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aN
+aN
+ah
+"}
+(100,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aB
+aV
+aV
+aN
+aN
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aN
+aN
+aN
+aM
+"}
+(101,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aB
+aV
+aN
+aN
+aV
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aN
+aV
+aN
+aN
+aN
+aN
+aM
+"}
+(102,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aB
+aN
+aN
+aN
+aN
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aV
+aV
+aR
+aN
+aV
+aN
+aB
+aM
+"}
+(103,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aB
+aN
+aN
+aN
+aN
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aV
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aV
+aV
+aN
+aN
+aB
+aM
+"}
+(104,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aB
+aN
+aN
+aN
+aN
+aN
+aN
+av
+aN
+aJ
+aJ
+aN
+aN
+av
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aB
+aB
+aM
+"}
+(105,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aB
+aB
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aV
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aB
+aB
+aM
+"}
+(106,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aA
+aA
+aB
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aN
+aV
+aV
+av
+aN
+aN
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aW
+aL
+aL
+aM
+"}
+(107,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aA
+aA
+aA
+aB
+aN
+av
+aN
+aN
+av
+aJ
+aJ
+aV
+aV
+aV
+aR
+aV
+aN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aL
+aL
+aM
+"}
+(108,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aA
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aW
+aN
+aL
+aL
+aM
+"}
+(109,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aA
+aA
+aA
+aA
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aL
+aL
+aM
+"}
+(110,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aW
+aW
+aL
+aL
+aM
+"}
+(111,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aL
+aL
+aM
+"}
+(112,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aL
+aL
+aM
+"}
+(113,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aL
+aL
+aM
+"}
+(114,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aL
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aN
+aL
+aL
+aM
+"}
+(115,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aJ
+aB
+aL
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aV
+aV
+aN
+aB
+aL
+aL
+aM
+"}
+(116,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aJ
+aB
+aL
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aV
+aR
+aN
+aB
+aL
+aL
+aM
+"}
+(117,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aB
+aB
+aL
+aB
+aJ
+aJ
+aJ
+aJ
+aB
+aB
+aB
+aB
+aJ
+aJ
+aJ
+aN
+aN
+aN
+aV
+aV
+aN
+aB
+aL
+aL
+aM
+"}
+(118,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aB
+aB
+aJ
+aJ
+aJ
+aB
+aL
+aL
+aB
+aJ
+aJ
+aB
+aN
+aN
+aN
+aN
+aB
+aB
+aB
+aL
+aL
+aM
+"}
+(119,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aB
+aB
+aB
+aJ
+aJ
+aB
+aL
+aL
+aB
+aJ
+aJ
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aL
+aL
+aM
+"}
+(120,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aB
+aB
+aB
+aB
+aL
+aL
+aB
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aB
+aM
+"}
+(121,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aB
+aB
+aL
+aL
+aL
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aB
+aM
+"}
+(122,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aM
 "}

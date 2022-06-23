@@ -10,7 +10,6 @@
 	var/list/boss_abilities = list() //list of /datum/action/boss
 	var/datum/boss_active_timed_battle/atb
 	var/point_regen_delay = 1
-	var/assign_abilities = TRUE //in case you want the bosses to not immediately gain their abilities for whatever reason
 	var/mid_ability = FALSE //in case you want to check to see if a boss in the middle of an abiltiy (i.e to prevent them from triggering another ability)
 
 
@@ -20,16 +19,14 @@
 	atb = new()
 	atb.point_regen_delay = point_regen_delay
 	atb.boss = src
-	if(assign_abilities)
-		AssignAbilities()
 
-/mob/living/simple_animal/hostile/boss/proc/AssignAbilities()
 	for(var/ab in boss_abilities)
 		boss_abilities -= ab
 		var/datum/action/boss/AB = new ab()
 		AB.boss = src
 		AB.Grant(src)
 		boss_abilities += AB
+
 	atb.assign_abilities(boss_abilities)
 
 /mob/living/simple_animal/hostile/boss/Destroy()

@@ -1,79 +1,1596 @@
-"aa" = (/obj/machinery/door/firedoor/closed,/obj/effect/turf_decal/tile/neutral/half/contrasted,/turf/open/indestructible,/area/template_noop)
-"ac" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 4},/turf/open/indestructible,/area/template_noop)
-"ad" = (/turf/closed/indestructible/reinforced,/area/template_noop)
-"ae" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid,/area/template_noop)
-"af" = (/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
-"ag" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 4},/turf/open/indestructible,/area/template_noop)
-"ah" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid,/area/template_noop)
-"ai" = (/obj/machinery/door/firedoor/closed,/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
-"aj" = (/obj/effect/turf_decal/tile/neutral/half/contrasted,/obj/structure/fluff{desc = "A humanoid figure shrouded by erratic static."; icon = 'icons/effects/effects.dmi'; icon_state = "static"; name = "humanoid figure"},/turf/open/indestructible,/area/template_noop)
-"ak" = (/obj/effect/turf_decal/tile/neutral,/turf/open/indestructible,/area/template_noop)
-"al" = (/obj/machinery/door/firedoor/closed,/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
-"am" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless,/area/template_noop)
-"an" = (/turf/closed/mineral/asteroid/porous,/area/template_noop)
-"ap" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/turf/open/indestructible,/area/template_noop)
-"aq" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 8},/turf/open/indestructible,/area/template_noop)
-"as" = (/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/indestructible,/area/template_noop)
-"at" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 8},/turf/open/indestructible,/area/template_noop)
-"au" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/obj/structure/extinguisher_cabinet/directional/north,/turf/open/indestructible,/area/template_noop)
-"av" = (/obj/effect/decal/cleanable/dirt,/turf/open/indestructible{icon_state = "plating"; name = "plating"},/area/template_noop)
-"aw" = (/obj/modular_map_connector,/turf/template_noop,/area/template_noop)
-"az" = (/obj/structure/fluff{desc = "A humanoid figure shrouded by erratic static."; icon = 'icons/effects/effects.dmi'; icon_state = "static"; name = "humanoid figure"},/turf/open/misc/asteroid,/area/template_noop)
-"aA" = (/obj/effect/turf_decal/tile/neutral/half/contrasted,/turf/open/indestructible,/area/template_noop)
-"aB" = (/obj/machinery/door/firedoor,/turf/open/indestructible,/area/template_noop)
-"aC" = (/obj/effect/decal/cleanable/dirt,/obj/item/stack/rods,/turf/open/floor/plating/airless,/area/template_noop)
-"aD" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
-"aE" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/obj/item/stack/sheet/iron,/turf/open/indestructible,/area/template_noop)
-"aF" = (/mob/living/simple_animal/hostile/asteroid/curseblob,/turf/open/misc/asteroid,/area/template_noop)
-"aH" = (/obj/machinery/door/firedoor/closed,/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
-"aI" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
-"aJ" = (/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
-"aK" = (/obj/effect/decal/cleanable/dirt,/obj/item/stack/sheet/iron,/turf/open/floor/plating/airless,/area/template_noop)
-"aL" = (/turf/open/misc/asteroid,/area/template_noop)
-"aM" = (/turf/template_noop,/area/template_noop)
-"aN" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
-"aO" = (/turf/open/indestructible,/area/template_noop)
-"aP" = (/turf/closed/indestructible/fakedoor{name = "Secure Maintenance Access"},/area/template_noop)
-"aQ" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/turf/open/indestructible,/area/template_noop)
-"aR" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/neutral/half/contrasted,/turf/open/indestructible,/area/template_noop)
-"aS" = (/obj/structure/girder,/turf/open/floor/plating/airless,/area/template_noop)
-"aU" = (/turf/open/space/basic,/area/template_noop)
-"aV" = (/obj/structure/lattice,/turf/open/space/basic,/area/template_noop)
-"aW" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/obj/effect/turf_decal/sand,/turf/open/indestructible,/area/template_noop)
-"aX" = (/turf/closed/indestructible/fakeglass,/area/template_noop)
-"aY" = (/obj/effect/turf_decal/sand/plating,/turf/open/indestructible{icon_state = "plating"; name = "plating"},/area/template_noop)
-"gK" = (/obj/structure/fluff{desc = "A humanoid figure shrouded by erratic static."; icon = 'icons/effects/effects.dmi'; icon_state = "static"; name = "humanoid figure"},/turf/open/misc/snow,/area/template_noop)
-"ir" = (/obj/effect/step_trigger/teleport_fancy{entersmoke = 1; entersparks = 1; locationx = 27; locationy = 236; uses = 0},/obj/structure/fluff{desc = "You're not sure if walking into this is a great idea..."; icon = 'icons/effects/eldritch.dmi'; icon_state = "pierced_illusion"; name = "fluxating rift"},/turf/open/misc/snow,/area/template_noop)
-"lL" = (/obj/structure/flora/tree/pine/xmas/presents,/obj/item/a_gift,/turf/open/misc/snow,/area/template_noop)
-"lQ" = (/obj/effect/step_trigger/message{message = "Please do not come back any time soon, these sorts of things should be kept to a one-in-a-lifetime experience if possible."; name = "leaving message in the tear"},/turf/open/misc/snow,/area/template_noop)
-"mJ" = (/obj/structure/flora/grass/both,/turf/open/misc/snow,/area/template_noop)
-"tv" = (/obj/item/a_gift,/turf/open/misc/snow,/area/template_noop)
-"xa" = (/turf/open/misc/snow,/area/template_noop)
-"yw" = (/obj/item/flashlight/flare/torch,/turf/open/misc/snow,/area/template_noop)
-"BG" = (/obj/structure/flora/grass/brown,/turf/open/misc/snow,/area/template_noop)
-"Fx" = (/turf/closed/mineral/snowmountain,/area/template_noop)
-"IO" = (/obj/effect/decal/cleanable/dirt,/obj/effect/step_trigger/message{message = "Life has many doors small one, some are best left closed. Hurry now, before someone less... lenient notices you."; name = "initial warning in the tear"},/turf/open/indestructible,/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/door/firedoor/closed,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/turf/open/indestructible,
+/area/template_noop)
+"ac" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/template_noop)
+"ad" = (
+/turf/closed/indestructible/reinforced,
+/area/template_noop)
+"ae" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid,
+/area/template_noop)
+"af" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/template_noop)
+"ag" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/template_noop)
+"ah" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid,
+/area/template_noop)
+"ai" = (
+/obj/machinery/door/firedoor/closed,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/template_noop)
+"aj" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/structure/fluff{
+	desc = "A humanoid figure shrouded by erratic static.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "static";
+	name = "humanoid figure"
+	},
+/turf/open/indestructible,
+/area/template_noop)
+"ak" = (
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/indestructible,
+/area/template_noop)
+"al" = (
+/obj/machinery/door/firedoor/closed,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/template_noop)
+"am" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"an" = (
+/turf/closed/mineral/asteroid/porous,
+/area/template_noop)
+"ap" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/template_noop)
+"aq" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/template_noop)
+"as" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/template_noop)
+"at" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/template_noop)
+"au" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/indestructible,
+/area/template_noop)
+"av" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible{
+	icon_state = "plating";
+	name = "plating"
+	},
+/area/template_noop)
+"aw" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"az" = (
+/obj/structure/fluff{
+	desc = "A humanoid figure shrouded by erratic static.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "static";
+	name = "humanoid figure"
+	},
+/turf/open/misc/asteroid,
+/area/template_noop)
+"aA" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/turf/open/indestructible,
+/area/template_noop)
+"aB" = (
+/obj/machinery/door/firedoor,
+/turf/open/indestructible,
+/area/template_noop)
+"aC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"aD" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/template_noop)
+"aE" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/item/stack/sheet/iron,
+/turf/open/indestructible,
+/area/template_noop)
+"aF" = (
+/mob/living/simple_animal/hostile/asteroid/curseblob,
+/turf/open/misc/asteroid,
+/area/template_noop)
+"aH" = (
+/obj/machinery/door/firedoor/closed,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/template_noop)
+"aI" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/template_noop)
+"aJ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/template_noop)
+"aK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"aL" = (
+/turf/open/misc/asteroid,
+/area/template_noop)
+"aM" = (
+/turf/template_noop,
+/area/template_noop)
+"aN" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/template_noop)
+"aO" = (
+/turf/open/indestructible,
+/area/template_noop)
+"aP" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Secure Maintenance Access"
+	},
+/area/template_noop)
+"aQ" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/template_noop)
+"aR" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/turf/open/indestructible,
+/area/template_noop)
+"aS" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"aU" = (
+/turf/open/space/basic,
+/area/template_noop)
+"aV" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/template_noop)
+"aW" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/indestructible,
+/area/template_noop)
+"aX" = (
+/turf/closed/indestructible/fakeglass,
+/area/template_noop)
+"aY" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/indestructible{
+	icon_state = "plating";
+	name = "plating"
+	},
+/area/template_noop)
+"gK" = (
+/obj/structure/fluff{
+	desc = "A humanoid figure shrouded by erratic static.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "static";
+	name = "humanoid figure"
+	},
+/turf/open/misc/snow,
+/area/template_noop)
+"ir" = (
+/obj/effect/step_trigger/teleport_fancy{
+	entersmoke = 1;
+	entersparks = 1;
+	locationx = 27;
+	locationy = 236;
+	uses = 0
+	},
+/obj/structure/fluff{
+	desc = "You're not sure if walking into this is a great idea...";
+	icon = 'icons/effects/eldritch.dmi';
+	icon_state = "pierced_illusion";
+	name = "fluxating rift"
+	},
+/turf/open/misc/snow,
+/area/template_noop)
+"lL" = (
+/obj/structure/flora/tree/pine/xmas/presents,
+/obj/item/a_gift,
+/turf/open/misc/snow,
+/area/template_noop)
+"lQ" = (
+/obj/effect/step_trigger/message{
+	message = "Please do not come back any time soon, these sorts of things should be kept to a one-in-a-lifetime experience if possible.";
+	name = "leaving message in the tear"
+	},
+/turf/open/misc/snow,
+/area/template_noop)
+"mJ" = (
+/obj/structure/flora/grass/both,
+/turf/open/misc/snow,
+/area/template_noop)
+"tv" = (
+/obj/item/a_gift,
+/turf/open/misc/snow,
+/area/template_noop)
+"xa" = (
+/turf/open/misc/snow,
+/area/template_noop)
+"yw" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/snow,
+/area/template_noop)
+"BG" = (
+/obj/structure/flora/grass/brown,
+/turf/open/misc/snow,
+/area/template_noop)
+"Fx" = (
+/turf/closed/mineral/snowmountain,
+/area/template_noop)
+"IO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/step_trigger/message{
+	message = "Life has many doors small one, some are best left closed. Hurry now, before someone less... lenient notices you.";
+	name = "initial warning in the tear"
+	},
+/turf/open/indestructible,
+/area/template_noop)
 
 (1,1,1) = {"
-aMaMaUaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aMaUaUaUaMaMaMaqaMaMaMaMaMaMaMaMaMaMaMaMaManaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
-aUaUaUaUaUaMaMaMaMaMaMaMaMaMaUaUaMaMaMaManaLanaMaMaMaMaMaMaMaMaManananaMaMaMaMaMaMaMaMaMaMaMaMtvaMaMaMFxFxaMaMaM
-aMaUaUaUaUaMaMaMaMaUaMaUaMaMaUaUaMaMaMaMaLaLanaMaMaMaMaMaManananananananaMaMaMaMaMaMaMaMaMtvlLxaaMaMFxFxFxFxaMaM
-aMaUaUaUaMaMaMaMaUaVaSaUaUaUaUaUaUaMaMaMaMazaLanaManananaManaLaLaLaLaLananananananaMananaMaMgKtvaMaMaMFxFxFxaMaM
-aMaMaUaMaMaMaMaMaUaVadaUaUaUaUaUaUaMaMaMaMaMaMaMaMananananananananaLanananananananaMaMaMaMaMaMaMaMaMaMBGxaaMaMaM
-aMaMaMaMaMaMaMaUaUamadaUaUaVaUaUaUaUaMaMaManaMaMaManaLaLanaMananaLaLaLananananananananaManaMaMFxFxaMaMaMaMaMaMaM
-aMaMaMaMaMaMaSaVaVaKadaUaUaVaUaUaUaUaMaMaMaMaMananananaLaMaMaManaFananananaManananaMaMaMaMaMaMmJFxxaaMaMaMaMaMaM
-aMaMaMaMaMaMadaCamamadaUaUaVaVaUaVaUaMaMaMaMaLaLaLaLaLahaLaMaManaLananaMaMaMaMaMaMaMaMaMaMaMxaxaxaxaxaaMaMaMaMaM
-aMaMadaMadaPadaiaialadadadaXaXaXaXadaMaMaMaLaLaLaLaLaLaLaLaeaLaLaLaLaLaMaLaLaLaMaLaLaLaLxaxaxairxamJxaaMaMaMaMaM
-awaMaEaMaMaNaHaIaJafapauaMaMaMaQaQaNaWaYaLaLaLaLananaLaLaLaLaLahaLaLaLaLaLaMaLxalQxaxaxaxamJmJxaxaxaxaaMaMaMaMaM
-aMaMaMaMaJaJaiaJaJaOaBaOaOaJIOaJavaYaYaYaYaLaMaLanananaLaLaMaMaMaLaLaLaLaLaLaLaLaMxaxaaMywxaFxFxFxxaaMaMaMaMaMaM
-aMajaMaMaMaAaaasaOakaRaAaAaAaMaMaMaMaMaMaMaMaMaLanananananaMaMaMaLaFaMaMaMaMaMaMaMaMaMaMaMaMFxFxFxaMaMaMaMaMaMaM
-aMadaMadadadadataBacadadadadaMadadaMaMadaMaMaMaMananananananaManaLaLananaMaMaMaMaMaMaMaMaMaMaMFxaMaMaMaMaMaMaMaM
-aMaMaMaMaMaMadaqaOagadaMaMaMaMaMaMaMaMaMaMaMaMaMaManananananananaLananananananaMaMaMaMaManaMaMaMaMaMaMaMxaxaaMaM
-aMaMaMaMaMaMadaqaOaDadaMaMaMaMaMaMaMaMaMaMaManaMaMaMaMaMaManananaLaLaLanananananananaMaMaMaMaMaMaMxaBGgKFxFxaMaM
-aMaMaMaMaMaMadaMaJaMadaMaUaMaMaMaMaUaUaMaMaMaMaMaMaMaManaMaMaManananaLananananaMaMaMaMaManaMaMaMaMxaxaFxFxFxaMaM
-aMaMaMaMaMaMaMaMaJaMaMaMaUaUaMaMaUaUaUaUaMaMaMaMaMaMaManaMaMaManananaLananaMaMaMaMaMaMaMaMaMaMaMaMxaxaFxFxFxaMaM
-aMaMaMaMaMaMadaMaMaMaMaMaUaUaUaMaUaUaUaUaUaMaMaMaMaMaMaMaMaMaMaMaManananaMaMaMaMaMaMaMaMaMaMaMaMaMaMFxFxFxFxaMaM
-aMaMaMaMaMaMaMaMaMaMaMaMaUaMaMaMaUaUaUaUaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMFxFxFxaMaM
-aMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaMaM
+aM
+aM
+aU
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aw
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(2,1,1) = {"
+aM
+aU
+aU
+aU
+aU
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aj
+ad
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(3,1,1) = {"
+aU
+aU
+aU
+aU
+aU
+aU
+aM
+aM
+aM
+ad
+aE
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(4,1,1) = {"
+aM
+aU
+aU
+aU
+aU
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+ad
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(5,1,1) = {"
+aM
+aM
+aU
+aU
+aM
+aM
+aM
+aM
+aM
+ad
+aM
+aJ
+aM
+ad
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(6,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aP
+aN
+aJ
+aA
+ad
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(7,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aS
+ad
+ad
+aH
+ai
+aa
+ad
+ad
+ad
+ad
+aM
+ad
+aM
+aM
+"}
+(8,1,1) = {"
+aM
+aq
+aM
+aM
+aM
+aM
+aU
+aV
+aC
+ai
+aI
+aJ
+as
+at
+aq
+aq
+aM
+aM
+aM
+aM
+aM
+"}
+(9,1,1) = {"
+aM
+aM
+aM
+aM
+aU
+aU
+aU
+aV
+am
+ai
+aJ
+aJ
+aO
+aB
+aO
+aO
+aJ
+aJ
+aM
+aM
+aM
+"}
+(10,1,1) = {"
+aM
+aM
+aM
+aU
+aV
+aV
+am
+aK
+am
+al
+af
+aO
+ak
+ac
+ag
+aD
+aM
+aM
+aM
+aM
+aM
+"}
+(11,1,1) = {"
+aM
+aM
+aM
+aM
+aS
+ad
+ad
+ad
+ad
+ad
+ap
+aB
+aR
+ad
+ad
+ad
+ad
+aM
+aM
+aM
+aM
+"}
+(12,1,1) = {"
+aM
+aM
+aM
+aU
+aU
+aU
+aU
+aU
+aU
+ad
+au
+aO
+aA
+ad
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(13,1,1) = {"
+aM
+aM
+aM
+aM
+aU
+aU
+aU
+aU
+aU
+ad
+aM
+aO
+aA
+ad
+aM
+aM
+aU
+aU
+aU
+aU
+aM
+"}
+(14,1,1) = {"
+aM
+aM
+aM
+aM
+aU
+aU
+aV
+aV
+aV
+aX
+aM
+aJ
+aA
+ad
+aM
+aM
+aM
+aU
+aU
+aM
+aM
+"}
+(15,1,1) = {"
+aM
+aM
+aU
+aU
+aU
+aU
+aU
+aU
+aV
+aX
+aM
+IO
+aM
+aM
+aM
+aM
+aM
+aM
+aU
+aM
+aM
+"}
+(16,1,1) = {"
+aM
+aM
+aU
+aU
+aU
+aU
+aU
+aU
+aU
+aX
+aQ
+aJ
+aM
+ad
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(17,1,1) = {"
+aM
+aM
+aM
+aM
+aU
+aU
+aU
+aU
+aV
+aX
+aQ
+av
+aM
+ad
+aM
+aM
+aM
+aU
+aU
+aU
+aM
+"}
+(18,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aU
+aU
+aU
+ad
+aN
+aY
+aM
+aM
+aM
+aM
+aU
+aU
+aU
+aU
+aM
+"}
+(19,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aW
+aY
+aM
+aM
+aM
+aM
+aU
+aU
+aU
+aU
+aM
+"}
+(20,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aY
+aY
+aM
+ad
+aM
+aM
+aM
+aU
+aU
+aU
+aM
+"}
+(21,1,1) = {"
+aM
+aM
+an
+aL
+aM
+aM
+aM
+aM
+aM
+aM
+aL
+aY
+aM
+aM
+aM
+aM
+aM
+aM
+aU
+aM
+aM
+"}
+(22,1,1) = {"
+aM
+an
+aL
+aL
+az
+aM
+an
+aM
+aM
+aL
+aL
+aL
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(23,1,1) = {"
+aM
+aM
+an
+an
+aL
+aM
+aM
+aM
+aL
+aL
+aL
+aM
+aM
+aM
+aM
+an
+aM
+aM
+aM
+aM
+aM
+"}
+(24,1,1) = {"
+aM
+aM
+aM
+aM
+an
+aM
+aM
+an
+aL
+aL
+aL
+aL
+aL
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(25,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+an
+aL
+aL
+an
+an
+an
+an
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(26,1,1) = {"
+aM
+aM
+aM
+aM
+an
+an
+an
+an
+aL
+aL
+an
+an
+an
+an
+an
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(27,1,1) = {"
+aM
+aM
+aM
+aM
+an
+an
+aL
+an
+aL
+aL
+aL
+an
+an
+an
+an
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(28,1,1) = {"
+aM
+aM
+aM
+aM
+an
+an
+aL
+aL
+ah
+aL
+aL
+aL
+an
+an
+an
+aM
+an
+an
+aM
+aM
+aM
+"}
+(29,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+an
+an
+aM
+aL
+aL
+aL
+aL
+an
+an
+an
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(30,1,1) = {"
+aM
+aM
+aM
+an
+an
+an
+aM
+aM
+aM
+ae
+aL
+aM
+aM
+an
+an
+an
+aM
+aM
+aM
+aM
+aM
+"}
+(31,1,1) = {"
+aM
+aM
+aM
+an
+aL
+an
+an
+aM
+aM
+aL
+aL
+aM
+aM
+aM
+an
+an
+aM
+aM
+aM
+aM
+aM
+"}
+(32,1,1) = {"
+aM
+aM
+aM
+an
+aL
+an
+an
+an
+an
+aL
+ah
+aM
+aM
+an
+an
+an
+an
+an
+aM
+aM
+aM
+"}
+(33,1,1) = {"
+aM
+aM
+an
+an
+aL
+an
+aL
+aF
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+an
+an
+aM
+aM
+aM
+"}
+(34,1,1) = {"
+aM
+aM
+an
+an
+aL
+aL
+aL
+an
+an
+aL
+aL
+aL
+aF
+aL
+an
+aL
+an
+an
+an
+aM
+aM
+"}
+(35,1,1) = {"
+aM
+aM
+an
+an
+aL
+an
+aL
+an
+an
+aL
+aL
+aL
+aM
+an
+an
+aL
+aL
+aL
+an
+aM
+aM
+"}
+(36,1,1) = {"
+aM
+aM
+aM
+an
+an
+an
+an
+an
+aM
+aM
+aL
+aL
+aM
+an
+an
+an
+an
+an
+an
+aM
+aM
+"}
+(37,1,1) = {"
+aM
+aM
+aM
+aM
+an
+an
+an
+an
+aM
+aL
+aL
+aL
+aM
+aM
+an
+an
+an
+an
+aM
+aM
+aM
+"}
+(38,1,1) = {"
+aM
+aM
+aM
+aM
+an
+an
+an
+aM
+aM
+aL
+aM
+aL
+aM
+aM
+an
+an
+an
+aM
+aM
+aM
+aM
+"}
+(39,1,1) = {"
+aM
+aM
+aM
+aM
+an
+an
+an
+an
+aM
+aL
+aL
+aL
+aM
+aM
+an
+an
+an
+aM
+aM
+aM
+aM
+"}
+(40,1,1) = {"
+aM
+aM
+aM
+aM
+an
+an
+an
+an
+aM
+aM
+xa
+aL
+aM
+aM
+aM
+an
+aM
+aM
+aM
+aM
+aM
+"}
+(41,1,1) = {"
+aM
+aM
+aM
+aM
+an
+an
+an
+an
+aM
+aL
+lQ
+aM
+aM
+aM
+aM
+an
+aM
+aM
+aM
+aM
+aM
+"}
+(42,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+an
+aM
+aM
+aL
+xa
+xa
+aM
+aM
+aM
+an
+aM
+aM
+aM
+aM
+aM
+"}
+(43,1,1) = {"
+aM
+aM
+aM
+aM
+an
+aM
+an
+aM
+aM
+aL
+xa
+xa
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(44,1,1) = {"
+aM
+aM
+aM
+aM
+an
+aM
+aM
+aM
+aM
+aL
+xa
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(45,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+an
+aM
+aM
+xa
+xa
+yw
+aM
+aM
+an
+aM
+an
+aM
+aM
+aM
+aM
+"}
+(46,1,1) = {"
+aM
+aM
+aM
+tv
+aM
+aM
+aM
+aM
+aM
+xa
+mJ
+xa
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(47,1,1) = {"
+aM
+aM
+aM
+lL
+gK
+aM
+aM
+aM
+xa
+xa
+mJ
+Fx
+Fx
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(48,1,1) = {"
+aM
+aM
+tv
+xa
+tv
+aM
+Fx
+mJ
+xa
+ir
+xa
+Fx
+Fx
+Fx
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(49,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+Fx
+Fx
+xa
+xa
+xa
+Fx
+Fx
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(50,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+xa
+xa
+mJ
+xa
+xa
+aM
+aM
+aM
+xa
+xa
+xa
+aM
+aM
+aM
+"}
+(51,1,1) = {"
+aM
+aM
+aM
+Fx
+aM
+aM
+aM
+aM
+xa
+xa
+xa
+aM
+aM
+aM
+aM
+BG
+xa
+xa
+Fx
+aM
+aM
+"}
+(52,1,1) = {"
+aM
+aM
+Fx
+Fx
+Fx
+BG
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+gK
+Fx
+Fx
+Fx
+Fx
+aM
+"}
+(53,1,1) = {"
+aM
+aM
+Fx
+Fx
+Fx
+xa
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+xa
+Fx
+Fx
+Fx
+Fx
+Fx
+aM
+"}
+(54,1,1) = {"
+aM
+aM
+aM
+Fx
+Fx
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+xa
+Fx
+Fx
+Fx
+Fx
+Fx
+aM
+"}
+(55,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+"}
+(56,1,1) = {"
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
+aM
 "}
