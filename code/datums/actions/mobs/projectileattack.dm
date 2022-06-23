@@ -339,5 +339,5 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/wind_clap/Activate(atom/target_atom)
 	. = ..()
 	playsound(owner, projectile_sound, 50, TRUE, -1)
-	owner.visible_message(span_danger("[owner] fires the proto-kinetic accelerator!"))
+	owner.visible_message(span_danger("[owner] claps his hands creating a shockwave!"))
 	owner.face_atom(target_atom)
