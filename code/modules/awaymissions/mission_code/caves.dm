@@ -553,12 +553,12 @@
 	Please note that your month-end report on the local floral activity is still due at the same time, so please adjust your schedule properly to make sure both reports are submitted within adaquate time.")
 
 /obj/machinery/computer/terminal/caves/research5
-	content = list("INFO-SECURE: Your number one source of encrypted text files! ERROR: Encryption hash not found, file not encrypted! -- NOTES: Cycle 34 - Miners uncovered pieces of scrap bronze from one of the local lizard nests they cleared out recently. \
-	 Ullman is a bit perplexed by this as this hellscape we survey has no natural deposits of neither tin nor copper, let alone humoring the prospects these primals may actually be learning metalworking to some extent due to our prolonged presence here. \
-	 I've asked the QM if anything in previous request logs had anything made of bronze, mostly to see if maybe they're just stealing from our storage bay during off-hours.")
+	content = list("INFO-SECURE: Your number one source of encrypted text files! ERROR: Encryption hash not found, file not encrypted! -- NOTES: Cycle 34 - Miners uncovered pieces of scrap bronze from one of the local lizard nests they cleared out recently.	\
+	Ullman is a bit perplexed by this as this hellscape we survey has no natural deposits of neither tin nor copper, let alone humoring the prospects these primals may actually be learning metalworking to some extent due to our prolonged presence here.	\
+	I've asked the QM if anything in previous request logs had anything made of bronze, mostly to see if maybe they're just stealing from our storage bay during off-hours.")
 
 /obj/machinery/computer/terminal/caves/researchbroke1
-	content = list("INFO-SECURE: Your number one source of encrypted text files! ERROR: Terminal set in showcase mode, encryption not available! -- NOTES: Cycle 20 - Seismic activity in the lower regions has caused fractures to form in the less stable regions of the caves. \
+	content = list("INFO-SECURE: Your number one source of encrypted text files! ERROR: Terminal set in showcase mode, encryption not available! -- NOTES: Cycle 20 - Seismic activity in the lower regions has caused fractures to form in the less stable regions of the caves.	\
 	These fractures seem to go hundreds of feet down, to a point where its hard to judge the actual drop. The Site Director has had a few crates of jaunters ordered for personnel safety, as we can't be certain if these rifts will be kept to the lower levels or not. ")
 
 /obj/machinery/computer/terminal/caves/researchbroke2
@@ -568,7 +568,7 @@
 //Lore papers
 /obj/item/paper/fluff/awaymissions/caves/seismic_log
 	name = "Seismic Activity Report Log 43-2"
-	info = "<b><center>Seismic Activity Chart</b></center><br><br><center>*Various line graphs documenting seismic acitivty of the region over the last several months. \
+	info = "<b><center>Seismic Activity Chart</b></center><br><br><center>*Various line graphs documenting seismic acitivty of the region over the last several months.	\
 			The chart seems to spike around a month ago before going back to the baseline*</center>"
 
 /obj/item/paper/fluff/awaymissions/caves/floralguide

@@ -1473,10 +1473,7 @@
 /obj/item/storage/bag/tray,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/spacebattle/syndicate1{
-	name = "Mining Outpost Delta";
-	requires_power = 1
-	})
+/area/awaymission/caves/main_outpost)
 "gT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -3377,7 +3374,7 @@
 "qh" = (
 /obj/machinery/door/airlock/survival_pod/glass,
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/mineral/titanium/survival/pod,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
 "qi" = (
 /obj/structure/flora/ash/tall_shroom,
