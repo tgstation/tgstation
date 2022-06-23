@@ -781,3 +781,25 @@
   Pepsilawn:
   - bugfix: Kilostation's Greater Port Maintenance has had a missing area patched
       up.
+2022-06-23:
+  Cheshify:
+  - bugfix: The pride and gluttony ruins have had some minor fixes
+  MidoriWroth:
+  - rscadd: Botany can now grow olives, which can be ground into a paste and mixed
+      with water to make quality oil.
+  - rscadd: You can now make custom sushi by using an ingredient on a seaweed sheet.
+      The sushi will be named after the first ingredient you use.
+  - balance: Pierogis now need a dough slice instead of a bun
+  - balance: Quality oil costs 50 credits to order instead of 120
+  Mothblocks:
+  - bugfix: Fixes laser pointer circuits crashing clients.
+  san7890:
+  - rscadd: Nanotrasen has now installed an HFR Room and an Atmospherics Project Room
+      on IceBoxStation. The Atmospherics Storage Room has also had catwalks installed
+      in to accomodate these rooms uninstalled around it.
+  - rscadd: The Atmospherics Loop on IceBoxStation has undergone some minor modifications
+      to accomodate "feeding" these new rooms. Notably, there is now a "minor" loop
+      on the lower Z-Level that you can push and pull gases towards to your (probable)
+      heart's content.
+  - rscadd: The AI Satellite, Incinerator, and some sections of Maintenance have been
+      shuffled around on IceBoxStation to accomodate these changes.

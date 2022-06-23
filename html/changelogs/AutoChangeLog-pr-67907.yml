@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Fixes laser pointer circuits crashing clients."
