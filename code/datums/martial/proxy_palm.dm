@@ -17,6 +17,7 @@
 /datum/martial_art/proxy_palm/on_remove(mob/living/owner)
 	to_chat(owner, span_userdanger("You suddenly forget the arts of [name]..."))
 	windclap.Remove(owner)
+	return ..()
 
 /datum/martial_art/proxy_palm/proc/check_streak(mob/living/attacker, mob/living/defender)
 	if(!can_use(attacker))
