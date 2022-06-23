@@ -571,7 +571,7 @@
 	var/obj/machinery/computer/shuttle/C = getControlConsole()
 	if(!istype(C, /obj/machinery/computer/shuttle/pod))
 		return ..()
-	if(SSsecurity_level.current_level >= SEC_LEVEL_RED || (C && (C.obj_flags & EMAGGED)))
+	if(SSsecurity_level.get_current_level(TRUE) >= SEC_LEVEL_RED || (C && (C.obj_flags & EMAGGED)))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
@@ -732,7 +732,7 @@
 /obj/item/storage/pod/can_interact(mob/user)
 	if(!..())
 		return FALSE
-	if(SSsecurity_level.current_level >= SEC_LEVEL_RED || unlocked)
+	if(SSsecurity_level.get_current_level(TRUE) >= SEC_LEVEL_RED || unlocked)
 		return TRUE
 	to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
 	return FALSE

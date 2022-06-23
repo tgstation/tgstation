@@ -128,9 +128,9 @@
 
 	. += "fire_overlay"
 	if(is_station_level(z))
-		. += "fire_[SSsecurity_level.current_level]"
-		. += mutable_appearance(icon, "fire_[SSsecurity_level.current_level]")
-		. += emissive_appearance(icon, "fire_[SSsecurity_level.current_level]", alpha = src.alpha)
+		. += "fire_[SSsecurity_level.get_current_level(TRUE)]"
+		. += mutable_appearance(icon, "fire_[SSsecurity_level.get_current_level(TRUE)]")
+		. += emissive_appearance(icon, "fire_[SSsecurity_level.get_current_level(TRUE)]", alpha = src.alpha)
 	else
 		. += "fire_[SEC_LEVEL_GREEN]"
 		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")

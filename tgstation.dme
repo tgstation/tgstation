@@ -4126,7 +4126,7 @@
 #include "code\modules\research\xenobiology\vatgrowing\samples\cell_lines\common.dm"
 #include "code\modules\research\xenobiology\vatgrowing\samples\viruses\_virus.dm"
 #include "code\modules\security_levels\keycard_authentication.dm"
-#include "code\modules\security_levels\security_levels.dm"
+#include "code\modules\security_levels\security_level_datums.dm"
 #include "code\modules\shuttle\arrivals.dm"
 #include "code\modules\shuttle\assault_pod.dm"
 #include "code\modules\shuttle\battlecruiser_starfury.dm"

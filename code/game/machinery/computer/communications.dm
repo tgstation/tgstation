@@ -200,7 +200,7 @@
 			var/new_sec_level = seclevel2num(params["newSecurityLevel"])
 			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
 				return
-			if (SSsecurity_level.current_level == new_sec_level)
+			if (SSsecurity_level.get_current_level(TRUE) == new_sec_level)
 				return
 
 			set_security_level(new_sec_level)
