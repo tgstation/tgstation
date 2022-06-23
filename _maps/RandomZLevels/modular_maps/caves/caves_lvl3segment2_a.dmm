@@ -268,7 +268,7 @@
 /obj/structure/necropolis_gate,
 /obj/machinery/door/puzzle/keycard{
 	desc = "A strange gate with runes on it with a slot seemingly for some sort of key, or maybe blade?";
-	name = "necropolis gate";
+	name = "Necropolis Gate";
 	open_message = "You slot the blade into the hole and it shudders to life, grinding open.";
 	puzzle_id = "justwipedouttomatotown"
 	},

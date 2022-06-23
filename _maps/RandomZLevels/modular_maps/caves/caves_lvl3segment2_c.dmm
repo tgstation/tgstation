@@ -1276,7 +1276,6 @@
 /area/awaymission/caves/misc/syndicate)
 "Di" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/power/smes/engineering,
 /obj/structure/sign/warning/electric_shock/directional/west,
 /turf/open/floor/plating,
