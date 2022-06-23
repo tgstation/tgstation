@@ -1,0 +1,4 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - bugfix: "Opening wrapped crates now places them at the correct location."
