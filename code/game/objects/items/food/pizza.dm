@@ -15,7 +15,7 @@
 
 /obj/item/food/pizza/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 80)
+	AddComponent(/datum/component/slippery, 8 SECONDS)
 
 /obj/item/food/pizza/raw
 	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
