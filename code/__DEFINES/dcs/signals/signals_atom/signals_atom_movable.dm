@@ -91,5 +91,7 @@
 #define COMSIG_MOVABLE_SPACEMOVE "spacemove"
 	#define COMSIG_MOVABLE_STOP_SPACEMOVE (1<<0)
 
+/// Sent from /obj/item/radio/talk_into(): (obj/item/radio/used_radio, list/message_args)
 #define COMSIG_MOVABLE_USING_RADIO "movable_radio"
+	/// Return to prevent the mob from talking into the radio.
 	#define COMPONENT_CANNOT_USE_RADIO (1<<0)

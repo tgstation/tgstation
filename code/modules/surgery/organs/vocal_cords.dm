@@ -107,7 +107,7 @@
 		to_chat(owner, span_notice("You must wait [DisplayTimeText(next_command - world.time)] before Speaking again."))
 		return FALSE
 
-	return owner.can_speak()
+	return owner.can_speak_vocal()
 
 /obj/item/organ/internal/vocal_cords/colossus/handle_speech(message)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)

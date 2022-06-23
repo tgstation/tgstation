@@ -15,13 +15,15 @@
 	var/speech_sound = 'sound/magic/clockwork/invoke_general.ogg'
 
 /obj/effect/proc_holder/spell/voice_of_god/can_cast(mob/user = usr)
-	return user.can_speak()
+	// We check can_speak() instead of can_speak_vocal() this can't be used to get around IC mutes and such
+	return user.can_speak(command)
 
 /obj/effect/proc_holder/spell/voice_of_god/choose_targets(mob/user = usr)
 	perform(user=user)
+
 /obj/effect/proc_holder/spell/voice_of_god/perform(list/targets, recharge = 1, mob/user = usr)
 	command = tgui_input_text(user, "Speak with the Voice of God", "Command")
-	if(QDELETED(src) || QDELETED(user) || !user.can_speak())
+	if(QDELETED(src) || QDELETED(user) || !can_cast(user))
 		return
 	if(!command)
 		revert_cast(user)

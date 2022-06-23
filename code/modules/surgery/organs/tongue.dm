@@ -431,6 +431,14 @@
 	. = ..()
 	languages_possible = languages_possible_ethereal
 
+/// Defines used to determine whether a sign language user can sign or not, and if not, why they cannot.
+#define SIGN_OKAY -1
+#define SIGN_ONE_HAND 0
+#define SIGN_HANDS_FULL 1
+#define SIGN_ARMLESS 2
+#define SIGN_TRAIT_BLOCKED 3
+#define SIGN_CUFFED 4
+
 //Sign Language Tongue - yep, that's how you speak sign language.
 /obj/item/organ/internal/tongue/tied
 	name = "tied tongue"
@@ -486,14 +494,14 @@
 
 	return COMPONENT_CAN_ALWAYS_SPEAK
 
-/// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
+/// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE] that stars out our message if we only have 1 hand free
 /obj/item/organ/tongue/tied/proc/on_treat_message(mob/living/source, list/message_args)
 	SIGNAL_HANDLER
 
 	if(check_signables_state() == SIGN_ONE_HAND)
 		message_args[1] = stars(message_args[1])
 
-/// Signal proc for [COMSIG_MOVABLE_USING_RADIO]
+/// Signal proc for [COMSIG_MOVABLE_USING_RADIO] that disallows us from speaking on comms if we can't sign
 /obj/item/organ/tongue/tied/proc/on_use_radio(atom/movable/source, obj/item/radio/radio, list/speech_arguments)
 	SIGNAL_HANDLER
 
@@ -507,7 +515,7 @@
 		if(SIGN_HANDS_FULL, SIGN_ARMLESS, SIGN_TRAIT_BLOCKED, SIGN_CUFFED)
 			return COMPONENT_CANNOT_USE_RADIO
 
-// Checks to see how many hands this person has to sign with.
+/// Checks to see what state this person is in and if they are able to sign or not.
 /obj/item/organ/tongue/tied/proc/check_signables_state()
 	if(!owner)
 		CRASH("[type] called check_signables_state without an owner.")
@@ -535,9 +543,8 @@
 
 	return SIGN_OKAY
 
-//Thank you Jwapplephobia for helping me with the literal hellcode below
-
 /obj/item/organ/internal/tongue/tied/modify_speech(datum/source, list/speech_args)
+	//Thank you Jwapplephobia for helping me with the literal hellcode below
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/exclamation_found = findtext(message, "!")
@@ -556,3 +563,10 @@
 		signer.visible_message(span_notice("[signer] raises [signer.p_their()] eyebrows."))
 	else if(question_found)
 		signer.visible_message(span_notice("[signer] lowers [signer.p_their()] eyebrows."))
+
+#undef SIGN_OKAY
+#undef SIGN_ONE_HAND
+#undef SIGN_HANDS_FULL
+#undef SIGN_ARMLESS
+#undef SIGN_TRAIT_BLOCKED
+#undef SIGN_CUFFED
