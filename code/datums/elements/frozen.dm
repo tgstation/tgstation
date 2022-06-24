@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0,0,0)))
+
 ///simple element to handle frozen obj's
 /datum/element/frozen
 	element_flags = ELEMENT_DETACH
