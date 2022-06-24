@@ -13,7 +13,7 @@
 8. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
 9. [Banned content](#banned-content)
 10. [A word on Git](#a-word-on-git)
-11. ["Can I add a git submodule?"](#can-i-add-a-git-submodule?)
+11. [Can I add a git submodule?](#can-i-add-a-git-submodule?)
 
 ## Reporting Issues
 
