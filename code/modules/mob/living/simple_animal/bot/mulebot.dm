@@ -281,7 +281,7 @@
 			if(usr.has_unlimited_silicon_privilege)
 				bot_cover_flags ^= BOT_COVER_LOCKED
 				. = TRUE
-		if("power")
+		if("on")
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
 			else if(bot_cover_flags & BOT_COVER_OPEN)

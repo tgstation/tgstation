@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Added several new goodie items to purchase through cargo, including translation keys, mutadone autoinjectors, and a full RLD."
-  - code_imp: "documented research_nodes and radios."
