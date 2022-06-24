@@ -462,7 +462,9 @@ export const Spellbook = (props, context) => {
                                         <Button
                                           icon="tshirt"
                                           color={
-                                            entry.requires_wizard_garb ? 'bad' : 'green'
+                                            entry.requires_wizard_garb
+                                              ? 'bad'
+                                              : 'green'
                                           }
                                           tooltipPosition="bottom-start"
                                           tooltip={
@@ -597,7 +599,9 @@ export const Spellbook = (props, context) => {
                                         <Button
                                           icon="tshirt"
                                           color={
-                                            entry.requires_wizard_garb ? 'bad' : 'green'
+                                            entry.requires_wizard_garb
+                                              ? 'bad'
+                                              : 'green'
                                           }
                                           tooltipPosition="bottom-start"
                                           tooltip={
