@@ -9,7 +9,7 @@ import { connectionLost, connectionRestored, roundRestarted } from './actions';
 import { selectGame } from './selectors';
 import { CONNECTION_LOST_AFTER } from './constants';
 
-const withTimestamp = action => ({
+const withTimestamp = (action) => ({
   ...action,
   meta: {
     ...action.meta,
@@ -17,7 +17,7 @@ const withTimestamp = action => ({
   },
 });
 
-export const gameMiddleware = store => {
+export const gameMiddleware = (store) => {
   let lastPingedAt;
 
   setInterval(() => {
@@ -26,8 +26,8 @@ export const gameMiddleware = store => {
       return;
     }
     const game = selectGame(state);
-    const pingsAreFailing = lastPingedAt
-      && Date.now() >= lastPingedAt + CONNECTION_LOST_AFTER;
+    const pingsAreFailing =
+      lastPingedAt && Date.now() >= lastPingedAt + CONNECTION_LOST_AFTER;
     if (!game.connectionLostAt && pingsAreFailing) {
       store.dispatch(withTimestamp(connectionLost()));
     }
@@ -36,7 +36,7 @@ export const gameMiddleware = store => {
     }
   }, 1000);
 
-  return next => action => {
+  return (next) => (action) => {
     const { type } = action;
 
     if (type === pingSuccess.type || type === pingSoft.type) {

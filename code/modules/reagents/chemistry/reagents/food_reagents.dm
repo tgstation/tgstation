@@ -1055,3 +1055,11 @@
 	taste_description = "raw batter"
 	color = "#ebca85"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/olivepaste
+	name = "Olive Paste"
+	description = "A mushy pile of finely ground olives."
+	taste_description = "mushy olives"
+	color = "#adcf77"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+

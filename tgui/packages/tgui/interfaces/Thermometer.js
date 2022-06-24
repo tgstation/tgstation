@@ -19,21 +19,21 @@ export class Thermometer extends Component {
   render() {
     const { act, data } = useBackend(this.context);
     return (
-      <Window
-        width={70}
-        height={430}>
+      <Window width={70} height={430}>
         <Stack
           fill
           align="center"
           justify="space-around"
           backgroundColor="#242322"
           style={{
-            'background-image': "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEVya3UjIyN3S/1dAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAMSURBVAjXY2hgcAAAAcQAwUlFKkkAAAAASUVORK5CYII=')",
+            'background-image':
+              "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEVya3UjIyN3S/1dAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAMSURBVAjXY2hgcAAAAcQAwUlFKkkAAAAASUVORK5CYII=')",
           }}>
           <Stack.Item ml={1}>
             <ThermometerIcon
               temperature={data.Temperature}
-              maxTemperature={1000} />
+              maxTemperature={1000}
+            />
           </Stack.Item>
         </Stack>
       </Window>
@@ -41,7 +41,7 @@ export class Thermometer extends Component {
   }
 }
 
-const ThermometerIcon = props => {
+const ThermometerIcon = (props) => {
   const { temperature, maxTemperature } = props;
   return (
     <Box>
@@ -67,12 +67,13 @@ const ThermometerIcon = props => {
             'right': 0,
             'transition': 'height 2s ease-out',
             // Temp in %
-            'height': `${((temperature / maxTemperature)*100)}%`,
+            'height': `${(temperature / maxTemperature) * 100}%`,
             'background-color': '#bd2020',
             'border-radius': '8px',
             'border-bottom': 'none',
             'z-index': '1',
-          }} />
+          }}
+        />
       </Box>
       <Box
         style={{
@@ -95,4 +96,3 @@ const ThermometerIcon = props => {
     </Box>
   );
 };
-

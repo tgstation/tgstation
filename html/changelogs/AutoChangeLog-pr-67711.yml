@@ -1,5 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes: 
-  - bugfix: "Fixed recycler bug that deleted the output stack because it was merged with the input stack"
-  - bugfix: "Fixed recycler bug where it deleted stacks of 50 because it didn't have enough space by removing recycle bins that reset its internal space from infinity to the level of matter bin part"
