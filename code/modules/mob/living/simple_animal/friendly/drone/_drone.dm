@@ -187,6 +187,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_LITERATE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_KNOW_ENGI_WIRES, INNATE_TRAIT) //Drones shouldn't have to guess what wires do what
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
