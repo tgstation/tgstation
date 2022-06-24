@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - rscdel: "Removed a tip suggesting being a drunk scientists boosts research point gain. This was removed at some point, but the tip remained, despite being incorrect."
