@@ -99,7 +99,7 @@
 	//Use of the second function improves the power gain imparted by using co2
 	if(power_changes)
 		///The power that is getting lost this tick.
-		var/power_loss = power < POWERLOSS_LINEAR_THRESHOLD ? ((power / POWERLOSS_CUBIC_DIVISOR) ** 3) : (POWERLOSS_LINEAR_OFFSET + POWERLOSS_LINEAR_RATE * (power - POWERLOSS_LINEAR_THRESHOLD))
+		var/power_loss = max(POWERLOSS_LINEAR_RATE * (power - powerloss_linear_threshold), 0) + min((power / POWERLOSS_CUBIC_DIVISOR) ** 3, (powerloss_linear_threshold / POWERLOSS_CUBIC_DIVISOR) ** 3)
 		power_loss *= powerloss_inhibitor * (1 - (PSYCHOLOGIST_POWERLOSS_REDUCTION * psyCoeff))
 		power = max(power - power_loss, 0)
 	//After this point power is lowered
