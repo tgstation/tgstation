@@ -277,7 +277,7 @@ const Loadouts = (props, context) => {
             blurb={multiline`
                 The power of the mighty Mjolnir! Best not to lose it.
                 This loadout has Summon Item, Mutate, Blink, Force Wall,
-                and, Tesla Blast. Mutate is your utility in this case:
+                Tesla Blast, and Mjolnir. Mutate is your utility in this case:
                 Use it for limited ranged fire and getting out of bad blinks.
               `}
           />
@@ -461,24 +461,16 @@ export const Spellbook = (props, context) => {
                                       <Box mr={-9.5} mt={-3}>
                                         <Button
                                           icon="tshirt"
-<<<<<<< HEAD
-                                          color={entry.requires_wizard_garb ? "bad" : "green"}
-                                          tooltipPosition="bottom-start"
-                                          tooltip={entry.requires_wizard_garb
-                                            ? "Requires wizard garb."
-                                            :"Can be cast without wizard garb."} />
-=======
                                           color={
-                                            entry.clothes_req ? 'bad' : 'green'
+                                            entry.requires_wizard_garb ? 'bad' : 'green'
                                           }
                                           tooltipPosition="bottom-start"
                                           tooltip={
-                                            entry.clothes_req
+                                            entry.requires_wizard_garb
                                               ? 'Requires wizard garb.'
                                               : 'Can be cast without wizard garb.'
                                           }
                                         />
->>>>>>> master
                                       </Box>
                                     )}
                                   </>
@@ -604,24 +596,16 @@ export const Spellbook = (props, context) => {
                                       <Box mr={-9.5} mt={-3}>
                                         <Button
                                           icon="tshirt"
-<<<<<<< HEAD
-                                          color={entry.requires_wizard_garb ? "bad" : "green"}
-                                          tooltipPosition="bottom-start"
-                                          tooltip={entry.requires_wizard_garb
-                                            ? "Requires wizard garb."
-                                            :"Can be cast without wizard garb."} />
-=======
                                           color={
-                                            entry.clothes_req ? 'bad' : 'green'
+                                            entry.requires_wizard_garb ? 'bad' : 'green'
                                           }
                                           tooltipPosition="bottom-start"
                                           tooltip={
-                                            entry.clothes_req
+                                            entry.requires_wizard_garb
                                               ? 'Requires wizard garb.'
                                               : 'Can be cast without wizard garb.'
                                           }
                                         />
->>>>>>> master
                                       </Box>
                                     )}
                                   </>
