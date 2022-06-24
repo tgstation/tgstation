@@ -932,12 +932,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if (hotkeys)
 		// If hotkey mode is enabled, then clicking the map will automatically
-		// unfocus the text bar. This removes the red color from the text bar
-		// so that the visual focus indicator matches reality.
-		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
-
+		// unfocus the text bar.
+		winset(src, null, "input.focus=false")
 	else
-		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+		winset(src, null, "input.focus=true")
 
 	SEND_SIGNAL(src, COMSIG_CLIENT_CLICK, object, location, control, params, usr)
 
@@ -1228,11 +1226,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	fullscreen = !fullscreen
 
 	if (fullscreen)
-		winset(usr, "mainwindow", "menu=")
+		winset(usr, "mainwindow", "on-size=")
 		winset(usr, "mainwindow", "titlebar=false")
 		winset(usr, "mainwindow", "can-resize=false")
+		winset(usr, "mainwindow", "menu=")
+		winset(usr, "mainwindow", "is-maximized=false")
 		winset(usr, "mainwindow", "is-maximized=true")
-		winset(usr, "mainwindow", "on-size=")
 	else
 		winset(usr, "mainwindow", "menu=menu")
 		winset(usr, "mainwindow", "titlebar=true")
@@ -1250,20 +1249,3 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		winset(usr, "mapwindow.status_bar", "is-visible=true")
 	else
 		winset(usr, "mapwindow.status_bar", "is-visible=false")
-
-/client/verb/toggle_chat_bar()
-	set name = "Toggle Chat Bar"
-	set category = "OOC"
-
-	show_chat_bar = !show_chat_bar
-
-	if (show_chat_bar)
-		winset(usr, "outputwindow.input", "is-visible=true")
-		winset(usr, "outputwindow.oocbutton", "is-visible=true")
-		winset(usr, "outputwindow.saybutton", "is-visible=true")
-		winset(usr, "outputwindow.mebutton", "is-visible=true")
-	else
-		winset(usr, "outputwindow.input", "is-visible=false")
-		winset(usr, "outputwindow.oocbutton", "is-visible=false")
-		winset(usr, "outputwindow.saybutton", "is-visible=false")
-		winset(usr, "outputwindow.mebutton", "is-visible=false")
