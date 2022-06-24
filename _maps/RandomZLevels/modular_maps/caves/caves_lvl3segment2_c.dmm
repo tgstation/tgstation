@@ -1027,13 +1027,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/caves/misc/syndicate/vault)
-"ya" = (
-/obj/modular_map_root/caves{
-	key = "caves_lvl3segment3";
-	name = "lvl3segment3"
-	},
-/turf/template_noop,
-/area/template_noop)
 "yc" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2681,7 +2674,7 @@ ax
 EN
 ax
 ax
-ya
+aR
 "}
 (12,1,1) = {"
 aw

@@ -407,13 +407,6 @@
 "vF" = (
 /turf/closed/indestructible/necropolis,
 /area/template_noop)
-"wv" = (
-/obj/modular_map_root/caves{
-	key = "caves_lvl3segment2";
-	name = "lvl3segment2"
-	},
-/turf/template_noop,
-/area/template_noop)
 "wV" = (
 /obj/structure/flora/rock,
 /obj/effect/turf_decal/stripes/line{
@@ -6797,7 +6790,7 @@ Vh
 rb
 rx
 rx
-wv
+Gq
 "}
 (100,1,1) = {"
 Gq

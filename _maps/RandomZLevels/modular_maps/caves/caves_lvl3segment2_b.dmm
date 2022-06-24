@@ -1090,13 +1090,6 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/office)
-"Jm" = (
-/obj/modular_map_root/caves{
-	key = "caves_lvl3segment3";
-	name = "lvl3segment3"
-	},
-/turf/template_noop,
-/area/template_noop)
 "Jo" = (
 /obj/structure/closet{
 	icon_state = "abductor";
@@ -2097,7 +2090,7 @@ gQ
 Me
 Uo
 ax
-Jm
+aR
 "}
 (12,1,1) = {"
 aN

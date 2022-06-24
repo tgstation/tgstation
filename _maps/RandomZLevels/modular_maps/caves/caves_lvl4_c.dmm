@@ -151,14 +151,6 @@
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
 	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 142;
-	locationy = 95;
-	name = "tram1 to tram2";
-	uses = 0
-	},
 /turf/open/floor/iron,
 /area/template_noop)
 "cb" = (
@@ -564,14 +556,6 @@
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
 	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 228;
-	locationy = 96;
-	name = "delta1 to delta2";
-	uses = 0
-	},
 /turf/open/floor/iron/white,
 /area/template_noop)
 "gA" = (
@@ -613,14 +597,6 @@
 	icon = 'icons/effects/eldritch.dmi';
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 204;
-	locationy = 64;
-	name = "meta1 to middle";
-	uses = 0
 	},
 /turf/open/floor/bronze/filled,
 /area/template_noop)
@@ -844,14 +820,6 @@
 	icon = 'icons/effects/eldritch.dmi';
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 182;
-	locationy = 74;
-	name = "tram1 to middle";
-	uses = 0
 	},
 /turf/open/floor/carpet,
 /area/template_noop)
@@ -1219,23 +1187,6 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"px" = (
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 207;
-	locationy = 89;
-	name = "middle to delta1";
-	uses = 0
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
 "pB" = (
 /turf/closed/wall/rust,
 /area/template_noop)
@@ -1260,14 +1211,6 @@
 	icon = 'icons/effects/eldritch.dmi';
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 183;
-	locationy = 61;
-	name = "kilo1 to middle";
-	uses = 0
 	},
 /turf/open/floor/iron,
 /area/template_noop)
@@ -1682,14 +1625,6 @@
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
 	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 156;
-	locationy = 83;
-	name = "middle to tram1";
-	uses = 0
-	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "uW" = (
@@ -1805,14 +1740,6 @@
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
 	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 201;
-	locationy = 80;
-	name = "delta1 to middle";
-	uses = 0
-	},
 /turf/open/floor/iron,
 /area/template_noop)
 "vM" = (
@@ -1912,14 +1839,6 @@
 	icon = 'icons/effects/eldritch.dmi';
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 210;
-	locationy = 70;
-	name = "icebox to middle";
-	uses = 0
 	},
 /turf/open/floor/iron,
 /area/template_noop)
@@ -2207,21 +2126,7 @@
 /turf/open/floor/iron,
 /area/template_noop)
 "Af" = (
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 208;
-	locationy = 51;
-	name = "middle to meta1";
-	uses = 0
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/space/basic,
 /area/template_noop)
 "Ay" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -2429,23 +2334,6 @@
 	light_power = 0.75;
 	light_range = 2
 	},
-/area/template_noop)
-"CP" = (
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 230;
-	locationy = 71;
-	name = "middle to icebox";
-	uses = 0
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "CT" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -3013,14 +2901,6 @@
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
 	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 215;
-	locationy = 93;
-	name = "delta2 to delta1";
-	uses = 0
-	},
 /obj/structure/fluff{
 	desc = "Has a valve and pump attached to it.";
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
@@ -3089,23 +2969,6 @@
 "Kx" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
-	},
-/turf/open/floor/iron,
-/area/template_noop)
-"KD" = (
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 242;
-	locationy = 28;
-	name = "icebox to start";
-	uses = 0
 	},
 /turf/open/floor/iron,
 /area/template_noop)
@@ -3201,23 +3064,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
-/area/template_noop)
-"Mc" = (
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 176;
-	locationy = 54;
-	name = "middle to kilo1";
-	uses = 0
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "Mm" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -3447,23 +3293,6 @@
 	},
 /turf/open/floor/iron,
 /area/template_noop)
-"PD" = (
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 159;
-	locationy = 40;
-	name = "kilo1 to kilo2";
-	uses = 0
-	},
-/turf/open/floor/iron,
-/area/template_noop)
 "PI" = (
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
@@ -3671,14 +3500,6 @@
 	icon = 'icons/effects/eldritch.dmi';
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 168;
-	locationy = 50;
-	name = "kilo2 to kilo1";
-	uses = 0
 	},
 /turf/open/floor/iron/dark,
 /area/template_noop)
@@ -4029,14 +3850,6 @@
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
 	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 206;
-	locationy = 29;
-	name = "meta1 to meta2";
-	uses = 0
-	},
 /turf/open/floor/iron,
 /area/template_noop)
 "UG" = (
@@ -4155,43 +3968,9 @@
 	dir = 8
 	},
 /area/template_noop)
-"VR" = (
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 241;
-	locationy = 47;
-	name = "start to icebox";
-	uses = 0
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
 "VU" = (
 /obj/structure/table,
 /turf/open/floor/plating,
-/area/template_noop)
-"VW" = (
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 206;
-	locationy = 41;
-	name = "meta2 to meta1";
-	uses = 0
-	},
-/turf/open/floor/iron,
 /area/template_noop)
 "We" = (
 /obj/structure/fluff{
@@ -4462,14 +4241,6 @@
 	icon = 'icons/effects/eldritch.dmi';
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersparks = 1;
-	exitsparks = 1;
-	locationx = 156;
-	locationy = 92;
-	name = "tram2 to tram1";
-	uses = 0
 	},
 /turf/open/floor/glass/reinforced,
 /area/template_noop)
@@ -9930,7 +9701,7 @@ zp
 ge
 bq
 Ei
-PD
+wS
 np
 Gp
 CN
@@ -11794,7 +11565,7 @@ rw
 EQ
 Vs
 rw
-Mc
+Vs
 Vs
 Vs
 Vs
@@ -14025,7 +13796,7 @@ Pm
 Vs
 Vs
 Vs
-px
+DL
 Vs
 Vs
 bi
@@ -14416,7 +14187,7 @@ rw
 Vs
 Vs
 Vs
-Af
+DL
 Vs
 bi
 Pm
@@ -14701,7 +14472,7 @@ Pm
 Pm
 Sv
 nq
-VW
+wS
 Tt
 ed
 ed
@@ -14796,7 +14567,7 @@ Pm
 Pm
 Pm
 Pm
-Pm
+Af
 Pm
 Pm
 Pm
@@ -15160,7 +14931,7 @@ Pm
 Pm
 Pm
 Vs
-CP
+DL
 Vs
 Vs
 Pm
@@ -19058,7 +18829,7 @@ Gp
 Fw
 Gp
 Gp
-KD
+wS
 Gp
 CN
 Pm
@@ -19202,7 +18973,7 @@ Pm
 Pm
 Pm
 Vs
-VR
+DL
 Vs
 Vs
 Vs

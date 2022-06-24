@@ -411,13 +411,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"zI" = (
-/obj/modular_map_root/caves{
-	key = "caves_lvl3segment3";
-	name = "lvl3segment3"
-	},
-/turf/open/indestructible/boss,
-/area/template_noop)
 "zJ" = (
 /turf/template_noop,
 /area/template_noop)
@@ -1149,7 +1142,7 @@ eC
 eC
 eC
 ru
-zI
+Kt
 "}
 (12,1,1) = {"
 Ia

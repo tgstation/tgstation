@@ -602,13 +602,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"uU" = (
-/obj/modular_map_root/caves{
-	key = "caves_lvl3segment2";
-	name = "lvl3segment2"
-	},
-/turf/template_noop,
-/area/template_noop)
 "vj" = (
 /obj/structure/stone_tile/block/burnt,
 /obj/structure/stone_tile/burnt{
@@ -7215,7 +7208,7 @@ Wk
 Wk
 Wk
 Wk
-uU
+Oe
 "}
 (100,1,1) = {"
 Oe

@@ -8,13 +8,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"ah" = (
-/obj/modular_map_root/caves{
-	key = "caves_lvl3segment2";
-	name = "lvl3segment2"
-	},
-/turf/template_noop,
-/area/template_noop)
 "ai" = (
 /obj/structure/flora/ash/cap_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -7493,7 +7486,7 @@ aN
 aN
 aN
 aN
-ah
+aM
 "}
 (100,1,1) = {"
 aM

@@ -4139,6 +4139,13 @@
 "ub" = (
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/recycle)
+"ud" = (
+/obj/modular_map_root/caves{
+	key = "caves_lvl3segment3";
+	name = "lvl3segment3"
+	},
+/turf/closed/indestructible/riveted,
+/area/awaymission/caves/bmp_asteroid/level_three)
 "ue" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/step_trigger/teleport_fancy{
@@ -10599,6 +10606,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/engineering)
+"ZT" = (
+/obj/modular_map_root/caves{
+	key = "caves_lvl3segment2";
+	name = "lvl3segment2"
+	},
+/turf/closed/indestructible/riveted,
+/area/awaymission/caves/bmp_asteroid/level_three)
 "ZU" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 1
@@ -13696,7 +13710,7 @@ am
 am
 am
 am
-rf
+ud
 am
 am
 am
@@ -36533,7 +36547,7 @@ am
 am
 am
 am
-rf
+ZT
 am
 am
 am
