@@ -803,3 +803,27 @@
       heart's content.
   - rscadd: The AI Satellite, Incinerator, and some sections of Maintenance have been
       shuffled around on IceBoxStation to accomodate these changes.
+2022-06-24:
+  CoffeeDragon16:
+  - bugfix: getting your tongue removed will affect your speech again
+  Melbert:
+  - bugfix: Language encryption keys now only work when you've equipped the headset
+  - bugfix: Language encryption keys no longer forever-grant you the language in some
+      circumstances
+  - bugfix: Language encryption keys now update when they're installed if you're currently
+      wearing the headset
+  Tastyfish:
+  - bugfix: Opening wrapped crates now places them at the correct location.
+  antropod:
+  - bugfix: Randomized recipes (metalgen and secret sauce) are working again.
+  carshalash:
+  - bugfix: Jungle salad can now be eaten again
+  - bugfix: Eldritch nightmares were incorrectly added to the gold slime pool
+  dragomagol:
+  - qol: the cyborg hypospray now has a TGUI menu
+  theOOZ:
+  - qol: Rapid Lighting Device now fits in the utility toolbelt
+  timothymtorres:
+  - rscadd: Add magical reactions when hydroponics plants are hit with polymorph,
+      death, or resurrection magic. Plants with the anti-magic gene (holymelons) block
+      any kind of magical effect on the plant.

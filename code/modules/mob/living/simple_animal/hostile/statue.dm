@@ -10,6 +10,7 @@
 	gender = NEUTER
 	combat_mode = TRUE
 	mob_biotypes = MOB_HUMANOID
+	gold_core_spawnable = NO_SPAWN
 
 	response_help_continuous = "touches"
 	response_help_simple = "touch"

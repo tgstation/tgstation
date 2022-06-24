@@ -53,19 +53,42 @@
 	var/obj/item/parent_item = parent
 	parent_item.update_slot_icon()
 
+
+/datum/component/bloodysoles/proc/reset_bloody_shoes()
+	bloody_shoes = list(BLOOD_STATE_HUMAN = 0, BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	on_changed_bloody_shoes(BLOOD_STATE_NOT_BLOODY)
+
+///lowers bloody_shoes[index] by adjust_by
+/datum/component/bloodysoles/proc/adjust_bloody_shoes(index, adjust_by)
+	bloody_shoes[index] = max(bloody_shoes[index] - adjust_by, 0)
+	on_changed_bloody_shoes()
+
+/datum/component/bloodysoles/proc/set_bloody_shoes(index, new_value)
+	bloody_shoes[index] = new_value
+	on_changed_bloody_shoes(index)
+
+///called whenever the value of bloody_soles changes
+/datum/component/bloodysoles/proc/on_changed_bloody_shoes(index)
+	if(index && index != last_blood_state)
+		last_blood_state = index
+	if(!wielder)
+		return
+	if(bloody_shoes[last_blood_state] <= BLOOD_FOOTPRINTS_MIN * 2)//need twice that amount to make footprints
+		UnregisterSignal(wielder, COMSIG_MOVABLE_MOVED)
+	else
+		RegisterSignal(wielder, COMSIG_MOVABLE_MOVED, .proc/on_moved, override = TRUE)
+
 /**
  * Run to equally share the blood between us and a decal
  */
 /datum/component/bloodysoles/proc/share_blood(obj/effect/decal/cleanable/pool)
-	last_blood_state = pool.blood_state
-
 	// Share the blood between our boots and the blood pool
-	var/total_bloodiness = pool.bloodiness + bloody_shoes[last_blood_state]
+	var/total_bloodiness = pool.bloodiness + bloody_shoes[pool.blood_state]
 
 	// We can however be limited by how much blood we can hold
 	var/new_our_bloodiness = min(BLOOD_ITEM_MAX, total_bloodiness / 2)
 
-	bloody_shoes[last_blood_state] = new_our_bloodiness
+	set_bloody_shoes(pool.blood_state, new_our_bloodiness)
 	pool.bloodiness = total_bloodiness - new_our_bloodiness // Give the pool the remaining blood incase we were limited
 
 	if(HAS_TRAIT(parent_atom, TRAIT_LIGHT_STEP)) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
@@ -105,7 +128,8 @@
 
 	equipped_slot = slot
 	wielder = equipper
-	RegisterSignal(wielder, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	if(bloody_shoes[last_blood_state] > BLOOD_FOOTPRINTS_MIN * 2)
+		RegisterSignal(wielder, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(wielder, COMSIG_STEP_ON_BLOOD, .proc/on_step_blood)
 
 /**
@@ -147,7 +171,7 @@
 				oldLocFP.update_appearance()
 		else if(find_pool_by_blood_state(oldLocTurf))
 			// No footprints in the tile we left, but there was some other blood pool there. Add exit footprints on it
-			bloody_shoes[last_blood_state] -= half_our_blood
+			adjust_bloody_shoes(last_blood_state, half_our_blood)
 			update_icon()
 
 			oldLocFP = new(oldLocTurf)
@@ -167,7 +191,7 @@
 
 	// Create new footprints
 	if(half_our_blood >= BLOOD_FOOTPRINTS_MIN)
-		bloody_shoes[last_blood_state] -= half_our_blood
+		adjust_bloody_shoes(last_blood_state, half_our_blood)
 		update_icon()
 
 		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom))
@@ -213,8 +237,7 @@
 	if(!(clean_types & CLEAN_TYPE_BLOOD) || last_blood_state == BLOOD_STATE_NOT_BLOODY)
 		return NONE
 
-	bloody_shoes = list(BLOOD_STATE_HUMAN = 0, BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
-	last_blood_state = BLOOD_STATE_NOT_BLOODY
+	reset_bloody_shoes()
 	update_icon()
 	return COMPONENT_CLEANED
 
@@ -235,7 +258,6 @@
 		bloody_feet = mutable_appearance('icons/effects/blood.dmi', "shoeblood", SHOES_LAYER)
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(parent, COMSIG_STEP_ON_BLOOD, .proc/on_step_blood)
 	RegisterSignal(parent, COMSIG_CARBON_UNEQUIP_SHOECOVER, .proc/unequip_shoecover)
 	RegisterSignal(parent, COMSIG_CARBON_EQUIP_SHOECOVER, .proc/equip_shoecover)
