@@ -42261,6 +42261,9 @@
 	name = "High-Risk Modules";
 	req_access = list("captain")
 	},
+/obj/item/ai_module/reset/purge{
+	pixel_y = 11
+	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "njA" = (
@@ -71314,6 +71317,7 @@
 	c_tag = "ai_upload West";
 	network = list("aiupload")
 	},
+/obj/item/ai_module/supplied/freeform,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "wjy" = (
