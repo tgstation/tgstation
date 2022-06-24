@@ -2773,6 +2773,7 @@
 #include "code\modules\events\anomaly_delimber.dm"
 #include "code\modules\events\anomaly_flux.dm"
 #include "code\modules\events\anomaly_grav.dm"
+#include "code\modules\events\anomaly_hallucination.dm"
 #include "code\modules\events\anomaly_pyro.dm"
 #include "code\modules\events\anomaly_vortex.dm"
 #include "code\modules\events\aurora_caelus.dm"
