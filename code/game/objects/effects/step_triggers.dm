@@ -67,7 +67,7 @@
 			return
 
 	if(immobilize)
-		ADD_TRAIT(AM, TRAIT_IMMOBILIZED, src)
+		ADD_TRAIT(AM, TRAIT_IMMOBILIZED, REF(src))
 
 	affecting[AM] = AM.dir
 	var/datum/move_loop/loop = SSmove_manager.move(AM, direction, speed, tiles ? tiles * speed : INFINITY)
@@ -103,7 +103,7 @@
 	SIGNAL_HANDLER
 	var/atom/movable/being_moved = source.moving
 	affecting -= being_moved
-	REMOVE_TRAIT(being_moved, TRAIT_IMMOBILIZED, src)
+	REMOVE_TRAIT(being_moved, TRAIT_IMMOBILIZED, REF(src))
 
 
 /* Stops things thrown by a thrower, doesn't do anything */
