@@ -15747,7 +15747,7 @@
 "eZo" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
-/area/station/security/processing)
+/area/station/maintenance/fore/lesser)
 "eZp" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
@@ -39130,9 +39130,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
-"mBW" = (
-/turf/open/floor/plating,
-/area/station/security/processing)
 "mBX" = (
 /obj/structure/table/wood,
 /obj/machinery/airalarm/directional/east,
@@ -52542,7 +52539,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/security/processing)
+/area/station/maintenance/fore/lesser)
 "qNc" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Service Hall Exit"
@@ -52813,7 +52810,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/security/processing)
+/area/station/maintenance/fore/lesser)
 "qQN" = (
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
@@ -58971,10 +58968,6 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
-"sSy" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/security/processing)
 "sSD" = (
 /obj/effect/landmark/observer_start,
 /obj/effect/turf_decal/plaque{
@@ -74925,7 +74918,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/security/processing)
+/area/station/maintenance/fore/lesser)
 "xWA" = (
 /obj/structure/table,
 /obj/item/plate,
@@ -236760,8 +236753,8 @@ bln
 bln
 bln
 lSu
-ykw
-sSy
+iug
+ykj
 eZo
 kzw
 ipP
@@ -237017,7 +237010,7 @@ wNO
 wNO
 wNO
 wNO
-ykw
+iug
 xWr
 qMY
 kzw
@@ -237274,9 +237267,9 @@ wNO
 wNO
 wNO
 wNO
-ykw
+iug
 xWr
-mBW
+iUG
 kzw
 kdT
 hQd
@@ -237531,7 +237524,7 @@ wNO
 wNO
 wNO
 wNO
-ykw
+iug
 qQK
 xWr
 kzw
