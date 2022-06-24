@@ -179,8 +179,6 @@
 	var/fullscreen = FALSE
 	//Hide status bar (bottom left)
 	var/show_status_bar = TRUE
-	//Hide persistent chat box (bottom right)
-	var/show_chat_bar = TRUE
 
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
