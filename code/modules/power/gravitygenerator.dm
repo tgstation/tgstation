@@ -3,7 +3,8 @@
 // Gravity Generator
 //
 
-GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
+/// We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
+GLOBAL_LIST_EMPTY(gravity_generators)
 
 #define POWER_IDLE 0
 #define POWER_UP 1
@@ -383,7 +384,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		mobs.update_gravity(mobs.has_gravity())
 		if(mobs.client)
 			shake_camera(mobs, 15, 1)
-			mobs.playsound_local(T, null, 100, 1, 0.5, S = alert_sound)
+			mobs.playsound_local(T, null, 100, 1, 0.5, sound_to_use = alert_sound)
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)
@@ -411,6 +412,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 			GLOB.gravity_generators["[z]"] |= src
 		else
 			GLOB.gravity_generators["[z]"] -= src
+		SSmapping.calculate_z_level_gravity(z)
 
 /obj/machinery/gravity_generator/main/proc/change_setting(value)
 	if(value != setting)

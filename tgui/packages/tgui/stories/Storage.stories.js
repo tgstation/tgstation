@@ -15,16 +15,12 @@ export const meta = {
 
 const Story = (props, context) => {
   if (!window.localStorage) {
-    return (
-      <NoticeBox>
-        Local storage is not available.
-      </NoticeBox>
-    );
+    return <NoticeBox>Local storage is not available.</NoticeBox>;
   }
   return (
     <Section
       title="Local Storage"
-      buttons={(
+      buttons={
         <Button
           icon="recycle"
           onClick={() => {
@@ -33,7 +29,7 @@ const Story = (props, context) => {
           }}>
           Clear
         </Button>
-      )}>
+      }>
       <LabeledList>
         <LabeledList.Item label="Keys in use">
           {localStorage.length}

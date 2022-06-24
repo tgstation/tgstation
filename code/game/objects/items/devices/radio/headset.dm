@@ -27,6 +27,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	slot_flags = ITEM_SLOT_EARS
 	dog_fashion = null
 	var/obj/item/encryptionkey/keyslot2 = null
+	/// A list of all languages that this headset allows the user to understand. Populated by language encryption keys.
+	var/list/language_list
 
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
@@ -58,8 +60,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	set_listening(TRUE)
 	recalculateChannels()
 	possibly_deactivate_in_loc()
-	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/learn_language)
-	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, .proc/unlearn_language)
 
 /obj/item/radio/headset/proc/possibly_deactivate_in_loc()
 	if(ismob(loc))
@@ -85,33 +85,22 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		return attack_self(headset_user)
 	return ..()
 
-/obj/item/radio/headset/proc/learn_language()
-	SIGNAL_HANDLER
-	if(!istype(loc, /mob/living/carbon))
-		return
-	var/list/language_list = list()
-	if(keyslot?.translated_language)
-		language_list += keyslot.translated_language
-	if(keyslot2?.translated_language)
-		language_list += keyslot2.translated_language
-
-	var/mob/living/carbon/person = loc
+/// Grants all the languages this headset allows the mob to understand via installed chips.
+/obj/item/radio/headset/proc/grant_headset_languages(mob/grant_to)
 	for(var/language in language_list)
-		person.grant_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
+		grant_to.grant_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
-/obj/item/radio/headset/proc/unlearn_language()
-	SIGNAL_HANDLER
-	if(!istype(loc, /mob/living/carbon))
+/obj/item/radio/headset/equipped(mob/user, slot, initial)
+	. = ..()
+	if(!(slot_flags & slot))
 		return
-	var/list/language_list = list()
-	if(keyslot?.translated_language)
-		language_list += keyslot.translated_language
-	if(keyslot2?.translated_language)
-		language_list += keyslot2.translated_language
 
-	var/mob/living/carbon/person = loc
+	grant_headset_languages(user)
+
+/obj/item/radio/headset/dropped(mob/user, silent)
+	. = ..()
 	for(var/language in language_list)
-		person.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
+		user.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
@@ -367,7 +356,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	else
 		return ..()
 
-
 /obj/item/radio/headset/recalculateChannels()
 	. = ..()
 	if(keyslot2)
@@ -379,11 +367,29 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			translate_binary = TRUE
 		if(keyslot2.syndie)
 			syndie = TRUE
-		if (keyslot2.independent)
+		if(keyslot2.independent)
 			independent = TRUE
 
 		for(var/ch_name in channels)
 			secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+
+	var/list/old_language_list = language_list?.Copy()
+	language_list = list()
+	if(keyslot?.translated_language)
+		language_list += keyslot.translated_language
+	if(keyslot2?.translated_language)
+		language_list += keyslot2.translated_language
+
+	// If we're equipped on a mob, we should make sure all the languages
+	// learned from our installed key chips are all still accurate
+	var/mob/mob_loc = loc
+	if(istype(mob_loc) && mob_loc.get_item_by_slot(slot_flags) == src)
+		// Remove all the languages we may not be able to know anymore
+		for(var/language in old_language_list)
+			mob_loc.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
+
+		// And grant all the languages we definitely should know now
+		grant_headset_languages(mob_loc)
 
 /obj/item/radio/headset/AltClick(mob/living/user)
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())
