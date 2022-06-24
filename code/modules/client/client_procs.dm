@@ -1210,3 +1210,50 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
+
+/client/verb/toggle_fullscreen()
+	set name = "Toggle Fullscreen"
+	set category = "OOC"
+
+	fullscreen = !fullscreen
+
+	if (fullscreen)
+		winset(usr, "mainwindow", "menu=")
+		winset(usr, "mainwindow", "titlebar=false")
+		winset(usr, "mainwindow", "can-resize=false")
+		winset(usr, "mainwindow", "is-maximized=true")
+		winset(usr, "mainwindow", "on-size=")
+	else
+		winset(usr, "mainwindow", "menu=menu")
+		winset(usr, "mainwindow", "titlebar=true")
+		winset(usr, "mainwindow", "can-resize=true")
+		winset(usr, "mainwindow", "is-maximized=false")
+		winset(usr, "mainwindow", "on-size=attempt_auto_fit_viewport")
+
+/client/verb/toggle_status_bar()
+	set name = "Toggle Status Bar"
+	set category = "OOC"
+
+	show_status_bar = !show_status_bar
+
+	if (show_status_bar)
+		winset(usr, "mapwindow.status_bar", "is-visible=true")
+	else
+		winset(usr, "mapwindow.status_bar", "is-visible=false")
+
+/client/verb/toggle_chat_bar()
+	set name = "Toggle Chat Bar"
+	set category = "OOC"
+
+	show_chat_bar = !show_chat_bar
+
+	if (show_chat_bar)
+		winset(usr, "outputwindow.input", "is-visible=true")
+		winset(usr, "outputwindow.oocbutton", "is-visible=true")
+		winset(usr, "outputwindow.saybutton", "is-visible=true")
+		winset(usr, "outputwindow.mebutton", "is-visible=true")
+	else
+		winset(usr, "outputwindow.input", "is-visible=false")
+		winset(usr, "outputwindow.oocbutton", "is-visible=false")
+		winset(usr, "outputwindow.saybutton", "is-visible=false")
+		winset(usr, "outputwindow.mebutton", "is-visible=false")
