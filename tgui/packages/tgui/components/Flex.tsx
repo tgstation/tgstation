@@ -26,15 +26,7 @@ export const computeFlexClassName = (props: FlexProps) => {
 };
 
 export const computeFlexProps = (props: FlexProps) => {
-  const {
-    className,
-    direction,
-    wrap,
-    align,
-    justify,
-    inline,
-    ...rest
-  } = props;
+  const { className, direction, wrap, align, justify, inline, ...rest } = props;
   return computeBoxProps({
     style: {
       ...rest.style,
@@ -47,14 +39,11 @@ export const computeFlexProps = (props: FlexProps) => {
   });
 };
 
-export const Flex = props => {
+export const Flex = (props) => {
   const { className, ...rest } = props;
   return (
     <div
-      className={classes([
-        className,
-        computeFlexClassName(rest),
-      ])}
+      className={classes([className, computeFlexClassName(rest)])}
       {...computeFlexProps(rest)}
     />
   );
@@ -79,6 +68,7 @@ export const computeFlexItemClassName = (props: FlexItemProps) => {
 };
 
 export const computeFlexItemProps = (props: FlexItemProps) => {
+  // prettier-ignore
   const {
     className,
     style,
@@ -89,6 +79,7 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
     align,
     ...rest
   } = props;
+  // prettier-ignore
   const computedBasis = basis
     // IE11: Set basis to specified width if it's known, which fixes certain
     // bugs when rendering tables inside the flex.
@@ -109,14 +100,11 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
   });
 };
 
-const FlexItem = props => {
+const FlexItem = (props) => {
   const { className, ...rest } = props;
   return (
     <div
-      className={classes([
-        className,
-        computeFlexItemClassName(props),
-      ])}
+      className={classes([className, computeFlexItemClassName(props)])}
       {...computeFlexItemProps(rest)}
     />
   );

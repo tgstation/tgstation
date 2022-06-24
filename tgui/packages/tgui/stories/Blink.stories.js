@@ -14,9 +14,7 @@ export const meta = {
 const Story = (props, context) => {
   return (
     <Section>
-      <Blink>
-        Blink
-      </Blink>
+      <Blink>Blink</Blink>
     </Section>
   );
 };

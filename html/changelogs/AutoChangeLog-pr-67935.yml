@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - code_imp: "Prettier is now recommended as an extension for UI development (or just in general!)"
+  - refactor: "Many, many interfaces have been hit with the prettier stick so please report any issues. There should be zero noticeable differences in how UIs look or function."

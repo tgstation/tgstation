@@ -32,7 +32,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)
-	faction = list("jungle")
+	faction = list("monkey", "jungle")
 	robust_searching = TRUE
 	stat_attack = HARD_CRIT
 	minbodytemp = 270
@@ -118,10 +118,11 @@
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic
 	name = "Cargorilla" // Overriden, normally
-	desc = "Cargo's pet gorilla."
+	icon = 'icons/mob/cargorillia.dmi'
+	desc = "Cargo's pet gorilla. They seem to have an 'I love Mom' tattoo."
 	maxHealth = 200
 	health = 200
-	faction = list(FACTION_STATION)
+	faction = list("neutral", "monkey", "jungle")
 	gold_core_spawnable = NO_SPAWN
 	unique_name = FALSE
 	/// Whether we're currently being polled over

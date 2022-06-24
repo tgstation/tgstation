@@ -5,32 +5,30 @@ import { Window } from '../layouts';
 export const Electrolyzer = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window
-      width={400}
-      height={305}>
+    <Window width={400} height={305}>
       <Window.Content>
         <Section
           title="Power"
-          buttons={(
+          buttons={
             <>
               <Button
                 icon="eject"
                 content="Eject Cell"
                 disabled={!data.hasPowercell || !data.open}
-                onClick={() => act('eject')} />
+                onClick={() => act('eject')}
+              />
               <Button
                 icon={data.on ? 'power-off' : 'times'}
                 content={data.on ? 'On' : 'Off'}
                 selected={data.on}
                 disabled={!data.hasPowercell && !data.anchored}
-                onClick={() => act('power')} />
+                onClick={() => act('power')}
+              />
             </>
-          )}>
+          }>
           <LabeledList>
-            <LabeledList.Item
-              label="Cell"
-              color={!data.hasPowercell && 'bad'}>
-              {data.hasPowercell && (
+            <LabeledList.Item label="Cell" color={!data.hasPowercell && 'bad'}>
+              {(data.hasPowercell && (
                 <ProgressBar
                   value={data.powerLevel / 100}
                   content={data.powerLevel + '%'}
@@ -38,8 +36,10 @@ export const Electrolyzer = (props, context) => {
                     good: [0.6, Infinity],
                     average: [0.3, 0.6],
                     bad: [-Infinity, 0.3],
-                  }} />
-              ) || 'None'}
+                  }}
+                />
+              )) ||
+                'None'}
             </LabeledList.Item>
           </LabeledList>
         </Section>
