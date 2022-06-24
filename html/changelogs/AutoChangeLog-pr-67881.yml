@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Language encryption keys now only work when you've equipped the headset"
-  - bugfix: "Language encryption keys no longer forever-grant you the language in some circumstances"
-  - bugfix: "Language encryption keys now update when they're installed if you're currently wearing the headset"
