@@ -250,7 +250,7 @@
 	dust()
 
 /mob/living/simple_animal/drone/examine(mob/user)
-	. = list("<span class='info'>This is [icon2html(src, user)] \a <b>[src]</b>!<hr>")
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <b>[src]</b>!")
 
 	//Hands
 	for(var/obj/item/I in held_items)

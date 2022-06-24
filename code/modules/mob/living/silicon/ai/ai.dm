@@ -233,6 +233,9 @@
 		ai_voicechanger = null
 	return ..()
 
+/mob/living/silicon/ai/get_examine_string()
+	return null
+
 /// Removes all malfunction-related abilities from the AI
 /mob/living/silicon/ai/proc/remove_malf_abilities()
 	QDEL_NULL(modules_action)

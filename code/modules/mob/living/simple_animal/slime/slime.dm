@@ -438,7 +438,7 @@
 	return
 
 /mob/living/simple_animal/slime/examine(mob/user)
-	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!<hr>")
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!")
 	if (stat == DEAD)
 		. += span_deadsay("It is limp and unresponsive.")
 	else

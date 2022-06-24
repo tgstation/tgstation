@@ -14,7 +14,7 @@
 		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA) || HAS_TRAIT(L, TRAIT_INVISIBLE_MAN))
 			obscure_name = TRUE
 
-	. = list("<span class='info'>This is <EM>[!obscure_name ? name : "Unknown"]</EM>!<hr>")
+	. = list("<span class='info'>This is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
 
 	var/obscured = check_obscured_slots()
 

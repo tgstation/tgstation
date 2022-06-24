@@ -534,11 +534,11 @@
 		result = examinify.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
 	if(result.len)
-		for(var/i = 1, i <= result.len, i++)
+		for(var/i in 1 to (length(result) - 1))
 			if(!findtext(result[i], "<hr>"))
 				result[i] += "\n"
 
-	to_chat(src, "<div class='examine_block'><span class='infoplain'>[result.Join()]</span></div>")
+	to_chat(src, examine_block("<span class='infoplain'>[result.Join()]</span>"))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
 
 

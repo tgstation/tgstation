@@ -202,6 +202,8 @@
 
 	model.transform_to(model_list[input_model])
 
+/mob/living/silicon/robot/get_examine_string()
+	return null
 
 /// Used to setup the a basic and (somewhat) unique name for the robot.
 /mob/living/silicon/robot/proc/setup_default_name()

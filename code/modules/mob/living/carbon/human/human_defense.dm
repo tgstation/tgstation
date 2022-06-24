@@ -707,11 +707,11 @@
 /mob/living/carbon/human/check_self_for_injuries()
 	if(stat >= UNCONSCIOUS)
 		return
-	var/list/combined_msg = list("<div class='examine_block'>")
+	var/list/combined_msg = list()
 
 	visible_message(span_notice("[src] examines [p_them()]self."))
 
-	combined_msg += span_boldnotice("You check yourself for injuries.<hr>")
+	combined_msg += span_notice("You check yourself for injuries.")
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
@@ -895,7 +895,7 @@
 	if(quirks.len)
 		combined_msg += span_notice("You have these quirks: [get_quirk_string(FALSE, CAT_QUIRK_ALL)].")
 
-	to_chat(src, combined_msg.Join("\n"))
+	to_chat(src, examine_block(combined_msg.Join("\n")))
 
 /mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
