@@ -150,10 +150,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	breaker = FALSE
 	charge_count = 0
 
-///Admin station generator, uses no power.
-/obj/machinery/gravity_generator/main/admin
-	use_power = NO_POWER_USE
-
 /obj/machinery/gravity_generator/main/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, start_immediately = FALSE)
@@ -434,7 +430,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/main/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	enable()
+	if(charge_count != 0 && charging_state != POWER_UP)
+		enable()
 
 //prevents shuttles attempting to rotate this since it messes up sprites
 /obj/machinery/gravity_generator/main/shuttleRotate(rotation, params)
