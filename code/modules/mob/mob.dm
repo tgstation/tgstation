@@ -535,8 +535,7 @@
 
 	if(result.len)
 		for(var/i in 1 to (length(result) - 1))
-			if(!findtext(result[i], "<hr>"))
-				result[i] += "\n"
+			result[i] += "\n"
 
 	to_chat(src, examine_block("<span class='infoplain'>[result.Join()]</span>"))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)

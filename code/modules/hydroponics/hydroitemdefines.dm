@@ -172,13 +172,12 @@
 		returned_message += "[span_bold("[scanned_tray.myseed.plantname]")]"
 		returned_message += "\nPlant Age: [span_notice("[scanned_tray.age]")]"
 		returned_message += "\nPlant Health: [span_notice("[scanned_tray.plant_health]")]"
-		returned_message += "<hr>"
-		returned_message += scan_plant_stats(scanned_tray.myseed)
-		returned_message += "<hr>"
+		returned_message += scan_plant_stats(scanned_tray.myseed, TRUE)
+		returned_message += "\n<b>Growth medium</b>"
 	else
-		returned_message += span_bold("No plant found.\n")
+		returned_message += span_bold("No plant found.")
 
-	returned_message += "Weed level: [span_notice("[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]")]"
+	returned_message += "\nWeed level: [span_notice("[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]")]"
 	returned_message += "\nPest level: [span_notice("[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]")]"
 	returned_message += "\nToxicity level: [span_notice("[scanned_tray.toxic] / [MAX_TRAY_TOXINS]")]"
 	returned_message += "\nWater level: [span_notice("[scanned_tray.waterlevel] / [scanned_tray.maxwater]")]"
@@ -201,22 +200,16 @@
 	if(scanned_tray.myseed)
 		returned_message += "[span_bold("[scanned_tray.myseed.plantname]")]"
 		returned_message += "\nPlant Age: [span_notice("[scanned_tray.age]")]"
-		returned_message += "<hr>"
-		returned_message += scan_plant_chems(scanned_tray.myseed)
-		returned_message += "<hr>"
+		returned_message += scan_plant_chems(scanned_tray.myseed, TRUE)
 	else
-		returned_message += span_bold("No plant found.\n")
+		returned_message += span_bold("No plant found.")
 
-	returned_message += "Tray contains:\n"
+	returned_message += "\nGrowth medium contains:"
 	if(scanned_tray.reagents.reagent_list.len)
-		var/newline = FALSE
 		for(var/datum/reagent/reagent_id in scanned_tray.reagents.reagent_list)
-			if(newline)
-				returned_message += "\n"
-			returned_message += "[span_notice("&bull; [reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]")]"
-			newline = TRUE
+			returned_message += "\n[span_notice("&bull; [reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]")]"
 	else
-		returned_message += "[span_notice("No reagents found.")]"
+		returned_message += "\n[span_notice("No reagents found.")]"
 
 	return span_info(returned_message)
 
@@ -228,8 +221,12 @@
  *
  * Returns the formatted output as text.
  */
-/obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object)
-	var/returned_message = "This is [span_name("\a [scanned_object]")]."
+/obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object, in_tray = FALSE)
+	var/returned_message = ""
+	if(!in_tray)
+		returned_message += "This is [span_name("\a [scanned_object]")]."
+	else
+		returned_message += "\n<b>Seed Stats</b>"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -237,7 +234,7 @@
 	if(our_seed && istype(our_seed))
 		returned_message += get_analyzer_text_traits(our_seed)
 	else
-		returned_message += "<hr>No genes found."
+		returned_message += "\nNo genes found."
 
 	return span_info(returned_message)
 
@@ -249,8 +246,12 @@
  *
  * Returns the formatted output as text.
  */
-/obj/item/plant_analyzer/proc/scan_plant_chems(obj/item/scanned_object)
-	var/returned_message = "This is [span_name("\a [scanned_object]")]."
+/obj/item/plant_analyzer/proc/scan_plant_chems(obj/item/scanned_object, in_tray = FALSE)
+	var/returned_message = ""
+	if(!in_tray)
+		returned_message += "This is [span_name("\a [scanned_object]")]."
+	else
+		returned_message += "\n<b>Seed Stats</b>"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
@@ -260,7 +261,7 @@
 	else if (our_seed.reagents_add?.len) //we have a seed with reagent genes
 		returned_message += get_analyzer_text_chem_genes(our_seed)
 	else
-		returned_message += "<hr>No reagents found."
+		returned_message += "\nNo reagents found."
 
 	return span_info(returned_message)
 
@@ -313,8 +314,7 @@
 	QDEL_NULL(scanned_graft_result) //graft genes are stored as typepaths so if we want to get their formatted name we need a datum ref - musn't forget to clean up afterwards
 	var/unique_text = scanned.get_unique_analyzer_text()
 	if(unique_text)
-		text += "<hr>"
-		text += unique_text
+		text += "\n[unique_text]"
 	return text
 
 /**
@@ -325,15 +325,9 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_genes(obj/item/seeds/scanned)
-	var/text = ""
-	text += "\nPlant Reagent Genes"
-	text += "<hr>"
-	var/newline = FALSE
+	var/text = "\nPlant Reagent Genes:"
 	for(var/datum/plant_gene/reagent/gene in scanned.genes)
-		if(newline)
-			text += "\n"
-		text += "[gene.get_name()]"
-		newline = TRUE
+		text += "\n&bull; [gene.get_name()]"
 	return text
 
 /**
@@ -346,24 +340,19 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_contents(obj/item/scanned_plant)
 	var/text = ""
 	var/reagents_text = ""
-	text += "\nPlant Reagents"
-	text += "\nMaximum reagent capacity: [scanned_plant.reagents.maximum_volume]"
+	text += "\nPlant Reagents:"
 	var/chem_cap = 0
-	var/newline = FALSE
 	for(var/_reagent in scanned_plant.reagents.reagent_list)
 		var/datum/reagent/reagent = _reagent
 		var/amount = reagent.volume
 		chem_cap += reagent.volume
-		if(newline)
-			reagents_text += "\n"
-		reagents_text += "&bull; [reagent.name]: [amount]"
-		newline = TRUE
+		reagents_text += "\n&bull; [reagent.name]: [amount]"
+	if(reagents_text)
+		text += reagents_text
+	text += "\nMaximum reagent capacity: [scanned_plant.reagents.maximum_volume]"
 	if(chem_cap > 100)
 		text += "\n[span_danger("Reagent Traits Over 100% Production")]"
 
-	if(reagents_text)
-		text += "<hr>"
-		text += reagents_text
 	return text
 
 /**
@@ -379,8 +368,7 @@
 		text += "\nParent Plant: [span_notice("[scanned_graft.parent_name]")]"
 	if(scanned_graft.stored_trait)
 		text += "\nGraftable Traits: [span_notice("[scanned_graft.stored_trait.get_name()]")]"
-	text += "<hr>"
-	text += "Yield: [span_notice("[scanned_graft.yield]")]"
+	text += "\nYield: [span_notice("[scanned_graft.yield]")]"
 	text += "\nProduction speed: [span_notice("[scanned_graft.production]")]"
 	text += "\nEndurance: [span_notice("[scanned_graft.endurance]")]"
 	text += "\nLifespan: [span_notice("[scanned_graft.lifespan]")]"

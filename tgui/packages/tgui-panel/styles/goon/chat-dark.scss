@@ -901,18 +901,11 @@ em {
 }
 
 .examine_block {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(55, 55, 55, 0.33);
-  margin: 7px 4px;
+  background: #1b1c1e;
+  border: 1px solid #a4bad6;
+  margin: 7px;
   padding: 8px 12px;
   max-width: 550px;
-}
-
-.examine_block hr {
-  border: none;
-  background: #222;
-  height: 1px;
-  margin: 8px 16px 8px 16px;
 }
 
 .tooltip {
