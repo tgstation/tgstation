@@ -71,6 +71,28 @@
 		say("oye i die..")
 		qdel()
 
+//Cave tram controls for 1st floor
+/obj/machinery/computer/tram_controls/caves
+	specific_lift_id = "caves 1st floor tram"
+
+/obj/effect/landmark/lift_id/caves
+	specific_lift_id = "caves 1st floor tram"
+
+/obj/effect/landmark/tram/caves/upper
+	name = "Delta Outpost Mining Dock"
+	destination_id = "caves_upper"
+	tgui_icons = list("Arrivals" = "plane-arrival")
+
+/obj/effect/landmark/tram/caves/middle
+	name = "Delta Outpost Storage & Robotics"
+	destination_id = "caves_middle"
+	tgui_icons = list("Arrivals" = "plane-arrival")
+
+/obj/effect/landmark/tram/caves/lower
+	name = "Delta Outpost Research Division"
+	destination_id = "caves_lower"
+	tgui_icons = list("Arrivals" = "plane-arrival")
+
 //Mech used by the clockwork miners
 /obj/vehicle/sealed/mecha/working/ripley/mk2/clockcult
 	icon_state = "ripleyclockcult"

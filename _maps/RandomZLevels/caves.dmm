@@ -2388,18 +2388,12 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
 "lf" = (
-/obj/effect/landmark/tram/right_part{
-	destination_id = "caves_bottom";
-	tram_id = "caves"
+/obj/effect/landmark/tram/caves/lower,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple";
+	initial_id = "caves_bottom"
 	},
-/obj/structure/industrial_lift/tram/central{
-	icon_state = "titanium_white";
-	initial_id = "caves_bottom";
-	tram_id = "caves"
-	},
-/obj/machinery/computer/tram_controls{
-	tram_id = "caves"
-	},
+/obj/machinery/computer/tram_controls/caves,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "lg" = (
@@ -5658,12 +5652,11 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "AG" = (
-/obj/machinery/computer/tram_controls{
-	dir = 4;
-	tram_id = "caves"
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
+	},
+/obj/machinery/computer/tram_controls/caves{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
@@ -7199,10 +7192,7 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/main_outpost)
 "IW" = (
-/obj/effect/landmark/tram/middle_part{
-	destination_id = "caves_middle";
-	tram_id = "caves"
-	},
+/obj/effect/landmark/tram/caves/middle,
 /turf/open/lava/smooth/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
 "IZ" = (
@@ -9236,10 +9226,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/main_outpost/dorm)
 "SE" = (
-/obj/effect/landmark/tram/left_part{
-	destination_id = "caves_top";
-	tram_id = "caves"
-	},
+/obj/effect/landmark/tram/caves/upper,
 /turf/open/lava/smooth/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
 "SL" = (
