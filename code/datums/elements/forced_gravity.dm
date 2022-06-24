@@ -6,7 +6,7 @@
 	///whether we will override the turf if it forces no gravity
 	var/ignore_turf_gravity
 
-/datum/element/forced_gravity/Attach(datum/target, gravity=1, ignore_turf_gravity = FALSE)
+/datum/element/forced_gravity/Attach(datum/target, gravity = 1, ignore_turf_gravity = FALSE)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
