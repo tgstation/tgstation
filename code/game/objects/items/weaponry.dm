@@ -455,7 +455,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
 	w_class = WEIGHT_CLASS_SMALL
-	item_flags = BLIND_TOOL
 	custom_materials = list(/datum/material/iron = 600)
 
 /obj/item/cane/white/Initialize(mapload)
@@ -468,6 +467,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	ADD_TRAIT(src, TRAIT_BLIND_TOOL, ITEM_BLIND_TRAIT)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].

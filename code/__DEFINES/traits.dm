@@ -413,6 +413,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Whether or not orbiting is blocked or not
 #define TRAIT_ORBITING_FORBIDDEN "orbiting_forbidden"
 
+/// Item still allows you to examine items while blind and actively held.
+#define TRAIT_BLIND_TOOL "blind_tool"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -810,6 +813,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ORBITING_TRAIT "orbiting"
 /// From the item_scaling element
 #define ITEM_SCALING_TRAIT "item_scaling"
+/// Trait given by Objects that provide blindsight
+#define ITEM_BLIND_TRAIT "blind_item_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
