@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(target, COMSIG_MOVABLE_POST_THROW, .proc/shatter_on_throw)
-	RegisterSignal(target, COMSIG_OBJ_UNFREEZE, .proc/on_unfrozen)
+	RegisterSignal(target, COMSIG_OBJ_UNFREEZE, .proc/on_unfreeze)
 
 /datum/element/frozen/Detach(datum/source, ...)
 	var/obj/obj_source = source
@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	obj_source.alpha += 25
 	. = ..()
 
-/datum/element/frozen/proc/on_unfrozen(datum/source)
+/datum/element/frozen/proc/on_unfreeze(datum/source)
 	SIGNAL_HANDLER
 	Detach(source)
 
