@@ -1,0 +1,4 @@
+author: "Ebb, epochayur, SweptWasTaken"
+delete-after: True
+changes: 
+  - bugfix: "Soap and biopsy tools now have suit storage sprites."
