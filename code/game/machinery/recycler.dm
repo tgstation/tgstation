@@ -49,14 +49,8 @@
 /obj/machinery/recycler/RefreshParts()
 	. = ..()
 	var/amt_made = 0
-	var/mat_mod = 0
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		mat_mod = 2 * B.rating
-	mat_mod *= 50000
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		amt_made = 12.5 * M.rating //% of materials salvaged
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced
@@ -167,22 +161,21 @@
 			qdel(content)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
-
 	var/obj/item/grown/log/L = I
 	if(istype(L))
 		var/seed_modifier = 0
 		if(L.seed)
 			seed_modifier = round(L.seed.potency / 25)
 		new L.plank_type(loc, 1 + seed_modifier)
+		qdel(I)
 	else
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/material_amount = materials.get_item_material_amount(I, BREAKDOWN_FLAGS_RECYCLER)
 		if(!material_amount)
 			return
 		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
+		qdel(I)
 		materials.retrieve_all()
-	qdel(I)
-
 
 /obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)

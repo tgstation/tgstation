@@ -56,10 +56,10 @@
 //because you're expecting user input.
 /obj/item/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		to_chat(user, span_warning("There is no toner cartridge installed in [src]!"))
+		balloon_alert(user, "no cartridge!")
 		return FALSE
 	else if(ink.charges < 1)
-		to_chat(user, span_warning("[src] is out of ink!"))
+		balloon_alert(user, "out of ink!")
 		return FALSE
 	else
 		return TRUE
@@ -211,7 +211,7 @@
 /obj/item/airlock_painter/decal/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
-		to_chat(user, span_notice("You need to get closer!"))
+		balloon_alert(user, "get closer!")
 		return
 
 	if(isfloorturf(target) && use_paint(user))

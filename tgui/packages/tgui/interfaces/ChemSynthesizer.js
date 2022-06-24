@@ -12,34 +12,38 @@ export const ChemSynthesizer = (props, context) => {
     possible_amounts = [],
   } = data;
   return (
-    <Window
-      width={300}
-      height={375}>
+    <Window width={300} height={375}>
       <Window.Content>
         <Section>
           <Box>
-            {possible_amounts.map(possible_amount => (
+            {possible_amounts.map((possible_amount) => (
               <Button
                 icon="plus"
                 key={toFixed(possible_amount, 0)}
                 content={toFixed(possible_amount, 0)}
                 selected={possible_amount === amount}
-                onClick={() => act('amount', {
-                  target: possible_amount,
-                })} />
+                onClick={() =>
+                  act('amount', {
+                    target: possible_amount,
+                  })
+                }
+              />
             ))}
           </Box>
           <Box mt={1}>
-            {chemicals.map(chemical => (
+            {chemicals.map((chemical) => (
               <Button
                 key={chemical.id}
                 icon="tint"
                 content={chemical.title}
                 width="129px"
                 selected={chemical.id === current_reagent}
-                onClick={() => act('select', {
-                  reagent: chemical.id,
-                })} />
+                onClick={() =>
+                  act('select', {
+                    reagent: chemical.id,
+                  })
+                }
+              />
             ))}
           </Box>
         </Section>

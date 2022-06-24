@@ -22,7 +22,7 @@ let setClientThemeTimer = null;
  * There's no way round it. We're essentially changing the skin by hand.
  * It's painful but it works, and is the way Lummox suggested.
  */
-export const setClientTheme = name => {
+export const setClientTheme = (name) => {
   // Transmit once for fast updates and again in a little while in case we won
   // the race against statbrowser init.
   clearInterval(setClientThemeTimer);

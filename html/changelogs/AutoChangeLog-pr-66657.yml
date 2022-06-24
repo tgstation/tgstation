@@ -1,0 +1,7 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - balance: "the tram is now twice as fast, pray it doesnt get any faster (it cant without raising world fps)
+performance: the tram is now about 10 times cheaper to move for the server"
+  - rscadd: "mappers can now create trams with multiple z levels"
+  - code_imp: "industrial_lift's now have more of their behavior pertaining to \"the entire lift\" being handled by their lift_master_datum as opposed to belonging to a random platform on the lift."
