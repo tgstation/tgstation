@@ -1,12 +1,12 @@
-import { useBackend, useLocalState } from "../../backend";
-import { Button, Modal, Section } from "../../components";
-import { ListMapper } from "./ListMapper";
+import { useBackend, useLocalState } from '../../backend';
+import { Button, Modal, Section } from '../../components';
+import { ListMapper } from './ListMapper';
 
 export const CallModal = (props, context) => {
   const { act, data } = useBackend(context);
   const { callArguments } = data;
-  const [, setModal] = useLocalState(context, "modal");
-  const [toCall, setToCall] = useLocalState(context, "toCallTaskInfo");
+  const [, setModal] = useLocalState(context, 'modal');
+  const [toCall, setToCall] = useLocalState(context, 'toCallTaskInfo');
   const { type, params } = toCall;
   return (
     <Modal>
@@ -15,22 +15,19 @@ export const CallModal = (props, context) => {
         width="600px"
         scrollable
         title="Call Function/Task"
-        buttons={(
+        buttons={
           <Button
             color="red"
             icon="window-close"
             onClick={() => {
               setModal(null);
               setToCall(null);
-              act("clearArgs");
+              act('clearArgs');
             }}>
             Cancel
           </Button>
-        )}>
-        <ListMapper
-          name="Arguments"
-          list={callArguments}
-          editable />
+        }>
+        <ListMapper name="Arguments" list={callArguments} editable />
         <Button
           onClick={() => {
             setModal(null);

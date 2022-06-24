@@ -1,9 +1,9 @@
-import { useLocalState } from "../../backend";
-import { Button, Modal, Section } from "../../components";
+import { useLocalState } from '../../backend';
+import { Button, Modal, Section } from '../../components';
 
 export const ChunkViewModal = (props, context) => {
-  const [, setModal] = useLocalState(context, "modal");
-  const [viewedChunk, setViewedChunk] = useLocalState(context, "viewedChunk");
+  const [, setModal] = useLocalState(context, 'modal');
+  const [viewedChunk, setViewedChunk] = useLocalState(context, 'viewedChunk');
   return (
     <Modal>
       <Section

@@ -1,10 +1,10 @@
-import { useBackend, useLocalState } from "../../backend";
-import { Button, Modal, Input, Section, Stack } from "../../components";
+import { useBackend, useLocalState } from '../../backend';
+import { Button, Modal, Input, Section, Stack } from '../../components';
 
 export const StateSelectModal = (props, context) => {
   const { act, data } = useBackend(context);
-  const [, setModal] = useLocalState(context, "modal", "states");
-  const [input, setInput] = useLocalState(context, "newStateName", "");
+  const [, setModal] = useLocalState(context, 'modal', 'states');
+  const [input, setInput] = useLocalState(context, 'newStateName', '');
   const { states } = data;
   return (
     <Modal>
@@ -12,7 +12,7 @@ export const StateSelectModal = (props, context) => {
         height="400px"
         width="300px"
         title="States"
-        buttons={(
+        buttons={
           <Button
             color="red"
             icon="window-close"
@@ -21,13 +21,13 @@ export const StateSelectModal = (props, context) => {
             }}>
             Cancel
           </Button>
-        )}>
+        }>
         {states.map((value, i) => (
           <Button
             key={i}
             onClick={() => {
               setModal(null);
-              act("switchState", { index: i+1 });
+              act('switchState', { index: i + 1 });
             }}>
             {value}
           </Button>
@@ -49,7 +49,7 @@ export const StateSelectModal = (props, context) => {
               icon="plus"
               onClick={() => {
                 setModal(null);
-                act("newState", { name: input });
+                act('newState', { name: input });
               }}
             />
           </Stack.Item>

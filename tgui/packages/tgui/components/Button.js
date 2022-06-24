@@ -310,7 +310,6 @@ export class ButtonInput extends Component {
 
 Button.Input = ButtonInput;
 
-
 export class ButtonFile extends Component {
   constructor() {
     super();
@@ -320,7 +319,7 @@ export class ButtonFile extends Component {
   async read(files) {
     const promises = Array.from(files).map((file) => {
       let reader = new FileReader();
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         reader.onload = () => resolve(reader.result);
         reader.readAsText(file);
       });
@@ -330,12 +329,7 @@ export class ButtonFile extends Component {
   }
 
   render() {
-    const {
-      onSelectFiles,
-      accept,
-      multiple,
-      ...rest
-    } = this.props;
+    const { onSelectFiles, accept, multiple, ...rest } = this.props;
     const filePicker = (
       <input
         hidden
