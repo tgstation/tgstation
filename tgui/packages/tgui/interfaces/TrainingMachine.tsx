@@ -22,7 +22,7 @@ export const TrainingMachine = () => {
 };
 
 /** Creates a labeledlist of controls */
-const TrainingControls = (_, context) => {
+const TrainingControls = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { movespeed, range, moving } = data;
 

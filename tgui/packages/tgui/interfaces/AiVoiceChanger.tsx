@@ -11,7 +11,7 @@ type Data = {
   name: string;
 };
 
-export const AiVoiceChanger = (_, context) => {
+export const AiVoiceChanger = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { loud, name, on, say_verb, voices } = data;
 

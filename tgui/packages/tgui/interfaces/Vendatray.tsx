@@ -12,7 +12,7 @@ type Data = {
   product_icon: string;
 };
 
-export const Vendatray = (_, context) => {
+export const Vendatray = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { product_name, registered, owner_name } = data;
 
@@ -45,7 +45,7 @@ export const Vendatray = (_, context) => {
 };
 
 /** Lists product info and buttons to open or purchase */
-const ProductInfo = (_, context) => {
+const ProductInfo = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { product_name, product_cost, tray_open } = data;
 
@@ -79,7 +79,7 @@ const ProductInfo = (_, context) => {
 };
 
 /** Produces an image from the product icon */
-const VendingImage = (_, context) => {
+const VendingImage = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { product_icon } = data;
 

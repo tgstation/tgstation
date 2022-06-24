@@ -10,7 +10,7 @@ type Data = {
   contents_ref: string;
 };
 
-export const Folder = (_, context) => {
+export const Folder = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { theme, bg_color, folder_name, contents, contents_ref } = data;
 

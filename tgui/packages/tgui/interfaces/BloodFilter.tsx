@@ -7,7 +7,7 @@ type Data = {
   whitelist: string[];
 };
 
-export const BloodFilter = (_, context) => {
+export const BloodFilter = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { whitelist = [] } = data;
   const [chemName, setChemName] = useLocalState(context, 'chemName', '');

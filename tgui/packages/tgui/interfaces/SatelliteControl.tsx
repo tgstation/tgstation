@@ -16,7 +16,7 @@ type Satellite = {
   mode: string;
 };
 
-export const SatelliteControl = (_, context) => {
+export const SatelliteControl = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { meteor_shield } = data;
 
@@ -31,7 +31,7 @@ export const SatelliteControl = (_, context) => {
 };
 
 /** Displays coverage info of the meteor shield */
-const ShieldInfo = (_, context) => {
+const ShieldInfo = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { meteor_shield_coverage, meteor_shield_coverage_max } = data;
 
@@ -57,7 +57,7 @@ const ShieldInfo = (_, context) => {
 };
 
 /** Displays a map of satellites and their status */
-const SatelliteDisplay = (_, context) => {
+const SatelliteDisplay = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { satellites = [] } = data;
 

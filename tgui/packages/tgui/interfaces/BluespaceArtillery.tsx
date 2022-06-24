@@ -10,7 +10,7 @@ type Data = {
   target: string;
 };
 
-export const BluespaceArtillery = (_, context) => {
+export const BluespaceArtillery = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { notice, connected, unlocked, target } = data;
 

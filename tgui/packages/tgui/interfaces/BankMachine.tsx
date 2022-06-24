@@ -10,7 +10,7 @@ type Data = {
   station_name: string;
 };
 
-export const BankMachine = (_, context) => {
+export const BankMachine = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { current_balance, siphoning, station_name } = data;
 

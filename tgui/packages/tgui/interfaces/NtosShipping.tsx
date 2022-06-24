@@ -24,7 +24,7 @@ export const NtosShipping = () => {
 };
 
 /** Returns information about the current user, available paper, etc */
-const ShippingHub = (_, context) => {
+const ShippingHub = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { current_user, card_owner, has_printer, paperamt, barcode_split } =
     data;
@@ -58,7 +58,7 @@ const ShippingHub = (_, context) => {
 };
 
 /** Returns shipping options */
-const ShippingOptions = (_, context) => {
+const ShippingOptions = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { has_id_slot, has_printer, current_user } = data;
 

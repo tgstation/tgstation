@@ -27,7 +27,7 @@ accessability, it is nowhere near gospel.`,
 with a crowbar`,
 ] as const;
 
-export const ColorBlindTester = (_, context) => {
+export const ColorBlindTester = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { details } = data;
 

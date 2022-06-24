@@ -12,7 +12,7 @@ type Gland = {
   amount: number;
 };
 
-export const GlandDispenser = (_, context) => {
+export const GlandDispenser = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { glands = [] } = data;
 

@@ -13,7 +13,7 @@ type Data = {
   accesses: string[];
 };
 
-export const AirlockElectronics = (_, context) => {
+export const AirlockElectronics = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const {
     accesses = [],

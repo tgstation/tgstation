@@ -8,7 +8,7 @@ type Data = {
   contents_ref: string;
 };
 
-export const FilingCabinet = (_, context) => {
+export const FilingCabinet = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { cabinet_name, contents, contents_ref } = data;
 

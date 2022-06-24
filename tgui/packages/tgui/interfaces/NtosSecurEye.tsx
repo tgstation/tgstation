@@ -14,7 +14,7 @@ type Camera = {
   name: string;
 };
 
-export const NtosSecurEye = (_, context) => {
+export const NtosSecurEye = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { PC_device_theme } = data;
 
@@ -31,7 +31,7 @@ export const NtosSecurEye = (_, context) => {
 };
 
 /** Displays info and controls for the current camera */
-const CameraControls = (_, context) => {
+const CameraControls = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { activeCamera, mapRef } = data;
   const cameras = selectCameras(data.cameras);

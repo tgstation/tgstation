@@ -14,7 +14,7 @@ type Data = {
   emptying: BooleanLike;
 };
 
-export const ChemAcclimator = (_, context) => {
+export const ChemAcclimator = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const {
     chem_temp,

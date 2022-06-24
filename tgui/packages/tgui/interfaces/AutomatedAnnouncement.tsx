@@ -16,7 +16,7 @@ type Data = {
   newhead: string;
 };
 
-export const AutomatedAnnouncement = (_, context) => {
+export const AutomatedAnnouncement = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { arrivalToggle, arrival, newheadToggle, newhead } = data;
   return (

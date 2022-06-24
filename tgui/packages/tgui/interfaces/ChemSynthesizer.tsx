@@ -10,7 +10,7 @@ type Data = {
   possible_amounts: number[];
 };
 
-export const ChemSynthesizer = (_, context) => {
+export const ChemSynthesizer = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const {
     amount,

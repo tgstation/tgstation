@@ -18,7 +18,7 @@ type Filter = {
   gas_name: string;
 };
 
-export const AtmosFilter = (_, context) => {
+export const AtmosFilter = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { filter_types = [], on, rate, max_rate } = data;
 

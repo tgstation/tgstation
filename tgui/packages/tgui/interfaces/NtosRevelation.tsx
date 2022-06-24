@@ -7,7 +7,7 @@ type Data = {
   armed: BooleanLike;
 };
 
-export const NtosRevelation = (_, context) => {
+export const NtosRevelation = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { armed } = data;
 

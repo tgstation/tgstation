@@ -62,7 +62,7 @@ export const NtosRadarContent = (props) => {
 };
 
 /** Returns object information */
-const ObjectDisplay = (_, context) => {
+const ObjectDisplay = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { object = [], scanning, selected } = data;
 

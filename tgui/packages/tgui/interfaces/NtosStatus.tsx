@@ -7,7 +7,7 @@ type Data = {
   lower: string;
 };
 
-export const NtosStatus = (_, context) => {
+export const NtosStatus = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { upper, lower } = data;
 

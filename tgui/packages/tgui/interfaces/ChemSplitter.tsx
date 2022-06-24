@@ -9,7 +9,7 @@ type Data = {
   max_transfer: number;
 };
 
-export const ChemSplitter = (_, context) => {
+export const ChemSplitter = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { straight, side, max_transfer } = data;
 

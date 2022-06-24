@@ -11,7 +11,7 @@ type Data = {
   powerLevel: number;
 };
 
-export const Electrolyzer = (_, context) => {
+export const Electrolyzer = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { hasPowercell, on, open, anchored, powerLevel } = data;
 

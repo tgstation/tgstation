@@ -12,7 +12,7 @@ type Data = {
   beakerContents: { name: string; volume: number }[];
 };
 
-export const ChemDebugSynthesizer = (_, context) => {
+export const ChemDebugSynthesizer = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const {
     amount,

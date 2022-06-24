@@ -13,7 +13,7 @@ type Data = {
   allow_breeding: BooleanLike;
 };
 
-export const Aquarium = (_, context) => {
+export const Aquarium = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const {
     temperature,

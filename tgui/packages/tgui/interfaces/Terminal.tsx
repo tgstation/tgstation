@@ -8,7 +8,7 @@ type Data = {
   tguitheme: string;
 };
 
-export const Terminal = (_, context) => {
+export const Terminal = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { messages = [], uppertext } = data;
 

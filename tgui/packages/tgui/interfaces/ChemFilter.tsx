@@ -62,7 +62,7 @@ export const ChemFilterPane = (props: Props, context) => {
   );
 };
 
-export const ChemFilter = (_, context) => {
+export const ChemFilter = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { left = [], right = [] } = data;
   const [leftName, setLeftName] = useLocalState(context, 'leftName', '');

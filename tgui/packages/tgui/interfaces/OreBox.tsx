@@ -16,7 +16,7 @@ type Material = {
 const OREBOX_INFO = `All ores will be placed in here when you are wearing a
 mining stachel on your belt or in a pocket while dragging the ore box.`;
 
-export const OreBox = (_, context) => {
+export const OreBox = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { materials } = data;
 

@@ -6,7 +6,7 @@ type Data = {
   note: string;
 };
 
-export const NtosNotepad = (_, context) => {
+export const NtosNotepad = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { note } = data;
 

@@ -16,7 +16,7 @@ type Filter = {
   gas_name: string;
 };
 
-export const PortableScrubber = (_, context) => {
+export const PortableScrubber = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { filter_types = [] } = data;
 
