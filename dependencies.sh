@@ -21,7 +21,7 @@ export SPACEMAN_DMM_VERSION=suite-1.7.1
 export PYTHON_VERSION=3.7.9
 
 #auxlua repo (maintainers: change Y0SH1M4S73R to tgstation before merging)
-export AUXLUA_REPO=Y0SH1M4S73R/auxlua
+export AUXLUA_REPO=tgstation/auxlua
 
 #auxlua git tag
 export AUXLUA_VERSION=0.1.0
