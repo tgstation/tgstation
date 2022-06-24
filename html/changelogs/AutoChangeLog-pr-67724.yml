@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - rscadd: "Add magical reactions when hydroponics plants are hit with polymorph, death, or resurrection magic. Plants with the anti-magic gene (holymelons) block any kind of magical effect on the plant."

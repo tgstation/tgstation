@@ -70,9 +70,9 @@
 	next_move_dir_sub = 0
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
-	if(!mob || !mob.loc)
+	if(!direct || !new_loc)
 		return FALSE
-	if(!new_loc || !direct)
+	if(!mob?.loc)
 		return FALSE
 	if(mob.notransform)
 		return FALSE //This is sota the goto stop mobs from moving var
@@ -118,7 +118,9 @@
 
 	//We are now going to move
 	var/add_delay = mob.cached_multiplicative_slowdown
-	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? SQRT_2 : 1 ) )) // set it now in case of pulled objects
+	var/new_glide_size = DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? SQRT_2 : 1 ) )
+	if(mob.glide_size != new_glide_size)
+		mob.set_glide_size(new_glide_size) // set it now in case of pulled objects
 	//If the move was recent, count using old_move_delay
 	//We want fractional behavior and all
 	if(old_move_delay + world.tick_lag > world.time)
@@ -137,10 +139,15 @@
 	if((direct & (direct - 1)) && mob.loc == new_loc) //moved diagonally successfully
 		add_delay *= SQRT_2
 
+	var/after_glide = 0
 	if(visual_delay)
-		mob.set_glide_size(visual_delay)
+		after_glide = visual_delay
 	else
-		mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
+		after_glide = DELAY_TO_GLIDE_SIZE(add_delay)
+
+	if(after_glide != mob.glide_size)
+		mob.set_glide_size(after_glide)
+
 	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
@@ -358,10 +365,12 @@
 /// Update the gravity status of this mob
 /mob/proc/update_gravity(has_gravity, override=FALSE)
 	var/speed_change = max(0, has_gravity - STANDARD_GRAVITY)
-	if(!speed_change)
+	if(!speed_change && gravity_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
-	else
+		gravity_slowdown = 0
+	else if(gravity_slowdown != speed_change)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown=speed_change)
+		gravity_slowdown = speed_change
 
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth

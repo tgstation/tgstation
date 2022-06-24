@@ -1,4 +1,0 @@
-author: "antropod"
-delete-after: True
-changes: 
-  - bugfix: "Randomized recipes (metalgen and secret sauce) are working again."
