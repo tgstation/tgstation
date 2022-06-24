@@ -1,14 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import {
-  Box,
-  Button,
-  Flex,
-  Section,
-  Tabs,
-  TextArea,
-  Modal,
-  Stack,
-} from '../../components';
+import { Box, Button, Flex, Section, Tabs, TextArea, Modal, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { CallModal } from './CallModal';
 import { ChunkViewModal } from './ChunkViewModal';
