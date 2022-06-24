@@ -13,6 +13,7 @@
 8. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
 9. [Banned content](#banned-content)
 10. [A word on Git](#a-word-on-git)
+11. ["Can I add a git submodule?"](#can-i-add-a-git-submodule?)
 
 ## Reporting Issues
 
@@ -191,6 +192,14 @@ Unless overridden or a non standard git binary is used the line ending settings 
 Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.
 
 Github actions that require additional configuration are disabled on the repository until ACTION_ENABLER secret is created with non-empty value.
+
+## Can I add a Git submodule?
+### No.
+Submodules are buggy, error prone, and every time we've tried to use them, things break and it has to be removed.
+See:
+https://github.com/tgstation/tgstation/pull/28871
+https://github.com/tgstation/tgstation/pull/28902
+https://github.com/tgstation/tgstation/pull/29091
 
 ## Using the Maintainer Role Ping in Discord
 
