@@ -20,7 +20,7 @@ export SPACEMAN_DMM_VERSION=suite-1.7.1
 # Python version for mapmerge and other tools
 export PYTHON_VERSION=3.7.9
 
-#auxlua repo (maintainers: change Y0SH1M4S73R to tgstation before merging)
+#auxlua repo
 export AUXLUA_REPO=tgstation/auxlua
 
 #auxlua git tag
