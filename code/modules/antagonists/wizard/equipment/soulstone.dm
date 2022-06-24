@@ -125,9 +125,11 @@
 	RegisterSignal(src, COMSIG_BIBLE_SMACKED)
 	return TRUE
 
+/// Checks if the passed mob has the required antag datum set on the soulstone.
 /obj/item/soulstone/proc/role_check(mob/who)
 	return required_role ? (who.mind && who.mind.has_antag_datum(required_role, TRUE)) : TRUE
 
+/// Called whenever the soulstone releases a shade from it.
 /obj/item/soulstone/proc/on_release_spirits()
 	if(!one_use)
 		return
@@ -360,6 +362,14 @@
 		return FALSE
 	return TRUE
 
+/**
+ * Creates a new shade mob to inhabit the stone.
+ *
+ * victim - the body that's being shaded
+ * user - the person doing the shading. Optional.
+ * message_user - if TRUE, we send the user (if present) a message that a shade has been created / captured.
+ * shade_controller - the mob (usually, a ghost) that will take over control of the victim / new shade. Optional, if not passed the victim itself will take control.
+ */
 /obj/item/soulstone/proc/init_shade(mob/living/carbon/human/victim, mob/user, message_user = FALSE, mob/shade_controller)
 	if(!shade_controller)
 		shade_controller = victim
@@ -394,6 +404,17 @@
 
 	victim.dust(drop_items = TRUE)
 
+/**
+ * Gets a ghost from dead chat to replace a missing player when a shade is created.
+ *
+ * Gets ran if a soulstone is used on a body that has no client to take over the shade.
+ *
+ * victim - the body that's being shaded
+ * user - the mob shading the body
+ *
+ * Returns FALSE if no ghosts are available or the replacement fails.
+ * Returns TRUE otherwise.
+ */
 /obj/item/soulstone/proc/get_ghost_to_replace_shade(mob/living/carbon/victim, mob/user)
 	var/mob/dead/observer/chosen_ghost
 	var/list/consenting_candidates = poll_ghost_candidates("Would you like to play as a Shade?", "Cultist", ROLE_CULTIST, 5 SECONDS, POLL_IGNORE_SHADE)
