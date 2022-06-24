@@ -171,7 +171,7 @@
 		hypospray_injector.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
 
 		to_chat(injectee, span_warning("You feel a tiny prick!"))
-		to_chat(user, span_notice("You inject [injectee] with the injector."))
+		to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent.name])."))
 
 		if(injectee.reagents)
 			hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
