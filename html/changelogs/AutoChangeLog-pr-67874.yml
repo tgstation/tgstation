@@ -1,0 +1,4 @@
+author: "Hamcha"
+delete-after: True
+changes: 
+  - bugfix: "the message monitor console can now send admin messages again"

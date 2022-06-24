@@ -1,0 +1,4 @@
+author: "ElGood"
+delete-after: True
+changes: 
+  - imageadd: "Bluespace RPED has unique inhand sprites"

@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - bugfix: "Supermatter cascade final objective no longer generates when the engine has exploded."
