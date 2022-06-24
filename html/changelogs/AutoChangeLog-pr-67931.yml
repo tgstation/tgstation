@@ -1,0 +1,4 @@
+author: "Pepsilawn"
+delete-after: True
+changes: 
+  - bugfix: "Coffins' base sell price adjusted back to 100 credits as previously intended."
