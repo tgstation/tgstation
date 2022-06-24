@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - code_imp: "Diggable component was changed to the Diggable element."

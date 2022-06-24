@@ -6,12 +6,8 @@
 
 import { Flex } from './Flex';
 
-export const LabeledControls = props => {
-  const {
-    children,
-    wrap,
-    ...rest
-  } = props;
+export const LabeledControls = (props) => {
+  const { children, wrap, ...rest } = props;
   return (
     <Flex
       mx={-0.5}
@@ -24,13 +20,8 @@ export const LabeledControls = props => {
   );
 };
 
-const LabeledControlsItem = props => {
-  const {
-    label,
-    children,
-    mx = 1,
-    ...rest
-  } = props;
+const LabeledControlsItem = (props) => {
+  const { label, children, mx = 1, ...rest } = props;
   return (
     <Flex.Item mx={mx}>
       <Flex
@@ -41,12 +32,8 @@ const LabeledControlsItem = props => {
         justify="space-between"
         {...rest}>
         <Flex.Item />
-        <Flex.Item>
-          {children}
-        </Flex.Item>
-        <Flex.Item color="label">
-          {label}
-        </Flex.Item>
+        <Flex.Item>{children}</Flex.Item>
+        <Flex.Item color="label">{label}</Flex.Item>
       </Flex>
     </Flex.Item>
   );

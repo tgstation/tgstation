@@ -20,6 +20,12 @@
 		return FALSE
 	if(SStraitor.get_taken_count(type) > 0) // Prevents multiple people from ever getting the same final objective.
 		return FALSE
+	var/valid_crystal = FALSE
+	for(var/obj/machinery/power/supermatter_crystal/engine/crystal in GLOB.machines)
+		if(is_station_level(crystal.z) || is_mining_level(crystal.z))
+			valid_crystal = TRUE
+	if(!valid_crystal)
+		return FALSE
 	return TRUE
 
 /datum/traitor_objective/final/on_objective_taken(mob/user)

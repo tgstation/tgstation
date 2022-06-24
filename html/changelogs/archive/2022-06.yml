@@ -707,3 +707,123 @@
   - qol: Meta and Tram have autodrobes in dorms now.
   bob-b-b:
   - balance: Increased greed vending machine integrity and max items
+2022-06-20:
+  ArcaneMusic:
+  - rscadd: Added several new goodie items to purchase through cargo, including translation
+      keys, mutadone autoinjectors, and a full RLD.
+  - code_imp: documented research_nodes and radios.
+  LemonInTheDark:
+  - code_imp: WAHHHH LIGHTING HAS CHANGED just backend mind. Please report any bugs
+  MTandi:
+  - bugfix: Fixed recycler bug that deleted the output stack because it was merged
+      with the input stack
+  - bugfix: Fixed recycler bug where it deleted stacks of 50 because it didn't have
+      enough space by removing recycle bins that reset its internal space from infinity
+      to the level of matter bin part
+  - qol: food now shows its type on examine
+  Melbert:
+  - qol: The Cursed Dufflebag now tells nearby people when it takes a bite out of
+      someone.
+  - balance: The Cursed Dufflebag takes any food poisoned by any means, instead of
+      just burnt messes.
+  - balance: The Cursed Dufflebag deals out slightly less wounds now to people wearing
+      armor and protection.
+  - balance: The Cursed Dufflebag deals less damage if the mob it's attached to is
+      dead, and doesn't heal if so.
+  - bugfix: The Cursed Dufflebag no longer permanently makes you a pacifist and clumsy.
+  - code_imp: Diggable component was changed to the Diggable element.
+  Mothblocks:
+  - bugfix: Fixed revolutions blaring alerts for a few seconds after winning.
+  - balance: Hacking the command console and winning revs no longer adds midround
+      threat. Instead, it'll force a heavy ruleset to spawn, and barring that, will
+      spawn a dangerous random event.
+  Paxilmaniac:
+  - qol: liquid plasma now points out in examine text that plasma can be collected
+      from it with a beaker
+  - bugfix: liquid plasma will now cool down gasses inside of heat exchanger pipes
+      to 100K instead of heat them to 5000K
+  SmArtKar:
+  - bugfix: Locate weakpoint objective now works again.
+  Watermelon914:
+  - admin: Added a way for administrators to globally disable circuit component sound
+      emitters.
+  - balance: Further limited the sound emitter component so that maximum volume is
+      reduced and pitch is capped between -50 and 50
+2022-06-21:
+  Cursor, sprites by Crumpaloo.:
+  - imageadd: The Cargorilla has found clothing in their size.
+  - rscadd: Updated the Cargorilla's description to match their new look.
+  GoldenAlpharex:
+  - bugfix: Fixed a runtime related to the TGUI white mode preference that would happen
+      every time someone would connect to the server.
+  JohnFulpWillard:
+  - bugfix: The Traitor eye snatching objective will now appear in-game.
+  MTandi:
+  - rscadd: 'Oldstation: Added a lootbox for every role'
+  - rscadd: 'Oldstation: Added 1 diamond ore spawn and 1 gibtonite spawn to asteroids'
+  - rscdel: 'Oldstation: Removed redundant cable, pen, free pipe dispensers and the
+      box of firing pins'
+  Pepsilawn:
+  - bugfix: The Lavaland Mafia map now displays safer flooring over empty space.
+  SmoSmoSmoSmok:
+  - bugfix: mulebots can be turned on/off
+  Thunder12345:
+  - bugfix: A camera in Meta's tech storage is now properly named
+2022-06-22:
+  Capsandi:
+  - bugfix: some walls in the crashed ship ruin, they are no longer full-bright
+  CoffeeDragon16:
+  - bugfix: switching bodies, such as becoming a lich or mindswapping will no longer
+      revoke a wizard's access to their spell book
+  Paxilmaniac:
+  - rscadd: Glass floor tiles can now be made out of both plasma glass, and reinforced
+      plasma glass
+  Pepsilawn:
+  - bugfix: Kilostation's Greater Port Maintenance has had a missing area patched
+      up.
+2022-06-23:
+  Cheshify:
+  - bugfix: The pride and gluttony ruins have had some minor fixes
+  MidoriWroth:
+  - rscadd: Botany can now grow olives, which can be ground into a paste and mixed
+      with water to make quality oil.
+  - rscadd: You can now make custom sushi by using an ingredient on a seaweed sheet.
+      The sushi will be named after the first ingredient you use.
+  - balance: Pierogis now need a dough slice instead of a bun
+  - balance: Quality oil costs 50 credits to order instead of 120
+  Mothblocks:
+  - bugfix: Fixes laser pointer circuits crashing clients.
+  san7890:
+  - rscadd: Nanotrasen has now installed an HFR Room and an Atmospherics Project Room
+      on IceBoxStation. The Atmospherics Storage Room has also had catwalks installed
+      in to accomodate these rooms uninstalled around it.
+  - rscadd: The Atmospherics Loop on IceBoxStation has undergone some minor modifications
+      to accomodate "feeding" these new rooms. Notably, there is now a "minor" loop
+      on the lower Z-Level that you can push and pull gases towards to your (probable)
+      heart's content.
+  - rscadd: The AI Satellite, Incinerator, and some sections of Maintenance have been
+      shuffled around on IceBoxStation to accomodate these changes.
+2022-06-24:
+  CoffeeDragon16:
+  - bugfix: getting your tongue removed will affect your speech again
+  Melbert:
+  - bugfix: Language encryption keys now only work when you've equipped the headset
+  - bugfix: Language encryption keys no longer forever-grant you the language in some
+      circumstances
+  - bugfix: Language encryption keys now update when they're installed if you're currently
+      wearing the headset
+  Tastyfish:
+  - bugfix: Opening wrapped crates now places them at the correct location.
+  antropod:
+  - bugfix: Randomized recipes (metalgen and secret sauce) are working again.
+  carshalash:
+  - bugfix: Jungle salad can now be eaten again
+  - bugfix: Eldritch nightmares were incorrectly added to the gold slime pool
+  dragomagol:
+  - qol: the cyborg hypospray now has a TGUI menu
+  theOOZ:
+  - qol: Rapid Lighting Device now fits in the utility toolbelt
+  timothymtorres:
+  - rscadd: Add magical reactions when hydroponics plants are hit with polymorph,
+      death, or resurrection magic. Plants with the anti-magic gene (holymelons) block
+      any kind of magical effect on the plant.
