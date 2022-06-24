@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
- @use '../colors.scss';
- @use '../base.scss';
+@use '../colors.scss';
+@use '../base.scss';
 
-
-.ListInput__Section .Section__title{
+.ListInput__Section .Section__title {
   flex-shrink: 0;
 }
 
@@ -15,15 +14,15 @@
   font-size: base.em(12px);
 }
 
- .ListInput__Loader {
-   width: 100%;
-   position: relative;
-   height: 4px;
- }
+.ListInput__Loader {
+  width: 100%;
+  position: relative;
+  height: 4px;
+}
 
- .ListInput__LoaderProgress {
-   position: absolute;
-   transition: background-color 500ms ease-out, width 500ms ease-out;
-   background-color: colors.bg(colors.$primary);
-   height: 100%;
- }
+.ListInput__LoaderProgress {
+  position: absolute;
+  transition: background-color 500ms ease-out, width 500ms ease-out;
+  background-color: colors.bg(colors.$primary);
+  height: 100%;
+}

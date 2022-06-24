@@ -5,9 +5,7 @@ import { Window } from '../layouts';
 export const AtmosTempPump = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window
-      width={335}
-      height={115}>
+    <Window width={335} height={115}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -16,7 +14,8 @@ export const AtmosTempPump = (props, context) => {
                 icon={data.on ? 'power-off' : 'times'}
                 content={data.on ? 'On' : 'Off'}
                 selected={data.on}
-                onClick={() => act('power')} />
+                onClick={() => act('power')}
+              />
             </LabeledList.Item>
             <LabeledList.Item label="Heat transfer rate">
               <NumberInput
@@ -27,17 +26,23 @@ export const AtmosTempPump = (props, context) => {
                 minValue={0}
                 maxValue={data.max_heat_transfer_rate}
                 step={1}
-                onChange={(e, value) => act('rate', {
-                  rate: value,
-                })} />
+                onChange={(e, value) =>
+                  act('rate', {
+                    rate: value,
+                  })
+                }
+              />
               <Button
                 ml={1}
                 icon="plus"
                 content="Max"
                 disabled={data.rate === data.max_heat_transfer_rate}
-                onClick={() => act('rate', {
-                  rate: 'max',
-                })} />
+                onClick={() =>
+                  act('rate', {
+                    rate: 'max',
+                  })
+                }
+              />
             </LabeledList.Item>
           </LabeledList>
         </Section>

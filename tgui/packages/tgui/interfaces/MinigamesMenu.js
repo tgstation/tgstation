@@ -1,14 +1,11 @@
 import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
- 
+
 export const MinigamesMenu = (props, context) => {
   const { act } = useBackend(context);
   return (
-    <Window
-      title="Minigames Menu"
-      width={450}
-      height={200}>
+    <Window title="Minigames Menu" width={450} height={200}>
       <Window.Content>
         <Section title="Select Minigame" textAlign="center">
           <Stack>
@@ -32,7 +29,7 @@ export const MinigamesMenu = (props, context) => {
                 onClick={() => act('mafia')}
               />
             </Stack.Item>
-          </Stack>  
+          </Stack>
         </Section>
       </Window.Content>
     </Window>
