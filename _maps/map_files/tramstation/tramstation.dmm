@@ -23192,14 +23192,8 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/mid)
 "hWV" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 5;
-	id = "mining_home";
-	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/box;
-	width = 7
+/obj/docking_port/stationary/mining_home{
+	dir = 4
 	},
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
@@ -23936,14 +23930,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "iia" = (
-/obj/docking_port/stationary{
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp_home";
-	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/generic;
-	width = 9
-	},
+/obj/docking_port/stationary/laborcamp_home,
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "iib" = (
@@ -54794,14 +54781,8 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "suI" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 5;
-	id = "commonmining_home";
-	name = "SS13: Common Mining Dock";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
-	width = 7
+/obj/docking_port/stationary/mining_home/common{
+	dir = 4
 	},
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
