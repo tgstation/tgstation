@@ -36948,6 +36948,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/ai_module/supplied/freeform,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "kvM" = (
@@ -60489,6 +60490,9 @@
 	name = "High-Risk Modules";
 	req_access = list("captain")
 	},
+/obj/item/ai_module/reset/purge{
+	pixel_y = 11
+	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "rmT" = (
@@ -66858,7 +66862,7 @@
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
-/area/space/nearstation)
+/area/station/maintenance/port/greater)
 "sYd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

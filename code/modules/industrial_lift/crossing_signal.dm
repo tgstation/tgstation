@@ -26,7 +26,7 @@
 	/// green, amber, or red.
 	var/signal_state = XING_STATE_GREEN
 	/// The ID of the tram we control
-	var/tram_id = "tram_station"
+	var/tram_id = MAIN_STATION_TRAM
 	/// Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
 	/// Proximity threshold for amber warning (slow people may be in danger)
@@ -42,14 +42,14 @@
 	. = ..()
 	find_tram()
 
-	var/obj/structure/industrial_lift/tram/central/tram_part = tram_ref?.resolve()
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_travelling)
 
 /obj/machinery/crossing_signal/Destroy()
 	. = ..()
 
-	var/obj/structure/industrial_lift/tram/central/tram_part = tram_ref?.resolve()
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		UnregisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING)
 
@@ -67,8 +67,8 @@
  * Locates tram parts in the lift global list after everything is done.
  */
 /obj/machinery/crossing_signal/proc/find_tram()
-	for(var/obj/structure/industrial_lift/tram/central/tram as anything in GLOB.central_trams)
-		if(tram.tram_id != tram_id)
+	for(var/datum/lift_master/tram/tram as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
+		if(tram.specific_lift_id != tram_id)
 			continue
 		tram_ref = WEAKREF(tram)
 		break
@@ -103,10 +103,10 @@
 	end_processing()
 
 /obj/machinery/crossing_signal/process()
-	var/obj/structure/industrial_lift/tram/central/tram_part = tram_ref?.resolve()
+	var/datum/lift_master/tram/tram = tram_ref?.resolve()
 
 	// Check for stopped states.
-	if(!tram_part || !is_operational)
+	if(!tram || !is_operational)
 		// Tram missing, or we lost power.
 		// Tram missing is always safe (green)
 		set_signal_state(XING_STATE_GREEN, force = !is_operational)
@@ -114,26 +114,32 @@
 
 	use_power(active_power_usage)
 
+	var/obj/structure/industrial_lift/tram/tram_part = tram.return_closest_platform_to(src)
+
+	if(QDELETED(tram_part))
+		set_signal_state(XING_STATE_GREEN, force = !is_operational)
+		return PROCESS_KILL
+
 	// Everything will be based on position and travel direction
 	var/signal_pos
 	var/tram_pos
 	var/tram_velocity_sign // 1 for positive axis movement, -1 for negative
 	// Try to be agnostic about N-S vs E-W movement
-	if(tram_part.travel_direction & (NORTH|SOUTH))
+	if(tram.travel_direction & (NORTH|SOUTH))
 		signal_pos = y
 		tram_pos = tram_part.y
-		tram_velocity_sign = tram_part.travel_direction & NORTH ? 1 : -1
+		tram_velocity_sign = tram.travel_direction & NORTH ? 1 : -1
 	else
 		signal_pos = x
 		tram_pos = tram_part.x
-		tram_velocity_sign = tram_part.travel_direction & EAST ? 1 : -1
+		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
 	var/approach_distance = tram_velocity_sign * (signal_pos - tram_pos)
 
 	// Check for stopped state.
 	// Will kill the process since tram starting up will restart process.
-	if(!tram_part.travelling)
+	if(!tram.travelling)
 		// if super close, show red anyway since tram could suddenly start moving
 		if(abs(approach_distance) < red_distance_threshold)
 			set_signal_state(XING_STATE_RED)
