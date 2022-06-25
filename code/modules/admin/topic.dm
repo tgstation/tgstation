@@ -1977,7 +1977,7 @@
 		return usr.client?.mark_datum(datum_to_mark)
 
 	else if(href_list["lua_state"])
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_DEBUG))
 			return
 		var/datum/lua_state/state_to_view = locate(href_list["lua_state"])
 		if(!state_to_view)
