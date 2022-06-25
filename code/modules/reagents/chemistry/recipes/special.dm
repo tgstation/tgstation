@@ -190,6 +190,31 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			return null
 		.[pathR] = textreagents[R]
 
+/datum/chemical_reaction/randomized/proc/SaveOldRecipe()
+	var/recipe_data = list()
+
+	recipe_data["timestamp"] = created
+	recipe_data["required_reagents"] = required_reagents
+	recipe_data["required_catalysts"] = required_catalysts
+
+	recipe_data["is_cold_recipe"] = is_cold_recipe
+	recipe_data["required_temp"] = required_temp
+	recipe_data["optimal_temp"] = optimal_temp
+	recipe_data["overheat_temp"] = overheat_temp
+	recipe_data["thermic_constant"] = thermic_constant
+
+	recipe_data["optimal_ph_min"] = optimal_ph_min
+	recipe_data["optimal_ph_max"] = optimal_ph_max
+	recipe_data["determin_ph_range"] = determin_ph_range
+	recipe_data["H_ion_release"] = H_ion_release
+
+	recipe_data["purity_min"] = purity_min
+
+	recipe_data["results"] = results
+	recipe_data["required_container"] = required_container
+
+	return recipe_data
+
 /datum/chemical_reaction/randomized/proc/LoadOldRecipe(recipe_data)
 	created = text2num(recipe_data["timestamp"])
 

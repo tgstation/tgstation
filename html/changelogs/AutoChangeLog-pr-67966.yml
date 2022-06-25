@@ -1,0 +1,5 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "advanced cyborg hypospray once again refills its chems"
+  - qol: "tochat for cyborg hypospray injections tells you which chem you injected"

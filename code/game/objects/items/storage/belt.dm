@@ -52,6 +52,7 @@
 		/obj/item/assembly/signaler,
 		/obj/item/clothing/gloves,
 		/obj/item/construction/rcd,
+		/obj/item/construction/rld,
 		/obj/item/crowbar,
 		/obj/item/extinguisher/mini,
 		/obj/item/flashlight,

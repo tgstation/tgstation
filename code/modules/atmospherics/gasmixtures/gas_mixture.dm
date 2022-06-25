@@ -111,8 +111,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(volume) // to prevent division by zero
 		var/cached_gases = gases
 		TOTAL_MOLES(cached_gases, .)
-		. *= R_IDEAL_GAS_EQUATION * temperature / volume
-		return
+		return . * R_IDEAL_GAS_EQUATION * temperature / volume
 	return 0
 
 /// Calculate temperature in kelvins
@@ -661,7 +660,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/gas_pressure_quadratic(a, b, c, lower_limit, upper_limit)
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		solution = max(SolveQuadratic(a, b, c)) 
+		solution = max(SolveQuadratic(a, b, c))
 		if(solution > lower_limit && solution < upper_limit) //SolveQuadratic can return empty lists so be careful here
 			return solution
 	stack_trace("Failed to solve pressure quadratic equation. A: [a]. B: [b]. C:[c]. Current value = [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")

@@ -10,7 +10,7 @@
 	base_icon_state = "wall"
 	layer = LOW_OBJ_LAYER
 	density = TRUE
-	opacity = TRUE
+	opacity = FALSE
 	max_integrity = 100
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
