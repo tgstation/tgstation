@@ -344,7 +344,7 @@ GLOBAL_VAR(restart_counter)
 	s += "<br>Round time: <b>[gameTimestamp("hh:mm")]</b>"
 	if(SSmapping.config)
 		s += "<br>Map: <b>[SSmapping.config.map_name]</b>"
-	s += "<br>Alert level: <b>[capitalize(get_security_level())]</b>"
+	s += "<br>Alert level: <b>[capitalize(SSsecurity_level.get_current_level_as_text())]</b>"
 
 	status = s
 

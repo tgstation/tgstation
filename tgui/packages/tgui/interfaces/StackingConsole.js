@@ -4,18 +4,12 @@ import { Window } from '../layouts';
 
 export const StackingConsole = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    machine,
-  } = data;
+  const { machine } = data;
   return (
-    <Window
-      width={320}
-      height={340}>
+    <Window width={320} height={340}>
       <Window.Content scrollable>
         {!machine ? (
-          <NoticeBox>
-            No connected stacking machine
-          </NoticeBox>
+          <NoticeBox>No connected stacking machine</NoticeBox>
         ) : (
           <StackingConsoleContent />
         )}
@@ -26,39 +20,37 @@ export const StackingConsole = (props, context) => {
 
 export const StackingConsoleContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    stacking_amount,
-    contents = [],
-  } = data;
+  const { stacking_amount, contents = [] } = data;
   return (
     <>
       <Section>
         <LabeledList>
           <LabeledList.Item label="Stacking Amount">
-            {stacking_amount || "Unknown"}
+            {stacking_amount || 'Unknown'}
           </LabeledList.Item>
         </LabeledList>
       </Section>
       <Section title="Stored Materials">
         {!contents.length ? (
-          <NoticeBox>
-            No stored materials
-          </NoticeBox>
+          <NoticeBox>No stored materials</NoticeBox>
         ) : (
           <LabeledList>
-            {contents.map(sheet => (
+            {contents.map((sheet) => (
               <LabeledList.Item
                 key={sheet.type}
                 label={sheet.name}
-                buttons={(
+                buttons={
                   <Button
                     icon="eject"
                     content="Release"
-                    onClick={() => act('release', {
-                      type: sheet.type,
-                    })} />
-                )}>
-                {sheet.amount || "Unknown"}
+                    onClick={() =>
+                      act('release', {
+                        type: sheet.type,
+                      })
+                    }
+                  />
+                }>
+                {sheet.amount || 'Unknown'}
               </LabeledList.Item>
             ))}
           </LabeledList>

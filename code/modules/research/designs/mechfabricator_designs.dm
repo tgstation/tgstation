@@ -1389,6 +1389,13 @@
 	build_path = /obj/item/mod/module/anomaly_locked/kinesis
 	department_type = MODULE_ENGINEERING
 
+/datum/design/module/mod_sonar
+	name = "MOD Module: Active Sonar"
+	id = "mod_sonar"
+	materials = list(/datum/material/titanium = 250, /datum/material/glass = 1000, /datum/material/gold = 500, /datum/material/uranium = 250)
+	build_path = /obj/item/mod/module/active_sonar
+	department_type = MODULE_SECURITY
+
 /datum/design/module/projectile_dampener
 	name = "MOD Module: Projectile Dampener"
 	id = "mod_projectile_dampener"

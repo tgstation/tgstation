@@ -171,53 +171,6 @@ SUBSYSTEM_DEF(spatial_grid)
 			var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
 			new_cell_grid[y] += cell
 
-///creates number_to_generate new oranges_ear's and adds them to the subsystems list of ears.
-///i really fucking hope this never gets called after init :clueless:
-/datum/controller/subsystem/spatial_grid/proc/pregenerate_more_oranges_ears(number_to_generate)
-	for(var/new_ear in 1 to number_to_generate)
-		pregenerated_oranges_ears += new/mob/oranges_ear(null)
-
-	number_of_oranges_ears = length(pregenerated_oranges_ears)
-
-///allocate one [/mob/oranges_ear] mob per turf containing atoms_that_need_ears and give them a reference to every listed atom in their turf.
-///if an oranges_ear is allocated to a turf that already has an oranges_ear then the second one fails to allocate (and gives the existing one the atom it was assigned to)
-/datum/controller/subsystem/spatial_grid/proc/assign_oranges_ears(list/atoms_that_need_ears)
-	var/input_length = length(atoms_that_need_ears)
-
-	if(input_length > number_of_oranges_ears)
-		stack_trace("somehow, for some reason, more than the preset generated number of oranges ears was requested. thats fucking [number_of_oranges_ears]. this is not good that should literally never happen")
-		pregenerate_more_oranges_ears(input_length - number_of_oranges_ears)//im still gonna DO IT but ill complain about it
-
-	. = list()
-
-	///the next unallocated /mob/oranges_ear that we try to allocate to assigned_atom's turf
-	var/mob/oranges_ear/current_ear
-	///the next atom in atoms_that_need_ears an ear assigned to it
-	var/atom/assigned_atom
-	///the turf loc of the current assigned_atom. turfs are used to track oranges_ears already assigned to one location so we dont allocate more than one
-	///because allocating more than one oranges_ear to a given loc wastes view iterations
-	var/turf/turf_loc
-
-	for(var/current_ear_index in 1 to input_length)
-		assigned_atom = atoms_that_need_ears[current_ear_index]
-
-		turf_loc = get_turf(assigned_atom)
-		if(!turf_loc)
-			continue
-
-		current_ear = pregenerated_oranges_ears[current_ear_index]
-
-		if(turf_loc.assigned_oranges_ear)
-			turf_loc.assigned_oranges_ear.references += assigned_atom
-			continue //if theres already an oranges_ear mob at assigned_movable's turf we give assigned_movable to it instead and dont allocate ourselves
-
-		current_ear.references += assigned_atom
-
-		current_ear.loc = turf_loc //normally this is bad, but since this is meant to be as fast as possible we literally just need to exist there for view() to see us
-		turf_loc.assigned_oranges_ear = current_ear
-
-		. += current_ear
-
 ///adds cells to the grid for every z level when world.maxx or world.maxy is expanded after this subsystem is initialized. hopefully this is never needed.
 ///because i never tested this.
 /datum/controller/subsystem/spatial_grid/proc/after_world_bounds_expanded(datum/controller/subsystem/processing/dcs/fucking_dcs, has_expanded_world_maxx, has_expanded_world_maxy)
@@ -277,10 +230,6 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/center_y = center_turf.y
 
 	. = list()
-
-	//cache for sanic speeds
-	var/cells_on_y_axis = src.cells_on_y_axis
-	var/cells_on_x_axis = src.cells_on_x_axis
 
 	//technically THIS list only contains lists, but inside those lists are grid cell datums and we can go without a SINGLE var init if we do this
 	var/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
@@ -458,6 +407,8 @@ SUBSYSTEM_DEF(spatial_grid)
 			GRID_CELL_SET(intersecting_cell.atmos_contents, new_target)
 			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_ATMOS), new_target)
 
+	return intersecting_cell
+
 /**
  * find the spatial map cell that target used to belong to, then remove the target (and sometimes it's important_recusive_contents) from it.
  * make sure to provide the turf old_target used to be "in"
@@ -583,6 +534,53 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	message_admins(cell_coords)
 	message_admins("[src] is supposed to only be contained in the cell at indexes ([real_cell.cell_x], [real_cell.cell_y], [real_cell.cell_z]). but is contained at the cells at [cell_coords]")
+
+///creates number_to_generate new oranges_ear's and adds them to the subsystems list of ears.
+///i really fucking hope this never gets called after init :clueless:
+/datum/controller/subsystem/spatial_grid/proc/pregenerate_more_oranges_ears(number_to_generate)
+	for(var/new_ear in 1 to number_to_generate)
+		pregenerated_oranges_ears += new/mob/oranges_ear(null)
+
+	number_of_oranges_ears = length(pregenerated_oranges_ears)
+
+///allocate one [/mob/oranges_ear] mob per turf containing atoms_that_need_ears and give them a reference to every listed atom in their turf.
+///if an oranges_ear is allocated to a turf that already has an oranges_ear then the second one fails to allocate (and gives the existing one the atom it was assigned to)
+/datum/controller/subsystem/spatial_grid/proc/assign_oranges_ears(list/atoms_that_need_ears)
+	var/input_length = length(atoms_that_need_ears)
+
+	if(input_length > number_of_oranges_ears)
+		stack_trace("somehow, for some reason, more than the preset generated number of oranges ears was requested. thats fucking [number_of_oranges_ears]. this is not good that should literally never happen")
+		pregenerate_more_oranges_ears(input_length - number_of_oranges_ears)//im still gonna DO IT but ill complain about it
+
+	. = list()
+
+	///the next unallocated /mob/oranges_ear that we try to allocate to assigned_atom's turf
+	var/mob/oranges_ear/current_ear
+	///the next atom in atoms_that_need_ears an ear assigned to it
+	var/atom/assigned_atom
+	///the turf loc of the current assigned_atom. turfs are used to track oranges_ears already assigned to one location so we dont allocate more than one
+	///because allocating more than one oranges_ear to a given loc wastes view iterations
+	var/turf/turf_loc
+
+	for(var/current_ear_index in 1 to input_length)
+		assigned_atom = atoms_that_need_ears[current_ear_index]
+
+		turf_loc = get_turf(assigned_atom)
+		if(!turf_loc)
+			continue
+
+		current_ear = pregenerated_oranges_ears[current_ear_index]
+
+		if(turf_loc.assigned_oranges_ear)
+			turf_loc.assigned_oranges_ear.references += assigned_atom
+			continue //if theres already an oranges_ear mob at assigned_movable's turf we give assigned_movable to it instead and dont allocate ourselves
+
+		current_ear.references += assigned_atom
+
+		current_ear.loc = turf_loc //normally this is bad, but since this is meant to be as fast as possible we literally just need to exist there for view() to see us
+		turf_loc.assigned_oranges_ear = current_ear
+
+		. += current_ear
 
 ///debug proc for finding how full the cells of src's z level are
 /atom/proc/find_grid_statistics_for_z_level(insert_clients = 0)
