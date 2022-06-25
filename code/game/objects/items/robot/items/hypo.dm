@@ -171,7 +171,7 @@
 		hypospray_injector.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
 
 		to_chat(injectee, span_warning("You feel a tiny prick!"))
-		to_chat(user, span_notice("You inject [injectee] with the injector."))
+		to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent.name])."))
 
 		if(injectee.reagents)
 			hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
@@ -239,6 +239,7 @@
 
 /// Upgrade our hypospray to hold even more new reagents!
 /obj/item/reagent_containers/borghypo/medical/proc/upgrade_hypo()
+	upgraded = TRUE
 	// Expand the holder's capacity to allow for our new suite of reagents
 	stored_reagents.maximum_volume += (length(expanded_reagent_types) * (max_volume_per_reagent + 1))
 	for(var/reagent in expanded_reagent_types)
@@ -247,6 +248,7 @@
 
 /// Remove the reagents we got from the expansion, back to our base reagents
 /obj/item/reagent_containers/borghypo/medical/proc/remove_hypo_upgrade()
+	upgraded = FALSE
 	for(var/reagent in expanded_reagent_types)
 		var/datum/reagent/reagent_to_remove = reagent
 		stored_reagents.del_reagent(reagent_to_remove)
