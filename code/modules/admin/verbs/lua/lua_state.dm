@@ -67,7 +67,7 @@ GLOBAL_PROTECT(lua_usr)
 
 	// Internal errors unrelated to the code being executed are returned as text rather than lists
 	if(istext(result))
-		result = list("status" = "error", "param" = result, "name" = "input")
+		result = list("status" = "errored", "param" = result, "name" = "input")
 	result["chunk"] = script
 	. = handle_result(result)
 
@@ -87,7 +87,7 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.lua_usr = tmp_usr
 
 	if(istext(result))
-		result = list("status" = "error", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
+		result = list("status" = "errored", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	return handle_result(result)
 
 /datum/lua_state/proc/call_function_return_first(function, ...)
@@ -101,7 +101,7 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.IsLuaCall = FALSE
 
 	if(istext(result))
-		result = list("status" = "error", "param" = result, "name" = "An attempted awaken")
+		result = list("status" = "errored", "param" = result, "name" = "An attempted awaken")
 	return handle_result(result)
 
 /// Prefer calling SSlua.queue_resume over directly calling this
@@ -115,7 +115,7 @@ GLOBAL_PROTECT(lua_usr)
 	GLOB.IsLuaCall = FALSE
 
 	if(istext(result))
-		result = list("status" = "error", "param" = result, "name" = "An attempted resume")
+		result = list("status" = "errored", "param" = result, "name" = "An attempted resume")
 	return handle_result(result)
 
 /datum/lua_state/proc/get_globals()
