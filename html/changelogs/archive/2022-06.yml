@@ -827,3 +827,47 @@
   - rscadd: Add magical reactions when hydroponics plants are hit with polymorph,
       death, or resurrection magic. Plants with the anti-magic gene (holymelons) block
       any kind of magical effect on the plant.
+2022-06-25:
+  ArcaneMusic:
+  - bugfix: White canes now examine objects properly and sound correct when hitting
+      things.
+  Ebb, epochayur, SweptWasTaken:
+  - bugfix: Soap and biopsy tools now have suit storage sprites.
+  ElGood:
+  - imageadd: Bluespace RPED has unique inhand sprites
+  Gandalf2k15:
+  - refactor: Security level code has been refactored, please report any abnormalities
+      to the github.
+  Hamcha:
+  - bugfix: the message monitor console can now send admin messages again
+  Kylerace:
+  - balance: 'the tram is now twice as fast, pray it doesnt get any faster (it cant
+      without raising world fps) performance: the tram is now about 10 times cheaper
+      to move for the server'
+  - rscadd: mappers can now create trams with multiple z levels
+  - code_imp: industrial_lift's now have more of their behavior pertaining to "the
+      entire lift" being handled by their lift_master_datum as opposed to belonging
+      to a random platform on the lift.
+  Melbert:
+  - rscdel: Removed a tip suggesting being a drunk scientists boosts research point
+      gain. This was removed at some point, but the tip remained, despite being incorrect.
+  Pepsilawn:
+  - bugfix: Coffins' base sell price adjusted back to 100 credits as previously intended.
+  Rhials:
+  - bugfix: Supermatter cascade final objective no longer generates when the engine
+      has exploded.
+  SmoSmoSmoSmok:
+  - rscadd: You can attach a bell to your wheelchair
+  Son-of-Space:
+  - balance: The AIs freeform and purge law boards have been returned as a static
+      staple on all maps.
+  jlsnow301:
+  - code_imp: Prettier is now recommended as an extension for UI development (or just
+      in general!)
+  - refactor: Many, many interfaces have been hit with the prettier stick so please
+      report any issues. There should be zero noticeable differences in how UIs look
+      or function.
+  private-tristan:
+  - spellcheck: silver golems text no longer states that they are immune to most magic
+  skylord-a52:
+  - refactor: Renamed "delimber" anomaly to "bioscrambler" anomaly
