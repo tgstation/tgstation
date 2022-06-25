@@ -30195,6 +30195,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/computer/atmos_control/nocontrol/master{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos/storage/gas)
 "jtX" = (
@@ -33617,9 +33620,6 @@
 /area/station/engineering/atmos)
 "kwH" = (
 /obj/structure/cable,
-/obj/machinery/computer/atmos_control/nocontrol/master{
-	dir = 8
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage/gas)
 "kwK" = (
