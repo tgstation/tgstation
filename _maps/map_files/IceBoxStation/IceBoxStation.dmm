@@ -28985,7 +28985,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/engineering/atmos)
 "jaO" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/glass{
 	name = "Turbine Access"
 	},
 /obj/structure/cable,
@@ -36012,7 +36012,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "lii" = (
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/window/preopen{
 	id = "Atmospherics Project Shutters";
 	name = "Atmospherics Project Shutters"
 	},
@@ -46742,7 +46742,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "oAl" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
@@ -47046,7 +47046,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "oDn" = (
-/obj/machinery/door/airlock/atmos,
+/obj/machinery/door/airlock/atmos/glass,
 /obj/structure/cable,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -47852,7 +47852,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/window/preopen{
 	id = "Atmospherics Project Shutters";
 	name = "Atmospherics Project Shutters"
 	},
@@ -49971,7 +49971,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -60527,7 +60527,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "sPV" = (
-/obj/machinery/door/airlock/atmos,
+/obj/machinery/door/airlock/atmos/glass,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/turf_decal/trimline/yellow/corner,
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -60805,7 +60805,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "sVE" = (
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 8;
 	id = "Atmospherics HFR Shutters";
 	name = "Atmospherics HFR Shutters"
