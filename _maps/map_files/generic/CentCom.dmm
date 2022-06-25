@@ -14230,9 +14230,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "Pu" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/misc/beach/sand,
 /area/centcom/central_command_areas/holding)
 "Pv" = (
