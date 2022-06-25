@@ -1990,7 +1990,7 @@
 			var/list/log_entry = state_to_view.log[log_index]
 			if(log_entry["chunk"])
 				LAZYINITLIST(editor.tgui_shared_states)
-				editor.tgui_shared_states["viewedChunk"] = "\"[log_entry["chunk"]]\""
-				editor.tgui_shared_states["modal"] = "\"viewChunk\""
+				editor.tgui_shared_states["viewedChunk"] = json_encode(log_entry["chunk"])
+				editor.tgui_shared_states["modal"] = json_encode("viewChunk")
 		editor.ui_interact(usr)
 		editor.tgui_shared_states = null
