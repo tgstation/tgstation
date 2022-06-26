@@ -257,3 +257,16 @@
 /proc/_winget(player, control_id, params)
 	winget(player, control_id, params)
 
+/proc/_text2path(text)
+	return text2path(text)
+
+/proc/_turn(dir, angle)
+	return turn(dir, angle)
+
+/// For some reason, an atom's contents are a kind of list that auxtools can't work with as a list
+/// This proc returns a copy of contents that is an ordinary list
+/proc/_contents(atom/thing)
+	var/list/ret = list()
+	if(istype(thing))
+		ret += thing.contents
+	return ret
