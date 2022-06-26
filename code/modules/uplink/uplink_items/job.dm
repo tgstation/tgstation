@@ -209,7 +209,7 @@
 	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
 	progression_minimum = 30 MINUTES
 	cost = 10
-	item = /obj/item/autosurgeon/organ/syndicate/laser_arm
+	item = /obj/item/autosurgeon/syndicate/laser_arm
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/chemical_gun
