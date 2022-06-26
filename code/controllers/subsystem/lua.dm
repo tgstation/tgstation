@@ -36,22 +36,6 @@ SUBSYSTEM_DEF(lua)
 		__lua_set_set_var_wrapper("/proc/wrap_lua_set_var")
 		__lua_set_datum_proc_call_wrapper("/proc/wrap_lua_datum_proc_call")
 		__lua_set_global_proc_call_wrapper("/proc/wrap_lua_global_proc_call")
-
-		// Get the current working directory - we need it to set the LUAU_PATH environment variable
-		var/here = world.shelleo(world.system_type == MS_WINDOWS ? "cd" : "pwd")[SHELLEO_STDOUT]
-		here = replacetext(here, "\n", "")
-		var/last_char = copytext_char(here, -1)
-		if(last_char != "/" && last_char != "\\")
-			here += "/"
-
-		// Read the paths from the config file
-		var/list/lua_path = list()
-		var/list/config_paths = CONFIG_GET(str_list/lua_path)
-		for(var/path in config_paths)
-			if(path[1] != "/")
-				path = here + path
-			lua_path += path
-		world.SetConfig("env", "LUAU_PATH", jointext(lua_path, ";"))
 		return ..()
 	catch(var/exception/e)
 		// Something went wrong, best not allow the subsystem to run
@@ -62,6 +46,23 @@ SUBSYSTEM_DEF(lua)
 		to_chat(world, span_boldwarning("[msg]"))
 		warning(e.name)
 		return time
+
+/datum/controller/subsystem/lua/OnConfigLoad()
+	// Get the current working directory - we need it to set the LUAU_PATH environment variable
+	var/here = world.shelleo(world.system_type == MS_WINDOWS ? "cd" : "pwd")[SHELLEO_STDOUT]
+	here = replacetext(here, "\n", "")
+	var/last_char = copytext_char(here, -1)
+	if(last_char != "/" && last_char != "\\")
+		here += "/"
+
+	// Read the paths from the config file
+	var/list/lua_path = list()
+	var/list/config_paths = CONFIG_GET(str_list/lua_path)
+	for(var/path in config_paths)
+		if(path[1] != "/")
+			path = here + path
+		lua_path += path
+	world.SetConfig("env", "LUAU_PATH", jointext(lua_path, ";"))
 
 /datum/controller/subsystem/lua/Shutdown()
 	AUXTOOLS_SHUTDOWN(AUXLUA)
