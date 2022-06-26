@@ -637,7 +637,11 @@
  * Produces a signal [COMSIG_PARENT_EXAMINE]
  */
 /atom/proc/examine(mob/user)
-	. = list("[get_examine_string(user, TRUE)][!get_examine_string() ? null : "."]")
+	var/examine_string = get_examine_string(user, thats = TRUE)
+	if(examine_string)
+		. = list("[examine_string].")
+	else
+		. = list()
 
 	. += get_name_chaser(user)
 	if(desc)
