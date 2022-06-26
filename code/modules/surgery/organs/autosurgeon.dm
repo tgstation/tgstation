@@ -27,10 +27,10 @@
 /obj/item/autosurgeon/Initialize(mapload)
 	. = ..()
 	if(starting_organ)
-		insert_organ(new starting_organ(src))
+		load_organ(new starting_organ(src))
 		add_overlay(loaded_overlay)
 
-/obj/item/autosurgeon/proc/insert_organ(obj/item/item)
+/obj/item/autosurgeon/proc/load_organ(obj/item/item)
 	storedorgan = item
 	item.forceMove(src)
 	name = "[initial(name)] ([storedorgan.name])"
