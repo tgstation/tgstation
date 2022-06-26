@@ -2078,6 +2078,9 @@
 /area/station/service/kitchen/diner)
 "aUt" = (
 /obj/machinery/computer/camera_advanced/base_construction/aux,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "aUA" = (
