@@ -402,4 +402,3 @@
 
 /datum/config_entry/flag/disallow_circuit_sounds
 
-/datum/config_entry/str_list/lua_path
