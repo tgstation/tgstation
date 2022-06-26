@@ -33,7 +33,7 @@
 /obj/item/autosurgeon/proc/load_organ(obj/item/item)
 	storedorgan = item
 	item.forceMove(src)
-	name = "[initial(name)] ([storedorgan.name])"
+	name = "[storedorgan.name] [initial(name)]"
 
 /obj/item/autosurgeon/proc/use_autosurgeon(mob/living/target)
 	name = initial(name)
