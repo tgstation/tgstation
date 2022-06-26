@@ -12495,7 +12495,6 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
