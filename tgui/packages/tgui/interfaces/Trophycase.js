@@ -6,9 +6,14 @@ export const Trophycase = (props, context) => {
   const { act, data } = useBackend(context);
   const { showpiece_name } = data;
   return (
-    <Window width={300} height={400}>
+    <Window width={300} height={420}>
       <Window.Content>
         <Stack vertical fill>
+          <Stack.Item>
+            <Section align="left">
+              <HistorianPanel />
+            </Section>
+          </Stack.Item>
           <Stack.Item>
             <Section align="center">
               <b>{showpiece_name ? showpiece_name : 'Under construction.'}</b>
@@ -17,11 +22,6 @@ export const Trophycase = (props, context) => {
           <Stack.Item>
             <Section align="center">
               <ShowpieceImage />
-            </Section>
-          </Stack.Item>
-          <Stack.Item>
-            <Section align="left">
-              <HistorianPanel />
             </Section>
           </Stack.Item>
           <Stack.Item>
