@@ -121,11 +121,11 @@ const ShowpieceDescription = (props, context) => {
       )}
       {!!holographic_showpiece && <b>{showpiece_description}</b>}
       {!holographic_showpiece && !historian_mode && !!has_showpiece && (
-        <b>
+        <Box className="Trophycase-description">
           {showpiece_description
             ? showpiece_description
             : "This exhibit under construction. Get the curator's key to finalize your contribution!"}
-        </b>
+        </Box>
       )}
       {!holographic_showpiece && !!historian_mode && !!has_showpiece && (
         <Box>
