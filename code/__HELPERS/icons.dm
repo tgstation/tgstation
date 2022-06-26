@@ -1084,10 +1084,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /image/proc/setDir(newdir)
 	dir = newdir
 
-//Assumes already frozed
-/obj/proc/make_unfrozen()
-	SEND_SIGNAL(src, COMSIG_OBJ_UNFREEZE)
-
 /// generates a filename for a given asset.
 /// like generate_asset_name(), except returns the rsc reference and the rsc file hash as well as the asset name (sans extension)
 /// used so that certain asset files dont have to be hashed twice

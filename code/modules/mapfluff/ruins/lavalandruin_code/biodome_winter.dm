@@ -29,21 +29,19 @@
 	var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 	var/mob/thrown_by = thrownby?.resolve()
 	if(ismovable(hit_atom) && !caught && (!thrown_by || thrown_by && COOLDOWN_FINISHED(src, freeze_cooldown)))
-		freeze(hit_atom)
+		freeze_hit_atom(hit_atom)
 	if(thrown_by && !caught)
 		addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrown_by, throw_range+2, throw_speed, null, TRUE), 1)
 
-/obj/item/freeze_cube/proc/freeze(atom/movable/hit_atom)
+/obj/item/freeze_cube/proc/freeze_hit_atom(atom/movable/hit_atom)
 	playsound(src, 'sound/effects/glassbr3.ogg', 50, TRUE)
 	COOLDOWN_START(src, freeze_cooldown, cooldown_time)
 	if(isobj(hit_atom))
 		var/obj/hit_object = hit_atom
-		if(hit_object.resistance_flags & FREEZE_PROOF)
+		var/success = hit_object.freeze()
+		if(!success && hit_object.resistance_flags & FREEZE_PROOF)
 			hit_object.visible_message(span_warning("[hit_object] is freeze-proof!"))
-			return
-		if(HAS_TRAIT(hit_object, TRAIT_FROZEN))
-			return
-		hit_object.AddElement(/datum/element/frozen)
+
 	else if(isliving(hit_atom))
 		var/mob/living/hit_mob = hit_atom
 		SSmove_manager.stop_looping(hit_mob) //stops them mid pathing even if they're stunimmune

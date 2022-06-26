@@ -59,7 +59,7 @@
 /// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
 
-/// from /obj/proc/make_unfrozen()
+/// from /obj/proc/unfreeze()
 #define COMSIG_OBJ_UNFREEZE "obj_unfreeze"
 
 // /obj/machinery/atmospherics/components/binary/valve signals
