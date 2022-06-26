@@ -30,9 +30,9 @@
 		load_organ(new starting_organ(src))
 		add_overlay(loaded_overlay)
 
-/obj/item/autosurgeon/proc/load_organ(obj/item/item)
-	storedorgan = item
-	item.forceMove(src)
+/obj/item/autosurgeon/proc/load_organ(obj/item/organ/loaded_organ)
+	storedorgan = loaded_organ
+	loaded_organ.forceMove(src)
 	name = "[initial(name)] ([storedorgan.name])"
 
 /obj/item/autosurgeon/proc/use_autosurgeon(mob/living/target, mob/living/user)
