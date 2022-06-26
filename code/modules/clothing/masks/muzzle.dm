@@ -39,15 +39,13 @@
 	greyscale_config = /datum/greyscale_config/tape_piece
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn
 	greyscale_colors = "#B2B2B2"
-	item_flags = NOBLUDGEON
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
 	. += "[span_notice("Target mouth and use it on someone to tape their mouth closed.")]"
 
 /obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, params)
-	if(attacker.zone_selected != BODY_ZONE_PRECISE_MOUTH)
-		to_chat(attacker, span_notice("Target [victim]'s mouth if you want to tape it closed."))
+	if(attacker.combat_mode)
 		return ..()
 	if(victim.is_mouth_covered(head_only = TRUE))
 		to_chat(attacker, span_notice("[victim]'s mouth is covered."))
