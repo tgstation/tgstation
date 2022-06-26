@@ -18,6 +18,7 @@
 	var/obj/item/organ/storedorgan
 	// percentage modifier for how fast the surgery happens on other people
 	var/surgery_speed = 1
+	// overlay that shows when the autosurgeon has a stored organ
 	var/loaded_overlay = "autosurgeon_loaded_overlay"
 
 /obj/item/autosurgeon/attack_self_tk(mob/user)
