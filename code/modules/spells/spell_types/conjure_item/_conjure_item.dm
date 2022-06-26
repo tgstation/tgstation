@@ -31,7 +31,11 @@
 	if(existing_item)
 		cast_on.dropItemToGround(existing_item)
 
-	cast_on.put_in_hands(make_item(), TRUE)
+	var/obj/item/created = make_item()
+	if(QDELETED(created))
+		CRASH("[type] tried to create an item, but failed. It's item type is [item_type].")
+
+	cast_on.put_in_hands(created, del_on_fail = TRUE)
 	return ..()
 
 /// Instantiates the item we're conjuring and returns it.
