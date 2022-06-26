@@ -24,11 +24,6 @@ GLOBAL_PROTECT(lua_usr)
 	if(var_name == NAMEOF(src, internal_id))
 		return FALSE
 
-/datum/lua_state/CanProcCall(procname)
-	if(GLOB.IsLuaCall) //No calling auxlua hooks from lua code
-		return FALSE
-	return ..()
-
 /datum/lua_state/New(_name)
 	if(SSlua.initialized != TRUE)
 		qdel(src)
