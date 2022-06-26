@@ -64,7 +64,6 @@ function SS13.register_signal(datum, signal, func)
 end
 
 function SS13.unregister_signal(datum, signal)
-	if not callback then return end
 	if not SS13.signal_handlers then return end
 	local ref = dm.global_proc("REF", datum)
 	if not SS13.signal_handlers[ref] then return end
