@@ -84,7 +84,7 @@
 	range = 15
 	speed = 1
 
-/obj/projectile/magic/spell/rust_wave/Moved(atom/OldLoc, Dir)
+/obj/projectile/magic/spell/rust_wave/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/items/welder.ogg', 75, TRUE)
 	var/list/turflist = list()
@@ -96,10 +96,9 @@
 	T1 = get_step(src,turn(dir,-90))
 	turflist += T1
 	turflist += get_step(T1,turn(dir,-90))
-	for(var/X in turflist)
-		if(!X || prob(25))
+	for(var/turf/T as anything in turflist)
+		if(!T || prob(25))
 			continue
-		var/turf/T = X
 		T.rust_heretic_act()
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short

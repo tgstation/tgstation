@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	. = ..()
 	Show()
 
-/obj/effect/hallucination/simple/Moved(atom/OldLoc, Dir)
+/obj/effect/hallucination/simple/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!loc)
 		return

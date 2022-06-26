@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	update_move_direction()
 
-/obj/machinery/conveyor/Moved(atom/OldLoc, Dir)
+/obj/machinery/conveyor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!.)
 		return

@@ -48,7 +48,7 @@
 	summoner.AddElement(/datum/element/forced_gravity, 1)
 	AddElement(/datum/element/forced_gravity, 1)
 
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/Moved(oldLoc, dir)
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	for(var/i in gravito_targets)
 		if(get_dist(src, i) > gravity_power_range)

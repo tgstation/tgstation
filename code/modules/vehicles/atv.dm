@@ -38,7 +38,7 @@
 	turret = new(loc)
 	turret.base = src
 
-/obj/vehicle/ridden/atv/turret/Moved()
+/obj/vehicle/ridden/atv/turret/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!turret)
 		return

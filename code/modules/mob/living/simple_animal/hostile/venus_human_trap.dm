@@ -157,7 +157,7 @@
 	. = ..()
 	pull_vines()
 
-/mob/living/simple_animal/hostile/venus_human_trap/Moved(atom/OldLoc, Dir)
+/mob/living/simple_animal/hostile/venus_human_trap/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	pixel_x = base_pixel_x + (dir & (NORTH|WEST) ? 2 : -2)
 

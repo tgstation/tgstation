@@ -356,16 +356,15 @@
 	attached_items -= source
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
-/obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
+/obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!loc)
 		return
-	for(var/mob/living/living_mob in OldLoc.contents)//Kidnap everyone on top
+	for(var/mob/living/living_mob in old_loc.contents)//Kidnap everyone on top
 		living_mob.forceMove(loc)
-	for(var/x in attached_items)
-		var/atom/movable/AM = x
-		if(!AM.Move(loc))
-			RemoveItemFromTable(AM, AM.loc)
+	for(var/atom/movable/attached_movable as anything in attached_items)
+		if(!attached_movable.Move(loc))
+			RemoveItemFromTable(attached_movable, attached_movable.loc)
 
 /*
  * Glass tables

@@ -945,16 +945,16 @@
 		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
 		RegisterSignal(source.loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
-/obj/item/card/id/advanced/Moved(atom/OldLoc, Dir)
+/obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 
-	if(istype(OldLoc, /obj/item/storage/wallet))
-		UnregisterSignal(OldLoc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if(istype(old_loc, /obj/item/storage/wallet))
+		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-	if(istype(OldLoc, /obj/item/computer_hardware/card_slot))
-		var/obj/item/computer_hardware/card_slot/slot = OldLoc
+	if(istype(old_loc, /obj/item/computer_hardware/card_slot))
+		var/obj/item/computer_hardware/card_slot/slot = old_loc
 
-		UnregisterSignal(OldLoc, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(old_loc, COMSIG_MOVABLE_MOVED)
 
 		if(istype(slot.holder, /obj/item/modular_computer/tablet))
 			var/obj/item/modular_computer/tablet/slot_holder = slot.holder

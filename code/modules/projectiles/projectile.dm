@@ -590,7 +590,7 @@
  * Scan turf we're now in for anything we can/should hit. This is useful for hitting non dense objects the user
  * directly clicks on, as well as for PHASING projectiles to be able to hit things at all as they don't ever Bump().
  */
-/obj/projectile/Moved(atom/OldLoc, Dir)
+/obj/projectile/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!fired)
 		return

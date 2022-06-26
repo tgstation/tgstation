@@ -146,7 +146,7 @@
 	icon_state = "trashcart"
 	can_install_electronics = FALSE
 
-/obj/structure/closet/crate/trashcart/Moved()
+/obj/structure/closet/crate/trashcart/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)

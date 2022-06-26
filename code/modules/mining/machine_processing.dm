@@ -31,7 +31,7 @@
 	if(input_turf)
 		UnregisterSignal(input_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON))
 
-/obj/machinery/mineral/Moved()
+/obj/machinery/mineral/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!needs_item_input || !anchored)
 		return

@@ -1,4 +1,4 @@
-/mob/living/Moved()
+/mob/living/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	update_turf_movespeed(loc)
 
