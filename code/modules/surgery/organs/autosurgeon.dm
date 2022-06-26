@@ -46,7 +46,7 @@
 	storedorgan = null
 	name = initial(name)
 	playsound(target.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
-	cut_overlay(loaded_overlay)
+	remove_overlay(loaded_overlay)
 	if(uses != INFINITE)
 		uses--
 	if(!uses)
