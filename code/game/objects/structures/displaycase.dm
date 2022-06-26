@@ -341,13 +341,15 @@
 
 /obj/structure/displaycase/trophy/ui_data(mob/user)
 	var/list/data = list()
+	data["historian_mode"] = historian_mode
+	data["holographic_showpiece"] = holographic_showpiece
+	data["max_length"] = MAX_BROADCAST_LEN
+	data["has_showpiece"] = showpiece ? TRUE : FALSE
 	if(showpiece)
 		data["showpiece_name"] = capitalize(showpiece.name)
 		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
 		data["showpiece_icon"] = base64
 		data["showpiece_description"] = trophy_message ? trophy_message : null
-		data["historian_mode"] = historian_mode
-		data["holographic_showpiece"] = holographic_showpiece
 	return data
 
 /obj/structure/displaycase/trophy/ui_act(action, params)
@@ -356,16 +358,23 @@
 		return
 	switch(action)
 		if("insert_key")
-			var/obj/item/key/displaycase/disk = usr.get_active_held_item()
-			if(istype(disk))
+			if(historian_mode)
+				return
+			var/obj/item/key/displaycase/trophy_key = usr.get_active_held_item()
+			if(istype(trophy_key))
 				toggle_historian_mode(usr)
 				return TRUE
 			return
 		if("change_message")
 			if(!holographic_showpiece)
-				var/new_trophy_message = trim("[params["passedMessage"]]", 255)
+				var/new_trophy_message = trim("[params["passedMessage"]]", MAX_BROADCAST_LEN)
 				trophy_message = new_trophy_message
 				return TRUE
+		if("lock")
+			if(!historian_mode)
+				return
+			toggle_historian_mode(usr)
+			return TRUE
 
 /obj/structure/displaycase/trophy/ui_interact(mob/user, datum/tgui/ui)
 	if(open)

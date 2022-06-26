@@ -250,7 +250,7 @@ SUBSYSTEM_DEF(persistence)
 			continue
 
 		T.showpiece = new /obj/item/showpiece_dummy(T, path)
-		T.trophy_message = trim(html_encode(chosen_trophy["message"]))
+		T.trophy_message = trim(html_encode(chosen_trophy["message"]), MAX_BROADCAST_LEN)
 		if(T.trophy_message == "")
 			T.trophy_message = T.showpiece.desc
 		T.placer_key = trim(html_encode(chosen_trophy["placer_key"]))
