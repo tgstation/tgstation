@@ -1,4 +1,0 @@
-author: "castawaynont"
-delete-after: True
-changes: 
-  - bugfix: "Allows Icebox's atmospherics APC to be accessible roundstart by moving a console."
