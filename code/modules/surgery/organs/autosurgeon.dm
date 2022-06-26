@@ -33,12 +33,18 @@
 /obj/item/autosurgeon/proc/load_organ(obj/item/item)
 	storedorgan = item
 	item.forceMove(src)
-	name = "[storedorgan.name] [initial(name)]"
+	name = "[initial(name)] ([storedorgan.name])"
 
-/obj/item/autosurgeon/proc/use_autosurgeon(mob/living/target)
-	name = initial(name)
+/obj/item/autosurgeon/proc/use_autosurgeon(mob/living/target, mob/living/user)
+	if(!user)
+		user = target
+
+	if(target != user)
+		log_combat(user, target, "autosurgeon implanted [storedorgan] into", "[src]", "in [AREACOORD(target)]")
+
 	storedorgan.Insert(target)//insert stored organ into the user
 	storedorgan = null
+	name = initial(name)
 	playsound(target.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
 	cut_overlay(loaded_overlay)
 	if(uses != INFINITE)
@@ -67,7 +73,7 @@
 	user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
 	to_chat(target, span_notice("You feel a sharp sting as something plunges into your body!"))
 
-	use_autosurgeon(target)
+	use_autosurgeon(target, user)
 
 /obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, organ_type))
