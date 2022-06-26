@@ -1,3 +1,5 @@
+#define MAX_LOG_REPEAT_LOOKBACK 5
+
 GLOBAL_VAR_INIT(IsLuaCall, FALSE)
 GLOBAL_PROTECT(IsLuaCall)
 
@@ -37,15 +39,17 @@ GLOBAL_PROTECT(lua_usr)
 		SSlua.sleeps += src
 	var/append_to_log = TRUE
 	if(log.len)
-		var/list/last_entry = peek(log)
-		if(last_entry["status"] == result["status"] \
-			&& last_entry["chunk"] == result["chunk"] \
-			&& last_entry["name"] == result["name"] \
-			&& ((last_entry["param"] == result["param"]) || deep_compare_list(last_entry["param"], result["param"])))
-			if(!last_entry["repeats"])
-				last_entry["repeats"] = 0
-			last_entry["repeats"]++
-			append_to_log = FALSE
+		for(var/index in log.len to max(log.len - MAX_LOG_REPEAT_LOOKBACK, 1) step -1)
+			var/list/entry = log[index]
+			if(entry["status"] == result["status"] \
+				&& entry["chunk"] == result["chunk"] \
+				&& entry["name"] == result["name"] \
+				&& ((entry["param"] == result["param"]) || deep_compare_list(entry["param"], result["param"])))
+				if(!entry["repeats"])
+					entry["repeats"] = 0
+				entry["repeats"]++
+				append_to_log = FALSE
+				break
 	if(append_to_log)
 		log += list(result)
 	// We want to return the return value(s) of executed code
@@ -121,3 +125,5 @@ GLOBAL_PROTECT(lua_usr)
 
 /datum/lua_state/proc/kill_task(task_info)
 	__lua_kill_task(internal_id, task_info)
+
+#undef MAX_LOG_REPEAT_LOOKBACK
