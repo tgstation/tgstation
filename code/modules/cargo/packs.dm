@@ -1408,14 +1408,14 @@
 	crate_name = "raw pyro anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
-/datum/supply_pack/science/raw_delimber_anomaly
-	name = "Raw Delimber Anomaly"
-	desc = "The raw core of a delimber anomaly, ready to be implosion-compressed into a powerful artifact."
+/datum/supply_pack/science/raw_bioscrambler_anomaly
+	name = "Raw Bioscrambler Anomaly"
+	desc = "The raw core of a bioscrambler anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
 	access = ACCESS_ORDNANCE
 	access_view = ACCESS_ORDNANCE
-	contains = list(/obj/item/raw_anomaly_core/delimber)
-	crate_name = "raw delimber anomaly"
+	contains = list(/obj/item/raw_anomaly_core/bioscrambler)
+	crate_name = "raw bioscrambler anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
 

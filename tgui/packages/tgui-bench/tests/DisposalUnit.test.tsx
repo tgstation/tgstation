@@ -6,9 +6,11 @@ import { configureStore, StoreProvider } from 'tgui/store';
 const store = configureStore({ sideEffets: false });
 
 const renderUi = createRenderer((dataJson: string) => {
-  store.dispatch(backendUpdate({
-    data: Byond.parseJson(dataJson),
-  }));
+  store.dispatch(
+    backendUpdate({
+      data: Byond.parseJson(dataJson),
+    })
+  );
   return (
     <StoreProvider store={store}>
       <DisposalUnit />

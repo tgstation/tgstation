@@ -7,9 +7,7 @@ export const Crayon = (props, context) => {
   const capOrChanges = data.has_cap || data.can_change_colour;
   const drawables = data.drawables || [];
   return (
-    <Window
-      width={600}
-      height={600}>
+    <Window width={600} height={600}>
       <Window.Content scrollable>
         {!!capOrChanges && (
           <Section title="Basic">
@@ -19,30 +17,33 @@ export const Crayon = (props, context) => {
                   icon={data.is_capped ? 'power-off' : 'times'}
                   content={data.is_capped ? 'On' : 'Off'}
                   selected={data.is_capped}
-                  onClick={() => act('toggle_cap')} />
+                  onClick={() => act('toggle_cap')}
+                />
               </LabeledList.Item>
             </LabeledList>
             <Button
               content="Select New Color"
-              onClick={() => act('select_colour')} />
+              onClick={() => act('select_colour')}
+            />
           </Section>
         )}
         <Section title="Stencil">
           <LabeledList>
-            {drawables.map(drawable => {
+            {drawables.map((drawable) => {
               const items = drawable.items || [];
               return (
-                <LabeledList.Item
-                  key={drawable.name}
-                  label={drawable.name}>
-                  {items.map(item => (
+                <LabeledList.Item key={drawable.name} label={drawable.name}>
+                  {items.map((item) => (
                     <Button
                       key={item.item}
                       content={item.item}
                       selected={item.item === data.selected_stencil}
-                      onClick={() => act('select_stencil', {
-                        item: item.item,
-                      })} />
+                      onClick={() =>
+                        act('select_stencil', {
+                          item: item.item,
+                        })
+                      }
+                    />
                   ))}
                 </LabeledList.Item>
               );
@@ -55,9 +56,7 @@ export const Crayon = (props, context) => {
               {data.text_buffer}
             </LabeledList.Item>
           </LabeledList>
-          <Button
-            content="New Text"
-            onClick={() => act('enter_text')} />
+          <Button content="New Text" onClick={() => act('enter_text')} />
         </Section>
       </Window.Content>
     </Window>
