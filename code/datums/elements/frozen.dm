@@ -11,7 +11,7 @@
 	if(target_obj.obj_flags & FREEZE_PROOF)
 		return ELEMENT_INCOMPATIBLE
 
-	if(HAS_TRAIT_FROM(target, TRAIT_FROZEN, ELEMENT_TRAIT(type)))
+	if(HAS_TRAIT(target_obj, TRAIT_FROZEN))
 		return ELEMENT_INCOMPATIBLE
 
 	ADD_TRAIT(target_obj, TRAIT_FROZEN, ELEMENT_TRAIT(type))
