@@ -11,6 +11,9 @@
 	if(target_obj.obj_flags & FREEZE_PROOF)
 		return ELEMENT_INCOMPATIBLE
 
+	if(HAS_TRAIT_FROM(target, TRAIT_FROZEN, ELEMENT_TRAIT(type)))
+		return ELEMENT_INCOMPATIBLE
+
 	ADD_TRAIT(target_obj, TRAIT_FROZEN, ELEMENT_TRAIT(type))
 	target_obj.name = "frozen [target_obj.name]"
 	target_obj.add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
