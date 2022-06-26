@@ -9,7 +9,7 @@
 	inhand_icon_state = "nothing"
 	w_class = WEIGHT_CLASS_SMALL
 
-	//how many times you can use the autosurgeon before it becomes useless. -1 is infinite
+	//how many times you can use the autosurgeon before it becomes useless
 	var/uses = INFINITE
 	// What organ will the subtype start with
 	var/starting_organ
@@ -33,7 +33,7 @@
 		if(storedorgan && user)
 			to_chat(user, span_alert("[src] already has an implant stored."))
 			return
-		if(!uses > 0)
+		if(uses == 0)
 			to_chat(user, span_alert("[src] is used up and cannot be loaded with more implants."))
 			return
 		if(!user.transferItemToLoc(loaded_organ, src))
