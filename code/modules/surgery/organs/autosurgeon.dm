@@ -38,7 +38,7 @@
 	name = initial(name)
 	storedorgan.Insert(target)//insert stored organ into the user
 	storedorgan = null
-		playsound(target.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
+	playsound(target.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
 	cut_overlays()
 	if(uses != INFINITE)
 		uses--
