@@ -203,6 +203,7 @@
 	deathsound = 'sound/effects/glassbr1.ogg'
 	del_on_death = TRUE
 	is_mirror = TRUE
+	anchored = TRUE // no dragging your mirror around
 	var/mob/living/simple_animal/hostile/asteroid/elite/herald/my_master = null
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/Initialize(mapload)
