@@ -18,7 +18,7 @@ const r = require.context('../stories', false, /\.stories\.js$/);
  *   },
  * }[]}
  */
-const getStories = () => r.keys().map(path => r(path));
+const getStories = () => r.keys().map((path) => r(path));
 
 export const KitchenSink = (props, context) => {
   const { panel } = props;
@@ -28,11 +28,7 @@ export const KitchenSink = (props, context) => {
   const story = stories[pageIndex];
   const Layout = panel ? Pane : Window;
   return (
-    <Layout
-      title="Kitchen Sink"
-      width={600}
-      height={500}
-      theme={theme}>
+    <Layout title="Kitchen Sink" width={600} height={500} theme={theme}>
       <Flex height="100%">
         <Flex.Item m={1} mr={0}>
           <Section fill fitted>
@@ -49,12 +45,8 @@ export const KitchenSink = (props, context) => {
             </Tabs>
           </Section>
         </Flex.Item>
-        <Flex.Item
-          position="relative"
-          grow={1}>
-          <Layout.Content scrollable>
-            {story.meta.render()}
-          </Layout.Content>
+        <Flex.Item position="relative" grow={1}>
+          <Layout.Content scrollable>{story.meta.render()}</Layout.Content>
         </Flex.Item>
       </Flex>
     </Layout>

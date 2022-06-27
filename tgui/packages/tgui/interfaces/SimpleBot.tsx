@@ -32,7 +32,7 @@ type Controls = {
 export const SimpleBot = (_, context) => {
   const { data } = useBackend<SimpleBotContext>(context);
   const { can_hack, locked } = data;
-  const access = (!locked || can_hack);
+  const access = !locked || can_hack;
 
   return (
     <Window width={450} height={300}>
@@ -40,9 +40,7 @@ export const SimpleBot = (_, context) => {
         <Stack fill vertical>
           <Stack.Item>
             <Section title="Settings" buttons={<TabDisplay />}>
-              {!access
-                ? (<NoticeBox>Locked!</NoticeBox>)
-                : (<SettingsDisplay />)}
+              {!access ? <NoticeBox>Locked!</NoticeBox> : <SettingsDisplay />}
             </Section>
           </Stack.Item>
           {access && (
@@ -210,7 +208,8 @@ const ControlsDisplay = (_, context) => {
             label={control[0]
               .replace('_', ' ')
               .replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-                letter.toUpperCase())}>
+                letter.toUpperCase()
+              )}>
             <ControlHelper control={control} />
           </LabeledControls.Item>
         );
@@ -319,7 +318,12 @@ const FloorbotLine = (props, context) => {
         onClick={() => act('line_mode')}
         size={!control[1] ? 2 : 1.5}>
         {' '}
-        {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
+        {control[1]
+          ? control[1]
+            .toString()
+            .charAt(0)
+            .toUpperCase()
+          : ''}
       </Icon>
     </Tooltip>
   );
