@@ -28,9 +28,7 @@
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "dO" = (
-/obj/structure/sign/warning/explosives/alt{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/explosives/alt/directional/west,
 /obj/machinery/atmospherics/components/tank/nitrogen{
 	dir = 4;
 	initialize_directions = 4
@@ -124,9 +122,7 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
 "iQ" = (
-/obj/structure/sign/warning/explosives/alt{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/explosives/alt/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)

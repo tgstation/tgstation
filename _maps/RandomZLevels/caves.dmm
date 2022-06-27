@@ -496,9 +496,8 @@
 	},
 /area/awaymission/caves/research)
 "cE" = (
-/obj/structure/sign/warning/vacuum{
-	name = "\improper LOW AIR AREA";
-	pixel_x = 32
+/obj/structure/sign/warning/vacuum/directional/east{
+	name = "\improper LOW AIR AREA"
 	},
 /obj/item/stack/rods,
 /turf/open/floor/iron{
@@ -601,9 +600,8 @@
 	},
 /area/awaymission/caves/research)
 "cZ" = (
-/obj/structure/sign/warning/vacuum{
-	name = "\improper LOW AIR AREA";
-	pixel_x = 32
+/obj/structure/sign/warning/vacuum/directional/east{
+	name = "\improper LOW AIR AREA"
 	},
 /turf/open/floor/iron{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
@@ -1120,9 +1118,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fL" = (
-/obj/structure/sign/departments/exam_room{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/exam_room/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fN" = (
@@ -1422,9 +1418,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "kw" = (
-/obj/structure/sign/warning/xeno_mining{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/xeno_mining/directional/south,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1776,10 +1770,9 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "DO" = (
-/obj/structure/sign/warning/pods{
+/obj/structure/sign/warning/pods/directional/west{
 	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
-	name = "\improper MECH TUNNEL PASSAGE A1 TO A2";
-	pixel_x = -32
+	name = "\improper MECH TUNNEL PASSAGE A1 TO A2"
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/misc/asteroid/basalt{
@@ -1853,10 +1846,9 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "Jp" = (
 /obj/machinery/light/small/built/directional/east,
-/obj/structure/sign/warning/pods{
+/obj/structure/sign/warning/pods/directional/east{
 	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
-	name = "\improper MECH TUNNEL PASSAGE B1 TO A2";
-	pixel_x = 32
+	name = "\improper MECH TUNNEL PASSAGE B1 TO A2"
 	},
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
@@ -1882,9 +1874,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Ls" = (
-/obj/structure/sign/departments/medbay{
-	pixel_x = -32
-	},
+/obj/structure/sign/departments/medbay/directional/west,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -2005,10 +1995,9 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "Rp" = (
-/obj/structure/sign/warning/pods{
+/obj/structure/sign/warning/pods/directional/east{
 	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
-	name = "\improper MECH TUNNEL PASSAGE A2 TO B1";
-	pixel_x = 32
+	name = "\improper MECH TUNNEL PASSAGE A2 TO B1"
 	},
 /obj/machinery/light/small/built/directional/east,
 /turf/open/misc/asteroid/basalt{
@@ -2080,10 +2069,9 @@
 /area/awaymission/caves/bmp_asteroid)
 "WL" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/pods{
+/obj/structure/sign/warning/pods/directional/west{
 	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
-	name = "\improper MECH TUNNEL PASSAGE A2 TO A1";
-	pixel_x = -32
+	name = "\improper MECH TUNNEL PASSAGE A2 TO A1"
 	},
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
