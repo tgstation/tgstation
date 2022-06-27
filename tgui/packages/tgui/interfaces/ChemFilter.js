@@ -11,31 +11,38 @@ export const ChemFilterPane = (props, context) => {
     <Section
       title={title}
       minHeight="240px"
-      buttons={(
+      buttons={
         <>
           <Input
             placeholder="Reagent"
             width="140px"
-            onInput={(e, value) => onReagentInput(value)} />
+            onInput={(e, value) => onReagentInput(value)}
+          />
           <Button
             ml={1}
             icon="plus"
-            onClick={() => act('add', {
-              which: titleKey,
-              name: reagentName,
-            })} />
+            onClick={() =>
+              act('add', {
+                which: titleKey,
+                name: reagentName,
+              })
+            }
+          />
         </>
-      )}>
-      {list.map(filter => (
+      }>
+      {list.map((filter) => (
         <Fragment key={filter}>
           <Button
             fluid
             icon="minus"
             content={filter}
-            onClick={() => act('remove', {
-              which: titleKey,
-              reagent: filter,
-            })} />
+            onClick={() =>
+              act('remove', {
+                which: titleKey,
+                reagent: filter,
+              })
+            }
+          />
         </Fragment>
       ))}
     </Section>
@@ -44,16 +51,11 @@ export const ChemFilterPane = (props, context) => {
 
 export const ChemFilter = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    left = [],
-    right = [],
-  } = data;
+  const { left = [], right = [] } = data;
   const [leftName, setLeftName] = useLocalState(context, 'leftName', '');
   const [rightName, setRightName] = useLocalState(context, 'rightName', '');
   return (
-    <Window
-      width={500}
-      height={300}>
+    <Window width={500} height={300}>
       <Window.Content scrollable>
         <Stack>
           <Stack.Item grow>
@@ -61,14 +63,16 @@ export const ChemFilter = (props, context) => {
               title="Left"
               list={left}
               reagentName={leftName}
-              onReagentInput={value => setLeftName(value)} />
+              onReagentInput={(value) => setLeftName(value)}
+            />
           </Stack.Item>
           <Stack.Item grow>
             <ChemFilterPane
               title="Right"
               list={right}
               reagentName={rightName}
-              onReagentInput={value => setRightName(value)} />
+              onReagentInput={(value) => setRightName(value)}
+            />
           </Stack.Item>
         </Stack>
       </Window.Content>

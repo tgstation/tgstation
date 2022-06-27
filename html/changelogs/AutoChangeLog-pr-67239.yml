@@ -1,7 +1,0 @@
-author: "MidoriWroth"
-delete-after: True
-changes: 
-  - rscadd: "Botany can now grow olives, which can be ground into a paste and mixed with water to make quality oil."
-  - rscadd: "You can now make custom sushi by using an ingredient on a seaweed sheet. The sushi will be named after the first ingredient you use."
-  - balance: "Pierogis now need a dough slice instead of a bun"
-  - balance: "Quality oil costs 50 credits to order instead of 120"

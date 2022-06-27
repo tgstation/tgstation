@@ -36948,6 +36948,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/ai_module/supplied/freeform,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "kvM" = (
@@ -60488,6 +60489,9 @@
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "High-Risk Modules";
 	req_access = list("captain")
+	},
+/obj/item/ai_module/reset/purge{
+	pixel_y = 11
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
