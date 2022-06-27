@@ -1,7 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - balance: "The amount of midround threat required for a midround roll has increased slightly from 6.5 to 7."
-  - balance: "Lowered the maximum threat level on sub-20 pop."
-  - balance: "Lowered the number of roundstart traitors."
-  - server: "Fixed \"low_pop_minimum_threat\" being incorrectly named. It has been changed to \"low_pop_maximum_threat\"."

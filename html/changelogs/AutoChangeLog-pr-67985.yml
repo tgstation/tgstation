@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - bugfix: "Fix scrubbers not being able to be deconstructed when connected pipe disconnects."

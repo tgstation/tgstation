@@ -1,4 +1,0 @@
-author: "Hamcha"
-delete-after: True
-changes: 
-  - bugfix: "The decryption key to the Nanotrasen message network has been delivered to the Syndicate Listening Post"
