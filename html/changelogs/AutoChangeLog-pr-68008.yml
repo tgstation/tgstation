@@ -1,4 +1,0 @@
-author: "Original code by SabreML"
-delete-after: True
-changes: 
-  - bugfix: "Items in the suit storage slot won't turn invisible anymore"

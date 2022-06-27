@@ -75,6 +75,9 @@
 	/// Return to stop the cast and prevent the soul imbue
 	#define COMPONENT_BLOCK_IMBUE (1 << 0)
 
+/// Sent from /datum/action/cooldown/spell/aoe/knock/cast(), to every nearby turf (for connect loc): (datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
+#define COMSIG_ATOM_MAGICALLY_UNLOCKED "atom_magic_unlock"
+
 // Instant Summons
 /// Sent from /datum/action/cooldown/spell/summonitem/cast(), to the item being marked for recall: (datum/action/cooldown/spell/spell, mob/user)
 #define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"

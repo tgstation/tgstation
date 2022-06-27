@@ -160,9 +160,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aF" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "aG" = (
