@@ -13,6 +13,8 @@
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
+	forced_ambience = TRUE
+	ambient_buzz = 'sound/ambience/source_corridor2.ogg'
 
 //Maintenance - Departmental
 

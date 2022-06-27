@@ -70,7 +70,17 @@
 	var/parallax_movedir = 0
 
 	var/ambience_index = AMBIENCE_GENERIC
+	///A list of sounds to pick from every so often to play to clients.
 	var/list/ambientsounds
+	///Does this area immediately play an ambience track upon enter?
+	var/forced_ambience = FALSE
+	///The background droning loop that plays 24/7
+	var/ambient_buzz = 'sound/ambience/shipambience.ogg'
+	///Used to decide what the minimum time between ambience is
+	var/min_ambience_cooldown = 15 SECONDS
+	///Used to decide what the maximum time between ambience is
+	var/max_ambience_cooldown = 65 SECONDS
+
 	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/cameras
@@ -93,11 +103,6 @@
 
 	///Used to decide what kind of reverb the area makes sound have
 	var/sound_environment = SOUND_ENVIRONMENT_NONE
-
-	///Used to decide what the minimum time between ambience is
-	var/min_ambience_cooldown = 30 SECONDS
-	///Used to decide what the maximum time between ambience is
-	var/max_ambience_cooldown = 90 SECONDS
 
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
@@ -418,7 +423,43 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	//Ship ambience just loops if turned on.
 	if(L.client?.prefs.toggles & SOUND_SHIP_AMBIENCE)
-		SEND_SOUND(L, sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+		if(!L.can_hear())
+			return
+
+		//If the area has no buzz, skip!
+		if(!ambient_buzz)
+			SEND_SOUND(L, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+			return
+
+		//Lavaland always has it's ambience.
+		if(is_mining_level(z))
+			SEND_SOUND(L, sound(ambient_buzz, repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+			return
+
+		//Station ambience
+		var/droning_hum = FALSE
+		if(!always_unpowered && power_environ)
+			for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in src)
+				if(vent.on)
+					droning_hum = TRUE
+					break
+
+		if(droning_hum)
+			SEND_SOUND(L, sound(ambient_buzz, repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+		else
+			SEND_SOUND(L, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+
+
+///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
+/area/proc/update_beauty()
+	if(!areasize)
+		beauty = 0
+		return FALSE
+	if(areasize >= beauty_threshold)
+		beauty = 0
+		return FALSE //Too big
+	beauty = totalbeauty / areasize
+
 
 /**
  * Called when an atom exits an area

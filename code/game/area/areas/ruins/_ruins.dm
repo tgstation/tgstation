@@ -11,7 +11,6 @@
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
-
 /area/ruin/unpowered
 	always_unpowered = TRUE
 
