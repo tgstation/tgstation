@@ -15010,6 +15010,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
+"eEt" = (
+/obj/structure/sign/barsign{
+	pixel_y = -32
+	},
+/turf/open/floor/wood/parquet,
+/area/station/commons/lounge)
 "eEz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -39336,6 +39342,12 @@
 /obj/item/stack/ducts/fifty,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
+"msM" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/siding/white/corner,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron,
+/area/station/service/bar)
 "msN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/closed/wall/r_wall,
@@ -179997,7 +180009,7 @@ doJ
 vps
 iPY
 doJ
-doJ
+eEt
 dMS
 afI
 riy
@@ -181025,7 +181037,7 @@ lJM
 npr
 uSx
 oDX
-uLq
+msM
 dMS
 hpK
 dMS
