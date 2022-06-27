@@ -40,13 +40,11 @@
 			message_admins("[key_name_admin(usr)] has added implant [organ.type] to [ADMIN_LOOKUPFLW(C)]")
 
 		if("drop organ/implant", "remove organ/implant")
-			for(var/X in C.internal_organs)
-				var/obj/item/organ/I = X
-				organs["[I.name] ([I.type])"] = I
+			for(var/obj/item/organ/organs as anything in C.internal_organs)
+				organs["[organs.name] ([organs.type])"] = organs
 
-			for(var/X in C.implants)
-				var/obj/item/implant/I = X
-				organs["[I.name] ([I.type])"] = I
+			for(var/obj/item/implant/implants as anything in C.implants)
+				organs["[implants.name] ([implants.type])"] = implants
 
 			var/obj/item/organ = tgui_input_list(usr, "Select organ/implant", "Organ Manipulation", organs)
 			if(isnull(organ))

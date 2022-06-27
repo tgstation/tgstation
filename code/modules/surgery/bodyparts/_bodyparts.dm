@@ -796,7 +796,7 @@
 
 	//EMISSIVE CODE END
 	//Draw external organs like horns and frills
-	for(var/obj/item/organ/external/external_organ in external_organs)
+	for(var/obj/item/organ/external/external_organ as anything in external_organs)
 		if(!dropped && !external_organ.can_draw_on_bodypart(owner))
 			continue
 		//Some externals have multiple layers for background, foreground and between
