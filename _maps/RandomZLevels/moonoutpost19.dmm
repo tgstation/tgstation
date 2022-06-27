@@ -6225,7 +6225,7 @@
 /area/awaymission/moonoutpost19/hive)
 "Hn" = (
 /obj/machinery/door/puzzle{
-	name = "ATV shed door";
+	name = "ATV Shed Door";
 	puzzle_id = "atvs"
 	},
 /turf/open/floor/plating{
