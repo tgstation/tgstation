@@ -39,7 +39,7 @@
 	///are we registered in SSshuttles?
 	var/registered = FALSE
 
-	///register to SSshuttles
+///register to SSshuttles
 /obj/docking_port/proc/register()
 	if(registered)
 		WARNING("docking_port registered multiple times")
@@ -47,7 +47,7 @@
 	registered = TRUE
 	return
 
-	///unregister from SSshuttles
+///unregister from SSshuttles
 /obj/docking_port/proc/unregister()
 	if(!registered)
 		WARNING("docking_port unregistered multiple times")
@@ -57,7 +57,7 @@
 /obj/docking_port/proc/Check_id()
 	return
 
-	//these objects are indestructible
+//these objects are indestructible
 /obj/docking_port/Destroy(force)
 	// unless you assert that you know what you're doing. Horrible things
 	// may result.
@@ -68,7 +68,7 @@
 		return QDEL_HINT_LETMELIVE
 
 /obj/docking_port/has_gravity(turf/T)
-	return FALSE
+	return TRUE
 
 /obj/docking_port/take_damage()
 	return

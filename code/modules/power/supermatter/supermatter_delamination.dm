@@ -223,7 +223,7 @@
  * Adds a bit of spiciness to the cascade by breaking lights and turning emergency maint access on
  */
 /datum/supermatter_delamination/proc/create_cascade_ambience()
-	if(SSsecurity_level.current_level != SEC_LEVEL_DELTA)
+	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA) // skip the announcement and shuttle timer adjustment in set_security_level()
 	make_maint_all_access()
 	break_lights_on_station()

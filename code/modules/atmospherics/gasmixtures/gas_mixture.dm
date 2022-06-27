@@ -111,8 +111,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(volume) // to prevent division by zero
 		var/cached_gases = gases
 		TOTAL_MOLES(cached_gases, .)
-		. *= R_IDEAL_GAS_EQUATION * temperature / volume
-		return
+		return . * R_IDEAL_GAS_EQUATION * temperature / volume
 	return 0
 
 /// Calculate temperature in kelvins

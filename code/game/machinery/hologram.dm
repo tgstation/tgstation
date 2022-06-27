@@ -39,7 +39,8 @@ Possible to do for anyone motivated enough:
 	icon_state = "holopad0"
 	base_icon_state = "holopad"
 	layer = LOW_OBJ_LAYER
-	plane = FLOOR_PLANE
+	/// The plane is set such that it shows up without being covered by pipes/wires in a map editor, we change this on initialize.
+	plane = GAME_PLANE
 	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	max_integrity = 300
 	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
@@ -85,6 +86,12 @@ Possible to do for anyone motivated enough:
 	var/calling = FALSE
 	///bitfield. used to turn on and off hearing sensitivity depending on if we can act on Hear() at all - meant for lowering the number of unessesary hearable atoms
 	var/can_hear_flags = NONE
+
+/obj/machinery/holopad/Initialize(mapload)
+	. = ..()
+	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
+	plane = FLOOR_PLANE
+	update_overlays()
 
 /obj/machinery/holopad/secure
 	name = "secure holopad"

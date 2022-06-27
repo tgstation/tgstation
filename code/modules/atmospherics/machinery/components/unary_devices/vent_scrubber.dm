@@ -518,5 +518,9 @@
 	living_mobs += WEAKREF(new_mob)
 	visible_message(span_warning("[new_mob] crawls out of [src]!"))
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/disconnect()
+	..()
+	on = FALSE
+
 #undef SIPHONING
 #undef SCRUBBING
