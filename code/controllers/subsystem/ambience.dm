@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(ambience)
 	client_old_areas -= to_remove
 	currentrun -= to_remove
 
-/area/maintenance
+/area/station/maintenance
 	min_ambience_cooldown = 20 SECONDS
 	max_ambience_cooldown = 35 SECONDS
 
@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(ambience)
 	'sound/ambience/cavesound3.ogg',
 	)
 
-/area/maintenance/play_ambience(mob/M, sound/override_sound, volume)
+/area/station/maintenance/play_ambience(mob/M, sound/override_sound, volume)
 	if(!M.has_light_nearby() && prob(0.5))
 		return ..(M, pick(minecraft_cave_noises))
 	return ..()
