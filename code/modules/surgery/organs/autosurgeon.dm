@@ -15,6 +15,8 @@
 	var/starting_organ
 	// The organ currently loaded in the autosurgeon
 	var/obj/item/organ/storedorgan
+	// list of organs and their children we allow into the autosurgeon- an empty list means no whitelist
+	var/list/organ_whitelist = list()
 	// percentage modifier for how fast the surgery happens on other people
 	var/surgery_speed = 1
 	// overlay that shows when the autosurgeon has a stored organ
@@ -28,7 +30,7 @@
 	if(starting_organ)
 		load_organ(new starting_organ(src))
 
-/obj/item/autosurgeon/proc/load_organ(obj/item/organ/loaded_organ, mob/living/user, )
+/obj/item/autosurgeon/proc/load_organ(obj/item/organ/loaded_organ, mob/living/user)
 	if(user)
 		if(storedorgan && user)
 			to_chat(user, span_alert("[src] already has an implant stored."))
@@ -36,6 +38,11 @@
 		if(uses == 0)
 			to_chat(user, span_alert("[src] is used up and cannot be loaded with more implants."))
 			return
+		if(organ_whitelist.len)
+			for(var/obj/item/organ/whitelisted_organ in organ_whitelist)
+				if(!ispath(loaded_organ.type, whitelisted_organ))
+					to_chat(user, span_alert("[src] is not compatible with this type of autosurgeon."))
+					return
 		if(!user.transferItemToLoc(loaded_organ, src))
 			to_chat(user, span_warning("[loaded_organ] is stuck to your hand!"))
 			return
@@ -138,3 +145,8 @@
 	desc = "A device that automatically - painfully - inserts an implant. It seems someone's specially \
 	modified this one to only insert... tongues. Horrifying."
 	starting_organ = /obj/item/organ/internal/tongue
+
+
+/obj/item/autosurgeon/syndicate/commsagent/Initialize(mapload)
+	. = ..()
+	organ_whitelist += /obj/item/organ/internal/tongue
