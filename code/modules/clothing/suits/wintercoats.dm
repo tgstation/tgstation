@@ -152,8 +152,7 @@
 /obj/item/clothing/suit/armor/hos/trenchcoat/winter
 	name = "head of security's winter coat"
 	desc = "A trenchcoat enhanced with a special lightweight kevlar, padded with wool on the collar and inside. You feel strangely lonely wearing this coat."
-	icon_state = "coathos"
-	inhand_icon_state = "coathos"
+	icon_state = "hoswinter"
 
 // Medical Doctor
 /obj/item/clothing/suit/hooded/wintercoat/medical
