@@ -88,8 +88,3 @@
 		to_chat(user, span_danger("Some dull, universal force is blocking the way. It's overwhelmingly oppressive force feels dangerous."))
 		return
 	return newloc
-
-/// React to signals by deleting the effect. Used for bloodcrawl.
-/obj/effect/dummy/phased_mob/proc/deleteself(mob/living/source, obj/effect/decal/cleanable/phase_in_decal)
-	SIGNAL_HANDLER
-	qdel(src)
