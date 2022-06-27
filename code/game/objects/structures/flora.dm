@@ -965,7 +965,6 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	flora_flags = FLORA_STONE
 	can_uproot = FALSE
 	delete_on_harvest = TRUE
-	rock = TRUE
 
 /obj/structure/flora/rock/style_2
 	icon_state = "basalt2"
