@@ -22,6 +22,7 @@
 /datum/element/atmos_sensitive/Detach(datum/source)
 	var/atom/us = source
 	us.RemoveElement(/datum/element/connect_loc, pass_on)
+	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
 		us.atmos_end()
 		SSair.atom_process -= us

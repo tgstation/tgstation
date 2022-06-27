@@ -6,11 +6,7 @@ import { ShuttleConsoleContent } from './ShuttleConsole';
 export const AuxBaseConsole = (props, context) => {
   const { data } = useBackend(context);
   const [tab, setTab] = useSharedState(context, 'tab', 1);
-  const {
-    type,
-    blind_drop,
-    turrets = [],
-  } = data;
+  const { type, blind_drop, turrets = [] } = data;
   return (
     <Window
       width={turrets.length ? 620 : 350}
@@ -22,7 +18,7 @@ export const AuxBaseConsole = (props, context) => {
             lineHeight="23px"
             selected={tab === 1}
             onClick={() => setTab(1)}>
-            {type === "shuttle" ? "Shuttle Launch" : "Base Launch"}
+            {type === 'shuttle' ? 'Shuttle Launch' : 'Base Launch'}
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
@@ -33,44 +29,38 @@ export const AuxBaseConsole = (props, context) => {
           </Tabs.Tab>
         </Tabs>
         {tab === 1 && (
-          <ShuttleConsoleContent
-            type={type}
-            blind_drop={blind_drop} />
+          <ShuttleConsoleContent type={type} blind_drop={blind_drop} />
         )}
-        {tab === 2 && (
-          <AuxBaseConsoleContent />
-        )}
+        {tab === 2 && <AuxBaseConsoleContent />}
       </Window.Content>
     </Window>
   );
 };
 
 const STATUS_COLOR_KEYS = {
-  "ERROR": "bad",
-  "Disabled": "bad",
-  "Firing": "average",
-  "All Clear": "good",
+  'ERROR': 'bad',
+  'Disabled': 'bad',
+  'Firing': 'average',
+  'All Clear': 'good',
 };
 
 export const AuxBaseConsoleContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    turrets = [],
-  } = data;
+  const { turrets = [] } = data;
   return (
     <Section
-      title={"Turret Control"}
-      buttons={(
+      title={'Turret Control'}
+      buttons={
         !!turrets.length && (
           <Button
             icon="power-off"
-            content={"Toggle Power"}
-            onClick={() => act('turrets_power')} />
-        ))}>
+            content={'Toggle Power'}
+            onClick={() => act('turrets_power')}
+          />
+        )
+      }>
       {!turrets.length ? (
-        <NoticeBox>
-          No connected turrets
-        </NoticeBox>
+        <NoticeBox>No connected turrets</NoticeBox>
       ) : (
         <Table cellpadding="3" textAlign="center">
           <Table.Row header>
@@ -81,12 +71,11 @@ export const AuxBaseConsoleContent = (props, context) => {
             <Table.Cell>Distance</Table.Cell>
             <Table.Cell>Power</Table.Cell>
           </Table.Row>
-          {turrets.map(turret => (
+          {turrets.map((turret) => (
             <Table.Row key={turret.key}>
               <Table.Cell bold>{turret.name}</Table.Cell>
               <Table.Cell>{turret.integrity}%</Table.Cell>
-              <Table.Cell
-                color={STATUS_COLOR_KEYS[turret.status] || "bad"}>
+              <Table.Cell color={STATUS_COLOR_KEYS[turret.status] || 'bad'}>
                 {turret.status}
               </Table.Cell>
               <Table.Cell>{turret.direction}</Table.Cell>
@@ -95,9 +84,12 @@ export const AuxBaseConsoleContent = (props, context) => {
                 <Button
                   icon="power-off"
                   content="Toggle"
-                  onClick={() => act('single_turret_power', {
-                    single_turret_power: turret.ref,
-                  })} />
+                  onClick={() =>
+                    act('single_turret_power', {
+                      single_turret_power: turret.ref,
+                    })
+                  }
+                />
               </Table.Cell>
             </Table.Row>
           ))}

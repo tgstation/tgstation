@@ -41,7 +41,6 @@
 	var/turf/target_turf = get_turf(target)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
 	if(target_holosign)
-		to_chat(user, span_notice("You use [src] to deactivate [target_holosign]."))
 		qdel(target_holosign)
 		return
 	if(target_turf.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
@@ -50,7 +49,7 @@
 		to_chat(user, span_notice("[src] is busy creating a hologram."))
 		return
 	if(LAZYLEN(signs) >= max_signs)
-		to_chat(user, span_notice("[src] is projecting at max capacity!"))
+		balloon_alert(user, "max capacity!")
 		return
 	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
@@ -64,7 +63,6 @@
 		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return
 	target_holosign = new holosign_type(get_turf(target), src)
-	to_chat(user, span_notice("You create \a [target_holosign] with [src]."))
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -73,7 +71,7 @@
 	if(LAZYLEN(signs))
 		for(var/H in signs)
 			qdel(H)
-		to_chat(user, span_notice("You clear all active holograms."))
+		balloon_alert(user, "holograms cleared")
 
 /obj/item/holosign_creator/Destroy()
 	. = ..()
@@ -151,4 +149,4 @@
 			return
 	for(var/sign in signs)
 		qdel(sign)
-	to_chat(user, span_notice("You clear all active holograms."))
+	balloon_alert(user, "holograms cleared")
