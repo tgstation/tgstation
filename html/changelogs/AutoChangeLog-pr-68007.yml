@@ -1,0 +1,5 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - bugfix: "Gorillas now change speed when holding something vs. not holding something, as was always intended"
+  - balance: "Made gorillas use their old speed value when they're holding something, and made them slightly faster when they're not holding something"

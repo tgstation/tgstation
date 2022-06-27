@@ -191,9 +191,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "dj" = (
-/obj/structure/sign/warning/gas_mask{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "ek" = (
@@ -404,9 +402,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "lT" = (
-/obj/structure/sign/warning/gas_mask{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "me" = (
@@ -469,9 +465,7 @@
 /area/ruin/powered/beach)
 "pE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
-/obj/structure/sign/warning/gas_mask{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/gas_mask/directional/west,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "pS" = (
@@ -842,9 +836,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "Cq" = (
-/obj/structure/sign/departments/restroom{
-	pixel_x = 32
-	},
+/obj/structure/sign/departments/restroom/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Cs" = (
@@ -1136,9 +1128,7 @@
 /area/ruin/powered/beach)
 "Mb" = (
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/east,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "Md" = (
@@ -1232,9 +1222,7 @@
 /area/ruin/powered/beach)
 "Qf" = (
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/departments/botany{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/botany/directional/south,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "Qx" = (

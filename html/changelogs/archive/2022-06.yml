@@ -871,3 +871,25 @@
   - spellcheck: silver golems text no longer states that they are immune to most magic
   skylord-a52:
   - refactor: Renamed "delimber" anomaly to "bioscrambler" anomaly
+2022-06-26:
+  Kylerace:
+  - bugfix: NanoTrasen has issued a ghost vaccine for the ghost virus that made ghosts
+      ghost deaf two days ago. now ghosts can hear again (as they are no longer ghost
+      deaf)
+  Profakos:
+  - spellcheck: fixes typos in ash lore
+  RandomGamer123:
+  - qol: Icebox atmos' shutters and airlocks are now transparent for better visibility
+  - bugfix: Fixed freon formation being nearly instant at most temperatures
+  Wallem:
+  - rscadd: Adds the Active Sonar Module, a module that allows the suit-wearer to
+      detect living organisms within a given radius.
+  castawaynont:
+  - bugfix: Allows Icebox's atmospherics APC to be accessible roundstart by moving
+      a console.
+  dragomagol:
+  - bugfix: advanced cyborg hypospray once again refills its chems
+  - qol: tochat for cyborg hypospray injections tells you which chem you injected
+  san7890:
+  - spellcheck: The exclamation point in the "Server Hop" verb has been deleted, which
+      now means you only need to type it in as 'server-hop'. Much nicer.
