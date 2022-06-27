@@ -40,10 +40,10 @@
 
 /datum/light_source/New(atom/owner, atom/top)
 	source_atom = owner // Set our new owner.
-	add_to_light_sources(source_atom.light_sources)
+	add_to_light_sources(source_atom)
 	top_atom = top
 	if (top_atom != source_atom)
-		add_to_light_sources(top_atom.light_sources)
+		add_to_light_sources(top_atom)
 
 	source_turf = top_atom
 	pixel_turf = get_turf_pixel(top_atom) || source_turf
@@ -59,10 +59,10 @@
 /datum/light_source/Destroy(force)
 	remove_lum()
 	if (source_atom)
-		remove_from_light_sources(source_atom.light_sources)
+		remove_from_light_sources(source_atom)
 
 	if (top_atom)
-		remove_from_light_sources(top_atom.light_sources)
+		remove_from_light_sources(top_atom)
 
 	if (needs_update)
 		SSlighting.sources_queue -= src
@@ -118,12 +118,12 @@
 	// This top atom is different.
 	if (new_top_atom && new_top_atom != top_atom)
 		if(top_atom != source_atom && top_atom.light_sources) // Remove ourselves from the light sources of that top atom.
-			remove_from_light_sources(top_atom.light_sources)
+			remove_from_light_sources(top_atom)
 
 		top_atom = new_top_atom
 
 		if (top_atom != source_atom)
-			add_to_light_sources(top_atom.light_sources)
+			add_to_light_sources(top_atom)
 
 	EFFECT_UPDATE(LIGHTING_CHECK_UPDATE)
 
