@@ -32,20 +32,28 @@
 
 /obj/item/autosurgeon/proc/load_organ(obj/item/organ/loaded_organ, mob/living/user)
 	if(user)
-		if(storedorgan && user)
+		if(storedorgan)
 			to_chat(user, span_alert("[src] already has an implant stored."))
 			return
+
 		if(uses == 0)
 			to_chat(user, span_alert("[src] is used up and cannot be loaded with more implants."))
 			return
+
 		if(organ_whitelist.len)
-			for(var/obj/item/organ/whitelisted_organ in organ_whitelist)
-				if(!ispath(loaded_organ.type, whitelisted_organ))
-					to_chat(user, span_alert("[src] is not compatible with this type of autosurgeon."))
-					return
+			var/obj/item/organ/organ_whitelisted
+			for(var/whitelisted_organ in organ_whitelist)
+				if(istype(loaded_organ, whitelisted_organ))
+					organ_whitelisted = TRUE
+					break
+			if(!organ_whitelisted)
+				to_chat(user, span_alert("[src] is not compatible with [loaded_organ]."))
+				return
+
 		if(!user.transferItemToLoc(loaded_organ, src))
-			to_chat(user, span_warning("[loaded_organ] is stuck to your hand!"))
+			to_chat(user, span_alert("[loaded_organ] is stuck to your hand!"))
 			return
+
 	storedorgan = loaded_organ
 	loaded_organ.forceMove(src)
 	name = "[initial(name)] ([storedorgan.name])" //to tell you the organ type, like "suspicious autosurgeon (Reviver implant)"
