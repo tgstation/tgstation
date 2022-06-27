@@ -1310,8 +1310,8 @@
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
 /obj/item/ai_module/reset{
-	pixel_y = 8;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 8
 	},
 /obj/item/ai_module/supplied/freeform{
 	pixel_x = -1
@@ -5604,6 +5604,7 @@
 /area/station/commons/toilet)
 "ccj" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/vehicle/ridden/forklift/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "ccs" = (
@@ -10202,6 +10203,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/vehicle/ridden/forklift/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "dvW" = (
@@ -18956,6 +18958,7 @@
 	dir = 8
 	},
 /obj/structure/sign/warning/engine_safety/directional/west,
+/obj/vehicle/ridden/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "gAk" = (
@@ -34401,6 +34404,7 @@
 	dir = 10
 	},
 /obj/machinery/newscaster/directional/north,
+/obj/vehicle/ridden/forklift/science,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "lDl" = (
@@ -60240,6 +60244,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/vehicle/ridden/forklift/service,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "urq" = (
@@ -63711,6 +63716,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/vehicle/ridden/forklift/security,
 /turf/open/floor/iron,
 /area/station/security/office)
 "vyR" = (
