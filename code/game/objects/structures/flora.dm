@@ -862,12 +862,12 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	delete_on_harvest = TRUE
 	rock = TRUE
 	/// Itemstack that is dropped when a rock is mined with a pickaxe
-	var/obj/item/stack/mineResult = /obj/item/stack/ore/glass/basalt
+	var/obj/item/stack/mine_result = /obj/item/stack/ore/glass/basalt
 	/// Amount of the itemstack to drop
-	var/mineAmount = 20
+	var/mine_amount = 20
 
 /obj/structure/flora/rock/attackby(obj/item/attacking_item, mob/user, params)
-	if(!mineResult || attacking_item.tool_behaviour != TOOL_MINING)
+	if(!mine_result || attacking_item.tool_behaviour != TOOL_MINING)
 		return ..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return ..()
@@ -875,8 +875,8 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	if(!attacking_item.use_tool(src, user, 40, volume=50))
 		return
 	to_chat(user, span_notice("You finish mining the rock."))
-	if(mineResult && mineAmount)
-		new mineResult(loc, mineAmount)
+	if(mine_result && mine_amount)
+		new mine_result(loc, mine_amount)
 	SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
 	qdel(src)
 
