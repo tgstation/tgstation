@@ -38,6 +38,7 @@
 	if(observers?.len)
 		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
+
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
 	ghostize() //False, since we're deleting it currently
@@ -533,7 +534,11 @@
 	else
 		result = examinify.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
-	to_chat(src, "<span class='infoplain'>[result.Join("\n")]</span>")
+	if(result.len)
+		for(var/i in 1 to (length(result) - 1))
+			result[i] += "\n"
+
+	to_chat(src, examine_block("<span class='infoplain'>[result.Join()]</span>"))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
 
 
@@ -551,11 +556,12 @@
 	/// the item in our active hand
 	var/obj/item/active_item = get_active_held_item()
 	var/boosted = FALSE
-	if(active_item.item_flags & BLIND_TOOL)
-		boosted = TRUE
-	if(active_item && active_item != examined_thing && !(active_item.item_flags & BLIND_TOOL))
-		to_chat(src, span_warning("Your hands are too full to examine this!"))
-		return FALSE
+	if(active_item)
+		if(HAS_TRAIT(active_item, TRAIT_BLIND_TOOL))
+			boosted = TRUE
+		else if(active_item != examined_thing)
+			to_chat(src, span_warning("Your hands are too full to examine this!"))
+			return FALSE
 
 	//you can only initiate exaimines if you have a hand, it's not disabled, and only as many examines as you have hands
 	/// our active hand, to check if it's disabled/detatched

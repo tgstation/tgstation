@@ -1360,6 +1360,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
+"DN" = (
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "DU" = (
 /obj/structure/table,
 /obj/item/flashlight{
@@ -3009,7 +3013,7 @@ eb
 eb
 bu
 cD
-bE
+DN
 bE
 Rl
 Ra
