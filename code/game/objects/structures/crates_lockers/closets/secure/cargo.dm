@@ -5,6 +5,7 @@
 
 /obj/structure/closet/secure_closet/quartermaster/PopulateContents()
 	..()
+	new /obj/item/key/forklift/cargo(src)
 	new /obj/item/clothing/neck/cloak/qm(src)
 	new /obj/item/storage/lockbox/medal/cargo(src)
 	new /obj/item/clothing/under/rank/cargo/qm(src)
@@ -24,3 +25,4 @@
 	new /obj/item/circuitboard/machine/ore_silo(src)
 	new /obj/item/card/id/departmental_budget/car(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/qm(src)
+

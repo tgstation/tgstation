@@ -10,6 +10,7 @@
 	build_length = 5 SECONDS
 	turf_place_on_top = TRUE
 	show_name_on_change = FALSE
+	deconstruction_cooldown = 10 SECONDS
 
 /datum/forklift_module/floors/New()
 	. = ..()

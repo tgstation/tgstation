@@ -20,7 +20,7 @@
 
 /obj/item/key/forklift/security
 	name = "security forklift keys"
-	desc = "A keyring with keys for a forklift. Entrusted to the most senior member of Security. Has a \"No Grey Shits!\" sticker on the back."
+	desc = "A keyring with keys for a forklift. Entrusted to the most senior member of Security. Has a Kalvin and HoP's sticker pissing on the Syndicate Logo on the back."
 	icon_state = "keyjanitor"
 
 /obj/item/key/forklift/cargo

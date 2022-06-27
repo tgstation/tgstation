@@ -159,9 +159,23 @@
 /datum/component/riding/vehicle/forklift
 	keytype = /obj/item/key/forklift
 
-/datum/component/riding/vehicle/forklift/handle_specials()
-	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
+/datum/component/riding/vehicle/forklift/engineering
+	keytype = /obj/item/key/forklift/engineering
+
+/datum/component/riding/vehicle/forklift/medical
+	keytype = /obj/item/key/forklift/medbay
+
+/datum/component/riding/vehicle/forklift/security
+	keytype = /obj/item/key/forklift/security
+
+/datum/component/riding/vehicle/forklift/cargo
+	keytype = /obj/item/key/forklift/cargo
+
+/datum/component/riding/vehicle/forklift/service
+	keytype = /obj/item/key/forklift/service
+
+/datum/component/riding/vehicle/forklift/science
+	keytype = /obj/item/key/forklift/science
 
 /datum/component/riding/vehicle/scooter
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER

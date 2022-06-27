@@ -5,7 +5,7 @@
 
 /obj/structure/closet/secure_closet/research_director/PopulateContents()
 	..()
-
+	new /obj/item/key/forklift/science(src)
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
 	new /obj/item/clothing/head/bio_hood/scientist(src)
 	new /obj/item/storage/bag/garment/research_director(src)

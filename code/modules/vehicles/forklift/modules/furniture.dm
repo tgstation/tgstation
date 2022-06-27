@@ -13,10 +13,6 @@
 		/obj/structure/chair/office,
 		/obj/structure/chair/office/light,
 		/obj/structure/chair/comfy/beige,
-		/obj/structure/chair/comfy/black,
-		/obj/structure/chair/comfy/brown,
-		/obj/structure/chair/comfy/lime,
-		/obj/structure/chair/comfy/teal,
 		/obj/structure/grille,
 		/obj/structure/window,
 		/obj/structure/window/fulltile,
@@ -56,18 +52,6 @@
 		/obj/structure/chair/comfy/beige = list(
 			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
 		),
-		/obj/structure/chair/comfy/black = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-		),
-		/obj/structure/chair/comfy/brown = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-		),
-		/obj/structure/chair/comfy/lime = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-		),
-		/obj/structure/chair/comfy/teal = list(
-			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 2,
-		),
 		/obj/structure/chair = list(
 			/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1,
 		),
@@ -93,6 +77,7 @@
 		),
 	)
 	build_length = 1 SECONDS
+	deconstruction_cooldown = 5 SECONDS
 
 /datum/forklift_module/furniture/valid_placement_location(location)
 	if(istype(location, /turf/open/floor))

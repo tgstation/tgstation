@@ -6,7 +6,7 @@
 /obj/vehicle/ridden/forklift
 	name = "rapid construction forklift"
 	desc = "A forklift for rapidly constructing in an area."
-	icon_state = "pussywagon" // TODO: get sprites.
+	icon_state = "rat"
 	key_type = /obj/item/key/forklift
 	movedelay = 1
 	///What module is selected for each occupant? Different occupants can have different modules selected.
@@ -17,17 +17,24 @@
 		/datum/forklift_module/walls,
 		/datum/forklift_module/floors,
 		/datum/forklift_module/airlocks,
+		/datum/forklift_module/shuttle,
 	)
 	var/starting_module_path = /datum/forklift_module/furniture
 	///How many sheets of materials can this hold?
 	var/maximum_materials = MINERAL_MATERIAL_AMOUNT * 125 // 125 sheets of materials. Ideally 50 iron, 50 glass, 25 of anything else.
 	///What construction holograms do we got?
 	var/list/holograms = list()
+	///What path do we use for the ridable component? Needed for key overrides.
+	var/ridable_path = /datum/component/riding/vehicle/forklift
+	///What upgrades have been applied?
+	var/list/applied_upgrades = list()
 	COOLDOWN_DECLARE(build_cooldown)
 	COOLDOWN_DECLARE(destructive_scan_cooldown)
+	COOLDOWN_DECLARE(deconstruction_cooldown)
 
 /obj/vehicle/ridden/forklift/Initialize(mapload)
 	. = ..()
+	add_overlay(image(icon, "rat_overlays", ABOVE_MOB_LAYER))
 	var/static/list/materials_list = list(
 		/datum/material/iron,
 		/datum/material/glass,
@@ -43,7 +50,7 @@
 		/datum/material/wood,
 		)
 	AddComponent(/datum/component/material_container, materials_list, maximum_materials, MATCONTAINER_EXAMINE, allowed_items=/obj/item/stack)
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/forklift)
+	AddElement(/datum/element/ridable, ridable_path)
 
 /obj/vehicle/ridden/forklift/add_occupant(mob/M, control_flags)
 	. = ..()
@@ -108,10 +115,6 @@
 	var/scrolled_up = (delta_y > 0)
 	var/datum/forklift_module/current_module = selected_modules[source]
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
-		current_module.on_shift_scrollwheel(source, A, scrolled_up)
-	else if(LAZYACCESS(modifiers, CTRL_CLICK))
-		current_module.on_ctrl_scrollwheel(source, A, scrolled_up)
-	else
 		var/datum/forklift_module/next_module
 		if(scrolled_up)
 			next_module = next_list_item(current_module.type, available_modules)
@@ -128,6 +131,12 @@
 		selected_modules[source] = next_module
 		balloon_alert(source, next_module.name)
 		qdel(current_module)
+	else if(LAZYACCESS(modifiers, CTRL_CLICK))
+		current_module.on_ctrl_scrollwheel(source, A, scrolled_up)
+	else if(LAZYACCESS(modifiers, ALT_CLICK))
+		current_module.on_alt_scrollwheel(source, A, scrolled_up)
+	else
+		current_module.on_scrollwheel(source, A, scrolled_up)
 
 /obj/vehicle/ridden/forklift/proc/on_click(mob/source, atom/clickingon, list/modifiers)
 	SIGNAL_HANDLER
@@ -145,6 +154,9 @@
 	else if(modifiers[LEFT_CLICK])
 		current_module.on_left_click(source, clickingon)
 		return COMSIG_MOB_CANCEL_CLICKON
+	else if(modifiers[MIDDLE_CLICK])
+		current_module.on_middle_click(source, clickingon)
+		return COMSIG_MOB_CANCEL_CLICKON
 
 /obj/vehicle/ridden/forklift/proc/on_mouse_entered(mob/source, atom/A, location, control, params)
 	SIGNAL_HANDLER
@@ -152,3 +164,71 @@
 	current_module.on_mouse_entered(source, A, location, control, params)
 
 
+/obj/vehicle/ridden/forklift/engineering
+	name = "engineering forklift"
+	desc = "A forklift for rapidly constructing in an area. Has a \"Days since supermatter incident: 0\" sticker on the back."
+	available_modules = list(
+		/datum/forklift_module/furniture,
+		/datum/forklift_module/walls,
+		/datum/forklift_module/floors,
+		/datum/forklift_module/airlocks,
+		/datum/forklift_module/shuttle,
+		/datum/forklift_module/department_machinery/engineering,
+		// /datum/forklift_module/atmos,
+	)
+	starting_module_path = /datum/forklift_module/furniture
+	key_type = /obj/item/key/forklift/engineering
+	ridable_path = /datum/component/riding/vehicle/forklift/engineering
+
+/obj/vehicle/ridden/forklift/medical
+	name = "medical forklift"
+	desc = "A forklift for rapidly constructing in an area. Has a \"Clean hands save lives!\" sticker on the back."
+	available_modules = list(
+		/datum/forklift_module/plumbing,
+		/datum/forklift_module/department_machinery/medical,
+	)
+	starting_module_path = /datum/forklift_module/plumbing
+	key_type = /obj/item/key/forklift/medbay
+	ridable_path = /datum/component/riding/vehicle/forklift/medical
+
+/obj/vehicle/ridden/forklift/science
+	name = "science forklift"
+	desc = "A forklift for rapidly constructing in an area. Has a \"Have you read your SICP today?\" sticker on the back."
+	available_modules = list(
+		/datum/forklift_module/plumbing,
+		// /datum/forklift_module/atmos,
+		/datum/forklift_module/department_machinery/science,
+	)
+	starting_module_path = /datum/forklift_module/plumbing
+	key_type = /obj/item/key/forklift/science
+	ridable_path = /datum/component/riding/vehicle/forklift/science
+
+/obj/vehicle/ridden/forklift/security
+	name = "security forklift"
+	desc = "A forklift for rapidly constructing in an area. It's lifted, and there's a pair of truck nuts dangling from the hitch on the back."
+	available_modules = list(
+		/datum/forklift_module/department_machinery/security,
+	)
+	starting_module_path = /datum/forklift_module/department_machinery/security
+	key_type = /obj/item/key/forklift/security
+	ridable_path = /datum/component/riding/vehicle/forklift/security
+
+/obj/vehicle/ridden/forklift/service
+	name = "service forklift"
+	desc = "A forklift for rapidly constructing in an area. Has a \"How's my driving? PDA the HoP!\" sticker on the back."
+	available_modules = list(
+		/datum/forklift_module/department_machinery/service,
+	)
+	starting_module_path = /datum/forklift_module/department_machinery/service
+	key_type = /obj/item/key/forklift/service
+	ridable_path = /datum/component/riding/vehicle/forklift/service
+
+/obj/vehicle/ridden/forklift/cargo
+	name = "cargo forklift"
+	desc = "A forklift for rapidly constructing in an area. Has a \"Every worker a member of the board!\" sticker on the back."
+	available_modules = list(
+		/datum/forklift_module/department_machinery/cargo,
+	)
+	starting_module_path = /datum/forklift_module/department_machinery/cargo
+	key_type = /obj/item/key/forklift/cargo
+	ridable_path = /datum/component/riding/vehicle/forklift/cargo

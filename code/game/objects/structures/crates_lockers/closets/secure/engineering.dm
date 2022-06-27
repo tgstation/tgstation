@@ -5,7 +5,7 @@
 
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
 	..()
-
+	new /obj/item/key/forklift/engineering(src)
 	new /obj/item/storage/bag/garment/engineering_chief (src)
 	new /obj/item/computer_hardware/hard_drive/portable/command/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)

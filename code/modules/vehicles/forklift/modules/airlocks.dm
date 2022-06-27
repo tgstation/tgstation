@@ -101,6 +101,7 @@
 		my_forklift.balloon_alert(source, SSid_access.desc_by_access[selected_access])
 
 /datum/forklift_module/airlocks/after_build(atom/built_atom)
+	built_atom.dir = direction
 	if(selected_access != "None")
 		var/obj/machinery/door/airlock/airlock = built_atom
 		airlock.req_access += list(selected_access)

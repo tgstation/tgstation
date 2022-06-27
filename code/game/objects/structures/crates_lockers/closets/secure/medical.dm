@@ -74,7 +74,7 @@
 
 /obj/structure/closet/secure_closet/chief_medical/PopulateContents()
 	..()
-
+	new /obj/item/key/forklift/medbay(src)
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)
 	new /obj/item/storage/bag/garment/chief_medical(src)
@@ -93,6 +93,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
+
 
 
 /obj/structure/closet/secure_closet/animal

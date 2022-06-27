@@ -2,6 +2,8 @@
 	name = "construction hologram"
 	desc = "A construction hologram. Can be destroyed with one hit to cancel the construction and refund the materials."
 	max_integrity = 1
+	movement_type = FLYING
+	anchored = TRUE
 	///What path are we building when done?
 	var/typepath_to_build
 	///What was spent on us?
@@ -14,10 +16,6 @@
 	var/turf_place_on_top = FALSE
 	///Should we give a refund when we're destroyed?
 	var/give_refund = TRUE
-
-/obj/structure/building_hologram/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT) // I LOVE HOLOGRAMS FALLING TO THE LOWER Z-LEVEL
 
 /obj/structure/building_hologram/Destroy()
 	. = ..()
@@ -38,12 +36,12 @@
 	dir = direction
 	color = COLOR_BLUE_LIGHT
 	alpha = 128
-	layer = atom_typepath_to_build.layer
 
 /obj/structure/building_hologram/proc/before_build(datum/forklift_module/forklift_module_ref)
 	return
 
 /obj/structure/building_hologram/proc/after_build(atom/built_atom)
+	built_atom.dir = dir
 	return
 
 /obj/structure/building_hologram/airlock
@@ -51,6 +49,7 @@
 	var/access_to_require = "None"
 
 /obj/structure/building_hologram/airlock/after_build(atom/built_atom)
+	built_atom.dir = dir
 	if(access_to_require != "None")
 		var/obj/machinery/door/airlock/airlock = built_atom
 		airlock.req_access += list(access_to_require)
