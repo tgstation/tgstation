@@ -21,8 +21,8 @@ SUBSYSTEM_DEF(ambience)
 		cached_clients.len--
 
 		//Check to see if the client exists and isn't held by a new player
-		var/mob/client_mob = client_iterator.mob
-		if(isnull(client_iterator) || isnewplayer(client_mob))
+		var/mob/client_mob = client_iterator?.mob
+		if(isnull(client_iterator) || !client_mob ||isnewplayer(client_mob))
 			ambience_listening_clients -= client_iterator
 			client_old_areas -= client_iterator
 			continue
@@ -34,8 +34,8 @@ SUBSYSTEM_DEF(ambience)
 			ambience_listening_clients -= client_iterator
 			continue
 
-		if(!(current_area.forced_ambience && (client_old_areas?[client_iterator] != current_area)))
-			if(ambience_listening_clients[client_iterator] > world.time)
+		if(ambience_listening_clients[client_iterator] > world.time)
+			if(!(current_area.forced_ambience && (client_old_areas?[client_iterator] != current_area) && prob(5)))
 				continue
 
 		//Run play_ambience() on the client-mob, and set it's ambience cooldown relative to the length of the sound played.
@@ -49,11 +49,17 @@ SUBSYSTEM_DEF(ambience)
 			return
 
 ///Attempts to play an ambient sound to a mob, returning the cooldown in deciseconds
-/area/proc/play_ambience(mob/M, sound/override_sound)
+/area/proc/play_ambience(mob/M, sound/override_sound, volume)
 	var/turf/T = get_turf(M)
 	var/sound/new_sound = override_sound || pick(ambientsounds)
 	new_sound = sound(new_sound, channel = CHANNEL_AMBIENCE)
-	M.playsound_local(T, new_sound, 33, TRUE, channel = CHANNEL_AMBIENCE)
+	M.playsound_local(T,
+		new_sound,
+		volume ? volume : 33,
+		TRUE,
+		channel = CHANNEL_AMBIENCE
+	)
+
 	return rand(min_ambience_cooldown, max_ambience_cooldown) + (new_sound.len * 10) //Convert to deciseconds
 
 /datum/controller/subsystem/ambience/proc/remove_ambience_client(client/to_remove)
@@ -62,22 +68,8 @@ SUBSYSTEM_DEF(ambience)
 	currentrun -= to_remove
 
 /area/maintenance
-	min_ambience_cooldown = 10 SECONDS
-	max_ambience_cooldown = 20 SECONDS
-	ambientsounds = list(
-	'sound/machines/airlock_alien_prying.ogg',
-	'sound/voice/hiss1.ogg',
-	'sound/voice/hiss2.ogg',
-	'sound/voice/hiss3.ogg',
-	'sound/voice/hiss4.ogg',
-	'sound/voice/hiss5.ogg',
-	'sound/voice/hiss6.ogg',
-	'sound/voice/lowHiss1.ogg',
-	'sound/voice/lowHiss2.ogg',
-	'sound/voice/lowHiss3.ogg',
-	'sound/voice/lowHiss4.ogg',
-	'sound/ambience/maintambience.ogg',
-	)
+	min_ambience_cooldown = 20 SECONDS
+	max_ambience_cooldown = 35 SECONDS
 
 	var/static/list/minecraft_cave_noises = list(
 	'sound/machines/airlock.ogg',
@@ -93,8 +85,12 @@ SUBSYSTEM_DEF(ambience)
 	'sound/ambience/Cave1.ogg',
 	)
 
-/area/maintenance/play_ambience(mob/M, sound/override_sound)
-	if(!M.has_light_nearby() && prob(0.1))
+/area/maintenance/play_ambience(mob/M, sound/override_sound, volume)
+	if(!M.has_light_nearby() && prob(0.5))
 		return ..(M, pick(minecraft_cave_noises))
+	return ..()
 
+/area/lavaland/play_ambience(mob/M, sound/override_sound, volume)
+	if(prob(1))
+		return ..(M, 'sound/ambience/Cave1.ogg')
 	return ..()

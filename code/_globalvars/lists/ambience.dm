@@ -102,9 +102,11 @@ GLOBAL_LIST_INIT(maint_ambience,list(
 	'sound/ambience/ambimaint4.ogg',
 	'sound/ambience/ambimaint5.ogg',
 	'sound/ambience/ambitech2.ogg',
+	'sound/voice/lowHiss1.ogg',
 	'sound/voice/lowHiss2.ogg',
 	'sound/voice/lowHiss3.ogg',
 	'sound/voice/lowHiss4.ogg',
+	'sound/ambience/maintambience.ogg',
 ))
 
 GLOBAL_LIST_INIT(away_ambience,list(

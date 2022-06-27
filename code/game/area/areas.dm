@@ -77,9 +77,9 @@
 	///The background droning loop that plays 24/7
 	var/ambient_buzz = 'sound/ambience/shipambience.ogg'
 	///Used to decide what the minimum time between ambience is
-	var/min_ambience_cooldown = 15 SECONDS
+	var/min_ambience_cooldown = 25 SECONDS
 	///Used to decide what the maximum time between ambience is
-	var/max_ambience_cooldown = 65 SECONDS
+	var/max_ambience_cooldown = 70 SECONDS
 
 	flags_1 = CAN_BE_DIRTY_1
 
@@ -437,14 +437,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			return
 
 		//Station ambience
-		var/droning_hum = FALSE
-		if(!always_unpowered && power_environ)
-			for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in src)
-				if(vent.on)
-					droning_hum = TRUE
-					break
-
-		if(droning_hum)
+		if(apc.operating && apc.main_status)
 			SEND_SOUND(L, sound(ambient_buzz, repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
 		else
 			SEND_SOUND(L, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
