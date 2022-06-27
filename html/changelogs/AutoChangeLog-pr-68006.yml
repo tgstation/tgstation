@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - qol: "mining and labor shuttle home docks are no longer varedits of /stationary, and are now their own subtype"

@@ -2996,9 +2996,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/sign/departments/medbay{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/medbay/directional/north,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -5214,9 +5212,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/sign/warning/electric_shock{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/electric_shock/directional/west,
 /obj/structure/cable,
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/plating,
@@ -5481,9 +5477,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/structure/sign/warning/engine_safety{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/engine_safety/directional/east,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "oR" = (
@@ -7291,9 +7285,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "wH" = (
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
@@ -7356,9 +7348,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "wU" = (
 /obj/machinery/light/directional/north,
-/obj/structure/sign/warning/docking{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/docking/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -7757,9 +7747,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "yl" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/no_smoking/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "ym" = (
@@ -7969,9 +7957,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
 "yQ" = (
-/obj/structure/sign/warning/docking{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/docking/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -8145,9 +8131,7 @@
 	piping_layer = 4
 	},
 /obj/machinery/space_heater,
-/obj/structure/sign/warning/xeno_mining{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/xeno_mining/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
@@ -9512,9 +9496,7 @@
 	dir = 4;
 	piping_layer = 4
 	},
-/obj/structure/sign/warning/xeno_mining{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/xeno_mining/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "FL" = (
@@ -10121,9 +10103,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "If" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/no_smoking/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -10289,9 +10269,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
 "IJ" = (
-/obj/structure/sign/warning/electric_shock{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/east,
 /turf/closed/wall,
 /area/awaymission/snowdin/post/mining_main/robotics)
 "IL" = (
@@ -10551,9 +10529,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
 "JA" = (
-/obj/structure/sign/warning/electric_shock{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
@@ -10799,9 +10775,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
 "Kl" = (
-/obj/structure/sign/warning/docking{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/docking/directional/east,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -10975,9 +10949,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
 "KG" = (
-/obj/structure/sign/warning/docking{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/docking/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "KH" = (
@@ -11025,9 +10997,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
 "KN" = (
-/obj/structure/sign/warning/docking{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/docking/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
@@ -11313,9 +11283,7 @@
 /turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
 "LZ" = (
-/obj/structure/sign/warning/docking{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/docking/directional/north,
 /obj/machinery/light/broken/directional/north,
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/mining_dock)
@@ -12421,9 +12389,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/sign/warning/electric_shock{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/electric_shock/directional/west,
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -12665,9 +12631,7 @@
 /area/awaymission/snowdin/outside)
 "Ts" = (
 /obj/machinery/airalarm/directional/north,
-/obj/structure/sign/warning/docking{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/docking/directional/east,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -13545,9 +13509,7 @@
 	pixel_x = -8;
 	pixel_y = 24
 	},
-/obj/structure/sign/warning/fire{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/fire/directional/south,
 /turf/open/floor/engine,
 /area/awaymission/snowdin/post/engineering)
 "YK" = (
@@ -13652,9 +13614,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/snowdin/post)
 "Zq" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/directional/north,
 /obj/machinery/light/broken/directional/north,
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/cavern2)
