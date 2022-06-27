@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { Button, LabeledList, Section, ProgressBar, Flex, Box, Table, Collapsible, Input, Dimmer, Icon } from '../components';
 import { Window } from '../layouts';
-import { capitalize } from "common/string";
+import { capitalize } from 'common/string';
 
 export const Autolathe = (props, context) => {
   const { act, data } = useBackend(context);
@@ -14,30 +14,28 @@ export const Autolathe = (props, context) => {
     designs = [],
     active,
   } = data;
-  const [
-    current_category,
-    setCategory,
-  ] = useLocalState(context, 'current_category', "None");
-  const filteredmaterials = materials.filter(material =>
-    material.mineral_amount > 0);
+  const [current_category, setCategory] = useLocalState(
+    context,
+    'current_category',
+    'None'
+  );
+  const filteredmaterials = materials.filter(
+    (material) => material.mineral_amount > 0
+  );
   return (
-    <Window
-      title="Autolathe"
-      width={600}
-      height={600}>
+    <Window title="Autolathe" width={600} height={600}>
       <Window.Content scrollable>
         <Section title="Total Materials">
           <LabeledList>
-            <LabeledList.Item
-              label="Total Materials">
+            <LabeledList.Item label="Total Materials">
               <ProgressBar
                 value={materialtotal}
                 minValue={0}
                 maxValue={materialsmax}
                 ranges={{
-                  "good": [materialsmax * 0.85, materialsmax],
-                  "average": [materialsmax * 0.25, materialsmax * 0.85],
-                  "bad": [0, materialsmax * 0.25],
+                  'good': [materialsmax * 0.85, materialsmax],
+                  'average': [materialsmax * 0.25, materialsmax * 0.85],
+                  'bad': [0, materialsmax * 0.25],
                 }}>
                 {materialtotal + '/' + materialsmax + ' cm³'}
               </ProgressBar>
@@ -46,7 +44,7 @@ export const Autolathe = (props, context) => {
               {filteredmaterials.length > 0 && (
                 <Collapsible title="Materials">
                   <LabeledList>
-                    {filteredmaterials.map(filteredmaterial => (
+                    {filteredmaterials.map((filteredmaterial) => (
                       <LabeledList.Item
                         key={filteredmaterial.id}
                         label={capitalize(filteredmaterial.name)}>
@@ -58,18 +56,21 @@ export const Autolathe = (props, context) => {
                           maxValue={materialsmax}
                           color="black"
                           backgroundColor={filteredmaterial.matcolour}>
-                          <div style={{ transform: 'scaleX(-1)' }}>{filteredmaterial.mineral_amount + ' cm³'}</div>
+                          <div style={{ transform: 'scaleX(-1)' }}>
+                            {filteredmaterial.mineral_amount + ' cm³'}
+                          </div>
                         </ProgressBar>
                       </LabeledList.Item>
                     ))}
                   </LabeledList>
-                </Collapsible>)}
+                </Collapsible>
+              )}
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section
-          title="Search">
-          <Input fluid
+        <Section title="Search">
+          <Input
+            fluid
             placeholder="Search Recipes..."
             selfClear
             onChange={(e, value) => {
@@ -79,11 +80,12 @@ export const Autolathe = (props, context) => {
                 });
                 setCategory('results for "' + value + '"');
               }
-            }} />
+            }}
+          />
         </Section>
         <Section title="Categories">
           <Box>
-            {categories.map(category => (
+            {categories.map((category) => (
               // eslint-disable-next-line react/jsx-key
               <Button
                 selected={current_category === category}
@@ -93,22 +95,24 @@ export const Autolathe = (props, context) => {
                     selectedCategory: category,
                   });
                   setCategory(category);
-                }} />
+                }}
+              />
             ))}
           </Box>
         </Section>
-        {current_category.toString() !== "None" && (
+        {current_category.toString() !== 'None' && (
           <Section
             title={'Displaying ' + current_category.toString()}
-            buttons={(
+            buttons={
               <Button
                 icon="times"
                 content="Close Category"
                 onClick={() => {
                   act('menu');
-                  setCategory("None");
-                }} />
-            )}>
+                  setCategory('None');
+                }}
+              />
+            }>
             {active === 1 && (
               <Dimmer fontSize="32px">
                 <Icon name="cog" spin />
@@ -117,18 +121,20 @@ export const Autolathe = (props, context) => {
             )}
             <Flex direction="row" wrap="nowrap">
               <Table>
-                {designs.length
-                  && (designs.map(design => (
-                    <Table.Row
-                      key={design.id}>
+                {(designs.length &&
+                  designs.map((design) => (
+                    <Table.Row key={design.id}>
                       <Flex.Item>
                         <Button
                           content={design.name}
                           disabled={design.buildable}
-                          onClick={() => act('make', {
-                            id: design.id,
-                            multiplier: '1',
-                          })} />
+                          onClick={() =>
+                            act('make', {
+                              id: design.id,
+                              multiplier: '1',
+                            })
+                          }
+                        />
                       </Flex.Item>
                       {design.sheet ? (
                         <Table.Cell>
@@ -137,18 +143,24 @@ export const Autolathe = (props, context) => {
                               icon="hammer"
                               content="10"
                               disabled={!design.mult10}
-                              onClick={() => act('make', {
-                                id: design.id,
-                                multiplier: '10',
-                              })} />
+                              onClick={() =>
+                                act('make', {
+                                  id: design.id,
+                                  multiplier: '10',
+                                })
+                              }
+                            />
                             <Button
                               icon="hammer"
                               content="25"
                               disabled={!design.mult25}
-                              onClick={() => act('make', {
-                                id: design.id,
-                                multiplier: '25',
-                              })} />
+                              onClick={() =>
+                                act('make', {
+                                  id: design.id,
+                                  multiplier: '25',
+                                })
+                              }
+                            />
                           </Flex.Item>
                         </Table.Cell>
                       ) : (
@@ -158,39 +170,48 @@ export const Autolathe = (props, context) => {
                               icon="hammer"
                               content="5"
                               disabled={!design.mult5}
-                              onClick={() => act('make', {
-                                id: design.id,
-                                multiplier: '5',
-                              })} />
+                              onClick={() =>
+                                act('make', {
+                                  id: design.id,
+                                  multiplier: '5',
+                                })
+                              }
+                            />
                             <Button
                               icon="hammer"
                               content="10"
                               disabled={!design.mult10}
-                              onClick={() => act('make', {
-                                id: design.id,
-                                multiplier: '10',
-                              })} />
+                              onClick={() =>
+                                act('make', {
+                                  id: design.id,
+                                  multiplier: '10',
+                                })
+                              }
+                            />
                           </Flex.Item>
                         </Table.Cell>
                       )}
                       <Table.Cell>
                         <Button.Input
-                          content={"[Max:" + design.maxmult + ']'}
+                          content={'[Max:' + design.maxmult + ']'}
                           maxValue={design.maxmult}
                           disabled={design.buildable}
-                          backgroundColor={design.buildable ? '#999999' : 'default'}
-                          onCommit={(e, value) => act('make', {
-                            id: design.id,
-                            multiplier: value,
-                          })} />
+                          backgroundColor={
+                            design.buildable ? '#999999' : 'default'
+                          }
+                          onCommit={(e, value) =>
+                            act('make', {
+                              id: design.id,
+                              multiplier: value,
+                            })
+                          }
+                        />
                       </Table.Cell>
                       {design.cost}
                     </Table.Row>
                   ))) || (
                   <Table.Row>
-                    <Table.Cell>
-                      {"No designs found."}
-                    </Table.Cell>
+                    <Table.Cell>{'No designs found.'}</Table.Cell>
                   </Table.Row>
                 )}
               </Table>

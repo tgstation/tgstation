@@ -1,7 +1,7 @@
 /datum/crafting_recipe/food/herby_cheese
 	name = "Herby cheese"
 	reqs = list(
-		/obj/item/food/curd_cheese = 1,
+		/obj/item/food/cheese/curd_cheese = 1,
 		/obj/item/food/grown/herbs = 4
 	)
 	result = /obj/item/food/herby_cheese
@@ -43,7 +43,7 @@
 /datum/crafting_recipe/food/squeaking_stir_fry
 	name = "Skeklitmischtpoppl (Squeaking stir fry)"
 	reqs = list(
-		/obj/item/food/cheese_curds = 1,
+		/obj/item/food/cheese/cheese_curds = 1,
 		/obj/item/food/tofu = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/salad/boiledrice = 1,
@@ -68,7 +68,7 @@
 /datum/crafting_recipe/food/loaded_curds
 	name = "Ozlsettitæloskekllön ede pommes (Loaded curds and fries)"
 	reqs = list(
-		/obj/item/food/cheese_curds = 1,
+		/obj/item/food/cheese/cheese_curds = 1,
 		/obj/item/food/soup/vegetarian_chili = 1,
 		/obj/item/food/onion_slice = 1,
 		/obj/item/food/cheese/wedge = 1,
@@ -92,7 +92,7 @@
 		/obj/item/food/pesto = 1,
 		/obj/item/food/spaghetti/boiledspaghetti = 2,
 		/obj/item/food/bechamel_sauce = 1,
-		/obj/item/food/firm_cheese_slice = 1
+		/obj/item/food/cheese/firm_cheese_slice = 1
 	)
 	result = /obj/item/food/raw_green_lasagne
 	subcategory = CAT_MOTH
@@ -145,7 +145,7 @@
 /datum/crafting_recipe/food/mozzarella_sticks
 	name = "Mozzarella sticks"
 	reqs = list(
-		/obj/item/food/mozzarella = 1,
+		/obj/item/food/cheese/mozzarella = 1,
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/tomato_sauce = 1
 	)
@@ -169,7 +169,7 @@
 		/obj/item/food/grown/potato = 1,
 		/obj/item/food/onion_slice = 2,
 		/obj/item/food/grown/chili = 1,
-		/obj/item/food/firm_cheese_slice = 1
+		/obj/item/food/cheese/firm_cheese_slice = 1
 	)
 	result = /obj/item/food/fueljacks_lunch
 	subcategory = CAT_MOTH
@@ -309,8 +309,8 @@
 	reqs = list(
 		/obj/item/food/soup/cornmeal_porridge = 1,
 		/datum/reagent/consumable/milk = 5,
-		/obj/item/food/firm_cheese_slice = 1,
-		/obj/item/food/curd_cheese = 1,
+		/obj/item/food/cheese/firm_cheese_slice = 1,
+		/obj/item/food/cheese/curd_cheese = 1,
 		/obj/item/food/butter = 1
 	)
 	result = /obj/item/food/soup/cheesy_porridge
@@ -323,7 +323,7 @@
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/tomato_sauce = 1,
-		/obj/item/food/mozzarella = 1
+		/obj/item/food/cheese/mozzarella = 1
 	)
 	result = /obj/item/food/soup/fried_eggplant_polenta
 	subcategory = CAT_MOTH
@@ -332,7 +332,7 @@
 	name = "Caprese salad"
 	reqs = list(
 		/obj/item/food/grown/tomato = 1,
-		/obj/item/food/mozzarella = 1,
+		/obj/item/food/cheese/mozzarella = 1,
 		/obj/item/food/grown/herbs = 1,
 		/datum/reagent/consumable/quality_oil = 2,
 		/datum/reagent/consumable/vinegar = 2
@@ -383,8 +383,8 @@
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/tomato_sauce = 1,
-		/obj/item/food/mozzarella = 1,
-		/obj/item/food/firm_cheese_slice = 1,
+		/obj/item/food/cheese/mozzarella = 1,
+		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_margherita
@@ -395,7 +395,7 @@
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/datum/reagent/consumable/bbqsauce = 10,
-		/obj/item/food/firm_cheese_slice = 1,
+		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/obj/item/food/oven_baked_corn = 1,
 		/obj/item/food/grown/ghost_chili = 1
 	)
@@ -407,11 +407,11 @@
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/tomato_sauce = 1,
-		/obj/item/food/firm_cheese_slice = 1,
+		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/obj/item/food/cheese/wedge = 1,
-		/obj/item/food/mozzarella = 1,
+		/obj/item/food/cheese/mozzarella = 1,
 		/obj/item/food/herby_cheese = 1,
-		/obj/item/food/cheese_curds = 1
+		/obj/item/food/cheese/cheese_curds = 1
 	)
 	result = /obj/item/food/raw_mothic_five_cheese
 	subcategory = CAT_MOTH
@@ -421,9 +421,9 @@
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/bechamel_sauce = 1,
-		/obj/item/food/firm_cheese_slice = 1,
+		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/obj/item/food/grown/garlic = 1,
-		/obj/item/food/mozzarella = 1,
+		/obj/item/food/cheese/mozzarella = 1,
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_white_pie
@@ -435,7 +435,7 @@
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/pesto = 1,
 		/obj/item/food/grown/tomato = 1,
-		/obj/item/food/mozzarella = 1
+		/obj/item/food/cheese/mozzarella = 1
 	)
 	result = /obj/item/food/raw_mothic_pesto
 	subcategory = CAT_MOTH
@@ -454,7 +454,7 @@
 /datum/crafting_recipe/food/moth_cheese_cakes
 	name = "Ælorölen (Cheesecake balls)"
 	reqs = list(
-		/obj/item/food/curd_cheese = 1,
+		/obj/item/food/cheese/curd_cheese = 1,
 		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/flour = 5,
 		/datum/reagent/consumable/sugar = 5,

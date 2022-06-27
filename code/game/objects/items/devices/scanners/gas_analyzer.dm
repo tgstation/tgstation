@@ -116,7 +116,7 @@
 /obj/item/analyzer/attack_self(mob/user, modifiers)
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
-	atmos_scan(user=user, target=get_turf(src), tool=src, silent=FALSE)
+	atmos_scan(user=user, target=get_turf(src), silent=FALSE)
 	on_analyze(source=src, target=get_turf(src))
 
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
@@ -127,6 +127,7 @@
 
 /// Called when our analyzer is used on something
 /obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
+	SIGNAL_HANDLER
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
@@ -145,7 +146,7 @@
  * Gets called by analyzer_act, which in turn is called by tool_act.
  * Also used in other chat-based gas scans.
  */
-/proc/atmos_scan(mob/user, atom/target, obj/tool, silent=FALSE)
+/proc/atmos_scan(mob/user, atom/target, silent=FALSE)
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
@@ -188,5 +189,5 @@
 			message += span_notice("Volume: [volume] L") // don't want to change the order volume appears in, suck it
 
 	// we let the join apply newlines so we do need handholding
-	to_chat(user, jointext(message, "\n"), type = MESSAGE_TYPE_INFO)
+	to_chat(user, examine_block(jointext(message, "\n")), type = MESSAGE_TYPE_INFO)
 	return TRUE

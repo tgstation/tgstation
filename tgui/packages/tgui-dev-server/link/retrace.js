@@ -18,7 +18,7 @@ const logger = createLogger('retrace');
 const { SourceMapConsumer } = SourceMap;
 const sourceMaps = [];
 
-export const loadSourceMaps = async bundleDir => {
+export const loadSourceMaps = async (bundleDir) => {
   // Destroy and garbage collect consumers
   while (sourceMaps.length !== 0) {
     const { consumer } = sourceMaps.shift();
@@ -30,29 +30,29 @@ export const loadSourceMaps = async bundleDir => {
     try {
       const file = basename(path).replace('.map', '');
       const consumer = await new SourceMapConsumer(
-        JSON.parse(fs.readFileSync(path, 'utf8')));
+        JSON.parse(fs.readFileSync(path, 'utf8'))
+      );
       sourceMaps.push({ file, consumer });
-    }
-    catch (err) {
+    } catch (err) {
       logger.error(err);
     }
   }
   logger.log(`loaded ${sourceMaps.length} source maps`);
 };
 
-export const retrace = stack => {
+export const retrace = (stack) => {
   if (typeof stack !== 'string') {
     logger.log('ERROR: Stack is not a string!', stack);
     return stack;
   }
   const header = stack.split(/\n\s.*at/)[0];
   const mappedStack = parseStackTrace(stack)
-    .map(frame => {
+    .map((frame) => {
       if (!frame.file) {
         return frame;
       }
       // Find the correct source map
-      const sourceMap = sourceMaps.find(sourceMap => {
+      const sourceMap = sourceMaps.find((sourceMap) => {
         return frame.file.includes(sourceMap.file);
       });
       if (!sourceMap) {
@@ -72,7 +72,7 @@ export const retrace = stack => {
         column: mappedFrame.column,
       };
     })
-    .map(frame => {
+    .map((frame) => {
       // Stringify the frame
       const { file, methodName, lineNumber } = frame;
       if (!file) {

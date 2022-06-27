@@ -1265,3 +1265,27 @@
 	build_path = /obj/item/toner/large
 	category = list("initial", "Misc", "Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/solar
+	name = "Solar Panel Frame"
+	id = "solar_panel"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 3500, /datum/material/glass = 1000)
+	build_path = /obj/item/solar_assembly
+	category = list("initial", "Construction")
+
+/datum/design/tracker_electronics
+	name = "Solar Tracking Electronics"
+	id = "solar_tracker"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 500)
+	build_path = /obj/item/electronics/tracker
+	category = list("initial", "Electronics", "Construction")
+
+/datum/design/fishing_rod_basic
+	name = "Fishing Rod"
+	id = "fishing_rod"
+	build_type = AUTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
+	build_path = /obj/item/fishing_rod
+	category = list("initial", "Misc", "Equipment")

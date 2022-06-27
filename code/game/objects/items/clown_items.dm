@@ -16,6 +16,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "soap"
+	worn_icon_state = "soap"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -55,12 +56,14 @@
 	desc = "A homemade bar of soap. Smells of... well...."
 	grind_results = list(/datum/reagent/liquidgibs = 9, /datum/reagent/lye = 9)
 	icon_state = "soapgibs"
+	worn_icon_state = "soapgibs"
 	cleanspeed = 3 SECONDS // faster than base soap to reward chemists for going to the effort
 
 /obj/item/soap/nanotrasen
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
 	grind_results = list(/datum/reagent/toxin/plasma = 10, /datum/reagent/lye = 10)
 	icon_state = "soapnt"
+	worn_icon_state = "soapnt"
 	cleanspeed = 2.8 SECONDS //janitor gets this
 	uses = 300
 
@@ -70,12 +73,14 @@
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
 	grind_results = list(/datum/reagent/consumable/aloejuice = 10, /datum/reagent/lye = 10)
 	icon_state = "soapdeluxe"
+	worn_icon_state = "soapdeluxe"
 	cleanspeed = 2 SECONDS //captain gets one of these
 
 /obj/item/soap/syndie
 	desc = "An untrustworthy bar of soap made of strong chemical agents that dissolve blood faster."
 	grind_results = list(/datum/reagent/toxin/acid = 10, /datum/reagent/lye = 10)
 	icon_state = "soapsyndie"
+	worn_icon_state = "soapsyndie"
 	cleanspeed = 0.5 SECONDS //faster than mops so it's useful for traitors who want to clean crime scenes
 
 /obj/item/soap/omega
@@ -83,6 +88,7 @@
 	desc = "The most advanced soap known to mankind. The beginning of the end for germs."
 	grind_results = list(/datum/reagent/consumable/potato_juice = 9, /datum/reagent/consumable/ethanol/lizardwine = 9, /datum/reagent/monkey_powder = 9, /datum/reagent/drug/krokodil = 9, /datum/reagent/toxin/acid/nitracid = 9, /datum/reagent/baldium = 9, /datum/reagent/consumable/ethanol/hooch = 9, /datum/reagent/bluespace = 9, /datum/reagent/drug/pumpup = 9, /datum/reagent/consumable/space_cola = 9)
 	icon_state = "soapomega"
+	worn_icon_state = "soapomega"
 	cleanspeed = 0.3 SECONDS //Only the truest of mind soul and body get one of these
 	uses = 800 //In the Greek numeric system, Omega has a value of 800
 

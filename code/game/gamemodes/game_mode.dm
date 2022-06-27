@@ -200,6 +200,8 @@
 		SSticker.news_report = STATION_EVACUATED
 		if(SSshuttle.emergency.is_hijacked())
 			SSticker.news_report = SHUTTLE_HIJACK
+	if(SSsupermatter_cascade.cascade_initiated)
+		SSticker.news_report = SUPERMATTER_CASCADE
 
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()

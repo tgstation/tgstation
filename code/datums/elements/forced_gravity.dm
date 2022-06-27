@@ -1,16 +1,18 @@
 /datum/element/forced_gravity
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
+	///the level of gravity we force unto our target
 	var/gravity
-	var/ignore_space
+	///whether we will override the turf if it forces no gravity
+	var/ignore_turf_gravity
 
-/datum/element/forced_gravity/Attach(datum/target, gravity=1, ignore_space=FALSE)
+/datum/element/forced_gravity/Attach(datum/target, gravity=1, ignore_turf_gravity = FALSE)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 
 	src.gravity = gravity
-	src.ignore_space = ignore_space
+	src.ignore_turf_gravity = ignore_turf_gravity
 
 	RegisterSignal(target, COMSIG_ATOM_HAS_GRAVITY, .proc/gravity_check)
 	if(isturf(target))
@@ -24,9 +26,11 @@
 /datum/element/forced_gravity/proc/gravity_check(datum/source, turf/location, list/gravs)
 	SIGNAL_HANDLER
 
-	if(!ignore_space && isspaceturf(location))
-		return
+	if(!ignore_turf_gravity && location.force_no_gravity)
+		return FALSE
 	gravs += gravity
+
+	return TRUE
 
 /datum/element/forced_gravity/proc/turf_gravity_check(datum/source, atom/checker, list/gravs)
 	SIGNAL_HANDLER

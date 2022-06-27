@@ -70,8 +70,8 @@
 		to_chat(user, "<span class='info'>[M]'s biological structure is too complex for the health analyzer.")
 		return
 
-	user.visible_message(span_notice("[user] analyzes [M]'s vitals."), \
-						span_notice("You analyze [M]'s vitals."))
+	user.visible_message(span_notice("[user] analyzes [M]'s vitals."))
+	balloon_alert(user, "analyzing vitals")
 
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
@@ -238,7 +238,10 @@
 
 			if(mode == SCANNER_VERBOSE)
 				for(var/obj/item/bodypart/limb as anything in damaged)
-					dmgreport += "<tr><td><font color='#cc3333'>[capitalize(limb.plaintext_zone)]:</font></td>"
+					if(limb.bodytype & BODYTYPE_ROBOTIC)
+						dmgreport += "<tr><td><font color='#cc3333'>[capitalize(limb.name)]:</font></td>"
+					else
+						dmgreport += "<tr><td><font color='#cc3333'>[capitalize(limb.plaintext_zone)]:</font></td>"
 					dmgreport += "<td><font color='#cc3333'>[(limb.brute_dam > 0) ? "[CEILING(limb.brute_dam,1)]" : "0"]</font></td>"
 					dmgreport += "<td><font color='#ff9933'>[(limb.burn_dam > 0) ? "[CEILING(limb.burn_dam,1)]" : "0"]</font></td></tr>"
 			dmgreport += "</font></table>"
@@ -374,7 +377,7 @@
 	// we handled the last <br> so we don't need handholding
 
 	if(tochat)
-		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 	else
 		return(jointext(render_list, ""))
 
@@ -433,7 +436,7 @@
 				render_list += "<span class='alert ml-2'>[allergies]</span>\n"
 
 		// we handled the last <br> so we don't need handholding
-		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
@@ -472,7 +475,7 @@
 		else
 			to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
 	else
-		to_chat(user, jointext(render_list, ""), type = MESSAGE_TYPE_INFO)
+		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/wound
 	name = "first aid analyzer"

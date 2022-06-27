@@ -18,7 +18,8 @@
 	var/setting = 1 // displayed range is 3 * setting
 	var/max_range = 3 // displayed max range is 3 * max range
 
-/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location = null, datum/reagents/carry = null, efficiency = 10, silent=FALSE)
+/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, efficiency = 10, silent=FALSE)
+	src.holder = holder
 	src.location = get_turf(location)
 	src.amount = amount
 	carry?.copy_to(chemholder, 20)
@@ -87,7 +88,7 @@
 	if(on && !smoke_test)
 		update_appearance()
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
-		smoke.set_up(setting * 3, location = location, carry = reagents, efficiency = efficiency)
+		smoke.set_up(setting * 3, holder = src, location = location, carry = reagents, efficiency = efficiency)
 		smoke.start()
 		use_power(active_power_usage)
 

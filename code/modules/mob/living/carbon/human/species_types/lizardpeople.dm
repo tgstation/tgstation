@@ -9,6 +9,7 @@
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_LITERATE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
@@ -135,8 +136,8 @@ Lizard subspecies: ASHWALKERS
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
+		//TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,
-		TRAIT_ILLITERATE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
 	digitigrade_customization = DIGITIGRADE_FORCED
@@ -151,11 +152,12 @@ Lizard subspecies: SILVER SCALED
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_LITERATE,
 		TRAIT_HOLY,
 		TRAIT_NOBREATH,
+		TRAIT_PIERCEIMMUNE,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_PIERCEIMMUNE,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_WINE_TASTER,
 	)

@@ -36,6 +36,10 @@
 	var/turf/location = get_turf(loc)
 	if(location)
 		location.hotspot_expose(heat, EXPOSED_VOLUME)
+	if(holder)
+		SEND_SIGNAL(holder.loc, COMSIG_IGNITER_ACTIVATE)
+	if(QDELETED(src))
+		return TRUE
 	sparks.start()
 	return TRUE
 

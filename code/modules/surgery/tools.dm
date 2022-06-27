@@ -116,6 +116,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
+	demolition_mod = 0.5
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("drills")
 	attack_verb_simple = list("drill")
@@ -154,6 +155,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 10
+	demolition_mod = 0.25
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
 	throw_speed = 3
