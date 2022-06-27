@@ -47,7 +47,7 @@
 /turf/closed/wall/mineral/wood,
 /area/ruin/powered/shuttle)
 "oJ" = (
-/obj/structure/sink/directional/south,
+/obj/structure/sink,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "pI" = (

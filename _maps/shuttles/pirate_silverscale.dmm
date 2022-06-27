@@ -240,7 +240,9 @@
 	dir = 8
 	},
 /obj/structure/mirror/directional/north,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 17
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -529,7 +531,9 @@
 	dir = 8
 	},
 /obj/structure/mirror/directional/north,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 17
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -608,9 +612,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "HS" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)

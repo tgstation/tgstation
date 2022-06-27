@@ -1,11 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"bd" = (
-/obj/structure/barricade/wooden/snowed,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/powered/shuttle)
 "bf" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -25,6 +18,18 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"fd" = (
+/obj/structure/table/bronze{
+	color = "#666666"
+	},
+/obj/structure/sink/kitchen{
+	pixel_y = 24
+	},
+/obj/item/plate,
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
 "ht" = (
 /obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -108,16 +113,6 @@
 /obj/item/ammo_casing/shotgun/buckshot,
 /obj/item/ammo_casing/shotgun/buckshot,
 /obj/item/ammo_casing/shotgun/buckshot,
-/turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/powered/shuttle)
-"vb" = (
-/obj/structure/table/bronze{
-	color = "#666666"
-	},
-/obj/structure/sink/kitchen/directional/south,
-/obj/item/plate,
 /turf/open/floor/wood/large{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -226,13 +221,6 @@
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"FE" = (
-/obj/structure/barricade/wooden/crude/snow,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/powered/shuttle)
 "FS" = (
 /obj/structure/railing{
 	color = "#8a7453"
@@ -247,6 +235,13 @@
 	dir = 8
 	},
 /turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Hy" = (
+/obj/structure/barricade/wooden/crude/snow,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -352,6 +347,13 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
+"Vf" = (
+/obj/structure/barricade/wooden/snowed,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
 "VV" = (
 /obj/structure/bonfire,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -411,7 +413,7 @@ Sv
 ol
 ol
 ol
-FE
+Hy
 ol
 mq
 mq
@@ -451,7 +453,7 @@ Sv
 Sv
 qd
 Ht
-bd
+Vf
 El
 zT
 ol
@@ -527,7 +529,7 @@ ol
 cP
 Hv
 ng
-bd
+Vf
 zd
 bf
 bf
@@ -544,7 +546,7 @@ Sv
 sF
 sF
 sF
-FE
+Hy
 wN
 Zg
 ng
@@ -570,7 +572,7 @@ Ht
 ol
 XZ
 ol
-vb
+fd
 uc
 Of
 ol
@@ -593,7 +595,7 @@ Ht
 ol
 ol
 ol
-bd
+Vf
 ol
 ol
 ol

@@ -255,9 +255,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "lE" = (
-/obj/structure/sign/warning/explosives/alt{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/explosives/alt/directional/north,
 /obj/machinery/syndicatebomb/self_destruct{
 	anchored = 1
 	},
@@ -338,17 +336,6 @@
 "rG" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation)
-"rW" = (
-/obj/structure/barricade/wooden/crude,
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation)
 "ta" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/sign/poster/contraband/random/directional/west,
@@ -374,6 +361,7 @@
 /obj/machinery/computer/message_monitor{
 	dir = 8
 	},
+/obj/item/paper/monitorkey,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "uI" = (
@@ -444,6 +432,19 @@
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
+"xY" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11;
+	pixel_y = -2
+	},
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/mirror/directional/east,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/listeningstation)
 "ym" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -489,6 +490,16 @@
 "zp" = (
 /turf/closed/wall,
 /area/ruin/unpowered/no_grav)
+"zv" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
+	dir = 6
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation)
 "zV" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
@@ -662,6 +673,16 @@
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
+"IG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/reagent_dispensers/plumbed{
+	name = "Syndicate Ceritified Drinking Water";
+	desc = "Who knew water could taste so good?"
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation)
 "Jj" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/cerulean,
@@ -712,13 +733,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/listeningstation)
-"Me" = (
-/obj/structure/sink/directional/west,
-/obj/machinery/shower/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/mirror/directional/east,
-/turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
 "Mt" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -791,19 +805,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
+"QE" = (
+/obj/structure/barricade/wooden/crude,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation)
 "QI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/red/directional/south,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation)
-"Rm" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/supply/visible/layer4{
-	dir = 6
-	},
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "RB" = (
@@ -884,16 +899,6 @@
 /obj/structure/tank_frame,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
-"Uk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/reagent_dispensers/plumbed{
-	name = "Syndicate Ceritified Drinking Water";
-	desc = "Who knew water could taste so good?"
-	},
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation)
 "Uu" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/light/red/directional/east,
@@ -958,9 +963,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/listeningstation)
 "XQ" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/iv_drip,
@@ -1248,7 +1251,7 @@ vI
 JB
 rG
 rG
-rW
+QE
 JB
 vI
 AV
@@ -1487,7 +1490,7 @@ vI
 vI
 JB
 be
-Rm
+zv
 qN
 ct
 SB
@@ -1542,11 +1545,11 @@ NO
 Om
 kK
 YV
-Uk
+IG
 rG
 iU
 KG
-Me
+xY
 JB
 vI
 vI

@@ -101,6 +101,23 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
+"as" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/obj/structure/mirror/directional/north,
+/turf/open/floor/iron/freezer,
+/area/awaymission/cabin)
+"at" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/structure/mirror/directional/north,
+/turf/open/floor/iron/freezer,
+/area/awaymission/cabin)
 "au" = (
 /obj/structure/dresser,
 /turf/open/floor/wood,
@@ -164,6 +181,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
+"aE" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/baseturf_helper/asteroid/snow,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
 "aF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -176,6 +200,13 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
+"aH" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/curtain,
+/turf/open/floor/iron/freezer,
+/area/awaymission/cabin)
 "aI" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table/wood,
@@ -199,6 +230,15 @@
 "aL" = (
 /turf/open/floor/plating,
 /area/awaymission/cabin)
+"aM" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
 "aN" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -219,11 +259,38 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
+"aQ" = (
+/obj/structure{
+	anchored = 1;
+	density = 1;
+	desc = "Generates power from lava!";
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
+	icon_state = "compressor";
+	name = "geothermal generator"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
 "aR" = (
 /obj/machinery/door/window/right/directional/west{
 	name = "Fireplace"
 	},
 /obj/structure/fireplace,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"aS" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "sink";
+	pixel_y = 28
+	},
+/obj/structure/janitorialcart,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/clothing/suit/caution,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
@@ -397,6 +464,14 @@
 /obj/machinery/reagentgrinder,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
+"bz" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "sink";
+	pixel_y = 28
+	},
+/turf/open/floor/iron/cafeteria,
+/area/awaymission/cabin)
 "bA" = (
 /obj/machinery/chem_master/condimaster,
 /turf/open/floor/iron/freezer,
@@ -419,9 +494,35 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
+"bG" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/white,
+/area/awaymission/cabin)
+"bH" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/curtain,
+/obj/item/soap/nanotrasen{
+	pixel_x = -1;
+	pixel_y = -3
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/cabin)
 "bI" = (
 /turf/open/lava,
 /area/awaymission/cabin/caves/mountain)
+"bJ" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/cabin)
 "bK" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -624,7 +725,6 @@
 /obj/structure/cable,
 /obj/structure/musician/piano{
 	desc = "Very theatrical.";
-	icon_state = "piano";
 	name = "theatre piano"
 	},
 /turf/open/floor/wood,
@@ -753,12 +853,27 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
+"cT" = (
+/obj/vehicle/ridden/atv,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
 "cU" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cV" = (
 /obj/vehicle/ridden/atv,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"cW" = (
+/obj/item/shovel,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"cX" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cZ" = (
@@ -870,6 +985,26 @@
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/food/condiment/mayonnaise,
 /turf/open/floor/iron/freezer,
+/area/awaymission/cabin)
+"du" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"dv" = (
+/obj/structure{
+	anchored = 1;
+	density = 1;
+	desc = "Generates power from lava!";
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
+	icon_state = "turbine";
+	name = "geothermal generator"
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "dw" = (
 /mob/living/simple_animal/hostile/bear/snow{
@@ -1014,6 +1149,11 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/suit/hooded/wintercoat,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"ec" = (
+/obj/machinery/light/directional/south,
+/obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ed" = (
@@ -1963,9 +2103,7 @@
 "hf" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/remains/robot,
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/fire/directional/north,
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -2068,6 +2206,14 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"hw" = (
+/obj/structure/closet/toolcloset,
+/obj/item/lightreplacer,
+/obj/item/storage/toolbox/mechanical,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hx" = (
@@ -2304,15 +2450,6 @@
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/item/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/iron/freezer,
-/area/awaymission/cabin)
-"iu" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
 /area/awaymission/cabin)
 "iv" = (
 /turf/closed/wall/mineral/snow,
@@ -2887,6 +3024,10 @@
 /obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/cabin/caves)
+"ko" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/freezing,
+/area/awaymission/cabin/caves)
 "kE" = (
 /obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -3164,9 +3305,8 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/cabin/caves)
 "mw" = (
-/obj/structure/sign/warning{
-	name = "\improper SAWBLADE WARNING";
-	pixel_x = -32
+/obj/structure/sign/warning/directional/west{
+	name = "\improper SAWBLADE WARNING"
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
@@ -3467,15 +3607,6 @@
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
-"oX" = (
-/obj/vehicle/ridden/atv,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
-"ph" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood/freezing,
-/area/awaymission/cabin/caves)
 "pj" = (
 /obj/structure/sign/warning/engine_safety{
 	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift. It seems to particularly focus on how dangerous the sawblade is.";
@@ -3632,11 +3763,6 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin)
-"tp" = (
-/obj/machinery/shower/directional/north,
-/obj/structure/curtain,
-/turf/open/floor/iron/freezer,
-/area/awaymission/cabin)
 "ts" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
@@ -3700,12 +3826,6 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
-"uC" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
 "uK" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
@@ -3784,11 +3904,6 @@
 	},
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
-"wS" = (
-/obj/item/shovel,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
 "xa" = (
 /obj/item/paper/pamphlet/gateway,
 /turf/open/misc/ice/smooth,
@@ -3918,15 +4033,6 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
-"za" = (
-/obj/machinery/shower/directional/north,
-/obj/structure/curtain,
-/obj/item/soap/nanotrasen{
-	pixel_x = -1;
-	pixel_y = -3
-	},
-/turf/open/floor/iron/freezer,
-/area/awaymission/cabin)
 "zd" = (
 /obj/structure/statue/snow/snowman{
 	anchored = 1;
@@ -4047,14 +4153,6 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
-"BT" = (
-/obj/structure/closet/toolcloset,
-/obj/item/lightreplacer,
-/obj/item/storage/toolbox/mechanical,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
 "BU" = (
 /obj/structure/fence,
 /obj/effect/light_emitter{
@@ -4104,11 +4202,6 @@
 	slowdown = 0
 	},
 /area/awaymission/cabin/caves)
-"DY" = (
-/obj/structure/sink/directional/west,
-/obj/structure/mirror/directional/north,
-/turf/open/floor/iron/freezer,
-/area/awaymission/cabin)
 "Fq" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/sign/poster/official/space_cops{
@@ -4214,13 +4307,6 @@
 	slowdown = 1
 	},
 /area/awaymission/cabin/caves)
-"JP" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/baseturf_helper/asteroid/snow,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
 "JW" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/crowbar/large,
@@ -4263,9 +4349,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Lt" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/no_smoking/directional/east,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "LE" = (
@@ -4380,11 +4464,6 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
-"NM" = (
-/obj/structure/sink/directional/east,
-/obj/structure/mirror/directional/north,
-/turf/open/floor/iron/freezer,
-/area/awaymission/cabin)
 "Oe" = (
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
@@ -4406,18 +4485,6 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
-"Oq" = (
-/obj/structure/sink/kitchen/directional/south{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink"
-	},
-/obj/structure/janitorialcart,
-/obj/item/mop,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/clothing/suit/caution,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
 "Ow" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
@@ -4454,11 +4521,6 @@
 "PV" = (
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
-"PZ" = (
-/obj/machinery/light/directional/south,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
 "Qf" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/light_emitter{
@@ -4504,13 +4566,6 @@
 /obj/item/reagent_containers/spray/pepper/empty,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
-"Rn" = (
-/obj/structure/sink/kitchen/directional/south{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/cabin)
 "Rp" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium/red/snow_cabin,
@@ -4536,10 +4591,6 @@
 	},
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
-"Ru" = (
-/obj/structure/sink/directional/west,
-/turf/open/floor/iron/freezer,
-/area/awaymission/cabin)
 "Rz" = (
 /obj/item/toy/figure/md{
 	desc = "The doctor that got volunteered to join the exploration team.";
@@ -4612,20 +4663,6 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
-"SK" = (
-/obj/structure{
-	anchored = 1;
-	density = 1;
-	desc = "Generates power from lava!";
-	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
-	icon_state = "compressor";
-	name = "geothermal generator"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
 "SQ" = (
 /obj/structure/table/wood,
 /obj/item/hatchet{
@@ -4668,20 +4705,6 @@
 	},
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
-"SR" = (
-/obj/structure{
-	anchored = 1;
-	density = 1;
-	desc = "Generates power from lava!";
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
-	icon_state = "turbine";
-	name = "geothermal generator"
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
 "SS" = (
 /obj/effect/decal/cleanable/glitter/blue{
 	desc = "It looks like fancy glitter to me.";
@@ -4728,11 +4751,6 @@
 /obj/effect/decal/cleanable/shreds,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
-"TX" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
 "TY" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/light_emitter{
@@ -4746,15 +4764,9 @@
 	},
 /area/awaymission/cabin/caves)
 "Un" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/no_smoking/directional/west,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
-"Uo" = (
-/obj/structure/sink/directional/east,
-/turf/open/floor/iron/white,
-/area/awaymission/cabin)
 "Uu" = (
 /obj/structure/statue/snow/snowlegion{
 	anchored = 1;
@@ -20939,8 +20951,8 @@ Oe
 Oe
 ki
 ki
-ph
-ph
+ko
+ko
 ki
 ki
 ki
@@ -21194,12 +21206,12 @@ ab
 Oe
 Oe
 Oe
-ph
+ko
 ki
 ki
 ki
 ki
-ph
+ko
 ki
 Oe
 Oe
@@ -24794,7 +24806,7 @@ ki
 ki
 ki
 ki
-ph
+ko
 Oe
 Oe
 gx
@@ -25049,7 +25061,7 @@ Oe
 ki
 ki
 ki
-ph
+ko
 ki
 ki
 Oe
@@ -25135,7 +25147,7 @@ hB
 eg
 eg
 an
-oX
+cT
 cV
 gL
 cV
@@ -25395,7 +25407,7 @@ an
 cU
 aL
 aL
-PZ
+ec
 an
 th
 RC
@@ -26164,7 +26176,7 @@ aq
 eg
 an
 cU
-wS
+cW
 aL
 gN
 an
@@ -26401,9 +26413,9 @@ RC
 RC
 th
 an
-DY
+as
 aB
-tp
+aH
 an
 an
 an
@@ -26662,7 +26674,7 @@ an
 an
 an
 an
-Oq
+aS
 hg
 aq
 ht
@@ -26915,9 +26927,9 @@ RC
 RC
 th
 an
-NM
+at
 aC
-tp
+aH
 an
 an
 an
@@ -26935,7 +26947,7 @@ aq
 eg
 an
 eb
-TX
+cX
 an
 an
 th
@@ -30513,9 +30525,9 @@ pL
 RC
 th
 an
-DY
+as
 aB
-tp
+aH
 an
 an
 an
@@ -31027,16 +31039,16 @@ RC
 pL
 th
 an
-NM
+at
 aC
-tp
+aH
 an
 an
 an
 aq
 ht
 an
-Rn
+bz
 bO
 bW
 ck
@@ -32579,7 +32591,7 @@ eg
 aq
 an
 aJ
-Uo
+bG
 bE
 cv
 hq
@@ -34625,9 +34637,9 @@ RC
 RC
 th
 an
-DY
+as
 aB
-tp
+aH
 an
 an
 an
@@ -34891,7 +34903,7 @@ bf
 bb
 an
 bj
-za
+bH
 an
 kk
 aq
@@ -35148,7 +35160,7 @@ bb
 az
 an
 bk
-Ru
+bJ
 an
 aq
 aq
@@ -35910,9 +35922,9 @@ RC
 th
 ax
 aD
-iu
-uC
-BT
+aM
+du
+hw
 an
 aZ
 be
@@ -36166,9 +36178,9 @@ RC
 pL
 th
 ax
-JP
-SK
-SR
+aE
+aQ
+dv
 an
 an
 ao

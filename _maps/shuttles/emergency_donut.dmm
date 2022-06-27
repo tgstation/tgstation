@@ -275,9 +275,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aY" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aZ" = (
@@ -342,11 +340,16 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bj" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bk" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bl" = (

@@ -219,6 +219,10 @@
 /mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
+"aU" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/awaymission/research/interior/engineering)
 "aW" = (
 /obj/machinery/light/directional/east,
 /obj/structure/tank_dispenser,
@@ -239,10 +243,28 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
+"bb" = (
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/awaymission/research/interior/engineering)
+"be" = (
+/obj/item/stack/rods,
+/obj/item/ammo_casing/c45,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/awaymission/research/interior/engineering)
 "bf" = (
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4
 	},
+/area/awaymission/research/interior/engineering)
+"bg" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
 /area/awaymission/research/interior/engineering)
 "bi" = (
 /obj/structure/table,
@@ -275,6 +297,12 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
+/area/awaymission/research/interior/engineering)
+"bs" = (
+/obj/item/ammo_casing/c45,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
 /area/awaymission/research/interior/engineering)
 "bw" = (
 /obj/structure/table,
@@ -425,9 +453,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "bP" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "bQ" = (
@@ -458,9 +484,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bV" = (
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/west,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -518,6 +542,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
+"cg" = (
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier{
+	brute_damage = 200
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/awaymission/research/interior/engineering)
 "ch" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
@@ -567,6 +598,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
+"cr" = (
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
+	brute_damage = 200
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/awaymission/research/interior)
 "cs" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engine Room"
@@ -600,6 +639,11 @@
 /mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
+"cA" = (
+/obj/item/ammo_casing/c46x30mm,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/awaymission/research/interior)
 "cC" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -626,6 +670,16 @@
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
+"cM" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/awaymission/research/interior)
+"cN" = (
+/obj/item/ammo_casing/c9mm,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/awaymission/research/interior)
 "cP" = (
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
 	brute_damage = 200
@@ -1040,6 +1094,11 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
+/area/awaymission/research/interior/cryo)
+"eD" = (
+/obj/structure/barricade/security,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
 /area/awaymission/research/interior/cryo)
 "eE" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -2092,6 +2151,15 @@
 /obj/item/dnainjector/insulated,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
+"io" = (
+/obj/structure/mirror/directional/west,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/research/interior/bathroom)
 "ip" = (
 /obj/structure/urinal/directional/north,
 /turf/open/floor/iron/freezer,
@@ -2171,6 +2239,12 @@
 /area/awaymission/research/interior/bathroom)
 "iM" = (
 /turf/closed/wall,
+/area/awaymission/research/interior/bathroom)
+"iN" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/iron/freezer,
 /area/awaymission/research/interior/bathroom)
 "iO" = (
 /obj/structure/window/reinforced/tinted{
@@ -2253,6 +2327,15 @@
 /area/awaymission/research/interior/medbay)
 "jf" = (
 /turf/closed/wall,
+/area/awaymission/research/interior/medbay)
+"jg" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "jh" = (
 /obj/effect/turf_decal/tile/blue,
@@ -3111,15 +3194,11 @@
 /area/awaymission/research/exterior)
 "mg" = (
 /obj/structure/closet/emcloset,
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "mh" = (
-/obj/structure/sign/warning/pods{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/pods/directional/west,
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
@@ -3312,9 +3391,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
 "mI" = (
-/obj/structure/sign/warning/pods{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/pods/directional/west,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -3410,9 +3487,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
 "mU" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/vacuum/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -3433,9 +3508,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
 "mW" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/vacuum/directional/south,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -3501,18 +3574,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/security)
-"nF" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior/engineering)
-"nJ" = (
-/obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
-	brute_damage = 200
-	},
-/obj/effect/decal/cleanable/blood,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior)
 "oc" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -3665,11 +3726,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
-"sx" = (
-/obj/item/ammo_casing/c46x30mm,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior)
 "sM" = (
 /obj/structure/window/reinforced,
 /obj/effect/landmark/awaystart,
@@ -3751,10 +3807,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/misc/asteroid/airless,
 /area/awaymission/research/exterior)
-"wx" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior)
 "wF" = (
 /obj/item/bikehorn,
 /turf/open/misc/asteroid/airless,
@@ -3779,11 +3831,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
-"wO" = (
-/obj/structure/mirror/directional/west,
-/obj/structure/sink/directional/east,
-/turf/open/floor/iron/freezer,
-/area/awaymission/research/interior/bathroom)
 "xl" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
@@ -3843,13 +3890,6 @@
 /mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
-"yq" = (
-/obj/item/shard{
-	icon_state = "small"
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior/engineering)
 "yM" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -3873,13 +3913,6 @@
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
-"AB" = (
-/obj/effect/mob_spawn/corpse/human/syndicatesoldier{
-	brute_damage = 200
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior/engineering)
 "AY" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/riot,
@@ -4092,12 +4125,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
-"Gp" = (
-/obj/item/ammo_casing/c45,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior/engineering)
 "Ha" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -4235,11 +4262,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
-"Ld" = (
-/obj/effect/decal/cleanable/blood,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior/engineering)
 "Le" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -4299,10 +4321,6 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
-"Oa" = (
-/obj/machinery/shower/directional/west,
-/turf/open/floor/iron/freezer,
-/area/awaymission/research/interior/bathroom)
 "Or" = (
 /obj/structure/chair{
 	dir = 4
@@ -4453,20 +4471,9 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
-"SC" = (
-/obj/item/stack/rods,
-/obj/item/ammo_casing/c45,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior/engineering)
 "SM" = (
 /turf/open/misc/asteroid,
 /area/awaymission/research/exterior)
-"SY" = (
-/obj/structure/barricade/security,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior/cryo)
 "Ta" = (
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
@@ -4625,12 +4632,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
-"Xt" = (
-/obj/item/ammo_casing/c9mm,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior)
 "Xz" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
@@ -4696,11 +4697,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/security)
-"YC" = (
-/obj/structure/sink/directional/east,
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron/white,
-/area/awaymission/research/interior/medbay)
 "Zg" = (
 /obj/item/stack/rods,
 /obj/item/shard,
@@ -39526,7 +39522,7 @@ aH
 aH
 dR
 ea
-SY
+eD
 fi
 fJ
 TW
@@ -39793,8 +39789,8 @@ ea
 ea
 bD
 id
-wO
-wO
+io
+io
 iJ
 iA
 iM
@@ -40310,7 +40306,7 @@ id
 ip
 iA
 iK
-Oa
+iN
 iM
 id
 eH
@@ -41825,8 +41821,8 @@ al
 al
 al
 al
-nF
-yq
+aU
+bb
 gL
 bG
 ar
@@ -42083,14 +42079,14 @@ ap
 an
 aJ
 nf
-nF
+aU
 EV
 bH
 ar
 ar
 cp
 cp
-wx
+cM
 cp
 UA
 cp
@@ -42340,14 +42336,14 @@ an
 an
 an
 aT
-nF
+aU
 Mo
 bI
 bV
 cf
 cq
-sx
-Xt
+cA
+cN
 Bx
 dl
 dz
@@ -42597,12 +42593,12 @@ an
 an
 aK
 au
-SC
-yq
+be
+bb
 XU
 EC
-AB
-nJ
+cg
+cr
 UY
 KJ
 cp
@@ -42855,10 +42851,10 @@ an
 aL
 nf
 bf
-Gp
+bs
 bK
 bX
-nF
+aU
 cs
 cC
 cP
@@ -43110,8 +43106,8 @@ al
 al
 al
 al
-nF
-Ld
+aU
+bg
 QI
 bL
 ar
@@ -48538,7 +48534,7 @@ ad
 aH
 aO
 iW
-YC
+jg
 jz
 jS
 kl

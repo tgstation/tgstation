@@ -272,7 +272,6 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "bg" = (
@@ -284,10 +283,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "bh" = (
-/obj/machinery/computer{
-	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
-	dir = 4;
-	name = "Broken Computer"
+/obj/machinery/computer/old{
+	dir = 4
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -411,7 +408,6 @@
 "bx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "by" = (
@@ -564,12 +560,6 @@
 /obj/structure/sign/departments/science,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/charlie/hall)
-"bZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
 "ca" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -605,6 +595,17 @@
 /obj/item/multitool,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
+"cg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/window/left/directional/west,
+/obj/machinery/shower{
+	dir = 8;
+	can_refill = 0;
+	can_toggle_refill = 0
+	},
+/obj/item/soap/nanotrasen,
+/turf/open/floor/iron/white,
+/area/ruin/space/ancientstation/charlie/hall)
 "ci" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1248,13 +1249,18 @@
 	},
 /area/ruin/space/ancientstation/delta/rnd)
 "eb" = (
-/obj/item/pipe_dispenser,
-/obj/item/pipe_dispenser,
-/obj/structure/closet/crate/engineering{
-	name = "radiation suit crate"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/south,
+/obj/structure/closet/crate/secure/engineering{
+	req_access = list("away_engineering")
+	},
+/obj/item/pipe_dispenser,
+/obj/item/storage/bag/construction,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/t_scanner,
+/obj/item/screwdriver/power,
+/obj/item/storage/belt/utility,
+/obj/item/clothing/head/hardhat/weldhat,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
 "ec" = (
@@ -1454,6 +1460,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/autolathe,
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "eC" = (
@@ -1462,7 +1469,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "eD" = (
@@ -1474,7 +1480,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "eE" = (
@@ -1791,7 +1796,6 @@
 "fw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/east,
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "fx" = (
@@ -1989,6 +1993,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
+"gf" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/hall)
 "gg" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 10
@@ -2331,12 +2340,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
-"hf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
 "hi" = (
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/charlie/hall)
@@ -2407,6 +2410,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured_half,
 /area/ruin/space/ancientstation/beta/supermatter)
+"hx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "old sink";
+	pixel_y = 28
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/ancientstation/charlie/kitchen)
 "hy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/bin,
@@ -2454,16 +2466,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
-"hF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/glass/plasma,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
 "hJ" = (
 /obj/machinery/door/firedoor/closed,
 /obj/effect/decal/cleanable/dirt,
@@ -2802,10 +2804,6 @@
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/gun/energy/laser/retro/old{
-	pixel_x = 2;
-	pixel_y = 2
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -2822,10 +2820,13 @@
 "iA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/vest/old,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/item/gun/energy/laser/retro/old{
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
@@ -3234,7 +3235,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "jX" = (
@@ -3674,6 +3674,12 @@
 /obj/effect/mob_spawn/ghost_role/human/oldeng,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
+"lq" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/mob/living/simple_animal/hostile/alien,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "lr" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -3860,6 +3866,14 @@
 /area/ruin/space/ancientstation/delta/rnd)
 "lV" = (
 /obj/structure/grille/broken,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/medbay)
+"lW" = (
+/obj/structure/grille/broken,
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "lY" = (
@@ -4080,6 +4094,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "mK" = (
@@ -4535,10 +4550,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
+"nQ" = (
+/obj/item/stack/rods,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/hall)
 "nS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "nT" = (
@@ -4665,6 +4686,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "oj" = (
@@ -4675,6 +4697,7 @@
 /obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "ok" = (
@@ -4900,6 +4923,24 @@
 /obj/effect/decal/cleanable/xenoblood/xgibs/up,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
+"oV" = (
+/obj/item/stack/rods,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/hall)
+"oW" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/hall)
 "oX" = (
 /obj/machinery/airalarm/all_access{
 	dir = 8;
@@ -4910,6 +4951,14 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
+"oZ" = (
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/hall)
 "pa" = (
 /obj/item/stack/rods,
 /obj/machinery/door/firedoor,
@@ -5009,15 +5058,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
-"pu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/left/directional/west,
-/obj/machinery/shower/directional/west{
-	has_water_reclaimer = 0
-	},
-/obj/item/soap/nanotrasen,
-/turf/open/floor/iron/white,
-/area/ruin/space/ancientstation/charlie/hall)
 "pv" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -5247,19 +5287,6 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
-"rF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/shard/plasma,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
-"rG" = (
-/obj/item/stack/rods,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/hall)
 "rN" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
@@ -5268,15 +5295,15 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/glass,
 /obj/item/reagent_containers/glass/bottle{
-	pixel_x = 8;
-	list_reagents = list(/datum/reagent/growthserum = 30);
+	pixel_x = 4;
+	list_reagents = list(/datum/reagent/growthserum=30);
 	name = "Experimental solution";
 	renamedByPlayer = 1;
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/glass/bottle{
 	pixel_x = -4;
-	list_reagents = list(/datum/reagent/consumable/nutriment/peptides = 30);
+	list_reagents = list(/datum/reagent/consumable/nutriment/peptides=30);
 	name = "Solution for Molly";
 	renamedByPlayer = 1
 	},
@@ -5359,8 +5386,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Charlie-Central-Hall-2";
-	location = "Delta-Central-Hall-1"
+	codes_txt = "patrol;next_patrol=charlie-2";
+	location = "charlie-1"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
@@ -5388,14 +5415,18 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
-"sD" = (
-/obj/item/stack/rods,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4
+"sJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	dir = 8;
+	name = "old sink";
+	pixel_x = 12;
+	has_water_reclaimer = 0
 	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/rnd)
 "sL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -5494,16 +5525,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
-"uh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen/directional/west{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	has_water_reclaimer = 0
-	},
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/delta/rnd)
 "uj" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ancientstation/delta/proto)
@@ -5646,6 +5667,14 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/medbay)
+"vk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shard/plasma,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "vm" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -5708,6 +5737,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/engie)
+"vO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "vS" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/glass/bottle/silver{
@@ -5757,16 +5792,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"vZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/power/emitter{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/greenglow,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
 "wa" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
@@ -5792,12 +5817,14 @@
 "wg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/storage/box/firingpins,
 /obj/structure/closet/crate/secure/weapon{
 	req_access = list("away_sec")
 	},
+/obj/item/knife/combat,
+/obj/item/clothing/suit/armor/vest/old,
+/obj/item/gun/ballistic/rifle/boltaction,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "wi" = (
@@ -5841,6 +5868,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"wq" = (
+/obj/machinery/shower{
+	dir = 8;
+	can_refill = 0;
+	can_toggle_refill = 0
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/vault,
+/area/ruin/space/ancientstation/delta/biolab)
 "wt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/old{
@@ -5895,6 +5931,14 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
+"wS" = (
+/obj/item/stack/rods,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "xj" = (
 /obj/machinery/door/airlock/science{
 	name = "Biolab"
@@ -5926,8 +5970,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Delta-Central-Hall-2";
-	location = "Delta-Central-Hall-1"
+	codes_txt = "patrol;next_patrol=delta-2";
+	location = "delta-1"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
@@ -6014,6 +6058,11 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
+"yF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/rnd)
 "yQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/plasma/spawner,
@@ -6151,11 +6200,6 @@
 "zL" = (
 /turf/closed/mineral/random,
 /area/ruin/space/ancientstation/delta/hall)
-"zY" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/turf/open/floor/iron/white,
-/area/ruin/space/ancientstation/delta/rnd)
 "Aa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6253,6 +6297,16 @@
 "AK" = (
 /turf/closed/wall,
 /area/ruin/space/ancientstation/beta/medbay)
+"AO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11;
+	has_water_reclaimer = 0
+	},
+/obj/structure/mirror/directional/east,
+/turf/open/floor/iron/white,
+/area/ruin/space/ancientstation/charlie/hall)
 "AV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -6323,8 +6377,8 @@
 /obj/structure/cable,
 /obj/machinery/duct,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Charlie-Central-Hall-3";
-	location = "Delta-Central-Hall-2"
+	codes_txt = "patrol;next_patrol=charlie-3";
+	location = "charlie-2"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
@@ -6449,14 +6503,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
-"Ct" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen/directional/south{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/ancientstation/charlie/kitchen)
 "CF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -6545,18 +6591,16 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
-"DD" = (
-/obj/item/shard{
-	icon_state = "medium"
+"Dx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/emitter{
+	dir = 1
 	},
-/obj/effect/decal/cleanable/glass,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/effect/decal/cleanable/greenglow,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/hall)
+/area/ruin/space/ancientstation/beta/supermatter)
 "DJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/south,
@@ -6727,8 +6771,8 @@
 	dir = 10
 	},
 /obj/machinery/navbeacon{
-	location = "Delta-Central-Hall-0";
-	codes_txt = "patrol;next_patrol=Delta-Central-Hall-1"
+	location = "delta-0";
+	codes_txt = "patrol;next_patrol=delta-1"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
@@ -6847,6 +6891,16 @@
 /obj/structure/cable,
 /turf/template_noop,
 /area/space/nearstation)
+"FP" = (
+/obj/item/shard/plasma{
+	icon_state = "plasmasmall"
+	},
+/obj/effect/decal/cleanable/glass/plasma,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "FR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6928,14 +6982,6 @@
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
-"Gu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/right/directional/west,
-/obj/machinery/shower/directional/west{
-	has_water_reclaimer = 0
-	},
-/turf/open/floor/iron/white,
-/area/ruin/space/ancientstation/charlie/hall)
 "Gz" = (
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/delta/hall)
@@ -7030,8 +7076,8 @@
 /obj/machinery/duct,
 /obj/structure/cable,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Charlie-Central-Hall-0";
-	location = "Charlie-Central-Hall-3"
+	codes_txt = "patrol;next_patrol=charlie-0";
+	location = "charlie-3"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
@@ -7132,6 +7178,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/biolab)
 "Ic" = (
@@ -7231,6 +7278,22 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"Jb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/tank/internals/plasma/full{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/assembly/timer{
+	pixel_y = -1;
+	pixel_x = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/hall)
 "Jd" = (
 /obj/structure/transit_tube{
 	anchored = 0
@@ -7335,8 +7398,8 @@
 	dir = 1
 	},
 /obj/machinery/navbeacon{
-	location = "Charlie-Central-Hall-0";
-	codes_txt = "patrol;next_patrol=Charlie-Central-Hall-1"
+	location = "charlie-0";
+	codes_txt = "patrol;next_patrol=charlie-1"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -7359,14 +7422,6 @@
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"JS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/directional/west{
-	has_water_reclaimer = 0
-	},
-/obj/structure/mirror/directional/east,
-/turf/open/floor/iron/white,
-/area/ruin/space/ancientstation/charlie/hall)
 "JT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7465,6 +7520,12 @@
 /obj/item/paper/fluff/ruins/oldstation/protosupermatter,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
+"KI" = (
+/obj/item/stack/rods,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "KK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7483,6 +7544,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
+"KP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "KV" = (
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light_switch/directional/west,
@@ -7509,7 +7576,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "Lg" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/random,
+/turf/closed/mineral/diamond,
 /area/space/nearstation)
 "Lh" = (
 /obj/structure/window/reinforced,
@@ -7650,6 +7717,13 @@
 "Md" = (
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/ancientstation/beta/gravity)
+"Ms" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/plasma/spawner/east,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "Mu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
@@ -7669,20 +7743,6 @@
 /obj/structure/girder/displaced,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"ML" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/white,
-/area/ruin/space/ancientstation/delta/rnd)
 "MM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -7721,12 +7781,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/ancientstation/beta/gravity)
-"Nd" = (
-/obj/item/stack/rods,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
 "Nh" = (
 /obj/machinery/power/emitter{
 	dir = 8
@@ -7735,11 +7789,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
-"Nl" = (
-/obj/item/shard,
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space/nearstation)
 "Np" = (
 /obj/effect/decal/cleanable/blood/xtracks{
 	dir = 10
@@ -7756,9 +7805,7 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "Nu" = (
 /obj/effect/decal/cleanable/generic,
-/obj/structure/sign/warning/radiation/rad_area{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Nz" = (
@@ -7857,14 +7904,6 @@
 	dir = 1
 	},
 /area/ruin/space/ancientstation/delta/biolab)
-"Oo" = (
-/obj/item/shard{
-	icon_state = "small"
-	},
-/obj/effect/decal/cleanable/glass,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/hall)
 "Os" = (
 /obj/structure/door_assembly/door_assembly_eng,
 /turf/open/floor/plating/airless,
@@ -7972,13 +8011,6 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
-"Po" = (
-/obj/machinery/shower/directional/west{
-	has_water_reclaimer = 0
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/vault,
-/area/ruin/space/ancientstation/delta/biolab)
 "Pp" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
@@ -8002,10 +8034,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
-/obj/item/pen/red{
-	pixel_x = 8;
-	pixel_y = 12
-	},
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
@@ -8098,8 +8126,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Delta-Central-Hall-0";
-	location = "Delta-Central-Hall-3"
+	codes_txt = "patrol;next_patrol=delta-0";
+	location = "delta-3"
 	},
 /obj/machinery/duct,
 /turf/open/floor/iron,
@@ -8118,18 +8146,10 @@
 	icon_state = "plant-25"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/departments/restroom{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/restroom/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
-"PY" = (
-/obj/item/stack/rods,
-/obj/effect/decal/cleanable/glass,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/hall)
 "PZ" = (
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
@@ -8173,6 +8193,9 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
+"Qs" = (
+/turf/closed/mineral/gibtonite,
+/area/space/nearstation)
 "QC" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 8
@@ -8256,7 +8279,7 @@
 	},
 /obj/machinery/computer/atmos_control{
 	dir = 4;
-	atmos_chambers = list("beta-o2" = "Beta Oxygen Supply", "beta-n2" = "Beta Nitrogen Supply")
+	atmos_chambers = list("beta-o2"="Beta Oxygen Supply","beta-n2"="Beta Nitrogen Supply")
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -8437,6 +8460,20 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
+"SQ" = (
+/obj/effect/decal/cleanable/shreds,
+/obj/structure/alien/weeds,
+/obj/structure/closet/crate/secure/science{
+	req_access = list("away_science")
+	},
+/obj/item/relic,
+/obj/item/transfer_valve,
+/obj/item/raw_anomaly_core/bluespace,
+/obj/item/raw_anomaly_core/random,
+/obj/item/clothing/suit/toggle/labcoat/science,
+/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "ST" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8560,7 +8597,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
@@ -8591,6 +8627,16 @@
 /obj/structure/girder,
 /turf/closed/mineral/random,
 /area/ruin/space/ancientstation/beta/hall)
+"Ul" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass/plasma,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "Un" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light_switch/directional/west{
@@ -8684,14 +8730,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/storage)
-"VK" = (
-/obj/structure/grille/broken,
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/medbay)
 "VT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/shard/plasma{
@@ -8752,11 +8790,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
-"Wz" = (
-/obj/structure/closet/crate/bin,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/hall)
 "WA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8778,9 +8811,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/warning/radiation/rad_area{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/ancientstation/beta/gravity)
 "WI" = (
@@ -8803,16 +8834,16 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"Xh" = (
-/obj/item/shard/plasma{
-	icon_state = "plasmasmall"
-	},
-/obj/effect/decal/cleanable/glass/plasma,
-/obj/structure/cable,
+"Xe" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
+/obj/machinery/door/window/right/directional/west,
+/obj/machinery/shower{
+	dir = 8;
+	can_refill = 0;
+	can_toggle_refill = 0
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/ancientstation/charlie/hall)
 "Xr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -9005,13 +9036,6 @@
 /obj/structure/sign/poster/contraband/lamarr,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/delta/biolab)
-"YQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/window/plasma/spawner/east,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
 "YW" = (
 /turf/open/floor/iron/textured_half,
 /area/ruin/space/ancientstation/beta/supermatter)
@@ -9077,8 +9101,8 @@
 	dir = 9
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Delta-Central-Hall-3";
-	location = "Delta-Central-Hall-2"
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
@@ -10435,7 +10459,7 @@ UP
 UP
 UP
 Uj
-rG
+nQ
 gO
 AK
 ow
@@ -10509,7 +10533,7 @@ bq
 oB
 oF
 oJ
-VK
+lW
 YH
 Jg
 UP
@@ -10652,7 +10676,7 @@ Ax
 kQ
 jO
 nw
-Wz
+gf
 mH
 ko
 kB
@@ -10713,8 +10737,8 @@ qA
 qA
 oQ
 oS
-PY
-rG
+oV
+nQ
 BX
 pc
 nx
@@ -10779,8 +10803,8 @@ oO
 Bz
 Kw
 oT
-DD
-Oo
+oW
+oZ
 pa
 EL
 km
@@ -11106,9 +11130,9 @@ Vl
 Tx
 Hj
 iv
-rF
+vk
 Tt
-YQ
+Ms
 xH
 JL
 Vl
@@ -11172,11 +11196,11 @@ Vl
 Vl
 Nu
 yQ
-sD
+wS
 Wh
 Pw
-vZ
-hf
+Dx
+vO
 SK
 Jg
 Jg
@@ -11239,9 +11263,9 @@ Vl
 Sk
 QT
 Ns
-hF
-Xh
-bZ
+Ul
+FP
+KP
 Sb
 Df
 Jg
@@ -11306,11 +11330,11 @@ Qb
 Fz
 Hj
 sR
-Nd
+KI
 pR
 LG
 rm
-Jg
+UP
 Jg
 aa
 aa
@@ -11376,7 +11400,7 @@ MH
 Jf
 rm
 rm
-Jg
+UP
 Jg
 aa
 aa
@@ -11441,7 +11465,7 @@ Vl
 Zc
 Zc
 rm
-Jg
+rm
 Jg
 Jg
 aa
@@ -11497,7 +11521,7 @@ mw
 aa
 aa
 aa
-Nl
+aa
 aa
 aa
 aa
@@ -13152,7 +13176,7 @@ dp
 ey
 CF
 gY
-Ct
+hx
 Wu
 KK
 Ip
@@ -13400,10 +13424,10 @@ aa
 aa
 aT
 fR
-JS
+AO
 bc
-Gu
-pu
+Xe
+cg
 hi
 PV
 KM
@@ -14722,7 +14746,7 @@ ag
 ag
 cG
 cZ
-cZ
+SQ
 ad
 bE
 bE
@@ -14994,7 +15018,7 @@ En
 Ao
 SV
 SM
-jL
+yF
 mI
 nS
 nS
@@ -15059,7 +15083,7 @@ bE
 op
 Ao
 wx
-ML
+di
 oD
 og
 lF
@@ -15125,7 +15149,7 @@ bE
 oq
 IL
 bD
-zY
+kw
 fu
 hE
 gP
@@ -15191,7 +15215,7 @@ bE
 En
 Ao
 wx
-zY
+kw
 fv
 lF
 gQ
@@ -15260,9 +15284,9 @@ bD
 eD
 fw
 eC
-zY
+kw
 jW
-uh
+sJ
 bD
 TZ
 MN
@@ -15509,7 +15533,7 @@ aa
 ad
 ar
 aE
-aH
+lq
 ag
 gk
 Ws
@@ -15548,7 +15572,7 @@ aa
 aa
 aa
 aa
-aa
+UP
 aa
 aa
 aa
@@ -15601,7 +15625,7 @@ vy
 rp
 Ij
 dh
-dh
+Jb
 bE
 aa
 aa
@@ -15614,8 +15638,8 @@ aa
 aa
 ab
 aa
-aa
-aa
+UP
+UP
 aa
 aa
 aa
@@ -15657,7 +15681,7 @@ wK
 Jq
 On
 GX
-Po
+wq
 TX
 rp
 CK
@@ -15679,9 +15703,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+UP
+UP
+UP
 aa
 aa
 aa
@@ -15744,11 +15768,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+UP
+UP
+Qs
+UP
+UP
 aa
 aa
 aa
@@ -15811,10 +15835,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+UP
+UP
+UP
+UP
 aa
 aa
 aa
@@ -15878,8 +15902,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+UP
+UP
 aa
 aa
 aa

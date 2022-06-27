@@ -1860,9 +1860,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dL" = (
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dM" = (

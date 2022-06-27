@@ -1617,7 +1617,10 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "xm" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = -4
+	},
 /obj/machinery/light/small/directional/west,
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/iron/showroomfloor,
@@ -2626,7 +2629,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "JX" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "JZ" = (
@@ -2713,9 +2719,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ll" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2952,9 +2956,7 @@
 /area/shuttle/escape)
 "Oi" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Monastery Cemetery";
 	network = list("ss13","monastery")
@@ -3501,7 +3503,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "TJ" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "TR" = (
@@ -3731,7 +3736,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "WJ" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = -4
+	},
 /obj/item/soap/homemade,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
