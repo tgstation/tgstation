@@ -623,9 +623,8 @@
 /area/station/tcommsat/server)
 "ahi" = (
 /obj/structure/cable,
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/station/security/detectives_office/private_investigators_office)
 "ahj" = (
 /obj/structure/cable,
@@ -2739,6 +2738,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"aJs" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/abandoned_gambling_den)
 "aJu" = (
 /obj/structure/cable,
 /obj/machinery/power/smes/engineering,
@@ -4671,6 +4677,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
+"bkD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/box/red/corners{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/abandoned_gambling_den)
 "bkE" = (
 /obj/structure/window/reinforced,
 /turf/open/space,
@@ -8989,9 +9003,8 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken6"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/station/maintenance/starboard/aft)
 "che" = (
 /obj/structure/table,
@@ -9831,6 +9844,13 @@
 /obj/structure/cable,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"csn" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/abandoned_gambling_den)
 "cst" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
@@ -9883,6 +9903,14 @@
 	dir = 8
 	},
 /area/station/hallway/primary/port)
+"csP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/abandoned_gambling_den)
 "csU" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/engine/plasma,
@@ -21087,9 +21115,8 @@
 	icon_state = "detective"
 	},
 /obj/item/clothing/gloves/color/black,
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/station/security/detectives_office/private_investigators_office)
 "fqJ" = (
 /obj/structure/chair/sofa/bench{
@@ -29434,6 +29461,11 @@
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
+"hBp" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/box/red/corners,
+/turf/open/floor/iron/dark,
+/area/station/service/abandoned_gambling_den)
 "hBr" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /obj/machinery/computer/atmos_control/plasma_tank{
@@ -39009,6 +39041,9 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "jXL" = (
@@ -40523,9 +40558,8 @@
 	},
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/xeno_spawn,
-/turf/open/floor/wood{
-	icon_state = "wood-broken2"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/station/security/detectives_office/private_investigators_office)
 "krF" = (
 /obj/effect/turf_decal/siding/blue{
@@ -49963,6 +49997,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"mQv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/box/red/corners{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/abandoned_gambling_den)
 "mQA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/bar/directional/west,
@@ -56241,6 +56284,9 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "oxg" = (
@@ -56923,8 +56969,10 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/chair/stool/bar/directional/south,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 6
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "oGb" = (
@@ -59859,9 +59907,8 @@
 /area/station/commons/toilet/restrooms)
 "psv" = (
 /obj/effect/spawner/random/trash/mess,
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/station/security/detectives_office/private_investigators_office)
 "psA" = (
 /obj/machinery/lapvend,
@@ -61785,9 +61832,8 @@
 	dir = 9
 	},
 /obj/item/poster/random_contraband,
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
 /area/station/maintenance/starboard/aft)
 "pQF" = (
 /obj/effect/landmark/start/lawyer,
@@ -63349,6 +63395,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/central)
+"qlI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning,
+/turf/open/floor/iron/dark,
+/area/station/service/abandoned_gambling_den)
 "qlK" = (
 /obj/machinery/light,
 /obj/structure/table,
@@ -64536,6 +64588,14 @@
 /obj/item/circuitboard/machine/chem_master,
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/port/fore)
+"qDt" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/abandoned_gambling_den)
 "qDu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -73448,6 +73508,7 @@
 /area/station/engineering/atmos)
 "sMa" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "sMw" = (
@@ -82710,6 +82771,13 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/engineering/transit_tube)
+"vfk" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/abandoned_gambling_den)
 "vfw" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -83134,6 +83202,7 @@
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/effect/landmark/event_spawn,
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "vlt" = (
@@ -117881,8 +117950,8 @@ riD
 pVk
 wTQ
 blI
-sMa
-sMa
+aJs
+csn
 jXD
 oxe
 jtC
@@ -118138,10 +118207,10 @@ qtw
 pKd
 pNA
 fEI
-srI
-srI
+csP
+bkD
 jtC
-fNa
+mQv
 sMa
 ibp
 mDY
@@ -118395,7 +118464,7 @@ nuJ
 qYr
 crW
 hUD
-jDU
+qDt
 srI
 vli
 jDU
@@ -118652,11 +118721,11 @@ uCG
 qYr
 wcd
 hUD
-jDU
+qDt
 pBY
 djv
-sMa
-srI
+hBp
+qlI
 ibp
 pNA
 qul
@@ -118912,7 +118981,7 @@ hUD
 pBY
 jtC
 jtC
-sMa
+vfk
 oGa
 ibp
 jXL
