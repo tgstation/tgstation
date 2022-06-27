@@ -1346,20 +1346,14 @@
 /obj/structure/toilet{
 	pixel_y = 16
 	},
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/medbay)
 "cJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/shower{
-	pixel_y = 15
-	},
+/obj/machinery/shower/directional/south,
 /obj/item/soap,
 /obj/structure/curtain,
 /obj/machinery/light/small/built/directional/south,
