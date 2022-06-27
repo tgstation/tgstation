@@ -4294,14 +4294,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "bgU" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 3;
-	height = 5;
-	id = "mining_home";
-	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/delta;
-	width = 7
+/obj/docking_port/stationary/mining_home{
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/space)
@@ -5802,14 +5796,8 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "bAc" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp_home";
-	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/delta;
-	width = 9
+/obj/docking_port/stationary/laborcamp_home{
+	dir = 8
 	},
 /turf/open/space/basic,
 /area/space)
@@ -61244,14 +61232,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
 "qzS" = (
-/obj/docking_port/stationary{
-	dwidth = 3;
-	height = 5;
-	id = "commonmining_home";
-	name = "SS13: Common Mining Dock";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
-	width = 7
-	},
+/obj/docking_port/stationary/mining_home/common,
 /turf/open/space/basic,
 /area/space)
 "qzX" = (
