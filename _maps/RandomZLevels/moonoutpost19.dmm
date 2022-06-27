@@ -6269,7 +6269,7 @@
 "Hn" = (
 /obj/machinery/door/puzzle{
 	name = "ATV shed door";
-	puzzle_id = atvs
+	puzzle_id = "atvs"
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -8117,7 +8117,7 @@
 /obj/item/keycard{
 	desc = "This keycard has a little label on it, it goes to the ATV shed off-base.";
 	name = "security keycard: ATV shed";
-	puzzle_id = atvs
+	puzzle_id = "atvs"
 	},
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
