@@ -1,336 +1,79 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/obj/machinery/door/airlock/maintenance/external{
-	name = "Bridge Maintenance"
-	},
-/turf/open/floor/plating,
-/area/ruin/unpowered)
-"ab" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/frame/computer{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"aK" = (
-/turf/open/floor/iron/showroomfloor,
-/area/ruin/unpowered)
-"bd" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"bN" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner,
-/obj/item/circuitboard/machine/telecomms/processor,
-/obj/item/rack_parts,
-/turf/open/floor/circuit/off,
-/area/ruin/unpowered)
-"cI" = (
+"ag" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Bridge"
-	},
-/obj/effect/turf_decal/tile/red/half,
-/turf/open/floor/iron/smooth_edge,
-/area/ruin/unpowered)
-"cJ" = (
-/obj/structure/alien/weeds,
-/obj/structure/bed/nest,
-/turf/open/floor/iron/airless,
-/area/ruin/unpowered)
-"dM" = (
-/obj/structure/closet/crate/large,
-/obj/structure/sign/poster/official/terragov{
-	pixel_x = 32
-	},
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"dW" = (
-/obj/machinery/camera/directional/west{
-	network = list()
-	},
-/turf/open/floor/carpet,
-/area/ruin/unpowered)
-"em" = (
-/obj/structure/table/reinforced,
-/obj/item/gun/energy/dueling,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"eW" = (
-/turf/template_noop,
-/area/template_noop)
-"fc" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/resin/wall,
-/turf/open/floor/iron/airless,
-/area/ruin/unpowered)
-"fE" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Bridge"
-	},
-/obj/effect/turf_decal/tile/red/half{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth_edge{
-	dir = 1
-	},
-/area/ruin/unpowered)
-"gz" = (
-/obj/structure/alien/weeds,
-/turf/open/floor/iron/airless,
-/area/ruin/unpowered)
-"gY" = (
-/obj/structure/table/reinforced,
-/obj/item/computer_hardware/printer,
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"if" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/east,
-/obj/machinery/computer/terminal{
-	dir = 1
-	},
-/obj/machinery/light/red/directional/south,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"iP" = (
-/obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered)
-"jb" = (
-/obj/structure/alien/weeds,
-/obj/structure/bed/nest,
-/obj/machinery/light/red/directional/east,
-/turf/open/floor/iron/airless,
-/area/ruin/unpowered)
-"jh" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/item/circuitboard/machine/telecomms/bus,
-/obj/item/rack_parts,
-/turf/open/floor/circuit/off,
-/area/ruin/unpowered)
-"jl" = (
-/obj/machinery/camera/directional/south{
-	network = list()
-	},
-/obj/machinery/light/small/broken/directional/south,
-/turf/open/floor/plating,
-/area/ruin/unpowered)
-"jz" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner,
-/obj/structure/table/reinforced,
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"jY" = (
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"kx" = (
-/obj/structure/frame/computer{
-	dir = 1
-	},
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"ky" = (
-/obj/effect/turf_decal/tile/red/anticorner{
-	dir = 1
+	name = "Bridge Office"
 	},
 /turf/open/floor/iron/smooth,
 /area/ruin/unpowered)
-"kU" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/ruin/unpowered)
-"lk" = (
-/obj/structure/frame/machine,
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"lt" = (
-/obj/machinery/light/red/directional/south,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"lu" = (
-/obj/structure/table/wood,
-/obj/item/computer_hardware/printer,
-/obj/machinery/light/small/broken/directional/east,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"lB" = (
-/obj/item/bedsheet/brown,
-/obj/structure/bed,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"lK" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
-/obj/machinery/computer/terminal,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"mi" = (
-/obj/machinery/door/window/brigdoor/left/directional/north,
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"mC" = (
-/obj/machinery/camera/directional/south{
-	network = list()
-	},
-/obj/effect/turf_decal/tile/red/half,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"mW" = (
-/obj/structure/table/wood,
-/obj/item/megaphone/command,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"nl" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
-/obj/machinery/computer/terminal,
-/obj/effect/turf_decal/tile/red/half{
-	dir = 8
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"ox" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Captain's Quarters"
-	},
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"oU" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"oY" = (
-/obj/machinery/light/red/directional/east,
-/obj/structure/mirror/directional/east,
-/turf/open/floor/iron/showroomfloor,
-/area/ruin/unpowered)
-"pi" = (
+"bI" = (
 /obj/structure/alien/weeds,
 /obj/item/chair/plastic,
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
-"pT" = (
+"bO" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/turf/open/floor/iron/airless,
+/area/ruin/unpowered)
+"bU" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/turf/open/floor/iron/airless,
+/area/ruin/unpowered)
+"cH" = (
+/obj/effect/turf_decal/tile/red/half{
+	dir = 1
+	},
+/obj/machinery/light/red/directional/north,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"dk" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/wall,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"dD" = (
 /obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/ruin/unpowered)
-"pW" = (
-/turf/open/floor/carpet,
-/area/ruin/unpowered)
-"qa" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"rd" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/item/stack/cable_coil/cut,
-/obj/structure/frame/machine,
-/turf/open/floor/circuit/off,
-/area/ruin/unpowered)
-"rh" = (
-/obj/machinery/light/red/directional/west,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"sf" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/table/reinforced,
-/obj/item/wallframe/button{
-	pixel_x = -8;
-	pixel_y = 9
-	},
-/obj/item/wallframe/button{
-	pixel_x = -8;
-	pixel_y = -3
-	},
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"sn" = (
-/obj/machinery/door/window/brigdoor/left/directional/west,
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/circuit/off,
-/area/ruin/unpowered)
-"su" = (
-/obj/machinery/photocopier,
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"ts" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/east,
+"dM" = (
+/obj/structure/window/reinforced/spawner/west,
 /obj/machinery/computer/terminal{
-	dir = 1
+	dir = 4
 	},
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/pod/light,
 /area/ruin/unpowered)
-"tG" = (
+"eU" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/item/rack_parts,
 /turf/open/floor/circuit/off,
 /area/ruin/unpowered)
-"tH" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/table/reinforced,
-/obj/item/wallframe/button{
-	pixel_x = -8;
-	pixel_y = 9
-	},
-/obj/item/wallframe/button{
-	pixel_x = -8;
-	pixel_y = -3
-	},
-/obj/item/wallframe/button{
-	pixel_x = 5;
-	pixel_y = -3
-	},
-/obj/item/wallframe/button{
-	pixel_x = 5;
-	pixel_y = 9
-	},
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"uv" = (
-/obj/effect/turf_decal/tile/red/half,
-/turf/open/floor/iron/smooth_edge,
-/area/ruin/unpowered)
-"uS" = (
-/obj/item/circuitboard/machine/telecomms/processor,
-/turf/open/floor/circuit/off,
-/area/ruin/unpowered)
-"uV" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/resin/wall,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered)
-"ve" = (
-/obj/effect/turf_decal/tile/red/half,
+"fd" = (
+/obj/structure/frame/machine,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/smooth,
 /area/ruin/unpowered)
-"vR" = (
-/obj/machinery/door/window/brigdoor/left/directional/south,
+"fI" = (
+/obj/machinery/photocopier,
 /turf/open/floor/pod/light,
 /area/ruin/unpowered)
-"wa" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp,
-/turf/open/floor/wood,
+"fP" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/carpet,
 /area/ruin/unpowered)
-"wv" = (
+"gx" = (
+/obj/structure/alien/weeds,
+/obj/structure/closet,
+/turf/open/floor/iron/airless,
+/area/ruin/unpowered)
+"gI" = (
+/obj/structure/alien/weeds,
+/obj/item/chair/plastic,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"gL" = (
 /obj/structure/table/reinforced,
 /obj/item/kirbyplants{
 	pixel_y = 10
@@ -338,201 +81,41 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"wM" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor/left/directional/west,
-/obj/machinery/door/window/left/directional/east,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"xq" = (
-/obj/structure/alien/weeds,
-/obj/machinery/camera/directional/west{
+/obj/machinery/camera/directional/north{
 	network = list()
 	},
-/turf/open/floor/iron/airless,
-/area/ruin/unpowered)
-"xr" = (
-/obj/structure/alien/weeds,
-/obj/structure/closet,
-/turf/open/floor/iron/airless,
-/area/ruin/unpowered)
-"xH" = (
-/obj/structure/stairs/west,
-/turf/open/floor/plating,
-/area/ruin/unpowered)
-"xN" = (
-/obj/machinery/door/window/brigdoor/left/directional/east,
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"xZ" = (
-/obj/machinery/pdapainter,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"yJ" = (
-/obj/structure/frame/computer{
-	dir = 1
-	},
-/obj/machinery/light/red/directional/south,
-/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/smooth,
 /area/ruin/unpowered)
-"yL" = (
+"hi" = (
+/turf/template_noop,
+/area/template_noop)
+"hp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
-"yN" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Bridge Office"
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"zw" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/west,
-/obj/item/circuitboard/machine/telecomms/hub,
-/obj/item/stack/cable_coil/cut,
-/obj/structure/frame/machine,
-/turf/open/floor/circuit/off,
-/area/ruin/unpowered)
-"zB" = (
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"zX" = (
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/circuit/off,
-/area/ruin/unpowered)
-"Ay" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"AR" = (
-/obj/machinery/door/firedoor/border_only/closed{
-	dir = 1
-	},
-/turf/template_noop,
-/area/ruin/unpowered)
-"Bs" = (
-/obj/structure/frame/computer{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/ruin/unpowered)
-"BI" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
-/obj/machinery/computer/terminal,
-/obj/machinery/light/red/directional/north,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"Cz" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/machinery/computer/terminal,
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"CW" = (
-/obj/effect/turf_decal/tile/red/half{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"Dg" = (
-/obj/structure/window/reinforced/spawner,
-/obj/item/stack/cable_coil/cut,
-/obj/structure/frame/machine,
-/obj/machinery/light/red/directional/south,
-/turf/open/floor/circuit/off,
-/area/ruin/unpowered)
-"Do" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Captain's Washroom"
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/ruin/unpowered)
-"DC" = (
-/obj/machinery/light/red/directional/east,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"Ea" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner,
-/obj/item/circuitboard/machine/teleporter_hub,
-/turf/open/floor/circuit/off,
-/area/ruin/unpowered)
-"Eb" = (
-/mob/living/simple_animal/pet/cat{
-	name = "Jonesy"
-	},
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"El" = (
-/obj/structure/frame/machine,
-/obj/machinery/light/red/directional/north,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"Ey" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/carpet,
-/area/ruin/unpowered)
-"ET" = (
-/obj/structure/chair/office{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red/half{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"Fj" = (
+"hy" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Captain's Quarters"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/ruin/unpowered)
-"FV" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/item/stack/cable_coil/cut,
-/obj/machinery/light/red/directional/north,
-/turf/open/floor/circuit/off,
+"hT" = (
+/obj/structure/alien/weeds/node,
+/turf/open/floor/iron/airless,
 /area/ruin/unpowered)
-"Gd" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/machinery/computer/terminal{
-	dir = 4
-	},
+"hU" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen/fountain,
 /turf/open/floor/pod/light,
 /area/ruin/unpowered)
-"Gk" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
+"hV" = (
 /turf/open/floor/iron/smooth,
 /area/ruin/unpowered)
-"GS" = (
-/obj/structure/chair/office,
-/obj/effect/turf_decal/tile/red/half,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"Ht" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner,
-/obj/structure/frame/computer{
-	dir = 4
+"ia" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge"
 	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"Ij" = (
-/obj/machinery/door/airlock/maintenance/external{
-	name = "Bridge Maintenance"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered)
-"Iw" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
 	},
@@ -540,1161 +123,1427 @@
 	dir = 1
 	},
 /area/ruin/unpowered)
-"IU" = (
-/obj/structure/frame/computer{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red/anticorner{
-	dir = 8
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"Ja" = (
+"ib" = (
 /obj/structure/alien/weeds,
 /obj/machinery/light/red/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
-"Jd" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
-/turf/open/floor/iron/smooth,
+"iB" = (
+/mob/living/simple_animal/pet/cat{
+	name = "Jonesy"
+	},
+/turf/open/floor/wood,
 /area/ruin/unpowered)
-"Ji" = (
-/turf/closed/wall/r_wall,
-/area/ruin/unpowered)
-"Ky" = (
-/obj/effect/turf_decal/tile/red/anticorner{
+"jo" = (
+/obj/structure/chair/office{
 	dir = 8
 	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"KC" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/machinery/computer/terminal{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"LC" = (
-/obj/structure/frame/machine,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"LT" = (
-/obj/structure/frame/computer,
 /turf/open/floor/pod/light,
 /area/ruin/unpowered)
-"LY" = (
-/obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/xenoblood/xgibs/larva,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered)
-"Mj" = (
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered)
-"Nb" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/frame/computer{
-	dir = 1
-	},
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"Nj" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/template_noop)
-"OX" = (
-/obj/structure/window/reinforced/spawner/north,
+"jq" = (
 /obj/structure/window/reinforced/spawner/east,
-/obj/item/circuitboard/machine/telecomms/relay,
+/obj/structure/window/reinforced/spawner,
+/obj/item/circuitboard/machine/telecomms/processor,
+/obj/item/rack_parts,
+/turf/open/floor/circuit/off,
+/area/ruin/unpowered)
+"jI" = (
+/obj/machinery/door/window/brigdoor/left/directional/south,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"kd" = (
+/obj/structure/window/reinforced/spawner,
+/obj/item/stack/cable_coil/cut,
 /obj/structure/frame/machine,
 /turf/open/floor/circuit/off,
 /area/ruin/unpowered)
-"PL" = (
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"Qc" = (
-/obj/structure/toilet{
-	dir = 4
+"lq" = (
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Bridge Maintenance"
 	},
-/turf/open/floor/iron/showroomfloor,
-/area/ruin/unpowered)
-"Sb" = (
-/obj/structure/alien/weeds/node,
-/obj/effect/decal/cleanable/xenoblood,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered)
-"So" = (
-/obj/structure/frame/computer,
-/obj/effect/turf_decal/tile/red/anticorner{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/unpowered)
-"SY" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"Tc" = (
-/obj/machinery/door/firedoor/border_only/closed{
-	dir = 8
-	},
-/obj/structure/alien/weeds,
-/obj/item/chair/plastic,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered)
-"TL" = (
-/obj/structure/curtain,
-/obj/item/soap/deluxe,
-/turf/open/floor/iron/showroomfloor,
-/area/ruin/unpowered)
-"TW" = (
-/obj/structure/sink/greyscale{
-	dir = 8;
-	pixel_x = 12
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/ruin/unpowered)
-"Uo" = (
-/obj/structure/alien/weeds,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered)
-"UC" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/table/reinforced,
-/turf/open/floor/pod/light,
-/area/ruin/unpowered)
-"UM" = (
-/obj/machinery/light/red/directional/west,
-/turf/open/floor/carpet,
-/area/ruin/unpowered)
-"US" = (
-/obj/structure/alien/weeds/node,
-/turf/open/floor/iron/airless,
-/area/ruin/unpowered)
-"UU" = (
-/obj/machinery/door/firedoor/border_only/closed,
-/turf/template_noop,
-/area/ruin/unpowered)
-"Vv" = (
-/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"Vz" = (
+"lr" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/xenoblood/xgibs/up,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
-"VI" = (
+"lS" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/wall,
+/turf/open/floor/iron/airless,
+/area/ruin/unpowered)
+"mg" = (
 /obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen/fountain,
+/obj/item/computer_hardware/printer,
 /turf/open/floor/pod/light,
 /area/ruin/unpowered)
-"VL" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
-/obj/machinery/computer/terminal,
-/turf/open/floor/iron/smooth,
+"mi" = (
+/obj/structure/stairs/west,
+/obj/machinery/door/window/brigdoor/left/directional/east,
+/turf/open/floor/plating,
 /area/ruin/unpowered)
-"Xu" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/west,
-/obj/machinery/computer/terminal{
+"mu" = (
+/obj/structure/frame/computer{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/pod/light,
 /area/ruin/unpowered)
-"XK" = (
-/obj/machinery/camera/directional/north{
-	network = list()
+"mB" = (
+/obj/structure/chair/office{
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/ruin/unpowered)
-"Yx" = (
+"na" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/item/stack/cable_coil/cut,
+/obj/structure/frame/machine,
+/turf/open/floor/circuit/off,
+/area/ruin/unpowered)
+"nn" = (
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"np" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/table/reinforced,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"nJ" = (
+/obj/machinery/pdapainter,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ob" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/obj/structure/bed/nest,
+/obj/machinery/light/red/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
-"YM" = (
+"pj" = (
+/obj/structure/stairs/west,
+/obj/machinery/door/window/brigdoor/right/directional/east,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"pv" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Captain's Quarters"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"pF" = (
+/obj/machinery/camera/directional/south{
+	network = list()
+	},
+/obj/machinery/light/small/broken/directional/south,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"qf" = (
+/obj/machinery/light/red/directional/east,
+/obj/structure/mirror/directional/east,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/unpowered)
+"qS" = (
+/obj/effect/turf_decal/tile/red/half,
+/turf/open/floor/iron/smooth_edge,
+/area/ruin/unpowered)
+"qY" = (
+/obj/machinery/door/window/brigdoor/left/directional/east,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"rb" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/computer/terminal,
+/obj/effect/turf_decal/tile/red/half{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"ri" = (
+/obj/effect/turf_decal/tile/red/half,
+/obj/machinery/light/red/directional/south,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"rA" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"rJ" = (
+/obj/machinery/light/red/directional/south,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"rM" = (
+/turf/closed/wall/r_wall,
+/area/ruin/unpowered)
+"rZ" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge"
+	},
+/obj/effect/turf_decal/tile/red/half,
+/turf/open/floor/iron/smooth_edge,
+/area/ruin/unpowered)
+"sr" = (
+/obj/structure/table/wood,
+/obj/item/megaphone/command,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"sI" = (
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"tm" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"ur" = (
+/obj/structure/sink/greyscale{
+	dir = 8;
+	pixel_x = 12
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/unpowered)
+"uP" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"uW" = (
+/obj/structure/window/reinforced/spawner/north,
+/turf/template_noop,
+/area/ruin/unpowered)
+"vi" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"vl" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"vJ" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/energy/dueling,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"vW" = (
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"yb" = (
+/obj/item/bedsheet/brown,
+/obj/structure/bed,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ym" = (
+/obj/structure/window/reinforced/spawner,
+/turf/template_noop,
+/area/ruin/unpowered)
+"yt" = (
+/obj/item/circuitboard/machine/telecomms/processor,
+/turf/open/floor/circuit/off,
+/area/ruin/unpowered)
+"yS" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"zw" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/unpowered)
+"zA" = (
+/obj/effect/turf_decal/tile/red/half{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/ruin/unpowered)
+"zH" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"Aa" = (
+/obj/machinery/light/red/directional/east,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"Bk" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table/reinforced,
+/obj/item/wallframe/button{
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/obj/item/wallframe/button{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"Br" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east,
+/obj/machinery/computer/terminal,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"BQ" = (
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"CU" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/table/reinforced,
+/obj/item/wallframe/button{
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/obj/item/wallframe/button{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/wallframe/button{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/obj/item/wallframe/button{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"CV" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/brigdoor/left/directional/west,
+/obj/machinery/door/window/left/directional/east,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"Ek" = (
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Bridge Maintenance"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"EQ" = (
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 8
+	},
+/obj/machinery/camera/directional/south{
+	network = list()
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"Fo" = (
+/obj/machinery/light/red/directional/west,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"FM" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"YU" = (
-/obj/machinery/door/firedoor/border_only/closed{
+"FP" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Hc" = (
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/unpowered)
+"Hj" = (
+/obj/machinery/door/window/brigdoor/left/directional/north,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"HC" = (
+/obj/structure/table/wood,
+/obj/item/computer_hardware/printer,
+/obj/machinery/light/small/broken/directional/east,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"In" = (
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"It" = (
+/obj/effect/turf_decal/tile/red/half{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"IW" = (
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"Jr" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"JT" = (
+/obj/machinery/camera/directional/west{
+	network = list()
+	},
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"Ke" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/machinery/computer/terminal{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"Kq" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"Ky" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"KI" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Captain's Washroom"
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/unpowered)
+"KY" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/west,
+/obj/item/circuitboard/machine/telecomms/hub,
+/obj/item/stack/cable_coil/cut,
+/obj/structure/frame/machine,
+/turf/open/floor/circuit/off,
+/area/ruin/unpowered)
+"Lm" = (
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/circuit/off,
+/area/ruin/unpowered)
+"Lr" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/circuit/off,
+/area/ruin/unpowered)
+"LS" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Mk" = (
+/obj/effect/turf_decal/tile/red/half,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"ME" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east,
+/obj/item/circuitboard/machine/telecomms/relay,
+/obj/structure/frame/machine,
+/turf/open/floor/circuit/off,
+/area/ruin/unpowered)
+"MG" = (
+/obj/structure/frame/machine,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"Oo" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
-"ZC" = (
-/turf/open/floor/plating,
+"Pq" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east,
+/obj/machinery/computer/terminal,
+/obj/machinery/light/red/directional/north,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/smooth,
 /area/ruin/unpowered)
+"Qp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"QP" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/item/circuitboard/machine/telecomms/bus,
+/obj/item/rack_parts,
+/turf/open/floor/circuit/off,
+/area/ruin/unpowered)
+"RH" = (
+/obj/structure/frame/computer,
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"RZ" = (
+/obj/structure/frame/machine,
+/obj/machinery/light/red/directional/north,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"SD" = (
+/obj/structure/closet/crate/large,
+/obj/structure/sign/poster/official/terragov{
+	pixel_x = 32
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"SF" = (
+/obj/structure/frame/computer,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"SW" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"TI" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/machinery/light/red/directional/south,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"Ub" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"UH" = (
+/obj/structure/alien/weeds,
+/obj/machinery/camera/directional/west{
+	network = list()
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/unpowered)
+"UQ" = (
+/obj/structure/alien/weeds,
+/obj/machinery/light/red/directional/east,
+/turf/open/floor/iron/airless,
+/area/ruin/unpowered)
+"UX" = (
+/obj/machinery/light/red/directional/west,
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"VO" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"VT" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/computer/terminal,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"WC" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"WH" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/east,
+/obj/machinery/computer/terminal{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"WN" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/table/reinforced,
+/turf/open/floor/pod/light,
+/area/ruin/unpowered)
+"WR" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/west,
+/obj/machinery/computer/terminal{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"Xg" = (
+/obj/structure/chair/office,
+/obj/effect/turf_decal/tile/red/half,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"XC" = (
+/obj/structure/curtain,
+/obj/item/soap/deluxe,
+/obj/machinery/shower{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/unpowered)
+"YA" = (
+/obj/machinery/door/window/brigdoor/left/directional/west,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/circuit/off,
+/area/ruin/unpowered)
+"YO" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/unpowered)
+"YQ" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner,
+/obj/item/circuitboard/machine/teleporter_hub,
+/turf/open/floor/circuit/off,
+/area/ruin/unpowered)
+"ZL" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/computer/terminal,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/smooth,
+/area/ruin/unpowered)
+"ZP" = (
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"ZZ" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
 
 (1,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (2,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-Ji
-kU
-kU
-kU
-kU
-kU
-Ji
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+rM
+rM
+uP
+uP
+uP
+uP
+uP
+rM
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (3,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-LC
-ky
-ab
-KC
-Ht
-Ky
-em
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+rM
+fd
+In
+vi
+Ke
+zH
+sI
+vJ
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (4,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-El
-CW
-jY
-Gk
-jY
-GS
-yJ
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+rM
+RZ
+It
+hV
+Ub
+hV
+Xg
+TI
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (5,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-Ji
-So
-qa
-jY
-jY
-jY
-Ay
-IU
-Ji
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+rM
+rM
+RH
+SW
+hV
+hV
+hV
+IW
+tm
+rM
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (6,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-wv
-qa
-Jd
-zB
-zB
-zB
-oU
-Ay
+hi
+hi
+hi
+hi
+hi
+rM
+gL
+SW
+Qp
+BQ
+BQ
+BQ
 Ky
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+IW
+EQ
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (7,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-Ji
-XK
-jY
-zB
-su
-VI
-gY
-zB
-jY
-mC
-Ji
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+rM
+rM
+cH
+hV
+BQ
+fI
+hU
+mg
+BQ
+hV
+ri
+rM
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (8,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-lK
-ET
-jY
-kx
-UC
-Gd
-jz
-LT
-jY
-GS
-Xu
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+rM
+ZL
+mB
+hV
+mu
+WN
+dM
+np
+SF
+hV
+Xg
+WR
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (9,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-BI
-CW
-jY
-kx
-Cz
-bd
-Nb
-lk
-jY
-ve
-if
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+rM
+Pq
+It
+hV
+mu
+VT
+jo
+yS
+MG
+hV
+Mk
+WH
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (10,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-nl
-qa
-jY
-zB
-mi
-zB
-vR
-zB
-jY
-ve
-Xu
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+rM
+rb
+SW
+hV
+BQ
+Hj
+BQ
+jI
+BQ
+hV
+Mk
+WR
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (11,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-VL
-pT
-jY
-zB
-sf
-xN
-tH
-zB
-jY
-GS
-ts
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+rM
+Br
+dD
+hV
+BQ
+Bk
+qY
+CU
+BQ
+hV
+Xg
+WH
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (12,1,1) = {"
-eW
-eW
-eW
-eW
-Ji
-Ji
-Ji
-Ji
-Ji
-xH
-xH
-AR
-eW
-UU
-xH
-xH
-Ji
-Ji
-Ji
-Ji
-Ji
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+rM
+rM
+rM
+rM
+rM
+mi
+pj
+uW
+hi
+ym
+mi
+pj
+rM
+rM
+rM
+rM
+rM
+rM
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (13,1,1) = {"
-eW
-eW
-eW
-Uo
-uV
-US
-cJ
-Ja
-xq
-YU
-YU
-Nj
-eW
-eW
-Tc
-YU
-Ja
-fc
-Ji
-Vv
-ZC
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+Oo
+dk
+hT
+bO
+ib
+UH
+Oo
+Oo
+ZZ
+hi
+hi
+gI
+Oo
+ib
+lS
+rM
+FP
+LS
+rM
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (14,1,1) = {"
-eW
-eW
-eW
-Nj
-uV
-gz
-gz
-Yx
-gz
-Vz
-eW
-eW
-eW
-eW
-eW
-Uo
-cJ
-gz
-aa
-ZC
-jl
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+ZZ
+dk
+zw
+zw
+bU
+zw
+lr
+hi
+hi
+hi
+hi
+hi
+Oo
+bO
+zw
+lq
+LS
+pF
+rM
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (15,1,1) = {"
-eW
-eW
-eW
-Nj
-uV
-gz
-gz
-gz
-cJ
-iP
-eW
-eW
-eW
-eW
-eW
-Uo
-gz
-US
-Ji
-ZC
-ZC
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+ZZ
+dk
+zw
+zw
+zw
+bO
+WC
+hi
+hi
+hi
+hi
+hi
+Oo
+zw
+hT
+rM
+LS
+LS
+rM
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (16,1,1) = {"
-eW
-eW
-eW
-Nj
-uV
-gz
-US
-cJ
-gz
-iP
-Nj
-eW
-eW
-Nj
-Nj
-Sb
-gz
-cJ
-Ji
-YM
-ZC
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+ZZ
+dk
+zw
+hT
+bO
+zw
+WC
+ZZ
+hi
+hi
+ZZ
+ZZ
+nn
+zw
+bO
+rM
+FM
+LS
+rM
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (17,1,1) = {"
-eW
-eW
-eW
-Uo
-uV
-gz
-gz
-gz
-pi
-Uo
-LY
-eW
-eW
-eW
-Uo
-Uo
-gz
-Yx
-Ji
-Ji
-Fj
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+Oo
+dk
+UQ
+zw
+zw
+bI
+Oo
+Kq
+hi
+hi
+hi
+Oo
+Oo
+zw
+bU
+rM
+rM
+pv
+rM
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (18,1,1) = {"
-eW
-eW
-eW
-eW
-Ji
-Ji
-zw
-jh
-sn
-Ea
-uV
-uV
-uV
-uV
-uV
-pi
-jb
-xr
-Ji
-mW
-lt
-Ji
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+rM
+rM
+KY
+QP
+YA
+YQ
+dk
+dk
+dk
+dk
+dk
+bI
+ob
+gx
+rM
+sr
+rJ
+rM
+rM
+hi
+hi
+hi
+hi
+hi
 "}
 (19,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-Ji
-FV
-zX
-uS
-Dg
-Ji
-cI
-Ji
-fE
-Ji
-Ji
-Ji
-Ji
-Ji
-wa
-Eb
-lB
-Ji
-Ji
-Ji
-Ji
-eW
-eW
-eW
+hi
+hi
+hi
+rM
+Lr
+Lm
+yt
+kd
+rM
+rZ
+rM
+ia
+rM
+rM
+rM
+rM
+rM
+Jr
+iB
+yb
+rM
+rM
+rM
+rM
+hi
+hi
 "}
 (20,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-Ji
-OX
-tG
-rd
-bN
-Ji
-uv
-rh
-Iw
-Ji
-UM
-dW
-pW
-ox
-PL
-PL
-PL
-Ji
-Qc
-TL
-Ji
-eW
-eW
-eW
+hi
+hi
+hi
+rM
+ME
+eU
+na
+jq
+rM
+qS
+Fo
+zA
+rM
+UX
+JT
+ZP
+hy
+VO
+VO
+VO
+rM
+YO
+XC
+rM
+hi
+hi
 "}
 (21,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-Ji
-kU
-kU
-kU
-kU
-Ji
-uv
-jY
-Iw
-yN
-pW
-pW
-Bs
-Ji
-SY
-yL
-PL
-Do
-aK
-aK
-aa
-Mj
-eW
-eW
+hi
+hi
+hi
+rM
+uP
+uP
+uP
+uP
+rM
+qS
+hV
+zA
+ag
+ZP
+ZP
+vl
+rM
+rA
+hp
+VO
+KI
+Hc
+Hc
+lq
+vW
+hi
 "}
 (22,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-uv
-DC
-Iw
-Ji
-Ey
-pW
-Bs
-Ji
-xZ
-lu
-dM
-Ji
-oY
-TW
-Ji
-Mj
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+rM
+qS
+Aa
+zA
+rM
+fP
+ZP
+vl
+rM
+nJ
+HC
+SD
+rM
+qf
+ur
+rM
+vW
+hi
 "}
 (23,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-cI
-Ji
-fE
-Ji
-kU
-wM
-kU
-Ji
-Ji
-Ji
-Ji
-Ji
-Ji
-Ji
-Ji
-Nj
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+rM
+rZ
+rM
+ia
+rM
+uP
+CV
+uP
+rM
+rM
+rM
+rM
+rM
+rM
+rM
+rM
+ZZ
+hi
 "}
 (24,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-Mj
-Mj
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+vW
+vW
+hi
 "}
 (25,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-Nj
-Nj
-Nj
-eW
-Nj
-Nj
-Mj
-Mj
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+rM
+ZZ
+ZZ
+ZZ
+hi
+ZZ
+ZZ
+vW
+vW
+hi
 "}
 (26,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ij
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Mj
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+Ek
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+vW
+hi
 "}
 (27,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (28,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-Ji
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+rM
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
 (29,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-"}
-(30,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-"}
-(31,1,1) = {"
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
-eW
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
+hi
 "}
