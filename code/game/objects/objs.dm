@@ -397,6 +397,6 @@
 	AddElement(/datum/element/frozen)
 	return TRUE
 
-///Assumes already frozen
+///unfreezes this obj if its frozen
 /obj/proc/unfreeze()
 	SEND_SIGNAL(src, COMSIG_OBJ_UNFREEZE)
