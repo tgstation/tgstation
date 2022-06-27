@@ -25263,7 +25263,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
-/obj/structure/musician/piano,
+/obj/effect/spawner/random/structure/musician/piano/random_piano,
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/carpet,
 /area/station/service/theater)
@@ -67974,9 +67974,7 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "vmr" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "vms" = (
