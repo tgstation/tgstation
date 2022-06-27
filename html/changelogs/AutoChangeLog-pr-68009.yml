@@ -1,4 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes: 
-  - bugfix: "People who gain or lose the monkified mutation no longer have invisible equipped items."

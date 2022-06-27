@@ -12453,7 +12453,6 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -15876,7 +15875,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/musician/piano,
+/obj/effect/spawner/random/structure/musician/piano/random_piano,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/service/theater/abandoned)
@@ -48834,7 +48833,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/musician/piano,
+/obj/effect/spawner/random/structure/musician/piano/random_piano,
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},

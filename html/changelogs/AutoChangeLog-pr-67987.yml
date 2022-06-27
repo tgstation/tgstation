@@ -1,6 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes: 
-  - qol: "UI: Added option to enter fullscreen mode to OOC verbs"
-  - qol: "UI: Added option to hide the status/tooltip bar to OOC verbs"
-  - qol: "UI: Made the chat input change colors according to the selected theme"

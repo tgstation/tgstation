@@ -893,3 +893,53 @@
   san7890:
   - spellcheck: The exclamation point in the "Server Hop" verb has been deleted, which
       now means you only need to type it in as 'server-hop'. Much nicer.
+2022-06-27:
+  13spacemen:
+  - rscadd: Added the current map to the hub entry
+  - qol: Shutters on Metastation have directions now
+  CoffeeDragon16:
+  - bugfix: regenerative core implants will automatically revive you again
+  Hamcha:
+  - bugfix: The decryption key to the Nanotrasen message network has been delivered
+      to the Syndicate Listening Post
+  IndieanaJones:
+  - bugfix: Gorillas now change speed when holding something vs. not holding something,
+      as was always intended
+  - balance: Made gorillas use their old speed value when they're holding something,
+      and made them slightly faster when they're not holding something
+  - bugfix: People who gain or lose the monkified mutation no longer have invisible
+      equipped items.
+  MTandi:
+  - qol: 'UI: Added option to enter fullscreen mode to OOC verbs'
+  - qol: 'UI: Added option to hide the status/tooltip bar to OOC verbs'
+  - qol: 'UI: Made the chat input change colors according to the selected theme'
+  Mothblocks:
+  - balance: The amount of midround threat required for a midround roll has increased
+      slightly from 6.5 to 7.
+  - balance: Lowered the maximum threat level on sub-20 pop.
+  - balance: Lowered the number of roundstart traitors.
+  - server: Fixed "low_pop_minimum_threat" being incorrectly named. It has been changed
+      to "low_pop_maximum_threat".
+  Original code by SabreML:
+  - bugfix: Items in the suit storage slot won't turn invisible anymore
+  Paxilmaniac:
+  - code_imp: times for food items are now in X SECONDS format, functionality is still
+      the exact same
+  - qol: mining and labor shuttle home docks are no longer varedits of /stationary,
+      and are now their own subtype
+  Pickle-Coding:
+  - bugfix: Fix scrubbers not being able to be deconstructed when connected pipe disconnects.
+  RandomGamer123:
+  - bugfix: Fixes nuke op reinforcements having no HUD icon when seen by other nukeops,
+      nor being able to see the HUD icons of other nuke ops
+  - code_imp: Fixed a runtime if update_sight is called on a mob whose client has
+      no eye
+  private-tristan:
+  - balance: the meteor with engines strapped to it now has air in its rocks
+  san7890:
+  - bugfix: Nanotrasen hired a contracting company to completely re-do the Metastation
+      brig, but the commanding official was chumped- and was left with was a few decalling
+      changes and some re-piping. How ultimately odd.
+  - qol: Nanotrasen has used a new method of installing signs to their walls. If you
+      see any floating signs, or signs that appear to be positioned in incorrect locations,
+      please contact your nearest reality manager.
