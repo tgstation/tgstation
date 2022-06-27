@@ -17,7 +17,7 @@ export const AtmosAlertConsole = (props, context) => {
         <Section title="Alarms">
           <ul>
             {priority.length === 0 && (
-              <li className="color-good">No Priority </li>
+              <li className="color-good">No Priority Alerts</li>
             )}
             {priority.map((alert) => (
               <li key={alert}>
