@@ -65,7 +65,7 @@
 		qdel(GetComponent(/datum/component/geiger_sound))
 
 	update_appearance(UPDATE_ICON)
-	to_chat(user, span_notice("[icon2html(src, user)] You switch [scanning ? "on" : "off"] [src]."))
+	balloon_alert(user, "switch [scanning ? "on" : "off"]")
 
 /obj/item/geiger_counter/afterattack(atom/target, mob/living/user, params)
 	. = ..()
