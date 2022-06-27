@@ -148,3 +148,14 @@
 #define HYPERTORUS_FLAG_BIG_SPREAD (1<<7)
 #define HYPERTORUS_FLAG_MASSIVE_SPREAD (1<<8)
 #define HYPERTORUS_FLAG_CRITICAL_MELTDOWN (1<<9)
+
+///High power damage
+#define HYPERTORUS_FLAG_HIGH_POWER_DAMAGE (1<<0)
+///High fuel mix mole
+#define HYPERTORUS_FLAG_HIGH_FUEL_MIX_MOLE (1<<1)
+///iron content damage
+#define HYPERTORUS_FLAG_IRON_CONTENT_DAMAGE (1<<2)
+///Iron content increasing
+#define HYPERTORUS_FLAG_IRON_CONTENT_INCREASE (1<<3)
+///Emped hypertorus
+#define HYPERTORUS_FLAG_EMPED (1<<4)

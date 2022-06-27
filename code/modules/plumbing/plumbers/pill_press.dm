@@ -93,7 +93,7 @@
 			pill_amount++
 			if(pill_amount >= max_floor_products) //too much so just stop
 				break
-		if(pill_amount < max_floor_products)
+		if(pill_amount < max_floor_products && anchored)
 			var/atom/movable/AM = stored_products[1] //AM because forceMove is all we need
 			stored_products -= AM
 			AM.forceMove(drop_location())
@@ -136,7 +136,11 @@
 		if("change_current_volume")
 			current_volume = clamp(text2num(params["volume"]), min_volume, max_volume)
 		if("change_product_name")
-			product_name = html_encode(params["name"])
+			var/formatted_name = html_encode(params["name"])
+			if (length(formatted_name) > MAX_NAME_LEN)
+				product_name = copytext(formatted_name, 1, MAX_NAME_LEN+1)
+			else
+				product_name = formatted_name
 		if("change_product")
 			product = params["product"]
 			if (product == "pill")

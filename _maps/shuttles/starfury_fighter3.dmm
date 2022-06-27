@@ -5,10 +5,10 @@
 "e" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "SBC_fighter3_bolt";
-	name = "Syndicate Fighter Airlock";
-	req_access_txt = "150"
+	name = "Syndicate Fighter Airlock"
 	},
 /obj/docking_port/mobile/syndicate_fighter/fighter_three,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/shuttle/sbc_fighter3)
 "f" = (
@@ -53,7 +53,7 @@
 	name = "Ship Turret Control";
 	pixel_x = -32;
 	pixel_y = 26;
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;

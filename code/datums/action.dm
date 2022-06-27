@@ -436,6 +436,9 @@
 /datum/action/item_action/toggle_helmet
 	name = "Toggle Helmet"
 
+/datum/action/item_action/toggle_seclight
+	name = "Toggle Seclight"
+
 /datum/action/item_action/toggle_jetpack
 	name = "Toggle Jetpack"
 
@@ -460,28 +463,6 @@
 /datum/action/item_action/explosive_implant
 	check_flags = NONE
 	name = "Activate Explosive Implant"
-
-/datum/action/item_action/toggle_research_scanner
-	name = "Toggle Research Scanner"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "scan_mode"
-	var/active = FALSE
-
-/datum/action/item_action/toggle_research_scanner/Trigger(trigger_flags)
-	if(IsAvailable())
-		active = !active
-		if(active)
-			owner.research_scanner++
-		else
-			owner.research_scanner--
-		to_chat(owner, span_notice("[target] research scanner has been [active ? "activated" : "deactivated"]."))
-		return 1
-
-/datum/action/item_action/toggle_research_scanner/Remove(mob/M)
-	if(owner && active)
-		owner.research_scanner--
-		active = FALSE
-	..()
 
 /datum/action/item_action/instrument
 	name = "Use Instrument"
@@ -574,8 +555,8 @@
 		return FALSE
 	if(istype(owner.loc, /obj/structure/closet/cardboard/agent))
 		var/obj/structure/closet/cardboard/agent/box = owner.loc
-		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-		box.open()
+		if(box.open())
+			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 		return
 	//Box closing from here on out.
 	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.

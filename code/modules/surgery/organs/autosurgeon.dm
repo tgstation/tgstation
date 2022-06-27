@@ -76,7 +76,10 @@
 
 /obj/item/autosurgeon/organ/attack(mob/living/target, mob/living/user, params)
 	add_fingerprint(user)
-	user.balloon_alert_to_viewers("Prepares to use [src] on [target].", "You begin to prepare to use [src] on [target].")
+	user.visible_message(
+		"[user] prepares to use [src] on [target].",
+		"You begin to prepare to use [src] on [target]."
+	)
 	if(!do_after(user, (8 SECONDS * surgery_speed), target))
 		return
 	user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
@@ -103,21 +106,21 @@
 /obj/item/autosurgeon/organ/cmo
 	desc = "A single use autosurgeon that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
-	starting_organ = /obj/item/organ/cyberimp/eyes/hud/medical
+	starting_organ = /obj/item/organ/internal/cyberimp/eyes/hud/medical
 
 /obj/item/autosurgeon/organ/syndicate/laser_arm
 	desc = "A single use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
-	starting_organ = /obj/item/organ/cyberimp/arm/gun/laser
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/gun/laser
 
 /obj/item/autosurgeon/organ/syndicate/thermal_eyes
-	starting_organ = /obj/item/organ/eyes/robotic/thermals
+	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals
 
 /obj/item/autosurgeon/organ/syndicate/xray_eyes
-	starting_organ = /obj/item/organ/eyes/robotic/xray
+	starting_organ = /obj/item/organ/internal/eyes/robotic/xray
 
 /obj/item/autosurgeon/organ/syndicate/anti_stun
-	starting_organ = /obj/item/organ/cyberimp/brain/anti_stun
+	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_stun
 
 /obj/item/autosurgeon/organ/syndicate/reviver
-	starting_organ = /obj/item/organ/cyberimp/chest/reviver
+	starting_organ = /obj/item/organ/internal/cyberimp/chest/reviver

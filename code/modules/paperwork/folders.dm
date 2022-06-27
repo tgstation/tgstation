@@ -29,9 +29,8 @@
 	if(length(contents))
 		. += span_notice("Right-click to remove [contents[1]].")
 
-/obj/item/folder/proc/rename(mob/user)
-	if(!user.is_literate())
-		to_chat(user, span_notice("You scribble illegibly on the cover of [src]!"))
+/obj/item/folder/proc/rename(mob/user, obj/item/writing_instrument)
+	if(!user.can_write(writing_instrument))
 		return
 
 	var/inputvalue = tgui_input_text(user, "What would you like to label the folder?", "Folder Labelling", max_length = MAX_NAME_LEN)
@@ -70,7 +69,7 @@
 		to_chat(user, span_notice("You put [weapon] into [src]."))
 		update_appearance()
 	else if(istype(weapon, /obj/item/pen))
-		rename(user)
+		rename(user, weapon)
 
 /obj/item/folder/attack_self(mob/user)
 	add_fingerprint(usr)

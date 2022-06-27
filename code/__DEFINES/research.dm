@@ -7,14 +7,6 @@
 #define RESEARCH_FABRICATOR_SCREEN_SEARCH 4
 #define RESEARCH_FABRICATOR_SCREEN_CATEGORYVIEW 5
 
-//! Department flags for techwebs. Defines which department can print what from each protolathe so Cargo can't print guns, etc.
-#define DEPARTMENTAL_FLAG_SECURITY (1<<0)
-#define DEPARTMENTAL_FLAG_MEDICAL (1<<1)
-#define DEPARTMENTAL_FLAG_CARGO (1<<2)
-#define DEPARTMENTAL_FLAG_SCIENCE (1<<3)
-#define DEPARTMENTAL_FLAG_ENGINEERING (1<<4)
-#define DEPARTMENTAL_FLAG_SERVICE (1<<5)
-
 /// For instances where we don't want a design showing up due to it being for debug/sanity purposes
 #define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
 
@@ -53,7 +45,9 @@
 #define CELL_LINE_TABLE_COW "cell_line_cow_table"
 #define CELL_LINE_TABLE_MOONICORN "cell_line_moonicorn_table"
 #define CELL_LINE_TABLE_GELATINOUS "cell_line_gelatinous_table"
+#define CELL_LINE_TABLE_GLOCKROACH "cell_line_glockroach_table"
 #define CELL_LINE_TABLE_GRAPE "cell_line_grape_table"
+#define CELL_LINE_TABLE_HAUBEROACH "cell_line_hauberoach_table"
 #define CELL_LINE_TABLE_MEGACARP "cell_line_megacarp_table"
 #define CELL_LINE_TABLE_MOUSE "cell_line_mouse_table"
 #define CELL_LINE_TABLE_PINE "cell_line_pine_table"

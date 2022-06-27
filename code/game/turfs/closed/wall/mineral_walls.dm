@@ -6,8 +6,6 @@
 	canSmoothWith = null
 	rcd_memory = null
 	material_flags = MATERIAL_EFFECTS
-	var/last_event = 0
-	var/active = null
 
 /turf/closed/wall/mineral/gold
 	name = "gold wall"
@@ -88,35 +86,45 @@
 	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
 	custom_materials = list(/datum/material/uranium = 4000)
 
+	/// Mutex to prevent infinite recursion when propagating radiation pulses
+	var/active = null
+
+	/// The last time a radiation pulse was performed
+	var/last_event = 0
+
+/turf/closed/wall/mineral/uranium/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, .proc/radiate)
+
 /turf/closed/wall/mineral/uranium/proc/radiate()
-	if(!active)
-		if(world.time > last_event+15)
-			active = 1
-			radiation_pulse(
-				src,
-				max_range = 3,
-				threshold = RAD_LIGHT_INSULATION,
-				chance = URANIUM_IRRADIATION_CHANCE,
-				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
-			)
-			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
-				T.radiate()
-			last_event = world.time
-			active = null
-			return
-	return
+	SIGNAL_HANDLER
+	if(active)
+		return
+	if(world.time <= last_event + 1.5 SECONDS)
+		return
+	active = TRUE
+	radiation_pulse(
+		src,
+		max_range = 3,
+		threshold = RAD_LIGHT_INSULATION,
+		chance = URANIUM_IRRADIATION_CHANCE,
+		minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+	)
+	propagate_radiation_pulse()
+	last_event = world.time
+	active = FALSE
 
 /turf/closed/wall/mineral/uranium/attack_hand(mob/user, list/modifiers)
 	radiate()
-	. = ..()
+	return ..()
 
 /turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
-	..()
+	return ..()
 
 /turf/closed/wall/mineral/uranium/Bumped(atom/movable/AM)
 	radiate()
-	..()
+	return ..()
 
 /turf/closed/wall/mineral/uranium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
@@ -151,10 +159,10 @@
 
 /turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
 	if(W.get_sharpness() && W.force)
-		var/duration = (48/W.force) * 2 //In seconds, for now.
+		var/duration = ((4.8 SECONDS)/W.force) * 2 //In seconds, for now.
 		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/fireaxe))
 			duration /= 4 //Much better with hatchets and axes.
-		if(do_after(user, duration*10, target=src)) //Into deciseconds.
+		if(do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
 			dismantle_wall(FALSE,FALSE)
 			return
 	return ..()

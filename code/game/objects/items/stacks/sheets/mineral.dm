@@ -281,7 +281,6 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/titanium
 	material_type = /datum/material/titanium
 	walltype = /turf/closed/wall/mineral/titanium
-	tram_wall_type = /obj/structure/tramwall/titanium
 
 GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20), \
@@ -315,7 +314,6 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/plastitanium
 	material_flags = NONE
 	walltype = /turf/closed/wall/mineral/plastitanium
-	tram_wall_type = /obj/structure/tramwall/plastitanium
 
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
@@ -483,6 +481,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	point_value = 100
 	mats_per_unit = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT)
+	material_type = /datum/material/metalhydrogen
 	merge_type = /obj/item/stack/sheet/mineral/metal_hydrogen
 
 /obj/item/stack/sheet/mineral/metal_hydrogen/get_main_recipes()

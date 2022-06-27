@@ -240,7 +240,7 @@
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "medkit_advanced"
 	inhand_icon_state = "medkit-rad"
-	custom_premium_price = PAYCHECK_HARD * 6
+	custom_premium_price = PAYCHECK_COMMAND * 6
 	damagetype_healed = "all"
 
 /obj/item/storage/medkit/advanced/PopulateContents()
@@ -369,7 +369,7 @@
 
 /obj/item/storage/pill_bottle/probital
 	name = "bottle of probital pills"
-	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting, may cause fatigue'."
+	desc = "Contains pills used to treat brute damage. The tag in the bottle states 'Eat before ingesting, may cause fatigue'."
 
 /obj/item/storage/pill_bottle/probital/PopulateContents()
 	for(var/i in 1 to 4)
@@ -377,7 +377,7 @@
 
 /obj/item/storage/pill_bottle/iron
 	name = "bottle of iron pills"
-	desc = "Contains pills used to reduce blood loss slowly.The tag in the bottle states 'Only take one each five minutes'."
+	desc = "Contains pills used to reduce blood loss slowly. The tag in the bottle states 'Only take one each five minutes'."
 
 /obj/item/storage/pill_bottle/iron/PopulateContents()
 	for(var/i in 1 to 4)
@@ -524,7 +524,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_premium_price = PAYCHECK_MEDIUM * 4
+	custom_premium_price = PAYCHECK_CREW * 4
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
@@ -577,30 +577,26 @@
 ///freezes the organ and loops bodyparts like heads
 /obj/item/storage/organbox/proc/freeze(datum/source, obj/item/I)
 	SIGNAL_HANDLER
-	if(isorgan(I))
-		var/obj/item/organ/organ = I
-		organ.organ_flags |= ORGAN_FROZEN
+	if(isinternalorgan(I))
+		var/obj/item/organ/internal/int_organ = I
+		int_organ.organ_flags |= ORGAN_FROZEN
 		return
 	if(istype(I, /obj/item/bodypart))
 		var/obj/item/bodypart/B = I
-		for(var/O in B.contents)
-			if(isorgan(O))
-				var/obj/item/organ/organ = O
-				organ.organ_flags |= ORGAN_FROZEN
+		for(var/obj/item/organ/internal/int_organ in B.contents)
+			int_organ.organ_flags |= ORGAN_FROZEN
 
 ///unfreezes the organ and loops bodyparts like heads
 /obj/item/storage/organbox/proc/unfreeze(datum/source, obj/item/I)
 	SIGNAL_HANDLER
-	if(isorgan(I))
-		var/obj/item/organ/organ = I
-		organ.organ_flags  &= ~ORGAN_FROZEN
+	if(isinternalorgan(I))
+		var/obj/item/organ/internal/int_organ = I
+		int_organ.organ_flags &= ~ORGAN_FROZEN
 		return
 	if(istype(I, /obj/item/bodypart))
 		var/obj/item/bodypart/B = I
-		for(var/O in B.contents)
-			if(isorgan(O))
-				var/obj/item/organ/organ = O
-				organ.organ_flags  &= ~ORGAN_FROZEN
+		for(var/obj/item/organ/internal/int_organ in B.contents)
+			int_organ.organ_flags &= ~ORGAN_FROZEN
 
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())

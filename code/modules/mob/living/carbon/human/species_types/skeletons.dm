@@ -9,27 +9,28 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
-		TRAIT_NOMETABOLISM,
-		TRAIT_TOXIMMUNE,
-		TRAIT_RESISTHEAT,
+		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_EASYDISMEMBER,
+		TRAIT_FAKEDEATH,
+		TRAIT_GENELESS,
+		TRAIT_LIMBATTACHMENT,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
+		TRAIT_NOCLONELOSS,
+		TRAIT_NOHUNGER,
+		TRAIT_NOMETABOLISM,
+		TRAIT_RADIMMUNE,
+		TRAIT_PIERCEIMMUNE,
 		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NOHUNGER,
-		TRAIT_EASYDISMEMBER,
-		TRAIT_LIMBATTACHMENT,
-		TRAIT_FAKEDEATH,
+		TRAIT_TOXIMMUNE,
 		TRAIT_XENO_IMMUNE,
-		TRAIT_NOCLONELOSS,
-		TRAIT_CAN_USE_FLIGHT_POTION,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutanttongue = /obj/item/organ/tongue/bone
-	mutantstomach = /obj/item/organ/stomach/bone
+	mutanttongue = /obj/item/organ/internal/tongue/bone
+	mutantstomach = /obj/item/organ/internal/stomach/bone
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW

@@ -16,7 +16,7 @@
 
 /obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
 	if(last_nightshift_switch > world.time - 100) //~10 seconds between each toggle to prevent spamming
-		to_chat(usr, span_warning("[src]'s night lighting circuit breaker is still cycling!"))
+		balloon_alert(user, "night breaker is cycling!")
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(!nightshift_lights)
@@ -110,7 +110,7 @@
 		terminal = null
 
 /obj/machinery/power/apc/proc/energy_fail(duration)
-	for(var/obj/machinery/failing_machine as anything in area.contents)
+	for(var/obj/machinery/failing_machine in area.contents)
 		if(failing_machine.critical_machine)
 			return
 
@@ -123,7 +123,7 @@
 /obj/machinery/power/apc/proc/set_nightshift(on)
 	set waitfor = FALSE
 	nightshift_lights = on
-	for(var/obj/machinery/light/night_light as anything in area)
+	for(var/obj/machinery/light/night_light in area)
 		if(night_light.nightshift_allowed)
 			night_light.nightshift_enabled = nightshift_lights
 			night_light.update(FALSE)

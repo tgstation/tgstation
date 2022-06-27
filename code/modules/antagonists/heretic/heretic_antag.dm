@@ -64,6 +64,7 @@
 		PATH_FLESH = "red",
 		PATH_ASH = "white",
 		PATH_VOID = "blue",
+		PATH_BLADE = "label", // my favorite color is label
 	)
 
 	data["charges"] = knowledge_points

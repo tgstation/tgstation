@@ -32,7 +32,8 @@
 		M.laws_sanity_check()
 		if(M.stat != DEAD && !M.incapacitated())
 			if(prob(replaceLawsetChance))
-				M.laws.pick_weighted_lawset()
+				var/datum/ai_laws/ion_lawset = pick_weighted_lawset()
+				M.laws.inherent = ion_lawset.inherent
 
 			if(prob(removeRandomLawChance))
 				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
@@ -40,14 +41,14 @@
 			var/message = ionMessage || generate_ion_law()
 			if(message)
 				if(prob(removeDontImproveChance))
-					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION), LAW_ION)
 				else
 					M.add_ion_law(message)
 
 			if(prob(shuffleLawsChance))
 				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
 
-			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
+			log_silicon("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
 			M.post_lawchange()
 
 	if(botEmagChance)

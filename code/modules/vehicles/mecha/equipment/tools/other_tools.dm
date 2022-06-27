@@ -434,7 +434,7 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas
 	name = "RCS thruster package"
 	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments, by expelling gas from the internal life support tank."
-	effect_type = /obj/effect/particle_effect/smoke
+	effect_type = /obj/effect/particle_effect/fluid/smoke
 	var/move_cost = 20 //moles per step
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
@@ -468,3 +468,46 @@
 		generate_effect(movement_dir)
 		return TRUE
 	return FALSE
+
+///////////////////////////////////// CONCEALED WEAPON BAY ////////////////////////////////////////
+
+/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay
+	name = "concealed weapon bay"
+	desc = "A compartment that allows a non-combat mecha to equip one weapon while hiding the weapon from plain sight."
+	icon_state = "mecha_weapon_bay"
+
+/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
+	if(istype(M, /obj/vehicle/sealed/mecha/combat))
+		to_chat(user, span_warning("[M] does not have the correct bolt configuration!"))
+		return
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/special_attaching_interaction(attach_right = FALSE, obj/vehicle/sealed/mecha/mech, mob/user, checkonly = FALSE)
+	if(checkonly)
+		return TRUE
+	var/obj/item/mecha_parts/mecha_equipment/existing_equip
+	if(attach_right)
+		existing_equip = mech.equip_by_category[MECHA_R_ARM]
+	else
+		existing_equip = mech.equip_by_category[MECHA_L_ARM]
+	if(existing_equip)
+		name = existing_equip.name
+		icon = existing_equip.icon
+		icon_state = existing_equip.icon_state
+		existing_equip.detach()
+		existing_equip.Destroy()
+		user.visible_message(span_notice("[user] hollows out [src] and puts something in."), span_notice("You attach the concealed weapon bay to [mech] within the shell of [src]."))
+	else
+		user.visible_message(span_notice("[user] attaches [src] to [mech]."), span_notice("You attach [src] to [mech]."))
+	attach(mech, attach_right)
+	mech.mech_type |= EXOSUIT_MODULE_CONCEALED_WEP_BAY
+	return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/detach(atom/moveto)
+	var/obj/vehicle/sealed/mecha/mech = chassis
+	. = ..()
+	name = initial(name)
+	icon = initial(icon)
+	icon_state = initial(icon_state)
+	if(!locate(/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay) in mech.contents) //if no others exist
+		mech.mech_type &= ~EXOSUIT_MODULE_CONCEALED_WEP_BAY

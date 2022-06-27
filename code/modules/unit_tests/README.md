@@ -51,11 +51,17 @@ Unit tests should also be just that--testing *units* of code. For example, inste
 
 You can find more information about all of these from their respective doc comments, but for a brief overview:
 
-`/datum/unit_test` - The base for all tests to be ran. Subtypes must override `Run()`. `New()` and `Destroy()` can be used for setup and teardown. To fail, use `Fail(reason)`.
+`/datum/unit_test` - The base for all tests to be ran. Subtypes must override `Run()`. `New()` and `Destroy()` can be used for setup and teardown. To fail, use `TEST_FAIL(reason)`.
 
 `/datum/unit_test/proc/allocate(type, ...)` - Allocates an instance of the provided type with the given arguments. Is automatically destroyed when the test is over. Commonly seen in the form of `var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)`.
 
+`TEST_FAIL(reason)` - Marks a failure at this location, but does not stop the test.
+
 `TEST_ASSERT(assertion, reason)` - Stops the unit test and fails if the assertion is not met. For example: `TEST_ASSERT(powered(), "Machine is not powered")`.
+
+`TEST_ASSERT_NOTNULL(a, message)` - Same as `TEST_ASSERT`, but checks if `!isnull(a)`. For example: `TEST_ASSERT_NOTNULL(myatom, "My atom was never set!")`.
+
+`TEST_ASSERT_NULL(a, message)` - Same as `TEST_ASSERT`, but checks if `isnull(a)`. If not, gives a helpful message showing what `a` was. For example: `TEST_ASSERT_NULL(delme, "Delme was never cleaned up!")`.
 
 `TEST_ASSERT_EQUAL(a, b, message)` - Same as `TEST_ASSERT`, but checks if `a == b`. If not, gives a helpful message showing what both `a` and `b` were. For example: `TEST_ASSERT_EQUAL(2 + 2, 4, "The universe is falling apart before our eyes!")`.
 

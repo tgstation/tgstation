@@ -63,6 +63,8 @@
 	var/restricted = FALSE
 	/// Can this item be deconstructed to unlock certain techweb research nodes?
 	var/illegal_tech = TRUE
+	// String to be shown instead of the price, e.g for the Random item.
+	var/cost_override_string = ""
 
 /datum/uplink_category
 	/// Name of the category

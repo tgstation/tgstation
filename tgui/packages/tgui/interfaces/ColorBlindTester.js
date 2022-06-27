@@ -6,10 +6,7 @@ export const ColorBlindTester = (props, context) => {
   const { act, data } = useBackend(context);
   const { details } = data;
   return (
-    <Window
-      title="Color Blindness Testing"
-      width={600}
-      height={515}>
+    <Window title="Color Blindness Testing" width={600} height={515}>
       <Window.Content>
         <NoticeBox warning>
           <Box>
@@ -17,10 +14,10 @@ export const ColorBlindTester = (props, context) => {
             matrixes.
           </Box>
           <Box>
-            There is NO GOOD WAY to do proper color blind simulation in
-            BYOND, because we have no way to extract the gamma of a pixel
-            without iterating all pixels on the screen, which we need to do to
-            properly correct for the human eye.
+            There is NO GOOD WAY to do proper color blind simulation in BYOND,
+            because we have no way to extract the gamma of a pixel without
+            iterating all pixels on the screen, which we need to do to properly
+            correct for the human eye.
           </Box>
           <Box>
             Because of this, this simulation is very imperfect. You will notice
@@ -55,14 +52,17 @@ const ColorBlindCategory = (props, context) => {
       <Section
         key={category}
         title={category}
-        buttons={(
+        buttons={
           <Button
             icon="eye"
             content="Select"
-            onClick={() => act("set_matrix", {
-              name: category,
-            })} />
-        )}>
+            onClick={() =>
+              act('set_matrix', {
+                name: category,
+              })
+            }
+          />
+        }>
         {details[category]}
       </Section>
     );
@@ -71,14 +71,14 @@ const ColorBlindCategory = (props, context) => {
     <Section
       key={category}
       title={category}
-      buttons={(
+      buttons={
         <Button
           icon="times"
           content="Clear"
           color="bad"
-          onClick={() => act("clear_matrix")}
+          onClick={() => act('clear_matrix')}
         />
-      )}>
+      }>
       {details[category]}
     </Section>
   );

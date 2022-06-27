@@ -11,30 +11,47 @@
 	/// determines the drain cost on the antimagic item
 	var/antimagic_charge_cost = 1
 
-/obj/projectile/magic/prehit_pierce(mob/living/target)
+/obj/projectile/magic/prehit_pierce(atom/target)
 	. = ..()
-	if(istype(target) && target.can_block_magic(antimagic_flags, antimagic_charge_cost))
-		visible_message(span_warning("[src] fizzles on contact with [target]!"))
-		return PROJECTILE_DELETE_WITHOUT_HITTING
-			
+
+	if(isliving(target))
+		var/mob/living/victim = target
+		if(victim.can_block_magic(antimagic_flags, antimagic_charge_cost))
+			visible_message(span_warning("[src] fizzles on contact with [victim]!"))
+			return PROJECTILE_DELETE_WITHOUT_HITTING
+
+	if(istype(target, /obj/machinery/hydroponics)) // even plants can block antimagic
+		var/obj/machinery/hydroponics/plant_tray = target
+		if(!plant_tray.myseed)
+			return
+		if(plant_tray.myseed.get_gene(/datum/plant_gene/trait/anti_magic))
+			visible_message(span_warning("[src] fizzles on contact with [plant_tray]!"))
+			return PROJECTILE_DELETE_WITHOUT_HITTING
+
 /obj/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
-/obj/projectile/magic/death/on_hit(mob/living/target)
+/obj/projectile/magic/death/on_hit(atom/target)
 	. = ..()
-	if(!isliving(target))
-		return 
 
-	if(target.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-		if(target.revive(full_heal = TRUE, admin_revive = TRUE))
-			target.grab_ghost(force = TRUE) // even suicides
-			to_chat(target, span_notice("You rise with a start, you're undead!!!"))
-		else if(target.stat != DEAD)
-			to_chat(target, span_notice("You feel great!"))
-		return
+	if(isliving(target))
+		var/mob/living/victim = target
+		if(victim.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
+			if(victim.revive(full_heal = TRUE, admin_revive = TRUE))
+				victim.grab_ghost(force = TRUE) // even suicides
+				to_chat(victim, span_notice("You rise with a start, you're undead!!!"))
+			else if(victim.stat != DEAD)
+				to_chat(victim, span_notice("You feel great!"))
+			return
+		victim.death()
 
-	target.death()
+	if(istype(target, /obj/machinery/hydroponics))
+		var/obj/machinery/hydroponics/plant_tray = target
+		if(!plant_tray.myseed)
+			return
+		plant_tray.set_weedlevel(0) // even the weeds perish
+		plant_tray.plantdies()
 
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -43,20 +60,27 @@
 	damage_type = OXY
 	nodamage = TRUE
 
-/obj/projectile/magic/resurrection/on_hit(mob/living/target)
+/obj/projectile/magic/resurrection/on_hit(atom/target)
 	. = ..()
-	if(!isliving(target))
-		return 
 
-	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-		target.death()
-		return
+	if(isliving(target))
+		var/mob/living/victim = target
 
-	if(target.revive(full_heal = TRUE, admin_revive = TRUE))
-		target.grab_ghost(force = TRUE) // even suicides
-		to_chat(target, span_notice("You rise with a start, you're alive!!!"))
-	else if(target.stat != DEAD)
-		to_chat(target, span_notice("You feel great!"))
+		if(victim.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+			victim.death()
+			return
+
+		if(victim.revive(full_heal = TRUE, admin_revive = TRUE))
+			victim.grab_ghost(force = TRUE) // even suicides
+			to_chat(victim, span_notice("You rise with a start, you're alive!!!"))
+		else if(victim.stat != DEAD)
+			to_chat(victim, span_notice("You feel great!"))
+
+	if(istype(target, /obj/machinery/hydroponics))
+		var/obj/machinery/hydroponics/plant_tray = target
+		if(!plant_tray.myseed)
+			return
+		plant_tray.set_plant_health(plant_tray.myseed.endurance, forced = TRUE)
 
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -77,8 +101,9 @@
 		if(!stuff.anchored && stuff.loc && !isobserver(stuff))
 			if(do_teleport(stuff, stuff, 10, channel = TELEPORT_CHANNEL_MAGIC))
 				teleammount++
-				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+				var/smoke_range = max(round(4 - teleammount), 0)
+				var/datum/effect_system/fluid_spread/smoke/smoke = new
+				smoke.set_up(smoke_range, holder = src, location = stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 				smoke.start()
 
 /obj/projectile/magic/safety
@@ -98,8 +123,8 @@
 
 	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin_turf, destination_turf))
-			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(0, t)
+			var/datum/effect_system/fluid_spread/smoke/smoke = new
+			smoke.set_up(0, holder = src, location = t)
 			smoke.start()
 
 /obj/projectile/magic/door
@@ -138,10 +163,18 @@
 	damage_type = BURN
 	nodamage = TRUE
 
-/obj/projectile/magic/change/on_hit(mob/living/target)
+/obj/projectile/magic/change/on_hit(atom/target)
 	. = ..()
+
 	if(isliving(target))
-		target.wabbajack()
+		var/mob/living/victim = target
+		victim.wabbajack()
+
+	if(istype(target, /obj/machinery/hydroponics))
+		var/obj/machinery/hydroponics/plant_tray = target
+		if(!plant_tray.myseed)
+			return
+		plant_tray.polymorph()
 
 /obj/projectile/magic/animate
 	name = "bolt of animation"
@@ -160,7 +193,7 @@
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
 				var/mob/living/L = P.petrified_mob
-				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
+				var/mob/living/simple_animal/hostile/netherworld/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
 				if(owner)
 					S.faction = list("[REF(owner)]")
@@ -317,7 +350,7 @@
 /obj/projectile/magic/antimagic/on_hit(mob/living/target)
 	. = ..()
 	if(isliving(target))
-		target.apply_status_effect(/datum/status_effect/antimagic)
+		target.apply_status_effect(/datum/status_effect/song/antimagic)
 
 /obj/projectile/magic/fetch
 	name = "bolt of fetching"
@@ -347,7 +380,7 @@
 	if(isliving(target))
 		if(!target.mind)
 			return
-			
+
 		to_chat(target, span_danger("Your body feels drained and there is a burning pain in your chest."))
 		target.maxHealth -= 20
 		target.health = min(target.health, target.maxHealth)
@@ -446,7 +479,7 @@
 	qdel(chain)
 	. = ..()
 
-/obj/projectile/magic/aoe/fireball
+/obj/projectile/magic/fireball
 	name = "bolt of fireball"
 	icon_state = "fireball"
 	damage = 10
@@ -459,12 +492,12 @@
 	var/exp_flash = 3
 	var/exp_fire = 2
 
-/obj/projectile/magic/aoe/fireball/on_hit(mob/living/target)
+/obj/projectile/magic/fireball/on_hit(mob/living/target)
 	. = ..()
 	if(ismob(target))
 		//between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 		target.take_overall_damage(0, 10)
-		
+
 	var/turf/T = get_turf(target)
 	explosion(T, devastation_range = -1, heavy_impact_range = exp_heavy, light_impact_range = exp_light, flame_range = exp_fire, flash_range = exp_flash, adminlog = FALSE, explosion_cause = src)
 

@@ -5,7 +5,7 @@
  */
 /area
 	name = "Space"
-	icon = 'icons/turf/areas.dmi'
+	icon = 'icons/area/areas_misc.dmi'
 	icon_state = "unknown"
 	layer = AREA_LAYER
 	//Keeping this on the default plane, GAME_PLANE, will make area overlays fail to render on FLOOR_PLANE.
@@ -27,6 +27,8 @@
 	var/list/firealarms
 	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
+	///List of all lights in our area
+	var/list/lights = list()
 	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing. Fire alarms and fire locks will set and clear alarms.
 	var/datum/alarm_handler/alarm_manager
 
@@ -266,38 +268,22 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (area_flags & NO_ALERTS)
 		return
 	//Trigger alarm effect
-	set_fire_alarm_effect()
+	set_fire_effect(TRUE)
 	//Lockdown airlocks
 	for(var/obj/machinery/door/door in src)
 		close_and_lock_door(door)
 
-/**
- * Trigger the fire alarm visual affects in an area
- *
- * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
- */
-/area/proc/set_fire_alarm_effect()
-	if(fire)
-		return
-	fire = TRUE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/obj/machinery/light/L in src)
-		L.update()
-	for(var/obj/machinery/firealarm/firepanel in firealarms)
-		firepanel.set_status()
 
 /**
- * unset the fire alarm visual affects in an area
+ * Set the fire alarm visual affects in an area
  *
- * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
+ * Allows interested parties (lights and fire alarms) to react
  */
-/area/proc/unset_fire_alarm_effects()
-	fire = FALSE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/obj/machinery/light/L in src)
-		L.update()
-	for(var/obj/machinery/firealarm/firepanel in firealarms)
-		firepanel.set_status()
+/area/proc/set_fire_effect(new_fire)
+	if(new_fire == fire)
+		return
+	fire = new_fire
+	SEND_SIGNAL(src, COMSIG_AREA_FIRE_CHANGED, fire)
 
 /**
  * Update the icon state of the area
@@ -417,7 +403,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Entered(atom/movable/arrived, area/old_area)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, arrived, old_area)
-	if(!LAZYACCESS(arrived.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE))
+
+	if(!arrived.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
 	for(var/atom/movable/recipient as anything in arrived.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
@@ -433,7 +420,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(L.client?.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		SEND_SOUND(L, sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
 
+/**
+ * Called when an atom exits an area
+ *
+ * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
+ */
+/area/Exited(atom/movable/gone, direction)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
 
+	if(!gone.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
+		return
+	for(var/atom/movable/recipient as anything in gone.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
+		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
 
 ///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
 /area/proc/update_beauty()
@@ -444,20 +442,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		beauty = 0
 		return FALSE //Too big
 	beauty = totalbeauty / areasize
-
-
-/**
- * Called when an atom exits an area
- *
- * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
- */
-/area/Exited(atom/movable/gone, direction)
-	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
-	if(!LAZYACCESS(gone.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE))
-		return
-	for(var/atom/movable/recipient as anything in gone.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
-		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
-
 
 /**
  * Setup an area (with the given name)

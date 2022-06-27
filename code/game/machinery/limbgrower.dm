@@ -214,7 +214,7 @@
 	//i need to create a body part manually using a set icon (otherwise it doesnt appear)
 	var/obj/item/bodypart/limb
 	limb = new buildpath(loc)
-	limb.name = "\improper synthetic [selected_category] [parse_zone(limb.body_zone)]"
+	limb.name = "\improper synthetic [selected_category] [limb.plaintext_zone]"
 	limb.limb_id = selected_category
 	limb.mutation_color = "#62A262"
 	limb.update_icon_dropped()

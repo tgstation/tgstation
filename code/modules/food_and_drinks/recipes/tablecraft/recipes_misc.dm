@@ -162,8 +162,8 @@
 /datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!
 	name = "Living bear/butter hybrid"
 	reqs = list(
-		/obj/item/organ/brain = 1,
-		/obj/item/organ/heart = 1,
+		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/heart = 1,
 		/obj/item/food/butter = 10,
 		/obj/item/food/meat/slab = 5,
 		/datum/reagent/blood = 50,
@@ -178,7 +178,7 @@
 		/obj/item/food/doughslice = 1,
 		/datum/reagent/consumable/cream = 5,
 		/obj/item/food/cheese/wedge = 1,
-		/obj/item/food/meat/rawcrab = 1
+		/obj/item/food/meat/slab/rawcrab = 1
 	)
 	result = /obj/item/food/crab_rangoon
 	subcategory = CAT_MISCFOOD
@@ -207,7 +207,7 @@
 /datum/crafting_recipe/food/pesto
 	name = "Pesto"
 	reqs = list(
-		/obj/item/food/firm_cheese_slice = 1,
+		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/datum/reagent/consumable/salt = 5,
 		/obj/item/food/grown/herbs = 2,
 		/obj/item/food/grown/garlic = 1,
@@ -241,9 +241,9 @@
 /datum/crafting_recipe/food/pierogi
 	name = "Pierogi"
 	reqs = list(
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/grown/onion = 1,
-		/obj/item/food/bun = 1
+		/obj/item/food/grown/onion = 1
 	)
 	result = /obj/item/food/pierogi
 	subcategory = CAT_MISCFOOD

@@ -92,8 +92,8 @@ const TerminalDisplay = (props, context) => {
   const { description, force_fee, name, owner, user, shop_logo } = data;
   const { onClick } = props;
   const is_owner = owner === user?.name;
-  const cannot_pay
-    = is_owner || !user || user?.balance < 1 || user?.balance < force_fee;
+  const cannot_pay =
+    is_owner || !user || user?.balance < 1 || user?.balance < force_fee;
   const decodedName = name.replace(/&#(\d+);/g, (_, dec) => {
     return String.fromCharCode(dec);
   });
@@ -104,7 +104,8 @@ const TerminalDisplay = (props, context) => {
         is_owner && (
           <Button icon="edit" onClick={onClick}>
             Setup
-          </Button>)
+          </Button>
+        )
       }
       fill
       title="Terminal">

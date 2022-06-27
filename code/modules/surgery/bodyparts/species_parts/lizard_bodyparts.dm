@@ -3,7 +3,6 @@
 	limb_id = SPECIES_LIZARD
 	uses_mutcolor = TRUE
 	is_dimorphic = FALSE
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_SNOUTED //This is temporary. Ideally the "snout" external organ adds to this.
 
 /obj/item/bodypart/chest/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
