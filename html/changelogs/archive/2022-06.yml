@@ -827,3 +827,119 @@
   - rscadd: Add magical reactions when hydroponics plants are hit with polymorph,
       death, or resurrection magic. Plants with the anti-magic gene (holymelons) block
       any kind of magical effect on the plant.
+2022-06-25:
+  ArcaneMusic:
+  - bugfix: White canes now examine objects properly and sound correct when hitting
+      things.
+  Ebb, epochayur, SweptWasTaken:
+  - bugfix: Soap and biopsy tools now have suit storage sprites.
+  ElGood:
+  - imageadd: Bluespace RPED has unique inhand sprites
+  Gandalf2k15:
+  - refactor: Security level code has been refactored, please report any abnormalities
+      to the github.
+  Hamcha:
+  - bugfix: the message monitor console can now send admin messages again
+  Kylerace:
+  - balance: 'the tram is now twice as fast, pray it doesnt get any faster (it cant
+      without raising world fps) performance: the tram is now about 10 times cheaper
+      to move for the server'
+  - rscadd: mappers can now create trams with multiple z levels
+  - code_imp: industrial_lift's now have more of their behavior pertaining to "the
+      entire lift" being handled by their lift_master_datum as opposed to belonging
+      to a random platform on the lift.
+  Melbert:
+  - rscdel: Removed a tip suggesting being a drunk scientists boosts research point
+      gain. This was removed at some point, but the tip remained, despite being incorrect.
+  Pepsilawn:
+  - bugfix: Coffins' base sell price adjusted back to 100 credits as previously intended.
+  Rhials:
+  - bugfix: Supermatter cascade final objective no longer generates when the engine
+      has exploded.
+  SmoSmoSmoSmok:
+  - rscadd: You can attach a bell to your wheelchair
+  Son-of-Space:
+  - balance: The AIs freeform and purge law boards have been returned as a static
+      staple on all maps.
+  jlsnow301:
+  - code_imp: Prettier is now recommended as an extension for UI development (or just
+      in general!)
+  - refactor: Many, many interfaces have been hit with the prettier stick so please
+      report any issues. There should be zero noticeable differences in how UIs look
+      or function.
+  private-tristan:
+  - spellcheck: silver golems text no longer states that they are immune to most magic
+  skylord-a52:
+  - refactor: Renamed "delimber" anomaly to "bioscrambler" anomaly
+2022-06-26:
+  Kylerace:
+  - bugfix: NanoTrasen has issued a ghost vaccine for the ghost virus that made ghosts
+      ghost deaf two days ago. now ghosts can hear again (as they are no longer ghost
+      deaf)
+  Profakos:
+  - spellcheck: fixes typos in ash lore
+  RandomGamer123:
+  - qol: Icebox atmos' shutters and airlocks are now transparent for better visibility
+  - bugfix: Fixed freon formation being nearly instant at most temperatures
+  Wallem:
+  - rscadd: Adds the Active Sonar Module, a module that allows the suit-wearer to
+      detect living organisms within a given radius.
+  castawaynont:
+  - bugfix: Allows Icebox's atmospherics APC to be accessible roundstart by moving
+      a console.
+  dragomagol:
+  - bugfix: advanced cyborg hypospray once again refills its chems
+  - qol: tochat for cyborg hypospray injections tells you which chem you injected
+  san7890:
+  - spellcheck: The exclamation point in the "Server Hop" verb has been deleted, which
+      now means you only need to type it in as 'server-hop'. Much nicer.
+2022-06-27:
+  13spacemen:
+  - rscadd: Added the current map to the hub entry
+  - qol: Shutters on Metastation have directions now
+  CoffeeDragon16:
+  - bugfix: regenerative core implants will automatically revive you again
+  Hamcha:
+  - bugfix: The decryption key to the Nanotrasen message network has been delivered
+      to the Syndicate Listening Post
+  IndieanaJones:
+  - bugfix: Gorillas now change speed when holding something vs. not holding something,
+      as was always intended
+  - balance: Made gorillas use their old speed value when they're holding something,
+      and made them slightly faster when they're not holding something
+  - bugfix: People who gain or lose the monkified mutation no longer have invisible
+      equipped items.
+  MTandi:
+  - qol: 'UI: Added option to enter fullscreen mode to OOC verbs'
+  - qol: 'UI: Added option to hide the status/tooltip bar to OOC verbs'
+  - qol: 'UI: Made the chat input change colors according to the selected theme'
+  Mothblocks:
+  - balance: The amount of midround threat required for a midround roll has increased
+      slightly from 6.5 to 7.
+  - balance: Lowered the maximum threat level on sub-20 pop.
+  - balance: Lowered the number of roundstart traitors.
+  - server: Fixed "low_pop_minimum_threat" being incorrectly named. It has been changed
+      to "low_pop_maximum_threat".
+  Original code by SabreML:
+  - bugfix: Items in the suit storage slot won't turn invisible anymore
+  Paxilmaniac:
+  - code_imp: times for food items are now in X SECONDS format, functionality is still
+      the exact same
+  - qol: mining and labor shuttle home docks are no longer varedits of /stationary,
+      and are now their own subtype
+  Pickle-Coding:
+  - bugfix: Fix scrubbers not being able to be deconstructed when connected pipe disconnects.
+  RandomGamer123:
+  - bugfix: Fixes nuke op reinforcements having no HUD icon when seen by other nukeops,
+      nor being able to see the HUD icons of other nuke ops
+  - code_imp: Fixed a runtime if update_sight is called on a mob whose client has
+      no eye
+  private-tristan:
+  - balance: the meteor with engines strapped to it now has air in its rocks
+  san7890:
+  - bugfix: Nanotrasen hired a contracting company to completely re-do the Metastation
+      brig, but the commanding official was chumped- and was left with was a few decalling
+      changes and some re-piping. How ultimately odd.
+  - qol: Nanotrasen has used a new method of installing signs to their walls. If you
+      see any floating signs, or signs that appear to be positioned in incorrect locations,
+      please contact your nearest reality manager.

@@ -65,10 +65,15 @@
 	explosion_block = EXPLOSION_BLOCK_PROC
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = .proc/on_magic_unlock,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/machinery/door/examine(mob/user)
 	. = ..()
 	if(red_alert_access)
-		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
+		if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 			. += span_notice("Due to a security threat, its access requirements have been lifted!")
 		else
 			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
@@ -88,7 +93,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/door/check_access_list(list/access_list)
-	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
+	if(red_alert_access && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 		return TRUE
 	return ..()
 
@@ -483,5 +488,10 @@
 	zap_flags &= ~ZAP_OBJ_DAMAGE
 	. = ..()
 
+/// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Open up when someone casts knock.
+/obj/machinery/door/proc/on_magic_unlock(datum/source, obj/effect/proc_holder/spell/aoe_turf/knock/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, .proc/open)
 
 #undef DOOR_CLOSE_WAIT
