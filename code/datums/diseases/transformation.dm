@@ -243,7 +243,7 @@
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna.species.id != SPECIES_MONKEY && human.dna.species.id != SPECIES_SLIMEPERSON && affected_mob.dna.species.id != SPECIES_STARGAZER && affected_mob.dna.species.id != SPECIES_LUMINESCENT)
+				if(!ismonkey(human) && !isjellyperson(human))
 					human.set_species(/datum/species/jelly/slime)
 
 /datum/disease/transformation/slime/do_disease_transformation(mob/living/affected_mob)
