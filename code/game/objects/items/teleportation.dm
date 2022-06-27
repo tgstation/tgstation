@@ -310,8 +310,8 @@
 		return (BRUTELOSS)
 
 /obj/item/teleporter
-	name = "syndicate teleporter"
-	desc = "A Syndicate reverse-engineered version of the Nanotrasen portable handheld teleporter. It uses bluespace technology to translocate users, but lacks the advanced safety features of its counterpart. Warranty null and void if exposed to an electromagnetic pulse."
+	name = "experimental teleporter"
+	desc = "A reverse-engineered version of the Nanotrasen portable handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndi-tele"
 	throwforce = 5
@@ -320,11 +320,15 @@
 	throw_range = 10
 	flags_1 = CONDUCT_1
 	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	//Uses of the device left
 	var/charges = 4
 	//The maximum number of stored uses
 	var/max_charges = 4
+	///Minimum distance to teleport user forward
 	var/minimum_teleport_distance = 4
+	///Maximum distance to teleport user forward
 	var/maximum_teleport_distance = 8
 	//How far the emergency teleport checks for a safe position
 	var/parallel_teleport_distance = 3
@@ -334,22 +338,26 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/teleporter/Destroy(force)
-	. = ..()
 	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/teleporter/examine(mob/user)
 	. = ..()
 	. += span_notice("[src] has [charges] out of [max_charges] charges left.")
 
 /obj/item/teleporter/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
 	attempt_teleport(user, FALSE)
+	return TRUE
 
 /obj/item/teleporter/process()
 	if(prob(10) && charges < max_charges)
 		charges++
 		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			to_chat(H, span_notice("[src] beeps."))
+			var/mob/living/carbon/human/holder = loc
+			to_chat(holder, span_notice("[src] beeps."))
 		playsound(src, 'sound/machines/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/teleporter/emp_act(severity)
@@ -361,60 +369,70 @@
 			attempt_teleport(user, TRUE)
 		else
 			var/turf/teleport_turf = get_turf(src)
-			for(var/mob/living/M in teleport_turf)
+			for(var/mob/living/mob_on_same_tile in teleport_turf)
 				if(!teleported_something)
 					teleport_turf.visible_message(span_danger("[src] activates sporadically, teleporting everyone around it!"))
 					teleported_something = TRUE
-				attempt_teleport(M, TRUE)
+				attempt_teleport(mob_on_same_tile, TRUE)
 			if(!teleported_something)
 				visible_message(span_danger("[src] blinks out of existence!"))
 				do_sparks(2, 1, src)
 				qdel(src)
 
-/obj/item/teleporter/proc/attempt_teleport(mob/user, EMP_D = FALSE)
-	if(!charges && !EMP_D)
-		to_chat(user, span_warning("[src] is recharging."))
+/**
+ * Tries to teleport the user forward based on random number between min/max teleport distance vars.
+ * If destination is closed turf, try to save user from gibbing via a panic teleport.
+ * Wearing bag of holding or triggering teleport via EMP removes panic teleport, higher chance of being gibbed.
+ * Mobs on same tile as destination get telefragged.
+ **/
+/obj/item/teleporter/proc/attempt_teleport(mob/user, triggered_by_emp = FALSE)
+	if(!charges && !triggered_by_emp)
+		balloon_alert(user, "recharging!")
 		return
 
 	var/turf/current_location = get_turf(user)
 	var/area/current_area = get_area(current_location)
 	if(!current_location || current_area.area_flags & NOTELEPORT || is_away_level(current_location.z) || is_centcom_level(current_location.z) || is_reserved_level(current_location.z) || !isturf(user.loc))//If turf was not found or they're on z level 2 or >7 which does not currently exist. or if user is not located on a turf
-		to_chat(user, span_notice("[src] is malfunctioning."))
+		balloon_alert(user, "malfunctioning!")
 		return
 
 	var/teleport_distance = rand(minimum_teleport_distance, maximum_teleport_distance)
 	var/turf/destination = get_teleport_loc(current_location, user, teleport_distance)
 	var/bagholdingcheck = FALSE
 	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(locate(/obj/item/storage/backpack/holding) in C.get_all_gear())
+		var/mob/living/carbon/teleporting_guy = user
+		if(locate(/obj/item/storage/backpack/holding) in teleporting_guy.get_all_gear())
 			bagholdingcheck = TRUE
 
 	if(isclosedturf(destination))
-		if(!EMP_D && !bagholdingcheck)
+		if(!triggered_by_emp && !bagholdingcheck)
 			panic_teleport(user, destination) //We're in a wall, engage emergency parallel teleport.
 		else
+			if(bagholdingcheck)
+				to_chat(user, span_warning("The bluespace interface on your bag of holding interferes with the teleport!"))
 			get_fragged(user, destination) //EMP teleported you into a wall? Wearing a BoH? You're dead.
 	else
 		telefrag(destination, user)
 		do_teleport(user, destination, channel = TELEPORT_CHANNEL_FREE)
-		if(charges > 0)
-			charges--
+		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
 		playsound(current_location, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 
+/**
+ * Checks parallel_teleport_distance amount of tiles parallel to user's teleport destination.
+ * If no valid closed turfs found, gib user.
+ **/
 /obj/item/teleporter/proc/panic_teleport(mob/user, turf/destination)
 	var/turf/mobloc = get_turf(user)
-	var/turf/emergency_destination = get_teleport_loc(destination, user, distance = 0, closed = TRUE, errorx = parallel_teleport_distance)
+	var/turf/emergency_destination = get_teleport_loc(destination, user, distance = 0, closedturfcheck = TRUE, errorx = parallel_teleport_distance)
 
 	if(emergency_destination)
 		telefrag(emergency_destination, user)
 		do_teleport(user, emergency_destination, channel = TELEPORT_CHANNEL_FREE)
-		if(charges > 0)
-			charges--
+		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		playsound(mobloc, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -423,7 +441,7 @@
 	else //We tried to save. We failed. Death time.
 		get_fragged(user, destination)
 
-
+///Force move victim to destination, explode destination, drop all victim's items, gib them
 /obj/item/teleporter/proc/get_fragged(mob/living/victim, turf/destination)
 	var/turf/mobloc = get_turf(victim)
 	victim.forceMove(destination)
@@ -437,28 +455,27 @@
 	victim.unequip_everything()
 	victim.gib()
 
-/obj/item/teleporter/proc/telefrag(turf/fragging_location, mob/user)
-	for(var/mob/living/M in fragging_location)//Hit everything in the turf
-		M.apply_damage(20, BRUTE)
-		M.Paralyze(6 SECONDS)
-		to_chat(M, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
+///Damage and stun all mobs in fragging_location turf, called after a teleport
+/obj/item/teleporter/proc/telefrag(turf/fragging_location, mob/user) // Don't let this gib. Never let this gib.
+	for(var/mob/living/victim in fragging_location)//Hit everything in the turf
+		victim.apply_damage(20, BRUTE)
+		victim.Paralyze(6 SECONDS)
+		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
 
 /obj/item/paper/teleporter
 	name = "Teleporter Guide"
-	icon_state = "paper"
-	info = {"<b>Instructions on your new prototype syndicate teleporter:</b><br>
+	info = {"<b>Instructions on your new prototype teleporter:</b><br>
 	<br>
 	This teleporter will teleport the user 4-8 meters in the direction they are facing.<br>
 	<br>
-	It has 4 charges, and will recharge over time. No, sticking the teleporter into the tesla, an APC, a microwave, or an electrified door, will not make it charge faster.<br>
+	It has 4 charges, and will recharge over time randomly. No, sticking the teleporter into an APC, microwave, or electrified airlock, will not make it charge faster.<br>
 	<br>
 	<b>Warning:</b> Teleporting into walls will activate a failsafe teleport parallel up to 3 meters, but the user will be ripped apart if it fails to find a safe location.<br>
 	<br>
-	Do not expose the teleporter to electromagnetic pulses, or possess a bag of holding while operating it. Unwanted malfunctions may occur.
+	Do not expose the teleporter to electromagnetic pulses. Unwanted malfunctions may occur.
 "}
 /obj/item/storage/box/syndie_kit/teleporter
 	name = "syndicate teleporter kit"
-
 
 /obj/item/storage/box/syndie_kit/teleporter/PopulateContents()
 	new /obj/item/teleporter(src)
