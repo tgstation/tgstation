@@ -313,7 +313,7 @@
 	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
 	exp_tag = "Scan"
 	possible_types = list(/obj/vehicle/sealed/mecha)
-	total_requirement = 3
+	total_requirement = 2
 	///Damage percent that each mech needs to be at for a scan to work.
 	var/damage_percent
 
