@@ -1312,8 +1312,8 @@
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
 /obj/item/ai_module/reset{
-	pixel_y = 8;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 8
 	},
 /obj/item/ai_module/supplied/freeform{
 	pixel_x = -1
