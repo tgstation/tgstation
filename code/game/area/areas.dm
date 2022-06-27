@@ -447,16 +447,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	else
 		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
 
-///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
-/area/proc/update_beauty()
-	if(!areasize)
-		beauty = 0
-		return FALSE
-	if(areasize >= beauty_threshold)
-		beauty = 0
-		return FALSE //Too big
-	beauty = totalbeauty / areasize
-
 
 /**
  * Called when an atom exits an area
