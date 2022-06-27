@@ -249,9 +249,9 @@
 /datum/disease/transformation/slime/do_disease_transformation(mob/living/affected_mob)
 	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
 		var/mob/living/carbon/human/human = affected_mob
-		if(human.dna.species.id != SPECIES_MONKEY)
+		if(!ismonkey(human))
 			new_form = /mob/living/simple_animal/slime/random
-	..()
+	return ..()
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"
