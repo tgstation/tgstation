@@ -833,8 +833,10 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 
 /obj/structure/flora/lunar_plant/style_1
 	icon_state = "lunar_plant1"
+
 /obj/structure/flora/lunar_plant/style_2
 	icon_state = "lunar_plant2"
+
 /obj/structure/flora/lunar_plant/style_3
 	icon_state = "lunar_plant3"
 
@@ -880,10 +882,13 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 
 /obj/structure/flora/rock/style_2
 	icon_state = "basalt2"
+
 /obj/structure/flora/rock/style_3
 	icon_state = "basalt3"
+
 /obj/structure/flora/rock/style_4
 	icon_state = "basalt4"
+
 /obj/structure/flora/rock/style_random/Initialize(mapload)
 	. = ..()
 	icon_state = "basalt[rand(1, 4)]"
