@@ -358,6 +358,14 @@
 	head = /obj/item/clothing/head/wizard/marisa
 	shoes = /obj/item/clothing/shoes/sneakers/marisa
 
+/datum/outfit/wizard/academy
+	name = "Academy Wizard"
+	r_pocket = null
+	r_hand = null
+	suit = /obj/item/clothing/suit/wizrobe/red
+	head = /obj/item/clothing/head/wizard/red
+	backpack_contents = list(/obj/item/storage/box/survival = 1)
+
 /datum/outfit/centcom/soviet
 	name = "Soviet Admiral"
 
