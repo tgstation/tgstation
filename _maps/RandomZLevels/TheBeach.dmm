@@ -12,7 +12,7 @@
 	},
 /area/awaymission/beach)
 "ac" = (
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "ad" = (
 /turf/open/misc/beach/coastline_b{
@@ -141,7 +141,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "av" = (
-/turf/open/water/beach{
+/turf/open/water/beach/biodome{
 	desc = "What's the difference?";
 	name = "coastline water"
 	},
@@ -208,7 +208,7 @@
 	pixel_x = -16;
 	pixel_y = 1
 	},
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "aK" = (
 /mob/living/simple_animal/crab,
@@ -936,7 +936,7 @@
 /obj/item/clothing/head/collectable/paper{
 	desc = "What looks like an ordinary paper hat is actually a rare and valuable collector's edition paper hat. Keep away from fire, Curators, and ocean waves."
 	},
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "da" = (
 /mob/living/simple_animal/parrot,

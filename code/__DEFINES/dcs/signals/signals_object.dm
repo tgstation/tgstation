@@ -340,6 +340,9 @@
 	/// Returns if the item had a negative side effect occur while recharging
 	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
 
+/// Sent from /obj/effect/proc_holder/spell/aoe_turf/knock/cast(), to every nearby turf: (obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+#define COMSIG_ATOM_MAGICALLY_UNLOCKED "atom_magic_unlock"
+
 // /obj/item/camera signals
 
 ///from /obj/item/camera/captureimage(): (atom/target, mob/user)
