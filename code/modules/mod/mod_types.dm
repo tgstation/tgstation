@@ -145,16 +145,16 @@
 		/obj/item/mod/module/bikehorn,
 	)
 
-/obj/item/mod/control/pre_equipped/ntuplinkagent
+/obj/item/mod/control/pre_equipped/ntagentmod
 	theme = /datum/mod_theme/ntagent
 	applied_cell = /obj/item/stock_parts/cell/super
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/flamethrower,
-		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
+		/obj/item/mod/module/chameleon,
 	)
 
 /obj/item/mod/control/pre_equipped/traitor
@@ -388,15 +388,15 @@
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/anomaly_locked/kinesis/plus,
 	)
-/obj/item/mod/control/pre_equipped/ntuplinkagent_empty
-	theme = /datum/mod_theme/ntagent
 
-INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/ntuplinkagent_empty)
 //these exist for the prefs menu
 /obj/item/mod/control/pre_equipped/empty
 
 /obj/item/mod/control/pre_equipped/empty/syndicate
 	theme = /datum/mod_theme/syndicate
+
+/obj/item/mod/control/pre_equipped/empty/ntagentmod
+	theme = /datum/mod_theme/ntagent
 
 /obj/item/mod/control/pre_equipped/empty/syndicate/honkerative
 	applied_skin = "honkerative"
