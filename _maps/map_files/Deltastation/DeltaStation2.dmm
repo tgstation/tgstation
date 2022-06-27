@@ -4989,6 +4989,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
+/obj/vehicle/ridden/forklift/science,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "bpF" = (
@@ -7283,6 +7284,7 @@
 /area/station/command/heads_quarters/hos)
 "bRG" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/vehicle/ridden/forklift/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "bRJ" = (
@@ -29472,6 +29474,7 @@
 "ibn" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
+/obj/vehicle/ridden/forklift/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "ibp" = (
@@ -45695,6 +45698,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/vehicle/ridden/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "mrl" = (
@@ -47343,6 +47347,7 @@
 "mOv" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
+/obj/vehicle/ridden/forklift/service,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hop)
 "mOz" = (
@@ -77965,6 +77970,13 @@
 /obj/structure/punching_bag,
 /turf/open/floor/plating,
 /area/station/security/prison)
+"uXj" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/vehicle/ridden/forklift/medical,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "uXB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron{
@@ -137318,7 +137330,7 @@ pBT
 hWB
 aGa
 pdl
-dfB
+uXj
 mbQ
 uxY
 oBg

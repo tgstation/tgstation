@@ -8826,6 +8826,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/vehicle/ridden/forklift/science,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "dlH" = (
@@ -11530,6 +11531,7 @@
 "ekk" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/disposalpipe/segment,
+/obj/vehicle/ridden/forklift/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "ekB" = (
@@ -20460,6 +20462,11 @@
 /obj/machinery/holopad/secure,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
+"hzB" = (
+/obj/structure/cable,
+/obj/vehicle/ridden/forklift/cargo,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "hzF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -26793,6 +26800,7 @@
 /area/station/service/hydroponics/garden)
 "jzD" = (
 /obj/machinery/holopad/secure,
+/obj/vehicle/ridden/forklift/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "jzN" = (
@@ -43306,6 +43314,7 @@
 /area/station/command/heads_quarters/hos)
 "psy" = (
 /obj/machinery/keycard_auth/directional/east,
+/obj/vehicle/ridden/forklift/service,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "psF" = (
@@ -48193,6 +48202,7 @@
 	c_tag = "Engineering - Foyer - Shared Storage"
 	},
 /obj/structure/sign/poster/official/random/directional/west,
+/obj/vehicle/ridden/forklift/engineering,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -87046,7 +87056,7 @@ hyd
 aok
 jRM
 bgx
-mmR
+hzB
 wRj
 bJR
 xgw

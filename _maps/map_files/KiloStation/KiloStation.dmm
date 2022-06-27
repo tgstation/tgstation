@@ -7127,6 +7127,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/vehicle/ridden/forklift/service,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "cfK" = (
@@ -13669,6 +13670,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/syndicatebomb/training,
 /obj/item/wirecutters,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "dYM" = (
@@ -25356,9 +25358,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-18"
-	},
 /obj/machinery/light_switch/directional/west{
 	pixel_y = -4
 	},
@@ -25368,6 +25367,7 @@
 	pixel_y = 6;
 	req_access = list("science")
 	},
+/obj/vehicle/ridden/forklift/science,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/lab)
 "hhX" = (
@@ -32577,6 +32577,7 @@
 /area/station/security/office)
 "jaR" = (
 /obj/effect/turf_decal/bot,
+/obj/vehicle/ridden/forklift/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jaW" = (
@@ -70103,12 +70104,11 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "tUV" = (
-/obj/structure/table,
 /obj/machinery/firealarm/directional/north,
-/obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
+/obj/vehicle/ridden/forklift/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "tVh" = (
@@ -78067,6 +78067,7 @@
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 1
 	},
+/obj/vehicle/ridden/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "wdf" = (
@@ -79857,6 +79858,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/newscaster/directional/south,
+/obj/vehicle/ridden/forklift/medical,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/central)
 "wCY" = (

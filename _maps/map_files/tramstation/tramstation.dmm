@@ -5625,6 +5625,7 @@
 /area/station/commons/toilet)
 "ccj" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/vehicle/ridden/forklift/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "ccs" = (
@@ -9858,6 +9859,7 @@
 	dir = 9;
 	network = list("ss13","rd")
 	},
+/obj/vehicle/ridden/forklift/science,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "drl" = (
@@ -10236,6 +10238,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/vehicle/ridden/forklift/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "dvW" = (
@@ -18989,6 +18992,7 @@
 /obj/structure/sign/warning/engine_safety{
 	pixel_x = -32
 	},
+/obj/vehicle/ridden/forklift/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "gAk" = (
@@ -37300,6 +37304,7 @@
 "myB" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
+/obj/vehicle/ridden/forklift/security,
 /turf/open/floor/iron,
 /area/station/security/office)
 "myD" = (
@@ -70638,6 +70643,7 @@
 	dir = 4
 	},
 /obj/machinery/holopad,
+/obj/vehicle/ridden/forklift/service,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "xVx" = (

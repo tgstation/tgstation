@@ -3938,6 +3938,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/main)
+"bog" = (
+/obj/vehicle/ridden/forklift/service,
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/hop)
 "bol" = (
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
@@ -15572,6 +15576,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/vehicle/ridden/forklift/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "eYs" = (
@@ -21079,6 +21084,7 @@
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 1
 	},
+/obj/vehicle/ridden/forklift/cargo,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "gMo" = (
@@ -37295,6 +37301,13 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/entry)
+"lWZ" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/vehicle/ridden/forklift/security,
+/turf/open/floor/iron,
+/area/station/security/brig/upper)
 "lXa" = (
 /obj/machinery/door/airlock{
 	name = "Port Emergency Storage"
@@ -63889,6 +63902,10 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos)
+"uxO" = (
+/obj/vehicle/ridden/forklift/engineering,
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/lobby)
 "uxU" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/disposalpipe/segment,
@@ -70644,6 +70661,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/vehicle/ridden/forklift/science,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/lab)
 "wEU" = (
@@ -233556,7 +233574,7 @@ cqQ
 jRC
 nvs
 edW
-shc
+bog
 cpm
 mEM
 ylU
@@ -235294,7 +235312,7 @@ nBx
 azx
 tDw
 rhf
-cAC
+lWZ
 cEL
 hwZ
 vdf
@@ -237181,7 +237199,7 @@ bID
 trG
 vCK
 rSC
-rSC
+uxO
 rSC
 tGH
 kVM
