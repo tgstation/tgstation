@@ -1,0 +1,5 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Fixes nuke op reinforcements having no HUD icon when seen by other nukeops, nor being able to see the HUD icons of other nuke ops"
+  - code_imp: "Fixed a runtime if update_sight is called on a mob whose client has no eye"

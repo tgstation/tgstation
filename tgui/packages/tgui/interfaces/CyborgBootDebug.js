@@ -35,62 +35,61 @@ const TOOLTIP_LAWSYNC = multiline`
 
 export const CyborgBootDebug = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    designation,
-    master,
-    lawsync,
-    aisync,
-    locomotion,
-    panel,
-  } = data;
+  const { designation, master, lawsync, aisync, locomotion, panel } = data;
   return (
-    <Window
-      width={master?.length > 26 ? 537 : 440}
-      height={289}>
+    <Window width={master?.length > 26 ? 537 : 440} height={289}>
       <Window.Content>
         <Section title="Basic Settings">
           <LabeledList>
             <LabeledList.Item
               label="Designation"
-              buttons={(
+              buttons={
                 <Button
                   icon="info"
                   tooltip={TOOLTIP_NAME}
-                  tooltipPosition="left" />
-              )}>
+                  tooltipPosition="left"
+                />
+              }>
               <Input
                 fluid
-                value={designation || "Default Cyborg"}
-                onChange={(e, value) => act('rename', {
-                  new_name: value,
-                })} />
+                value={designation || 'Default Cyborg'}
+                onChange={(e, value) =>
+                  act('rename', {
+                    new_name: value,
+                  })
+                }
+              />
             </LabeledList.Item>
             <LabeledList.Item
               label="Servo Motor Functions"
-              buttons={(
+              buttons={
                 <Button
                   icon="info"
                   tooltip={TOOLTIP_LOCOMOTION}
-                  tooltipPosition="left" />
-              )}>
+                  tooltipPosition="left"
+                />
+              }>
               <Button
-                icon={locomotion ? "unlock" : "lock"}
-                content={locomotion ? "Free" : "Restricted"}
-                color={locomotion ? "good" : "bad"}
-                onClick={() => act('locomotion')} />
+                icon={locomotion ? 'unlock' : 'lock'}
+                content={locomotion ? 'Free' : 'Restricted'}
+                color={locomotion ? 'good' : 'bad'}
+                onClick={() => act('locomotion')}
+              />
             </LabeledList.Item>
             <LabeledList.Item
               label="Cover Panel"
-              buttons={(
+              buttons={
                 <Button
                   icon="info"
                   tooltip={TOOLTIP_PANEL}
-                  tooltipPosition="left" />
-              )}>
+                  tooltipPosition="left"
+                />
+              }>
               <Button
-                icon={panel ? "lock" : "unlock"}
-                content={panel ? "Locked" : "Unlocked"}
-                onClick={() => act('panel')} />
+                icon={panel ? 'lock' : 'unlock'}
+                content={panel ? 'Locked' : 'Unlocked'}
+                onClick={() => act('panel')}
+              />
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -98,45 +97,51 @@ export const CyborgBootDebug = (props, context) => {
           <LabeledList>
             <LabeledList.Item
               label="AI Connection Port"
-              buttons={(
+              buttons={
                 <Button
                   icon="info"
                   tooltip={TOOLTIP_AISYNC}
-                  tooltipPosition="left" />
-              )}>
+                  tooltipPosition="left"
+                />
+              }>
               <Button
-                icon={aisync ? "unlock" : "lock"}
-                content={aisync ? "Open" : "Closed"}
-                onClick={() => act('aisync')} />
+                icon={aisync ? 'unlock' : 'lock'}
+                content={aisync ? 'Open' : 'Closed'}
+                onClick={() => act('aisync')}
+              />
             </LabeledList.Item>
             <LabeledList.Item
               label="Master AI"
-              buttons={(
+              buttons={
                 <Button
                   icon="info"
                   tooltip={TOOLTIP_AI}
-                  tooltipPosition="left" />
-              )}>
+                  tooltipPosition="left"
+                />
+              }>
               <Button
-                icon={!aisync ? "times" : master ? "edit" : "sync"}
-                content={!aisync ? "None" : master || "Automatic"}
-                color={master ? "default" : "good"}
+                icon={!aisync ? 'times' : master ? 'edit' : 'sync'}
+                content={!aisync ? 'None' : master || 'Automatic'}
+                color={master ? 'default' : 'good'}
                 disabled={!aisync}
-                onClick={() => act('set_ai')} />
+                onClick={() => act('set_ai')}
+              />
             </LabeledList.Item>
             <LabeledList.Item
               label="LawSync Port"
-              buttons={(
+              buttons={
                 <Button
                   icon="info"
                   tooltip={TOOLTIP_LAWSYNC}
-                  tooltipPosition="top-start" />
-              )}>
+                  tooltipPosition="top-start"
+                />
+              }>
               <Button
-                icon={!aisync ? "lock" : lawsync ? "unlock" : "lock"}
-                content={!aisync ? "Closed" : lawsync ? "Open" : "Closed"}
+                icon={!aisync ? 'lock' : lawsync ? 'unlock' : 'lock'}
+                content={!aisync ? 'Closed' : lawsync ? 'Open' : 'Closed'}
                 disabled={!aisync}
-                onClick={() => act('lawsync')} />
+                onClick={() => act('lawsync')}
+              />
             </LabeledList.Item>
           </LabeledList>
         </Section>

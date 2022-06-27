@@ -9,7 +9,6 @@
 #define ON_BLUEPRINTS (1<<5)  //Are we visible on the station blueprints at roundstart?
 #define UNIQUE_RENAME (1<<6) // can you customize the description/name of the thing?
 #define USES_TGUI (1<<7) //put on things that use tgui on ui_interact instead of custom/old UI.
-#define FROZEN (1<<8)
 #define BLOCK_Z_OUT_DOWN (1<<9)  // Should this object block z falling from loc?
 #define BLOCK_Z_OUT_UP (1<<10) // Should this object block z uprise from loc?
 #define BLOCK_Z_IN_DOWN (1<<11) // Should this object block z falling from above?
@@ -41,8 +40,6 @@
 #define IGNORE_DIGITIGRADE (1<<18)
 /// Has contextual screentips when HOVERING OVER OTHER objects
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
-/// Item still allows you to examine items while blind and actively held.
-#define BLIND_TOOL (1 << 20)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

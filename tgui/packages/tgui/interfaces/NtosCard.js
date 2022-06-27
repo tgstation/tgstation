@@ -5,9 +5,7 @@ import { AccessList } from './common/AccessList';
 
 export const NtosCard = (props, context) => {
   return (
-    <NtosWindow
-      width={500}
-      height={670}>
+    <NtosWindow width={500} height={670}>
       <NtosWindow.Content scrollable>
         <NtosCardContent />
       </NtosWindow.Content>
@@ -30,7 +28,7 @@ export const NtosCardContent = (props, context) => {
     accessFlagNames,
     showBasic,
     templates = {},
-  } = data; 
+  } = data;
 
   if (!have_id_slot) {
     return (
@@ -40,9 +38,7 @@ export const NtosCardContent = (props, context) => {
     );
   }
 
-  const [
-    selectedTab,
-  ] = useSharedState(context, "selectedTab", "login");
+  const [selectedTab] = useSharedState(context, 'selectedTab', 'login');
 
   return (
     <>
@@ -51,14 +47,11 @@ export const NtosCardContent = (props, context) => {
           <IDCardTabs />
         </Stack.Item>
         <Stack.Item width="100%">
-          {(selectedTab === "login") && (
-            <IDCardLogin />
-          ) || (selectedTab === "modify") && (
-            <IDCardTarget />
-          )}
+          {(selectedTab === 'login' && <IDCardLogin />) ||
+            (selectedTab === 'modify' && <IDCardTarget />)}
         </Stack.Item>
       </Stack>
-      {(!!has_id && !!authenticatedUser) && (
+      {!!has_id && !!authenticatedUser && (
         <Section
           title="Templates"
           mt={1}
@@ -66,16 +59,18 @@ export const NtosCardContent = (props, context) => {
             <Button
               icon="question-circle"
               tooltip={
-                "Will attempt to apply all access for the template to the ID card.\n"
-              + "Does not use wildcards unless the template specifies them."
+                'Will attempt to apply all access for the template to the ID card.\n' +
+                'Does not use wildcards unless the template specifies them.'
               }
-              tooltipPosition="left" />
-          } >
+              tooltipPosition="left"
+            />
+          }>
           <TemplateDropdown templates={templates} />
-        </Section>)}
+        </Section>
+      )}
       <Stack mt={1}>
         <Stack.Item grow>
-          {(!!has_id && !!authenticatedUser) && (
+          {!!has_id && !!authenticatedUser && (
             <Box>
               <AccessList
                 accesses={regions}
@@ -91,12 +86,16 @@ export const NtosCardContent = (props, context) => {
                     content="Terminate Employment"
                     confirmContent="Fire Employee?"
                     color="bad"
-                    onClick={() => act('PRG_terminate')} />
+                    onClick={() => act('PRG_terminate')}
+                  />
                 }
-                accessMod={(ref, wildcard) => act('PRG_access', {
-                  access_target: ref,
-                  access_wildcard: wildcard,
-                })} />
+                accessMod={(ref, wildcard) =>
+                  act('PRG_access', {
+                    access_target: ref,
+                    access_wildcard: wildcard,
+                  })
+                }
+              />
             </Box>
           )}
         </Stack.Item>
@@ -106,27 +105,28 @@ export const NtosCardContent = (props, context) => {
 };
 
 const IDCardTabs = (props, context) => {
-  const [
-    selectedTab,
-    setSelectedTab,
-  ] = useSharedState(context, "selectedTab", "login");
+  const [selectedTab, setSelectedTab] = useSharedState(
+    context,
+    'selectedTab',
+    'login'
+  );
 
   return (
     <Tabs vertical fill>
       <Tabs.Tab
-        minWidth={"100%"}
+        minWidth={'100%'}
         altSelection
-        selected={"login" === selectedTab}
-        color={("login" === selectedTab) ? "green" : "default"}
-        onClick={() => setSelectedTab("login")}>
+        selected={'login' === selectedTab}
+        color={'login' === selectedTab ? 'green' : 'default'}
+        onClick={() => setSelectedTab('login')}>
         Login ID
       </Tabs.Tab>
       <Tabs.Tab
-        minWidth={"100%"}
+        minWidth={'100%'}
         altSelection
-        selected={"modify" === selectedTab}
-        color={("modify" === selectedTab) ? "green" : "default"}
-        onClick={() => setSelectedTab("modify")}>
+        selected={'modify' === selectedTab}
+        color={'modify' === selectedTab ? 'green' : 'default'}
+        onClick={() => setSelectedTab('modify')}>
         Target ID
       </Tabs.Tab>
     </Tabs>
@@ -135,32 +135,29 @@ const IDCardTabs = (props, context) => {
 
 export const IDCardLogin = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    authenticatedUser,
-    has_id,
-    have_printer,
-    authIDName,
-  } = data;
+  const { authenticatedUser, has_id, have_printer, authIDName } = data;
 
   return (
     <Section
       title="Login"
-      buttons={(
+      buttons={
         <>
           <Button
             icon="print"
             content="Print"
             disabled={!have_printer || !has_id}
-            onClick={() => act('PRG_print')} />
+            onClick={() => act('PRG_print')}
+          />
           <Button
-            icon={authenticatedUser ? "sign-out-alt" : "sign-in-alt"}
-            content={authenticatedUser ? "Log Out" : "Log In"}
-            color={authenticatedUser ? "bad" : "good"}
+            icon={authenticatedUser ? 'sign-out-alt' : 'sign-in-alt'}
+            content={authenticatedUser ? 'Log Out' : 'Log In'}
+            color={authenticatedUser ? 'bad' : 'good'}
             onClick={() => {
               act(authenticatedUser ? 'PRG_logout' : 'PRG_authenticate');
-            }} />
+            }}
+          />
         </>
-      )}>
+      }>
       <Stack wrap="wrap">
         <Stack.Item width="100%">
           <Button
@@ -168,10 +165,11 @@ export const IDCardLogin = (props, context) => {
             ellipsis
             icon="eject"
             content={authIDName}
-            onClick={() => act('PRG_ejectauthid')} />
+            onClick={() => act('PRG_ejectauthid')}
+          />
         </Stack.Item>
         <Stack.Item width="100%" mt={1} ml={0}>
-          Login: {authenticatedUser || "-----"}
+          Login: {authenticatedUser || '-----'}
         </Stack.Item>
       </Stack>
     </Section>
@@ -180,14 +178,8 @@ export const IDCardLogin = (props, context) => {
 
 const IDCardTarget = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    authenticatedUser,
-    id_rank,
-    id_owner,
-    has_id,
-    id_name,
-    id_age,
-  } = data;
+  const { authenticatedUser, id_rank, id_owner, has_id, id_name, id_age } =
+    data;
 
   return (
     <Section title="Modify ID">
@@ -196,20 +188,22 @@ const IDCardTarget = (props, context) => {
         ellipsis
         icon="eject"
         content={id_name}
-        onClick={() => act('PRG_ejectmodid')} />
+        onClick={() => act('PRG_ejectmodid')}
+      />
       {!!(has_id && authenticatedUser) && (
         <>
           <Stack mt={1}>
-            <Stack.Item align="center">
-              Details:
-            </Stack.Item>
+            <Stack.Item align="center">Details:</Stack.Item>
             <Stack.Item grow={1} mr={1} ml={1}>
               <Input
                 width="100%"
                 value={id_owner}
-                onInput={(e, value) => act('PRG_edit', {
-                  name: value,
-                })} />
+                onInput={(e, value) =>
+                  act('PRG_edit', {
+                    name: value,
+                  })
+                }
+              />
             </Stack.Item>
             <Stack.Item>
               <NumberInput
@@ -217,24 +211,27 @@ const IDCardTarget = (props, context) => {
                 unit="Years"
                 minValue={17}
                 maxValue={85}
-                onChange={(e, value) => { act('PRG_age', {
-                  id_age: value,
-                });
-                }} />
+                onChange={(e, value) => {
+                  act('PRG_age', {
+                    id_age: value,
+                  });
+                }}
+              />
             </Stack.Item>
           </Stack>
           <Stack>
-            <Stack.Item align="center">
-              Assignment:
-            </Stack.Item>
+            <Stack.Item align="center">Assignment:</Stack.Item>
             <Stack.Item grow={1} ml={1}>
               <Input
                 fluid
                 mt={1}
                 value={id_rank}
-                onInput={(e, value) => act('PRG_assign', {
-                  assignment: value,
-                })} />
+                onInput={(e, value) =>
+                  act('PRG_assign', {
+                    assignment: value,
+                  })
+                }
+              />
             </Stack.Item>
           </Stack>
         </>
@@ -245,9 +242,7 @@ const IDCardTarget = (props, context) => {
 
 const TemplateDropdown = (props, context) => {
   const { act } = useBackend(context);
-  const {
-    templates,
-  } = props;
+  const { templates } = props;
 
   const templateKeys = Object.keys(templates);
 
@@ -260,15 +255,16 @@ const TemplateDropdown = (props, context) => {
       <Stack.Item grow>
         <Dropdown
           width="100%"
-          displayText={"Select a template..."}
-          options={
-            templateKeys.map(path => {
-              return templates[path];
+          displayText={'Select a template...'}
+          options={templateKeys.map((path) => {
+            return templates[path];
+          })}
+          onSelected={(sel) =>
+            act('PRG_template', {
+              name: sel,
             })
           }
-          onSelected={sel => act("PRG_template", {
-            name: sel,
-          })} />
+        />
       </Stack.Item>
     </Stack>
   );
