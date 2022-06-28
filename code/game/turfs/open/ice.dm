@@ -50,5 +50,7 @@
 	desc = "Somehow, it is not melting under these conditions. Must be some very thick ice. Just as slippery too."
 	baseturfs = /turf/open/misc/ice/coldroom
 	planetary_atmos = FALSE
+
+/turf/open/misc/ice/coldroom/Initialize(mapload)
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
-	temperature = COLD_ROOM_TEMP
+	return ..()
