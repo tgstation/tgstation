@@ -331,10 +331,6 @@
 			return
 		C.grabbedby(H)
 		C.grippedby(H, instant = TRUE) //instant aggro grab
-		tentacle_stab(H, C)
-
-/obj/projectile/tentacle/proc/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
-	if(H.Adjacent(C))
 		for(var/obj/item/I in H.held_items)
 			if(I.get_sharpness())
 				C.visible_message(span_danger("[H] impales [C] with [H.p_their()] [I.name]!"), span_userdanger("[H] impales you with [H.p_their()] [I.name]!"))
