@@ -23,9 +23,9 @@
 
 /obj/item/food/pizza/MakeProcessable()
 	if (slice_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, 30, table_required = TRUE)
-		AddElement(/datum/element/processable, TOOL_SAW, slice_type, 6, 45, table_required = TRUE)
-		AddElement(/datum/element/processable, TOOL_SCALPEL, slice_type, 6, 60, table_required = TRUE)
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, 3 SECONDS, table_required = TRUE)
+		AddElement(/datum/element/processable, TOOL_SAW, slice_type, 6, 4.5 SECONDS, table_required = TRUE)
+		AddElement(/datum/element/processable, TOOL_SCALPEL, slice_type, 6, 6 SECONDS, table_required = TRUE)
 
 // Pizza Slice
 /obj/item/food/pizzaslice
@@ -36,7 +36,7 @@
 	decomp_type = /obj/item/food/pizzaslice/moldy
 
 /obj/item/food/pizzaslice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 10, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE)
 
 
 /obj/item/food/pizza/margherita
@@ -356,19 +356,10 @@
 	. = ..()
 
 // Ant Pizza, now with more ants.
-/obj/item/food/pizza/ants
-	name = "\improper Ant Party pizza"
-	desc = "/// Filled with bugs, remember to fix"
-	icon_state = "antpizza"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/ants = 25, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "insects" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | GROSS
-	slice_type = /obj/item/food/pizzaslice/ants
-	boxtag = "Anthill Deluxe"
-
 /obj/item/food/pizzaslice/ants
 	name = "\improper Ant Party pizza slice"
 	desc = "The key to a perfect slice of pizza is not to overdo it with the ants."
 	icon_state = "antpizzaslice"
+	food_reagents = list(/datum/reagent/ants = 5, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "insects" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | GROSS
+	foodtypes = GRAIN | VEGETABLES | DAIRY | BUGS

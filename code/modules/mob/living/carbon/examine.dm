@@ -6,7 +6,7 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!>")
 	var/obscured = check_obscured_slots()
 
 	if (handcuffed)
@@ -27,7 +27,7 @@
 	var/appears_dead = FALSE
 	if (stat == DEAD)
 		appears_dead = TRUE
-		if(getorgan(/obj/item/organ/brain))
+		if(getorgan(/obj/item/organ/internal/brain))
 			. += span_deadsay("[t_He] [t_is] limp and unresponsive, with no signs of life.")
 		else if(get_bodypart(BODY_ZONE_HEAD))
 			. += span_deadsay("It appears that [t_his] brain is missing...")
@@ -150,7 +150,7 @@
 				. += "[t_He] look[p_s()] very happy."
 			if(MOOD_LEVEL_HAPPY4 to INFINITY)
 				. += "[t_He] look[p_s()] ecstatic."
-	. += "*---------*</span>"
+	. += "</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 

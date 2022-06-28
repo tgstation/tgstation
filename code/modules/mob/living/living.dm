@@ -879,7 +879,7 @@
 		var/mob/living/L = pulledby
 		L.set_pull_offsets(src, pulledby.grab_state)
 
-	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
+	if(active_storage && !((active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) || CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.close(src)
 
 	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss()*200/maxHealth))
@@ -1130,7 +1130,7 @@
 
 /mob/living/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
-	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, args) & COMPONENT_CANT_TRACK)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
 		return FALSE
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -1280,7 +1280,7 @@
 				/mob/living/simple_animal/hostile/carp,
 				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/hostile/mushroom,
-				/mob/living/simple_animal/hostile/statue,
+				/mob/living/simple_animal/hostile/netherworld/statue,
 				/mob/living/simple_animal/hostile/retaliate/bat,
 				/mob/living/simple_animal/hostile/retaliate/goat,
 				/mob/living/simple_animal/hostile/killertomato,
@@ -1404,6 +1404,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(!fire_status || !fire_status.on_fire)
 		return
+
 	remove_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 
 /**

@@ -11,8 +11,8 @@
 #define HEALIUM_HEAT_PENALTY 4
 #define PROTO_NITRATE_HEAT_PENALTY -3
 #define ZAUKER_HEAT_PENALTY 8
-#define HYPERNOBLIUM_HEAT_PENALTY -5
-#define ANTINOBLIUM_HEAT_PENALTY 20
+#define HYPERNOBLIUM_HEAT_PENALTY -13
+#define ANTINOBLIUM_HEAT_PENALTY 15
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
 //Keep the negative values here above -10 and we won't get negative rads
@@ -26,6 +26,8 @@
 #define HEALIUM_TRANSMIT_MODIFIER 2.4
 #define PROTO_NITRATE_TRANSMIT_MODIFIER 15
 #define ZAUKER_TRANSMIT_MODIFIER 20
+#define ANTINOBLIUM_TRANSMIT_MODIFIER -5
+#define HYPERNOBLIUM_TRANSMIT_MODIFIER 3
 
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
@@ -96,7 +98,7 @@
 #define GRAVITATIONAL_ANOMALY "gravitational_anomaly"
 #define FLUX_ANOMALY "flux_anomaly"
 #define PYRO_ANOMALY "pyro_anomaly"
-#define DELIMBER_ANOMALY "delimber_anomaly"
+#define BIOSCRAMBLER_ANOMALY "bioscrambler_anomaly"
 #define HALLUCINATION_ANOMALY "hallucination_anomaly"
 #define VORTEX_ANOMALY "vortex_anomaly"
 
@@ -119,3 +121,14 @@
 #define MAX_SPACE_EXPOSURE_DAMAGE 10
 
 #define SUPERMATTER_CASCADE_PERCENT 80
+
+/// The divisor scaling value for cubic power loss.
+#define POWERLOSS_CUBIC_DIVISOR 500
+/// The power threshold required to transform power loss into a linear function. It is the power needed for the derivative of the cubic power loss to be equal to POWERLOSS_LINEAR_RATE.
+#define POWERLOSS_LINEAR_THRESHOLD 5880.76
+/// The offset for the linear power loss function. It is the power loss when power is at POWERLOSS_LINEAR_THRESHOLD.
+#define POWERLOSS_LINEAR_OFFSET 1627.01
+/// The rate at which the linear power loss function scales with power.
+#define POWERLOSS_LINEAR_RATE 0.83
+/// How much a psychologist can reduce power loss.
+#define PSYCHOLOGIST_POWERLOSS_REDUCTION 0.2

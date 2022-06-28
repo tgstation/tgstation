@@ -62,7 +62,7 @@
 /datum/outfit/synthetic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
-	var/obj/item/organ/eyes/robotic/glow/eyes = new()
+	var/obj/item/organ/internal/eyes/robotic/glow/eyes = new()
 	eyes.Insert(H, drop_if_replaced = FALSE)
 
 /datum/outfit/spacepol
@@ -230,7 +230,7 @@
 
 /obj/item/card/id/advanced/bountyhunter
 	assignment = "Bounty Hunter"
-	icon_state = "card_flames" //oh SHIT
+	icon_state = "card_flame" //oh SHIT
 	trim = /datum/id_trim/bounty_hunter
 
 /datum/outfit/bountyarmor/ert

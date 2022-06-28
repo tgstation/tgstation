@@ -65,4 +65,4 @@
 	/// Assoc list of objectives by type mapped to their weight. Can also contain lists of objectives mapped to weight
 	var/list/objectives = list()
 	/// The weight of the category. How likely this category is to be chosen.
-	var/weight = 1
+	var/weight = OBJECTIVE_WEIGHT_DEFAULT

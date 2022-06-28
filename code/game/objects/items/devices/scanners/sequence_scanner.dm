@@ -25,10 +25,8 @@
 	add_fingerprint(user)
 	//no scanning if its a husk or DNA-less Species
 	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
-		user.visible_message(
-			span_notice("[user] analyzes [target]'s genetic sequence."),
-			span_notice("You analyze [target]'s genetic sequence.")
-			)
+		user.visible_message(span_notice("[user] analyzes [target]'s genetic sequence."))
+		balloon_alert(user, "sequence analyzed")
 		gene_scan(target, user)
 	else
 		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic sequence."), span_warning("[target] has no readable genetic sequence!"))
@@ -70,7 +68,7 @@
 		if(LAZYFIND(active_mutations, mutation))
 			to_chat(user, span_boldnotice("[get_display_name(mutation)]"))
 		else
-			to_chat(user, span_notice("[get_display_name(mutation)]"))	
+			to_chat(user, span_notice("[get_display_name(mutation)]"))
 
 /obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
 	if(!LAZYLEN(buffer) || !ready)
@@ -82,25 +80,27 @@
 	var/answer = tgui_input_list(user, "Analyze Potential", "Sequence Analyzer", sort_list(options))
 	if(isnull(answer))
 		return
-	if(ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		var/sequence
-		for(var/mutation in buffer) //this physically hurts but i dont know what anything else short of an assoc list
-			if(get_display_name(mutation) == answer)
-				sequence = buffer[mutation]
-				break
+	if(!ready || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !user.can_read(src))
+		return
 
-		if(sequence)
-			var/display
-			for(var/i in 0 to length_char(sequence) / DNA_MUTATION_BLOCKS-1)
-				if(i)
-					display += "-"
-				display += copytext_char(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+	var/sequence
+	for(var/mutation in buffer) //this physically hurts but i dont know what anything else short of an assoc list
+		if(get_display_name(mutation) == answer)
+			sequence = buffer[mutation]
+			break
 
-			to_chat(user, "[span_boldnotice("[display]")]<br>")
+	if(sequence)
+		var/display
+		for(var/i in 0 to length_char(sequence) / DNA_MUTATION_BLOCKS-1)
+			if(i)
+				display += "-"
+			display += copytext_char(sequence, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
 
-		ready = FALSE
-		icon_state = "[icon_state]_recharging"
-		addtimer(CALLBACK(src, .proc/recharge), cooldown, TIMER_UNIQUE)
+		to_chat(user, "[span_boldnotice("[display]")]<br>")
+
+	ready = FALSE
+	icon_state = "[icon_state]_recharging"
+	addtimer(CALLBACK(src, .proc/recharge), cooldown, TIMER_UNIQUE)
 
 /obj/item/sequence_scanner/proc/recharge()
 	icon_state = initial(icon_state)

@@ -28,7 +28,7 @@
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
 	desc = "Opens up the path of blades to you. \
-		Allows you to transmute a knife with a bar of silver to create a Darkened Blade. \
+		Allows you to transmute a knife with two bars of silver to create a Darkened Blade. \
 		You can create up to five at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the even of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
@@ -96,7 +96,7 @@
 
 /datum/heretic_knowledge/blade_dance
 	name = "Dance of the Brand"
-	desc = "Being attacked while wielding a Darkened Blade in either hand will deliver a riposte \
+	desc = "Being attacked while wielding a Heretic Blade in either hand will deliver a riposte \
 		towards your attacker. This effect can only trigger once every 20 seconds."
 	gain_text = "Having the prowess to wield such a thing requires great dedication and terror."
 	next_knowledge = list(
@@ -369,7 +369,7 @@
 	. = ..()
 	priority_announce("[generate_heretic_text()] Master of blades, the Colonel's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	user.client?.give_award(/datum/award/achievement/misc/blade_ascension, user)
-	ADD_TRAIT(user, TRAIT_BATON_RESISTANCE, name)
+	ADD_TRAIT(user, TRAIT_STUNIMMUNE, name)
 	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)

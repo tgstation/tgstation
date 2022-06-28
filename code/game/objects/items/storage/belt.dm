@@ -12,6 +12,7 @@
 	attack_verb_simple = list("whip", "lash", "discipline")
 	max_integrity = 300
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
+	w_class = WEIGHT_CLASS_BULKY
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
@@ -51,6 +52,7 @@
 		/obj/item/assembly/signaler,
 		/obj/item/clothing/gloves,
 		/obj/item/construction/rcd,
+		/obj/item/construction/rld,
 		/obj/item/crowbar,
 		/obj/item/extinguisher/mini,
 		/obj/item/flashlight,
@@ -286,6 +288,30 @@
 	to_preload += /obj/item/reagent_containers/glass/bottle/formaldehyde
 	return to_preload
 
+/obj/item/storage/belt/medical/ert
+	preload = TRUE
+
+/obj/item/storage/belt/medical/ert/PopulateContents()
+	SSwardrobe.provide_type(/obj/item/sensor_device, src)
+	SSwardrobe.provide_type(/obj/item/pinpointer/crew, src)
+	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
+	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
+	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
+	SSwardrobe.provide_type(/obj/item/surgical_drapes, src)
+	update_appearance()
+
+/obj/item/storage/belt/medical/ert/get_types_to_preload()
+	var/list/to_preload = list()
+	to_preload += /obj/item/sensor_device
+	to_preload += /obj/item/pinpointer/crew
+	to_preload += /obj/item/scalpel/advanced
+	to_preload += /obj/item/retractor/advanced
+	to_preload += /obj/item/stack/medical/bone_gel
+	to_preload += /obj/item/cautery/advanced
+	to_preload += /obj/item/surgical_drapes
+	return to_preload
+
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
@@ -365,7 +391,7 @@
 		/obj/item/lighter,
 		/obj/item/mining_scanner,
 		/obj/item/multitool,
-		/obj/item/organ/regenerative_core,
+		/obj/item/organ/internal/regenerative_core,
 		/obj/item/pickaxe,
 		/obj/item/radio,
 		/obj/item/reagent_containers/food/drinks,
@@ -653,6 +679,7 @@
 		/obj/item/lightreplacer,
 		/obj/item/melee/flyswatter,
 		/obj/item/paint/paint_remover,
+		/obj/item/plunger,
 		/obj/item/pushbroom,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
@@ -833,6 +860,5 @@
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,
 		/obj/item/seeds,
-		
 		/obj/item/shovel/spade,
 		))

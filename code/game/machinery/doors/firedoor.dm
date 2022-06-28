@@ -82,7 +82,7 @@
 	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/merger_adding)
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/merger_removing)
 	GetMergeGroup(merger_id, merger_typecache)
-	register_adjacent_turfs(src)
+	register_adjacent_turfs()
 
 	if(alarm_type) // Fucking subtypes fucking mappers fucking hhhhhhhh
 		start_activation_process(alarm_type)
@@ -215,28 +215,40 @@
 			var/turf/checked_turf = get_step(get_turf(firelock), dir)
 			if(!checked_turf)
 				continue
+			if(isclosedturf(checked_turf))
+				continue
 			process_results(checked_turf)
 
-/obj/machinery/door/firedoor/proc/register_adjacent_turfs(atom/loc)
+/obj/machinery/door/firedoor/proc/register_adjacent_turfs()
+	if(!loc)
+		return
+
+	var/turf/our_turf = get_turf(loc)
+	RegisterSignal(our_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
 	for(var/dir in GLOB.cardinals)
-		var/turf/checked_turf = get_step(get_turf(loc), dir)
+		var/turf/checked_turf = get_step(our_turf, dir)
 
 		if(!checked_turf)
 			continue
+		if(isclosedturf(checked_turf))
+			continue
 		process_results(checked_turf)
 		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
-		RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
 
 
-/obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/loc)
+/obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/old_loc)
+	if(!loc)
+		return
+
+	var/turf/our_turf = get_turf(old_loc)
+	UnregisterSignal(our_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 	for(var/dir in GLOB.cardinals)
-		var/turf/checked_turf = get_step(get_turf(loc), dir)
+		var/turf/checked_turf = get_step(our_turf, dir)
 
 		if(!checked_turf)
 			continue
 
 		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
-		UnregisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/datum/gas_mixture/environment = checked_turf.return_air()
@@ -641,7 +653,7 @@
 /obj/machinery/door/firedoor/Moved(atom/oldloc)
 	. = ..()
 	unregister_adjacent_turfs(oldloc)
-	register_adjacent_turfs(src)
+	register_adjacent_turfs()
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
@@ -686,7 +698,7 @@
 	if(!(border_dir == dir)) //Make sure looking at appropriate border
 		return TRUE
 
-/obj/machinery/door/firedoor/border_only/CanAStarPass(obj/item/card/id/ID, to_dir)
+/obj/machinery/door/firedoor/border_only/CanAStarPass(obj/item/card/id/ID, to_dir, no_id = FALSE)
 	return !density || (dir != to_dir)
 
 /obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)

@@ -88,7 +88,7 @@
 	return FALSE
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/spellbook/book) //return point value or -1 for failure
-	var/area/wizard_station/A = GLOB.areas_by_type[/area/wizard_station]
+	var/area/centcom/wizard_station/A = GLOB.areas_by_type[/area/centcom/wizard_station]
 	if(!(user in A.contents))
 		to_chat(user, span_warning("You can only refund spells at the wizard lair!"))
 		return -1
@@ -495,7 +495,7 @@
 /datum/spellbook_entry/item/warpwhistle
 	name = "Warp Whistle"
 	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the beginning of every use."
-	item_path = /obj/item/warpwhistle
+	item_path = /obj/item/warp_whistle
 	category = "Mobility"
 	cost = 1
 
@@ -647,7 +647,9 @@
 	/// Determines if this spellbook can refund anything.
 	var/can_refund = TRUE
 
-	var/mob/living/carbon/human/owner
+	/// The mind that first used the book. Automatically assigned when a wizard spawns.
+	var/datum/mind/owner
+
 	var/list/entries = list()
 
 /obj/item/spellbook/examine(mob/user)
@@ -685,16 +687,18 @@
 
 /obj/item/spellbook/attack_self(mob/user)
 	if(!owner)
+		if(!user.mind)
+			return
 		to_chat(user, span_notice("You bind the spellbook to yourself."))
-		owner = user
+		owner = user.mind
 		return
-	if(user != owner)
+	if(user.mind != owner)
 		if(user.mind.special_role == ROLE_WIZARD_APPRENTICE)
 			to_chat(user, "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not.")
 		else
 			to_chat(user, span_warning("The [name] does not recognize you as its owner and refuses to open!"))
 		return
-	. = ..()
+	return ..()
 
 /obj/item/spellbook/attackby(obj/item/O, mob/user, params)
 	if(!can_refund)

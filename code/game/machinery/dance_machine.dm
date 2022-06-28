@@ -19,7 +19,7 @@
 	name = "radiant dance machine mark IV"
 	desc = "The first three prototypes were discontinued after mass casualty incidents."
 	icon_state = "disco"
-	req_access = list(ACCESS_ENGINE)
+	req_access = list(ACCESS_ENGINEERING)
 	anchored = FALSE
 	var/list/spotlights = list()
 	var/list/sparkles = list()
@@ -458,7 +458,7 @@
 				continue
 			if(!(M in rangers))
 				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, S = song_played, use_reverb = FALSE)
+				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, sound_to_use = song_played, use_reverb = FALSE)
 		for(var/mob/L in rangers)
 			if(get_dist(src,L) > 10)
 				rangers -= L

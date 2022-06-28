@@ -140,6 +140,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_INCAPACITATED "incapacitated"
 /// In some kind of critical condition. Is able to succumb.
 #define TRAIT_CRITICAL_CONDITION "critical-condition"
+/// Whitelist for mobs that can read or write
+#define TRAIT_LITERATE "literate"
+/// Blacklist for mobs that can't read or write
+#define TRAIT_ILLITERATE "illiterate"
 #define TRAIT_BLIND "blind"
 #define TRAIT_MUTE "mute"
 #define TRAIT_EMOTEMUTE "emotemute"
@@ -409,13 +413,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Whether or not orbiting is blocked or not
 #define TRAIT_ORBITING_FORBIDDEN "orbiting_forbidden"
 
+/// Item still allows you to examine items while blind and actively held.
+#define TRAIT_BLIND_TOOL "blind_tool"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
 // example. Through years of training/abuse, their livers have taken
 // a liking to those substances. Steal a sec officer's liver, eat donuts good.
 
-// These traits are applied to /obj/item/organ/liver
+// These traits are applied to /obj/item/organ/internal/liver
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law_enforcement_metabolism"
 #define TRAIT_CULINARY_METABOLISM "culinary_metabolism"
 #define TRAIT_COMEDY_METABOLISM "comedy_metabolism"
@@ -484,6 +491,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_AREA_SENSITIVE "area-sensitive"
 ///every hearing sensitive atom has this trait
 #define TRAIT_HEARING_SENSITIVE "hearing_sensitive"
+///every object that is currently the active storage of some client mob has this trait
+#define TRAIT_ACTIVE_STORAGE "active_storage"
 
 /// Climbable trait, given and taken by the climbable element when added or removed. Exists to be easily checked via HAS_TRAIT().
 #define TRAIT_CLIMBABLE "trait_climbable"
@@ -534,6 +543,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
 /// Designates a heart as a living heart for a heretic.
 #define TRAIT_LIVING_HEART "living_heart"
+/// Prevents the same person from being chosen multiple times for kidnapping objective
+#define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -804,10 +815,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ORBITING_TRAIT "orbiting"
 /// From the item_scaling element
 #define ITEM_SCALING_TRAIT "item_scaling"
+/// Trait given by Objects that provide blindsight
+#define ITEM_BLIND_TRAIT "blind_item_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
-* granted/removed by [/obj/item/organ/tongue]
+* granted/removed by [/obj/item/organ/internal/tongue]
 * Used for ensuring that carbons without tongues cannot taste anything
 * so it is added in Initialize, and then removed when a tongue is inserted
 * and readded when a tongue is removed.
@@ -846,6 +859,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
 /// ID cards with this trait will attempt to forcibly occupy the front-facing ID card slot in wallets.
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
+/// ID cards with this trait have special appraisal text.
+#define TRAIT_TASTEFULLY_THICK_ID_CARD "impressive_very_nice"
+
 /// Traits granted to items due to their chameleon properties.
 #define CHAMELEON_ITEM_TRAIT "chameleon_item_trait"
 
@@ -885,3 +901,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Ignores body_parts_covered during the add_fingerprint() proc. Works both on the person and the item in the glove slot.
 #define TRAIT_FINGERPRINT_PASSTHROUGH "fingerprint_passthrough"
+
+/// this object has been frozen
+#define TRAIT_FROZEN "frozen"
+
+/// Currently fishing
+#define TRAIT_GONE_FISHING "fishing"

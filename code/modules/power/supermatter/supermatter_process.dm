@@ -19,6 +19,7 @@
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = local_turf.return_air()
+	environment_total_moles = env.total_moles()
 	var/datum/gas_mixture/removed
 	if(produces_gas)
 		//Remove gas from surrounding area
@@ -68,19 +69,28 @@
 		//handles temperature increase and gases made by the crystal
 		temperature_gas_production(env, removed)
 
-	if(check_cascade_requirements(anomaly_event))
+	var/cascading = check_cascade_requirements()
+	if(cascading)
+		if(!cascade_initiated)
+			addtimer(CALLBACK(src, .proc/announce_incoming_cascade), 2 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
+			log_game("[src] has begun a cascade.")
+			message_admins("[src] has begun a cascade, reasons: [cascading]. [ADMIN_JMP(src)]")
+			investigate_log("has begun a cascade, reasons: [cascading].", INVESTIGATE_ENGINE)
 		cascade_initiated = TRUE
 		if(!warp)
 			warp = new(src)
 			vis_contents += warp
 		animate(warp, time = 1, transform = matrix().Scale(0.5,0.5))
 		animate(time = 9, transform = matrix())
-
 	else
 		if(warp)
 			vis_contents -= warp
-			warp = null
-		cascade_initiated = FALSE
+			QDEL_NULL(warp)
+		if(cascade_initiated)
+			log_game("[src] has stopped its cascade.")
+			message_admins("[src] has stopped its cascade. [ADMIN_JMP(src)]")
+			investigate_log("has stopped its cascade.", INVESTIGATE_ENGINE)
+			cascade_initiated = FALSE
 
 	//handles hallucinations and the presence of a psychiatrist
 	psychological_examination()
@@ -88,7 +98,10 @@
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
 	if(power_changes)
-		power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor) * (1 - (0.2 * psyCoeff)),0)
+		///The power that is getting lost this tick.
+		var/power_loss = power < POWERLOSS_LINEAR_THRESHOLD ? ((power / POWERLOSS_CUBIC_DIVISOR) ** 3) : (POWERLOSS_LINEAR_OFFSET + POWERLOSS_LINEAR_RATE * (power - POWERLOSS_LINEAR_THRESHOLD))
+		power_loss *= powerloss_inhibitor * (1 - (PSYCHOLOGIST_POWERLOSS_REDUCTION * psyCoeff))
+		power = max(power - power_loss, 0)
 	//After this point power is lowered
 	//This wraps around to the begining of the function
 	//Handle high power zaps/anomaly generation
@@ -135,15 +148,17 @@
 			has_holes = TRUE
 			break
 
+	var/cascade_multiplier = cascade_initiated ? 0.25 : 1
+
 	//Due to DAMAGE_INCREASE_MULTIPLIER, we only deal one 4th of the damage the statements otherwise would cause
 	//((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 10)) * some number between 0.25 and knock your socks off / 150) * 0.25
 	//Heat and mols account for each other, a lot of hot mols are more damaging then a few
 	//Mols start to have a positive effect on damage after 350
 	damage = max(damage + (max(clamp(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
-	//Power only starts affecting damage when it is above 5000
-	damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
-	//Molar count only starts affecting damage when it is above 1800
-	damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
+	//Power only starts affecting damage when it is above 5000 (1250 when a cascade is occurring)
+	damage = max(damage + (max(power - (POWER_PENALTY_THRESHOLD * cascade_multiplier), 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
+	//Molar count only starts affecting damage when it is above 1800 (450 when a cascade is occurring)
+	damage = max(damage + (max(combined_gas - (MOLE_PENALTY_THRESHOLD * cascade_multiplier), 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
 	//There might be a way to integrate healing and hurting via heat
 	//healing damage
@@ -426,19 +441,25 @@
 		if(combined_gas > MOLE_PENALTY_THRESHOLD)
 			radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel)
 
-		if(check_cascade_requirements(anomaly_event))
+		if(check_cascade_requirements())
 			var/channel_to_talk_to = damage > emergency_point ? common_channel : engineering_channel
-			radio.talk_into(src, "DANGER: RESONANCE CASCADE INITIATED.", channel_to_talk_to)
+			radio.talk_into(src, "DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.", channel_to_talk_to)
 			for(var/mob/victim as anything in GLOB.player_list)
 				var/list/messages = list(
-					"You feel a strange presence in the air coming from engineering.",
-					"Something is wrong, there are weird sounds coming from engineering.",
-					"You don't like the smell of the SM.",
-					"The SM is emitting strange noises.",
-					"Crystals sounds are echoing through the station.",
+					"Space seems to be shifting around you...",
+					"You hear a high-pitched ringing sound.",
+					"You feel tingling going down your back.",
+					"Something feels very off.",
+					"A drowning sense of dread washes over you."
 				)
-				to_chat(victim, span_boldannounce(pick(messages)))
+				to_chat(victim, span_danger(pick(messages)))
 
 	//Boom (Mind blown)
 	if(damage > explosion_point)
 		countdown()
+
+/obj/machinery/power/supermatter_crystal/proc/announce_incoming_cascade()
+	if(check_cascade_requirements())
+		priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
+			a subject within [station_name()], a resonance collapse may occur.",
+			"Nanotrasen Star Observation Association")

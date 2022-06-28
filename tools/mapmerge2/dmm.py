@@ -84,7 +84,7 @@ class DMM:
             self.grid[k] = bad_keys.get(v, v)
 
     def remove_unused_keys(self, modified_keys = None):
-        unused_keys = modified_keys if modified_keys is not None else self.dictionary.keys()
+        unused_keys = list(set(modified_keys)) if modified_keys is not None else self.dictionary.keys()
         for key in self.grid.values():
             if key in unused_keys:
                 unused_keys.remove(key)
