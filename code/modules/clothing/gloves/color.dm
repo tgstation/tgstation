@@ -188,8 +188,8 @@
 
 // Brown gloves intended to be paired with winter coats (specifically EVA winter coats)
 /obj/item/clothing/gloves/color/brown/protects_cold
-	name = "extravehicular gloves"
-	desc = "A pair of thick brown gloves, lined to protect the wearer from the cold."
+	name = "\proper Endotherm gloves"
+	desc = "A pair of thick brown gloves, lined to protect the wearer from freezing cold."
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE

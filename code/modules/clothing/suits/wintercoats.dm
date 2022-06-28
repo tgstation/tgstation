@@ -41,7 +41,7 @@
 // An coat intended for use for general crew EVA, with values close to those of the space suits found in EVA normally
 // Slight extra armor, bulky size, slows you down, can carry a large oxygen tank, won't burn off.
 /obj/item/clothing/suit/hooded/wintercoat/eva
-	name = "extravehicular winter coat"
+	name = "\proper Endotherm winter coat"
 	desc = "A thickly padded winter coat to keep the wearer well insulated no matter the circumstances."
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 0.66
@@ -55,7 +55,7 @@
 	allowed += /obj/item/tank/internals
 
 /obj/item/clothing/head/hooded/winterhood/eva
-	name = "extravehicular winter hood"
+	name = "\proper Endotherm winter hood"
 	desc = "A thickly padded hood attached to an even thicker coat."
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 20)
 	resistance_flags = NONE

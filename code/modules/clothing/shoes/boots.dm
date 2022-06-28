@@ -65,8 +65,8 @@
 
 // A pair of ice boots intended for general crew EVA use - see EVA winter coat for comparison.
 /obj/item/clothing/shoes/winterboots/ice_boots/eva
-	name = "extravehicular hiking boots"
-	desc = "A heavy pair of boots with grips applied to the bottom to keep the wearer vertical while walking in the harsh snow."
+	name = "\proper Endotherm hiking boots"
+	desc = "A heavy pair of boots with grips applied to the bottom to keep the wearer vertical while walking in freezing conditions."
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 0.66
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 10)
