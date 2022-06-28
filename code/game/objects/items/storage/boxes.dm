@@ -451,7 +451,7 @@
 
 /obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
-	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
+	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will stay perpetually warmed with cutting edge Donk Co. technology.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
 	var/donktype = /obj/item/food/donkpocket

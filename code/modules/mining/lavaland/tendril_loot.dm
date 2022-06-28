@@ -605,7 +605,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF
 	clothing_flags = THICKMATERIAL
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/regenerative_core/legion, /obj/item/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/cleaving_saw)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/internal/regenerative_core/legion, /obj/item/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/cleaving_saw)
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()

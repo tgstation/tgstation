@@ -47,6 +47,11 @@
 	mood_change = -2
 	timeout = 4 MINUTES
 
+/datum/mood_event/cascade // Big boi delamination
+	description = "The engineers have finally done it, we are all going to die..."
+	mood_change = -8
+	timeout = 5 MINUTES
+
 /datum/mood_event/depression_minimal
 	description = "I feel a bit down."
 	mood_change = -10

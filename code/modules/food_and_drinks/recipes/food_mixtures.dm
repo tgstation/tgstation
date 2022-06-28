@@ -261,3 +261,7 @@
 	results = list(/datum/reagent/consumable/quality_oil = 2)
 	mix_message = "The cooking oil dilutes the quality oil- how delightfully devilish..."
 	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/quality_oil
+	results = list(/datum/reagent/consumable/quality_oil = 2)
+	required_reagents = list(/datum/reagent/consumable/olivepaste = 4, /datum/reagent/water = 1)

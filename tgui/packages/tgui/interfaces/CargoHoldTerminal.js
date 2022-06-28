@@ -4,16 +4,9 @@ import { Window } from '../layouts';
 
 export const CargoHoldTerminal = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    points,
-    pad,
-    sending,
-    status_report,
-  } = data;
+  const { points, pad, sending, status_report } = data;
   return (
-    <Window
-      width={600}
-      height={230}>
+    <Window width={600} height={230}>
       <Window.Content scrollable>
         <Section>
           <LabeledList>
@@ -26,26 +19,26 @@ export const CargoHoldTerminal = (props, context) => {
         </Section>
         <Section
           title="Cargo Pad"
-          buttons={(
+          buttons={
             <>
               <Button
-                icon={"sync"}
-                content={"Recalculate Value"}
+                icon={'sync'}
+                content={'Recalculate Value'}
                 disabled={!pad}
-                onClick={() => act('recalc')} />
+                onClick={() => act('recalc')}
+              />
               <Button
                 icon={sending ? 'times' : 'arrow-up'}
-                content={sending ? "Stop Sending" : "Send Goods"}
+                content={sending ? 'Stop Sending' : 'Send Goods'}
                 selected={sending}
                 disabled={!pad}
-                onClick={() => act(sending ? 'stop' : 'send')} />
+                onClick={() => act(sending ? 'stop' : 'send')}
+              />
             </>
-          )}>
+          }>
           <LabeledList>
-            <LabeledList.Item
-              label="Status"
-              color={pad ? "good" : "bad"}>
-              {pad ? "Online" : "Not Found"}
+            <LabeledList.Item label="Status" color={pad ? 'good' : 'bad'}>
+              {pad ? 'Online' : 'Not Found'}
             </LabeledList.Item>
             <LabeledList.Item label="Cargo Report">
               {status_report}

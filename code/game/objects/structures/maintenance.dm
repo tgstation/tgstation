@@ -25,7 +25,6 @@ at the cost of risking a vicious bite.**/
 		/obj/item/restraints/handcuffs/cable/pink = 1,
 		/obj/item/restraints/handcuffs/alien = 2,
 		/obj/item/coin/bananium = 9,
-		/obj/item/fish/ratfish = 10,
 		/obj/item/knife/butcher = 5,
 		/obj/item/coin/mythril = 1,
 	)
@@ -40,6 +39,13 @@ at the cost of risking a vicious bite.**/
 	if(prob(75))
 		var/picked_item = pick_weight(loot_table)
 		hidden_item = new picked_item(src)
+
+	var/datum/fish_source/moisture_trap/fish_source = new
+	if(prob(50)) // 50% chance there's another item to fish out of there
+		var/picked_item = pick_weight(loot_table)
+		fish_source.fish_table[picked_item] = 5
+		fish_source.fish_counts[picked_item] = 1;
+	AddComponent(/datum/component/fishing_spot, fish_source)
 
 
 /obj/structure/moisture_trap/Destroy()

@@ -572,7 +572,7 @@
 		if(!isnull(E.lighting_alpha))
 			lighting_alpha = E.lighting_alpha
 
-	if(client.eye != src)
+	if(client.eye && client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
