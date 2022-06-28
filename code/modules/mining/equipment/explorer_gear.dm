@@ -76,7 +76,7 @@
 		/obj/item/flashlight,
 		/obj/item/knife/combat/bone,
 		/obj/item/knife/combat/survival,
-		/obj/item/organ/regenerative_core/legion,
+		/obj/item/organ/internal/regenerative_core/legion,
 		/obj/item/pickaxe,
 		/obj/item/spear,
 		/obj/item/tank/internals,
