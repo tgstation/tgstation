@@ -2986,6 +2986,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal)
+"aNJ" = (
+/obj/structure/table/wood/fancy,
+/obj/item/book/granter/action/spell/smoke/lesser,
+/obj/item/nullrod,
+/obj/item/organ/internal/heart,
+/obj/item/reagent_containers/food/drinks/bottle/holywater,
+/turf/open/floor/iron/grimy,
+/area/station/service/chapel/office)
 "aNY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
@@ -12441,26 +12449,6 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs/aft)
-"dqv" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/old,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Mining Dock Airlock"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "dqC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
@@ -15864,6 +15852,14 @@
 "eqU" = (
 /turf/open/space,
 /area/space)
+"eqW" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/spawner/random/structure/musician/piano/random_piano,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/service/theater/abandoned)
 "ero" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -31979,14 +31975,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/processing)
-"iLq" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/spawner/random/structure/musician/piano/random_piano,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/service/theater/abandoned)
 "iLr" = (
 /turf/closed/wall,
 /area/station/service/theater/abandoned)
@@ -35559,6 +35547,25 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"jIK" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Mining Dock Airlock"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "jIO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -44200,14 +44207,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
-"lZb" = (
-/obj/structure/table/wood/fancy,
-/obj/item/book/granter/action/spell/smoke/lesser,
-/obj/item/nullrod,
-/obj/item/organ/internal/heart,
-/obj/item/reagent_containers/food/drinks/bottle/holywater,
-/turf/open/floor/iron/grimy,
-/area/station/service/chapel/office)
 "lZm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -44321,14 +44320,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/gateway)
-"maV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/service/theatre,
-/turf/open/floor/wood,
-/area/station/hallway/secondary/service)
 "mbp" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -48829,6 +48820,17 @@
 "nmw" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/port/fore)
+"nmN" = (
+/obj/effect/landmark/start/hangover,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/spawner/random/structure/musician/piano/random_piano,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/service/theater)
 "nmP" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -63687,6 +63689,14 @@
 "rov" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/lobby)
+"roN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/service/general,
+/turf/open/floor/wood,
+/area/station/hallway/secondary/service)
 "roZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral,
@@ -63999,6 +64009,22 @@
 /obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
+"ruv" = (
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/mining/glass{
+	name = "Delivery Office"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/supply/shipping,
+/turf/open/floor/iron,
+/area/station/cargo/sorting)
 "ruN" = (
 /obj/machinery/porta_turret/ai,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -67605,17 +67631,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/space_hut/observatory)
-"sro" = (
-/obj/effect/landmark/start/hangover,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/spawner/random/structure/musician/piano/random_piano,
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/station/service/theater)
 "sry" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -68444,21 +68459,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
-"sCW" = (
-/obj/machinery/door/firedoor,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/mining/glass{
-	name = "Delivery Office"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/shipping,
-/turf/open/floor/iron,
-/area/station/cargo/sorting)
 "sCY" = (
 /obj/structure/cable,
 /obj/machinery/power/tracker,
@@ -71870,6 +71870,23 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
+"tvo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/mining/glass{
+	name = "Delivery Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/shipping,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/turf/open/floor/iron,
+/area/station/cargo/sorting)
 "tvr" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Medbay - Center";
@@ -82496,22 +82513,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/grimy,
 /area/station/command/corporate_showroom)
-"whb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/door/airlock/mining/glass{
-	name = "Delivery Office"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/shipping,
-/turf/open/floor/iron,
-/area/station/cargo/sorting)
 "whj" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -123255,7 +123256,7 @@ fel
 geI
 iAb
 kZc
-lZb
+aNJ
 kZc
 yly
 gkq
@@ -125714,7 +125715,7 @@ msR
 qGL
 vnU
 tNO
-sro
+nmN
 wuh
 wuh
 wkp
@@ -127751,7 +127752,7 @@ jYM
 kVP
 tVC
 ptC
-maV
+roN
 rgK
 ahQ
 fAt
@@ -128270,7 +128271,7 @@ giz
 nOn
 mKa
 lJJ
-maV
+roN
 ptC
 xBj
 qAV
@@ -132144,7 +132145,7 @@ hoC
 yfI
 bGf
 kGo
-sCW
+ruv
 nxl
 ygL
 xhW
@@ -133167,7 +133168,7 @@ mOe
 yhh
 liD
 mZU
-whb
+tvo
 uBZ
 pso
 sqW
@@ -137283,7 +137284,7 @@ aad
 aaa
 rWo
 rWo
-dqv
+jIK
 rWo
 rWo
 aaa
@@ -140709,7 +140710,7 @@ eYq
 uYi
 eYq
 gYl
-iLq
+eqW
 iLr
 aad
 aad

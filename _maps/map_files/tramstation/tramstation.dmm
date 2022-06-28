@@ -2068,13 +2068,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen/diner)
-"aUt" = (
-/obj/machinery/computer/camera_advanced/base_construction,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/construction/mining/aux_base)
 "aUA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -18958,14 +18951,6 @@
 /obj/structure/sign/warning/engine_safety/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
-"gAa" = (
-/obj/structure/table/wood,
-/obj/item/book/granter/action/spell/smoke/lesser{
-	name = "mysterious old book of cloud-chasing"
-	},
-/obj/item/soulstone/anybody/chaplain,
-/turf/open/floor/cult,
-/area/station/service/chapel/office)
 "gAk" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/button/door/directional/west{
@@ -19555,6 +19540,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
+"gLA" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/action/spell/smoke/lesser{
+	name = "mysterious old book of cloud-chasing"
+	},
+/obj/item/soulstone/anybody/chaplain,
+/turf/open/floor/cult,
+/area/station/service/chapel/office)
 "gLH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20785,6 +20778,13 @@
 	},
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
+"hek" = (
+/obj/machinery/computer/camera_advanced/base_construction/aux,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/construction/mining/aux_base)
 "hel" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
@@ -40855,10 +40855,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
-"nHU" = (
-/obj/structure/musician/piano,
-/turf/open/floor/wood,
-/area/station/service/theater)
 "nHX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -69258,6 +69254,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"xxP" = (
+/obj/structure/musician/piano,
+/turf/open/floor/wood,
+/area/station/service/theater)
 "xxW" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
@@ -102455,7 +102455,7 @@ pRb
 axP
 wSg
 kiK
-nHU
+xxP
 jNg
 nTL
 vdv
@@ -150527,7 +150527,7 @@ wRd
 wRd
 wRd
 uPU
-aUt
+hek
 vzB
 pSz
 vzM
@@ -153657,7 +153657,7 @@ jpx
 squ
 iZk
 jFJ
-gAa
+gLA
 jFJ
 dhe
 aYr

@@ -11,6 +11,10 @@
 	if(target_obj.obj_flags & FREEZE_PROOF)
 		return ELEMENT_INCOMPATIBLE
 
+	if(HAS_TRAIT(target_obj, TRAIT_FROZEN))
+		return ELEMENT_INCOMPATIBLE
+
+	ADD_TRAIT(target_obj, TRAIT_FROZEN, ELEMENT_TRAIT(type))
 	target_obj.name = "frozen [target_obj.name]"
 	target_obj.add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 	target_obj.alpha -= 25
@@ -21,6 +25,7 @@
 
 /datum/element/frozen/Detach(datum/source, ...)
 	var/obj/obj_source = source
+	REMOVE_TRAIT(obj_source, TRAIT_FROZEN, ELEMENT_TRAIT(type))
 	obj_source.name = replacetext(obj_source.name, "frozen ", "")
 	obj_source.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
 	obj_source.alpha += 25
