@@ -41,10 +41,18 @@
 	name = "Nanotrasen MODsuit"
 	desc = "The budget version of the ERT MODsuit. Features armoring and a set of inbuilt modules. \
 	Comes with a flamethrower! Free of charge."
-	item = /obj/item/mod/control/pre_equipped/ntuplinkagent
+	item = /obj/item/mod/control/pre_equipped/ntagentmod
 	cost = 9
 	purchasable_from = UPLINK_NANO
 	progression_minimum = 20 MINUTES
+
+/datum/uplink_item/suits/antimagic
+	name = "MODsuit Anti-Magic Module"
+	desc = "For anything unholy standing in our way to Nanotrasen's glory."
+	item = /obj/item/mod/module/anti_magic
+	progression_minimum = 20 MINUTES
+	cost = 2
+	purchasable_from = UPLINK_NANO
 
 /datum/uplink_item/suits/thermal
 	name = "MODsuit Thermal Visor Module"
