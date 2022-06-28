@@ -563,6 +563,7 @@
 		return INITIALIZE_HINT_QDEL
 	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
 	modsuit_image.plane = ABOVE_LIGHTING_PLANE
+	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
 	mod_man = WEAKREF(looker)
 	add_mind(looker)
 

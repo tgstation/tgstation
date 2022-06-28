@@ -123,11 +123,18 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/simple/proc/GetImage()
 	var/image/I = image(image_icon,src,image_state,image_layer,dir=src.dir)
 	I.plane = image_plane
+	SET_PLANE_EXPLICIT(I, image_plane, src)
 	I.pixel_x = px
 	I.pixel_y = py
 	if(col_mod)
 		I.color = col_mod
 	return I
+
+/obj/effect/hallucination/simple/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE_EXPLICIT(current_image, PLANE_TO_TRUE(current_image.plane), new_turf)
 
 /obj/effect/hallucination/simple/proc/Show(update=1)
 	if(active)
