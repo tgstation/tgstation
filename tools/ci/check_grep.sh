@@ -20,7 +20,7 @@ if grep -P 'Merge Conflict Marker' _maps/**/*.dmm; then
     st=1
 fi;
 # We check for this as well to ensure people aren't actually using this mapping effect in their maps.
-if grep -P '/obj/effect/mapping_helpers/merge_conflict_marker' _maps/**/*.dmm; then
+if grep -P '/obj/merge_conflict_marker' _maps/**/*.dmm; then
     echo "ERROR: Merge conflict markers detected in map, please resolve all merge failures!"
     st=1
 fi;
