@@ -73,16 +73,16 @@ SUBSYSTEM_DEF(ambience)
 
 	///A list of rare sound effects to fuck with players. No, it does not contain actual minecraft sounds anymore.
 	var/static/list/minecraft_cave_noises = list(
-	'sound/machines/airlock.ogg',
-	'sound/effects/snap.ogg',
-	'sound/effects/clownstep1.ogg',
-	'sound/effects/clownstep2.ogg',
-	'sound/items/welder.ogg',
-	'sound/items/welder2.ogg',
-	'sound/items/crowbar.ogg',
-	'sound/items/deconstruct.ogg',
-	'sound/ambience/source_holehit3.ogg',
-	'sound/ambience/cavesound3.ogg',
+		'sound/machines/airlock.ogg',
+		'sound/effects/snap.ogg',
+		'sound/effects/clownstep1.ogg',
+		'sound/effects/clownstep2.ogg',
+		'sound/items/welder.ogg',
+		'sound/items/welder2.ogg',
+		'sound/items/crowbar.ogg',
+		'sound/items/deconstruct.ogg',
+		'sound/ambience/source_holehit3.ogg',
+		'sound/ambience/cavesound3.ogg',
 	)
 
 /area/station/maintenance/play_ambience(mob/M, sound/override_sound, volume)
