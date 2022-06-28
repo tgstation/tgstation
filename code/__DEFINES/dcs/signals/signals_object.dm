@@ -59,6 +59,9 @@
 /// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
 
+/// from /obj/proc/make_unfrozen()
+#define COMSIG_OBJ_UNFREEZE "obj_unfreeze"
+
 // /obj/machinery/atmospherics/components/binary/valve signals
 
 /// from /obj/machinery/atmospherics/components/binary/valve/toggle(): (on)
@@ -336,6 +339,9 @@
 	#define COMPONENT_ITEM_CHARGED (1 << 0)
 	/// Returns if the item had a negative side effect occur while recharging
 	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
+
+/// Sent from /obj/effect/proc_holder/spell/aoe_turf/knock/cast(), to every nearby turf: (obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+#define COMSIG_ATOM_MAGICALLY_UNLOCKED "atom_magic_unlock"
 
 // /obj/item/camera signals
 

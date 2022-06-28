@@ -1329,6 +1329,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	icon_state = "greed"
 	icon_deny = "greed-deny"
 	panel_type = "panel4"
+	max_integrity = 700
+	max_loaded_items = 40
 	light_mask = "greed-light-mask"
 	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
 

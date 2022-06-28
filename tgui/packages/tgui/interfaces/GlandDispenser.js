@@ -4,17 +4,12 @@ import { Window } from '../layouts';
 
 export const GlandDispenser = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    glands = [],
-  } = data;
+  const { glands = [] } = data;
   return (
-    <Window
-      width={300}
-      height={338}
-      theme="abductor">
+    <Window width={300} height={338} theme="abductor">
       <Window.Content>
         <Section>
-          {glands.map(gland => (
+          {glands.map((gland) => (
             <Button
               key={gland.id}
               width="60px"
@@ -24,11 +19,14 @@ export const GlandDispenser = (props, context) => {
               lineHeight="55px"
               icon="eject"
               backgroundColor={gland.color}
-              content={gland.amount || "0"}
+              content={gland.amount || '0'}
               disabled={!gland.amount}
-              onClick={() => act('dispense', {
-                gland_id: gland.id,
-              })} />
+              onClick={() =>
+                act('dispense', {
+                  gland_id: gland.id,
+                })
+              }
+            />
           ))}
         </Section>
       </Window.Content>

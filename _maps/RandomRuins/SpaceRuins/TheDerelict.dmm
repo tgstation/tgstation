@@ -700,9 +700,7 @@
 /area/ruin/space/derelict/gravity_generator)
 "ek" = (
 /obj/structure/closet/radiation,
-/obj/structure/sign/warning/radiation/rad_area{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/gravity_generator)
 "el" = (

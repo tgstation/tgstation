@@ -4,37 +4,19 @@ import { Window } from '../layouts';
 
 export const Vendatray = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    product_name,
-    product_cost,
-    tray_open,
-    registered,
-    owner_name,
-  } = data;
+  const { product_name, product_cost, tray_open, registered, owner_name } =
+    data;
   return (
-    <Window
-      width={300}
-      height={270}>
+    <Window width={300} height={270}>
       <Window.Content>
-        <Flex
-          mb={1}>
-          <Flex.Item
-            mr={1}>
-            {!!product_name && (
-              <VendingImage />
-            )}
-          </Flex.Item>
-          <Flex.Item
-            grow={1}>
-            <Section
-              fontSize="18px"
-              align="center">
-              <b>{product_name ? product_name : "Empty"}</b>
+        <Flex mb={1}>
+          <Flex.Item mr={1}>{!!product_name && <VendingImage />}</Flex.Item>
+          <Flex.Item grow={1}>
+            <Section fontSize="18px" align="center">
+              <b>{product_name ? product_name : 'Empty'}</b>
               <Box fontSize="16px">
-                <i>{product_name ? product_cost : "N/A"} cr </i>
-                <Button
-                  icon="pen"
-                  onClick={() => act('Adjust')} />
+                <i>{product_name ? product_cost : 'N/A'} cr </i>
+                <Button icon="pen" onClick={() => act('Adjust')} />
               </Box>
             </Section>
             <>
@@ -43,31 +25,30 @@ export const Vendatray = (props, context) => {
                 icon="window-restore"
                 content={tray_open ? 'Open' : 'Closed'}
                 selected={tray_open}
-                onClick={() => act('Open')} />
+                onClick={() => act('Open')}
+              />
               <Button.Confirm
                 fluid
                 icon="money-bill-wave"
                 content="Purchase Item"
                 disabled={!product_name}
-                onClick={() => act('Buy')} />
+                onClick={() => act('Buy')}
+              />
             </>
           </Flex.Item>
         </Flex>
-        {registered?(
-          <Section italics>
-            Pays to the account of {owner_name}.
-          </Section>
-        ):(
+        {registered ? (
+          <Section italics>Pays to the account of {owner_name}.</Section>
+        ) : (
           <>
-            <Section>
-              Tray is unregistered.
-            </Section>
+            <Section>Tray is unregistered.</Section>
             <Button
               fluid
               icon="cash-register"
               content="Register Tray"
               disabled={registered}
-              onClick={() => act('Register')} />
+              onClick={() => act('Register')}
+            />
           </>
         )}
       </Window.Content>
@@ -77,12 +58,11 @@ export const Vendatray = (props, context) => {
 
 const VendingImage = (props, context) => {
   const { data } = useBackend(context);
-  const {
-    product_icon,
-  } = data;
+  const { product_icon } = data;
   return (
     <Section height="100%">
-      <Box as="img"
+      <Box
+        as="img"
         m={1}
         src={`data:image/jpeg;base64,${product_icon}`}
         height="96px"
@@ -90,7 +70,8 @@ const VendingImage = (props, context) => {
         style={{
           '-ms-interpolation-mode': 'nearest-neighbor',
           'vertical-align': 'middle',
-        }} />
+        }}
+      />
     </Section>
   );
 };
