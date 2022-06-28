@@ -3531,9 +3531,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"bhc" = (
-/turf/closed/mineral/snowmountain,
-/area/station/service/kitchen/coldroom)
 "bhj" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -10039,6 +10036,9 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"dbG" = (
+/turf/closed/mineral/snowmountain/coldroom,
+/area/icemoon/underground/explored)
 "dbH" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/mess)
@@ -14318,7 +14318,7 @@
 	dir = 4
 	},
 /obj/structure/sign/warning/cold_temp/directional/south,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "esj" = (
 /obj/structure/cable,
@@ -23226,7 +23226,7 @@
 /area/station/security/prison/work)
 "hkl" = (
 /obj/machinery/gibber,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "hkp" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -26650,7 +26650,7 @@
 	pixel_y = 10
 	},
 /obj/item/food/meat/slab/synthmeat,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "iqr" = (
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -31501,7 +31501,7 @@
 /area/station/maintenance/aft/lesser)
 "jQj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "jQw" = (
 /obj/effect/turf_decal/tile/brown{
@@ -34475,7 +34475,7 @@
 	pixel_x = -24
 	},
 /obj/structure/flora/bush/snow/style_random,
-/turf/open/misc/asteroid/snow/temperatre,
+/turf/open/misc/asteroid/snow/coldroom,
 /area/station/service/kitchen/coldroom)
 "kMD" = (
 /obj/machinery/door/airlock{
@@ -36218,10 +36218,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"lnL" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "lnY" = (
 /obj/structure/table/glass,
 /obj/structure/bedsheetbin,
@@ -40056,7 +40052,7 @@
 	atmos_requirements = list("min_oxy"=1,"max_oxy"=0,"min_plas"=0,"max_plas"=1,"min_co2"=0,"max_co2"=5,"min_n2"=0,"max_n2"=0);
 	minbodytemp = 150
 	},
-/turf/open/misc/asteroid/snow/temperatre,
+/turf/open/misc/asteroid/snow/coldroom,
 /area/station/service/kitchen/coldroom)
 "mFE" = (
 /turf/closed/wall,
@@ -41678,9 +41674,6 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
-"nfM" = (
-/turf/closed/mineral/snowmountain,
-/area/icemoon/underground/explored)
 "nfR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -42178,7 +42171,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "nnk" = (
 /obj/item/chair/plastic,
@@ -45659,6 +45652,9 @@
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"ops" = (
+/turf/closed/mineral/snowmountain/coldroom,
+/area/station/service/kitchen/coldroom)
 "opu" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/structure/disposalpipe/segment{
@@ -47671,7 +47667,7 @@
 /obj/machinery/camera/autoname/directional/north,
 /obj/item/pickaxe,
 /obj/item/toy/figure/chef,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "oVY" = (
 /obj/structure/cable,
@@ -47846,7 +47842,7 @@
 "oYs" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/item/food/chococoin,
-/turf/open/misc/ice/temperate,
+/turf/open/misc/ice/coldroom,
 /area/station/service/kitchen/coldroom)
 "oYu" = (
 /obj/machinery/status_display/evac/directional/south,
@@ -50889,7 +50885,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "pUX" = (
 /obj/effect/turf_decal/tile/brown{
@@ -52447,7 +52443,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/window/left/directional/east,
 /obj/structure/sign/warning/gas_mask/directional/north,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "qwB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -62689,7 +62685,7 @@
 /area/station/cargo/storage)
 "tEO" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "tER" = (
 /obj/effect/turf_decal/siding/wood{
@@ -65456,7 +65452,7 @@
 	desc = "Turn it on and you'll immediately get warmer! Warranty void if left in weather conditions."
 	},
 /obj/structure/table,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "uyO" = (
 /obj/machinery/shower{
@@ -65650,7 +65646,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "uBV" = (
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "uCe" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
@@ -66665,7 +66661,7 @@
 	dir = 1
 	},
 /obj/machinery/disposal/bin,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "uTk" = (
 /obj/structure/disposalpipe/segment,
@@ -68700,7 +68696,7 @@
 /area/station/hallway/primary/starboard)
 "vzg" = (
 /obj/structure/closet/secure_closet/freezer/meat,
-/turf/open/misc/asteroid/snow/temperatre,
+/turf/open/misc/asteroid/snow/coldroom,
 /area/station/service/kitchen/coldroom)
 "vzm" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
@@ -74622,7 +74618,7 @@
 /area/station/engineering/storage/tech)
 "xsw" = (
 /obj/structure/kitchenspike,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "xsD" = (
 /obj/item/food/grown/carrot,
@@ -76105,7 +76101,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "xSg" = (
 /obj/structure/closet/firecloset,
@@ -76895,7 +76891,7 @@
 "ydL" = (
 /obj/machinery/light/cold/directional/west,
 /obj/item/radio/intercom/directional/west,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "ydU" = (
 /obj/effect/turf_decal/tile/blue{
@@ -179246,10 +179242,10 @@ qqC
 qLP
 nCJ
 dMS
-xMq
-xMq
-xMq
-xMq
+dbG
+dbG
+dbG
+dbG
 btU
 btU
 sGf
@@ -179503,10 +179499,10 @@ hHU
 dMS
 nCJ
 dMS
-xMq
-xMq
-xMq
-xMq
+dbG
+dbG
+dbG
+dbG
 btU
 idr
 qSe
@@ -179760,10 +179756,10 @@ dMS
 dMS
 nCJ
 dMS
-xMq
-xMq
-xMq
-xMq
+dbG
+dbG
+dbG
+dbG
 btU
 oYm
 kht
@@ -180017,9 +180013,9 @@ riy
 riy
 ecE
 dMS
-xMq
-xMq
-xMq
+dMS
+ops
+ops
 btU
 btU
 btU
@@ -180274,9 +180270,9 @@ dMS
 dMS
 dMS
 dMS
-nfM
-nfM
-xMq
+ops
+ops
+ops
 btU
 nTA
 lMa
@@ -180531,9 +180527,9 @@ xsw
 ydL
 kMB
 vzg
-bhc
-nfM
-xMq
+ops
+ops
+ops
 btU
 wvL
 jnY
@@ -180788,9 +180784,9 @@ xsw
 uBV
 mFD
 oYs
-bhc
-nfM
-xMq
+ops
+ops
+ops
 btU
 eEN
 tHe
@@ -181044,10 +181040,10 @@ dMS
 uyH
 xRU
 uBV
-bhc
-bhc
-nfM
-xMq
+ops
+ops
+ops
+btU
 btU
 hyM
 ofm
@@ -181301,10 +181297,10 @@ vvb
 pUT
 jQj
 hkl
-bhc
-bhc
-nfM
-xMq
+ops
+ops
+ops
+ops
 btU
 jgV
 qnv
@@ -181557,11 +181553,11 @@ jNy
 dMS
 oVV
 uBV
-bhc
-bhc
-nfM
-nfM
-xMq
+ops
+ops
+ops
+ops
+ops
 btU
 bAU
 olO
@@ -181815,10 +181811,10 @@ dMS
 nmR
 uBV
 qUd
-bhc
-nfM
-nfM
-xMq
+ops
+ops
+ops
+ops
 btU
 qvt
 vae
@@ -182072,10 +182068,10 @@ jre
 iqe
 tEO
 uTh
-bhc
-nfM
-nfM
-xMq
+ops
+ops
+ops
+ops
 btU
 pKf
 vSH
@@ -182329,10 +182325,10 @@ jre
 qww
 esd
 ksK
-bhc
-nfM
-nfM
-xMq
+ops
+ops
+ops
+ops
 btU
 bWB
 ksM
@@ -182587,9 +182583,9 @@ cMO
 qLe
 ksK
 ksK
-nfM
-nfM
-xMq
+ops
+ops
+btU
 btU
 btU
 btU
@@ -182843,14 +182839,14 @@ gEc
 iIo
 xSg
 ksK
-nfM
-nfM
-nfM
-nfM
-xMq
-xMq
-xMq
-xMq
+dbG
+dbG
+dbG
+dbG
+btU
+dbG
+dbG
+dbG
 jUB
 srM
 skU
@@ -183100,12 +183096,12 @@ jre
 jre
 jre
 jre
-nfM
-nfM
-nfM
-nfM
-nfM
-nfM
+dbG
+dbG
+dbG
+dbG
+dbG
+xMq
 xMq
 xMq
 jUB
@@ -183357,12 +183353,12 @@ wSs
 wSs
 wSs
 jre
-nfM
-nfM
-nfM
-nfM
-nfM
-nfM
+dbG
+dbG
+dbG
+dbG
+xMq
+xMq
 udC
 xMq
 xDb
@@ -183614,11 +183610,11 @@ vTp
 jre
 uZH
 jre
-nfM
-nfM
-nfM
-nfM
-nfM
+dbG
+dbG
+dbG
+xMq
+xMq
 udC
 udC
 xMq
@@ -183871,9 +183867,9 @@ jre
 jre
 uiv
 jre
-nfM
-nfM
-nfM
+xMq
+xMq
+xMq
 udC
 udC
 udC
@@ -244266,7 +244262,7 @@ cwh
 izC
 tLF
 aJh
-lnL
+lso
 dEV
 bai
 azw
