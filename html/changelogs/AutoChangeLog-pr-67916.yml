@@ -1,0 +1,4 @@
+author: "Sebbe9123"
+delete-after: True
+changes: 
+  - rscadd: "Adds a special Medical ERT belt + gives it to medical ERT"
