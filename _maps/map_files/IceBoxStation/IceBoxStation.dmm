@@ -54509,11 +54509,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"qUF" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/spawner/random/maintenance,
-/turf/open/space/basic,
-/area/station/maintenance/fore)
 "qUL" = (
 /obj/structure/closet/emcloset,
 /obj/effect/spawner/random/maintenance/two,
@@ -231119,7 +231114,7 @@ fsm
 bln
 bln
 bln
-qUF
+xhx
 oZV
 skl
 fbC

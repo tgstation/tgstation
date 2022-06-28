@@ -816,6 +816,7 @@
 #include "code\datums\components\sitcomlaughter.dm"
 #include "code\datums\components\sizzle.dm"
 #include "code\datums\components\slippery.dm"
+#include "code\datums\components\slow_when_slot_occupied.dm"
 #include "code\datums\components\smooth_tunes.dm"
 #include "code\datums\components\soulstoned.dm"
 #include "code\datums\components\sound_player.dm"
