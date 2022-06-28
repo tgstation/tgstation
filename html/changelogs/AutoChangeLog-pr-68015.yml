@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Frozen stuff is now properly actually recognized as frozen and won't re-freeze."

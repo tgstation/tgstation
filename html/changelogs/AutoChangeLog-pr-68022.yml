@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - bugfix: "Tramstation aux construction console works again as intended."
