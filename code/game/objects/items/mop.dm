@@ -62,21 +62,26 @@
 		return
 
 	if(T)
-		var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you *started* cleaning
+		//set the cleaning speed
+		var/clean_speedies = 1
+		if(user.mind)
+			clean_speedies = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
+
+		//add the cleaning overlay
+		var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
 		if(HAS_TRAIT(T, CURRENTLY_CLEANING))
 			already_cleaning = TRUE
 		else
 			ADD_TRAIT(T, CURRENTLY_CLEANING, src)
 			T.add_overlay(GLOB.cleaning_bubbles)
 
+		//do the cleaning
 		user.visible_message(span_notice("[user] begins to clean \the [T] with [src]."), span_notice("You begin to clean \the [T] with [src]..."))
-		var/clean_speedies = 1
-		if(user.mind)
-			clean_speedies = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
 		if(do_after(user, mopspeed*clean_speedies, target = T))
 			to_chat(user, span_notice("You finish mopping."))
 			clean(T, user)
 
+		//remove the cleaning overlay
 		if(!already_cleaning)
 			T.cut_overlay(GLOB.cleaning_bubbles)
 			REMOVE_TRAIT(T, CURRENTLY_CLEANING, src)

@@ -152,18 +152,21 @@
 			log_combat(user, C, "touched", src, log_object)
 
 	else if(istype(A) && (src in user))
-		var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you *started* cleaning
+		//add the cleaning overlay
+		var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
 		if(HAS_TRAIT(A, CURRENTLY_CLEANING))
 			already_cleaning = TRUE
 		else
 			ADD_TRAIT(A, CURRENTLY_CLEANING, src)
 			A.add_overlay(GLOB.cleaning_bubbles)
 
+		//do the cleaning
 		user.visible_message(span_notice("[user] starts to wipe down [A] with [src]!"), span_notice("You start to wipe down [A] with [src]..."))
 		if(do_after(user,30, target = A))
 			user.visible_message(span_notice("[user] finishes wiping off [A]!"), span_notice("You finish wiping off [A]."))
 			A.wash(CLEAN_SCRUB)
 
+		//remove the cleaning overlay
 		if(!already_cleaning)
 			A.cut_overlay(GLOB.cleaning_bubbles)
 			REMOVE_TRAIT(A, CURRENTLY_CLEANING, src)

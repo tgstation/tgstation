@@ -131,11 +131,14 @@
 	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
+
+	//set the cleaning speed
 	var/clean_speedies = 1 * cleanspeed
 	if(user.mind)
 		clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
 
-	var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you *started* cleaning
+	//add the cleaning overlay
+	var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
 	if(HAS_TRAIT(target, CURRENTLY_CLEANING))
 		already_cleaning = TRUE
 	else
@@ -189,6 +192,7 @@
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)
 
+	//remove the cleaning overlay
 	if(!already_cleaning)
 		target.cut_overlay(GLOB.cleaning_bubbles)
 		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
