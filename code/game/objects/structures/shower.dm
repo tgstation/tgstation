@@ -34,8 +34,10 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	density = FALSE
 	use_power = NO_POWER_USE
 	subsystem_type = /datum/controller/subsystem/processing/plumbing
-	///Is the shower on or off?
-	var/on = FALSE
+	///Does the user want the shower on or off?
+	var/intended_on = FALSE
+	///Is the shower actually spitting out water currently
+	var/actually_on = FALSE
 	///What temperature the shower reagents are set to.
 	var/current_temperature = SHOWER_NORMAL
 	///What sound will be played on loop when the shower is on and pouring water.
@@ -104,23 +106,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	return ..()
 
 /obj/machinery/shower/interact(mob/user)
-	if(reagents.total_volume < 5)
-		to_chat(user ,span_notice("\The [src] is dry."))
+	. = ..()
+	if(!.)
+		return
+
+	intended_on = !intended_on
+	if(!update_actually_on(intended_on))
+		to_chat(user, span_notice("\The [src] is dry."))
 		return FALSE
-	on = !on
-	update_appearance()
-	handle_mist()
-	add_fingerprint(user)
-	if(on)
-		begin_processing()
-		process(SSFLUIDS_DT)
-		soundloop.start()
-		COOLDOWN_START(src, timed_cooldown, SHOWER_TIMED_LENGTH)
-	else
-		soundloop.stop()
-		if(isopenturf(loc))
-			var/turf/open/tile = loc
-			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
+
+	return TRUE
 
 /obj/machinery/shower/analyzer_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -193,7 +188,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/update_overlays()
 	. = ..()
-	if(!on)
+	if(!actually_on)
 		return
 	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
@@ -213,27 +208,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
 	// If there was already mist, and the shower was turned off (or made cold): remove the existing mist in 25 sec
 	var/obj/effect/mist/mist = locate() in loc
-	if(!mist && on && current_temperature != SHOWER_FREEZING)
+	if(!mist && actually_on && current_temperature != SHOWER_FREEZING)
 		addtimer(CALLBACK(src, .proc/make_mist), 5 SECONDS)
 
-	if(mist && (!on || current_temperature == SHOWER_FREEZING))
+	if(mist && !(actually_on && current_temperature != SHOWER_FREEZING))
 		addtimer(CALLBACK(src, .proc/clear_mist), 25 SECONDS)
 
 /obj/machinery/shower/proc/make_mist()
 	var/obj/effect/mist/mist = locate() in loc
-	if(!mist && on && current_temperature != SHOWER_FREEZING)
+	if(!mist && actually_on && current_temperature != SHOWER_FREEZING)
 		var/obj/effect/mist/new_mist = new /obj/effect/mist(loc)
 		new_mist.color = mix_color_from_reagents(reagents.reagent_list)
 
 /obj/machinery/shower/proc/clear_mist()
 	var/obj/effect/mist/mist = locate() in loc
-	if(mist && (!on || current_temperature == SHOWER_FREEZING))
+	if(mist && !(actually_on && current_temperature != SHOWER_FREEZING))
 		qdel(mist)
 
 
 /obj/machinery/shower/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(on && reagents.total_volume)
+	if(actually_on && reagents.total_volume)
 		wash_atom(AM)
 
 /obj/machinery/shower/proc/wash_atom(atom/target)
@@ -243,44 +238,75 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(isliving(target))
 		check_heat(target)
 
-/obj/machinery/shower/process(delta_time)
-	var/updated = FALSE
+/**
+ * Toggle whether shower is actually on and outputting water.
+ * May not match what user asked to happen by clicking.
+ * Returns TRUE if the state was changed.
+ *
+ * Arguments:
+ * * new_on_state - new state
+ */
+/obj/machinery/shower/proc/update_actually_on(new_on_state)
+	if(new_on_state == actually_on)
+		return FALSE
 
-	// the TIMED mode cutoff feature
-	if(on && mode == SHOWER_MODE_TIMED && COOLDOWN_FINISHED(src, timed_cooldown))
-		on = FALSE
-		updated = TRUE
+	// Check if we have enough reagents to actually turn on.
+	if(new_on_state && reagents.total_volume < SHOWER_SPRAY_VOLUME)
+		return FALSE
 
-	// possible reactivation in FOREVER mode
-	else if(!on && mode == SHOWER_MODE_FOREVER && reagents.total_volume >= SHOWER_SPRAY_VOLUME)
-		on = TRUE
-		updated = TRUE
+	actually_on = new_on_state
 
-	if(updated)
-		update_appearance()
-		handle_mist()
-		if(on)
-			soundloop.start()
-
-	if(on && reagents.total_volume >= SHOWER_SPRAY_VOLUME)
-		wash_atom(loc)
-		for(var/atom/movable/movable_content as anything in loc)
-			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
-				wash_atom(movable_content) // Reagent exposure is handled in wash_atom
-
-		reagents.remove_any(SHOWER_SPRAY_VOLUME)
-		return
-
-	// FOREVER's gimmick is it doesn't turn off, it just pauses until reagents.total_volume > 0 again
-	on = FALSE
-	soundloop.stop()
-	handle_mist()
-	if(has_water_reclaimer)
-		reagents.add_reagent(reagent_id, refill_rate * delta_time)
 	update_appearance()
-	// Only kill if not running forever and we have nothing to reclaim
-	if(mode != SHOWER_MODE_FOREVER && reagents.total_volume >= reagents.maximum_volume)
+	handle_mist()
+	if(new_on_state)
+		begin_processing()
+		soundloop.start()
+		COOLDOWN_START(src, timed_cooldown, SHOWER_TIMED_LENGTH)
+	else
+		soundloop.stop()
+		if(isopenturf(loc))
+			var/turf/open/tile = loc
+			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
+
+/obj/machinery/shower/process(delta_time)
+	// the TIMED mode cutoff feature. User has to manually reactivate.
+	if(intended_on && mode == SHOWER_MODE_TIMED && COOLDOWN_FINISHED(src, timed_cooldown))
+		// the TIMED mode cutoff feature. User has to manually reactivate.
+		intended_on = FALSE
+
+	// Shower should shut off now and/or reclaim water.
+	if(!intended_on)
+		update_actually_on(FALSE)
+
+		// Reclaiming
+		if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
+			reagents.add_reagent(reagent_id, refill_rate * delta_time)
+			return
+
 		return PROCESS_KILL
+
+	// Reminder: from here on out, intended_on is TRUE.
+
+	// Turn on if appropriate.
+	if(!actually_on)
+		// update_actually_on() will reject if not possible to reactivate.
+		// SHOWER_MODE_FOREVER mode doesn't actually kill process in order to reactivate later.
+		if(!update_actually_on(TRUE))
+			return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
+	else if(reagents.total_volume < SHOWER_SPRAY_VOLUME)
+		// Out of water, stop.
+		// SHOWER_MODE_FOREVER mode doesn't actually kill process in order to reactivate later.
+		update_actually_on(FALSE)
+		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
+
+	// Wash up.
+
+	wash_atom(loc)
+	for(var/atom/movable/movable_content as anything in loc)
+		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
+			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
+
+	reagents.remove_any(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/iron(drop_location(), 2)
