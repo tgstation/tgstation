@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "the Gravity Generator no longer plays several looping sounds."
+  - bugfix: "Oldstation's gravity generator now properly spawns off."
