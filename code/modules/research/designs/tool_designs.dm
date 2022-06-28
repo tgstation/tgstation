@@ -34,6 +34,16 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/rangedanalyzer
+	name = "Experimental Long-range Gas Analyzer"
+	desc = "An experimental gas analyzer capable of operating at long distance"
+	id = "rangedanalyzer"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 300, /datum/material/gold = 100)
+	build_path = /obj/item/analyzer/ranged
+	category = list("Tool design")
+	departmental_flags= DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/rpd
 	name = "Rapid Pipe Dispenser (RPD)"
 	id = "rpd_loaded"

@@ -191,3 +191,27 @@
 	// we let the join apply newlines so we do need handholding
 	to_chat(user, jointext(message, "\n"), type = MESSAGE_TYPE_INFO)
 	return TRUE
+
+/obj/item/analyzer/ranged
+	desc = "A hand-held long-range environmental scanner which reports current gas levels."
+	name = "Long-range gas analyzer"
+	custom_price = PAYCHECK_LOWER * 0.9
+	icon = 'icons/obj/device.dmi'
+	icon_state = "analyzer"
+	inhand_icon_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	tool_behaviour = TOOL_ANALYZER
+	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
+
+/obj/item/analyzer/ranged/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	atmos_scan(user, target)
