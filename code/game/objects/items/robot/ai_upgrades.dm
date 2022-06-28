@@ -25,7 +25,7 @@
 		AI.hack_software = TRUE
 		log_silicon("[key_name(user)] has upgraded [key_name(AI)] with a [src].")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
-	to_chat(user, span_notice("You upgrade [AI]. [src] is consumed in the process."))
+	to_chat(user, span_notice("You install [src], upgrading [AI]."))
 	qdel(src)
 	return TRUE
 

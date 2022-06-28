@@ -247,6 +247,8 @@
 
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
+						if(brain.braintype == "Android")
+							A.posibrain_core = TRUE
 						SSblackbox.record_feedback("amount", "ais_created", 1)
 						deadchat_broadcast(" has been brought online at <b>[get_area_name(A, TRUE)]</b>.", span_name("[A]"), follow_target=A, message_type=DEADCHAT_ANNOUNCEMENT)
 						qdel(src)

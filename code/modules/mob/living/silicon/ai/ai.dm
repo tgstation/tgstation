@@ -109,6 +109,8 @@
 
 	var/atom/movable/screen/ai/modpc/interfaceButton
 
+	var/posibrain_core = FALSE
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -379,14 +381,34 @@
 
 /mob/living/silicon/ai/wirecutter_act(mob/living/user, obj/item/tool)
 	. = ..()
-	var/consent = tgui_alert(src, "[user] is attempting to disconnect your neural networks, open your panel?", "Neural Network Disconnection", list("Yes", "No"))
-	if(consent == "No")
+	if(stat == DEAD)
+		to_chat(user, span_warning("Neural networks corrupted!"))
 		return
+	var/consent = tgui_alert(src, "[user] is attempting to disconnect your neural networks, open your access panel?", "Neural Network Disconnection", list("Yes", "No"))
+	if(consent == "No" || IS_MALF_AI(src))
+		to_chat(user, span_notice("[src] refuses to open its access panel."))
+		return
+	balloon_alert(src, "opened access panel")
+	balloon_alert(user, "disconnecting neural networks")
 	if(!tool.use_tool(src, user, 10 SECONDS))
 		return
 	balloon_alert(user, "disconnected neural networks")
+	if(!ai_to_mmi())
+		return
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/mob/living/silicon/ai/proc/ai_to_mmi()
 	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src))
-	ai_core.brain = new(src)
+	var/mmi_type
+	if(posibrain_core)
+		mmi_type = new/obj/item/mmi/posibrain(src)
+	else
+		mmi_type = new/obj/item/mmi(src)
+	if(hack_software)
+		new/obj/item/malf_upgrade(get_turf(src))
+	disconnect_shell()
+	ShutOffDoomsdayDevice()
+	ai_core.brain = mmi_type
 	ai_core.brain.brain = new /obj/item/organ/internal/brain(ai_core.brain)
 	ai_core.brain.brain.organ_flags |= ORGAN_FROZEN
 	ai_core.brain.brain.name = "[real_name]'s brain"
@@ -401,6 +423,7 @@
 	mind.transfer_to(ai_core.brain.brainmob)
 	ai_core.brain.update_appearance()
 	qdel(src)
+	return TRUE
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
