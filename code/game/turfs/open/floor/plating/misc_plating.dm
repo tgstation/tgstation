@@ -74,6 +74,7 @@
 // When you want real, genuine snowed plating in your kitchen's cold room.
 /turf/open/floor/plating/snowed/coldroom
 	planetary_atmos = FALSE
+	temperature = COLD_ROOM_TEMP
 
 /turf/open/floor/plating/snowed/coldroom/Initialize(mapload)
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS

@@ -54005,7 +54005,7 @@
 /area/station/hallway/primary/fore)
 "qUd" = (
 /obj/structure/reagent_dispensers/cooking_oil,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "qUe" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
