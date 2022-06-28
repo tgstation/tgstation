@@ -564,9 +564,10 @@
 
 	see_invisible = initial(see_invisible)
 	see_in_dark = initial(see_in_dark)
-	set_sight(initial(sight))
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		set_sight(null)
+	else
+		set_sight(initial(sight))
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.

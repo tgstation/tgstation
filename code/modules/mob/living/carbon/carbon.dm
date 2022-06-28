@@ -557,12 +557,12 @@
 		else if(is_secret_level(z))
 			set_sight(initial(sight))
 		else
-			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS|SEE_BLACKNESS)
+			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		return
 
-	set_sight(initial(sight))
+	var/new_sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
 	var/obj/item/organ/internal/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
@@ -570,7 +570,7 @@
 	else
 		see_invisible = E.see_invisible
 		see_in_dark = E.see_in_dark
-		add_sight(E.sight_flags)
+		new_sight |= E.sight_flags
 		if(!isnull(E.lighting_alpha))
 			lighting_alpha = E.lighting_alpha
 
@@ -581,7 +581,7 @@
 
 	if(glasses)
 		var/obj/item/clothing/glasses/G = glasses
-		add_sight(G.vision_flags)
+		new_sight |= G.vision_flags
 		see_in_dark = max(G.darkness_view, see_in_dark)
 		if(G.invis_override)
 			see_invisible = G.invis_override
@@ -595,23 +595,24 @@
 		see_in_dark = max(see_in_dark, 8)
 
 	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
-		add_sight(SEE_TURFS)
+		new_sight |= SEE_TURFS
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
-		add_sight(SEE_MOBS)
+		new_sight |= SEE_MOBS
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
-		add_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)
 		see_invisible = see_override
 
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		set_sight(null)
+		new_sight = SEE_BLACKNESS
 
+	set_sight(new_sight)
 	return ..()
 
 

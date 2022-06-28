@@ -623,7 +623,7 @@
 
 	see_invisible = initial(see_invisible)
 	see_in_dark = initial(see_in_dark)
-	set_sight(initial(sight))
+	var/new_sight = initial(sight)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	if(client.eye != src)
@@ -632,22 +632,22 @@
 			return
 
 	if(sight_mode & BORGMESON)
-		add_sight(SEE_TURFS)
+		new_sight |= SEE_TURFS
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGMATERIAL)
-		add_sight(SEE_OBJS)
+		new_sight |= SEE_OBJS
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGXRAY)
-		add_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_invisible = SEE_INVISIBLE_LIVING
 		see_in_dark = 8
 
 	if(sight_mode & BORGTHERM)
-		add_sight(SEE_MOBS)
+		new_sight |= SEE_MOBS
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		see_invisible = min(see_invisible, SEE_INVISIBLE_LIVING)
 		see_in_dark = 8
@@ -656,8 +656,9 @@
 		see_invisible = see_override
 
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		set_sight(null)
+		new_sight = null
 
+	set_sight(new_sight)
 	sync_lighting_plane_alpha()
 
 /mob/living/silicon/robot/update_stat()

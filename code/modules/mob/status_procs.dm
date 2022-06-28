@@ -109,6 +109,9 @@
 
 /mob/proc/set_sight(new_value)
 	SHOULD_CALL_PARENT(TRUE)
+	// Can't turn this off, because we need it to make a plane master we need exist
+	// Sorry brother
+	new_value |= SEE_BLACKNESS
 	if(sight == new_value)
 		return
 	var/old_sight = sight
