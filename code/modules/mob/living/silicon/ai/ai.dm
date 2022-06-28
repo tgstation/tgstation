@@ -377,6 +377,30 @@
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
+/mob/living/silicon/ai/wirecutter_act(mob/living/user, obj/item/tool)
+	. = ..()
+	var/consent = tgui_alert(src, "[user] is attempting to disconnect your neural networks, open your panel?", "Neural Network Disconnection", list("Yes", "No"))
+	if(consent == "No")
+		return
+	if(!tool.use_tool(src, user, 10 SECONDS))
+		return
+	balloon_alert(user, "disconnected neural networks")
+	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src))
+	ai_core.brain = new(src)
+	ai_core.brain.brain = new /obj/item/organ/internal/brain(ai_core.brain)
+	ai_core.brain.brain.organ_flags |= ORGAN_FROZEN
+	ai_core.brain.brain.name = "[real_name]'s brain"
+	ai_core.brain.name = "[initial(ai_core.brain.name)]: [real_name]"
+	ai_core.brain.set_brainmob(new /mob/living/brain(ai_core.brain))
+	ai_core.brain.brainmob.name = src.real_name
+	ai_core.brain.brainmob.real_name = src.real_name
+	ai_core.brain.brainmob.container = ai_core.brain
+	ai_core.brain.forceMove(ai_core)
+	if(ai_core.brain.brainmob.stat == DEAD)
+		ai_core.brain.brainmob.set_stat(CONSCIOUS)
+	mind.transfer_to(ai_core.brain.brainmob)
+	ai_core.brain.update_appearance()
+	qdel(src)
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
