@@ -38,7 +38,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// list of current relays this plane is utilizing to render
 	var/list/atom/movable/render_plane_relay/relays = list()
 
-/atom/movable/screen/plane_master/New(datum/plane_master_group/home, offset = 0)
+/atom/movable/screen/plane_master/New(atom/loc, datum/plane_master_group/home, offset = 0)
 	src.offset = offset
 	true_alpha = alpha
 	real_plane = plane
@@ -60,6 +60,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /// Sets the plane group that owns us, it also determines what screen we render to
 /atom/movable/screen/plane_master/proc/set_home(datum/plane_master_group/home)
+	if(!istype(home, /datum/plane_master_group))
+		qdel(src)
+		return
 	src.home = home
 	if(home.map)
 		screen_loc = "[home.map]:[screen_loc]"
