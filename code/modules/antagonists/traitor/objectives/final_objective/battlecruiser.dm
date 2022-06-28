@@ -1,5 +1,5 @@
 /// The minimum number of ghosts and observers needed before handing out battlecruiser objectives.
-#define MIN_GHOSTS_FOR_BATTLECRUISER 8
+#define MIN_GHOSTS_FOR_BATTLECRUISER 1
 
 /datum/traitor_objective/final/battlecruiser
 	name = "Reveal Station Coordinates to nearby Syndicate Battlecruiser"
