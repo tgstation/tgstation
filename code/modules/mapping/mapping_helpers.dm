@@ -189,7 +189,6 @@
 	else
 		airlock.locked = TRUE
 
-
 /obj/effect/mapping_helpers/airlock/unres
 	name = "airlock unrestricted side helper"
 	icon_state = "airlock_unres_helper"
