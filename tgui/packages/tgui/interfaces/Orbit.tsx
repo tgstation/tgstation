@@ -24,10 +24,12 @@ enum Tab {
   Misc,
 }
 
-const GroupNames = [
-  ['Antagonists', 'Alive'],
-  ['Ghosts', 'Dead'],
-  ['Misc', 'NPCs'],
+type Group = [Observable[], Observable[]];
+
+const GroupLabels = [
+  [{ name: 'Antagonists', color: 'bad' }, { name: 'Alive' }],
+  [{ name: 'Dead' }, { name: 'Ghosts' }],
+  [{ name: 'Misc' }, { name: 'NPCs' }],
 ] as const;
 
 export const Orbit = (props, context) => {
@@ -127,24 +129,11 @@ const ObservableContent = (props, context) => {
     ''
   );
   const [tab, setTab] = useLocalState(context, 'tab', Tab.Alive);
-  let filteredObservables: [Observable[], Observable[]] = [[], []];
-  // Do we have a search query? Filter each list.
-  if (searchQuery) {
-    const poiGroupA: Observable[] = list[0].filter((observable) => {
-      return observable.name
-        ?.toLowerCase()
-        ?.includes(searchQuery?.toLowerCase());
-    });
-    const poiGroupB: Observable[] = list[1].filter((observable) => {
-      return observable.name
-        ?.toLowerCase()
-        ?.includes(searchQuery?.toLowerCase());
-    });
-    filteredObservables = [poiGroupA, poiGroupB];
-  }
-  const displayedList = searchQuery ? filteredObservables : list;
-  const sectionTitle = GroupNames[tab];
+  const displayedList = !searchQuery
+    ? list
+    : getFilteredList(list, searchQuery);
   const listsEmpty = !displayedList[0]?.length && !displayedList[1]?.length;
+  const sectionTitle = GroupLabels[tab];
 
   return (
     <Stack fill vertical>
@@ -175,8 +164,8 @@ const TableDisplay = (props, context) => {
       fill
       scrollable
       title={
-        <Box italic color="good" ml={7}>
-          {title}
+        <Box italic color={title.color || 'good'} ml={7}>
+          {title.name}
         </Box>
       }>
       {!!list?.length && (
@@ -223,7 +212,7 @@ const TableRow = (props: { observable: Observable }, context) => {
 };
 
 /** Returns an array of two Observable[] lists based on the tabs. */
-const getCurrentLists = (tab: Tab, data: Data) => {
+const getCurrentLists = (tab: Tab, data: Data): Group => {
   const { alive, antagonists, dead, ghosts, misc, npcs } = data;
   switch (tab) {
     case Tab.Alive:
@@ -233,12 +222,12 @@ const getCurrentLists = (tab: Tab, data: Data) => {
     case Tab.Misc:
       return [misc, npcs];
     default:
-      return alive;
+      return [antagonists, alive];
   }
 };
 
 /** Colorizes the amount of orbiters */
-const getColor = (orbiters: number) => {
+const getColor = (orbiters: number): null | string => {
   if (!orbiters) {
     return null;
   } else if (orbiters < 2) {
@@ -250,4 +239,23 @@ const getColor = (orbiters: number) => {
   } else {
     return 'bad';
   }
+};
+
+/**
+ * Filters both lists for the search query.
+ *
+ * Returns:
+ *  an array of two Observable[]
+ */
+const getFilteredList = (list: Group, searchQuery: string): Group => {
+  let filteredObservables: Group = [[], []];
+  const poiGroupA: Observable[] = list[0].filter((observable) => {
+    return observable.name?.toLowerCase()?.includes(searchQuery?.toLowerCase());
+  });
+  const poiGroupB: Observable[] = list[1].filter((observable) => {
+    return observable.name?.toLowerCase()?.includes(searchQuery?.toLowerCase());
+  });
+  filteredObservables = [poiGroupA, poiGroupB];
+
+  return filteredObservables;
 };
