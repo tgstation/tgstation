@@ -23,12 +23,8 @@
 /datum/unit_test/barsigns_name/Run()
 	var/list/existing_names = list()
 
-	for(var/sign_type in subtypesof(/datum/barsign))
+	for(var/sign_type in subtypesof(/datum/barsign) - /datum/barsign/hiddensigns)
 		var/datum/barsign/sign = new sign_type()
-
-		// Hidden bar signs aren't expected to have a name.
-		if(sign.hidden)
-			continue
 
 		if(!sign.name)
 			TEST_FAIL("[sign_type] does not have a name.")
