@@ -349,12 +349,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master/emissive
 	name = "Emissive"
 	documentation = "This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.\
- 		<br>Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.\
- 		<br>Emissive blockers are pasted with an atom color that converts them to be entirely some different color.\
- 		<br>Emissive overlays and emissive blockers are put onto the same plane (This one).\
- 		<br>The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.\
- 		<br>A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.\
- 		<br>This is then used to alpha mask the lighting plane."
+		<br>Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.\
+		<br>Emissive blockers are pasted with an atom color that converts them to be entirely some different color.\
+		<br>Emissive overlays and emissive blockers are put onto the same plane (This one).\
+		<br>The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.\
+		<br>A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.\
+		<br>This is then used to alpha mask the lighting plane."
 	plane = EMISSIVE_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_RENDER_TARGET
