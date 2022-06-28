@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/datum/plane_master_group/group = master_groups[group_key]
 		group.build_plane_masters(starting_offset, ending_offset)
 
-/// Returns the plane master that match the input plane from the passed in group
+/// Returns the plane master that matches the input plane from the passed in group
 /datum/hud/proc/get_plane_master(plane, group_key = PLANE_GROUP_MAIN)
 	var/plane_key = "[plane]"
 	var/datum/plane_master_group/group = master_groups[group_key]

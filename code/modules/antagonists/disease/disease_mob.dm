@@ -239,7 +239,7 @@ the new instance inside the host to be updated to the template's stats.
 			A.Buy(src, TRUE, FALSE)
 	if(freemove_end_timerid)
 		deltimer(freemove_end_timerid)
-	sight = SEE_SELF
+	set_sight(SEE_SELF)
 
 /mob/camera/disease/proc/add_infection(datum/disease/advance/sentient_disease/V)
 	disease_instances += V

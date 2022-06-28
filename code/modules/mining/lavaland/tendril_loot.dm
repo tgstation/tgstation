@@ -277,7 +277,7 @@
 
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
-	user.sight |= sight_flags
+	user.add_sight(sight_flags)
 	if(!isnull(lighting_alpha))
 		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
 
@@ -1005,7 +1005,7 @@
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
 	user.alpha = 150
 	user.invisibility = INVISIBILITY_OBSERVER // so hostile mobs cant see us or target us
-	user.sight |= SEE_SELF // so we can see us
+	user.add_sight(SEE_SELF) // so we can see us
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
@@ -1017,7 +1017,7 @@
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
 	user.invisibility = 0
-	user.sight &= ~SEE_SELF
+	user.clear_sight(SEE_SELF)
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))
 	playsound(src, 'sound/magic/summonitems_generic.ogg', 50, TRUE)

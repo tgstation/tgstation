@@ -225,31 +225,43 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "This is quite fiddly, so bear with me. By default (in byond) everything in the game is rendered onto plane 0. It's the default plane. \
 		<br>But, because we've moved everything we control off plane 0, all that's left is stuff byond internally renders. \
 		<br>What we're doing here is using plane 0 to capture \"Blackness\", or the mask that hides tiles. Note, this only works if our mob has the SEE_PIXELS or SEE_BLACKNESS sight flags.\
-		<br>We relay this plane master (on plane 0) down to other copies of itself, depending on the layer your mob is on at the moment."
+		<br>We relay this plane master (on plane 0) down to other copies of itself, depending on the layer your mob is on at the moment.\
+		<br>Of note: plane master blackness, and the blackness that comes from having nothing to display look similar, but are not the same thing,\
+		mind yourself when you're working with this plane, you might have accidentially been trying to work with the wrong thing."
 	plane = BLACKNESS_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	// Lemon todo: this breaks the plane master, look into why. it's prob just the alpha
-//	color = list(null, null, null, "#0000", "#000f")
-	blend_mode = BLEND_MULTIPLY
-	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR | PIXEL_SCALE
-	//byond internal end
+	// Note: we don't set this to blend multiply because it just dies when its alpha is modified, since there's no backdrop I think
 
 /atom/movable/screen/plane_master/blackness/show_to(mob/mymob)
 	. = ..()
 	if(offset != 0)
 		// You aren't the source? don't change yourself
 		return
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, .proc/handle_sight_value)
+	handle_sight_value(mymob, mymob.sight, 0)
 	var/datum/hud/hud = home.our_hud
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
 	offset_change(0, hud.current_plane_offset)
 
-/atom/movable/screen/plane_master/blackness/hide_from(mob/mymob)
+/atom/movable/screen/plane_master/blackness/hide_from(mob/oldmob)
 	if(offset != 0)
 		return
+	UnregisterSignal(oldmob, COMSIG_MOB_SIGHT_CHANGE)
 	var/datum/hud/hud = home.our_hud
 	if(hud)
 		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+
+/// Reacts to some new plane master value
+/atom/movable/screen/plane_master/blackness/proc/handle_sight_value(datum/source, new_sight, old_sight)
+	SIGNAL_HANDLER
+	// Tryin to set a sight flag that cuts blackness eh?
+	if(new_sight & BLACKNESS_CUTTING)
+		// Better set alpha then, so it'll actually work
+		// We just get the one because there is only one blackness PM, it's just mirrored around
+		disable_alpha()
+	else
+		enable_alpha()
+
 
 /atom/movable/screen/plane_master/blackness/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER

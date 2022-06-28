@@ -106,3 +106,17 @@
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)
+
+/mob/proc/set_sight(new_value)
+	SHOULD_CALL_PARENT(TRUE)
+	if(sight == new_value)
+		return
+	var/old_sight = sight
+	sight = new_value
+	SEND_SIGNAL(src, COMSIG_MOB_SIGHT_CHANGE, new_value, old_sight)
+
+/mob/proc/add_sight(new_value)
+	set_sight(sight | new_value)
+
+/mob/proc/clear_sight(new_value)
+	set_sight(sight & ~new_value)
