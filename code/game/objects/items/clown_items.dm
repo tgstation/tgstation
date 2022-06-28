@@ -134,13 +134,20 @@
 	var/clean_speedies = 1 * cleanspeed
 	if(user.mind)
 		clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
+
+	var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you *started* cleaning
+	if(HAS_TRAIT(target, CURRENTLY_CLEANING))
+		already_cleaning = TRUE
+	else
+		ADD_TRAIT(target, CURRENTLY_CLEANING, src)
+		target.add_overlay(GLOB.cleaning_bubbles)
+
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
 		to_chat(user, span_warning("You need to take that [target.name] off before cleaning it!"))
 	else if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message(span_notice("[user] begins to scrub \the [target.name] out with [src]."), span_warning("You begin to scrub \the [target.name] out with [src]..."))
-		target.add_overlay(GLOB.cleaning_bubbles)
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, span_notice("You scrub \the [target.name] out."))
 			var/obj/effect/decal/cleanable/cleanies = target
@@ -158,7 +165,6 @@
 		return
 	else if(istype(target, /obj/structure/window))
 		user.visible_message(span_notice("[user] begins to clean \the [target.name] with [src]..."), span_notice("You begin to clean \the [target.name] with [src]..."))
-		target.add_overlay(GLOB.cleaning_bubbles)
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, span_notice("You clean \the [target.name]."))
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -173,7 +179,6 @@
 			decreaseUses(user)
 	else
 		user.visible_message(span_notice("[user] begins to clean \the [target.name] with [src]..."), span_notice("You begin to clean \the [target.name] with [src]..."))
-		target.add_overlay(GLOB.cleaning_bubbles)
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, span_notice("You clean \the [target.name]."))
 			if(user && isturf(target))
@@ -183,7 +188,10 @@
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)
-	target.cut_overlay(GLOB.cleaning_bubbles)
+
+	if(!already_cleaning)
+		target.cut_overlay(GLOB.cleaning_bubbles)
+		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
 	return
 
 /obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)
