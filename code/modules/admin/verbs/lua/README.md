@@ -115,6 +115,9 @@ Like with signal handlers written in DM, Lua signal handlers should not sleep.
 ### SS13.unregister_signal(datum, signal)
 Unregister a signal previously registered using `SS13.register_signal`.
 
+### SS13.set_timeout(time, func)
+Creates a timer which will execute `func` after `time` **seconds**. `func` should not expect to be passed any arguments, as it will not be passed any.
+
 ---
 
 ## Internal globals

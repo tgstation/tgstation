@@ -75,4 +75,19 @@ function SS13.unregister_signal(datum, signal)
 	SS13.signal_handlers[ref][signal] = {}
 end
 
+function SS13.set_timeout(time, func)
+	if not SS13.timeouts then
+		SS13.timeouts = {}
+	end
+	local callback = SS13.new("/datum/callback", SS13.state, "call_function")
+	local callback_ref = dm.global_proc("REF", callback)
+	SS13.timeouts[callback_ref] = function()
+		func()
+		SS13.timeouts[callback_ref] = nil
+	end
+	local path = {"SS13", "timeouts", callback_ref}
+	callback:set_var("arguments", {path})
+	dm.global_proc("_addtimer", callback, time*10, 8, nil, debug.info(1, "sl"))
+end
+
 return SS13
