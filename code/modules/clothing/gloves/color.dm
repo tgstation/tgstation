@@ -186,6 +186,14 @@
 	icon_state = "brown"
 	inhand_icon_state = "browngloves"
 
+// Brown gloves intended to be paired with winter coats (specifically EVA winter coats)
+/obj/item/clothing/gloves/color/brown/protects_cold
+	name = "extravehicular gloves"
+	desc = "A pair of thick brown gloves, lined to protect the wearer from the cold."
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	resistance_flags = NONE
+
 /obj/item/clothing/gloves/color/captain
 	desc = "Regal blue gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky."
 	name = "captain's gloves"

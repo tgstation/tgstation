@@ -63,6 +63,17 @@
 	inhand_icon_state = "iceboots"
 	clothing_flags = NOSLIP_ICE
 
+// A pair of ice boots intended for general crew EVA use - see EVA winter coat for comparison.
+/obj/item/clothing/shoes/winterboots/ice_boots/eva
+	name = "extravehicular hiking boots"
+	desc = "A heavy pair of boots with grips applied to the bottom to keep the wearer vertical while walking in the harsh snow."
+	w_class = WEIGHT_CLASS_BULKY
+	slowdown = 0.66
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 10)
+	strip_delay = 4 SECONDS
+	equip_delay_other = 4 SECONDS
+	resistance_flags = NONE
+
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
 	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
