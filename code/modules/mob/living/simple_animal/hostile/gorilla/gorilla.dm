@@ -21,7 +21,7 @@
 	response_disarm_simple = "challenge"
 	response_harm_continuous = "thumps"
 	response_harm_simple = "thump"
-	speed = 1
+	speed = 0.5
 	melee_damage_lower = 15
 	melee_damage_upper = 18
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)
@@ -118,7 +118,8 @@
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic
 	name = "Cargorilla" // Overriden, normally
-	desc = "Cargo's pet gorilla."
+	icon = 'icons/mob/cargorillia.dmi'
+	desc = "Cargo's pet gorilla. They seem to have an 'I love Mom' tattoo."
 	maxHealth = 200
 	health = 200
 	faction = list("neutral", "monkey", "jungle")

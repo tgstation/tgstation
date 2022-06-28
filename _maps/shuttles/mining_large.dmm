@@ -427,9 +427,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/mining/large)
 "H" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)

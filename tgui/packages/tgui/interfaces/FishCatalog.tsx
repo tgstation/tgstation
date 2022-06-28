@@ -7,60 +7,58 @@ import { Window } from '../layouts';
 import { capitalize } from 'common/string';
 
 type FishingTips = {
-  spots : string,
-  difficulty: string,
-  favorite_bait: string,
-  disliked_bait: string,
-  traits: string[]
-}
+  spots: string;
+  difficulty: string;
+  favorite_bait: string;
+  disliked_bait: string;
+  traits: string[];
+};
 
 type FishInfo = {
-  name: string,
-  desc: string,
-  fluid: string,
-  temp_min: number,
-  temp_max: number,
-  feed: string,
-  source: string,
-  fishing_tips: FishingTips,
-  weight : string,
-  size: string,
-  icon: string
-}
+  name: string;
+  desc: string;
+  fluid: string;
+  temp_min: number;
+  temp_max: number;
+  feed: string;
+  source: string;
+  fishing_tips: FishingTips;
+  weight: string;
+  size: string;
+  icon: string;
+};
 
 type FishCatalogData = {
-  fish_info : FishInfo[] | null,
-  sponsored_by: string
-}
+  fish_info: FishInfo[] | null;
+  sponsored_by: string;
+};
 
 export const FishCatalog = (props, context) => {
   const { act, data } = useBackend<FishCatalogData>(context);
-  const {
-    fish_info,
-    sponsored_by,
-  } = data;
-  const fish_by_name = flow([
-    sortBy((fish: FishInfo) => fish.name),
-  ])(fish_info || []);
-  const [
-    currentFish,
-    setCurrentFish,
-  ] = useLocalState<FishInfo | null>(context, 'currentFish', null);
+  const { fish_info, sponsored_by } = data;
+  const fish_by_name = flow([sortBy((fish: FishInfo) => fish.name)])(
+    fish_info || []
+  );
+  const [currentFish, setCurrentFish] = useLocalState<FishInfo | null>(
+    context,
+    'currentFish',
+    null
+  );
   return (
-    <Window
-      width={500}
-      height={300}>
+    <Window width={500} height={300}>
       <Window.Content>
         <Stack fill>
           <Stack.Item width="140px">
             <Section fill scrollable>
-              {fish_by_name.map(f => (
+              {fish_by_name.map((f) => (
                 <Button
                   key={f.name}
                   fluid
                   color="transparent"
                   selected={f === currentFish}
-                  onClick={() => { setCurrentFish(f); }}>
+                  onClick={() => {
+                    setCurrentFish(f);
+                  }}>
                   {f.name}
                 </Button>
               ))}
@@ -70,9 +68,11 @@ export const FishCatalog = (props, context) => {
             <Section
               fill
               scrollable
-              title={currentFish
-                ? capitalize(currentFish.name)
-                : sponsored_by + " Fish Index"}>
+              title={
+                currentFish
+                  ? capitalize(currentFish.name)
+                  : sponsored_by + ' Fish Index'
+              }>
               {currentFish && (
                 <LabeledList>
                   <LabeledList.Item label="Description">
@@ -113,11 +113,7 @@ export const FishCatalog = (props, context) => {
                     </LabeledList>
                   </LabeledList.Item>
                   <LabeledList.Item label="Illustration">
-                    <Box
-                      className={classes([
-                        'fish32x32',
-                        currentFish.icon,
-                      ])} />
+                    <Box className={classes(['fish32x32', currentFish.icon])} />
                   </LabeledList.Item>
                 </LabeledList>
               )}

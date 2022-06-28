@@ -19,13 +19,13 @@
 
 /mob/living/simple_animal/hostile/guardian/dextrous/examine(mob/user)
 	if(dextrous)
-		. = list("<span class='info'>*---------*\nThis is [icon2html(src)] \a <b>[src]</b>!\n[desc]")
+		. = list("<span class='info'>This is [icon2html(src)] \a <b>[src]</b>!\n[desc]")
 		for(var/obj/item/I in held_items)
 			if(!(I.item_flags & ABSTRACT))
 				. += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
 		if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
 			. += "It is holding [internal_storage.get_examine_string(user)] in its internal storage."
-		. += "*---------*</span>"
+		. += "</span>"
 	else
 		return ..()
 
