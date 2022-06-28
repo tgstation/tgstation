@@ -5528,7 +5528,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9877,7 +9877,7 @@
 "cXg" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/structure/railing,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -28457,7 +28457,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 4
 	},
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "ibm" = (
@@ -29503,7 +29503,7 @@
 "ipL" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/crowbar/red,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/item/circuitboard/machine/biogenerator,
 /obj/item/wirecutters,
 /obj/item/wrench,
@@ -62053,7 +62053,7 @@
 /area/station/tcommsat/computer)
 "rLs" = (
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},

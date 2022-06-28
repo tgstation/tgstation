@@ -1485,7 +1485,7 @@
 /obj/item/shovel/spade,
 /obj/item/cultivator,
 /obj/item/plant_analyzer,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/green{
 	dir = 1

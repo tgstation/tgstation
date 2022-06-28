@@ -11,6 +11,15 @@
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/watering_can
+	name = "Watering Can"
+	id = "watering_can"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 200)
+	build_path = /obj/item/reagent_containers/glass/watering_can
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/mop
 	name = "Mop"
 	id = "mop"

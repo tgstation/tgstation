@@ -10530,7 +10530,7 @@
 /obj/item/hatchet,
 /obj/item/cultivator,
 /obj/item/crowbar,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/item/plant_analyzer,
 /obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/green,
@@ -21004,7 +21004,7 @@
 	},
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/effect/turf_decal/stripes/line,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /turf/open/floor/iron/half{
 	dir = 1
 	},
@@ -34733,7 +34733,7 @@
 /obj/structure/closet/crate/hydroponics,
 /obj/item/shovel/spade,
 /obj/item/wrench,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/item/wirecutters,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -58447,7 +58447,7 @@
 /obj/item/hatchet,
 /obj/item/crowbar,
 /obj/item/plant_analyzer,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
