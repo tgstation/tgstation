@@ -1,5 +1,5 @@
 import { Window } from '../layouts';
-import { Box, Button, Icon, Input, NoticeBox, Section, Stack, Table, Tabs } from '../components';
+import { Box, Button, Icon, Input, NoticeBox, Section, Stack, Table } from '../components';
 import { useBackend, useLocalState } from '../backend';
 import { multiline } from 'common/string';
 
@@ -18,59 +18,41 @@ type Observable = {
   orbiters: number;
 };
 
-enum Tab {
-  Alive,
-  Dead,
-  Misc,
-}
-
-type Group = [Observable[], Observable[]];
-
-const GroupLabels = [
-  [{ name: 'Antagonists', color: 'bad' }, { name: 'Alive' }],
-  [{ name: 'Dead' }, { name: 'Ghosts' }],
-  [{ name: 'Misc' }, { name: 'NPCs' }],
+const TITLES = [
+  { name: 'Antagonists', color: 'bad' },
+  { name: 'Alive', color: 'good' },
+  { name: 'Dead', color: 'grey' },
+  { name: 'Ghosts', color: 'grey' },
+  { name: 'Misc', color: 'grey' },
+  { name: 'NPCs', color: 'average' },
 ] as const;
+
+enum THREAT {
+  None,
+  Small = 'blue',
+  Medium = 'cyan',
+  Large = 'purple',
+}
 
 export const Orbit = (props, context) => {
   return (
-    <Window title="Orbit" width={350} height={550}>
+    <Window title="Orbit" width={400} height={550}>
       <Window.Content>
-        <Stack fill vertical>
-          <Stack.Item>
-            <ObservableTabs />
-          </Stack.Item>
-          <Stack.Item grow>
-            <ObservableSection />
-          </Stack.Item>
-        </Stack>
+        <Section
+          buttons={<ObservableSearch />}
+          fill
+          scrollable
+          title="Points of Interest">
+          <ObservableContent />
+        </Section>
       </Window.Content>
     </Window>
   );
 };
 
-/** Set of tabs at the top of the UI that controls which lists are shown. */
-const ObservableTabs = (props, context) => {
-  const [tab, setTab] = useLocalState<Tab>(context, 'tab', Tab.Alive);
-
-  return (
-    <Tabs fluid>
-      <Tabs.Tab onClick={() => setTab(Tab.Alive)} selected={tab === Tab.Alive}>
-        Alive
-      </Tabs.Tab>
-      <Tabs.Tab onClick={() => setTab(Tab.Dead)} selected={tab === Tab.Dead}>
-        Dead
-      </Tabs.Tab>
-      <Tabs.Tab onClick={() => setTab(Tab.Misc)} selected={tab === Tab.Misc}>
-        Misc
-      </Tabs.Tab>
-    </Tabs>
-  );
-};
-
-/** The primary section for displaying and searching observables */
-const ObservableSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+/** Controls filtering out the list of observables via search */
+const ObservableSearch = (props, context) => {
+  const { act } = useBackend<Data>(context);
   const [autoObserve, setAutoObserve] = useLocalState<boolean>(
     context,
     'autoObserve',
@@ -81,163 +63,144 @@ const ObservableSection = (props, context) => {
     'searchQuery',
     ''
   );
-  const [tab, setTab] = useLocalState<Tab>(context, 'tab', Tab.Alive);
-  const currentLists = getCurrentLists(tab, data);
 
   return (
-    <Section
-      buttons={
-        <>
-          <Input
-            autoFocus
-            placeholder="Search"
-            value={searchQuery}
-            onInput={(e) => setSearchQuery(e.target.value)}
-          />
+    <>
+      <Input
+        autoFocus
+        placeholder="Search"
+        value={searchQuery}
+        onInput={(e) => setSearchQuery(e.target.value)}
+      />
 
-          <Button
-            color={autoObserve ? 'good' : 'transparent'}
-            icon={autoObserve ? 'toggle-on' : 'toggle-off'}
-            onClick={() => setAutoObserve(!autoObserve)}
-            tooltip={multiline`Toggle Auto-Observe. When active, you'll
+      <Button
+        color={autoObserve ? 'good' : 'transparent'}
+        icon={autoObserve ? 'toggle-on' : 'toggle-off'}
+        onClick={() => setAutoObserve(!autoObserve)}
+        tooltip={multiline`Toggle Auto-Observe. When active, you'll
             see the UI / full inventory of whoever you're orbiting. Neat!`}
-            tooltipPosition="bottom-start"
-          />
-          <Button
-            inline
-            color="transparent"
-            tooltip="Refresh"
-            tooltipPosition="bottom-start"
-            icon="sync-alt"
-            onClick={() => act('refresh')}
-          />
-        </>
-      }
-      fill
-      title="Observables">
-      <ObservableContent list={currentLists} />
-    </Section>
+        tooltipPosition="bottom-start"
+      />
+      <Button
+        inline
+        color="transparent"
+        tooltip="Refresh"
+        tooltipPosition="bottom-start"
+        icon="sync-alt"
+        onClick={() => act('refresh')}
+      />
+    </>
   );
 };
 
-/** Controls filtering out the list of observables via search */
+/** The primary section of observable content, iterates over all POIs */
 const ObservableContent = (props, context) => {
-  const { list } = props;
-  const [searchQuery, setSearchQuery] = useLocalState(
+  const { data } = useBackend<Data>(context);
+  const {
+    alive = [],
+    antagonists = [],
+    dead = [],
+    ghosts = [],
+    misc = [],
+    npcs = [],
+  } = data;
+  const [searchQuery, setSearchQuery] = useLocalState<string>(
     context,
     'searchQuery',
     ''
   );
-  const [tab, setTab] = useLocalState(context, 'tab', Tab.Alive);
-  const displayedList = !searchQuery
-    ? list
-    : getFilteredList(list, searchQuery);
-  const listsEmpty = !displayedList[0]?.length && !displayedList[1]?.length;
-  const sectionTitle = GroupLabels[tab];
+  let visibleSections = [antagonists, alive, dead, ghosts, misc, npcs];
+  if (searchQuery) {
+    visibleSections = getFilteredLists(visibleSections, searchQuery);
+    if (!visibleSections.length) {
+      return <NoticeBox>Nothing to display!</NoticeBox>;
+    }
+  }
 
   return (
-    <Stack fill vertical>
-      {listsEmpty ? (
-        <NoticeBox>Nothing to display!</NoticeBox>
-      ) : (
-        displayedList?.map((list, index) => {
-          return (
-            !!list.length && (
-              <Stack.Item grow key={index}>
-                <TableDisplay list={list} title={sectionTitle[index]} />
-              </Stack.Item>
-            )
-          );
-        })
-      )}
+    <Stack vertical>
+      {visibleSections?.map((section, index) => {
+        const { name, color } = TITLES[index];
+        return (
+          !!section.length && (
+            <Stack.Item>
+              <ObservableSection color={color} name={name} section={section} />
+            </Stack.Item>
+          )
+        );
+      })}
     </Stack>
   );
 };
 
-/** The actual list component which simply displays a list based on props */
-const TableDisplay = (props, context) => {
-  const { list, title } = props;
+/** Displays an individual section for observable items */
+const ObservableSection = (props, context) => {
+  const { color, name, section } = props;
 
   return (
     <Section
-      color="label"
-      fill
-      scrollable
       title={
-        <Box italic color={title.color || 'good'} ml={7}>
-          {title.name}
+        <Box pl={7} color={color}>
+          {name}
         </Box>
       }>
-      {!!list?.length && (
-        <Table>
-          {list.map((observable, index) => {
-            return <TableRow key={index} observable={observable} />;
-          })}
-        </Table>
-      )}
+      {section.map((observable, index) => {
+        return (
+          <ObservableItem color={color} key={index} observable={observable} />
+        );
+      })}
     </Section>
   );
 };
 
 /** An individual listing for an observable's name, # observers */
-const TableRow = (props: { observable: Observable }, context) => {
+const ObservableItem = (props, context) => {
   const { act } = useBackend<Data>(context);
-  const { observable } = props;
+  const { color, observable } = props;
   const { ref, name, orbiters } = observable;
   const [autoObserve, setAutoObserve] = useLocalState<boolean>(
     context,
     'autoObserve',
     false
   );
-  // You're probably wondering why not use capitalize here. Well, it's because
-  // capitalize will lowercase other letters in the string.
-  const nameToUpper = (name: string) =>
-    name.replace(/^\w/, (c) => c.toUpperCase());
+  const threat = getThreat(orbiters);
 
   return (
-    <Table.Row
-      className="candystripe"
+    <Button
+      color={threat || color}
+      mt={0}
+      mb={0}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
-      <Table.Cell width="100%">{nameToUpper(name)}</Table.Cell>
-      <Table.Cell p={1}>
-        <Stack>
-          <Stack.Item color={getColor(orbiters)}>{orbiters}</Stack.Item>
-          <Stack.Item>
-            <Icon name="ghost" />
-          </Stack.Item>
-        </Stack>
-      </Table.Cell>
-    </Table.Row>
+      <Table>
+        <Table.Row>
+          <Table.Cell>{nameToUpper(name)}</Table.Cell>
+          {orbiters && (
+            <>
+              <Table.Cell>{orbiters.toString()}</Table.Cell>
+              <Table.Cell>
+                <Icon
+                  name={threat === THREAT.Large ? 'skull' : 'ghost'}
+                  spin={threat === THREAT.Medium}
+                />
+              </Table.Cell>
+            </>
+          )}
+        </Table.Row>
+      </Table>
+    </Button>
   );
 };
 
-/** Returns an array of two Observable[] lists based on the tabs. */
-const getCurrentLists = (tab: Tab, data: Data): Group => {
-  const { alive, antagonists, dead, ghosts, misc, npcs } = data;
-  switch (tab) {
-    case Tab.Alive:
-      return [antagonists, alive];
-    case Tab.Dead:
-      return [dead, ghosts];
-    case Tab.Misc:
-      return [misc, npcs];
-    default:
-      return [antagonists, alive];
-  }
-};
-
-/** Colorizes the amount of orbiters */
-const getColor = (orbiters: number): null | string => {
-  if (!orbiters) {
-    return null;
-  } else if (orbiters < 2) {
-    return 'label';
-  } else if (orbiters < 4) {
-    return 'good';
-  } else if (orbiters < 6) {
-    return 'average';
+/** Takes the amount of orbiters and returns some style options */
+const getThreat = (orbiters: number): THREAT => {
+  if (!orbiters || orbiters <= 2) {
+    return THREAT.None;
+  } else if (orbiters === 3) {
+    return THREAT.Small;
+  } else if (orbiters <= 6) {
+    return THREAT.Medium;
   } else {
-    return 'bad';
+    return THREAT.Large;
   }
 };
 
@@ -245,17 +208,24 @@ const getColor = (orbiters: number): null | string => {
  * Filters both lists for the search query.
  *
  * Returns:
- *  an array of two Observable[]
+ *  an array of Observable[]
  */
-const getFilteredList = (list: Group, searchQuery: string): Group => {
-  let filteredObservables: Group = [[], []];
-  const poiGroupA: Observable[] = list[0].filter((observable) => {
-    return observable.name?.toLowerCase()?.includes(searchQuery?.toLowerCase());
-  });
-  const poiGroupB: Observable[] = list[1].filter((observable) => {
-    return observable.name?.toLowerCase()?.includes(searchQuery?.toLowerCase());
-  });
-  filteredObservables = [poiGroupA, poiGroupB];
-
-  return filteredObservables;
+const getFilteredLists = (lists: Observable[][], searchQuery: string) => {
+  let filteredLists: Observable[][] = [];
+  for (const list of lists) {
+    const filtered = list.filter((observable) => {
+      return observable.name
+        ?.toLowerCase()
+        ?.includes(searchQuery?.toLowerCase());
+    });
+    filteredLists.push(filtered);
+  }
+  return filteredLists;
 };
+
+/**
+ * Returns a string with the first letter in uppercase.
+ * Unlike capitalize(), has no effect on the other letters
+ */
+const nameToUpper = (name: string) =>
+  name.replace(/^\w/, (c) => c.toUpperCase());
