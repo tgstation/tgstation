@@ -176,13 +176,11 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	switch(cannon_direction)
 		if(WEST)
 			setDir(WEST)
-			top_layer.icon_state = "top_west"
 			icon_state = "cannon_west"
 		if(EAST)
 			setDir(EAST)
 			pixel_x = -128
 			bound_x = -128
-			top_layer.icon_state = "top_east"
 			icon_state = "cannon_east"
 	get_layer()
 	reload()

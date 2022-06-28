@@ -38,7 +38,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// list of current relays this plane is utilizing to render
 	var/list/atom/movable/render_plane_relay/relays = list()
 
-/atom/movable/screen/plane_master/New(atom/loc, datum/plane_master_group/home, offset = 0)
+/atom/movable/screen/plane_master/Initialize(mapload, datum/plane_master_group/home, offset = 0)
 	src.offset = offset
 	true_alpha = alpha
 	real_plane = plane
