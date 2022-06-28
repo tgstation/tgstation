@@ -237,8 +237,9 @@
 
 	switch(stage)
 		if(1)
-			if(ishuman(affected_mob) && affected_mob.dna)
-				if(affected_mob.dna.species.id == SPECIES_SLIMEPERSON || affected_mob.dna.species.id == SPECIES_STARGAZER || affected_mob.dna.species.id == SPECIES_LUMINESCENT)
+			if(ishuman(affected_mob))
+				var/mob/living/carbon/human/human = affected_mob
+				if(isjellyperson(human))
 					stage = 5
 		if(3)
 			if(ishuman(affected_mob))
