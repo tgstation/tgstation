@@ -67,11 +67,11 @@
 				if("value")
 					path_list = list_element["value"]
 				else
-					to_chat(usr, span_warning("invalid path element type \[[path_element["type"]]] for argument move (expected \"key\" or \"value\""))
+					to_chat(usr, span_warning("invalid path element type \[[path_element["type"]]] for list traversal (expected \"key\" or \"value\""))
 					return
-			// The element we are entering SHOULD be a list
-			if(!islist(path_list))
-				to_chat(usr, span_warning("invalid path element \[[path_list]] for argument move (expected a list)"))
+			// The element we are entering SHOULD be a list, unless we're at the end of the path
+			if(!islist(path_list) && LAZYLEN(path))
+				to_chat(usr, span_warning("invalid path element \[[path_list]] for list traversal (expected a list)"))
 				return
 			current_list = path_list
 		return current_list
