@@ -3997,9 +3997,8 @@
 "bFc" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/vending/wardrobe/law_wardrobe,
-/obj/machinery/camera{
-	c_tag = "Civilian - Lawyer's Office";
-	dir = 9
+/obj/machinery/camera/directional/north{
+	c_tag = "Civilian - Lawyer's Office"
 	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
@@ -5309,10 +5308,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/warning{
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "Service - Custodial Closet";
-	dir = 9;
-	network = list("ss13","Service")
+/obj/machinery/camera/directional/north{
+	c_tag = "Service - Custodial Closet"
 	},
 /turf/open/floor/iron,
 /area/station/service/janitor)
@@ -6720,11 +6717,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "cut" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch"
+/obj/modular_map_root/tramstation{
+	key = "maintenance_security"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "cuG" = (
@@ -13356,12 +13351,11 @@
 "eHj" = (
 /obj/machinery/vending/tool,
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/camera{
-	c_tag = "Civilian - Primary Tool Storage";
-	dir = 6
-	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Civilian - Primary Tool Storage"
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
@@ -15209,7 +15203,7 @@
 "fqU" = (
 /obj/machinery/griddle,
 /obj/machinery/camera/directional/west{
-	c_tag = "Civilian - Kitchen West"
+	c_tag = "Service - Kitchen West"
 	},
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
@@ -15880,7 +15874,7 @@
 /obj/machinery/deepfryer,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/camera/directional/east{
-	c_tag = "Civilian - Kitchen East"
+	c_tag = "Service - Kitchen East"
 	},
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
@@ -16254,7 +16248,7 @@
 	pixel_x = -3
 	},
 /obj/machinery/camera/directional/north{
-	c_tag = "Civilian - Bar Lounge North West"
+	c_tag = "Service - Bar Lounge North West"
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron/checker,
@@ -25087,7 +25081,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/camera/directional/south{
-	c_tag = "Civilian - Bar Lounge South East"
+	c_tag = "Service - Bar Lounge South East"
 	},
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
@@ -31757,7 +31751,7 @@
 "ldX" = (
 /obj/machinery/restaurant_portal/restaurant,
 /obj/machinery/camera/directional/north{
-	c_tag = "Civilian - Bar Lounge North East"
+	c_tag = "Service - Bar Lounge North East"
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -40075,7 +40069,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/directional/south{
-	c_tag = "Civilian - Bar Lounge South West"
+	c_tag = "Service - Bar Lounge South West"
 	},
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
@@ -48216,7 +48210,7 @@
 /area/station/maintenance/port/fore)
 "qPh" = (
 /obj/machinery/camera{
-	c_tag = "Civilian - Bar Backroom";
+	c_tag = "Service - Bar Backroom";
 	dir = 9
 	},
 /turf/open/floor/wood,
@@ -64916,9 +64910,8 @@
 	},
 /obj/structure/closet/toolcloset,
 /obj/effect/landmark/start/hangover/closet,
-/obj/machinery/camera{
-	c_tag = "Civilian - Aux Tool Storage";
-	dir = 6
+/obj/machinery/camera/directional/east{
+	c_tag = "Civilian - Aux Tool Storage"
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
@@ -68947,12 +68940,11 @@
 	name = "Judge"
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/camera{
-	c_tag = "Civilian - Courtroom";
-	dir = 10
-	},
 /obj/structure/cable,
 /obj/machinery/light/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Civilian - Courtroom"
+	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "ybr" = (
@@ -160917,8 +160909,8 @@ omm
 bYa
 omm
 fpt
-fpt
-omm
+dhe
+dhe
 dhe
 dhe
 dhe
@@ -161174,12 +161166,12 @@ omm
 mYA
 omm
 omm
-fpt
-omm
-omm
-omm
-omm
-omm
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
 dhe
 dhe
 dhe
@@ -161431,12 +161423,12 @@ etn
 etn
 etn
 jKq
-fpt
-omm
-fpt
-fpt
-fpt
-omm
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
 dhe
 dhe
 dhe
@@ -161688,12 +161680,12 @@ aGm
 aGm
 aGm
 jKq
-fpt
-omm
-fpt
-fpt
-fpt
-omm
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
 dhe
 dhe
 dhe
@@ -161945,20 +161937,20 @@ aGm
 aGm
 aGm
 jKq
-fpt
-omm
-omm
-cut
-omm
-omm
-omm
-omm
-omm
-omm
-omm
-omm
-omm
-omm
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
 dhe
 dhe
 dhe
@@ -162202,20 +162194,20 @@ aGm
 bFT
 aGm
 jKq
-fpt
-fpt
-fpt
-fpt
-fpt
-fpt
-fpt
-fpt
-fpt
-fpt
-fpt
-fpt
-fpt
-omm
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
 dhe
 dhe
 dhe
@@ -162459,19 +162451,19 @@ jKq
 jKq
 jKq
 jKq
-omm
-omm
-omm
-omm
-omm
-omm
-omm
-omm
-omm
-omm
-omm
-omm
-fpt
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
+dhe
 omm
 omm
 omm
@@ -162727,8 +162719,8 @@ dhe
 dhe
 dhe
 dhe
-omm
-fpt
+dhe
+cut
 omm
 ybE
 ybE
