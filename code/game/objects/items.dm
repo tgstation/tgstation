@@ -497,7 +497,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 
 	//If the item is in a storage item, take it out
 	if(loc.atom_storage)
-		loc.atom_storage.attempt_remove(src, user.loc, TRUE)
+		loc.atom_storage.attempt_remove(src, user.loc, silent = TRUE)
 	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
 		return
 
@@ -533,7 +533,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 
 	//If the item is in a storage item, take it out
 	if(loc.atom_storage)
-		loc.atom_storage.attempt_remove(src, user.loc, TRUE)
+		loc.atom_storage.attempt_remove(src, user.loc, silent = TRUE)
 	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
 		return
 
@@ -759,7 +759,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(!newLoc)
 		return FALSE
 	if(loc.atom_storage)
-		return loc.atom_storage.attempt_remove(src, newLoc, TRUE)
+		return loc.atom_storage.attempt_remove(src, newLoc, silent = TRUE)
 	return FALSE
 
 /// Returns the icon used for overlaying the object on a belt

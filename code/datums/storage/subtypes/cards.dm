@@ -11,7 +11,7 @@
 	. = ..()
 	set_holdable(list(/obj/item/tcgcard))
 
-/datum/storage/tcg/attempt_remove()
+/datum/storage/tcg/attempt_remove(silent = FALSE)
 	. = ..()
 	handle_empty_deck()
 
