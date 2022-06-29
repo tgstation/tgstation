@@ -41,14 +41,12 @@
 /turf/closed/wall,
 /area/station/maintenance/department/security)
 "B" = (
-/obj/modular_map_root/tramstation{
-	key = "maintenance_security"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
 	},
+/obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "D" = (

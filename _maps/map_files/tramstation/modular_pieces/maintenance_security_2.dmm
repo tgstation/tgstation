@@ -8,7 +8,6 @@
 /area/station/maintenance/department/security)
 "j" = (
 /obj/modular_map_connector,
-/obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
 "m" = (

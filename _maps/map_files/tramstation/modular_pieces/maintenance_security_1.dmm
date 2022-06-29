@@ -30,7 +30,7 @@
 /area/template_noop)
 "P" = (
 /obj/modular_map_root/tramstation{
-	key = "maintenance_security"
+	key = "maintenance_security_attachment"
 	},
 /turf/template_noop,
 /area/template_noop)
