@@ -34,6 +34,9 @@
 
 	ShutOffDoomsdayDevice()
 
+	if(gibbed)
+		make_mmi_drop_and_transfer()
+
 	if(explosive)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, loc, 3, 6, 12, null, 15), 1 SECONDS)
 

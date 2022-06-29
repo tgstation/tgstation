@@ -13,6 +13,13 @@
 				. += span_warning("It looks slightly charred.")
 			else
 				. += span_warning("<B>Its casing is melted and heat-warped!</B>")
+		if(ishuman(user))
+			var/mob/living/carbon/human/examiner = user
+			var/list/access = examiner.wear_id.GetAccess()
+			if(examiner.wear_id && (ACCESS_ROBOTICS in access))
+				. += span_notice("You could try to open its access panel and <b>cut</b> its neural network connection.")
+			else if(emagged)
+				. += span_notice("Its access panel lock is sparking, you could open it and <b>cut</b> its neural network connection.")
 		if(deployed_shell)
 			. += "The wireless networking light is blinking."
 		else if (!shunted && !client)

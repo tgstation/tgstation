@@ -184,6 +184,8 @@
 	user.mind.AddSpell(spell_to_add)
 
 /datum/heretic_knowledge/spell/on_lose(mob/user)
+	if(!user.mind)
+		return
 	user.mind.RemoveSpell(spell_to_add)
 
 /*

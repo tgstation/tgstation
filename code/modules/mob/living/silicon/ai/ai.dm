@@ -108,8 +108,10 @@
 	interaction_range = null
 
 	var/atom/movable/screen/ai/modpc/interfaceButton
-
+	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure
 	var/posibrain_core = FALSE
+	///whether its access panel lock is emagged, so you can deconstruct it without robotics access or consent
+	var/emagged = FALSE
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -379,26 +381,54 @@
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
+/mob/living/silicon/ai/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	balloon_alert(user, "access panel lock shorted")
+	to_chat(src, span_warning("[user] shorts out your access panel lock!"))
+	emagged = TRUE
+
 /mob/living/silicon/ai/wirecutter_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(stat == DEAD)
-		to_chat(user, span_warning("Neural networks corrupted!"))
+		to_chat(user, span_warning("Neural network corrupted!"))
 		return
-	var/consent = tgui_alert(src, "[user] is attempting to disconnect your neural networks, open your access panel?", "Neural Network Disconnection", list("Yes", "No"))
-	if(consent == "No" || IS_MALF_AI(src))
+	var/consent = tgui_alert(src, "[user] is attempting to disconnect your neural network, open your access panel?", "Neural Network Disconnection", list("Yes", "No"))
+	var/consent_override = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.wear_id)
+			var/list/access = human_user.wear_id.GetAccess()
+			if(ACCESS_ROBOTICS in access)
+				consent_override = TRUE
+	if(consent == "No" && (!consent_override || !emagged))
 		to_chat(user, span_notice("[src] refuses to open its access panel."))
 		return
-	balloon_alert(src, "opened access panel")
-	balloon_alert(user, "disconnecting neural networks")
+	if(consent == "No" && (consent_override || emagged))
+		to_chat(user, span_warning("[src] refuses to open its access panel...so you[!emagged ? " swipe your ID and " : " "]open it anyway!"))
+	balloon_alert(src, "access panel opened")
+	to_chat(src, span_warning("[user] starts disconnecting your neural network!"))
+	balloon_alert(user, "disconnecting neural network")
 	if(!tool.use_tool(src, user, 10 SECONDS))
 		return
-	balloon_alert(user, "disconnected neural networks")
-	if(!ai_to_mmi())
+	if(IS_MALF_AI(src))
+		to_chat(user, span_userdanger("The voltage inside the wires rises dramatically!"))
+		user.electrocute_act(120, src)
+		return
+	balloon_alert(user, "disconnected neural network")
+	if(!ai_mob_to_structure())
 		return
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/mob/living/silicon/ai/proc/ai_to_mmi()
+/mob/living/silicon/ai/proc/ai_mob_to_structure()
+	disconnect_shell()
+	ShutOffDoomsdayDevice()
 	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src))
+	if(!make_mmi_drop_and_transfer(ai_core.brain, the_core = ai_core))
+		return FALSE
+	qdel(src)
+	return TRUE
+
+/mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
 	var/mmi_type
 	if(posibrain_core)
 		mmi_type = new/obj/item/mmi/posibrain(src)
@@ -406,23 +436,25 @@
 		mmi_type = new/obj/item/mmi(src)
 	if(hack_software)
 		new/obj/item/malf_upgrade(get_turf(src))
-	disconnect_shell()
-	ShutOffDoomsdayDevice()
-	ai_core.brain = mmi_type
-	ai_core.brain.brain = new /obj/item/organ/internal/brain(ai_core.brain)
-	ai_core.brain.brain.organ_flags |= ORGAN_FROZEN
-	ai_core.brain.brain.name = "[real_name]'s brain"
-	ai_core.brain.name = "[initial(ai_core.brain.name)]: [real_name]"
-	ai_core.brain.set_brainmob(new /mob/living/brain(ai_core.brain))
-	ai_core.brain.brainmob.name = src.real_name
-	ai_core.brain.brainmob.real_name = src.real_name
-	ai_core.brain.brainmob.container = ai_core.brain
-	ai_core.brain.forceMove(ai_core)
-	if(ai_core.brain.brainmob.stat == DEAD)
-		ai_core.brain.brainmob.set_stat(CONSCIOUS)
-	mind.transfer_to(ai_core.brain.brainmob)
-	ai_core.brain.update_appearance()
-	qdel(src)
+	the_mmi = mmi_type
+	the_mmi.brain = new /obj/item/organ/internal/brain(the_mmi)
+	the_mmi.brain.organ_flags |= ORGAN_FROZEN
+	the_mmi.brain.name = "[real_name]'s brain"
+	the_mmi.name = "[initial(the_mmi.name)]: [real_name]"
+	the_mmi.set_brainmob(new /mob/living/brain(the_mmi))
+	the_mmi.brainmob.name = src.real_name
+	the_mmi.brainmob.real_name = src.real_name
+	the_mmi.brainmob.container = the_mmi
+	if(the_core)
+		var/obj/structure/ai_core/core = the_core
+		core.brain = the_mmi
+		the_mmi.forceMove(the_core)
+	else
+		the_mmi.forceMove(get_turf(src))
+	if(the_mmi.brainmob.stat == DEAD)
+		the_mmi.brainmob.set_stat(CONSCIOUS)
+	mind.transfer_to(the_mmi.brainmob)
+	the_mmi.update_appearance()
 	return TRUE
 
 /mob/living/silicon/ai/Topic(href, href_list)
