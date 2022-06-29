@@ -38,13 +38,16 @@ export const Orbit = (props, context) => {
   return (
     <Window title="Orbit" width={400} height={550}>
       <Window.Content>
-        <Section
-          buttons={<ObservableSearch />}
-          fill
-          scrollable
-          title="Points of Interest">
-          <ObservableContent />
-        </Section>
+        <Stack fill vertical>
+          <Stack.Item mt={0}>
+            <ObservableSearch />
+          </Stack.Item>
+          <Stack.Item mt={0.2} grow>
+            <Section fill scrollable>
+              <ObservableContent />
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -65,31 +68,43 @@ const ObservableSearch = (props, context) => {
   );
 
   return (
-    <>
-      <Input
-        autoFocus
-        placeholder="Search"
-        value={searchQuery}
-        onInput={(e) => setSearchQuery(e.target.value)}
-      />
-
-      <Button
-        color={autoObserve ? 'good' : 'transparent'}
-        icon={autoObserve ? 'toggle-on' : 'toggle-off'}
-        onClick={() => setAutoObserve(!autoObserve)}
-        tooltip={multiline`Toggle Auto-Observe. When active, you'll
+    <Section>
+      <Stack>
+        <Stack.Item>
+          <Icon name="search" />
+        </Stack.Item>
+        <Stack.Item grow>
+          <Input
+            autoFocus
+            fluid
+            placeholder="Search..."
+            value={searchQuery}
+            onInput={(e) => setSearchQuery(e.target.value)}
+          />
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item>
+          <Button
+            color={autoObserve ? 'good' : 'transparent'}
+            icon={autoObserve ? 'toggle-on' : 'toggle-off'}
+            onClick={() => setAutoObserve(!autoObserve)}
+            tooltip={multiline`Toggle Auto-Observe. When active, you'll
             see the UI / full inventory of whoever you're orbiting. Neat!`}
-        tooltipPosition="bottom-start"
-      />
-      <Button
-        inline
-        color="transparent"
-        tooltip="Refresh"
-        tooltipPosition="bottom-start"
-        icon="sync-alt"
-        onClick={() => act('refresh')}
-      />
-    </>
+            tooltipPosition="bottom-start"
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            inline
+            color="transparent"
+            tooltip="Refresh"
+            tooltipPosition="bottom-start"
+            icon="sync-alt"
+            onClick={() => act('refresh')}
+          />
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
@@ -123,7 +138,7 @@ const ObservableContent = (props, context) => {
         const { name, color } = TITLES[index];
         return (
           !!section.length && (
-            <Stack.Item>
+            <Stack.Item key={index}>
               <ObservableSection color={color} name={name} section={section} />
             </Stack.Item>
           )
@@ -140,8 +155,8 @@ const ObservableSection = (props, context) => {
   return (
     <Section
       title={
-        <Box pl={7} color={color}>
-          {name}
+        <Box color={color} italic>
+          {name} ({section.length})
         </Box>
       }>
       {section.map((observable, index) => {
