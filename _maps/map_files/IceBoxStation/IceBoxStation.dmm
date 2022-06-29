@@ -47840,8 +47840,8 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "oYs" = (
-/obj/structure/closet/secure_closet/freezer/meat,
 /obj/item/food/chococoin,
+/obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/misc/ice/coldroom,
 /area/station/service/kitchen/coldroom)
 "oYu" = (
