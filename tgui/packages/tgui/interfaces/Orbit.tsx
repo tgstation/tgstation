@@ -1,5 +1,5 @@
 import { Window } from '../layouts';
-import { Box, Button, Icon, Input, NoticeBox, Section, Stack, Table } from '../components';
+import { Box, Button, Collapsible, Icon, Input, NoticeBox, Section, Stack, Table } from '../components';
 import { useBackend, useLocalState } from '../backend';
 import { multiline } from 'common/string';
 
@@ -139,7 +139,12 @@ const ObservableContent = (props, context) => {
         return (
           !!section.length && (
             <Stack.Item key={index}>
-              <ObservableSection color={color} name={name} section={section} />
+              <ObservableSection
+                color={color}
+                index={index}
+                name={name + ` (${section.length})`}
+                section={section}
+              />
             </Stack.Item>
           )
         );
@@ -150,21 +155,27 @@ const ObservableContent = (props, context) => {
 
 /** Displays an individual section for observable items */
 const ObservableSection = (props, context) => {
-  const { color, name, section } = props;
+  const { color, index, name, section } = props;
 
+  if (index < 2) {
+    return (
+      <Section title={<Box color={color}>{name}</Box>}>
+        {section.map((observable, idx) => {
+          return (
+            <ObservableItem color={color} key={idx} observable={observable} />
+          );
+        })}
+      </Section>
+    );
+  }
   return (
-    <Section
-      title={
-        <Box color={color} italic>
-          {name} ({section.length})
-        </Box>
-      }>
-      {section.map((observable, index) => {
+    <Collapsible bold color={color} title={name}>
+      {section.map((observable, idx) => {
         return (
-          <ObservableItem color={color} key={index} observable={observable} />
+          <ObservableItem color={color} key={idx} observable={observable} />
         );
       })}
-    </Section>
+    </Collapsible>
   );
 };
 
@@ -188,15 +199,16 @@ const ObservableItem = (props, context) => {
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
       <Table>
         <Table.Row>
-          <Table.Cell>{nameToUpper(name)}</Table.Cell>
+          <Table.Cell>{nameToUpper(name).slice(0, 44)}</Table.Cell>
           {orbiters && (
             <>
-              <Table.Cell>{orbiters.toString()}</Table.Cell>
+              <Table.Cell>({orbiters.toString()}</Table.Cell>
               <Table.Cell>
                 <Icon
+                  mr={0}
                   name={threat === THREAT.Large ? 'skull' : 'ghost'}
-                  spin={threat === THREAT.Medium}
                 />
+                )
               </Table.Cell>
             </>
           )}
