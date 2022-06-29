@@ -1,7 +1,7 @@
 /obj/item/implant/spell
 	name = "spell implant"
 	desc = "Allows you to cast a spell as if you were a wizard."
-	activated = FALSE
+	actions_types = null
 
 	/// Whether to make the spell robeless
 	var/make_robeless = TRUE

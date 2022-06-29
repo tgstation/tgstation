@@ -699,7 +699,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /// Gives one of our item actions to a mob, when equipped to a certain slot
 /obj/item/proc/give_item_action(datum/action/action, mob/to_who, slot)
 	// Some items only give their actions buttons when in a specific slot.
-	if(slot && !item_action_slot_check(slot, to_who))
+	if(!item_action_slot_check(slot, to_who))
 		// There is a chance we still have our item action currently,
 		// and are moving it from a "valid slot" to an "invalid slot".
 		// So call Remove() here regardless, even if excessive.
