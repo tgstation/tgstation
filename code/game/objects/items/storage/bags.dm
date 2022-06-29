@@ -342,7 +342,7 @@
 	. = ..()
 	// Drop all the things. All of them.
 	var/list/obj/item/oldContents = contents.Copy()
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY)
+	atom_storage.mass_empty(src, user)
 	// Make each item scatter a bit
 	for(var/obj/item/tray_item in oldContents)
 		do_scatter(tray_item)

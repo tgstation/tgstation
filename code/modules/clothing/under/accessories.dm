@@ -27,9 +27,9 @@
 		to_chat(user, span_warning("There doesn't seem to be anywhere to put [src]..."))
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	var/datum/storage/storage = atom_storage
 	if(storage)
-		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
+		if(U.atom_storage)
 			return FALSE
 		U.TakeComponent(storage)
 		set_detached_pockets(storage)

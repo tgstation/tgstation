@@ -324,7 +324,7 @@
 	atom_storage.set_holdable(list(/obj/item/gun/energy/dueling))
 
 /obj/item/storage/lockbox/dueling/update_icon_state()
-	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+	if(atom_storage.locked)
 		icon_state = icon_locked
 		return ..()
 	if(broken)

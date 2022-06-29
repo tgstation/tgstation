@@ -1,3 +1,8 @@
+// Datumized Storage
+// Eliminates the need for custom signals specifically for the storage component, and attaches a storage variable (atom_storage) to every atom.
+// The parent and real_location variables are both weakrefs, so they must be resolved before they can be used.
+// If you're looking to create custom storage type behaviors, check ../subtypes
+
 /datum/storage
 	var/datum/weakref/parent // the actual item we're attached to
 	var/datum/weakref/real_location // the actual item we're storing in
@@ -431,13 +436,32 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			continue
 		attempt_remove(thing, target, silent = TRUE)
 
-/datum/storage/proc/mass_empty(datum/source, mob/user)
+/datum/storage/proc/mass_empty(datum/source, atom/location)
 	SIGNAL_HANDLER
 
 	if(!allow_quick_empty)
 		return
 
-	remove_all(get_turf(user))
+	remove_all(get_turf(location))
+
+/datum/storage/proc/return_inv(list/interface, recursive = TRUE)
+	if(!islist(interface))
+		return FALSE
+
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return
+
+	var/list/ret = list()
+	ret |= resolve_location.contents
+	if(recursive)
+		for(var/i in ret.Copy())
+			var/atom/atom = i
+			atom.atom_storage?.return_inv(ret, TRUE)
+
+	interface |= ret
+	
+	return TRUE
 
 /datum/storage/proc/remove_and_refresh(atom/movable/gone)
 	SIGNAL_HANDLER
@@ -583,7 +607,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /datum/storage/proc/process_numerical_display()
 	var/obj/item/resolve_location = real_location?.resolve()
-	if(!real_location)
+	if(!resolve_location)
 		return
 
 	var/list/toreturn = list()
@@ -605,7 +629,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /datum/storage/proc/orient_to_hud()
 	var/obj/item/resolve_location = real_location?.resolve()
-	if(!real_location)
+	if(!resolve_location)
 		return
 
 	var/adjusted_contents = resolve_location.contents.len
@@ -623,7 +647,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /datum/storage/proc/orient_item_boxes(rows, cols, list/obj/item/numerical_display_contents)
 	var/obj/item/resolve_location = real_location?.resolve()
-	if(!real_location)
+	if(!resolve_location)
 		return
 
 	boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+cols-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
@@ -674,7 +698,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	var/obj/item/resolve_location = real_location?.resolve()
-	if(!real_location)
+	if(!resolve_location)
 		return
 
 	if(!toshow.CanReach(resolve_parent))
@@ -752,7 +776,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	var/obj/item/resolve_location = real_location?.resolve()
-	if(!real_location)
+	if(!resolve_location)
 		return
 
 	if(!toshow.client)
@@ -768,6 +792,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	toshow.active_storage = src
 
+	if(ismovable(resolve_location))
+		var/atom/movable/movable_loc = resolve_location
+		movable_loc.become_active_storage(src)
+
 	orient_to_hud()
 
 	is_using |= toshow
@@ -778,13 +806,17 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /datum/storage/proc/hide_contents(mob/toshow)
 	var/obj/item/resolve_location = real_location?.resolve()
-	if(!real_location)
+	if(!resolve_location)
 		return
 
 	if(!toshow.client)
 		return TRUE
 	if(toshow.active_storage == src)
 		toshow.active_storage = null
+
+	if(!length(is_using) && ismovable(resolve_location))
+		var/atom/movable/movable_loc = resolve_location
+		movable_loc.lose_active_storage(src)
 
 	is_using -= toshow
 		

@@ -161,7 +161,7 @@
 		var/mob/living/carbon/human/human_holder = quirk_holder
 		// post_add() can be called via delayed callback. Check they still have a backpack equipped before trying to open it.
 		if(human_holder.back)
-			SEND_SIGNAL(human_holder.back, COMSIG_TRY_STORAGE_SHOW, human_holder)
+			human_holder.back.atom_storage.show_contents(human_holder)
 
 	for(var/chat_string in where_items_spawned)
 		to_chat(quirk_holder, chat_string)

@@ -386,10 +386,9 @@
 			var/target_loc = drop_location()
 			var/drop_threshold = INFINITY
 			if(bottle)
-				var/datum/component/storage/STRB = bottle.GetComponent(
-					/datum/component/storage)
+				var/datum/storage/STRB = bottle.atom_storage
 				if(STRB)
-					drop_threshold = STRB.max_items - bottle.contents.len
+					drop_threshold = STRB.max_slots - bottle.contents.len
 					target_loc = bottle
 			for(var/i in 1 to amount)
 				if(i-1 < drop_threshold)

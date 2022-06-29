@@ -255,7 +255,7 @@
 							req_components[path] -= used_amt
 						else
 							added_components[part] = path
-							if(SEND_SIGNAL(replacer, COMSIG_TRY_STORAGE_TAKE, part, src))
+							if(replacer.atom_storage.attempt_remove(part, src))
 								req_components[path]--
 
 				for(var/obj/item/part in added_components)

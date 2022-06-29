@@ -21,18 +21,18 @@
 	atom_storage.locked = TRUE
 
 /obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
-	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
+	var/locked = atom_storage.locked
 	if(W.GetID())
 		if(broken)
 			to_chat(user, span_danger("It appears to be broken."))
 			return
 		if(allowed(user))
-			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, !locked)
-			locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
+			atom_storage.locked = !locked
+			locked = atom_storage.locked
 			if(locked)
 				icon_state = icon_locked
 				to_chat(user, span_danger("You lock the [src.name]!"))
-				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
+				atom_storage.close_all()
 				return
 			else
 				icon_state = icon_closed
@@ -49,7 +49,7 @@
 /obj/item/storage/lockbox/emag_act(mob/user)
 	if(!broken)
 		broken = TRUE
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+		atom_storage.locked = FALSE
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
