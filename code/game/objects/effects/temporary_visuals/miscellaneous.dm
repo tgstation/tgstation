@@ -605,7 +605,8 @@
 
 /obj/effect/temp_visual/paint_sealer_blip/Destroy()
 	. = ..()
-	UnregisterSignal(move_loop, list(COMSIG_PARENT_QDELETING, COMSIG_MOVELOOP_POSTPROCESS))
+	if(move_loop)
+		UnregisterSignal(move_loop, list(COMSIG_PARENT_QDELETING, COMSIG_MOVELOOP_POSTPROCESS))
 
 /**
  * Handler for blip movmement loop's COMSIG_PARENT_QDELETING.
