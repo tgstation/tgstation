@@ -1,59 +1,49 @@
 import { createSearch } from 'common/string';
 import { sortBy } from 'common/collections';
-import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from "../components";
-import { Window } from "../layouts";
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from '../components';
+import { Window } from '../layouts';
 
 export const Stack = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const {
-    amount,
-    recipes = [],
-  } = data;
+  const { amount, recipes = [] } = data;
 
-  const [
-    searchText,
-    setSearchText,
-  ] = useLocalState(context, 'searchText', '');
+  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
 
-  const testSearch = createSearch(searchText, item => {
+  const testSearch = createSearch(searchText, (item) => {
     return item;
   });
 
-  const items = searchText.length > 0
-   && Object.keys(recipes)
-     .filter(testSearch)
-     .reduce((obj, key) => {
-       obj[key] = recipes[key];
-       return obj;
-     }, {})
-    || recipes;
+  const items =
+    (searchText.length > 0 &&
+      Object.keys(recipes)
+        .filter(testSearch)
+        .reduce((obj, key) => {
+          obj[key] = recipes[key];
+          return obj;
+        }, {})) ||
+    recipes;
 
   const height = Math.max(94 + Object.keys(recipes).length * 26, 250);
 
   return (
-    <Window
-      width={400}
-      height={Math.min(height, 500)}>
+    <Window width={400} height={Math.min(height, 500)}>
       <Window.Content scrollable>
         <Section
-          title={"Amount: " + amount}
-          buttons={(
+          title={'Amount: ' + amount}
+          buttons={
             <>
               Search
               <Input
                 autoFocus
                 value={searchText}
                 onInput={(e, value) => setSearchText(value)}
-                mx={1} />
+                mx={1}
+              />
             </>
-          )}>
-          {items.length === 0 && (
-            <NoticeBox>
-              No recipes found.
-            </NoticeBox>
-          ) || (
+          }>
+          {(items.length === 0 && <NoticeBox>No recipes found.</NoticeBox>) || (
             <RecipeList recipes={items} />
           )}
         </Section>
@@ -65,31 +55,22 @@ export const Stack = (props, context) => {
 const RecipeList = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const {
-    recipes,
-  } = props;
+  const { recipes } = props;
 
-  const sortedKeys = sortBy(key => key.toLowerCase())(Object.keys(recipes));
+  const sortedKeys = sortBy((key) => key.toLowerCase())(Object.keys(recipes));
 
-  return sortedKeys.map(title => {
+  return sortedKeys.map((title) => {
     const recipe = recipes[title];
     if (recipe.ref === undefined) {
       return (
-        <Collapsible
-          ml={1}
-          color="label"
-          title={title}>
+        <Collapsible ml={1} color="label" title={title}>
           <Box ml={1}>
             <RecipeList recipes={recipe} />
           </Box>
         </Collapsible>
       );
     } else {
-      return (
-        <Recipe
-          title={title}
-          recipe={recipe} />
-      );
+      return <Recipe title={title} recipe={recipe} />;
     }
   });
 };
@@ -105,13 +86,12 @@ const buildMultiplier = (recipe, amount) => {
 const Multipliers = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const {
-    recipe,
-    maxMultiplier,
-  } = props;
+  const { recipe, maxMultiplier } = props;
 
-  const maxM = Math.min(maxMultiplier,
-    Math.floor(recipe.max_res_amount / recipe.res_amount));
+  const maxM = Math.min(
+    maxMultiplier,
+    Math.floor(recipe.max_res_amount / recipe.res_amount)
+  );
 
   const multipliers = [5, 10, 25];
 
@@ -119,26 +99,32 @@ const Multipliers = (props, context) => {
 
   for (const multiplier of multipliers) {
     if (maxM >= multiplier) {
-      finalResult.push((
+      finalResult.push(
         <Button
-          content={multiplier * recipe.res_amount + "x"}
-          onClick={() => act("make", {
-            ref: recipe.ref,
-            multiplier: multiplier,
-          })} />
-      ));
+          content={multiplier * recipe.res_amount + 'x'}
+          onClick={() =>
+            act('make', {
+              ref: recipe.ref,
+              multiplier: multiplier,
+            })
+          }
+        />
+      );
     }
   }
 
   if (multipliers.indexOf(maxM) === -1) {
-    finalResult.push((
+    finalResult.push(
       <Button
-        content={maxM * recipe.res_amount + "x"}
-        onClick={() => act("make", {
-          ref: recipe.ref,
-          multiplier: maxM,
-        })} />
-    ));
+        content={maxM * recipe.res_amount + 'x'}
+        onClick={() =>
+          act('make', {
+            ref: recipe.ref,
+            multiplier: maxM,
+          })
+        }
+      />
+    );
   }
 
   return finalResult;
@@ -147,30 +133,20 @@ const Multipliers = (props, context) => {
 const Recipe = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const {
-    amount,
-  } = data;
+  const { amount } = data;
 
-  const {
-    recipe,
-    title,
-  } = props;
+  const { recipe, title } = props;
 
-  const {
-    res_amount,
-    max_res_amount,
-    req_amount,
-    ref,
-  } = recipe;
+  const { res_amount, max_res_amount, req_amount, ref } = recipe;
 
   let buttonName = title;
-  buttonName += " (";
-  buttonName += req_amount + " ";
-  buttonName += ("sheet" + (req_amount > 1 ? "s" : ""));
-  buttonName += ")";
+  buttonName += ' (';
+  buttonName += req_amount + ' ';
+  buttonName += 'sheet' + (req_amount > 1 ? 's' : '');
+  buttonName += ')';
 
   if (res_amount > 1) {
-    buttonName = res_amount + "x " + buttonName;
+    buttonName = res_amount + 'x ' + buttonName;
   }
 
   const maxMultiplier = buildMultiplier(recipe, amount);
@@ -185,16 +161,17 @@ const Recipe = (props, context) => {
               disabled={!maxMultiplier}
               icon="wrench"
               content={buttonName}
-              onClick={() => act("make", {
-                ref: recipe.ref,
-                multiplier: 1,
-              })} />
+              onClick={() =>
+                act('make', {
+                  ref: recipe.ref,
+                  multiplier: 1,
+                })
+              }
+            />
           </Table.Cell>
           {max_res_amount > 1 && maxMultiplier > 1 && (
             <Table.Cell collapsing>
-              <Multipliers
-                recipe={recipe}
-                maxMultiplier={maxMultiplier} />
+              <Multipliers recipe={recipe} maxMultiplier={maxMultiplier} />
             </Table.Cell>
           )}
         </Table.Row>

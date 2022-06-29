@@ -329,9 +329,9 @@ const typevars = (type) => {
     case 'targeted/touch':
       ret = ret.filter(
         (variable) =>
-          variable.name !== 'range'
-          && variable.name !== 'invocation_type'
-          && variable.name !== 'selection_type'
+          variable.name !== 'range' &&
+          variable.name !== 'invocation_type' &&
+          variable.name !== 'selection_type'
       );
       ret.push(
         {
@@ -577,14 +577,17 @@ const SDQLSpellInput = (props, context) => {
           options={options}
           displayText={options[saved_vars[name]] ?? default_value}
           onSelected={(value) =>
-            act('variable', { name, value: options.indexOf(value) })}
+            act('variable', { name, value: options.indexOf(value) })
+          }
         />
       );
     case 'path':
       return (
         <Button
           content={saved_vars[name] ?? default_value}
-          onClick={() => act('path_variable', { name, root_path: default_value })}
+          onClick={() =>
+            act('path_variable', { name, root_path: default_value })
+          }
         />
       );
     case 'list':
@@ -603,17 +606,22 @@ const SDQLSpellListEntry = (props, context) => {
   const { list, default_value, is_input } = props;
   return (
     <Collapsible>
-      {Object.entries(list_vars[list] || default_value)
-        .map(([name, { type, value, flags }]) => (
+      {Object.entries(list_vars[list] || default_value).map(
+        ([name, { type, value, flags }]) => (
           <Stack key={name} fill mb="6px">
             <Stack.Item grow>
               {
-              // Can be renamed?
+                // Can be renamed?
                 (flags & 2) === 0 ? (
                   <Input
                     value={name}
                     onChange={(e, value) =>
-                      act('list_variable_rename', { list, name, new_name: value })}
+                      act('list_variable_rename', {
+                        list,
+                        name,
+                        new_name: value,
+                      })
+                    }
                   />
                 ) : (
                   <Box inline bold color="label" mr="6px">
@@ -624,13 +632,22 @@ const SDQLSpellListEntry = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               {
-              // Can type be changed?
+                // Can type be changed?
                 (flags & 1) === 0 && (
                   <Dropdown
-                    options={['num', 'bool', 'string', 'path', 'ref', 'icon', 'list']}
+                    options={[
+                      'num',
+                      'bool',
+                      'string',
+                      'path',
+                      'ref',
+                      'icon',
+                      'list',
+                    ]}
                     displayText={type}
                     onSelected={(value) =>
-                      act('list_variable_change_type', { list, name, value })}
+                      act('list_variable_change_type', { list, name, value })
+                    }
                   />
                 )
               }
@@ -650,7 +667,8 @@ const SDQLSpellListEntry = (props, context) => {
               />
             </Stack.Item>
           </Stack>
-        ))}
+        )
+      )}
       <Button
         icon="plus-circle"
         color="blue"
@@ -678,7 +696,8 @@ const SDQLSpellListVarInput = (props, context) => {
         <NumberInput
           value={value}
           onChange={(e, value) =>
-            act('list_variable_change_value', { list, name, value })}
+            act('list_variable_change_value', { list, name, value })
+          }
         />
       );
     case 'bool':
@@ -697,7 +716,8 @@ const SDQLSpellListVarInput = (props, context) => {
           fluid
           value={value}
           onChange={(e, value) =>
-            act('list_variable_change_value', { list, name, value })}
+            act('list_variable_change_value', { list, name, value })
+          }
         />
       );
     case 'list':
@@ -712,7 +732,8 @@ const SDQLSpellListVarInput = (props, context) => {
             icon="upload"
             color="blue"
             title="set to marked datum"
-            onClick={() => act('list_variable_set_ref', { list, name })} />
+            onClick={() => act('list_variable_set_ref', { list, name })}
+          />
         </>
       );
     default:
@@ -723,8 +744,6 @@ const SDQLSpellListVarInput = (props, context) => {
       );
   }
 };
-
-
 
 const SDQLSpellIcons = (props, context) => {
   const { data } = useBackend(context);
@@ -785,22 +804,22 @@ const SDQLSpellIcons = (props, context) => {
             />
           </Section>
         )}
-        {type
-          && vars.some((entry) => entry.name === 'ranged_mousepointer')
-          && saved_vars['ranged_mousepointer'] && (
-          <Section title="Mouse Cursor">
-            <Box
-              as="img"
-              height="64px"
-              width="auto"
-              m={0}
-              src={`data:image/jpeg;base64,${mouse_icon}`}
-              style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
-              }}
-            />
-          </Section>
-        )}
+        {type &&
+          vars.some((entry) => entry.name === 'ranged_mousepointer') &&
+          saved_vars['ranged_mousepointer'] && (
+            <Section title="Mouse Cursor">
+              <Box
+                as="img"
+                height="64px"
+                width="auto"
+                m={0}
+                src={`data:image/jpeg;base64,${mouse_icon}`}
+                style={{
+                  '-ms-interpolation-mode': 'nearest-neighbor',
+                }}
+              />
+            </Section>
+          )}
         {type && 'overlay' in saved_vars && saved_vars['overlay'] === 1 && (
           <Section title="Overlay Icon">
             <Box
@@ -822,29 +841,22 @@ const SDQLSpellIcons = (props, context) => {
 
 const SDQLSpellParseErrorModal = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    parse_errors,
-    parsed_type,
-    parsed_vars,
-    parsed_list_vars } = data;
+  const { parse_errors, parsed_type, parsed_vars, parsed_list_vars } = data;
   const multiple_errors = parse_errors.length > 1;
   return (
     <Modal>
       <Stack fill vertical>
         <Stack.Item>
-          Parse error{multiple_errors ? "s" : ""} occured while loading from file.
+          Parse error{multiple_errors ? 's' : ''} occured while loading from
+          file.
         </Stack.Item>
         <Stack.Item>
           <Section scrollable maxWidth="600px" maxHeight="200px">
             {parse_errors.map((error, i) => {
               return (
                 <>
-                  <Box key={`error_${i}`}>
-                    {error}
-                  </Box>
-                  {i<parse_errors.length-1 && (
-                    <hr />
-                  )}
+                  <Box key={`error_${i}`}>{error}</Box>
+                  {i < parse_errors.length - 1 && <hr />}
                 </>
               );
             })}
@@ -872,32 +884,34 @@ const SDQLSpellParseErrorModal = (props, context) => {
                       );
                     })}
                   </LabeledList>
-                  {Object.entries(parsed_list_vars).filter(([name]) => {
-                    return !/\//.test(name);
-                  }).map(([name]) => {
-                    return (
-                      <SDQLSpellParsedList
-                        key={name}
-                        list={name}
-                        name={name}
-                        recursive_props={{
-                          mx: "10px",
-                        }} />
-                    );
-                  })}
+                  {Object.entries(parsed_list_vars)
+                    .filter(([name]) => {
+                      return !/\//.test(name);
+                    })
+                    .map(([name]) => {
+                      return (
+                        <SDQLSpellParsedList
+                          key={name}
+                          list={name}
+                          name={name}
+                          recursive_props={{
+                            mx: '10px',
+                          }}
+                        />
+                      );
+                    })}
                   <Button.Confirm
                     content="Load Anyways"
                     confirmContent="Are you sure?"
-                    onClick={() => act('load_despite_error')} />
+                    onClick={() => act('load_despite_error')}
+                  />
                 </Section>
               </Collapsible>
             </Stack.Item>
           </>
         )}
         <Stack.Item>
-          <Button onClick={() => act('close_error')}>
-            Ok
-          </Button>
+          <Button onClick={() => act('close_error')}>Ok</Button>
         </Stack.Item>
       </Stack>
     </Modal>
@@ -914,14 +928,16 @@ const SDQLSpellParsedList = (props, context) => {
         <LabeledList>
           {Object.entries(parsed_list_vars[list])
             .sort(([, { type_1 }], [, { type_2 }]) => {
-              return (type_1 === "list" ? 1 : 0) - (type_2 === "list" ? 1 : 0);
-            }).map(([name, { type, value }]) => {
-              return type === "list" ? (
+              return (type_1 === 'list' ? 1 : 0) - (type_2 === 'list' ? 1 : 0);
+            })
+            .map(([name, { type, value }]) => {
+              return type === 'list' ? (
                 <SDQLSpellParsedList
                   key={name}
                   list={`${list}/${name}`}
                   name={name}
-                  recursive_props={recursive_props} />
+                  recursive_props={recursive_props}
+                />
               ) : (
                 <LabeledList.Item key={name} label={name}>
                   {value}

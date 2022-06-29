@@ -11,6 +11,15 @@
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/watering_can
+	name = "Watering Can"
+	id = "watering_can"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 200)
+	build_path = /obj/item/reagent_containers/glass/watering_can
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/mop
 	name = "Mop"
 	id = "mop"
@@ -1281,3 +1290,11 @@
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 500)
 	build_path = /obj/item/electronics/tracker
 	category = list("initial", "Electronics", "Construction")
+
+/datum/design/fishing_rod_basic
+	name = "Fishing Rod"
+	id = "fishing_rod"
+	build_type = AUTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
+	build_path = /obj/item/fishing_rod
+	category = list("initial", "Misc", "Equipment")

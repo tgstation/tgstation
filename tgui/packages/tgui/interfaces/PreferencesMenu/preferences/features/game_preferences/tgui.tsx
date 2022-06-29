@@ -34,3 +34,10 @@ export const tgui_lock: FeatureToggle = {
   description: 'Locks TGUI windows to your main monitor.',
   component: CheckboxInput,
 };
+
+export const tgui_say_light_mode: FeatureToggle = {
+  name: 'Say: Light mode',
+  category: 'UI',
+  description: 'Sets TGUI Say to use a light mode.',
+  component: CheckboxInput,
+};

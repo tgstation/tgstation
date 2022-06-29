@@ -26,6 +26,12 @@
 	var/immunity_trait = TRAIT_LAVA_IMMUNE
 	/// objects with these flags won't burn.
 	var/immunity_resistance_flags = LAVA_PROOF
+	/// the temperature that this turf will attempt to heat/cool gasses too in a heat exchanger, in kelvin
+	var/lava_temperature = 5000
+
+/turf/open/lava/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_LAVALAND_LAVA)
 
 /turf/open/lava/ex_act(severity, target)
 	return
@@ -99,7 +105,7 @@
 	. = 700000
 
 /turf/open/lava/GetTemperature()
-	. = 5000
+	. = lava_temperature
 
 /turf/open/lava/TakeTemperature(temp)
 

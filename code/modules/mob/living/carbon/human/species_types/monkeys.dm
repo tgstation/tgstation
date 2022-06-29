@@ -25,11 +25,11 @@
 	)
 	inherent_traits = list(
 		TRAIT_CAN_STRIP,
-		TRAIT_VENTCRAWLER_NUDE,
-		TRAIT_PRIMITIVE,
-		TRAIT_WEAK_SOUL,
 		TRAIT_GUN_NATURAL,
-		//TRAIT_LITERATE, monkeys shouldn't be able to read or write
+		//TRAIT_LITERATE,
+		TRAIT_PRIMITIVE,
+		TRAIT_VENTCRAWLER_NUDE,
+		TRAIT_WEAK_SOUL,
 	)
 	no_equip = list(
 		ITEM_SLOT_OCLOTHING,

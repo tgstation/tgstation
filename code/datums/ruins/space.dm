@@ -66,12 +66,12 @@
 	description = "A once-bustling tradestation that handled imports and exports from nearby stations now lays eerily dormant. \
 	The last received message was a distress call from one of the on-board officers, but we had no success in making contact again."
 
-/datum/map_template/ruin/space/derelict1
-	id = "derelict1"
-	suffix = "derelict1.dmm"
-	name = "Derelict 1"
-	description = "Nothing to see here citizen, move along, certainly no xeno outbreaks on this piece of station debris. That purple stuff? It's uh... station nectar. \
-	It's a top secret research installation."
+/datum/map_template/ruin/space/derelict_sulaco
+	id = "derelict_sulaco"
+	suffix = "derelict_sulaco.dmm"
+	name = "Derelict Sulaco"
+	description = "Nothing to see here citizen, move along, certainly no xeno outbreaks here. That purple stuff? It's uh... space nectar... but don't eat it! \
+	It's the bridge of a top secret military ship."
 
 /datum/map_template/ruin/space/derelict2
 	id = "derelict2"
