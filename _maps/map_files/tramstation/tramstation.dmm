@@ -18325,7 +18325,10 @@
 /area/station/command/teleporter)
 "gvC" = (
 /obj/structure/closet/secure_closet/freezer/meat,
-/turf/open/floor/plating/snowed/temperatre,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
 /area/station/service/kitchen/coldroom)
 "gvI" = (
 /turf/closed/wall,
@@ -29729,7 +29732,10 @@
 /obj/structure/reagent_dispensers/cooking_oil,
 /obj/machinery/light/cold/directional/north,
 /obj/item/radio/intercom/directional/north,
-/turf/open/floor/plating/snowed/temperatre,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
 /area/station/service/kitchen/coldroom)
 "ksa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
@@ -30333,6 +30339,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/weather/snow,
 /turf/open/floor/iron{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
@@ -43841,13 +43848,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
-"pmI" = (
-/obj/modular_map_root/tramstation{
-	key = "maintenance_midladder_upper"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
 "pmQ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -53526,12 +53526,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/surgery,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
-"sAB" = (
-/obj/modular_map_root/tramstation{
-	key = "maintenance_midladder"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/tram/mid)
 "sAE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/structure/lattice/catwalk,
@@ -58191,7 +58185,10 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating/snowed/temperatre,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
 /area/station/service/kitchen/coldroom)
 "ugc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -68037,7 +68034,10 @@
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating/snowed/temperatre,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/iron{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
 /area/station/service/kitchen/coldroom)
 "xDK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -107322,7 +107322,7 @@ dDG
 dDG
 dhe
 dhe
-sAB
+qjU
 ngQ
 uml
 jvM
@@ -174902,7 +174902,7 @@ lZW
 lZW
 lZW
 lZW
-pmI
+mPw
 lZW
 dDG
 dhe
