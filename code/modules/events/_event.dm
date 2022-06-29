@@ -93,18 +93,37 @@
 		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
 
 /datum/round_event_control/proc/runEvent(random = FALSE)
+	//We clear our signals first
+	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
-	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	occurrences++
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
+	triggering = TRUE
+
+	if (alert_observers)
+		message_admins("Random Event triggering in [RANDOM_EVENT_ADMIN_INTERVENTION_TIME] seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME SECONDS)
+
+	if(!triggering)
+		RegisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT, .proc/stop_random_event)
+		return E
+
+	triggering = FALSE
 	if(random)
 		log_game("Random Event triggering: [name] ([typepath])")
-	if (alert_observers)
+
+	if(alert_observers)
 		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+
+	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
+
+//Returns the component for the listener
+/datum/round_event_control/proc/stop_random_event()
+	return CANCEL_RANDOM_EVENT
 
 //Special admins setup
 /datum/round_event_control/proc/admin_setup()
@@ -179,6 +198,10 @@
 	if(!processing)
 		return
 
+	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_RANDOM_EVENT, src) & CANCEL_RANDOM_EVENT)
+		processing = FALSE
+		kill()
+		
 	if(activeFor == startWhen)
 		processing = FALSE
 		start()
