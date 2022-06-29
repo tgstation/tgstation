@@ -170,6 +170,7 @@
 	description = "Some say that this is the best medicine, but recent studies have proven that to be untrue."
 	metabolization_rate = INFINITY
 	color = "#FF4DD2"
+	overdose_threshold = 30
 	taste_description = "laughter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -178,11 +179,19 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_laughter)
 	..()
 
+/datum/reagent/consumable/laughter/overdose_process(mob/living/carbon/M, delta_time, times_fired)
+	if(DT_PROB(10, delta_time))
+		to_chat(M, span_userdanger("You laugh so hard you lose your breath..."))
+		M.adjustOxyLoss(5)
+		M.emote("gasp")
+	..()
+
 /datum/reagent/consumable/superlaughter
 	name = "Super Laughter"
 	description = "Funny until you're the one laughing."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	color = "#FF4DD2"
+	overdose_threshold = 15
 	taste_description = "laughter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -191,6 +200,12 @@
 		M.visible_message(span_danger("[M] bursts out into a fit of uncontrollable laughter!"), span_userdanger("You burst out in a fit of uncontrollable laughter!"))
 		M.Stun(5)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_superlaughter)
+	..()
+
+/datum/reagent/consumable/superlaughter/overdose_process(mob/living/carbon/M, delta_time, times_fired)
+	if(DT_PROB(16, delta_time))
+		to_chat(M, span_userdanger("You laugh so hard you feel your lungs hurt..."))
+		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/potato_juice
