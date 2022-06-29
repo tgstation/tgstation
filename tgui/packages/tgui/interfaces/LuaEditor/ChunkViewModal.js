@@ -10,6 +10,7 @@ export const ChunkViewModal = (props, context) => {
         height="400px"
         width="300px"
         scrollable
+        scrollableHorizontal
         title="Chunk"
         buttons={
           <Button

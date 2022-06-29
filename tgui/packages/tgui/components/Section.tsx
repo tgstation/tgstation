@@ -52,6 +52,7 @@ export class Section extends Component<SectionProps> {
       fill,
       fitted,
       scrollable,
+      scrollableHorizontal,
       children,
       ...rest
     } = this.props;
@@ -64,6 +65,7 @@ export class Section extends Component<SectionProps> {
           fill && 'Section--fill',
           fitted && 'Section--fitted',
           scrollable && 'Section--scrollable',
+          scrollableHorizontal && 'Section--scrollableHorizontal',
           className,
           computeBoxClassName(rest),
         ])}

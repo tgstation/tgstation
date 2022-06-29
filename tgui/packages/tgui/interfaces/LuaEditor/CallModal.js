@@ -14,6 +14,7 @@ export const CallModal = (props, context) => {
         height="600px"
         width="600px"
         scrollable
+        scrollableHorizontal
         title="Call Function/Task"
         buttons={
           <Button

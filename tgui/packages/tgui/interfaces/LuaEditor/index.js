@@ -112,7 +112,7 @@ export const LuaEditor = (props, context) => {
                     Log
                   </Tabs.Tab>
                 </Tabs>
-                <Section fill scrollable width="100%">
+                <Section fill scrollable scrollableHorizontal width="100%">
                   {tabContent}
                 </Section>
               </Section>
