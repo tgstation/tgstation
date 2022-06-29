@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes: 
+  - imageadd: "Shutters and window shutters on all stations are now directional"

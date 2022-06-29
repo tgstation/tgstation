@@ -451,24 +451,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"ake" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
-	name = "Robotics Desk";
-	req_access = list("robotics")
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "robotics2";
-	name = "Robotics Lab Shutters"
-	},
-/obj/item/folder/white,
-/obj/item/pen,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/station/science/robotics/lab)
 "akk" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/layer2{
 	dir = 4
@@ -2458,6 +2440,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
+"aQw" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "robotics2";
+	name = "Robotics Lab Shutters";
+	dir = 4
+	},
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "aQF" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -4755,14 +4746,6 @@
 "bzW" = (
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
-"bzZ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rnd";
-	name = "Research Lab Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/hallway/primary/starboard)
 "bAa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -6201,6 +6184,20 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
+"bVC" = (
+/obj/machinery/door/poddoor/shutters/window{
+	id = "drone_bay";
+	name = "Drone Bay Shutters";
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/cargo/drone_bay)
 "bVJ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -7908,6 +7905,17 @@
 "cvS" = (
 /turf/closed/wall,
 /area/station/maintenance/department/medical/central)
+"cvY" = (
+/obj/structure/sign/warning/electric_shock/directional/south,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hop";
+	name = "Privacy Shutters";
+	dir = 8
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/hop)
 "cwd" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/light/small/directional/west,
@@ -9464,6 +9472,16 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
+"cSV" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "Skynet_launch";
+	name = "Mech Bay";
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/station/science/robotics/mechbay)
 "cTc" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -11244,6 +11262,32 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/engine_equipment,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
+"dtp" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/north{
+	dir = 8;
+	name = "Reception Window"
+	},
+/obj/machinery/door/window/brigdoor{
+	base_state = "rightsecure";
+	dir = 4;
+	icon_state = "rightsecure";
+	name = "Head of Personnel's Desk";
+	req_access = list("hop")
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hop";
+	name = "Privacy Shutters";
+	dir = 8
+	},
+/obj/machinery/flasher/directional/north{
+	id = "hopflash"
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/hop)
 "dtr" = (
 /obj/machinery/computer/med_data,
 /obj/effect/turf_decal/tile/green,
@@ -11632,6 +11676,22 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/interrogation)
+"dAd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissaryshutter";
+	name = "Vacant Commissary Shutter";
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
 "dAg" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
@@ -12966,6 +13026,29 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
+"dVS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/line,
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/window{
+	id = "drone_bay";
+	name = "Drone Bay Shutters";
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/mid_joiner,
+/obj/effect/turf_decal/trimline/yellow/mid_joiner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/cargo/drone_bay)
 "dWf" = (
 /obj/item/trash/pistachios,
 /turf/open/floor/plating,
@@ -13751,6 +13834,15 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/medical/morgue)
+"eiC" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "gene_desk_shutters";
+	name = "Genetics Shutters";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/science/genetics)
 "eiI" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 1
@@ -14769,6 +14861,22 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"eBa" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Cargo_Store_In";
+	name = "Cargo Warehouse Shutters";
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "eBd" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
@@ -15147,16 +15255,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/security/prison/visit)
-"eGA" = (
-/obj/structure/sign/warning/electric_shock/directional/south,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hop";
-	name = "Privacy Shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/hop)
 "eGK" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/entertainment/drugs,
@@ -16055,6 +16153,15 @@
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
+"eVQ" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "robotics";
+	name = "Robotics Lab Shutters";
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "eVR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -16175,6 +16282,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"eXg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "viroview";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/medical/virology)
 "eXn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -16238,21 +16356,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"eYs" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	id = "commissaryshutter";
-	name = "Vacant Commissary Shutter"
-	},
-/turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary)
 "eYz" = (
 /obj/machinery/mineral/processing_unit{
 	dir = 1
@@ -16487,32 +16590,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
-"fbL" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rnd";
-	name = "Research Lab Shutters"
-	},
-/obj/machinery/door/window/right/directional/south{
-	name = "Research and Development Desk";
-	req_access = list("science")
-	},
-/obj/item/paper_bin{
-	pixel_x = -9;
-	pixel_y = 7
-	},
-/obj/item/folder{
-	pixel_x = -6
-	},
-/obj/item/pen{
-	pixel_x = -6
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
-/turf/open/floor/plating,
-/area/station/hallway/primary/starboard)
 "fcj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -17816,17 +17893,6 @@
 /obj/structure/sign/warning/cold_temp,
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
-"fxf" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/window{
-	id = "chemistry_access_shutters";
-	name = "Chemistry Access Shutters"
-	},
-/turf/open/floor/iron/white/textured,
-/area/station/medical/treatment_center)
 "fxl" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -17862,29 +17928,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"fxZ" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/window{
-	id = "chemistry_access_shutters";
-	name = "Chemistry Access Shutters"
-	},
-/turf/open/floor/iron/white/textured,
-/area/station/medical/treatment_center)
 "fya" = (
 /obj/structure/cable,
 /mob/living/simple_animal/sloth/paperwork,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"fyb" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kanyewest";
-	name = "Privacy Shutters"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/security/detectives_office)
 "fyc" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -17904,15 +17952,6 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
-"fyu" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rnd2";
-	name = "Research Lab Shutters"
-	},
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/plating,
-/area/station/science/ordnance/office)
 "fyw" = (
 /obj/machinery/telecomms/server/presets/service,
 /turf/open/floor/iron/dark/telecomms,
@@ -17936,6 +17975,18 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
+"fyO" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hopqueue";
+	name = "HoP Queue Shutters";
+	dir = 8
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/machinery/ticket_machine/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "fyR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -17991,6 +18042,16 @@
 "fzK" = (
 /turf/closed/wall,
 /area/station/service/bar)
+"fzL" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rnd2";
+	name = "Research Lab Shutters";
+	dir = 8
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/station/science/ordnance/office)
 "fzQ" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -18175,6 +18236,18 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"fDo" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemistry_lower_shutters";
+	name = "Chemistry Exterior Shutters";
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/medical/chemistry)
 "fDB" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance"
@@ -19254,6 +19327,19 @@
 	},
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
+"fVL" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rnd2";
+	name = "Research Lab Shutters";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/iron,
+/area/station/science/lab)
 "fVS" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron,
@@ -19982,6 +20068,14 @@
 	dir = 6
 	},
 /area/station/service/chapel)
+"giz" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "teledoor";
+	name = "MiniSat Teleport Access";
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "giD" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -20509,6 +20603,16 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/security/brig)
+"grg" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemistry_lower_shutters";
+	name = "Chemistry Exterior Shutters";
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/turf/open/floor/plating,
+/area/station/medical/chemistry)
 "grh" = (
 /obj/machinery/vending/security,
 /obj/machinery/light/directional/north,
@@ -21832,6 +21936,33 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"gNc" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rnd";
+	name = "Research Lab Shutters";
+	dir = 1
+	},
+/obj/machinery/door/window/right/directional/south{
+	name = "Research and Development Desk";
+	req_access = list("science")
+	},
+/obj/item/paper_bin{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/folder{
+	pixel_x = -6
+	},
+/obj/item/pen{
+	pixel_x = -6
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/starboard)
 "gNg" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "MiniSat External South";
@@ -21904,14 +22035,6 @@
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
-"gOI" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rnd2";
-	name = "Research Lab Shutters"
-	},
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/science/research)
 "gOJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -22311,6 +22434,26 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"gUR" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/east{
+	base_state = "left";
+	dir = 2;
+	icon_state = "left";
+	name = "Robotics Desk";
+	req_access = list("robotics")
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "robotics";
+	name = "Robotics Lab Shutters";
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "gUT" = (
 /obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/plating,
@@ -22544,6 +22687,15 @@
 /obj/item/pen,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
+"gYW" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rnd2";
+	name = "Research Lab Shutters";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/science/lab)
 "gZa" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -23013,24 +23165,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"hfT" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "briggate";
-	name = "Security Shutters"
-	},
-/obj/item/restraints/handcuffs,
-/obj/item/radio/off,
-/obj/structure/cable,
-/obj/machinery/door/window/brigdoor/left/directional/west{
-	name = "Brig Reception";
-	req_access = list("security")
-	},
-/obj/machinery/door/window/right/directional/east{
-	name = "Brig Reception"
-	},
-/turf/open/floor/iron/dark,
-/area/station/security/checkpoint/auxiliary)
 "hgc" = (
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -24568,6 +24702,19 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"hHy" = (
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	id = "Atmospherics Project Shutters";
+	name = "Atmospherics Project Shutters";
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "hHD" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Construction Area"
@@ -24792,6 +24939,15 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"hMp" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rnd2";
+	name = "Research Lab Shutters";
+	dir = 8
+	},
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/science/research)
 "hMr" = (
 /obj/effect/landmark/start/chaplain,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -25198,6 +25354,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/bar/atrium)
+"hSx" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Lakeview_Bathroom";
+	name = "Privacy Shutters";
+	dir = 8
+	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/mine/eva/lower)
 "hSF" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 8
@@ -25632,6 +25799,16 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
+"iac" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "briggate";
+	name = "Security Shutters";
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/checkpoint/auxiliary)
 "iag" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -25796,11 +25973,39 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
+"icb" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "briggate";
+	name = "Security Shutters";
+	dir = 4
+	},
+/obj/item/restraints/handcuffs,
+/obj/item/radio/off,
+/obj/structure/cable,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Brig Reception";
+	req_access = list("security")
+	},
+/obj/machinery/door/window/right/directional/east{
+	name = "Brig Reception"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/checkpoint/auxiliary)
 "ick" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"icl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rnd";
+	name = "Research Lab Shutters";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/starboard)
 "icy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -27648,14 +27853,6 @@
 /obj/effect/landmark/start/bartender,
 /turf/open/floor/iron,
 /area/station/service/bar)
-"iHK" = (
-/obj/effect/spawner/structure/window,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rnd2";
-	name = "Research Lab Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/science/research)
 "iHQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -28133,6 +28330,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
+"iND" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "lower_chapel_shutters";
+	name = "Graveyard Shutters";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/service/chapel)
 "iNH" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder{
@@ -29328,6 +29537,18 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
+"jgb" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rnd2";
+	name = "Research Lab Shutters";
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/science/lab)
 "jgh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -31283,6 +31504,11 @@
 "jNp" = (
 /turf/closed/wall/r_wall,
 /area/station/security/holding_cell)
+"jNw" = (
+/obj/item/food/chococoin,
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/turf/open/misc/ice/coldroom,
+/area/station/service/kitchen/coldroom)
 "jNy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31395,15 +31621,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
-"jOZ" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hop";
-	name = "Privacy Shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/hop)
 "jPa" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -32456,15 +32673,6 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos)
-"kgh" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	id = "Skynet_launch";
-	name = "Mech Bay"
-	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/station/science/robotics/mechbay)
 "kgl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -32491,19 +32699,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"kgx" = (
-/obj/machinery/door/poddoor/shutters/window{
-	id = "drone_bay";
-	name = "Drone Bay Shutters"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/station/cargo/drone_bay)
 "kgz" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
@@ -35782,18 +35977,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
-"lii" = (
-/obj/machinery/door/poddoor/shutters/window/preopen{
-	id = "Atmospherics Project Shutters";
-	name = "Atmospherics Project Shutters"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/project)
 "lim" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -36939,6 +37122,14 @@
 	dir = 10
 	},
 /area/station/science/research)
+"lAQ" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "armory";
+	name = "Armory Shutter";
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/ai_monitored/security/armory/upper)
 "lBb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -37798,6 +37989,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"lQG" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rnd2";
+	name = "Research Lab Shutters";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/science/research)
 "lQN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/cable,
@@ -39369,6 +39569,27 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"mtz" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "briggate";
+	name = "Security Shutters";
+	dir = 4
+	},
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/pen,
+/obj/machinery/door/window/brigdoor/right/directional/west{
+	name = "Brig Reception";
+	req_access = list("security")
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Brig Reception"
+	},
+/turf/open/floor/iron/dark,
+/area/station/security/checkpoint/auxiliary)
 "mtI" = (
 /turf/closed/wall,
 /area/station/science/robotics/lab)
@@ -39574,13 +39795,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/work)
-"mxB" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "viroview"
-	},
-/turf/open/floor/plating,
-/area/station/medical/virology)
 "mxD" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
@@ -39598,14 +39812,6 @@
 /obj/item/clothing/ears/earmuffs,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
-"mxW" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "gene_desk_shutters";
-	name = "Genetics Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/science/genetics)
 "myb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -40776,6 +40982,19 @@
 /obj/effect/turf_decal/siding/yellow/corner,
 /turf/open/floor/iron/large,
 /area/station/engineering/storage)
+"mSr" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	id = "Atmospherics Project Shutters";
+	name = "Atmospherics Project Shutters";
+	dir = 1
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "mSv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -40862,17 +41081,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
-"mUr" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chemistry_lower_shutters";
-	name = "Chemistry Exterior Shutters"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/medical/chemistry)
 "mUs" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating,
@@ -41083,6 +41291,17 @@
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/station/science/explab)
+"mXB" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hopqueue";
+	name = "HoP Queue Shutters";
+	dir = 8
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "mXC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -41568,6 +41787,15 @@
 	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hos)
+"nee" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "gene_shutters";
+	name = "Genetics Shutters";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/science/genetics)
 "nef" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
@@ -45624,6 +45852,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
+"oph" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "chemistry_access_shutters";
+	name = "Chemistry Access Shutters";
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/treatment_center)
 "opl" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
@@ -46697,16 +46935,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/service/bar)
-"oEb" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "viroview"
-	},
-/turf/open/floor/plating,
-/area/station/medical/virology)
 "oEj" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -46999,17 +47227,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
-"oKn" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hopqueue";
-	name = "HoP Queue Shutters"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/obj/machinery/ticket_machine/directional/north,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "oKv" = (
 /obj/item/trash/popcorn,
 /turf/open/floor/plating,
@@ -47163,20 +47380,6 @@
 /obj/machinery/computer/slot_machine,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
-"oMQ" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/south{
-	dir = 4;
-	name = "Genetics Desk";
-	req_access = list("genetics")
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "gene_desk_shutters";
-	name = "Genetics Shutters"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/station/science/genetics)
 "oMR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -47448,18 +47651,6 @@
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
-"oRE" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters/window/preopen{
-	id = "Atmospherics Project Shutters";
-	name = "Atmospherics Project Shutters"
-	},
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/project)
 "oSa" = (
 /obj/machinery/door/airlock/public/glass{
 	id_tag = "gulag3";
@@ -47839,11 +48030,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
-"oYs" = (
-/obj/item/food/chococoin,
-/obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/misc/ice/coldroom,
-/area/station/service/kitchen/coldroom)
 "oYu" = (
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/dark,
@@ -48584,15 +48770,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
-"pjV" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chemistry_lower_shutters";
-	name = "Chemistry Exterior Shutters"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/plating,
-/area/station/medical/chemistry)
 "pjZ" = (
 /obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/white,
@@ -48858,6 +49035,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/security/holding_cell)
+"ppd" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hop";
+	name = "Privacy Shutters";
+	dir = 8
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/hop)
 "ppl" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -49637,24 +49824,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/medical/treatment_center)
-"pBF" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	id = "commissaryshutter";
-	name = "Vacant Commissary Shutter"
-	},
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
-/turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary)
 "pBI" = (
 /obj/machinery/power/smes{
 	capacity = 9e+006;
@@ -49902,26 +50071,6 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
-"pGx" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "briggate";
-	name = "Security Shutters"
-	},
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/pen,
-/obj/machinery/door/window/brigdoor/right/directional/west{
-	name = "Brig Reception";
-	req_access = list("security")
-	},
-/obj/machinery/door/window/left/directional/east{
-	name = "Brig Reception"
-	},
-/turf/open/floor/iron/dark,
-/area/station/security/checkpoint/auxiliary)
 "pGM" = (
 /obj/structure/girder,
 /obj/structure/grille,
@@ -51193,14 +51342,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
-"qaK" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rnd2";
-	name = "Research Lab Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/science/lab)
 "qaL" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 5
@@ -51727,17 +51868,6 @@
 /obj/item/trash/semki,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
-"qkS" = (
-/obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rnd2";
-	name = "Research Lab Shutters"
-	},
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/science/lab)
 "qkT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -52289,25 +52419,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"qtZ" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	dir = 2;
-	icon_state = "left";
-	name = "Robotics Desk";
-	req_access = list("robotics")
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "robotics";
-	name = "Robotics Lab Shutters"
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
-/turf/open/floor/plating,
-/area/station/science/robotics/lab)
 "quf" = (
 /obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/iron,
@@ -53670,6 +53781,15 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace/icemoon,
 /area/station/science/server)
+"qOO" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rnd2";
+	name = "Research Lab Shutters";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/science/research)
 "qOP" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/structure/cable,
@@ -54754,13 +54874,6 @@
 "rfu" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/rec)
-"rfE" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "armory";
-	name = "Armory Shutter"
-	},
-/turf/open/floor/iron,
-/area/station/ai_monitored/security/armory/upper)
 "rfS" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -56814,14 +56927,6 @@
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
-"rPA" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Courtroom";
-	name = "Security Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/hallway/primary/fore)
 "rPL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -60336,21 +60441,6 @@
 /mob/living/simple_animal/bot/floorbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
-"sUB" = (
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "Cargo_Store_In";
-	name = "Cargo Warehouse Shutters"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/station/cargo/warehouse)
 "sUE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/frame/computer{
@@ -60406,21 +60496,6 @@
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
-"sVE" = (
-/obj/machinery/door/poddoor/shutters/window/preopen{
-	dir = 8;
-	id = "Atmospherics HFR Shutters";
-	name = "Atmospherics HFR Shutters"
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/hfr_room)
 "sVJ" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -62726,28 +62801,6 @@
 	dir = 1
 	},
 /area/mine/living_quarters)
-"tFM" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/yellow/line,
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters/window{
-	id = "drone_bay";
-	name = "Drone Bay Shutters"
-	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/station/cargo/drone_bay)
 "tFP" = (
 /obj/structure/closet/crate,
 /obj/machinery/light/small/directional/east,
@@ -63971,14 +64024,6 @@
 /obj/structure/ladder,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
-"tZw" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "robotics";
-	name = "Robotics Lab Shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/science/robotics/lab)
 "tZG" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
@@ -64954,18 +64999,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/ce)
-"uoJ" = (
-/obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rnd2";
-	name = "Research Lab Shutters"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/status_display/evac/directional/south,
-/turf/open/floor/iron,
-/area/station/science/lab)
 "uoT" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/table,
@@ -65241,6 +65274,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"uuv" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Courtroom";
+	name = "Security Shutters";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/hallway/primary/fore)
 "uuw" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
@@ -65370,16 +65412,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/janitor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
-"uwY" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Lakeview_Bathroom";
-	name = "Privacy Shutters"
-	},
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/mine/eva/lower)
 "uxj" = (
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/white/side{
@@ -65549,6 +65581,16 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
+"uzZ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kanyewest";
+	name = "Privacy Shutters";
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/detectives_office)
 "uAi" = (
 /obj/structure/table/reinforced,
 /obj/item/hfr_box/corner,
@@ -65672,6 +65714,21 @@
 /obj/item/shovel,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/aft)
+"uCA" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/south{
+	dir = 4;
+	name = "Genetics Desk";
+	req_access = list("genetics")
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "gene_desk_shutters";
+	name = "Genetics Shutters";
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/station/science/genetics)
 "uCJ" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -67377,6 +67434,25 @@
 	},
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
+"veM" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/east{
+	base_state = "left";
+	dir = 8;
+	icon_state = "left";
+	name = "Robotics Desk";
+	req_access = list("robotics")
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "robotics2";
+	name = "Robotics Lab Shutters";
+	dir = 4
+	},
+/obj/item/folder/white,
+/obj/item/pen,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "veT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light_switch/directional/east,
@@ -67404,6 +67480,21 @@
 /obj/structure/stairs/north,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"vfk" = (
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 4;
+	id = "Atmospherics HFR Shutters";
+	name = "Atmospherics HFR Shutters"
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/hfr_room)
 "vfo" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -67809,6 +67900,14 @@
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/snowed/icemoon,
 /area/station/maintenance/port/aft)
+"vlH" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "viroview";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/medical/virology)
 "vlI" = (
 /obj/machinery/disposal/bin,
 /obj/structure/window/reinforced,
@@ -69126,16 +69225,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
-"vFD" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hopqueue";
-	name = "HoP Queue Shutters"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "vGg" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -69741,17 +69830,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"vRI" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "lower_chapel_shutters";
-	name = "Graveyard Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/service/chapel)
 "vRN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -69975,6 +70053,22 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/sepia,
 /area/station/security/prison/rec)
+"vUH" = (
+/obj/machinery/door/airlock{
+	name = "Kitchen"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchencounter";
+	name = "Kitchen Shutters";
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "vUW" = (
 /obj/item/stack/cable_coil{
 	amount = 7;
@@ -71223,6 +71317,18 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
+"wnZ" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "chemistry_access_shutters";
+	name = "Chemistry Access Shutters";
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/treatment_center)
 "wob" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -73160,6 +73266,25 @@
 /obj/item/poster/random_contraband,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"wUc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissaryshutter";
+	name = "Vacant Commissary Shutter";
+	dir = 4
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
 "wUi" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=Stbd";
@@ -75643,31 +75768,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
-"xJW" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	dir = 8;
-	name = "Reception Window"
-	},
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
-	name = "Head of Personnel's Desk";
-	req_access = list("hop")
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hop";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/flasher/directional/north{
-	id = "hopflash"
-	},
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/hop)
 "xKa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -76164,21 +76264,6 @@
 "xSA" = (
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
-"xSM" = (
-/obj/machinery/door/airlock{
-	name = "Kitchen"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kitchencounter";
-	name = "Kitchen Shutters"
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "xSP" = (
 /obj/machinery/vending/security{
 	onstation_override = 1
@@ -76845,13 +76930,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"ycV" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "teledoor";
-	name = "MiniSat Teleport Access"
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "ycY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -94968,9 +95046,9 @@ mSH
 ngM
 kgN
 wDU
-uwY
-uwY
-uwY
+hSx
+hSx
+hSx
 wDU
 kUP
 okH
@@ -160494,9 +160572,9 @@ gjq
 gjq
 gjq
 sjb
-kgx
-tFM
-kgx
+bVC
+dVS
+bVC
 sjb
 hpM
 sjb
@@ -163836,8 +163914,8 @@ gjq
 jpS
 kNW
 kNW
-sUB
-sUB
+eBa
+eBa
 kNW
 kNW
 kNW
@@ -166355,7 +166433,7 @@ wUj
 wMt
 ucN
 ucN
-fyb
+uzZ
 irp
 ucN
 ucN
@@ -175914,12 +175992,12 @@ iDt
 iDt
 eXH
 eXH
-mUr
-mUr
-mUr
-mUr
-mUr
-mUr
+fDo
+fDo
+fDo
+fDo
+fDo
+fDo
 eXH
 hjM
 hjM
@@ -176940,7 +177018,7 @@ iDt
 scw
 iDt
 iDt
-pjV
+grg
 oic
 psv
 udK
@@ -177711,7 +177789,7 @@ iDt
 scw
 iDt
 scw
-pjV
+grg
 lAc
 ozZ
 yco
@@ -180783,7 +180861,7 @@ dMS
 xsw
 uBV
 mFD
-oYs
+jNw
 ops
 ops
 ops
@@ -180832,7 +180910,7 @@ gax
 foW
 ljL
 ljL
-lii
+hHy
 bnG
 lub
 wbk
@@ -181089,7 +181167,7 @@ vmu
 ueV
 ljL
 ljL
-oRE
+mSr
 lub
 dIl
 azB
@@ -181346,7 +181424,7 @@ xJH
 kMv
 ljL
 ljL
-oRE
+mSr
 lub
 pkY
 fiA
@@ -181596,13 +181674,13 @@ qck
 hjM
 rgE
 rgE
-sVE
-sVE
-sVE
+vfk
+vfk
+vfk
 rkN
 sPV
-sVE
-sVE
+vfk
+vfk
 uBA
 fKr
 vjk
@@ -182374,7 +182452,7 @@ fDe
 fHQ
 nmL
 qpr
-oRE
+mSr
 pYM
 eDj
 rEx
@@ -182631,7 +182709,7 @@ sIA
 lVw
 dDy
 nOS
-oRE
+mSr
 pYM
 slD
 tNi
@@ -184395,8 +184473,8 @@ xDb
 xDb
 xDb
 xDb
-mxB
-oEb
+vlH
+eXg
 xDb
 slx
 ffe
@@ -187968,11 +188046,11 @@ kTk
 gSV
 qEJ
 wrX
-vRI
-vRI
+iND
+iND
 wrX
-vRI
-vRI
+iND
+iND
 wrX
 wrX
 xMq
@@ -232437,8 +232515,8 @@ aSm
 wde
 gst
 gst
-eYs
-pBF
+dAd
+wUc
 gst
 jWU
 oiK
@@ -233735,12 +233813,12 @@ gfb
 pYB
 gfb
 gfb
-vFD
+mXB
 rcE
 rcE
 rcE
 rcE
-oKn
+fyO
 jII
 dnq
 ylU
@@ -234249,9 +234327,9 @@ msb
 hll
 iYb
 gfb
-xJW
-jOZ
-eGA
+dtp
+ppd
+cvY
 cpm
 cpm
 cpm
@@ -234443,7 +234521,7 @@ mAe
 jJM
 mAe
 uVP
-rfE
+lAQ
 diC
 cqb
 lyG
@@ -234722,7 +234800,7 @@ tCj
 sDl
 sDl
 sDl
-rPA
+uuv
 bZx
 bZx
 bZx
@@ -234979,7 +235057,7 @@ sDl
 sDl
 sDl
 sDl
-rPA
+uuv
 bZx
 bZx
 bZx
@@ -235236,7 +235314,7 @@ sDl
 sDl
 sDl
 sDl
-rPA
+uuv
 bZx
 bZx
 bZx
@@ -235493,7 +235571,7 @@ sDl
 sDl
 sDl
 sDl
-rPA
+uuv
 bZx
 bZx
 bZx
@@ -236779,9 +236857,9 @@ sDl
 sDl
 sDl
 psN
-pGx
-hfT
-hzY
+mtz
+icb
+iac
 psN
 pfe
 cow
@@ -244277,8 +244355,8 @@ nRd
 pOU
 tHr
 tHr
-fxf
-fxZ
+wnZ
+oph
 tHr
 tHr
 tHr
@@ -247425,7 +247503,7 @@ bln
 bln
 mwo
 swF
-ycV
+giz
 vAF
 swF
 vAn
@@ -248367,7 +248445,7 @@ kKL
 kKL
 kKL
 kKL
-xSM
+vUH
 kKL
 kKL
 kKL
@@ -250947,7 +251025,7 @@ lso
 rCu
 cYE
 wYf
-kgh
+cSV
 cZU
 kBl
 kBl
@@ -251204,7 +251282,7 @@ rek
 cvr
 rNQ
 wYf
-kgh
+cSV
 aID
 gky
 vvP
@@ -251461,7 +251539,7 @@ hUD
 ebb
 cYE
 wYf
-kgh
+cSV
 aID
 ddk
 ddk
@@ -253261,7 +253339,7 @@ lso
 rNQ
 lso
 twz
-tZw
+eVQ
 hXZ
 rIU
 rCX
@@ -253518,7 +253596,7 @@ lso
 cYE
 lso
 kKF
-qtZ
+gUR
 wew
 rIU
 abM
@@ -253775,7 +253853,7 @@ lso
 cYE
 lso
 kKF
-tZw
+eVQ
 wFU
 qHt
 gjg
@@ -254038,8 +254116,8 @@ ult
 ult
 ult
 mtI
-jDm
-ake
+aQw
+veM
 mtI
 mtI
 kaX
@@ -255066,18 +255144,18 @@ bZQ
 bZQ
 bZQ
 bZQ
-qaK
-qaK
+gYW
+gYW
 oHK
 oHK
-qkS
-uoJ
+jgb
+fVL
 oHK
 oHK
-iHK
-gOI
-iHK
-iHK
+qOO
+hMp
+qOO
+qOO
 wLl
 dyV
 hnP
@@ -255337,9 +255415,9 @@ kdJ
 usP
 wLl
 nsZ
-fyu
+fzL
 rhi
-fyu
+fzL
 nsZ
 iqx
 awa
@@ -255579,7 +255657,7 @@ eKl
 pxL
 lso
 jYQ
-bzZ
+icl
 xZA
 dVt
 gHY
@@ -255836,7 +255914,7 @@ nzR
 yeB
 uuC
 kKF
-bzZ
+icl
 gav
 ljF
 ljF
@@ -255845,10 +255923,10 @@ sDg
 gXJ
 egZ
 oHK
-iHK
-iHK
-iHK
-iHK
+lQG
+lQG
+lQG
+lQG
 wLl
 tur
 tur
@@ -256093,7 +256171,7 @@ udA
 lso
 lZi
 qaE
-fbL
+gNc
 xdU
 ttw
 wET
@@ -256350,7 +256428,7 @@ lso
 uuC
 ePR
 kwK
-bzZ
+icl
 jTm
 moJ
 oKy
@@ -256607,7 +256685,7 @@ utz
 gMe
 kuV
 cAi
-bzZ
+icl
 oPq
 aWH
 sut
@@ -256862,14 +256940,14 @@ qPL
 elw
 elw
 elw
-mxW
-oMQ
+eiC
+uCA
 mEJ
-sca
+nee
 mEJ
 ecw
 mEJ
-sca
+nee
 mEJ
 mEJ
 krY

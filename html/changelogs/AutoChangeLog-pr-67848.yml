@@ -1,0 +1,5 @@
+author: "Salex08"
+delete-after: True
+changes: 
+  - qol: "Added a new tab for the autolathe which allows you to dispense not only iron or glass but all the mats you put in"
+  - bugfix: "Fixes missing \"=\" operator in autolathe"

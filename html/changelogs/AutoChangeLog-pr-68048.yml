@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Comms console hacking will be interrupted if the comms console itself is destroyed or depowered."
