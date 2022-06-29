@@ -112,7 +112,7 @@
 
 /datum/traitor_objective/locate_weakpoint/proc/create_shockwave(center_x, center_y, center_z)
 	var/turf/epicenter = locate(center_x, center_y, center_z)
-	var/lowpop = (length(GLOB.clients) <= 20)
+	var/lowpop = (length(GLOB.clients) <= CONFIG_GET(number/minimal_access_threshold))
 	if(lowpop)
 		explosion(epicenter, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, explosion_cause = src)
 	else
