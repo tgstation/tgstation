@@ -29,8 +29,8 @@ const TITLES = [
 
 enum THREAT {
   None,
-  Small = 'blue',
-  Medium = 'cyan',
+  Small = 'teal',
+  Medium = 'blue',
   Large = 'purple',
 }
 
@@ -239,14 +239,14 @@ const getThreat = (orbiters: number): THREAT => {
  */
 const getFilteredLists = (lists: Observable[][], searchQuery: string) => {
   let filteredLists: Observable[][] = [];
-  for (const list of lists) {
+  lists.map((list) => {
     const filtered = list.filter((observable) => {
       return observable.name
         ?.toLowerCase()
         ?.includes(searchQuery?.toLowerCase());
     });
     filteredLists.push(filtered);
-  }
+  });
   return filteredLists;
 };
 
