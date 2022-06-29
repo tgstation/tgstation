@@ -987,3 +987,34 @@
       by a electric sign on IceBoxStation.
   - bugfix: Disposals will no longer now empty out in the middle of IceBoxStation's
       maintenance tunnels.
+2022-06-29:
+  Guillaume Prata and Wallem:
+  - rscadd: Botany starts with watering cans instead of buckets now. There is also
+      a research locked advanced watering can which generates it's own water.
+  JohnFulpWillard:
+  - bugfix: the Gravity Generator no longer plays several looping sounds.
+  - bugfix: Oldstation's gravity generator now properly spawns off.
+  Melbert:
+  - bugfix: Service members can access the service dorms on Deltastation again
+  - bugfix: Miners can access the shipping office on Deltastation again
+  RandomGamer123:
+  - qol: Makes the noblium gas shells experiment explicitly clear that it requires
+      Hypernoblium gas and not just "Noblium"
+  - spellcheck: CentCom is now properly capitalised in the description of an experiment
+  Salex08:
+  - spellcheck: The Brand of Dance description is correct now
+  - bugfix: headpikes can be made again.
+  Sebbe9123:
+  - rscadd: Adds a special Medical ERT belt + gives it to medical ERT
+  Y0SH1M4S73R:
+  - bugfix: Fixed a runtime that occurs when inflicting a blunt wound on an armless
+      human.
+  jlsnow301:
+  - bugfix: TGUI Say now retains current messages / keying through history doesn't
+      erase your current message.
+  - bugfix: TextArea keydown prop has been renamed so as to not trigger double keydown
+      events.
+  - bugfix: TGUI say now properly expands when viewing recent messages
+  san7890:
+  - rscadd: Ice Box Station's got a new look. Notably, the cold room is on the bottom
+      floor with the kitchen all being up on the upper Z-Level

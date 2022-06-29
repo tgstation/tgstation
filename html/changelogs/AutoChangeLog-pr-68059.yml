@@ -1,0 +1,4 @@
+author: "nichlas0010"
+delete-after: True
+changes: 
+  - bugfix: "The Orion Trail's Realism Mode works again, triggering negative events for the player"
