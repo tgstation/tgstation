@@ -506,10 +506,14 @@
 	blood_target_image.pixel_y = -new_target.pixel_y
 
 	for(var/datum/mind/cultist as anything in members)
-		if(cultist.current && cultist.current.stat != DEAD && cultist.current.client)
-			to_chat(cultist.current, span_bold(span_cultlarge("[marker] has marked [blood_target] in the [target_area.name] as the cult's top priority, get there immediately!")))
-			SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'), 0, 1, 75))
-			cultist.current.client.images += blood_target_image
+		if(!cultist.current)
+			continue
+		if(cultist.current.stat == DEAD || !cultist.current.client)
+			continue
+
+		to_chat(cultist.current, span_bold(span_cultlarge("[marker] has marked [blood_target] in the [target_area.name] as the cult's top priority, get there immediately!")))
+		SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'), 0, 1, 75))
+		cultist.current.client.images += blood_target_image
 
 	blood_target_reset_timer = addtimer(CALLBACK(src, .proc/unset_blood_target), duration, TIMER_STOPPABLE)
 	return TRUE
@@ -519,12 +523,16 @@
 	blood_target_reset_timer = null
 
 	for(var/datum/mind/cultist as anything in members)
-		if(cultist.current && cultist.current.stat != DEAD && cultist.current.client)
-			if(QDELETED(blood_target))
-				to_chat(cultist.current, span_bold(span_cultlarge("The blood mark's target is lost!")))
-			else
-				to_chat(cultist.current, span_bold(span_cultlarge("The blood mark has expired!")))
-			cultist.current.client.images -= blood_target_image
+		if(!cultist.current)
+			continue
+		if(cultist.current.stat == DEAD || !cultist.current.client)
+			continue
+
+		if(QDELETED(blood_target))
+			to_chat(cultist.current, span_bold(span_cultlarge("The blood mark's target is lost!")))
+		else
+			to_chat(cultist.current, span_bold(span_cultlarge("The blood mark has expired!")))
+		cultist.current.client.images -= blood_target_image
 
 	UnregisterSignal(blood_target, COMSIG_PARENT_QDELETING)
 	blood_target = null
