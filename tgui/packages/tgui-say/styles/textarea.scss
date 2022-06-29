@@ -5,7 +5,7 @@
   border: none;
   color: colors.$background;
   flex-grow: 1;
-  font-family: "Lucida Console", monospace;
+  font-family: 'Lucida Console', monospace;
   font-size: 1.1rem;
   margin-top: 2px;
 }
@@ -16,8 +16,7 @@
 }
 
 /** Creates an input for each channel */
-@each $channel,
-$color in colors.$channel-map {
+@each $channel, $color in colors.$channel-map {
   .textarea-#{$channel} {
     color: $color;
   }

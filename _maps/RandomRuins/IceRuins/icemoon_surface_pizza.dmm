@@ -990,9 +990,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/light/warm/directional/north,
-/obj/structure/sign/departments/restroom{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/restroom/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},

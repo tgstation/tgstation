@@ -67,8 +67,7 @@
 /datum/element/light_eater/proc/table_buffet(atom/commisary, datum/devourer)
 	. = list()
 	SEND_SIGNAL(commisary, COMSIG_LIGHT_EATER_QUEUE, ., devourer)
-	for(var/nom in commisary.light_sources)
-		var/datum/light_source/morsel = nom
+	for(var/datum/light_source/morsel as anything in commisary.light_sources)
 		.[morsel.source_atom] = TRUE
 
 /**

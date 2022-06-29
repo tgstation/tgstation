@@ -20,13 +20,18 @@
 		/datum/job_department/service,
 		)
 
-	family_heirlooms = list(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/toy/plush/beeplushie)
+	family_heirlooms = list(
+		/obj/item/cultivator,
+		/obj/item/reagent_containers/glass/watering_can/wood,
+		/obj/item/toy/plush/beeplushie,
+		)
 
 	mail_goodies = list(
 		/obj/item/reagent_containers/glass/bottle/mutagen = 20,
 		/obj/item/reagent_containers/glass/bottle/saltpetre = 20,
 		/obj/item/reagent_containers/glass/bottle/diethylamine = 20,
 		/obj/item/gun/energy/floragun = 10,
+		/obj/item/reagent_containers/glass/watering_can/advanced = 10,
 		/obj/effect/spawner/random/food_or_drink/seed_rare = 5,// These are strong, rare seeds, so use sparingly.
 		/obj/item/food/monkeycube/bee = 2
 	)

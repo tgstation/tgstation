@@ -857,9 +857,13 @@
 
 /obj/item/food/seaweedsheet
 	name = "seaweed sheet"
-	desc = "A dried sheet of seaweed used for making sushi."
+	desc = "A dried sheet of seaweed used for making sushi. Use an ingredient on it to start making custom sushi!"
 	icon_state = "seaweedsheet"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("seaweed" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/seaweedsheet/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/sushi/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)

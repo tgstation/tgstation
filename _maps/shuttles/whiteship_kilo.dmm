@@ -62,8 +62,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32;
+/obj/structure/sign/warning/vacuum/directional/west{
 	pixel_y = 32
 	},
 /obj/machinery/meter,
@@ -122,9 +121,7 @@
 "am" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/emcloset/anchored,
-/obj/structure/sign/warning/xeno_mining{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/xeno_mining/directional/north,
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/cobweb,
@@ -442,9 +439,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
 	pixel_x = 24
@@ -692,9 +687,7 @@
 "bm" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/emcloset/anchored,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/airalarm/all_access{
 	pixel_y = -24
 	},
