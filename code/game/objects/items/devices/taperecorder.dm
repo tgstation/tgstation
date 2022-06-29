@@ -95,7 +95,6 @@
 		playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
 		update_appearance()
 
-
 /obj/item/taperecorder/proc/eject(mob/user)
 	if(mytape)
 		playsound(src, 'sound/items/taperecorder/taperecorder_open.ogg', 50, FALSE)
@@ -121,7 +120,6 @@
 			return TRUE
 	return FALSE
 
-
 /obj/item/taperecorder/verb/ejectverb()
 	set name = "Eject Tape"
 	set category = "Object"
@@ -132,7 +130,6 @@
 		return
 
 	eject(usr)
-
 
 /obj/item/taperecorder/update_icon_state()
 	if(!mytape)
@@ -152,6 +149,7 @@
 	. = ..()
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
+		mytape.stored_languages += message_langs
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss")]\] [message]"
 
 
@@ -239,7 +237,7 @@
 		if(mytape.storedinfo.len < i)
 			say("End of recording.")
 			break
-		say("[mytape.storedinfo[i]]", sanitize=FALSE)//We want to display this properly, don't double encode
+		say("[mytape.storedinfo[i]]", sanitize=FALSE, language=mytape.stored_languages[i]) //We want to display this properly, don't double encode
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(1 SECONDS)
@@ -310,11 +308,9 @@
 	canprint = FALSE
 	addtimer(VARSET_CALLBACK(src, canprint, TRUE), 30 SECONDS)
 
-
 //empty tape recorders
 /obj/item/taperecorder/empty
 	starting_tape_type = null
-
 
 /obj/item/tape
 	name = "tape"
@@ -337,10 +333,13 @@
 	var/used_capacity = 0 SECONDS
 	///Numbered list of chat messages the recorder has heard with spans and prepended timestamps. Used for playback and transcription.
 	var/list/storedinfo = list()
+	///Numbered list of chat languages the recorder has heard via storedinfo. Used for playback and transcription.
+	var/list/stored_languages = list()
 	///Numbered list of seconds the messages in the previous list appear at on the tape. Used by playback to get the timing right.
 	var/list/timestamp = list()
 	var/used_capacity_otherside = 0 SECONDS //Separate my side
 	var/list/storedinfo_otherside = list()
+	var/list/stored_languages_otherside = list()
 	var/list/timestamp_otherside = list()
 	var/unspooled = FALSE
 	var/list/icons_available = list()
@@ -406,14 +405,17 @@
 /obj/item/tape/proc/tapeflip()
 	//first we save a copy of our current side
 	var/list/storedinfo_currentside = storedinfo.Copy()
+	var/list/stored_languages_currentside = stored_languages.Copy()
 	var/list/timestamp_currentside = timestamp.Copy()
 	var/used_capacity_currentside = used_capacity
 	//then we overwite our current side with our other side
 	storedinfo = storedinfo_otherside.Copy()
+	stored_languages = stored_languages_otherside.Copy()
 	timestamp = timestamp_otherside.Copy()
 	used_capacity = used_capacity_otherside
 	//then we overwrite our other side with the saved side
 	storedinfo_otherside = storedinfo_currentside.Copy()
+	stored_languages_otherside = stored_languages_currentside.Copy()
 	timestamp_otherside = timestamp_currentside.Copy()
 	used_capacity_otherside = used_capacity_currentside
 
