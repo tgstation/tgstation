@@ -52,15 +52,11 @@
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
 "as" = (
-/obj/machinery/shower{
-	pixel_y = 22
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
 "at" = (
-/obj/machinery/shower{
-	pixel_y = 22
-	},
+/obj/machinery/shower/directional/south,
 /obj/item/soap/nanotrasen,
 /obj/item/bikehorn/rubberducky/plasticducky,
 /turf/open/floor/iron/freezer,
@@ -78,11 +74,9 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "ay" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/west{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	dir = 8;
-	name = "old sink";
-	pixel_x = 12
+	name = "old sink"
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
@@ -392,9 +386,7 @@
 /turf/open/floor/iron,
 /area/mine/eva)
 "bK" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
@@ -1281,10 +1273,7 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fL" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -1602,11 +1591,9 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/north{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	dir = 1;
-	name = "old sink";
-	pixel_y = -5
+	name = "old sink"
 	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
@@ -2085,10 +2072,9 @@
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "nm" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	pixel_y = 28
+	name = "old sink"
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
@@ -3130,10 +3116,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Fe" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
@@ -3648,9 +3631,7 @@
 /area/mine/living_quarters)
 "Lr" = (
 /obj/machinery/door/window/right/directional/south,
-/obj/machinery/shower{
-	pixel_y = 22
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
 "Lu" = (
@@ -3988,9 +3969,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "RE" = (
-/obj/machinery/shower{
-	dir = 8
-	},
+/obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -4552,9 +4531,7 @@
 /area/mine/laborcamp)
 "Zc" = (
 /obj/machinery/door/window/left/directional/south,
-/obj/machinery/shower{
-	pixel_y = 22
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
 "Zh" = (

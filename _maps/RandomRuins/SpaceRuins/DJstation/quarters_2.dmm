@@ -7,19 +7,14 @@
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/djstation)
 "f" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 12
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/djstation)
 "i" = (
 /turf/closed/wall,
 /area/ruin/space/djstation)
 "k" = (
-/obj/machinery/shower{
-	pixel_y = 12
-	},
+/obj/machinery/shower/directional/south,
 /obj/effect/turf_decal/siding/yellow,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,

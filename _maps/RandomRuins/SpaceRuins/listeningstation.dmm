@@ -433,14 +433,8 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "xY" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11;
-	pixel_y = -2
-	},
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/structure/sink/directional/west,
+/obj/machinery/shower/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/showroomfloor,
