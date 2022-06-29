@@ -14,7 +14,7 @@
 	// What organ will the subtype start with
 	var/starting_organ
 	// The organ currently loaded in the autosurgeon
-	var/obj/item/organ/storedorgan
+	var/obj/item/organ/stored_organ
 	// list of organs and their children we allow into the autosurgeon- an empty list means no whitelist
 	var/list/organ_whitelist = list()
 	// percentage modifier for how fast the surgery happens on other people
@@ -30,9 +30,15 @@
 	if(starting_organ)
 		load_organ(new starting_organ(src))
 
+/obj/item/autosurgeon/update_overlays()
+	. = ..()
+	if(stored_organ)
+		. += loaded_overlay
+		. += emissive_appearance(icon, loaded_overlay)
+
 /obj/item/autosurgeon/proc/load_organ(obj/item/organ/loaded_organ, mob/living/user)
 	if(user)
-		if(storedorgan)
+		if(stored_organ)
 			to_chat(user, span_alert("[src] already has an implant stored."))
 			return
 
@@ -54,13 +60,13 @@
 			to_chat(user, span_alert("[loaded_organ] is stuck to your hand!"))
 			return
 
-	storedorgan = loaded_organ
+	stored_organ = loaded_organ
 	loaded_organ.forceMove(src)
-	name = "[initial(name)] ([storedorgan.name])" //to tell you the organ type, like "suspicious autosurgeon (Reviver implant)"
-	add_overlay(loaded_overlay)
+	name = "[initial(name)] ([stored_organ.name])" //to tell you the organ type, like "suspicious autosurgeon (Reviver implant)"
+	update_appearance()
 
 /obj/item/autosurgeon/proc/use_autosurgeon(mob/living/target, mob/living/user, implant_time)
-	if(!storedorgan)
+	if(!stored_organ)
 		to_chat(user, span_alert("[src] currently has no implant stored."))
 		return
 
@@ -74,16 +80,17 @@
 			return
 
 	if(target != user)
-		log_combat(user, target, "autosurgeon implanted [storedorgan] into", "[src]", "in [AREACOORD(target)]")
+		log_combat(user, target, "autosurgeon implanted [stored_organ] into", "[src]", "in [AREACOORD(target)]")
 		user.visible_message(span_notice("[user] presses a button on [src] as it plunges into [target]'s body."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
 	else
 		user.visible_message(span_notice("[user] pressses a button on [src] as it plunges into [user.p_their()] body."), "You press a button on [src] as it plunges into your body.")
 
-	storedorgan.Insert(target)//insert stored organ into the user
-	storedorgan = null
+	stored_organ.Insert(target)//insert stored organ into the user
+	stored_organ = null
 	name = initial(name) //get rid of the organ in the name
 	playsound(target.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
-	cut_overlays()
+	update_appearance()
+
 	if(uses)
 		uses--
 	if(uses == 0)
@@ -107,16 +114,16 @@
 /obj/item/autosurgeon/screwdriver_act(mob/living/user, obj/item/screwtool)
 	if(..())
 		return TRUE
-	if(!storedorgan)
+	if(!stored_organ)
 		to_chat(user, span_warning("There's no implant in [src] for you to remove!"))
 	else
 		var/atom/drop_loc = user.drop_location()
 		for(var/atom/movable/stored_implant as anything in src)
 			stored_implant.forceMove(drop_loc)
+			stored_organ = null
 
-		to_chat(user, span_notice("You remove the [storedorgan] from [src]."))
+		to_chat(user, span_notice("You remove the [stored_organ] from [src]."))
 		screwtool.play_tool_sound(src)
-		use_autosurgeon()
 	return TRUE
 
 /obj/item/autosurgeon/medical_hud
