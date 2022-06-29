@@ -12,6 +12,10 @@ for _, state in states do
 	end
 end
 
+function SS13.istype(thing, type)
+	return dm.global_proc("_istype", thing, dm.global_proc("_text2path", type)) == 1
+end
+
 function SS13.new(type, ...)
 	local datum = dm.global_proc("_new", type, {...})
 	local references = SS13.state:get_var("references")
@@ -20,7 +24,7 @@ function SS13.new(type, ...)
 end
 
 function SS13.await(thing_to_call, proc_to_call, ...)
-	if thing_to_call == nil then
+	if not SS13.istype(thing_to_call, "/datum") then
 		thing_to_call = SS13.global_proc
 	end
 	if thing_to_call == SS13.global_proc then
@@ -41,38 +45,94 @@ function SS13.wait(time, timer)
 	dm.global_proc("deltimer", timedevent, timer)
 end
 
-function SS13.register_signal(datum, signal, func)
+
+function SS13.register_signal(datum, signal, func, make_easy_clear_function)
 	if not SS13.signal_handlers then
 		SS13.signal_handlers = {}
 	end
+	if not SS13.istype(datum, "/datum") then return end
 	local ref = dm.global_proc("REF", datum)
 	if not SS13.signal_handlers[ref] then
 		SS13.signal_handlers[ref] = {}
 	end
+	if signal == "_cleanup" then return end
 	if not SS13.signal_handlers[ref][signal] then
 		SS13.signal_handlers[ref][signal] = {}
 	end
-	local path = {"SS13", "signal_handlers", ref, signal, "func"}
-	local callback = SS13.signal_handlers[ref][signal].callback
-	SS13.signal_handlers[ref][signal].func = func
-	if not callback then
-		callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first", path)
-		callback:call_proc("RegisterSignal", datum, signal, "Invoke")
-		SS13.signal_handlers[ref][signal].callback = callback
+	local callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first")
+	callback:call_proc("RegisterSignal", datum, signal, "Invoke")
+	local callback_ref = dm.global_proc("REF", callback)
+	local path = {"SS13", "signal_handlers", ref, signal, callback_ref, "func"}
+	callback:set_var("arguments", {path})
+	if not SS13.signal_handlers[ref]["_cleanup"] then
+		local cleanup_path = {"SS13", "signal_handlers", ref, "_cleanup"}
+		local cleanup_callback = SS13.new("/datum/callback", SS13.state, "call_function_return_first", cleanup_path)
+		cleanup_callback:call_proc("RegisterSignal", datum, "parent_qdeleting", "Invoke")
+		SS13.signal_handlers[ref]["_cleanup"] = function(datum)
+			SS13.signal_handler_cleanup(datum)
+			dm.global_proc("qdel", cleanup_callback)
+		end
+	end
+	SS13.signal_handlers[ref][signal][callback_ref] = {func=func, callback=callback}
+	if make_easy_clear_function then
+		local clear_function_name = "clear_signal_" .. ref .. "_" .. signal .. "_" .. callback_ref
+		SS13[clear_function_name] = function()
+			if callback then
+				SS13.unregister_signal(datum, signal, callback)
+			end
+			SS13[clear_function_name] = nil
+		end
 	end
 	return callback
 end
 
-function SS13.unregister_signal(datum, signal)
+
+function SS13.unregister_signal(datum, signal, callback)
+	local function clear_handler(handler_info)
+		if not handler_info then return end
+		if not handler_info.callback then return end
+		local handler_callback = handler_info.callback
+		handler_callback:call_proc("UnregisterSignal", datum, signal)
+		dm.global_proc("qdel", handler_callback)
+	end
+
+	if not SS13.signal_handlers then return end
+
+	local ref = dm.global_proc("REF", datum)
+	local function clear_easy_clear_function(callback_ref)
+		local clear_function_name = "clear_signal_" .. ref .. "_" .. signal .. "_" .. callback_ref
+		SS13[clear_function_name] = nil
+	end
+
+	if not SS13.signal_handlers[ref] then return end
+	if signal == "_cleanup" then return end
+	if not SS13.signal_handlers[ref][signal] then return end
+
+	if not callback then
+		for handler_key, handler_info in SS13.signal_handlers[ref][signal] do
+			clear_easy_clear_function(handler_key)
+			clear_handler(handler_info)
+		end
+		SS13.signal_handlers[ref][signal] = nil
+	else
+		if not SS13.istype(callback, "/datum/callback") then return end
+		local callback_ref = dm.global_proc("REF", callback)
+		clear_easy_clear_function(callback_ref)
+		clear_handler(SS13.signal_handlers[ref][signal][callback_ref])
+		SS13.signal_handlers[ref][signal][callback_ref] = nil
+	end
+end
+
+function SS13.signal_handler_cleanup(datum)
 	if not SS13.signal_handlers then return end
 	local ref = dm.global_proc("REF", datum)
 	if not SS13.signal_handlers[ref] then return end
-	local callback = SS13.signal_handlers[ref][signal].callback
-	if callback then
-		callback:call_proc("UnregisterSignal", datum, signal)
-		dm.global_proc("qdel", callback)
+
+	for signal, _ in SS13.signal_handlers[ref] do
+		SS13.unregister_signal(datum, signal)
 	end
-	SS13.signal_handlers[ref][signal] = {}
+
+	SS13.signal_handlers[ref] = nil
 end
 
 function SS13.set_timeout(time, func)
@@ -82,8 +142,8 @@ function SS13.set_timeout(time, func)
 	local callback = SS13.new("/datum/callback", SS13.state, "call_function")
 	local callback_ref = dm.global_proc("REF", callback)
 	SS13.timeouts[callback_ref] = function()
-		func()
 		SS13.timeouts[callback_ref] = nil
+		func()
 	end
 	local path = {"SS13", "timeouts", callback_ref}
 	callback:set_var("arguments", {path})
