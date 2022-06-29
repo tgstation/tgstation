@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Removes a method that allows xenobiologists to produce slimes of every colour and bypassing the intended progression sequence by making the disease induced by advanced mutation toxin only produce grey slimes unless the infected person is a sentient non-monkey human"
