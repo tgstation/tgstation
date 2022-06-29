@@ -90,9 +90,9 @@
 		"A shipment of scarves was delivered to the station.",
 	)
 	scarves = typesof(/obj/item/clothing/neck/scarf) + list(
-		/obj/item/clothing/neck/stripedredscarf,
-		/obj/item/clothing/neck/stripedgreenscarf,
-		/obj/item/clothing/neck/stripedbluescarf,
+		/obj/item/clothing/neck/large_scarf/red,
+		/obj/item/clothing/neck/large_scarf/green,
+		/obj/item/clothing/neck/large_scarf/blue,
 	)
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)

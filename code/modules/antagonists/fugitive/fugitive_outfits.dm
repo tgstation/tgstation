@@ -25,7 +25,7 @@
 	name = "Waldo"
 	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/suit/striped_sweater
-	head = /obj/item/clothing/head/beanie/waldo
+	head = /obj/item/clothing/head/waldo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/regular/circle

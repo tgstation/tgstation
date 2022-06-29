@@ -28,7 +28,7 @@
 		/obj/item/clothing/gloves/color/black = 3,
 		/obj/item/clothing/under/rank/security/officer/skirt = 3,
 		/obj/item/clothing/under/rank/security/officer/grey = 3,
-		/obj/item/clothing/under/pants/khaki = 3,
+		/obj/item/clothing/under/pants/slacks = 3,
 		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
 		)
 	premium = list(
@@ -431,7 +431,7 @@
 		/obj/item/clothing/head/taqiyahwhite = 1,
 		/obj/item/clothing/head/taqiyahred = 3,
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
-		/obj/item/clothing/head/beanie/rasta = 1,
+		/obj/item/clothing/head/rasta = 1,
 		)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
