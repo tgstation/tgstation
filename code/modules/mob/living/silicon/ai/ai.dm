@@ -453,7 +453,8 @@
 		the_mmi.forceMove(get_turf(src))
 	if(the_mmi.brainmob.stat == DEAD)
 		the_mmi.brainmob.set_stat(CONSCIOUS)
-	mind.transfer_to(the_mmi.brainmob)
+	if(mind)
+		mind.transfer_to(the_mmi.brainmob)
 	the_mmi.update_appearance()
 	return TRUE
 
