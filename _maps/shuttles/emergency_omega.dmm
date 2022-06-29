@@ -389,7 +389,8 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bh" = (
-/obj/machinery/shower/directional/east{
+/obj/machinery/shower{
+	dir = 4;
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/tile/blue{

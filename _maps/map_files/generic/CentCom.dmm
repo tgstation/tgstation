@@ -547,7 +547,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/armory)
 "bI" = (
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 12
+	},
 /obj/item/soap/syndie,
 /obj/structure/curtain,
 /obj/machinery/door/window/survival_pod,
@@ -693,7 +695,10 @@
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "cd" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
@@ -783,7 +788,11 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "cr" = (
-/obj/structure/sink/kitchen/directional/west,
+/obj/structure/sink/kitchen{
+	dir = 8;
+	pixel_x = 11;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/cafeteria,
 /area/centcom/central_command_areas/holding)
 "ct" = (
@@ -1170,7 +1179,9 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/holding)
 "dw" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
 "dx" = (
@@ -1477,7 +1488,10 @@
 /obj/structure/toilet/greyscale{
 	dir = 4
 	},
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/structure/mirror/directional/east,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/showroomfloor,
@@ -1854,7 +1868,10 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "fp" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/structure/mirror/directional/east,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/showroomfloor,
@@ -2009,7 +2026,10 @@
 /turf/closed/wall/mineral/wood,
 /area/centcom/central_command_areas/holding)
 "fP" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/structure/mirror/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
@@ -2225,7 +2245,9 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "gy" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -4590,7 +4612,9 @@
 	},
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "mV" = (
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 12
+	},
 /obj/machinery/light/floor,
 /turf/open/floor/iron/freezer,
 /area/centcom/syndicate_mothership/control)
@@ -4831,7 +4855,11 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/control)
 "nP" = (
-/obj/structure/sink/kitchen/directional/west,
+/obj/structure/sink/kitchen{
+	dir = 8;
+	pixel_x = 11;
+	pixel_y = 8
+	},
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/control)
@@ -5038,7 +5066,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "op" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
@@ -5174,7 +5205,9 @@
 /turf/closed/indestructible/iron,
 /area/centcom/syndicate_mothership/control)
 "oH" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
 "oI" = (
@@ -5423,7 +5456,9 @@
 /area/centcom/central_command_areas/prison)
 "pp" = (
 /obj/effect/turf_decal/stripes/box,
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 12
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "pq" = (
@@ -6247,7 +6282,9 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/armory)
 "rZ" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -7145,7 +7182,9 @@
 /turf/open/lava/plasma/ice_moon,
 /area/centcom/syndicate_mothership/control)
 "uX" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -7270,7 +7309,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 16
+	},
 /obj/structure/curtain,
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Shower"
@@ -7820,7 +7861,9 @@
 /turf/open/floor/carpet,
 /area/centcom/wizard_station)
 "wR" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -7867,7 +7910,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "wX" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
 /obj/structure/mirror/directional/west,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/showroomfloor,
@@ -8652,7 +8698,10 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/two)
 "zt" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron/white,
@@ -8882,7 +8931,9 @@
 	},
 /area/centcom/central_command_areas/holding)
 "zX" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/mineral/titanium/tiled,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
@@ -9131,7 +9182,10 @@
 	},
 /area/centcom/central_command_areas/holding)
 "AE" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -10346,7 +10400,9 @@
 /obj/structure/mirror/magic{
 	pixel_y = 28
 	},
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 20
+	},
 /turf/open/floor/iron/white,
 /area/centcom/wizard_station)
 "DT" = (
@@ -10751,7 +10807,10 @@
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/control)
 "Fe" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -11808,7 +11867,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 20
+	},
 /obj/item/shovel/spade{
 	pixel_x = -4
 	},
@@ -13192,7 +13253,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "MS" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -13976,7 +14039,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "OV" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -14252,7 +14318,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/ferry)
 "PI" = (
-/obj/structure/sink/kitchen/directional/west,
+/obj/structure/sink/kitchen{
+	dir = 8;
+	pixel_x = 11;
+	pixel_y = 8
+	},
 /obj/item/reagent_containers/glass/bucket,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/catwalk_floor,
@@ -14537,7 +14607,9 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "Qy" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -14719,7 +14791,9 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "Rb" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
@@ -15714,7 +15788,11 @@
 /area/centcom/central_command_areas/ferry)
 "TL" = (
 /obj/item/mop,
-/obj/structure/sink/kitchen/directional/west,
+/obj/structure/sink/kitchen{
+	dir = 8;
+	pixel_x = 11;
+	pixel_y = 4
+	},
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
@@ -16204,7 +16282,9 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/administration)
 "UX" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -16639,7 +16719,9 @@
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "Wb" = (
-/obj/structure/sink/kitchen/directional/south,
+/obj/structure/sink/kitchen{
+	pixel_y = 20
+	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "Wc" = (
@@ -16671,7 +16753,10 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "Wf" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
@@ -17101,7 +17186,9 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/sink/kitchen/directional/south,
+/obj/structure/sink/kitchen{
+	pixel_y = 23
+	},
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "Xk" = (
@@ -17111,7 +17198,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
 "Xl" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
 /obj/structure/mirror/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -17183,7 +17273,10 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "Xu" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
 /obj/structure/mirror/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -17545,7 +17638,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "Yz" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 12;
+	pixel_y = -6
+	},
 /obj/structure/mirror/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
@@ -17832,7 +17929,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "Zm" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
 /obj/structure/mirror/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 8

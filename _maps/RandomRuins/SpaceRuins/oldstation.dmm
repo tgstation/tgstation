@@ -598,7 +598,8 @@
 "cg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/left/directional/west,
-/obj/machinery/shower/directional/west{
+/obj/machinery/shower{
+	dir = 8;
 	can_refill = 0;
 	can_toggle_refill = 0
 	},
@@ -2411,9 +2412,10 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "hx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen/directional/south{
+/obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink"
+	name = "old sink";
+	pixel_y = 28
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
@@ -5285,6 +5287,11 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
+"rG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/gravity_generator/main/off,
+/turf/open/floor/iron/diagonal,
+/area/ruin/space/ancientstation/beta/gravity)
 "rN" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
@@ -5416,9 +5423,11 @@
 "sJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen/directional/west{
+/obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	dir = 8;
 	name = "old sink";
+	pixel_x = 12;
 	has_water_reclaimer = 0
 	},
 /turf/open/floor/iron,
@@ -5538,6 +5547,15 @@
 	dir = 1
 	},
 /area/ruin/space/ancientstation/delta/biolab)
+"un" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
+/turf/open/floor/iron/diagonal,
+/area/ruin/space/ancientstation/beta/gravity)
 "up" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -5865,7 +5883,8 @@
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "wq" = (
-/obj/machinery/shower/directional/west{
+/obj/machinery/shower{
+	dir = 8;
 	can_refill = 0;
 	can_toggle_refill = 0
 	},
@@ -6294,7 +6313,9 @@
 /area/ruin/space/ancientstation/beta/medbay)
 "AO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/directional/west{
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11;
 	has_water_reclaimer = 0
 	},
 /obj/structure/mirror/directional/east,
@@ -6646,11 +6667,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
-"El" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/gravity_generator/main/station/off,
-/turf/open/floor/iron/diagonal,
-/area/ruin/space/ancientstation/beta/gravity)
 "En" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7525,6 +7541,11 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"KL" = (
+/obj/effect/decal/cleanable/generic,
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
+/turf/open/floor/engine/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "KM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7710,6 +7731,15 @@
 "Md" = (
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/ancientstation/beta/gravity)
+"Mf" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-25"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/departments/restroom/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/hall)
 "Ms" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/plasma/spawner/east,
@@ -7794,11 +7824,6 @@
 	anchored = 1
 	},
 /obj/structure/window/plasma/spawner/west,
-/turf/open/floor/engine/airless,
-/area/ruin/space/ancientstation/beta/supermatter)
-"Nu" = (
-/obj/effect/decal/cleanable/generic,
-/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Nz" = (
@@ -8134,15 +8159,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
-"PV" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-25"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/departments/restroom/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/hall)
 "PZ" = (
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
@@ -8798,15 +8814,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/dorms)
-"WG" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/north,
-/obj/structure/sign/warning/radiation/rad_area/directional/north,
-/turf/open/floor/iron/diagonal,
-/area/ruin/space/ancientstation/beta/gravity)
 "WI" = (
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/beta/mining)
@@ -8830,7 +8837,8 @@
 "Xe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/right/directional/west,
-/obj/machinery/shower/directional/west{
+/obj/machinery/shower{
+	dir = 8;
 	can_refill = 0;
 	can_toggle_refill = 0
 	},
@@ -10706,9 +10714,9 @@ aa
 aa
 aa
 XY
-WG
+un
 Md
-El
+rG
 Md
 zp
 zn
@@ -11186,7 +11194,7 @@ SK
 SK
 Vl
 Vl
-Nu
+KL
 yQ
 wS
 Wh
@@ -13421,7 +13429,7 @@ bc
 Xe
 cg
 hi
-PV
+Mf
 KM
 cV
 du

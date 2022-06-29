@@ -1684,7 +1684,8 @@
 /area/shuttle/syndicate/hallway)
 "dD" = (
 /obj/structure/mirror/directional/west,
-/obj/machinery/shower/directional/east{
+/obj/machinery/shower{
+	dir = 4;
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/box,
@@ -2121,7 +2122,9 @@
 /area/shuttle/syndicate/armory)
 "ep" = (
 /obj/structure/mirror/directional/north,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 24
+	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1

@@ -129,7 +129,9 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "of" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4
+	},
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
 	dir = 8

@@ -52,11 +52,15 @@
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
 "as" = (
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 22
+	},
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
 "at" = (
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 22
+	},
 /obj/item/soap/nanotrasen,
 /obj/item/bikehorn/rubberducky/plasticducky,
 /turf/open/floor/iron/freezer,
@@ -74,9 +78,11 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "ay" = (
-/obj/structure/sink/kitchen/directional/west{
+/obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink"
+	dir = 8;
+	name = "old sink";
+	pixel_x = 12
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
@@ -386,7 +392,9 @@
 /turf/open/floor/iron,
 /area/mine/eva)
 "bK" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
@@ -1273,7 +1281,10 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fL" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -1591,9 +1602,11 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen/directional/north{
+/obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink"
+	dir = 1;
+	name = "old sink";
+	pixel_y = -5
 	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
@@ -2072,9 +2085,10 @@
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "nm" = (
-/obj/structure/sink/kitchen/directional/south{
+/obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink"
+	name = "old sink";
+	pixel_y = 28
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
@@ -3116,7 +3130,10 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Fe" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
@@ -3631,7 +3648,9 @@
 /area/mine/living_quarters)
 "Lr" = (
 /obj/machinery/door/window/right/directional/south,
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 22
+	},
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
 "Lu" = (
@@ -3969,7 +3988,9 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "RE" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -4531,7 +4552,9 @@
 /area/mine/laborcamp)
 "Zc" = (
 /obj/machinery/door/window/left/directional/south,
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 22
+	},
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
 "Zh" = (

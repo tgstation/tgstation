@@ -941,7 +941,11 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cX" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)

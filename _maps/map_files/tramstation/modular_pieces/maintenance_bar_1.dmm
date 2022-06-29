@@ -10,7 +10,9 @@
 /area/station/maintenance/central/greater)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 15
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "p" = (
