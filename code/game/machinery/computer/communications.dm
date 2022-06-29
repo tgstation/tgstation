@@ -197,13 +197,13 @@
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 
-			var/new_sec_level = seclevel2num(params["newSecurityLevel"])
+			var/new_sec_level = SSsecurity_level.text_level_to_number(params["newSecurityLevel"])
 			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
 				return
-			if (SSsecurity_level.current_level == new_sec_level)
+			if (SSsecurity_level.get_current_level_as_number() == new_sec_level)
 				return
 
-			set_security_level(new_sec_level)
+			SSsecurity_level.set_level(new_sec_level)
 
 			to_chat(usr, span_notice("Authorization confirmed. Modifying security level."))
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -517,7 +517,7 @@
 				data["shuttleCalled"] = FALSE
 				data["shuttleLastCalled"] = FALSE
 				data["aprilFools"] = SSevents.holidays && SSevents.holidays[APRIL_FOOLS]
-				data["alertLevel"] = get_security_level()
+				data["alertLevel"] = SSsecurity_level.get_current_level_as_text()
 				data["authorizeName"] = authorize_name
 				data["canLogOut"] = !issilicon(user)
 				data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac(user)
@@ -777,7 +777,26 @@
 /// The maximum percentage of the population to be ghosts before we no longer have the chance of spawning Sleeper Agents.
 #define MAX_PERCENT_GHOSTS_FOR_SLEEPER 0.2
 
-/*
+/// Begin the process of hacking into the comms console to call in a threat.
+/obj/machinery/computer/communications/proc/try_hack_console(mob/living/hacker, duration = 30 SECONDS)
+	if(!can_hack())
+		return FALSE
+
+	AI_notify_hack()
+	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack)))
+		return FALSE
+
+	hack_console(hacker)
+	return TRUE
+
+/// Checks if this console is hackable. Used as a callback during try_hack_console's doafter as well.
+/obj/machinery/computer/communications/proc/can_hack()
+	if(machine_stat & (NOPOWER|BROKEN))
+		return FALSE
+
+	return TRUE
+
+/**
  * The communications console hack,
  * called by certain antagonist actions.
  *

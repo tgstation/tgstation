@@ -612,9 +612,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "HS" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)

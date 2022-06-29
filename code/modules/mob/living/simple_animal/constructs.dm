@@ -92,13 +92,13 @@
 			text_span = "purple"
 		if(THEME_HOLY)
 			text_span = "blue"
-	. = list("<span class='[text_span]'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
+	. = list("<span class='[text_span]'>This is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
 	if(health < maxHealth)
 		if(health >= maxHealth/2)
 			. += span_warning("[t_He] look[t_s] slightly dented.")
 		else
 			. += span_warning("<b>[t_He] look[t_s] severely dented!</b>")
-	. += "*---------*</span>"
+	. += "</span>"
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(isconstruct(user)) //is it a construct?
