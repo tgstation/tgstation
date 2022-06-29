@@ -1,4 +1,0 @@
-author: "Guillaume Prata and Wallem"
-delete-after: True
-changes: 
-  - rscadd: "Botany starts with watering cans instead of buckets now. There is also a research locked advanced watering can which generates it's own water."
