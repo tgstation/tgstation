@@ -30,9 +30,7 @@
 
 /datum/lua_editor/ui_static_data(mob/user)
 	var/list/data = list()
-	var/raw_documentation = file2text('code/modules/admin/verbs/lua/README.md')
-	var/escaped_documentation = replacetext(raw_documentation, "_", "\\_") // the markdown parser doesn't play nice with the unescaped underscores
-	data["documentation"] = parsemarkdown_basic(escaped_documentation)
+	data["documentation"] = file2text('code/modules/admin/verbs/lua/README.md')
 	return data
 
 /datum/lua_editor/ui_data(mob/user)

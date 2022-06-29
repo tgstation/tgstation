@@ -1,5 +1,7 @@
 import { useLocalState } from '../../backend';
-import { Button, Modal, Section } from '../../components';
+import { Button, Modal, Section, Box } from '../../components';
+import { sanitizeText } from '../../sanitize';
+import hljs from 'highlight.js/lib/core';
 
 export const ChunkViewModal = (props, context) => {
   const [, setModal] = useLocalState(context, 'modal');
@@ -17,13 +19,20 @@ export const ChunkViewModal = (props, context) => {
             color="red"
             icon="window-close"
             onClick={() => {
-              setViewedChunk(null);
               setModal(null);
+              setViewedChunk(null);
             }}>
             Close
           </Button>
         }>
-        {viewedChunk}
+        <Box
+          as="pre"
+          dangerouslySetInnerHTML={{
+            __html: hljs.highlight(sanitizeText(viewedChunk), {
+              language: 'lua',
+            }).value,
+          }}
+        />
       </Section>
     </Modal>
   );

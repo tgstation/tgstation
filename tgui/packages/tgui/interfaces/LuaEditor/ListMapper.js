@@ -19,6 +19,7 @@ export const ListMapper = (props, context) => {
     vvAct,
     skipNulls,
     collapsible,
+    ...rest
   } = props;
 
   const [, setToCall] = useLocalState(context, 'toCallTaskInfo');
@@ -33,6 +34,7 @@ export const ListMapper = (props, context) => {
           name={`List[${thing.length}]`}
           path={path}
           collapsible
+          {...rest}
           {...overrideProps}
         />
       );
@@ -67,7 +69,7 @@ export const ListMapper = (props, context) => {
         return thing;
       }
     } else {
-      return <Box>{thing}</Box>;
+      return <Box {...rest}>{thing}</Box>;
     }
   };
 

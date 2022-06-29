@@ -8,6 +8,10 @@ import { ListMapper } from './ListMapper';
 import { Log } from './Log';
 import { TaskManager } from './TaskManager';
 import { sanitizeText } from '../../sanitize';
+import { marked } from 'marked';
+import hljs from 'highlight.js/lib/core';
+import lua from 'highlight.js/lib/languages/lua';
+hljs.registerLanguage('lua', lua);
 
 export const LuaEditor = (props, context) => {
   const { act, data } = useBackend(context);
@@ -135,7 +139,17 @@ export const LuaEditor = (props, context) => {
           </Button>
           <Section height="500px" width="700px" fill scrollable>
             <Box
-              dangerouslySetInnerHTML={{ __html: sanitizeText(documentation) }}
+              dangerouslySetInnerHTML={{
+                __html: marked(sanitizeText(documentation), {
+                  breaks: true,
+                  smartypants: true,
+                  smartLists: true,
+                  langPrefix: 'hljs language-',
+                  highlight: (code) => {
+                    return hljs.highlight(code, { language: 'lua' }).value;
+                  },
+                }),
+              }}
             />
           </Section>
         </Modal>
