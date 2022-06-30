@@ -2,6 +2,9 @@ import { Window } from '../layouts';
 import { Box, Button, Collapsible, Icon, Input, Section, Stack, Table } from '../components';
 import { useBackend, useLocalState } from '../backend';
 import { multiline } from 'common/string';
+import { filter, sortBy } from 'common/collections';
+
+type AntagGroup = [string, Observable[]];
 
 type Data = {
   alive: Observable[];
@@ -33,7 +36,7 @@ const COLLAPSING_TITLES: readonly Title[] = [
 
 const ANTAG_GROUPS = {
   'Nuclear Operative': 'Nuclear Operatives',
-  'Nuclear Leader': 'Nuclear Operatives',
+  'Nuclear Operative Leader': 'Nuclear Operatives',
   'Abductor Scientist': 'Abductors',
   'Abductor Agent': 'Abductors',
 } as const;
@@ -87,16 +90,31 @@ const ObservableSearch = (props, context) => {
   );
   /** Gets a list of Observable[], then filters the most relevant to orbit */
   const orbitMostRelevant = (searchText: string) => {
-    // Filters out any observable[] that doesn't match the search query
+    /** This function does the following:
+     * 1. Filters out empty observable arrays
+     * 2. Filters out observables that don't match the search query
+     * 3. Flattens the array to a list of observables
+     * 4. Sorts the list of observables by orbiters
+     * 5. Returns the top entry
+     */
     const mostRelevant = getFilteredLists(
-      [alive, antagonists, ghosts, dead, npcs, misc].filter((source) => {
-        return source.length > 0;
-      }),
+      filter((source: Observable[]) => !!source.length)([
+        alive,
+        antagonists,
+        dead,
+        ghosts,
+        misc,
+        npcs,
+      ]),
       searchText
     )
       .flat()
-      // Chooses the top observable based on observer count
+      /**
+       * I use standard sort here for better orbiter handling - this is
+       * null when 0.
+       */
       .sort(sortByOrbiters)[0];
+
     if (mostRelevant !== undefined) {
       act('orbit', {
         ref: mostRelevant.ref,
@@ -172,7 +190,7 @@ const ObservableContent = (props, context) => {
   let visibleTitles: Title[] = [];
   /** This collates antagonists into their own groups */
   if (antagonists.length) {
-    sortAntagonists(antagonists).map(([name, antag]) => {
+    collateAntagonists(antagonists).map(([name, antag]) => {
       visibleSections.push(antag);
       visibleTitles.push({ name, color: 'bad' });
     });
@@ -247,37 +265,66 @@ const ObservableMap = (props, context) => {
     'autoObserve',
     false
   );
+  const sortedSection = sortBy((poi: Observable) => poi.name)(section);
 
-  return section?.map((observable, index) => {
-    const { name, orbiters, ref } = observable;
-    const threat = getThreat(orbiters);
-    return (
-      <Button
-        color={threat || color}
-        key={index}
-        mt={0}
-        mb={0}
-        onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
-        <Table>
-          <Table.Row>
-            <Table.Cell>{nameToUpper(name).slice(0, 44)}</Table.Cell>
-            {orbiters && (
-              <>
-                <Table.Cell>({orbiters.toString()}</Table.Cell>
-                <Table.Cell>
-                  <Icon
-                    mr={0}
-                    name={threat === THREAT.Large ? 'skull' : 'ghost'}
-                  />
-                  )
-                </Table.Cell>
-              </>
-            )}
-          </Table.Row>
-        </Table>
-      </Button>
-    );
-  });
+  return (
+    <div>
+      {sortedSection?.map((observable, index) => {
+        const { name, orbiters, ref } = observable;
+        const threat = getThreat(orbiters || 0);
+        return (
+          <Button
+            color={threat || color}
+            key={index}
+            mt={0}
+            mb={0}
+            onClick={() =>
+              act('orbit', { auto_observe: autoObserve, ref: ref })
+            }>
+            <Table>
+              <Table.Row>
+                <Table.Cell>{nameToUpper(name).slice(0, 44)}</Table.Cell>
+                {orbiters && (
+                  <>
+                    <Table.Cell>({orbiters.toString()}</Table.Cell>
+                    <Table.Cell>
+                      <Icon
+                        mr={0}
+                        name={threat === THREAT.Large ? 'skull' : 'ghost'}
+                      />
+                      )
+                    </Table.Cell>
+                  </>
+                )}
+              </Table.Row>
+            </Table>
+          </Button>
+        );
+      })}
+    </div>
+  );
+};
+
+/**
+ * Collates antagonist groups into their own separate sections.
+ * Some antags are grouped together lest they be listed separately,
+ * ie: Nuclear Operatives. See: ANTAG_GROUPS.
+ */
+const collateAntagonists = (antagonists: Observable[]): AntagGroup[] => {
+  const collatedAntagonists = {};
+  for (const antagonist of antagonists) {
+    const { antag } = antagonist;
+    const resolvedName = ANTAG_GROUPS[antag!] || antag;
+    if (collatedAntagonists[resolvedName] === undefined) {
+      collatedAntagonists[resolvedName] = [];
+    }
+    collatedAntagonists[resolvedName].push(antagonist);
+  }
+  const sortedAntagonists = sortBy((antagonist: AntagGroup) => antagonist[0])(
+    Object.entries(collatedAntagonists)
+  );
+
+  return sortedAntagonists;
 };
 
 /** Takes the amount of orbiters and returns some style options */
@@ -315,6 +362,13 @@ const getFilteredLists = (
   return filteredLists;
 };
 
+/**
+ * Returns a string with the first letter in uppercase.
+ * Unlike capitalize(), has no effect on the other letters
+ */
+const nameToUpper = (name: string): string =>
+  name.replace(/^\w/, (c) => c.toUpperCase());
+
 /** Sorts by the highest orbiter count */
 const sortByOrbiters = (a: Observable, b: Observable): number => {
   if (!a.orbiters && !b.orbiters) {
@@ -327,40 +381,4 @@ const sortByOrbiters = (a: Observable, b: Observable): number => {
     return -1;
   }
   return a.orbiters - b.orbiters;
-};
-
-/**
- * Returns a string with the first letter in uppercase.
- * Unlike capitalize(), has no effect on the other letters
- */
-const nameToUpper = (name: string): string =>
-  name.replace(/^\w/, (c) => c.toUpperCase());
-
-/** Compares a string and returns a number value if there is a match. */
-const compareString = (a: string, b: string): number =>
-  a > b ? 1 : a < b ? -1 : 0;
-
-/**
- * Collates antagonist groups into their own separate sections.
- * Some antags are grouped together lest they be listed separately,
- * ie: Nuclear Operatives. See: ANTAG_GROUPS.
- */
-const sortAntagonists = (
-  antagonists: Observable[]
-): [string, Observable[]][] => {
-  const collatedAntagonists = {};
-  for (const antagonist of antagonists) {
-    const { antag } = antagonist;
-    const resolvedName = ANTAG_GROUPS[antag!] || antag;
-    if (collatedAntagonists[resolvedName] === undefined) {
-      collatedAntagonists[resolvedName] = [];
-    }
-    collatedAntagonists[resolvedName].push(antagonist);
-  }
-  const sortedAntagonists: [string, Observable[]][] =
-    Object.entries(collatedAntagonists);
-  sortedAntagonists.sort((a, b) => {
-    return compareString(a[0], b[0]);
-  });
-  return sortedAntagonists;
 };
