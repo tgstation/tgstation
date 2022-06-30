@@ -13,7 +13,7 @@
 
 	///windup autofire vars
 	///Whether the delay between shots increases over time, simulating a spooling weapon
-	var/windup_autofire = FALSE //
+	var/windup_autofire = FALSE
 	///the reduction to shot delay for windup
 	var/current_windup_reduction = 0
 	///the percentage of autfire_shot_delay that is added to current_windup_reduction
