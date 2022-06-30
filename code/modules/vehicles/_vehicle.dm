@@ -166,6 +166,7 @@
 
 /// To remove a trailer from the vehicle in a manner that allows safe qdels
 /obj/vehicle/proc/remove_trailer()
+	SIGNAL_HANDLER
 	UnregisterSignal(trailer, COMSIG_PARENT_QDELETING)
 	trailer = null
 
