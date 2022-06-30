@@ -159,7 +159,10 @@
 		else
 			ADD_TRAIT(A, CURRENTLY_CLEANING, src)
 			if(GLOB.cleaning_bubbles_lower.plane >= A.plane) //check if what we're cleaning isn't on a higher plane
-				A.add_overlay(GLOB.cleaning_bubbles_lower) //displays at the top of a floor tile, but under mobs
+				if(GLOB.cleaning_bubbles_lower.layer < A.layer)
+					A.add_overlay(GLOB.cleaning_bubbles_higher) //displays above mobs
+				else
+					A.add_overlay(GLOB.cleaning_bubbles_lower) //displays at the top of a floor tile, but under mobs
 			else
 				A.add_overlay(GLOB.cleaning_bubbles_higher) //displays above mobs
 
