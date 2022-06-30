@@ -1,8 +1,8 @@
-import { Window } from '../layouts';
-import { Box, Button, Collapsible, Icon, Input, Section, Stack, Table } from '../components';
 import { useBackend, useLocalState } from '../backend';
-import { multiline } from 'common/string';
 import { filter, sortBy } from 'common/collections';
+import { multiline } from 'common/string';
+import { Box, Button, Collapsible, Icon, Input, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 type AntagGroup = [string, Observable[]];
 
@@ -27,19 +27,19 @@ type Title = {
   color: string;
 };
 
-const COLLAPSING_TITLES: readonly Title[] = [
-  { name: 'Dead', color: 'grey' },
-  { name: 'Ghosts', color: 'grey' },
-  { name: 'Misc', color: 'grey' },
-  { name: 'NPCs', color: 'average' },
-] as const;
-
 const ANTAG_GROUPS = {
   'Nuclear Operative': 'Nuclear Operatives',
   'Nuclear Operative Leader': 'Nuclear Operatives',
   'Abductor Scientist': 'Abductors',
   'Abductor Agent': 'Abductors',
 } as const;
+
+const COLLAPSING_TITLES: readonly Title[] = [
+  { name: 'Dead', color: 'grey' },
+  { name: 'Ghosts', color: 'grey' },
+  { name: 'Misc', color: 'grey' },
+  { name: 'NPCs', color: 'average' },
+] as const;
 
 enum THREAT {
   None,
@@ -224,7 +224,7 @@ const PrimarySections = (props, context) => {
           <Section
             title={
               <Box color={color}>
-                {name} ({section.length})
+                {name} - ({section.length})
               </Box>
             }>
             <ObservableMap color={color} index={index} section={section} />
@@ -245,8 +245,9 @@ const CollapsingSections = (props, context) => {
       !!section.length && (
         <Stack.Item key={index}>
           <Collapsible
+            bold
             color={color}
-            title={name + ` (${section.length})`}
+            title={name + ` - (${section.length})`}
             section={section}>
             <ObservableMap color={color} section={section} />
           </Collapsible>
@@ -281,23 +282,18 @@ const ObservableMap = (props, context) => {
             onClick={() =>
               act('orbit', { auto_observe: autoObserve, ref: ref })
             }>
-            <Table>
-              <Table.Row>
-                <Table.Cell>{nameToUpper(name).slice(0, 44)}</Table.Cell>
-                {orbiters && (
-                  <>
-                    <Table.Cell>({orbiters.toString()}</Table.Cell>
-                    <Table.Cell>
-                      <Icon
-                        mr={0}
-                        name={threat === THREAT.Large ? 'skull' : 'ghost'}
-                      />
-                      )
-                    </Table.Cell>
-                  </>
-                )}
-              </Table.Row>
-            </Table>
+            {nameToUpper(name).slice(0, 44)}
+            {!!orbiters && (
+              <>
+                {' '}
+                ({orbiters.toString()}{' '}
+                <Icon
+                  mr={0}
+                  name={threat === THREAT.Large ? 'skull' : 'ghost'}
+                />
+                )
+              </>
+            )}
           </Button>
         );
       })}
