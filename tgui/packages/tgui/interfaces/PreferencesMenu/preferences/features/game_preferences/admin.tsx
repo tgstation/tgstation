@@ -35,9 +35,9 @@ export const ghost_roles_as_admin: FeatureToggle = {
   name: 'Get ghost roles while adminned',
   category: 'ADMIN',
   description: multiline`
-    WARNING: If you de-select this, you will not get any ghost roll pop-ups
+    WARNING: If you de-select this, you will not get any ghost role pop-ups
     while adminned! Every single pop-up WILL be muted for you while adminned.
-    However, this does not surpress notifications when you are a regular player.
+    However, this does not suppress notifications when you are a regular player.
 `,
   component: CheckboxInput,
 };
