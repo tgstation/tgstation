@@ -33,7 +33,7 @@
 	/// The strength of the internal flashlight
 	var/brightness_power = 5
 	/// Changes the display to syndi if true
-	var/emagged = FALSE
+	emagged = FALSE
 
 	/// Name of the one who commands us
 	var/master

@@ -110,8 +110,12 @@
 	var/atom/movable/screen/ai/modpc/interfaceButton
 	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure
 	var/posibrain_core = FALSE
-	///whether its access panel lock is emagged, so you can deconstruct it without robotics access or consent
-	var/emagged = FALSE
+	///whether its access panel lock is emagged, so you can crowbar it without robotics access or consent
+	emagged = FALSE
+	///whether its cover is opened, so you can wirecut it for deconstruction
+	var/opened = FALSE
+	///whether AI is anchored or not, used for checks
+	var/is_anchored = TRUE
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -367,57 +371,20 @@
 			return
 		battery = battery - 50
 		to_chat(src, span_notice("You route power from your backup battery to move the bolts."))
-	var/is_anchored = FALSE
-	if(move_resist == MOVE_FORCE_OVERPOWERING)
+	flip_anchored()
+	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
+
+/mob/living/silicon/ai/proc/flip_anchored()
+	if(is_anchored)
+		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_NORMAL
 		status_flags |= CANPUSH //we want the core to be push-able when un-anchored
 		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	else
-		is_anchored = TRUE
+		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_OVERPOWERING
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
-
-	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
-	// the message in the [] will change depending whether or not the AI is anchored
-
-/mob/living/silicon/ai/emag_act(mob/user, obj/item/card/emag/emag_card)
-	. = ..()
-	balloon_alert(user, "access panel lock shorted")
-	to_chat(src, span_warning("[user] shorts out your access panel lock!"))
-	emagged = TRUE
-
-/mob/living/silicon/ai/wirecutter_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(stat == DEAD)
-		to_chat(user, span_warning("Neural network corrupted!"))
-		return
-	var/consent = tgui_alert(src, "[user] is attempting to disconnect your neural network, open your access panel?", "Neural Network Disconnection", list("Yes", "No"))
-	var/consent_override = FALSE
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		if(human_user.wear_id)
-			var/list/access = human_user.wear_id.GetAccess()
-			if(ACCESS_ROBOTICS in access)
-				consent_override = TRUE
-	if(consent == "No" && (!consent_override || !emagged))
-		to_chat(user, span_notice("[src] refuses to open its access panel."))
-		return
-	if(consent == "No" && (consent_override || emagged))
-		to_chat(user, span_warning("[src] refuses to open its access panel...so you[!emagged ? " swipe your ID and " : " "]open it anyway!"))
-	balloon_alert(src, "access panel opened")
-	to_chat(src, span_warning("[user] starts disconnecting your neural network!"))
-	balloon_alert(user, "disconnecting neural network")
-	if(!tool.use_tool(src, user, 10 SECONDS))
-		return
-	if(IS_MALF_AI(src))
-		to_chat(user, span_userdanger("The voltage inside the wires rises dramatically!"))
-		user.electrocute_act(120, src)
-		return
-	balloon_alert(user, "disconnected neural network")
-	if(!ai_mob_to_structure())
-		return
-	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /mob/living/silicon/ai/proc/ai_mob_to_structure()
 	disconnect_shell()
@@ -445,13 +412,14 @@
 	the_mmi.brainmob.name = src.real_name
 	the_mmi.brainmob.real_name = src.real_name
 	the_mmi.brainmob.container = the_mmi
+	the_mmi.brainmob.set_suicide(suiciding)
 	if(the_core)
 		var/obj/structure/ai_core/core = the_core
 		core.brain = the_mmi
 		the_mmi.forceMove(the_core)
 	else
 		the_mmi.forceMove(get_turf(src))
-	if(the_mmi.brainmob.stat == DEAD)
+	if(the_mmi.brainmob.stat == DEAD && !suiciding)
 		the_mmi.brainmob.set_stat(CONSCIOUS)
 	if(mind)
 		mind.transfer_to(the_mmi.brainmob)

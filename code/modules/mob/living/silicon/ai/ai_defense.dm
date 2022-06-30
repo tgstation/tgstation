@@ -59,3 +59,73 @@
 
 /mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	return // no eyes, no flashing
+
+/mob/living/silicon/ai/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if(emagged)
+		balloon_alert(user, "access panel lock already shorted")
+		return
+	balloon_alert(user, "access panel lock shorted")
+	to_chat(src, span_warning("[user] shorts out your access panel lock!"))
+	emagged = TRUE
+
+/mob/living/silicon/ai/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(opened)
+		balloon_alert(user, "already open")
+		return
+	if(!is_anchored)
+		balloon_alert(user, "bolt it down first!")
+		return
+	var/consent
+	if(mind && stat != DEAD)
+		consent = tgui_alert(src, "[user] is attempting to open your access panel, unlock the cover?", "AI Access Panel", list("Yes", "No"))
+	var/consent_override = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.wear_id)
+			var/list/access = human_user.wear_id.GetAccess()
+			if(ACCESS_ROBOTICS in access)
+				consent_override = TRUE
+	if(consent == "No" && !consent_override && !emagged)
+		to_chat(user, span_notice("[src] refuses to unlock its access panel."))
+		return
+	if(consent == "No" && (consent_override || emagged))
+		to_chat(user, span_warning("[src] refuses to unlock its access panel...so you[!emagged ? " swipe your ID and " : " "]open it anyway!"))
+	if(isnull(consent) && mind && !consent_override && !emagged)
+		if(stat != DEAD)
+			to_chat(user, span_warning("[src] did not respond to your request to unlock its access panel cover lock."))
+			return
+		else
+			to_chat(user, span_warning("The access panel looks damaged, you try dislodging the cover."))
+	balloon_alert(user, "prying open access panel")
+	to_chat(src, "access panel being pried open...")
+	if(!tool.use_tool(src, user, (stat != DEAD ? 5 SECONDS : 40 SECONDS)))
+		return
+	balloon_alert(src, "access panel opened")
+	balloon_alert(user, "access panel opened")
+	opened = TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/mob/living/silicon/ai/wirecutter_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!opened)
+		balloon_alert(user, "open the access panel first!")
+		return
+	if(!is_anchored)
+		balloon_alert(user, "bolt it down first!")
+		return
+	balloon_alert(src, "neural network being disconnected...")
+	balloon_alert(user, "disconnecting neural network...")
+	if(!tool.use_tool(src, user, (stat != DEAD ? 5 SECONDS : 40 SECONDS)))
+		return
+	if(IS_MALF_AI(src))
+		to_chat(user, span_userdanger("The voltage inside the wires rises dramatically!"))
+		user.electrocute_act(120, src)
+		opened = FALSE
+		return
+	balloon_alert(user, "disconnected neural network")
+	to_chat(src, span_danger("You feel incredibly confused and disorientated."))
+	if(!ai_mob_to_structure())
+		return
+	return TOOL_ACT_TOOLTYPE_SUCCESS

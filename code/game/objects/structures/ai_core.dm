@@ -329,7 +329,7 @@
 		ai_mob.posibrain_core = TRUE
 	if(from_glass_core_to_mob)
 		SSblackbox.record_feedback("amount", "ais_created", 1)
-	deadchat_broadcast(" has been brought online at <b>[get_area_name(ai_mob, TRUE)]</b>.", span_name("[ai_mob]"), follow_target = ai_mob, message_type = DEADCHAT_ANNOUNCEMENT)
+	deadchat_broadcast(" has been brought online at <b>[get_area_name(ai_mob, format_text = TRUE)]</b>.", span_name("[ai_mob]"), follow_target = ai_mob, message_type = DEADCHAT_ANNOUNCEMENT)
 	qdel(src)
 	return TRUE
 
