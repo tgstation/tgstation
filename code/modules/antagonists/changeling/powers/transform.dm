@@ -142,16 +142,6 @@
 		return
 	..()
 	changeling.transform(user, chosen_prof)
-	
-	// Updates the examine menu dummy as well. Can't really do it inside /transform() because it could lead to a loop.
-	var/mob/dum = user.tgui.dummy_holder
-	dum.name = chosen_prof.name
-	for(var/obj/item/item in dum)
-		if(!dum.dropItemToGround(item))
-			qdel(item)
-			dum.regenerate_icons()
-	changeling.transform(dum, chosen_prof)
-	
 	SEND_SIGNAL(user, COMSIG_CHANGELING_TRANSFORM)
 	return TRUE
 
