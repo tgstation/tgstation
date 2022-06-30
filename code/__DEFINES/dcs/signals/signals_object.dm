@@ -59,6 +59,9 @@
 /// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
 
+/// from /obj/proc/make_unfrozen()
+#define COMSIG_OBJ_UNFREEZE "obj_unfreeze"
+
 // /obj/machinery/atmospherics/components/binary/valve signals
 
 /// from /obj/machinery/atmospherics/components/binary/valve/toggle(): (on)
@@ -116,6 +119,12 @@
 #define COMSIG_ITEM_DROPPED "item_drop"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
+
+/// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
+#define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
+	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	#define COMPONENT_ACTION_HANDLED (1<<0)
+
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
 ///from base of obj/item/hit_reaction(): (list/args)
@@ -330,6 +339,9 @@
 	#define COMPONENT_ITEM_CHARGED (1 << 0)
 	/// Returns if the item had a negative side effect occur while recharging
 	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
+
+/// Sent from /obj/effect/proc_holder/spell/aoe_turf/knock/cast(), to every nearby turf: (obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+#define COMSIG_ATOM_MAGICALLY_UNLOCKED "atom_magic_unlock"
 
 // /obj/item/camera signals
 

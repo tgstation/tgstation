@@ -477,3 +477,10 @@ MAXFINE 2000
 
 ## Whether native FoV is enabled for all people.
 #NATIVE_FOV
+
+## Whether circuit sounds are allowed to be played or not.
+#DISALLOW_CIRCUIT_SOUNDS
+
+## Comment if you wish to enable title music playing at the lobby screen. This flag is disabled by default to facilitate better code testing on local machines.
+## Do keep in mind that this flag will not affect individual player's preferences: if they opt-out on your server, it will never play for them.
+DISALLOW_TITLE_MUSIC

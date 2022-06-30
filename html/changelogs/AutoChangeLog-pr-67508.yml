@@ -1,4 +1,0 @@
-author: "robbertapir"
-delete-after: True
-changes: 
-  - bugfix: "sechud/medhud buttons in examines now time out after 1 minute. This means that a single examine will no longer allow you to track someone's identity and/or health for the rest of the round."

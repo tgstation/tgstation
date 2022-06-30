@@ -35,7 +35,7 @@
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
-	faction = FACTION_CLOWN
+	faction = list(FACTION_CLOWN)
 	var/attack_reagent
 
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
@@ -457,7 +457,6 @@
 	flick("glutton_mouth", src)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/tamed(mob/living/tamer)
-	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 

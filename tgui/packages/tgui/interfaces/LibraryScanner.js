@@ -4,10 +4,7 @@ import { Window } from '../layouts';
 
 export const LibraryScanner = (props, context) => {
   return (
-    <Window
-      title="Library Scanner"
-      width={350}
-      height={150}>
+    <Window title="Library Scanner" width={350} height={150}>
       <BookScanning />
     </Window>
   );
@@ -15,35 +12,22 @@ export const LibraryScanner = (props, context) => {
 
 const BookScanning = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    has_book,
-    has_cache,
-    book,
-  } = data;
+  const { has_book, has_cache, book } = data;
   if (!has_book && !has_cache) {
-    return (
-      <NoticeBox>
-        Insert a book to scan
-      </NoticeBox>
-    );
+    return <NoticeBox>Insert a book to scan</NoticeBox>;
   }
   return (
-    <Stack
-      direction="column"
-      height="100%"
-      justify="flex-end">
+    <Stack direction="column" height="100%" justify="flex-end">
       <Stack.Item grow>
-        <Section
-          textAlign="center"
-          height="100%"
-          title={book.author}>
+        <Section textAlign="center" height="100%" title={book.author}>
           {book.title}
         </Section>
       </Stack.Item>
       <Stack.Item>
         <Stack>
           <Stack.Item grow>
-            <Button fluid
+            <Button
+              fluid
               textAlign="center"
               icon="eject"
               onClick={() => act('eject')}
@@ -52,7 +36,8 @@ const BookScanning = (props, context) => {
             </Button>
           </Stack.Item>
           <Stack.Item grow>
-            <Button fluid
+            <Button
+              fluid
               textAlign="center"
               onClick={() => act('scan')}
               color="good"
@@ -62,7 +47,8 @@ const BookScanning = (props, context) => {
             </Button>
           </Stack.Item>
           <Stack.Item grow>
-            <Button fluid
+            <Button
+              fluid
               textAlign="center"
               icon="fire"
               onClick={() => act('clear')}

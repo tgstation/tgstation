@@ -451,7 +451,7 @@
 
 /obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
-	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
+	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will stay perpetually warmed with cutting edge Donk Co. technology.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
 	var/donktype = /obj/item/food/donkpocket
@@ -1740,11 +1740,11 @@
 										  /obj/item/reagent_containers/food/condiment/cornmeal = 5,
 										  /obj/item/reagent_containers/food/condiment/yoghurt = 5,
 										  /obj/item/reagent_containers/food/condiment/quality_oil = 5,
-										  /obj/item/food/mozzarella = 5,
-										  /obj/item/food/firm_cheese = 5,
+										  /obj/item/food/cheese/mozzarella = 5,
+										  /obj/item/food/cheese/firm_cheese = 5,
 										  /obj/item/food/cheese/wheel = 5,
-										  /obj/item/food/cheese_curds = 5,
-										  /obj/item/food/curd_cheese = 5))
+										  /obj/item/food/cheese/cheese_curds = 5,
+										  /obj/item/food/cheese/curd_cheese = 5))
 		new randomFood(src)
 
 /obj/item/storage/box/mothic_cans_sauces

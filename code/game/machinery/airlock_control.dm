@@ -7,7 +7,6 @@
 	var/frequency
 	var/datum/radio_frequency/radio_connection
 
-
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal)
 		return
@@ -50,7 +49,6 @@
 
 	send_status()
 
-
 /obj/machinery/door/airlock/proc/send_status()
 	if(radio_connection)
 		var/datum/signal/signal = new(list(
@@ -61,24 +59,26 @@
 		))
 		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 
-
 /obj/machinery/door/airlock/open(surpress_send)
 	. = ..()
 	if(!surpress_send)
 		send_status()
-
 
 /obj/machinery/door/airlock/close(surpress_send)
 	. = ..()
 	if(!surpress_send)
 		send_status()
 
-
 /obj/machinery/door/airlock/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	if(new_frequency)
 		frequency = new_frequency
 		radio_connection = SSradio.add_object(src, frequency, RADIO_AIRLOCK)
+
+/obj/machinery/door/airlock/on_magic_unlock(datum/source, obj/effect/proc_holder/spell/aoe_turf/knock/spell, mob/living/caster)
+	// Airlocks should unlock themselves when knock is casted, THEN open up.
+	locked = FALSE
+	return ..()
 
 /obj/machinery/door/airlock/Destroy()
 	if(frequency)

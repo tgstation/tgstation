@@ -1,0 +1,4 @@
+author: "Hamcha"
+delete-after: True
+changes: 
+  - bugfix: "The agent card now correctly allows you to take anyone's identity, even if their name contains numbers"

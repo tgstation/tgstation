@@ -675,7 +675,9 @@
 
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/bubblegum, blood_spawn_chance = 5)
+	AddComponent(/datum/component/blood_walk, \
+		blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
+		blood_spawn_chance = 5)
 
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh/AttackingTarget()
 	if(is_busy)
