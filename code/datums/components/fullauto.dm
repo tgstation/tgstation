@@ -11,28 +11,33 @@
 	var/autofire_shot_delay = 0.3 SECONDS //Time between individual shots.
 	var/mouse_status = AUTOFIRE_MOUSEUP //This seems hacky but there can be two MouseDown() without a MouseUp() in between if the user holds click and uses alt+tab, printscreen or similar.
 
-	//windup autofire vars
-	var/windup_autofire = FALSE //Whether the delay between shots increases over time, simulating a spooling weapon. Resets when you stop firing.
-	var/current_windup_reduction = 0 //the reduction to shot delay for windup. Resets when you stop firing to 0.
-	var/windup_autofire_reduction_multiplier = 0.3 //the percentage of autfire_shot_delay that is added to current_windup_reduction. In the default example, every shot reduces the shot delay by 30%.
-	var/windup_autofire_cap = 0.3 //How high of a reduction that current_windup_reduction can reach. In the default example, the delay between shots would be 30% of the original fire delay.
-	var/windup_spindown = 3 SECONDS //How long it takes for weapons that have spooled-up to reset back to the original firing speed
+	///windup autofire vars
+	///Whether the delay between shots increases over time, simulating a spooling weapon
+	var/windup_autofire = FALSE //
+	///the reduction to shot delay for windup
+	var/current_windup_reduction = 0
+	///the percentage of autfire_shot_delay that is added to current_windup_reduction
+	var/windup_autofire_reduction_multiplier = 0.3
+	///How high of a reduction that current_windup_reduction can reach
+	var/windup_autofire_cap = 0.3
+	///How long it takes for weapons that have spooled-up to reset back to the original firing speed
+	var/windup_spindown = 3 SECONDS
 	var/timerid
 	COOLDOWN_DECLARE(next_shot_cd)
 
-/datum/component/automatic_fire/Initialize(_autofire_shot_delay, _windup_autofire, _windup_autofire_reduction_multiplier, _windup_autofire_cap, _windup_spindown)
+/datum/component/automatic_fire/Initialize(autofire_shot_delay, windup_autofire, windup_autofire_reduction_multiplier, windup_autofire_cap, windup_spindown)
 	. = ..()
 	if(!isgun(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/obj/item/gun = parent
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/wake_up)
-	if(_autofire_shot_delay)
-		autofire_shot_delay = _autofire_shot_delay
-	if(_windup_autofire)
-		src.windup_autofire = _windup_autofire
-		src.windup_autofire_reduction_multiplier = _windup_autofire_reduction_multiplier
-		src.windup_autofire_cap = _windup_autofire_cap
-		src.windup_spindown = _windup_spindown
+	if(autofire_shot_delay)
+		src.autofire_shot_delay = autofire_shot_delay
+	if(windup_autofire)
+		src.windup_autofire = windup_autofire
+		src.windup_autofire_reduction_multiplier = windup_autofire_reduction_multiplier
+		src.windup_autofire_cap = windup_autofire_cap
+		src.windup_spindown = windup_spindown
 	if(autofire_stat == AUTOFIRE_STAT_IDLE && ismob(gun.loc))
 		var/mob/user = gun.loc
 		wake_up(src, user)
@@ -257,6 +262,7 @@
 	stop_autofiring()
 	return FALSE
 
+// Reset for our windup, resetting everything back to initial values after a variable set amount of time (determined by var/windup_spindown).
 /datum/component/automatic_fire/proc/windup_reset(deltimer)
 	current_windup_reduction = initial(current_windup_reduction)
 	if(deltimer && timerid)
