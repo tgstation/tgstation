@@ -57,7 +57,7 @@
 					organs.forceMove(Tsec)
 					organs.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
-		for(var/obj/item/organ/organs in internal_organs)
+		for(var/obj/item/organ/organs as anything in internal_organs)
 			if(no_brain && istype(organs, /obj/item/organ/internal/brain))
 				qdel(organs)
 				continue
