@@ -401,5 +401,3 @@
 	integer = FALSE
 
 /datum/config_entry/flag/disallow_circuit_sounds
-
-/datum/config_entry/string/tts_auth_key
