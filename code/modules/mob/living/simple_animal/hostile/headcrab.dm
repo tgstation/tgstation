@@ -85,9 +85,11 @@
 		if(changeling_datum.can_absorb_dna(owner))
 			changeling_datum.add_new_profile(owner)
 
-		var/datum/action/changeling/humanform/hf = new
+		var/datum/action/changeling/humanform/hf = new()
 		changeling_datum.purchased_powers += hf
+		hf.Grant(origin.current)
 		changeling_datum.regain_powers()
+		
 	owner.gib()
 
 #undef EGG_INCUBATION_TIME
