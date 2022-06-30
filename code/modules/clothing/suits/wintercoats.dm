@@ -44,7 +44,7 @@
 	name = "\proper Endotherm winter coat"
 	desc = "A thickly padded winter coat to keep the wearer well insulated no matter the circumstances. It has a harness for a larger oxygen tank attached to the back."
 	w_class = WEIGHT_CLASS_BULKY
-	slowdown = 0.25
+	slowdown = 0.75
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 20)
 	strip_delay = 6 SECONDS
 	equip_delay_other = 6 SECONDS
@@ -54,10 +54,6 @@
 /obj/item/clothing/suit/hooded/wintercoat/eva/Initialize(mapload)
 	. = ..()
 	allowed += /obj/item/tank/internals
-
-	// Wearing a large oxygen tank will add slowdown to the coat
-	var/static/list/things_which_slow_us = typesof(/obj/item/tank/internals) - typesof(/obj/item/tank/internals/emergency_oxygen) - typesof(/obj/item/tank/internals/plasmaman)
-	AddComponent(/datum/component/slows_when_slot_filed, 0.5, ITEM_SLOT_SUITSTORE, things_which_slow_us)
 
 /obj/item/clothing/head/hooded/winterhood/eva
 	name = "\proper Endotherm winter hood"
