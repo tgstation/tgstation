@@ -206,9 +206,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "xb" = (
 /obj/structure/cable,
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/fire/directional/north,
 /turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "xy" = (
@@ -220,9 +218,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "yU" = (
-/obj/structure/sign/warning/no_smoking{
-	desc = "An incredibly bad idea.";
-	pixel_y = 32
+/obj/structure/sign/warning/no_smoking/directional/north{
+	desc = "An incredibly bad idea."
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -388,9 +385,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/thelizardsgas)
 "LT" = (
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/power/terminal{
 	dir = 4
@@ -426,9 +421,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Pb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
