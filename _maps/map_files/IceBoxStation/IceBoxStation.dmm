@@ -8666,7 +8666,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/smooth_edge,
 /area/station/security/lockers)
 "cFc" = (
@@ -10983,7 +10983,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
-/obj/item/radio/intercom/prison/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
 "dos" = (
@@ -15248,7 +15248,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "eHK" = (
-/obj/item/radio/intercom/prison/directional/south,
+/obj/item/radio/intercom/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -17998,7 +17998,7 @@
 "fzD" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/red,
-/obj/item/radio/intercom/prison/directional/east,
+/obj/item/radio/intercom/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -31973,7 +31973,7 @@
 	pixel_x = -6;
 	pixel_y = 9
 	},
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "jUr" = (
@@ -34493,7 +34493,7 @@
 /obj/item/storage/box/firingpins,
 /obj/item/key/security,
 /obj/machinery/light/directional/east,
-/obj/item/radio/intercom/prison/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "kJP" = (
@@ -41223,7 +41223,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 8
 	},
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
@@ -50025,7 +50025,7 @@
 	},
 /area/station/science/lab)
 "pDB" = (
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -57867,7 +57867,7 @@
 	c_tag = "Security - Detective's Office"
 	},
 /obj/machinery/computer/secure_data,
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "sdc" = (
@@ -66211,7 +66211,7 @@
 "uJX" = (
 /obj/effect/turf_decal/tile/red/half,
 /obj/structure/closet/firecloset,
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/smooth_half,
 /area/station/security/brig/upper)
 "uJZ" = (
@@ -69340,7 +69340,7 @@
 /obj/structure/closet{
 	name = "Evidence Closet 1"
 	},
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/security/brig)
 "vIZ" = (
