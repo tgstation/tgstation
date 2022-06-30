@@ -57,6 +57,9 @@
 		if(brain)
 			to_chat(user, span_warning("There's already a brain in the MMI!"))
 			return
+		if(newbrain.suicided)
+			to_chat(user, span_warning("[newbrain] is completely useless."))
+			return
 		if(!newbrain.brainmob?.mind || !newbrain.brainmob)
 			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
 			if(install == "No")

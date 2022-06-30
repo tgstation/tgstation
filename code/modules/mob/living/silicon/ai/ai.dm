@@ -413,6 +413,7 @@
 	the_mmi.brainmob.real_name = src.real_name
 	the_mmi.brainmob.container = the_mmi
 	the_mmi.brainmob.set_suicide(suiciding)
+	the_mmi.brain.suicided = suiciding
 	if(the_core)
 		var/obj/structure/ai_core/core = the_core
 		core.brain = the_mmi
