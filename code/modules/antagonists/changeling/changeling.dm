@@ -107,10 +107,12 @@
 	 *	quirks like pacifist, brain tumor or paraplegic.
 	 */
 	var/list/mimicable_quirks_list = list(
+		"Bad Touch",
 		"Heterochromatic",
 		"Pseudobulbar Affect",
 		"Shifty Eyes",
 		"Smooth-Headed",
+		"Friendly",
 	)
 
 /datum/antagonist/changeling/New()
