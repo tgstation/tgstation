@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { filter, sortBy } from 'common/collections';
+import { filter, map, sortBy } from 'common/collections';
 import { multiline } from 'common/string';
 import { Box, Button, Collapsible, Icon, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -188,14 +188,14 @@ const ObservableContent = (props, context) => {
   let collapsibleSections = [dead, ghosts, misc, npcs];
   let visibleSections: Observable[][] = [];
   let visibleTitles: Title[] = [];
-  /** This collates antagonists into their own groups */
+  /** This collates antagonists into their own groups. */
   if (antagonists.length) {
     collateAntagonists(antagonists).map(([name, antag]) => {
       visibleSections.push(antag);
       visibleTitles.push({ name, color: 'bad' });
     });
   }
-  /** Adds living players to the end of the primary sections*/
+  /** Adds living players to the end of the primary sections. */
   visibleSections.push(alive);
   visibleTitles.push({ name: 'Alive', color: 'good' });
   /** Handles filtering out search results. */
@@ -213,48 +213,59 @@ const ObservableContent = (props, context) => {
 };
 
 /** Displays a primary antag or alive section */
-const PrimarySections = (props, context) => {
+const PrimarySections = (
+  props: { sections: Observable[][]; titles: Title[] },
+  context
+) => {
   const { sections = [], titles = [] } = props;
 
-  return sections?.map((section, index) => {
-    const { color, name } = titles[index];
-    return (
-      !!section.length && (
-        <Stack.Item key={index}>
-          <Section
-            title={
-              <Box color={color}>
-                {name} - ({section.length})
-              </Box>
-            }>
-            <ObservableMap color={color} index={index} section={section} />
-          </Section>
-        </Stack.Item>
-      )
-    );
-  });
+  return (
+    <div>
+      {sections?.map((section, index) => {
+        const { color, name } = titles[index];
+        return (
+          !!section.length && (
+            <Stack.Item key={index}>
+              <Section
+                title={
+                  <Box color={color}>
+                    {name} - ({section.length})
+                  </Box>
+                }>
+                <ObservableMap color={color} section={section} />
+              </Section>
+            </Stack.Item>
+          )
+        );
+      })}
+    </div>
+  );
 };
 
 /** Displays a collapsible section for ghosts, NPCs, etc. */
-const CollapsingSections = (props, context) => {
+const CollapsingSections = (props: { sections: Observable[][] }, context) => {
   const { sections = [] } = props;
 
-  return sections?.map((section, index) => {
-    const { color, name } = COLLAPSING_TITLES[index];
-    return (
-      !!section.length && (
-        <Stack.Item key={index}>
-          <Collapsible
-            bold
-            color={color}
-            title={name + ` - (${section.length})`}
-            section={section}>
-            <ObservableMap color={color} section={section} />
-          </Collapsible>
-        </Stack.Item>
-      )
-    );
-  });
+  return (
+    <div>
+      {sections?.map((section, index) => {
+        const { color, name } = COLLAPSING_TITLES[index];
+        return (
+          !!section.length && (
+            <Stack.Item key={index}>
+              <Collapsible
+                bold
+                color={color}
+                title={name + ` - (${section.length})`}
+                section={section}>
+                <ObservableMap color={color} section={section} />
+              </Collapsible>
+            </Stack.Item>
+          )
+        );
+      })}
+    </div>
+  );
 };
 
 /** Displays a map of observable items */
@@ -266,7 +277,7 @@ const ObservableMap = (props, context) => {
     'autoObserve',
     false
   );
-  const sortedSection = sortBy((poi: Observable) => poi.name)(section);
+  const sortedSection = sortBy<Observable>((poi) => poi.name)(section);
 
   return (
     <div>
@@ -314,7 +325,7 @@ const collateAntagonists = (antagonists: Observable[]): AntagGroup[] => {
     }
     collatedAntagonists[resolvedName].push(antagonist);
   }
-  const sortedAntagonists = sortBy((antagonist: AntagGroup) => antagonist[0])(
+  const sortedAntagonists = sortBy<AntagGroup>((antagonist) => antagonist[0])(
     Object.entries(collatedAntagonists)
   );
 
@@ -343,18 +354,12 @@ const getThreat = (orbiters: number): THREAT => {
 const getFilteredLists = (
   lists: Observable[][],
   searchQuery: string
-): Observable[][] => {
-  let filteredLists: Observable[][] = [];
-  lists.map((list) => {
-    const filtered = list.filter((observable) => {
-      return observable.name
-        ?.toLowerCase()
-        ?.includes(searchQuery?.toLowerCase());
-    });
-    filteredLists.push(filtered);
-  });
-  return filteredLists;
-};
+): Observable[][] =>
+  map((list: Observable[]) => {
+    return filter<Observable>((observable) =>
+      observable.name?.toLowerCase().includes(searchQuery?.toLowerCase())
+    )(list);
+  })(lists);
 
 /**
  * Returns a string with the first letter in uppercase.
