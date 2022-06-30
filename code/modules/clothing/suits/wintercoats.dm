@@ -45,9 +45,12 @@
 	desc = "A thickly padded winter coat to keep the wearer well insulated no matter the circumstances. It has a harness for a larger oxygen tank attached to the back."
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 0.75
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 20)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 50, FIRE = 50, ACID = 20)
 	strip_delay = 6 SECONDS
 	equip_delay_other = 6 SECONDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT // Protects very cold.
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT // Protects a little hot.
+	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/eva
 
@@ -58,7 +61,10 @@
 /obj/item/clothing/head/hooded/winterhood/eva
 	name = "\proper Endotherm winter hood"
 	desc = "A thickly padded hood attached to an even thicker coat."
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 20)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 50, FIRE = 50, ACID = 20)
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL|SNUG_FIT // Snug fit doesn't really matter, but might as well
 	resistance_flags = NONE
 
 // CentCom

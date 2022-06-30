@@ -193,6 +193,7 @@
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
+	clothing_flags = THICKMATERIAL
 
 /obj/item/clothing/gloves/color/captain
 	desc = "Regal blue gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky."
