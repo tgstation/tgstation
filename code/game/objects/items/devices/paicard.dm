@@ -187,9 +187,17 @@
 	if(!COOLDOWN_FINISHED(src, alert_cooldown))
 		return
 	COOLDOWN_START(src, alert_cooldown, 5 SECONDS)
-	flick("[initial(icon_state)]-alert", src)
+	add_notification()
+	addtimer(CALLBACK(src, .proc/remove_notification), 5 SECONDS)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	loc.visible_message(span_info("[src] flashes a message across its screen, \"Additional personalities available for download.\""), blind_message = span_notice("[src] vibrates with an alert."))
+
+/obj/item/paicard/proc/add_notification()
+	var/mutable_appearance/alert = mutable_appearance(icon, "[initial(icon_state)]-alert")
+	add_overlay(alert)
+
+/obj/item/paicard/proc/remove_notification()
+	cut_overlays()
 
 /obj/item/paicard/emp_act(severity)
 	. = ..()
