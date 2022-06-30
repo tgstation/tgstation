@@ -220,7 +220,7 @@ const ObservableMap = (props, context) => {
     false
   );
 
-  return section.map((observable, index) => {
+  return section?.map((observable, index) => {
     const { name, orbiters, ref } = observable;
     const threat = getThreat(orbiters);
     return (
