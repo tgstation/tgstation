@@ -180,9 +180,10 @@
 	
 	// The health analyzer will first check if the target is a changeling, and if they are, load the quirks of the person they're disguising as.
 	var/target_quirks = quirks
-	var/datum/antagonist/changeling/target_changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-	if(target_changeling)
-		target_quirks = target_changeling.current_profile.quirks
+	if(mind)
+		var/datum/antagonist/changeling/target_changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(target_changeling)
+			target_quirks = target_changeling.current_profile.quirks
 
 	switch(category)
 		if(CAT_QUIRK_ALL)
