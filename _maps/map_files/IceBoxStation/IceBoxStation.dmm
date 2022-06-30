@@ -6415,10 +6415,6 @@
 /obj/item/storage/box/bodybags,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
-"bWC" = (
-/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail,
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers)
 "bWK" = (
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
@@ -164248,7 +164244,7 @@ tjo
 tjo
 tjo
 tjo
-bWC
+tjo
 tjo
 tjo
 tjo
@@ -164505,7 +164501,7 @@ tjo
 tjo
 tjo
 tjo
-bWC
+tjo
 tjo
 tjo
 tjo
