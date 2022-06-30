@@ -54,7 +54,7 @@
 		if(E)
 			E.admin_setup(usr)
 			var/datum/round_event/event = E.runEvent()
-			if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_RANDOM_EVENT, src) & CANCEL_RANDOM_EVENT)
+			if(event.cancel_event)
 				return
 			if(event.announceWhen>0)
 				event.processing = FALSE
