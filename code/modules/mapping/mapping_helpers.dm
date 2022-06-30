@@ -195,7 +195,7 @@
 
 /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
 	airlock.unres_sides ^= dir
-	airlock.unres_helper = TRUE
+	airlock.unres_sensor = TRUE
 
 /obj/effect/mapping_helpers/airlock/abandoned
 	name = "airlock abandoned helper"
