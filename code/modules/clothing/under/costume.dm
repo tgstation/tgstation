@@ -370,3 +370,9 @@
 	icon_state = "referee"
 	inhand_icon_state = "referee"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/joker
+	name = "comedian suit"
+	desc = "The worst part of having a mental illness is people expect you to behave as if you don't."
+	icon_state = "joker"
+	can_adjust = FALSE
