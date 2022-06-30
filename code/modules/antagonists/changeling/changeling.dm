@@ -475,6 +475,8 @@
 	
 	new_profile.age = target.age
 	new_profile.physique = target.physique
+	new_profile.eye_color_left = target.eye_color_left
+	new_profile.eye_color_right = target.eye_color_right
 
 	// Grab the target's quirks.
 	for(var/datum/quirk/target_quirk in target.quirks)
@@ -715,6 +717,11 @@
 	user.physique = chosen_profile.physique
 	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
 	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
+	var/obj/item/organ/eyes/eye_organ = user.getorganslot(ORGAN_SLOT_EYES)
+	eye_organ.eye_color_left = chosen_profile.eye_color_left
+	eye_organ.eye_color_right = chosen_profile.eye_color_right
+	eye_organ.old_eye_color_left = chosen_profile.eye_color_left
+	eye_organ.old_eye_color_right = chosen_profile.eye_color_right
 
 	/*	
 	 *	Remove old quirks and copy over new ones from the chosen profile.
@@ -888,6 +895,10 @@
 	var/list/grad_style = list("None", "None")
 	/// The hair and facial hair gradient colours of the profile source.
 	var/list/grad_color = list(null, null)
+	/// The colour of the left eye of the profile source.
+	var/eye_color_left
+	/// The colour of the right eye of the profile source.
+	var/eye_color_right
 
 /datum/changeling_profile/Destroy()
 	qdel(dna)
@@ -925,6 +936,8 @@
 	new_profile.quirks = quirks.Copy()
 	new_profile.grad_style = LAZYLISTDUPLICATE(grad_style)
 	new_profile.grad_color = LAZYLISTDUPLICATE(grad_color)
+	new_profile.eye_color_left = eye_color_left
+	new_profile.eye_color_right = eye_color_right
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
