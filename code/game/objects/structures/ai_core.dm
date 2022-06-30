@@ -34,12 +34,12 @@
 				. += span_notice("The frame can be <b>wired</b>, the circuit board can be <b>unfastened</b>.")
 			if(CABLED_CORE)
 				if(!brain)
-					. += span_notice("There are wires which could be hooked up to a <b>brain</b> or <b>cut</b>.")
+					. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
 				else
 					var/accept_laws = TRUE
-					if(!brain?.brainmob?.mind || brain && brain.laws.id != DEFAULT_AI_LAWID)
+					if(!brain?.brainmob?.mind || !brain.brainmob || brain && brain.laws.id != DEFAULT_AI_LAWID)
 						accept_laws = FALSE
-					. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the brain could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across" : ""]")
+					. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the[brain.braintype == "Android" ? " positronic brain" : " MMI"] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across" : ""]")
 			if(GLASS_CORE)
 				. += span_notice("The monitor[brain?.brainmob?.mind ? " and neural interfaces" : " "]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
 			if(AI_READY_CORE)
@@ -131,7 +131,7 @@
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(state == AI_READY_CORE && brain?.brainmob?.mind)
-		balloon_alert(user, "connecting neural network")
+		balloon_alert(user, "connecting neural network...")
 		if(!tool.use_tool(src, user, 10 SECONDS))
 			return
 		if(!ai_structure_to_mob())
@@ -149,7 +149,7 @@
 			if(!P.tool_start_check(user, amount=0))
 				return
 
-			balloon_alert(user, "deconstructing frame")
+			balloon_alert(user, "deconstructing frame...")
 			if(P.use_tool(src, user, 20, volume=50) && state == EMPTY_CORE)
 				balloon_alert(user, "deconstructed frame")
 				deconstruct(TRUE)
@@ -195,7 +195,7 @@
 					var/obj/item/stack/cable_coil/C = P
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-						balloon_alert(user, "adding cables to frame")
+						balloon_alert(user, "adding cables to frame...")
 						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
 							balloon_alert(user, "added cables to frame.")
 							state = CABLED_CORE
@@ -206,7 +206,7 @@
 			if(CABLED_CORE)
 				if(P.tool_behaviour == TOOL_WIRECUTTER)
 					if(brain)
-						balloon_alert(user, "remove [brain.name] first!")
+						balloon_alert(user, "remove the [brain.braintype == "Android" ? "brain" : "MMI"] first!")
 					else
 						P.play_tool_sound(src)
 						balloon_alert(user, "cables removed")
@@ -222,9 +222,9 @@
 					var/obj/item/stack/sheet/rglass/G = P
 					if(G.get_amount() >= 2)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-						balloon_alert(user, "adding glass panel")
+						balloon_alert(user, "adding glass panel...")
 						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
-							balloon_alert(user, "added glass panel.")
+							balloon_alert(user, "added glass panel")
 							state = GLASS_CORE
 							update_appearance()
 					else
@@ -232,11 +232,11 @@
 					return
 
 				if(istype(P, /obj/item/ai_module))
-					if(!brain.brainmob || !brain.brainmob.mind)
-						balloon_alert(user, "brain is inactive!")
+					if(!brain?.brainmob || !brain?.brainmob?.mind)
+						balloon_alert(user, "[brain.braintype == "Android" ? "brain" : "MMI"] is inactive!")
 						return
 					if(brain && brain.laws.id != DEFAULT_AI_LAWID)
-						balloon_alert(user, "[brain.name] already has set laws!")
+						balloon_alert(user, "[brain.braintype == "Android" ? "brain" : "MMI"] already has set laws!")
 						return
 					var/obj/item/ai_module/module = P
 					module.install(laws, user)
@@ -245,14 +245,14 @@
 				if(istype(P, /obj/item/mmi) && !brain)
 					var/obj/item/mmi/M = P
 					if(!M.brain_check(user))
-						var/install = tgui_alert(user, "This brain is inactive, would you like to make an inactive AI?", "Installing AI Brain", list("Yes", "No"))
+						var/install = tgui_alert(user, "This [brain.braintype == "Android" ? "brain" : "MMI"] is inactive, would you like to make an inactive AI?", "Installing AI [brain.braintype == "Android" ? "Brain" : "MMI"]", list("Yes", "No"))
 						if(install == "No")
 							return
 						else
 							if(!user.transferItemToLoc(M, src))
 								return
 							brain = M
-							balloon_alert(user, "added [M.name] to frame")
+							balloon_alert(user, "added [brain.braintype == "Android" ? "brain" : "MMI"] to frame")
 							update_appearance()
 							return
 
@@ -265,13 +265,13 @@
 						return
 
 					brain = M
-					balloon_alert(user, "added [M.name] to frame")
+					balloon_alert(user, "added [brain.braintype == "Android" ? "brain" : "MMI"] to frame")
 					update_appearance()
 					return
 
 				if(P.tool_behaviour == TOOL_CROWBAR && brain)
 					P.play_tool_sound(src)
-					balloon_alert(user, "removed brain")
+					balloon_alert(user, "removed [brain.braintype == "Android" ? "brain" : "MMI"]")
 					brain.forceMove(loc)
 					brain = null
 					update_appearance()
@@ -280,7 +280,7 @@
 			if(GLASS_CORE)
 				if(P.tool_behaviour == TOOL_CROWBAR)
 					P.play_tool_sound(src)
-					balloon_alert(user, "removed glass panel.")
+					balloon_alert(user, "removed glass panel")
 					state = CABLED_CORE
 					update_appearance()
 					new /obj/item/stack/sheet/rglass(loc, 2)
@@ -290,7 +290,7 @@
 					P.play_tool_sound(src)
 					balloon_alert(user, "connected monitor[brain?.brainmob?.mind ? " and neural network" : ""]")
 					if(brain.brainmob?.mind)
-						ai_structure_to_mob()
+						ai_structure_to_mob(from_glass_core_to_mob = TRUE)
 					else
 						state = AI_READY_CORE
 						update_appearance()
@@ -302,33 +302,34 @@
 
 				if(P.tool_behaviour == TOOL_WIRECUTTER)
 					P.play_tool_sound(src)
-					balloon_alert(user, "disconnected the monitor")
+					balloon_alert(user, "disconnected monitor")
 					state = GLASS_CORE
 					update_appearance()
 					return
 	return ..()
 
-/obj/structure/ai_core/proc/ai_structure_to_mob()
-	var/mob/living/brain/B = brain.brainmob
-	if(!B.mind)
+/obj/structure/ai_core/proc/ai_structure_to_mob(from_glass_core_to_mob = FALSE)
+	var/mob/living/brain/the_brainmob = brain.brainmob
+	if(!the_brainmob.mind)
 		return FALSE
-	B.mind?.remove_antags_for_borging()
+	the_brainmob.mind?.remove_antags_for_borging()
 
-	var/mob/living/silicon/ai/A = null
+	var/mob/living/silicon/ai/ai_mob = null
 
 	if(brain.overrides_aicore_laws)
-		A = new /mob/living/silicon/ai(loc, brain.laws, B)
+		ai_mob = new /mob/living/silicon/ai(loc, brain.laws, the_brainmob)
 		brain.laws = null //Brain's law datum is being donated, so we need the brain to let it go or the GC will eat it
 	else
-		A = new /mob/living/silicon/ai(loc, laws, B)
+		ai_mob = new /mob/living/silicon/ai(loc, laws, the_brainmob)
 		laws = null //we're giving the new AI this datum, so let's not delete it when we qdel(src) 5 lines from now
 
 	if(brain.force_replace_ai_name)
-		A.fully_replace_character_name(A.name, brain.replacement_ai_name())
+		ai_mob.fully_replace_character_name(ai_mob.name, brain.replacement_ai_name())
 	if(brain.braintype == "Android")
-		A.posibrain_core = TRUE
-	SSblackbox.record_feedback("amount", "ais_created", 1)
-	deadchat_broadcast(" has been brought online at <b>[get_area_name(A, TRUE)]</b>.", span_name("[A]"), follow_target=A, message_type=DEADCHAT_ANNOUNCEMENT)
+		ai_mob.posibrain_core = TRUE
+	if(from_glass_core_to_mob)
+		SSblackbox.record_feedback("amount", "ais_created", 1)
+	deadchat_broadcast(" has been brought online at <b>[get_area_name(ai_mob, TRUE)]</b>.", span_name("[ai_mob]"), follow_target = ai_mob, message_type = DEADCHAT_ANNOUNCEMENT)
 	qdel(src)
 	return TRUE
 
@@ -378,7 +379,7 @@ That prevents a few funky behaviors.
 	return TRUE
 
 /obj/structure/ai_core/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
-	if(state != AI_READY_CORE || !..() || brain.brainmob.mind)
+	if(state != AI_READY_CORE || !..() || brain?.brainmob?.mind)
 		return
 	//Transferring a carded AI to a core.
 	if(interaction == AI_TRANS_FROM_CARD)
