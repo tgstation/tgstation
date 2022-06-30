@@ -294,6 +294,7 @@ GLOBAL_VAR(restart_counter)
 
 	TgsReboot()
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
+	AUXTOOLS_SHUTDOWN(AUXLUA)
 	..()
 
 /world/proc/update_status()
