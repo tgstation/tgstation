@@ -87,18 +87,15 @@ const ObservableSearch = (props, context) => {
   );
   /** Gets a list of Observable[], then filters the most relevant to orbit */
   const orbitMostRelevant = (searchText: string) => {
-    const sources: Observable[][] = [
-      alive,
-      antagonists,
-      ghosts,
-      dead,
-      npcs,
-      misc,
-    ].filter((source) => {
-      return source.length > 0;
-    });
-    const mostRelevant = getFilteredLists(sources, searchText)
+    // Filters out any observable[] that doesn't match the search query
+    const mostRelevant = getFilteredLists(
+      [alive, antagonists, ghosts, dead, npcs, misc].filter((source) => {
+        return source.length > 0;
+      }),
+      searchText
+    )
       .flat()
+      // Chooses the top observable based on observer count
       .sort(sortByOrbiters)[0];
     if (mostRelevant !== undefined) {
       act('orbit', {
