@@ -850,7 +850,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	return stolen_count >= amount
 
 /datum/objective/steal_n_of_type/proc/check_if_valid_item(obj/item/I)
-   return TRUE
+	return TRUE
 
 /datum/objective/steal_n_of_type/summon_guns
 	name = "steal guns"
@@ -859,7 +859,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	amount = 5
 
 /datum/objective/steal_n_of_type/summon_guns/check_if_valid_item(obj/item/gun/G)
-   return !(G.gun_flags & NOT_A_REAL_GUN)
+	return !(G.gun_flags & NOT_A_REAL_GUN)
 
 /datum/objective/steal_n_of_type/summon_guns/thief
 	explanation_text = "Steal at least 3 guns!"
