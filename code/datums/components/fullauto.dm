@@ -262,7 +262,7 @@
 	stop_autofiring()
 	return FALSE
 
-// Reset for our windup, resetting everything back to initial values after a variable set amount of time (determined by var/windup_spindown).
+/// Reset for our windup, resetting everything back to initial values after a variable set amount of time (determined by var/windup_spindown).
 /datum/component/automatic_fire/proc/windup_reset(deltimer)
 	current_windup_reduction = initial(current_windup_reduction)
 	if(deltimer && timerid)
