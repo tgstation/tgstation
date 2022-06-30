@@ -149,7 +149,7 @@
 		already_cleaning = TRUE
 	else
 		ADD_TRAIT(target, CURRENTLY_CLEANING, src)
-		target.add_overlay(GLOB.cleaning_bubbles)
+		target.add_overlay(GLOB.cleaning_bubbles_lower)
 
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
@@ -200,7 +200,7 @@
 
 	//remove the cleaning overlay
 	if(!already_cleaning)
-		target.cut_overlay(GLOB.cleaning_bubbles)
+		target.cut_overlay(GLOB.cleaning_bubbles_lower)
 		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
 	return
 

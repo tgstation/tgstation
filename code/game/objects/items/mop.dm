@@ -73,7 +73,7 @@
 			already_cleaning = TRUE
 		else
 			ADD_TRAIT(T, CURRENTLY_CLEANING, src)
-			T.add_overlay(GLOB.cleaning_bubbles)
+			T.add_overlay(GLOB.cleaning_bubbles_lower)
 
 		//do the cleaning
 		user.visible_message(span_notice("[user] begins to clean \the [T] with [src]."), span_notice("You begin to clean \the [T] with [src]..."))
@@ -83,7 +83,7 @@
 
 		//remove the cleaning overlay
 		if(!already_cleaning)
-			T.cut_overlay(GLOB.cleaning_bubbles)
+			T.cut_overlay(GLOB.cleaning_bubbles_lower)
 			REMOVE_TRAIT(T, CURRENTLY_CLEANING, src)
 
 /obj/item/mop/cyborg/Initialize(mapload)

@@ -1,6 +1,7 @@
 GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire"))
 GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, ABOVE_LIGHTING_PLANE))
-GLOBAL_DATUM_INIT(cleaning_bubbles, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", RIPPLE_LAYER, POINT_PLANE))
+GLOBAL_DATUM_INIT(cleaning_bubbles_lower, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", RIPPLE_LAYER, GAME_PLANE_FOV_HIDDEN)) //displays at the top of tiles, but under mobs
+GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", RIPPLE_LAYER, GAME_PLANE_UPPER_FOV_HIDDEN)) //displays above mobs
 
 /// Anything you can pick up and hold.
 /obj/item

@@ -158,7 +158,10 @@
 			already_cleaning = TRUE
 		else
 			ADD_TRAIT(A, CURRENTLY_CLEANING, src)
-			A.add_overlay(GLOB.cleaning_bubbles)
+			if(GLOB.cleaning_bubbles_lower.plane >= A.plane) //check if what we're cleaning isn't on a higher plane
+				A.add_overlay(GLOB.cleaning_bubbles_lower) //displays at the top of a floor tile, but under mobs
+			else
+				A.add_overlay(GLOB.cleaning_bubbles_higher) //displays above mobs
 
 		//do the cleaning
 		user.visible_message(span_notice("[user] starts to wipe down [A] with [src]!"), span_notice("You start to wipe down [A] with [src]..."))
@@ -168,5 +171,6 @@
 
 		//remove the cleaning overlay
 		if(!already_cleaning)
-			A.cut_overlay(GLOB.cleaning_bubbles)
+			A.cut_overlay(GLOB.cleaning_bubbles_lower)
+			A.cut_overlay(GLOB.cleaning_bubbles_higher)
 			REMOVE_TRAIT(A, CURRENTLY_CLEANING, src)
