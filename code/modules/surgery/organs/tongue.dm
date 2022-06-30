@@ -7,6 +7,9 @@
 	slot = ORGAN_SLOT_TONGUE
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
+	/// what voice comes with this tongue. If this actually gets merged switch it to vocal cords or something.
+	var/tts_seed = DEFAULT_SEED
+
 	var/list/languages_possible
 	var/list/languages_native //human mobs can speak with this languages without the accent (letters replaces)
 	var/say_mod = null
@@ -39,6 +42,11 @@
 
 /obj/item/organ/internal/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/tts_man = owner
+	if(tts_man.client)
+		INVOKE_ASYNC(GLOBAL_PROC, /proc/play_tts_locally, tts_man, speech_args[SPEECH_MESSAGE], tts_seed)
 	if(speech_args[SPEECH_LANGUAGE] in languages_native)
 		return FALSE //no changes
 	modify_speech(source, speech_args)
@@ -50,8 +58,7 @@
 	..()
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = say_mod
-	if (modifies_speech)
-		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(tongue_owner, COMSIG_MOB_SAY, .proc/handle_speech)
 	tongue_owner.UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
 
 	/* This could be slightly simpler, by making the removal of the

@@ -192,6 +192,25 @@ GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_SUPPLY,
 )))
 
+GLOBAL_LIST_INIT(tts_seeds_prefs, list(
+	//unisex
+	DEFAULT_SEED,
+	//female
+	"Aini",
+	"Orea",
+	"Claea",
+	"Lim",
+	"Aurae",
+	"Naia",
+	//male
+	"Aulon",
+	"Elei",
+	"Ogma",
+	"Raid",
+	"Pega",
+	"Lam",
+))
+
 	//Backpacks
 #define DBACKPACK "Department Backpack"
 #define DDUFFELBAG "Department Duffel Bag"

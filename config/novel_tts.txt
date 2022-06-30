@@ -1,0 +1,2 @@
+## Auth key for Novel TTS, which is enabled when a valid key is entered
+#TTS_AUTH_KEY
