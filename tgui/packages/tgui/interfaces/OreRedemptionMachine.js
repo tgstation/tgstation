@@ -30,8 +30,7 @@ export const OreRedemptionMachine = (props, context) => {
               ml={2}
               content="Claim"
               disabled={unclaimedPoints === 0 || !ore_silo}
-              onClick={() => act('Claim')}
-            />
+              onClick={() => act('Claim')} />
           </Box>
         </Section>
         <Section>
