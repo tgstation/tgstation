@@ -297,6 +297,13 @@ GLOBAL_VAR(restart_counter)
 	AUXTOOLS_SHUTDOWN(AUXLUA)
 	..()
 
+/world/Del()
+	AUXTOOLS_SHUTDOWN(AUXLUA)
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_shutdown")()
+	. = ..()
+
 /world/proc/update_status()
 
 	var/list/features = list()
