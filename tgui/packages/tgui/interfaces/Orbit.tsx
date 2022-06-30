@@ -66,7 +66,15 @@ export const Orbit = (props, context) => {
 
 /** Controls filtering out the list of observables via search */
 const ObservableSearch = (props, context) => {
-  const { act } = useBackend<Data>(context);
+  const { act, data } = useBackend<Data>(context);
+  const {
+    alive = [],
+    antagonists = [],
+    dead = [],
+    ghosts = [],
+    misc = [],
+    npcs = [],
+  } = data;
   const [autoObserve, setAutoObserve] = useLocalState<boolean>(
     context,
     'autoObserve',
@@ -77,6 +85,28 @@ const ObservableSearch = (props, context) => {
     'searchQuery',
     ''
   );
+  /** Gets a list of Observable[], then filters the most relevant to orbit */
+  const orbitMostRelevant = (searchText: string) => {
+    const sources: Observable[][] = [
+      alive,
+      antagonists,
+      ghosts,
+      dead,
+      npcs,
+      misc,
+    ].filter((source) => {
+      return source.length > 0;
+    });
+    const mostRelevant = getFilteredLists(sources, searchText)
+      .flat()
+      .sort(sortByOrbiters)[0];
+    if (mostRelevant !== undefined) {
+      act('orbit', {
+        ref: mostRelevant.ref,
+        auto_observe: autoObserve,
+      });
+    }
+  };
 
   return (
     <Section>
@@ -88,9 +118,10 @@ const ObservableSearch = (props, context) => {
           <Input
             autoFocus
             fluid
+            onEnter={(e, value) => orbitMostRelevant(value)}
+            onInput={(e) => setSearchQuery(e.target.value)}
             placeholder="Search..."
             value={searchQuery}
-            onInput={(e) => setSearchQuery(e.target.value)}
           />
         </Stack.Item>
         <Stack.Divider />
@@ -285,6 +316,20 @@ const getFilteredLists = (
     filteredLists.push(filtered);
   });
   return filteredLists;
+};
+
+/** Sorts by the highest orbiter count */
+const sortByOrbiters = (a: Observable, b: Observable): number => {
+  if (!a.orbiters && !b.orbiters) {
+    return 0;
+  }
+  if (!a.orbiters) {
+    return 1;
+  }
+  if (!b.orbiters) {
+    return -1;
+  }
+  return a.orbiters - b.orbiters;
 };
 
 /**
