@@ -32,6 +32,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
+	layer = ABOVE_WINDOW_LAYER
 	use_power = NO_POWER_USE
 	subsystem_type = /datum/controller/subsystem/processing/plumbing
 	///Does the user want the shower on or off?
@@ -107,13 +108,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/interact(mob/user)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
 	intended_on = !intended_on
 	if(!update_actually_on(intended_on))
-		to_chat(user, span_notice("\The [src] is dry."))
+		balloon_alert(user, "[src] is dry!")
 		return FALSE
+
+	balloon_alert(user, "turned [intended_on ? "on" : "off"]")
 
 	return TRUE
 
@@ -133,6 +136,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 		qdel(tool)
 		has_water_reclaimer = TRUE
+		begin_processing()
 
 	return ..()
 
@@ -143,6 +147,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 	tool.play_tool_sound(src)
 	mode = (mode + 1) % SHOWER_MODE_COUNT
+	begin_processing()
 	to_chat(user, span_notice("You change the shower's auto shut-off mode to [GLOB.shower_mode_descriptions["[mode]"]]."))
 	return TRUE
 
@@ -268,39 +273,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
 
+	return TRUE
+
 /obj/machinery/shower/process(delta_time)
 	// the TIMED mode cutoff feature. User has to manually reactivate.
 	if(intended_on && mode == SHOWER_MODE_TIMED && COOLDOWN_FINISHED(src, timed_cooldown))
 		// the TIMED mode cutoff feature. User has to manually reactivate.
 		intended_on = FALSE
 
-	// Shower should shut off now and/or reclaim water.
-	if(!intended_on)
+	// Out of water.
+	if(actually_on && reagents.total_volume < SHOWER_SPRAY_VOLUME)
 		update_actually_on(FALSE)
 
-		// Reclaiming
+		// Don't turn back on.
+		if(mode != SHOWER_MODE_FOREVER)
+			intended_on = FALSE
+	else
+		// Cycle: update_actually_on() will only change state if appropriate.
+		update_actually_on(intended_on)
+
+	// Reclaim water
+	if(!actually_on)
 		if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
 			reagents.add_reagent(reagent_id, refill_rate * delta_time)
-			return
+			return 0
 
-		return PROCESS_KILL
-
-	// Reminder: from here on out, intended_on is TRUE.
-
-	// Turn on if appropriate.
-	if(!actually_on)
-		// update_actually_on() will reject if not possible to reactivate.
-		// SHOWER_MODE_FOREVER mode doesn't actually kill process in order to reactivate later.
-		if(!update_actually_on(TRUE))
-			return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
-	else if(reagents.total_volume < SHOWER_SPRAY_VOLUME)
-		// Out of water, stop.
-		// SHOWER_MODE_FOREVER mode doesn't actually kill process in order to reactivate later.
-		update_actually_on(FALSE)
+		// FOREVER mode stays processing so it can cycle back on.
 		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
 
 	// Wash up.
-
 	wash_atom(loc)
 	for(var/atom/movable/movable_content as anything in loc)
 		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
