@@ -462,6 +462,7 @@
 	new_profile.protected = protect
 	
 	new_profile.age = target.age
+	new_profile.physique = target.physique
 
 	// Clothes, of course
 	new_profile.underwear = target.underwear
@@ -695,6 +696,7 @@
 	user.undershirt = chosen_profile.undershirt
 	user.socks = chosen_profile.socks
 	user.age = chosen_profile.age
+	user.physique = chosen_profile.physique
 	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
 	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
 
@@ -838,6 +840,8 @@
 	var/id_icon
 	/// The age of the profile source.
 	var/age
+	/// The body type of the profile source.
+	var/physique
 	/// The hair and facial hair gradient styles of the profile source.
 	var/list/grad_style = list("None", "None")
 	/// The hair and facial hair gradient colours of the profile source.
@@ -875,6 +879,7 @@
 	new_profile.profile_snapshot = profile_snapshot
 	new_profile.id_icon = id_icon
 	new_profile.age = age
+	new_profile.physique = physique
 	new_profile.grad_style = LAZYLISTDUPLICATE(grad_style)
 	new_profile.grad_color = LAZYLISTDUPLICATE(grad_color)
 
