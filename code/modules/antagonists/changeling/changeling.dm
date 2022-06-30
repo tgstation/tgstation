@@ -460,6 +460,8 @@
 	new_profile.dna = new_dna
 	new_profile.name = target.real_name
 	new_profile.protected = protect
+	
+	new_profile.age = target.age
 
 	// Clothes, of course
 	new_profile.underwear = target.underwear
@@ -688,6 +690,7 @@
 	user.underwear_color = chosen_profile.underwear_color
 	user.undershirt = chosen_profile.undershirt
 	user.socks = chosen_profile.socks
+	user.age = chosen_profile.age
 
 	chosen_dna.transfer_identity(user, TRUE)
 
@@ -827,6 +830,8 @@
 	var/datum/icon_snapshot/profile_snapshot
 	/// ID HUD icon associated with the profile
 	var/id_icon
+	/// The age of the profile source.
+	var/age
 
 /datum/changeling_profile/Destroy()
 	qdel(dna)
@@ -859,6 +864,7 @@
 	new_profile.stored_scars = stored_scars.Copy()
 	new_profile.profile_snapshot = profile_snapshot
 	new_profile.id_icon = id_icon
+	new_profile.age = age
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
