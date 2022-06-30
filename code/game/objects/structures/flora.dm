@@ -189,7 +189,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	if(harvesting_item)
 		//Check if its disallowed first, because we wanna cut it down in its tracks if so
 		if(is_type_in_typecache(harvesting_item, disallowed_tools))
-			return
+			return FALSE
 		//If its a required_tool then it skips all checks and gets forced to succeed (Unless its also disallowed. Which is... weird.)
 		if(is_type_in_typecache(harvesting_item, required_tools))
 			return TRUE
@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 		//Check to see if stone flora is being attacked by a mining item (same reason as above)
 		if((flora_flags & FLORA_STONE) && (harvesting_item.tool_behaviour == TOOL_MINING))
 			return TRUE
-	return
+	return FALSE
 
 /*
  * This gets called after a mob tries to harvest this flora with the correct tool.
@@ -210,11 +210,11 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 /obj/structure/flora/proc/harvest(user)
 	. = FALSE
 	if(harvested && !LAZYLEN(product_types))
-		return
+		return FALSE
 
 	var/list/products_to_create = get_products_list()
 	if(!products_to_create.len)
-		return
+		return FALSE
 
 	var/products_created = 0
 	var/turf/turf_below = get_turf(src)
