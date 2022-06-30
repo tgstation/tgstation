@@ -193,7 +193,9 @@
 	loc.visible_message(span_info("[src] flashes a message across its screen, \"Additional personalities available for download.\""), blind_message = span_notice("[src] vibrates with an alert."))
 
 /obj/item/paicard/proc/add_alert()
-	add_overlay(emissive_appearance(icon, "[initial(icon_state)]-alert", alpha = src.alpha))
+	add_overlay(
+		list(mutable_appearance(icon, "[initial(icon_state)]-alert"),
+			emissive_appearance(icon, "[initial(icon_state)]-alert", alpha = src.alpha)))
 
 /obj/item/paicard/proc/remove_alert()
 	cut_overlays()
