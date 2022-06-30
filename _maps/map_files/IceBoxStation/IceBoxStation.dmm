@@ -31106,6 +31106,7 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "jJa" = (
