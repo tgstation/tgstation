@@ -468,6 +468,10 @@
 	new_profile.underwear_color = target.underwear_color
 	new_profile.undershirt = target.undershirt
 	new_profile.socks = target.socks
+	
+	// Hair and facial hair gradients, alongside their colours.
+	new_profile.grad_style = LAZYLISTDUPLICATE(target.grad_style)
+	new_profile.grad_color = LAZYLISTDUPLICATE(target.grad_color)
 
 	// Grab skillchips they have
 	new_profile.skillchips = target.clone_skillchip_list(TRUE)
@@ -691,6 +695,8 @@
 	user.undershirt = chosen_profile.undershirt
 	user.socks = chosen_profile.socks
 	user.age = chosen_profile.age
+	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
+	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
 
 	chosen_dna.transfer_identity(user, TRUE)
 
@@ -832,6 +838,10 @@
 	var/id_icon
 	/// The age of the profile source.
 	var/age
+	/// The hair and facial hair gradient styles of the profile source.
+	var/list/grad_style = list("None", "None")
+	/// The hair and facial hair gradient colours of the profile source.
+	var/list/grad_color = list(null, null)
 
 /datum/changeling_profile/Destroy()
 	qdel(dna)
@@ -865,6 +875,8 @@
 	new_profile.profile_snapshot = profile_snapshot
 	new_profile.id_icon = id_icon
 	new_profile.age = age
+	new_profile.grad_style = LAZYLISTDUPLICATE(grad_style)
+	new_profile.grad_color = LAZYLISTDUPLICATE(grad_color)
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
