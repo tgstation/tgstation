@@ -293,8 +293,8 @@
 	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/wall/mineral/titanium/survival/pod
-	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
-	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_SURVIVAL_TITANIUM_POD)
+	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TITANIUM_POD)
 
 /////////////////////Plastitanium walls/////////////////////
 
