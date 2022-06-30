@@ -4483,7 +4483,6 @@
 /mob/living/simple_animal/bot/secbot/pingsky{
 	dir = 1
 	},
-/obj/structure/cable/layer3,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "bJl" = (
@@ -4827,10 +4826,6 @@
 /obj/structure/holosign/barrier/atmos/sturdy,
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/left)
-"bOY" = (
-/obj/structure/cable/layer3,
-/turf/closed/wall/r_wall,
-/area/station/ai_monitored/turret_protected/aisat/maint)
 "bPf" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
@@ -8122,7 +8117,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
-/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron,
 /area/station/engineering/transit_tube)
 "cOo" = (
@@ -8257,7 +8251,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/cable/layer3,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "cRi" = (
@@ -15468,7 +15461,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/cable/layer3,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "fpQ" = (
@@ -16389,7 +16381,6 @@
 "fFE" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable/layer3,
 /turf/open/space/basic,
 /area/space/nearstation)
 "fFF" = (
@@ -20879,7 +20870,6 @@
 /area/station/security/office)
 "hgc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable/layer3,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "hgJ" = (
@@ -29127,7 +29117,6 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
 /obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
-/obj/structure/cable/layer3,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "jWW" = (
@@ -33379,7 +33368,6 @@
 "lmt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "lmy" = (
@@ -36551,13 +36539,6 @@
 /obj/effect/turf_decal/caution,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
-"mnW" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/cable/layer3,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/maint)
 "mnX" = (
 /obj/machinery/vending/medical,
 /obj/effect/turf_decal/siding/white{
@@ -36620,7 +36601,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
-/obj/structure/cable/layer3,
 /turf/open/floor/plating,
 /area/station/engineering/transit_tube)
 "moP" = (
@@ -45136,7 +45116,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
-/obj/structure/cable/layer3,
 /turf/open/floor/plating,
 /area/station/engineering/transit_tube)
 "piX" = (
@@ -49300,7 +49279,6 @@
 	c_tag = "Secure - AI Antechamber North";
 	network = list("ss13","minisat")
 	},
-/obj/structure/cable/layer3,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "qBE" = (
@@ -61977,7 +61955,6 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "uSB" = (
@@ -62587,7 +62564,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
-/obj/structure/cable/layer3,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "vdv" = (
@@ -63862,7 +63838,6 @@
 "vzO" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable/layer3,
 /turf/open/floor/plating,
 /area/station/engineering/transit_tube)
 "vzU" = (
@@ -66625,7 +66600,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
-/obj/structure/cable/layer3,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "wzD" = (
@@ -67643,7 +67617,6 @@
 	},
 /obj/structure/cable,
 /mob/living/simple_animal/bot/floorbot,
-/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "wUS" = (
@@ -69558,12 +69531,6 @@
 "xBk" = (
 /turf/closed/wall,
 /area/station/medical/storage)
-"xBy" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable/layer3,
-/turf/open/floor/plating/airless,
-/area/mine/explored)
 "xBB" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
@@ -71051,7 +71018,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/cable/layer3,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "yev" = (
@@ -118803,12 +118769,12 @@ cOn
 piV
 vzO
 moK
-xBy
-xBy
-xBy
-xBy
-xBy
-xBy
+cwr
+cwr
+cwr
+cwr
+cwr
+cwr
 fFE
 fFE
 fFE
@@ -118840,10 +118806,10 @@ jWV
 yep
 bJc
 qBl
-bOY
+prA
 uRU
 lmt
-mnW
+wmf
 eEg
 wmf
 ieN
