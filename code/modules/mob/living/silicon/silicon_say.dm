@@ -40,8 +40,3 @@
 			return ITALICS | REDUCE_RANGE
 
 	return FALSE
-
-/mob/living/silicon/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
-	. =  ..()
-	play_tts_locally(src, message, SILICON_VOICE_SEED)
-	return .

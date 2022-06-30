@@ -45,7 +45,7 @@
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/tts_man = owner
-	if(tts_man.client)
+	if(tts_man.client && speech_args[SPEECH_LANGUAGE] == /datum/language/common)
 		INVOKE_ASYNC(GLOBAL_PROC, /proc/play_tts_locally, tts_man, speech_args[SPEECH_MESSAGE], tts_seed)
 	if(speech_args[SPEECH_LANGUAGE] in languages_native)
 		return FALSE //no changes

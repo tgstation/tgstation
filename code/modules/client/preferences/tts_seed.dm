@@ -9,17 +9,15 @@
 	return ..(input, preferences)
 
 /datum/preference/choiced/tts_seed/init_possible_values()
-	return GLOB.tts_seeds_prefs
+	return GLOB.tts_names_prefs
 
 /datum/preference/choiced/tts_seed/apply_to_human(mob/living/carbon/human/target, value)
+	var/actual_seed = GLOB.tts_names2seeds[value]
 	var/obj/item/organ/internal/tongue/tts_speaker = target.getorganslot(ORGAN_SLOT_TONGUE)
-	if(!tts_speaker)
-		log_admin("didn't apply tts seed to tongue")
-		return
-	tts_speaker.tts_seed = value
+	tts_speaker?.tts_seed = actual_seed
 
 /datum/preference/choiced/tts_seed/create_default_value()
-	return pick(GLOB.tts_seeds_prefs)
+	return pick(GLOB.tts_names_prefs)
 
 /datum/preference/choiced/tts_seed/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

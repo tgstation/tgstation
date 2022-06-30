@@ -4,4 +4,5 @@
 	. = ..()
 	if(preference == "tts_seed")
 		//show a lil sample
-		INVOKE_ASYNC(GLOBAL_PROC, /proc/play_tts_directly, user, PREFERENCES_TEST_MESSAGE, value)
+		var/seed = GLOB.tts_names2seeds[value]
+		INVOKE_ASYNC(GLOBAL_PROC, /proc/play_tts_directly, user, PREFERENCES_TEST_MESSAGE, seed)

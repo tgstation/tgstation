@@ -48,6 +48,8 @@
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
 
+	var/speaker_seed = SILICON_VOICE_SEED
+
 	var/obj/item/modular_computer/tablet/integrated/modularInterface
 
 /mob/living/silicon/Initialize(mapload)
@@ -66,6 +68,8 @@
 	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_LITERATE, ROUNDSTART_TRAIT)
+	if(speaker_seed)
+		AddElement(/datum/element/tts_speaker, speaker_seed)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)

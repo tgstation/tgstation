@@ -192,9 +192,10 @@ GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_SUPPLY,
 )))
 
+/// UPDATE ONE OF THESE, UPDATE THE OTHER BELOW PLEASE!!!
 GLOBAL_LIST_INIT(tts_seeds_prefs, list(
 	//unisex
-	DEFAULT_SEED,
+	"Ligeia",
 	//female
 	"Aini",
 	"Orea",
@@ -209,6 +210,51 @@ GLOBAL_LIST_INIT(tts_seeds_prefs, list(
 	"Raid",
 	"Pega",
 	"Lam",
+	"loop",
+	"seedmix:latituder+Raida-0-Raide+Ipa|cadence:Aini",
+))
+
+/// UPDATE ONE OF THESE, UPDATE THE OTHER ABOVE PLEASE!!!
+GLOBAL_LIST_INIT(tts_names2seeds, list(
+	//unisex
+	"Ghostrole Morgan" = "Ligeia",
+	//female
+	"Assistant Hanna" = "Aini",
+	"Warden Nako" = "Orea",
+	"Felinid Mynt" = "Claea",
+	"Virologist Rin" = "Lim",
+	"Roboticist Lavender" = "Aurae",
+	"Chemist Clementine" = "Naia",
+	//male
+	"Scientist Johann" = "Aulon",
+	"Roboticist Dan" = "Elei",
+	"Chaplain Nar Nar" = "Ogma",
+	"Head of Personnel Henry" = "Raid",
+	"Captain Cayden" = "Pega",
+	"Shaft Miner Nicholas" = "Lam",
+	"Centcom Officer Terry" = "loop",
+	"Syndicate High Command" = "seedmix:latituder+Raida-0-Raide+Ipa|cadence:Aini",
+))
+
+GLOBAL_LIST_INIT(tts_names_prefs, list(
+	//unisex
+	"Ghostrole Morgan",
+	//female
+	"Assistant Hanna",
+	"Warden Nako",
+	"Felinid Mynt",
+	"Virologist Rin",
+	"Roboticist Lavender",
+	"Chemist Clementine",
+	//male
+	"Scientist Johann",
+	"Roboticist Dan",
+	"Chaplain Nar Nar",
+	"Head of Personnel Henry",
+	"Captain Cayden",
+	"Shaft Miner Nicholas",
+	"Centcom Officer Terry",
+	"Syndicate High Command",
 ))
 
 	//Backpacks

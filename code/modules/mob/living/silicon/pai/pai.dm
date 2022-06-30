@@ -23,6 +23,8 @@
 	can_buckle_to = FALSE
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 
+	speaker_seed = PAI_VOICE_SEED
+
 	/// The card we inhabit
 	var/obj/item/paicard/card
 
