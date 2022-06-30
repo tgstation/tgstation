@@ -1,4 +1,5 @@
 import { CheckboxInput, FeatureColorInput, Feature, FeatureDropdownInput, FeatureToggle } from '../base';
+import { multiline } from 'common/string';
 
 export const asaycolor: Feature<string> = {
   name: 'Admin chat color',
@@ -27,5 +28,16 @@ export const fast_mc_refresh: FeatureToggle = {
   category: 'ADMIN',
   description:
     'Whether or not the MC tab of the Stat Panel refreshes fast. This is expensive so make sure you need it.',
+  component: CheckboxInput,
+};
+
+export const no_ghost_roles_as_admin: FeatureToggle = {
+  name: 'Suppress all Ghost Rolls while Adminned',
+  category: 'ADMIN',
+  description: multiline`
+  WARNING: If you select this, you will not get any ghost rolls while adminned!
+  Every single pop-up WILL be muted for you while adminned. However, this
+  does not surpress notifications when you are a regular player.
+`,
   component: CheckboxInput,
 };
