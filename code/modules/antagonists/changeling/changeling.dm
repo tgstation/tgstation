@@ -100,6 +100,18 @@
 	
 	///	Keeps track of the currently selected profile.
 	var/datum/changeling_profile/current_profile
+	
+	/*	
+	 *	Static list of the quirks that you can gain/lose depending on who you shapeshift into.
+	 *	It'd be easiest to just get all of your target's quirks, but it wouldn't make sense for
+	 *	quirks like pacifist, brain tumor or paraplegic.
+	 */
+	var/list/mimicable_quirks_list = list(
+		"Heterochromatic",
+		"Pseudobulbar Affect",
+		"Shifty Eyes",
+		"Smooth-Headed",
+	)
 
 /datum/antagonist/changeling/New()
 	. = ..()
@@ -464,6 +476,10 @@
 	new_profile.age = target.age
 	new_profile.physique = target.physique
 
+	// Grab the target's quirks.
+	for(var/datum/quirk/target_quirk in target.quirks)
+		LAZYADD(new_profile.quirks, new target_quirk.type)
+
 	// Clothes, of course
 	new_profile.underwear = target.underwear
 	new_profile.underwear_color = target.underwear_color
@@ -700,6 +716,30 @@
 	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
 	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
 
+	/*	
+	 *	Remove old quirks and copy over new ones from the chosen profile.
+	 *
+	 *	Only quirks from the mimicable_quirks_list will be removed and/or copied over.
+	 *	Copying all quirks would be easier as well as making it harder to distinguish
+	 *	the changeling from crew, but it would act as a major debuff with quirks like
+	 *	blind, paraplegic or brain tumor.
+	 *	TODO: Maybe add a toggle feature, allowing the changeling to switch between
+	 *	"mimicable" quirks and the full set of their target's quirks? That way they could
+	 *	make it harder for others to distinguish them when inspected up close.
+	 */
+	
+	for(var/datum/quirk/target_quirk in user.quirks)
+		for(var/mimicable_quirk in mimicable_quirks_list)
+			if(target_quirk.name == mimicable_quirk)
+				user.remove_quirk(target_quirk.type)
+				break
+
+	for(var/datum/quirk/target_quirk in chosen_profile.quirks)
+		for(var/mimicable_quirk in mimicable_quirks_list)
+			if(target_quirk.name == mimicable_quirk)
+				user.add_quirk(target_quirk.type)
+				break
+
 	chosen_dna.transfer_identity(user, TRUE)
 
 	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
@@ -842,6 +882,8 @@
 	var/age
 	/// The body type of the profile source.
 	var/physique
+	/// The quirks of the profile source.
+	var/list/quirks = list()
 	/// The hair and facial hair gradient styles of the profile source.
 	var/list/grad_style = list("None", "None")
 	/// The hair and facial hair gradient colours of the profile source.
@@ -880,6 +922,7 @@
 	new_profile.id_icon = id_icon
 	new_profile.age = age
 	new_profile.physique = physique
+	new_profile.quirks = quirks.Copy()
 	new_profile.grad_style = LAZYLISTDUPLICATE(grad_style)
 	new_profile.grad_color = LAZYLISTDUPLICATE(grad_color)
 
