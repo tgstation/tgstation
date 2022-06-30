@@ -2702,7 +2702,7 @@
 /obj/structure/showcase/cyborg/old{
 	pixel_y = 20
 	},
-/obj/structure/cable/layer3,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "aVr" = (
@@ -17823,6 +17823,7 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "gEF" = (
@@ -38467,6 +38468,7 @@
 	pixel_x = -22
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "nGz" = (
@@ -49310,6 +49312,7 @@
 "ryJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "ryL" = (
@@ -58658,7 +58661,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "uFC" = (
@@ -65759,6 +65761,7 @@
 	dir = 8
 	},
 /obj/structure/cable/multilayer/connected,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "xgG" = (
@@ -65943,6 +65946,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "xkT" = (
