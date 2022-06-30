@@ -271,7 +271,10 @@ const getThreat = (orbiters: number): THREAT => {
  * Returns:
  *  an array of Observable[]
  */
-const getFilteredLists = (lists: Observable[][], searchQuery: string) => {
+const getFilteredLists = (
+  lists: Observable[][],
+  searchQuery: string
+): Observable[][] => {
   let filteredLists: Observable[][] = [];
   lists.map((list) => {
     const filtered = list.filter((observable) => {
@@ -292,14 +295,17 @@ const nameToUpper = (name: string): string =>
   name.replace(/^\w/, (c) => c.toUpperCase());
 
 /** Compares a string and returns a number value if there is a match. */
-const compareString = (a, b): number => (a > b ? 1 : a < b ? -1 : 0);
+const compareString = (a: string, b: string): number =>
+  a > b ? 1 : a < b ? -1 : 0;
 
 /**
  * Collates antagonist groups into their own separate sections.
  * Some antags are grouped together lest they be listed separately,
  * ie: Nuclear Operatives. See: ANTAG_GROUPS.
  */
-const sortAntagonists = (antagonists: Observable[]) => {
+const sortAntagonists = (
+  antagonists: Observable[]
+): [string, Observable[]][] => {
   const collatedAntagonists = {};
   for (const antagonist of antagonists) {
     const { antag } = antagonist;
