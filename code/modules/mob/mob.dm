@@ -129,9 +129,8 @@
 	if(!istext(hud_category))
 		return FALSE
 
-	LAZYREMOVE(active_hud_list, hud_category)
-
 	if(!update_huds)
+		LAZYREMOVE(active_hud_list, hud_category)
 		return TRUE
 
 	if(exclusive_hud)
@@ -139,6 +138,8 @@
 	else
 		for(var/datum/atom_hud/hud_to_update as anything in GLOB.huds_by_category[hud_category])
 			hud_to_update.remove_single_hud_category_on_atom(src, hud_category)
+
+	LAZYREMOVE(active_hud_list, hud_category)
 
 	return TRUE
 
