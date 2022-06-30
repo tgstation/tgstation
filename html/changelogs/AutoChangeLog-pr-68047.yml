@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - code_imp: "The blood walk element has been changed from a bespoke element to a component."
-  - code_imp: "MULEs now use the blood walk component."
-  - bugfix: "MULEbots no longer track blood forever."

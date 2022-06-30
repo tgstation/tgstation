@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Cult sacrificing someone with a soul will no longer give you an empty soulstone when it should give you a filled one."
-  - bugfix: "Using a soulstone on a soulless corpse will now properly poll ghosts and allow a new shade."
-  - bugfix: "You can no longer capture spirits with soulstones you can't even release spirits from"
-  - bugfix: "You can no longer hypothetically capture yourself with a soulstone"
-  - code_imp: "Some cleanup on aisle soulstone."
