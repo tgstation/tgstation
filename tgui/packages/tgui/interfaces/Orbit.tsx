@@ -90,31 +90,15 @@ const ObservableSearch = (props, context) => {
   );
   /** Gets a list of Observable[], then filters the most relevant to orbit */
   const orbitMostRelevant = (searchText: string) => {
-    /** This function does the following:
-     * 1. Filters out empty observable arrays
-     * 2. Filters out observables that don't match the search query
-     * 3. Flattens the array to a list of observables
-     * 4. Sorts the list of observables by orbiters
-     * 5. Returns the top entry
-     */
-    const mostRelevant = getFilteredLists(
-      filter((source: Observable[]) => !!source.length)([
-        alive,
-        antagonists,
-        dead,
-        ghosts,
-        misc,
-        npcs,
-      ]),
+    /** Returns one Observable[] with entries that match searchText */
+    const observables = getFilteredLists(
+      [alive, antagonists, dead, ghosts, misc, npcs],
       searchText
-    )
-      .flat()
-      /**
-       * I use standard sort here for better orbiter handling - this is
-       * null when 0.
-       */
-      .sort(sortByOrbiters)[0];
-
+    ).flat();
+    /** Sorts the list (ascending), reverses, then selects highest orbit # */
+    const mostRelevant = sortBy<Observable>((poi) => poi.orbiters || 0)(
+      observables
+    ).reverse()[0];
     if (mostRelevant !== undefined) {
       act('orbit', {
         ref: mostRelevant.ref,
@@ -367,17 +351,3 @@ const getFilteredLists = (
  */
 const nameToUpper = (name: string): string =>
   name.replace(/^\w/, (c) => c.toUpperCase());
-
-/** Sorts by the highest orbiter count */
-const sortByOrbiters = (a: Observable, b: Observable): number => {
-  if (!a.orbiters && !b.orbiters) {
-    return 0;
-  }
-  if (!a.orbiters) {
-    return 1;
-  }
-  if (!b.orbiters) {
-    return -1;
-  }
-  return a.orbiters - b.orbiters;
-};
