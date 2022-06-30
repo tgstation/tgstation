@@ -15,6 +15,7 @@
 	light_on = FALSE
 	automatic_charge_overlays = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/ammo_casing/energy/wiremod_gun
 	projectile_type = /obj/projectile/energy/wiremod_gun
