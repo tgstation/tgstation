@@ -1,0 +1,5 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "Hypernob Protection (given to plasmamen that are breathing Hypernob as gas) is a status effect now and gives better feedback to the user."
+  - balance: "Hypernob Protection gives a small slowdown."
