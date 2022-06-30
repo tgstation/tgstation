@@ -162,12 +162,12 @@
 /proc/show_candidate_poll_window(mob/candidate_mob, poll_time, question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
 
-	/// Universal Opt-Out For All Players
-	if (candidate_mob.client.prefs.read_preference(/datum/preference/toggle/no_ghost_roles))
+	// Universal opt-out for all players.
+	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles)))
 		return
 
-	/// Opt-out for admins whom are currently adminned.
-	if (candidate_mob.client.prefs.read_preference(/datum/preference/toggle/no_ghost_roles_as_admin) && candidate_mob.client.holder)
+	// Opt-out for admins whom are currently adminned.
+	if ((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin)) && (!candidate_mob.client.holder))
 		return
 
 	SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg') //Alerting them to their consideration

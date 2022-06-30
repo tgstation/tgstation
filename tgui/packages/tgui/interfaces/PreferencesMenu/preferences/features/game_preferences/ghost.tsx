@@ -131,13 +131,13 @@ export const inquisitive_ghost: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const no_ghost_roles: FeatureToggle = {
-  name: 'Suppress all Ghost Rolls',
+export const ghost_roles: FeatureToggle = {
+  name: 'Get ghost roles',
   category: 'GHOST',
   description: multiline`
-  WARNING: If you select this, you will not get any ghost rolls what-so-ever!
-  Every single pop-up WILL be muted for you. This is only useful for those
-  who find ghost roles annoying, use at your own peril.
+    WARNING: If you de-select this, you will not get any ghost rolls pop-ups
+    what-so-ever! Every single pop-up WILL be muted for you. This is only
+    useful for those who find ghost roles annoying, use at your own peril.
 `,
   component: CheckboxInput,
 };

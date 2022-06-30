@@ -31,13 +31,13 @@ export const fast_mc_refresh: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const no_ghost_roles_as_admin: FeatureToggle = {
-  name: 'Suppress all Ghost Rolls while Adminned',
+export const ghost_roles_as_admin: FeatureToggle = {
+  name: 'Get ghost roles while adminned',
   category: 'ADMIN',
   description: multiline`
-  WARNING: If you select this, you will not get any ghost rolls while adminned!
-  Every single pop-up WILL be muted for you while adminned. However, this
-  does not surpress notifications when you are a regular player.
+    WARNING: If you de-select this, you will not get any ghost roll pop-ups
+    while adminned! Every single pop-up WILL be muted for you while adminned.
+    However, this does not surpress notifications when you are a regular player.
 `,
   component: CheckboxInput,
 };
