@@ -58,7 +58,7 @@
 	..()
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = say_mod
-	RegisterSignal(tongue_owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(tongue_owner, COMSIG_MOB_SAY, .proc/handle_speech, override = TRUE)
 	tongue_owner.UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
 
 	/* This could be slightly simpler, by making the removal of the
