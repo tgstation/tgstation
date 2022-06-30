@@ -97,9 +97,7 @@
 /area/station/engineering/gravity_generator)
 "au" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/radiation/rad_area{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering/gravity_generator)
 "av" = (
@@ -1126,14 +1124,8 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "eb" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp_home";
-	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/generic;
-	width = 9
+/obj/docking_port/stationary/laborcamp_home{
+	dir = 8
 	},
 /turf/open/space/basic,
 /area/space)
@@ -1371,9 +1363,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eU" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
 "eV" = (
@@ -2384,14 +2374,8 @@
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
 "Kd" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining_home";
-	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/box;
-	width = 7
+/obj/docking_port/stationary/mining_home{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
