@@ -113,6 +113,7 @@
 		"Shifty Eyes",
 		"Smooth-Headed",
 		"Friendly",
+		"Tongue Tied",
 	)
 
 /datum/antagonist/changeling/New()
