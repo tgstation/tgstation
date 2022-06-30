@@ -13,7 +13,7 @@
 	if (istype(W, /obj/item/stack/ore))
 		user.transferItemToLoc(W, src)
 	else if(W.atom_storage)
-		SEND_SIGNAL(W, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/stack/ore, src)
+		W.atom_storage.remove_type(/obj/item/stack/ore, src)
 		to_chat(user, span_notice("You empty the ore in [W] into \the [src]."))
 	else
 		return ..()

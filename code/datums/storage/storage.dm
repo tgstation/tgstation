@@ -436,6 +436,27 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			continue
 		attempt_remove(thing, target, silent = TRUE)
 
+/datum/storage/proc/remove_type(type, atom/destination, amount = INFINITY, check_adjacent = FALSE, force = FALSE, mob/user, list/inserted)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return
+	
+	if(!force)
+		if(check_adjacent)
+			if(!user || !user.CanReach(destination) || !user.CanReach(parent))
+				return FALSE
+	var/list/taking = typecache_filter_list(resolve_location.contents, typecacheof(type))
+	if(taking.len > amount)
+		taking.len = amount
+	if(inserted) //duplicated code for performance, don't bother checking retval/checking for list every item.
+		for(var/i in taking)
+			if(attempt_remove(i, destination))
+				inserted |= i
+	else
+		for(var/i in taking)
+			attempt_remove(i, destination)
+	return TRUE
+
 /datum/storage/proc/mass_empty(datum/source, atom/location)
 	SIGNAL_HANDLER
 
