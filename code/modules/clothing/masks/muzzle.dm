@@ -74,7 +74,7 @@
 
 /obj/item/clothing/mask/muzzle/tape/pointy
 	name = "pointy tape piece"
-	desc = "A piece of tape that can be put over someone's mouth. Looks like it will hurt if this is ripped off carelessly."
+	desc = "A piece of tape that can be put over someone's mouth. Looks like it will hurt if this is ripped off."
 	icon_state = "tape_piece_spikes"
 	worn_icon_state = "tape_piece_spikes_worn"
 	greyscale_config = /datum/greyscale_config/tape_piece/spikes
@@ -82,15 +82,17 @@
 	greyscale_colors = "#E64539#AD2F45"
 	var/stripping_damage = 10
 
-/obj/item/clothing/mask/muzzle/tape/pointy/doStrip(mob/stripper, mob/living/owner)
+/obj/item/clothing/mask/muzzle/tape/pointy/dropped(mob/living/user)
 	. = ..()
-	owner.apply_damage(stripping_damage, BRUTE, BODY_ZONE_HEAD)
-	owner.emote("scream")
-	to_chat(owner, span_danger("You feel a massive pain as hundreds of tiny spikes tear free from your face!"))
+	if(user.get_item_by_slot(ITEM_SLOT_MASK) != src)
+		return
+	user.apply_damage(stripping_damage, BRUTE, BODY_ZONE_HEAD)
+	user.emote("scream")
+	to_chat(user, span_userdanger("You feel massive pain as hundreds of tiny spikes tear free from your face!"))
 
 /obj/item/clothing/mask/muzzle/tape/pointy/super
 	name = "super pointy tape piece"
-	desc = "A piece of tape that can be put over someone's mouth. This thing could rip your face into a thousand pieces if ripped off carelessly."
+	desc = "A piece of tape that can be put over someone's mouth. This thing could rip your face into a thousand pieces if ripped off."
 	greyscale_colors = "#8C0A00#300008"
 	strip_delay = 60
 	stripping_damage = 20
