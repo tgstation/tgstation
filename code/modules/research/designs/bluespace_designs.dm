@@ -43,6 +43,7 @@
 	build_path = /obj/item/gps
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+	autolathe_exportable = FALSE
 
 /datum/design/desynchronizer
 	name = "Desynchronizer"
