@@ -277,8 +277,6 @@ const ObservableMap = (props, context) => {
           <Button
             color={threat || color}
             key={index}
-            mt={0}
-            mb={0}
             onClick={() =>
               act('orbit', { auto_observe: autoObserve, ref: ref })
             }>
