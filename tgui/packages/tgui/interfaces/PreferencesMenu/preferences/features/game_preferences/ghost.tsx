@@ -135,9 +135,10 @@ export const ghost_roles: FeatureToggle = {
   name: 'Get ghost roles',
   category: 'GHOST',
   description: multiline`
-    WARNING: If you de-select this, you will not get any ghost role pop-ups
-    what-so-ever! Every single type of these pop-up WILL be muted for you.
-    Very useful for those who find ghost roles annoying, use at your own peril.
+    If you de-select this, you will not get any ghost role pop-ups what-so-ever!
+    Every single type of these pop-ups WILL be muted for you when you are
+    ghosted. Very useful for those who find ghost roles or the
+    pop-ups annoying, use at your own peril.
 `,
   component: CheckboxInput,
 };

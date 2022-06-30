@@ -57,7 +57,7 @@
 	savefile_key = "ghost_roles_as_admin"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/datum/preference/toggle/no_ghost_roles_as_admin/is_accessible(datum/preferences/preferences)
+/datum/preference/toggle/ghost_roles_as_admin/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
 
