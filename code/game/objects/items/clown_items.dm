@@ -147,9 +147,17 @@
 	var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
 	if(HAS_TRAIT(target, CURRENTLY_CLEANING))
 		already_cleaning = TRUE
-	else
+	else //add the trait and overlay
 		ADD_TRAIT(target, CURRENTLY_CLEANING, src)
-		target.add_overlay(GLOB.cleaning_bubbles_lower)
+		if(target.plane > GLOB.cleaning_bubbles_lower.plane) //check if the higher overlay is necessary
+			target.add_overlay(GLOB.cleaning_bubbles_higher)
+		else if(target.plane == GLOB.cleaning_bubbles_lower.plane)
+			if(target.layer > GLOB.cleaning_bubbles_lower.layer)
+				target.add_overlay(GLOB.cleaning_bubbles_higher)
+			else
+				target.add_overlay(GLOB.cleaning_bubbles_lower)
+		else //(target.plane < GLOB.cleaning_bubbles_lower.plane)
+			target.add_overlay(GLOB.cleaning_bubbles_lower)
 
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
@@ -201,6 +209,7 @@
 	//remove the cleaning overlay
 	if(!already_cleaning)
 		target.cut_overlay(GLOB.cleaning_bubbles_lower)
+		target.cut_overlay(GLOB.cleaning_bubbles_higher)
 		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
 	return
 

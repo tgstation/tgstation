@@ -71,9 +71,17 @@
 		var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
 		if(HAS_TRAIT(T, CURRENTLY_CLEANING))
 			already_cleaning = TRUE
-		else
+		else //add the trait and overlay
 			ADD_TRAIT(T, CURRENTLY_CLEANING, src)
-			T.add_overlay(GLOB.cleaning_bubbles_lower)
+			if(T.plane > GLOB.cleaning_bubbles_lower.plane) //check if the higher overlay is necessary
+				T.add_overlay(GLOB.cleaning_bubbles_higher)
+			else if(T.plane == GLOB.cleaning_bubbles_lower.plane)
+				if(T.layer > GLOB.cleaning_bubbles_lower.layer)
+					T.add_overlay(GLOB.cleaning_bubbles_higher)
+				else
+					T.add_overlay(GLOB.cleaning_bubbles_lower)
+			else //(T.plane < GLOB.cleaning_bubbles_lower.plane)
+				T.add_overlay(GLOB.cleaning_bubbles_lower)
 
 		//do the cleaning
 		user.visible_message(span_notice("[user] begins to clean \the [T] with [src]."), span_notice("You begin to clean \the [T] with [src]..."))
@@ -84,6 +92,7 @@
 		//remove the cleaning overlay
 		if(!already_cleaning)
 			T.cut_overlay(GLOB.cleaning_bubbles_lower)
+			T.cut_overlay(GLOB.cleaning_bubbles_higher)
 			REMOVE_TRAIT(T, CURRENTLY_CLEANING, src)
 
 /obj/item/mop/cyborg/Initialize(mapload)
