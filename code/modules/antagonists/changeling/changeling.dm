@@ -727,8 +727,7 @@
 	 *	the changeling from crew, but it would act as a major debuff with quirks like
 	 *	blind, paraplegic or brain tumor.
 	 *	TODO: Maybe add a toggle feature, allowing the changeling to switch between
-	 *	"mimicable" quirks and the full set of their target's quirks? That way they could
-	 *	make it harder for others to distinguish them when inspected up close.
+	 *	their own and their target's quirks?
 	 */
 	
 	for(var/datum/quirk/target_quirk in user.quirks)
