@@ -1,5 +1,5 @@
 import { Window } from '../layouts';
-import { Box, Button, Collapsible, Icon, Input, NoticeBox, Section, Stack, Table } from '../components';
+import { Box, Button, Collapsible, Icon, Input, Section, Stack, Table } from '../components';
 import { useBackend, useLocalState } from '../backend';
 import { multiline } from 'common/string';
 
@@ -14,18 +14,29 @@ type Data = {
 
 type Observable = {
   ref: string;
+  antag?: string;
   name: string;
-  orbiters: number;
+  orbiters?: number;
 };
 
-const TITLES = [
-  { name: 'Antagonists', color: 'bad' },
-  { name: 'Alive', color: 'good' },
+type Title = {
+  name: string;
+  color: string;
+};
+
+const COLLAPSING_TITLES: readonly Title[] = [
   { name: 'Dead', color: 'grey' },
   { name: 'Ghosts', color: 'grey' },
   { name: 'Misc', color: 'grey' },
   { name: 'NPCs', color: 'average' },
 ] as const;
+
+const ANTAG_GROUPS = {
+  'Nuclear Operative': 'Nuclear Operatives',
+  'Nuclear Leader': 'Nuclear Operatives',
+  'Abductor Scientist': 'Abductors',
+  'Abductor Agent': 'Abductors',
+};
 
 enum THREAT {
   None,
@@ -108,7 +119,11 @@ const ObservableSearch = (props, context) => {
   );
 };
 
-/** The primary section of observable content, iterates over all POIs */
+/**
+ * The primary content display for points of interest. Renders a scrollable
+ * section that filters results based on search queries. Colors and groups
+ * together backend data.
+ */
 const ObservableContent = (props, context) => {
   const { data } = useBackend<Data>(context);
   const {
@@ -124,98 +139,117 @@ const ObservableContent = (props, context) => {
     'searchQuery',
     ''
   );
-  let visibleSections = [antagonists, alive, dead, ghosts, misc, npcs];
+  let collapsibleSections = [dead, ghosts, misc, npcs];
+  let visibleSections: Observable[][] = [];
+  let visibleTitles: Title[] = [];
+  /** This collates antagonists into their own groups */
+  if (antagonists.length) {
+    sortAntagonists(antagonists).map(([name, antag]) => {
+      visibleSections.push(antag);
+      visibleTitles.push({ name, color: 'bad' });
+    });
+  }
+  /** Adds living players to the end of the primary sections*/
+  visibleSections.push(alive);
+  visibleTitles.push({ name: 'Alive', color: 'good' });
+  /** Handles filtering out search results. */
   if (searchQuery) {
     visibleSections = getFilteredLists(visibleSections, searchQuery);
-    if (!visibleSections.length) {
-      return <NoticeBox>Nothing to display!</NoticeBox>;
-    }
+    collapsibleSections = getFilteredLists(collapsibleSections, searchQuery);
   }
 
   return (
     <Stack vertical>
-      {visibleSections?.map((section, index) => {
-        const { name, color } = TITLES[index];
-        return (
-          !!section.length && (
-            <Stack.Item key={index}>
-              <ObservableSection
-                color={color}
-                index={index}
-                name={name + ` (${section.length})`}
-                section={section}
-              />
-            </Stack.Item>
-          )
-        );
-      })}
+      <PrimarySections sections={visibleSections} titles={visibleTitles} />
+      <CollapsingSections sections={collapsibleSections} />
     </Stack>
   );
 };
 
-/** Displays an individual section for observable items */
-const ObservableSection = (props, context) => {
-  const { color, index, name, section } = props;
+/** Displays a primary antag or alive section */
+const PrimarySections = (props, context) => {
+  const { sections = [], titles = [] } = props;
 
-  if (index < 2) {
+  return sections?.map((section, index) => {
+    const { color, name } = titles[index];
     return (
-      <Section title={<Box color={color}>{name}</Box>}>
-        {section.map((observable, idx) => {
-          return (
-            <ObservableItem color={color} key={idx} observable={observable} />
-          );
-        })}
-      </Section>
+      !!section.length && (
+        <Stack.Item key={index}>
+          <Section
+            title={
+              <Box color={color}>
+                {name} ({section.length})
+              </Box>
+            }>
+            <ObservableMap color={color} index={index} section={section} />
+          </Section>
+        </Stack.Item>
+      )
     );
-  }
-  return (
-    <Collapsible bold color={color} title={name}>
-      {section.map((observable, idx) => {
-        return (
-          <ObservableItem color={color} key={idx} observable={observable} />
-        );
-      })}
-    </Collapsible>
-  );
+  });
 };
 
-/** An individual listing for an observable's name, # observers */
-const ObservableItem = (props, context) => {
+/** Displays a collapsible section for ghosts, NPCs, etc. */
+const CollapsingSections = (props, context) => {
+  const { sections = [] } = props;
+
+  return sections?.map((section, index) => {
+    const { color, name } = COLLAPSING_TITLES[index];
+    return (
+      !!section.length && (
+        <Stack.Item key={index}>
+          <Collapsible
+            color={color}
+            title={name + ` (${section.length})`}
+            section={section}>
+            <ObservableMap color={color} section={section} />
+          </Collapsible>
+        </Stack.Item>
+      )
+    );
+  });
+};
+
+/** Displays a map of observable items */
+const ObservableMap = (props, context) => {
   const { act } = useBackend<Data>(context);
-  const { color, observable } = props;
-  const { ref, name, orbiters } = observable;
+  const { color, section = [] } = props;
   const [autoObserve, setAutoObserve] = useLocalState<boolean>(
     context,
     'autoObserve',
     false
   );
-  const threat = getThreat(orbiters);
 
-  return (
-    <Button
-      color={threat || color}
-      mt={0}
-      mb={0}
-      onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
-      <Table>
-        <Table.Row>
-          <Table.Cell>{nameToUpper(name).slice(0, 44)}</Table.Cell>
-          {orbiters && (
-            <>
-              <Table.Cell>({orbiters.toString()}</Table.Cell>
-              <Table.Cell>
-                <Icon
-                  mr={0}
-                  name={threat === THREAT.Large ? 'skull' : 'ghost'}
-                />
-                )
-              </Table.Cell>
-            </>
-          )}
-        </Table.Row>
-      </Table>
-    </Button>
-  );
+  return section.map((observable, index) => {
+    const { name, orbiters, ref } = observable;
+    const threat = getThreat(orbiters);
+    return (
+      <Button
+        color={threat || color}
+        key={index}
+        mt={0}
+        mb={0}
+        onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
+        <Table>
+          <Table.Row>
+            <Table.Cell>{nameToUpper(name).slice(0, 44)}</Table.Cell>
+            {orbiters && (
+              <>
+                <Table.Cell>({orbiters.toString()}</Table.Cell>
+                <Table.Cell>
+                  <Icon
+                    mr={0}
+                    name={threat === THREAT.Large ? 'skull' : 'ghost'}
+                  />
+                  )
+                </Table.Cell>
+              </>
+            )}
+          </Table.Row>
+        </Table>
+      </Button>
+    );
+  });
 };
 
 /** Takes the amount of orbiters and returns some style options */
@@ -254,5 +288,31 @@ const getFilteredLists = (lists: Observable[][], searchQuery: string) => {
  * Returns a string with the first letter in uppercase.
  * Unlike capitalize(), has no effect on the other letters
  */
-const nameToUpper = (name: string) =>
+const nameToUpper = (name: string): string =>
   name.replace(/^\w/, (c) => c.toUpperCase());
+
+/** Compares a string and returns a number value if there is a match. */
+const compareString = (a, b): number => (a > b ? 1 : a < b ? -1 : 0);
+
+/**
+ * Collates antagonist groups into their own separate sections.
+ * Some antags are grouped together lest they be listed separately,
+ * ie: Nuclear Operatives. See: ANTAG_GROUPS.
+ */
+const sortAntagonists = (antagonists: Observable[]) => {
+  const collatedAntagonists = {};
+  for (const antagonist of antagonists) {
+    const { antag } = antagonist;
+    const resolvedName = ANTAG_GROUPS[antag!] || antag;
+    if (collatedAntagonists[resolvedName] === undefined) {
+      collatedAntagonists[resolvedName] = [];
+    }
+    collatedAntagonists[resolvedName].push(antagonist);
+  }
+  const sortedAntagonists: [string, Observable[]][] =
+    Object.entries(collatedAntagonists);
+  sortedAntagonists.sort((a, b) => {
+    return compareString(a[0], b[0]);
+  });
+  return sortedAntagonists;
+};
