@@ -36,7 +36,7 @@ const ANTAG_GROUPS = {
   'Nuclear Leader': 'Nuclear Operatives',
   'Abductor Scientist': 'Abductors',
   'Abductor Agent': 'Abductors',
-};
+} as const;
 
 enum THREAT {
   None,
