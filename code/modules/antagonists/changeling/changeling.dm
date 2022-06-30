@@ -97,6 +97,9 @@
 
 	/// A list of all memories we've stolen through absorbs.
 	var/list/stolen_memories = list()
+	
+	///	Keeps track of the currently selected profile.
+	var/datum/changeling_profile/current_profile
 
 /datum/antagonist/changeling/New()
 	. = ..()
@@ -513,6 +516,7 @@
 
 	if(!first_profile)
 		first_profile = new_profile
+		current_profile = first_profile
 
 	stored_profiles += new_profile
 	absorbed_count++
@@ -777,6 +781,7 @@
 			attempted_fake_scar.fake = TRUE
 
 	user.regenerate_icons()
+	current_profile = chosen_profile
 
 // Changeling profile themselves. Store a data to store what every DNA instance looked like.
 /datum/changeling_profile
