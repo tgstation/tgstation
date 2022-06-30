@@ -18415,9 +18415,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/item/radio/intercom/prison/directional/east{
-	frequency = 1359
-	},
+/obj/item/radio/intercom/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -71461,7 +71459,7 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/fore)
 "wqI" = (
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
