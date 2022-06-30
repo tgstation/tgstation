@@ -717,11 +717,8 @@
 	user.physique = chosen_profile.physique
 	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
 	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
-	var/obj/item/organ/eyes/eye_organ = user.getorganslot(ORGAN_SLOT_EYES)
-	eye_organ.eye_color_left = chosen_profile.eye_color_left
-	eye_organ.eye_color_right = chosen_profile.eye_color_right
-	eye_organ.old_eye_color_left = chosen_profile.eye_color_left
-	eye_organ.old_eye_color_right = chosen_profile.eye_color_right
+	user.eye_color_left = chosen_profile.eye_color_left
+	user.eye_color_right = chosen_profile.eye_color_right
 
 	/*	
 	 *	Remove old quirks and copy over new ones from the chosen profile.
