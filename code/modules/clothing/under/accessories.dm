@@ -25,7 +25,8 @@
 	if(storage)
 		if(U.atom_storage)
 			return FALSE
-		storage.set_real_location(U)
+		U.clone_storage(storage)
+		U.atom_storage.set_real_location(src)
 	U.attached_accessory = src
 	forceMove(U)
 	layer = FLOAT_LAYER
@@ -50,8 +51,8 @@
 	return TRUE
 
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
-	if(atom_storage && atom_storage.real_location?.resolve() == U)
-		atom_storage.set_real_location(src)
+	if(U.atom_storage && U.atom_storage.real_location?.resolve() == U)
+		QDEL_NULL(U.atom_storage)
 
 	U.armor = U.armor.detachArmor(armor)
 

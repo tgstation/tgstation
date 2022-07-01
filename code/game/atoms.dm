@@ -333,6 +333,7 @@
 
 	return ..()
 
+// A quick and easy way to create a storage datum for an atom
 /atom/proc/create_storage(max_slots, \
 	max_specific_storage, \
 	max_total_storage, \
@@ -353,6 +354,18 @@
 
 	if(canhold || canthold)
 		atom_storage.set_holdable(canhold, canthold)
+
+	return atom_storage
+
+// A quick and easy way to /clone/ a storage datum for an atom
+/atom/proc/clone_storage(datum/storage/cloning)
+	if(atom_storage)
+		QDEL_NULL(atom_storage)
+
+	atom_storage = new cloning.type(src, cloning.max_slots, cloning.max_specific_storage, cloning.max_total_storage, cloning.numerical_stacking, cloning.allow_quick_gather, cloning.collection_mode, cloning.attack_hand_interact)
+
+	if(cloning.can_hold || cloning.cant_hold)
+		atom_storage.set_holdable(cloning.can_hold, cloning.cant_hold)
 
 	return atom_storage
 
