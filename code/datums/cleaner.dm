@@ -1,6 +1,9 @@
 /datum/cleaner
 	var/datum/callback/clean_start_callback //cleaning will be cancelled if this returns false
 	var/datum/callback/on_cleaned_callback
+	var/base_cleaning_duration = 10 SECONDS //the time it takes to clean something, without skill adjustment
+	var/skill_speed_scaling = 1 //TODO
+	var/cleaing_strength = CLEAN_SCRUB //TODO
 
 /datum/cleaner/New(var/datum/callback/clean_start_callback = null, var/datum/callback/on_cleaned_callback = null)
 	src.clean_start_callback = clean_start_callback
@@ -27,9 +30,14 @@
 		else //(target.plane < GLOB.cleaning_bubbles_lower.plane)
 			target.add_overlay(GLOB.cleaning_bubbles_lower)
 
+	//set the cleaning speed
+	var/speed_modifier = 1
+	if(user.mind)
+		speed_modifier = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
+
 	//do the cleaning
 	user.visible_message(span_notice("[user] starts to wipe down [target] with [src]!"), span_notice("You start to wipe down [target] with [src]..."))
-	if(do_after(user,30, target = target))
+	if(do_after(user, base_cleaning_duration*speed_modifier, target = target))
 		user.visible_message(span_notice("[user] finishes wiping off [target]!"), span_notice("You finish wiping off [target]."))
 		target.wash(CLEAN_SCRUB)
 
@@ -42,11 +50,11 @@
 	if(on_cleaned_callback != null)
 		on_cleaned_callback.Invoke()
 
-//TODO apply to soap, mop, cleanbot
 //TODO account for different washing strenghts
-//TODO change visible message
-//TODO account for cleaning speed
+//TODO account for skill scaling
 //TODO give cleaning experience
+//TODO apply to soap, mop, cleanbot
+//TODO change visible message
 //TODO add soap features
 //TODO give this a better name (meelee_cleaner?)
 //TODO move global overlays to here?
