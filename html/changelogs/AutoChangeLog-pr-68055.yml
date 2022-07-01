@@ -1,0 +1,4 @@
+author: "Salex08"
+delete-after: True
+changes: 
+  - admin: "Admins can now cancel midround random events"
