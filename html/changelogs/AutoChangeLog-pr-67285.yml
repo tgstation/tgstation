@@ -1,5 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes: 
-  - bugfix: "Chainsaws can now actually cut wood! So can the giant axe that is the PKC, and other chainsaw items - but, alas, esword handles alone can not, and you must actually turn them on. Also, all mining implements can mine scattered stones as well!"
-  - bugfix: "Chainsaws are now faster when they are on, and slower when they aren't."
