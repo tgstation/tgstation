@@ -161,9 +161,9 @@ const ObservableSearch = (props, context) => {
 };
 
 /**
- * The primary content display for points of interest. Renders a scrollable
- * section that filters results based on search queries. Colors and groups
- * together backend data.
+ * The primary content display for points of interest.
+ * Renders a scrollable section replete with subsections for each
+ * observable group.
  */
 const ObservableContent = (props, context) => {
   const { data } = useBackend<Data>(context);
@@ -192,7 +192,7 @@ const ObservableContent = (props, context) => {
           />
         );
       })}
-      <ObservableSection color="good" section={alive} title={'Alive'} />
+      <ObservableSection color="good" section={alive} title="Alive" />
       <ObservableSection collapsible section={dead} title="Dead" />
       <ObservableSection collapsible section={ghosts} title="Ghosts" />
       <ObservableSection collapsible section={misc} title="Misc" />
@@ -206,7 +206,10 @@ const ObservableContent = (props, context) => {
   );
 };
 
-/** Displays a primary section for antags and living players */
+/**
+ * Displays a primary section for antags and living players.
+ * Filters the results if there is a provided search query.
+ */
 const ObservableSection = (props: SectionProps, context) => {
   const { collapsible = false, color = 'grey', section = [], title } = props;
   if (!section.length) {
