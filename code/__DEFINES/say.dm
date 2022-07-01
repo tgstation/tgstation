@@ -45,8 +45,8 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 
-#define MODE_VOCALCORDS "cords"
-#define MODE_KEY_VOCALCORDS "x"
+#define MODE_vocal_cords "cords"
+#define MODE_KEY_vocal_cords "x"
 
 #define MODE_MONKEY "monkeyhive"
 
