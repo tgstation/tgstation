@@ -121,7 +121,7 @@ const RequestControls = (props, context) => {
   );
 };
 
-const FilterPanel = (_, context) => {
+const FilterPanel = (props, context) => {
   const [filterVisible, setFilterVisible] = useLocalState(
     context,
     'filterVisible',
