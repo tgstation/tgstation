@@ -1,7 +1,7 @@
 
 //Toggle Night Vision
 /datum/action/cooldown/spell/night_vision
-	name = "Toggle Nightvision \[ON\]"
+	name = "Toggle Nightvision"
 	desc = "Toggle your nightvision mode."
 
 	cooldown_time = 1 SECONDS
@@ -9,6 +9,10 @@
 
 	/// The span the "toggle" message uses when sent to the user
 	var/toggle_span = "notice"
+
+/datum/action/cooldown/spell/night_vision/New(Target)
+	. = ..()
+	name = "[name] \[ON\]"
 
 /datum/action/cooldown/spell/night_vision/is_valid_target(atom/cast_on)
 	return isliving(cast_on)

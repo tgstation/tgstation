@@ -1,6 +1,5 @@
 /// A spell type that adds mutations to the caster temporarily.
 /datum/action/cooldown/spell/apply_mutations
-	name = "Mutate"
 	button_icon_state = "mutate"
 	sound = 'sound/magic/mutate.ogg'
 
@@ -38,6 +37,7 @@
 		cast_on.dna.remove_mutation(mutation)
 
 /datum/action/cooldown/spell/apply_mutations/mutate
+	name = "Mutate"
 	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
 	cooldown_time = 40 SECONDS
 	cooldown_reduction_per_rank = 2.5 SECONDS

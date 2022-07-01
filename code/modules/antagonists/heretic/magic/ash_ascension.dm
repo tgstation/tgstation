@@ -59,7 +59,7 @@
 
 /// Creates one, large, expanding ring of fire around the caster, which does not follow them.
 /datum/action/cooldown/spell/fire_cascade
-	name = "Fire Cascade"
+	name = "Lesser Fire Cascade"
 	desc = "Heats the air around you."
 	background_icon_state = "bg_ecult"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -92,6 +92,7 @@
 		stoplag(0.3 SECONDS)
 
 /datum/action/cooldown/spell/fire_cascade/big
+	name = "Greater Fire Cascade"
 	flame_radius = 6
 
 // Currently unused - releases streams of fire around the caster.

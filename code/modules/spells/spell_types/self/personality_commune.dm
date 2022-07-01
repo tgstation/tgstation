@@ -4,6 +4,7 @@
 	desc = "Sends thoughts to your alternate consciousness."
 	button_icon_state = "telepathy"
 	cooldown_time = 0 SECONDS
+	spell_requirements = NONE
 
 	/// Fluff text shown when a message is sent to the pair
 	var/fluff_text = span_boldnotice("You hear an echoing voice in the back of your head...")

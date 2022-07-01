@@ -54,6 +54,7 @@
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/cleave/long
+	name = "Lesser Cleave"
 	cooldown_time = 65 SECONDS
 
 /obj/effect/temp_visual/cleave

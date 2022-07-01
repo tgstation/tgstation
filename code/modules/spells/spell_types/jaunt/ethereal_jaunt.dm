@@ -223,14 +223,17 @@
 	return
 
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/angelic
+	name = "Purified Phase Shift"
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith/angelic
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out/angelic
 
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/mystic
+	name = "Mystic Phase Shift"
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith/mystic
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out/mystic
 
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/golem
+	name = "Runic Phase Shift"
 	cooldown_time = 80 SECONDS
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/cult/phase
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out

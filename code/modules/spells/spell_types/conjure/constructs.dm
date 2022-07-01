@@ -1,5 +1,5 @@
 /datum/action/cooldown/spell/conjure/construct
-	name = "Artificer"
+	name = "Summon Construct Shell"
 	desc = "This spell conjures a construct which may be controlled by Shades."
 	icon_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "artificer"
@@ -14,6 +14,7 @@
 	summon_radius = 0
 	summon_type = list(/obj/structure/constructshell)
 
-/datum/action/cooldown/spell/conjure/construct/lesser
+/datum/action/cooldown/spell/conjure/construct/lesser // Used by artificers.
+	name = "Create Construct Shell"
 	background_icon_state = "bg_demon"
 	cooldown_time = 3 MINUTES

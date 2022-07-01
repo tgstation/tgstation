@@ -980,7 +980,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		if(reqs & SPELL_REQUIRES_NO_ANTIMAGIC)
 			real_reqs += "Must have no antimagic"
 		if(reqs & SPELL_REQUIRES_OFF_CENTCOM)
-			real_reqs += "Must be off CC z-lvel"
+			real_reqs += "Must be off central command z-level"
 		if(reqs & SPELL_REQUIRES_WIZARD_GARB)
 			real_reqs += "Must have wizard clothes"
 

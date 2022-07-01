@@ -114,6 +114,7 @@
 
 //Toggle night vision: lets the revenant toggle its night vision
 /datum/action/cooldown/spell/night_vision/revenant
+	name = "Toggle Darkvision"
 	panel = "Revenant Abilities"
 	background_icon_state = "bg_revenant"
 	icon_icon = 'icons/mob/actions/actions_revenant.dmi'

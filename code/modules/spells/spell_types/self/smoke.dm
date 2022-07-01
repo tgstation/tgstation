@@ -16,6 +16,7 @@
 
 /// Chaplain smoke.
 /datum/action/cooldown/spell/smoke/lesser
+	name = "Holy Smoke"
 	desc = "This spell spawns a small cloud of smoke at your location."
 
 	school = SCHOOL_HOLY
