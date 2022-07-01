@@ -317,14 +317,14 @@
 	icon_broken = "medalbox+b"
 	base_icon_state = "medalbox"
 
-/obj/item/storage/lockbox/dueling/ComponentInitialize()
+/obj/item/storage/lockbox/dueling/Initialize()
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 2
 	atom_storage.set_holdable(list(/obj/item/gun/energy/dueling))
 
 /obj/item/storage/lockbox/dueling/update_icon_state()
-	if(atom_storage.locked)
+	if(atom_storage?.locked)
 		icon_state = icon_locked
 		return ..()
 	if(broken)

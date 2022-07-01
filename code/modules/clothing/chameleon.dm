@@ -667,8 +667,6 @@
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
-/obj/item/storage/belt/chameleon/ComponentInitialize()
-	. = ..()
 	atom_storage.silent = TRUE
 
 /obj/item/storage/belt/chameleon/emp_act(severity)

@@ -119,7 +119,7 @@
 	else
 		if (!atom_storage.locked)
 			return ..()
-	if(atom_storage.locked)
+	if(atom_storage?.locked)
 		ui_interact(user)
 		return
 
