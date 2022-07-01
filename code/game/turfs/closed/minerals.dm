@@ -487,6 +487,15 @@
 	turf_type = /turf/open/misc/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
+//For when you want genuine, real snowy mountainside in your kitchen's cold room.
+/turf/closed/mineral/snowmountain/coldroom
+	baseturfs = /turf/open/misc/asteroid/snow/coldroom
+	turf_type = /turf/open/misc/asteroid/snow/coldroom
+
+/turf/closed/mineral/snowmountain/coldroom/Initialize(mapload)
+	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
+	return ..()
+
 //yoo RED ROCK RED ROCK
 
 /turf/closed/mineral/asteroid

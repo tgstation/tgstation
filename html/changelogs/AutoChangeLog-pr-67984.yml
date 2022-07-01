@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - code_imp: "times for food items are now in X SECONDS format, functionality is still the exact same"
