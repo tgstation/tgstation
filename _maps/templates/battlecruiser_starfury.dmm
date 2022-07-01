@@ -1257,7 +1257,6 @@
 "eC" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/structure/cable,
 /obj/machinery/door/airlock/centcom{
 	name = "Weapon Bays Access"
 	},
