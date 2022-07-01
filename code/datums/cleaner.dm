@@ -1,10 +1,13 @@
 /datum/cleaner
-	var/datum/callback/clean_start_callback //cleaning will be cancelled if this returns false
+	/// Gets called when trying to clean something, the cleaning will be cancelled if this callback returns false.
+	var/datum/callback/clean_start_callback
+	/// Gets called when something is successfully cleaned.
 	var/datum/callback/on_cleaned_callback
-	///the time it takes to clean something, without reductions from the cleaning skill modifier
+	/// The time it takes to clean something, without reductions from the cleaning skill modifier.
 	var/base_cleaning_duration = 10 SECONDS
-	///offsets the cleaning duration modifier that you get from your cleaning skill, the duration cannot be modified to be more than the base duration
+	/// Offsets the cleaning duration modifier that you get from your cleaning skill, the duration cannot be modified to be more than the base duration.
 	var/skill_speed_modifier_offset = 0
+	/// Determines what this cleaner can wash off, [the available options are found here](code/__DEFINES/cleaning.html).
 	var/cleaning_strength = CLEAN_SCRUB
 
 /datum/cleaner/New(var/datum/callback/clean_start_callback = null, var/datum/callback/on_cleaned_callback = null)
@@ -54,8 +57,8 @@
 		on_cleaned_callback.Invoke()
 
 //TODO give cleaning experience
-//TODO apply to soap, mop, cleanbot
 //TODO change visible message
 //TODO add soap features
+//TODO apply to soap, mop, cleanbot
 //TODO give this a better name (meelee_cleaner?)
 //TODO move global overlays to here?
