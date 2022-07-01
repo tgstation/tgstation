@@ -62,6 +62,7 @@
 
 	stored_organ = loaded_organ
 	loaded_organ.forceMove(src)
+
 	name = "[initial(name)] ([stored_organ.name])" //to tell you the organ type, like "suspicious autosurgeon (Reviver implant)"
 	update_appearance()
 
