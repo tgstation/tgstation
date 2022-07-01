@@ -69,6 +69,7 @@
 	owner.mind.remove_antag_datum(/datum/antagonist/obsessed)
 	if(obsession)
 		UnregisterSignal(obsession, COMSIG_MOB_EYECONTACT)
+	owner.visible_message(span_deconversion_message("[owner] suddenly looks like [owner.p_theyve()] forgotten about something very important."), null, null, null, owner)
 
 /datum/brain_trauma/special/obsessed/handle_speech(datum/source, list/speech_args)
 	if(!viewing)

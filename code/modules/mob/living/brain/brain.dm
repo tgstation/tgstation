@@ -19,7 +19,6 @@
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
 
-
 /mob/living/brain/proc/create_dna()
 	stored_dna = new /datum/dna/stored(src)
 	if(!stored_dna.species)
