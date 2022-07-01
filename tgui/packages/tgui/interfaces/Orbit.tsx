@@ -261,7 +261,9 @@ const ObservableMap = (props, context) => {
     'autoObserve',
     false
   );
-  const sortedSection = sortBy<Observable>((poi) => poi.name)(section);
+  const sortedSection = sortBy<Observable>((poi) => poi.name?.toLowerCase())(
+    section
+  );
 
   return (
     <div>
