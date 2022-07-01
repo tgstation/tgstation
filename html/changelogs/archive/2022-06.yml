@@ -943,3 +943,113 @@
   - qol: Nanotrasen has used a new method of installing signs to their walls. If you
       see any floating signs, or signs that appear to be positioned in incorrect locations,
       please contact your nearest reality manager.
+2022-06-28:
+  13spacemen, Gandalf2k15:
+  - rscadd: Examining and other chat outputs now display in blocks to make them easier
+      to see
+  - bugfix: AI and borgs no longer have their name show twice upon being examined
+  CoffeeDragon16:
+  - bugfix: plasma glass floor tiles will no longer sometimes be invisible
+  - bugfix: pianos will now look broken when they are damaged
+  - soundadd: pianos make a DONG sound when hit
+  Comxy:
+  - bugfix: Fixes martial arts auto reset bug.
+  GoldenAlpharex:
+  - bugfix: Snail people are no longer too shy to show their eyes, and will now expose
+      them out for everyone to see them, once more.
+  Melbert:
+  - bugfix: Frozen stuff is now properly actually recognized as frozen and won't re-freeze.
+  - refactor: Refactored how Knock (spell) tells stuff to open up, makes it easier
+      to add more knockable things.
+  Paxilmaniac:
+  - bugfix: fixes the ocean in the beach gateway having a different gasmix than the
+      sand, making the place unbreathable
+  Profakos:
+  - bugfix: Tramstation aux construction console works again as intended.
+  - bugfix: the hookshot bounty hunter, when summoned as an ert team member, is no
+      longer identical to the armoured bounty hunter.
+  - bugfix: bounty hunter IDs are no longer invisible save for the trim
+  RandomGamer123:
+  - spellcheck: Fixed a lack of line breaks in the operating computer when displaying
+      surgeries with required chemicals
+  Son-of-Space:
+  - rscadd: derelict1.dmm was overhauled into a derelict version of the Sulaco bridge
+  Y0SH1M4S73R:
+  - bugfix: The runic knight helmet's worn sprites have had their alignment fixed.
+  cinder1992:
+  - rscdel: Delta-pattern station quartermasters no longer have to listen to the sound
+      of a fire alarm every time their miners use the mining shuttle.
+  dragomagol:
+  - bugfix: Broken tiles (as seen in places like caravan ambush) now match our smooth
+      iron tiles
+  san7890:
+  - bugfix: The Chief Engineer's Keycard Authentication Device is no longer covered
+      by a electric sign on IceBoxStation.
+  - bugfix: Disposals will no longer now empty out in the middle of IceBoxStation's
+      maintenance tunnels.
+2022-06-29:
+  Guillaume Prata and Wallem:
+  - rscadd: Botany starts with watering cans instead of buckets now. There is also
+      a research locked advanced watering can which generates it's own water.
+  JohnFulpWillard:
+  - bugfix: the Gravity Generator no longer plays several looping sounds.
+  - bugfix: Oldstation's gravity generator now properly spawns off.
+  Melbert:
+  - bugfix: Service members can access the service dorms on Deltastation again
+  - bugfix: Miners can access the shipping office on Deltastation again
+  RandomGamer123:
+  - qol: Makes the noblium gas shells experiment explicitly clear that it requires
+      Hypernoblium gas and not just "Noblium"
+  - spellcheck: CentCom is now properly capitalised in the description of an experiment
+  Salex08:
+  - spellcheck: The Brand of Dance description is correct now
+  - bugfix: headpikes can be made again.
+  Sebbe9123:
+  - rscadd: Adds a special Medical ERT belt + gives it to medical ERT
+  Y0SH1M4S73R:
+  - bugfix: Fixed a runtime that occurs when inflicting a blunt wound on an armless
+      human.
+  jlsnow301:
+  - bugfix: TGUI Say now retains current messages / keying through history doesn't
+      erase your current message.
+  - bugfix: TextArea keydown prop has been renamed so as to not trigger double keydown
+      events.
+  - bugfix: TGUI say now properly expands when viewing recent messages
+  san7890:
+  - rscadd: Ice Box Station's got a new look. Notably, the cold room is on the bottom
+      floor with the kitchen all being up on the upper Z-Level
+2022-06-30:
+  13spacemen:
+  - imageadd: Shutters and window shutters on all stations are now directional
+  Melbert:
+  - bugfix: Comms console hacking will be interrupted if the comms console itself
+      is destroyed or depowered.
+  - bugfix: Cult sacrificing someone with a soul will no longer give you an empty
+      soulstone when it should give you a filled one.
+  - bugfix: Using a soulstone on a soulless corpse will now properly poll ghosts and
+      allow a new shade.
+  - bugfix: You can no longer capture spirits with soulstones you can't even release
+      spirits from
+  - bugfix: You can no longer hypothetically capture yourself with a soulstone
+  - code_imp: Some cleanup on aisle soulstone.
+  - code_imp: The blood walk element has been changed from a bespoke element to a
+      component.
+  - code_imp: MULEs now use the blood walk component.
+  - bugfix: MULEbots no longer track blood forever.
+  Profakos:
+  - imageadd: Rootbread slice toppings have a sprite now.
+  RandomGamer123:
+  - bugfix: Removes a method that allows xenobiologists to produce slimes of every
+      colour and bypassing the intended progression sequence by making the disease
+      induced by advanced mutation toxin only produce grey slimes unless the infected
+      person is a sentient non-monkey human
+  ReinaCoder:
+  - imageadd: The Ghoulbot now has a new sprite matching the new 3/4 mulebot sprites
+  - imageadd: The Makarov pistol has been resprited
+  Salex08:
+  - qol: Added a new tab for the autolathe which allows you to dispense not only iron
+      or glass but all the mats you put in
+  - bugfix: Fixes missing "=" operator in autolathe
+  nichlas0010:
+  - bugfix: The Orion Trail's Realism Mode works again, triggering negative events
+      for the player

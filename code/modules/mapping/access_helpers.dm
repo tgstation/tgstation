@@ -1,5 +1,5 @@
 /obj/effect/mapping_helpers/airlock/access
-	layer = DOOR_HELPER_LAYER
+	layer = DOOR_ACCESS_HELPER_LAYER
 	icon_state = "access_helper"
 
 // These are mutually exclusive; can't have req_any and req_all

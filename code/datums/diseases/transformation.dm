@@ -227,7 +227,7 @@
 	stage3 = list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
 	stage4 = list("<span class='danger'>You are turning into a slime.</span>")
 	stage5 = list("<span class='danger'>You have become a slime.</span>")
-	new_form = /mob/living/simple_animal/slime/random
+	new_form = /mob/living/simple_animal/slime
 
 
 /datum/disease/transformation/slime/stage_act(delta_time, times_fired)
@@ -237,15 +237,22 @@
 
 	switch(stage)
 		if(1)
-			if(ishuman(affected_mob) && affected_mob.dna)
-				if(affected_mob.dna.species.id == SPECIES_SLIMEPERSON || affected_mob.dna.species.id == SPECIES_STARGAZER || affected_mob.dna.species.id == SPECIES_LUMINESCENT)
+			if(ishuman(affected_mob))
+				var/mob/living/carbon/human/human = affected_mob
+				if(isjellyperson(human))
 					stage = 5
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna.species.id != SPECIES_SLIMEPERSON && affected_mob.dna.species.id != SPECIES_STARGAZER && affected_mob.dna.species.id != SPECIES_LUMINESCENT)
+				if(!ismonkey(human) && !isjellyperson(human))
 					human.set_species(/datum/species/jelly/slime)
 
+/datum/disease/transformation/slime/do_disease_transformation(mob/living/affected_mob)
+	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
+		var/mob/living/carbon/human/human = affected_mob
+		if(!ismonkey(human))
+			new_form = /mob/living/simple_animal/slime/random
+	return ..()
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"
