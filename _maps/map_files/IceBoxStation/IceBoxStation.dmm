@@ -18780,10 +18780,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/drone_bay)
-"fLZ" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
 "fMg" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/glass/bottle/acidic_buffer{
@@ -23970,7 +23966,6 @@
 	dir = 5
 	},
 /obj/machinery/igniter/incinerator_atmos,
-/obj/structure/sign/warning/gas_mask/directional/south,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "hvl" = (
@@ -73143,7 +73138,6 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/lockers)
 "wRv" = (
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "wRx" = (
@@ -192189,7 +192183,7 @@ udC
 rcY
 iDt
 inb
-fLZ
+wRv
 gWZ
 wHd
 mLK
