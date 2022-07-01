@@ -129,6 +129,7 @@
 
 //Returns the component for the listener
 /datum/round_event_control/proc/stop_random_event()
+	SIGNAL_HANDLER
 	return CANCEL_RANDOM_EVENT
 
 //Special admins setup
@@ -147,7 +148,8 @@
 	var/activeFor = 0 //How long the event has existed. You don't need to change this.
 	var/current_players = 0 //Amount of of alive, non-AFK human players on server at the time of event start
 	var/fakeable = TRUE //Can be faked by fake news event.
-	var/cancel_event = FALSE //Wheter a admin wants this event to be cancelled
+	/// Whether a admin wants this event to be cancelled
+	var/cancel_event = FALSE
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
