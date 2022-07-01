@@ -52,7 +52,7 @@
 	var/screen_start_x = 4 // where storage starts being rendered, screen_loc wise
 	var/screen_start_y = 2
 
-	var/datum/action/item_action/storage_collection_mode/toggle_collectmode
+	var/datum/action/item_action/storage_gather_mode/toggle_collectmode
 
 /datum/storage/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
 	boxes = new(null, src)
