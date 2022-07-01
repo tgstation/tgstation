@@ -56,6 +56,7 @@
 					// Just absolutely murder me man
 					ears.applyOrganDamage(ears.maxHealth)
 					M.emote("scream")
+					ADD_TRAIT(M.affected_mob, TRAIT_DEAF, DISEASE_TRAIT)
 			else
 				to_chat(M, span_userdanger("Your ears pop and begin ringing loudly!"))
 				ears.deaf = min(20, ears.deaf + 15)
