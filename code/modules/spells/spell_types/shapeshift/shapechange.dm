@@ -1,5 +1,5 @@
-/datum/action/cooldown/spell/shapeshift
-	name = "Shapechange"
+/datum/action/cooldown/spell/shapeshift/wizard
+	name = "Wild Shapeshift"
 	desc = "Take on the shape of another for a time to use their natural abilities. \
 		Once you've made your choice, it cannot be changed."
 	button_icon_state = "shapeshift"
