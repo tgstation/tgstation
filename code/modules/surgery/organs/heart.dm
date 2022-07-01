@@ -335,6 +335,9 @@
 	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE))
 		return // no reviving during mafia, or other inconvenient times.
 
+	if(HAS_TRAIT(victim, TRAIT_HUSK))
+		return // if a changeling sucks you or husked from fire/space then sorry pal
+
 	victim.visible_message(
 		span_notice("Crystals start forming around [victim]."),
 		span_nicegreen("Crystals start forming around your dead body."),
@@ -366,6 +369,9 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
 
+	if(HAS_TRAIT(ethereal, TRAIT_HUSK))
+		return // Husks don't get to revive
+		
 	if(ismob(location) || isitem(location)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
 		to_chat(ethereal, span_warning("You were unable to finish your crystallization, for obvious reasons."))
 		stop_crystalization_process(ethereal, FALSE)
