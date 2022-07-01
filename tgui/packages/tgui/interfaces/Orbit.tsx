@@ -89,12 +89,15 @@ const ObservableSearch = (props, context) => {
     ''
   );
   /** Gets a list of Observable[], then filters the most relevant to orbit */
-  const orbitMostRelevant = (searchText: string) => {
+  const orbitMostRelevant = (searchText: string): void => {
     /** Returns one Observable[] with entries that match searchText */
     const observables = getFilteredLists(
       [alive, antagonists, dead, ghosts, misc, npcs],
       searchText
     ).flat();
+    if (!observables.length) {
+      return;
+    }
     /** Sorts the list (ascending), reverses, then selects highest orbit # */
     const mostRelevant = sortBy<Observable>((poi) => poi.orbiters || 0)(
       observables
@@ -172,14 +175,14 @@ const ObservableContent = (props, context) => {
   let collapsibleSections = [dead, ghosts, misc, npcs];
   let visibleSections: Observable[][] = [];
   let visibleTitles: Title[] = [];
-  /** This collates antagonists into their own groups. */
+  /** Creates sections and titles for each antagonist group discovered. */
   if (antagonists.length) {
     collateAntagonists(antagonists).map(([name, antag]) => {
       visibleSections.push(antag);
       visibleTitles.push({ name, color: 'bad' });
     });
   }
-  /** Adds living players to the end of the primary sections. */
+  /** Adds living players to the end of primary sections. */
   visibleSections.push(alive);
   visibleTitles.push({ name: 'Alive', color: 'good' });
   /** Handles filtering out search results. */
@@ -196,7 +199,7 @@ const ObservableContent = (props, context) => {
   );
 };
 
-/** Displays a primary antag or alive section */
+/** Displays a primary section for antags and living players */
 const PrimarySections = (
   props: { sections: Observable[][]; titles: Title[] },
   context
@@ -226,7 +229,7 @@ const PrimarySections = (
   );
 };
 
-/** Displays a collapsible section for ghosts, NPCs, etc. */
+/** Displays a collapsible section for dead, ghosts, misc, NPCs. */
 const CollapsingSections = (props: { sections: Observable[][] }, context) => {
   const { sections = [] } = props;
 
@@ -252,7 +255,7 @@ const CollapsingSections = (props: { sections: Observable[][] }, context) => {
   );
 };
 
-/** Displays a map of observable items */
+/** Renders all of the observables in sorted order */
 const ObservableMap = (props, context) => {
   const { act } = useBackend<Data>(context);
   const { color, section = [] } = props;
@@ -335,7 +338,7 @@ const getThreat = (orbiters: number): THREAT => {
  * Filters both lists for the search query.
  *
  * Returns:
- *  an array of Observable[]
+ *  An array of Observable[].
  */
 const getFilteredLists = (
   lists: Observable[][],
