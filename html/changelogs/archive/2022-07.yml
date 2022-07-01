@@ -1,0 +1,27 @@
+2022-07-01:
+  Guillaume Prata:
+  - qol: Hypernob Protection (given to plasmamen that are breathing Hypernob as gas)
+      is a status effect now and gives better feedback to the user.
+  - balance: Hypernob Protection gives a small slowdown.
+  Hamcha:
+  - bugfix: The agent card now correctly allows you to take anyone's identity, even
+      if their name contains numbers
+  OrionTheFox:
+  - bugfix: Chainsaws can now actually cut wood! So can the giant axe that is the
+      PKC, and other chainsaw items - but, alas, esword handles alone can not, and
+      you must actually turn them on. Also, all mining implements can mine scattered
+      stones as well!
+  - bugfix: Chainsaws are now faster when they are on, and slower when they aren't.
+  Salex08:
+  - bugfix: blacklists placeholder food items in the random food generator which caused
+      error sprites appearing
+  ShizCalev:
+  - qol: Gas filtering cloth are now smaller and can fit inside boxes!
+  chesse20:
+  - rscadd: Furry Pride Spraypaint added to spray cans
+  - rscdel: Y##f In H##l Sprapaint removed from spray cans
+  jlsnow301:
+  - code_imp: Refactored a large number of TGUI interfaces into TypeScript. If something's
+      broken, report it!
+  private-tristan:
+  - bugfix: metastation library no longer has 2 air alarms

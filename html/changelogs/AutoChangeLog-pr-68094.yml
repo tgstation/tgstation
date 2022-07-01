@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes: 
+  - bugfix: "Limb growing code now uses species_color instead of mutant_color for synthetic limb coloration"

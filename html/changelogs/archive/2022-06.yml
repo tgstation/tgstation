@@ -1018,3 +1018,38 @@
   san7890:
   - rscadd: Ice Box Station's got a new look. Notably, the cold room is on the bottom
       floor with the kitchen all being up on the upper Z-Level
+2022-06-30:
+  13spacemen:
+  - imageadd: Shutters and window shutters on all stations are now directional
+  Melbert:
+  - bugfix: Comms console hacking will be interrupted if the comms console itself
+      is destroyed or depowered.
+  - bugfix: Cult sacrificing someone with a soul will no longer give you an empty
+      soulstone when it should give you a filled one.
+  - bugfix: Using a soulstone on a soulless corpse will now properly poll ghosts and
+      allow a new shade.
+  - bugfix: You can no longer capture spirits with soulstones you can't even release
+      spirits from
+  - bugfix: You can no longer hypothetically capture yourself with a soulstone
+  - code_imp: Some cleanup on aisle soulstone.
+  - code_imp: The blood walk element has been changed from a bespoke element to a
+      component.
+  - code_imp: MULEs now use the blood walk component.
+  - bugfix: MULEbots no longer track blood forever.
+  Profakos:
+  - imageadd: Rootbread slice toppings have a sprite now.
+  RandomGamer123:
+  - bugfix: Removes a method that allows xenobiologists to produce slimes of every
+      colour and bypassing the intended progression sequence by making the disease
+      induced by advanced mutation toxin only produce grey slimes unless the infected
+      person is a sentient non-monkey human
+  ReinaCoder:
+  - imageadd: The Ghoulbot now has a new sprite matching the new 3/4 mulebot sprites
+  - imageadd: The Makarov pistol has been resprited
+  Salex08:
+  - qol: Added a new tab for the autolathe which allows you to dispense not only iron
+      or glass but all the mats you put in
+  - bugfix: Fixes missing "=" operator in autolathe
+  nichlas0010:
+  - bugfix: The Orion Trail's Realism Mode works again, triggering negative events
+      for the player

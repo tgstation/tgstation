@@ -22,7 +22,7 @@
 		/obj/item/clothing/suit/armor,
 		/obj/item/organ/internal/lungs,
 	)
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/mirror_walk)
+	actions_to_add = list(/datum/action/cooldown/spell/jaunt/mirror_walk)
 
 	/// Whether we take damage when we're examined
 	var/weak_on_examine = TRUE

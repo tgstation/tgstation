@@ -80,8 +80,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	/// Stored pAI in the computer
 	var/obj/item/paicard/inserted_pai = null
 
-	var/datum/action/item_action/toggle_computer_light/light_butt
-
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 
@@ -95,7 +93,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		soundloop = new(src, enabled)
 	UpdateDisplay()
 	if(has_light)
-		light_butt = new(src)
+		add_item_action(/datum/action/item_action/toggle_computer_light)
+
 	update_appearance()
 	register_context()
 	Add_Messenger()
@@ -116,18 +115,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	if(istype(inserted_pai))
 		QDEL_NULL(inserted_pai)
-	if(istype(light_butt))
-		QDEL_NULL(light_butt)
 
 	physical = null
 	return ..()
-
-/obj/item/modular_computer/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, light_butt))
-		toggle_flashlight()
-	else
-		..()
-
 
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
 	if(active_program?.tap(A, user, params))
@@ -557,6 +547,13 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		physical.visible_message(span_notice("\The [src] shuts down."))
 	enabled = 0
 	update_appearance()
+
+/obj/item/modular_computer/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
+		toggle_flashlight()
+		return
+
+	return ..()
 
 /**
  * Toggles the computer's flashlight, if it has one.
