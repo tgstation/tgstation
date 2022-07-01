@@ -155,7 +155,7 @@
 "ax" = (
 /obj/machinery/door/airlock/centcom{
 	id_tag = "syndie_battlecruiser_bridge_bolt";
-	name = "Weapon Bays Access"
+	name = "Port Shuttle Bay"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
