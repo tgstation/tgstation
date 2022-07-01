@@ -38627,6 +38627,10 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
+"nLq" = (
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/wood,
+/area/station/service/library)
 "nLz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -57144,7 +57148,6 @@
 /area/station/construction/mining/aux_base)
 "ueD" = (
 /obj/machinery/light/small/directional/south,
-/obj/machinery/airalarm/directional/south,
 /turf/open/floor/wood,
 /area/station/service/library)
 "ueG" = (
@@ -58338,11 +58341,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"uzs" = (
-/obj/machinery/airalarm/directional/west,
-/obj/structure/displaycase/trophy,
-/turf/open/floor/wood,
-/area/station/service/library)
 "uzJ" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
@@ -88021,7 +88019,7 @@ sVY
 cyk
 qzS
 rIa
-uzs
+ahD
 mjr
 jIY
 mjr
@@ -89056,7 +89054,7 @@ cLx
 nPu
 mjr
 nxz
-mjr
+nLq
 sVY
 pEH
 vWF
