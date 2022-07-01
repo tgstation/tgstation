@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - code_imp: "Refactored a large number of TGUI interfaces into TypeScript. If something's broken, report it!"
