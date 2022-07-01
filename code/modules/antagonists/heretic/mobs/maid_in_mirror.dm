@@ -42,7 +42,7 @@
 	if(!weak_on_examine)
 		return
 
-	if(!isliving(user))
+	if(!isliving(user) || user.stat == DEAD)
 		return
 
 	if(IS_HERETIC_OR_MONSTER(user) || user == src)
