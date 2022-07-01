@@ -12,11 +12,13 @@
 
 /obj/item/implant/spell/Initialize(mapload)
 	. = ..()
-	if(spell_type)
-		spell_to_give = new spell_type(src)
+	if(!spell_type)
+		return
 
-		if(make_robeless && (spell_to_give.spell_requirements & SPELL_REQUIRES_WIZARD_GARB))
-			spell_to_give.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
+	spell_to_give = new spell_type(src)
+
+	if(make_robeless && (spell_to_give.spell_requirements & SPELL_REQUIRES_WIZARD_GARB))
+		spell_to_give.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
 
 /obj/item/implant/spell/Destroy()
 	QDEL_NULL(spell_to_give)

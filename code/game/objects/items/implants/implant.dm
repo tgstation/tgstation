@@ -27,7 +27,7 @@
 	INVOKE_ASYNC(src, .proc/activate, "action_button")
 
 /obj/item/implant/item_action_slot_check(slot, mob/user)
-	return (user == imp_in)
+	return user == imp_in
 
 /obj/item/implant/proc/can_be_implanted_in(mob/living/target)
 	if(issilicon(target))
