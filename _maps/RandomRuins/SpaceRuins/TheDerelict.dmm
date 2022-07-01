@@ -246,7 +246,6 @@
 /area/ruin/space/ks13/engineering/atmos)
 "dj" = (
 /obj/structure/closet/radiation,
-/obj/structure/closet/radiation,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/singulo)
 "dn" = (
