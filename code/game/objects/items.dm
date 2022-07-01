@@ -1387,6 +1387,9 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(!istype(loc, /turf))
 		return
 
+	if(!istype(moving_from))
+		return
+
 	var/turf/current_turf = get_turf(src)
 	var/direction = get_dir(moving_from, current_turf)
 	var/from_x = moving_from.base_pixel_x
