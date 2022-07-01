@@ -31,6 +31,8 @@
 	glasses = /obj/item/clothing/glasses/regular/circle
 
 /datum/outfit/waldo/post_equip(mob/living/carbon/human/equipped_on, visualsOnly=FALSE)
+	equipped_on.w_uniform?.update_greyscale()
+	equipped_on.update_inv_w_uniform()
 	if(visualsOnly)
 		return
 	equipped_on.fully_replace_character_name(null,"Waldo")
