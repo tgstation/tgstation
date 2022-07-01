@@ -6,12 +6,10 @@
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/item/storage/drone_tools/Initialize(mapload)
+/obj/item/storage/drone_tools/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
-/obj/item/storage/drone_tools/ComponentInitialize()
-	. = ..()
 	var/static/list/drone_builtins = list(
 		/obj/item/crowbar/drone,
 		/obj/item/screwdriver/drone,

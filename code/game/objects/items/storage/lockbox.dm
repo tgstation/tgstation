@@ -127,7 +127,7 @@
 		new /obj/item/clothing/accessory/medal/conduct(src)
 
 /obj/item/storage/lockbox/medal/update_icon_state()
-	if(atom_storage.locked)
+	if(atom_storage?.locked)
 		icon_state = "medalbox+l"
 		return ..()
 
@@ -142,7 +142,7 @@
 	. = ..()
 	if(!contents || !open)
 		return
-	if(atom_storage.locked)
+	if(atom_storage?.locked)
 		return
 	for(var/i in 1 to contents.len)
 		var/obj/item/clothing/accessory/medal/M = contents[i]
