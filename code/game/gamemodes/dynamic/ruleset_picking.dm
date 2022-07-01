@@ -10,7 +10,7 @@
 	while (TRUE)
 		var/datum/dynamic_ruleset/rule = pick_weight(drafted_rules)
 		if (!rule)
-			var/leftover_rules = list()
+			var/list/leftover_rules = list()
 			for (var/leftover_rule in drafted_rules)
 				leftover_rules += "[leftover_rule]"
 
