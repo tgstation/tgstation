@@ -1,11 +1,11 @@
 /datum/cleaner
 	var/datum/callback/clean_start_callback //cleaning will be cancelled if this returns false
 	var/datum/callback/on_cleaned_callback
-	///the time it takes to clean something, without skill adjustment
+	///the time it takes to clean something, without reductions from the cleaning skill modifier
 	var/base_cleaning_duration = 10 SECONDS
 	///offsets the cleaning duration modifier that you get from your cleaning skill, the duration cannot be modified to be more than the base duration
 	var/skill_speed_modifier_offset = 0
-	var/cleaing_strength = CLEAN_SCRUB //TODO
+	var/cleaning_strength = CLEAN_SCRUB
 
 /datum/cleaner/New(var/datum/callback/clean_start_callback = null, var/datum/callback/on_cleaned_callback = null)
 	src.clean_start_callback = clean_start_callback
@@ -35,13 +35,14 @@
 	//set the cleaning duration
 	var/cleaning_duration = base_cleaning_duration
 	if(user.mind) //higher cleaning skill can make the duration shorter
+		//offsets the multiplier you get from cleaning skill, but doesn't allow the duration to be longer than the base duration
 		cleaning_duration = cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_speed_modifier_offset,1)
 
 	//do the cleaning
 	user.visible_message(span_notice("[user] starts to wipe down [target] with [src]!"), span_notice("You start to wipe down [target] with [src]..."))
 	if(do_after(user, cleaning_duration, target = target))
 		user.visible_message(span_notice("[user] finishes wiping off [target]!"), span_notice("You finish wiping off [target]."))
-		target.wash(CLEAN_SCRUB)
+		target.wash(cleaning_strength)
 
 	//remove the cleaning overlay
 	if(!already_cleaning)
@@ -52,7 +53,6 @@
 	if(on_cleaned_callback != null)
 		on_cleaned_callback.Invoke()
 
-//TODO account for different washing strenghts
 //TODO give cleaning experience
 //TODO apply to soap, mop, cleanbot
 //TODO change visible message
