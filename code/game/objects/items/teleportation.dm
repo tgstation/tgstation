@@ -361,22 +361,23 @@
 		playsound(src, 'sound/machines/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/syndicate_teleporter/emp_act(severity)
+	if(!prob(50/severity))
+		return
 	var/teleported_something = FALSE
-	if(prob(50/severity))
-		if(ishuman(loc))
-			var/mob/living/carbon/human/holder = loc
-			balloon_alert(holder, "teleporter buzzes!")
-			attempt_teleport(user = holder, triggered_by_emp = TRUE)
-		else
-			var/turf/teleport_turf = get_turf(src)
-			for(var/mob/living/mob_on_same_tile in teleport_turf)
-				if(!teleported_something)
-					teleported_something = TRUE
-				attempt_teleport(user = mob_on_same_tile, triggered_by_emp = TRUE, not_holding_tele = TRUE)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/holder = loc
+		balloon_alert(holder, "teleporter buzzes!")
+		attempt_teleport(user = holder, triggered_by_emp = TRUE)
+	else
+		var/turf/teleport_turf = get_turf(src)
+		for(var/mob/living/mob_on_same_tile in teleport_turf)
 			if(!teleported_something)
-				visible_message(span_danger("[src] blinks out of existence!"))
-				do_sparks(2, 1, src)
-				qdel(src)
+				teleported_something = TRUE
+			attempt_teleport(user = mob_on_same_tile, triggered_by_emp = TRUE, not_holding_tele = TRUE)
+		if(!teleported_something)
+			visible_message(span_danger("[src] blinks out of existence!"))
+			do_sparks(2, 1, src)
+			qdel(src)
 
 /**
  * Tries to teleport the user forward based on random number between min/max teleport distance vars.
@@ -391,7 +392,10 @@
 
 	var/turf/current_location = get_turf(user)
 
-	if(malfunctioning(user, current_location, not_holding_tele))
+	if(malfunctioning(user, current_location))
+		if(not_holding_tele)
+			return
+		balloon_alert(user, "malfunctioning!")
 		return
 
 	var/teleport_distance = rand(minimum_teleport_distance, maximum_teleport_distance)
@@ -419,23 +423,21 @@
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 
-/obj/item/syndicate_teleporter/proc/malfunctioning(mob/guy_teleporting, turf/current_location, not_holding_tele = FALSE)
+/obj/item/syndicate_teleporter/proc/malfunctioning(mob/guy_teleporting, turf/current_location)
 	var/area/current_area = get_area(current_location)
-	. = FALSE
 	if(!current_location)
-		. = TRUE
+		return TRUE
 	if(current_area.area_flags & NOTELEPORT)
-		. = TRUE
+		return TRUE
 	if(is_away_level(current_location.z))
-		. = TRUE
+		return TRUE
 	if(is_centcom_level(current_location.z))
-		. = TRUE
+		return TRUE
 	if(is_reserved_level(current_location.z))
-		. = TRUE
+		return TRUE
 	if(!isturf(guy_teleporting.loc))
-		. = TRUE
-	if(. && !not_holding_tele)
-		balloon_alert(guy_teleporting, "malfunctioning!")
+		return TRUE
+	return FALSE
 
 /**
  * Checks parallel_teleport_distance amount of tiles parallel to user's teleport destination.
@@ -484,16 +486,18 @@
 
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"
-	info = {"<b>Instructions on your new prototype teleporter:</b><br>
-	<br>
-	This teleporter will teleport the user 4-8 meters in the direction they are facing.<br>
-	<br>
-	It has 4 charges, and will recharge over time randomly. No, sticking the teleporter into an APC, microwave, or electrified airlock, will not make it charge faster.<br>
-	<br>
-	<b>Warning:</b> Teleporting into walls will activate a failsafe teleport parallel up to 3 meters, but the user will be ripped apart if it fails to find a safe location.<br>
-	<br>
-	Do not expose the teleporter to electromagnetic pulses. Unwanted malfunctions may occur.
-"}
+	info = {"
+		<b>Instructions on your new prototype teleporter:</b><br>
+		<br>
+		This teleporter will teleport the user 4-8 meters in the direction they are facing.<br>
+		<br>
+		It has 4 charges, and will recharge over time randomly. No, sticking the teleporter into an APC, microwave, or electrified airlock will not make it charge faster.<br>
+		<br>
+		<b>Warning:</b> Teleporting into walls will activate a failsafe teleport parallel up to 3 meters, but the user will be ripped apart if it fails to find a safe location.<br>
+		<br>
+		Do not expose the teleporter to electromagnetic pulses. Unwanted malfunctions may occur.
+		"}
+
 /obj/item/storage/box/syndie_kit/syndicate_teleporter
 	name = "syndicate teleporter kit"
 
