@@ -128,6 +128,11 @@
 	possible_transfer_amounts = list()
 	volume = 5
 	spillable = FALSE
+	var/datum/cleaner/cleaner
+
+/obj/item/reagent_containers/glass/rag/Initialize(mapload, vol)
+	. = ..()
+	cleaner = new /datum/cleaner()
 
 /obj/item/reagent_containers/glass/rag/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -152,30 +157,4 @@
 			log_combat(user, C, "touched", src, log_object)
 
 	else if(istype(A) && (src in user))
-		//add the cleaning overlay
-		var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
-		if(HAS_TRAIT(A, CURRENTLY_CLEANING))
-			already_cleaning = TRUE
-		else //add the trait and overlay
-			ADD_TRAIT(A, CURRENTLY_CLEANING, src)
-			if(A.plane > GLOB.cleaning_bubbles_lower.plane) //check if the higher overlay is necessary
-				A.add_overlay(GLOB.cleaning_bubbles_higher)
-			else if(A.plane == GLOB.cleaning_bubbles_lower.plane)
-				if(A.layer > GLOB.cleaning_bubbles_lower.layer)
-					A.add_overlay(GLOB.cleaning_bubbles_higher)
-				else
-					A.add_overlay(GLOB.cleaning_bubbles_lower)
-			else //(A.plane < GLOB.cleaning_bubbles_lower.plane)
-				A.add_overlay(GLOB.cleaning_bubbles_lower)
-
-		//do the cleaning
-		user.visible_message(span_notice("[user] starts to wipe down [A] with [src]!"), span_notice("You start to wipe down [A] with [src]..."))
-		if(do_after(user,30, target = A))
-			user.visible_message(span_notice("[user] finishes wiping off [A]!"), span_notice("You finish wiping off [A]."))
-			A.wash(CLEAN_SCRUB)
-
-		//remove the cleaning overlay
-		if(!already_cleaning)
-			A.cut_overlay(GLOB.cleaning_bubbles_lower)
-			A.cut_overlay(GLOB.cleaning_bubbles_higher)
-			REMOVE_TRAIT(A, CURRENTLY_CLEANING, src)
+		cleaner.clean(A, user)
