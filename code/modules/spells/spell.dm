@@ -169,7 +169,7 @@
 			to_chat(owner, span_warning("Some form of antimagic is preventing you from casting [src]!"))
 		return FALSE
 
-	if((!(spell_requirements & SPELL_CASTABLE_WHILE_PHASED)) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
+	if(!(spell_requirements & SPELL_CASTABLE_WHILE_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
 		if(feedback)
 			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE
@@ -194,7 +194,7 @@
 				to_chat(owner, span_warning("[src] can only be cast by humans!"))
 			return FALSE
 
-		if((!(spell_requirements & SPELL_CASTABLE_AS_BRAIN)) && isbrain(owner))
+		if(!(spell_requirements & SPELL_CASTABLE_AS_BRAIN) && isbrain(owner))
 			if(feedback)
 				to_chat(owner, span_warning("[src] can't be cast in this state!"))
 			return FALSE
@@ -294,16 +294,19 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
-	if(owner)
-		SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
+	if(!owner)
+		return
 
-		if(sparks_amt)
-			do_sparks(sparks_amt, FALSE, get_turf(owner))
+	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
 
-		if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
-			var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
-			smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
-			smoke.start()
+	// Sparks and smoke can only occur if there's an owner to source them from.
+	if(sparks_amt)
+		do_sparks(sparks_amt, FALSE, get_turf(owner))
+
+	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
+		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
+		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
+		smoke.start()
 
 /// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation
 /datum/action/cooldown/spell/proc/spell_feedback()
@@ -350,7 +353,7 @@
 	var/mob/living/living_owner = owner
 	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
 		if(feedback)
-			to_chat(owner, span_warning("You can't get form to invoke [src]!"))
+			to_chat(owner, span_warning("You can't position your hands correctly to invoke [src]!"))
 		return FALSE
 
 	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak_vocal())
@@ -420,35 +423,3 @@
 
 	name = "[spell_title][initial(name)]"
 	UpdateButtons()
-
-/// Debug proc for seeing at a glance what all spells have as set requirements
-/// Probably remove before merge, idk it might be useful in the future as a debug verb.
-/proc/debug_spell_requirements()
-	for(var/datum/action/cooldown/spell/spell as anything in typesof(/datum/action/cooldown/spell))
-		if(initial(spell.name) == "Spell")
-			continue
-
-		var/list/real_reqs = list()
-		var/reqs = initial(spell.spell_requirements)
-		if(reqs == NONE)
-			message_admins("[initial(spell.name)]: Usable by all / no requirements ")
-			continue
-
-		if(reqs & SPELL_CASTABLE_AS_BRAIN)
-			real_reqs += "Castable as brain"
-		if(reqs & SPELL_CASTABLE_WHILE_PHASED)
-			real_reqs += "Castable phased"
-		if(reqs & SPELL_REQUIRES_HUMAN)
-			real_reqs += "Must be human"
-		if(reqs & SPELL_REQUIRES_MIME_VOW)
-			real_reqs += "Must be miming"
-		if(reqs & SPELL_REQUIRES_MIND)
-			real_reqs += "Must have mind"
-		if(reqs & SPELL_REQUIRES_NO_ANTIMAGIC)
-			real_reqs += "Must have no antimagic"
-		if(reqs & SPELL_REQUIRES_OFF_CENTCOM)
-			real_reqs += "Must be off CC"
-		if(reqs & SPELL_REQUIRES_WIZARD_GARB)
-			real_reqs += "Must have wizard clothes"
-
-		message_admins("[initial(spell.name)]: [real_reqs.Join(", ")]")
