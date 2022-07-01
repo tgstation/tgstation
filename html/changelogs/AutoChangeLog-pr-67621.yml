@@ -1,0 +1,5 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "Clown/Mime survival boxes won't have a mostly pointless breathing mask, as their basic mask can be used for internals."
+  - imageadd: "New mime Hugbox!"

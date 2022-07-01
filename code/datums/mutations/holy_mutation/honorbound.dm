@@ -6,7 +6,7 @@
 	The user feels compelled to follow supposed \"rules of combat\" but in reality they physically are unable to. \
 	Their brain is rewired to excuse any curious inabilities that arise from this odd effect."
 	quality = POSITIVE //so it gets carried over on revives
-	power = /obj/effect/proc_holder/spell/pointed/declare_evil
+	power_path = /datum/action/cooldown/spell/pointed/declare_evil
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel honorbound!</span>"
 	text_lose_indication = "<span class='warning'>You feel unshackled from your code of honor!</span>"
@@ -167,7 +167,7 @@
 			guilty(thrown_by)
 
 //spell checking
-/datum/mutation/human/honorbound/proc/spell_check(mob/user, obj/effect/proc_holder/spell/spell_cast)
+/datum/mutation/human/honorbound/proc/spell_check(mob/user, datum/action/cooldown/spell/spell_cast)
 	SIGNAL_HANDLER
 	punishment(user, spell_cast.school)
 
@@ -201,72 +201,118 @@
 			lightningbolt(user)
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 
-/obj/effect/proc_holder/spell/pointed/declare_evil
+/datum/action/cooldown/spell/pointed/declare_evil
 	name = "Declare Evil"
 	desc = "If someone is so obviously an evil of this world you can spend a huge amount of favor to declare them guilty."
-	school = SCHOOL_HOLY
-	charge_max = 0
-	clothes_req = FALSE
-	range = 7
-	cooldown_min = 0
+	button_icon_state = "declaration"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/honorbound.dmi'
-	action_icon_state = "declaration"
+
+	school = SCHOOL_HOLY
+	cooldown_time = 0
+
+	invocation = "This is an error!"
+	invocation_type = INVOCATION_SHOUT
+	spell_requirements = SPELL_REQUIRES_HUMAN
+
 	active_msg = "You prepare to declare a sinner..."
 	deactive_msg = "You decide against a declaration."
 
-/obj/effect/proc_holder/spell/pointed/declare_evil/cast(list/targets, mob/living/carbon/human/user, silent = FALSE)
-	if(!ishuman(user))
-		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
-	var/datum/religion_sect/honorbound/honorsect = GLOB.religious_sect
-	if(honorsect.favor < 150)
-		to_chat(user, span_warning("You need at least 150 favor to declare someone evil!"))
-		return FALSE
-	if(!honormut)
-		return FALSE
-	if(!targets.len)
-		if(!silent)
-			to_chat(user, span_warning("Nobody to declare evil here!"))
-		return FALSE
-	if(targets.len > 1)
-		if(!silent)
-			to_chat(user, span_warning("Too many people to declare! Pick ONE!"))
-		return FALSE
-	var/declaration_message = "[targets[1]]! By the divine light of [GLOB.deity], You are an evil of this world that must be wrought low!"
-	if(!user.can_speak(declaration_message))
-		to_chat(user, span_warning("You can't get the declaration out!"))
-		return FALSE
-	if(!can_target(targets[1], user, silent))
-		return FALSE
-	GLOB.religious_sect.adjust_favor(-150, user)
-	user.say(declaration_message)
-	honormut.guilty(targets[1], declaration = TRUE)
-	return TRUE
+	/// The amount of favor required to declare on someone
+	var/required_favor = 150
+	/// A ref to our owner's honorbound mutation
+	var/datum/mutation/human/honorbound/honor_mutation
+	/// The declaration that's shouted in invocation. Set in New()
+	var/declaration = "By the divine light of my deity, you are an evil of this world that must be wrought low!"
 
-/obj/effect/proc_holder/spell/pointed/declare_evil/can_target(atom/target, mob/user, silent)
+/datum/action/cooldown/spell/pointed/declare_evil/New()
+	. = ..()
+	declaration = "By the divine light of [GLOB.deity], you are an evil of this world that must be wrought low!"
+
+/datum/action/cooldown/spell/pointed/declare_evil/Destroy()
+	// If we had an owner, Destroy() called Remove(), and already handled this
+	if(honor_mutation)
+		UnregisterSignal(honor_mutation, COMSIG_PARENT_QDELETING)
+		honor_mutation = null
+	return ..()
+
+/datum/action/cooldown/spell/pointed/declare_evil/Grant(mob/grant_to)
+	if(!ishuman(grant_to))
+		return FALSE
+
+	var/mob/living/carbon/human/human_owner = grant_to
+	var/datum/mutation/human/honorbound/honor_mut = human_owner.dna?.check_mutation(/datum/mutation/human/honorbound)
+	if(QDELETED(honor_mut))
+		return FALSE
+
+	RegisterSignal(honor_mut, COMSIG_PARENT_QDELETING, .proc/on_honor_mutation_lost)
+	honor_mutation = honor_mut
+	return ..()
+
+/datum/action/cooldown/spell/pointed/declare_evil/Remove(mob/living/remove_from)
+	. = ..()
+	UnregisterSignal(honor_mutation, COMSIG_PARENT_QDELETING)
+	honor_mutation = null
+
+/// If we lose our honor mutation somehow, self-delete (and clear references)
+/datum/action/cooldown/spell/pointed/declare_evil/proc/on_honor_mutation_lost(datum/source)
+	SIGNAL_HANDLER
+
+	qdel(src)
+
+/datum/action/cooldown/spell/pointed/declare_evil/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!isliving(target))
-		if(!silent)
-			to_chat(user, span_warning("You can only declare living beings evil!"))
+
+	// This shouldn't technically be a possible state, but you never know
+	if(!honor_mutation)
 		return FALSE
-	var/mob/living/victim = target
-	if(victim.stat == DEAD)
-		if(!silent)
-			to_chat(user, span_warning("Declaration on the dead? Really?"))
+	if(GLOB.religious_sect.favor < required_favor)
+		if(feedback)
+			to_chat(owner, span_warning("You need at least 150 favor to declare someone evil!"))
 		return FALSE
-	var/datum/mind/guilty_conscience = victim.mind
-	if(!victim.key ||!guilty_conscience) //sec and medical are immune to becoming guilty through attack (we don't check holy because holy shouldn't be able to attack eachother anyways)
-		if(!silent)
-			to_chat(user, span_warning("There is no evil a vacant mind can do."))
-		return FALSE
-	if(guilty_conscience.holy_role)//also handles any kind of issues with self declarations
-		if(!silent)
-			to_chat(user, span_warning("Followers of [GLOB.deity] cannot be evil!"))
-		return FALSE
-	if(guilty_conscience.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
-		if(!silent)
-			to_chat(user, span_warning("Members of security are uncorruptable! You cannot declare one evil!"))
-		return FALSE
+
 	return TRUE
+
+/datum/action/cooldown/spell/pointed/declare_evil/is_valid_target(atom/cast_on)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!isliving(cast_on))
+		to_chat(owner, span_warning("You can only declare living beings evil!"))
+		return FALSE
+
+	var/mob/living/living_cast_on = cast_on
+	if(living_cast_on.stat == DEAD)
+		to_chat(owner, span_warning("Declaration on the dead? Really?"))
+		return FALSE
+
+	// sec and medical are immune to becoming guilty through attack
+	// (we don't check holy, because holy shouldn't be able to attack eachother anyways)
+	if(!living_cast_on.key || !living_cast_on.mind)
+		to_chat(owner, span_warning("There is no evil a vacant mind can do."))
+		return FALSE
+
+	// also handles any kind of issues with self declarations
+	if(living_cast_on.mind.holy_role)
+		to_chat(owner, span_warning("Followers of [GLOB.deity] cannot be evil!"))
+		return FALSE
+
+	// cannot declare security as evil
+	if(living_cast_on.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+		to_chat(owner, span_warning("Members of security are uncorruptable! You cannot declare one evil!"))
+		return FALSE
+
+	return TRUE
+
+/datum/action/cooldown/spell/pointed/declare_evil/before_cast(mob/living/cast_on)
+	. = ..()
+	if(. & SPELL_CANCEL_CAST)
+		return
+
+	invocation = "[cast_on]! [declaration]"
+
+/datum/action/cooldown/spell/pointed/declare_evil/cast(mob/living/cast_on)
+	. = ..()
+	GLOB.religious_sect.adjust_favor(-required_favor, owner)
+	honor_mutation.guilty(cast_on, declaration = TRUE)

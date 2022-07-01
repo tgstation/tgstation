@@ -252,7 +252,7 @@
 	name = "Cult"
 
 	///The blood mark target
-	var/blood_target
+	var/atom/blood_target
 	///Image of the blood mark target
 	var/image/blood_target_image
 	///Timer for the blood mark expiration
@@ -487,6 +487,64 @@
 	if(HAS_TRAIT(M, TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || !M.client)
 		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
+
+/// Sets a blood target for the cult.
+/datum/team/cult/proc/set_blood_target(atom/new_target, mob/marker, duration = 90 SECONDS)
+	if(QDELETED(new_target))
+		CRASH("A null or invalid target was passed to set_blood_target.")
+
+	if(blood_target_reset_timer)
+		return FALSE
+
+	blood_target = new_target
+	RegisterSignal(blood_target, COMSIG_PARENT_QDELETING, .proc/unset_blood_target_and_timer)
+	var/area/target_area = get_area(new_target)
+
+	blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', new_target, "glow", ABOVE_MOB_LAYER)
+	blood_target_image.appearance_flags = RESET_COLOR
+	blood_target_image.pixel_x = -new_target.pixel_x
+	blood_target_image.pixel_y = -new_target.pixel_y
+
+	for(var/datum/mind/cultist as anything in members)
+		if(!cultist.current)
+			continue
+		if(cultist.current.stat == DEAD || !cultist.current.client)
+			continue
+
+		to_chat(cultist.current, span_bold(span_cultlarge("[marker] has marked [blood_target] in the [target_area.name] as the cult's top priority, get there immediately!")))
+		SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'), 0, 1, 75))
+		cultist.current.client.images += blood_target_image
+
+	blood_target_reset_timer = addtimer(CALLBACK(src, .proc/unset_blood_target), duration, TIMER_STOPPABLE)
+	return TRUE
+
+/// Unsets out blood target, clearing the images from all the cultists.
+/datum/team/cult/proc/unset_blood_target()
+	blood_target_reset_timer = null
+
+	for(var/datum/mind/cultist as anything in members)
+		if(!cultist.current)
+			continue
+		if(cultist.current.stat == DEAD || !cultist.current.client)
+			continue
+
+		if(QDELETED(blood_target))
+			to_chat(cultist.current, span_bold(span_cultlarge("The blood mark's target is lost!")))
+		else
+			to_chat(cultist.current, span_bold(span_cultlarge("The blood mark has expired!")))
+		cultist.current.client.images -= blood_target_image
+
+	UnregisterSignal(blood_target, COMSIG_PARENT_QDELETING)
+	blood_target = null
+
+	QDEL_NULL(blood_target_image)
+
+/// Unsets our blood target when they get deleted.
+/datum/team/cult/proc/unset_blood_target_and_timer(datum/source)
+	SIGNAL_HANDLER
+
+	deltimer(blood_target_reset_timer)
+	unset_blood_target()
 
 /datum/outfit/cultist
 	name = "Cultist (Preview only)"
