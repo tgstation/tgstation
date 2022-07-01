@@ -162,6 +162,17 @@
 /datum/component/riding/vehicle/forklift/engineering
 	keytype = /obj/item/key/forklift/engineering
 
+/datum/component/riding/vehicle/forklift/engineering/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(-16, -16), TEXT_SOUTH = list(-16, -16), TEXT_EAST = list(-16, -16), TEXT_WEST = list(-16, -16)))
+	set_vehicle_dir_offsets(NORTH, -16, -16)
+	set_vehicle_dir_offsets(SOUTH, -16, -16)
+	set_vehicle_dir_offsets(EAST, -16, -16)
+	set_vehicle_dir_offsets(WEST, -16, -16)
+	for(var/i in GLOB.cardinals)
+		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+
+
 /datum/component/riding/vehicle/forklift/medical
 	keytype = /obj/item/key/forklift/medbay
 

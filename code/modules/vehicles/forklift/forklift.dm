@@ -176,6 +176,9 @@
 		/datum/forklift_module/department_machinery/engineering,
 		// /datum/forklift_module/atmos,
 	)
+	icon = 'icons/obj/vehicles_large.dmi'
+	pixel_x = -16
+	pixel_y = -16
 	starting_module_path = /datum/forklift_module/furniture
 	key_type = /obj/item/key/forklift/engineering
 	ridable_path = /datum/component/riding/vehicle/forklift/engineering
