@@ -19,31 +19,6 @@ const PAI_RULES = `You are expected to role play to some degree.
 Keep in mind: Not entering information may lead to you not being
 selected. Press submit to alert pAI cards of your candidacy.`;
 
-// A component that makes a five point polygon
-const FivePointPolygon = (props) => {
-  const { color, height, width, x, y } = props;
-  const points = [
-    x,
-    y,
-    x + width,
-    y,
-    x + width,
-    y + height,
-    x,
-    y + height,
-    x,
-    y,
-  ];
-  return (
-    <polygon
-      points={points.join(' ')}
-      fill={color}
-      height={height}
-      width={width}
-    />
-  );
-};
-
 export const PaiSubmit = (_, context) => {
   const { data } = useBackend<CandidateData>(context);
   const [input, setInput] = useLocalState<CandidateData>(context, 'input', {
