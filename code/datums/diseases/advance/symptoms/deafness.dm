@@ -65,8 +65,6 @@
 	if(!.)
 		return FALSE
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-	if(advanced_disease.stage >= 4 && causes_permanent_deafness)
-		ADD_TRAIT(infected_mob, TRAIT_DEAF, DISEASE_TRAIT)
-	else
+	if(advanced_disease.stage < 5 || !causes_permanent_deafness)
 		REMOVE_TRAIT(infected_mob, TRAIT_DEAF, DISEASE_TRAIT)
 	return TRUE
