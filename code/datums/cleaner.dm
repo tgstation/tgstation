@@ -14,6 +14,15 @@
 	src.clean_start_callback = clean_start_callback
 	src.on_cleaned_callback = on_cleaned_callback
 
+/**
+ * Cleans something using this cleaner.
+ * The cleaning duration is modified by the cleaning skill of the user.
+ * Successfully cleaning gives cleaning experience to the user.
+ *
+ * Arguments
+ * * target the thing being cleaned
+ * * user the person doing the cleaning
+ */
 /datum/cleaner/proc/clean(atom/target as obj|turf|area, mob/living/user)
 	if(clean_start_callback != null)
 		if(clean_start_callback.Invoke() == FALSE)
