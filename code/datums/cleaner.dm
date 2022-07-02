@@ -96,5 +96,5 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 		target.cut_overlay(GLOB.cleaning_bubbles_higher)
 		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
 
-//TODO apply to mop, cleanbot
-//TODO give this a better name (meelee_cleaner?)
+//TODO remove before cleaning callback
+//TODO remove cleaning animation stuff

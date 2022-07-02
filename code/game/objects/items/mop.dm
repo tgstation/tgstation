@@ -17,11 +17,14 @@
 	///Maximum volume of reagents it can hold.
 	var/max_reagent_volume = 15
 	var/mopspeed = 1.5 SECONDS
+	var/datum/cleaner/cleaner
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()
+	cleaner = new /datum/cleaner(null, CALLBACK(src, .proc/clean))
+	cleaner.base_cleaning_duration = mopspeed
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
 
@@ -30,16 +33,6 @@
 	return ..()
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
-	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
-		// If there's a cleaner with a mind, let's gain some experience!
-		if(cleaner?.mind)
-			var/total_experience_gain = 0
-			for(var/obj/effect/decal/cleanable/cleanable_decal in A)
-				//it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
-				total_experience_gain += max(round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT, 1), 0)
-			cleaner.mind.adjust_experience(/datum/skill/cleaning, total_experience_gain)
-		A.wash(CLEAN_SCRUB)
-
 	reagents.expose(A, TOUCH, 10) //Needed for proper floor wetting.
 	var/val2remove = 1
 	if(cleaner?.mind)
@@ -62,38 +55,12 @@
 		return
 
 	if(T)
-		//set the cleaning speed
-		var/clean_speedies = 1
-		if(user.mind)
-			clean_speedies = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
-
-		//add the cleaning overlay
-		var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
-		if(HAS_TRAIT(T, CURRENTLY_CLEANING))
-			already_cleaning = TRUE
-		else //add the trait and overlay
-			ADD_TRAIT(T, CURRENTLY_CLEANING, src)
-			if(T.plane > GLOB.cleaning_bubbles_lower.plane) //check if the higher overlay is necessary
-				T.add_overlay(GLOB.cleaning_bubbles_higher)
-			else if(T.plane == GLOB.cleaning_bubbles_lower.plane)
-				if(T.layer > GLOB.cleaning_bubbles_lower.layer)
-					T.add_overlay(GLOB.cleaning_bubbles_higher)
-				else
-					T.add_overlay(GLOB.cleaning_bubbles_lower)
-			else //(T.plane < GLOB.cleaning_bubbles_lower.plane)
-				T.add_overlay(GLOB.cleaning_bubbles_lower)
-
-		//do the cleaning
-		user.visible_message(span_notice("[user] begins to clean \the [T] with [src]."), span_notice("You begin to clean \the [T] with [src]..."))
-		if(do_after(user, mopspeed*clean_speedies, target = T))
-			to_chat(user, span_notice("You finish mopping."))
-			clean(T, user)
-
-		//remove the cleaning overlay
-		if(!already_cleaning)
-			T.cut_overlay(GLOB.cleaning_bubbles_lower)
-			T.cut_overlay(GLOB.cleaning_bubbles_higher)
-			REMOVE_TRAIT(T, CURRENTLY_CLEANING, src)
+		if(!reagents.has_chemical_flag(REAGENT_CLEANS, 1)) //won't clean the turf nor give you experience without cleaning reagents
+			cleaner.cleaning_strength = 0 //none of the cleaning flags
+			cleaner.experience_gain_modifier = 0
+		cleaner.clean(T, user)
+		cleaner.cleaning_strength = CLEAN_SCRUB
+		cleaner.experience_gain_modifier = 1
 
 /obj/item/mop/cyborg/Initialize(mapload)
 	. = ..()
