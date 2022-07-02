@@ -13882,6 +13882,7 @@
 /obj/structure/closet/mini_fridge{
 	name = "mini-fridge"
 	},
+/obj/item/reagent_containers/food/condiment/milk,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "ekk" = (
@@ -72881,7 +72882,7 @@
 /area/station/commons/storage/mining)
 "wMP" = (
 /obj/item/food/chococoin,
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/misc/ice/coldroom,
 /area/station/service/kitchen/coldroom)
 "wMT" = (
