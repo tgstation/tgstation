@@ -5,7 +5,8 @@ This is the style you must follow when writing code. It's important to note that
 2. [Paths and Inheritence](#paths-and-inheritence)
 3. [Variables](#variables)
 4. [Procs](#procs)
-5. [Things that do not matter](#things-that-do-not-matter)
+5. [Macros](#macros)
+6. [Things that do not matter](#things-that-do-not-matter)
 
 ## General Guidelines
 
@@ -397,6 +398,331 @@ turn_on(30) // Not fine!
 turn_on(power_usage = 30) // Fine!
 
 set_invincible(FALSE) // Fine! Boolean parameters don't always need to be named. In this case, it is obvious what it means.
+```
+
+## Macros
+
+Macros are, in essence, direct copy and pastes into the code. They are one of the few zero cost abstractions we have in DM, and you will see them often. Macros have strange syntax requirements, so if you see lots of backslashes and semicolons and braces that you wouldn't normally see, that is why.
+
+This section will assume you understand the following concepts:
+
+### Language - Hygienic
+We say a macro is [**hygienic**](https://en.wikipedia.org/wiki/Hygienic_macro) if, generally, it does not rely on input not given to it directly through the call site, and does not affect the call site outside of it in a way that could not be easily reused somewhere else.
+
+An example of a non-hygienic macro is:
+
+```dm
+#define GET_HEALTH(health_percent) ((##health_percent) * max_health)
+```
+
+In here, we rely on the external `max_health` value.
+
+Here are two examples of non-hygienic macros, because it affects its call site:
+
+```dm
+#define DECLARE_MOTH(name) var/mob/living/moth/moth = new(##name)
+#define RETURN_IF(condition) if (condition) { return; }
+```
+
+### Language - Side effects/Pure
+We say something has [**side effects**](https://en.wikipedia.org/wiki/Side_effect_(computer_science)) if it mutates anything outside of itself. We say something is **pure** if it does not.
+
+For example, this has no side effects, and is pure:
+```dm
+#define MOTH_MAX_HEALTH 500
+```
+
+This, however, performs a side effect of updating the health:
+```dm
+#define MOTH_SET_HEALTH(moth, new_health) ##moth.set_health(##new_health)
+```
+
+Now that you're caught up on the terms, let's get into the guidelines.
+
+### Naming
+With little exception, macros should be SCREAMING_SNAKE_CASE.
+
+### Put macro segments inside parentheses where possible.
+This will save you from bugs down the line with operator precedence.
+
+For example, the following macro:
+
+```dm
+#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION T20C + 10
+```
+
+...will break when order of operations comes into play:
+
+```dm
+var/temperature = MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION * 50
+
+// ...is preprocessed as...
+var/temperature = T20C + 10 * 50 // Oh no! T20C + 500!
+```
+
+This is [a real bug that tends to come up](https://github.com/tgstation/tgstation/pull/37116), so to prevent it, we defensively wrap macro bodies with parentheses where possible.
+
+```dm
+// Phew!
+#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION (T20C + 10)
+```
+
+The same goes for arguments passed to a macro...
+
+```
+// Guarantee 
+#define CALCULATE_TEMPERATURE(base) (T20C + (##base))
+```
+
+### Be hygienic where reasonably possible
+
+Consider the previously mentioned non-hygienic macro:
+
+```dm
+#define GET_HEALTH(health_percent) ((##health_percent) * max_health)
+```
+
+This relies on "max_health", but it is not obviously clear what the source is. This will also become worse if we *do* want to change where we get the source from. This would be preferential as:
+
+```dm
+#define GET_HEALTH(source, health_percent) ((##health_percent) * (##source).max_health)
+```
+
+When a macro can't be hygienic, such as in the case where a macro is preferred to do something like define a variable, it should still do its best to rely only on input given to it:
+
+```dm
+#define DECLARE_MOTH(name) var/mob/living/moth/moth = new(##name)
+```
+
+...would ideally be written as...
+
+```dm
+#define DECLARE_MOTH(var_name, name) var/mob/living/moth/##var_name = new(##name)
+```
+
+As usual, exceptions exist--for instance, accessing a global like a subsystem within a macro is generally acceptable.
+
+### Preserve hygiene using double underscores (`__`) and `do...while (FALSE)`
+
+Some macros will want to create variables for themselves, and not the consumer. For instance, consider this macro:
+
+```dm
+#define HOW_LONG(proc_to_call) \
+	var/current_time = world.time; \
+	##proc_to_call(); \
+	world.log << "That took [world.time - current_time] deciseconds to complete.";
+```
+
+There are two problems here.
+
+One is that it is unhygienic. The `current_time` variable is leaking into the call site.
+
+The second is that this will create weird errors if `current_time` is a variable that already exists, for instance:
+
+```dm
+var/current_time = world.time
+
+HOW_LONG(make_soup) // This will error!
+```
+
+If this seems unlikely to you, then also consider that this:
+
+```dm
+HOW_LONG(make_soup)
+HOW_LONG(eat_soup)
+```
+
+...will also error, since they are both declaring the same variable!
+
+There is a way to solve both of these, and it is through both the `do...while (FALSE)` pattern and by using `__` for variable names.
+
+This code would change to look like:
+
+```dm
+#define HOW_LONG(proc_to_call) \
+	do { \
+		var/__current_time = world.time; \
+		##proc_to_call(); \
+		world.log << "That took [world.time - current_time] deciseconds to complete."; \
+	} while (FALSE)
+```
+
+The point of the `do...while (FALSE)` here is to **create another scope**. It is impossible for `__current_time` to be used outside of the define itself. If you haven't seen `do...while` syntax before, it is just saying "do this while the condition is true", and by passing `FALSE`, we ensure it will only run once.
+
+### Keep anything you use more than once in variables
+
+Remember that macros are just pastes. This means that, if you're not thinking, you can end up [creating some really weird macros by reusing variables](https://github.com/tgstation/tgstation/pull/55074).
+
+```dm
+#define TEST_ASSERT_EQUAL(a, b) \
+ 	if ((##a) != (##b)) { \
+		return Fail("Expected [##a] to be equal to [##b]."); \
+	}
+```
+
+This code may look benign, but consider the following code:
+
+```dm
+/// Deal damage to the mob, and return their new health
+/mob/living/proc/attack_mob(damage)
+	health -= damage
+	say("Ouch!")
+	return health
+
+// Later, in a test, assuming mobs start at 100 health
+TEST_ASSERT_EQUAL(victim.attack_mob(20), 60)
+```
+
+We're only dealing 20 damage to the mob, so it'll have 80 health left. But the test will fail, and report `Expected 60 to be equal to 60.`
+
+Uh oh! That's because this compiled to:
+
+```dm
+if ((victim.attack_mob(20)) != 60)
+	return Fail("Expected [victim.attack_mob(20)] to be equal to [60].")
+```
+
+It's running the proc twice!
+
+To fix this, we need to make sure the proc only runs once, by creating a variable for it, and using our `do...while (FALSE)` pattern we learned earlier.
+
+```dm
+#define TEST_ASSERT_EQUAL(a, b) \
+	do { \
+		var/__a_value = ##a;
+		var/__b_value = ##b;
+
+		if (__a_value != __b_value) { \
+			return Fail("Expected [__a_value] to be equal to [__b_value]."); \
+		} \
+	} while (FALSE)
+```
+
+Now our code correctly reports `Expected 80 to be equal to 60`.
+
+### ...but if you must be unhygienic, try to restrict the scope.
+
+This guideline can make some code look extremely noisy if you are writing a large proc, or using the macro a large amount of times.
+
+In this case, if your macro is only used by one proc, define the macro in that proc, ideally after whatever variables it uses.
+
+```dm
+/proc/some_complex_proc()
+	var/counter = 0
+
+	#define MY_NECESSARY_MACRO counter += 5; do_something(counter);
+
+	// My complex code that uses MY_NECESSARY_MACRO here...
+
+	#undef MY_NECESSARY_MACRO
+```
+
+### Don't perform work in an unsuspecting macro
+
+Suppose we have the following macro:
+
+```dm
+#define PARTY_LIGHT_COLOR (pick(COLOR_BLUE, COLOR_RED, COLOR_GREEN))
+```
+
+When this is used, it'll look like:
+
+```dm
+set_color(PARTY_LIGHT_COLOR)
+```
+
+Because of how common using defines as constants is, this would seemingly imply the same thing! It does not look like any code should be executing at all. This code would preferably look like:
+
+```dm
+set_color(PARTY_LIGHT_COLOR())
+```
+
+...which *does* imply some work is happening.
+
+BYOND does not support `#define PARTY_LIGHT_COLOR()`, so instead we would write the define as:
+
+```dm
+#define PARTY_LIGHT_COLOR(...) (pick(COLOR_BLUE, COLOR_RED, COLOR_GREEN))
+```
+
+### `#undef` any macros you create, unless they are needed elsewhere
+
+We do not want macros to leak outside their file, this will create odd dependencies that are based on the filenames. Thus, you should `#undef` any macro you make.
+
+```dm
+// Start of corn.dm
+#define CORN_KERNELS 5
+
+// All my brilliant corn code
+
+#undef CORN_KERNELS
+```
+
+It is often preferable for your `#define` and `#undef` to surround the code that actually uses them, for instance:
+
+```dm
+/obj/item/corn
+	name = "yummy corn"
+
+#define CORN_HEALTH_GAIN 5
+
+/obj/item/corn/proc/eat(mob/living/consumer)
+	consumer.health += CORN_HEALTH_GAIN // yum
+
+#undef CORN_HEALTH_GAIN
+
+// My other corn code
+```
+
+If you want other files to use macros, put them in somewhere such as a file in `__DEFINES`. That way, the files are included in a consistent order:
+
+```dm
+#include "__DEFINES/my_defines.dm" // Will always be included first, because of the underscores
+#include "game/my_object.dm" // This will be able to consistently use defines put in my_defines.dm
+```
+
+### Use `##` to help with ambiguities
+
+Especially with complex macros, it might not be immediately obvious what's part of the macro and what isn't.
+
+```dm
+#define CALL_PROC_COMPLEX(source, proc_name) \
+	if (source.is_ready()) { \
+		source.proc_name(); \
+	}
+```
+
+`source` and `proc_name` are both going to be directly pasted in, but they look just like any other normal code, and so it makes reading this macro a bit harder.
+
+Consider instead:
+
+```dm
+#define CALL_PROC_COMPLEX(source, proc_name) \
+	if (##source.is_ready()) { \
+		##source.##proc_name(); \
+	}
+```
+
+`##` will paste in the define parameter directly, and makes it more clear what belongs to the macro.
+
+This is the most subjective of all the guidelines here, as it might just create visual noise in very simple macros, so use your best judgment.
+
+### For impure/unhygienic defines, use procs/normal code when reasonable
+
+Sometimes the best macro is one that doesn't exist at all. Macros can make some code fairly hard to maintain, due to their very weird syntax restrictions, and can be generally fairly mysterious, and hurt readability. Thus, if you don't have a strong reason to use a macro, consider just writing the code out normally or using a proc.
+
+```dm
+#define SWORD_HIT(sword, victim) { /* Ugly backslashes! */ \
+	##sword.attack(##victim); /* Ugly semicolons! */ \
+	##victim.say("Ouch!"); /* Even ugly comments! */ \
+}
+```
+
+This is a fairly egregious macro, and would be better off just written like:
+```dm
+/obj/item/sword/proc/hit(mob/victim)
+	attack(victim)
+	victim.say("Ouch!")
 ```
 
 ## Things that do not matter

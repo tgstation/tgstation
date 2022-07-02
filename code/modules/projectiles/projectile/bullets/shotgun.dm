@@ -1,5 +1,6 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
+	icon_state = "pellet"
 	damage = 50
 	sharpness = SHARP_POINTY
 	wound_bonus = 0
@@ -16,6 +17,7 @@
 
 /obj/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
+	icon_state = "pellet"
 	damage = 10
 	stamina = 55
 	wound_bonus = 20
@@ -24,6 +26,7 @@
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
+	icon_state = "pellet"
 	damage = 20
 
 /obj/projectile/bullet/incendiary/shotgun/no_trail
@@ -68,6 +71,7 @@
 
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
+	icon_state = "pellet"
 	damage = 15
 	paralyze = 10
 
@@ -77,6 +81,7 @@
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/pellet
+	icon_state = "pellet"
 	var/tile_dropoff = 0.45
 	var/tile_dropoff_s = 0.25
 
@@ -141,4 +146,5 @@
 // Mech Scattershot
 
 /obj/projectile/bullet/scattershot
+	icon_state = "pellet"
 	damage = 24

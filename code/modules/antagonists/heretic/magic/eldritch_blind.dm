@@ -1,5 +1,9 @@
 // Given to heretic monsters.
-/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch
-	action_background_icon_state = "bg_ecult"
+/datum/action/cooldown/spell/pointed/blind/eldritch
+	name = "Eldritch Blind"
+	background_icon_state = "bg_ecult"
+
+	school = SCHOOL_FORBIDDEN
 	invocation = "E'E'S"
-	range = 10
+
+	cast_range = 10

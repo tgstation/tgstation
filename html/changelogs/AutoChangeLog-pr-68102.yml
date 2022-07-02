@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - qol: "There is now a new preference in Game Preferences, Suppress All Ghost Rolls. If you tick this preference, you will not get a singular window pop-up whenever a Ghost Role is available. Intended for the few who really do need it."
+  - admin: "Admins get another additional preference where Suppress All Ghost Roles only works while they are currently in an adminned state. They will still get ghost rolls normally when they are in a deadminned state."
