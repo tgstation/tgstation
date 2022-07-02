@@ -1380,6 +1380,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	name = "Destruction Scan"
 	desc = "Scans the surrounding area for destruction. Scanned structures will rebuild significantly faster."
 
+/datum/action/item_action/pick_color
+	name = "Choose A Color"
+
 #undef GLOW_MODE
 #undef LIGHT_MODE
 #undef REMOVE_MODE

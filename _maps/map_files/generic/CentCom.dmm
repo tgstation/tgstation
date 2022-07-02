@@ -6680,9 +6680,7 @@
 	dir = 8
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/sign/warning/secure_area{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/secure_area/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -8504,9 +8502,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/emps,
 /obj/item/gun/energy/ionrifle,
-/obj/structure/sign/departments/medbay/alt{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -14230,9 +14226,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "Pu" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/misc/beach/sand,
 /area/centcom/central_command_areas/holding)
 "Pv" = (

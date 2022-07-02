@@ -30,7 +30,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
-	loot = list(/obj/item/organ/regenerative_core)
+	loot = list(/obj/item/organ/internal/regenerative_core)
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	var/has_clickbox = TRUE
 
@@ -122,7 +122,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "bounces harmlessly off of"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
-	loot = list(/obj/item/organ/regenerative_core/legion)
+	loot = list(/obj/item/organ/internal/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	del_on_death = 1
 	stat_attack = HARD_CRIT
@@ -267,7 +267,7 @@
 	layer = MOB_LAYER
 	del_on_death = TRUE
 	sentience_type = SENTIENCE_BOSS
-	loot = list(/obj/item/organ/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 5)
+	loot = list(/obj/item/organ/internal/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 5)
 	move_to_delay = 14
 	vision_range = 5
 	aggro_vision_range = 9
@@ -294,7 +294,7 @@
 	icon_aggro = "snowlegion_alive"
 	icon_dead = "snowlegion"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
-	loot = list(/obj/item/organ/regenerative_core/legion)
+	loot = list(/obj/item/organ/internal/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow/make_legion(mob/living/carbon/human/H)
