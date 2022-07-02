@@ -65,8 +65,7 @@
 		if(human_target.lip_style)
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			human_target.update_lips(null)
-			if(on_cleaned_callback != null)
-				on_cleaned_callback.Invoke()
+			on_cleaned_callback?.Invoke()
 
 	else //normal cleaning
 		user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
@@ -86,8 +85,7 @@
 						window.bloodied = FALSE
 			user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
 			target.wash(cleaning_strength)
-			if(on_cleaned_callback != null)
-				on_cleaned_callback.Invoke()
+			on_cleaned_callback?.Invoke()
 
 
 	//remove the cleaning overlay
@@ -96,7 +94,6 @@
 		target.cut_overlay(GLOB.cleaning_bubbles_higher)
 		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
 
-//TODO use ? for callback access
 //TODO write datum code comment
 //TODO QOL washing walls with blood on them
 //TODO apply to soap, mop, cleanbot
