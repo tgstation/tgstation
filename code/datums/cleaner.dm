@@ -1,3 +1,9 @@
+/**
+ * Can be used to clean things.
+ * Takes care of duration, cleaning skill and special cleaning interactions.
+ * Callbacks can be set by the datum holding the cleaner to add custom functionality.
+ * Soap can use a callback to decrease the amount of uses it has left after cleaning for example.
+ */
 /datum/cleaner
 	/// Gets called when trying to clean something, the cleaning will be cancelled if this callback returns false.
 	var/datum/callback/clean_start_callback
@@ -12,14 +18,17 @@
 	/// Multiplies the cleaning skill experience gained from cleaning.
 	var/experience_gain_modifier = 1
 
-
-
+/**
+ * Creates a new cleaner.
+ *
+ * Arguments
+ * * clean_start_callback the callback that should be called when cleaning starts, cleaning is cancelled if this callback returns FALSE
+ * * on_cleaned_callback the callback that should be called when something is cleaned successfully
+ */
 
 /datum/cleaner/New(var/datum/callback/clean_start_callback = null, var/datum/callback/on_cleaned_callback = null)
 	src.clean_start_callback = clean_start_callback
 	src.on_cleaned_callback = on_cleaned_callback
-
-
 
 /**
  * Cleans something using this cleaner.
@@ -57,7 +66,6 @@
 		//offsets the multiplier you get from cleaning skill, but doesn't allow the duration to be longer than the base duration
 		cleaning_duration = cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_speed_modifier_offset,1)
 
-
 	//do the cleaning
 	if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH) //washing that potty mouth of yours
 		var/mob/living/carbon/human/human_target = target
@@ -87,15 +95,12 @@
 			target.wash(cleaning_strength)
 			on_cleaned_callback?.Invoke()
 
-
 	//remove the cleaning overlay
 	if(!already_cleaning)
 		target.cut_overlay(GLOB.cleaning_bubbles_lower)
 		target.cut_overlay(GLOB.cleaning_bubbles_higher)
 		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
 
-//TODO write datum code comment
-//TODO QOL washing walls with blood on them
 //TODO apply to soap, mop, cleanbot
 //TODO give this a better name (meelee_cleaner?)
 //TODO move global overlays to here?
