@@ -19,17 +19,17 @@
 	return FALSE
 
 
-/datum/saymode/vocal_cords
-	key = MODE_KEY_vocal_cords
-	mode = MODE_vocal_cords
+/datum/saymode/vocalcords
+	key = MODE_KEY_VOCALCORDS
+	mode = MODE_VOCALCORDS
 
 /datum/saymode/vocal_cords/handle_message(mob/living/user, message, datum/language/language)
 	if(iscarbon(user))
-		var/mob/living/carbon/speaking_carbon = user
-		var/obj/item/organ/internal/vocal_cords/active_cords = speaking_carbon.getorganslot(ORGAN_SLOT_VOICE)
-		if(active_cords?.can_speak_with())
-			active_cords.handle_speech(message) //message
-			active_cords.speak_with(message) //action
+		var/mob/living/carbon/C = user
+		var/obj/item/organ/internal/vocalcords/active_cords = C.getorganslot(ORGAN_SLOT_VOICE)
+		if(V?.can_speak_with())
+			V.handle_speech(message) //message
+			V.speak_with(message) //action
 	return FALSE
 
 

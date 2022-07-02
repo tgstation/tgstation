@@ -1,4 +1,4 @@
-/obj/item/organ/internal/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_vocal_cords channel
+/obj/item/organ/internal/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_VOCALCORDS channel
 	name = "vocal cords"
 	icon_state = "appendix"
 	visual = FALSE

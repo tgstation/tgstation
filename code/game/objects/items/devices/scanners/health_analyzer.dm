@@ -311,7 +311,6 @@
 			|| targetspecies.mutantliver != initial(targetspecies.mutantliver) \
 			|| targetspecies.mutantstomach != initial(targetspecies.mutantstomach) \
 			|| targetspecies.mutantappendix != initial(targetspecies.mutantappendix) \
-			|| targetspecies.mutant_vocal_cords != initial(targetspecies.mutantappendix) \
 			|| targetspecies.flying_species != initial(targetspecies.flying_species)
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
