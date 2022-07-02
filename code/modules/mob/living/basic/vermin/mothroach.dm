@@ -1,6 +1,6 @@
 /mob/living/basic/mothroach
 	name = "mothroach"
-	desc = "An ancient ancestor of the moth, which actually just looks like the crossbreed of a moth and a cockroach."
+	desc = "An ancient ancestor of the moth that actually just looks like the crossbreed of a moth and a cockroach."
 	icon_state = "mothroach"
 	icon_living = "mothroach"
 	icon_dead = "mothroach_dead"
@@ -8,14 +8,12 @@
 	held_rh = 'icons/mob/animal_item_rh.dmi'
 	head_icon = 'icons/mob/animal_item_head.dmi'
 	held_state = "mothroach"
-	density = FALSE
+	density = TRUE
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
-	mob_size = MOB_SIZE_TINY
-	health = 1
-	maxHealth = 1
+	mob_size = MOB_SIZE_SMALL
+	health = 25
+	maxHealth = 25
 	speed = 1.25
-	gold_core_spawnable = NO_SPAWN
-	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
@@ -36,7 +34,7 @@
 
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
+	AddElement(/datum/element/basic_body_temp_sensitive, 300, INFINITY)
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
