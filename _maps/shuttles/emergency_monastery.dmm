@@ -2019,7 +2019,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Cg" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)

@@ -212,7 +212,7 @@
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "aM" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/closet/secure_closet/freezer/meat/unlocked,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
@@ -337,7 +337,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "bf" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/closet/secure_closet/freezer/meat/unlocked,
 /obj/item/food/meat/slab/bear,
 /obj/item/food/meat/slab/bear,
 /obj/item/food/meat/slab/bear,
@@ -2570,7 +2570,7 @@
 /area/centcom/tdome/observation)
 "hu" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /obj/item/food/meat/slab/rawcrab,
 /obj/item/food/meat/slab/rawcrab,
 /obj/item/food/meat/slab/rawcrab,
@@ -5180,7 +5180,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "oF" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/whitebeet,
@@ -5337,7 +5337,7 @@
 /turf/open/floor/engine/vacuum,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "oZ" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/closet/secure_closet/freezer/meat/unlocked,
 /obj/item/food/fishmeat,
 /obj/item/food/fishmeat,
 /obj/item/food/fishmeat,
@@ -6633,7 +6633,7 @@
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/closet/secure_closet/freezer/meat/unlocked,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "td" = (
@@ -9396,7 +9396,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "Bn" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /obj/item/food/grown/rice,
 /obj/item/food/grown/rice,
 /obj/item/food/grown/rice,
@@ -14364,7 +14364,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "PP" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /obj/item/food/grown/chili,
 /obj/item/food/grown/chili,
 /obj/item/food/grown/chili,
@@ -15550,7 +15550,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "Tf" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open{
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked{
 	name = "freezer"
 	},
 /obj/item/food/meat/slab/killertomato,
@@ -17875,7 +17875,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/centcom/central_command_areas/holding)
 "Zj" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /obj/item/food/grown/banana,
 /obj/item/food/grown/banana,
 /obj/item/food/grown/wheat,

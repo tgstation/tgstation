@@ -2207,7 +2207,7 @@
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/bar)
 "my" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /obj/item/reagent_containers/food/condiment/enzyme,
 /obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
@@ -3010,7 +3010,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance{
+/obj/structure/closet/secure_closet/freezer/milk_eggs_rice_sugar_flour/maintenance{
 	req_access = null
 	},
 /obj/structure/cable,

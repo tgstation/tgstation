@@ -548,7 +548,7 @@
 /turf/closed/wall,
 /area/ruin/pizzeria/kitchen)
 "rY" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /obj/item/reagent_containers/food/condiment/flour,
 /obj/item/reagent_containers/food/condiment/milk,
 /obj/item/reagent_containers/food/condiment/milk{

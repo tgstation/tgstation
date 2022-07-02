@@ -1213,11 +1213,11 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/research)
 "dn" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/closet/secure_closet/freezer/meat/unlocked,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
 "do" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/closet/secure_closet/freezer/meat/unlocked,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
@@ -1348,7 +1348,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
 	},
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/kitchen)
@@ -1537,7 +1537,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/kitchen)
@@ -6095,7 +6095,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/cavern2)
 "qI" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/snowdin/post/cavern2)
 "qK" = (

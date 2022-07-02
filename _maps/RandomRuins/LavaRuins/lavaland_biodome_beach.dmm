@@ -427,7 +427,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "nI" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar{
 	req_access = null
 	},
 /obj/item/reagent_containers/food/condiment/milk,
@@ -877,7 +877,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "Ds" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar{
 	req_access = null
 	},
 /turf/open/floor/wood,

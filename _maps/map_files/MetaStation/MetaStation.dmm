@@ -33643,7 +33643,7 @@
 /area/station/medical/pharmacy)
 "lXC" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/obj/structure/closet/secure_closet/freezer/milk_eggs_rice_sugar_flour/maintenance,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
@@ -33866,7 +33866,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -51415,7 +51415,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},

@@ -1532,7 +1532,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
 "yp" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /obj/item/knife/kitchen,
 /obj/item/food/grown/carrot,
 /obj/item/food/grown/potato,

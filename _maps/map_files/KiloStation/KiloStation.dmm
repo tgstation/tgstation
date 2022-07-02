@@ -12043,7 +12043,7 @@
 /turf/closed/wall/rust,
 /area/station/service/bar/atrium)
 "dCW" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/cold/directional/west,
@@ -55714,7 +55714,7 @@
 	},
 /area/station/hallway/primary/central)
 "pVS" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /obj/item/reagent_containers/food/condiment/sugar,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/cobweb,

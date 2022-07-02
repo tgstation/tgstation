@@ -763,7 +763,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "Ni" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/structure/closet/secure_closet/freezer/empty/unlocked,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)

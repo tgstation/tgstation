@@ -767,7 +767,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "cG" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/closet/secure_closet/freezer/meat/unlocked,
 /obj/item/food/meat/slab/synthmeat,
 /obj/item/food/meat/slab/synthmeat,
 /obj/item/food/meat/slab/synthmeat,
@@ -982,7 +982,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dt" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /obj/item/reagent_containers/food/condiment/mayonnaise,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -2447,7 +2447,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "is" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /obj/item/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)

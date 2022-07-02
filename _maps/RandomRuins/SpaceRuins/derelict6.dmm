@@ -161,12 +161,12 @@
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/unpowered)
 "aK" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /obj/machinery/light/broken/directional/north,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/unpowered)
 "aL" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/unpowered)
 "aM" = (

@@ -125,7 +125,7 @@
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/booze,
-/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/structure/closet/secure_closet/freezer/empty/unlocked,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -198,7 +198,7 @@
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/structure/closet/secure_closet/freezer/empty/unlocked,
 /turf/open/floor/iron/white/corner,
 /area/ruin/space/has_grav/thelizardsgas)
 "wb" = (
@@ -553,7 +553,7 @@
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/structure/closet/secure_closet/freezer/empty/unlocked,
 /turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "Zr" = (

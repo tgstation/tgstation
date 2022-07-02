@@ -1129,7 +1129,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "gb" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gc" = (

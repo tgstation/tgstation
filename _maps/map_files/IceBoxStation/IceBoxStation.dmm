@@ -5988,7 +5988,7 @@
 /obj/effect/turf_decal/tile/blue/diagonal_edge,
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/light/directional/south,
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "bPP" = (
@@ -12478,7 +12478,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "dMO" = (
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/obj/structure/closet/secure_closet/freezer/milk_eggs_rice_sugar_flour/maintenance,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
@@ -51885,7 +51885,7 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "qiJ" = (
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/obj/structure/closet/secure_closet/freezer/milk_eggs_rice_sugar_flour/maintenance,
 /obj/effect/spawner/random/contraband/prison,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/mess)
@@ -72881,7 +72881,7 @@
 /area/station/commons/storage/mining)
 "wMP" = (
 /obj/item/food/chococoin,
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
 /turf/open/misc/ice/coldroom,
 /area/station/service/kitchen/coldroom)
 "wMT" = (
@@ -76154,7 +76154,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "xQm" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs{
 	req_access = "0"
 	},
 /obj/machinery/airalarm/directional/west,

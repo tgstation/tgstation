@@ -708,7 +708,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cr" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar{
 	req_access = list("kitchen")
 	},
 /obj/item/storage/fancy/egg_box,
@@ -741,7 +741,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cw" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/closet/secure_closet/freezer/meat/unlocked,
 /obj/item/food/meat/slab/goliath,
 /obj/item/food/meat/slab/xeno,
 /obj/item/food/meat/slab/spider,

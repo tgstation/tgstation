@@ -1076,7 +1076,7 @@
 /turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
 "jp" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/potato,
 /obj/item/food/grown/whitebeet,
@@ -2354,7 +2354,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "wX" = (
-/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/structure/closet/secure_closet/freezer/meat/unlocked,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawbacon,
