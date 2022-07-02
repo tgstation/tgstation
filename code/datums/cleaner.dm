@@ -5,12 +5,10 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 /**
  * Can be used to clean things.
  * Takes care of duration, cleaning skill and special cleaning interactions.
- * Callbacks can be set by the datum holding the cleaner to add custom functionality.
- * Soap can use a callback to decrease the amount of uses it has left after cleaning for example.
+ * A callback can be set by the datum holding the cleaner to add custom functionality.
+ * Soap uses a callback to decrease the amount of uses it has left after cleaning for example.
  */
 /datum/cleaner
-	/// Gets called when trying to clean something, the cleaning will be cancelled if this callback returns false.
-	var/datum/callback/clean_start_callback
 	/// Gets called when something is successfully cleaned.
 	var/datum/callback/on_cleaned_callback
 	/// The time it takes to clean something, without reductions from the cleaning skill modifier.
@@ -26,28 +24,22 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
  * Creates a new cleaner.
  *
  * Arguments
- * * clean_start_callback the callback that should be called when cleaning starts, cleaning is cancelled if this callback returns FALSE
  * * on_cleaned_callback the callback that should be called when something is cleaned successfully
  */
 
-/datum/cleaner/New(var/datum/callback/clean_start_callback = null, var/datum/callback/on_cleaned_callback = null)
-	src.clean_start_callback = clean_start_callback
+/datum/cleaner/New(var/datum/callback/on_cleaned_callback = null)
 	src.on_cleaned_callback = on_cleaned_callback
 
 /**
  * Cleans something using this cleaner.
  * The cleaning duration is modified by the cleaning skill of the user.
- * Successfully cleaning gives cleaning experience to the user.
+ * Successfully cleaning gives cleaning experience to the user and invokes the on_cleaned_callback.
  *
  * Arguments
  * * target the thing being cleaned
  * * user the person doing the cleaning
  */
 /datum/cleaner/proc/clean(atom/target as obj|turf|area, mob/living/user)
-	if(clean_start_callback != null)
-		if(clean_start_callback.Invoke(target, user) == FALSE)
-			return
-
 	//add the cleaning overlay
 	var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
 	if(HAS_TRAIT(target, CURRENTLY_CLEANING))
@@ -96,5 +88,4 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 		target.cut_overlay(GLOB.cleaning_bubbles_higher)
 		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
 
-//TODO remove before cleaning callback
 //TODO remove cleaning animation stuff

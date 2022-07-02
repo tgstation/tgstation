@@ -23,7 +23,7 @@
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()
-	cleaner = new /datum/cleaner(null, CALLBACK(src, .proc/apply_reagents))
+	cleaner = new /datum/cleaner(CALLBACK(src, .proc/apply_reagents))
 	cleaner.base_cleaning_duration = mopspeed
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
