@@ -489,7 +489,11 @@
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
-		owner.visible_message(span_warning("[owner]'s head splatters with a sickening crunch!"), ignored_mobs = list(owner))
+		if(owner.has_trauma_type(/datum/brain_trauma/special/obsessed))
+			owner.visible_message(span_warning("As [owner]'s head splatters open, something wicked crawls out of it!"), ignored_mobs = list(owner)) // The voice in the obsessed's head no longer has a place to reside in. It must be made manifest.
+			RegisterSignal(new /mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit(get_turf(owner)), COMSIG_LIVING_DEATH, .proc/on_death)
+		else
+			owner.visible_message(span_warning("[owner]'s head splatters with a sickening crunch!"), ignored_mobs = list(owner))
 		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 		head.dismember(BRUTE)
 		head.drop_organs()
@@ -520,3 +524,9 @@
 
 	if(istype(new_limb, /obj/item/bodypart/head))
 		return COMPONENT_NO_ATTACH
+
+///Handles curing the trauma after the spirit dies
+/datum/mutation/human/headless/proc/on_death()
+	SIGNAL_HANDLER
+
+	owner.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_LOBOTOMY)

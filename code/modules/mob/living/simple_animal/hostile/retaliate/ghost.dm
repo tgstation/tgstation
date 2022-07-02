@@ -64,3 +64,26 @@
 		ghost_facial_hair.alpha = 200
 		ghost_facial_hair.color = ghost_facial_hair_color
 		add_overlay(ghost_facial_hair)
+
+/mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit
+	random = FALSE
+	name = "Malign Spirit of Obsession"
+	desc = "The chip on one's shoulder, the voice of obsession in their head, made manifest!"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "ghost"
+	icon_living = "ghost"
+	turns_per_move = 5
+	healable = 0
+	speed = 0
+	maxHealth = 135
+	health = 135
+	harm_intent_damage = 14
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attack_sound = 'sound/hallucinations/growl3.ogg'
+	speak_emote = list("wails")
+
+/mob/living/simple_animal/hostile/retaliate/ghost/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/knockback, 3, FALSE, TRUE)
+	Retaliate()
