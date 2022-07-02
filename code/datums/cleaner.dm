@@ -1,7 +1,3 @@
-//cleaning animation overlays
-GLOBAL_DATUM_INIT(cleaning_bubbles_lower, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, GAME_PLANE)) //displays at the top of floor tiles, but under mobs
-GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, ABOVE_GAME_PLANE)) //displays above mobs
-
 /**
  * Can be used to clean things.
  * Takes care of duration, cleaning skill and special cleaning interactions.
@@ -40,22 +36,6 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
  * * user the person doing the cleaning
  */
 /datum/cleaner/proc/clean(atom/target as obj|turf|area, mob/living/user)
-	//add the cleaning overlay
-	var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
-	if(HAS_TRAIT(target, CURRENTLY_CLEANING))
-		already_cleaning = TRUE
-	else //add the trait and overlay
-		ADD_TRAIT(target, CURRENTLY_CLEANING, src)
-		if(target.plane > GLOB.cleaning_bubbles_lower.plane) //check if the higher overlay is necessary
-			target.add_overlay(GLOB.cleaning_bubbles_higher)
-		else if(target.plane == GLOB.cleaning_bubbles_lower.plane)
-			if(target.layer > GLOB.cleaning_bubbles_lower.layer)
-				target.add_overlay(GLOB.cleaning_bubbles_higher)
-			else
-				target.add_overlay(GLOB.cleaning_bubbles_lower)
-		else //(target.plane < GLOB.cleaning_bubbles_lower.plane)
-			target.add_overlay(GLOB.cleaning_bubbles_lower)
-
 	//set the cleaning duration
 	var/cleaning_duration = base_cleaning_duration
 	if(user.mind) //higher cleaning skill can make the duration shorter
@@ -81,11 +61,3 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 		user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
 		target.wash(cleaning_strength)
 		on_cleaned_callback?.Invoke(target, user)
-
-	//remove the cleaning overlay
-	if(!already_cleaning)
-		target.cut_overlay(GLOB.cleaning_bubbles_lower)
-		target.cut_overlay(GLOB.cleaning_bubbles_higher)
-		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
-
-//TODO remove cleaning animation stuff
