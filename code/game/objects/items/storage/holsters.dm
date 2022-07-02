@@ -20,7 +20,7 @@
 /obj/item/storage/belt/holster/Initialize()
 	. = ..()
 	atom_storage.max_slots = 1
-	atom_storage.max_total_storage = WEIGHT_CLASS_HUGE
+	atom_storage.max_total_storage = 16
 	atom_storage.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
