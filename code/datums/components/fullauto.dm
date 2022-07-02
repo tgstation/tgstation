@@ -22,6 +22,7 @@
 	var/windup_autofire_cap = 0.3
 	///How long it takes for weapons that have spooled-up to reset back to the original firing speed
 	var/windup_spindown = 3 SECONDS
+	///Timer for tracking the spindown reset timings
 	var/timerid
 	COOLDOWN_DECLARE(next_shot_cd)
 
