@@ -7,10 +7,9 @@ export const StateSelectModal = (props, context) => {
   const [input, setInput] = useLocalState(context, 'newStateName', '');
   const { states } = data;
   return (
-    <Modal>
+    <Modal height="400px" width="300px">
       <Section
-        height="400px"
-        width="300px"
+        fill
         title="States"
         buttons={
           <Button
@@ -32,10 +31,9 @@ export const StateSelectModal = (props, context) => {
             {value}
           </Button>
         ))}
-        <Stack>
-          <Stack.Item>
+        <Stack fill>
+          <Stack.Item shrink basis="100%">
             <Input
-              width="250px"
               fluid
               placeholder="New State"
               value={input}
