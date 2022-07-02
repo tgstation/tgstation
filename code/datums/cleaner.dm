@@ -1,3 +1,7 @@
+//cleaning animation overlays
+GLOBAL_DATUM_INIT(cleaning_bubbles_lower, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, GAME_PLANE)) //displays at the top of floor tiles, but under mobs
+GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, ABOVE_GAME_PLANE)) //displays above mobs
+
 /**
  * Can be used to clean things.
  * Takes care of duration, cleaning skill and special cleaning interactions.
@@ -103,4 +107,4 @@
 
 //TODO apply to soap, mop, cleanbot
 //TODO give this a better name (meelee_cleaner?)
-//TODO move global overlays to here?
+//TODO keep mouth cleaning to just soap?
