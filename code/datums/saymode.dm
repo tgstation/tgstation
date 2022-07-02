@@ -23,10 +23,10 @@
 	key = MODE_KEY_VOCALCORDS
 	mode = MODE_VOCALCORDS
 
-/datum/saymode/vocal_cords/handle_message(mob/living/user, message, datum/language/language)
+/datum/saymode/vocalcords/handle_message(mob/living/user, message, datum/language/language)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		var/obj/item/organ/internal/vocalcords/active_cords = C.getorganslot(ORGAN_SLOT_VOICE)
+		var/obj/item/organ/internal/vocalcords/V = C.getorganslot(ORGAN_SLOT_VOICE)
 		if(V?.can_speak_with())
 			V.handle_speech(message) //message
 			V.speak_with(message) //action
