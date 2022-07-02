@@ -34,6 +34,7 @@
 	. = ..()
 	cleaner = new /datum/cleaner(null, CALLBACK(src, .proc/decreaseUses))
 	cleaner.base_cleaning_duration = cleanspeed
+	cleaner.skill_duration_modifier_offset = 0.1 //less scaling for soapies
 
 /obj/item/soap/ComponentInitialize()
 	. = ..()

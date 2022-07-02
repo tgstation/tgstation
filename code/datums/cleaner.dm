@@ -15,8 +15,8 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 	var/datum/callback/on_cleaned_callback
 	/// The time it takes to clean something, without reductions from the cleaning skill modifier.
 	var/base_cleaning_duration = 3 SECONDS
-	/// Offsets the cleaning duration modifier that you get from your cleaning skill, the duration cannot be modified to be more than the base duration.
-	var/skill_speed_modifier_offset = 0
+	/// Offsets the cleaning duration modifier that you get from your cleaning skill, the duration won't be modified to be more than the base duration.
+	var/skill_duration_modifier_offset = 0
 	/// Determines what this cleaner can wash off, [the available options are found here](code/__DEFINES/cleaning.html).
 	var/cleaning_strength = CLEAN_SCRUB
 	/// Multiplies the cleaning skill experience gained from cleaning.
@@ -68,7 +68,7 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 	var/cleaning_duration = base_cleaning_duration
 	if(user.mind) //higher cleaning skill can make the duration shorter
 		//offsets the multiplier you get from cleaning skill, but doesn't allow the duration to be longer than the base duration
-		cleaning_duration = cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_speed_modifier_offset,1)
+		cleaning_duration = cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_duration_modifier_offset,1)
 
 	//do the cleaning
 	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
@@ -98,4 +98,3 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 
 //TODO apply to mop, cleanbot
 //TODO give this a better name (meelee_cleaner?)
-//TODO ADD SOAP SKILL OFFSET DONT FORGET IDIOT
