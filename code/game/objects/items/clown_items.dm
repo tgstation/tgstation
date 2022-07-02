@@ -120,6 +120,7 @@
  *
  * The higher the cleaning skill, the less likely the soap will lose a use.
  * Arguments
+ * * target - The atom that is being cleaned
  * * user - The mob that is using the soap to clean.
  */
 /obj/item/soap/proc/decreaseUses(atom/target, mob/living/user)
