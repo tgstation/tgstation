@@ -150,7 +150,7 @@ SUBSYSTEM_DEF(lua)
 
 	// Update every lua editor TGUI open for each state that had a task awakened or resumed
 	for(var/state in affected_states)
-		var/list/editor_list = editors["\ref[state]"]
+		var/list/editor_list = LAZYACCESS(editors, "\ref[state]")
 		if(editor_list)
 			for(var/datum/lua_editor/editor in editor_list)
 				SStgui.update_uis(editor)
