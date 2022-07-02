@@ -544,7 +544,7 @@
 	var/client/our_client = user.client
 	if(!our_client)
 		return
-	our_client.eye = target_move
+	our_client.set_eye(target_move)
 	// Let's smooth out that movement with an animate yeah?
 	// If the new x is greater (move is left to right) we get a negative offset. vis versa
 	our_client.pixel_x = (x - target_move.x) * world.icon_size

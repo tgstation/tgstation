@@ -14,6 +14,10 @@
 #define SET_PLANE(thing, new_value, z_reference) (thing.plane = MUTATE_PLANE(new_value, z_reference))
 #define SET_PLANE_W_SCALAR(thing, new_value, multiplier) (thing.plane = GET_NEW_PLANE(new_value, multiplier))
 
+// Lemon todo: add support for editing other user's planes
+// Potentially even support for viewing their plane masters while doing so
+// Consider adding a low spec mode if possible, seen too many fps complaints, concerning
+// AIs can see through static via openspace, fix that too
 // Lemon todo: There's way too many get_turf(src) calls using SET_PLANE
 // You should make a macro just for that case, reduce code bloat
 // Global todos:

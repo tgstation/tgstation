@@ -145,7 +145,7 @@
 		if(!do_after(src, 20, target = target))
 			return FALSE
 	forceMove(get_turf(target))
-	client.eye = src
+	client.set_eye(src)
 	SEND_SIGNAL(src, COMSIG_LIVING_AFTERPHASEIN, target)
 	visible_message(span_boldwarning("[src] rises out of the pool of blood!"))
 	exit_blood_effect(target)

@@ -29,7 +29,7 @@
 	if(same_z_layer)
 		return
 	update_ai_detect_hud()
-	
+
 /mob/camera/ai_eye/examine(mob/user) //Displays a silicon's laws to ghosts
 	. = ..()
 	if(istype(ai) && ai.laws && isobserver(user))
@@ -100,7 +100,7 @@
 		if(use_static)
 			ai.camera_visibility(src)
 		if(ai.client && !ai.multicam_on)
-			ai.client.eye = src
+			ai.client.set_eye(src)
 		update_ai_detect_hud()
 		update_parallax_contents()
 		//Holopad

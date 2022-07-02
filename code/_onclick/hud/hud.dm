@@ -125,13 +125,21 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	AddComponent(/datum/component/zparallax, owner.client)
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_plane_increase)
-	RegisterSignal(owner, COMSIG_MOB_RESET_PERSPECTIVE, .proc/on_eye_change)
-	if(mymob.client?.eye)
-		eye_z_changed(mymob.client.eye)
+	RegisterSignal(mymob, COMSIG_MOB_LOGIN, .proc/client_refresh)
+	RegisterSignal(mymob, COMSIG_MOB_LOGOUT, .proc/clear_client)
+
+/datum/hud/proc/client_refresh(datum/source)
+	RegisterSignal(mymob.client, COMSIG_CLIENT_SET_EYE, .proc/on_eye_change)
+	on_eye_change(null, null, mymob.client.eye)
+
+/datum/hud/proc/clear_client(datum/source)
+	UnregisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE)
+	UnregisterSignal(mymob.canon_client.eye, COMSIG_MOVABLE_Z_CHANGED)
 
 /datum/hud/proc/on_eye_change(datum/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
-	UnregisterSignal(old_eye, COMSIG_MOVABLE_Z_CHANGED)
+	if(old_eye)
+		UnregisterSignal(old_eye, COMSIG_MOVABLE_Z_CHANGED)
 	RegisterSignal(new_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/eye_z_changed)
 	eye_z_changed(new_eye)
 
