@@ -410,7 +410,7 @@
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
 
-/obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
+/obj/item/storage/box/syndie_kit/chemical/Initialize()
 	. = ..()
 	atom_storage.max_slots = 14
 
