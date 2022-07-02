@@ -27,10 +27,7 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)
 "h" = (
-/obj/structure/closet/secure_closet/freezer/meat/unlocked{
-	name = "\";
-	meat\" fridge" = None
-	},
+/obj/structure/closet/secure_closet/freezer/meat/unlocked,
 /obj/item/food/meat/slab/bear,
 /obj/item/food/meat/slab/corgi,
 /obj/item/food/meat/slab/goliath,
