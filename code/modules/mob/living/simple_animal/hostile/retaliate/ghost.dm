@@ -77,7 +77,7 @@
 	speed = 0
 	maxHealth = 135
 	health = 135
-	harm_intent_damage = 14
+	harm_intent_damage = 15
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attack_sound = 'sound/hallucinations/growl3.ogg'
