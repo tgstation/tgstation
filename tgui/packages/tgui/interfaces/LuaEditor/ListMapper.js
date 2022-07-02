@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Collapsible, LabeledList, Section } from '../../components';
 
-const RefRegex = RegExp('\\[0x[0-9a-fA-F]+]$');
+const RefRegex = RegExp('^.+ \\[0x[0-9a-fA-F]+]$');
 const FunctionRegex = RegExp('^function: 0x[0-9a-fA-F]+$');
 const UnconvertibleLuaValueRegex = RegExp(
   '^(table|function|thread): 0x[0-9a-fA-F]+$'
