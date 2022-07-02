@@ -53,9 +53,9 @@
 		cleaning_duration = cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_speed_modifier_offset,1)
 
 	//do the cleaning
-	user.visible_message(span_notice("[user] starts to wipe down [target] with [src]!"), span_notice("You start to wipe down [target] with [src]..."))
+	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
 	if(do_after(user, cleaning_duration, target = target))
-		user.visible_message(span_notice("[user] finishes wiping off [target]!"), span_notice("You finish wiping off [target]."))
+		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
 		if(user.mind) //give cleaning experience to the user
 			if(isturf(target))
 				for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
@@ -72,7 +72,6 @@
 	if(on_cleaned_callback != null)
 		on_cleaned_callback.Invoke()
 
-//TODO change visible message
 //TODO add soap features
 //TODO apply to soap, mop, cleanbot
 //TODO give this a better name (meelee_cleaner?)
