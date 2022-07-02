@@ -590,7 +590,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
 			air_update_turf(FALSE, FALSE)
 
-	if(take_atmos_damage()) // A bit different than other atmos devices it seems. Wont stop if currently taking damage.
+	// A bit different than other atmos devices. Wont stop if currently taking damage.
+	if(take_atmos_damage())
 		excited = TRUE
 	update_appearance()
 	return ..()
