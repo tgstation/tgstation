@@ -2,5 +2,5 @@
 /proc/log_research(text)
 	if(!text)
 		return
-	var/F = file("[GLOB.log_directory]/[INVESTIGATE_RESEARCH].html")
-	WRITE_FILE(F, "[time_stamp()] [message]<br>")
+	var/html_file = file("[GLOB.log_directory]/[INVESTIGATE_RESEARCH].html")
+	WRITE_FILE(html_file, "[time_stamp()] [text]<br>")
