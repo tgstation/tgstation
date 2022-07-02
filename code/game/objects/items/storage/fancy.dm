@@ -21,15 +21,22 @@
 	var/contents_tag = "errors"
 	/// What type of thing to fill this storage with.
 	var/spawn_type = null
+	/// How many of the things to fill this storage with.
+	var/spawn_count = 0
 	/// Whether the container is open or not
 	var/is_open = FALSE
 	/// What this container folds up into when it's empty.
 	var/obj/fold_result = /obj/item/stack/sheet/cardboard
 
+/obj/item/storage/fancy/Initialize()
+	. = ..()
+
+	atom_storage.max_slots = spawn_count
+
 /obj/item/storage/fancy/PopulateContents()
 	if(!spawn_type)
 		return
-	for(var/i = 1 to atom_storage.max_slots)
+	for(var/i = 1 to spawn_count)
 		new spawn_type(src)
 
 /obj/item/storage/fancy/update_icon_state()
@@ -79,6 +86,7 @@
 	icon_state = "donutbox_open" //composite image used for mapping
 	base_icon_state = "donutbox"
 	spawn_type = /obj/item/food/donut/plain
+	spawn_count = 6
 	is_open = TRUE
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 	custom_premium_price = PAYCHECK_COMMAND * 1.75
@@ -86,7 +94,6 @@
 
 /obj/item/storage/fancy/donut_box/Initialize()
 	. = ..()
-	atom_storage.max_slots = 6
 	atom_storage.set_holdable(list(/obj/item/food/donut))
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
@@ -129,11 +136,11 @@
 	name = "egg box"
 	desc = "A carton for containing eggs."
 	spawn_type = /obj/item/food/egg
+	spawn_count = 12
 	contents_tag = "egg"
 
 /obj/item/storage/fancy/egg_box/Initialize()
 	. = ..()
-	atom_storage.max_slots = 12
 	atom_storage.set_holdable(list(/obj/item/food/egg))
 
 /*
@@ -151,12 +158,9 @@
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/candle
+	spawn_count = 5
 	is_open = TRUE
 	contents_tag = "candle"
-
-/obj/item/storage/fancy/candle_box/Initialize()
-	. = ..()
-	atom_storage.max_slots = 5
 
 /obj/item/storage/fancy/candle_box/attack_self(mob/user)
 	if(!contents.len)
@@ -180,6 +184,7 @@
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
+	spawn_count = 6
 	custom_price = PAYCHECK_CREW
 	age_restricted = TRUE
 	contents_tag = "cigarette"
@@ -209,7 +214,6 @@
 
 /obj/item/storage/fancy/cigarettes/Initialize()
 	. = ..()
-	atom_storage.max_slots = 6
 	atom_storage.quickdraw = TRUE
 	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
@@ -381,12 +385,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	contents_tag = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigars/Initialize()
 	. = ..()
-	atom_storage.max_slots = 5
 	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
@@ -432,10 +436,10 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	contents_tag = "chocolate"
 	spawn_type = /obj/item/food/tinychocolate
+	spawn_count = 8
 
 /obj/item/storage/fancy/heart_box/Initialize()
 	. = ..()
-	atom_storage.max_slots = 8
 	atom_storage.set_holdable(list(/obj/item/food/tinychocolate))
 
 
@@ -447,8 +451,8 @@
 	base_icon_state = "nuggetbox"
 	contents_tag = "nugget"
 	spawn_type = /obj/item/food/nugget
+	spawn_count = 6
 
 /obj/item/storage/fancy/nugget_box/Initialize()
 	. = ..()
-	atom_storage.max_slots = 6
 	atom_storage.set_holdable(list(/obj/item/food/nugget))
