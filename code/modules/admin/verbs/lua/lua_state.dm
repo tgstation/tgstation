@@ -33,10 +33,13 @@ GLOBAL_PROTECT(lua_usr)
 	name = _name
 	internal_id = __lua_new_state()
 
-/datum/lua_state/proc/handle_result(result)
-	// If this is a sleep, we need to add it to the subsystem's list of sleeps to run in the next fire
+/datum/lua_state/proc/check_if_slept(result)
 	if(result["status"] == "sleeping")
 		SSlua.sleeps += src
+
+/datum/lua_state/proc/log_result(result, verbose = TRUE)
+	if(!verbose && result["status"] != "errored" && result["status"] != "bad return")
+		return
 	var/append_to_log = TRUE
 	if(log.len)
 		for(var/index in log.len to max(log.len - MAX_LOG_REPEAT_LOOKBACK, 1) step -1)
@@ -52,9 +55,6 @@ GLOBAL_PROTECT(lua_usr)
 				break
 	if(append_to_log)
 		log += list(result)
-	// We want to return the return value(s) of executed code
-	if(result["status"] == "finished" || result["status"] == "yielded")
-		return result["param"]
 
 /datum/lua_state/proc/load_script(script)
 	GLOB.IsLuaCall = TRUE
@@ -68,10 +68,12 @@ GLOBAL_PROTECT(lua_usr)
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "input")
 	result["chunk"] = script
-	. = handle_result(result)
+	check_if_slept(result)
 
 	message_admins("[key_name(usr)] executed [length(script)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(src, log.len)]")
-	log_lua("[key_name(usr)] executed the following lua code:\n[script]")
+	log_lua("[key_name(usr)] executed the following lua code:\n<code>[script]</code>")
+
+	return result
 
 /datum/lua_state/proc/call_function(function, ...)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
@@ -87,12 +89,15 @@ GLOBAL_PROTECT(lua_usr)
 
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
-	return handle_result(result)
+	check_if_slept(result)
+	return result
 
 /datum/lua_state/proc/call_function_return_first(function, ...)
-	var/list/return_values = call_function(arglist(args))
-	if(length(return_values))
-		return return_values[1]
+	var/list/result = call_function(arglist(args))
+	log_result(result, verbose = FALSE)
+	if(length(result))
+		if(islist(result["param"] && length(result["param"])))
+			return result["param"][1]
 
 /datum/lua_state/proc/awaken()
 	GLOB.IsLuaCall = TRUE
@@ -101,7 +106,8 @@ GLOBAL_PROTECT(lua_usr)
 
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "An attempted awaken")
-	return handle_result(result)
+	check_if_slept(result)
+	return result
 
 /// Prefer calling SSlua.queue_resume over directly calling this
 /datum/lua_state/proc/resume(index, ...)
@@ -115,7 +121,8 @@ GLOBAL_PROTECT(lua_usr)
 
 	if(istext(result))
 		result = list("status" = "errored", "param" = result, "name" = "An attempted resume")
-	return handle_result(result)
+	check_if_slept(result)
+	return result
 
 /datum/lua_state/proc/get_globals()
 	globals = __lua_get_globals(internal_id)

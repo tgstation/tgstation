@@ -99,7 +99,8 @@
 			return TRUE
 		if("runCode")
 			var/code = params["code"]
-			current_state.load_script(code)
+			var/result = current_state.load_script(code)
+			current_state.log_result(result)
 			return TRUE
 		if("moveArgUp")
 			var/list/path = params["path"]
@@ -152,7 +153,8 @@
 						break
 					to_chat(usr, span_warning("invalid path element \[[value]] for function call (expected list or text matching [function_regex])"))
 					return
-			current_state.call_function(arglist(list(function) + arguments))
+			var/result = current_state.call_function(arglist(list(function) + arguments))
+			current_state.log_result(result)
 			arguments.Cut()
 			return TRUE
 		if("resumeTask")

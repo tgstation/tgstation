@@ -123,7 +123,8 @@ SUBSYSTEM_DEF(lua)
 		if(!istype(state))
 			continue
 		affected_states |= state
-		state.awaken()
+		var/result = state.awaken()
+		state.log_result(result, verbose = FALSE)
 
 		if(MC_TICK_CHECK)
 			break
@@ -143,7 +144,8 @@ SUBSYSTEM_DEF(lua)
 			if(!islist(arguments))
 				continue
 			affected_states |= state
-			state.resume(arglist(list(index) + arguments))
+			var/result = state.resume(arglist(list(index) + arguments))
+			state.log_result(result, verbose = FALSE)
 
 			if(MC_TICK_CHECK)
 				break
