@@ -45,7 +45,7 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
  */
 /datum/cleaner/proc/clean(atom/target as obj|turf|area, mob/living/user)
 	if(clean_start_callback != null)
-		if(clean_start_callback.Invoke(user) == FALSE)
+		if(clean_start_callback.Invoke(target, user) == FALSE)
 			return
 
 	//add the cleaning overlay
@@ -77,7 +77,7 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 		if(human_target.lip_style)
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			human_target.update_lips(null)
-			on_cleaned_callback?.Invoke(user)
+			on_cleaned_callback?.Invoke(target, user)
 
 	else //normal cleaning
 		user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
@@ -97,7 +97,7 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 						window.bloodied = FALSE
 			user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
 			target.wash(cleaning_strength)
-			on_cleaned_callback?.Invoke(user)
+			on_cleaned_callback?.Invoke(target, user)
 
 	//remove the cleaning overlay
 	if(!already_cleaning)
@@ -105,7 +105,6 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 		target.cut_overlay(GLOB.cleaning_bubbles_higher)
 		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
 
-//TODO change callback parameters
 //TODO apply to mop, cleanbot
 //TODO give this a better name (meelee_cleaner?)
 //TODO keep mouth cleaning to just soap?
