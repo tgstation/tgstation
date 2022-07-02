@@ -23,7 +23,7 @@
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()
-	cleaner = new /datum/cleaner(null, CALLBACK(src, .proc/clean))
+	cleaner = new /datum/cleaner(null, CALLBACK(src, .proc/apply_reagents))
 	cleaner.base_cleaning_duration = mopspeed
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
@@ -32,7 +32,7 @@
 	GLOB.janitor_devices -= src
 	return ..()
 
-/obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
+/obj/item/mop/proc/apply_reagents(turf/A, mob/living/cleaner)
 	reagents.expose(A, TOUCH, 10) //Needed for proper floor wetting.
 	var/val2remove = 1
 	if(cleaner?.mind)
