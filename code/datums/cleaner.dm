@@ -71,33 +71,24 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 		cleaning_duration = cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_speed_modifier_offset,1)
 
 	//do the cleaning
-	if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH) //washing that potty mouth of yours
-		var/mob/living/carbon/human/human_target = target
-		user.visible_message(span_warning("\the [user] washes \the [target]'s mouth out!"), span_notice("You wash \the [target]'s mouth out!"))
-		if(human_target.lip_style)
-			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
-			human_target.update_lips(null)
-			on_cleaned_callback?.Invoke(target, user)
-
-	else //normal cleaning
-		user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
-		if(do_after(user, cleaning_duration, target = target))
-			user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
-			if(isturf(target)) //cleaning the floor and every bit of filth on top of it
-				for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
-					user.mind?.adjust_experience(/datum/skill/cleaning, round((cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT) * experience_gain_modifier))
-			else if(istype(target, /obj/structure/window)) //window cleaning
-				target.set_opacity(initial(target.opacity))
-				target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-				var/obj/structure/window/window = target
-				if(window.bloodied)
-					for(var/obj/effect/decal/cleanable/blood/iter_blood in window)
-						window.vis_contents -= iter_blood
-						qdel(iter_blood)
-						window.bloodied = FALSE
-			user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
-			target.wash(cleaning_strength)
-			on_cleaned_callback?.Invoke(target, user)
+	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
+	if(do_after(user, cleaning_duration, target = target))
+		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
+		if(isturf(target)) //cleaning the floor and every bit of filth on top of it
+			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
+				user.mind?.adjust_experience(/datum/skill/cleaning, round((cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT) * experience_gain_modifier))
+		else if(istype(target, /obj/structure/window)) //window cleaning
+			target.set_opacity(initial(target.opacity))
+			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			var/obj/structure/window/window = target
+			if(window.bloodied)
+				for(var/obj/effect/decal/cleanable/blood/iter_blood in window)
+					window.vis_contents -= iter_blood
+					qdel(iter_blood)
+					window.bloodied = FALSE
+		user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
+		target.wash(cleaning_strength)
+		on_cleaned_callback?.Invoke(target, user)
 
 	//remove the cleaning overlay
 	if(!already_cleaning)
@@ -107,4 +98,4 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 
 //TODO apply to mop, cleanbot
 //TODO give this a better name (meelee_cleaner?)
-//TODO keep mouth cleaning to just soap?
+//TODO ADD SOAP SKILL OFFSET DONT FORGET IDIOT
