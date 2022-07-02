@@ -221,14 +221,13 @@ window "outputwindow"
 		size = 517x20
 		anchor1 = 0,100
 		anchor2 = 100,100
-		background-color = #d3b5b5
 		is-default = true
-		border = sunken
+		border = line
 		saved-params = "command"
 	elem "oocbutton"
 		type = BUTTON
 		pos = 599,460
-		size = 40x19
+		size = 40x20
 		anchor1 = 100,100
 		anchor2 = -1,-1
 		background-color = none
@@ -241,7 +240,7 @@ window "outputwindow"
 	elem "saybutton"
 		type = BUTTON
 		pos = 519,460
-		size = 40x19
+		size = 40x20
 		anchor1 = 100,100
 		anchor2 = -1,-1
 		background-color = none
@@ -254,7 +253,7 @@ window "outputwindow"
 	elem "mebutton"
 		type = BUTTON
 		pos = 559,460
-		size = 40x19
+		size = 40x20
 		anchor1 = 100,100
 		anchor2 = -1,-1
 		background-color = none
@@ -270,7 +269,6 @@ window "outputwindow"
 		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffffff
 		is-visible = false
 		is-disabled = true
 		saved-params = ""

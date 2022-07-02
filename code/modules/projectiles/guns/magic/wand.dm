@@ -82,7 +82,7 @@
 			to_chat(user, span_notice("You feel great!"))
 			return
 	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
-	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
+	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]\
 	</span>")
 	user.death(FALSE)
 
@@ -118,7 +118,7 @@
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
 			to_chat(user, "<span class='warning'>You irradiate yourself with pure positive energy! \
-			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
+			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]\
 			</span>")
 			user.death(0)
 			return
