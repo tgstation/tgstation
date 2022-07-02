@@ -166,9 +166,7 @@
 /// Remember that on roundstart no one knows what their job is at this point.
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
 /datum/dynamic_ruleset/proc/ready(forced = 0)
-	if (!check_candidates())
-		return FALSE
-	return TRUE
+	return check_candidates()
 
 /// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
 /// This one only handles refunding the threat, override in ruleset to clean up the rest.

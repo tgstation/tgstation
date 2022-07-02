@@ -35,7 +35,7 @@
 		log_game("DYNAMIC: FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
 		return FALSE
 
-	return TRUE
+	return ..()
 
 /datum/dynamic_ruleset/latejoin/execute()
 	var/mob/M = pick(candidates)
