@@ -86,6 +86,7 @@ export const Log = (props, context) => {
         messageColor = 'green';
         break;
       case 'errored':
+      case 'bad return':
         message = (
           <>
             <b>{name}</b> errored with the message &quot;{param}&quot;
