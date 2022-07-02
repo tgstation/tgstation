@@ -4859,7 +4859,8 @@
 /obj/structure/window/reinforced/survival_pod,
 /obj/machinery/power/turbine/turbine_outlet,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/plating/airless,
 /area/shuttle/sbc_starfury)
 "FC" = (
 /obj/machinery/computer/monitor{
@@ -5036,7 +5037,13 @@
 "JF" = (
 /obj/machinery/power/turbine/core_rotor,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/sbc_starfury)
 "JG" = (
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
@@ -5562,7 +5569,10 @@
 /area/shuttle/sbc_starfury)
 "Ue" = (
 /obj/machinery/power/turbine/inlet_compressor,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/red/end{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/sbc_starfury)
 "Ux" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
