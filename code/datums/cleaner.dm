@@ -4,11 +4,13 @@
 	/// Gets called when something is successfully cleaned.
 	var/datum/callback/on_cleaned_callback
 	/// The time it takes to clean something, without reductions from the cleaning skill modifier.
-	var/base_cleaning_duration = 10 SECONDS
+	var/base_cleaning_duration = 3 SECONDS
 	/// Offsets the cleaning duration modifier that you get from your cleaning skill, the duration cannot be modified to be more than the base duration.
 	var/skill_speed_modifier_offset = 0
 	/// Determines what this cleaner can wash off, [the available options are found here](code/__DEFINES/cleaning.html).
 	var/cleaning_strength = CLEAN_SCRUB
+	/// Multiplies the cleaning skill experience gained from cleaning.
+	var/experience_gain_modifier = 1
 
 /datum/cleaner/New(var/datum/callback/clean_start_callback = null, var/datum/callback/on_cleaned_callback = null)
 	src.clean_start_callback = clean_start_callback
@@ -54,6 +56,11 @@
 	user.visible_message(span_notice("[user] starts to wipe down [target] with [src]!"), span_notice("You start to wipe down [target] with [src]..."))
 	if(do_after(user, cleaning_duration, target = target))
 		user.visible_message(span_notice("[user] finishes wiping off [target]!"), span_notice("You finish wiping off [target]."))
+		if(user.mind) //give cleaning experience to the user
+			if(isturf(target))
+				for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
+					user.mind?.adjust_experience(/datum/skill/cleaning, round((cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT) * experience_gain_modifier))
+			user.mind.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
 		target.wash(cleaning_strength)
 
 	//remove the cleaning overlay
@@ -65,7 +72,6 @@
 	if(on_cleaned_callback != null)
 		on_cleaned_callback.Invoke()
 
-//TODO give cleaning experience
 //TODO change visible message
 //TODO add soap features
 //TODO apply to soap, mop, cleanbot
