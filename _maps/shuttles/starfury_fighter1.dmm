@@ -99,6 +99,9 @@
 /obj/docking_port/mobile/syndicate_fighter/fighter_one,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_fighter1)
 "W" = (
