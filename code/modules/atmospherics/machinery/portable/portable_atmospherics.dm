@@ -20,9 +20,9 @@
 	var/excited = TRUE
 
 	/// Max amount of heat allowed inside the machine before it starts to melt. -1 is special value meaning we wont check.
-	var/temp_limit = 10000
+	var/temp_limit = 5000
 	/// Max amount of pressure allowed inside of the canister before it starts to break. -1 is special value meaning we wont check.
-	var/pressure_limit = 500000
+	var/pressure_limit = 50000
 
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
