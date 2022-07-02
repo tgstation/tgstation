@@ -604,13 +604,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
-
 	if(!attack_hand_interact)
 		return
 	if(user.active_storage == src && resolve_parent.loc == user)
 		user.active_storage.hide_contents(user)
 		hide_contents(user)
-		return
+		return TRUE
 	if(ishuman(user))
 		var/mob/living/carbon/human/hum = user
 		if(hum.l_store == resolve_parent && !hum.get_active_held_item())
@@ -772,7 +771,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!resolve_parent)
 		return
 
-	for(var/mob/living/user in can_see_contents())
+	for(var/mob/user in can_see_contents())
 		if (!user.CanReach(resolve_parent))
 			hide_contents(user)
 
@@ -781,7 +780,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		hide_contents(user)
 
 /datum/storage/proc/refresh_views()
-	for (var/user in can_see_contents())
+	for (var/mob/user in can_see_contents())
 		show_contents(src, user)
 
 /datum/storage/proc/can_see_contents()
