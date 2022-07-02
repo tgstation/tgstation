@@ -1,0 +1,9 @@
+#comment Freezer names fucking suck. Let's make them much more verbose.
+
+/obj/structure/closet/secure_closet/freezer/empty/open : /obj/structure/closet/secure_closet/freezer/empty/unlocked{@OLD}
+/obj/structure/closet/secure_closet/freezer/kitchen : /obj/structure/closet/secure_closet/freezer/flour_rice_sugar{@OLD}
+/obj/structure/closet/secure_closet/freezer/kitchen/mining : /obj/structure/closet/secure_closet/freezer/flour_rice_sugar/unlocked{@OLD}
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance : /obj/structure/closet/secure_closet/freezer/milk_eggs_rice_sugar_flour/maintenance{@OLD}
+/obj/structure/closet/secure_closet/freezer/meat/open : /obj/structure/closet/secure_closet/freezer/meat/unlocked{@OLD}
+/obj/structure/closet/secure_closet/freezer/fridge : /obj/structure/closet/secure_closet/freezer/milk_and_eggs{@OLD}
+/obj/structure/closet/secure_closet/freezer/fridge/open : /obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked{@OLD}

@@ -34,36 +34,23 @@
 /obj/structure/closet/secure_closet/freezer/empty
 	name = "empty freezer"
 
-/obj/structure/closet/secure_closet/freezer/empty/open
+/obj/structure/closet/secure_closet/freezer/empty/unlocked
 	req_access = null
 	locked = FALSE
 
-/obj/structure/closet/secure_closet/freezer/kitchen
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar
 	name = "kitchen cabinet"
 	req_access = list(ACCESS_KITCHEN)
 
-/obj/structure/closet/secure_closet/freezer/kitchen/PopulateContents()
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/food/condiment/flour(src)
 	new /obj/item/reagent_containers/food/condiment/rice(src)
 	new /obj/item/reagent_containers/food/condiment/sugar(src)
 
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance
-	name = "maintenance refrigerator"
-	desc = "This refrigerator looks quite dusty, is there anything edible still inside?"
-	req_access = list()
-
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance/PopulateContents()
-	..()
-	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/food/condiment/milk(src)
-		new /obj/item/reagent_containers/food/condiment/soymilk(src)
-	for(var/i in 1 to 2)
-		new /obj/item/storage/fancy/egg_box(src)
-
-/obj/structure/closet/secure_closet/freezer/kitchen/mining
-	req_access = list()
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar/unlocked
+	req_access = null
 
 /obj/structure/closet/secure_closet/freezer/meat
 	name = "meat fridge"
@@ -74,23 +61,23 @@
 	for(var/i in 1 to 4)
 		new /obj/item/food/meat/slab/monkey(src)
 
-/obj/structure/closet/secure_closet/freezer/meat/open
-	req_access = list()
+/obj/structure/closet/secure_closet/freezer/meat/unlocked
+	req_access = null
 	locked = FALSE
 
 /obj/structure/closet/secure_closet/freezer/gulag_fridge
-	name = "refrigerator"
+	name = "beer fridge"
 
 /obj/structure/closet/secure_closet/freezer/gulag_fridge/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/food/drinks/bottle/beer/light(src)
 
-/obj/structure/closet/secure_closet/freezer/fridge
-	name = "refrigerator"
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs
+	name = "perishables fridge"
 	req_access = list(ACCESS_KITCHEN)
 
-/obj/structure/closet/secure_closet/freezer/fridge/PopulateContents()
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/PopulateContents()
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/food/condiment/milk(src)
@@ -98,9 +85,33 @@
 	for(var/i in 1 to 2)
 		new /obj/item/storage/fancy/egg_box(src)
 
-/obj/structure/closet/secure_closet/freezer/fridge/open
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs/unlocked
 	req_access = null
 	locked = FALSE
+
+/obj/structure/closet/secure_closet/freezer/milk_eggs_rice_sugar_flour
+	name = "refrigerator"
+	desc = "This refrigerator seems to have a bit of everything!"
+	req_access = list(ACCESS_KITCHEN)
+
+/obj/structure/closet/secure_closet/freezer/milk_eggs_rice_sugar_flour/PopulateContents()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/food/condiment/flour(src)
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/food/condiment/milk(src)
+		new /obj/item/reagent_containers/food/condiment/soymilk(src)
+	for(var/i in 1 to 2)
+		new /obj/item/storage/fancy/egg_box(src)
+	new /obj/item/reagent_containers/food/condiment/rice(src)
+	new /obj/item/reagent_containers/food/condiment/sugar(src)
+
+/obj/structure/closet/secure_closet/freezer/unlocked
+	req_access = null
+
+/obj/structure/closet/secure_closet/freezer/milk_eggs_rice_sugar_flour/maintenance
+	desc = "This refrigerator looks quite dusty, is there anything edible still inside?"
+	req_access = null
 
 /obj/structure/closet/secure_closet/freezer/money
 	name = "freezer"
