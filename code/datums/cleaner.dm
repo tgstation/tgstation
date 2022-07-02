@@ -12,9 +12,14 @@
 	/// Multiplies the cleaning skill experience gained from cleaning.
 	var/experience_gain_modifier = 1
 
+
+
+
 /datum/cleaner/New(var/datum/callback/clean_start_callback = null, var/datum/callback/on_cleaned_callback = null)
 	src.clean_start_callback = clean_start_callback
 	src.on_cleaned_callback = on_cleaned_callback
+
+
 
 /**
  * Cleans something using this cleaner.
@@ -52,16 +57,38 @@
 		//offsets the multiplier you get from cleaning skill, but doesn't allow the duration to be longer than the base duration
 		cleaning_duration = cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_speed_modifier_offset,1)
 
+
 	//do the cleaning
-	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
-	if(do_after(user, cleaning_duration, target = target))
-		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
-		if(user.mind) //give cleaning experience to the user
-			if(isturf(target))
+	if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH) //washing that potty mouth of yours
+		var/mob/living/carbon/human/human_target = target
+		user.visible_message(span_warning("\the [user] washes \the [target]'s mouth out!"), span_notice("You wash \the [target]'s mouth out!"))
+		if(human_target.lip_style)
+			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
+			human_target.update_lips(null)
+			if(on_cleaned_callback != null)
+				on_cleaned_callback.Invoke()
+
+	else //normal cleaning
+		user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
+		if(do_after(user, cleaning_duration, target = target))
+			user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
+			if(isturf(target)) //cleaning the floor and every bit of filth on top of it
 				for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
 					user.mind?.adjust_experience(/datum/skill/cleaning, round((cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT) * experience_gain_modifier))
-			user.mind.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
-		target.wash(cleaning_strength)
+			else if(istype(target, /obj/structure/window)) //window cleaning
+				target.set_opacity(initial(target.opacity))
+				target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+				var/obj/structure/window/window = target
+				if(window.bloodied)
+					for(var/obj/effect/decal/cleanable/blood/iter_blood in window)
+						window.vis_contents -= iter_blood
+						qdel(iter_blood)
+						window.bloodied = FALSE
+			user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
+			target.wash(cleaning_strength)
+			if(on_cleaned_callback != null)
+				on_cleaned_callback.Invoke()
+
 
 	//remove the cleaning overlay
 	if(!already_cleaning)
@@ -69,10 +96,9 @@
 		target.cut_overlay(GLOB.cleaning_bubbles_higher)
 		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
 
-	if(on_cleaned_callback != null)
-		on_cleaned_callback.Invoke()
-
-//TODO add soap features
+//TODO use ? for callback access
+//TODO write datum code comment
+//TODO QOL washing walls with blood on them
 //TODO apply to soap, mop, cleanbot
 //TODO give this a better name (meelee_cleaner?)
 //TODO move global overlays to here?
