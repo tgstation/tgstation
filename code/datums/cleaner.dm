@@ -23,7 +23,7 @@
  * * on_cleaned_callback the callback that should be called when something is cleaned successfully
  */
 
-/datum/cleaner/New(var/datum/callback/on_cleaned_callback = null)
+/datum/cleaner/New(datum/callback/on_cleaned_callback = null)
 	src.on_cleaned_callback = on_cleaned_callback
 
 /**
