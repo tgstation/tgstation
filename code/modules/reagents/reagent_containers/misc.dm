@@ -133,6 +133,7 @@
 /obj/item/reagent_containers/glass/rag/Initialize(mapload, vol)
 	. = ..()
 	cleaner = new /datum/cleaner()
+	cleaner.base_cleaning_duration = 3 SECONDS
 
 /obj/item/reagent_containers/glass/rag/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
