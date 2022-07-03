@@ -76,11 +76,11 @@
 
 /mob/living/silicon/ai/update_sight()
 	set_invis_see(initial(see_invisible))
-	see_in_dark = initial(see_in_dark)
+	set_see_in_dark(initial(see_in_dark))
 	set_sight(initial(sight))
 	if(aiRestorePowerRoutine)
 		clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = 0
+		set_see_in_dark(0)
 
 	if(see_override)
 		set_invis_see(see_override)

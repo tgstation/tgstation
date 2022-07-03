@@ -558,7 +558,7 @@
 			set_sight(initial(sight))
 		else
 			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = 8
+		set_see_in_dark(8)
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 
@@ -569,7 +569,7 @@
 		update_tint()
 	else
 		set_invis_see(E.see_invisible)
-		see_in_dark = E.see_in_dark
+		set_see_in_dark(E.see_in_dark)
 		new_sight |= E.sight_flags
 		if(!isnull(E.lighting_alpha))
 			lighting_alpha = E.lighting_alpha
@@ -582,7 +582,7 @@
 	if(glasses)
 		var/obj/item/clothing/glasses/G = glasses
 		new_sight |= G.vision_flags
-		see_in_dark = max(G.darkness_view, see_in_dark)
+		set_see_in_dark(max(G.darkness_view, see_in_dark))
 		if(G.invis_override)
 			set_invis_see(G.invis_override)
 		else
@@ -592,7 +592,7 @@
 
 	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-		see_in_dark = max(see_in_dark, 8)
+		set_see_in_dark(max(see_in_dark, 8))
 
 	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
 		new_sight |= SEE_TURFS
@@ -604,7 +604,7 @@
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-		see_in_dark = max(see_in_dark, 8)
+		set_see_in_dark(max(see_in_dark, 8))
 
 	if(see_override)
 		set_invis_see(see_override)
