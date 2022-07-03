@@ -177,34 +177,26 @@
  */
 /mob/living/proc/get_quirk_string(medical, category = CAT_QUIRK_ALL) //helper string. gets a string of all the quirks the mob has
 	var/list/dat = list()
-	
-	// The health analyzer will first check if the target is a changeling, and if they are, load the quirks of the person they're disguising as.
-	var/target_quirks = quirks
-	if(mind)
-		var/datum/antagonist/changeling/target_changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(target_changeling)
-			target_quirks = target_changeling.current_profile.quirks
-
 	switch(category)
 		if(CAT_QUIRK_ALL)
-			for(var/V in target_quirks)
+			for(var/V in quirks)
 				var/datum/quirk/T = V
 				dat += medical ? T.medical_record_text : T.name
 		//Major Disabilities
 		if(CAT_QUIRK_MAJOR_DISABILITY)
-			for(var/V in target_quirks)
+			for(var/V in quirks)
 				var/datum/quirk/T = V
 				if(T.value < -4)
 					dat += medical ? T.medical_record_text : T.name
 		//Minor Disabilities
 		if(CAT_QUIRK_MINOR_DISABILITY)
-			for(var/V in target_quirks)
+			for(var/V in quirks)
 				var/datum/quirk/T = V
 				if(T.value >= -4 && T.value < 0)
 					dat += medical ? T.medical_record_text : T.name
 		//Neutral and Positive quirks
 		if(CAT_QUIRK_NOTES)
-			for(var/V in target_quirks)
+			for(var/V in quirks)
 				var/datum/quirk/T = V
 				if(T.value > -1)
 					dat += medical ? T.medical_record_text : T.name
