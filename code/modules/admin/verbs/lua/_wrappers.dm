@@ -18,3 +18,16 @@
 	else
 		SSlua.gc_guard = HandleUserlessProcCall("lua", GLOBAL_PROC, proc_name, arguments)
 	return SSlua.gc_guard
+
+/proc/wrap_lua_print(state_id, list/arguments)
+	var/datum/lua_state/target_state
+	for(var/datum/lua_state/state as anything in SSlua.states)
+		if(state.internal_id == state_id)
+			target_state = state
+			break
+	if(!target_state)
+		return
+	var/print_message = jointext(arguments, "\t")
+	var/result = list("status" = "print", "param" = print_message)
+	target_state.log_result(result, verbose = TRUE)
+	log_lua("[target_state]: [print_message]")

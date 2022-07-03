@@ -36,6 +36,7 @@ SUBSYSTEM_DEF(lua)
 		__lua_set_set_var_wrapper("/proc/wrap_lua_set_var")
 		__lua_set_datum_proc_call_wrapper("/proc/wrap_lua_datum_proc_call")
 		__lua_set_global_proc_call_wrapper("/proc/wrap_lua_global_proc_call")
+		__lua_set_print_wrapper("/proc/wrap_lua_print")
 		return ..()
 	catch(var/exception/e)
 		// Something went wrong, best not allow the subsystem to run

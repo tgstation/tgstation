@@ -94,6 +94,9 @@ export const Log = (props, context) => {
         );
         messageColor = 'red';
         break;
+      case 'print':
+        message = param;
+        break;
       default:
         logger.warn(`unknown log status ${status}`);
     }
