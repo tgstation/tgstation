@@ -346,7 +346,7 @@
 	data["max_length"] = MAX_BROADCAST_LEN
 	data["has_showpiece"] = showpiece ? TRUE : FALSE
 	if(showpiece)
-		data["showpiece_name"] = capitalize(showpiece.name)
+		data["showpiece_name"] = capitalize(format_text(showpiece.name))
 		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
 		data["showpiece_icon"] = base64
 		data["showpiece_description"] = trophy_message ? trophy_message : null
@@ -439,7 +439,7 @@
 		register = TRUE
 		data["owner_name"] = payments_acc.account_holder
 	if(showpiece)
-		data["product_name"] = capitalize(showpiece.name)
+		data["product_name"] = capitalize(format_text(showpiece.name))
 		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
 		data["product_icon"] = base64
 	data["registered"] = register
