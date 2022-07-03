@@ -1058,7 +1058,7 @@
 	prefix = "Cardboard"
 	special_names = list("Box")
 	info_text = "As a <span class='danger'>Cardboard Golem</span>, you aren't very strong, but you are a bit quicker and can easily create more brethren by using cardboard on yourself."
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOTONGUE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
