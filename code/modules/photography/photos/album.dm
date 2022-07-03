@@ -41,7 +41,7 @@
 
 //Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
 /obj/item/storage/photo_album/proc/persistence_load()
-	var/list/data = SSpersistence.GetPhotoAlbums()
+	var/list/data = SSpersistence.get_photo_albums()
 	if(data[persistence_id])
 		populate_from_id_list(data[persistence_id])
 

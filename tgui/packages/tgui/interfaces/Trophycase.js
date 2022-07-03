@@ -1,3 +1,4 @@
+import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../backend';
 import { Icon, Box, Button, Section, TextArea, Stack } from '../components';
 import { Window } from '../layouts';
@@ -16,7 +17,11 @@ export const Trophycase = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Section align="center">
-              <b>{showpiece_name ? showpiece_name : 'Under construction.'}</b>
+              <b>
+                {showpiece_name
+                  ? decodeHtmlEntities(showpiece_name)
+                  : 'Under construction.'}
+              </b>
             </Section>
           </Stack.Item>
           <Stack.Item>
@@ -25,7 +30,7 @@ export const Trophycase = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section align="center">
+            <Section align="center" fill>
               <ShowpieceDescription />
             </Section>
           </Stack.Item>
@@ -123,7 +128,7 @@ const ShowpieceDescription = (props, context) => {
       {!holographic_showpiece && !historian_mode && !!has_showpiece && (
         <Box className="Trophycase-description">
           {showpiece_description
-            ? showpiece_description
+            ? decodeHtmlEntities(showpiece_description)
             : "This exhibit under construction. Get the curator's key to finalize your contribution!"}
         </Box>
       )}

@@ -38,6 +38,7 @@ SUBSYSTEM_DEF(persistence)
 	load_adventures()
 	return SS_INIT_SUCCESS
 
+///Collects all data to persist.
 /datum/controller/subsystem/persistence/proc/collect_data()
 	save_wall_engravings()
 	save_prisoner_tattoos()
@@ -49,11 +50,13 @@ SUBSYSTEM_DEF(persistence)
 	save_custom_outfits()
 	save_delamination_counter()
 
+///Loads up Poly's speech buffer.
 /datum/controller/subsystem/persistence/proc/load_poly()
 	for(var/mob/living/simple_animal/parrot/poly/P in GLOB.alive_mob_list)
 		twitterize(P.speech_buffer, "polytalk")
 		break //Who's been duping the bird?!
 
+///Loads all engravings, and places a select amount in maintenance and the prison.
 /datum/controller/subsystem/persistence/proc/load_wall_engravings()
 	var/json_file = file(ENGRAVING_SAVE_FILE)
 	if(!fexists(json_file))
@@ -95,6 +98,7 @@ SUBSYSTEM_DEF(persistence)
 
 	log_world("Loaded [successfully_loaded_engravings] engraved messages on map [SSmapping.config.map_name]")
 
+///Saves all new engravings in the world.
 /datum/controller/subsystem/persistence/proc/save_wall_engravings()
 	var/list/saved_data = list()
 
@@ -134,6 +138,7 @@ SUBSYSTEM_DEF(persistence)
 
 	return json
 
+///Loads all tattoos, and select a few based on the amount of prisoner spawn positions.
 /datum/controller/subsystem/persistence/proc/load_prisoner_tattoos()
 	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
 	if(!fexists(json_file))
@@ -157,6 +162,7 @@ SUBSYSTEM_DEF(persistence)
 
 	log_world("Loaded [prison_tattoos_to_use.len] prison tattoos")
 
+///Saves all tattoos, so they can appear on prisoners in future rounds 
 /datum/controller/subsystem/persistence/proc/save_prisoner_tattoos()
 	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
 	var/list/saved_data = list()
@@ -188,7 +194,7 @@ SUBSYSTEM_DEF(persistence)
 
 	return json
 
-
+/// Loads the trophies from the source file, and places a few in trophy display cases.
 /datum/controller/subsystem/persistence/proc/load_trophies()
 	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/TrophyItems.sav")
@@ -208,6 +214,11 @@ SUBSYSTEM_DEF(persistence)
 		saved_trophies = json["data"]
 	set_up_trophies(saved_trophies.Copy())
 
+/// Returns a filtered list for the admin trophy panel.
+/datum/controller/subsystem/persistence/proc/trophy_ui_data(filter=NONE, search_text)
+	. = saved_trophies
+
+/// Loads up the amount of times maps appeared to alter their appearance in voting and rotation.
 /datum/controller/subsystem/persistence/proc/load_recent_maps()
 	var/map_sav = FILE_RECENT_MAPS
 	if(!fexists(FILE_RECENT_MAPS))
@@ -229,6 +240,7 @@ SUBSYSTEM_DEF(persistence)
 		if(run >= 2) //If run twice in the last KEEP_ROUNDS_MAP + 1 (including current) rounds, disable map for voting and rotation.
 			blocked_maps += VM.map_name
 
+/// Puts trophies into trophy cases.
 /datum/controller/subsystem/persistence/proc/set_up_trophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
 		var/obj/structure/displaycase/trophy/T = A
@@ -257,18 +269,20 @@ SUBSYSTEM_DEF(persistence)
 		T.holographic_showpiece = TRUE
 		T.update_appearance()
 
-/datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
+///Loads up the photo album source file.
+/datum/controller/subsystem/persistence/proc/get_photo_albums()
 	var/album_path = file("data/photo_albums.json")
 	if(fexists(album_path))
 		return json_decode(file2text(album_path))
 
-/datum/controller/subsystem/persistence/proc/GetPhotoFrames()
+///Loads up the photo frames source file.
+/datum/controller/subsystem/persistence/proc/get_photo_frames()
 	var/frame_path = file("data/photo_frames.json")
 	if(fexists(frame_path))
 		return json_decode(file2text(frame_path))
 
-/// Removes the identifier of a persitent photo frame from the json.
-/datum/controller/subsystem/persistence/proc/RemovePhotoFrame(identifier)
+/// Removes the identifier of a persistent photo frame from the json.
+/datum/controller/subsystem/persistence/proc/remove_photo_frames(identifier)
 	var/frame_path = file("data/photo_frames.json")
 	if(!fexists(frame_path))
 		return
@@ -280,6 +294,7 @@ SUBSYSTEM_DEF(persistence)
 	fdel(frame_path)
 	WRITE_FILE(frame_path, frame_json)
 
+///Loads photo albums, and populates them; also loads and applies frames to picture frames.
 /datum/controller/subsystem/persistence/proc/load_photo_persistence()
 	var/album_path = file("data/photo_albums.json")
 	var/frame_path = file("data/photo_frames.json")
@@ -303,6 +318,7 @@ SUBSYSTEM_DEF(persistence)
 				if(json[PF.persistence_id])
 					PF.load_from_id(json[PF.persistence_id])
 
+///Saves the contents of photo albums and the picture frames.
 /datum/controller/subsystem/persistence/proc/save_photo_persistence()
 	var/album_path = file("data/photo_albums.json")
 	var/frame_path = file("data/photo_frames.json")
@@ -339,6 +355,7 @@ SUBSYSTEM_DEF(persistence)
 
 	WRITE_FILE(frame_path, frame_json)
 
+///Collects trophies from all existing trophy cases.
 /datum/controller/subsystem/persistence/proc/collect_trophies()
 	for(var/trophy_case in GLOB.trophy_cases)
 		save_trophy(trophy_case)
@@ -349,6 +366,7 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
+///removes all trophies with identical path and message
 /datum/controller/subsystem/persistence/proc/remove_duplicate_trophies(list/trophies)
 	var/list/ukeys = list()
 	. = list()
@@ -360,14 +378,16 @@ SUBSYSTEM_DEF(persistence)
 			. += list(trophy)
 			ukeys[tkey] = TRUE
 
+///Save the trophy, if the trophy was not a roundstart item, it exists, and has a message attached.
 /datum/controller/subsystem/persistence/proc/save_trophy(obj/structure/displaycase/trophy/T)
-	if(!T.holographic_showpiece && T.showpiece)
+	if(!T.holographic_showpiece && T.showpiece && T.trophy_message)
 		var/list/data = list()
 		data["path"] = T.showpiece.type
-		data["message"] = T.trophy_message ? T.trophy_message : T.showpiece.desc
+		data["message"] = T.trophy_message
 		data["placer_key"] = T.placer_key
 		saved_trophies += list(data)
 
+///Updates the list of the most recent maps.
 /datum/controller/subsystem/persistence/proc/collect_maps()
 	if(length(saved_maps) > KEEP_ROUNDS_MAP) //Get rid of extras from old configs.
 		saved_maps.Cut(KEEP_ROUNDS_MAP+1)
@@ -383,6 +403,7 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
+///Loads all randomized recipes.
 /datum/controller/subsystem/persistence/proc/load_randomized_recipes()
 	var/json_file = file("data/RandomizedChemRecipes.json")
 	var/json
@@ -407,6 +428,7 @@ SUBSYSTEM_DEF(persistence)
 		else
 			log_game("Randomized recipe [randomized_type] resulted in conflicting recipes.")
 
+///Saves all randomized recipes.
 /datum/controller/subsystem/persistence/proc/save_randomized_recipes()
 	var/json_file = file("data/RandomizedChemRecipes.json")
 	var/list/file_data = list()
@@ -421,6 +443,7 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
+///Saves all scars for everyone's original characters
 /datum/controller/subsystem/persistence/proc/save_scars()
 	for(var/i in GLOB.joined_player_list)
 		var/mob/living/carbon/human/ending_human = get_mob_by_ckey(i)
@@ -437,7 +460,7 @@ SUBSYSTEM_DEF(persistence)
 		else
 			original_human.save_persistent_scars()
 
-
+///Loads the custom outfits of every admin.
 /datum/controller/subsystem/persistence/proc/load_custom_outfits()
 	var/file = file("data/custom_outfits.json")
 	if(!fexists(file))
@@ -459,6 +482,7 @@ SUBSYSTEM_DEF(persistence)
 			continue
 		GLOB.custom_outfits += outfit
 
+///Saves each admin's custom outfit list
 /datum/controller/subsystem/persistence/proc/save_custom_outfits()
 	var/file = file("data/custom_outfits.json")
 	fdel(file)
