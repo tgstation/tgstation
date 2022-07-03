@@ -27,10 +27,10 @@
 	src.on_cleaned_callback = on_cleaned_callback
 
 /datum/component/cleaner/RegisterWithParent()
-	RegisterSignal(parent, "start_cleaning", .proc/clean)
+	RegisterSignal(parent, COMSIG_START_CLEANING, .proc/clean)
 
 /datum/component/cleaner/UnregisterFromParent()
-	UnregisterSignal(parent, "start_cleaning")
+	UnregisterSignal(parent, COMSIG_START_CLEANING)
 
 /**
  * Cleans something using this cleaner.
@@ -69,7 +69,6 @@
 		target.wash(cleaning_strength)
 		on_cleaned_callback?.Invoke(target, user)
 
-//TODO add signal define
 //TODO update code comments
 //TODO apply to mop/soap/cleanbot
-//TODO remove old cleaner datum (also from the .dmi)
+//TODO remove old cleaner datum (also from the .dme)
