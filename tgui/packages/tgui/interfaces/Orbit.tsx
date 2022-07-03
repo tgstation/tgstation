@@ -225,12 +225,14 @@ const ObservableSection = (props: SectionProps, context) => {
   if (!filteredSection.length) {
     return null;
   }
-  const appendedTitle = title + ` - (${filteredSection.length})`;
-  const living = title === 'Alive' || color !== 'grey';
 
   return (
     <Stack.Item>
-      <Collapsible bold color={color} open={living} title={appendedTitle}>
+      <Collapsible
+        bold
+        color={color}
+        open={color !== 'grey'}
+        title={title + ` - (${filteredSection.length})`}>
         {filteredSection.map((poi, index) => {
           return <ObservableItem color={color} item={poi} key={index} />;
         })}
