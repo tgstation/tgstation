@@ -29,10 +29,8 @@ export const Trophycase = (props, context) => {
               <ShowpieceImage />
             </Section>
           </Stack.Item>
-          <Stack.Item>
-            <Section align="center" fill>
+          <Stack.Item grow>
               <ShowpieceDescription />
-            </Section>
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -120,20 +118,22 @@ const ShowpieceDescription = (props, context) => {
     showpiece_description,
   } = data;
   return (
-    <Section>
+    <Section align="center" fill scrollable>
       {!has_showpiece && (
-        <b>This exhibit is empty. History awaits your contribution!</b>
+        <Box fill className="Trophycase-description">
+          <b>This exhibit is empty. History awaits your contribution!</b>
+        </Box>
       )}
       {!!holographic_showpiece && <b>{showpiece_description}</b>}
       {!holographic_showpiece && !historian_mode && !!has_showpiece && (
-        <Box className="Trophycase-description">
+        <Box fill className="Trophycase-description">
           {showpiece_description
             ? decodeHtmlEntities(showpiece_description)
             : "This exhibit under construction. Get the curator's key to finalize your contribution!"}
         </Box>
       )}
       {!holographic_showpiece && !!historian_mode && !!has_showpiece && (
-        <Box>
+        <Box fill>
           <TextArea
             height="80px"
             fluid
