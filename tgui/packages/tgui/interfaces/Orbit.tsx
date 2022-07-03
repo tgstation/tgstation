@@ -197,7 +197,7 @@ const ObservableContent = (props, context) => {
       <ObservableSection section={dead} title="Dead" />
       <ObservableSection section={ghosts} title="Ghosts" />
       <ObservableSection section={misc} title="Misc" />
-      <ObservableSection color="average" section={npcs} title="NPCs" />
+      <ObservableSection section={npcs} title="NPCs" />
     </Stack>
   );
 };
@@ -222,16 +222,15 @@ const ObservableSection = (props: SectionProps, context) => {
     ),
     sortBy<Observable>((poi) => poi.name.toLowerCase()),
   ])(section);
-
   if (!filteredSection.length) {
     return null;
   }
+  const appendedTitle = title + ` - (${filteredSection.length})`;
+  const living = title === 'Alive' || color !== 'grey';
+
   return (
     <Stack.Item>
-      <Collapsible
-        bold
-        color={color}
-        title={title + ` - (${filteredSection.length})`}>
+      <Collapsible bold color={color} open={living} title={appendedTitle}>
         {filteredSection.map((poi, index) => {
           return <ObservableItem color={color} item={poi} key={index} />;
         })}
