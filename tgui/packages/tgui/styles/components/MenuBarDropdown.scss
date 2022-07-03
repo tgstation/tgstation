@@ -1,0 +1,92 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+
+$background-color: base.$color-bg !default;
+
+.NtosNotepad__MenuBar {
+  display: flex;
+}
+
+.MenuBar__MenuBarButton {
+  position: relative;
+  font-family: Verdana, sans-serif;
+  font-size: base.em(12px);
+  min-width: max-content;
+  line-height: base.em(17px);
+  user-select: none;
+  padding: .2rem .5rem .2rem .5rem;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+
+  &:hover {
+    background-color: lighten($background-color, 30%) !important;
+    transition: background-color 0ms;
+  }
+}
+
+.MenuBar {
+  position: relative;
+}
+
+.MenuBar__menu {
+  position: absolute;
+  overflow-y: auto;
+  z-index: 5;
+  max-height: base.em(200px);
+  border-radius: 0 0 base.em(2px) base.em(2px);
+  color: #fff;
+  background-color: $background-color;
+  padding: .3rem .3rem .3rem .3rem;
+  box-shadow: 4px 6px 5px -2px rgba(0, 0, 0, 0.55);
+}
+
+.MenuBar__MenuItem {
+  z-index: 5;
+  font-family: Verdana, sans-serif;
+  font-size: base.em(12px);
+  line-height: base.em(17px);
+  transition: background-color 100ms ease-out;
+  background-color: $background-color;
+  white-space: nowrap !important;
+  padding: .3rem 2rem .3rem 3rem;
+
+
+  &:hover {
+    background-color: lighten($background-color, 30%) !important;
+    transition: background-color 0ms;
+  }
+}
+
+.MenuBar__MenuItemToggle {
+  padding: .3rem 2rem .3rem 0;
+}
+
+.MenuBar__MenuItemToggle__check {
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 3rem;
+  margin-left: .3rem;
+}
+
+.MenuBar__over {
+  top: auto;
+  bottom: 100%;
+}
+
+.MenuBar__selected-text {
+  text-overflow: clip;
+  white-space: nowrap;
+  height: base.em(17px);
+  margin: 0;
+  padding: 0;
+}
+
+.MenuBar__Separator {
+  display: block;
+  margin: .3rem .3rem .3rem 2.3rem;
+  border-top: 1px solid base.$color-bg-section;
+}
