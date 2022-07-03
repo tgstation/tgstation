@@ -40,6 +40,11 @@
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
 
+/obj/item/soap/Destroy()
+	if(cleaner)
+		QDEL_NULL(cleaner)
+	. = ..()
+
 /obj/item/soap/examine(mob/user)
 	. = ..()
 	var/max_uses = initial(uses)

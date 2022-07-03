@@ -30,6 +30,8 @@
 
 /obj/item/mop/Destroy(force)
 	GLOB.janitor_devices -= src
+	if(cleaner)
+		QDEL_NULL(cleaner)
 	return ..()
 
 /obj/item/mop/proc/apply_reagents(turf/A, mob/living/cleaner)

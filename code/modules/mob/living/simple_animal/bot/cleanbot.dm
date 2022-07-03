@@ -164,6 +164,8 @@
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
 	GLOB.janitor_devices -= src
+	if(cleaner)
+		QDEL_NULL(cleaner)
 	if(weapon)
 		var/atom/Tsec = drop_location()
 		weapon.force = weapon_orig_force

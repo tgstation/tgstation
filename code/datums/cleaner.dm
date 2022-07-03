@@ -22,9 +22,13 @@
  * Arguments
  * * on_cleaned_callback the callback that should be called when something is cleaned successfully
  */
-
 /datum/cleaner/New(datum/callback/on_cleaned_callback = null)
 	src.on_cleaned_callback = on_cleaned_callback
+
+/datum/cleaner/Destroy()
+	if(on_cleaned_callback)
+		QDEL_NULL(on_cleaned_callback)
+	. = ..()
 
 /**
  * Cleans something using this cleaner.
