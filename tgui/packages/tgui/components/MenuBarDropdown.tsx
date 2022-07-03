@@ -38,6 +38,7 @@ class Menu extends Component<MenuProps> {
     };
   }
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillMount() {
     window.addEventListener('click', this.handleClick);
   }
