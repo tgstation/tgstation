@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Button, LabeledList, ProgressBar } from '../../components';
+import { Box, Button, LabeledList, ProgressBar, Tooltip } from '../../components';
 import { OperatorData, MechaUtility } from './data';
 
 export const UtilityModulesPane = (props, context) => {
@@ -62,13 +62,31 @@ const Snowflake = (props: { module: MechaUtility }, context) => {
   }
 };
 
+const EjectorLabel = (props: { name: string }) => {
+  const { name } = props;
+  return (
+    <Tooltip content={name} position="top">
+      <Box
+        style={{
+          'display': 'inline-block',
+          'vertical-align': 'middle',
+          'max-width': '6rem',
+          'overflow-x': 'hidden',
+          'text-overflow': 'ellipsis',
+        }}>
+        {`${name}:`}
+      </Box>
+    </Tooltip>
+  );
+};
+
 const SnowflakeEjector = (props: { module: MechaUtility }, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { cargo } = props.module.snowflake;
   return (
     <LabeledList>
       {cargo.map((item, i) => (
-        <LabeledList.Item key={i} label={item.name}>
+        <LabeledList.Item key={i} label={<EjectorLabel name={item.name} />}>
           <Button
             onClick={() =>
               act('equip_act', {
