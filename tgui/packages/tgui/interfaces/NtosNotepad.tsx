@@ -2,7 +2,9 @@ import { NtosWindow } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Section, TextArea, MenuBarDropdown, Button, Input, Divider } from '../components';
 import { Component, InfernoNode, RefObject } from 'inferno';
-import { logger } from '../logging';
+import { createLogger } from '../logging';
+
+const logger = createLogger('NtosNotepad');
 
 const DEFAULT_DOCUMENT_NAME = 'Untitled';
 
