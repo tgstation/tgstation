@@ -145,7 +145,7 @@
 		if(human_target.lip_style)
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			human_target.update_lips(null)
-		decreaseUses(target, user)
+		decreaseUses(src, target, user)
 		return
 	SEND_SIGNAL(src, COMSIG_START_CLEANING, target, user) //normal cleaning
 
