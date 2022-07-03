@@ -5,10 +5,10 @@
  */
 
 import { classes } from 'common/react';
-import {Component, createRef, InfernoNode, InfernoNodeArray, RefObject} from 'inferno';
+import { Component, createRef, InfernoNode, InfernoNodeArray, RefObject } from 'inferno';
 import { Box } from './Box';
-import {logger} from "../logging";
-import {Icon} from "./Icon";
+import { logger } from '../logging';
+import { Icon } from './Icon';
 
 type MenuProps = {
   open: boolean;
@@ -16,7 +16,7 @@ type MenuProps = {
   width: string;
   menuRef: RefObject<HTMLElement>;
   onOutsideClick: () => void;
-}
+};
 
 class Menu extends Component<MenuProps> {
   private readonly handleClick: (event) => void;
@@ -53,13 +53,12 @@ class Menu extends Component<MenuProps> {
         className={'MenuBar__menu'}
         style={{
           width: width,
-        }}
-      >
+        }}>
         {options.length ? options : 'No Options Found'}
       </div>
     ) : null;
 
-    return <>{menu}</>
+    return <>{menu}</>;
   }
 }
 
@@ -73,7 +72,7 @@ type MenuBarDropdownProps = {
   onClick: () => void;
   onOutsideClick: () => void;
   className?: string;
-}
+};
 
 class MenuBarButton extends Component<MenuBarDropdownProps> {
   private readonly menuRef: RefObject<HTMLDivElement>;
@@ -99,20 +98,12 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
     const { className, ...rest } = boxProps;
 
     return (
-      <div
-        ref={this.menuRef}
-        className="MenuBar"
-      >
+      <div ref={this.menuRef} className="MenuBar">
         <Box
-          className={classes([
-            "MenuBar__MenuBarButton",
-            className,
-
-          ])}
+          className={classes(['MenuBar__MenuBarButton', className])}
           {...rest}
           onClick={this.props.onClick}
-          onmouseover={this.props.onMouseOver}
-        >
+          onmouseover={this.props.onMouseOver}>
           <span className="MenuBar__selected-text">{display}</span>
         </Box>
         {open && (
@@ -140,7 +131,7 @@ type MenuBarItemProps = {
   openOnHover: boolean;
   disabled?: boolean;
   className?: string;
-}
+};
 
 export const MenuBarDropdown = (props: MenuBarItemProps) => {
   const {
@@ -152,7 +143,7 @@ export const MenuBarDropdown = (props: MenuBarItemProps) => {
     openMenuBar,
     setOpenOnHover,
     openOnHover,
-    disabled
+    disabled,
   } = props;
 
   return (
@@ -177,45 +168,38 @@ export const MenuBarDropdown = (props: MenuBarItemProps) => {
         }
       }}
     />
-  )
-}
+  );
+};
 
 const MenuItemToggle = (props) => {
-  const {value, displayText, onClick, checked} = props;
+  const { value, displayText, onClick, checked } = props;
   return (
     <Box
-      className={classes([
-        "MenuBar__MenuItem",
-        "MenuBar__MenuItemToggle",
-      ])}
-      onClick={() => onClick(value)}
-    >
+      className={classes(['MenuBar__MenuItem', 'MenuBar__MenuItemToggle'])}
+      onClick={() => onClick(value)}>
       <div className="MenuBar__MenuItemToggle__check">
-        {checked && <Icon size={1.3} name="check"/>}
+        {checked && <Icon size={1.3} name="check" />}
       </div>
       {displayText}
     </Box>
   );
-}
+};
 
 MenuBarDropdown.MenuItemToggle = MenuItemToggle;
 
 const MenuItem = (props) => {
-  const {value, displayText, onClick} = props;
+  const { value, displayText, onClick } = props;
   return (
-    <Box
-      className="MenuBar__MenuItem"
-      onClick={() => onClick(value)}
-    >
+    <Box className="MenuBar__MenuItem" onClick={() => onClick(value)}>
       {displayText}
     </Box>
   );
-}
+};
 
 MenuBarDropdown.MenuItem = MenuItem;
 
 const Separator = () => {
-  return <div className="MenuBar__Separator"/>;
-}
+  return <div className="MenuBar__Separator" />;
+};
 
 MenuBarDropdown.Separator = Separator;

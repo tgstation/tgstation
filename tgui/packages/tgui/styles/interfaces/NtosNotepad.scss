@@ -45,7 +45,7 @@ $background-color: base.$color-bg !default;
   margin-left: 1rem;
   margin-right: 2rem;
   flex-grow: 1;
-  opacity: .33;
+  opacity: 0.33;
 }
 
 .NtosNotepad__Dialog__body {
@@ -116,5 +116,5 @@ $background-color: base.$color-bg !default;
   display: block;
   border-left: 1px solid base.$color-bg-section;
   padding-left: 1rem;
-  padding-right: .2rem;
+  padding-right: 0.2rem;
 }

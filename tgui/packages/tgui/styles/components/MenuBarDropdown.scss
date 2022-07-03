@@ -18,7 +18,7 @@ $background-color: base.$color-bg !default;
   min-width: max-content;
   line-height: base.em(17px);
   user-select: none;
-  padding: .2rem .5rem .2rem .5rem;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
   border-radius: 0 !important;
   background-color: transparent !important;
 
@@ -40,7 +40,7 @@ $background-color: base.$color-bg !default;
   border-radius: 0 0 base.em(2px) base.em(2px);
   color: #fff;
   background-color: $background-color;
-  padding: .3rem .3rem .3rem .3rem;
+  padding: 0.3rem 0.3rem 0.3rem 0.3rem;
   box-shadow: 4px 6px 5px -2px rgba(0, 0, 0, 0.55);
 }
 
@@ -52,8 +52,7 @@ $background-color: base.$color-bg !default;
   transition: background-color 100ms ease-out;
   background-color: $background-color;
   white-space: nowrap !important;
-  padding: .3rem 2rem .3rem 3rem;
-
+  padding: 0.3rem 2rem 0.3rem 3rem;
 
   &:hover {
     background-color: lighten($background-color, 30%) !important;
@@ -62,14 +61,14 @@ $background-color: base.$color-bg !default;
 }
 
 .MenuBar__MenuItemToggle {
-  padding: .3rem 2rem .3rem 0;
+  padding: 0.3rem 2rem 0.3rem 0;
 }
 
 .MenuBar__MenuItemToggle__check {
   display: inline-block;
   vertical-align: middle;
   min-width: 3rem;
-  margin-left: .3rem;
+  margin-left: 0.3rem;
 }
 
 .MenuBar__over {
@@ -87,6 +86,6 @@ $background-color: base.$color-bg !default;
 
 .MenuBar__Separator {
   display: block;
-  margin: .3rem .3rem .3rem 2.3rem;
+  margin: 0.3rem 0.3rem 0.3rem 2.3rem;
   border-top: 1px solid base.$color-bg-section;
 }

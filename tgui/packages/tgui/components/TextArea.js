@@ -217,7 +217,7 @@ export class TextArea extends Component {
           className={classes([
             'TextArea__textarea',
             scrollbar && 'TextArea__textarea--scrollable',
-            nowrap && "TextArea__nowrap",
+            nowrap && 'TextArea__nowrap',
           ])}
           placeholder={placeholder}
           onChange={this.handleOnChange}
