@@ -67,5 +67,4 @@
 		target.wash(cleaning_strength)
 		on_cleaned_callback?.Invoke(target, user)
 
-//TODO apply to mop
 //TODO remove old cleaner datum (also from the .dme)

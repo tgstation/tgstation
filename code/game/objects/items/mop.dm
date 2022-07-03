@@ -17,22 +17,21 @@
 	///Maximum volume of reagents it can hold.
 	var/max_reagent_volume = 15
 	var/mopspeed = 1.5 SECONDS
-	var/datum/cleaner/cleaner
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()
-	cleaner = new /datum/cleaner(CALLBACK(src, .proc/apply_reagents))
-	cleaner.base_cleaning_duration = mopspeed
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
 
 /obj/item/mop/Destroy(force)
 	GLOB.janitor_devices -= src
-	if(cleaner)
-		QDEL_NULL(cleaner)
 	return ..()
+
+/obj/item/mop/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/cleaner, mopspeed, on_cleaned_callback=CALLBACK(src, .proc/apply_reagents))
 
 /obj/item/mop/proc/apply_reagents(turf/A, mob/living/cleaner)
 	reagents.expose(A, TOUCH, 10) //Needed for proper floor wetting.
@@ -57,10 +56,11 @@
 		return
 
 	if(T)
+		var/datum/component/cleaner/cleaner = GetComponent(/datum/component/cleaner)
 		if(!reagents.has_chemical_flag(REAGENT_CLEANS, 1)) //won't clean the turf nor give you experience without cleaning reagents
 			cleaner.cleaning_strength = 0 //none of the cleaning flags
 			cleaner.experience_gain_modifier = 0
-		cleaner.clean(T, user)
+		SEND_SIGNAL(src, COMSIG_START_CLEANING, T, user)
 		cleaner.cleaning_strength = CLEAN_SCRUB
 		cleaner.experience_gain_modifier = 1
 
