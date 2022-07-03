@@ -52,7 +52,6 @@ type MenuBarProps = {
   aboutNotepadDialog: () => void;
 };
 
-// eslint-disable-function react/jsx-key
 const MenuBar = (props: MenuBarProps, context) => {
   const {
     openDocument,
