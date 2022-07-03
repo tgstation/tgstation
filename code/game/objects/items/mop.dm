@@ -33,13 +33,20 @@
 	. = ..()
 	AddComponent(/datum/component/cleaner, mopspeed, on_cleaned_callback=CALLBACK(src, .proc/apply_reagents))
 
-/obj/item/mop/proc/apply_reagents(turf/A, mob/living/cleaner)
-	reagents.expose(A, TOUCH, 10) //Needed for proper floor wetting.
+/**
+ * Applies reagents to the cleaned floor and removes them from the mop.
+ *
+ * Arguments
+ * * cleaning_source the source of the cleaning
+ * * cleaned_turf the turf that is being cleaned
+ * * cleaner the mob that is doing the cleaning
+ */
+/obj/item/mop/proc/apply_reagents(datum/cleaning_source, turf/cleaned_turf, mob/living/cleaner)
+	reagents.expose(cleaned_turf, TOUCH, 10) //Needed for proper floor wetting.
 	var/val2remove = 1
 	if(cleaner?.mind)
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER),0.1)
 	reagents.remove_any(val2remove) //reaction() doesn't use up the reagents
-
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
 	. = ..()

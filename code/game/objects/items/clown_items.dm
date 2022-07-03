@@ -115,10 +115,11 @@
  *
  * The higher the cleaning skill, the less likely the soap will lose a use.
  * Arguments
+ * * source - the source of the cleaning
  * * target - The atom that is being cleaned
  * * user - The mob that is using the soap to clean.
  */
-/obj/item/soap/proc/decreaseUses(atom/target, mob/living/user)
+/obj/item/soap/proc/decreaseUses(datum/source, atom/target, mob/living/user)
 	var/skillcheck = 1
 	if(user?.mind)
 		skillcheck = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
