@@ -559,10 +559,10 @@
 		else
 			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = NIGHTVISION_FOV_RANGE
-		see_invisible = SEE_INVISIBLE_OBSERVER
+		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 
-	see_invisible = initial(see_invisible)
+	set_invis_see(initial(see_invisible))
 	see_in_dark = initial(see_in_dark)
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		set_sight(null)

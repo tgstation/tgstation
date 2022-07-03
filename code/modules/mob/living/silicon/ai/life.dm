@@ -75,7 +75,7 @@
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()
-	see_invisible = initial(see_invisible)
+	set_invis_see(initial(see_invisible))
 	see_in_dark = initial(see_in_dark)
 	set_sight(initial(sight))
 	if(aiRestorePowerRoutine)
@@ -83,7 +83,7 @@
 		see_in_dark = 0
 
 	if(see_override)
-		see_invisible = see_override
+		set_invis_see(see_override)
 	sync_lighting_plane_alpha()
 
 

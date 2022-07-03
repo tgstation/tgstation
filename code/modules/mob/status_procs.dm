@@ -107,6 +107,8 @@
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)
 
+/// Sight here is the mob.sight var, which tells byond what to actually show to our client
+/// See [code\__DEFINES\sight.dm] for more details
 /mob/proc/set_sight(new_value)
 	SHOULD_CALL_PARENT(TRUE)
 	// Can't turn this off, because we need it to make a plane master we need exist
@@ -123,3 +125,14 @@
 
 /mob/proc/clear_sight(new_value)
 	set_sight(sight & ~new_value)
+
+/// see invisibility is the mob's capability to see things that ought to be hidden from it
+/// Can think of it as a primitive version of changing the alpha of planes
+/// We mostly use it to hide ghosts, no real reason why
+/mob/proc/set_invis_see(new_sight)
+	SHOULD_CALL_PARENT(TRUE)
+	if(new_sight == see_invisible)
+		return
+	var/old_invis = see_invisible
+	see_invisible = new_sight
+	SEND_SIGNAL(src, COMSIG_MOB_SEE_INVIS_CHANGE, see_invisible, old_invis)

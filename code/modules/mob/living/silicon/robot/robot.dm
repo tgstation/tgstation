@@ -618,10 +618,10 @@
 		else
 			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_OBSERVER
+		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 
-	see_invisible = initial(see_invisible)
+	set_invis_see(initial(see_invisible))
 	see_in_dark = initial(see_in_dark)
 	var/new_sight = initial(sight)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
@@ -643,17 +643,17 @@
 
 	if(sight_mode & BORGXRAY)
 		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-		see_invisible = SEE_INVISIBLE_LIVING
+		set_invis_see(SEE_INVISIBLE_LIVING)
 		see_in_dark = 8
 
 	if(sight_mode & BORGTHERM)
 		new_sight |= SEE_MOBS
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-		see_invisible = min(see_invisible, SEE_INVISIBLE_LIVING)
+		set_invis_see(min(see_invisible, SEE_INVISIBLE_LIVING))
 		see_in_dark = 8
 
 	if(see_override)
-		see_invisible = see_override
+		set_invis_see(see_override)
 
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
 		new_sight = null
