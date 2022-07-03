@@ -36,8 +36,6 @@
 	var/weapon_orig_force = 0
 	var/chosen_name
 
-	var/datum/cleaner/cleaner
-
 	var/list/stolen_valor = list()
 
 	var/static/list/officers_titles = list(
@@ -148,9 +146,6 @@
 	get_targets()
 	update_icon_state()
 
-	cleaner = new /datum/cleaner()
-	cleaner.base_cleaning_duration = 0.1 SECONDS
-
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
 	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
@@ -164,13 +159,15 @@
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
 	GLOB.janitor_devices -= src
-	if(cleaner)
-		QDEL_NULL(cleaner)
 	if(weapon)
 		var/atom/Tsec = drop_location()
 		weapon.force = weapon_orig_force
 		drop_part(weapon, Tsec)
 	return ..()
+
+/mob/living/simple_animal/bot/cleanbot/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/cleaner, 0.1 SECONDS)
 
 /mob/living/simple_animal/bot/cleanbot/update_icon_state()
 	. = ..()
@@ -358,7 +355,7 @@
 		mode = BOT_CLEANING
 		update_icon_state()
 		var/turf/T = get_turf(A)
-		cleaner.clean(T, src)
+		SEND_SIGNAL(src, COMSIG_START_CLEANING, T, src)
 		target = null
 		mode = BOT_IDLE
 		update_icon_state()
