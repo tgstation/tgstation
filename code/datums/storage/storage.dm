@@ -83,12 +83,13 @@
 		return
 	
 	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), .proc/handle_attack)
-	RegisterSignal(resolve_parent, COMSIG_MOUSEDROP_ONTO, .proc/handle_mousedrop)
+	RegisterSignal(resolve_parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
+	RegisterSignal(resolve_parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedropped_onto)
 
 	RegisterSignal(resolve_parent, COMSIG_ATOM_EMP_ACT, .proc/emp_act)
 	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
 	RegisterSignal(resolve_parent, COMSIG_ITEM_PRE_ATTACK, .proc/intercept_preattack)
-	RegisterSignal(resolve_parent, COMSIG_OBJ_DECONSTRUCT, .proc/remove_all)
+	RegisterSignal(resolve_parent, COMSIG_OBJ_DECONSTRUCT, .proc/deconstruct)
 
 	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, .proc/mass_empty)
 
@@ -118,6 +119,11 @@
 	is_using.Cut()
 
 	return ..()
+
+/datum/storage/proc/deconstruct()
+	SIGNAL_HANDLER
+
+	remove_all()
 
 /datum/storage/proc/handle_enter(datum/source, obj/item/arrived)
 	SIGNAL_HANDLER
@@ -361,6 +367,17 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	progress.update(progress.goal - things.len)
 	return FALSE
 
+/datum/storage/proc/handle_mass_transfer(mob/user, atom/going_to)
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return
+
+	if(!going_to.atom_storage)
+		return
+
+	for (var/atom/thing in resolve_location.contents)
+		going_to.atom_storage.attempt_insert(src, thing, user)
+
 /datum/storage/proc/item_insertion_feedback(mob/user, obj/item/thing, override = FALSE)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
@@ -419,7 +436,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	return TRUE
 
-/datum/storage/proc/remove_all(datum/source, atom/target)
+/datum/storage/proc/remove_all(atom/target)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
@@ -457,10 +474,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			attempt_remove(i, destination)
 	return TRUE
 
-/datum/storage/proc/mass_empty(datum/source, atom/location)
+/datum/storage/proc/mass_empty(datum/source, atom/location, force)
 	SIGNAL_HANDLER
 
-	if(!allow_quick_empty)
+	if(!allow_quick_empty && !force)
 		return
 
 	remove_all(get_turf(location))
@@ -548,7 +565,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	progress.end_progress()
 	to_chat(user, span_notice("You put everything you could [insert_preposition]to [resolve_parent]."))
 
-/datum/storage/proc/handle_mousedrop(datum/source, atom/over_object, mob/user)
+/datum/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/user)
 	SIGNAL_HANDLER
 
 	var/obj/item/resolve_parent = parent?.resolve()
@@ -568,7 +585,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(over_object == user)
 		open_storage(resolve_parent, user)
+
 	if(!istype(over_object, /atom/movable/screen))
+		INVOKE_ASYNC(src, .proc/dump_content_at, over_object, user)
 		return
 	
 	if(resolve_parent.loc != user)
@@ -581,6 +600,37 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		var/atom/movable/screen/inventory/hand/hand = over_object
 		user.putItemFromInventoryInHandIfPossible(resolve_parent, hand.held_index)
 		return
+
+/datum/storage/proc/dump_content_at(atom/dest_object, mob/user)
+	var/obj/item/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	var/obj/item/resolve_location = real_location?.resolve()
+	if(!resolve_location)
+		return
+
+	if(user.CanReach(resolve_parent) && dest_object && user.CanReach(dest_object))
+		if(locked)
+			return
+		if(dest_object.storage_contents_dump_act(resolve_parent, user))
+			return
+
+/datum/storage/proc/mousedropped_onto(datum/source, obj/item/dropping, mob/user)
+	SIGNAL_HANDLER
+
+	var/obj/item/resolve_parent = parent?.resolve()
+
+	if(!resolve_parent)
+		return
+	if(!istype(dropping))
+		return
+	
+	if(iscarbon(user) || isdrone(user))
+		var/mob/living/user_living = user
+		if(!user_living.incapacitated() && dropping == user_living.get_active_held_item())
+			if(!dropping.atom_storage && can_insert(dropping, user)) //If it has storage it should be trying to dump, not insert.
+				attempt_insert(src, dropping, user)
 
 /datum/storage/proc/attackby(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER

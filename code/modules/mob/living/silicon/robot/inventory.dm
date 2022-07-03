@@ -97,7 +97,7 @@
 	item_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
 
 	if(istype(item_module, /obj/item/storage/bag/tray/))
-		item_module.atom_storage.mass_empty(src, loc)
+		item_module.atom_storage.remove_all(loc)
 	if(istype(item_module, /obj/item/borg/sight))
 		var/obj/item/borg/sight/borg_sight = item_module
 		sight_mode &= ~borg_sight.sight_mode

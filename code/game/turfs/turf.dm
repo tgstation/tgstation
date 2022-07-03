@@ -452,23 +452,21 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/Bless()
 	new /obj/effect/blessing(src)
 
-/turf/storage_contents_dump_act(datum/storage/src_object, mob/user)
+/turf/storage_contents_dump_act(atom/src_object, mob/user)
 	. = ..()
 	if(.)
 		return
-	var/atom/resolve_parent = src_object.real_location?.resolve()
+	if(!src_object.atom_storage)
+		return
+	var/atom/resolve_parent = src_object.atom_storage.real_location?.resolve()
 	if(!resolve_parent)
 		return FALSE
 	if(length(resolve_parent.contents))
-		to_chat(usr, span_notice("You start dumping out the contents..."))
-		if(!do_after(usr,20,target=resolve_parent))
+		to_chat(user, span_notice("You start dumping out the contents of [src_object]..."))
+		if(!do_after(user, 20, target=resolve_parent))
 			return FALSE
 
-	var/list/things = resolve_parent.contents
-	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object, /datum/storage.proc/mass_empty, src, user)))
-		stoplag(1)
-	progress.end_progress()
+	src_object.atom_storage.remove_all(src)
 
 	return TRUE
 

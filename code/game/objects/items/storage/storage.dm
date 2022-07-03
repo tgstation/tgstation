@@ -37,7 +37,7 @@
 
 /obj/item/storage/doStrip(mob/who)
 	if(HAS_TRAIT(src, TRAIT_NODROP) && rummage_if_nodrop)
-		atom_storage.mass_empty()
+		atom_storage.remove_all()
 		return TRUE
 	return ..()
 
@@ -47,7 +47,7 @@
 /obj/item/storage/proc/PopulateContents()
 
 /obj/item/storage/proc/emptyStorage()
-	atom_storage.mass_empty()
+	atom_storage.remove_all()
 
 /obj/item/storage/Destroy()
 	for(var/obj/important_thing in contents)
