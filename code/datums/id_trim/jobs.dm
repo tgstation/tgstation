@@ -825,7 +825,6 @@
 		ACCESS_RESEARCH,
 		ACCESS_SCIENCE,
 		ACCESS_XENOBIOLOGY,
-
 		)
 	extra_access = list(
 		ACCESS_GENETICS,
