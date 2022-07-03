@@ -13,30 +13,28 @@ export const UtilityModulesPane = (props, context) => {
             {module.snowflake.snowflake_id ? (
               <Snowflake module={module} />
             ) : (
-              <Box display="flex" flexDirection="row" alignItems="center">
-                <Box>
-                  <Button
-                    verticalAlignContent="middle"
-                    content={(module.activated ? 'En' : 'Dis') + 'abled'}
-                    onClick={() =>
-                      act('equip_act', {
-                        ref: module.ref,
-                        gear_action: 'toggle',
-                      })
-                    }
-                    selected={module.activated}
-                  />
-                  <Button
-                    verticalAlignContent="middle"
-                    content={'Detach'}
-                    onClick={() =>
-                      act('equip_act', {
-                        ref: module.ref,
-                        gear_action: 'detach',
-                      })
-                    }
-                  />
-                </Box>
+              <Box width="100%" display="flex" flexDirection="row" alignItems="center">
+                <Button
+                  verticalAlignContent="middle"
+                  content={(module.activated ? 'En' : 'Dis') + 'abled'}
+                  onClick={() =>
+                    act('equip_act', {
+                      ref: module.ref,
+                      gear_action: 'toggle',
+                    })
+                  }
+                  selected={module.activated}
+                />
+                <Button
+                  verticalAlignContent="middle"
+                  content={'Detach'}
+                  onClick={() =>
+                    act('equip_act', {
+                      ref: module.ref,
+                      gear_action: 'detach',
+                    })
+                  }
+                />
               </Box>
             )}
           </LabeledList.Item>
