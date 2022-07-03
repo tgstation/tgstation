@@ -58,7 +58,7 @@ class Menu extends Component<MenuProps> {
       </div>
     ) : null;
 
-    return <>{menu}</>;
+    return { menu };
   }
 }
 
@@ -102,8 +102,8 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
         <Box
           className={classes(['MenuBar__MenuBarButton', className])}
           {...rest}
-          onClick={this.props.onClick}
-          onmouseover={this.props.onMouseOver}>
+          onClick={disabled ? undefined : onClick}
+          onmouseover={onMouseOver}>
           <span className="MenuBar__selected-text">{display}</span>
         </Box>
         {open && (
@@ -144,6 +144,7 @@ export const MenuBarDropdown = (props: MenuBarItemProps) => {
     setOpenOnHover,
     openOnHover,
     disabled,
+    className,
   } = props;
 
   return (
@@ -153,6 +154,7 @@ export const MenuBarDropdown = (props: MenuBarItemProps) => {
       options={options}
       disabled={disabled}
       open={openMenuBar === entry}
+      className={className}
       onClick={() => {
         const open = openMenuBar === entry ? null : entry;
         setOpenMenuBar(open);

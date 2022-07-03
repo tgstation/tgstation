@@ -19,7 +19,7 @@ const PartiallyUnderlined = (props: PartiallyUnderlinedProps) => {
   return (
     <>
       {start}
-      <span style="text-decoration: underline;">{underlined}</span>
+      <span style={{ 'text-decoration': 'underline' }}>{underlined}</span>
       {end}
     </>
   );
@@ -50,6 +50,7 @@ type MenuBarProps = {
   aboutNotepadDialog: () => void;
 };
 
+// eslint-disable-function react/jsx-key
 const MenuBar = (props: MenuBarProps, context) => {
   const {
     openDocument,
@@ -119,6 +120,7 @@ const MenuBar = (props: MenuBarProps, context) => {
         break;
     }
   };
+  // Adds the key using the value
   const getMenuItemProps = (value: string, displayText: string) => {
     return {
       key: value,
@@ -127,6 +129,7 @@ const MenuBar = (props: MenuBarProps, context) => {
       onClick: onMenuItemClick,
     };
   };
+  /* eslint-disable react/jsx-key */
   const fileOptions = [
     <MenuBarDropdown.MenuItem {...getMenuItemProps('new', 'New')} />,
     <MenuBarDropdown.MenuItem {...getMenuItemProps('open', 'Open')} />,
@@ -161,6 +164,7 @@ const MenuBar = (props: MenuBarProps, context) => {
       {...getMenuItemProps('aboutNotepad', 'About Notepad')}
     />,
   ];
+  /* eslint-enable react/jsx-key */
   const itemProps = {
     openOnHover,
     setOpenOnHover,
@@ -233,13 +237,13 @@ const StatusBar = (props: StatusBarProps) => {
   );
 };
 
-function getStatusCounts(text: string, selectionStart: number): Statuses {
+const getStatusCounts = (text: string, selectionStart: number): Statuses => {
   const lines = text.substr(0, selectionStart).split('\n');
   return {
     line: lines.length,
     column: lines[lines.length - 1].length + 1,
   };
-}
+};
 
 type Statuses = {
   line: number;
@@ -403,7 +407,7 @@ const UnsavedChangesDialog = (props: UnsavedChangesDialogProps) => {
       </div>
       <div className="NtosNotepad__Dialog__footer">
         <DialogButton onClick={save}>Save</DialogButton>
-        <DialogButton onClick={noSave}>Don't Save</DialogButton>
+        <DialogButton onClick={noSave}>Don&apos;t Save</DialogButton>
         <DialogButton onClick={close}>Cancel</DialogButton>
       </div>
     </Dialog>
@@ -465,19 +469,20 @@ type AboutDialogProps = {
 
 const AboutDialog = (props: AboutDialogProps) => {
   const { close, clientName } = props;
+  const paragraphStyle = { 'padding': '.5rem 1rem 0 2rem' };
   return (
     <Dialog title="About Notepad" close={close} width={'500px'}>
       <div className="NtosNotepad__Dialog__body">
         <span className="NtosNotepad__AboutDialog__logo">NtOS</span>
         <Divider />
         <Box className="NtosNotepad__AboutDialog__text">
-          <span style={{ 'padding': '.5rem 1rem 0 2rem' }}>
+          <span style={paragraphStyle}>
             Nanotrasen NtOS
           </span>
-          <span style={{ 'padding': '.5rem 1rem 0 2rem' }}>
+          <span style={paragraphStyle}>
             Version 7815696ecbf1c96e6894b779456d330e
           </span>
-          <span style={{ 'padding': '.5rem 1rem 0 2rem' }}>
+          <span style={paragraphStyle}>
             &copy; NT Corporation. All rights reserved.
           </span>
           <span style={{ 'padding': '3rem 1rem 3rem 2rem' }}>
@@ -545,9 +550,9 @@ export const NtosNotepad = (props, context) => {
     true
   );
   const closeDialog = () => setActiveDialog(Dialogs.NONE);
-  const save = (newDocumentName = documentName) => {
+  const save = (newDocumentName: string = documentName) => {
     logger.log(`Saving the document as ${newDocumentName}`);
-    if (newDocumentName == DEFAULT_DOCUMENT_NAME) {
+    if (newDocumentName === DEFAULT_DOCUMENT_NAME) {
       logger.log(`Document name is ${newDocumentName}. New name is required.`);
       setActiveDialog(Dialogs.SAVE_AS);
       return;
@@ -573,7 +578,7 @@ export const NtosNotepad = (props, context) => {
   ): boolean => {
     // This is a guard function that throws up the "unsaved changes" dialog if the user is
     // attempting to do something that will make them lose data
-    if (!retrying && originalText != text) {
+    if (!retrying && originalText !== text) {
       logger.log('Unsaved changes. Asking client to save');
       setRetryAction(() => action);
       setActiveDialog(Dialogs.UNSAVED_CHANGES);
@@ -616,7 +621,7 @@ export const NtosNotepad = (props, context) => {
   };
 
   // MS Notepad displays an asterisk when there's unsaved changes
-  const unsavedAsterisk = text != originalText ? '*' : '';
+  const unsavedAsterisk = text !== originalText ? '*' : '';
   return (
     <NtosWindow
       title={`${unsavedAsterisk}${documentName} - Notepad`}
@@ -656,7 +661,7 @@ export const NtosNotepad = (props, context) => {
         <UnsavedChangesDialog
           documentName={documentName}
           save={
-            documentName == DEFAULT_DOCUMENT_NAME
+            documentName === DEFAULT_DOCUMENT_NAME
               ? () => setActiveDialog(Dialogs.SAVE_AS)
               : save
           }
