@@ -643,8 +643,13 @@
 	set name = "Edit/Debug Planes"
 	set desc = "Edit and visualize plane masters and their connections (relays)"
 
+	edit_plane_masters()
+
+/client/proc/edit_plane_masters(mob/debug_on)
 	if(!holder)
 		return
+	if(debug_on)
+		holder.plane_debug.set_target(debug_on)
 	holder.plane_debug.ui_interact(mob)
 
 /client/proc/debug_huds(i as num)

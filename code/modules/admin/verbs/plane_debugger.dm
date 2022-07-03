@@ -5,6 +5,8 @@
 	var/list/depth_stack = list()
 	/// The current plane master group we're viewing
 	var/current_group = PLANE_GROUP_MAIN
+	/// Weakref to the mob to edit
+	var/datum/weakref/mob_ref
 
 /datum/plane_master_debug/New(datum/admins/owner)
 	src.owner = owner
@@ -12,6 +14,17 @@
 /datum/plane_master_debug/Destroy()
 	owner = null
 	return ..()
+
+/datum/plane_master_debug/proc/set_target(mob/new_mob)
+	depth_stack = list()
+	mob_ref = WEAKREF(new_mob)
+
+/datum/plane_master_debug/proc/get_target()
+	var/mob/target = mob_ref?.resolve()
+	if(!target?.hud_used)
+		target = owner.owner.mob
+		set_target(target)
+	return target
 
 /datum/plane_master_debug/ui_state(mob/user)
 	return GLOB.admin_state
@@ -28,7 +41,12 @@
 /datum/plane_master_debug/ui_data()
 	var/list/data = list()
 
-	var/datum/hud/our_hud = owner.owner.mob.hud_used
+	var/mob/reference_frame = get_target()
+	data["mob_name"] = reference_frame.name
+	data["mob_ref"] = ref(reference_frame)
+	data["our_ref"] = ref(owner.owner.mob)
+
+	var/datum/hud/our_hud = reference_frame.hud_used
 	var/list/our_groups = our_hud.master_groups
 	if(!our_groups[current_group])
 		// We assume we'll always have at least one group
@@ -245,7 +263,8 @@
 	if(.)
 		return
 
-	var/datum/hud/our_hud = owner?.owner?.mob?.hud_used
+	var/mob/reference_frame = get_target()
+	var/datum/hud/our_hud = reference_frame.hud_used
 	var/datum/plane_master_group/group = our_hud?.master_groups[current_group]
 	if(!group) // Nothing to act on
 		return
@@ -254,6 +273,10 @@
 	switch(action)
 		if("refresh")
 			group.rebuild_hud()
+		if("reset_mob")
+			set_target(null)
+		if("vv_mob")
+			owner.owner.debug_variables(reference_frame)
 		if("set_group")
 			current_group = params["target_group"]
 		if("connect_relay")

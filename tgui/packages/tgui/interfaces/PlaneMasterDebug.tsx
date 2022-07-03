@@ -117,6 +117,9 @@ type PlaneDebugData = {
   plane_info: AssocPlane;
   filter_connect: AssocFilters;
   depth_stack: AssocString[];
+  mob_name: string;
+  mob_ref: string;
+  our_ref: string;
 };
 
 // Stolen wholesale from fontcode
@@ -374,7 +377,7 @@ export class PlaneMasterDebug extends Component {
 
   render() {
     const { act, data } = useBackend<PlaneDebugData>(this.context);
-    const { plane_info, depth_stack } = data;
+    const { plane_info, mob_name } = data;
     const [showAdd, setShowAdd] = useLocalState(this.context, 'showAdd', false);
 
     const [connectSources, setConnectSouces] = useLocalState<AssocConnected>(
@@ -400,7 +403,7 @@ export class PlaneMasterDebug extends Component {
     }
 
     return (
-      <Window width={1200} height={800} name="Plane Debugging">
+      <Window width={1200} height={800} title={'Plane Debugging: ' + mob_name}>
         <Window.Content
           style={{
             'background-image': 'none',
@@ -643,6 +646,8 @@ const DrawAbovePlane = (props, context) => {
       {!readPlane && (
         <>
           <InfoButton />
+          <MobResetButton />
+          <VVButton />
           <RefreshButton />
         </>
       )}
@@ -677,6 +682,8 @@ const PlaneWindow = (props, context) => {
         <>
           <ClosePlaneWindow />
           <InfoButton no_position />
+          <MobResetButton no_position />
+          <VVButton no_position />
           <RefreshButton no_position />
         </>
       }>
@@ -770,15 +777,58 @@ const PlaneWindow = (props, context) => {
 const InfoButton = (props, context) => {
   const [showInfo, setShowInfo] = useLocalState(context, 'showInfo', false);
   const { no_position } = props;
+  const foreign = has_foreign_mob(context);
+
+  return (
+    <Button
+      top={no_position ? '' : '30px'}
+      right={no_position ? '' : foreign ? '76px' : "52px"}
+      position={no_position ? '' : 'absolute'}
+      icon="exclamation"
+      onClick={() => setShowInfo(true)}
+      tooltip="Info about what this window is/why it exists"
+    />
+  );
+};
+
+const MobResetButton = (props, context) => {
+  const { act } = useBackend(context);
+  const { no_position } = props;
+  if (!has_foreign_mob(context)) {
+    return;
+  }
+
+  return (
+    <Button
+      top={no_position ? '' : '30px'}
+      right={no_position ? '' : '52px'}
+      position={no_position ? '' : 'absolute'}
+      color="bad"
+      icon="power-off"
+      onClick={() => act('reset_mob')}
+      tooltip="Reset our focused mob to your active mob"
+    />
+  );
+};
+
+const has_foreign_mob = function (context) {
+  const { data } = useBackend<PlaneDebugData>(context);
+  const { mob_ref, our_ref } = data;
+  return mob_ref !== our_ref;
+};
+
+const VVButton = (props, context) => {
+  const { act } = useBackend(context);
+  const { no_position } = props;
 
   return (
     <Button
       top={no_position ? '' : '30px'}
       right={no_position ? '' : '28px'}
       position={no_position ? '' : 'absolute'}
-      icon="exclamation"
-      onClick={() => setShowInfo(true)}
-      tooltip="Info about what this window is/why it exists"
+      icon="pen"
+      onClick={() => act('vv_mob')}
+      tooltip="View the variables of our currently focused mob"
     />
   );
 };

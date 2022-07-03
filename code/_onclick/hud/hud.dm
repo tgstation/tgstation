@@ -134,13 +134,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/clear_client(datum/source)
 	UnregisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE)
-	UnregisterSignal(mymob.canon_client.eye, COMSIG_MOVABLE_Z_CHANGED)
+	on_eye_change(null, mymob.canon_client.eye, null)
 
 /datum/hud/proc/on_eye_change(datum/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
 	if(old_eye)
 		UnregisterSignal(old_eye, COMSIG_MOVABLE_Z_CHANGED)
-	RegisterSignal(new_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/eye_z_changed)
+	if(new_eye)
+		RegisterSignal(new_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/eye_z_changed)
 	eye_z_changed(new_eye)
 
 /datum/hud/proc/eye_z_changed(atom/eye)

@@ -1234,6 +1234,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DIRECT_CONTROL, "Give Direct Control")
 	VV_DROPDOWN_OPTION(VV_HK_OFFER_GHOSTS, "Offer Control to Ghosts")
 	VV_DROPDOWN_OPTION(VV_HK_SDQL_SPELL, "Give SDQL Spell")
+	VV_DROPDOWN_OPTION(VV_HK_VIEW_PLANES, "View/Edit Planes")
 
 /mob/vv_do_topic(list/href_list)
 	. = ..()
@@ -1289,6 +1290,10 @@
 		if(!check_rights(R_DEBUG))
 			return
 		usr.client.cmd_sdql_spell_menu(src)
+	if(href_list[VV_HK_VIEW_PLANES])
+		if(!check_rights(R_DEBUG))
+			return
+		usr.client.edit_plane_masters(src)
 /**
  * extra var handling for the logging var
  */
