@@ -1,5 +1,5 @@
 /**
- * Can be used to clean things.
+ * Component that can be used to clean things.
  * Takes care of duration, cleaning skill and special cleaning interactions.
  * A callback can be set by the datum holding the cleaner to add custom functionality.
  * Soap uses a callback to decrease the amount of uses it has left after cleaning for example.
@@ -16,9 +16,6 @@
 	/// Gets called when something is successfully cleaned.
 	var/datum/callback/on_cleaned_callback
 
-/**
- *
- */
 /datum/component/cleaner/Initialize(base_cleaning_duration, skill_duration_modifier_offset = 0, cleaning_strength = CLEAN_SCRUB, experience_gain_modifier = 1, datum/callback/on_cleaned_callback = null)
 	src.base_cleaning_duration = base_cleaning_duration
 	src.skill_duration_modifier_offset = skill_duration_modifier_offset
@@ -38,6 +35,7 @@
  * Successfully cleaning gives cleaning experience to the user and invokes the on_cleaned_callback.
  *
  * Arguments
+ * * source the datum that sent the signal to start cleaning
  * * target the thing being cleaned
  * * user the person doing the cleaning
  */
@@ -69,6 +67,5 @@
 		target.wash(cleaning_strength)
 		on_cleaned_callback?.Invoke(target, user)
 
-//TODO update code comments
 //TODO apply to mop/soap/cleanbot
 //TODO remove old cleaner datum (also from the .dme)
