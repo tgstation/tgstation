@@ -65,6 +65,8 @@ $background-color: base.$color-bg !default;
 .NtosNotepad__Dialog__button {
   margin: 0 1rem 0 1rem;
   height: 2rem;
+  min-width: 6rem;
+  text-align: center;
 }
 
 .NtosNotepad__SaveAsDialog__inputs {
