@@ -172,14 +172,17 @@ export class TextArea extends Component {
       ...boxProps
     } = this.props;
     // Box props
-    const { className, fluid, ...rest } = boxProps;
+    const { className, fluid, nowrap, ...rest } = boxProps;
     return (
       <Box
         className={classes(['TextArea', fluid && 'TextArea--fluid', className])}
         {...rest}>
         <textarea
           ref={this.textareaRef}
-          className="TextArea__textarea"
+          className={classes([
+            "TextArea__textarea",
+            nowrap && "TextArea__nowrap"
+          ])}
           placeholder={placeholder}
           onChange={this.handleOnChange}
           onKeyDown={this.handleKeyDown}

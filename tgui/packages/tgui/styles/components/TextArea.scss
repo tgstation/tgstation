@@ -61,3 +61,9 @@ $border-radius: Input.$border-radius !default;
     color: rgba(255, 255, 255, 0.45);
   }
 }
+
+.TextArea__nowrap {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  overflow-x: scroll;
+}
