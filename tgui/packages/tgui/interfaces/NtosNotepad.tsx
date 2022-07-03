@@ -420,7 +420,7 @@ const AboutDialog = (props: AboutDialogProps) => {
             existing intellectual property rights in the Sol system and other regions.
           </span>
           <span style={{"padding": "3rem 1rem 0.5rem 2rem", "max-width": "35rem"}}>
-            This porduct is licensed under the NT Corporation Terms to:
+            This product is licensed under the NT Corporation Terms to:
           </span>
           <span style={{"padding": "0 1rem 0 4rem"}}>{clientName}</span>
         </Box>
