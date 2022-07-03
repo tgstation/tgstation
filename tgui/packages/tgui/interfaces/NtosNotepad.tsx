@@ -1,6 +1,6 @@
 import {NtosWindow} from '../layouts';
 import {useBackend, useLocalState} from '../backend';
-import {Box, Section, TextArea, MenuBarDropdown, Button, Input} from '../components';
+import {Box, Section, TextArea, MenuBarDropdown, Button, Input, Divider} from '../components';
 import {Component, InfernoNode, RefObject} from "inferno";
 import {logger} from "../logging";
 
@@ -39,8 +39,9 @@ type MenuBarProps = {
   deleteSelected: () => void;
   showStatusBar: boolean;
   setShowStatusBar: (boolean) => void;
-  wordWrap: boolean,
-  setWordWrap: (boolean) => void,
+  wordWrap: boolean;
+  setWordWrap: (boolean) => void;
+  aboutNotepadDialog: () => void;
 }
 
 const MenuBar = (props: MenuBarProps, context) => {
@@ -58,6 +59,7 @@ const MenuBar = (props: MenuBarProps, context) => {
     showStatusBar,
     wordWrap,
     setWordWrap,
+    aboutNotepadDialog,
   } = props;
   const [openOnHover, setOpenOnHover] = useLocalState(context, "openOnHover", false);
   const [openMenuBar, setOpenMenuBar] = useLocalState<string | null>(context, "openMenuBar", null);
@@ -76,6 +78,7 @@ const MenuBar = (props: MenuBarProps, context) => {
       case "delete": deleteSelected(); break;
       case "statusBar": setShowStatusBar(!showStatusBar); break;
       case "wordWrap": setWordWrap(!wordWrap); break;
+      case "aboutNotepad": aboutNotepadDialog(); break;
     }
   }
   const getMenuItemProps = (value: string, displayText: string) => {
@@ -395,13 +398,46 @@ const SaveAsDialog = (props: SaveAsDialogProps, context) => {
   );
 }
 
+type AboutDialogProps = {
+  close: () => void;
+  clientName: string;
+}
+
+const AboutDialog = (props: AboutDialogProps) => {
+  const {close, clientName} = props;
+  return (
+    <Dialog title="About Notepad" close={close} width={"500px"}>
+      <div className="NtosNotepad__Dialog__body">
+        <span className="NtosNotepad__AboutDialog__logo">NtOS</span>
+        <Divider />
+        <Box className="NtosNotepad__AboutDialog__text">
+          <span style={{"padding": ".5rem 1rem 0 2rem"}}>Nanotrasen NtOS</span>
+          <span style={{"padding": ".5rem 1rem 0 2rem"}}>Version 7815696ecbf1c96e6894b779456d330e</span>
+          <span style={{"padding": ".5rem 1rem 0 2rem"}}>&copy; NT Corporation. All rights reserved.</span>
+          <span style={{"padding": "3rem 1rem 3rem 2rem"}}>
+            The NtOS operating system and its user interface are protected by trademark and other pending or
+            existing intellectual property rights in the Sol system and other regions.
+          </span>
+          <span style={{"padding": "3rem 1rem 0.5rem 2rem", "max-width": "35rem"}}>
+            This porduct is licensed under the NT Corporation Terms to:
+          </span>
+          <span style={{"padding": "0 1rem 0 4rem"}}>{clientName}</span>
+        </Box>
+      </div>
+      <div className="NtosNotepad__Dialog__footer" >
+        <DialogButton onClick={close}>Ok</DialogButton>
+      </div>
+    </Dialog>
+  );
+}
+
 type NoteData = {
   note: string;
 };
 type RetryActionType = (retrying?: boolean) => void;
 
 export const NtosNotepad = (props, context) => {
-  const {act, data} = useBackend<NoteData>(context);
+  const {act, data, config} = useBackend<NoteData>(context);
   const [documentName, setDocumentName] = useLocalState<string>(context, "documentName", DEFAULT_DOCUMENT_NAME);
   const [originalText, setOriginalText] = useLocalState<string>(context, "originalText", "");
   const [text, setText] = useLocalState<string>(context, "text", "");
@@ -524,7 +560,14 @@ export const NtosNotepad = (props, context) => {
         <SaveAsDialog
           documentName={documentName}
           save={save}
-          close={closeDialog} />
+          close={closeDialog}
+        />
+      )}
+      {activeDialog === Dialogs.ABOUT && (
+        <AboutDialog
+          close={closeDialog}
+          clientName={config.user.name}
+        />
       )}
     </NtosWindow>
   );
