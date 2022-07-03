@@ -95,7 +95,8 @@ const MenuBar = (props: MenuBarProps, context) => {
     <MenuBarDropdown.MenuItem {...getMenuItemProps("save", "Save")} />,
     <MenuBarDropdown.MenuItem {...getMenuItemProps("saveAs", "Save As...")} />,
     <MenuBarDropdown.Separator key="firstSep"/>,
-    <MenuBarDropdown.MenuItem {...getMenuItemProps("print", "Print...")} />,
+    // TODO(raffclar): Investigate and add support for printing of notes via local or remote printer
+    // <MenuBarDropdown.MenuItem {...getMenuItemProps("print", "Print...")} />,
     <MenuBarDropdown.Separator key="secondSep"/>,
     <MenuBarDropdown.MenuItem {...getMenuItemProps("exit", "Exit...")} />,
   ];
