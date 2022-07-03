@@ -100,20 +100,6 @@
 	
 	///	Keeps track of the currently selected profile.
 	var/datum/changeling_profile/current_profile
-	
-	/*	
-	 *	List of the quirks that you can gain/lose depending on who you shapeshift into.
-	 *	It'd be easiest to just get all of your target's quirks, but it wouldn't make sense for
-	 *	quirks like pacifist, brain tumor or paraplegic.
-	 */
-	var/list/mimicable_quirks_list = list(
-		"Bad Touch",
-		"Heterochromatic",
-		"Shifty Eyes",
-		"Smooth-Headed",
-		"Friendly",
-		"Tongue Tied",
-	)
 
 /datum/antagonist/changeling/New()
 	. = ..()
