@@ -149,7 +149,7 @@
 	update_icon_state()
 
 	cleaner = new /datum/cleaner()
-	cleaner.base_cleaning_duration = 1.0 SECONDS
+	cleaner.base_cleaning_duration = 0.1 SECONDS
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
