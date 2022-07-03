@@ -1,0 +1,104 @@
+@use 'sass:color';
+@use '../base';
+@use '../colors';
+@use '../functions';
+
+$background-color: base.$color-bg !default;
+
+.NtosNotepad__layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.NtosNotepad__Dialog {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NtosNotepad__Dialog__content {
+  width: 370px;
+  background-color: $background-color;
+}
+
+.NtosNotepad__Dialog__header {
+  display: flex;
+  height: 2em;
+  line-height: 1.928em;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-family: Consolas, monospace;
+  font-size: base.em(14px);
+  user-select: none;
+  -ms-user-select: none;
+}
+
+.NtosNotepad__Dialog__title {
+  display: inline;
+  font-style: italic;
+  margin-left: 1rem;
+  margin-right: 2rem;
+  flex-grow: 1;
+  opacity: .33;
+}
+
+.NtosNotepad__Dialog__body {
+  margin: 2rem 1rem 2rem 1rem;
+  font-family: Consolas, monospace;
+  font-size: base.em(14px);
+}
+
+.NtosNotepad__Dialog__footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 1rem 1rem 1rem 1rem;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.NtosNotepad__Dialog__button {
+  margin: 0 1rem 0 1rem;
+  height: 2rem;
+}
+
+.NtosNotepad__SaveAsDialog__inputs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 3rem;
+}
+
+.NtosNotepad__SaveAsDialog__input {
+  margin-left: 1rem;
+  flex-grow: 1;
+}
+
+.NtosNotepad__SaveAsDialog__label {
+  vertical-align: center;
+}
+
+.NtosNotepad__textarea {
+  background-color: base.$color-bg-section;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.NtosNotepad__StatusBar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+
+.NtosNotepad__StatusBar__entry {
+  display: block;
+  border-left: 1px solid base.$color-bg-section;
+  padding-left: 1rem;
+  padding-right: .2rem;
+}
