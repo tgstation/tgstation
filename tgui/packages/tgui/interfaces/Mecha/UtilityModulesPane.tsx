@@ -6,37 +6,43 @@ export const UtilityModulesPane = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { mech_equipment } = data;
   return (
-    <LabeledList>
-      {mech_equipment['utility'].map((module, i) => (
-        <LabeledList.Item key={i} label={module.name}>
-          {module.snowflake.snowflake_id ? (
-            <Snowflake module={module} />
-          ) : (
-            <>
-              <Button
-                content={(module.activated ? 'En' : 'Dis') + 'abled'}
-                onClick={() =>
-                  act('equip_act', {
-                    ref: module.ref,
-                    gear_action: 'toggle',
-                  })
-                }
-                selected={module.activated}
-              />
-              <Button
-                content={'Detach'}
-                onClick={() =>
-                  act('equip_act', {
-                    ref: module.ref,
-                    gear_action: 'detach',
-                  })
-                }
-              />
-            </>
-          )}
-        </LabeledList.Item>
-      ))}
-    </LabeledList>
+    <Box style={{ 'overflow-x': 'auto' }}>
+      <LabeledList>
+        {mech_equipment['utility'].map((module, i) => (
+          <LabeledList.Item key={i} label={module.name} verticalAlign="middle">
+            {module.snowflake.snowflake_id ? (
+              <Snowflake module={module} />
+            ) : (
+              <Box display="flex" flexDirection="row" alignItems="center">
+                <Box>
+                  <Button
+                    verticalAlignContent="middle"
+                    content={(module.activated ? 'En' : 'Dis') + 'abled'}
+                    onClick={() =>
+                      act('equip_act', {
+                        ref: module.ref,
+                        gear_action: 'toggle',
+                      })
+                    }
+                    selected={module.activated}
+                  />
+                  <Button
+                    verticalAlignContent="middle"
+                    content={'Detach'}
+                    onClick={() =>
+                      act('equip_act', {
+                        ref: module.ref,
+                        gear_action: 'detach',
+                      })
+                    }
+                  />
+                </Box>
+              </Box>
+            )}
+          </LabeledList.Item>
+        ))}
+      </LabeledList>
+    </Box>
   );
 };
 
