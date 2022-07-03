@@ -28,22 +28,11 @@
 	var/cleanspeed = 3.5 SECONDS //slower than mop
 	force_string = "robust... against germs"
 	var/uses = 100
-	var/datum/cleaner/cleaner
-
-/obj/item/soap/Initialize(mapload, vol)
-	. = ..()
-	cleaner = new /datum/cleaner(CALLBACK(src, .proc/decreaseUses))
-	cleaner.base_cleaning_duration = cleanspeed
-	cleaner.skill_duration_modifier_offset = 0.1 //less scaling for soapies
 
 /obj/item/soap/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
-
-/obj/item/soap/Destroy()
-	if(cleaner)
-		QDEL_NULL(cleaner)
-	. = ..()
+	AddComponent(/datum/component/cleaner, cleanspeed, 0.1, on_cleaned_callback=CALLBACK(src, .proc/decreaseUses)) //less scaling for soapies
 
 /obj/item/soap/examine(mob/user)
 	. = ..()
@@ -157,7 +146,7 @@
 			human_target.update_lips(null)
 		decreaseUses(target, user)
 		return
-	cleaner.clean(target, user) //normal cleaning
+	SEND_SIGNAL(src, COMSIG_START_CLEANING, target, user) //normal cleaning
 
 /obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)
 	if(uses <= 0)
