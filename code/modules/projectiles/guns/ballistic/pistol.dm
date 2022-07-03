@@ -1,5 +1,5 @@
 /obj/item/gun/ballistic/automatic/pistol
-	name = "makarov pistol"
+	name = "\improper Makarov pistol"
 	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
@@ -21,7 +21,8 @@
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 90
 	bolt_wording = "slide"
-	suppressor_x_offset = 4
+	suppressor_x_offset = 10
+	suppressor_y_offset = -1
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
@@ -33,6 +34,14 @@
 	. = ..()
 	var/obj/item/suppressor/S = new(src)
 	install_suppressor(S)
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine
+	name = "\improper Ansem pistol"
+	desc = "The spiritual successor of the Makarov, or maybe someone just dropped their gun in a bucket of paint. The gun is chambered in 10mm."
+	icon_state = "pistol_evil"
+	mag_type = /obj/item/ammo_box/magazine/m10mm
+	empty_indicator = TRUE
+	suppressor_x_offset = 12
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
@@ -73,7 +82,7 @@
 	inhand_icon_state = "deagleg"
 
 /obj/item/gun/ballistic/automatic/pistol/aps
-	name = "stechkin APS machine pistol"
+	name = "\improper Stechkin APS machine pistol"
 	desc = "An old Soviet machine pistol. It fires quickly, but kicks like a mule. Uses 9mm ammo. Has a threaded barrel for suppressors."
 	icon_state = "aps"
 	w_class = WEIGHT_CLASS_NORMAL
