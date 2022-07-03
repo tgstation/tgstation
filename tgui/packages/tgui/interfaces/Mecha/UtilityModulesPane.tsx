@@ -6,7 +6,7 @@ export const UtilityModulesPane = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { mech_equipment } = data;
   return (
-    <Box style={{ 'overflow-x': 'auto' }}>
+    <Box style={{ 'overflow': 'auto', 'max-height': '16rem' }}>
       <LabeledList>
         {mech_equipment['utility'].map((module, i) => (
           <LabeledList.Item key={i} label={module.name} verticalAlign="middle">
