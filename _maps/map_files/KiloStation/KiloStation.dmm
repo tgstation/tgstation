@@ -44845,9 +44845,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4;
-	external_pressure_bound = 140;
-	pressure_checks = 0
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
