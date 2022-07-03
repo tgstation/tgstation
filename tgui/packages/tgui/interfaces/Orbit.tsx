@@ -1,9 +1,10 @@
 import { useBackend, useLocalState } from '../backend';
 import { filter, sortBy } from 'common/collections';
 import { multiline } from 'common/string';
-import { Box, Button, Collapsible, Icon, Input, Section, Stack } from '../components';
+import { Button, Collapsible, Icon, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
+import { logger } from '../logging';
 
 type AntagGroup = [string, Observable[]];
 
@@ -24,7 +25,6 @@ type Observable = {
 };
 
 type SectionProps = {
-  collapsible?: boolean;
   color?: string;
   section: Observable[];
   title: string;
@@ -104,12 +104,13 @@ const ObservableSearch = (props, context) => {
     const mostRelevant: Observable = flow([
       // Filters out anything that doesn't match search
       filter<Observable>((observable) =>
-        observable.name?.includes(searchQuery?.toLowerCase())
+        observable.name?.toLowerCase().includes(searchQuery?.toLowerCase())
       ),
       // Sorts descending by orbiters
       sortBy<Observable>((poi) => -(poi.orbiters || 0)),
       // Makes a single Observable[] list for an easy search
-    ])([alive, antagonists, dead, ghosts, misc, npcs].flat());
+    ])([alive, antagonists, dead, ghosts, misc, npcs].flat())[0];
+    logger.log(mostRelevant);
     if (mostRelevant !== undefined) {
       act('orbit', {
         ref: mostRelevant.ref,
@@ -193,25 +194,20 @@ const ObservableContent = (props, context) => {
         );
       })}
       <ObservableSection color="good" section={alive} title="Alive" />
-      <ObservableSection collapsible section={dead} title="Dead" />
-      <ObservableSection collapsible section={ghosts} title="Ghosts" />
-      <ObservableSection collapsible section={misc} title="Misc" />
-      <ObservableSection
-        collapsible
-        color="average"
-        section={npcs}
-        title="NPCs"
-      />
+      <ObservableSection section={dead} title="Dead" />
+      <ObservableSection section={ghosts} title="Ghosts" />
+      <ObservableSection section={misc} title="Misc" />
+      <ObservableSection color="average" section={npcs} title="NPCs" />
     </Stack>
   );
 };
 
 /**
- * Displays a primary section for antags and living players.
+ * Displays a collapsible with a map of observable items.
  * Filters the results if there is a provided search query.
  */
 const ObservableSection = (props: SectionProps, context) => {
-  const { collapsible = false, color = 'grey', section = [], title } = props;
+  const { color = 'grey', section = [], title } = props;
   if (!section.length) {
     return null;
   }
@@ -226,73 +222,54 @@ const ObservableSection = (props: SectionProps, context) => {
     ),
     sortBy<Observable>((poi) => poi.name.toLowerCase()),
   ])(section);
+
   if (!filteredSection.length) {
     return null;
   }
   return (
     <Stack.Item>
-      {!collapsible ? (
-        <Section
-          title={
-            <Box color={color}>
-              {title} - ({filteredSection.length})
-            </Box>
-          }>
-          <ObservableMap color={color} section={filteredSection} />
-        </Section>
-      ) : (
-        <Collapsible
-          bold
-          color={color}
-          title={title + ` - (${filteredSection.length})`}>
-          <ObservableMap color={color} section={filteredSection} />
-        </Collapsible>
-      )}
+      <Collapsible
+        bold
+        color={color}
+        title={title + ` - (${filteredSection.length})`}>
+        {filteredSection.map((poi, index) => {
+          return <ObservableItem color={color} item={poi} key={index} />;
+        })}
+      </Collapsible>
     </Stack.Item>
   );
 };
 
-/** Renders all of the observables in sorted order */
-const ObservableMap = (
-  props: { color: string; section: Observable[] },
+/** Renders an observable button */
+const ObservableItem = (
+  props: { color: string; item: Observable },
   context
 ) => {
   const { act } = useBackend<Data>(context);
-  const { color, section = [] } = props;
+  const {
+    color,
+    item: { name, orbiters, ref },
+  } = props;
   const [autoObserve, setAutoObserve] = useLocalState<boolean>(
     context,
     'autoObserve',
     false
   );
+  const threat = getThreat(orbiters || 0);
 
   return (
-    <div>
-      {section?.map((observable, index) => {
-        const { name, orbiters, ref } = observable;
-        const threat = getThreat(orbiters || 0);
-        return (
-          <Button
-            color={threat || color}
-            key={index}
-            onClick={() =>
-              act('orbit', { auto_observe: autoObserve, ref: ref })
-            }>
-            {nameToUpper(name).slice(0, 44) /** prevents it from overflowing */}
-            {!!orbiters && (
-              <>
-                {' '}
-                ({orbiters.toString()}{' '}
-                <Icon
-                  mr={0}
-                  name={threat === THREAT.Large ? 'skull' : 'ghost'}
-                />
-                )
-              </>
-            )}
-          </Button>
-        );
-      })}
-    </div>
+    <Button
+      color={threat || color}
+      onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
+      {nameToUpper(name).slice(0, 44) /** prevents it from overflowing */}
+      {!!orbiters && (
+        <>
+          {' '}
+          ({orbiters?.toString()}{' '}
+          <Icon mr={0} name={threat === THREAT.Large ? 'skull' : 'ghost'} />)
+        </>
+      )}
+    </Button>
   );
 };
 
