@@ -705,29 +705,6 @@
 	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
 	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
 
-	/*	
-	 *	Remove old quirks and copy over new ones from the chosen profile.
-	 *
-	 *	Only quirks from the mimicable_quirks_list will be removed and/or copied over.
-	 *	Copying all quirks would be easier as well as making it harder to distinguish
-	 *	the changeling from crew, but it would act as a major debuff with quirks like
-	 *	blind, paraplegic or brain tumor.
-	 *	TODO: Maybe add a toggle feature, allowing the changeling to switch between
-	 *	their own and their target's quirks?
-	 */
-	
-	for(var/datum/quirk/target_quirk in user.quirks)
-		for(var/mimicable_quirk in mimicable_quirks_list)
-			if(target_quirk.name == mimicable_quirk)
-				user.remove_quirk(target_quirk.type)
-				break
-
-	for(var/datum/quirk/target_quirk in chosen_profile.quirks)
-		for(var/mimicable_quirk in mimicable_quirks_list)
-			if(target_quirk.name == mimicable_quirk)
-				user.add_quirk(target_quirk.type)
-				break
-
 	chosen_dna.transfer_identity(user, TRUE)
 
 	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
