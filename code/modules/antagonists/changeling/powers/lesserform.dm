@@ -25,8 +25,7 @@
 	for(var/slot in changeling.slot2type)
 		if(istype(user.vars[slot], changeling.slot2type[slot]))
 			qdel(user.vars[slot])
-	for(var/scar in user.all_scars)
-		var/datum/scar/iter_scar = scar
+	for(var/datum/scar/iter_scar as anything in user.all_scars)
 		if(iter_scar.fake)
 			qdel(iter_scar)
 	user.regenerate_icons()
