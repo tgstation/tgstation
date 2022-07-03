@@ -128,17 +128,10 @@
 	possible_transfer_amounts = list()
 	volume = 5
 	spillable = FALSE
-	var/datum/cleaner/cleaner
 
-/obj/item/reagent_containers/glass/rag/Initialize(mapload, vol)
+/obj/item/reagent_containers/glass/rag/ComponentInitialize()
 	. = ..()
-	cleaner = new /datum/cleaner()
-	cleaner.base_cleaning_duration = 3 SECONDS
-
-/obj/item/reagent_containers/glass/rag/Destroy()
-	if(cleaner)
-		QDEL_NULL(cleaner)
-	. = ..()
+	AddComponent(/datum/component/cleaner, 3 SECONDS)
 
 /obj/item/reagent_containers/glass/rag/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -163,4 +156,4 @@
 			log_combat(user, C, "touched", src, log_object)
 
 	else if(istype(A) && (src in user))
-		cleaner.clean(A, user)
+		SEND_SIGNAL(src, "start_cleaning", A, user)
