@@ -71,7 +71,6 @@
 /obj/item/organ/internal/body_egg/changeling_egg/proc/Pop()
 	var/mob/living/carbon/human/spawned_monkey = new(owner)
 	spawned_monkey.set_species(/datum/species/monkey)
-	spawned_monkey.regenerate_icons()
 
 	for(var/obj/item/organ/I in src)
 		I.Insert(spawned_monkey, 1)
