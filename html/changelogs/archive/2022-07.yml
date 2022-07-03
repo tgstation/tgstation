@@ -104,3 +104,18 @@
   - bugfix: fixes intercoms being the incorrect state.
   san7890:
   - bugfix: Chefs on IceBoxStation will now start with eggs and milk again.
+2022-07-03:
+  Pepsilawn:
+  - bugfix: Kilostation's Supermatter was made more consistent, it will no longer
+      start with its pumps lacking pressure target checking.
+  Y0SH1M4S73R:
+  - bugfix: Maids in the Mirror are unaffected by the gaze of ghosts
+  chesse20:
+  - rscadd: Furry Pride large spraypaint added to spraycans
+  san7890:
+  - qol: There is now a new preference in Game Preferences, Suppress All Ghost Rolls.
+      If you tick this preference, you will not get a singular window pop-up whenever
+      a Ghost Role is available. Intended for the few who really do need it.
+  - admin: Admins get another additional preference where Suppress All Ghost Roles
+      only works while they are currently in an adminned state. They will still get
+      ghost rolls normally when they are in a deadminned state.
