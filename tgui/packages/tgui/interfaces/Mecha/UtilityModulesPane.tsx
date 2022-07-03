@@ -13,7 +13,11 @@ export const UtilityModulesPane = (props, context) => {
             {module.snowflake.snowflake_id ? (
               <Snowflake module={module} />
             ) : (
-              <Box width="100%" display="flex" flexDirection="row" alignItems="center">
+              <Box
+                width="100%"
+                display="flex"
+                flexDirection="row"
+                alignItems="center">
                 <Button
                   verticalAlignContent="middle"
                   content={(module.activated ? 'En' : 'Dis') + 'abled'}
