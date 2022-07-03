@@ -747,3 +747,57 @@
 	..()
 	to_chat(user, span_nicegreen("You feel [GLOB.deity]'s tenacity pouring into you!"))
 	user.AddElement(/datum/element/tenacious)
+
+
+///exorcism rite
+
+/datum/religion_rites/exorcism
+	name = "Exorcism"
+	desc = "The first thing they teach you in Chaplain College. Expels hostile spirits, as well as any other junk that may be floating around in someone's soul."
+	ritual_length = 20 SECONDS
+	ritual_invocations = list("With the grace and glory of our god ...",
+						"... We ask you to release this poor soul from their torment ...",
+						"... And unbind them from their supernatural compulsions ...")
+	invoke_msg = "BEGONE, WRETCHED SPIRITS. LEAVE THIS VESSEL BEHIND."
+	favor_cost = 1000
+
+/datum/religion_rites/exorcism/perform_rite(mob/living/carbon/human/user, atom/movable/religious_tool)
+	var/mob/living/carbon/human/rite_target
+	if(!religious_tool?.buckled_mobs?.len)
+		to_chat(user, span_warning("You cannot perform an exorcism on yourself!"))
+		return
+	else
+		for(var/buckled in religious_tool.buckled_mobs)
+			if(ishuman(buckled))
+				rite_target = buckled
+				break
+	rite_target.emote("scream")
+	rite_target.visible_message(span_warning("[rite_target] begins thrashing wildly!"), ignored_mobs = list(rite_target))
+	to_chat(rite_target, span_warning("Your body throbs in almost unbearable pain, and you feel like throwing up!"))
+	return ..()
+
+/datum/religion_rites/exorcism/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+	..()
+	if(!ismovable(religious_tool))
+		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
+
+	var/mob/living/carbon/human/rite_target
+	if(!religious_tool?.buckled_mobs?.len)
+		return FALSE
+	else
+		for(var/buckled in religious_tool.buckled_mobs)
+			if(ishuman(buckled))
+				rite_target = buckled
+				break
+
+	rite_target.vomit(blood = TRUE)
+	rite_target.reagents.add_reagent(/datum/reagent/toxin/spewium, 15) //Y'know back in 1973 The Exorcist made people puke in theaters. Crazy shit.
+	rite_target.visible_message(span_warning("A low drone fills the air as something wicked manifests above [rite_target]!"), ignored_mobs = list(rite_target))
+	RegisterSignal(new /mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit(get_turf(rite_target)), COMSIG_LIVING_DEATH, rite_target, .proc/on_exorcised_death)
+	return TRUE
+
+///Handles curing the associated trauma after an obsession ghost dies
+/datum/religion_rites/exorcism/proc/on_exorcised_death(mob/living/carbon/human/user)
+	SIGNAL_HANDLER
+
+	user.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_LOBOTOMY)
