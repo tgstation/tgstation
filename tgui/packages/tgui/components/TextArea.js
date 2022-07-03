@@ -180,8 +180,8 @@ export class TextArea extends Component {
         <textarea
           ref={this.textareaRef}
           className={classes([
-            "TextArea__textarea",
-            nowrap && "TextArea__nowrap"
+            'TextArea__textarea',
+            nowrap && 'TextArea__nowrap',
           ])}
           placeholder={placeholder}
           onChange={this.handleOnChange}
