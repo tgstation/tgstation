@@ -37,7 +37,7 @@
 	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
-	var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
 	if(!ears)
 		return //cutting off your ears to cure the deafness: the ultimate own
 	switch(A.stage)
@@ -48,7 +48,8 @@
 			if(power >= 2)
 				if(ears.damage < ears.maxHealth)
 					to_chat(M, span_userdanger("Your ears pop painfully and start bleeding!"))
-					ears.damage = max(ears.damage, ears.maxHealth)
+					// Just absolutely murder me man
+					ears.applyOrganDamage(ears.maxHealth)
 					M.emote("scream")
 			else
 				to_chat(M, span_userdanger("Your ears pop and begin ringing loudly!"))

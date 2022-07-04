@@ -136,7 +136,11 @@
 		if("change_current_volume")
 			current_volume = clamp(text2num(params["volume"]), min_volume, max_volume)
 		if("change_product_name")
-			product_name = html_encode(params["name"])
+			var/formatted_name = html_encode(params["name"])
+			if (length(formatted_name) > MAX_NAME_LEN)
+				product_name = copytext(formatted_name, 1, MAX_NAME_LEN+1)
+			else
+				product_name = formatted_name
 		if("change_product")
 			product = params["product"]
 			if (product == "pill")

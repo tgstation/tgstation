@@ -33,6 +33,7 @@
 							"Tools",
 							"Electronics",
 							"Construction",
+							"Material",
 							"T-Comm",
 							"Security",
 							"Machinery",
@@ -45,7 +46,6 @@
 /obj/machinery/autolathe/Initialize(mapload)
 	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
-
 	wires = new /datum/wires/autolathe(src)
 	stored_research = new /datum/techweb/specialized/autounlocking/autolathe
 	matching_designs = list()
@@ -112,9 +112,9 @@
 				var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
 				for(var/datum/material/mat in D.materials)
 					max_multiplier = min(D.maxstack, round(mats.get_material_amount(mat)/D.materials[mat]))
-				if (max_multiplier>10 && !disabled)
+				if (max_multiplier >= 10 && !disabled)
 					m10 = TRUE
-				if (max_multiplier>25 && !disabled)
+				if (max_multiplier >= 25 && !disabled)
 					m25 = TRUE
 		else
 			if(!unbuildable)

@@ -129,10 +129,8 @@
 				stuffed = FALSE
 			else
 				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
-				if(iscarbon(user))
-					var/mob/living/carbon/C = user
-					if(C.drunkenness < 50)
-						C.drunkenness = min(C.drunkenness + 20, 50)
+				user.adjust_drunk_effect(20, up_to = 50)
+
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
 				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
@@ -696,3 +694,24 @@
 	attack_verb_continuous = list("slashes", "bites", "charges")
 	attack_verb_simple = list("slash", "bite", "charge")
 	squeak_override = list('sound/items/intents/Help.ogg' = 1)
+
+/obj/item/toy/plush/abductor
+	name = "abductor plushie"
+	desc = "A plushie depicting an alien abductor. The tag on it is in an indecipherable language."
+	icon_state = "abductor"
+	inhand_icon_state = "abductor"
+	attack_verb_continuous = list("abducts", "probes")
+	attack_verb_continuous = list("abduct", "probe")
+	squeak_override = list('sound/weather/ashstorm/inside/weak_end.ogg' = 1) //very faint sound since abductors are silent as far as "speaking" is concerned.
+
+/obj/item/toy/plush/abductor/agent
+	name = "abductor agent plushie"
+	desc = "A plushie depicting an alien abductor agent. The stun baton is attached to the hand of the plushie, and appears to be inert. I wouldn't stay alone with it."
+	icon_state = "abductor_agent"
+	inhand_icon_state = "abductor_agent"
+	attack_verb_continuous = list("abducts", "probes", "stuns")
+	attack_verb_continuous = list("abduct", "probe", "stun")
+	squeak_override = list(
+		'sound/weapons/egloves.ogg' = 2,
+		'sound/weapons/cablecuff.ogg' = 1,
+	)

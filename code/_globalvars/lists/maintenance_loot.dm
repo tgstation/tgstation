@@ -289,6 +289,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/shield/riot/buckler = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
+		/obj/item/fishing_rod/master = 1,
 		) = 1,
 
 	list(//equipment
@@ -354,6 +355,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 			/obj/item/instrument/trombone/spectral = 1,
 			/obj/item/instrument/trumpet/spectral = 1,
 			) = 1,
+		/obj/item/toy/cards/deck/tarot/haunted = 1,
 	))
 
 //Maintenance loot spawner pools

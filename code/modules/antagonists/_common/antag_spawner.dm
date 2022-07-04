@@ -67,7 +67,7 @@
 	spawn_antag(student.client, get_turf(src), apprentice_school, teacher.mind)
 
 /obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, kind, datum/mind/user)
-	new /obj/effect/particle_effect/smoke(T)
+	new /obj/effect/particle_effect/fluid/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
 	M.key = C.key
@@ -145,6 +145,10 @@
 	C.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
 	nukie.ckey = C.key
 	var/datum/mind/op_mind = nukie.mind
+	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
+		nukie.forceMove(pick(GLOB.newplayer_start))
+	else
+		nukie.forceMove(locate(1,1,1))
 
 	antag_datum = new()
 	antag_datum.send_to_spawnpoint = FALSE
@@ -257,14 +261,15 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(T)
-	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
+	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(T)
+	new /obj/effect/dummy/phased_mob(T, S)
+
 	S.key = C.key
 	S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
 	S.mind.special_role = ROLE_SLAUGHTER_DEMON
 	S.mind.add_antag_datum(antag_type)
-	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
-	Ctrl+Click a blood pool to manifest.</B>")
+	to_chat(S, span_bold("You are currently not currently in the same plane of existence as the station. \
+		Use your Blood Crawl ability near a pool of blood to manifest and wreak havoc."))
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"

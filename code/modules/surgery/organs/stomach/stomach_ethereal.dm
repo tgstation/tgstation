@@ -1,4 +1,4 @@
-/obj/item/organ/stomach/ethereal
+/obj/item/organ/internal/stomach/ethereal
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
@@ -7,21 +7,21 @@
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
 
-/obj/item/organ/stomach/ethereal/on_life(delta_time, times_fired)
+/obj/item/organ/internal/stomach/ethereal/on_life(delta_time, times_fired)
 	. = ..()
 	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
 	handle_charge(owner, delta_time, times_fired)
 
-/obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/internal/stomach/ethereal/Insert(mob/living/carbon/carbon, special = 0)
 	. = ..()
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
-	ADD_TRAIT(owner, TRAIT_NOHUNGER, src)
+	ADD_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
 
-/obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/internal/stomach/ethereal/Remove(mob/living/carbon/carbon, special = 0)
 	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
-	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, src)
+	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
 
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "charge")
 	carbon.clear_alert(ALERT_ETHEREAL_CHARGE)
@@ -29,24 +29,24 @@
 
 	return ..()
 
-/obj/item/organ/stomach/ethereal/handle_hunger_slowdown(mob/living/carbon/human/human)
+/obj/item/organ/internal/stomach/ethereal/handle_hunger_slowdown(mob/living/carbon/human/human)
 	human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (1.5 * (1 - crystal_charge / 100)))
 
-/obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount, repairs)
+/obj/item/organ/internal/stomach/ethereal/proc/charge(datum/source, amount, repairs)
 	SIGNAL_HANDLER
 	adjust_charge(amount / 3.5)
 
-/obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
+/obj/item/organ/internal/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
 	SIGNAL_HANDLER
 	if(flags & SHOCK_ILLUSION)
 		return
 	adjust_charge(shock_damage * siemens_coeff * 2)
 	to_chat(owner, span_notice("You absorb some of the shock into your body!"))
 
-/obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
+/obj/item/organ/internal/stomach/ethereal/proc/adjust_charge(amount)
 	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
 
-/obj/item/organ/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, delta_time, times_fired)
+/obj/item/organ/internal/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, delta_time, times_fired)
 	switch(crystal_charge)
 		if(-INFINITY to ETHEREAL_CHARGE_NONE)
 			SEND_SIGNAL(carbon, COMSIG_ADD_MOOD_EVENT, "charge", /datum/mood_event/decharged)
@@ -78,7 +78,7 @@
 			carbon.clear_alert(ALERT_ETHEREAL_CHARGE)
 			carbon.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 
-/obj/item/organ/stomach/ethereal/proc/discharge_process(mob/living/carbon/carbon)
+/obj/item/organ/internal/stomach/ethereal/proc/discharge_process(mob/living/carbon/carbon)
 	to_chat(carbon, span_warning("You begin to lose control over your charge!"))
 	carbon.visible_message(span_danger("[carbon] begins to spark violently!"))
 

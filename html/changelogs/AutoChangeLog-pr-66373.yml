@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes: 
-  - bugfix: "fixes bubblegum charge ignoring cooldown"

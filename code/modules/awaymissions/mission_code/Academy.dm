@@ -284,7 +284,7 @@
 			//Cookie
 			T.visible_message(span_userdanger("A cookie appears out of thin air!"))
 			var/obj/item/food/cookie/C = new(drop_location())
-			do_smoke(0, drop_location())
+			do_smoke(0, holder = src, location = drop_location())
 			C.name = "Cookie of Fate"
 		if(12)
 			//Healing
@@ -305,18 +305,18 @@
 		if(14)
 			//Free Gun
 			T.visible_message(span_userdanger("An impressive gun appears!"))
-			do_smoke(0, drop_location())
+			do_smoke(0, holder = src, location = drop_location())
 			new /obj/item/gun/ballistic/revolver/mateba(drop_location())
 		if(15)
 			//Random One-use spellbook
 			T.visible_message(span_userdanger("A magical looking book drops to the floor!"))
-			do_smoke(0, drop_location())
-			new /obj/item/book/granter/spell/random(drop_location())
+			do_smoke(0, holder = src, location = drop_location())
+			new /obj/item/book/granter/action/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
 			T.visible_message(span_userdanger("A Dice Servant appears in a cloud of smoke!"))
 			var/mob/living/carbon/human/H = new(drop_location())
-			do_smoke(0, drop_location())
+			do_smoke(0, holder = src, location = drop_location())
 
 			H.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()
@@ -331,20 +331,19 @@
 				message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Dice Servant")
 				H.key = C.key
 
-			var/obj/effect/proc_holder/spell/targeted/summonmob/S = new
-			S.target_mob = H
-			user.mind.AddSpell(S)
+			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user, H)
+			summon_servant.Grant(user)
 
 		if(17)
 			//Tator Kit
 			T.visible_message(span_userdanger("A suspicious box appears!"))
 			new /obj/item/storage/box/syndicate/bundle_a(drop_location())
-			do_smoke(0, drop_location())
+			do_smoke(0, holder = src, location = drop_location())
 		if(18)
 			//Captain ID
 			T.visible_message(span_userdanger("A golden identification card appears!"))
 			new /obj/item/card/id/advanced/gold/captains_spare(drop_location())
-			do_smoke(0, drop_location())
+			do_smoke(0, holder = src, location = drop_location())
 		if(19)
 			//Instrinct Resistance
 			T.visible_message(span_userdanger("[user] looks very robust!"))
@@ -359,36 +358,50 @@
 /datum/outfit/butler
 	name = "Butler"
 	uniform = /obj/item/clothing/under/suit/black_really
+	neck = /obj/item/clothing/neck/tie/red/tied
 	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/bowler
 	glasses = /obj/item/clothing/glasses/monocle
 	gloves = /obj/item/clothing/gloves/color/white
 
-/obj/effect/proc_holder/spell/targeted/summonmob
+/datum/action/cooldown/spell/summon_mob
 	name = "Summon Servant"
 	desc = "This spell can be used to call your servant, whenever you need it."
-	charge_max = 100
-	clothes_req = 0
-	invocation = "JE VES"
+	button_icon_state = "summons"
+
 	school = SCHOOL_CONJURATION
+	cooldown_time = 10 SECONDS
+
+	invocation = "JE VES"
 	invocation_type = INVOCATION_WHISPER
-	range = -1
-	level_max = 0 //cannot be improved
-	cooldown_min = 100
-	include_user = 1
+	spell_requirements = NONE
+	spell_max_level = 0 //cannot be improved
 
-	var/mob/living/target_mob
+	smoke_type = /datum/effect_system/fluid_spread/smoke
+	smoke_amt = 2
 
-	action_icon_state = "summons"
+	var/datum/weakref/summon_weakref
 
-/obj/effect/proc_holder/spell/targeted/summonmob/cast(list/targets,mob/user = usr)
-	if(!target_mob)
+/datum/action/cooldown/spell/summon_mob/New(Target, mob/living/summoned_mob)
+	. = ..()
+	if(summoned_mob)
+		summon_weakref = WEAKREF(summoned_mob)
+
+/datum/action/cooldown/spell/summon_mob/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/to_summon = summon_weakref?.resolve()
+	if(QDELETED(to_summon))
+		to_chat(cast_on, span_warning("You can't seem to summon your servant - it seems they've vanished from reality, or never existed in the first place..."))
 		return
-	var/turf/Start = get_turf(user)
-	for(var/direction in GLOB.alldirs)
-		var/turf/T = get_step(Start,direction)
-		if(!T.density)
-			target_mob.Move(T)
+
+	do_teleport(
+		to_summon,
+		get_turf(cast_on),
+		precision = 1,
+		asoundin = 'sound/magic/wand_teleport.ogg',
+		asoundout = 'sound/magic/wand_teleport.ogg',
+		channel = TELEPORT_CHANNEL_MAGIC,
+	)
 
 /obj/structure/ladder/unbreakable/rune
 	name = "\improper Teleportation Rune"

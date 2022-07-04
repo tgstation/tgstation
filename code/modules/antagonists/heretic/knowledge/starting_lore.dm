@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	desc = "Starts your journey into the Mansus. \
 		Grants you the Mansus Grasp, a powerful and upgradable \
 		disabling spell that can be cast regardless of having a focus."
-	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
+	spell_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
 	route = PATH_START
 
@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	priority = MAX_KNOWLEDGE_PRIORITY - 1 // Knowing how to remake your heart is important
 	route = PATH_START
 	/// The typepath of the organ type required for our heart.
-	var/required_organ_type = /obj/item/organ/heart
+	var/required_organ_type = /obj/item/organ/internal/heart
 
 /datum/heretic_knowledge/living_heart/on_research(mob/user)
 	. = ..()
@@ -60,9 +60,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// If a heretic is made from a species without a heart, we need to find a backup.
 	if(!where_to_put_our_heart)
 		var/static/list/backup_organs = list(
-			ORGAN_SLOT_LUNGS = /obj/item/organ/lungs,
-			ORGAN_SLOT_LIVER = /obj/item/organ/liver,
-			ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
+			ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs,
+			ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver,
+			ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach,
 		)
 
 		for(var/backup_slot in backup_organs)
@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	desc = "Allows you to transmute a sheet of glass and a pair of eyes to create an Amber Focus. \
 		A focus must be worn in order to cast more advanced spells."
 	required_atoms = list(
-		/obj/item/organ/eyes = 1,
+		/obj/item/organ/internal/eyes = 1,
 		/obj/item/stack/sheet/glass = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus)

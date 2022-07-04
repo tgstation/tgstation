@@ -147,9 +147,9 @@
 			if(24 to 30)
 				airlock.panel_open = TRUE
 	if(airlock.cutAiWire)
-		wires.cut(WIRE_AI)
+		airlock.wires.cut(WIRE_AI)
 	if(airlock.autoname)
-		name = get_area_name(src, TRUE)
+		airlock.name = get_area_name(src, TRUE)
 	update_appearance()
 	qdel(src)
 
@@ -174,6 +174,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.closeOtherId)
 		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] closeOtherId, but it's already set!")
+	else if(!cycle_id)
+		log_mapping("[src] at [AREACOORD(src)] doesn't have a cycle_id to assign to [airlock]!")
 	else
 		airlock.closeOtherId = cycle_id
 
@@ -187,9 +189,8 @@
 	else
 		airlock.locked = TRUE
 
-
 /obj/effect/mapping_helpers/airlock/unres
-	name = "airlock unresctricted side helper"
+	name = "airlock unrestricted side helper"
 	icon_state = "airlock_unres_helper"
 
 /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
@@ -698,3 +699,35 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	json_cache[json_url] = json_data
 	query_in_progress = FALSE
 	return json_data
+
+/obj/effect/mapping_helpers/broken_floor
+	name = "broken floor"
+	icon = 'icons/turf/damaged.dmi'
+	icon_state = "damaged1"
+	late = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/effect/mapping_helpers/broken_floor/Initialize(mapload)
+	.=..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/broken_floor/LateInitialize()
+	var/turf/open/floor/floor = get_turf(src)
+	floor.break_tile()
+	qdel(src)
+
+/obj/effect/mapping_helpers/burnt_floor
+	name = "burnt floor"
+	icon = 'icons/turf/damaged.dmi'
+	icon_state = "floorscorched1"
+	late = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/effect/mapping_helpers/burnt_floor/Initialize(mapload)
+	.=..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/burnt_floor/LateInitialize()
+	var/turf/open/floor/floor = get_turf(src)
+	floor.burn_tile()
+	qdel(src)

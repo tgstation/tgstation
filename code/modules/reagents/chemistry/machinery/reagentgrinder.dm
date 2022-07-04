@@ -274,7 +274,7 @@
 			playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
 		else
 			playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
-	use_power(active_power_usage * time)
+	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
 
 /obj/machinery/reagentgrinder/proc/stop_operating()

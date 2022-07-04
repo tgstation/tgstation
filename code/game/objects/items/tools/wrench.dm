@@ -10,6 +10,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	throwforce = 7
+	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_SMALL
 	usesound = 'sound/items/ratchet.ogg'
 	custom_materials = list(/datum/material/iron=150)
@@ -88,7 +89,6 @@
 	attack_verb_continuous = list("devastates", "brutalizes", "commits a war crime against", "obliterates", "humiliates")
 	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
 	tool_behaviour = null
-	toolspeed = null
 
 /obj/item/wrench/combat/Initialize(mapload)
 	. = ..()
@@ -110,10 +110,8 @@
 
 	if(active)
 		tool_behaviour = TOOL_WRENCH
-		toolspeed = 1
 	else
 		tool_behaviour = initial(tool_behaviour)
-		toolspeed = initial(toolspeed)
 
 	balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)

@@ -14,7 +14,6 @@
 	var/buffer = 50
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
-	///wheter we partake in rcd construction or not
 
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
@@ -98,6 +97,8 @@
 /obj/machinery/plumbing/layer_manifold/Initialize(mapload, bolt, layer)
 	. = ..()
 
+	AddComponent(/datum/component/plumbing/manifold, bolt, FIRST_DUCT_LAYER)
 	AddComponent(/datum/component/plumbing/manifold, bolt, SECOND_DUCT_LAYER)
 	AddComponent(/datum/component/plumbing/manifold, bolt, THIRD_DUCT_LAYER)
 	AddComponent(/datum/component/plumbing/manifold, bolt, FOURTH_DUCT_LAYER)
+	AddComponent(/datum/component/plumbing/manifold, bolt, FIFTH_DUCT_LAYER)

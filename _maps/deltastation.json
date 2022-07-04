@@ -10,8 +10,8 @@
 		"whiteship": "whiteship_delta"
 	},
 	"job_changes": {
-		"cook": {
-			"additional_cqc_areas": ["/area/service/cafeteria"]
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/cafeteria"]
 		}
 	}
 }

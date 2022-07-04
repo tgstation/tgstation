@@ -12,7 +12,7 @@
 	volume = 15
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
-	custom_price = PAYCHECK_EASY * 0.5
+	custom_price = PAYCHECK_CREW * 0.5
 	sharpness = SHARP_POINTY
 	/// Flags used by the injection
 	var/inject_flags = NONE

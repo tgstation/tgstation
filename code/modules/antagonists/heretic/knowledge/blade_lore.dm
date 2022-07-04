@@ -28,7 +28,7 @@
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
 	desc = "Opens up the path of blades to you. \
-		Allows you to transmute a knife with a bar of silver to create a Darkened Blade. \
+		Allows you to transmute a knife with two bars of silver to create a Darkened Blade. \
 		You can create up to five at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the even of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
@@ -96,7 +96,7 @@
 
 /datum/heretic_knowledge/blade_dance
 	name = "Dance of the Brand"
-	desc = "Being attacked while wielding a Darkened Blade in either hand will deliver a riposte \
+	desc = "Being attacked while wielding a Heretic Blade in either hand will deliver a riposte \
 		towards your attacker. This effect can only trigger once every 20 seconds."
 	gain_text = "Having the prowess to wield such a thing requires great dedication and terror."
 	next_knowledge = list(
@@ -224,7 +224,7 @@
 	name = "Stance of the Scarred Duelist"
 	desc = "Grants resilience to blood loss from wounds and immunity to having your limbs dismembered. \
 		Additionally, when damaged below 50% of your maximum health, \
-		you gain increased resistance to gaining wounds and stun resistance."
+		you gain increased resistance to gaining wounds and resistance to batons."
 	gain_text = "The Colonel was many things though out the age. But now, he is blind; he is deaf; \
 		he cannot be wounded; and he cannot be denied. His methods ensure that."
 	next_knowledge = list(
@@ -250,7 +250,7 @@
 	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
 	if(in_duelist_stance)
 		REMOVE_TRAIT(user, TRAIT_HARDLY_WOUNDED, type)
-		REMOVE_TRAIT(user, TRAIT_STUNRESISTANCE, type)
+		REMOVE_TRAIT(user, TRAIT_BATON_RESISTANCE, type)
 
 	UnregisterSignal(user, list(COMSIG_PARENT_EXAMINE, COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_HEALTH_UPDATE))
 
@@ -276,14 +276,14 @@
 		source.balloon_alert(source, "exited duelist stance")
 		in_duelist_stance = FALSE
 		REMOVE_TRAIT(source, TRAIT_HARDLY_WOUNDED, type)
-		REMOVE_TRAIT(source, TRAIT_STUNRESISTANCE, type)
+		REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
 		return
 
 	if(!in_duelist_stance && source.health <= source.maxHealth * 0.5)
 		source.balloon_alert(source, "entered duelist stance")
 		in_duelist_stance = TRUE
 		ADD_TRAIT(source, TRAIT_HARDLY_WOUNDED, type)
-		ADD_TRAIT(source, TRAIT_STUNRESISTANCE, type)
+		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
 		return
 
 #undef BLOOD_FLOW_PER_SEVEIRTY
@@ -340,7 +340,7 @@
 		/datum/heretic_knowledge/final/blade_final,
 		/datum/heretic_knowledge/rifle,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/aimed/furious_steel
+	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
 	route = PATH_BLADE
 
@@ -374,8 +374,8 @@
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)
 
-	var/obj/effect/proc_holder/spell/aimed/furious_steel/steel_spell = locate() in user.mind.spell_list
-	steel_spell?.charge_max /= 3
+	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
+	steel_spell?.cooldown_time /= 3
 
 /datum/heretic_knowledge/final/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER

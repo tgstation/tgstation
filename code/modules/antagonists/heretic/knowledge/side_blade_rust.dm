@@ -71,31 +71,25 @@
 		/obj/item/stack/sheet/animalhide = 1,
 		/obj/item/ammo_casing = 3,
 	)
+	result_atoms = list(/obj/item/ammo_box/a762/lionhunter)
 	cost = 1
 	route = PATH_SIDE
-	/// A list of calibers we will accept for "ballistic ammo casings".
-	var/static/list/acceptable_calibers = list(
-		CALIBER_10MM,
-		CALIBER_357,
-		CALIBER_38,
-		CALIBER_45,
-		CALIBER_46X30MM,
-		CALIBER_50,
-		CALIBER_712X82MM,
-		CALIBER_75,
-		CALIBER_9MM,
-		CALIBER_A556,
-		CALIBER_A762,
-		CALIBER_N762,
-		CALIBER_SHOTGUN,
+	/// A list of calibers that the ritual will deny. Only ballistic calibers are allowed.
+	var/static/list/caliber_blacklist = list(
+		CALIBER_LASER,
+		CALIBER_ENERGY,
+		CALIBER_FOAM,
+		CALIBER_ARROW,
+		CALIBER_HARPOON,
+		CALIBER_HOOK,
 	)
 
 /datum/heretic_knowledge/rifle_ammo/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	for(var/obj/item/ammo_casing/casing in atoms)
-		if(casing.caliber in acceptable_calibers)
+		if(!(casing.caliber in caliber_blacklist))
 			continue
 
-		// Remove any casings not in in the acceptable_calibers list from atoms
+		// Remove any casings in the caliber_blacklist list from atoms
 		atoms -= casing
 
 	// We removed any invalid casings from the atoms list,

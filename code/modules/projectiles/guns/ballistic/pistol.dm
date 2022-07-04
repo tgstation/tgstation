@@ -16,7 +16,6 @@
 	load_empty_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
 	eject_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
 	eject_empty_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
-	vary_fire_sound = FALSE
 	rack_sound = 'sound/weapons/gun/pistol/rack_small.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
@@ -26,6 +25,9 @@
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/fire_mag
+	mag_type = /obj/item/ammo_box/magazine/m9mm/fire
 
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
 	. = ..()

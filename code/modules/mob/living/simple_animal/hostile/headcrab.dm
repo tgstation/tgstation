@@ -29,7 +29,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
-	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
+	var/obj/item/organ/internal/body_egg/changeling_egg/egg = new(victim)
 	egg.Insert(victim)
 	if(origin)
 		egg.origin = origin
@@ -54,13 +54,13 @@
 			to_chat(src, span_userdanger("With our egg laid, our death approaches rapidly..."))
 			addtimer(CALLBACK(src, .proc/death), 100)
 
-/obj/item/organ/body_egg/changeling_egg
+/obj/item/organ/internal/body_egg/changeling_egg
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
 	var/datum/mind/origin
 	var/time = 0
 
-/obj/item/organ/body_egg/changeling_egg/egg_process(delta_time, times_fired)
+/obj/item/organ/internal/body_egg/changeling_egg/egg_process(delta_time, times_fired)
 	// Changeling eggs grow in dead people
 	time += delta_time * 10
 	if(time >= EGG_INCUBATION_TIME)
@@ -68,7 +68,7 @@
 		Remove(owner)
 		qdel(src)
 
-/obj/item/organ/body_egg/changeling_egg/proc/Pop()
+/obj/item/organ/internal/body_egg/changeling_egg/proc/Pop()
 	var/mob/living/carbon/human/species/monkey/spawned_monkey = new(owner)
 
 	for(var/obj/item/organ/I in src)

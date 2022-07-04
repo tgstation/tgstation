@@ -33,7 +33,7 @@
 				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."))
 			var/obj/item/bodypart/target_bodypart = target.get_bodypart(target_zone)
 			if(target_bodypart)
-				target_bodypart.generic_bleedstacks += 10
+				target_bodypart.adjustBleedStacks(10)
 	return ..()
 
 /datum/surgery_step/incise/nobleed/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -66,7 +66,7 @@
 		var/mob/living/carbon/human/human_target = target
 		var/obj/item/bodypart/target_bodypart = human_target.get_bodypart(target_zone)
 		if(target_bodypart)
-			target_bodypart.generic_bleedstacks -= 3
+			target_bodypart.adjustBleedStacks(-3)
 	return ..()
 
 //retract skin
@@ -118,7 +118,7 @@
 		var/mob/living/carbon/human/human_target = target
 		var/obj/item/bodypart/target_bodypart = human_target.get_bodypart(target_zone)
 		if(target_bodypart)
-			target_bodypart.generic_bleedstacks -= 3
+			target_bodypart.adjustBleedStacks(-3)
 	return ..()
 
 

@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(job)
 		if(!job.config_check())
 			continue
 		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
-			testing("Removed [job.type] due to map config")
+			log_job_debug("Removed [job.title] due to map config")
 			continue
 		new_all_occupations += job
 		name_occupations[job.title] = job
@@ -729,7 +729,7 @@ SUBSYSTEM_DEF(job)
 
 ///Lands specified mob at a random spot in the hallways
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)
-	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/hallway))
+	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/station/hallway))
 
 	if(!spawn_turf)
 		SendToLateJoin(living_mob)
@@ -832,8 +832,8 @@ SUBSYSTEM_DEF(job)
 	var/obj/item/id_slot = new_captain.get_item_by_slot(ITEM_SLOT_ID)
 	if(id_slot)
 		var/obj/item/card/id/id_card = id_slot.GetID()
-		if(!(ACCESS_HEADS in id_card.access))
-			id_card.add_wildcards(list(ACCESS_HEADS), mode=FORCE_ADD_ALL)
+		if(!(ACCESS_COMMAND in id_card.access))
+			id_card.add_wildcards(list(ACCESS_COMMAND), mode=FORCE_ADD_ALL)
 
 	assigned_captain = TRUE
 

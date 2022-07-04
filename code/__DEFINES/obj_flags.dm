@@ -9,7 +9,6 @@
 #define ON_BLUEPRINTS (1<<5)  //Are we visible on the station blueprints at roundstart?
 #define UNIQUE_RENAME (1<<6) // can you customize the description/name of the thing?
 #define USES_TGUI (1<<7) //put on things that use tgui on ui_interact instead of custom/old UI.
-#define FROZEN (1<<8)
 #define BLOCK_Z_OUT_DOWN (1<<9)  // Should this object block z falling from loc?
 #define BLOCK_Z_OUT_UP (1<<10) // Should this object block z uprise from loc?
 #define BLOCK_Z_IN_DOWN (1<<11) // Should this object block z falling from above?
@@ -62,6 +61,10 @@
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
 #define BLOCKS_SPEECH (1<<16)
 #define PLASMAMAN_HELMET_EXEMPT (1<<17) //prevents from placing on plasmaman helmet
+/// Prevents plasmamen from igniting when wearing this
+#define PLASMAMAN_PREVENT_IGNITION (1<<18)
+/// Usable as casting clothes by wizards (only matters for suits and headwear)
+#define CASTING_CLOTHES (1<<19)
 
 /// Flags for the organ_flags var on /obj/item/organ
 

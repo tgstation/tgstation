@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes: 
-  - bugfix: "Prevents abandoned crates deleting their contents (No, you can't cheese them by blowing them up)"

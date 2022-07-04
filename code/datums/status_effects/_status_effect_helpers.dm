@@ -40,7 +40,8 @@
 
 	// Create the status effect with our mob + our arguments
 	var/datum/status_effect/new_instance = new new_effect(arguments)
-	return new_instance
+	if(!QDELETED(new_instance))
+		return new_instance
 
 /**
  * Removes all instances of a given status effect from this mob
@@ -78,7 +79,7 @@
 	return null
 
 /**
- * Reteurns a list of all status effects that share the passed effect type's ID
+ * Returns a list of all status effects that share the passed effect type's ID
  *
  * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
  *

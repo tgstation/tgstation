@@ -105,6 +105,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// will show the feature as selectable.
 	var/relevant_species_trait = null
 
+	/// If the selected species has this in its /datum/species/var/external_organs,
+	/// will show the feature as selectable.
+	var/relevant_external_organ = null
+
 /// Called on the saved input when retrieving.
 /// Also called by the value sent from the user through UI. Do not trust it.
 /// Input is the value inside the savefile, output is to tell other code
@@ -240,6 +244,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		// things running pre-assets-initialization.
 		if (!isnull(Master.current_initializing_subsystem))
 			extra_info = "Info was attempted to be retrieved while [Master.current_initializing_subsystem] was initializing."
+		else if (!MC_RUNNING())
+			extra_info = "Info was attempted to be retrieved before the MC started, but not while it was actively initializing a subsystem"
 
 		CRASH("Preference type `[preference_type]` is invalid! [extra_info]")
 
@@ -316,7 +322,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait))
+	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait) || !isnull(relevant_external_organ))
 		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 
 		var/datum/species/species = new species_type

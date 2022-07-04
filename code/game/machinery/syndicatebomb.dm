@@ -331,7 +331,6 @@
 		holder.delayedlittle = FALSE
 		holder.explode_now = FALSE
 		holder.update_appearance()
-		holder.updateDialog()
 		STOP_PROCESSING(SSfastprocess, holder)
 
 /obj/item/bombcore/training/detonate()

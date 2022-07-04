@@ -472,7 +472,7 @@
 	else
 		if(!ignore_stomach && (methods & INGEST) && istype(target, /mob/living/carbon))
 			var/mob/living/carbon/eater = target
-			var/obj/item/organ/stomach/belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
+			var/obj/item/organ/internal/stomach/belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
 			if(!belly)
 				eater.expel_ingested(my_atom, amount)
 				return
@@ -1047,7 +1047,7 @@
 	var/list/mix_message = list()
 	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
 		mix_message += end_reaction(equilibrium)
-	if(length(mix_message))
+	if(my_atom && length(mix_message))
 		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 	finish_reacting()
 
