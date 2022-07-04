@@ -17,6 +17,8 @@ $background-color: base.$color-bg !default;
 .Dialog__content {
   width: 370px;
   background-color: $background-color;
+  font-family: Consolas, monospace;
+  font-size: base.em(14px);
 }
 
 .Dialog__header {
@@ -24,8 +26,6 @@ $background-color: base.$color-bg !default;
   height: 2em;
   line-height: 1.928em;
   background-color: rgba(0, 0, 0, 0.5);
-  font-family: Consolas, monospace;
-  font-size: base.em(14px);
   user-select: none;
   -ms-user-select: none;
 }
@@ -41,15 +41,13 @@ $background-color: base.$color-bg !default;
 
 .Dialog__body {
   margin: 2rem 1rem 2rem 1rem;
-  font-family: Consolas, monospace;
-  font-size: base.em(14px);
 }
 
 .Dialog__footer {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding: 1rem 1rem 1rem 1rem;
+  padding: 1rem;
   background-color: rgba(0, 0, 0, 0.25);
 }
 
