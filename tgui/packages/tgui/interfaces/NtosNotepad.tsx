@@ -238,17 +238,17 @@ const StatusBar = (props: StatusBarProps) => {
   );
 };
 
+type Statuses = {
+  line: number;
+  column: number;
+};
+
 const getStatusCounts = (text: string, selectionStart: number): Statuses => {
   const lines = text.substr(0, selectionStart).split('\n');
   return {
     line: lines.length,
     column: lines[lines.length - 1].length + 1,
   };
-};
-
-type Statuses = {
-  line: number;
-  column: number;
 };
 
 const TEXTAREA_UPDATE_TRIGGERS = [
