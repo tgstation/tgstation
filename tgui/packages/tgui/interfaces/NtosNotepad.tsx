@@ -7,7 +7,7 @@
 import { NtosWindow } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Section, TextArea, MenuBarDropdown, Button, Input, Divider } from '../components';
-import { Component, InfernoNode, RefObject } from 'inferno';
+import { Component, createRef, InfernoNode, RefObject } from 'inferno';
 import { createLogger } from '../logging';
 
 const logger = createLogger('NtosNotepad');
@@ -266,6 +266,7 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
 
   constructor(props) {
     super(props);
+    this.innerRef = createRef();
   }
 
   handleEvent(event: Event) {
@@ -286,6 +287,25 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
     return true;
   }
 
+  // eslint-disable-next-line react/no-deprecated
+  componentDidMount() {
+    const textarea = this.innerRef?.current;
+    if (!textarea) {
+      logger.error(
+        'NotePadTextArea.render(): Textarea RefObject should not be null'
+      );
+      return;
+    }
+
+    // Javascript – execute when textarea caret is moved
+    // https://stackoverflow.com/a/53999418/5613731
+    TEXTAREA_UPDATE_TRIGGERS.forEach((trigger) =>
+      textarea.addEventListener(trigger, this)
+    );
+    // Slight hack: Keep selection when textarea loses focus so menubar actions can be used (i.e cut, delete)
+    textarea.onblur = this.onblur.bind(this);
+  }
+
   componentWillUnmount() {
     const textarea = this.innerRef?.current;
     if (!textarea) {
@@ -304,21 +324,7 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
 
     return (
       <TextArea
-        innerRef={(ref) => {
-          this.innerRef = ref;
-          const textarea = this.innerRef.current;
-          if (!textarea) {
-            return;
-          }
-
-          // Javascript – execute when textarea caret is moved
-          // https://stackoverflow.com/a/53999418/5613731
-          TEXTAREA_UPDATE_TRIGGERS.forEach((trigger) =>
-            textarea.addEventListener(trigger, this)
-          );
-          // Slight hack: Keep selection when textarea loses focus so menubar actions can be used (i.e cut, delete)
-          textarea.onblur = this.onblur.bind(this);
-        }}
+        innerRef={this.innerRef}
         onInput={(_, value) => setText(value)}
         className={'NtosNotepad__textarea'}
         scroll
