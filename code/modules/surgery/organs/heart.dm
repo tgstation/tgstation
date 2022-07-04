@@ -332,6 +332,9 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
 		return //lol double rip
 
+	if(HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN))
+		return //aw shit we're drained
+
 	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE))
 		return // no reviving during mafia, or other inconvenient times.
 
