@@ -49,7 +49,12 @@ class Menu extends Component<MenuProps> {
 
   render() {
     const { open, options, width } = this.props;
-    const menu = open ? (
+
+    if (!open) {
+      return '';
+    }
+
+    return (
       <div
         className={'MenuBar__menu'}
         style={{
@@ -57,9 +62,7 @@ class Menu extends Component<MenuProps> {
         }}>
         {options.length ? options : 'No Options Found'}
       </div>
-    ) : null;
-
-    return { menu };
+    );
   }
 }
 
