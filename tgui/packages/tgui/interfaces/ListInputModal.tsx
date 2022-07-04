@@ -14,7 +14,7 @@ type ListInputData = {
   title: string;
 };
 
-export const ListInputModal = (_, context) => {
+export const ListInputModal = (props, context) => {
   const { act, data } = useBackend<ListInputData>(context);
   const {
     items = [],

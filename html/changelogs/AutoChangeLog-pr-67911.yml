@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - code_imp: "Added code functionality for autofire windup and resetting, both redefinable. Nothing uses this code just yet!"

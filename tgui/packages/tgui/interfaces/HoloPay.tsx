@@ -19,7 +19,7 @@ Use of departmental funds is prohibited. For more information, visit
 the Head of Personnel. All rights reserved. All trademarks are property
 of their respective owners.`;
 
-export const HoloPay = (_, context) => {
+export const HoloPay = (props, context) => {
   const { data } = useBackend<HoloPayData>(context);
   const { owner } = data;
   const [setupMode, setSetupMode] = useLocalState(context, 'setupMode', false);
@@ -55,7 +55,7 @@ export const HoloPay = (_, context) => {
 /**
  * Displays the current user's bank information (if any)
  */
-const AccountDisplay = (_, context) => {
+const AccountDisplay = (props, context) => {
   const { data } = useBackend<HoloPayData>(context);
   const { user } = data;
   if (!user) {
