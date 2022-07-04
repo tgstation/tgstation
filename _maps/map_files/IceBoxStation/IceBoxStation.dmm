@@ -73612,13 +73612,8 @@
 /turf/open/floor/plating,
 /area/station/security/courtroom)
 "wZc" = (
-/obj/item/food/chococoin,
 /obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/item/food/chococoin,
-/obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/misc/ice/coldroom,
 /area/station/service/kitchen/coldroom)
 "wZj" = (
