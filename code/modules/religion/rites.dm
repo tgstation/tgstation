@@ -771,6 +771,9 @@
 			if(ishuman(buckled))
 				rite_target = buckled
 				break
+
+	if(!user.has_trauma_type(/datum/brain_trauma/special/obsessed))
+		to_chat(user, "You sense that there are no evil presences residing within [rite_target], or at least none that you can expel.")
 	rite_target.emote("scream")
 	rite_target.visible_message(span_warning("[rite_target] begins thrashing wildly and rises into the air above [religious_tool]!"), ignored_mobs = list(rite_target))
 	to_chat(rite_target, span_warning("Your body throbs in almost unbearable pain, and you feel like throwing up!"))
@@ -797,7 +800,7 @@
 	rite_target.visible_message(span_warning("A terrible wailing fills the air as something wicked is torn from [rite_target]'s very soul!"), ignored_mobs = list(rite_target))
 	RegisterSignal(new /mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit(get_turf(rite_target)), COMSIG_LIVING_DEATH, rite_target, .proc/on_exorcised_death)
 	playsound(get_turf(rite_target),'sound/hallucinations/wail.ogg', 50, TRUE, TRUE)
-	for(var/obj/machinery/power/apc/overload in range(10, get_turf(src)))
+	for(var/obj/machinery/power/apc/overload in range(20, get_turf(src)))
 		overload.overload_lighting()
 
 	return TRUE
