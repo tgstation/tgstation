@@ -431,7 +431,7 @@ const SaveAsDialog = (props: SaveAsDialogProps, context) => {
     saveAsName
   );
   const saveWithValidName = () => {
-    if (newDocumentName === '*.txt') {
+    if (newDocumentName.length === 0 || newDocumentName === '*.txt') {
       return;
     }
 
