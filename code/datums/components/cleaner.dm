@@ -16,7 +16,13 @@
 	/// Gets called when something is successfully cleaned.
 	var/datum/callback/on_cleaned_callback
 
-/datum/component/cleaner/Initialize(base_cleaning_duration, skill_duration_modifier_offset = 0, cleaning_strength = CLEAN_SCRUB, experience_gain_modifier = 1, datum/callback/on_cleaned_callback = null)
+/datum/component/cleaner/Initialize(
+	base_cleaning_duration,
+	skill_duration_modifier_offset = 0,
+	cleaning_strength = CLEAN_SCRUB,
+	experience_gain_modifier = 1,
+	datum/callback/on_cleaned_callback = null,
+)
 	src.base_cleaning_duration = base_cleaning_duration
 	src.skill_duration_modifier_offset = skill_duration_modifier_offset
 	src.cleaning_strength = cleaning_strength
@@ -42,7 +48,7 @@
  * * target the thing being cleaned
  * * user the person doing the cleaning
  */
-/datum/component/cleaner/proc/on_start_cleaning(datum/source, atom/target as obj|turf|area, mob/living/user)
+/datum/component/cleaner/proc/on_start_cleaning(datum/source, atom/target, mob/living/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/clean, source, target, user) //signal handlers can't have do_afters inside of them
 
