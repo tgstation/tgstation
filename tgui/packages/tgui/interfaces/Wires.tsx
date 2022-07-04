@@ -19,7 +19,7 @@ type Wire = {
 export const Wires = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { proper_name, status = [], wires = [] } = data;
-  const dynamicHeight = 150 + wires.length * 28 + (proper_name ? 30 : 0);
+  const dynamicHeight = 150 + wires.length * 30 + (proper_name ? 30 : 0);
 
   return (
     <Window width={350} height={dynamicHeight}>

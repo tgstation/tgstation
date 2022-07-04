@@ -41336,7 +41336,6 @@
 /area/station/maintenance/port/greater)
 "lMy" = (
 /obj/effect/decal/remains/human,
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "lMZ" = (
@@ -74278,7 +74277,6 @@
 "vgc" = (
 /obj/structure/sign/warning/vacuum/directional/east,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "vgd" = (

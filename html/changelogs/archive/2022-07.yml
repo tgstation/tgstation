@@ -119,3 +119,16 @@
   - admin: Admins get another additional preference where Suppress All Ghost Roles
       only works while they are currently in an adminned state. They will still get
       ghost rolls normally when they are in a deadminned state.
+2022-07-04:
+  Melbert:
+  - code_imp: Some traits which mistakenly were sourced from a hard reference are
+      no longer.
+  Salex08:
+  - bugfix: you start with the right amount of breathing mask again
+  TheBoondock:
+  - bugfix: fixed crystalizer passing any item as the user and causing a runtime
+  - balance: Pluoxium now heals oxygen damage when breathed
+  jlsnow301:
+  - refactor: Orbit UI has been reworked.
+  san7890:
+  - bugfix: Okay, this time I promise you have eggs and milk in the IceBox Kitchen.

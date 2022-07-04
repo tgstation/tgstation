@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(eigenstates)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/remove_eigen_entry)
 		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/tool_interact)
 		target.RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, /obj/structure/closet/proc/bust_open)
-		ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
+		ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 		var/obj/item = target
 		if(item)
 			item.color = COLOR_PERIWINKLEE //Tint the locker slightly.
@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(eigenstates)
 		COMSIG_CLOSET_INSERT,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
 	))
-	REMOVE_TRAIT(entry, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
+	REMOVE_TRAIT(entry, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 	entry.UnregisterSignal(entry, COMSIG_EIGENSTATE_ACTIVATE) //This is a signal on the object itself so we have to call it from that
 	///Remove the current entry if we're empty
 	for(var/targets in eigen_targets)

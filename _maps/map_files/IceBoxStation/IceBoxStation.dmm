@@ -13882,6 +13882,7 @@
 /obj/structure/closet/mini_fridge{
 	name = "mini-fridge"
 	},
+/obj/item/reagent_containers/food/condiment/milk,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "ekk" = (
@@ -18780,10 +18781,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/drone_bay)
-"fLZ" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
 "fMg" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/glass/bottle/acidic_buffer{
@@ -23970,7 +23967,6 @@
 	dir = 5
 	},
 /obj/machinery/igniter/incinerator_atmos,
-/obj/structure/sign/warning/gas_mask/directional/south,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "hvl" = (
@@ -72881,7 +72877,7 @@
 /area/station/commons/storage/mining)
 "wMP" = (
 /obj/item/food/chococoin,
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/misc/ice/coldroom,
 /area/station/service/kitchen/coldroom)
 "wMT" = (
@@ -73143,7 +73139,6 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/lockers)
 "wRv" = (
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "wRx" = (
@@ -192189,7 +192184,7 @@ udC
 rcY
 iDt
 inb
-fLZ
+wRv
 gWZ
 wHd
 mLK
