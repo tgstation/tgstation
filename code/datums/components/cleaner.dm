@@ -26,6 +26,11 @@
 	src.on_cleaned_callback = on_cleaned_callback
 	cleaning_proc = CALLBACK(src, .proc/clean)
 
+/datum/component/cleaner/Destroy(force, silent)
+	if(on_cleaned_callback)
+		QDEL_NULL(on_cleaned_callback)
+	QDEL_NULL(cleaning_proc)
+
 /datum/component/cleaner/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_START_CLEANING, .proc/on_start_cleaning)
 
