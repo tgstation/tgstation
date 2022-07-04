@@ -611,7 +611,7 @@
 /obj/item/reagent_containers/food/drinks/mug/nanotrasen
 	name = "\improper Nanotrasen mug"
 	desc = "A mug to display your corporate pride."
-	icon_state = "mug_nt"
+	icon_state = "mug_nt_empty"
 
 /obj/item/reagent_containers/food/drinks/mug/nanotrasen/update_icon_state()
 	icon_state = reagents.total_volume ? "mug_nt" : "mug_nt_empty"
