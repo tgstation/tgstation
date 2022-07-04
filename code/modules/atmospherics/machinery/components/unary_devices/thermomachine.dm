@@ -3,6 +3,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "thermo_base"
+	plane = GAME_PLANE
 
 	name = "Temperature control unit"
 	desc = "Heats or cools gas in connected pipes."
