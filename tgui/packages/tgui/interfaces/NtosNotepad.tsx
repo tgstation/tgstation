@@ -302,7 +302,7 @@ class NotePadTextArea extends Component<
     const textarea = this.textAreaRef?.current;
     if (!textarea) {
       logger.error(
-        'NotePadTextArea. componentWillUnmount(): Textarea RefObject should not be null'
+        'NotePadTextArea.componentWillUnmount(): Textarea RefObject should not be null'
       );
       return;
     }
