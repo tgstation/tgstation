@@ -6,7 +6,7 @@
 
 import { NtosWindow } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Section, TextArea, MenuBarDropdown, Button, Input, Divider } from '../components';
+import { Box, Section, TextArea, MenuBar, Button, Input, Divider } from '../components';
 import { Component, createRef, InfernoNode, RefObject } from 'inferno';
 import { createLogger } from '../logging';
 
@@ -58,7 +58,7 @@ type MenuBarProps = {
   aboutNotepadDialog: () => void;
 };
 
-const MenuBar = (props: MenuBarProps, context) => {
+const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
   const {
     openDocument,
     save,
@@ -144,64 +144,64 @@ const MenuBar = (props: MenuBarProps, context) => {
   };
 
   return (
-    <Box className="NtosNotepad__MenuBar">
-      <MenuBarDropdown
+    <MenuBar>
+      <MenuBar.Dropdown
         entry="file"
         openWidth="22rem"
         display={<PartiallyUnderlined str="File" indexStart={0} />}
         {...itemProps}
       >
-        <MenuBarDropdown.MenuItem {...getMenuItemProps('new', 'New')} />
-        <MenuBarDropdown.MenuItem {...getMenuItemProps('open', 'Open')} />
-        <MenuBarDropdown.MenuItem {...getMenuItemProps('save', 'Save')} />
-        <MenuBarDropdown.MenuItem {...getMenuItemProps('saveAs', 'Save As...')} />
-        <MenuBarDropdown.Separator key="firstSep" />
-        <MenuBarDropdown.MenuItem {...getMenuItemProps('exit', 'Exit...')} />
-      </MenuBarDropdown>
-      <MenuBarDropdown
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('new', 'New')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('open', 'Open')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('save', 'Save')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('saveAs', 'Save As...')} />
+        <MenuBar.Dropdown.Separator key="firstSep" />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('exit', 'Exit...')} />
+      </MenuBar.Dropdown>
+      <MenuBar.Dropdown
         entry="edit"
         openWidth="22rem"
         display={<PartiallyUnderlined str="Edit" indexStart={0} />}
         {...itemProps}
       >
-        <MenuBarDropdown.MenuItem {...getMenuItemProps('cut', 'Cut')} />
-        <MenuBarDropdown.MenuItem {...getMenuItemProps('copy', 'Copy')} />
-        <MenuBarDropdown.MenuItem {...getMenuItemProps('paste', 'Paste')} />
-        <MenuBarDropdown.MenuItem {...getMenuItemProps('delete', 'Delete')} />
-      </MenuBarDropdown>
-      <MenuBarDropdown
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('cut', 'Cut')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('copy', 'Copy')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('paste', 'Paste')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('delete', 'Delete')} />
+      </MenuBar.Dropdown>
+      <MenuBar.Dropdown
         entry="format"
         openWidth="15rem"
         display={<PartiallyUnderlined str="Format" indexStart={1} />}
         {...itemProps}
       >
-        <MenuBarDropdown.MenuItemToggle
+        <MenuBar.Dropdown.MenuItemToggle
           checked={wordWrap}
           {...getMenuItemProps('wordWrap', 'Word Wrap')}
         />
-      </MenuBarDropdown>
-      <MenuBarDropdown
+      </MenuBar.Dropdown>
+      <MenuBar.Dropdown
         entry="view"
         openWidth="15rem"
         display={<PartiallyUnderlined str="View" indexStart={0} />}
         {...itemProps}
       >
-        <MenuBarDropdown.MenuItemToggle
+        <MenuBar.Dropdown.MenuItemToggle
           checked={showStatusBar}
           {...getMenuItemProps('statusBar', 'Status Bar')}
         />
-      </MenuBarDropdown>
-      <MenuBarDropdown
+      </MenuBar.Dropdown>
+      <MenuBar.Dropdown
         entry="help"
         openWidth="17rem"
         display={<PartiallyUnderlined str="Help" indexStart={0} />}
         {...itemProps}
       >
-        <MenuBarDropdown.MenuItem
+        <MenuBar.Dropdown.MenuItem
           {...getMenuItemProps('aboutNotepad', 'About Notepad')}
         />
-      </MenuBarDropdown>
-    </Box>
+      </MenuBar.Dropdown>
+    </MenuBar>
   );
 };
 
@@ -622,7 +622,7 @@ export const NtosNotepad = (props, context) => {
       height={900}>
       <NtosWindow.Content>
         <Box className="NtosNotepad__layout">
-          <MenuBar
+          <NtosNotepadMenuBar
             openDocument={openDocument}
             save={save}
             saveAsDialog={() => setActiveDialog(Dialogs.SAVE_AS)}

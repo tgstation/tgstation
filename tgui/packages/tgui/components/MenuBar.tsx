@@ -96,7 +96,7 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
     const { className, ...rest } = boxProps;
 
     return (
-      <div ref={this.menuRef} className="MenuBar">
+      <div ref={this.menuRef} className="MenuBar__MenuBarButton-container">
         <Box
           className={classes(['MenuBar__MenuBarButton', className])}
           {...rest}
@@ -131,7 +131,7 @@ type MenuBarItemProps = {
   className?: string;
 };
 
-export const MenuBarDropdown = (props: MenuBarItemProps) => {
+export const Dropdown = (props: MenuBarItemProps) => {
   const {
     entry,
     children,
@@ -186,7 +186,7 @@ const MenuItemToggle = (props) => {
   );
 };
 
-MenuBarDropdown.MenuItemToggle = MenuItemToggle;
+Dropdown.MenuItemToggle = MenuItemToggle;
 
 const MenuItem = (props) => {
   const { value, displayText, onClick } = props;
@@ -197,10 +197,25 @@ const MenuItem = (props) => {
   );
 };
 
-MenuBarDropdown.MenuItem = MenuItem;
+Dropdown.MenuItem = MenuItem;
 
 const Separator = () => {
   return <div className="MenuBar__Separator" />;
 };
 
-MenuBarDropdown.Separator = Separator;
+Dropdown.Separator = Separator;
+
+type MenuBarProps = {
+  children: any;
+};
+
+export const MenuBar = (props: MenuBarProps) => {
+  const { children } = props;
+  return (
+    <Box className="MenuBar">
+      {children}
+    </Box>
+  );
+}
+
+MenuBar.Dropdown = Dropdown;
