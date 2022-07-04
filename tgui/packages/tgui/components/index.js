@@ -28,7 +28,7 @@ export { KeyListener } from './KeyListener';
 export { Knob } from './Knob';
 export { LabeledControls } from './LabeledControls';
 export { LabeledList } from './LabeledList';
-export { MenuBarDropdown } from './MenuBarDropdown';
+export { MenuBar } from './MenuBar';
 export { Modal } from './Modal';
 export { NoticeBox } from './NoticeBox';
 export { NumberInput } from './NumberInput';

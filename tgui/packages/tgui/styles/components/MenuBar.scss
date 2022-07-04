@@ -7,7 +7,7 @@
 
 $background-color: base.$color-bg !default;
 
-.NtosNotepad__MenuBar {
+.MenuBar {
   display: flex;
 }
 
@@ -28,7 +28,7 @@ $background-color: base.$color-bg !default;
   }
 }
 
-.MenuBar {
+.MenuBar__MenuBarButton-container {
   position: relative;
 }
 
