@@ -75332,6 +75332,10 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
+"xCc" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance/office)
 "xCh" = (
 /obj/machinery/button/door/directional/west{
 	id = "xenobio5";
@@ -257985,7 +257989,7 @@ kgo
 sCx
 gWr
 iHc
-gXv
+xCc
 gXv
 vaa
 xLq
