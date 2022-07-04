@@ -43,8 +43,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	integrity_failure = 0.4
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	req_access = list()
-	temp_limit = 10000
-	pressure_limit = 500000
 
 	var/icon/canister_overlay_file = 'icons/obj/atmospherics/canisters.dmi'
 
