@@ -531,4 +531,5 @@
 /datum/mutation/human/headless/proc/on_obsessed_spirit_death()
 	SIGNAL_HANDLER
 
+	to_chat(owner, span_warning("The voices in your head abruptly cut off, and do not return."))
 	owner.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_LOBOTOMY)

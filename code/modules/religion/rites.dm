@@ -751,7 +751,7 @@
 
 ///exorcism rite
 
-/datum/religion_rites/exorcism
+/datum/religion_rites/exorcism //In the future I would love to turn exorcism (and, in turn, posession) into a component or something more versatile, but for now this works.
 	name = "Exorcism"
 	desc = "The first thing they teach you in Chaplain College. Expels hostile spirits, as well as any other junk that may be floating around in someone's soul."
 	ritual_length = 20 SECONDS
@@ -773,7 +773,7 @@
 				break
 
 	if(!user.has_trauma_type(/datum/brain_trauma/special/obsessed))
-		to_chat(user, "You sense that there are no evil presences residing within [rite_target], or at least none that you can expel.")
+		to_chat(user, "You sense that there are no evil presences residing within [rite_target], or at least none that you can expel...")
 	rite_target.emote("scream")
 	rite_target.visible_message(span_warning("[rite_target] begins thrashing wildly and rises into the air above [religious_tool]!"), ignored_mobs = list(rite_target))
 	to_chat(rite_target, span_warning("Your body throbs in almost unbearable pain, and you feel like throwing up!"))
@@ -809,4 +809,5 @@
 /datum/religion_rites/exorcism/proc/on_exorcised_death(mob/living/carbon/human/user)
 	SIGNAL_HANDLER
 
+	to_chat(owner, span_warning("The voices in your head abruptly cut off as the evil influence fades from your mind."))
 	user.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_LOBOTOMY)
