@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - code_imp: "Some traits which mistakenly were sourced from a hard reference are no longer."
