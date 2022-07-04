@@ -136,42 +136,6 @@ const MenuBar = (props: MenuBarProps, context) => {
       onClick: onMenuItemClick,
     };
   };
-  /* eslint-disable react/jsx-key */
-  const fileOptions = [
-    <MenuBarDropdown.MenuItem {...getMenuItemProps('new', 'New')} />,
-    <MenuBarDropdown.MenuItem {...getMenuItemProps('open', 'Open')} />,
-    <MenuBarDropdown.MenuItem {...getMenuItemProps('save', 'Save')} />,
-    <MenuBarDropdown.MenuItem {...getMenuItemProps('saveAs', 'Save As...')} />,
-    <MenuBarDropdown.Separator key="firstSep" />,
-    // TODO(raffclar): Investigate and add support for printing of notes via local or remote printer
-    // <MenuBarDropdown.MenuItem {...getMenuItemProps("print", "Print...")} />,
-    //<MenuBarDropdown.Separator key="secondSep" />,
-    <MenuBarDropdown.MenuItem {...getMenuItemProps('exit', 'Exit...')} />,
-  ];
-  const editOptions = [
-    <MenuBarDropdown.MenuItem {...getMenuItemProps('cut', 'Cut')} />,
-    <MenuBarDropdown.MenuItem {...getMenuItemProps('copy', 'Copy')} />,
-    <MenuBarDropdown.MenuItem {...getMenuItemProps('paste', 'Paste')} />,
-    <MenuBarDropdown.MenuItem {...getMenuItemProps('delete', 'Delete')} />,
-  ];
-  const formatOptions = [
-    <MenuBarDropdown.MenuItemToggle
-      checked={wordWrap}
-      {...getMenuItemProps('wordWrap', 'Word Wrap')}
-    />,
-  ];
-  const viewOptions = [
-    <MenuBarDropdown.MenuItemToggle
-      checked={showStatusBar}
-      {...getMenuItemProps('statusBar', 'Status Bar')}
-    />,
-  ];
-  const helpOptions = [
-    <MenuBarDropdown.MenuItem
-      {...getMenuItemProps('aboutNotepad', 'About Notepad')}
-    />,
-  ];
-  /* eslint-enable react/jsx-key */
   const itemProps = {
     openOnHover,
     setOpenOnHover,
@@ -185,37 +149,58 @@ const MenuBar = (props: MenuBarProps, context) => {
         entry="file"
         openWidth="22rem"
         display={<PartiallyUnderlined str="File" indexStart={0} />}
-        options={fileOptions}
         {...itemProps}
-      />
+      >
+        <MenuBarDropdown.MenuItem {...getMenuItemProps('new', 'New')} />
+        <MenuBarDropdown.MenuItem {...getMenuItemProps('open', 'Open')} />
+        <MenuBarDropdown.MenuItem {...getMenuItemProps('save', 'Save')} />
+        <MenuBarDropdown.MenuItem {...getMenuItemProps('saveAs', 'Save As...')} />
+        <MenuBarDropdown.Separator key="firstSep" />
+        <MenuBarDropdown.MenuItem {...getMenuItemProps('exit', 'Exit...')} />
+      </MenuBarDropdown>
       <MenuBarDropdown
         entry="edit"
         openWidth="22rem"
         display={<PartiallyUnderlined str="Edit" indexStart={0} />}
-        options={editOptions}
         {...itemProps}
-      />
+      >
+        <MenuBarDropdown.MenuItem {...getMenuItemProps('cut', 'Cut')} />
+        <MenuBarDropdown.MenuItem {...getMenuItemProps('copy', 'Copy')} />
+        <MenuBarDropdown.MenuItem {...getMenuItemProps('paste', 'Paste')} />
+        <MenuBarDropdown.MenuItem {...getMenuItemProps('delete', 'Delete')} />
+      </MenuBarDropdown>
       <MenuBarDropdown
         entry="format"
         openWidth="15rem"
         display={<PartiallyUnderlined str="Format" indexStart={1} />}
-        options={formatOptions}
         {...itemProps}
-      />
+      >
+        <MenuBarDropdown.MenuItemToggle
+          checked={wordWrap}
+          {...getMenuItemProps('wordWrap', 'Word Wrap')}
+        />
+      </MenuBarDropdown>
       <MenuBarDropdown
         entry="view"
         openWidth="15rem"
         display={<PartiallyUnderlined str="View" indexStart={0} />}
-        options={viewOptions}
         {...itemProps}
-      />
+      >
+        <MenuBarDropdown.MenuItemToggle
+          checked={showStatusBar}
+          {...getMenuItemProps('statusBar', 'Status Bar')}
+        />
+      </MenuBarDropdown>
       <MenuBarDropdown
         entry="help"
         openWidth="17rem"
         display={<PartiallyUnderlined str="Help" indexStart={0} />}
-        options={helpOptions}
         {...itemProps}
-      />
+      >
+        <MenuBarDropdown.MenuItem
+          {...getMenuItemProps('aboutNotepad', 'About Notepad')}
+        />
+      </MenuBarDropdown>
     </Box>
   );
 };

@@ -11,7 +11,7 @@ import { logger } from '../logging';
 import { Icon } from './Icon';
 
 type MenuProps = {
-  options: InfernoNodeArray;
+  children: any;
   width: string;
   menuRef: RefObject<HTMLElement>;
   onOutsideClick: () => void;
@@ -47,14 +47,14 @@ class Menu extends Component<MenuProps> {
   }
 
   render() {
-    const { options, width } = this.props;
+    const { width, children } = this.props;
     return (
       <div
         className={'MenuBar__menu'}
         style={{
           width: width,
         }}>
-        {options.length ? options : 'No Options Found'}
+        {children}
       </div>
     );
   }
@@ -63,7 +63,7 @@ class Menu extends Component<MenuProps> {
 type MenuBarDropdownProps = {
   open: boolean;
   openWidth: string;
-  options: any;
+  children: any;
   disabled?: boolean;
   display: InfernoNode;
   onMouseOver: () => void;
@@ -85,7 +85,7 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
     const {
       open,
       openWidth,
-      options,
+      children,
       disabled,
       display,
       onMouseOver,
@@ -107,10 +107,9 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
         {open && (
           <Menu
             width={openWidth}
-            options={options}
             menuRef={this.menuRef}
             onOutsideClick={onOutsideClick}
-          />
+          >{children}</Menu>
         )}
       </div>
     );
@@ -119,9 +118,9 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
 
 type MenuBarItemProps = {
   entry: string;
+  children: any;
   openWidth: string;
   display: InfernoNode;
-  options: InfernoNodeArray;
   setOpenMenuBar: (entry: string | null) => void;
   openMenuBar: string | null;
   setOpenOnHover: (flag: boolean) => void;
@@ -133,9 +132,9 @@ type MenuBarItemProps = {
 export const MenuBarDropdown = (props: MenuBarItemProps) => {
   const {
     entry,
+    children,
     openWidth,
     display,
-    options,
     setOpenMenuBar,
     openMenuBar,
     setOpenOnHover,
@@ -148,7 +147,6 @@ export const MenuBarDropdown = (props: MenuBarItemProps) => {
     <MenuBarButton
       openWidth={openWidth}
       display={display}
-      options={options}
       disabled={disabled}
       open={openMenuBar === entry}
       className={className}
@@ -166,7 +164,9 @@ export const MenuBarDropdown = (props: MenuBarItemProps) => {
           setOpenMenuBar(entry);
         }
       }}
-    />
+    >
+      {children}
+    </MenuBarButton>
   );
 };
 
