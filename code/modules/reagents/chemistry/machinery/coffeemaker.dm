@@ -6,6 +6,7 @@
 	base_icon_state = "coffeemaker"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/coffeemaker
+	pixel_y = 4 //needed to make it sit nicely on tables
 	var/obj/item/reagent_containers/glass/coffeepot = null
 	var/brewing = FALSE
 	var/brew_time = 20 SECONDS
