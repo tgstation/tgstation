@@ -17,12 +17,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 /atom/movable/plane_master_controller/proc/get_planes()
 	var/returned_planes = list()
 	for(var/true_plane in controlled_planes)
-		returned_planes += get_true_plane(plane)
+		returned_planes += get_true_plane(true_plane)
 	return returned_planes
 
-/atom/movable/plane_master_controller/proc/get_true_plane(plane)
-	var/list/returned_planes = list()
-	returned_planes += owner_hud.get_true_plane_masters(plane)
+/atom/movable/plane_master_controller/proc/get_true_plane(true_plane)
+	var/list/returned_planes = owner_hud.get_true_plane_masters(true_plane)
 	if(!length(returned_planes)) //If we looked for a hud that isn't instanced, just keep going
 		stack_trace("[plane] isn't a valid plane master layer for [owner_hud.type], are you sure it exists in the first place?")
 		return
