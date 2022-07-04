@@ -599,8 +599,7 @@
 
 /obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
-	create_storage()
-	atom_storage.set_holdable(list(/obj/item/toy/crayon))
+	create_storage(canhold = list(/obj/item/toy/crayon))
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)

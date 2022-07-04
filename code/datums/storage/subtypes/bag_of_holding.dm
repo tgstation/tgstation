@@ -10,7 +10,7 @@
 		INVOKE_ASYNC(src, .proc/recursive_insertion, to_insert, user)
 		return
 
-	. = ..()
+	return ..()
 
 /datum/storage/bag_of_holding/proc/recursive_insertion(obj/item/to_insert, mob/living/user)
 	var/obj/item/resolve_parent = parent?.resolve()

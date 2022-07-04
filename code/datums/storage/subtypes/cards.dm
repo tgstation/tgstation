@@ -5,8 +5,7 @@
 	max_specific_storage = WEIGHT_CLASS_TINY
 	max_slots = 30
 	max_total_storage = WEIGHT_CLASS_TINY * 30
-	///The deck that the card pile is using for FAIR PLAY.
-
+	
 /datum/storage/tcg/New()
 	. = ..()
 	set_holdable(list(/obj/item/tcgcard))

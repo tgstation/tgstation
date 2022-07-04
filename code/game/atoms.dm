@@ -162,8 +162,7 @@
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
 	var/datum/forensics/forensics
 
-	// tsu storage testing
-	var/datum/storage/atom_storage
+	var/datum/storage/atom_storage /// our storage datum
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -333,18 +332,18 @@
 
 	return ..()
 
-// A quick and easy way to create a storage datum for an atom
-/atom/proc/create_storage(max_slots, \
-	max_specific_storage, \
-	max_total_storage, \
-	numerical_stacking = FALSE, \
-	allow_quick_gather = FALSE, \
-	allow_quick_empty = FALSE, \
-	collection_mode = COLLECT_ONE, \
-	attack_hand_interact = TRUE, \
-	list/canhold, \
-	list/canthold, \
-	type = /datum/storage, \
+/// A quick and easy way to create a storage datum for an atom
+/atom/proc/create_storage(max_slots,
+	max_specific_storage,
+	max_total_storage,
+	numerical_stacking = FALSE,
+	allow_quick_gather = FALSE,
+	allow_quick_empty = FALSE,
+	collection_mode = COLLECT_ONE,
+	attack_hand_interact = TRUE,
+	list/canhold,
+	list/canthold,
+	type = /datum/storage,
 	)
 
 	if(atom_storage)
@@ -357,7 +356,7 @@
 
 	return atom_storage
 
-// A quick and easy way to /clone/ a storage datum for an atom
+/// A quick and easy way to /clone/ a storage datum for an atom (does not copy over contents, only the datum details)
 /atom/proc/clone_storage(datum/storage/cloning)
 	if(atom_storage)
 		QDEL_NULL(atom_storage)
