@@ -10304,6 +10304,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"dfn" = (
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen/coldroom)
 "dfv" = (
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
 /obj/effect/turf_decal/bot,
@@ -12042,13 +12049,6 @@
 "dCM" = (
 /turf/closed/wall/rust,
 /area/station/service/bar/atrium)
-"dCW" = (
-/obj/structure/closet/secure_closet/freezer/milk_and_eggs,
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/cold/directional/west,
-/turf/open/floor/iron/freezer,
-/area/station/service/kitchen/coldroom)
 "dCX" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -43444,6 +43444,15 @@
 /obj/machinery/door/window/left/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
+"msI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "msL" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -44840,17 +44849,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/service/bar/atrium)
-"mNt" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4;
-	external_pressure_bound = 140;
-	pressure_checks = 0
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "mNz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -55713,13 +55711,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
-"pVS" = (
-/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
-/obj/item/reagent_containers/food/condiment/sugar,
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/iron/freezer,
-/area/station/service/kitchen/coldroom)
 "pWj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -67209,6 +67200,13 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/supermatter/room)
+"teX" = (
+/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen/coldroom)
 "tfs" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -118557,8 +118555,8 @@ jds
 bXz
 ekL
 bXz
-pVS
-dCW
+teX
+dfn
 mXM
 sWI
 fHw
@@ -121694,9 +121692,9 @@ quv
 lhm
 lYb
 kvM
-mNt
-mNt
-mNt
+msI
+msI
+msI
 dPr
 sMY
 hSt
