@@ -30,6 +30,7 @@
 	if(on_cleaned_callback)
 		QDEL_NULL(on_cleaned_callback)
 	QDEL_NULL(cleaning_proc)
+	return ..()
 
 /datum/component/cleaner/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_START_CLEANING, .proc/on_start_cleaning)
