@@ -45,3 +45,4 @@ export { TextArea } from './TextArea';
 export { TimeDisplay } from './TimeDisplay';
 export { TrackOutsideClicks } from './TrackOutsideClicks';
 export { Tooltip } from './Tooltip';
+export { Dialog } from './Dialog';
