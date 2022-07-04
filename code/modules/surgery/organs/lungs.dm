@@ -359,7 +359,7 @@
 				breather.reagents.add_reagent(/datum/reagent/healium,max(0, 1 - existing))
 		gas_breathed = breath_gases[/datum/gas/healium][MOLES]
 		breath_gases[/datum/gas/healium][MOLES]-=gas_breathed
-		if(bz_pp > 50 && healium_pp > 50 && owner.IsSleeping())
+		if(bz_pp > 50 && healium_pp > 50 && owner.IsSleeping() && owner.has_trauma_type(/datum/brain_trauma/special/obsessed))
 			to_chat(owner, span_warning("As you slip deeper and deeper into your sleep, you notice the voices in your head begin to sound more and more distant..."))
 			owner.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_LOBOTOMY)
 

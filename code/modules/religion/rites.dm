@@ -751,7 +751,7 @@
 
 ///exorcism rite
 
-/datum/religion_rites/exorcism //In the future I would love to turn exorcism (and, in turn, posession) into a component or something more versatile, but for now this works.
+/datum/religion_rites/exorcism //In the future I would love to turn exorcism (and also posession) into a component or something more versatile, but for now this works.
 	name = "Exorcism"
 	desc = "The first thing they teach you in Chaplain College. Expels hostile spirits, as well as any other junk that may be floating around in someone's soul."
 	ritual_length = 20 SECONDS
@@ -809,5 +809,6 @@
 /datum/religion_rites/exorcism/proc/on_exorcised_death(mob/living/carbon/human/user)
 	SIGNAL_HANDLER
 
-	to_chat(owner, span_warning("The voices in your head abruptly cut off as the evil influence fades from your mind."))
-	user.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_LOBOTOMY)
+	if(owner.has_trauma_type(/datum/brain_trauma/special/obsessed))
+		to_chat(owner, span_warning("The voices in your head abruptly cut off as the evil influence fades from your mind."))
+		user.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_LOBOTOMY)
