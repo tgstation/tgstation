@@ -1,6 +1,6 @@
 /**
  * @file
- * @copyright 2020 Aleksej Komarov
+ * @copyright 2022 Aleksej Komarov
  * @license MIT
  */
 

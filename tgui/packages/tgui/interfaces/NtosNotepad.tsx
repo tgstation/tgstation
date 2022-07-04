@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2022 raffclar
+ * @license MIT
+ */
+
 import { NtosWindow } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Section, TextArea, MenuBarDropdown, Button, Input, Divider } from '../components';
