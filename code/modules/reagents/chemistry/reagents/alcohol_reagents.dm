@@ -2891,3 +2891,29 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(drinker.hallucination < hal_cap && DT_PROB(5, delta_time))
 		drinker.hallucination += hal_amt
 	..()
+
+/datum/reagent/consumable/ethanol/plumwine
+	name = "Plum wine"
+	description = "Plums turned into wine."
+	color = "#8a0421"
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+	boozepwr = 20
+	taste_description = "a poet's love and undoing"
+	glass_icon_state = "plumwineglass"
+	glass_name = "plum wine"
+	glass_desc = "Looks like an evening of writing fine poetry."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
+
+/datum/reagent/consumable/ethanol/thehat
+	name = "The Hat"
+	description = "A fancy drink, usually served in a man's hat."
+	color = "#b90a5c"
+	boozepwr = 80
+	quality = DRINK_NICE
+	taste_description = "something perfumy"
+	glass_icon_state = "thehatglass"
+	glass_name = "The Hat"
+	glass_desc ="A single plum floating in perfume, served in a man's hat."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK

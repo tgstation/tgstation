@@ -517,3 +517,22 @@
 /obj/item/food/cakeslice/fruit/Initialize(mapload)
 	. = ..()
 	icon_state = "[base_icon_state][rand(1,3)]"
+
+/obj/item/food/cake/plum
+	name = "plum cake"
+	desc = "A cake centred with Plums."
+	icon_state = "plumcake"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/impurity/rosenol = 8)
+	tastes = list("cake" = 5, "sweetness" = 1, "plum" = 2)
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
+	venue_value = FOOD_PRICE_CHEAP
+
+/obj/item/food/cake/plum/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/plum, 5, 3 SECONDS, table_required = TRUE)
+
+/obj/item/food/cakeslice/plum
+	name = "plum cake slice"
+	desc = "A slice of plum cake."
+	icon_state = "plumcakeslice"
+	tastes = list("cake" = 5, "sweetness" = 1, "plum" = 2)
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
