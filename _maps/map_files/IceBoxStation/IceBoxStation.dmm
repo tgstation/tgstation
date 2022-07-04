@@ -22144,6 +22144,10 @@
 /area/station/security/warden)
 "gPB" = (
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Engineering Emitter Room Port";
+	network = list("ss13","engine")
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gPE" = (
@@ -45118,6 +45122,13 @@
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
+"oaY" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Engineering Emitter Room Starboard";
+	network = list("ss13","engine")
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "obj" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -239008,7 +239019,7 @@ nsv
 kAT
 gka
 oWQ
-lhC
+oaY
 alx
 pMC
 qWJ
