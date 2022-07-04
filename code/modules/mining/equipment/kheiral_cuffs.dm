@@ -64,7 +64,7 @@
 		gps_name = id_card.registered_name
 	AddComponent(/datum/component/gps, "*[gps_name]'s Kheiral Link")
 	balloon_alert(user, "GPS activated")
-	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
+	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = TRUE
 
 /// Disables the GPS and removes the multiz trait
@@ -75,7 +75,7 @@
 		return
 	balloon_alert(user, "GPS de-activated")
 	qdel(GetComponent(/datum/component/gps))
-	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
+	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = FALSE
 
 /// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc

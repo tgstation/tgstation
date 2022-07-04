@@ -14,6 +14,7 @@
 	var/mob/holder
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
