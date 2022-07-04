@@ -62,7 +62,7 @@ type CustomInput = {
   img: string;
 };
 
-export const Vending = (_, context) => {
+export const Vending = (props, context) => {
   const { data } = useBackend<VendingData>(context);
   const { onstation } = data;
 
@@ -85,7 +85,7 @@ export const Vending = (_, context) => {
 };
 
 /** Displays user details if an ID is present and the user is on the station */
-export const UserDetails = (_, context) => {
+export const UserDetails = (props, context) => {
   const { data } = useBackend<VendingData>(context);
   const { user } = data;
 
@@ -115,7 +115,7 @@ export const UserDetails = (_, context) => {
 };
 
 /** Displays  products in a section, with user balance at top */
-const ProductDisplay = (_, context) => {
+const ProductDisplay = (props, context) => {
   const { data } = useBackend<VendingData>(context);
   const {
     onstation,

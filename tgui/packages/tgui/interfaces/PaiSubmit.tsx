@@ -19,7 +19,7 @@ const PAI_RULES = `You are expected to role play to some degree.
 Keep in mind: Not entering information may lead to you not being
 selected. Press submit to alert pAI cards of your candidacy.`;
 
-export const PaiSubmit = (_, context) => {
+export const PaiSubmit = (props, context) => {
   const { data } = useBackend<CandidateData>(context);
   const [input, setInput] = useLocalState<CandidateData>(context, 'input', {
     comments: data.comments || '',
