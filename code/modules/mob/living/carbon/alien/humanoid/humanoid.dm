@@ -12,8 +12,6 @@
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
-	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
-	var/drooling = 0 //For Neruotoxic spit overlays
 	deathsound = 'sound/voice/hiss6.ogg'
 	bodyparts = list(
 		/obj/item/bodypart/chest/alien,
@@ -61,11 +59,10 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		return A
 	return FALSE
 
-
 /mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)
-	if(breath && breath.total_moles() > 0 && !sneaking)
+	if(breath?.total_moles() > 0 && !HAS_TRAIT(src, TRAIT_ALIEN_SNEAK))
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
-	..()
+	return ..()
 
 /mob/living/carbon/alien/humanoid/set_name()
 	if(numba)
