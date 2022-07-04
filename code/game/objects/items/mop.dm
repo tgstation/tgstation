@@ -22,16 +22,13 @@
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/cleaner, mopspeed, on_cleaned_callback=CALLBACK(src, .proc/apply_reagents))
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
 
 /obj/item/mop/Destroy(force)
 	GLOB.janitor_devices -= src
 	return ..()
-
-/obj/item/mop/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/cleaner, mopspeed, on_cleaned_callback=CALLBACK(src, .proc/apply_reagents))
 
 /**
  * Applies reagents to the cleaned floor and removes them from the mop.

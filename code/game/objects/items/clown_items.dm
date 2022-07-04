@@ -29,7 +29,7 @@
 	force_string = "robust... against germs"
 	var/uses = 100
 
-/obj/item/soap/ComponentInitialize()
+/obj/item/soap/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
 	AddComponent(/datum/component/cleaner, cleanspeed, 0.1, on_cleaned_callback=CALLBACK(src, .proc/decreaseUses)) //less scaling for soapies

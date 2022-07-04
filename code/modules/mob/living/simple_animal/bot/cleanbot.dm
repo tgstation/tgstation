@@ -141,6 +141,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/cleaner, 0.1 SECONDS)
 
 	chosen_name = name
 	get_targets()
@@ -164,10 +165,6 @@
 		weapon.force = weapon_orig_force
 		drop_part(weapon, Tsec)
 	return ..()
-
-/mob/living/simple_animal/bot/cleanbot/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/cleaner, 0.1 SECONDS)
 
 /mob/living/simple_animal/bot/cleanbot/update_icon_state()
 	. = ..()

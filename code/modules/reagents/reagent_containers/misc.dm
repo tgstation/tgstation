@@ -129,7 +129,7 @@
 	volume = 5
 	spillable = FALSE
 
-/obj/item/reagent_containers/glass/rag/ComponentInitialize()
+/obj/item/reagent_containers/glass/rag/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cleaner, 3 SECONDS)
 
