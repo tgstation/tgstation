@@ -120,6 +120,7 @@ type PlaneDebugData = {
   mob_name: string;
   mob_ref: string;
   our_ref: string;
+  tracking_active: boolean;
 };
 
 // Stolen wholesale from fontcode
@@ -647,6 +648,7 @@ const DrawAbovePlane = (props, context) => {
         <>
           <InfoButton />
           <MobResetButton />
+          <ToggleMirror />
           <VVButton />
           <RefreshButton />
         </>
@@ -683,6 +685,7 @@ const PlaneWindow = (props, context) => {
           <ClosePlaneWindow />
           <InfoButton no_position />
           <MobResetButton no_position />
+          <ToggleMirror no_position />
           <VVButton no_position />
           <RefreshButton no_position />
         </>
@@ -782,7 +785,7 @@ const InfoButton = (props, context) => {
   return (
     <Button
       top={no_position ? '' : '30px'}
-      right={no_position ? '' : foreign ? '76px' : "52px"}
+      right={no_position ? '' : foreign ? '100px' : "76px"}
       position={no_position ? '' : 'absolute'}
       icon="exclamation"
       onClick={() => setShowInfo(true)}
@@ -791,7 +794,7 @@ const InfoButton = (props, context) => {
   );
 };
 
-const MobResetButton = (props, context) => {
+const MobResetButton = (props, context): any => {
   const { act } = useBackend(context);
   const { no_position } = props;
   if (!has_foreign_mob(context)) {
@@ -801,12 +804,30 @@ const MobResetButton = (props, context) => {
   return (
     <Button
       top={no_position ? '' : '30px'}
-      right={no_position ? '' : '52px'}
+      right={no_position ? '' : '76px'}
       position={no_position ? '' : 'absolute'}
       color="bad"
       icon="power-off"
       onClick={() => act('reset_mob')}
       tooltip="Reset our focused mob to your active mob"
+    />
+  );
+};
+
+const ToggleMirror = (props, context) => {
+  const { act, data } = useBackend<PlaneDebugData>(context);
+  const { no_position } = props;
+  const { tracking_active } = data;
+
+  return (
+    <Button
+      top={no_position ? '' : '30px'}
+      right={no_position ? '' : '52px'}
+      position={no_position ? '' : 'absolute'}
+      color={tracking_active ? "bad" : "good"}
+      icon="eye"
+      onClick={() => act('toggle_mirroring')}
+      tooltip={(tracking_active ? "Disables" : "Enables") + " seeing 'through' the edited mob's eyes, for debugging and such"}
     />
   );
 };

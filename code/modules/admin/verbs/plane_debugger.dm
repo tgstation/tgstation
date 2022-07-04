@@ -10,6 +10,8 @@
 
 	var/datum/visual_data/tracking/stored
 	var/datum/visual_data/mirroring/mirror
+	/// If we are actively mirroring the target of our current ui
+	var/mirror_target = FALSE
 
 /datum/plane_master_debug/New(datum/admins/owner)
 	src.owner = owner
@@ -28,6 +30,10 @@
 
 	mob_ref = WEAKREF(new_mob)
 
+	if(!mirror_target)
+		UnregisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT)
+		return
+
 	RegisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT, .proc/on_our_logout, override = TRUE)
 	mirror = new()
 	mirror.shadow(new_mob)
@@ -41,6 +47,8 @@
 	SIGNAL_HANDLER
 	// Recreate our stored view, since we've changed mobs now
 	create_store()
+	UnregisterSignal(source, COMSIG_MOB_LOGOUT)
+	RegisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT, .proc/on_our_logout, override = TRUE)
 
 /// Create or refresh our stored visual data, represeting the viewing mob
 /datum/plane_master_debug/proc/create_store()
@@ -57,6 +65,14 @@
 		target = owner.owner.mob
 		set_target(target)
 	return target
+
+/// Setter for mirror_target, basically allows for enabling/disabiling viewing through mob's sight
+/datum/plane_master_debug/proc/set_mirroring(value)
+	if(value == mirror_target)
+		return
+	mirror_target = value
+	// Refresh our target and mirrors and such
+	set_target(get_target())
 
 /datum/plane_master_debug/ui_state(mob/user)
 	return GLOB.admin_state
@@ -77,6 +93,7 @@
 	data["mob_name"] = reference_frame.name
 	data["mob_ref"] = ref(reference_frame)
 	data["our_ref"] = ref(owner.owner.mob)
+	data["tracking_active"] = mirror_target
 
 	var/datum/hud/our_hud = reference_frame.hud_used
 	var/list/our_groups = our_hud.master_groups
@@ -307,6 +324,8 @@
 			group.rebuild_hud()
 		if("reset_mob")
 			set_target(null)
+		if("toggle_mirroring")
+			set_mirroring(!mirror_target)
 		if("vv_mob")
 			owner.owner.debug_variables(reference_frame)
 		if("set_group")
@@ -355,3 +374,6 @@
 			user?.client?.open_filter_editor(edit)
 			return TRUE
 
+/datum/plane_master_debug/ui_close(mob/user)
+	. = ..()
+	set_mirroring(FALSE)

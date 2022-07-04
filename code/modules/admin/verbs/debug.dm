@@ -649,7 +649,10 @@
 	if(!holder)
 		return
 	if(debug_on)
+		holder.plane_debug.set_mirroring(TRUE)
 		holder.plane_debug.set_target(debug_on)
+	else
+		holder.plane_debug.set_mirroring(FALSE)
 	holder.plane_debug.ui_interact(mob)
 
 /client/proc/debug_huds(i as num)
