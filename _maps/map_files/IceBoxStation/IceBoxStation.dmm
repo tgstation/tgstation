@@ -15744,10 +15744,6 @@
 /obj/item/trash/raisins,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
-"eZo" = (
-/obj/structure/cable/multilayer/multiz,
-/turf/open/floor/plating,
-/area/station/security/processing)
 "eZp" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
@@ -39130,9 +39126,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
-"mBW" = (
-/turf/open/floor/plating,
-/area/station/security/processing)
 "mBX" = (
 /obj/structure/table/wood,
 /obj/machinery/airalarm/directional/east,
@@ -52542,7 +52535,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/security/processing)
+/area/station/maintenance/fore)
 "qNc" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Service Hall Exit"
@@ -52813,7 +52806,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/security/processing)
+/area/station/maintenance/fore)
 "qQN" = (
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
@@ -58971,10 +58964,6 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
-"sSy" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/security/processing)
 "sSD" = (
 /obj/effect/landmark/observer_start,
 /obj/effect/turf_decal/plaque{
@@ -65554,6 +65543,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"uZk" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/fore)
 "uZn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -74925,7 +74917,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/security/processing)
+/area/station/maintenance/fore)
 "xWA" = (
 /obj/structure/table,
 /obj/item/plate,
@@ -236760,10 +236752,10 @@ bln
 bln
 bln
 lSu
-ykw
-sSy
-eZo
-kzw
+uZk
+jOQ
+bxQ
+uZk
 ipP
 mZD
 aKt
@@ -237017,10 +237009,10 @@ wNO
 wNO
 wNO
 wNO
-ykw
+uZk
 xWr
 qMY
-kzw
+uZk
 iLe
 aOS
 mQE
@@ -237274,10 +237266,10 @@ wNO
 wNO
 wNO
 wNO
-ykw
+uZk
 xWr
-mBW
-kzw
+deY
+uZk
 kdT
 hQd
 eCH
@@ -237531,10 +237523,10 @@ wNO
 wNO
 wNO
 wNO
-ykw
+uZk
 qQK
 xWr
-kzw
+uZk
 kzw
 kzw
 kzw
