@@ -1,12 +1,12 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, NoticeBox } from '../components';
+import { Box, Button, LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
   proper_name: string;
   wires: Wire[];
-  statuses: string[];
+  status: string[];
 };
 
 type Wire = {
@@ -18,27 +18,35 @@ type Wire = {
 
 export const Wires = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { proper_name, statuses = [], wires = [] } = data;
+  const { proper_name, status = [], wires = [] } = data;
   const dynamicHeight = 150 + wires.length * 30 + (proper_name ? 30 : 0);
 
   return (
     <Window width={350} height={dynamicHeight}>
       <Window.Content>
-        {!!proper_name && (
-          <NoticeBox textAlign="center">
-            {proper_name} Wire Configuration
-          </NoticeBox>
-        )}
-        <Section>
-          <WireMap />
-        </Section>
-        {!!statuses.length && (
-          <Section>
-            {statuses.map((status) => (
-              <Box key={status}>{status}</Box>
-            ))}
-          </Section>
-        )}
+        <Stack fill vertical>
+          {!!proper_name && (
+            <Stack.Item>
+              <NoticeBox textAlign="center">
+                {proper_name} Wire Configuration
+              </NoticeBox>
+            </Stack.Item>
+          )}
+          <Stack.Item grow>
+            <Section fill>
+              <WireMap />
+            </Section>
+          </Stack.Item>
+          {!!status.length && (
+            <Stack.Item>
+              <Section>
+                {status.map((status) => (
+                  <Box key={status}>{status}</Box>
+                ))}
+              </Section>
+            </Stack.Item>
+          )}
+        </Stack>
       </Window.Content>
     </Window>
   );
