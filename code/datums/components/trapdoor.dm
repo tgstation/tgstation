@@ -50,7 +50,8 @@
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
-	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
+	if(assembly)
+		UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
 
 /datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
