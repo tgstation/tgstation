@@ -1,0 +1,4 @@
+author: "zzzmike"
+delete-after: True
+changes: 
+  - bugfix: "QM added as command in CrewManifest.js"
