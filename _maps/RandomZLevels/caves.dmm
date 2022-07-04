@@ -1034,13 +1034,6 @@
 /obj/machinery/iv_drip,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
-"fU" = (
-/obj/effect/landmark/awaystart,
-/turf/open/floor/plating/elevatorshaft{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7";
-	name = "elevator flooring"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "fW" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
@@ -1565,12 +1558,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
-"zn" = (
-/obj/effect/landmark/awaystart,
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "zH" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
@@ -6591,7 +6578,7 @@ bL
 BK
 BK
 BK
-zn
+BK
 BK
 BK
 BK
@@ -14078,7 +14065,7 @@ BK
 BK
 fJ
 fQ
-fU
+fQ
 fQ
 fQ
 fJ
