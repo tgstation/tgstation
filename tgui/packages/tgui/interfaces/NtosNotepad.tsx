@@ -139,7 +139,7 @@ const MenuBar = (props: MenuBarProps, context) => {
     <MenuBarDropdown.Separator key="firstSep" />,
     // TODO(raffclar): Investigate and add support for printing of notes via local or remote printer
     // <MenuBarDropdown.MenuItem {...getMenuItemProps("print", "Print...")} />,
-    <MenuBarDropdown.Separator key="secondSep" />,
+    //<MenuBarDropdown.Separator key="secondSep" />,
     <MenuBarDropdown.MenuItem {...getMenuItemProps('exit', 'Exit...')} />,
   ];
   const editOptions = [
