@@ -11,7 +11,6 @@ import { logger } from '../logging';
 import { Icon } from './Icon';
 
 type MenuProps = {
-  open: boolean;
   options: InfernoNodeArray;
   width: string;
   menuRef: RefObject<HTMLElement>;
@@ -48,12 +47,7 @@ class Menu extends Component<MenuProps> {
   }
 
   render() {
-    const { open, options, width } = this.props;
-
-    if (!open) {
-      return '';
-    }
-
+    const { options, width } = this.props;
     return (
       <div
         className={'MenuBar__menu'}
@@ -112,7 +106,6 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
         </Box>
         {open && (
           <Menu
-            open={open}
             width={openWidth}
             options={options}
             menuRef={this.menuRef}
