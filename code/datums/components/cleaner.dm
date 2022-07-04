@@ -15,8 +15,6 @@
 	var/experience_gain_modifier
 	/// Gets called when something is successfully cleaned.
 	var/datum/callback/on_cleaned_callback
-	/// Gets invoked asynchronously by the signal handler
-	var/datum/callback/cleaning_proc
 
 /datum/component/cleaner/Initialize(base_cleaning_duration, skill_duration_modifier_offset = 0, cleaning_strength = CLEAN_SCRUB, experience_gain_modifier = 1, datum/callback/on_cleaned_callback = null)
 	src.base_cleaning_duration = base_cleaning_duration
@@ -24,12 +22,10 @@
 	src.cleaning_strength = cleaning_strength
 	src.experience_gain_modifier = experience_gain_modifier
 	src.on_cleaned_callback = on_cleaned_callback
-	cleaning_proc = CALLBACK(src, .proc/clean)
 
 /datum/component/cleaner/Destroy(force, silent)
 	if(on_cleaned_callback)
 		QDEL_NULL(on_cleaned_callback)
-	QDEL_NULL(cleaning_proc)
 	return ..()
 
 /datum/component/cleaner/RegisterWithParent()
@@ -48,7 +44,7 @@
  */
 /datum/component/cleaner/proc/on_start_cleaning(datum/source, atom/target as obj|turf|area, mob/living/user)
 	SIGNAL_HANDLER
-	cleaning_proc.InvokeAsync(source, target, user) //signal handlers can't have do_afters inside of them
+	INVOKE_ASYNC(src, .proc/clean, source, target, user) //signal handlers can't have do_afters inside of them
 
 /**
  * Cleans something using this cleaner.
