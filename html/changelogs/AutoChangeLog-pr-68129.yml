@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "Ensures pirate outfits and justice suits are actually able to protect from damage, as their armor values suggests they should."
+  - bugfix: "Stops golems from wearing the armored versions of the pirate outfits."
