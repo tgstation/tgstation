@@ -5,7 +5,7 @@
  */
 
 import { classes } from 'common/react';
-import { Component, createRef, InfernoNode, InfernoNodeArray, RefObject } from 'inferno';
+import { Component, createRef, InfernoNode, RefObject } from 'inferno';
 import { Box } from './Box';
 import { logger } from '../logging';
 import { Icon } from './Icon';
@@ -109,7 +109,9 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
             width={openWidth}
             menuRef={this.menuRef}
             onOutsideClick={onOutsideClick}
-          >{children}</Menu>
+          >
+            {children}
+          </Menu>
         )}
       </div>
     );
