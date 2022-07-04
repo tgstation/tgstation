@@ -44,6 +44,7 @@
 @include meta.load-css('./components/Tabs.scss');
 @include meta.load-css('./components/TextArea.scss');
 @include meta.load-css('./components/Tooltip.scss');
+@include meta.load-css('./components/Dialog.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/ListInput.scss');
