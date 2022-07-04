@@ -8,6 +8,9 @@
 	/// Weakref to the mob to edit
 	var/datum/weakref/mob_ref
 
+	var/datum/visual_data/tracking/stored
+	var/datum/visual_data/mirroring/mirror
+
 /datum/plane_master_debug/New(datum/admins/owner)
 	src.owner = owner
 
@@ -16,8 +19,37 @@
 	return ..()
 
 /datum/plane_master_debug/proc/set_target(mob/new_mob)
+	QDEL_NULL(mirror)
+	QDEL_NULL(stored)
+
 	depth_stack = list()
+	if(!new_mob?.hud_used)
+		new_mob = owner.owner?.mob
+
 	mob_ref = WEAKREF(new_mob)
+
+	RegisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT, .proc/on_our_logout, override = TRUE)
+	mirror = new()
+	mirror.shadow(new_mob)
+
+	if(new_mob == owner.owner.mob)
+		return
+
+	create_store()
+
+/datum/plane_master_debug/proc/on_our_logout(mob/source)
+	SIGNAL_HANDLER
+	// Recreate our stored view, since we've changed mobs now
+	create_store()
+
+/// Create or refresh our stored visual data, represeting the viewing mob
+/datum/plane_master_debug/proc/create_store()
+	if(stored)
+		QDEL_NULL(stored)
+	stored = new()
+	stored.shadow(owner.owner.mob)
+	stored.set_truth(mirror)
+	mirror.set_mirror_target(owner.owner.mob)
 
 /datum/plane_master_debug/proc/get_target()
 	var/mob/target = mob_ref?.resolve()

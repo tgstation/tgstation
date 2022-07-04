@@ -134,14 +134,16 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/clear_client(datum/source)
 	UnregisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE)
-	on_eye_change(null, mymob.canon_client.eye, null)
 
 /datum/hud/proc/on_eye_change(datum/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
 	if(old_eye)
 		UnregisterSignal(old_eye, COMSIG_MOVABLE_Z_CHANGED)
 	if(new_eye)
-		RegisterSignal(new_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/eye_z_changed)
+		// By the time logout runs, the client's eye has already changed
+		// There's just no log of the old eye, so we need to override
+		// :sadkirby:
+		RegisterSignal(new_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/eye_z_changed, override = TRUE)
 	eye_z_changed(new_eye)
 
 /datum/hud/proc/eye_z_changed(atom/eye)
@@ -324,6 +326,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	else if (viewmob.hud_used)
 		viewmob.hud_used.plane_masters_update()
 
+	SEND_SIGNAL(screenmob, COMSIG_MOB_HUD_REFRESHED, src)
 	return TRUE
 
 /datum/hud/proc/plane_masters_update()
