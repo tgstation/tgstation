@@ -63,7 +63,7 @@ class Menu extends Component<MenuProps> {
 type MenuBarDropdownProps = {
   open: boolean;
   openWidth: string;
-  options: InfernoNodeArray;
+  options: any;
   disabled?: boolean;
   display: InfernoNode;
   onMouseOver: () => void;
