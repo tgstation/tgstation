@@ -14,7 +14,7 @@ const logger = createLogger('NtosNotepad');
 
 const DEFAULT_DOCUMENT_NAME = 'Untitled';
 
-interface PartiallyUnderlinedProps {
+type PartiallyUnderlinedProps = {
   str: string;
   indexStart: number;
 }
