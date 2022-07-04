@@ -659,8 +659,8 @@
 		new_sight = null
 
 	set_sight(new_sight)
-	sync_lighting_plane_alpha()
-
+	return ..()
+	
 /mob/living/silicon/robot/update_stat()
 	if(status_flags & GODMODE)
 		return
