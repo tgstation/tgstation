@@ -276,11 +276,8 @@ interface NotePadTextAreaProps {
   setStatuses: (statuses: Statuses) => void;
 }
 
-class NotePadTextArea extends Component<
-  NotePadTextAreaProps,
-  { textAreaRef: RefObject<HTMLTextAreaElement> }
-> {
-  textAreaRef: RefObject<HTMLTextAreaElement>;
+class NotePadTextArea extends Component<NotePadTextAreaProps> {
+  innerRef: RefObject<HTMLTextAreaElement>;
 
   constructor(props) {
     super(props);
@@ -292,12 +289,12 @@ class NotePadTextArea extends Component<
   }
 
   onblur() {
-    if (!this.textAreaRef.current) {
+    if (!this.innerRef.current) {
       return;
     }
 
     if (this.props.maintainFocus) {
-      this.textAreaRef.current.focus();
+      this.innerRef.current.focus();
       return false;
     }
 
@@ -305,7 +302,7 @@ class NotePadTextArea extends Component<
   }
 
   componentWillUnmount() {
-    const textarea = this.textAreaRef?.current;
+    const textarea = this.innerRef?.current;
     if (!textarea) {
       logger.error(
         'NotePadTextArea.componentWillUnmount(): Textarea RefObject should not be null'
@@ -322,9 +319,9 @@ class NotePadTextArea extends Component<
 
     return (
       <TextArea
-        textAreaRef={(ref) => {
-          this.textAreaRef = ref;
-          const textarea = this.textAreaRef.current;
+        innerRef={(ref) => {
+          this.innerRef = ref;
+          const textarea = this.innerRef.current;
           if (!textarea) {
             return;
           }
