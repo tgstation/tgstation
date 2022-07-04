@@ -785,7 +785,7 @@ const InfoButton = (props, context) => {
   return (
     <Button
       top={no_position ? '' : '30px'}
-      right={no_position ? '' : foreign ? '100px' : "76px"}
+      right={no_position ? '' : foreign ? '100px' : '76px'}
       position={no_position ? '' : 'absolute'}
       icon="exclamation"
       onClick={() => setShowInfo(true)}
@@ -824,10 +824,13 @@ const ToggleMirror = (props, context) => {
       top={no_position ? '' : '30px'}
       right={no_position ? '' : '52px'}
       position={no_position ? '' : 'absolute'}
-      color={tracking_active ? "bad" : "good"}
+      color={tracking_active ? 'bad' : 'good'}
       icon="eye"
       onClick={() => act('toggle_mirroring')}
-      tooltip={(tracking_active ? "Disables" : "Enables") + " seeing 'through' the edited mob's eyes, for debugging and such"}
+      tooltip={
+        (tracking_active ? 'Disables' : 'Enables') +
+        " seeing 'through' the edited mob's eyes, for debugging and such"
+      }
     />
   );
 };
