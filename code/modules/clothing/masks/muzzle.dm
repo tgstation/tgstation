@@ -39,10 +39,22 @@
 	greyscale_config = /datum/greyscale_config/tape_piece
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn
 	greyscale_colors = "#B2B2B2"
+	var/harmful_strip = FALSE
+	var/stripping_damage = 0
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
 	. += "[span_notice("Target mouth and use it on someone to tape their mouth closed.")]"
+
+/obj/item/clothing/mask/muzzle/tape/dropped(mob/living/user)
+	. = ..()
+	if(user.get_item_by_slot(ITEM_SLOT_MASK) != src)
+		return
+	playsound(user, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
+	if(harmful_strip)
+		user.apply_damage(stripping_damage, BRUTE, BODY_ZONE_HEAD)
+		user.emote("scream")
+		to_chat(user, span_userdanger("You feel massive pain as hundreds of tiny spikes tear free from your face!"))
 
 /obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, params)
 	if(attacker.combat_mode)
@@ -80,15 +92,8 @@
 	greyscale_config = /datum/greyscale_config/tape_piece/spikes
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn/spikes
 	greyscale_colors = "#E64539#AD2F45"
-	var/stripping_damage = 10
-
-/obj/item/clothing/mask/muzzle/tape/pointy/dropped(mob/living/user)
-	. = ..()
-	if(user.get_item_by_slot(ITEM_SLOT_MASK) != src)
-		return
-	user.apply_damage(stripping_damage, BRUTE, BODY_ZONE_HEAD)
-	user.emote("scream")
-	to_chat(user, span_userdanger("You feel massive pain as hundreds of tiny spikes tear free from your face!"))
+	harmful_strip = TRUE
+	stripping_damage = 10
 
 /obj/item/clothing/mask/muzzle/tape/pointy/super
 	name = "super pointy tape piece"
