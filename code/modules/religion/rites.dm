@@ -755,10 +755,10 @@
 	name = "Exorcism"
 	desc = "The first thing they teach you in Chaplain College. Expels hostile spirits, as well as any other junk that may be floating around in someone's soul."
 	ritual_length = 20 SECONDS
-	ritual_invocations = list("With the grace and glory of our god ...",
-						"... We ask you to release this poor soul from their torment ...",
-						"... And unbind them from their supernatural compulsions ...")
-	invoke_msg = "BEGONE, WRETCHED SPIRITS. LEAVE THIS VESSEL BEHIND."
+	ritual_invocations = list("Secundum gratiam et gloriam dei nostri ...",
+						"... Rogamus te, ut hanc miseram animam a tormentis eorum absolvas ...",
+						"... Et a supernis coactis solve ...")
+	invoke_msg = "BEGONE, SPIRITS. LEAVE THIS VESSEL BEHIND."
 	favor_cost = 1000
 
 /datum/religion_rites/exorcism/perform_rite(mob/living/carbon/human/user, atom/movable/religious_tool)
@@ -772,8 +772,10 @@
 				rite_target = buckled
 				break
 	rite_target.emote("scream")
-	rite_target.visible_message(span_warning("[rite_target] begins thrashing wildly!"), ignored_mobs = list(rite_target))
+	rite_target.visible_message(span_warning("[rite_target] begins thrashing wildly and rises into the air above [religious_tool]!"), ignored_mobs = list(rite_target))
 	to_chat(rite_target, span_warning("Your body throbs in almost unbearable pain, and you feel like throwing up!"))
+	for(var/obj/machinery/light/flick in get_area(rite_target))
+		flick.flicker(100)
 	return ..()
 
 /datum/religion_rites/exorcism/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
@@ -792,8 +794,12 @@
 
 	rite_target.vomit(blood = TRUE)
 	rite_target.reagents.add_reagent(/datum/reagent/toxin/spewium, 15) //Y'know back in 1973 The Exorcist made people puke in theaters. Crazy shit.
-	rite_target.visible_message(span_warning("A low drone fills the air as something wicked manifests above [rite_target]!"), ignored_mobs = list(rite_target))
+	rite_target.visible_message(span_warning("A terrible wailing fills the air as something wicked is torn from [rite_target]'s very soul!"), ignored_mobs = list(rite_target))
 	RegisterSignal(new /mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit(get_turf(rite_target)), COMSIG_LIVING_DEATH, rite_target, .proc/on_exorcised_death)
+	playsound(get_turf(rite_target),'sound/hallucinations/wail.ogg', 50, TRUE, TRUE)
+	for(var/obj/machinery/power/apc/overload in range(10, get_turf(src)))
+		overload.overload_lighting()
+
 	return TRUE
 
 ///Handles curing the associated trauma after an obsession ghost dies

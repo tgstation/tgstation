@@ -490,8 +490,10 @@
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		if(owner.has_trauma_type(/datum/brain_trauma/special/obsessed))
-			owner.visible_message(span_warning("As [owner]'s head splatters open, something wicked crawls out of it!"), ignored_mobs = list(owner)) // The voice in the obsessed's head no longer has a place to reside in. It must be made manifest.
+			owner.visible_message(span_warning("As [owner]'s head erupts, the voice inside of [owner.p_their()]'s head suddenly manifests in its place!"), ignored_mobs = list(owner)) // The voice in the obsessed's head no longer has a place to reside in. It must be made manifest.
 			RegisterSignal(new /mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit(get_turf(owner)), COMSIG_LIVING_DEATH, .proc/on_death)
+			for(var/obj/machinery/power/apc/overload in range(30, get_turf(src))) //Bigger discharge of mysterious ghost light-destroyer energy(?)
+				overload.overload_lighting()
 		else
 			owner.visible_message(span_warning("[owner]'s head splatters with a sickening crunch!"), ignored_mobs = list(owner))
 		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
