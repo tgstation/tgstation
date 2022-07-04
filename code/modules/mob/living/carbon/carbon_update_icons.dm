@@ -183,43 +183,6 @@
 	// Setup such that walking the list backwards will allow us to properly update overlays
 	// (keeping in mind that overlays only update if an apperance is removed and added, and this pattern applies in a nested fashion)
 
-	// But first, we're going to filter out parents with no "important" children, along with children with nothing useful about them
-	// (IE, parents that have no apperances in their command update chain, and that aren't floating themselves)
-	// This way, we'll be left with a flattened list of JUST the apperances that need to be updated in case of plane shifting
-	queue_index = length(queue)
-	var/parent_index = length(parent_queue)
-	// We track the index of the last parent change so we can remove redundant parents
-	// Start with this so ending the list with NEXT_PARENT_COMMAND behaves consistently with the above
-	var/last_parent_found = queue_index + 1
-	while(queue_index >= 1)
-		var/item = queue[queue_index]
-		if(item == NEXT_PARENT_COMMAND)
-			// If we JUST switched parents, this current parent has no valid children, and should get nuked
-			if(last_parent_found == queue_index + 1)
-				var/mutable_appearance/current_parent = parent_queue[parent_index]
-				parent_queue -= current_parent
-				queue -= NEXT_PARENT_COMMAND
-				// If the parent is floating, not only is it not a valid parent, it's not a valid result either
-				// In addition, images with no loc can't have their planes changed, so we don't wanna keep em around
-				if(current_parent.plane == FLOAT_PLANE)
-					// We can be assured that our parent is before us in this list, so the operation is safe
-					queue -= current_parent
-					// Offset the index so it's still pointing at the right value
-					queue_index--
-			// Just found a parent, set our store
-			last_parent_found = queue_index
-			// Next parent in the queue please
-			parent_index--
-		else
-			var/mutable_appearance/appearance = item
-			if(!appearance || (appearance.plane == FLOAT_PLANE && !length(appearance.overlays)))
-				queue -= appearance
-				queue_index--
-				// We walk this back so our above case will properly work
-				last_parent_found--
-		// Prep for the next step back in the queue
-		queue_index--
-
 	// If we found no results, return null
 	if(!length(queue))
 		return null
@@ -254,7 +217,6 @@
 				break
 			if(queue[upper_parent] == NEXT_PARENT_COMMAND) // We found em lads
 				break
-
 
 	// One more thing to do
 	// It's much more convinient for the parent queue to be a list of indexes pointing at queue locations
