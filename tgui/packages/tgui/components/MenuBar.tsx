@@ -96,13 +96,18 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
     const { className, ...rest } = boxProps;
 
     return (
-      <div ref={this.menuRef} className="MenuBar__MenuBarButton-container">
+      <div ref={this.menuRef}>
         <Box
-          className={classes(['MenuBar__MenuBarButton', className])}
+          className={classes([
+            'MenuBar__MenuBarButton',
+            'MenuBar__font',
+            'MenuBar__hover',
+            className
+          ])}
           {...rest}
           onClick={disabled ? undefined : onClick}
           onmouseover={onMouseOver}>
-          <span className="MenuBar__selected-text">{display}</span>
+          <span className="MenuBar__MenuBarButton-text">{display}</span>
         </Box>
         {open && (
           <Menu
@@ -176,8 +181,14 @@ const MenuItemToggle = (props) => {
   const { value, displayText, onClick, checked } = props;
   return (
     <Box
-      className={classes(['MenuBar__MenuItem', 'MenuBar__MenuItemToggle'])}
-      onClick={() => onClick(value)}>
+      className={classes([
+        'MenuBar__font',
+        'MenuBar__MenuItem',
+        'MenuBar__MenuItemToggle',
+        'MenuBar__hover',
+      ])}
+      onClick={() => onClick(value)}
+    >
       <div className="MenuBar__MenuItemToggle__check">
         {checked && <Icon size={1.3} name="check" />}
       </div>
@@ -191,7 +202,13 @@ Dropdown.MenuItemToggle = MenuItemToggle;
 const MenuItem = (props) => {
   const { value, displayText, onClick } = props;
   return (
-    <Box className="MenuBar__MenuItem" onClick={() => onClick(value)}>
+    <Box className={classes([
+        'MenuBar__font',
+        'MenuBar__MenuItem',
+        'MenuBar__hover',
+      ])}
+      onClick={() => onClick(value)}
+    >
       {displayText}
     </Box>
   );
