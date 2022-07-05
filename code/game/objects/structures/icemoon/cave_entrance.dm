@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 			new /obj/item/ship_in_a_bottle(loc)
 			new /obj/item/oar(loc)
 		if(16)
-			new /obj/item/seeds/gatfruit(loc)
+			new /obj/item/seeds/nettle/death(loc)
 		if(17)
 			new /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola(loc)
 		if(18)
