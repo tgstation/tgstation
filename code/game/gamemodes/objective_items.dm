@@ -34,34 +34,6 @@
 /datum/objective_item/steal/low_risk
 	objective_type = OBJECTIVE_ITEM_TYPE_TRAITOR
 
-/datum/objective_item/steal/low_risk/techboard
-	name = "the (TECH BOARD) circuitboard in secure tech storage"
-	var/circuitboard_name
-	excludefromjob = list(
-		JOB_CAPTAIN,
-		JOB_CHIEF_ENGINEER,
-		JOB_RESEARCH_DIRECTOR,
-	)
-	exists_on_map = TRUE
-
-/datum/objective_item/steal/low_risk/techboard/aiupload
-	targetitem = /obj/item/circuitboard/computer/aiupload
-	circuitboard_name = "ai upload"
-
-/obj/item/circuitboard/computer/aiupload/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/circuitboard/computer/aiupload)
-
-/datum/objective_item/steal/low_risk/techboard/borgupload
-	targetitem = /obj/item/circuitboard/computer/borgupload
-	circuitboard_name = "cyborg upload"
-
-/obj/item/circuitboard/computer/borgupload/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/circuitboard/computer/borgupload)
-
-/datum/objective_item/steal/low_risk/techboard/New()
-	. = ..()
-	name = replacetext(name, "(TECH BOARD)", circuitboard_name)
-
 /datum/objective_item/steal/low_risk/aicard
 	targetitem = /obj/item/aicard
 	name = "an intelliCard"
