@@ -30664,7 +30664,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/departments/vault/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "irJ" = (
