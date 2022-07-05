@@ -633,7 +633,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	return ITALICS | REDUCE_RANGE
 
 /// Called when a mob drops an item.
-/obj/item/proc/dropped(mob/user, silent)
+/obj/item/proc/dropped(mob/user, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	// Remove any item actions we temporary gave out.

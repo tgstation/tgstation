@@ -225,7 +225,7 @@
 /// ~Lemon
 GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
-/datum/storage/proc/set_holdable(list/can_hold_list, list/cant_hold_list)
+/datum/storage/proc/set_holdable(list/can_hold_list = null, list/cant_hold_list = null)
 	if(!islist(can_hold_list))
 		can_hold_list = list(can_hold_list)
 	if(!islist(cant_hold_list))

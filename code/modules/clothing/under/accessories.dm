@@ -21,11 +21,10 @@
 		to_chat(user, span_warning("There doesn't seem to be anywhere to put [src]..."))
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
-	var/datum/storage/storage = atom_storage
-	if(storage)
+	if(atom_storage)
 		if(U.atom_storage)
 			return FALSE
-		U.clone_storage(storage)
+		U.clone_storage(atom_storage)
 		U.atom_storage.set_real_location(src)
 	U.attached_accessory = src
 	forceMove(U)

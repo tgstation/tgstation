@@ -289,10 +289,9 @@
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
-		var/datum/storage/STR = T.atom_storage
 		to_chat(user, span_warning("You empty the bag."))
 		for(var/obj/item/O in T.contents)
-			STR.attempt_remove(O,src)
+			T.atom_storage.attempt_remove(O,src)
 		T.update_appearance()
 		update_appearance()
 	else

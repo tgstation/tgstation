@@ -30,6 +30,8 @@
 	var/datum/storage/modstorage = mod.atom_storage
 	atom_storage.locked = TRUE
 	qdel(modstorage)
+	if(!deleting)
+		atom_storage.remove_all(get_turf(src))
 	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
