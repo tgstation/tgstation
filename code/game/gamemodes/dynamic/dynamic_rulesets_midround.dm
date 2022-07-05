@@ -876,6 +876,7 @@
 	antag_datum = /datum/antagonist/disease
 	antag_flag = ROLE_SENTIENT_DISEASE
 	required_candidates = 1
+	minimum_players = 25
 	weight = 4
 	cost = 8
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
