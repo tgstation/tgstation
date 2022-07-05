@@ -15,7 +15,7 @@ type TextInputData = {
   title: string;
 };
 
-export const TextInputModal = (_, context) => {
+export const TextInputModal = (props, context) => {
   const { act, data } = useBackend<TextInputData>(context);
   const {
     large_buttons,

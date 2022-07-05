@@ -15,7 +15,12 @@ if grep -P '//' _maps/**/*.dmm | grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEA
 	echo "ERROR: Unexpected commented out line detected in this map file. Please remove it."
 	st=1
 fi;
-if grep -P 'Merge conflict marker' _maps/**/*.dmm; then
+if grep -P 'Merge Conflict Marker' _maps/**/*.dmm; then
+    echo "ERROR: Merge conflict markers detected in map, please resolve all merge failures!"
+    st=1
+fi;
+# We check for this as well to ensure people aren't actually using this mapping effect in their maps.
+if grep -P '/obj/merge_conflict_marker' _maps/**/*.dmm; then
     echo "ERROR: Merge conflict markers detected in map, please resolve all merge failures!"
     st=1
 fi;

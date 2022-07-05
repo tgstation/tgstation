@@ -190,7 +190,7 @@
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/card/id/advanced/chameleon(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
-			new /obj/item/book/granter/spell/summonitem(src)
+			new /obj/item/book/granter/action/spell/summonitem(src)
 
 		if(KIT_WHITE_WHALE_HOLY_GRAIL) //Unique items that don't appear anywhere else
 			new /obj/item/gun/ballistic/rifle/boltaction/harpoon(src)
@@ -508,8 +508,8 @@
 	new /obj/item/gun/ballistic/revolver/reverse(src)
 
 /obj/item/storage/box/syndie_kit/mimery/PopulateContents()
-	new /obj/item/book/granter/spell/mimery_blockade(src)
-	new /obj/item/book/granter/spell/mimery_guns(src)
+	new /obj/item/book/granter/action/spell/mime/mimery_blockade(src)
+	new /obj/item/book/granter/action/spell/mime/mimery_guns(src)
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)

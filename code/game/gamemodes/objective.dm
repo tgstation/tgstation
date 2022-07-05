@@ -157,30 +157,32 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 					receiver.failed_special_equipment += equipment_path
 					receiver.try_give_equipment_fallback()
 
-/obj/effect/proc_holder/spell/self/special_equipment_fallback
+/datum/action/special_equipment_fallback
 	name = "Request Objective-specific Equipment"
 	desc = "Call down a supply pod containing the equipment required for specific objectives."
-	action_icon = 'icons/obj/device.dmi'
-	action_icon_state = "beacon"
-	charge_max = 0
-	clothes_req = FALSE
-	nonabstract_req = TRUE
-	phase_allowed = TRUE
-	antimagic_flags = NONE
-	invocation_type = INVOCATION_NONE
+	icon_icon = 'icons/obj/device.dmi'
+	button_icon_state = "beacon"
 
-/obj/effect/proc_holder/spell/self/special_equipment_fallback/cast(list/targets, mob/user)
-	var/datum/mind/mind = user.mind
-	if(!mind)
-		CRASH("[src] has no owner!")
-	if(mind.failed_special_equipment?.len)
+/datum/action/special_equipment_fallback/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/datum/mind/our_mind = target
+	if(!istype(our_mind))
+		CRASH("[type] - [src] has an incorrect target!")
+	if(our_mind.current != owner)
+		CRASH("[type] - [src] was owned by a mob which was not the current of the target mind!")
+
+	if(LAZYLEN(our_mind.failed_special_equipment))
 		podspawn(list(
-			"target" = get_turf(user),
+			"target" = get_turf(owner),
 			"style" = STYLE_SYNDICATE,
-			"spawn" = mind.failed_special_equipment
+			"spawn" = our_mind.failed_special_equipment,
 		))
-		mind.failed_special_equipment = null
-	mind.RemoveSpell(src)
+		our_mind.failed_special_equipment = null
+	qdel(src)
+	return TRUE
 
 /datum/objective/assassinate
 	name = "assasinate"
@@ -843,16 +845,24 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if(!isliving(M.current))
 			continue
 		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
-		for(var/obj/I in all_items) //Check for wanted items
-			if(is_type_in_typecache(I, wanted_items))
-				stolen_count++
+		for(var/obj/current_item in all_items) //Check for wanted items
+			if(is_type_in_typecache(current_item, wanted_items))
+				if(check_if_valid_item(current_item))
+					stolen_count++
 	return stolen_count >= amount
+
+/datum/objective/steal_n_of_type/proc/check_if_valid_item(obj/item/current_item)
+	return TRUE
 
 /datum/objective/steal_n_of_type/summon_guns
 	name = "steal guns"
 	explanation_text = "Steal at least five guns!"
 	wanted_items = list(/obj/item/gun)
 	amount = 5
+
+/datum/objective/steal_n_of_type/summon_guns/check_if_valid_item(obj/item/current_item)
+	var/obj/item/gun/gun = current_item
+	return !(gun.gun_flags & NOT_A_REAL_GUN)
 
 /datum/objective/steal_n_of_type/summon_guns/thief
 	explanation_text = "Steal at least 3 guns!"
@@ -875,12 +885,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if(!isliving(M.current))
 			continue
 		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
-		for(var/obj/I in all_items) //Check for wanted items
-			if(istype(I, /obj/item/book/granter/spell))
-				var/obj/item/book/granter/spell/spellbook = I
-				if(!spellbook.used || !spellbook.oneuse) //if the book still has powers...
+		for(var/obj/thing in all_items) //Check for wanted items
+			if(istype(thing, /obj/item/book/granter/action/spell))
+				var/obj/item/book/granter/action/spell/spellbook = thing
+				if(spellbook.uses > 0) //if the book still has powers...
 					stolen_count++ //it counts. nice.
-			else if(is_type_in_typecache(I, wanted_items))
+			else if(is_type_in_typecache(thing, wanted_items))
 				stolen_count++
 	return stolen_count >= amount
 

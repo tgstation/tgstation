@@ -159,22 +159,29 @@
 	if(!suppressed)
 		if(message)
 			if(tk_firing(user))
-				visible_message(span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"), \
-								blind_message = span_hear("You hear a gunshot!"), \
-								vision_distance = COMBAT_MESSAGE_RANGE)
+				visible_message(
+						span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),
+						blind_message = span_hear("You hear a gunshot!"),
+						vision_distance = COMBAT_MESSAGE_RANGE
+				)
 			else if(pointblank)
-				user.visible_message(span_danger("[user] fires [src] point blank at [pbtarget]!"), \
-								span_danger("You fire [src] point blank at [pbtarget]!"), \
-								span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget)
+				user.visible_message(
+						span_danger("[user] fires [src] point blank at [pbtarget]!"),
+						span_danger("You fire [src] point blank at [pbtarget]!"),
+						span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget
+				)
 				to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
 				if(pb_knockback > 0 && ismob(pbtarget))
 					var/mob/PBT = pbtarget
 					var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
 					PBT.throw_at(throw_target, pb_knockback, 2)
 			else if(!tk_firing(user))
-				user.visible_message(span_danger("[user] fires [src]!"), \
-								span_danger("You fire [src]!"), \
-								span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE)
+				user.visible_message(
+						span_danger("[user] fires [src]!"),
+						blind_message = span_hear("You hear a gunshot!"),
+						vision_distance = COMBAT_MESSAGE_RANGE,
+						ignored_mobs = user
+				)
 
 /obj/item/gun/emp_act(severity)
 	. = ..()
@@ -262,7 +269,7 @@
 				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 				process_fire(user, user, FALSE, null, shot_leg)
 				SEND_SIGNAL(user, COMSIG_MOB_CLUMSY_SHOOT_FOOT)
-				if(!HAS_TRAIT(src, TRAIT_NODROP))
+				if(!tk_firing(user) && !HAS_TRAIT(src, TRAIT_NODROP))
 					user.dropItemToGround(src, TRUE)
 				return TRUE
 

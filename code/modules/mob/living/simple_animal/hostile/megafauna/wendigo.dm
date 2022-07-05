@@ -303,16 +303,10 @@ Difficulty: Hard
 	if(!human_user.mind)
 		return
 	to_chat(human_user, span_danger("Power courses through you! You can now shift your form at will."))
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/polar_bear/transformation_spell = new
-	human_user.mind.AddSpell(transformation_spell)
+	var/datum/action/cooldown/spell/shapeshift/polar_bear/transformation_spell = new(user.mind || user)
+	transformation_spell.Grant(user)
 	playsound(human_user.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
-
-/obj/effect/proc_holder/spell/targeted/shapeshift/polar_bear
-	name = "Polar Bear Form"
-	desc = "Take on the shape of a polar bear."
-	invocation = "RAAAAAAAAWR!"
-	shapeshift_type = /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 
 /obj/item/crusher_trophy/wendigo_horn
 	name = "wendigo horn"

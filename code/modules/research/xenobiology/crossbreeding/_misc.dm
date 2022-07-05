@@ -136,7 +136,7 @@ Slimecrossing Items
 	icon_state = "slimebarrier_thick"
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
-	timeleft = 100
+	initial_duration = 10 SECONDS
 
 //Rainbow barrier - Chilling Rainbow
 /obj/effect/forcefield/slimewall/rainbow

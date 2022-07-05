@@ -132,6 +132,7 @@
 	chameleon_action.chameleon_name = "Glasses"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
+	add_item_action(chameleon_action)
 
 /obj/item/clothing/glasses/hud/security/chameleon/emp_act(severity)
 	. = ..()
@@ -211,6 +212,9 @@
 		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
 		our_hud.show_to(user)
 
+/datum/action/item_action/switch_hud
+	name = "Switch HUD"
+
 /obj/item/clothing/glasses/hud/toggle/thermal
 	name = "thermal HUD scanner"
 	desc = "Thermal imaging HUD in the shape of glasses."
@@ -255,4 +259,3 @@
 	desc = "These sunglasses are special, and let you view potential criminals."
 	icon_state = "sun"
 	inhand_icon_state = "sunglasses"
-
