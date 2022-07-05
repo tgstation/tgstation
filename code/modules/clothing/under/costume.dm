@@ -357,6 +357,12 @@
 	inhand_icon_state = "football_red"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/big_game_referees
+	name = "big game referee uniform"
+	icon_state = "bg_ref_uniform"
+	inhand_icon_state = "bg_ref_uniform"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/swagoutfit
 	name = "Swag outfit"
 	desc = "Why don't you go secure some bitches?"

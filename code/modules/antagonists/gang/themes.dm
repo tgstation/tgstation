@@ -40,20 +40,27 @@
 	description = "You're listening to SPORTS DAILY with John Dadden, and we're here LIVE covering the FINAL DAY of THE BIG GAME MMDXXXVIII! The teams playing tonight to decide \
 	who takes home THE BIG GAME MMDXXXVIII cup are the Sybil Slickers and the Basil Boys! It's currently a toss up between the two teams, Which will take home the victory? That's up \
 	to the teams and the coaches! Play ball!"
-	involved_gangs = list(/datum/antagonist/gang/sybil_slickers, /datum/antagonist/gang/basil_boys)
-	starting_gangsters = 5
+	involved_gangs = list(/datum/antagonist/gang/sybil_slickers, /datum/antagonist/gang/basil_boys, /datum/antagonist/gang/big_game_referees)
+	starting_gangsters = 3
 	gang_objectives = list(
 
 		/datum/antagonist/gang/sybil_slickers = "Alright, it's the BIG DAY of THE BIG GAME MMDXXXVIII! Get your players ready to go, and \
-		ensure everyone's healthy, hydrated, and ready to PLAY BALL! There's a small hiccup, however. The ball got deflated by Ball Handler Tom Brady XXIV, and \
-		we will need to set up a new ball. Talk with the opposing coaches and decide on what to use for the replacement ball, recruit your team, and then play and win the \
+		ensure everyone's healthy, hydrated, and ready to PLAY BALL! Talk with the referees, recruit your team, and then play and win the \
 		FINAL MATCH of THE BIG GAME MMDXXXVIII!",
 
 		/datum/antagonist/gang/basil_boys = "Alright, it's the BIG DAY of THE BIG GAME MMDXXXVIII! Get your players ready to go, and \
-		ensure everyone's healthy, hydrated, and ready to PLAY BALL! There's a small hiccup, however. The ball got deflated by Ball Handler Tom Brady XXIV, and \
-		we will need to set up a new ball. Talk with the opposing coaches and decide on what to use for the replacement ball, recruit your team, and then play and win the \
-		FINAL MATCH of THE BIG GAME MMDXXXVIII!"
+		ensure everyone's healthy, hydrated, and ready to PLAY BALL! Talk with the referees, recruit your team, and then play and win the \
+		FINAL MATCH of THE BIG GAME MMDXXXVIII!",
+
+		/datum/antagonist/gang/big_game_referees = "Alright, it's the BIG DAY of THE BIG GAME MMDXXXVIII! As a referee, it's your job to organize THE BIG GAME MMDXXXVIII, \
+		decide on the venue, and coordinate the match, decide on the rules, and run THE BIG GAME MMDXXXVIII!!! The first referee has the ALMIGHTY FOOTBALL, which is the \
+		ball that will be used for THE BIG GAME MMDXXXVIII. If you need more referees, have the head referees hire more.",
 	)
+	bonus_first_gangster_items = list(
+		/datum/antagonist/gang/sybil_slickers = null,
+		/datum/antagonist/gang/basil_boys = null,
+		/datum/antagonist/gang/big_game_referees = /obj/item/football,
+		) // the cash
 
 /datum/gang_theme/level_10_arch
 	name = "Level 10 Arch"
@@ -130,7 +137,10 @@
 	Today we'll be discussing the fall of the famous United States empire in the early 21st century. The program will last about an hour, and we'll get right into it after a quick word \
 	from today's sponsor, Majima Construction: We Build Shit!"
 	involved_gangs = list(/datum/antagonist/gang/yakuza, /datum/antagonist/gang/irs)
-	bonus_first_gangster_items = list(/obj/item/storage/secure/briefcase/syndie) // the cash
+	bonus_first_gangster_items = list(
+		/datum/antagonist/gang/yakuza = /obj/item/storage/secure/briefcase/syndie,
+		/datum/antagonist/gang/irs = /obj/item/storage/secure/briefcase/syndie,
+		) // the cash
 	starting_gangsters = 5
 	gang_objectives = list(
 

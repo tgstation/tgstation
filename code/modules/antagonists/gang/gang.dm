@@ -148,13 +148,16 @@
 					to_chat(owner.current, "Your [bonus_object.name] has been placed at your feet.")
 					bonus_object.forceMove(get_turf(gangster_human))
 		if(starter_gangster)
-			if(my_gang.current_theme.bonus_first_gangster_items)
+			if(my_gang.current_theme.bonus_first_gangster_items && !my_gang.starting_item_handed_out)
 				for(var/bonus_starter_item in my_gang.current_theme.bonus_first_gangster_items)
-					var/obj/item/bonus_starter_object = new bonus_starter_item(owner.current)
-					var/equipped = bonus_starter_object.equip_to_best_slot(gangster_human)
-					if(!equipped)
-						to_chat(owner.current, "Your [bonus_starter_object.name] has been placed at your feet.")
-						bonus_starter_object.forceMove(get_turf(gangster_human))
+					if(!isnull(my_gang.current_theme.bonus_first_gangster_items[bonus_starter_item]) && bonus_starter_item == src.type)
+						my_gang.starting_item_handed_out = TRUE
+						var/path_to_spawn = my_gang.current_theme.bonus_first_gangster_items[bonus_starter_item]
+						var/obj/item/bonus_starter_object = new path_to_spawn(owner.current)
+						var/equipped = bonus_starter_object.equip_to_best_slot(gangster_human)
+						if(!equipped)
+							to_chat(owner.current, "Your [bonus_starter_object.name] has been placed at your feet.")
+							bonus_starter_object.forceMove(get_turf(gangster_human))
 
 /datum/antagonist/gang/ui_static_data(mob/user)
 	var/list/data = list()
@@ -185,6 +188,8 @@
 	var/datum/antagonist/gang/my_gang_datum
 	/// The current theme. Used to pull important stuff such as spawning equipment and objectives.
 	var/datum/gang_theme/current_theme
+	/// Has the starting item been handed out yet?
+	var/starting_item_handed_out = FALSE
 
 /// Allow gangs to have custom naming schemes for their gangsters.
 /datum/team/gang/proc/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
@@ -754,7 +759,7 @@
 		/obj/item/clothing/head/sybil_slickers,
 		/obj/item/clothing/gloves/tackler/football,
 		/obj/item/clothing/shoes/sybil_slickers,
-		/obj/item/toy/crayon/spraycan)
+	)
 	antag_hud_name = "SybilSlickers"
 	gang_team_type = /datum/team/gang/sybil_slickers
 
@@ -776,8 +781,8 @@
 		/obj/item/clothing/under/costume/basil_boys,
 		/obj/item/clothing/head/basil_boys,
 		/obj/item/clothing/gloves/tackler/football,
-		/obj/item/clothing/shoes/basil_boys,
-		/obj/item/toy/crayon/spraycan)
+		/obj/item/clothing/shoes/basil_boys
+	)
 	antag_hud_name = "BasilBoys"
 	gang_team_type = /datum/team/gang/basil_boys
 
@@ -786,5 +791,28 @@
 	last_name.Find(original_name)
 	if(starter_gangster)
 		gangster.current.fully_replace_character_name(gangster.current.real_name, "Basil Coach [last_name.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+
+/datum/antagonist/gang/big_game_referees
+	show_in_antagpanel = TRUE
+	name = "\improper Big Game Referee"
+	roundend_category = "Big Game Referees"
+	gang_name = "Big Game Referees"
+	gang_id = "Referees"
+	free_clothes = list(
+		/obj/item/clothing/under/costume/big_game_referees,
+		/obj/item/clothing/head/big_game_referees,
+		/obj/item/clothing/shoes/big_game_referees,
+		/obj/item/clothing/mask/whistle/referee,
+	)
+	antag_hud_name = "Referees"
+	gang_team_type = /datum/team/gang/big_game_referees
+
+/datum/team/gang/big_game_referees/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	last_name.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, "Sybil Coach [last_name.match]")
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)

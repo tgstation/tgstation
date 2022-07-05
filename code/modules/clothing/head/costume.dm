@@ -179,3 +179,8 @@
 	name = "basil boys helmet"
 	icon_state = "football_helmet_red"
 	inhand_icon_state = "football_helmet_red"
+
+/obj/item/clothing/head/big_game_referees
+	name = "big game referee cap"
+	icon_state = "bg_ref_cap"
+	inhand_icon_state = "bg_ref_cap"

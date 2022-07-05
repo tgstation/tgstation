@@ -2200,6 +2200,7 @@
 #include "code\modules\antagonists\fugitive\fugitive_ship.dm"
 #include "code\modules\antagonists\fugitive\hunter.dm"
 #include "code\modules\antagonists\gang\cellphone.dm"
+#include "code\modules\antagonists\gang\football.dm"
 #include "code\modules\antagonists\gang\gang.dm"
 #include "code\modules\antagonists\gang\handler.dm"
 #include "code\modules\antagonists\gang\induction_package.dm"

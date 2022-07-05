@@ -99,3 +99,9 @@
 	desc = "FOOTBALL! YEAH!"
 	icon_state = "sneakers_red"
 	inhand_icon_state = "sneakers_red"
+
+/obj/item/clothing/shoes/big_game_referees
+	name = "big game referee shoes"
+	desc = "FOOTBALL! YEAH!"
+	icon_state = "bg_ref_shoes"
+	inhand_icon_state = "bg_ref_shoes"
