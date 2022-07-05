@@ -1088,14 +1088,11 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "fi" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "caves_bottom"
-	},
 /obj/structure/railing/corner,
 /obj/structure/railing/corner{
 	dir = 4
 	},
+/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "fk" = (
@@ -1788,13 +1785,13 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
 "ie" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "caves_bottom"
-	},
 /obj/structure/railing{
 	dir = 9
 	},
+/obj/effect/landmark/lift_id{
+	specific_lift_id = s
+	},
+/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "if" = (
@@ -2389,10 +2386,7 @@
 /area/awaymission/caves/main_outpost/seconadry/secpost)
 "lf" = (
 /obj/effect/landmark/tram/caves/lower,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "caves_bottom"
-	},
+/obj/structure/industrial_lift/tram,
 /obj/machinery/computer/tram_controls/caves,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
@@ -5551,13 +5545,10 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/tunnel)
 "Ak" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "caves_bottom"
-	},
 /obj/structure/railing{
 	dir = 5
 	},
+/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Al" = (
@@ -7196,13 +7187,10 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
 "IZ" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "caves_bottom"
-	},
 /obj/structure/railing{
 	dir = 10
 	},
+/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Ja" = (
@@ -7221,24 +7209,18 @@
 	},
 /area/awaymission/caves/main_outpost/seconadry/secpost)
 "Je" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "caves_bottom"
-	},
 /obj/structure/railing,
+/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Jf" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "caves_bottom"
-	},
 /obj/structure/railing/corner{
 	dir = 1
 	},
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Jg" = (
@@ -8742,13 +8724,10 @@
 	},
 /area/awaymission/caves/main_outpost)
 "Qj" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "caves_bottom"
-	},
 /obj/structure/railing{
 	dir = 6
 	},
+/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Ql" = (
@@ -9323,13 +9302,10 @@
 	},
 /area/awaymission/caves/main_outpost/rec)
 "Ti" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "caves_bottom"
-	},
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Tj" = (
