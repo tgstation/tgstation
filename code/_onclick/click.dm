@@ -157,7 +157,7 @@
 	var/obj/item/item_atom = A
 	if(istype(item_atom))
 		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
-			UnarmedAttack(A,1,modifiers)
+			UnarmedAttack(item_atom, TRUE, modifiers)
 
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
