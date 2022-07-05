@@ -13283,6 +13283,16 @@
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"dBz" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/departments/vault/directional/east{
+	step_y = 32
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/command/nuke_storage)
 "dBK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -30654,7 +30664,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/departments/vault/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "irJ" = (
@@ -72468,7 +72477,6 @@
 	name = "Vault Door"
 	},
 /obj/structure/sign/warning/electric_shock/directional/south,
-/obj/structure/sign/warning/secure_area/directional/north,
 /obj/effect/landmark/navigate_destination,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line{
@@ -134716,7 +134724,7 @@ aaa
 aad
 aaa
 teY
-tcG
+dBz
 teY
 aaa
 aad

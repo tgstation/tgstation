@@ -11701,12 +11701,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
-"duI" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/structure/sign/departments/vault/directional/north,
-/turf/open/floor/plating,
-/area/station/hallway/primary/port)
 "duS" = (
 /obj/machinery/door/airlock{
 	name = "Labor Camp Library"
@@ -50371,6 +50365,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/departments/vault/directional/north{
+	step_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
 "ptp" = (
@@ -231244,6 +231241,7 @@ xWN
 xWN
 wtw
 uiM
+jOt
 jOt
 ozw
 aJA

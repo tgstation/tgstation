@@ -15434,12 +15434,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
-"fJZ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/structure/sign/departments/vault/directional/north,
-/turf/open/floor/plating,
-/area/station/construction/storage_wing)
 "fKf" = (
 /obj/machinery/telecomms/bus/preset_three,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -61878,6 +61872,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/departments/vault/directional/north{
+	step_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/construction/storage_wing)
 "vLv" = (
@@ -90372,7 +90369,7 @@ wHW
 wHW
 isp
 rlU
-fJZ
+aEH
 aEH
 lpt
 mTp
