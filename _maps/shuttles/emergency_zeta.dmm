@@ -234,8 +234,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "Qf" = (
-/obj/machinery/shower{
-	dir = 8;
+/obj/machinery/shower/directional/west{
 	name = "emergency shower"
 	},
 /turf/open/floor/plating/abductor,

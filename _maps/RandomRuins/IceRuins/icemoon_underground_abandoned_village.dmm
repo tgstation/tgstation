@@ -209,10 +209,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered)
 "sY" = (
-/obj/structure/sink/kitchen{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/kitchen/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker,
 /area/ruin/powered)

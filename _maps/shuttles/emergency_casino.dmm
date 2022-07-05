@@ -454,11 +454,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower";
-	pixel_x = -6;
-	pixel_y = -7
+/obj/machinery/shower/directional/west{
+	name = "emergency shower"
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -525,11 +522,8 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower";
-	pixel_x = -6;
-	pixel_y = -4
+/obj/machinery/shower/directional/west{
+	name = "emergency shower"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
@@ -863,9 +857,7 @@
 /turf/open/floor/sepia,
 /area/shuttle/escape)
 "xI" = (
-/obj/structure/sink{
-	dir = 1
-	},
+/obj/structure/sink/directional/north,
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)

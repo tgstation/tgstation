@@ -241,10 +241,7 @@
 /area/shuttle/abandoned)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/item/soap,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)

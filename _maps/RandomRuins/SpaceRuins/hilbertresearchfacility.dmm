@@ -944,9 +944,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "wG" = (
 /obj/effect/turf_decal/stripes/end,
-/obj/machinery/shower{
-	pixel_y = 12
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "wI" = (
