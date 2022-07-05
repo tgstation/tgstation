@@ -56,7 +56,9 @@
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	if(owner.has_trauma_type(/datum/brain_trauma/special/obsessed))
 			victim.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_MAGIC)
-			to_chat(owner, span_warning("The voices in your head are suddenly interrupted by soothing silence in your mind."))
+			to_chat(owner, span_warning("The voices in your head are abruptly silenced, but you can feel that something in your brain was seriously hurt!")) //brains dont actually have nerves in them
+			target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
+
 	if(prob(75)) // 75% chance to get a trauma from this
 		switch(rand(1,3))//Now let's see what hopefully-not-important part of the brain we cut off
 			if(1)
