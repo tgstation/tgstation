@@ -47,7 +47,7 @@
 			puff.set_up(smokeradius, holder = src, location = user, carry = item.reagents, efficiency = 20)
 			puff.start()
 			if (prob(5) && !emagged)
-				if(islizard(user) || isfelinid(user))
+				if(islizard(user))
 					to_chat(user, span_boldnotice("A hidden treat in the pipes!"))
 					user.balloon_alert(user, "A hidden treat in the pipes!")
 					user.visible_message(span_danger("[user] fishes a mouse out of the pipes."))
@@ -98,9 +98,9 @@
 	return
 
 /obj/structure/toiletbong/emag_act(mob/user, obj/item/card/emag/emag_card)
-	playsound(src, 'sound/effects/splash.ogg', 50)
+	playsound(src, 'sound/effects/fish_splash.ogg', 50)
 	user.balloon_alert(user, "Whoops!")
 	if(!emagged)
 		emagged = TRUE
 		smokeradius = 2
-		to_chat(user, span_boldwarning("The emag falls into the toilet. You fish it back out. Looks like you broke the toilet."))
+		to_chat(user, span_boldwarning("The [emag_card.name] falls into the toilet. You fish it back out. Looks like you broke the toilet."))
