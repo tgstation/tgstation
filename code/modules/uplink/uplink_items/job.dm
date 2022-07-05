@@ -90,6 +90,17 @@
 	surplus = 0
 	restricted_roles = list(JOB_COOK, JOB_BOTANIST, JOB_CLOWN, JOB_MIME)
 
+/datum/uplink_item/role_restricted/gatfruit_seeds
+	name = "Pack Of Gatfruit Seeds"
+	desc = "A pack of Pyrus Gatt'Gat seeds, geneticially engineered to grow into Syndicate Revolvers upon maturity. \
+			Outer shell must be injested before use. Caution should be used while growing these, as a savvy \
+			co-worker may turn the tables and use them for their own purposes."
+	progression_minimum = 50 MINUTES
+	item = /obj/item/seeds/gatfruit
+	cost = 30 // You have to either ration your telecrystals to reach this by 50 minutes, or do objectives the hard way without any items until then.
+	surplus = 1
+	restricted_roles = list(JOB_COOK, JOB_BOTANIST)
+
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
 	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. \
