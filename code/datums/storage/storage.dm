@@ -4,54 +4,81 @@
  * The parent and real_location variables are both weakrefs, so they must be resolved before they can be used.
  * If you're looking to create custom storage type behaviors, check ../subtypes */
 /datum/storage
-	var/datum/weakref/parent /// the actual item we're attached to
-	var/datum/weakref/real_location /// the actual item we're storing in
+	/// the actual item we're attached to
+	var/datum/weakref/parent
+	/// the actual item we're storing in
+	var/datum/weakref/real_location
 
-	var/list/can_hold /// if this is set, only items, and their children, will fit
-	var/list/cant_hold /// if this is set, items, and their children, won't fit
-	var/list/exception_hold /// if set, these items will be the exception to the max size of object that can fit.
-	var/list/can_hold_trait /// if set can only contain stuff with this single trait present.
+	/// if this is set, only items, and their children, will fit
+	var/list/can_hold
+	/// if this is set, items, and their children, won't fit
+	var/list/cant_hold
+	/// if set, these items will be the exception to the max size of object that can fit.
+	var/list/exception_hold
+	/// if set can only contain stuff with this single trait present.
+	var/list/can_hold_trait
 
-	var/animated = TRUE /// whether or not we should have those cute little animations
+	/// whether or not we should have those cute little animations
+	var/animated = TRUE
 
 	var/max_slots = 7
-	var/max_specific_storage = WEIGHT_CLASS_NORMAL /// max weight class for a single item being inserted
-	var/max_total_storage = 14 /// max combined weight classes the storage can hold
+	/// max weight class for a single item being inserted
+	var/max_specific_storage = WEIGHT_CLASS_NORMAL
+	/// max combined weight classes the storage can hold
+	var/max_total_storage = 14
 
-	var/list/is_using = list() /// list of all the mobs currently viewing the contents
+	/// list of all the mobs currently viewing the contents
+	var/list/is_using = list()
 
 	var/locked = FALSE
-	var/attack_hand_interact = TRUE /// whether or not we should open when clicked
-	var/allow_big_nesting = FALSE /// whether or not we allow storage objects of the same size inside
+	/// whether or not we should open when clicked
+	var/attack_hand_interact = TRUE
+	/// whether or not we allow storage objects of the same size inside
+	var/allow_big_nesting = FALSE
 
-	var/allow_quick_gather = FALSE /// should we be allowed to pickup an object by clicking it
-	var/allow_quick_empty = FALSE /// show we allow emptying all contents by using the storage object in hand
-	var/collection_mode = COLLECT_ONE /// the mode for collection when allow_quick_gather is enabled
+	/// should we be allowed to pickup an object by clicking it
+	var/allow_quick_gather = FALSE
+	/// show we allow emptying all contents by using the storage object in hand
+	var/allow_quick_empty = FALSE
+	/// the mode for collection when allow_quick_gather is enabled
+	var/collection_mode = COLLECT_ONE
 
-	var/can_hold_description /// shows what we can hold in examine text
+	/// shows what we can hold in examine text
+	var/can_hold_description
 
-	var/emp_shielded /// contents shouldn't be emped
+	/// contents shouldn't be emped
+	var/emp_shielded
 
-	var/insert_preposition = "in" /// you put things *in* a bag, but *on* a plate
+	/// you put things *in* a bag, but *on* a plate
+	var/insert_preposition = "in"
 	
-	var/silent = FALSE /// don't show any chat messages regarding inserting items
-	var/rustle_sound = TRUE /// play a rustling sound when interacting with the bag
+	/// don't show any chat messages regarding inserting items
+	var/silent = FALSE
+	/// play a rustling sound when interacting with the bag
+	var/rustle_sound = TRUE
 
-	var/quickdraw = FALSE /// alt click takes an item out instead of opening up storage
+	/// alt click takes an item out instead of opening up storage
+	var/quickdraw = FALSE
 
-	var/numerical_stacking = FALSE /// instead of displaying multiple items of the same type, display them as numbered contents
+	/// instead of displaying multiple items of the same type, display them as numbered contents
+	var/numerical_stacking = FALSE
 
-	var/atom/movable/screen/storage/boxes /// storage display object
-	var/atom/movable/screen/close/closer /// close button object
+	/// storage display object
+	var/atom/movable/screen/storage/boxes
+	/// close button object
+	var/atom/movable/screen/close/closer
 
-	var/screen_max_columns = 7 /// maximum amount of columns a storage object can have
+	/// maximum amount of columns a storage object can have
+	var/screen_max_columns = 7
 	var/screen_max_rows = INFINITY
-	var/screen_pixel_x = 16 /// pixel location of the boxes and close button
+	/// pixel location of the boxes and close button
+	var/screen_pixel_x = 16
 	var/screen_pixel_y = 16
-	var/screen_start_x = 4 /// where storage starts being rendered, screen_loc wise
+	/// where storage starts being rendered, screen_loc wise
+	var/screen_start_x = 4
 	var/screen_start_y = 2
 
-	var/datum/action/item_action/storage_gather_mode/toggle_collectmode
+	var/datum/weakref/modeswitch_action_ref
 
 /datum/storage/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
 	boxes = new(null, src)
@@ -105,10 +132,9 @@
 
 /datum/storage/Destroy()
 	parent = null
+	real_location = null
 	boxes = null
 	closer = null
-
-	set_real_location(null, should_drop = TRUE)
 
 	for(var/mob/person in is_using)
 		if(person.active_storage == src)
@@ -189,7 +215,6 @@
 /datum/storage/proc/handle_show_valid_items(datum/source, user)
 	to_chat(user, span_notice("[source] can hold: [can_hold_description]"))
 
-/// [And now, a message from component storage, brought to you graciously by Lemon]
 /// Almost 100% of the time the lists passed into set_holdable are reused for each instance of the component
 /// Just fucking cache it 4head
 /// Yes I could generalize this, but I don't want anyone else using it. in fact, DO NOT COPY THIS
@@ -237,17 +262,17 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!resolve_parent)
 		return
 
-	QDEL_NULL(toggle_collectmode)
-	
-	if(!isitem(resolve_parent) || !allow_quick_gather)
+	if(!istype(resolve_parent) || !allow_quick_gather)
+		QDEL_NULL(modeswitch_action_ref)
 		return
-	toggle_collectmode = new(resolve_parent)
-	
-	if(resolve_parent.item_flags & IN_INVENTORY)
-		var/mob/user = resolve_parent.loc
-		if(!istype(user))
-			return
-		toggle_collectmode.Grant(user)
+
+	var/datum/action/existing = modeswitch_action_ref?.resolve()
+	if(!QDELETED(existing))
+		return
+
+	var/datum/action/modeswitch_action = resolve_parent.add_item_action(/datum/action/item_action/storage_gather_mode)
+	RegisterSignal(modeswitch_action, COMSIG_ACTION_TRIGGER, .proc/action_trigger)
+	modeswitch_action_ref = WEAKREF(modeswitch_action)
 
 /// Refreshes and item to be put back into the real world, out of storage.
 /datum/storage/proc/reset_item(obj/item/thing)
@@ -1001,6 +1026,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	toshow.client.screen -= boxes
 	toshow.client.screen -= closer
 	toshow.client.screen -= resolve_location.contents
+
+/datum/storage/proc/action_trigger(datum/signal_source, datum/action/source)
+	SIGNAL_HANDLER
+
+	toggle_collection_mode(source.owner)
+	return TRUE
 
 /**
  * Toggles the collectmode of our storage.

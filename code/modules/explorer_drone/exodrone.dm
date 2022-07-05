@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	GLOB.exodrones += src
 	/// Cargo storage
 	create_storage(max_slots = EXODRONE_CARGO_SLOTS)
-	atom_storage.set_holdable(list(), GLOB.blacklisted_cargo_types)
+	atom_storage.set_holdable(canthold = GLOB.blacklisted_cargo_types)
 
 /obj/item/exodrone/Destroy()
 	. = ..()

@@ -174,7 +174,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 
 /obj/item/storage/secure/safe/Initialize()
 	. = ..()
-	atom_storage.set_holdable(null, list(/obj/item/storage/secure/briefcase))
+	atom_storage.set_holdable(canthold = list(/obj/item/storage/secure/briefcase))
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
 /obj/item/storage/secure/safe/PopulateContents()

@@ -7,4 +7,4 @@
 
 /datum/storage/implant/New()
 	. = ..()
-	set_holdable(null, list(/obj/item/disk/nuclear))
+	set_holdable(canthold = list(/obj/item/disk/nuclear))

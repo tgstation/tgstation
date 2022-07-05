@@ -12,20 +12,21 @@
 	. = ..()
 	set_holdable(/obj/item/food/monkeycube)
 
-	if(!istype(parent?.resolve(), /obj/item/slimecross/reproductive))
-		stack_trace("storage subtype extract_inventory incompatible with [parent?.resolve()]")
+	var/obj/item/slimecross/reproductive/parentSlimeExtract = parent?.resolve()
+	if(!parentSlimeExtract)
+		return
+
+	if(!istype(parentSlimeExtract, /obj/item/slimecross/reproductive))
+		stack_trace("storage subtype extract_inventory incompatible with [parentSlimeExtract]")
 		qdel(src)
 
 /datum/storage/extract_inventory/proc/processCubes(mob/user)
-	message_admins("processing")
 	var/obj/item/slimecross/reproductive/parentSlimeExtract = parent?.resolve()
 	if(!parentSlimeExtract)
-		message_admins("nope")
 		return
 
 	message_admins(parentSlimeExtract.contents.len)
 	if(parentSlimeExtract.contents.len >= max_slots)
-		message_admins("yup")
 		QDEL_LIST(parentSlimeExtract.contents)
 		createExtracts(user)
 

@@ -46,7 +46,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 30
 	atom_storage.max_slots = 30
-	atom_storage.set_holdable(null, list(/obj/item/disk/nuclear))
+	atom_storage.set_holdable(canthold = list(/obj/item/disk/nuclear))
 
 /obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!"))
