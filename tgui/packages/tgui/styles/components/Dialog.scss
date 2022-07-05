@@ -15,7 +15,6 @@ $background-color: base.$color-bg !default;
 }
 
 .Dialog__content {
-  width: 370px;
   background-color: $background-color;
   font-family: Consolas, monospace;
   font-size: base.em(14px);
@@ -63,13 +62,41 @@ $background-color: base.$color-bg !default;
   flex-direction: row;
   align-items: center;
   padding-left: 3rem;
+  justify-content: flex-end;
+  margin-right: 1rem;
 }
 
 .SaveAsDialog__input {
   margin-left: 1rem;
-  flex-grow: 1;
+  width: 80%;
 }
 
 .SaveAsDialog__label {
   vertical-align: center;
+}
+
+.Dialog__FileList {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  align-content: flex-start;
+  max-height: 20rem;
+  overflow: auto;
+  overflow-y: scroll;
+}
+
+.Dialog__FileEntry {
+  text-align: center;
+  margin: 1rem;
+}
+
+.Dialog__FileIcon {
+  display: inline-block;
+  margin: 0 0 1rem 0;
+  position: relative;
+  width: 6vh;
+  height: auto;
+  text-align: center;
+  cursor: default;
 }
