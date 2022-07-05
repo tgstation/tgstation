@@ -207,7 +207,10 @@
 /turf/open/floor/pod/light,
 /area/misc/survivalpod)
 "I" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/pod/light,
 /area/misc/survivalpod)
