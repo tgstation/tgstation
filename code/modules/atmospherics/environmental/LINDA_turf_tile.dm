@@ -596,7 +596,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 				continue
 			var/turf/neighbor = get_step(src, direction)
 
-			if(!neighbor.thermal_conductivity)
+			if(!neighbor?.thermal_conductivity) // by checking if neighbor actually exists, we fix superconductivity with the edge of the map on planetary atmos maps
 				continue
 
 			if(neighbor.archived_cycle < SSair.times_fired)

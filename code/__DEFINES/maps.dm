@@ -31,7 +31,7 @@ to trust the words presented within.
 
 We also provide this information to you so that you can have an at-a-glance look at how
 Z-Levels are arranged. It is extremely ill-advised to ever use the location of a Z-Level
-to assign traits to it or use it in coding. Use Z-Traits (ZTRAITs) for these. 
+to assign traits to it or use it in coding. Use Z-Traits (ZTRAITs) for these.
 
 If you want to start toying around with Z-Levels, do not take these words for fact.
 Always compile, always use that verb, and always make sure that it works for what you want to do.
@@ -122,6 +122,9 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 ///boolean - does this z disable parallax?
 #define ZTRAIT_NOPARALLAX "No Parallax"
+
+///boolean - does this z use the gas giant parallax?
+#define ZTRAIT_GASPARALLAX "Gas Giant Parallax"
 
 // default trait definitions, used by SSmapping
 ///Z level traits for CentCom

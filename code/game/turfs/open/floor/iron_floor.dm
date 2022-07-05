@@ -178,6 +178,9 @@
 /turf/open/floor/iron/dark/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/iron/dark/gas_giant
+	initial_gas_mix = GASGIANT_DEFAULT_ATMOS
+
 /turf/open/floor/iron/dark/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
@@ -380,6 +383,8 @@
 /turf/open/floor/iron/solarpanel/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/iron/solarpanel/gas_giant
+	initial_gas_mix = GASGIANT_DEFAULT_ATMOS
 
 /turf/open/floor/iron/freezer
 	icon_state = "freezerfloor"

@@ -11,10 +11,11 @@
 	canSmoothWith = list(SMOOTH_GROUP_TURF_CHASM)
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	bullet_bounce_sound = null //abandon all hope ye who enter
+	var/chasm_path = /datum/component/chasm
 
 /turf/open/chasm/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
+	AddComponent(chasm_path, SSmapping.get_turf_below(src))
 
 /// Lets people walk into chasms.
 /turf/open/chasm/CanAllowThrough(atom/movable/mover, border_dir)
@@ -95,6 +96,24 @@
 	light_range = 1.9
 	light_power = 0.65
 	light_color = LIGHT_COLOR_PURPLE
+
+// The default turf for the Gas Giant. Instead of deleting you when you fall down, instead it kills you with brute and your body is deposited via Fulton at Arrivals.
+/turf/open/chasm/gas_giant
+	name = "gas giant stratosphere"
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "rock_highchance"
+	initial_gas_mix = GASGIANT_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/chasm/gas_giant
+	light_range = 1.9
+	light_power = 0.65
+	light_color = LIGHT_COLOR_BROWN
+	smoothing_flags = 0
+	smoothing_groups = null
+	canSmoothWith = null
+	chasm_path = /datum/component/chasm/gas_giant
+	plane = PLANE_SPACE
+	layer = SPACE_LAYER
 
 // Chasms for the jungle, with planetary atmos and a different icon
 /turf/open/chasm/jungle

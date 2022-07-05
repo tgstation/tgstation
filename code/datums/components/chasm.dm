@@ -3,7 +3,8 @@
 	var/turf/target_turf
 	var/fall_message = "GAH! Ah... where are you?"
 	var/oblivion_message = "You stumble and stare into the abyss before you. It stares back, and you fall into the enveloping dark."
-
+	/// Does falling down this chasm fulton your dead body back to Arrivals?
+	var/fulton_safe = FALSE
 	/// List of refs to falling objects -> how many levels deep we've fallen
 	var/static/list/falling_atoms = list()
 	var/static/list/forbidden_types = typecacheof(list(
@@ -134,21 +135,66 @@
 		//Make sure the item is still there after our sleep
 		if(!AM || QDELETED(AM))
 			return
+		if(!fulton_safe && isliving(AM) || !isliving(AM))
+			if(iscyborg(AM))
+				var/mob/living/silicon/robot/S = AM
+				qdel(S.mmi)
+			if(isliving(AM))
+				var/mob/living/L = AM
+				if(L.stat != DEAD)
+					L.death(TRUE)
 
-		if(iscyborg(AM))
-			var/mob/living/silicon/robot/S = AM
-			qdel(S.mmi)
-		if(isliving(AM))
-			var/mob/living/L = AM
-			if(L.stat != DEAD)
-				L.death(TRUE)
-
-		falling_atoms -= falling_ref
-		qdel(AM)
-		if(AM && !QDELETED(AM)) //It's indestructible
-			var/atom/parent = src.parent
-			parent.visible_message(span_boldwarning("[parent] spits out [AM]!"))
+			falling_atoms -= falling_ref
+			qdel(AM)
+			if(AM && !QDELETED(AM)) //It's indestructible
+				var/atom/parent = src.parent
+				parent.visible_message(span_boldwarning("[parent] spits out [AM]!"))
+				AM.alpha = oldalpha
+				AM.color = oldcolor
+				AM.transform = oldtransform
+				AM.throw_at(get_edge_target_turf(parent,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
+		else
+			// stolen from fulton code lmao
+			var/mutable_appearance/balloon
+			var/mutable_appearance/balloon3
+			var/mob/living/M = AM
+			M.adjustBruteLoss(200) // crushed to death
+			M.death(FALSE) // they dead
+			if(M.buckled)
+				M.buckled.unbuckle_mob(M, TRUE) // Unbuckle them to prevent anchoring problems
+			var/obj/effect/extraction_holder/holder_obj = new(AM.loc)
+			holder_obj.pixel_z = 1000
+			holder_obj.appearance = AM.appearance
+			AM.forceMove(holder_obj)
+			balloon = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_balloon")
+			balloon.pixel_y = 10
+			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			playsound(holder_obj.loc, 'sound/items/fultext_deploy.ogg', 50, TRUE, -3)
+			sleep(5 SECONDS)
+			playsound(holder_obj.loc, 'sound/items/fultext_launch.ogg', 50, TRUE, -3)
+			sleep(3 SECONDS)
+			holder_obj.forceMove(get_turf(pick(SSjob.latejoin_trackers)))
 			AM.alpha = oldalpha
 			AM.color = oldcolor
 			AM.transform = oldtransform
-			AM.throw_at(get_edge_target_turf(parent,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
+			holder_obj.add_overlay(balloon)
+			animate(holder_obj, pixel_z = 10, time = 50)
+			sleep(50)
+			animate(holder_obj, pixel_z = 15, time = 10)
+			sleep(10)
+			animate(holder_obj, pixel_z = 10, time = 10)
+			sleep(10)
+			balloon3 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_retract")
+			balloon3.pixel_y = 10
+			balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			holder_obj.cut_overlay(balloon)
+			holder_obj.add_overlay(balloon3)
+			sleep(4)
+			holder_obj.cut_overlay(balloon3)
+			animate(holder_obj, pixel_z = 0, time = 5)
+			sleep(5)
+			AM.forceMove(holder_obj.loc)
+			qdel(holder_obj)
+
+/datum/component/chasm/gas_giant
+	fulton_safe = TRUE

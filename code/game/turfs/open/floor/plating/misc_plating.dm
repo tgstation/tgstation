@@ -10,6 +10,9 @@
 	icon_state = "plating"
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
+/turf/open/floor/plating/gas_giant
+	initial_gas_mix = GASGIANT_DEFAULT_ATMOS
+
 /turf/open/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"

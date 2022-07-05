@@ -7,12 +7,17 @@
 
 	if(!length(C.parallax_layers_cached))
 		C.parallax_layers_cached = list()
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, screenmob)
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, screenmob)
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, screenmob)
-		if(SSparallax.random_layer)
-			C.parallax_layers_cached += new SSparallax.random_layer(null, screenmob)
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, screenmob)
+		if(!SSmapping.config.uses_gas_giant_parallax)
+			C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, screenmob)
+			C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, screenmob)
+			C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, screenmob)
+			if(SSparallax.random_layer)
+				C.parallax_layers_cached += new SSparallax.random_layer(null, screenmob)
+			C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, screenmob)
+		else
+			C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/gas_giant_background(null, screenmob)
+			C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/gas_giant/rocks(null, screenmob)
+			C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/gas_giant(null, screenmob)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -359,3 +364,25 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/planet/update_o()
 	return //Shit won't move
+
+/atom/movable/screen/parallax_layer/gas_giant_background
+	icon_state = "gas_giant_background"
+	speed = 0.6
+	layer = 1
+
+/atom/movable/screen/parallax_layer/gas_giant
+	icon_state = "space_gas"
+	blend_mode = BLEND_OVERLAY
+	speed = 3
+	layer = 3
+	var/color_to_use = "#FF0000"
+
+/atom/movable/screen/parallax_layer/gas_giant/Initialize(mapload, mob/owner)
+	. = ..()
+	src.add_atom_colour(color_to_use, ADMIN_COLOUR_PRIORITY)
+
+/atom/movable/screen/parallax_layer/gas_giant/rocks
+	icon_state = "asteroids"
+	color_to_use = "#ff7300"
+	speed = 1
+	layer = 2
