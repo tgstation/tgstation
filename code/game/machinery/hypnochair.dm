@@ -135,7 +135,7 @@
 		victim.cure_trauma_type(/datum/brain_trauma/severe/hypnotic_trigger, TRAUMA_RESILIENCE_SURGERY)
 		if(victim.has_trauma_type(/datum/brain_trauma/special/obsessed))
 			victim.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_MAGIC)
-			to_chat(victim, span_warning("Your mind feels empty as the [name] stops. It feels like you've forgotten about something very important."))
+			to_chat(victim, span_warning("Your mind feels empty as [src] stops. It feels like you've forgotten about something very important."))
 		if(prob(90))
 			victim.gain_trauma(new /datum/brain_trauma/severe/hypnotic_trigger(temp_trigger), TRAUMA_RESILIENCE_SURGERY)
 		else
