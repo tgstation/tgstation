@@ -232,7 +232,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aisat, 32)
 
 /obj/structure/sign/departments/vault
 	name = "\improper Vault sign"
-	sign_chane_name = "Location- Vault"
+	sign_change_name = "Location- Vault"
 	desc = "A sign labelling a saferoom where the station's resources and self-destruct are secured."
 	icon_state = "vault"
 
