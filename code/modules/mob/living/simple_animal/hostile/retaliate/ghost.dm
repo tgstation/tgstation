@@ -84,7 +84,7 @@
 	speak_emote = list("wails")
 	light_range = 0 //Spawns into darkness. Its cooler with no glow.
 
-/mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit/Initialize(mapload) //maybe find a way to make this player controllable when summoned via exorcism?
+/mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/knockback, 2, FALSE, TRUE)
 	Retaliate()

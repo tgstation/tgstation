@@ -493,7 +493,7 @@
 			owner.visible_message(span_warning("Something wicked is forced from [owner]'s head as it erupts, damaging nearby electronics!"), ignored_mobs = list(owner)) // The voice in the obsessed's head no longer has a place to reside in. It must be made manifest.
 			playsound(get_turf(owner),'sound/hallucinations/wail.ogg', 50, TRUE, TRUE)
 			RegisterSignal(new /mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit(get_turf(owner)), COMSIG_LIVING_DEATH, .proc/on_obsessed_spirit_death)
-			for(var/obj/machinery/power/apc/overload in range(45, get_turf(src)))
+			for(var/obj/machinery/power/apc/overload in range(35, get_turf(src)))
 				overload.overload_lighting()
 			empulse(get_turf(owner), 4, 9)
 		else
