@@ -27,6 +27,10 @@
 	return ..() && (current_charges > 0)
 
 /datum/action/innate/dash/Activate()
+	var/obj/item/dashing_item = target
+	if(!istype(dashing_item))
+		return
+
 	dashing_item.attack_self(owner) //Used to toggle dash behavior in the dashing item
 
 /// Teleports user to target using do_teleport. Returns TRUE if teleport successful, FALSE otherwise.
@@ -45,6 +49,10 @@
 		user.balloon_alert(user, "dash blocked!")
 		return FALSE
 
+	// Note: It's possible do_teleport, for whatever reason,
+	// caused our owner to be unassigned by this point.
+	/// (Such as dropping our item after landing).
+
 	var/obj/spot_one = new phaseout(current_turf, user.dir)
 	var/obj/spot_two = new phasein(target_turf, user.dir)
 	spot_one.Beam(spot_two, beam_effect, time = beam_length)
@@ -52,11 +60,17 @@
 	current_charges--
 	addtimer(CALLBACK(src, .proc/charge), charge_rate)
 	owner?.update_action_buttons_icon()
+
 	return TRUE
 
-/// Callback for [/proc/teleport] to increment our charges back up.
+/// Callback for [/proc/teleport] to increment our charges after  use.
 /datum/action/innate/dash/proc/charge()
 	current_charges = clamp(current_charges + 1, 0, max_charges)
+
+	var/obj/item/dashing_item = target
+	if(!istype(dashing_item))
+		return
+
 	if(recharge_sound)
 		playsound(dashing_item, recharge_sound, 50, TRUE)
 
