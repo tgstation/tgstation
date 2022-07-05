@@ -51,7 +51,7 @@
 
 	// Note: It's possible do_teleport, for whatever reason,
 	// caused our owner to be unassigned by this point.
-	/// (Such as dropping our item after landing).
+	// (Such as dropping our item after landing.)
 
 	var/obj/spot_one = new phaseout(current_turf, user.dir)
 	var/obj/spot_two = new phasein(target_turf, user.dir)
