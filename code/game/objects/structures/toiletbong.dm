@@ -5,6 +5,8 @@
 	icon_state = "toiletbong"
 	density = TRUE
 	anchored = TRUE
+	var/emagged = FALSE
+	var/smokeradius = 1
 	var/mutable_appearance/weed_overlay
 
 /obj/structure/toiletbong/Initialize()
@@ -37,27 +39,31 @@
 		return
 	user.visible_message(span_boldnotice("[user] takes a huge drag on the [src]."))
 	if (do_after(user, 2 SECONDS, target = src))
-		var/obj/item/reagent_containers/item = contents[1]
-		playsound(src, 'sound/items/modsuit/flamethrower.ogg', 50)
-		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(1, holder = src, location = user, carry = item.reagents, efficiency = 20)
-		puff.start()
-		if (prob(5))
-			if(islizard(user) || isfelinid(user))
-				to_chat(user, span_boldnotice("A hidden treat in the pipes!"))
-				user.balloon_alert(user, "A hidden treat in the pipes!")
-				user.visible_message(span_danger("[user] fishes a mouse out of the pipes."))
-			else
-				to_chat(user, span_userdanger("There was something disgusting in the pipes!"))
-				user.visible_message(span_danger("[user] spits out a mouse."))
-				user.adjust_disgust(50)
-				user.vomit(10)
-			var/mob/living/spawned_mob = new /mob/living/simple_animal/mouse(get_turf(user))
-			spawned_mob.faction |= "[REF(user)]"
-			if(prob(50))
-				for(var/j in 1 to rand(1, 3))
-					step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))
-		qdel(item)
+		var/turf/toiletbong_location = loc
+		toiletbong_location.hotspot_expose(1000, 5)
+		for (var/obj/item/item in contents)
+			playsound(src, 'sound/items/modsuit/flamethrower.ogg', 50)
+			var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
+			puff.set_up(smokeradius, holder = src, location = user, carry = item.reagents, efficiency = 20)
+			puff.start()
+			if (prob(5) && !emagged)
+				if(islizard(user) || isfelinid(user))
+					to_chat(user, span_boldnotice("A hidden treat in the pipes!"))
+					user.balloon_alert(user, "A hidden treat in the pipes!")
+					user.visible_message(span_danger("[user] fishes a mouse out of the pipes."))
+				else
+					to_chat(user, span_userdanger("There was something disgusting in the pipes!"))
+					user.visible_message(span_danger("[user] spits out a mouse."))
+					user.adjust_disgust(50)
+					user.vomit(10)
+				var/mob/living/spawned_mob = new /mob/living/simple_animal/mouse(get_turf(user))
+				spawned_mob.faction |= "[REF(user)]"
+				if(prob(50))
+					for(var/j in 1 to rand(1, 3))
+						step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))
+			qdel(item)
+			if(!emagged)
+				break
 		update_icon()
 
 /obj/structure/toiletbong/wrench_act(mob/living/user, obj/item/tool)
@@ -90,3 +96,11 @@
 	setDir(turn(dir,90))
 	playsound(src, 'sound/items/deconstruct.ogg', 50)
 	return
+
+/obj/structure/toiletbong/emag_act(mob/user, obj/item/card/emag/emag_card)
+	playsound(src, 'sound/effects/splash.ogg', 50)
+	user.balloon_alert(user, "Whoops!")
+	if(!emagged)
+		emagged = TRUE
+		smokeradius = 2
+		to_chat(user, span_boldwarning("The emag falls into the toilet. You fish it back out. Looks like you broke the toilet."))
