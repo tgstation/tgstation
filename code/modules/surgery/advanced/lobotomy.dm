@@ -60,7 +60,7 @@
 		target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
 
 	if(prob(75)) // 75% chance to get a trauma from this
-		switch(rand(1,3))//Now let's see what hopefully-not-important pa	rt of the brain we cut off
+		switch(rand(1,3))//Now let's see what hopefully-not-important part of the brain we cut off
 			if(1)
 				target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
 			if(2)
