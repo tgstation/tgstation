@@ -2,7 +2,7 @@
 	name = "chem implant"
 	desc = "Injects things."
 	icon_state = "reagents"
-	activated = FALSE
+	actions_types = null
 
 /obj/item/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>

@@ -18,6 +18,7 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	inhand_icon_state = "pirate"
+	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/food/drinks/bottle/rum)
 	species_exception = list(/datum/species/golem)
 
@@ -25,6 +26,7 @@
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
 	strip_delay = 40
 	equip_delay_other = 20
+	species_exception = null
 
 /obj/item/clothing/suit/pirate/captain
 	name = "pirate captain coat"
@@ -36,6 +38,7 @@
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
 	strip_delay = 40
 	equip_delay_other = 20
+	species_exception = null
 
 /obj/item/clothing/suit/cyborg_suit
 	name = "cyborg suit"
@@ -51,6 +54,7 @@
 	desc = "this pretty much looks ridiculous" //Needs no fixing
 	icon_state = "justice"
 	inhand_icon_state = "justice"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 
