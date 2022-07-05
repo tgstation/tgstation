@@ -95,9 +95,9 @@
 	desc = "A pack of Pyrus Gatt'Gat seeds, geneticially engineered to grow into Syndicate Revolvers upon maturity. \
 			Outer shell must be injested before use. Caution should be used while growing these, as a savvy \
 			co-worker may turn the tables and use them for their own purposes."
-	progression_minimum = 50 MINUTES
+	progression_minimum = 30 MINUTES
 	item = /obj/item/seeds/gatfruit
-	cost = 30 // You have to either ration your telecrystals to reach this by 50 minutes, or do objectives the hard way without any items until then.
+	cost = 30 // You have to either ration your telecrystals to reach this by 30 minutes, or do objectives the hard way without any items until then.
 	surplus = 1
 	restricted_roles = list(JOB_COOK, JOB_BOTANIST)
 
