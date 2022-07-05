@@ -85,6 +85,11 @@
 		return
 	return ..()
 
+/mob/living/silicon/attack_drone_secondary(mob/living/simple_animal/drone/M)
+	if(M.combat_mode)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
+
 /mob/living/silicon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	if(buckled_mobs)
 		for(var/mob/living/M in buckled_mobs)

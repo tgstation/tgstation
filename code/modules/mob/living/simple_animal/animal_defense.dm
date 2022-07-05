@@ -116,6 +116,11 @@
 		return
 	return ..()
 
+/mob/living/simple_animal/attack_drone_secondary(mob/living/simple_animal/drone/M)
+	if(M.combat_mode)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
+
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = MELEE, actuallydamage = TRUE)
 	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
