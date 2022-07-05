@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - rscdel: "removes movement and combat mode from the status tab"

@@ -1,4 +1,0 @@
-author: "zzzmike"
-delete-after: True
-changes: 
-  - bugfix: "QM added to job blacklist (like other command members are)"
