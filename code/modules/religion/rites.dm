@@ -753,7 +753,7 @@
 
 /datum/religion_rites/expel_influence //In the future I would love to turn exorcism (and also posession) into a component or something more versatile, but for now this works.
 	name = "Expel Influence"
-	desc = "The first thing they teach you at Chaplain College. A very low-level maneuver that can expel malicious influences from a person's mind and force it \
+	desc = "The first thing they teach you at Chaplain College. A very low-level maneuver that can expel malicious influences from a person's mind and force them \
 			to manifest in the physical realm. This rite typically only sees success when used on low-intensity influence matricies, which typically take the form of \
 			voices in one's head. For handling higher intensity influence matricies, such as ones utilized by gods, demons, deities, timeshares, or other sources of \
 			malicious and intrusive control, consider employing more direct measures."
