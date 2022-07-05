@@ -491,6 +491,7 @@
 	if(head)
 		if(owner.has_trauma_type(/datum/brain_trauma/special/obsessed))
 			owner.visible_message(span_warning("As [owner]'s head erupts, the voice inside of [owner.p_their()]'s head suddenly manifests in its place!"), ignored_mobs = list(owner)) // The voice in the obsessed's head no longer has a place to reside in. It must be made manifest.
+			playsound(get_turf(owner),'sound/hallucinations/wail.ogg', 50, TRUE, TRUE)
 			RegisterSignal(new /mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit(get_turf(owner)), COMSIG_LIVING_DEATH, .proc/on_obsessed_spirit_death)
 			for(var/obj/machinery/power/apc/overload in range(45, get_turf(src)))
 				overload.overload_lighting()
