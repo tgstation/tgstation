@@ -339,7 +339,7 @@ const NewscasterContent = (props, context) => {
 };
 
 /** The Channel Box is the basic channel information where buttons live.*/
-const NewscasterChannelBox = (_, context) => {
+const NewscasterChannelBox = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     channelName,
@@ -488,7 +488,7 @@ const processedText = (value) => {
 };
 
 /** This is where the channels comments get spangled out (tm) */
-const NewscasterChannelMessages = (_, context) => {
+const NewscasterChannelMessages = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     messages = [],

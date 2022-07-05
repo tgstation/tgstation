@@ -649,6 +649,8 @@
 	var/mob/living/silicon/robot/Cyborg = usr
 	GLOB.crewmonitor.show(Cyborg,Cyborg)
 
+/datum/action/item_action/crew_monitor
+	name = "Interface With Crew Monitor"
 
 /obj/item/borg/upgrade/transform
 	name = "borg model picker (Standard)"
