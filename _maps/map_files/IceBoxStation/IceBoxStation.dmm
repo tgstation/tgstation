@@ -1539,24 +1539,6 @@
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
-"aAv" = (
-/obj/machinery/requests_console/directional/south{
-	announcementConsole = 1;
-	anon_tips_receiver = 1;
-	assistance_requestable = 1;
-	department = "Bridge";
-	departmentType = 5;
-	name = "Bridge Requests Console"
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "aAC" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
@@ -6174,7 +6156,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/departments/aisat/directional/south,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
@@ -14552,10 +14533,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
-"evo" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/station/engineering/transit_tube)
 "evp" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -18098,6 +18075,24 @@
 	},
 /turf/open/floor/plating,
 /area/station/cargo/drone_bay)
+"fBs" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/requests_console/directional/south{
+	announcementConsole = 1;
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
+	department = "Bridge";
+	departmentType = 5;
+	name = "Bridge Requests Console"
+	},
+/turf/open/floor/iron,
+/area/station/command/bridge)
 "fBA" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -20436,6 +20431,25 @@
 /obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"gnK" = (
+/obj/machinery/requests_console/directional/south{
+	announcementConsole = 1;
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
+	department = "Bridge";
+	departmentType = 5;
+	name = "Bridge Requests Console"
+	},
+/obj/machinery/requests_console/directional/south{
+	announcementConsole = 1;
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
+	department = "Bridge";
+	departmentType = 5;
+	name = "Bridge Requests Console"
+	},
+/turf/closed/wall/r_wall,
+/area/station/ai_monitored/turret_protected/ai_upload)
 "gnL" = (
 /obj/structure/closet/bombcloset/security,
 /turf/open/floor/iron/smooth,
@@ -45693,6 +45707,7 @@
 "okk" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
+/obj/structure/sign/departments/aisat/directional/east,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/storage_shared)
 "oko" = (
@@ -49401,7 +49416,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/departments/vault/directional/north{
-	pixel_x = 32
+	step_x = 32
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
@@ -237137,7 +237152,7 @@ eOw
 rns
 mkA
 nOH
-aAv
+uyF
 ybv
 hMc
 hMc
@@ -238165,8 +238180,8 @@ poE
 cOP
 scx
 lhv
-uyF
-ybv
+fBs
+gnK
 pPN
 cHO
 cHO
@@ -241314,7 +241329,7 @@ alD
 tjk
 ydc
 nyA
-evo
+duh
 iaY
 duh
 duh

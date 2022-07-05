@@ -27270,7 +27270,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/sign/warning/rad_shelter/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/radshelter/civil)
 "jsA" = (
@@ -58033,10 +58032,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"tCh" = (
-/obj/structure/sign/warning/rad_shelter/directional/north,
-/turf/closed/wall/r_wall,
-/area/station/hallway/secondary/exit)
 "tCi" = (
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
@@ -185306,7 +185301,7 @@ rzO
 azX
 vHa
 hHP
-tCh
+lCy
 rlW
 doD
 qbu
