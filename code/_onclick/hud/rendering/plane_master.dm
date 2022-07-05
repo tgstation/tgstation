@@ -37,6 +37,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	var/blend_mode_override
 	/// list of current relays this plane is utilizing to render
 	var/list/atom/movable/render_plane_relay/relays = list()
+	/// if render relays have already be generated
+	var/relays_generated = FALSE
 
 /atom/movable/screen/plane_master/Initialize(mapload, datum/plane_master_group/home, offset = 0)
 	src.offset = offset
@@ -380,10 +382,30 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Parallax"
 	documentation = "Contains parallax, or to be more exact the screen objects that hold parallax.\
 		<br>Note the BLEND_MULTIPLY. The trick here is how low our plane value is. Because of that, we draw below almost everything in the game.\
-		<br>We abuse this to ensure we multiply against the Parallax whitifier plane, or space's plane. It's set to full white, so when you do the multiply you just get parallax out where it well, makes sense to be."
+		<br>We abuse this to ensure we multiply against the Parallax whitifier plane, or space's plane. It's set to full white, so when you do the multiply you just get parallax out where it well, makes sense to be.\
+		<br>Also notice that the parent parallax plane is mirrored down to all children. We want to support viewing parallax across all z levels at once."
 	plane = PLANE_SPACE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	if(offset != 0)
+		// You aren't the source? don't change yourself
+		return
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_increase)
+	offset_increase(0, SSmapping.max_plane_offset)
+
+/atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
+	SIGNAL_HANDLER
+	offset_increase(old_offset, new_offset)
+
+/atom/movable/screen/plane_master/parallax/proc/offset_increase(old_offset, new_offset)
+	// Parallax will be mirrored down to any new planes that are added, so it will properly render across mirage borders
+	for(var/offset in old_offset to new_offset)
+		if(offset != 0)
+			// Overlay so we don't multiply twice, and thus fuck up our rendering
+			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
 
 /atom/movable/screen/plane_master/parallax_white
 	name = "Parallax whitifier"

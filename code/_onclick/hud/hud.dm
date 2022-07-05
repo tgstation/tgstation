@@ -133,7 +133,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	on_eye_change(null, null, mymob.client.eye)
 
 /datum/hud/proc/clear_client(datum/source)
-	UnregisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE)
+	if(mymob.canon_client)
+		UnregisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE)
 
 /datum/hud/proc/on_eye_change(datum/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
@@ -148,7 +149,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/eye_z_changed(atom/eye)
 	SIGNAL_HANDLER
-	refresh_parallax_plane()
 	var/turf/eye_turf = get_turf(eye)
 	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
 	if(current_plane_offset == new_offset)

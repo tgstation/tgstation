@@ -3,6 +3,7 @@
 // Mostly because we don't have setters for everything (like ui elements IE: client.screen)
 
 // DEBUG ONLY, THIS IS  N O T  STABLE ENOUGH FOR PLAYERS
+// Should potentially support images, might be too hard tho since there's no default "refresh" tool
 
 // Convenience datum, not for use outside of this ui
 /datum/visual_data
