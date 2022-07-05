@@ -777,6 +777,8 @@
 
 	if(!user.has_trauma_type(/datum/brain_trauma/special/obsessed))
 		to_chat(user, "You sense that there are no evil presences residing within [rite_target] that you can expel!")
+		return
+
 	rite_target.emote("scream")
 	rite_target.visible_message(span_warning("[rite_target] begins thrashing wildly and rises into the air above [religious_tool]!"), ignored_mobs = list(rite_target))
 	to_chat(rite_target, span_warning("Your body throbs in almost unbearable pain, and you feel like throwing up!"))
