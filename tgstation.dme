@@ -3278,6 +3278,7 @@
 #include "code\modules\mapping\access_helpers.dm"
 #include "code\modules\mapping\map_template.dm"
 #include "code\modules\mapping\mapping_helpers.dm"
+#include "code\modules\mapping\merge_conflicts.dm"
 #include "code\modules\mapping\preloader.dm"
 #include "code\modules\mapping\reader.dm"
 #include "code\modules\mapping\ruins.dm"
