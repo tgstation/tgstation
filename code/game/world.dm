@@ -307,9 +307,10 @@ GLOBAL_VAR(restart_counter)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			s += "<b>[server_name]</b> "
-		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
-		if(CONFIG_GET(flag/allow_ai))
-			features += "AI allowed"
+		if(!CONFIG_GET(flag/norespawn))
+			features += "respawn"
+		if(!CONFIG_GET(flag/allow_ai))
+			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)
 
 	if (CONFIG_GET(flag/station_name_in_hub_entry))
