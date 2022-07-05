@@ -86,10 +86,10 @@
 
 /mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit/Initialize(mapload) //maybe find a way to make this player controllable when summoned via exorcism?
 	. = ..()
-	AddElement(/datum/element/knockback, 3, FALSE, TRUE)
+	AddElement(/datum/element/knockback, 2, FALSE, TRUE)
 	Retaliate()
 
-/mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit/on_hit()
+/mob/living/simple_animal/hostile/retaliate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 
 	if(prob(25)) //Oh boy its time to go ghost hunting!
@@ -101,6 +101,8 @@
 				return
 
 		var/turf/destination = find_safe_turf(extended_safety_checks = TRUE)
-		do_teleport(src, destination, 1, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_FREE) //please, future rhials, improve this
 		playsound(get_turf(src),'sound/hallucinations/wail.ogg', 50, TRUE, TRUE)
 		src.visible_message(span_warning("The [src] wails and dives through the astral plane, fleeing the area!"), span_warning("You begin to panic and channel your might to dive into the astral plane, fleeing the area!"))
+		do_teleport(src, destination, 1, asoundin = 'sound/effects/screech.ogg', channel = TELEPORT_CHANNEL_FREE)
+		for(var/obj/machinery/power/apc/overload in range(10, get_turf(src)))
+				overload.overload_lighting()
