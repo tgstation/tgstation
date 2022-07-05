@@ -152,5 +152,4 @@
 	//If not, pick any other ordinary target
 	if(possible_targets.len > 0)
 		chosen_victim = pick(possible_targets)
-
 	return chosen_victim
