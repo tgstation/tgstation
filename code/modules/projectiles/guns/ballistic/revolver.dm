@@ -156,6 +156,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 	hidden_chambered = TRUE //Cheater.
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
 	. = ..()

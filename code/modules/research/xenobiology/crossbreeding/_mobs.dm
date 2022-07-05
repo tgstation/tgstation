@@ -4,30 +4,36 @@ Slimecrossing Mobs
 	Collected here for clarity.
 */
 
-//Slime transformation power - Burning Black
-/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform
+/// Slime transformation power - from Burning Black
+/datum/action/cooldown/spell/shapeshift/slime_form
 	name = "Slime Transformation"
 	desc = "Transform from a human to a slime, or back again!"
-	action_icon_state = "transformslime"
-	cooldown_min = 0
-	charge_max = 0
+	button_icon_state = "transformslime"
+	cooldown_time = 0 SECONDS
+
 	invocation_type = INVOCATION_NONE
-	shapeshift_type = /mob/living/simple_animal/slime/transformedslime
+
 	convert_damage = TRUE
 	convert_damage_type = CLONE
+	possible_shapes = list(/mob/living/simple_animal/slime/transformed_slime)
+
+	/// If TRUE, we self-delete (remove ourselves) the next time we turn back into a human
 	var/remove_on_restore = FALSE
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/restore_form(mob/living/shape)
+/datum/action/cooldown/spell/shapeshift/slime_form/restore_form(mob/living/shape)
+	. = ..()
+	if(!.)
+		return
+
 	if(remove_on_restore)
-		if(shape.mind)
-			shape.mind.RemoveSpell(src)
-	return ..()
+		qdel(src)
 
-//Transformed slime - Burning Black
-/mob/living/simple_animal/slime/transformedslime
+/// Transformed slime - from Burning Black
+/mob/living/simple_animal/slime/transformed_slime
 
-/mob/living/simple_animal/slime/transformedslime/Reproduce() //Just in case.
-	to_chat(src, span_warning("I can't reproduce..."))
+// Just in case.
+/mob/living/simple_animal/slime/transformed_slime/Reproduce()
+	to_chat(src, span_warning("I can't reproduce...")) // Mood
 	return
 
 //Slime corgi - Chilling Pink

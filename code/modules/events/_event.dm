@@ -1,4 +1,4 @@
-#define RANDOM_EVENT_ADMIN_INTERVENTION_TIME 10
+#define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (10 SECONDS)
 
 //this singleton datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
@@ -69,8 +69,8 @@
 
 	triggering = TRUE
 	if (alert_observers)
-		message_admins("Random Event triggering in [RANDOM_EVENT_ADMIN_INTERVENTION_TIME] seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
-		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME SECONDS)
+		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 		if(!canSpawnEvent(players_amt))
 			message_admins("Second pre-condition check for [name] failed, skipping...")
@@ -93,18 +93,44 @@
 		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
 
 /datum/round_event_control/proc/runEvent(random = FALSE)
+	/*
+	* We clear our signals first so we dont cancel a wanted event by accident,
+	* the majority of time the admin will probably want to cancel a single midround spawned random events
+	* and not multiple events called by others admins
+	* * In the worst case scenario we can still recall a event which we cancelled by accident, which is much better then to have a unwanted event
+	*/
+	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
-	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	occurrences++
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
+	triggering = TRUE
+
+	if (alert_observers)
+		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
+
+	if(!triggering)
+		RegisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT, .proc/stop_random_event)
+		E.cancel_event = TRUE
+		return E
+
+	triggering = FALSE
 	if(random)
 		log_game("Random Event triggering: [name] ([typepath])")
-	if (alert_observers)
+
+	if(alert_observers)
 		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+
+	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
+
+//Returns the component for the listener
+/datum/round_event_control/proc/stop_random_event()
+	SIGNAL_HANDLER
+	return CANCEL_RANDOM_EVENT
 
 //Special admins setup
 /datum/round_event_control/proc/admin_setup()
@@ -122,6 +148,8 @@
 	var/activeFor = 0 //How long the event has existed. You don't need to change this.
 	var/current_players = 0 //Amount of of alive, non-AFK human players on server at the time of event start
 	var/fakeable = TRUE //Can be faked by fake news event.
+	/// Whether a admin wants this event to be cancelled
+	var/cancel_event = FALSE
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -177,6 +205,11 @@
 /datum/round_event/process()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!processing)
+		return
+
+	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_RANDOM_EVENT, src) & CANCEL_RANDOM_EVENT)
+		processing = FALSE
+		kill()
 		return
 
 	if(activeFor == startWhen)
