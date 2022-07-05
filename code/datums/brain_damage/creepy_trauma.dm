@@ -153,5 +153,4 @@
 	if(possible_targets.len > 0)
 		chosen_victim = pick(possible_targets)
 
-	chosen_victim = new /mob/living/carbon/human(get_turf(owner)) //DEBUG LINE PLEASE REMOVE LATER KTHXBYE
 	return chosen_victim
