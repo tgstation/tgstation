@@ -4,7 +4,8 @@
 	for(var/I in overlays_standing)
 		add_overlay(I)
 
-	var/asleep = IsSleeping()
+	var/are_we_drooling = istype(click_intercept, /datum/action/cooldown/alien/acid)
+
 	if(stat == DEAD)
 		//If we mostly took damage from fire
 		if(getFireLoss() > 125)
@@ -12,7 +13,7 @@
 		else
 			icon_state = "alien[caste]_dead"
 
-	else if((stat == UNCONSCIOUS && !asleep) || stat == HARD_CRIT || stat == SOFT_CRIT || IsParalyzed())
+	else if((stat == UNCONSCIOUS && !IsSleeping()) || stat == HARD_CRIT || stat == SOFT_CRIT || IsParalyzed())
 		icon_state = "alien[caste]_unconscious"
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
@@ -21,11 +22,11 @@
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
-		if(drooling)
+		if(are_we_drooling)
 			add_overlay("alienspit_[caste]")
 	else
 		icon_state = "alien[caste]"
-		if(drooling)
+		if(are_we_drooling)
 			add_overlay("alienspit")
 
 	if(leaping)

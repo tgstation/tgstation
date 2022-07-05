@@ -26591,7 +26591,7 @@
 /area/station/service/library)
 "jrg" = (
 /obj/machinery/door/airlock{
-	name = "Kitchen Acces"
+	name = "Kitchen Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -34698,6 +34698,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
+"mcJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/tram/mid)
 "mcM" = (
 /obj/effect/landmark/start/security_officer,
 /obj/structure/chair{
@@ -46629,6 +46635,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
+"qhC" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/checker,
+/area/station/commons/lounge)
 "qhJ" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -50207,10 +50217,10 @@
 /area/station/security/prison)
 "ruW" = (
 /obj/structure/table/wood,
-/obj/item/book/granter/spell/smoke/lesser{
-	name = "mysterious old book of cloud-chasing"
-	},
 /obj/item/soulstone/anybody/chaplain,
+/obj/item/book/granter/action/spell/smoke/lesser{
+	name = "concentrated kush"
+	},
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
 "rva" = (
@@ -64026,6 +64036,12 @@
 "wkk" = (
 /turf/open/floor/iron/freezer,
 /area/station/security/prison)
+"wkl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/tram/mid)
 "wkz" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Post - Cargo"
@@ -101149,7 +101165,7 @@ hbv
 sHD
 vot
 qjU
-qgh
+wkl
 qgh
 tjs
 qjU
@@ -102691,7 +102707,7 @@ wPy
 gQL
 poC
 qjU
-qgh
+mcJ
 qgh
 ugX
 qjU
@@ -167191,7 +167207,7 @@ lNJ
 rvd
 nHx
 vJt
-mHc
+qhC
 fjp
 crT
 nKz

@@ -8666,7 +8666,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/smooth_edge,
 /area/station/security/lockers)
 "cFc" = (
@@ -10983,7 +10983,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
-/obj/item/radio/intercom/prison/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/transfer)
 "dos" = (
@@ -13882,6 +13882,7 @@
 /obj/structure/closet/mini_fridge{
 	name = "mini-fridge"
 	},
+/obj/item/reagent_containers/food/condiment/milk,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "ekk" = (
@@ -15248,7 +15249,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "eHK" = (
-/obj/item/radio/intercom/prison/directional/south,
+/obj/item/radio/intercom/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -17998,7 +17999,7 @@
 "fzD" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/red,
-/obj/item/radio/intercom/prison/directional/east,
+/obj/item/radio/intercom/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -18415,9 +18416,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/item/radio/intercom/prison/directional/east{
-	frequency = 1359
-	},
+/obj/item/radio/intercom/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -18782,10 +18781,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/drone_bay)
-"fLZ" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
 "fMg" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/glass/bottle/acidic_buffer{
@@ -23972,7 +23967,6 @@
 	dir = 5
 	},
 /obj/machinery/igniter/incinerator_atmos,
-/obj/structure/sign/warning/gas_mask/directional/south,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "hvl" = (
@@ -30831,20 +30825,6 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"jFF" = (
-/obj/structure/table/wood,
-/obj/item/book/granter/spell/smoke/lesser{
-	name = "mysterious old book of cloud-chasing"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/holywater{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/nullrod{
-	pixel_x = 4
-	},
-/turf/open/floor/cult,
-/area/station/service/chapel/office)
 "jFR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -31973,7 +31953,7 @@
 	pixel_x = -6;
 	pixel_y = 9
 	},
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "jUr" = (
@@ -34083,6 +34063,20 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"kCx" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/action/spell/smoke/lesser{
+	name = "mysterious old book of cloud-chasing"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/nullrod{
+	pixel_x = 4
+	},
+/turf/open/floor/cult,
+/area/station/service/chapel/office)
 "kCz" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/firealarm/directional/west,
@@ -34493,7 +34487,7 @@
 /obj/item/storage/box/firingpins,
 /obj/item/key/security,
 /obj/machinery/light/directional/east,
-/obj/item/radio/intercom/prison/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "kJP" = (
@@ -41223,7 +41217,7 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 8
 	},
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
@@ -47399,11 +47393,6 @@
 /obj/structure/sign/warning/gas_mask,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
-"oLP" = (
-/obj/structure/closet/secure_closet/freezer/meat,
-/obj/item/food/chococoin,
-/turf/open/misc/ice/coldroom,
-/area/station/service/kitchen/coldroom)
 "oLW" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used to access the various cameras on the station.";
@@ -50025,7 +50014,7 @@
 	},
 /area/station/science/lab)
 "pDB" = (
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -57867,7 +57856,7 @@
 	c_tag = "Security - Detective's Office"
 	},
 /obj/machinery/computer/secure_data,
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "sdc" = (
@@ -66211,7 +66200,7 @@
 "uJX" = (
 /obj/effect/turf_decal/tile/red/half,
 /obj/structure/closet/firecloset,
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/smooth_half,
 /area/station/security/brig/upper)
 "uJZ" = (
@@ -69340,7 +69329,7 @@
 /obj/structure/closet{
 	name = "Evidence Closet 1"
 	},
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/security/brig)
 "vIZ" = (
@@ -71461,7 +71450,7 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/fore)
 "wqI" = (
-/obj/item/radio/intercom/prison/directional/north,
+/obj/item/radio/intercom/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -72886,6 +72875,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/storage/mining)
+"wMP" = (
+/obj/item/food/chococoin,
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/misc/ice/coldroom,
+/area/station/service/kitchen/coldroom)
 "wMT" = (
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron,
@@ -73145,7 +73139,6 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/lockers)
 "wRv" = (
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "wRx" = (
@@ -75339,6 +75332,10 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
+"xCc" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance/office)
 "xCh" = (
 /obj/machinery/button/door/directional/west{
 	id = "xenobio5";
@@ -180861,7 +180858,7 @@ dMS
 jBB
 mQk
 ocF
-oLP
+wMP
 fwB
 fwB
 fwB
@@ -190094,7 +190091,7 @@ fsO
 tBs
 tWc
 tBs
-jFF
+kCx
 wrX
 umF
 cUk
@@ -192191,7 +192188,7 @@ udC
 rcY
 iDt
 inb
-fLZ
+wRv
 gWZ
 wHd
 mLK
@@ -257992,7 +257989,7 @@ kgo
 sCx
 gWr
 iHc
-gXv
+xCc
 gXv
 vaa
 xLq

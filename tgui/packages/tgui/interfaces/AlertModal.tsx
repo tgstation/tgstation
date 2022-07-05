@@ -17,7 +17,7 @@ type AlertModalData = {
 const KEY_DECREMENT = -1;
 const KEY_INCREMENT = 1;
 
-export const AlertModal = (_, context) => {
+export const AlertModal = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
   const {
     autofocus,

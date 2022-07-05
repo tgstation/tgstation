@@ -340,7 +340,7 @@
 		/datum/heretic_knowledge/final/blade_final,
 		/datum/heretic_knowledge/rifle,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/aimed/furious_steel
+	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
 	route = PATH_BLADE
 
@@ -374,8 +374,8 @@
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)
 
-	var/obj/effect/proc_holder/spell/aimed/furious_steel/steel_spell = locate() in user.mind.spell_list
-	steel_spell?.charge_max /= 3
+	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
+	steel_spell?.cooldown_time /= 3
 
 /datum/heretic_knowledge/final/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
