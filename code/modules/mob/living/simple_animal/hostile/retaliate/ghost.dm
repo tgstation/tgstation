@@ -97,12 +97,14 @@
 		for(var/obj/item/candle/anchor in around)
 			if(anchor.lit)
 				if(prob(20)) //spamming the message would get annoying
-					src.visible_message(span_warning("The [src] attempts to flee into the astral plane, but is confined to this realm by the [anchor]!"), span_warning("You channel your might to escape into the astral plane, but are confined by the [anchor]!"))
+					src.visible_message(span_warning("The [src] attempts to flee through the astral plane, but is confined to this realm by the [anchor]!"), span_warning("You channel your might to escape into the astral plane, but are confined by the [anchor]!"))
 				return
 
 		var/turf/destination = find_safe_turf(extended_safety_checks = TRUE)
+		for(var/obj/machinery/light/flick in get_area(src))
+			flick.flicker(10)
 		playsound(get_turf(src),'sound/hallucinations/wail.ogg', 50, TRUE, TRUE)
 		src.visible_message(span_warning("The [src] wails and dives through the astral plane, fleeing the area!"), span_warning("You begin to panic and channel your might to dive into the astral plane, fleeing the area!"))
 		do_teleport(src, destination, 1, asoundin = 'sound/effects/screech.ogg', channel = TELEPORT_CHANNEL_FREE)
 		for(var/obj/machinery/power/apc/overload in range(10, get_turf(src)))
-				overload.overload_lighting()
+			overload.overload_lighting()
