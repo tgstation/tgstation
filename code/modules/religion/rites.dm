@@ -753,7 +753,7 @@
 
 /datum/religion_rites/exorcism //In the future I would love to turn exorcism (and also posession) into a component or something more versatile, but for now this works.
 	name = "Exorcism"
-	desc = "The first thing they teach you in Chaplain College. Expels hostile spirits, as well as any other junk that may be floating around in someone's soul."
+	desc = "The first thing they teach you in Chaplain College. Expels hostile spirits, demonic influence, and any other junk that may be floating around in someone's soul."
 	ritual_length = 20 SECONDS
 	ritual_invocations = list("Secundum gratiam et gloriam dei nostri ...",
 						"... Rogamus te, ut hanc miseram animam a tormentis eorum absolvas ...",
