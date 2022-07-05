@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the Herald being able to drag it's mirror around."

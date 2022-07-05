@@ -132,3 +132,38 @@
   - refactor: Orbit UI has been reworked.
   san7890:
   - bugfix: Okay, this time I promise you have eggs and milk in the IceBox Kitchen.
+2022-07-05:
+  Fikou:
+  - balance: The supermatter running into you is no longer just as deadly as you running
+      into the supermatter.
+  Guillaume Prata:
+  - qol: Miners rejoice! A few of the mostly useless and spammy messages that get
+      send to your chat were changed to balloon alerts or straight up removed. Hopefully,
+      you will have an easier time listening to the radio chatter now.
+  JohnFulpWillard:
+  - bugfix: Thief's preference icon has been fixed, and now properly has hair.
+  Mooshimi:
+  - rscdel: Removed the lightbulbs inside the Ordinance burn chambers on Kilo and
+      Icebox.
+  - rscdel: Removed the mask sign inside the turbine burn chamber on Icebox.
+  RandomGamer123:
+  - bugfix: Adds an air scrubber and vent to a section of hallway that was without
+      them on MetaStation.
+  Salex08:
+  - bugfix: fixes a major oversight with steal gun objectives
+  magatsuchi:
+  - code_imp: removes a stray verb call from the status tab
+  - rscdel: removes movement and combat mode from the status tab
+  necromanceranne:
+  - code_imp: Added code functionality for autofire windup and resetting, both redefinable.
+      Nothing uses this code just yet!
+  - bugfix: Ensures pirate outfits and justice suits are actually able to protect
+      from damage, as their armor values suggests they should.
+  - bugfix: Stops golems from wearing the armored versions of the pirate outfits.
+  vincentiusvin:
+  - refactor: Changed how canister calculate their overpressure/overtemp damage. No
+      gameplay changes expected.
+  zzzmike:
+  - bugfix: head of staff announcement added to QM
+  - bugfix: QM added to job blacklist (like other command members are)
+  - bugfix: QM added as command in CrewManifest.js
