@@ -749,11 +749,14 @@
 	user.AddElement(/datum/element/tenacious)
 
 
-///exorcism rite
+///expel influence rite
 
-/datum/religion_rites/exorcism //In the future I would love to turn exorcism (and also posession) into a component or something more versatile, but for now this works.
-	name = "Exorcism"
-	desc = "The first thing they teach you in Chaplain College. Expels hostile spirits, demonic influence, and any other junk that may be floating around in someone's soul."
+/datum/religion_rites/expel_influence //In the future I would love to turn exorcism (and also posession) into a component or something more versatile, but for now this works.
+	name = "Expel Influence"
+	desc = "The first thing they teach you at Chaplain College. A very low-level maneuver that can expel malicious influences from a person's mind and force it \
+			to manifest in the physical realm. This rite typically only sees success when used on low-intensity influence matricies, which typically take the form of \
+			voices in one's head. For handling higher intensity influence matricies, such as ones utilized by gods, demons, deities, timeshares, or other sources of \
+			malicious and intrusive control, consider employing more direct measures.
 	ritual_length = 20 SECONDS
 	ritual_invocations = list("Secundum gratiam et gloriam dei nostri ...",
 						"... Rogamus te, ut hanc miseram animam a tormentis eorum absolvas ...",
@@ -761,10 +764,10 @@
 	invoke_msg = "BEGONE, SPIRITS. LEAVE THIS VESSEL BEHIND."
 	favor_cost = 1000
 
-/datum/religion_rites/exorcism/perform_rite(mob/living/carbon/human/user, atom/movable/religious_tool)
+/datum/religion_rites/expel_influence/perform_rite(mob/living/carbon/human/user, atom/movable/religious_tool)
 	var/mob/living/carbon/human/rite_target
 	if(!religious_tool?.buckled_mobs?.len)
-		to_chat(user, span_warning("You cannot perform an exorcism on yourself!"))
+		to_chat(user, span_warning("You cannot expel influences from your own mind!"))
 		return
 	else
 		for(var/buckled in religious_tool.buckled_mobs)
@@ -773,7 +776,7 @@
 				break
 
 	if(!user.has_trauma_type(/datum/brain_trauma/special/obsessed))
-		to_chat(user, "You sense that there are no evil presences residing within [rite_target], or at least none that you can expel...")
+		to_chat(user, "You sense that there are no evil presences residing within [rite_target] that you can expel!")
 	rite_target.emote("scream")
 	rite_target.visible_message(span_warning("[rite_target] begins thrashing wildly and rises into the air above [religious_tool]!"), ignored_mobs = list(rite_target))
 	to_chat(rite_target, span_warning("Your body throbs in almost unbearable pain, and you feel like throwing up!"))
@@ -781,7 +784,7 @@
 		flick.flicker(100)
 	return ..()
 
-/datum/religion_rites/exorcism/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+/datum/religion_rites/expel_influence/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
 	if(!ismovable(religious_tool))
 		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
@@ -798,7 +801,7 @@
 	rite_target.vomit(blood = TRUE)
 	rite_target.reagents.add_reagent(/datum/reagent/toxin/spewium, 15) //Y'know back in 1973 The Exorcist made people puke in theaters. Crazy shit.
 	rite_target.visible_message(span_warning("A terrible wailing fills the air as something wicked is torn from [rite_target]'s very soul!"), ignored_mobs = list(rite_target))
-	RegisterSignal(new /mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit(get_turf(rite_target)), COMSIG_LIVING_DEATH, rite_target, .proc/on_exorcised_death)
+	RegisterSignal(new /mob/living/simple_animal/hostile/retaliate/ghost/obsessed_spirit(get_turf(rite_target)), COMSIG_LIVING_DEATH, rite_target, .proc/on_expelled_death)
 	playsound(get_turf(rite_target),'sound/hallucinations/wail.ogg', 50, TRUE, TRUE)
 	for(var/obj/machinery/power/apc/overload in range(20, get_turf(src)))
 		overload.overload_lighting()
@@ -806,7 +809,7 @@
 	return TRUE
 
 ///Handles curing the associated trauma after an obsession ghost dies
-/datum/religion_rites/exorcism/proc/on_exorcised_death(mob/living/carbon/human/user)
+/datum/religion_rites/expel_influence/proc/on_expelled_death(mob/living/carbon/human/user)
 	SIGNAL_HANDLER
 
 	if(user.has_trauma_type(/datum/brain_trauma/special/obsessed))
