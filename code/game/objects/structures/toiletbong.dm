@@ -70,7 +70,23 @@
 		anchored = TRUE
 	return TRUE
 
-/obj/structure/toiletbong/alt_click_secondary(mob/living/user)
-	setDir(turn(dir,-90))
+/obj/structure/toiletbong/crowbar_act(mob/living/user, obj/item/tool)
+	if(anchored)
+		return FALSE
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You begin taking apart the [src]."))
+	if (!do_after(user, 10 SECONDS, target = src))
+		return FALSE
+	new /obj/item/flamethrower(get_turf(src))
+	new /obj/item/stack/sheet/iron(get_turf(src))
+	var/obj/item/tank/internals/plasma/ptank = new /obj/item/tank/internals/plasma(get_turf(src))
+	ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (0)
+	qdel(src)
+	return TRUE
+
+/obj/structure/toiletbong/AltClick(mob/living/user)
+	if(anchored)
+		return ..()
+	setDir(turn(dir,90))
 	playsound(src, 'sound/items/deconstruct.ogg', 50)
 	return
