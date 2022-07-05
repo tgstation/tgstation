@@ -23240,6 +23240,13 @@
 /obj/structure/reflector/single,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"gpA" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/structure/sign/departments/rndserver/directional/west,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "gpB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -30647,6 +30654,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/sign/departments/vault/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "irJ" = (
@@ -45372,6 +45380,7 @@
 /obj/item/kirbyplants/random,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/departments/aiupload/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "mlt" = (
@@ -49581,6 +49590,7 @@
 /obj/item/folder/blue,
 /obj/item/pen,
 /obj/machinery/light/small/directional/south,
+/obj/structure/sign/departments/aisat/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "nuI" = (
@@ -62314,6 +62324,18 @@
 /obj/effect/spawner/random/entertainment/deck,
 /turf/open/floor/carpet/green,
 /area/station/commons/lounge)
+"qPS" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sign/departments/telecomms/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
 "qPX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -84645,13 +84667,6 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
-"wFR" = (
-/obj/structure/lattice,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "wGa" = (
 /obj/structure/disposalpipe/junction{
 	dir = 8
@@ -108758,7 +108773,7 @@ sVm
 abj
 abj
 lbi
-wFR
+qYo
 aaa
 nUT
 aaa
@@ -125776,7 +125791,7 @@ qIh
 jzK
 vGR
 fcd
-vGR
+gpA
 ofH
 xFz
 peU
@@ -129072,8 +129087,8 @@ lkL
 lkL
 dnK
 gys
-gqQ
-oHJ
+vpK
+qPS
 cKm
 oEo
 bvJ
@@ -129843,7 +129858,7 @@ lKf
 atv
 cnu
 mly
-vpK
+gqQ
 rBB
 mpf
 vuz

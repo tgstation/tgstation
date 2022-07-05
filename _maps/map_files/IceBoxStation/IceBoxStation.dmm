@@ -2431,7 +2431,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron,
@@ -6345,6 +6344,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/sign/departments/aisat/directional/south,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
@@ -11701,6 +11701,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
+"duI" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/structure/sign/departments/vault/directional/north,
+/turf/open/floor/plating,
+/area/station/hallway/primary/port)
 "duS" = (
 /obj/machinery/door/airlock{
 	name = "Labor Camp Library"
@@ -13090,7 +13096,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/warning/cold_temp/directional/south,
+/obj/structure/sign/departments/rndserver/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "dQZ" = (
@@ -45992,6 +45998,7 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/pen,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "nZh" = (
@@ -52664,7 +52671,6 @@
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/engineering)
 "qeA" = (
-/obj/structure/sign/warning/secure_area/directional/west,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -52673,6 +52679,7 @@
 	dir = 8
 	},
 /obj/machinery/vending/cigarette,
+/obj/structure/sign/departments/telecomms/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "qeJ" = (
@@ -77247,7 +77254,7 @@
 	},
 /area/station/ai_monitored/command/storage/eva)
 "xIF" = (
-/obj/machinery/firealarm/directional/south,
+/obj/structure/sign/warning/cold_temp/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "xII" = (
@@ -231237,7 +231244,6 @@ xWN
 xWN
 wtw
 uiM
-jOt
 jOt
 ozw
 aJA
