@@ -23,7 +23,7 @@
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
 	//PRESTO FUCKIN MAJESTO
-	C.gain_trauma(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_LOBOTOMY)//ZAP
+	C.gain_trauma(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_MAGIC)//ZAP
 
 /datum/antagonist/obsessed/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)

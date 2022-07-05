@@ -811,4 +811,4 @@
 
 	if(owner.has_trauma_type(/datum/brain_trauma/special/obsessed))
 		to_chat(owner, span_warning("The voices in your head abruptly cut off as the evil influence fades from your mind."))
-		user.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_LOBOTOMY)
+		user.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_MAGIC)
