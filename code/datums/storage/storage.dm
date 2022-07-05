@@ -2,7 +2,8 @@
  * Datumized Storage
  * Eliminates the need for custom signals specifically for the storage component, and attaches a storage variable (atom_storage) to every atom.
  * The parent and real_location variables are both weakrefs, so they must be resolved before they can be used.
- * If you're looking to create custom storage type behaviors, check ../subtypes */
+ * If you're looking to create custom storage type behaviors, check ../subtypes
+ */
 /datum/storage
 	var/datum/weakref/parent /// the actual item we're attached to
 	var/datum/weakref/real_location /// the actual item we're storing in
