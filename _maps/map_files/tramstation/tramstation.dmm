@@ -11664,6 +11664,7 @@
 	network = list("ss13","rd")
 	},
 /obj/structure/cable,
+/obj/structure/sign/departments/aiupload/directional/east,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "dUg" = (
@@ -15722,6 +15723,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
+"ftA" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/sign/departments/rndserver/directional/east,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "ftP" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/machinery/shower{
@@ -25234,6 +25243,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
 	},
+/obj/structure/sign/departments/telecomms/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "iGV" = (
@@ -27260,6 +27270,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/structure/sign/warning/rad_shelter/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/radshelter/civil)
 "jsA" = (
@@ -27281,6 +27292,13 @@
 	},
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/right)
+"jsM" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/structure/sign/departments/court/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "jsN" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
@@ -28039,8 +28057,8 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Command - Bridge South"
 	},
-/obj/machinery/newscaster/directional/south,
 /obj/structure/cable,
+/obj/structure/sign/departments/vault/directional/south,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "jDm" = (
@@ -44293,6 +44311,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "oUZ" = (
@@ -58014,6 +58033,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"tCh" = (
+/obj/structure/sign/warning/rad_shelter/directional/north,
+/turf/closed/wall/r_wall,
+/area/station/hallway/secondary/exit)
 "tCi" = (
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
@@ -62341,6 +62364,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
+"vbI" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/structure/sign/warning/rad_shelter/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "vbL" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -67029,6 +67059,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
+/obj/structure/sign/departments/aisat/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/transit_tube)
 "wIA" = (
@@ -167014,7 +167045,7 @@ sxC
 sxC
 sxC
 qEU
-sxC
+jsM
 sxC
 uAh
 sxC
@@ -171396,7 +171427,7 @@ iIc
 swY
 eAg
 vpY
-vpY
+vbI
 juD
 vpY
 wHg
@@ -182993,7 +183024,7 @@ nHd
 wVj
 wVj
 kEA
-hwM
+ftA
 hwM
 hwM
 hwM
@@ -185275,7 +185306,7 @@ rzO
 azX
 vHa
 hHP
-lCy
+tCh
 rlW
 doD
 qbu
