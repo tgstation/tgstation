@@ -756,7 +756,7 @@
 	desc = "The first thing they teach you at Chaplain College. A very low-level maneuver that can expel malicious influences from a person's mind and force it \
 			to manifest in the physical realm. This rite typically only sees success when used on low-intensity influence matricies, which typically take the form of \
 			voices in one's head. For handling higher intensity influence matricies, such as ones utilized by gods, demons, deities, timeshares, or other sources of \
-			malicious and intrusive control, consider employing more direct measures.
+			malicious and intrusive control, consider employing more direct measures."
 	ritual_length = 20 SECONDS
 	ritual_invocations = list("Secundum gratiam et gloriam dei nostri ...",
 						"... Rogamus te, ut hanc miseram animam a tormentis eorum absolvas ...",
