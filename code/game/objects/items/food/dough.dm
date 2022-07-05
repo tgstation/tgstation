@@ -14,7 +14,7 @@
 
 // Dough + rolling pin = flat dough
 /obj/item/food/dough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatdough, 1, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatdough, 1, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/flatdough
 	name = "flat dough"
@@ -30,7 +30,7 @@
 
 // sliceable into 3xdoughslices
 /obj/item/food/flatdough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/doughslice, 3, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/doughslice, 3, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/pizzabread
 	name = "pizza bread"
@@ -60,7 +60,7 @@
 	AddComponent(/datum/component/bakeable, /obj/item/food/bun, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/doughslice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/bait/doughball, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/bait/doughball, 5, 3 SECONDS)
 
 /obj/item/food/bun
 	name = "bun"
@@ -90,7 +90,7 @@
 	AddComponent(/datum/component/bakeable, /obj/item/food/cake/plain, rand(70 SECONDS, 90 SECONDS), TRUE, TRUE)
 
 /obj/item/food/cakebatter/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/piedough, 1, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/piedough, 1, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/piedough
 	name = "pie dough"
@@ -105,7 +105,7 @@
 	AddComponent(/datum/component/bakeable, /obj/item/food/pie/plain, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 /obj/item/food/piedough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rawpastrybase, 6, 30, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rawpastrybase, 6, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/rawpastrybase
 	name = "raw pastry base"

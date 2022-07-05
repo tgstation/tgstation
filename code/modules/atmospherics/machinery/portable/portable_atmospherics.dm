@@ -1,3 +1,5 @@
+#define PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT 0
+
 /obj/machinery/portable_atmospherics
 	name = "portable_atmospherics"
 	icon = 'icons/obj/atmos.dmi'
@@ -16,6 +18,11 @@
 	var/volume = 0
 	///Used to track if anything of note has happen while running process_atmos()
 	var/excited = TRUE
+
+	/// Max amount of heat allowed inside the machine before it starts to melt. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
+	var/temp_limit = 5000
+	/// Max amount of pressure allowed inside of the canister before it starts to break. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
+	var/pressure_limit = 50000
 
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
@@ -48,6 +55,29 @@
 		if(!excited)
 			return PROCESS_KILL
 	excited = FALSE
+
+/// Take damage if a variable is exceeded. Damage is equal to temp/limit * heat/limit.
+/// The damage multiplier is treated as 1 if something is being ignored while the other one is exceeded.
+/// On most cases only one will be exceeded, so the other one is scaled down.
+/obj/machinery/portable_atmospherics/proc/take_atmos_damage()
+	var/taking_damage = FALSE
+	
+	var/temp_damage = 1
+	var/pressure_damage = 1
+
+	if(temp_limit != PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT)
+		temp_damage = air_contents.temperature / temp_limit
+		taking_damage = temp_damage > 1
+
+	if(pressure_limit != PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT)
+		pressure_damage = air_contents.return_pressure() / pressure_limit
+		taking_damage = taking_damage || pressure_damage > 1
+
+	if(!taking_damage)
+		return FALSE
+	
+	take_damage(clamp(temp_damage * pressure_damage, 5, 50), BURN, 0)
+	return TRUE
 
 /obj/machinery/portable_atmospherics/return_air()
 	SSair.start_processing_machine(src)

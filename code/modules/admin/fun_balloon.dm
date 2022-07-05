@@ -126,7 +126,7 @@
 /obj/effect/station_crash
 	name = "station crash"
 	desc = "With no survivors!"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/balloons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
 	var/min_crash_strength = 3

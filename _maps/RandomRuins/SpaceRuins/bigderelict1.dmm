@@ -15,9 +15,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "af" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -28,9 +26,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ah" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ai" = (
@@ -293,9 +289,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "bk" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "bl" = (
@@ -323,9 +317,7 @@
 "bo" = (
 /obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 4;
 	icon_state = "trails_1";

@@ -401,26 +401,6 @@
 		if(HM?.timeout)
 			dna.remove_mutation(HM.type)
 
-/*
-Alcohol Poisoning Chart
-Note that all higher effects of alcohol poisoning will inherit effects for smaller amounts (i.e. light poisoning inherts from slight poisoning)
-In addition, severe effects won't always trigger unless the drink is poisonously strong
-All effects don't start immediately, but rather get worse over time; the rate is affected by the imbiber's alcohol tolerance
-
-0: Non-alcoholic
-1-10: Barely classifiable as alcohol - occassional slurring
-11-20: Slight alcohol content - slurring
-21-30: Below average - imbiber begins to look slightly drunk
-31-40: Just below average - no unique effects
-41-50: Average - mild disorientation, imbiber begins to look drunk
-51-60: Just above average - disorientation, vomiting, imbiber begins to look heavily drunk
-61-70: Above average - small chance of blurry vision, imbiber begins to look smashed
-71-80: High alcohol content - blurry vision, imbiber completely shitfaced
-81-90: Extremely high alcohol content - light brain damage, passing out
-91-100: Dangerously toxic - swift death
-*/
-#define BALLMER_POINTS 5
-
 // This updates all special effects that really should be status effect datums: Druggy, Hallucinations, Drunkenness, Mute, etc..
 /mob/living/carbon/handle_status_effects(delta_time, times_fired)
 	..()
