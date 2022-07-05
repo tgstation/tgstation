@@ -72,7 +72,7 @@
 					dept_data += job_datum.title
 			if(dept_data.len <= 0) //Congratufuckinglations
 				tgui_alert(src, "There are literally no random jobs available for you on this server, dm the admins for help")
-				return;
+				return
 			var/random = pick(dept_data)
 			var/randomjob = "<p><center><a href='byond://?src=[REF(src)];SelectedJob=[random]'>[random]</a></center><center><a href='byond://?src=[REF(src)];SelectedJob=Random'>Reroll</a></center><center><a href='byond://?src=[REF(src)];cancrand=[1]'>Cancel</a></center></p>"
 			var/datum/browser/popup = new(src, "randjob", "<div align='center'>Random Job</div>", 200, 150)
