@@ -809,6 +809,6 @@
 /datum/religion_rites/exorcism/proc/on_exorcised_death(mob/living/carbon/human/user)
 	SIGNAL_HANDLER
 
-	if(owner.has_trauma_type(/datum/brain_trauma/special/obsessed))
-		to_chat(owner, span_warning("The voices in your head abruptly cut off as the evil influence fades from your mind."))
+	if(user.has_trauma_type(/datum/brain_trauma/special/obsessed))
+		to_chat(user, span_warning("The voices in your head abruptly cut off as the evil influence fades from your mind."))
 		user.cure_trauma_type(/datum/brain_trauma/special/obsessed, TRAUMA_RESILIENCE_MAGIC)
