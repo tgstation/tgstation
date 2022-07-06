@@ -13882,6 +13882,7 @@
 /obj/structure/closet/mini_fridge{
 	name = "mini-fridge"
 	},
+/obj/item/reagent_containers/food/condiment/milk,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "ekk" = (
@@ -18780,10 +18781,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/drone_bay)
-"fLZ" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
 "fMg" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/glass/bottle/acidic_buffer{
@@ -22147,6 +22144,10 @@
 /area/station/security/warden)
 "gPB" = (
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Engineering Emitter Room Port";
+	network = list("ss13","engine")
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gPE" = (
@@ -23970,7 +23971,6 @@
 	dir = 5
 	},
 /obj/machinery/igniter/incinerator_atmos,
-/obj/structure/sign/warning/gas_mask/directional/south,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "hvl" = (
@@ -45122,6 +45122,13 @@
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
+"oaY" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Engineering Emitter Room Starboard";
+	network = list("ss13","engine")
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "obj" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -72881,7 +72888,7 @@
 /area/station/commons/storage/mining)
 "wMP" = (
 /obj/item/food/chococoin,
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/misc/ice/coldroom,
 /area/station/service/kitchen/coldroom)
 "wMT" = (
@@ -73143,7 +73150,6 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/lockers)
 "wRv" = (
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "wRx" = (
@@ -75337,6 +75343,10 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
+"xCc" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance/office)
 "xCh" = (
 /obj/machinery/button/door/directional/west{
 	id = "xenobio5";
@@ -192189,7 +192199,7 @@ udC
 rcY
 iDt
 inb
-fLZ
+wRv
 gWZ
 wHd
 mLK
@@ -239013,7 +239023,7 @@ nsv
 kAT
 gka
 oWQ
-lhC
+oaY
 alx
 pMC
 qWJ
@@ -257990,7 +258000,7 @@ kgo
 sCx
 gWr
 iHc
-gXv
+xCc
 gXv
 vaa
 xLq
