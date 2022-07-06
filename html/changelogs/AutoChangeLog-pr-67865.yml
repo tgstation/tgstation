@@ -1,4 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the Structural Weakpoint Objective to do a normal, smaller explosion, especially on Lowpop(~20) and gives the objective a lower weight."

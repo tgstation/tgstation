@@ -304,6 +304,7 @@
     if (type === 'js') {
       var node = document.createElement('script');
       node.type = 'text/javascript';
+      node.crossOrigin = 'anonymous';
       // IE8: Prefer non-https protocols
       node.src = Byond.IS_LTE_IE9
         ? url.replace('https://', 'http://')
