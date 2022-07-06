@@ -169,8 +169,8 @@
 	thief.dna.update_ui_block(DNA_GENDER_BLOCK)
 	thief.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 	thief.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
-	thief.update_hair()
-	thief.update_body()
+	thief.update_hair(is_creating = TRUE)
+	thief.update_body(is_creating = TRUE)
 
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
