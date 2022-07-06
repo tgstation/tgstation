@@ -5,14 +5,8 @@ import { Window } from '../layouts';
 
 export const OreRedemptionMachine = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    unclaimedPoints,
-    ore_silo,
-    materials,
-    alloys,
-    diskDesigns,
-    hasDisk,
-  } = data;
+  const { unclaimedPoints, ore_silo, materials, alloys, diskDesigns, hasDisk } =
+    data;
   return (
     <Window title="Ore Redemption Machine" width={440} height={550}>
       <Window.Content scrollable>
