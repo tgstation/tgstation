@@ -9,17 +9,17 @@
 	inhand_icon_state = "nothing"
 	w_class = WEIGHT_CLASS_SMALL
 
-	//how many times you can use the autosurgeon before it becomes useless
+	/// How many times you can use the autosurgeon before it becomes useless
 	var/uses = INFINITE
-	// What organ will the subtype start with
+	/// What organ will the autosurgeon sub-type will start with. ie, CMO autosurgeon start with a medi-hud.
 	var/starting_organ
-	// The organ currently loaded in the autosurgeon
+	/// The organ currently loaded in the autosurgeon, ready to be implanted.
 	var/obj/item/organ/stored_organ
-	// list of organs and their children we allow into the autosurgeon- an empty list means no whitelist
+	/// The list of organs and their children we allow into the autosurgeon. An empty list means no whitelist.
 	var/list/organ_whitelist = list()
-	// percentage modifier for how fast the surgery happens on other people
+	/// The percentage modifier for how fast you can use the autosurgeon to implant other people.
 	var/surgery_speed = 1
-	// overlay that shows when the autosurgeon has a stored organ
+	/// The overlay that shows when the autosurgeon has an organ inside of it.
 	var/loaded_overlay = "autosurgeon_loaded_overlay"
 
 /obj/item/autosurgeon/attack_self_tk(mob/user)
