@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Box, Button, ProgressBar, Tooltip } from '../../components';
+import { Box, Button, ProgressBar, Section, Tooltip } from '../../components';
 import { OperatorData, MechaUtility } from './data';
 
 const UtilityName = (props: { name: string }) => {
@@ -51,16 +51,18 @@ export const UtilityModulesPane = (props, context) => {
   const { data } = useBackend<OperatorData>(context);
   const { mech_equipment } = data;
   return (
-    <Box style={{ 'overflow': 'auto', 'max-height': '16rem' }}>
-      <div>
-        {mech_equipment['utility'].map((module, i) => {
-          return module.snowflake.snowflake_id ? (
-            <Snowflake module={module} />
-          ) : (
-            <Equipment module={module} />
-          );
-        })}
-      </div>
+    <Box style={{ 'height': '16rem' }}>
+      <Section scrollable fill>
+        <div>
+          {mech_equipment['utility'].map((module, i) => {
+            return module.snowflake.snowflake_id ? (
+              <Snowflake module={module} />
+            ) : (
+              <Equipment module={module} />
+            );
+          })}
+        </div>
+      </Section>
     </Box>
   );
 };
