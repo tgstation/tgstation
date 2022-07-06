@@ -385,7 +385,7 @@
 			//Random One-use spellbook
 			selected_turf.visible_message(span_userdanger("A magical looking book drops to the floor!"))
 			do_smoke(0, holder = src, location = drop_location())
-			new /obj/item/book/granter/spell/random(drop_location())
+			new /obj/item/book/granter/action/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
 			selected_turf.visible_message(span_userdanger("A Dice Servant appears in a cloud of smoke!"))
@@ -405,9 +405,8 @@
 				message_admins("[ADMIN_LOOKUPFLW(candidate)] was spawned as Dice Servant")
 				human_servant.key = candidate.key
 
-			var/obj/effect/proc_holder/spell/targeted/summonmob/mob_spell = new
-			mob_spell.target_mob = human_servant
-			user.mind.AddSpell(mob_spell)
+			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user, human_servant)
+			summon_servant.Grant(user)
 
 		if(17)
 			//Tator Kit
@@ -439,28 +438,41 @@
 	glasses = /obj/item/clothing/glasses/monocle
 	gloves = /obj/item/clothing/gloves/color/white
 
-/obj/effect/proc_holder/spell/targeted/summonmob
+/datum/action/cooldown/spell/summon_mob
 	name = "Summon Servant"
 	desc = "This spell can be used to call your servant, whenever you need it."
-	charge_max = 100
-	clothes_req = 0
-	invocation = "JE VES"
+	button_icon_state = "summons"
+
 	school = SCHOOL_CONJURATION
+	cooldown_time = 10 SECONDS
+
+	invocation = "JE VES"
 	invocation_type = INVOCATION_WHISPER
-	range = -1
-	level_max = 0 //cannot be improved
-	cooldown_min = 100
-	include_user = TRUE
-	/// Reference to the dice servant created by the die of fate
-	var/mob/living/target_mob
+	spell_requirements = NONE
+	spell_max_level = 0 //cannot be improved
 
-	action_icon_state = "summons"
+	smoke_type = /datum/effect_system/fluid_spread/smoke
+	smoke_amt = 2
 
-/obj/effect/proc_holder/spell/targeted/summonmob/cast(list/targets,mob/user = usr)
-	if(!target_mob)
+	var/datum/weakref/summon_weakref
+
+/datum/action/cooldown/spell/summon_mob/New(Target, mob/living/summoned_mob)
+	. = ..()
+	if(summoned_mob)
+		summon_weakref = WEAKREF(summoned_mob)
+
+/datum/action/cooldown/spell/summon_mob/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/to_summon = summon_weakref?.resolve()
+	if(QDELETED(to_summon))
+		to_chat(cast_on, span_warning("You can't seem to summon your servant - it seems they've vanished from reality, or never existed in the first place..."))
 		return
-	var/turf/Start = get_turf(user)
-	for(var/direction in GLOB.alldirs)
-		var/turf/dir_turf = get_step(Start,direction)
-		if(!dir_turf.density)
-			target_mob.Move(dir_turf)
+
+	do_teleport(
+		to_summon,
+		get_turf(cast_on),
+		precision = 1,
+		asoundin = 'sound/magic/wand_teleport.ogg',
+		asoundout = 'sound/magic/wand_teleport.ogg',
+		channel = TELEPORT_CHANNEL_MAGIC,
+	)
