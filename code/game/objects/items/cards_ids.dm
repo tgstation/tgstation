@@ -878,6 +878,7 @@
 	worn_icon_state = "card_grey"
 
 	wildcard_slots = WILDCARD_LIMIT_GREY
+	flags_1 = UNPAINTABLE_1
 
 	/// An overlay icon state for when the card is assigned to a name. Usually manifests itself as a little scribble to the right of the job icon.
 	var/assigned_icon_state = "assigned"
@@ -906,6 +907,21 @@
 	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	return ..()
+
+
+/obj/item/card/id/advanced/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(istype(W, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/our_crayon = W
+		if(tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment")) == "Department")
+			if(do_after(user, 2 SECONDS)) // Doesn't technically require a spraycan's cap to be on but shhh
+				src.department_color_override = our_crayon.paint_color
+				balloon_alert(user, "Recolored!")
+			else return
+		else if(do_after(user, 1 SECONDS))
+			src.subdepartment_color_override = our_crayon.paint_color
+			balloon_alert(user, "Recolored!")
+		update_icon()
 
 /obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user)
 	SIGNAL_HANDLER
