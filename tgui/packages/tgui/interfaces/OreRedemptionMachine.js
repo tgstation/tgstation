@@ -24,7 +24,8 @@ export const OreRedemptionMachine = (props, context) => {
           </BlockQuote>
           {!ore_silo && (
             <BlockQuote mb={1}>
-              Point claiming impossible.<br />
+              Point claiming impossible.
+              <br />
               Reason: Ore silo link missing.
             </BlockQuote>
           )}
@@ -37,7 +38,8 @@ export const OreRedemptionMachine = (props, context) => {
               ml={2}
               content="Claim"
               disabled={unclaimedPoints === 0 || !ore_silo}
-              onClick={() => act('Claim')} />
+              onClick={() => act('Claim')}
+            />
           </Box>
         </Section>
         <Section>
