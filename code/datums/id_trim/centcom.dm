@@ -185,7 +185,7 @@
 /// Trim for generic ERT clowns. No universal ID card changing access.
 /datum/id_trim/centcom/ert/clown
 	assignment = JOB_ERT_CLOWN
-	trim_state = "trim_ert_entertainment"
+	trim_state = "trim_clown"
 	subdepartment_color = "#FF00FF" // RIP Rainbow trim, a real one
 	sechud_icon_state = SECHUD_ENTERTAINMENT_RESPONSE_OFFICER
 
