@@ -37,8 +37,8 @@ SUBSYSTEM_DEF(traitor)
 	var/generate_objectives = TRUE
 	/// Objectives that have been completed by type. Used for limiting objectives.
 	var/list/taken_objectives_by_type = list()
-	/// Contains 3 areas: 2 areas to scan in order to triangulate the third one which is the structural weakpoint itself
-	var/list/station_weakpoints = list()
+	/// A list of all existing objectives by type
+	var/list/all_objectives_by_type = list()
 
 /datum/controller/subsystem/traitor/Initialize(start_timeofday)
 	. = ..()
@@ -52,30 +52,6 @@ SUBSYSTEM_DEF(traitor)
 			if(!actual_typepath)
 				log_world("[configuration_path] has an invalid type ([typepath]) that doesn't exist in the codebase! Please correct or remove [typepath]")
 			configuration_data[actual_typepath] = data[typepath]
-
-	/// List of high-security areas that we pick required ones from
-	var/list/allowed_areas = typecacheof(list(/area/station/command,
-		/area/station/cargo/qm,
-		/area/station/comms,
-		/area/station/engineering,
-		/area/station/science,
-		/area/station/security,
-	))
-
-	var/list/blacklisted_areas = typecacheof(list(/area/station/engineering/hallway,
-		/area/station/engineering/lobby,
-		/area/station/engineering/storage,
-		/area/station/science/lobby,
-		/area/station/security/prison,
-	))
-
-	var/list/possible_areas = GLOB.the_station_areas.Copy()
-	for(var/area/possible_area as anything in possible_areas)
-		if(!is_type_in_typecache(possible_area, allowed_areas) || initial(possible_area.outdoors) || is_type_in_typecache(possible_area, blacklisted_areas))
-			possible_areas -= possible_area
-
-	for(var/i in 1 to 3)
-		station_weakpoints += pick_n_take(possible_areas)
 
 /datum/controller/subsystem/traitor/fire(resumed)
 	var/player_count = length(GLOB.alive_player_list)
@@ -123,13 +99,17 @@ SUBSYSTEM_DEF(traitor)
 	if(!istype(objective))
 		return
 
-	var/datum/traitor_objective/current_type = objective.type
-	while(current_type != /datum/traitor_objective)
-		if(!taken_objectives_by_type[current_type])
-			taken_objectives_by_type[current_type] = list(objective)
-		else
-			taken_objectives_by_type[current_type] += objective
-		current_type = type2parent(current_type)
+	add_objective_to_list(objective, taken_objectives_by_type)
 
 /datum/controller/subsystem/traitor/proc/get_taken_count(datum/traitor_objective/objective_type)
 	return length(taken_objectives_by_type[objective_type])
+
+
+/datum/controller/subsystem/traitor/proc/add_objective_to_list(datum/traitor_objective/objective, list/objective_list)
+	var/datum/traitor_objective/current_type = objective.type
+	while(current_type != /datum/traitor_objective)
+		if(!objective_list[current_type])
+			objective_list[current_type] = list(objective)
+		else
+			objective_list[current_type] += objective
+		current_type = type2parent(current_type)

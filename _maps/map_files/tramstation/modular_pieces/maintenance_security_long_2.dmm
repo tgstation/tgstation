@@ -73,10 +73,9 @@
 	pixel_x = -10;
 	pixel_y = -10
 	},
-/obj/structure/sign/warning{
+/obj/structure/sign/warning/directional/east{
 	desc = "A warning sign to watch for loose rocks.";
-	name = "COLLAPSE HAZARD sign";
-	pixel_x = 32
+	name = "COLLAPSE HAZARD sign"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
@@ -99,10 +98,9 @@
 	pixel_x = -9;
 	pixel_y = 8
 	},
-/obj/structure/sign/warning{
+/obj/structure/sign/warning/directional/north{
 	desc = "A warning sign to watch for loose rocks.";
-	name = "COLLAPSE HAZARD sign";
-	pixel_y = 32
+	name = "COLLAPSE HAZARD sign"
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,

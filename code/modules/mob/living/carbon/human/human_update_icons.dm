@@ -154,7 +154,12 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/uniform_overlay
 
-		//Change check_adjustable_clothing.dm if you change this
+		//This is how non-humanoid clothing works. You check if the mob has the right bodyflag, and the clothing has the corresponding clothing flag.
+		//handled_by_bodytype is used to track whether or not we successfully used an alternate sprite. It's set to TRUE to ease up on copy-paste.
+		//icon_file MUST be set to null by default, or it causes issues.
+		//handled_by_bodytype MUST be set to FALSE under the if(!icon_exists()) statement, or everything breaks.
+		//"override_file = handled_by_bodytype ? icon_file : null" MUST be added to the arguments of build_worn_icon()
+		//Friendly reminder that icon_exists(file, state, scream = TRUE) is your friend when debugging this code.
 		var/handled_by_bodytype = TRUE
 		var/icon_file
 		var/woman
@@ -169,6 +174,8 @@ There are several things that need to be remembered:
 
 			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
 				icon_file = DEFAULT_UNIFORM_FILE
+				handled_by_bodytype = FALSE
+
 			//END SPECIES HANDLING
 			uniform_overlay = uniform.build_worn_icon(
 				default_layer = UNIFORM_LAYER,
@@ -680,7 +687,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/proc/update_hud_s_store(obj/item/worn_item)
 	worn_item.screen_loc = ui_sstore1
-	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
+	if(client && hud_used?.hud_shown)
 		client.screen += worn_item
 	update_observer_view(worn_item,TRUE)
 

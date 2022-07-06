@@ -1120,10 +1120,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/attack_direction = get_dir(user, target)
 		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
 			target.apply_damage(damage*1.5, user.dna.species.attack_type, affecting, armor_block, attack_direction = attack_direction)
+			if((damage * 1.5) >= 9)
+				target.force_say()
 			log_combat(user, target, "kicked")
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
+			if(damage >= 9)
+				target.force_say()
 			log_combat(user, target, "punched")
 
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
@@ -1157,126 +1161,133 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, modifiers)
-	if(!istype(M))
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/owner, mob/living/carbon/human/target, datum/martial_art/attacker_style, modifiers)
+	if(!istype(owner))
 		return
-	CHECK_DNA_AND_SPECIES(M)
-	CHECK_DNA_AND_SPECIES(H)
+	CHECK_DNA_AND_SPECIES(owner)
+	CHECK_DNA_AND_SPECIES(target)
 
-	if(!istype(M)) //sanity check for drones.
+	if(!istype(owner)) //sanity check for drones.
 		return
-	if(M.mind)
-		attacker_style = M.mind.martial_art
-	if((M != H) && M.combat_mode && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
-		log_combat(M, H, "attempted to touch")
-		H.visible_message(span_warning("[M] attempts to touch [H]!"), \
-						span_danger("[M] attempts to touch you!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, M)
-		to_chat(M, span_warning("You attempt to touch [H]!"))
+	if(owner.mind)
+		attacker_style = owner.mind.martial_art
+	if((owner != target) && owner.combat_mode && target.check_shields(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
+		log_combat(owner, target, "attempted to touch")
+		target.visible_message(span_warning("[owner] attempts to touch [target]!"), \
+						span_danger("[owner] attempts to touch you!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, owner)
+		to_chat(owner, span_warning("You attempt to touch [target]!"))
 		return
 
-	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style)
+	SEND_SIGNAL(owner, COMSIG_MOB_ATTACK_HAND, owner, target, attacker_style)
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		disarm(M, H, attacker_style)
+		disarm(owner, target, attacker_style)
 		return // dont attack after
-	if(M.combat_mode)
-		harm(M, H, attacker_style)
+	if(owner.combat_mode)
+		harm(owner, target, attacker_style)
 	else
-		help(M, H, attacker_style)
+		help(owner, target, attacker_style)
 
-/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
+/datum/species/proc/spec_attacked_by(obj/item/weapon, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/human)
 	// Allows you to put in item-specific reactions based on species
-	if(user != H)
-		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
+	if(user != human)
+		if(human.check_shields(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration))
 			return FALSE
-	if(H.check_block())
-		H.visible_message(span_warning("[H] blocks [I]!"), \
-						span_userdanger("You block [I]!"))
+	if(human.check_block())
+		human.visible_message(span_warning("[human] blocks [weapon]!"), \
+						span_userdanger("You block [weapon]!"))
 		return FALSE
 
 	var/hit_area
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
-		affecting = H.bodyparts[1]
+		affecting = human.bodyparts[1]
 
 	hit_area = affecting.plaintext_zone
 	var/def_zone = affecting.body_zone
 
-	var/armor_block = H.run_armor_check(affecting, MELEE, span_notice("Your armor has protected your [hit_area]!"), span_warning("Your armor has softened a hit to your [hit_area]!"),I.armour_penetration, weak_against_armour = I.weak_against_armour)
+	var/armor_block = human.run_armor_check(affecting, MELEE, span_notice("Your armor has protected your [hit_area]!"), span_warning("Your armor has softened a hit to your [hit_area]!"),weapon.armour_penetration, weak_against_armour = weapon.weak_against_armour)
 	armor_block = min(ARMOR_MAX_BLOCK, armor_block) //cap damage reduction at 90%
-	var/Iwound_bonus = I.wound_bonus
+	var/Iwound_bonus = weapon.wound_bonus
 
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
-	if((I.item_flags & SURGICAL_TOOL) && !user.combat_mode && H.body_position == LYING_DOWN && (LAZYLEN(H.surgeries) > 0))
+	if((weapon.item_flags & SURGICAL_TOOL) && !user.combat_mode && human.body_position == LYING_DOWN && (LAZYLEN(human.surgeries) > 0))
 		Iwound_bonus = CANT_WOUND
 
-	var/weakness = check_species_weakness(I, user)
+	var/weakness = check_species_weakness(weapon, user)
 
-	H.send_item_attack_message(I, user, hit_area, affecting)
+	human.send_item_attack_message(weapon, user, hit_area, affecting)
 
 
-	var/attack_direction = get_dir(user, H)
-	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction)
+	var/attack_direction = get_dir(user, human)
+	apply_damage(weapon.force * weakness, weapon.damtype, def_zone, armor_block, human, wound_bonus = Iwound_bonus, bare_wound_bonus = weapon.bare_wound_bonus, sharpness = weapon.get_sharpness(), attack_direction = attack_direction)
 
-	if(!I.force)
+	if(!weapon.force)
 		return FALSE //item force is zero
-
 	var/bloody = FALSE
-	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
-		if(IS_ORGANIC_LIMB(affecting))
-			I.add_mob_blood(H) //Make the weapon bloody, not the person.
-			if(prob(I.force * 2)) //blood spatter!
-				bloody = TRUE
-				var/turf/location = H.loc
-				if(istype(location))
-					H.add_splatter_floor(location)
-				if(get_dist(user, H) <= 1) //people with TK won't get smeared with blood
-					user.add_mob_blood(H)
+	if(weapon.damtype != BRUTE)
+		return TRUE
+	if(!(prob(25 + (weapon.force * 2))))
+		return TRUE
 
-		switch(hit_area)
-			if(BODY_ZONE_HEAD)
-				if(!I.get_sharpness() && armor_block < 50)
-					if(prob(I.force))
-						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
-						if(H.stat == CONSCIOUS)
-							H.visible_message(span_danger("[H] is knocked senseless!"), \
-											span_userdanger("You're knocked senseless!"))
-							H.set_timed_status_effect(20 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
-							H.adjust_blurriness(10)
-						if(prob(10))
-							H.gain_trauma(/datum/brain_trauma/mild/concussion)
-					else
-						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, I.force * 0.2)
+	if(IS_ORGANIC_LIMB(affecting))
+		weapon.add_mob_blood(human) //Make the weapon bloody, not the person.
+		if(prob(weapon.force * 2)) //blood spatter!
+			bloody = TRUE
+			var/turf/location = human.loc
+			if(istype(location))
+				human.add_splatter_floor(location)
+			if(get_dist(user, human) <= 1) //people with TK won't get smeared with blood
+				user.add_mob_blood(human)
 
-					if(H.mind && H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
-						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
-						if(rev)
-							rev.remove_revolutionary(FALSE, user)
+	switch(hit_area)
+		if(BODY_ZONE_HEAD)
+			if(!weapon.get_sharpness() && armor_block < 50)
+				if(prob(weapon.force))
+					human.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+					if(human.stat == CONSCIOUS)
+						human.visible_message(span_danger("[human] is knocked senseless!"), \
+										span_userdanger("You're knocked senseless!"))
+						human.set_timed_status_effect(20 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+						human.adjust_blurriness(10)
+					if(prob(10))
+						human.gain_trauma(/datum/brain_trauma/mild/concussion)
+				else
+					human.adjustOrganLoss(ORGAN_SLOT_BRAIN, weapon.force * 0.2)
 
-				if(bloody) //Apply blood
-					if(H.wear_mask)
-						H.wear_mask.add_mob_blood(H)
-						H.update_inv_wear_mask()
-					if(H.head)
-						H.head.add_mob_blood(H)
-						H.update_inv_head()
-					if(H.glasses && prob(33))
-						H.glasses.add_mob_blood(H)
-						H.update_inv_glasses()
+				if(human.mind && human.stat == CONSCIOUS && human != user && prob(weapon.force + ((100 - human.health) * 0.5))) // rev deconversion through blunt trauma.
+					var/datum/antagonist/rev/rev = human.mind.has_antag_datum(/datum/antagonist/rev)
+					if(rev)
+						rev.remove_revolutionary(FALSE, user)
 
-			if(BODY_ZONE_CHEST)
-				if(H.stat == CONSCIOUS && !I.get_sharpness() && armor_block < 50)
-					if(prob(I.force))
-						H.visible_message(span_danger("[H] is knocked down!"), \
-									span_userdanger("You're knocked down!"))
-						H.apply_effect(60, EFFECT_KNOCKDOWN, armor_block)
+			if(bloody) //Apply blood
+				if(human.wear_mask)
+					human.wear_mask.add_mob_blood(human)
+					human.update_inv_wear_mask()
+				if(human.head)
+					human.head.add_mob_blood(human)
+					human.update_inv_head()
+				if(human.glasses && prob(33))
+					human.glasses.add_mob_blood(human)
+					human.update_inv_glasses()
 
-				if(bloody)
-					if(H.wear_suit)
-						H.wear_suit.add_mob_blood(H)
-						H.update_inv_wear_suit()
-					if(H.w_uniform)
-						H.w_uniform.add_mob_blood(H)
-						H.update_inv_w_uniform()
+		if(BODY_ZONE_CHEST)
+			if(human.stat == CONSCIOUS && !weapon.get_sharpness() && armor_block < 50)
+				if(prob(weapon.force))
+					human.visible_message(span_danger("[human] is knocked down!"), \
+								span_userdanger("You're knocked down!"))
+					human.apply_effect(60, EFFECT_KNOCKDOWN, armor_block)
+
+			if(bloody)
+				if(human.wear_suit)
+					human.wear_suit.add_mob_blood(human)
+					human.update_inv_wear_suit()
+				if(human.w_uniform)
+					human.w_uniform.add_mob_blood(human)
+					human.update_inv_w_uniform()
+
+	/// Triggers force say events
+	if(weapon.force > 10 || weapon.force >= 5 && prob(33))
+		human.force_say(user)
 
 	return TRUE
 

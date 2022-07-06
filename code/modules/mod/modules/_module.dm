@@ -294,12 +294,13 @@
 
 /// Pins the module to the user's action buttons
 /obj/item/mod/module/proc/pin(mob/user)
-	var/datum/action/item_action/mod/pinned_module/action = pinned_to[REF(user)]
-	if(action)
-		qdel(action)
-	else
-		action = new(mod, src, user)
-		action.Grant(user)
+	var/datum/action/item_action/mod/pinned_module/existing_action = pinned_to[REF(user)]
+	if(existing_action)
+		mod.remove_item_action(existing_action)
+		return
+
+	var/datum/action/item_action/mod/pinned_module/new_action = new(mod, src, user)
+	mod.add_item_action(new_action)
 
 /// On drop key, concels a device item.
 /obj/item/mod/module/proc/dropkey(mob/living/user)

@@ -73,7 +73,7 @@
 		Unmade, it aspires to be more than it is, and shears soot-filled wounds with a blunt edge."
 	icon_state = "ash_blade"
 	inhand_icon_state = "ash_blade"
-	after_use_message = "The Nightwater hears your call..."
+	after_use_message = "The Nightwatcher hears your call..."
 
 // Path of Flesh's blade
 /obj/item/melee/sickly_blade/flesh

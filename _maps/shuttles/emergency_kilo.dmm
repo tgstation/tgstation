@@ -215,9 +215,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "az" = (
@@ -743,9 +741,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bv" = (
-/obj/structure/sign/departments/security{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/security/directional/north,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/bot,
 /obj/structure/chair/comfy/shuttle,
@@ -772,9 +768,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "by" = (
-/obj/structure/sign/departments/engineering{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/engineering/directional/north,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/bot,
 /obj/structure/chair/comfy/shuttle,

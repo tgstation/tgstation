@@ -145,9 +145,7 @@
 /turf/template_noop,
 /area/template_noop)
 "V" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/south,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/djstation/service)

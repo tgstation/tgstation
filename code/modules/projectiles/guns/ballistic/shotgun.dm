@@ -9,7 +9,6 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
-	vary_fire_sound = FALSE
 	fire_sound_volume = 90
 	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
 	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'

@@ -598,7 +598,7 @@ SUBSYSTEM_DEF(ticker)
 		if(GANG_DESTROYED)
 			news_message = "The crew of [decoded_station_name] would like to thank the Spinward Stellar Coalition Police Department for quickly resolving a minor terror threat to the station."
 		if(SUPERMATTER_CASCADE)
-			news_message = "Recovery of the surviving crew of [decoded_station_name] is underway following a major supermatter cascade."
+			news_message = "Officials are advising nearby colonies about a newly declared exclusion zone in the sector surrounding [decoded_station_name]."
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")

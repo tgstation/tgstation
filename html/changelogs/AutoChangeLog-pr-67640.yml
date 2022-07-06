@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Ore silos can once again be synced to machines on the station on other z levels, for multi-z maps."

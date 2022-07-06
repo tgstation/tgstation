@@ -15,10 +15,9 @@
 /area/station/maintenance/department/medical)
 "d" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/sign/warning/secure_area{
+/obj/structure/sign/warning/secure_area/directional/west{
 	desc = "A warning sign which reads 'CAVE IN HAZARD: WEAR PROTECTIVE HEAD GEAR'.";
-	name = "\improper CAVE IN HAZARD sign";
-	pixel_x = -32
+	name = "\improper CAVE IN HAZARD sign"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
@@ -75,10 +74,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/sign/warning/secure_area{
+/obj/structure/sign/warning/secure_area/directional/south{
 	desc = "A warning sign which reads 'CAVE IN HAZARD: WEAR PROTECTIVE HEAD GEAR'.";
-	name = "\improper CAVE IN HAZARD sign";
-	pixel_y = -32
+	name = "\improper CAVE IN HAZARD sign"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)

@@ -14,9 +14,9 @@
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
-		TRAIT_LITERATE,
 	)
 	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much

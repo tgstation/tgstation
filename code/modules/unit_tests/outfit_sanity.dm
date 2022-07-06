@@ -20,7 +20,7 @@
 	r_hand = /obj/item/stack/spacecash/c1000
 
 /datum/unit_test/outfit_sanity/Run()
-	var/datum/outfit/prototype_outfit
+	var/datum/outfit/prototype_outfit = /datum/outfit
 	var/prototype_name = initial(prototype_outfit.name)
 	var/mob/living/carbon/human/H = allocate(/mob/living/carbon/human)
 

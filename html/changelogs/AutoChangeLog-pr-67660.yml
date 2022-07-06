@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - bugfix: "Jobs are no longer closed when the nuke detonates off-station."

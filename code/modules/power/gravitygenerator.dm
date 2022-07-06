@@ -3,7 +3,8 @@
 // Gravity Generator
 //
 
-GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
+/// We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
+GLOBAL_LIST_EMPTY(gravity_generators)
 
 #define POWER_IDLE 0
 #define POWER_UP 1
@@ -27,21 +28,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	var/datum/proximity_monitor/advanced/gravity/gravity_field
-
 	var/sprite_number = 0
-
-	///Audio for when the gravgen is on
-	var/datum/looping_sound/gravgen/soundloop
-
-/obj/machinery/gravity_generator/Initialize(mapload)
-	. = ..()
-	soundloop = new(src, TRUE)
-
-/obj/machinery/gravity_generator/Destroy()
-	QDEL_NULL(gravity_field)
-	QDEL_NULL(soundloop)
-	return ..()
 
 /obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return FALSE
@@ -77,59 +64,52 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/proc/set_fix()
 	set_machine_stat(machine_stat & ~BROKEN)
 
+/**
+ * Generator part
+ *
+ * Parts of the gravity generator used to have a proper sprite.
+ */
+/obj/machinery/gravity_generator/part
+	var/obj/machinery/gravity_generator/main/main_part
+
 /obj/machinery/gravity_generator/part/Destroy()
+	atom_break()
 	if(main_part)
-		qdel(main_part)
-	set_broken()
-	QDEL_NULL(soundloop)
+		UnregisterSignal(main_part, COMSIG_ATOM_UPDATED_ICON)
+		main_part = null
 	return ..()
 
-//
-// Part generator which is mostly there for looks
-//
-
-/obj/machinery/gravity_generator/part
-	var/obj/machinery/gravity_generator/main/main_part = null
-
-/obj/machinery/gravity_generator/part/attackby(obj/item/I, mob/user, params)
-	return main_part.attackby(I, user)
+/obj/machinery/gravity_generator/part/attackby(obj/item/weapon, mob/user, params)
+	if(!main_part)
+		return
+	return main_part.attackby(weapon, user)
 
 /obj/machinery/gravity_generator/part/get_status()
-	return main_part?.get_status()
+	if(!main_part)
+		return
+	return main_part.get_status()
 
 /obj/machinery/gravity_generator/part/attack_hand(mob/user, list/modifiers)
+	if(!main_part)
+		return
 	return main_part.attack_hand(user, modifiers)
 
 /obj/machinery/gravity_generator/part/set_broken()
 	..()
-	if(main_part && !(main_part.machine_stat & BROKEN))
-		main_part.set_broken()
+	if(!main_part || (main_part.machine_stat & BROKEN))
+		return
+	main_part.set_broken()
 
 /// Used to eat args
 /obj/machinery/gravity_generator/part/proc/on_update_icon(obj/machinery/gravity_generator/source, updates, updated)
 	SIGNAL_HANDLER
 	return update_appearance(updates)
 
-//
-// Generator which spawns with the station.
-//
-
-/obj/machinery/gravity_generator/main/station/Initialize(mapload)
-	. = ..()
-	setup_parts()
-	middle.add_overlay("activated")
-	update_list()
-
-//
-// Generator an admin can spawn
-//
-/obj/machinery/gravity_generator/main/station/admin
-	use_power = NO_POWER_USE
-
-//
-// Main Generator with the main code
-//
-
+/**
+ * Main gravity generator
+ *
+ * The actual gravity generator, that actually holds the UI, contains the grav gen parts, ect.
+ */
 /obj/machinery/gravity_generator/main
 	icon_state = "on_8"
 	idle_power_usage = 0
@@ -138,30 +118,53 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
+
+	/// List of all gravity generator parts
+	var/list/generator_parts = list()
+	/// The gravity generator part in the very center, the fifth one, where we place the overlays.
+	var/obj/machinery/gravity_generator/part/center_part
+
+	/// Whether the gravity generator is currently active.
 	var/on = TRUE
+	/// If the main breaker is on/off, to enable/disable gravity.
 	var/breaker = TRUE
-	var/list/parts = list()
-	var/obj/middle = null
+	/// If the generatir os idle, charging, or down.
 	var/charging_state = POWER_IDLE
+	/// How much charge the gravity generator has, goes down when breaker is shut, and shuts down at 0.
 	var/charge_count = 100
+
+	/// The gravity overlay currently used.
 	var/current_overlay = null
-	var/broken_state = 0
-	var/setting = 1 //Gravity value when on
+	/// When broken, what stage it is at (GRAV_NEEDS_SCREWDRIVER:0) (GRAV_NEEDS_WELDING:1) (GRAV_NEEDS_PLASTEEL:2) (GRAV_NEEDS_WRENCH:3)
+	var/broken_state = GRAV_NEEDS_SCREWDRIVER
+	/// Gravity value when on, honestly I don't know why it does it like this, but it does.
+	var/setting = 1
+
+	/// The gravity field created by the generator.
+	var/datum/proximity_monitor/advanced/gravity/gravity_field
+	/// Audio for when the gravgen is on
+	var/datum/looping_sound/gravgen/soundloop
 
 ///Station generator that spawns with gravity turned off.
-/obj/machinery/gravity_generator/main/station/off
+/obj/machinery/gravity_generator/main/off
 	on = FALSE
 	breaker = FALSE
 	charge_count = 0
 
+/obj/machinery/gravity_generator/main/Initialize(mapload)
+	. = ..()
+	soundloop = new(src, start_immediately = FALSE)
+	setup_parts()
+	if(on)
+		enable()
+		center_part.add_overlay("activated")
+
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
-	on = FALSE
-	update_list()
-	for(var/obj/machinery/gravity_generator/part/O in parts)
-		O.main_part = null
-		if(!QDESTROYING(O))
-			qdel(O)
+	disable()
+	QDEL_NULL(soundloop)
+	QDEL_NULL(center_part)
+	QDEL_LIST(generator_parts)
 	return ..()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
@@ -175,26 +178,23 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 			continue
 		var/obj/machinery/gravity_generator/part/part = new(T)
 		if(count == 5) // Middle
-			middle = part
+			center_part = part
 		if(count <= 3) // Their sprite is the top part of the generator
 			part.set_density(FALSE)
 			part.layer = WALL_OBJ_LAYER
 			part.plane = GAME_PLANE_UPPER
 		part.sprite_number = count
 		part.main_part = src
-		parts += part
+		generator_parts += part
 		part.update_appearance()
 		part.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, /obj/machinery/gravity_generator/part/proc/on_update_icon)
 
-/obj/machinery/gravity_generator/main/proc/connected_parts()
-	return parts.len == 8
-
 /obj/machinery/gravity_generator/main/set_broken()
-	..()
-	for(var/obj/machinery/gravity_generator/M in parts)
-		if(!(M.machine_stat & BROKEN))
-			M.set_broken()
-	middle.cut_overlays()
+	. = ..()
+	for(var/obj/machinery/gravity_generator/internal_parts as anything in generator_parts)
+		if(!(internal_parts.machine_stat & BROKEN))
+			internal_parts.set_broken()
+	center_part.cut_overlays()
 	charge_count = 0
 	breaker = FALSE
 	set_power()
@@ -202,10 +202,10 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	investigate_log("has broken down.", INVESTIGATE_GRAVITY)
 
 /obj/machinery/gravity_generator/main/set_fix()
-	..()
-	for(var/obj/machinery/gravity_generator/M in parts)
-		if(M.machine_stat & BROKEN)
-			M.set_fix()
+	. = ..()
+	for(var/obj/machinery/gravity_generator/internal_parts as anything in generator_parts)
+		if(internal_parts.machine_stat & BROKEN)
+			internal_parts.set_fix()
 	broken_state = FALSE
 	update_appearance()
 	set_power()
@@ -213,26 +213,26 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 // Interaction
 
 // Fixing the gravity generator.
-/obj/machinery/gravity_generator/main/attackby(obj/item/I, mob/user, params)
+/obj/machinery/gravity_generator/main/attackby(obj/item/weapon, mob/user, params)
 	if(machine_stat & BROKEN)
 		switch(broken_state)
 			if(GRAV_NEEDS_SCREWDRIVER)
-				if(I.tool_behaviour == TOOL_SCREWDRIVER)
+				if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
 					to_chat(user, span_notice("You secure the screws of the framework."))
-					I.play_tool_sound(src)
+					weapon.play_tool_sound(src)
 					broken_state++
 					update_appearance()
 					return
 			if(GRAV_NEEDS_WELDING)
-				if(I.tool_behaviour == TOOL_WELDER)
-					if(I.use_tool(src, user, 0, volume=50, amount=1))
+				if(weapon.tool_behaviour == TOOL_WELDER)
+					if(weapon.use_tool(src, user, 0, volume=50, amount=1))
 						to_chat(user, span_notice("You mend the damaged framework."))
 						broken_state++
 						update_appearance()
 					return
 			if(GRAV_NEEDS_PLASTEEL)
-				if(istype(I, /obj/item/stack/sheet/plasteel))
-					var/obj/item/stack/sheet/plasteel/PS = I
+				if(istype(weapon, /obj/item/stack/sheet/plasteel))
+					var/obj/item/stack/sheet/plasteel/PS = weapon
 					if(PS.get_amount() >= 10)
 						PS.use(10)
 						to_chat(user, span_notice("You add the plating to the framework."))
@@ -243,9 +243,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 						to_chat(user, span_warning("You need 10 sheets of plasteel!"))
 					return
 			if(GRAV_NEEDS_WRENCH)
-				if(I.tool_behaviour == TOOL_WRENCH)
+				if(weapon.tool_behaviour == TOOL_WRENCH)
 					to_chat(user, span_notice("You secure the plating to the framework."))
-					I.play_tool_sound(src)
+					weapon.play_tool_sound(src)
 					set_fix()
 					return
 	return ..()
@@ -308,9 +308,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	on = TRUE
 	update_use_power(ACTIVE_POWER_USE)
 
-	if (!SSticker.IsRoundInProgress())
-		return
-
 	soundloop.start()
 	if (!gravity_in_level())
 		investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
@@ -325,89 +322,69 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	on = FALSE
 	update_use_power(IDLE_POWER_USE)
 
-	if (!SSticker.IsRoundInProgress())
-		return
-
 	soundloop.stop()
+	QDEL_NULL(gravity_field)
 	if (gravity_in_level())
 		investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
 		message_admins("The gravity generator was brought offline with no backup generator. [ADMIN_VERBOSEJMP(src)]")
 		shake_everyone()
 
-	QDEL_NULL(gravity_field)
 	complete_state_update()
 
 /obj/machinery/gravity_generator/main/proc/complete_state_update()
 	update_appearance()
 	update_list()
 
-// Set the state of the gravity.
-/obj/machinery/gravity_generator/main/proc/set_state(new_state)
-
-	on = new_state
-	update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
-	// Sound the alert if gravity was just enabled or disabled.
-	var/alert = FALSE
-	if(SSticker.IsRoundInProgress())
-		if(on) // If we turned on and the game is live.
-
-		else
-
-
-
-	if(alert)
-		shake_everyone()
-
 // Charge/Discharge and turn on/off gravity when you reach 0/100 percent.
 /obj/machinery/gravity_generator/main/process()
 	if(machine_stat & BROKEN)
 		return
-	if(charging_state != POWER_IDLE)
-		if(charging_state == POWER_UP && charge_count >= 100)
-			enable()
-		else if(charging_state == POWER_DOWN && charge_count <= 0)
-			disable()
-		else
-			if(charging_state == POWER_UP)
-				charge_count += 2
-			else if(charging_state == POWER_DOWN)
-				charge_count -= 2
+	if(charging_state == POWER_IDLE)
+		return
+	if(charging_state == POWER_UP && charge_count >= 100)
+		enable()
+	else if(charging_state == POWER_DOWN && charge_count <= 0)
+		disable()
+	else
+		if(charging_state == POWER_UP)
+			charge_count += 2
+		else if(charging_state == POWER_DOWN)
+			charge_count -= 2
 
-			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
+		if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
+			playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
 
-			var/overlay_state = null
-			switch(charge_count)
-				if(0 to 20)
-					overlay_state = null
-				if(21 to 40)
-					overlay_state = "startup"
-				if(41 to 60)
-					overlay_state = "idle"
-				if(61 to 80)
-					overlay_state = "activating"
-				if(81 to 100)
-					overlay_state = "activated"
+		var/overlay_state = null
+		switch(charge_count)
+			if(0 to 20)
+				overlay_state = null
+			if(21 to 40)
+				overlay_state = "startup"
+			if(41 to 60)
+				overlay_state = "idle"
+			if(61 to 80)
+				overlay_state = "activating"
+			if(81 to 100)
+				overlay_state = "activated"
 
-			if(overlay_state != current_overlay)
-				if(middle)
-					middle.cut_overlays()
-					if(overlay_state)
-						middle.add_overlay(overlay_state)
-					current_overlay = overlay_state
+		if(overlay_state != current_overlay)
+			if(center_part)
+				center_part.cut_overlays()
+				if(overlay_state)
+					center_part.add_overlay(overlay_state)
+				current_overlay = overlay_state
 
-// Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
+/// Shake everyone on the z level to let them know that gravity was enagaged/disengaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/T = get_turf(src)
 	var/sound/alert_sound = sound('sound/effects/alert.ogg')
-	for(var/i in GLOB.mob_list)
-		var/mob/M = i
-		if(M.z != z && !(SSmapping.level_trait(z, ZTRAITS_STATION) && SSmapping.level_trait(M.z, ZTRAITS_STATION)))
+	for(var/mob/mobs as anything in GLOB.mob_list)
+		if(mobs.z != z && !(SSmapping.level_trait(z, ZTRAITS_STATION) && SSmapping.level_trait(mobs.z, ZTRAITS_STATION)))
 			continue
-		M.update_gravity(M.has_gravity())
-		if(M.client)
-			shake_camera(M, 15, 1)
-			M.playsound_local(T, null, 100, 1, 0.5, S = alert_sound)
+		mobs.update_gravity(mobs.has_gravity())
+		if(mobs.client)
+			shake_camera(mobs, 15, 1)
+			mobs.playsound_local(T, null, 100, 1, 0.5, sound_to_use = alert_sound)
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)
@@ -418,22 +395,24 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	return FALSE
 
 /obj/machinery/gravity_generator/main/proc/update_list()
-	var/turf/T = get_turf(src.loc)
-	if(T)
-		var/list/z_list = list()
-		// Multi-Z, station gravity generator generates gravity on all ZTRAIT_STATION z-levels.
-		if(SSmapping.level_trait(T.z, ZTRAIT_STATION))
-			for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-				z_list += z
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	var/list/z_list = list()
+	// Multi-Z, station gravity generator generates gravity on all ZTRAIT_STATION z-levels.
+	if(SSmapping.level_trait(T.z, ZTRAIT_STATION))
+		for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+			z_list += z
+	else
+		z_list += T.z
+	for(var/z in z_list)
+		if(!GLOB.gravity_generators["[z]"])
+			GLOB.gravity_generators["[z]"] = list()
+		if(on)
+			GLOB.gravity_generators["[z]"] |= src
 		else
-			z_list += T.z
-		for(var/z in z_list)
-			if(!GLOB.gravity_generators["[z]"])
-				GLOB.gravity_generators["[z]"] = list()
-			if(on)
-				GLOB.gravity_generators["[z]"] |= src
-			else
-				GLOB.gravity_generators["[z]"] -= src
+			GLOB.gravity_generators["[z]"] -= src
+		SSmapping.calculate_z_level_gravity(z)
 
 /obj/machinery/gravity_generator/main/proc/change_setting(value)
 	if(value != setting)
@@ -447,8 +426,23 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	disable()
 	investigate_log("was turned off by blackout event or a gravity anomaly detonation.", INVESTIGATE_GRAVITY)
 
+/obj/machinery/gravity_generator/main/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	disable()
+
+/obj/machinery/gravity_generator/main/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	. = ..()
+	if(charge_count != 0 && charging_state != POWER_UP)
+		enable()
+
+//prevents shuttles attempting to rotate this since it messes up sprites
+/obj/machinery/gravity_generator/main/shuttleRotate(rotation, params)
+	params = NONE
+	return ..()
+
 // Misc
 
+/// Gravity generator instruction guide
 /obj/item/paper/guides/jobs/engi/gravity_gen
 	name = "paper- 'Generate your own gravity!'"
 	info = {"<h1>Gravity Generator Instructions For Dummies</h1>
