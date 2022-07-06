@@ -10927,6 +10927,10 @@
 /obj/item/kirbyplants/random,
 /obj/structure/sign/warning/no_smoking/directional/north,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "cQy" = (
@@ -67086,13 +67090,6 @@
 "siI" = (
 /turf/open/floor/wood,
 /area/station/service/library)
-"siP" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai)
 "siT" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
@@ -98693,7 +98690,7 @@ tzv
 btH
 btH
 kAo
-siP
+kXJ
 bEl
 xMy
 uDl

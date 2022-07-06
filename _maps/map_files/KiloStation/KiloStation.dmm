@@ -70,9 +70,6 @@
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "aay" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -21722,6 +21719,10 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
 /obj/effect/decal/cleanable/cobweb,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "gkW" = (

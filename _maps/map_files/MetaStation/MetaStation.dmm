@@ -2639,6 +2639,10 @@
 /obj/structure/showcase/cyborg/old{
 	pixel_y = 20
 	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "aVr" = (
@@ -38484,13 +38488,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
-"nGv" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai)
 "nGz" = (
 /obj/structure/rack,
 /obj/item/radio/off{
@@ -123744,7 +123741,7 @@ jZC
 pan
 mbS
 wgB
-nGv
+mCL
 aWO
 aYz
 lup
