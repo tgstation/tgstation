@@ -402,14 +402,20 @@
 	icon_state = "hood_cargo"
 
 // Quartermaster
-/obj/item/clothing/suit/hooded/wintercoat/qm
+/obj/item/clothing/suit/hooded/wintercoat/cargo/qm
 	name = "quartermaster's winter coat"
 	desc = "A dark brown winter coat that has a golden crate pin for its zipper pully."
 	icon_state = "coatqm"
 	inhand_icon_state = "coatqm"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/qm
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/cargo/qm
 
-/obj/item/clothing/head/hooded/winterhood/qm
+/obj/item/clothing/suit/hooded/wintercoat/cargo/qm/Initialize(mapload)
+	. = ..()
+	allowed += list(
+		/obj/item/melee/baton/telescopic,
+	)
+	
+/obj/item/clothing/head/hooded/winterhood/cargo/qm
 	desc = "A dark brown winter hood"
 	icon_state = "hood_qm"
 
