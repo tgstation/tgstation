@@ -90,4 +90,4 @@
 						window.bloodied = FALSE
 			user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
 			target.wash(cleaning_strength)
-		on_cleaned_callback?.Invoke(source, target, user)
+		on_cleaned_callback?.Invoke(source, target, user, clean_target)
