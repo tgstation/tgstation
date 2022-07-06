@@ -93,7 +93,7 @@
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE
-	user.visible_message(span_notice("[user] collapses [src.name]."), span_notice("You collapse [src.name]."))
+	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
 	var/obj/structure/bed/roller/folding_bed = new foldabletype(get_turf(src))
 	user.put_in_hands(folding_bed)
 	qdel(src)
