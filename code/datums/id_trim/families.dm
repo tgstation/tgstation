@@ -1,7 +1,9 @@
 /// Trim for the families space police. Has all access.
 /datum/id_trim/space_police
-	trim_state = "trim_ert_security"
 	assignment = "Space Police"
+	trim_state = "trim_securityofficer"
+	department_color = "#134975"
+	subdepartment_color = "#CB0000"
 
 /datum/id_trim/space_police/New()
 	. = ..()

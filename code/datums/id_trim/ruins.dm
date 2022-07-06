@@ -38,12 +38,17 @@
 /datum/id_trim/away/cat_surgeon
 	assignment = "Cat Surgeon"
 	trim_state = "trim_medicaldoctor"
+	department_color = "#5B97BC"
+	subdepartment_color = "#58C800"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINTENANCE)
 
-/// Trim for Hilber in Hilbert's Hotel.
+/// Trim for Hilbert in Hilbert's Hotel.
 /datum/id_trim/away/hilbert
 	assignment = "Head Researcher"
-	trim_state = "trim_researchdirector"
+	department_color = "#1B67A5"
+	subdepartment_color = "#C96DBF"
+	trim_state = "trim_scientist"
+	department_state = "departmenthead"
 	access = list(ACCESS_AWAY_GENERIC3, ACCESS_RESEARCH)
 
 /// Trim for beach bum lifeguards.
@@ -54,6 +59,8 @@
 /datum/id_trim/space_bartender
 	assignment = "Space Bartender"
 	trim_state = "trim_bartender"
+	department_color = "#58C800"
+	subdepartment_color = "#C96DBF"
 	access = list(ACCESS_BAR)
 
 /// Trim for various Centcom corpses.
@@ -69,11 +76,14 @@
 /// Trim for various Centcom corpses.
 /datum/id_trim/centcom/corpse/private_security
 	assignment = JOB_CENTCOM_PRIVATE_SECURITY
+	department_color = "#CB0000"
+	subdepartment_color = "#CB0000"
 	access = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY, ACCESS_MECH_SECURITY)
 
 /// Trim for various Centcom corpses.
 /datum/id_trim/centcom/corpse/private_security/tradepost_officer
 	assignment = "Tradepost Officer"
+	subdepartment_color = "#B18644"
 
 /// Trim for various Centcom corpses.
 /datum/id_trim/centcom/corpse/assault
@@ -84,6 +94,8 @@
 /datum/id_trim/engioutpost
 	assignment = "Senior Station Engineer"
 	trim_state = "trim_stationengineer"
+	department_color = "#FFA62B"
+	subdepartment_color = "#FFA62B"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINEERING, ACCESS_ENGINEERING, ACCESS_ENGINE_EQUIP, ACCESS_MAINT_TUNNELS)
 
 /// Trim for various various ruins.
@@ -95,6 +107,8 @@
 /datum/id_trim/pirate
 	assignment = "Pirate"
 	trim_state = "trim_unknown"
+	department_color = "#F10303"
+	subdepartment_color = "#F10303"
 	access = list(ACCESS_SYNDICATE)
 
 /// Trim for pirates.
