@@ -21,7 +21,7 @@
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
-	toolspeed = 0.5
+	toolspeed = 1.5 //Turn it on first you dork
 	var/on = FALSE
 
 /obj/item/chainsaw/ComponentInitialize()
@@ -55,6 +55,7 @@
 	else
 		hitsound = SFX_SWING_HIT
 
+	toolspeed = on ? 0.5 : initial(toolspeed) //Turning it on halves the speed
 	if(src == user.get_active_held_item()) //update inhands
 		user.update_inv_hands()
 	update_action_buttons()
@@ -71,3 +72,6 @@
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		return TRUE
 	return FALSE
+
+/datum/action/item_action/startchainsaw
+	name = "Pull The Starting Cord"

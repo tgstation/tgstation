@@ -55,10 +55,10 @@
 	. = ..()
 	if(HAS_TRAIT(add_to, TRAIT_COMPONENT_PRINTER))
 		return FALSE
-	ADD_TRAIT(add_to, TRAIT_COMPONENT_PRINTER, src)
+	ADD_TRAIT(add_to, TRAIT_COMPONENT_PRINTER, REF(src))
 
 /obj/item/circuit_component/printer/removed_from(obj/item/integrated_circuit/removed_from)
-	REMOVE_TRAIT(removed_from, TRAIT_COMPONENT_PRINTER, src)
+	REMOVE_TRAIT(removed_from, TRAIT_COMPONENT_PRINTER, REF(src))
 	return ..()
 
 /obj/item/circuit_component/printer/register_shell(atom/movable/shell)

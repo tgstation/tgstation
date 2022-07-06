@@ -16,7 +16,7 @@ type Reagent = {
   description: string;
 };
 
-export const BorgShaker = (_, context) => {
+export const BorgShaker = (props, context) => {
   const { data } = useBackend<BorgShakerContext>(context);
   const { theme, minVolume, sodas, alcohols, selectedReagent } = data;
 
