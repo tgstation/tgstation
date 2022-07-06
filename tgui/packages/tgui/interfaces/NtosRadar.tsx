@@ -27,17 +27,15 @@ type Target = {
   locx: number;
 };
 
-export const NtosRadar = () => {
+export const NtosRadar = (props, context) => {
   return (
     <NtosWindow width={800} height={600} theme="ntos">
-      <NtosRadarContent sig_err={'Signal Lost'} />
+      <NtosRadarContent />
     </NtosWindow>
   );
 };
 
-export const NtosRadarContent = (props) => {
-  const { sig_err } = props;
-
+export const NtosRadarContent = (props, context) => {
   return (
     <Stack fill>
       <Stack.Item position="relative" width={20.5}>
@@ -55,7 +53,7 @@ export const NtosRadarContent = (props) => {
         m={1.5}
         width={45}
         height={45}>
-        <TargetDisplay sig_err={sig_err} />
+        <TargetDisplay />
       </Stack.Item>
     </Stack>
   );
@@ -106,8 +104,10 @@ const ObjectDisplay = (props, context) => {
 const TargetDisplay = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { selected, target } = data;
-  const { sig_err } = props;
 
+  if (!selected || !target) {
+    return null;
+  }
   if (!Object.keys(target).length && !!selected) {
     return (
       <NoticeBox
@@ -117,7 +117,7 @@ const TargetDisplay = (props, context) => {
         width={42}
         fontSize="30px"
         textAlign="center">
-        {sig_err}
+        Signal Lost
       </NoticeBox>
     );
   }
