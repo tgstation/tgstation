@@ -412,13 +412,13 @@
 	name = "\improper Derelict Genetics"
 	icon_state = "ks13_gen"
 
-/area/ruin/space/ks13/science/toxins
-	name = "\improper Derelict Toxins Department"
-	icon_state = "ks13_toxins"
+/area/ruin/space/ks13/science/ordnance
+	name = "\improper Derelict Ordnance Department"
+	icon_state = "ks13_ord"
 
-/area/ruin/space/ks13/science/toxins_hall
-	name = "\improper Derelict Toxins Hallway"
-	icon_state = "ks13_toxins_hall"
+/area/ruin/space/ks13/science/ordnance_hall
+	name = "\improper Derelict Ordnance Hallway"
+	icon_state = "ks13_ord_hall"
 
 // Area define for organization
 /area/ruin/space/ks13/security
