@@ -124,7 +124,7 @@
 		else
 			calling_arguments = args
 	if(datum_flags & DF_VAR_EDITED)
-		if(usr && !usr.client?.ckey) //This ONLY happens when usr's client switches mobs just before the callback gets invoked.
+		if(usr && usr != GLOB.AdminProcCallHandler && !usr.client?.ckey) //This ONLY happens when usr's client switches mobs just before the callback gets invoked.
 			return HandleUserlessProcCall(usr, object, delegate, calling_arguments)
 		return WrapAdminProcCall(object, delegate, calling_arguments)
 	if (object == GLOBAL_PROC)
