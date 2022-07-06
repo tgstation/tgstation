@@ -71,7 +71,7 @@
 						continue
 					dept_data += job_datum.title
 			if(dept_data.len <= 0) //Congratufuckinglations
-				tgui_alert(src, "There are literally no random jobs available for you on this server, dm the admins for help")
+				tgui_alert(src, "There are literally no random jobs available for you on this server, ahelp for assistance.")
 				return
 			var/random = pick(dept_data)
 			var/randomjob = "<p><center><a href='byond://?src=[REF(src)];SelectedJob=[random]'>[random]</a></center><center><a href='byond://?src=[REF(src)];SelectedJob=Random'>Reroll</a></center><center><a href='byond://?src=[REF(src)];cancrand=[1]'>Cancel</a></center></p>"
