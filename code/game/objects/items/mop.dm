@@ -60,13 +60,10 @@
 		return
 
 	if(T)
-		var/datum/component/cleaner/cleaner = GetComponent(/datum/component/cleaner)
-		if(!reagents.has_chemical_flag(REAGENT_CLEANS, 1)) //won't clean the turf nor give you experience without cleaning reagents
-			cleaner.cleaning_strength = 0 //none of the cleaning flags
-			cleaner.experience_gain_modifier = 0
-		SEND_SIGNAL(src, COMSIG_START_CLEANING, T, user)
-		cleaner.cleaning_strength = CLEAN_SCRUB
-		cleaner.experience_gain_modifier = 1
+		if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
+			SEND_SIGNAL(src, COMSIG_START_CLEANING, T, user)
+		else //won't clean the turf nor give you experience without cleaning reagents
+			SEND_SIGNAL(src, COMSIG_START_CLEANING, T, user, FALSE)
 
 /obj/item/mop/cyborg/Initialize(mapload)
 	. = ..()
