@@ -1,49 +1,66 @@
 import { useBackend } from '../../backend';
-import { Box, Button, LabeledList, ProgressBar, Tooltip } from '../../components';
+import { Box, Button, ProgressBar, Tooltip } from '../../components';
 import { OperatorData, MechaUtility } from './data';
 
+const UtilityName = (props: { name: string }) => {
+  const { name } = props;
+  return (
+    <Tooltip content={name} position="top">
+      <span className="UtilityModulePane__UtilityName">{`${name}:`}</span>
+    </Tooltip>
+  );
+};
+
+type EquipmentProps = {
+  module: MechaUtility;
+};
+
+const Equipment = (props: EquipmentProps, context) => {
+  const { module } = props;
+  const { act } = useBackend<OperatorData>(context);
+
+  return (
+    <div className="UtilityModulePane__Equipment">
+      <UtilityName name={module.name} />
+      <Button
+        className="UtilityModulePane__Equipment__button"
+        content={(module.activated ? 'En' : 'Dis') + 'abled'}
+        onClick={() =>
+          act('equip_act', {
+            ref: module.ref,
+            gear_action: 'toggle',
+          })
+        }
+        selected={module.activated}
+      />
+      <Button
+        className="UtilityModulePane__Equipment__button"
+        content={'Detach'}
+        onClick={() =>
+          act('equip_act', {
+            ref: module.ref,
+            gear_action: 'detach',
+          })
+        }
+      />
+    </div>
+  );
+};
+
 export const UtilityModulesPane = (props, context) => {
-  const { act, data } = useBackend<OperatorData>(context);
+  const { data } = useBackend<OperatorData>(context);
   const { mech_equipment } = data;
   return (
     <Box style={{ 'overflow': 'auto', 'max-height': '16rem' }}>
-      <LabeledList>
-        {mech_equipment['utility'].map((module, i) => (
-          <LabeledList.Item key={i} label={module.name} verticalAlign="middle">
-            {module.snowflake.snowflake_id ? (
-              <Snowflake module={module} />
-            ) : (
-              <Box
-                width="100%"
-                display="flex"
-                flexDirection="row"
-                alignItems="center">
-                <Button
-                  verticalAlignContent="middle"
-                  content={(module.activated ? 'En' : 'Dis') + 'abled'}
-                  onClick={() =>
-                    act('equip_act', {
-                      ref: module.ref,
-                      gear_action: 'toggle',
-                    })
-                  }
-                  selected={module.activated}
-                />
-                <Button
-                  verticalAlignContent="middle"
-                  content={'Detach'}
-                  onClick={() =>
-                    act('equip_act', {
-                      ref: module.ref,
-                      gear_action: 'detach',
-                    })
-                  }
-                />
-              </Box>
-            )}
-          </LabeledList.Item>
-        ))}
-      </LabeledList>
+      <div>
+        {mech_equipment['utility'].map((module, i) => {
+          return module.snowflake.snowflake_id ? (
+            <Snowflake module={module} />
+          ) : (
+            <Equipment module={module} />
+          );
+        })}
+      </div>
     </Box>
   );
 };
@@ -64,44 +81,32 @@ const Snowflake = (props: { module: MechaUtility }, context) => {
   }
 };
 
-const EjectorLabel = (props: { name: string }) => {
-  const { name } = props;
-  return (
-    <Tooltip content={name} position="top">
-      <Box
-        style={{
-          'display': 'inline-block',
-          'vertical-align': 'middle',
-          'max-width': '6rem',
-          'overflow-x': 'hidden',
-          'text-overflow': 'ellipsis',
-        }}>
-        {`${name}:`}
-      </Box>
-    </Tooltip>
-  );
-};
-
 const SnowflakeEjector = (props: { module: MechaUtility }, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { cargo } = props.module.snowflake;
   return (
-    <LabeledList>
-      {cargo.map((item, i) => (
-        <LabeledList.Item key={i} label={<EjectorLabel name={item.name} />}>
-          <Button
-            onClick={() =>
-              act('equip_act', {
-                ref: props.module.ref,
-                cargoref: item.ref,
-                gear_action: 'eject',
-              })
-            }>
-            {'Eject'}
-          </Button>
-        </LabeledList.Item>
-      ))}
-    </LabeledList>
+    <>
+      {cargo && cargo.length > 0 && <Box>Cargo</Box>}
+      <Box style={{ 'margin-left': '1rem' }}>
+        {cargo.map((item) => (
+          <div
+            key={props.module.ref}
+            className="UtilityModulePane__SnowflakeEjector__entry">
+            <UtilityName name={item.name} />
+            <Button
+              onClick={() =>
+                act('equip_act', {
+                  ref: props.module.ref,
+                  cargoref: item.ref,
+                  gear_action: 'eject',
+                })
+              }>
+              {'Eject'}
+            </Button>
+          </div>
+        ))}
+      </Box>
+    </>
   );
 };
 

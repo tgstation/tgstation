@@ -91,6 +91,7 @@ export type OperatorData = {
 };
 
 export type MechaUtility = {
+  activated: boolean;
   name: string;
   ref: string;
   snowflake: any;
