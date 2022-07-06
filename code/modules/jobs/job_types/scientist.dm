@@ -53,9 +53,19 @@
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(prob(0.4))
+	try_giving_horrible_tie()
+
+/datum/outfit/job/scientist/proc/try_giving_horrible_tie()
+	if (prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible
 
 /datum/outfit/job/scientist/get_types_to_preload()
 	. = ..()
 	. += /obj/item/clothing/neck/tie/horrible
+
+/// A version of the scientist outfit that is guaranteed to be the same every time
+/datum/outfit/job/scientist/consistent
+	name = "Scientist - Consistent"
+
+/datum/outfit/job/scientist/consistent/try_giving_horrible_tie()
+	return

@@ -173,6 +173,11 @@
 	light_color = LIGHT_COLOR_PURPLE
 	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
 	immunity_resistance_flags = FREEZE_PROOF
+	lava_temperature = 100
+
+/turf/open/lava/plasma/examine(mob/user)
+	. = ..()
+	. += span_info("Some <b>liquid plasma<b> could probably be scooped up with a <b>container</b>.")
 
 /turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
 	var/obj/item/reagent_containers/glass/C = I
@@ -213,7 +218,7 @@
 	if(plasma_parts.len)
 		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
 		burn_human.emote("scream")
-		ADD_TRAIT(burn_limb, TRAIT_PLASMABURNT, src)
+		ADD_TRAIT(burn_limb, TRAIT_PLASMABURNT, name)
 		burn_human.update_body_parts()
 		burn_human.emote("scream")
 		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.name] melts down to the bone!"), \

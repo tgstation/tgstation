@@ -64,6 +64,7 @@
 		"turbine_part_compressor",
 		"turbine_part_rotor",
 		"turbine_part_stator",
+		"watering_can",
 	)
 
 /datum/techweb_node/mmi
@@ -880,36 +881,63 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
-/datum/techweb_node/ai
-	id = "ai"
+/datum/techweb_node/ai_basic
+	id = "ai_basic"
 	display_name = "Artificial Intelligence"
 	description = "AI unit research."
 	prereq_ids = list("adv_robotics")
 	design_ids = list(
 		"aicore",
-		"aifixer",
-		"aiupload",
-		"asimov_module",
 		"borg_ai_control",
-		"corporate_module",
-		"default_module",
-		"freeform_module",
-		"freeformcore_module",
 		"intellicard",
 		"mecha_tracking_ai_control",
-		"onehuman_module",
-		"overlord_module",
-		"oxygen_module",
-		"paladin_module",
-		"protectstation_module",
-		"purge_module",
-		"quarantine_module",
-		"remove_module",
+		"aifixer",
+		"aiupload",
 		"reset_module",
+		"asimov_module",
+		"default_module",
+		"nutimov_module",
+		"paladin_module",
+		"robocop_module",
+		"corporate_module",
+		"drone_module",
+		"oxygen_module",
 		"safeguard_module",
-		"tyrant_module",
+		"protectstation_module",
+		"quarantine_module",
+		"freeform_module",
+		"remove_module",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/ai_adv
+	id = "ai_adv"
+	display_name = "Advanced Artificial Intelligence"
+	description = "State of the art lawsets to be used for AI research."
+	prereq_ids = list("ai_basic")
+	design_ids = list(
+		"asimovpp_module",
+		"paladin_devotion_module",
+		"dungeon_master_module",
+		"painter_module",
+		"ten_commandments_module",
+		"hippocratic_module",
+		"maintain_module",
+		"liveandletlive_module",
+		"reporter_module",
+		"hulkamania_module",
+		"peacekeeper_module",
+		"overlord_module",
+		"tyrant_module",
+		"antimov_module",
+		"balance_module",
+		"thermurderdynamic_module",
+		"damaged_module",
+		"freeformcore_module",
+		"onehuman_module",
+		"purge_module",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 //Any kind of point adjustment needs to happen before SSresearch sets up the whole node tree, it gets cached
 /datum/techweb_node/ai/New()
@@ -1175,7 +1203,7 @@
 		"cybernetic_stomach_tier2",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
-	
+
 
 /datum/techweb_node/cyber_organs_upgraded
 	id = "cyber_organs_upgraded"
@@ -1293,16 +1321,19 @@
 	id = "botany"
 	display_name = "Botanical Engineering"
 	description = "Botanical tools"
-	prereq_ids = list("adv_engi", "biotech")
+	prereq_ids = list("biotech")
 	design_ids = list(
 		"biogenerator",
 		"flora_gun",
+		"gene_shears",
 		"hydro_tray",
 		"portaseeder",
 		"seed_extractor",
+		"adv_watering_can",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	discount_experiments = list(/datum/experiment/scanning/random/plants/wild = 3000)
+	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
+	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 3000)
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -1311,7 +1342,6 @@
 	prereq_ids = list("adv_engi")
 	design_ids = list(
 		"exwelder",
-		"gene_shears",
 		"handdrill",
 		"jawsoflife",
 		"laserscalpel",
@@ -1538,6 +1568,8 @@
 		"mod_mag_harness",
 		"mod_pathfinder",
 		"mod_holster",
+		"mod_sonar",
+		"mod_projectile_dampener",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -2127,6 +2159,18 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"mod_disposal",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/fishing
+	id = "fishing"
+	display_name = "Fishing Technology"
+	description = "Cutting edge fishing advancements."
+	prereq_ids = list("base")
+	design_ids = list(
+		"fishing_rod_tech"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

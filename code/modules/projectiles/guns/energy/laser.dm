@@ -15,6 +15,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = FALSE
 	item_flags = NONE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/retro
 	name ="retro laser gun"
@@ -135,6 +136,7 @@
 	pin = /obj/item/firing_pin/tag/blue
 	ammo_x_offset = 2
 	selfcharge = TRUE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
@@ -149,6 +151,7 @@
 	pin = /obj/item/firing_pin/tag/red
 	ammo_x_offset = 2
 	selfcharge = TRUE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
@@ -163,18 +166,22 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite)
 	shaded_charge = TRUE
 	ammo_x_offset = 1
-	can_flashlight = TRUE
-	flight_x_offset = 15
-	flight_y_offset = 9
 	can_bayonet = TRUE
 	knife_x_offset = 19
 	knife_y_offset = 13
 	w_class = WEIGHT_CLASS_NORMAL
 	dual_wield_spread = 10 //as intended by the coders
 
-/obj/item/gun/energy/laser/thermal/ComponentInitialize()
+/obj/item/gun/energy/laser/thermal/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+
+/obj/item/gun/energy/laser/thermal/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 15, \
+		overlay_y = 9)
 
 /obj/item/gun/energy/laser/thermal/inferno //the magma gun
 	name = "inferno pistol"

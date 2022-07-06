@@ -6,6 +6,7 @@
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_NOSLIPALL,
+		TRAIT_LITERATE,
 	)
 	attack_verb = "slap"
 	attack_effect = ATTACK_EFFECT_DISARM

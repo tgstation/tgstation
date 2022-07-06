@@ -24,29 +24,34 @@
   @include meta.load-css('../atomic/color.scss');
 
   // Components
-  @include meta.load-css('../components/Button.scss', $with: (
-    'color-default': #E8E4C9,
-    'color-disabled': #363636,
-    'color-selected': #9d0808,
-    'color-caution': #be6209,
-    'color-danger': #9a9d00,
-  ));
-  @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'background-color': rgba(0, 0, 0, 0.5),
-  ));
+  @include meta.load-css(
+    '../components/Button.scss',
+    $with: (
+      'color-default': #e8e4c9,
+      'color-disabled': #363636,
+      'color-selected': #9d0808,
+      'color-caution': #be6209,
+      'color-danger': #9a9d00
+    )
+  );
+  @include meta.load-css(
+    '../components/ProgressBar.scss',
+    $with: ('background-color': rgba(0, 0, 0, 0.5))
+  );
   @include meta.load-css('../components/Section.scss');
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'background-color': #585337,
-  ));
+  @include meta.load-css(
+    '../layouts/TitleBar.scss',
+    $with: ('background-color': #585337)
+  );
 
   .Button {
     font-family: monospace;
     color: #161613;
-    border: base.em(2px) outset #E8E4C9;
+    border: base.em(2px) outset #e8e4c9;
     outline: base.em(1px) solid #161613;
   }
 
