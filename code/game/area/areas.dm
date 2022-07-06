@@ -44,6 +44,9 @@
 	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
 
+	/// Is this area considered underground? As in, is it not the top most Z level of a map? Used for determining if the day/night system should touch this area.
+	var/underground = FALSE
+
 	/// Size of the area in open turfs, only calculated for indoors areas.
 	var/areasize = 0
 

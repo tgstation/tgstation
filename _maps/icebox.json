@@ -51,5 +51,6 @@
 		"Captain": {
 			"special_charter": "moon"
 		}
-	}
+	},
+	"day_night_controller":"/datum/day_night_controller/icebox"
 }
