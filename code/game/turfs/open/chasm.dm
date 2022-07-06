@@ -102,6 +102,7 @@
 	name = "gas giant stratosphere"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_highchance"
+	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT // no superconductivity into 42k active turfs thx
 	initial_gas_mix = GASGIANT_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/chasm/gas_giant
