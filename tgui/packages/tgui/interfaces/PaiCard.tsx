@@ -1,9 +1,9 @@
 import { BooleanLike } from '../../common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-type PaiCardData = {
+type Data = {
   candidates: Candidate[];
   pai: Pai;
 };
@@ -27,7 +27,7 @@ type Pai = {
 };
 
 export const PaiCard = (props, context) => {
-  const { data } = useBackend<PaiCardData>(context);
+  const { data } = useBackend<Data>(context);
   const { pai } = data;
 
   return (
@@ -39,32 +39,18 @@ export const PaiCard = (props, context) => {
 
 /** Gives a list of candidates as cards */
 const PaiDownload = (props, context) => {
-  const { act, data } = useBackend<PaiCardData>(context);
+  const { act, data } = useBackend<Data>(context);
   const { candidates = [] } = data;
-  const [tabInChar, setTabInChar] = useLocalState(context, 'tab', true);
-  const onClick = () => {
-    setTabInChar(!tabInChar);
-  };
 
   return (
     <Section
       buttons={
-        <>
-          {!!candidates.length && (
-            <Button
-              icon="info"
-              onClick={onClick}
-              tooltip="Toggles between IC and OOC information.">
-              {tabInChar ? 'IC' : 'OOC'}
-            </Button>
-          )}
-          <Button
-            icon="bell"
-            onClick={() => act('request')}
-            tooltip="Request candidates.">
-            Request
-          </Button>
-        </>
+        <Button
+          icon="bell"
+          onClick={() => act('request')}
+          tooltip="Request candidates.">
+          Request
+        </Button>
       }
       fill
       scrollable
@@ -76,11 +62,7 @@ const PaiDownload = (props, context) => {
           {candidates.map((candidate, index) => {
             return (
               <Stack.Item key={index}>
-                <CandidateDisplay
-                  candidate={candidate}
-                  index={index + 1}
-                  tabInChar={tabInChar}
-                />
+                <CandidateDisplay candidate={candidate} index={index + 1} />
               </Stack.Item>
             );
           })}
@@ -94,10 +76,20 @@ const PaiDownload = (props, context) => {
  * had to make the comments and descriptions a separate tab.
  * In longer entries, it is much more readable.
  */
-const CandidateDisplay = (props, context) => {
-  const { act } = useBackend<PaiCardData>(context);
-  const { candidate, index, tabInChar } = props;
-  const { comments, description, key, name } = candidate;
+const CandidateDisplay = (
+  props: { candidate: Candidate; index: number },
+  context
+) => {
+  const { act } = useBackend<Data>(context);
+  const {
+    candidate: {
+      comments = 'None',
+      description = 'None',
+      key,
+      name = 'Randomized Name',
+    },
+    index,
+  } = props;
 
   return (
     <Box
@@ -120,12 +112,15 @@ const CandidateDisplay = (props, context) => {
         height={12}
         scrollable
         title={'Candidate ' + index}>
-        <Box color="green" fontSize="16px">
-          Name: {name || 'Randomized Name'}
+        <Box color="green" fontSize="16px" mb={1}>
+          Name: {name}
         </Box>
-        {tabInChar
-          ? `Description: ${description || 'None'}`
-          : `OOC Comments: ${comments || 'None'}`}
+        <LabeledList>
+          <LabeledList.Item label="IC Description">
+            {description}
+          </LabeledList.Item>
+          <LabeledList.Item label="OOC Comments">{comments}</LabeledList.Item>
+        </LabeledList>
       </Section>
     </Box>
   );
@@ -133,9 +128,10 @@ const CandidateDisplay = (props, context) => {
 
 /** Once a pAI has been loaded, you can alter its settings here */
 const PaiOptions = (props, context) => {
-  const { act, data } = useBackend<PaiCardData>(context);
-  const { pai } = data;
-  const { can_holo, dna, emagged, laws, master, name, transmit, receive } = pai;
+  const { act, data } = useBackend<Data>(context);
+  const {
+    pai: { can_holo, dna, emagged, laws, master, name, transmit, receive },
+  } = data;
 
   return (
     <Section fill scrollable title={`Settings: ${name.toUpperCase()}`}>

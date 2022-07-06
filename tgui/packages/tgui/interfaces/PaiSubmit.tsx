@@ -2,7 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Input, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
-type CandidateData = {
+type Data = {
   comments: string;
   description: string;
   name: string;
@@ -20,16 +20,6 @@ Keep in mind: Not entering information may lead to you not being
 selected. Press submit to alert pAI cards of your candidacy.`;
 
 export const PaiSubmit = (props, context) => {
-  const { data } = useBackend<CandidateData>(context);
-  const [input, setInput] = useLocalState<CandidateData>(context, 'input', {
-    comments: data.comments || '',
-    description: data.description || '',
-    name: data.name || '',
-  });
-  const onChangeHandler = (e, value) => {
-    setInput({ ...input, [value]: e.target.value });
-  };
-
   return (
     <Window width={400} height={460} title="pAI Candidacy Menu">
       <Window.Content>
@@ -38,10 +28,10 @@ export const PaiSubmit = (props, context) => {
             <DetailsDisplay />
           </Stack.Item>
           <Stack.Item>
-            <InputDisplay input={input} onChangeHandler={onChangeHandler} />
+            <InputDisplay />
           </Stack.Item>
           <Stack.Item>
-            <ButtonsDisplay input={input} />
+            <ButtonsDisplay />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -50,7 +40,7 @@ export const PaiSubmit = (props, context) => {
 };
 
 /** Displays basic info about playing pAI */
-const DetailsDisplay = () => {
+const DetailsDisplay = (props, context) => {
   return (
     <Section fill scrollable title="Details">
       <Box color="label">
@@ -64,9 +54,14 @@ const DetailsDisplay = () => {
 };
 
 /** Input boxes for submission details */
-const InputDisplay = (props) => {
-  const { input, onChangeHandler } = props;
-  const { comments, description, name } = input;
+const InputDisplay = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const { comments, description, name } = data;
+  const [input, setInput] = useLocalState<Data>(context, 'input', {
+    comments,
+    description,
+    name,
+  });
 
   return (
     <Section fill title="Input">
@@ -79,7 +74,7 @@ const InputDisplay = (props) => {
             <Input
               fluid
               value={name}
-              onChange={(e) => onChangeHandler(e, 'name')}
+              onChange={(e, value) => setInput({ ...input, name: value })}
             />
           </Tooltip>
         </Stack.Item>
@@ -91,7 +86,9 @@ const InputDisplay = (props) => {
             <Input
               fluid
               value={description}
-              onChange={(e) => onChangeHandler(e, 'description')}
+              onChange={(e, value) =>
+                setInput({ ...input, description: value })
+              }
             />
           </Tooltip>
         </Stack.Item>
@@ -103,7 +100,7 @@ const InputDisplay = (props) => {
             <Input
               fluid
               value={comments}
-              onChange={(e) => onChangeHandler(e, 'comments')}
+              onChange={(e, value) => setInput({ ...input, comments: value })}
             />
           </Tooltip>
         </Stack.Item>
@@ -114,8 +111,13 @@ const InputDisplay = (props) => {
 
 /** Gives the user a submit button */
 const ButtonsDisplay = (props, context) => {
-  const { act } = useBackend<CandidateData>(context);
-  const { input } = props;
+  const { act, data } = useBackend<Data>(context);
+  const { comments, description, name } = data;
+  const [input, setInput] = useLocalState<Data>(context, 'input', {
+    comments,
+    description,
+    name,
+  });
 
   return (
     <Section fill>
