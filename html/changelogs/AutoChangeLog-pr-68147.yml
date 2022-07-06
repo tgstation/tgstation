@@ -1,4 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - admin: "experiment completion are now logged in research.html"
