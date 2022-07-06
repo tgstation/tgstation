@@ -22144,10 +22144,6 @@
 /area/station/security/warden)
 "gPB" = (
 /obj/item/radio/intercom/directional/west,
-/obj/machinery/camera/directional/west{
-	c_tag = "Engineering Emitter Room Port";
-	network = list("ss13","engine")
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gPE" = (
@@ -45122,13 +45118,6 @@
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
-"oaY" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Engineering Emitter Room Starboard";
-	network = list("ss13","engine")
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
 "obj" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -75343,10 +75332,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
-"xCc" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/open/floor/iron/dark,
-/area/station/science/ordnance/office)
 "xCh" = (
 /obj/machinery/button/door/directional/west{
 	id = "xenobio5";
@@ -239023,7 +239008,7 @@ nsv
 kAT
 gka
 oWQ
-oaY
+lhC
 alx
 pMC
 qWJ
@@ -258000,7 +257985,7 @@ kgo
 sCx
 gWr
 iHc
-xCc
+gXv
 gXv
 vaa
 xLq

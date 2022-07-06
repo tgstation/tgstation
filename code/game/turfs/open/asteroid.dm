@@ -71,11 +71,12 @@
 		if(!isturf(user.loc))
 			return
 
-		balloon_alert(user, "digging...")
+		to_chat(user, span_notice("You start digging..."))
 
 		if(W.use_tool(src, user, 40, volume=50))
 			if(!can_dig(user))
 				return TRUE
+			to_chat(user, span_notice("You dig a hole."))
 			getDug()
 			SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
 			return TRUE

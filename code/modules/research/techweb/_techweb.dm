@@ -298,7 +298,6 @@
 /datum/techweb/proc/complete_experiment(datum/experiment/completed_experiment)
 	available_experiments -= completed_experiment
 	completed_experiments[completed_experiment.type] = completed_experiment
-	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb id [id]")
 
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)

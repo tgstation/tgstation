@@ -1,4 +1,0 @@
-author: "orthography"
-delete-after: True
-changes: 
-  - bugfix: "gives access to the APC as the AI, and adds more camera coverage where it belongs."
