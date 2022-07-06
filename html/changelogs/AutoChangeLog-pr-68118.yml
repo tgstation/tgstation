@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "pAI screens light up with an alert when there's a personality to download!"
