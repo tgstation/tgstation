@@ -102,7 +102,7 @@
 
 		var/turf/destination = find_safe_turf(extended_safety_checks = TRUE)
 		for(var/obj/machinery/light/flick in get_area(src))
-			flick.flicker(10 SECONDS)
+			flick.flicker(10)
 		playsound(get_turf(src),'sound/hallucinations/wail.ogg', 50, TRUE, TRUE)
 		src.visible_message(span_warning("The [src] wails and dives through the astral plane, fleeing the area!"), span_warning("You begin to panic and channel your might to dive into the astral plane, fleeing the area!"))
 		do_teleport(src, destination, 1, asoundin = 'sound/effects/screech.ogg', channel = TELEPORT_CHANNEL_FREE)

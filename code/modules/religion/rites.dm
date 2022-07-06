@@ -783,7 +783,7 @@
 	rite_target.visible_message(span_warning("[rite_target] begins thrashing wildly and rises into the air above [religious_tool]!"), ignored_mobs = list(rite_target))
 	to_chat(rite_target, span_warning("Your body throbs in almost unbearable pain, and you feel like throwing up!"))
 	for(var/obj/machinery/light/flick in get_area(rite_target))
-		flick.flicker(15 SECONDS)
+		flick.flicker(15)
 	return ..()
 
 /datum/religion_rites/expel_influence/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
