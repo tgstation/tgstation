@@ -407,6 +407,9 @@
 	desc = "A dark brown winter coat that has a golden crate pin for its zipper pully."
 	icon_state = "coatqm"
 	inhand_icon_state = "coatqm"
+	allowed = list(
+		/obj/item/melee/baton/telescopic,
+	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/qm
 
 /obj/item/clothing/head/hooded/winterhood/qm
