@@ -1397,6 +1397,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "aEU" = (
@@ -6090,6 +6091,7 @@
 	dir = 9;
 	network = list("aicore")
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "cjx" = (
@@ -6997,8 +6999,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/cable/layer3,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "cxs" = (
@@ -10755,7 +10755,6 @@
 /area/station/service/theater)
 "dDA" = (
 /obj/structure/cable,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "dDG" = (
@@ -13443,11 +13442,6 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
-"eDJ" = (
-/obj/structure/cable/layer3,
-/obj/structure/cable/layer1,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai)
 "eDO" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
@@ -15181,6 +15175,7 @@
 	id = "AI";
 	pixel_y = -26
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "fkv" = (
@@ -19370,7 +19365,6 @@
 	pixel_y = 7
 	},
 /obj/machinery/newscaster/directional/north,
-/obj/structure/cable/layer1,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "gGG" = (
@@ -23571,10 +23565,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
-"ieh" = (
-/obj/structure/cable/layer1,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai)
 "iev" = (
 /obj/structure/training_machine,
 /obj/item/target,
@@ -25094,7 +25084,6 @@
 /obj/machinery/flasher/directional/north{
 	id = "AI"
 	},
-/obj/structure/cable/multilayer/connected,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "iDl" = (
@@ -33961,6 +33950,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "lvi" = (
@@ -35913,7 +35903,6 @@
 	dir = 9;
 	network = list("aicore")
 	},
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "mbm" = (
@@ -36340,6 +36329,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "mjm" = (
@@ -52453,6 +52443,7 @@
 /area/station/maintenance/tram/right)
 "rFY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "rGi" = (
@@ -61531,7 +61522,6 @@
 "uMO" = (
 /obj/structure/window/reinforced,
 /obj/structure/cable,
-/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "uMR" = (
@@ -63310,6 +63300,7 @@
 /area/station/commons/dorms/laundry)
 "vsh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "vsz" = (
@@ -69496,6 +69487,11 @@
 "xBk" = (
 /turf/closed/wall,
 /area/station/medical/storage)
+"xBy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/ai)
 "xBB" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
@@ -183833,7 +183829,7 @@ fXr
 hMy
 tcZ
 aET
-oFI
+xBy
 oFI
 kve
 guT
@@ -184856,12 +184852,12 @@ mKc
 oIl
 kve
 gGD
-ieh
+tcs
 dDA
 uMO
 kBk
 cxr
-eDJ
+tcs
 rhx
 kve
 guT
