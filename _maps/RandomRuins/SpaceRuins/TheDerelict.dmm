@@ -1639,7 +1639,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/cell)
 "rY" = (
-/obj/machinery/door/airlock/research{
+/obj/machinery/door/airlock/research/glass{
 	name = "Toxins Mix External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
@@ -7444,7 +7444,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
 "Wl" = (
-/obj/machinery/door/airlock/research{
+/obj/machinery/door/airlock/research/glass{
 	name = "Toxins Mix Internal Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
