@@ -440,6 +440,8 @@
 	modifies_speech = TRUE
 	// The tonal indicator shown when we finish sending a message. If it's empty, none appears.
 	var/tonal_indicator = null
+	// The timerid for our tonal indicator
+	var/tonal_timerid
 
 /obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer)
 	. = ..()
@@ -480,14 +482,16 @@
 
 	if(question_found)
 		tonal_indicator = mutable_appearance('icons/mob/talk.dmi', "signlang1", TYPING_LAYER)
+		signer.visible_message(span_notice("[signer] lowers [signer.p_their()] eyebrows."))
 	else if(exclamation_found)
 		tonal_indicator = mutable_appearance('icons/mob/talk.dmi', "signlang2", TYPING_LAYER)
+		signer.visible_message(span_notice("[signer] raises [signer.p_their()] eyebrows."))
 	if(!isnull(tonal_indicator))
 		owner.add_overlay(tonal_indicator)
-		addtimer(CALLBACK(src, .proc/remove_tonal_indicator), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+		tonal_timerid = addtimer(CALLBACK(src, .proc/remove_tonal_indicator), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/organ/internal/tongue/tied/proc/remove_tonal_indicator()
-	if(isnull(tonal_indicator))
+	if(isnull(tonal_indicator) || !client.typing_indicators)
 		return
 	owner.cut_overlay(tonal_indicator)
 	tonal_indicator = null
