@@ -43,7 +43,7 @@ export const TaskManager = (props, context) => {
                 <Button
                   onClick={() => {
                     setToCall({
-                      type: 'resume',
+                      type: 'resumeTask',
                       params: { index: info.index },
                     });
                     setModal('call');
