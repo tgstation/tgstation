@@ -74,6 +74,7 @@
 		JOB_STATION_ENGINEER,
 		JOB_SCIENTIST,
 		JOB_ATMOSPHERIC_TECHNICIAN,
+		JOB_WORKER,
 	)
 	exists_on_map = TRUE
 
@@ -93,7 +94,7 @@
 /datum/objective_item/steal/low_risk/fireaxe
 	name = "a fire axe"
 	targetitem = /obj/item/fireaxe
-	excludefromjob = list(JOB_CHIEF_ENGINEER,JOB_STATION_ENGINEER,JOB_ATMOSPHERIC_TECHNICIAN)
+	excludefromjob = list(JOB_CHIEF_ENGINEER,JOB_STATION_ENGINEER,JOB_ATMOSPHERIC_TECHNICIAN,JOB_WORKER)
 	exists_on_map = TRUE
 
 /obj/item/fireaxe/add_stealing_item_objective()
@@ -291,7 +292,7 @@
 	difficulty = 3
 	excludefromjob = list(
 		JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN,
-		JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST,
+		JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_WORKER,
 	)
 
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/tank/T)
@@ -348,7 +349,7 @@
 	name = "the Blackbox"
 	targetitem = /obj/item/blackbox
 	difficulty = 10
-	excludefromjob = list(JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
+	excludefromjob = list(JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_WORKER)
 	exists_on_map = TRUE
 
 /obj/item/blackbox/add_stealing_item_objective()
