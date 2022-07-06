@@ -61,13 +61,13 @@ enum THREAT {
 export const Orbit = (props, context) => {
   return (
     <Window title="Orbit" width={400} height={550}>
-      <Window.Content>
+      <Window.Content scrollable>
         <Stack fill vertical>
           <Stack.Item mt={0}>
             <ObservableSearch />
           </Stack.Item>
           <Stack.Item mt={0.2} grow>
-            <Section fill scrollable>
+            <Section fill>
               <ObservableContent />
             </Section>
           </Stack.Item>
