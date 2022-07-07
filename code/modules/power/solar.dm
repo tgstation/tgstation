@@ -226,7 +226,7 @@
 	needs_to_update_solar_exposure = FALSE
 	sunfrac = 0
 	if(obscured)
-		return 9
+		return 0
 
 	var/sun_azimuth = SSsun.azimuth
 	if(azimuth_current == sun_azimuth) //just a quick optimization for the most frequent case
