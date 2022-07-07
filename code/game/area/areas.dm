@@ -508,35 +508,35 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	LAZYCLEARLIST(adjacent_day_night_turf_cache)
 	LAZYINITLIST(adjacent_day_night_turf_cache)
 
-	for(var/turf/iterated_turf in contents)
+	for(var/turf/iterating_turf in contents)
 		var/bitfield = NONE
 		for(var/bit_step in ALL_JUNCTION_DIRECTIONS)
 			var/turf/target_turf
 			switch(bit_step)
 				if(NORTH_JUNCTION)
-					target_turf = locate(iterated_turf.x, iterated_turf.y + 1, iterated_turf.z)
+					target_turf = locate(iterating_turf.x, iterating_turf.y + 1, iterating_turf.z)
 				if(SOUTH_JUNCTION)
-					target_turf = locate(iterated_turf.x, iterated_turf.y - 1, iterated_turf.z)
+					target_turf = locate(iterating_turf.x, iterating_turf.y - 1, iterating_turf.z)
 				if(EAST_JUNCTION)
-					target_turf = locate(iterated_turf.x + 1, iterated_turf.y, iterated_turf.z)
+					target_turf = locate(iterating_turf.x + 1, iterating_turf.y, iterating_turf.z)
 				if(WEST_JUNCTION)
-					target_turf = locate(iterated_turf.x - 1, iterated_turf.y, iterated_turf.z)
+					target_turf = locate(iterating_turf.x - 1, iterating_turf.y, iterating_turf.z)
 				if(NORTHEAST_JUNCTION)
 					if(bitfield & NORTH_JUNCTION || bitfield & EAST_JUNCTION)
 						continue
-					target_turf = locate(iterated_turf.x + 1, iterated_turf.y + 1, iterated_turf.z)
+					target_turf = locate(iterating_turf.x + 1, iterating_turf.y + 1, iterating_turf.z)
 				if(SOUTHEAST_JUNCTION)
 					if(bitfield & SOUTH_JUNCTION || bitfield & EAST_JUNCTION)
 						continue
-					target_turf = locate(iterated_turf.x + 1, iterated_turf.y - 1, iterated_turf.z)
+					target_turf = locate(iterating_turf.x + 1, iterating_turf.y - 1, iterating_turf.z)
 				if(SOUTHWEST_JUNCTION)
 					if(bitfield & SOUTH_JUNCTION || bitfield & WEST_JUNCTION)
 						continue
-					target_turf = locate(iterated_turf.x - 1, iterated_turf.y - 1, iterated_turf.z)
+					target_turf = locate(iterating_turf.x - 1, iterating_turf.y - 1, iterating_turf.z)
 				if(NORTHWEST_JUNCTION)
 					if(bitfield & NORTH_JUNCTION || bitfield & WEST_JUNCTION)
 						continue
-					target_turf = locate(iterated_turf.x - 1, iterated_turf.y + 1, iterated_turf.z)
+					target_turf = locate(iterating_turf.x - 1, iterating_turf.y + 1, iterating_turf.z)
 			if(!target_turf)
 				continue
 			var/area/target_area = target_turf.loc
@@ -548,9 +548,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 		if(!bitfield)
 			continue
-		adjacent_day_night_turf_cache[iterated_turf] = list(DAY_NIGHT_TURF_INDEX_BITFIELD, DAY_NIGHT_TURF_INDEX_APPEARANCE)
-		adjacent_day_night_turf_cache[iterated_turf][DAY_NIGHT_TURF_INDEX_BITFIELD] = bitfield
-		RegisterSignal(iterated_turf, COMSIG_PARENT_QDELETING, .proc/clear_adjacent_turf)
+		adjacent_day_night_turf_cache[iterating_turf] = list(DAY_NIGHT_TURF_INDEX_BITFIELD, DAY_NIGHT_TURF_INDEX_APPEARANCE)
+		adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_BITFIELD] = bitfield
+		RegisterSignal(iterating_turf, COMSIG_PARENT_QDELETING, .proc/clear_adjacent_turf)
+		if(iterating_turf.lighting_object)
+			iterating_turf.lighting_object.day_night_area = src
 
 	UNSETEMPTY(adjacent_day_night_turf_cache)
 

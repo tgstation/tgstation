@@ -16,6 +16,8 @@ SUBSYSTEM_DEF(day_night)
 	var/list/cached_controllers = list()
 	/// The amount of time we add every tick
 	var/tick_time = DAY_NIGHT_SUBSYSTEM_FIRE_INCREMENT
+	/// If it is our first time firing, we will update maps accordingly as atoms that have initialised will have overriden luminosity.
+	var/first_tick = TRUE
 
 /datum/controller/subsystem/day_night/Initialize(start_timeofday)
 	current_hour = rand(0, 23) // We set the starting station time to something random.
@@ -24,7 +26,9 @@ SUBSYSTEM_DEF(day_night)
 
 /datum/controller/subsystem/day_night/fire(resumed)
 	tick_tock(tick_time)
-
+	if(first_tick)
+		update_controllers(current_hour)
+		first_tick = FALSE
 /**
  * Our internal ticky tocky time machine that will move time forward by the a set amount.
  * Arguments:

@@ -8,6 +8,9 @@
 	///the turf that our light is applied to
 	var/turf/affected_turf
 
+	/// Area which gets linked to a lighting object to make it consider the luminosity from the day/night blending from the area. Yes this isn't ideal, but applying luminosity up to 2 (from both sources) on the turf is not ideal either
+	var/area/day_night_area
+
 /datum/lighting_object/New(turf/source)
 	if(!isturf(source))
 		qdel(src, force=TRUE)
@@ -40,6 +43,7 @@
 		affected_turf.luminosity = 1
 		affected_turf.underlays -= current_underlay
 	affected_turf = null
+	day_night_area = null
 	return ..()
 
 /datum/lighting_object/proc/update()
@@ -89,6 +93,10 @@
 	// This number is mostly arbitrary.
 	var/set_luminosity = max > 1e-6
 	#endif
+
+	// Respect daynight blending from an area for luminosity here.
+	if(day_night_area && day_night_area.luminosity)
+		set_luminosity = 1
 
 	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
 		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case

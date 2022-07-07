@@ -137,7 +137,7 @@
 	if(hour == 24)
 		hour = 0
 	for(var/datum/lightzone/iterating_lightzone as anything in lightzone_cache)
-		if((hour >= iterating_lightzone.start_hour) && (hour < (iterating_lightzone.end_hour == 0 ? 24 : iterating_lightzone.end_hour)))
+		if((hour >= iterating_lightzone.start_hour) && (hour < (!iterating_lightzone.end_hour ? 24 : iterating_lightzone.end_hour)))
 			lightzone_to_return = iterating_lightzone
 	if(!lightzone_to_return)
 		CRASH("Error while finding a lightzone in slot [hour] for [type]!")
@@ -221,7 +221,7 @@
 			current_iterating_lightzone = check_lightzone
 			transition_value = 0
 		var/datum/lightzone/next_lightzone = get_lightzone(current_iterating_lightzone.end_hour)
-		var/segments = ((current_iterating_lightzone.end_hour == 0 ? 24 : current_iterating_lightzone.end_hour) - current_iterating_lightzone.start_hour)
+		var/segments = ((!current_iterating_lightzone.end_hour ? 24 : current_iterating_lightzone.end_hour) - current_iterating_lightzone.start_hour)
 		var/transition_color = BlendRGB(current_iterating_lightzone.light_color, next_lightzone.light_color, transition_value)
 		var/transition_alpha = (current_iterating_lightzone.light_alpha * (1 - transition_value)) + (next_lightzone.light_alpha * (0 + transition_value))
 		color_lookup_table["[hour_index]"] = transition_color
