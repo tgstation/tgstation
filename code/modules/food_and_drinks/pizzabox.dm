@@ -25,6 +25,7 @@
 	var/list/boxes = list()
 
 	var/obj/item/food/pizza/pizza
+	var/obj/item/food/pizza/pizza_type
 
 	var/obj/item/bombcore/miniature/pizza/bomb
 	var/bomb_active = FALSE // If the bomb is counting down.
@@ -37,8 +38,8 @@
 
 /obj/item/pizzabox/Initialize(mapload)
 	. = ..()
-	if(pizza)
-		pizza = new pizza
+	if(pizza_type)
+		pizza = new pizza_type
 	update_appearance()
 
 
@@ -303,25 +304,25 @@
 	bomb_defused = FALSE
 	boxtag = "Meat Explosion"
 	boxtag_set = TRUE
-	pizza = /obj/item/food/pizza/meat
+	pizza_type = /obj/item/food/pizza/meat
 
 /obj/item/pizzabox/margherita
-	pizza = /obj/item/food/pizza/margherita
+	pizza_type = /obj/item/food/pizza/margherita
 
 /obj/item/pizzabox/margherita/robo
-	pizza = /obj/item/food/pizza/margherita/robo
+	pizza_type = /obj/item/food/pizza/margherita/robo
 
 /obj/item/pizzabox/vegetable
-	pizza = /obj/item/food/pizza/vegetable
+	pizza_type = /obj/item/food/pizza/vegetable
 
 /obj/item/pizzabox/mushroom
-	pizza = /obj/item/food/pizza/mushroom
+	pizza_type = /obj/item/food/pizza/mushroom
 
 /obj/item/pizzabox/meat
-	pizza = /obj/item/food/pizza/meat
+	pizza_type = /obj/item/food/pizza/meat
 
 /obj/item/pizzabox/pineapple
-	pizza = /obj/item/food/pizza/pineapple
+	pizza_type = /obj/item/food/pizza/pineapple
 
 //An anomalous pizza box that, when opened, produces the opener's favorite kind of pizza.
 /obj/item/pizzabox/infinite

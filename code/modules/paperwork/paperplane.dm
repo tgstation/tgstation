@@ -57,7 +57,7 @@
 
 /obj/item/paperplane/update_overlays()
 	. = ..()
-	var/list/stamped = internalPaper.stamped
+	var/list/stamped = internalPaper?.stamped
 	if(!LAZYLEN(stamped))
 		return
 	for(var/S in stamped)

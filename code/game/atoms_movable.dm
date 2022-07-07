@@ -94,17 +94,9 @@
 
 /atom/movable/Initialize(mapload)
 	. = ..()
-	switch(blocks_emissive)
-		if(EMISSIVE_BLOCK_GENERIC)
-			var/mutable_appearance/gen_emissive_blocker = mutable_appearance(icon, icon_state, offset_spokesman = src, plane = EMISSIVE_PLANE, alpha = src.alpha)
-			gen_emissive_blocker.color = GLOB.em_block_color
-			gen_emissive_blocker.dir = dir
-			gen_emissive_blocker.appearance_flags |= appearance_flags
-			add_overlay(list(gen_emissive_blocker))
-		if(EMISSIVE_BLOCK_UNIQUE)
-			render_target = ref(src)
-			em_block = new(src, render_target)
-			add_overlay(list(em_block))
+	if(blocks_emissive)
+		// Gotta do it to ya, so our blockers get tracked by the overlays system
+		update_appearance()
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)
@@ -171,7 +163,11 @@
 	if(!blocks_emissive)
 		return
 	else if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
-		var/mutable_appearance/gen_emissive_blocker = emissive_blocker(icon, icon_state, src, alpha = src.alpha, appearance_flags = src.appearance_flags)
+		var/offset = 0
+		var/turf/our_t = get_turf(src)
+		if(our_t)
+			offset = GET_TURF_PLANE_OFFSET(our_t)
+		var/mutable_appearance/gen_emissive_blocker = emissive_blocker(icon, icon_state, src, alpha = src.alpha, appearance_flags = src.appearance_flags, offset_const = offset)
 		gen_emissive_blocker.dir = dir
 		return gen_emissive_blocker
 	else if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)

@@ -133,7 +133,7 @@
 		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon_state()
-	icon_state = "[base_icon_state][(reagents.total_volume > 0) ? null : 0]"
+	icon_state = "[base_icon_state][(reagents?.total_volume > 0) ? null : 0]"
 	return ..()
 
 /obj/item/reagent_containers/hypospray/medipen/examine()

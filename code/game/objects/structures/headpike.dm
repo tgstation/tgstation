@@ -40,6 +40,9 @@
 	return ..()
 
 /obj/structure/headpike/update_name()
+	if(!victim)
+		name = initial(name)
+		return ..()
 	name = "[victim.real_name] on a [spear]"
 	return ..()
 

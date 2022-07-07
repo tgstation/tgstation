@@ -136,8 +136,10 @@
 
 /obj/machinery/power/solar/update_overlays()
 	. = ..()
-	panel.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : null]"
-	panel_edge.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : "_edge"]"
+	if(panel)
+		panel.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : null]"
+	if(panel_edge)
+		panel_edge.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : "_edge"]"
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
