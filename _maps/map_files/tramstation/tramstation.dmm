@@ -11161,7 +11161,7 @@
 	name = "random snowman spawner";
 	spawn_loot_chance = 10
 	},
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/station/service/kitchen/coldroom)
 "dQX" = (
 /obj/machinery/door/morgue{
@@ -14821,7 +14821,7 @@
 /obj/machinery/airalarm/kitchen_cold_room{
 	pixel_y = -24
 	},
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/station/service/kitchen/coldroom)
 "fiy" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -15274,7 +15274,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/station/service/kitchen/coldroom)
 "fpA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -25132,7 +25132,7 @@
 "iRv" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/station/service/kitchen/coldroom)
 "iRz" = (
 /obj/structure/grille,
@@ -51311,7 +51311,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/station/service/kitchen/coldroom)
 "rKC" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -68121,7 +68121,7 @@
 "xCR" = (
 /obj/structure/ladder,
 /obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/station/service/kitchen/coldroom)
 "xCZ" = (
 /obj/machinery/holopad,
@@ -68381,7 +68381,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/fake_snow,
+/turf/open/misc/snow/actually_safe,
 /area/station/service/kitchen/coldroom)
 "xJB" = (
 /obj/effect/turf_decal/trimline/white/line{
