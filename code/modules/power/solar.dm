@@ -41,7 +41,9 @@
 	Make(S)
 	connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
-	RegisterSignal(SSday_night, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, .proc/queue_update_solar_exposure)
+	var/level_controller = SSday_night.get_controller(z)
+	if(level_controller)
+		RegisterSignal(level_controller, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, .proc/queue_update_solar_exposure)
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer

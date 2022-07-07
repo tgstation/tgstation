@@ -1,15 +1,15 @@
 /**
  * Day Night Presets are easy to use day/night cycles for certain maps, they are what is used to dictate the sky color.
  *
- * IMPORTANT: The timezones in this MUST all add up to 23, you cannot miss an hour!
+ * IMPORTANT: The lightzones in this MUST all add up to 23, you cannot miss an hour!
  */
 /datum/day_night_controller
 	/// The maps that this preset should be loaded on
 	var/load_map_name
-	/// The timezones that this preset should have
-	var/list/timezones = list()
-	/// The timezones that this preset has loaded
-	var/list/timezone_cache = list()
+	/// The lightzones that this preset should have
+	var/list/lightzones = list()
+	/// The lightzones that this preset has loaded
+	var/list/lightzone_cache = list()
 	/// A list of loaded areas
 	var/list/area_cache = list()
 	/// A list of areas that are not affected directly, but still have turf adjacency
@@ -31,7 +31,7 @@
 		return
 	affected_z_level = incoming_affected_z_level
 	get_affected_areas()
-	load_timezones()
+	load_lightzones()
 	compile_transitions()
 
 /**
@@ -114,29 +114,29 @@
 
 
 /**
- * Creates all of the desired timezone datums and caches them for later.
+ * Creates all of the desired lightzone datums and caches them for later.
  */
-/datum/day_night_controller/proc/load_timezones()
-	for(var/iterating_timezone_type in timezones)
-		timezone_cache += new iterating_timezone_type
+/datum/day_night_controller/proc/load_lightzones()
+	for(var/iterating_lightzone_type in lightzones)
+		lightzone_cache += new iterating_lightzone_type
 
 /**
- * Gets the timezone that relates to the given hour
+ * Gets the lightzone that relates to the given hour
  * Arguments:
- * * hour - The hour at which we will be checking our timezones.
- * Returns the timezone datum.
+ * * hour - The hour at which we will be checking our lightzones.
+ * Returns the lightzone datum.
  */
-/datum/day_night_controller/proc/get_timezone(hour)
-	var/timezone_to_return
-	for(var/datum/timezone/iterating_timezone as anything in timezone_cache)
-		if((hour >= iterating_timezone.start_hour) && (hour <= iterating_timezone.end_hour))
-			timezone_to_return = iterating_timezone
-	if(!timezone_to_return)
-		CRASH("Critical error while finding a timezone in slot [hour] for [type]!")
-	return timezone_to_return
+/datum/day_night_controller/proc/get_lightzone(hour)
+	var/lightzone_to_return
+	for(var/datum/lightzone/iterating_lightzone as anything in lightzone_cache)
+		if((hour >= iterating_lightzone.start_hour) && (hour <= iterating_lightzone.end_hour))
+			lightzone_to_return = iterating_lightzone
+	if(!lightzone_to_return)
+		CRASH("Critical error while finding a lightzone in slot [hour] for [type]!")
+	return lightzone_to_return
 
 /**
- * Applys the current timezone to all of the areas according to the lookup tables and hour.
+ * Applys the current lightzone to all of the areas according to the lookup tables and hour.
  * Arguments:
  * * hour - The index to use in our lookup tables.
  */
@@ -198,22 +198,22 @@
 		iterating_area.luminosity = luminosity
 
 /**
- * Compiles a lookup table using the loaded timezones for each hour so we can reference it later when switching to said hour.
+ * Compiles a lookup table using the loaded lightzones for each hour so we can reference it later when switching to said hour.
  */
 /datum/day_night_controller/proc/compile_transitions()
 	var/hour_index = 0 // We start at 0 as this is 24hr time
-	var/datum/timezone/current_iterating_timezone
+	var/datum/lightzone/current_iterating_lightzone
 	var/transition_value = 0
 	for(var/i in 1 to 24)
-		var/datum/timezone/check_timezone = get_timezone(hour_index)
-		if(current_iterating_timezone != check_timezone)
-			current_iterating_timezone = check_timezone
+		var/datum/lightzone/check_lightzone = get_lightzone(hour_index)
+		if(current_iterating_lightzone != check_lightzone)
+			current_iterating_lightzone = check_lightzone
 			transition_value = 0
-		var/datum/timezone/next_timezone = get_timezone(current_iterating_timezone.end_hour == 23 ? 0 : current_iterating_timezone.end_hour + 1)
-		var/segments = (current_iterating_timezone.end_hour - current_iterating_timezone.start_hour)
+		var/datum/lightzone/next_lightzone = get_lightzone(current_iterating_lightzone.end_hour == 23 ? 0 : current_iterating_lightzone.end_hour + 1)
+		var/segments = (current_iterating_lightzone.end_hour - current_iterating_lightzone.start_hour)
 		transition_value += (1 / segments)
-		var/transition_color = BlendRGB(current_iterating_timezone.light_color, next_timezone.light_color, transition_value)
-		var/transition_alpha = (current_iterating_timezone.light_alpha * (1 - transition_value)) + (next_timezone.light_alpha * (0 + transition_value))
+		var/transition_color = BlendRGB(current_iterating_lightzone.light_color, next_lightzone.light_color, transition_value)
+		var/transition_alpha = (current_iterating_lightzone.light_alpha * (1 - transition_value)) + (next_lightzone.light_alpha * (0 + transition_value))
 		color_lookup_table["[hour_index]"] = transition_color
 		alpha_lookup_table["[hour_index]"] = transition_alpha
 		hour_index++
@@ -229,11 +229,11 @@
 
 // PRESETS
 /datum/day_night_controller/icebox
-	timezones = list(
-		/datum/timezone/midnight,
-		/datum/timezone/early_morning,
-		/datum/timezone/morning,
-		/datum/timezone/midday,
-		/datum/timezone/early_evening,
-		/datum/timezone/evening,
+	lightzones = list(
+		/datum/lightzone/midnight,
+		/datum/lightzone/early_morning,
+		/datum/lightzone/morning,
+		/datum/lightzone/midday,
+		/datum/lightzone/early_evening,
+		/datum/lightzone/evening,
 	)

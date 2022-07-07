@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(day_night)
  */
 /datum/controller/subsystem/day_night/proc/get_twelvehour_timestamp()
 	var/am_or_pm = current_hour < 12 ? "AM" : "PM"
-	var/hour_entry = current_hour > 12 ? "[current_hour - 12]" : "0[current_hour]"
+	var/hour_entry = current_hour > 12 ? "[current_hour - 12]" : current_hour < 10 ? "0[current_hour]" : current_hour
 	var/minute_entry = current_minute < 10 ? "0[current_minute]" : current_minute
 	return "[hour_entry]:[minute_entry] [am_or_pm]"
 
