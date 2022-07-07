@@ -665,8 +665,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
 "alR" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/effect/turf_decal/bot_white,
+/obj/structure/closet/secure_closet/freezer/milk_eggs_rice_sugar_flour,
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
 "alS" = (
@@ -14557,19 +14557,9 @@
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "fcy" = (
-/obj/structure/closet/secure_closet/freezer/flour_rice_sugar,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/siding/thinplating/corner,
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
 	},
-/obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -47177,8 +47167,8 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "qiV" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/effect/turf_decal/bot_white,
+/obj/structure/closet/secure_closet/freezer/milk_and_eggs,
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
 "qjf" = (
@@ -64017,19 +64007,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "wcQ" = (
-/obj/structure/closet/secure_closet/freezer/milk_and_eggs,
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/siding/thinplating/corner{
-	dir = 8
-	},
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/chair{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
 	},
