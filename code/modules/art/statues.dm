@@ -558,15 +558,10 @@ Moving interrupts
 	if(!content_ma)
 		return
 	var/turf/our_turf = get_turf(src)
-	for(var/mutable_appearance/appearance as anything in content_ma.overlays)
-		// MA's stored in the overlays list are not actually mutable, they've been flattened
-		// We're gonna unflatten em so we can modify them
-		// Lemon todo: look into how carbon updating works, copy that behavior here
-		content_ma.overlays -= appearance
-		var/mutable_appearance/new_lad = new()
-		new_lad.appearance = appearance
-		SET_PLANE(new_lad, PLANE_TO_TRUE(new_lad.plane), our_turf)
-		content_ma.overlays += new_lad
+	// MA's stored in the overlays list are not actually mutable, they've been flattened
+	// This proc unflattens them, updates them, and then reapplies
+	var/list/created = update_appearance_planes(list(content_ma), GET_TURF_PLANE_OFFSET(our_turf))
+	content_ma = created[1]
 
 /obj/structure/statue/custom/update_overlays()
 	. = ..()

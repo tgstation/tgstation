@@ -26,11 +26,9 @@
 
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
-	var/list/overlays_update_on_z_change[TOTAL_LAYERS]
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
 	if((. = overlays_standing[cache_index]))
-		overlays_update_on_z_change[cache_index] = build_planeed_apperance_queue(.)
 		add_overlay(.)
 
 /mob/living/carbon/proc/remove_overlay(cache_index)
@@ -38,7 +36,6 @@
 	if(I)
 		cut_overlay(I)
 		overlays_standing[cache_index] = null
-		overlays_update_on_z_change[cache_index] = null
 
 /mob/living/carbon/proc/visual_remove_overlay(cache_index)
 	var/I = overlays_standing[cache_index]
@@ -55,7 +52,6 @@
 	if(I)
 		cut_overlay(I[Index])
 		overlays_standing[cache_index] = null
-		overlays_update_on_z_change[cache_index] = null
 
 /atom/proc/realize_overlays()
 	realized_overlays = list()
@@ -158,6 +154,7 @@
 		queue = list(appearances)
 	var/queue_index = 0
 	var/list/parent_queue = list()
+	var/unique_plane_found = FALSE
 
 	// We are essentially going to unroll apperance overlays into a flattened list here, so we can filter out floating planes laster
 	// It will look like "overlay overlay overlay (change overlay parent), overlay overlay etc"
@@ -171,6 +168,10 @@
 
 		var/mutable_appearance/new_appearance = new /mutable_appearance()
 		new_appearance.appearance = appearance
+		// We don't need to process anything if no unqiues are found, so we track this
+		// It's unlikely, but better safe then sorry and all
+		if(new_appearance.plane != FLOAT_PLANE)
+			unique_plane_found = TRUE
 		// Now check its children
 		if(length(appearance.overlays))
 			queue += NEXT_PARENT_COMMAND
@@ -178,13 +179,12 @@
 			for(var/mutable_appearance/child_appearance as anything in appearance.overlays)
 				queue += child_appearance
 
-
 	// Now we have a flattened list of parents and their children
 	// Setup such that walking the list backwards will allow us to properly update overlays
 	// (keeping in mind that overlays only update if an apperance is removed and added, and this pattern applies in a nested fashion)
 
 	// If we found no results, return null
-	if(!length(queue))
+	if(!length(queue) || !unique_plane_found)
 		return null
 
 	// ALRIGHT MOTHERFUCKER
@@ -237,70 +237,79 @@
 	var/list/return_pack = list(queue, parent_indexes)
 	return return_pack
 
+	// Rebuilding is a hack. We should really store a list of indexes into our existing overlay list or SOMETHING
+	// IDK. will work for now though, which is a lot better then not working at all
 /mob/living/carbon/proc/update_z_overlays(new_offset, rebuild = FALSE)
 	// Null entries will be filtered here
-	for(var/i in 1 to length(overlays_update_on_z_change))
-		var/list/cache_grouping = overlays_update_on_z_change[i]
-		// Rebuilding is a hack. We should really store a list of indexes into our existing overlay list or SOMETHING
-		// IDK. will work for now though, which is a lot better then not working at all
-		if(rebuild)
-			cache_grouping = build_planeed_apperance_queue(overlays_standing[i])
+	for(var/i in 1 to length(overlays_standing))
+		var/list/cache_grouping = overlays_standing[i]
+		if(!islist(cache_grouping))
+			cache_grouping = list(cache_grouping)
 		// Need this so we can have an index, could build index into the list if we need to tho, check
-		if(!cache_grouping)
+		if(!length(cache_grouping))
 			continue
-		var/list/processing_queue = cache_grouping[1]
-		var/list/parents_queue = cache_grouping[2]
-		var/list/cached_overlays = islist(overlays_standing[i]) ? overlays_standing[i] : list(overlays_standing[i])
-		// Now that we have our queues, we're going to walk them forwards to remove, and backwards to add
-		var/parents_index = 0
-		for(var/item in processing_queue)
-			if(item == NEXT_PARENT_COMMAND)
-				parents_index++
-				continue
-			var/mutable_appearance/iter_apper = item
+		overlays_standing[i] = update_appearance_planes(cache_grouping, new_offset)
 
-			// If we have a parent, refresh our entry in it
-			// This currently does not work. I assume because when a parent's overlays update
-			// It's place in the overlays list is lost, so you get dupes
-			// I think what I need is to process the list bottom up, to remove everything
-			// and then loop again top down to readd all the nested overlays properly
-			// If that makes any sense
-			// Might actually be able to do it in one pass now that I think about it, not totally sure
-			// should check later
+/atom/proc/update_appearance_planes(var/list/mutable_appearance/appearances, new_offset)
+	var/list/build_list = build_planeed_apperance_queue(appearances)
 
-			// Oh and make sure, we need to reupdate the overlays_standing value later
-			// Since its values will no longer be accurate
-			if(parents_index)
-				var/parent_src_index = parents_queue[parents_index]
-				var/mutable_appearance/parent = processing_queue[parent_src_index]
-				parent.overlays -= iter_apper.appearance
-			else // Otherwise, we're at the end of the list, and our parent is the mob
-				cut_overlay(iter_apper)
-				cached_overlays -= iter_apper
+	if(!length(build_list))
+		return appearances
 
-		var/queue_index = length(processing_queue)
-		parents_index = length(parents_queue)
-		while(queue_index >= 1)
-			var/item = processing_queue[queue_index]
-			if(item == NEXT_PARENT_COMMAND)
-				parents_index--
-				queue_index--
-				continue
-			var/mutable_appearance/new_iter = new /mutable_appearance()
-			new_iter.appearance = item
-			if(new_iter.plane != FLOAT_PLANE)
-				SET_PLANE_W_SCALAR(new_iter, PLANE_TO_TRUE(new_iter.plane), new_offset)
-			if(parents_index)
-				var/parent_src_index = parents_queue[parents_index]
-				var/mutable_appearance/parent = processing_queue[parent_src_index]
-				parent.overlays += new_iter.appearance
-			else
-				add_overlay(new_iter)
-				cached_overlays += new_iter
+	// hand_back contains a new copy of the passed in list, with updated values
+	var/list/hand_back = list()
 
-			processing_queue[queue_index] = new_iter.appearance
+	var/list/processing_queue = build_list[1]
+	var/list/parents_queue = build_list[2]
+	// Now that we have our queues, we're going to walk them forwards to remove, and backwards to add
+	var/parents_index = 0
+	for(var/item in processing_queue)
+		if(item == NEXT_PARENT_COMMAND)
+			parents_index++
+			continue
+		var/mutable_appearance/iter_apper = item
+
+		// If we have a parent, refresh our entry in it
+		// This currently does not work. I assume because when a parent's overlays update
+		// It's place in the overlays list is lost, so you get dupes
+		// I think what I need is to process the list bottom up, to remove everything
+		// and then loop again top down to readd all the nested overlays properly
+		// If that makes any sense
+		// Might actually be able to do it in one pass now that I think about it, not totally sure
+		// should check later
+
+		// Oh and make sure, we need to reupdate the overlays_standing value later
+		// Since its values will no longer be accurate
+		if(parents_index)
+			var/parent_src_index = parents_queue[parents_index]
+			var/mutable_appearance/parent = processing_queue[parent_src_index]
+			parent.overlays -= iter_apper.appearance
+		else // Otherwise, we're at the end of the list, and our parent is the mob
+			cut_overlay(iter_apper)
+
+	var/queue_index = length(processing_queue)
+	parents_index = length(parents_queue)
+	while(queue_index >= 1)
+		var/item = processing_queue[queue_index]
+		if(item == NEXT_PARENT_COMMAND)
+			parents_index--
 			queue_index--
-		overlays_standing[i] = cached_overlays
+			continue
+		var/mutable_appearance/new_iter = new /mutable_appearance()
+		new_iter.appearance = item
+		if(new_iter.plane != FLOAT_PLANE)
+			SET_PLANE_W_SCALAR(new_iter, PLANE_TO_TRUE(new_iter.plane), new_offset)
+		if(parents_index)
+			var/parent_src_index = parents_queue[parents_index]
+			var/mutable_appearance/parent = processing_queue[parent_src_index]
+			parent.overlays += new_iter.appearance
+		else
+			add_overlay(new_iter)
+			hand_back += new_iter
+
+		processing_queue[queue_index] = new_iter.appearance
+		queue_index--
+	return hand_back
 
 #undef NEXT_PARENT_COMMAND
 
