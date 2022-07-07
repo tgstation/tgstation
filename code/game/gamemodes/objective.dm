@@ -12,7 +12,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/target_amount = 0 //If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = FALSE //currently only used for custom objectives.
 	var/martyr_compatible = FALSE //If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
-	var/admin_grantable = FALSE //can this be granted by admins?
+	///can this be granted by admins?
+	var/admin_grantable = FALSE
 
 /datum/objective/New(text)
 	if(text)
