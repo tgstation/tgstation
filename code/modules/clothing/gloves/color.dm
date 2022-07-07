@@ -174,6 +174,15 @@
 	icon_state = "gray"
 	inhand_icon_state = "graygloves"
 
+// Grey gloves intended to be paired with winter coats (specifically EVA winter coats)
+/obj/item/clothing/gloves/color/grey/protects_cold
+	name = "\proper Endotherm gloves"
+	desc = "A pair of thick grey gloves, lined to protect the wearer from freezing cold."
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	resistance_flags = NONE
+	clothing_flags = THICKMATERIAL
+
 /obj/item/clothing/gloves/color/light_brown
 	name = "light brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
@@ -185,15 +194,6 @@
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "brown"
 	inhand_icon_state = "browngloves"
-
-// Brown gloves intended to be paired with winter coats (specifically EVA winter coats)
-/obj/item/clothing/gloves/color/brown/protects_cold
-	name = "\proper Endotherm gloves"
-	desc = "A pair of thick brown gloves, lined to protect the wearer from freezing cold."
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	resistance_flags = NONE
-	clothing_flags = THICKMATERIAL
 
 /obj/item/clothing/gloves/color/captain
 	desc = "Regal blue gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky."

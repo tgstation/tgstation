@@ -67,6 +67,7 @@
 /obj/item/clothing/shoes/winterboots/ice_boots/eva
 	name = "\proper Endotherm hiking boots"
 	desc = "A heavy pair of boots with grips applied to the bottom to keep the wearer vertical while walking in freezing conditions."
+	icon_state = "iceboots_eva"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 0.25
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 50, FIRE = 50, ACID = 10)

@@ -6826,7 +6826,7 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/delivery/red,
-/obj/item/clothing/gloves/color/brown/protects_cold,
+/obj/item/clothing/gloves/color/grey/protects_cold,
 /obj/item/clothing/mask/gas,
 /obj/structure/sign/warning/electric_shock/directional/east,
 /turf/open/floor/iron/textured,
@@ -30488,7 +30488,7 @@
 	pixel_x = -1
 	},
 /obj/effect/turf_decal/delivery/red,
-/obj/item/clothing/gloves/color/brown/protects_cold,
+/obj/item/clothing/gloves/color/grey/protects_cold,
 /obj/item/clothing/mask/gas,
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron/textured,
@@ -39449,7 +39449,7 @@
 	pixel_x = -1
 	},
 /obj/effect/turf_decal/delivery/red,
-/obj/item/clothing/gloves/color/brown/protects_cold,
+/obj/item/clothing/gloves/color/grey/protects_cold,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/iron/textured,
 /area/station/ai_monitored/command/storage/eva)
@@ -52732,7 +52732,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/delivery/red,
-/obj/item/clothing/gloves/color/brown/protects_cold,
+/obj/item/clothing/gloves/color/grey/protects_cold,
 /obj/item/clothing/mask/gas,
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -61899,7 +61899,7 @@
 	pixel_x = -2
 	},
 /obj/effect/turf_decal/delivery/red,
-/obj/item/clothing/gloves/color/brown/protects_cold,
+/obj/item/clothing/gloves/color/grey/protects_cold,
 /obj/item/clothing/mask/gas,
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/textured,
@@ -75232,7 +75232,7 @@
 	pixel_x = -2
 	},
 /obj/effect/turf_decal/delivery/red,
-/obj/item/clothing/gloves/color/brown/protects_cold,
+/obj/item/clothing/gloves/color/grey/protects_cold,
 /obj/item/clothing/mask/gas,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/textured,
