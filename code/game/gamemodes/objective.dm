@@ -187,9 +187,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/assassinate
 	name = "assasinate"
-	var/target_role_type=FALSE
 	martyr_compatible = TRUE
 	admin_grantable = TRUE
+	var/target_role_type=FALSE
 
 
 /datum/objective/assassinate/check_completion()
@@ -207,8 +207,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/mutiny
 	name = "mutiny"
-	var/target_role_type=FALSE
 	martyr_compatible = 1
+	var/target_role_type=FALSE
 
 
 /datum/objective/mutiny/check_completion()
@@ -226,9 +226,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/maroon
 	name = "maroon"
-	var/target_role_type=FALSE
 	martyr_compatible = TRUE
 	admin_grantable = TRUE
+	var/target_role_type=FALSE
 
 
 /datum/objective/maroon/check_completion()
@@ -251,8 +251,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/debrain
 	name = "debrain"
-	var/target_role_type=0
 	admin_grantable = TRUE
+	var/target_role_type=0
 
 
 /datum/objective/debrain/check_completion()
@@ -283,9 +283,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/protect//The opposite of killing a dude.
 	name = "protect"
 	martyr_compatible = TRUE
+	admin_grantable = TRUE
 	var/target_role_type = FALSE
 	var/human_check = TRUE
-	admin_grantable = TRUE
 
 
 /datum/objective/protect/check_completion()
@@ -313,8 +313,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/jailbreak
 	name = "jailbreak"
 	martyr_compatible = TRUE //why not?
-	var/target_role_type
 	admin_grantable = TRUE
+	var/target_role_type
 
 
 /datum/objective/jailbreak/check_completion()
@@ -349,8 +349,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	team_explanation_text = "Hijack the emergency shuttle by hacking its navigational protocols through the control console (alt click emergency shuttle console). Leave no team member behind."
 	martyr_compatible = FALSE //Technically you won't get both anyway.
 	/// Overrides the hijack speed of any antagonist datum it is on ONLY, no other datums are impacted.
-	var/hijack_speed_override = 1
 	admin_grantable = TRUE
+	var/hijack_speed_override = 1
 
 /datum/objective/hijack/check_completion() // Requires all owners to escape.
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
@@ -554,10 +554,10 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal
 	name = "steal"
-	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
-	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
 	martyr_compatible = FALSE
 	admin_grantable = TRUE
+	var/datum/objective_item/targetinfo = null //Save the chosen item datum so we can access it later.
+	var/obj/item/steal_target = null //Needed for custom objectives (they're just items, not datums).
 
 /datum/objective/steal/get_target()
 	return steal_target
