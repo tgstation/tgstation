@@ -513,7 +513,9 @@
 	if(!blocks_emissive)
 		return
 
-	. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
+	var/turf/our_turf = get_turf(src)
+	var/offset = GET_TURF_PLANE_OFFSET(our_turf)
+	. += emissive_blocker(standing.icon, standing.icon_state, alpha = standing.alpha, offset_const = offset)
 
 /mob/living/carbon/update_body(is_creating)
 	update_body_parts(is_creating)

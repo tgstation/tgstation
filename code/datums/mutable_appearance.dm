@@ -22,8 +22,8 @@
 		// Lemon todo: this is too often done intentionally
 		// Maybe we should just have things pass in 0 if it's intentional?
 		// IDK maybe this is a bad check, it's caught things for me in the past tho
-		//	if(!our_turf)
-		//		stack_trace("Null location passed in as an offset spokesman for a mutable appearance, ya done fucked up")
+			if(!our_turf)
+				stack_trace("Null location passed in as an offset spokesman for a mutable appearance, ya done fucked up")
 			plane = MUTATE_PLANE(plane, our_turf)
 	var/mutable_appearance/MA = new()
 	MA.icon = icon

@@ -67,7 +67,7 @@
 	/// If this bit of weather should also draw an overlay that's uneffected by lighting onto the area
 	/// Taken from weather_glow.dmi
 	var/use_glow = TRUE
-	var/mutable_appearance/current_glow
+	var/list/offsets_to_glow
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -239,26 +239,38 @@
 		if(END_STAGE)
 			using_icon_state = ""
 
-	var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, ABOVE_LIGHTING_PLANE, 100)
+	var/list/new_offsets_to_glow = list()
+	// Lemon todo: you may have trouble here bestie
 	for(var/V in impacted_areas)
 		var/area/N = V
-		if(current_glow)
-			N.overlays -= current_glow
+		var/offset = SSmapping.max_plane_offset ? GET_Z_PLANE_OFFSET(N.z) : 0
+		var/offset_offset = offset + 1
+		if(length(new_offsets_to_glow) < offset_offset)
+			new_offsets_to_glow.len = offset_offset
+
+		var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, ABOVE_LIGHTING_PLANE, 100, offset_const = offset)
+		new_offsets_to_glow[offset_offset] = glow_overlay
+		var/mutable_appearance/old_glow
+		if(length(offsets_to_glow) >= offset_offset)
+			old_glow = offsets_to_glow[offset_offset]
+
+		if(old_glow)
+			N.overlays -= old_glow
 		if(stage == END_STAGE)
 			N.color = null
 			N.icon_state = using_icon_state
 			N.icon = 'icons/area/areas_misc.dmi'
 			N.layer = initial(N.layer)
-			SET_PLANE(N, initial(N.plane), N)
+			SET_PLANE_W_SCALAR(N, initial(N.plane), offset)
 			N.set_opacity(FALSE)
 		else
 			N.layer = overlay_layer
-			SET_PLANE(N, overlay_plane, N)
+			SET_PLANE_W_SCALAR(N, overlay_plane, offset)
 			N.icon = 'icons/effects/weather_effects.dmi'
 			N.icon_state = using_icon_state
 			N.color = weather_color
 			if(use_glow)
 				N.overlays += glow_overlay
 
-	current_glow = glow_overlay
+	offsets_to_glow = new_offsets_to_glow
 
