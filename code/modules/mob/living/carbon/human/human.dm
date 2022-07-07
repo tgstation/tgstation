@@ -288,7 +288,7 @@
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
-				var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
+				var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, SSday_night.get_twentyfourhour_timestamp(), fine)
 				for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
 					if(tablet.saved_identification == target_record.fields["name"])
 						var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
@@ -314,7 +314,7 @@
 					return
 				if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				var/crime = GLOB.data_core.createCrimeEntry(t1, null, allowed_access, station_time_timestamp())
+				var/crime = GLOB.data_core.createCrimeEntry(t1, null, allowed_access, SSday_night.get_twentyfourhour_timestamp())
 				GLOB.data_core.addCrime(target_record.fields["id"], crime)
 				investigate_log("New Crime: <strong>[t1]</strong> | Added to [target_record.fields["name"]] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 				to_chat(human_user, span_notice("Successfully added a crime."))
@@ -358,7 +358,7 @@
 				var/counter = 1
 				while(target_record.fields[text("com_[]", counter)])
 					counter++
-				target_record.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				target_record.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, SSday_night.get_twentyfourhour_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 				to_chat(human_user, span_notice("Successfully added comment."))
 				return
 

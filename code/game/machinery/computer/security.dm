@@ -657,7 +657,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, SSday_night.get_twentyfourhour_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 
 			if("Delete Record (ALL)")
 				if(active1)
@@ -841,7 +841,7 @@ What a mess.*/
 							var/t2 = tgui_input_text(usr, "Input crime details", "Security Records")
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, SSday_night.get_twentyfourhour_timestamp())
 							GLOB.data_core.addCrime(active1.fields["id"], crime)
 							investigate_log("New Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("crim_delete")
@@ -868,7 +868,7 @@ What a mess.*/
 							var/fine = tgui_input_number(usr, "Input citation fine", "Security Records", 50, maxFine)
 							if (!fine || QDELETED(usr) || QDELETED(src) || !canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
+							var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, SSday_night.get_twentyfourhour_timestamp(), fine)
 							for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
 								if(tablet.saved_identification == active1.fields["name"])
 									var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."

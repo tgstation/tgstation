@@ -3,7 +3,7 @@
 /// The time at which  we reset to 0
 #define MIDNIGHT_RESET 24
 /// How many minutes we add to the time every subsystem fire
-#define SUBSYSTEM_FIRE_INCREMENT 10
+#define DAY_NIGHT_SUBSYSTEM_FIRE_INCREMENT 1
 
 // Day/Night parameters, mostly used for the traits
 /// The point at which daytime starts
@@ -15,7 +15,8 @@
 /// The point at which nighttime ends
 #define NIGHTTIME_END 7 // 7 AM
 
-#define MINIMUM_LIGHT_FOR_LUMINOSITY 100
+/// This determines the minimum alpha level for there to be luminosity in the affected area.
+#define MINIMUM_ALPHA_FOR_LUMINOSITY 100
 
-#define AREA_DAY_NIGHT_INDEX_BITFIELD "bitfield"
-#define AREA_DAY_NIGHT_INDEX_APPEARANCE "appearance"
+#define DAY_NIGHT_TURF_INDEX_BITFIELD "bitfield"
+#define DAY_NIGHT_TURF_INDEX_APPEARANCE "appearance"

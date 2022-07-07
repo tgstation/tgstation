@@ -476,15 +476,6 @@
 	smoothing_groups = null
 	canSmoothWith = null
 
-#undef NORTH_JUNCTION
-#undef SOUTH_JUNCTION
-#undef EAST_JUNCTION
-#undef WEST_JUNCTION
-#undef NORTHEAST_JUNCTION
-#undef NORTHWEST_JUNCTION
-#undef SOUTHEAST_JUNCTION
-#undef SOUTHWEST_JUNCTION
-
 #undef NO_ADJ_FOUND
 #undef ADJ_FOUND
 #undef NULLTURF_BORDER

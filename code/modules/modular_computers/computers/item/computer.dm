@@ -500,7 +500,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 		data["PC_programheaders"] = program_headers
 
-	data["PC_stationtime"] = station_time_timestamp()
+	data["PC_stationtime"] = SSday_night.get_twentyfourhour_timestamp()
 	data["PC_hasheader"] = 1
 	data["PC_showexitprogram"] = active_program ? 1 : 0 // Hides "Exit Program" button on mainscreen
 	return data

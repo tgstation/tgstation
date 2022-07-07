@@ -6,7 +6,7 @@
 
 SUBSYSTEM_DEF(day_night)
 	name = "Day/Night Cycle"
-	wait = 1 MINUTES // Every minute, the clock moves forward 10 minutes
+	wait = 6 SECONDS // Every minute, the clock moves forward 1 minutes
 	/// The current hour
 	var/current_hour = 0
 	/// The current minute
@@ -20,16 +20,15 @@ SUBSYSTEM_DEF(day_night)
 	return ..()
 
 /datum/controller/subsystem/day_night/fire(resumed)
-	current_minute += SUBSYSTEM_FIRE_INCREMENT
+	current_minute += DAY_NIGHT_SUBSYSTEM_FIRE_INCREMENT
 
 	if(current_minute >= HOUR_INCREMENT)
 		var/time_delta = (current_minute - HOUR_INCREMENT) > 0 ? current_minute - HOUR_INCREMENT : 0
 		current_minute = time_delta
 		current_hour += 1
-		update_controllers(current_hour)
-
-	if(current_hour >= MIDNIGHT_RESET)
-		current_hour = 0
+		if(current_hour >= MIDNIGHT_RESET)
+			current_hour = 0
+		update_controllers(current_hour) // dispite the fast run time, we only update every time it reaches an hour
 
 /**
  * Loads the currently chosen day night controller from config, if there is one.
@@ -53,25 +52,42 @@ SUBSYSTEM_DEF(day_night)
  * Returns HH:MM
  */
 /datum/controller/subsystem/day_night/proc/get_twentyfourhour_timestamp()
-	var/hour_entry = "[current_hour]"
-	if(current_hour < 10)
-		hour_entry = "0[hour_entry]"
-	var/minute_entry = "[current_minute]"
-	if(current_minute < 10)
-		minute_entry = "0[minute_entry]"
-	return "[hour_entry][minute_entry]"
+	var/hour_entry = current_hour < 10 ? "0[current_hour]" : current_hour
+	var/minute_entry = current_minute < 10 ? "0[current_minute]" : current_minute
+	return "[hour_entry]:[minute_entry]"
 
 /**
  * Gets the current 12hr time in text format to be displayed on the statpanel.
  *
- * Returns HH:MM
+ * Returns HH:MM PM/AM
  */
 /datum/controller/subsystem/day_night/proc/get_twelvehour_timestamp()
-	return
+	var/am_or_pm = current_hour < 12 ? "AM" : "PM"
+	var/hour_entry = current_hour > 12 ? "0[current_hour - 12]" : current_hour
+	var/minute_entry = current_minute < 10 ? "0[current_minute]" : current_minute
+	return "[hour_entry]:[minute_entry] [am_or_pm]"
+
+/**
+ * Returns the current time, unformatted, as a list, current hour and current minute.
+ */
+/datum/controller/subsystem/day_night/proc/return_raw_time()
+	return list(current_hour, current_minute)
+
+/**
+ * Checks if the current hour is within a given timeframe.
+ */
+/datum/controller/subsystem/day_night/proc/check_timeframe(start_hour, end_hour)
+	return ((current_hour >= start_hour) && (current_hour <= end_hour))
+
+/**
+ * Checks if the current time is within a given timeframe.
+ */
+/datum/controller/subsystem/day_night/proc/check_specific_timeframe(list/start_time, list/end_time)
+	return (((current_hour >= start_time[1]) && (current_hour <= end_time[1])) && ((current_minute >= start_time[2]) && (current_minute <= end_time[2])))
 
 
 /**
- * Updates the current controller timezones
+ * Updates all cached controllers to the new hour.
  * Arguments:
  * * hour - The updating hour which we will sent to the controller controllers
  */

@@ -16,13 +16,13 @@
 	var/list/unaffected_area_cache = list()
 	/// The mutable appearance that we apply to our areas
 	var/mutable_appearance/area_appearance
-	/// The affected Z level
+	/// The affected Z level - Ideally, we will eventually be using a more robust system for loaded planets and such.
 	var/affected_z_level
 	/// Our current luminosity
 	var/current_luminosity = FALSE
-	/// Lookup table for the colors for each hour
+	/// Lookup table for the colors for each hour, 24 hour format starting at 0.
 	var/list/color_lookup_table = list()
-	/// Lookup table for the alpha values for each hour
+	/// Lookup table for the alpha values for each hour, 24 hour format starting at 0.
 	var/list/alpha_lookup_table = list()
 
 
@@ -62,7 +62,7 @@
 	return TRUE
 
 /**
- * Removes an area from the controller
+ * Removes an affected area from the controller and clears up references.
  * Arguments:
  * * area_to_unregister - The area that is to be unregistered from this controller
  */
@@ -72,6 +72,12 @@
 	UnregisterSignal(area_to_unregister, COMSIG_PARENT_QDELETING)
 	area_cache -= area_to_unregister
 
+/**
+ * Registers an area that is not affected by the lighting updates, but will be checked for turf adjacency.
+ * Arguments:
+ * * area_to_register - The area that is to be registered
+ * Returns TRUE if it was successfully registered, otherwise FALSE if not.
+ */
 /datum/day_night_controller/proc/register_unaffected_area(area/area_to_register)
 	if(area_to_register in unaffected_area_cache)
 		return FALSE
@@ -82,6 +88,11 @@
 	RegisterSignal(area_to_register, COMSIG_AREA_AFTER_SHUTTLE_MOVE, .proc/after_shuttle_move)
 	return TRUE
 
+/**
+ * Removes an unaffected turf from the controller and clears up references.
+ * * Arguments:
+ * * area_to_unregister - The area that is to be unregistered from this controller
+ */
 /datum/day_night_controller/proc/unregister_unaffected_area(area/area_to_unregister)
 	SIGNAL_HANDLER
 
@@ -90,6 +101,9 @@
 	UnregisterSignal(area_to_unregister, COMSIG_AREA_AFTER_SHUTTLE_MOVE)
 	unaffected_area_cache -= area_to_unregister
 
+/**
+ * Called after a shuttle moves from a registered area, checks to see if the new level is different from ours.
+ */
 /datum/day_night_controller/proc/after_shuttle_move(area/area_to_check)
 	SIGNAL_HANDLER
 
@@ -113,45 +127,62 @@
  * Returns the timezone datum.
  */
 /datum/day_night_controller/proc/get_timezone(hour)
+	var/timezone_to_return
 	for(var/datum/timezone/iterating_timezone as anything in timezone_cache)
 		if((hour >= iterating_timezone.start_hour) && (hour <= iterating_timezone.end_hour))
-			return iterating_timezone
+			timezone_to_return = iterating_timezone
+	if(!timezone_to_return)
+		CRASH("Critical error while finding a timezone in slot [hour] for [type]!")
+	return timezone_to_return
 
 /**
- * Applys the current timezone to all of the areas
+ * Applys the current timezone to all of the areas according to the lookup tables and hour.
+ * Arguments:
+ * * hour - The index to use in our lookup tables.
  */
 /datum/day_night_controller/proc/update_time(hour)
 	update_lighting(color_lookup_table["[hour]"], alpha_lookup_table["[hour]"])
 
 /**
- * Core proc to update the lighting of any affected areas and turfs
+ * The core proc that should always be used when updating the lighting of this day/night controller.
  */
 /datum/day_night_controller/proc/update_lighting(light_color, alpha_to_set)
 	SEND_SIGNAL(src, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, light_color, alpha_to_set)
 	remove_effect_from_areas()
 	update_area_appearance(light_color, alpha_to_set)
 	set_area_luminosity(alpha_to_set)
-	apply_effect_to_areas(light_color, alpha_to_set)
+	apply_effect_to_areas()
 
 /**
- * Updates the current area appearance
+ * Builds a new apppearance based off of the light color and alpha values for use later.
+ * Arguments:
+ * * light_color - The color that we will set the mutable appearance to.
+ * * light_alpha - The alpha that we will set the mutable appearance to.
+ * Note: We use mutable appearances as this is the most efficent way to render lighting effects onto areas, using the light update method
+ * is just not fast enough.
  */
 /datum/day_night_controller/proc/update_area_appearance(light_color, light_alpha)
 	var/mutable_appearance/updated_appearance = mutable_appearance(
 		'icons/effects/daynight_blend.dmi',
 		"white",
 		DAY_NIGHT_LIGHTING_LAYER,
-		DAY_NIGHT_LIGHTING_LAYER,
+		LIGHTING_PLANE,
 		light_alpha
 		)
 	updated_appearance.color = light_color
 	area_appearance = updated_appearance
 
+/**
+ * Removes the current mutable appearance from all of the affected areas underlays.
+ */
 /datum/day_night_controller/proc/remove_effect_from_areas()
 	for(var/area/iterating_area as anything in area_cache)
 		iterating_area.underlays -= area_appearance
 
-/datum/day_night_controller/proc/apply_effect_to_areas(light_color, light_alpha)
+/**
+ * Applies the current mutable appearance to all of the affected areas underlays.
+ */
+/datum/day_night_controller/proc/apply_effect_to_areas()
 	for(var/area/iterating_area as anything in area_cache)
 		iterating_area.underlays += area_appearance
 
@@ -161,7 +192,7 @@
  * * light_alpha - The new alpha that we are going to be setting.
  */
 /datum/day_night_controller/proc/set_area_luminosity(light_alpha)
-	var/luminosity = (light_alpha >= MINIMUM_LIGHT_FOR_LUMINOSITY) ? TRUE : FALSE
+	var/luminosity = (light_alpha >= MINIMUM_ALPHA_FOR_LUMINOSITY) ? TRUE : FALSE
 	current_luminosity = luminosity
 	for(var/area/iterating_area as anything in area_cache)
 		iterating_area.luminosity = luminosity
@@ -187,3 +218,13 @@
 		alpha_lookup_table["[hour_index]"] = transition_alpha
 		hour_index++
 
+// PRESETS
+/datum/day_night_controller/icebox
+	timezones = list(
+		/datum/timezone/midnight,
+		/datum/timezone/early_morning,
+		/datum/timezone/morning,
+		/datum/timezone/midday,
+		/datum/timezone/early_evening,
+		/datum/timezone/evening,
+	)

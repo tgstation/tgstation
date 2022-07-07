@@ -199,7 +199,7 @@ SUBSYSTEM_DEF(networks)
 	return FALSE
 
 /datum/controller/subsystem/networks/proc/log_data_transfer( datum/netdata/data)
-	logs += "[station_time_timestamp()] - [data.generate_netlog()]"
+	logs += "[SSday_night.get_twentyfourhour_timestamp()] - [data.generate_netlog()]"
 	if(logs.len > setting_maxlogcount)
 		logs = logs.Copy(logs.len - setting_maxlogcount, 0)
 
@@ -218,7 +218,7 @@ SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/networks/proc/add_log(log_string, network = null , hardware_id = null)
 	set waitfor = FALSE // so process keeps running
 	var/list/log_text = list()
-	log_text += "\[[station_time_timestamp()]\]"
+	log_text += "\[[SSday_night.get_twentyfourhour_timestamp()]\]"
 	if(network)
 		var/datum/ntnet/net = network
 		if(!istype(net))

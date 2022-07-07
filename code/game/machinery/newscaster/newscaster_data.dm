@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = author
 	newMsg.body = msg
-	newMsg.time_stamp = "[station_time_timestamp()]"
+	newMsg.time_stamp = "[SSday_night.get_twentyfourhour_timestamp()]"
 	newMsg.is_admin_message = adminMessage
 	newMsg.locked = !allow_comments
 	if(picture)

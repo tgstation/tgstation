@@ -654,7 +654,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	var/datum/feed_comment/new_feed_comment = new/datum/feed_comment
 	new_feed_comment.author = newscaster_username
 	new_feed_comment.body = comment_text
-	new_feed_comment.time_stamp = station_time_timestamp()
+	new_feed_comment.time_stamp = SSday_night.get_twentyfourhour_timestamp()
 	current_message.comments += new_feed_comment
 	usr.log_message("(as [newscaster_username]) commented on message [current_message.return_body(-1)] -- [current_message.body]", LOG_COMMENT)
 	creating_comment = FALSE

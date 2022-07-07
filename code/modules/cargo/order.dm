@@ -1,4 +1,4 @@
-/// The chance for a manifest or crate to be created with errors 
+/// The chance for a manifest or crate to be created with errors
 #define MANIFEST_ERROR_CHANCE 5
 
 // MANIFEST BITFLAGS
@@ -6,7 +6,7 @@
 #define MANIFEST_ERROR_NAME (1 << 0)
 /// Determines if contents will be deleted from the manifest but still be present in the crate
 #define MANIFEST_ERROR_CONTENTS (1 << 1)
-/// Determines if contents will be deleted from the crate but still be present in the manifest 
+/// Determines if contents will be deleted from the crate but still be present in the manifest
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
@@ -66,7 +66,7 @@
 	P.info += "<h2>[station_name()] Supply Requisition</h2>"
 	P.info += "<hr/>"
 	P.info += "Order #[id]<br/>"
-	P.info += "Time of Order: [station_time_timestamp()]<br/>"
+	P.info += "Time of Order: [SSday_night.get_twentyfourhour_timestamp()]<br/>"
 	P.info += "Item: [pack.name]<br/>"
 	P.info += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
 	P.info += "Requested by: [orderer]<br/>"

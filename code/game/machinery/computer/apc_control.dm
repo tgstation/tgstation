@@ -197,7 +197,7 @@
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)
 		return
-	LAZYADD(logs, "([station_time_timestamp()]): [auth_id] [log_text]")
+	LAZYADD(logs, "([SSday_night.get_twentyfourhour_timestamp()]): [auth_id] [log_text]")
 
 /obj/machinery/computer/apc_control/proc/restore_comp()
 	obj_flags &= ~EMAGGED
