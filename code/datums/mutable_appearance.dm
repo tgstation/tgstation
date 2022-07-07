@@ -15,16 +15,15 @@
 		// Essentially, we allow users that only want one static offset to pass one in
 		if(!isnull(offset_const))
 			plane = GET_NEW_PLANE(plane, offset_const)
-		else
-			// otherwise if you're setting plane you better have the guts to back it up
+		// That, or you need to pass in some non null object to reference 
+		else if(!isnull(offset_spokesman))
+			// Note, we are ok with null turfs, that's not an error condition we'll just default to 0, the error would be
+			// Not passing ANYTHING in, key difference
 			var/turf/our_turf = get_turf(offset_spokesman)
-			// Null passed in, here we go
-		// Lemon todo: this is too often done intentionally
-		// Maybe we should just have things pass in 0 if it's intentional?
-		// IDK maybe this is a bad check, it's caught things for me in the past tho
-			if(!our_turf)
-				stack_trace("Null location passed in as an offset spokesman for a mutable appearance, ya done fucked up")
 			plane = MUTATE_PLANE(plane, our_turf)
+		// otherwise if you're setting plane you better have the guts to back it up
+		else
+			stack_trace("No plane offset passed in as context for a non floatig mutable appearance, ya done fucked up")
 	var/mutable_appearance/MA = new()
 	MA.icon = icon
 	MA.icon_state = icon_state

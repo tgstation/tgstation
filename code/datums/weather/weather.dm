@@ -243,16 +243,15 @@
 	// Lemon todo: you may have trouble here bestie
 	for(var/V in impacted_areas)
 		var/area/N = V
-		var/offset = SSmapping.max_plane_offset ? GET_Z_PLANE_OFFSET(N.z) : 0
-		var/offset_offset = offset + 1
-		if(length(new_offsets_to_glow) < offset_offset)
-			new_offsets_to_glow.len = offset_offset
+		var/offset = SSmapping.max_plane_offset ? GET_Z_PLANE_OFFSET(N.z) + 1 : 1
+		if(length(new_offsets_to_glow) < offset)
+			new_offsets_to_glow.len = offset
 
-		var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, ABOVE_LIGHTING_PLANE, 100, offset_const = offset)
-		new_offsets_to_glow[offset_offset] = glow_overlay
+		var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, N, ABOVE_LIGHTING_PLANE, 100)
+		new_offsets_to_glow[offset] = glow_overlay
 		var/mutable_appearance/old_glow
-		if(length(offsets_to_glow) >= offset_offset)
-			old_glow = offsets_to_glow[offset_offset]
+		if(length(offsets_to_glow) >= offset)
+			old_glow = offsets_to_glow[offset]
 
 		if(old_glow)
 			N.overlays -= old_glow
