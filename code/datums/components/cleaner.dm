@@ -73,21 +73,22 @@
 
 	//do the cleaning
 	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
-	if(do_after(user, cleaning_duration, target = target))
-		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
-		if(clean_target)
-			if(isturf(target)) //cleaning the floor and every bit of filth on top of it
-				for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
-					user.mind?.adjust_experience(/datum/skill/cleaning, round((cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT) * experience_gain_modifier))
-			else if(istype(target, /obj/structure/window)) //window cleaning
-				target.set_opacity(initial(target.opacity))
-				target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-				var/obj/structure/window/window = target
-				if(window.bloodied)
-					for(var/obj/effect/decal/cleanable/blood/iter_blood in window)
-						window.vis_contents -= iter_blood
-						qdel(iter_blood)
-						window.bloodied = FALSE
-			user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
-			target.wash(cleaning_strength)
-		on_cleaned_callback?.Invoke(source, target, user, clean_target)
+	if(!do_after(user, cleaning_duration, target = target))
+		return
+	user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
+	if(clean_target)
+		if(isturf(target)) //cleaning the floor and every bit of filth on top of it
+			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
+				user.mind?.adjust_experience(/datum/skill/cleaning, round((cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT) * experience_gain_modifier))
+		else if(istype(target, /obj/structure/window)) //window cleaning
+			target.set_opacity(initial(target.opacity))
+			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			var/obj/structure/window/window = target
+			if(window.bloodied)
+				for(var/obj/effect/decal/cleanable/blood/iter_blood in window)
+					window.vis_contents -= iter_blood
+					qdel(iter_blood)
+					window.bloodied = FALSE
+		user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
+		target.wash(cleaning_strength)
+	on_cleaned_callback?.Invoke(source, target, user, clean_target)
