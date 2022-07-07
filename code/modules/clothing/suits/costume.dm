@@ -292,7 +292,7 @@
 	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
 	icon_state = "ian"
 	inhand_icon_state = "labcoat"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	//cold_protection = CHEST|GROIN|ARMS
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
