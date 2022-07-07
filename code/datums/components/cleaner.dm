@@ -17,7 +17,7 @@
 	var/datum/callback/on_cleaned_callback
 
 /datum/component/cleaner/Initialize(
-	base_cleaning_duration,
+	base_cleaning_duration = 3 SECONDS,
 	skill_duration_modifier_offset = 0,
 	cleaning_strength = CLEAN_SCRUB,
 	experience_gain_modifier = 1,
