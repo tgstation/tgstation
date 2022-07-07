@@ -1,0 +1,5 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "You fold roller beds and bodybags with a right click instead of click and dragging into you."
+  - qol: "You can use any sharp object to cut a bodybag's tag instead of being forced to use a wirecutter."
