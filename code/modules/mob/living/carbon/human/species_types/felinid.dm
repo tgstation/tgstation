@@ -45,10 +45,10 @@
 			// You *could* dodge any and all ears by playing a felinid, but you'd be playing a felinid so I guess it's fair.
 			mutantears = /obj/item/organ/internal/ears
 		if(H.dna.features["tail_human"] == "Cat")
-			var/obj/item/organ/tail/cat/tail = new
+			var/obj/item/organ/external/tail/cat/tail = new
 			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
 		else if(H.dna.features["tail_human"] == "Fox")
-			mutant_organs = list(/obj/item/organ/tail/fox)
+			mutant_organs = list(/obj/item/organ/external/tail/fox)
 		else
 			mutant_organs = list()
 	return ..()
