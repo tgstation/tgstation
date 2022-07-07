@@ -4,7 +4,6 @@
 	damage = 5
 	damage_type = TOX
 	nodamage = FALSE
-	paralyze = 100
 	armor_flag = BIO
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/neurotoxin
 
@@ -12,4 +11,6 @@
 	if(isalien(target))
 		paralyze = 0
 		nodamage = TRUE
+	else
+		target.acid_act(200, 1000)
 	return ..()
