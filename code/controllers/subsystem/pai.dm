@@ -1,3 +1,5 @@
+#define SPAM_TIME 30 SECONDS
+
 SUBSYSTEM_DEF(pai)
 	name = "pAI"
 
@@ -25,6 +27,9 @@ SUBSYSTEM_DEF(pai)
 	/// If the user has hit "submit"
 	var/ready = FALSE
 
+/datum/pai_candidate/New(key)
+	src.key = key
+
 /**
  * Pings ghosts to announce that someone is requesting a pAI
  *
@@ -34,7 +39,8 @@ SUBSYSTEM_DEF(pai)
 */
 /datum/controller/subsystem/pai/proc/findPAI(obj/item/paicard/pai, mob/user)
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
-		to_chat(user, span_warning("Due to growing incidents of SELF corrupted independent artificial intelligences, freeform personality devices have been temporarily banned in this sector."))
+		to_chat(user, span_warning("Due to growing incidents of SELF corrupted independent artificial intelligences, \
+			freeform personality devices have been temporarily banned in this sector."))
 		return
 	if(request_spam)
 		to_chat(user, span_warning("Request sent too recently."))
@@ -43,8 +49,9 @@ SUBSYSTEM_DEF(pai)
 	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 	to_chat(user, span_notice("You have requested pAI assistance."))
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
-	notify_ghosts("[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.", source=user, alert_overlay = alert_overlay, action=NOTIFY_ORBIT, header="pAI Request!", ignore_key = POLL_IGNORE_PAI)
-	addtimer(CALLBACK(src, .proc/request_again), 10 SECONDS)
+	notify_ghosts("[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.", \
+		source=user, alert_overlay = alert_overlay, action=NOTIFY_ORBIT, header="pAI Request!", ignore_key = POLL_IGNORE_PAI)
+	addtimer(CALLBACK(src, .proc/request_again), SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
 	return TRUE
 
 /**
@@ -56,11 +63,10 @@ SUBSYSTEM_DEF(pai)
  */
 /datum/controller/subsystem/pai/proc/recruitWindow(mob/user)
 	/// Searches for a previous candidate upon opening the menu
-	var/datum/pai_candidate/candidate = check_candidate(user)
+	var/datum/pai_candidate/candidate = candidates[user.ckey]
 	if(isnull(candidate))
-		candidate = new /datum/pai_candidate()
-		candidate.key = user.key
-		candidates.Add(candidate)
+		candidate = new /datum/pai_candidate(user.key)
+		candidates[user.ckey] = candidate
 	ui_interact(user)
 
 /datum/controller/subsystem/pai/ui_state(mob/user)
@@ -72,12 +78,12 @@ SUBSYSTEM_DEF(pai)
 	if(!ui)
 		ui = new(user, src, "PaiSubmit")
 		ui.open()
+		ui.set_autoupdate(FALSE)
 
 /datum/controller/subsystem/pai/ui_static_data(mob/user)
 	. = ..()
 	var/list/data = list()
-	/// The matching candidate from search
-	var/datum/pai_candidate/candidate = check_candidate(user)
+	var/datum/pai_candidate/candidate = candidates[user.ckey]
 	if(isnull(candidate))
 		return data
 	data["comments"] = candidate.comments
@@ -89,69 +95,38 @@ SUBSYSTEM_DEF(pai)
 	. = ..()
 	if(.)
 		return
-	/// The matching candidate from search
-	var/datum/pai_candidate/candidate = check_candidate(usr)
+	var/datum/pai_candidate/candidate = candidates[usr.ckey]
+	if(is_banned_from(usr.ckey, ROLE_PAI))
+		to_chat(usr, span_warning("You are banned from playing pAI!"))
+		ui.close()
+		return FALSE
 	if(isnull(candidate))
 		to_chat(usr, span_warning("There was an error. Please resubmit."))
 		ui.close()
 		return FALSE
 	switch(action)
 		if("submit")
-			candidate.comments = params["candidate"]["comments"]
-			candidate.description = params["candidate"]["description"]
-			candidate.name = params["candidate"]["name"]
+			candidate.comments = params["comments"]
+			candidate.description = params["description"]
+			candidate.name = params["name"]
+			sanitize_details(candidate)
 			candidate.ready = TRUE
 			ui.close()
 			submit_alert()
+			return TRUE
 		if("save")
-			candidate.comments = params["candidate"]["comments"]
-			candidate.description = params["candidate"]["description"]
-			candidate.name = params["candidate"]["name"]
+			candidate.comments = params["comments"]
+			candidate.description = params["description"]
+			candidate.name = params["name"]
+			sanitize_details(candidate)
 			candidate.savefile_save(usr)
+			return TRUE
 		if("load")
 			candidate.savefile_load(usr)
-			//In case people have saved unsanitized stuff.
-			if(candidate.comments)
-				candidate.comments = copytext_char(candidate.comments,1,MAX_MESSAGE_LEN)
-			if(candidate.description)
-				candidate.description = copytext_char(candidate.description,1,MAX_MESSAGE_LEN)
-			if(candidate.name)
-				candidate.name = copytext_char(candidate.name,1,MAX_NAME_LEN)
+			sanitize_details(candidate)
 			ui.send_full_update()
-	return
-
-/**
- * Finds the candidate in question from the list of candidates.
- */
-/datum/controller/subsystem/pai/proc/check_candidate(mob/user)
-	/// Finds a matching candidate.
-	var/datum/pai_candidate/candidate
-	for(var/datum/pai_candidate/checked_candidate as anything in candidates)
-		if(checked_candidate.key == user.key)
-			candidate = checked_candidate
-			return candidate
-	return null
-
-/**
- * Pings all pAI cards on the station that new candidates are available.
- */
-/datum/controller/subsystem/pai/proc/submit_alert()
-	if(submit_spam)
-		to_chat(usr, span_warning("Your candidacy has been submitted, but pAI cards have been alerted too recently."))
-		return FALSE
-	submit_spam = TRUE
-	for(var/obj/item/paicard/paicard in pai_card_list)
-		if(!paicard.pai)
-			paicard.alertUpdate()
-	to_chat(usr, span_notice("Your pAI candidacy has been submitted!"))
-	addtimer(CALLBACK(src, .proc/submit_again), 10 SECONDS)
-	return TRUE
-
-/datum/controller/subsystem/pai/proc/request_again()
-	request_spam = FALSE
-
-/datum/controller/subsystem/pai/proc/submit_again()
-	submit_spam = FALSE
+			return TRUE
+	return FALSE
 
 /**
  * Checks if a candidate is ready so that they may be displayed in the pAI
@@ -165,3 +140,35 @@ SUBSYSTEM_DEF(pai)
 			return candidate
 	return FALSE
 
+/** Sanitizes PAI details */
+/datum/controller/subsystem/pai/proc/sanitize_details(datum/pai_candidate/candidate)
+	if(candidate.comments)
+		candidate.comments = copytext_char(candidate.comments, 1, MAX_MESSAGE_LEN)
+	if(candidate.description)
+		candidate.description = copytext_char(candidate.description, 1, MAX_MESSAGE_LEN)
+	if(candidate.name)
+		candidate.name = copytext_char(candidate.name, 1, MAX_NAME_LEN)
+	return TRUE
+
+/**
+ * Pings all pAI cards on the station that new candidates are available.
+ */
+/datum/controller/subsystem/pai/proc/submit_alert()
+	if(submit_spam)
+		to_chat(usr, span_warning("Your candidacy has been submitted, but pAI cards have been alerted too recently."))
+		return FALSE
+	submit_spam = TRUE
+	for(var/obj/item/paicard/paicard in pai_card_list)
+		if(!paicard.pai)
+			paicard.alertUpdate()
+	to_chat(usr, span_notice("Your pAI candidacy has been submitted!"))
+	addtimer(CALLBACK(src, .proc/submit_again), SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+	return TRUE
+
+/datum/controller/subsystem/pai/proc/request_again()
+	request_spam = FALSE
+
+/datum/controller/subsystem/pai/proc/submit_again()
+	submit_spam = FALSE
+
+#undef SPAM_TIME
