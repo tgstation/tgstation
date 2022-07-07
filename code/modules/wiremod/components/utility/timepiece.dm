@@ -37,6 +37,7 @@
 	var/static/unit_options = list(
 		COMP_TIMEPIECE_HOURS,
 		COMP_TIMEPIECE_MINUTES,
+		COMP_TIMEPIECE_SECONDS,
 	)
 	time_unit = add_option_port("Unit of Time", unit_options)
 
@@ -45,9 +46,9 @@
 
 	switch(format.value)
 		if(COMP_TIMEPIECE_TWENTYFOUR_HOUR)
-			time = SSday_night.get_twentyfourhour_timestamp()
+			time = station_time_timestamp()
 		if(COMP_TIMEPIECE_TWELVE_HOUR)
-			time = SSday_night.get_twelvehour_timestamp()
+			time = time_to_twelve_hour(station_time())
 
 	text_output.set_output(time)
 
