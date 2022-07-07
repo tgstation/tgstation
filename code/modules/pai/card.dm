@@ -327,7 +327,7 @@
 	if(!pai)
 		return FALSE
 	if(tgui_alert(user, "Are you certain you wish to delete the current personality? \
-		This action cannot be undone.", "Personality Wipe", list("Yes", "No") != "Yes"))
+		This action cannot be undone.", "Personality Wipe", list("Yes", "No")) != "Yes")
 		return TRUE
 	to_chat(pai, span_warning("You feel yourself slipping away from reality."))
 	to_chat(pai, span_danger("Byte by byte you lose your sense of self."))
