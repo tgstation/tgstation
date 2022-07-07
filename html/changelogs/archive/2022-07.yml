@@ -186,3 +186,19 @@
   - bugfix: Fix Confusion and Self-Respiration virus symptoms to appear at final stage.
   vincentiusvin:
   - admin: experiment completion are now logged in research.html
+2022-07-07:
+  Crumpaloo, jlsnow301, JohnFulpWillard:
+  - rscadd: Typing indicators now use your speech bubble type, rather than all being
+      the same, so Cyborgs no longer look like a human when typing, and Lawyers have
+      that cool speech bubble again.
+  Mooshimi:
+  - refactor: Reworked the wiring in AI Sats incorporating multiple layered wiring.
+  dragomagol:
+  - bugfix: pAI screens light up with an alert when there's a personality to download!
+  lizardqueenlexi:
+  - bugfix: made plastic flaps in MetaStation deliveries area transparent
+  orthography:
+  - bugfix: Fixed sec vestibule maintenance
+  - bugfix: fixed metastation atmos areas.
+  stylemistake:
+  - bugfix: Fixed "Script Error" in tgui and tgchat (hopefully).
