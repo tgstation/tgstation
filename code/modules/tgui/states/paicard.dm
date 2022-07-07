@@ -10,7 +10,7 @@
 
 GLOBAL_DATUM_INIT(paicard_state, /datum/ui_state/paicard_state, new)
 
-/datum/ui_state/paicard_state/can_use_topic(obj/item/paicard/paicard, mob/user)
+/datum/ui_state/paicard_state/can_use_topic(obj/item/pai_card/paicard, mob/user)
 	/// paicard is in the user's closest inventory
 	if(!paicard.slotted && (paicard in user))
 		return user.shared_ui_interaction(paicard)

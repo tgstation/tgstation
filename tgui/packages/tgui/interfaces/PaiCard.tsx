@@ -10,8 +10,8 @@ type Data = {
 
 type Candidate = {
   comments: string;
+  ckey: string;
   description: string;
-  key: string;
   name: string;
 };
 
@@ -72,9 +72,8 @@ const PaiDownload = (props, context) => {
   );
 };
 
-/** Candidate card: Individual. Since this info is refreshing,
- * had to make the comments and descriptions a separate tab.
- * In longer entries, it is much more readable.
+/**
+ * Renders a custom section that displays a candidate.
  */
 const CandidateDisplay = (
   props: { candidate: Candidate; index: number },
@@ -84,8 +83,8 @@ const CandidateDisplay = (
   const {
     candidate: {
       comments = 'None',
+      ckey,
       description = 'None',
-      key,
       name = 'Randomized Name',
     },
     index,
@@ -103,7 +102,7 @@ const CandidateDisplay = (
         buttons={
           <Button
             icon="download"
-            onClick={() => act('download', { key })}
+            onClick={() => act('download', { ckey })}
             tooltip="Accepts this pAI candidate.">
             Download
           </Button>

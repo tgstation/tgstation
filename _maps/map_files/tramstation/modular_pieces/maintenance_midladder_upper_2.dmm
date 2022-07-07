@@ -46,7 +46,7 @@
 /area/station/maintenance/department/cargo)
 "o" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/paicard{
+/obj/item/pai_card{
 	pixel_y = 2
 	},
 /obj/item/clothing/suit/nerdshirt,

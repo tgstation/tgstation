@@ -757,7 +757,7 @@
 /area/ruin/space/derelict/bridge/access)
 "eC" = (
 /obj/structure/table,
-/obj/item/paicard,
+/obj/item/pai_card,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "eD" = (

@@ -24,7 +24,7 @@
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 
 	/// The card we inhabit
-	var/obj/item/paicard/card
+	var/obj/item/pai_card/card
 
 	/// Used as currency to purchase different abilities
 	var/ram = 100
@@ -153,7 +153,7 @@
 	return ..()
 
 /mob/living/silicon/pai/Initialize(mapload)
-	var/obj/item/paicard/pai_card = loc
+	var/obj/item/pai_card/pai_card = loc
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
@@ -161,8 +161,8 @@
 		lawcheck += law
 	if(!istype(pai_card)) //when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = pai_card
-		pai_card = new /obj/item/paicard(newcardloc)
-		pai_card.setPersonality(src)
+		pai_card = new /obj/item/pai_card(newcardloc)
+		pai_card.set_personality(src)
 	forceMove(pai_card)
 	card = pai_card
 	job = JOB_PERSONAL_AI
@@ -225,11 +225,11 @@
 	return ..(M, be_close, no_dexterity, no_tk, need_hands, TRUE) //Resting is just an aesthetic feature for them.
 
 /mob/proc/makePAI(delold)
-	var/obj/item/paicard/card = new /obj/item/paicard(get_turf(src))
+	var/obj/item/pai_card/card = new /obj/item/pai_card(get_turf(src))
 	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
 	pai.key = key
 	pai.name = name
-	card.setPersonality(pai)
+	card.set_personality(pai)
 	if(delold)
 		qdel(src)
 
@@ -262,10 +262,10 @@
 
 	return ..()
 
-/obj/item/paicard/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/item/pai_card/screwdriver_act(mob/living/user, obj/item/tool)
 	return pai.radio.screwdriver_act(user, tool)
 
-/obj/item/paicard/attackby(obj/item/used, mob/user, params)
+/obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encryptmod)
 			to_chat(user, span_alert("Encryption Key ports not configured."))
@@ -277,7 +277,7 @@
 
 	return ..()
 
-/obj/item/paicard/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive
+/obj/item/pai_card/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive
 	if(!pai)
 		return
 	to_chat(user, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))

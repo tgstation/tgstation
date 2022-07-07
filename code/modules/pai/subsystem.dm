@@ -7,70 +7,10 @@ SUBSYSTEM_DEF(pai)
 
 	/// List of pAI candidates, including those not submitted.
 	var/list/candidates = list()
-	/// Prevents a crew member from hitting "request pAI"
-	var/request_spam = FALSE
 	/// Prevents a pAI from submitting itself repeatedly and sounding an alert.
 	var/submit_spam = FALSE
 	/// All pAI cards on the map.
 	var/list/pai_card_list = list()
-
-/// Created when a user clicks the "pAI candidate" window
-/datum/pai_candidate
-	/// User inputted OOC comments
-	var/comments
-	/// User inputted behavior description
-	var/description
-	/// User's ckey - not input
-	var/key
-	/// User's pAI name. If blank, ninja name.
-	var/name
-	/// If the user has hit "submit"
-	var/ready = FALSE
-
-/datum/pai_candidate/New(key)
-	src.key = key
-
-/**
- * Pings ghosts to announce that someone is requesting a pAI
- *
- * Arguments
- * @pai - The card requesting assistance
- * @user - The player requesting a pAI
-*/
-/datum/controller/subsystem/pai/proc/findPAI(obj/item/paicard/pai, mob/user)
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
-		to_chat(user, span_warning("Due to growing incidents of SELF corrupted independent artificial intelligences, \
-			freeform personality devices have been temporarily banned in this sector."))
-		return
-	if(request_spam)
-		to_chat(user, span_warning("Request sent too recently."))
-		return
-	request_spam = TRUE
-	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
-	to_chat(user, span_notice("You have requested pAI assistance."))
-	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
-	notify_ghosts("[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.", \
-		source=user, alert_overlay = alert_overlay, action=NOTIFY_ORBIT, header="pAI Request!", ignore_key = POLL_IGNORE_PAI)
-	addtimer(CALLBACK(src, .proc/request_again), SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
-	return TRUE
-
-/**
- * This is the primary window proc when the pAI candidate
- * hud menu is pressed by observers.
- *
- * Arguments
- * @user - The ghost doing the pressing.
- */
-/datum/controller/subsystem/pai/proc/recruitWindow(mob/user)
-	/// Searches for a previous candidate upon opening the menu
-	var/datum/pai_candidate/candidate = candidates[user.ckey]
-	if(isnull(candidate))
-		candidate = new /datum/pai_candidate(user.key)
-		candidates[user.ckey] = candidate
-	ui_interact(user)
-
-/datum/controller/subsystem/pai/ui_state(mob/user)
-	return GLOB.observer_state
 
 /datum/controller/subsystem/pai/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -79,6 +19,9 @@ SUBSYSTEM_DEF(pai)
 		ui = new(user, src, "PaiSubmit")
 		ui.open()
 		ui.set_autoupdate(FALSE)
+
+/datum/controller/subsystem/pai/ui_state(mob/user)
+	return GLOB.observer_state
 
 /datum/controller/subsystem/pai/ui_static_data(mob/user)
 	. = ..()
@@ -109,6 +52,7 @@ SUBSYSTEM_DEF(pai)
 			candidate.comments = params["comments"]
 			candidate.description = params["description"]
 			candidate.name = params["name"]
+			candidate.user = usr
 			sanitize_details(candidate)
 			candidate.ready = TRUE
 			ui.close()
@@ -118,6 +62,7 @@ SUBSYSTEM_DEF(pai)
 			candidate.comments = params["comments"]
 			candidate.description = params["description"]
 			candidate.name = params["name"]
+			candidate.user = usr
 			sanitize_details(candidate)
 			candidate.savefile_save(usr)
 			return TRUE
@@ -129,16 +74,22 @@ SUBSYSTEM_DEF(pai)
 	return FALSE
 
 /**
- * Checks if a candidate is ready so that they may be displayed in the pAI
- * card's candidate window
+ * This is the primary window proc when the pAI candidate
+ * hud menu is pressed by observers.
+ *
+ * Arguments
+ *
+ * @user - The ghost doing the pressing.
  */
-/datum/controller/subsystem/pai/proc/check_ready(datum/pai_candidate/candidate)
-	if(!candidate.ready)
-		return FALSE
-	for(var/mob/dead/observer/observer in GLOB.player_list)
-		if(observer.key == candidate.key)
-			return candidate
-	return FALSE
+/datum/controller/subsystem/pai/proc/recruit_window(mob/user)
+	/// Searches for a previous candidate upon opening the menu
+	var/datum/pai_candidate/candidate = candidates[user.ckey]
+	if(isnull(candidate))
+		candidate = new /datum/pai_candidate()
+		candidate.user = user
+		candidate.ckey = user.ckey
+		candidates[user.ckey] = candidate
+	ui_interact(user)
 
 /** Sanitizes PAI details */
 /datum/controller/subsystem/pai/proc/sanitize_details(datum/pai_candidate/candidate)
@@ -150,6 +101,10 @@ SUBSYSTEM_DEF(pai)
 		candidate.name = copytext_char(candidate.name, 1, MAX_NAME_LEN)
 	return TRUE
 
+/** Allows the candidate to spam pai_cards again. */
+/datum/controller/subsystem/pai/proc/submit_again()
+	submit_spam = FALSE
+
 /**
  * Pings all pAI cards on the station that new candidates are available.
  */
@@ -158,17 +113,11 @@ SUBSYSTEM_DEF(pai)
 		to_chat(usr, span_warning("Your candidacy has been submitted, but pAI cards have been alerted too recently."))
 		return FALSE
 	submit_spam = TRUE
-	for(var/obj/item/paicard/paicard in pai_card_list)
-		if(!paicard.pai)
-			paicard.alertUpdate()
+	for(var/obj/item/pai_card/pai_card in pai_card_list)
+		if(!pai_card.pai)
+			pai_card.alert_update()
 	to_chat(usr, span_notice("Your pAI candidacy has been submitted!"))
 	addtimer(CALLBACK(src, .proc/submit_again), SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
 	return TRUE
-
-/datum/controller/subsystem/pai/proc/request_again()
-	request_spam = FALSE
-
-/datum/controller/subsystem/pai/proc/submit_again()
-	submit_spam = FALSE
 
 #undef SPAM_TIME

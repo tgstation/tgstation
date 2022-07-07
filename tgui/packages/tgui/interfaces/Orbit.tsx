@@ -4,7 +4,6 @@ import { multiline } from 'common/string';
 import { Button, Collapsible, Icon, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
-import { logger } from '../logging';
 
 type AntagGroup = [string, Observable[]];
 
@@ -110,7 +109,6 @@ const ObservableSearch = (props, context) => {
       sortBy<Observable>((poi) => -(poi.orbiters || 0)),
       // Makes a single Observable[] list for an easy search
     ])([alive, antagonists, dead, ghosts, misc, npcs].flat())[0];
-    logger.log(mostRelevant);
     if (mostRelevant !== undefined) {
       act('orbit', {
         ref: mostRelevant.ref,
