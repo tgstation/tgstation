@@ -228,11 +228,8 @@
 
 	var/sun_azimuth = SSsun.azimuth
 	var/calculated_sun_fraction = 0
-	if(azimuth_current == sun_azimuth) //just a quick optimization for the most frequent case
-		calculated_sun_fraction = 1
-	else
-		//dot product of sun and panel -- Lambert's Cosine Law
-		calculated_sun_fraction = cos(azimuth_current - sun_azimuth)
+	//dot product of sun and panel -- Lambert's Cosine Law
+	calculated_sun_fraction = cos(azimuth_current - sun_azimuth)
 	calculated_sun_fraction -= light_modifier
 	calculated_sun_fraction = clamp(round(calculated_sun_fraction, 0.01), 0, 1)
 	sunfrac = calculated_sun_fraction

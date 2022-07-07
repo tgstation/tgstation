@@ -16,7 +16,7 @@
 #define NIGHTTIME_END 7 // 7 AM
 
 /// This determines the minimum alpha level for there to be luminosity in the affected area.
-#define MINIMUM_ALPHA_FOR_LUMINOSITY 100
+#define MINIMUM_ALPHA_FOR_LUMINOSITY 50
 
 #define DAY_NIGHT_TURF_INDEX_BITFIELD "bitfield"
 #define DAY_NIGHT_TURF_INDEX_APPEARANCE "appearance"
