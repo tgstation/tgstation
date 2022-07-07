@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes: 
+  - bugfix: "fixed an incorrect disposals junction in Tramstation Medical department"
