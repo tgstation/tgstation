@@ -19,10 +19,9 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		var/list/choices = flist(path)
 		if(path != root)
 			choices.Insert(1,"/")
-		var/list/sorted_choices = sort_list(choices)
-		choices.Insert(length(choices) + 1, "Download Folder")
+		choices = sort_list(choices) + "Download Folder"
 
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sorted_choices
+		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in choices
 		switch(choice)
 			if(null)
 				return
