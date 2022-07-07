@@ -189,7 +189,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	name = "assasinate"
 	martyr_compatible = TRUE
 	admin_grantable = TRUE
-	var/target_role_type=FALSE
+	var/target_role_type = FALSE
 
 
 /datum/objective/assassinate/check_completion()
@@ -208,7 +208,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/mutiny
 	name = "mutiny"
 	martyr_compatible = 1
-	var/target_role_type=FALSE
+	var/target_role_type = FALSE
 
 
 /datum/objective/mutiny/check_completion()
@@ -228,7 +228,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	name = "maroon"
 	martyr_compatible = TRUE
 	admin_grantable = TRUE
-	var/target_role_type=FALSE
+	var/target_role_type = FALSE
 
 
 /datum/objective/maroon/check_completion()
@@ -252,7 +252,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/debrain
 	name = "debrain"
 	admin_grantable = TRUE
-	var/target_role_type=0
+	var/target_role_type = FALSE
 
 
 /datum/objective/debrain/check_completion()
