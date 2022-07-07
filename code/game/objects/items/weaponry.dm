@@ -684,9 +684,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
 	w_class = WEIGHT_CLASS_HUGE
-	var/homerun_ready = FALSE
+	/// Are we able to do a homerun?
 	var/homerun_able = FALSE
-	/// Can we launch mobs thrown at us away.
+	/// Are we ready to do a homerun?
+	var/homerun_ready = FALSE
+	/// Can we launch mobs thrown at us away?
 	var/mob_thrower = FALSE
 
 /obj/item/melee/baseball_bat/Initialize(mapload)
@@ -706,6 +708,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
 	homerun_able = TRUE
+	mob_thrower = TRUE
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
