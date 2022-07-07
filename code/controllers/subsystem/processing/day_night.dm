@@ -7,6 +7,7 @@
 SUBSYSTEM_DEF(day_night)
 	name = "Day/Night Cycle"
 	wait = 6 SECONDS // Every minute, the clock moves forward 1 minutes
+	init_order = INIT_ORDER_DAY_NIGHT
 	/// The current hour
 	var/current_hour = 0
 	/// The current minute
@@ -40,7 +41,6 @@ SUBSYSTEM_DEF(day_night)
 			current_hour = 0
 		update_controllers(current_hour) // dispite the fast run time, we only update every time it reaches an hour
 
-	SSnightshift.check_nightshift()
 	SEND_SIGNAL(src, COMSIG_DAY_NIGHT_CONTROLLER_TIME_TICK, current_hour, current_minute)
 
 /**

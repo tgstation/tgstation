@@ -32,7 +32,7 @@
 	var/obj/effect/overlay/panel
 	var/obj/effect/overlay/panel_edge
 	/// Is the current light level too low to generate power?
-	var/light_level_too_low = 1
+	var/light_level_too_low = FALSE
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
@@ -251,8 +251,8 @@
 	if(light_level_too_low)
 		return
 
-	var/solar_generation = SOLAR_GEN_RATE * sunfrac
-	add_avail(solar_generation)
+	var/sgen = SOLAR_GEN_RATE * sunfrac
+	add_avail(sgen)
 	if(control)
 		control.gen += sgen
 

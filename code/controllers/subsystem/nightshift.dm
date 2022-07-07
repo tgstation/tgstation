@@ -1,9 +1,7 @@
 SUBSYSTEM_DEF(nightshift)
 	name = "Night Shift"
-	wait = 10 MINUTES
+	wait = 1 MINUTES
 
-	/// Is the nightshift system enabled?
-	var/nightshift_enabled = TRUE
 	var/nightshift_active = FALSE
 	var/nightshift_start_time = list(19, 30) //7 30 PM, station time
 	var/nightshift_end_time = list(7, 30) //7 30 AM, station time
@@ -15,7 +13,6 @@ SUBSYSTEM_DEF(nightshift)
 /datum/controller/subsystem/nightshift/Initialize()
 	if(!CONFIG_GET(flag/enable_night_shifts))
 		can_fire = FALSE
-		nightshift_enabled = FALSE
 	return ..()
 
 /datum/controller/subsystem/nightshift/fire(resumed = FALSE)
@@ -41,7 +38,7 @@ SUBSYSTEM_DEF(nightshift)
 				announce("Restoring night lighting configuration to normal operation.")
 			else
 				announce("Disabling night lighting: Station is in a state of emergency.")
-	if(emergency || !nightshift_enabled)
+	if(emergency)
 		night_time = FALSE
 	if(nightshift_active != night_time)
 		update_nightshift(night_time, announcing)

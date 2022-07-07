@@ -2804,7 +2804,7 @@
 #include "code\modules\clothing\under\jobs\Plasmaman\medsci.dm"
 #include "code\modules\clothing\under\jobs\Plasmaman\security.dm"
 #include "code\modules\day_night\day_night_controller.dm"
-#include "code\modules\day_night\day_night_timezones.dm"
+#include "code\modules\day_night\day_night_lightzones.dm"
 #include "code\modules\detectivework\evidence.dm"
 #include "code\modules\detectivework\scanner.dm"
 #include "code\modules\discord\accountlink.dm"

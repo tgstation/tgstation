@@ -134,8 +134,10 @@
  */
 /datum/day_night_controller/proc/get_lightzone(hour)
 	var/lightzone_to_return
+	if(hour == 24)
+		hour = 0
 	for(var/datum/lightzone/iterating_lightzone as anything in lightzone_cache)
-		if((hour >= iterating_lightzone.start_hour) && (hour <= iterating_lightzone.end_hour))
+		if((hour >= iterating_lightzone.start_hour) && (hour < (iterating_lightzone.end_hour == 0 ? 24 : iterating_lightzone.end_hour)))
 			lightzone_to_return = iterating_lightzone
 	if(!lightzone_to_return)
 		CRASH("Error while finding a lightzone in slot [hour] for [type]!")
@@ -155,10 +157,10 @@
 /datum/day_night_controller/proc/update_lighting(light_color, light_alpha)
 	current_light_color = light_color
 	current_light_alpha = light_alpha
+	set_area_luminosity(light_alpha)
 	SEND_SIGNAL(src, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, light_color, light_alpha)
 	remove_effect_from_areas()
 	update_area_appearance(light_color, light_alpha)
-	set_area_luminosity(light_alpha)
 	apply_effect_to_areas()
 
 
@@ -210,7 +212,7 @@
  * Compiles a lookup table using the loaded lightzones for each hour so we can reference it later when switching to said hour.
  */
 /datum/day_night_controller/proc/compile_transitions()
-	var/hour_index = 0 // We start at 0 as this is 24hr time
+	var/hour_index = 0 // We start at 1 as this is 24hr time
 	var/datum/lightzone/current_iterating_lightzone
 	var/transition_value = 0
 	for(var/i in 1 to 24)
@@ -218,13 +220,13 @@
 		if(current_iterating_lightzone != check_lightzone)
 			current_iterating_lightzone = check_lightzone
 			transition_value = 0
-		var/datum/lightzone/next_lightzone = get_lightzone(current_iterating_lightzone.end_hour == 23 ? 0 : current_iterating_lightzone.end_hour + 1)
-		var/segments = (current_iterating_lightzone.end_hour - current_iterating_lightzone.start_hour)
-		transition_value += (1 / segments)
+		var/datum/lightzone/next_lightzone = get_lightzone(current_iterating_lightzone.end_hour)
+		var/segments = ((current_iterating_lightzone.end_hour == 0 ? 24 : current_iterating_lightzone.end_hour) - current_iterating_lightzone.start_hour)
 		var/transition_color = BlendRGB(current_iterating_lightzone.light_color, next_lightzone.light_color, transition_value)
 		var/transition_alpha = (current_iterating_lightzone.light_alpha * (1 - transition_value)) + (next_lightzone.light_alpha * (0 + transition_value))
 		color_lookup_table["[hour_index]"] = transition_color
 		alpha_lookup_table["[hour_index]"] = transition_alpha
+		transition_value += (1 / segments)
 		hour_index++
 
 /**
