@@ -22,7 +22,15 @@ SUBSYSTEM_DEF(day_night)
 	return ..()
 
 /datum/controller/subsystem/day_night/fire(resumed)
-	current_minute += tick_time
+	tick_tock(tick_time)
+
+/**
+ * Our internal ticky tocky time machine that will move time forward by the a set amount.
+ * Arguments:
+ * * time_to_tick - The amount of time we will be adding to our internal clock
+ */
+/datum/controller/subsystem/day_night/proc/tick_tock(time_to_tick)
+	current_minute += time_to_tick
 
 	if(current_minute >= HOUR_INCREMENT)
 		var/time_delta = (current_minute - HOUR_INCREMENT) > 0 ? current_minute - HOUR_INCREMENT : 0
@@ -31,6 +39,9 @@ SUBSYSTEM_DEF(day_night)
 		if(current_hour >= MIDNIGHT_RESET)
 			current_hour = 0
 		update_controllers(current_hour) // dispite the fast run time, we only update every time it reaches an hour
+
+	SSnightshift.check_nightshift()
+	SEND_SIGNAL(src, COMSIG_DAY_NIGHT_CONTROLLER_TIME_TICK, current_hour, current_minute)
 
 /**
  * Loads the currently chosen day night controller from config, if there is one.
@@ -85,7 +96,14 @@ SUBSYSTEM_DEF(day_night)
  * Checks if the current time is within a given timeframe.
  */
 /datum/controller/subsystem/day_night/proc/check_specific_timeframe(list/start_time, list/end_time)
-	return (((current_hour >= start_time[1]) && (current_hour <= end_time[1])) && ((current_minute >= start_time[2]) && (current_minute <= end_time[2])))
+	if(current_hour > start_time[1] && current_hour < end_time[1])
+		return TRUE
+	if(current_hour == start_time[1] && current_minute >= start_time[2])
+		return TRUE
+	if(current_hour == end_time[1] && current_minute <= end_time[2])
+		return TRUE
+	return FALSE
+
 
 /**
  * Checks if a Z level has a corresponding day night controller.

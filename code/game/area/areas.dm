@@ -577,8 +577,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
  * A handler to set all adjacent turfs to the correct lighting.
  */
-/area/proc/apply_day_night_turfs(datum/day_night_controller/incoming_controller, light_color, light_alpha)
+/area/proc/apply_day_night_turfs(datum/day_night_controller/incoming_controller)
 	SIGNAL_HANDLER
+
+	if(!incoming_controller)
+		return
 
 	for(var/turf/iterating_turf as anything in adjacent_day_night_turf_cache)
 		iterating_turf.underlays -= adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_APPEARANCE]
@@ -587,10 +590,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			"[adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_BITFIELD]]",
 			DAY_NIGHT_LIGHTING_LAYER,
 			LIGHTING_PLANE,
-			light_alpha,
+			incoming_controller.current_light_alpha,
 			RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			)
-		appearance_to_add.color = light_color
+		appearance_to_add.color = incoming_controller.current_light_color
 		iterating_turf.underlays += appearance_to_add
 		adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_APPEARANCE] = appearance_to_add
 
@@ -601,8 +604,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Arguments:
  * * initialize_turfs - This will call the expensive proc initialize_day_night_adjacent_turfs, recalculating all of the turfs after clearing them.
  * * search_for_controller - This will make us look for a controller in our new z-level, and set us up to it if needed.
+ * * new_light_color & new_light_alpha - Incoming parameters to apply an update to lighting.
  */
-/area/proc/update_day_night_turfs(initialize_turfs = FALSE, search_for_controller = FALSE)
+/area/proc/update_day_night_turfs(initialize_turfs = FALSE, search_for_controller = FALSE, datum/day_night_controller/incoming_controller)
 	if(search_for_controller)
 		for(var/datum/day_night_controller/iterating_controller in SSday_night.cached_controllers)
 			if(iterating_controller.affected_z_level == z)
@@ -614,3 +618,5 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(adjacent_day_night_turf_cache)
 			clear_adjacent_turfs()
 		initialize_day_night_adjacent_turfs()
+	if(incoming_controller)
+		apply_day_night_turfs(incoming_controller)

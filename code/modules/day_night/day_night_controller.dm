@@ -24,6 +24,10 @@
 	var/list/color_lookup_table = list()
 	/// Lookup table for the alpha values for each hour, 24 hour format starting at 0.
 	var/list/alpha_lookup_table = list()
+	/// Our currently set light color
+	var/current_light_color
+	/// Our currently set light alpha
+	var/current_light_alpha
 
 
 /datum/day_night_controller/New(incoming_affected_z_level)
@@ -82,7 +86,7 @@
 	if(area_to_register in unaffected_area_cache)
 		return FALSE
 	unaffected_area_cache += area_to_register
-	area_to_register.update_day_night_turfs(TRUE)
+	area_to_register.update_day_night_turfs(TRUE, FALSE, src)
 	area_to_register.RegisterSignal(src, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, /area.proc/apply_day_night_turfs)
 	RegisterSignal(area_to_register, COMSIG_PARENT_QDELETING, .proc/unregister_unaffected_area)
 	RegisterSignal(area_to_register, COMSIG_AREA_AFTER_SHUTTLE_MOVE, .proc/after_shuttle_move)
@@ -99,6 +103,8 @@
 	area_to_unregister.clear_adjacent_turfs()
 	area_to_unregister.UnregisterSignal(src, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE)
 	UnregisterSignal(area_to_unregister, COMSIG_AREA_AFTER_SHUTTLE_MOVE)
+	UnregisterSignal(area_to_unregister, COMSIG_PARENT_QDELETING)
+
 	unaffected_area_cache -= area_to_unregister
 
 /**
@@ -110,7 +116,7 @@
 	if(area_to_check.z == affected_z_level)
 		return
 
-	unregister_affected_area(area_to_check)
+	unregister_unaffected_area(area_to_check)
 
 
 /**
@@ -132,7 +138,7 @@
 		if((hour >= iterating_lightzone.start_hour) && (hour <= iterating_lightzone.end_hour))
 			lightzone_to_return = iterating_lightzone
 	if(!lightzone_to_return)
-		CRASH("Critical error while finding a lightzone in slot [hour] for [type]!")
+		CRASH("Error while finding a lightzone in slot [hour] for [type]!")
 	return lightzone_to_return
 
 /**
@@ -146,12 +152,15 @@
 /**
  * The core proc that should always be used when updating the lighting of this day/night controller.
  */
-/datum/day_night_controller/proc/update_lighting(light_color, alpha_to_set)
-	SEND_SIGNAL(src, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, light_color, alpha_to_set)
+/datum/day_night_controller/proc/update_lighting(light_color, light_alpha)
+	current_light_color = light_color
+	current_light_alpha = light_alpha
+	SEND_SIGNAL(src, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, light_color, light_alpha)
 	remove_effect_from_areas()
-	update_area_appearance(light_color, alpha_to_set)
-	set_area_luminosity(alpha_to_set)
+	update_area_appearance(light_color, light_alpha)
+	set_area_luminosity(light_alpha)
 	apply_effect_to_areas()
+
 
 /**
  * Builds a new apppearance based off of the light color and alpha values for use later.
@@ -226,6 +235,7 @@
  */
 /datum/day_night_controller/proc/get_alpha_value(hour)
 	return alpha_lookup_table["[hour]"]
+
 
 // PRESETS
 /datum/day_night_controller/icebox
