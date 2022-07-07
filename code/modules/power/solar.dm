@@ -2,6 +2,8 @@
 #define OCCLUSION_DISTANCE 20
 #define PANEL_Y_OFFSET 13
 #define PANEL_EDGE_Y_OFFSET (PANEL_Y_OFFSET - 2)
+#define SOLAR_ALPHA_MINIMUM_TO_GENERATE_POWER 100
+#define SOLAR_ALPHA_MAXIMUM_TO_GENERATE_POWER 200
 
 /obj/machinery/power/solar
 	name = "solar panel"
@@ -39,6 +41,7 @@
 	Make(S)
 	connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
+	RegisterSignal(SSday_night, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, .proc/queue_update_solar_exposure)
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
@@ -213,14 +216,25 @@
 	if(obscured)
 		return 0
 
+	var/datum/day_night_controller/level_controller = SSday_night.get_controller(z)
+	var/light_modifier = 0
+	if(level_controller)
+		var/current_level_lighting_alpha = level_controller.get_alpha_value(SSday_night.current_hour)
+		if(current_level_lighting_alpha < SOLAR_ALPHA_MINIMUM_TO_GENERATE_POWER)
+			return 0
+		if(current_level_lighting_alpha < SOLAR_ALPHA_MAXIMUM_TO_GENERATE_POWER)
+			light_modifier = current_level_lighting_alpha * 0.001
+
 	var/sun_azimuth = SSsun.azimuth
+	var/calculated_sun_fraction = 0
 	if(azimuth_current == sun_azimuth) //just a quick optimization for the most frequent case
-		. = 1
+		calculated_sun_fraction = 1
 	else
 		//dot product of sun and panel -- Lambert's Cosine Law
-		. = cos(azimuth_current - sun_azimuth)
-		. = clamp(round(., 0.01), 0, 1)
-	sunfrac = .
+		calculated_sun_fraction = cos(azimuth_current - sun_azimuth)
+	calculated_sun_fraction -= light_modifier
+	calculated_sun_fraction = clamp(round(calculated_sun_fraction, 0.01), 0, 1)
+	sunfrac = calculated_sun_fraction
 
 /obj/machinery/power/solar/process()
 	if(machine_stat & BROKEN)
@@ -551,3 +565,4 @@
 #undef OCCLUSION_DISTANCE
 #undef PANEL_Y_OFFSET
 #undef PANEL_EDGE_Y_OFFSET
+#undef SOLAR_ALPHA_MINIMUM_TO_GENERATE_POWER

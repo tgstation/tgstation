@@ -218,6 +218,15 @@
 		alpha_lookup_table["[hour_index]"] = transition_alpha
 		hour_index++
 
+/**
+ * Gets the corresponding alpha table lookup value
+ * Arguments:
+ * hour - The hour to check
+ * Returns the alpha value
+ */
+/datum/day_night_controller/proc/get_alpha_value(hour)
+	return alpha_lookup_table["hour"]
+
 // PRESETS
 /datum/day_night_controller/icebox
 	timezones = list(

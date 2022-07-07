@@ -87,6 +87,15 @@ SUBSYSTEM_DEF(day_night)
 /datum/controller/subsystem/day_night/proc/check_specific_timeframe(list/start_time, list/end_time)
 	return (((current_hour >= start_time[1]) && (current_hour <= end_time[1])) && ((current_minute >= start_time[2]) && (current_minute <= end_time[2])))
 
+/**
+ * Checks if a Z level has a corresponding day night controller.
+ *
+ * Returns the controller if it does.
+ */
+/datum/controller/subsystem/day_night/proc/get_controller(z_level)
+	for(var/datum/day_night_controller/iterating_controller in cached_controllers)
+		if(iterating_controller.affected_z_level == z_level)
+			return iterating_controller
 
 /**
  * Updates all cached controllers to the new hour.
