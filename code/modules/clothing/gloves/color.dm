@@ -178,6 +178,7 @@
 /obj/item/clothing/gloves/color/grey/protects_cold
 	name = "\proper Endotherm gloves"
 	desc = "A pair of thick grey gloves, lined to protect the wearer from freezing cold."
+	w_class = WEIGHT_CLASS_NORMAL
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
