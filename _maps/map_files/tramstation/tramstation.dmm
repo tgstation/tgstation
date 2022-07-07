@@ -41508,7 +41508,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron,
-/area/station/security/brig)
+/area/station/security/processing)
 "osT" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -152122,9 +152122,9 @@ dDG
 dDG
 dDG
 jym
-czW
+kzZ
 izO
-xGw
+eUH
 wtQ
 sQf
 mjO
@@ -153150,9 +153150,9 @@ dDG
 dDG
 dDG
 dDG
-kzZ
+czW
 izO
-eUH
+xGw
 wtQ
 owA
 rte
