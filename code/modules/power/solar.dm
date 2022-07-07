@@ -214,14 +214,15 @@
 	needs_to_update_solar_exposure = FALSE
 	sunfrac = 0
 	if(obscured)
-		return 0
+		return
 
 	var/datum/day_night_controller/level_controller = SSday_night.get_controller(z)
 	var/light_modifier = 0
 	if(level_controller)
 		var/current_level_lighting_alpha = level_controller.get_alpha_value(SSday_night.current_hour)
 		if(current_level_lighting_alpha < SOLAR_ALPHA_MINIMUM_TO_GENERATE_POWER)
-			return 0
+			sunfrac = 0
+			return
 		if(current_level_lighting_alpha < SOLAR_ALPHA_MAXIMUM_TO_GENERATE_POWER)
 			light_modifier = current_level_lighting_alpha * 0.001
 
