@@ -93,6 +93,7 @@
 			dna = pai.master_dna,
 			emagged = pai.emagged,
 			laws = pai.laws.supplied,
+			master = pai.master,
 			name = pai.name,
 			transmit = pai.can_transmit,
 			receive = pai.can_receive,
@@ -108,7 +109,7 @@
 			download_candidate(params["ckey"])
 			return TRUE
 		if("fix_speech")
-			fix_speech()
+			fix_speech(usr)
 			return TRUE
 		if("request")
 			find_pai(usr)
@@ -117,7 +118,7 @@
 			set_dna(usr)
 			return TRUE
 		if("set_laws")
-			set_laws()
+			set_laws(usr)
 			return TRUE
 		if("toggle_holo")
 			toggle_holo(usr)
@@ -150,7 +151,7 @@
 	add_alert()
 	addtimer(CALLBACK(src, .proc/remove_alert), 5 SECONDS)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-	loc.visible_message(span_info("[src] flashes a message across its screen"), \
+	loc.visible_message(span_notice("[src] flashes a message across its screen"), \
 		"Additional personalities available for download.", \
 		blind_message = span_notice("[src] vibrates with an alert."))
 
@@ -237,7 +238,7 @@
 
 /** Imprints your DNA onto the downloaded pAI */
 /obj/item/pai_card/proc/set_dna(mob/user)
-	if(pai || pai.master_dna)
+	if(!pai || pai.master_dna)
 		return FALSE
 	if(!iscarbon(user))
 		to_chat(user, span_warning("You don't have any DNA, or your DNA is incompatible with this device!"))
@@ -245,20 +246,26 @@
 		var/mob/living/carbon/master = user
 		pai.master = master.real_name
 		pai.master_dna = master.dna.unique_enzymes
-		to_chat(pai, span_notice("You have been bound to a new master."))
+		to_chat(pai, span_notice("You have been bound to a new master: [master]!"))
 		pai.emitter_semi_cd = FALSE
 	return TRUE
 
 /** Opens a tgui alert that allows someone to enter laws. */
-/obj/item/pai_card/proc/set_laws()
+/obj/item/pai_card/proc/set_laws(mob/user)
 	if(!pai)
+		return FALSE
+	if(!pai.master)
+		to_chat(user, span_warning("The pAI is not bound to a master! It doesn't have to listen to anyone."))
 		return FALSE
 	var/new_laws = tgui_input_text(usr, "Enter any additional directives you would like your pAI \
 		personality to follow. Note that these directives will not override the personality's allegiance \
 		to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", \
-		pai.laws.supplied[1], MAX_MESSAGE_LEN)
-	if(new_laws && pai)
-		pai.add_supplied_law(0, new_laws)
+		pai.laws.supplied[1], 300)
+	if(!new_laws || !pai || !pai.master)
+		return FALSE
+	pai.add_supplied_law(0, new_laws)
+	to_chat(pai, span_notice("They are as follows:"))
+	to_chat(pai, span_notice(new_laws))
 	return TRUE
 
 /**
@@ -282,14 +289,11 @@
 /obj/item/pai_card/proc/toggle_holo(mob/user)
 	if(!pai)
 		return FALSE
-	if(pai.can_holo)
-		to_chat(pai, span_warning("Your owner has disabled your holomatrix projectors!"))
-		pai.can_holo = FALSE
-		to_chat(user, span_notice("You disable your pAI's holomatrix!"))
-	else
-		to_chat(pai, span_notice("Your owner has enabled your holomatrix projectors!"))
-		pai.can_holo = TRUE
-		to_chat(user, span_notice("You enable your pAI's holomatrix!"))
+	to_chat(user, span_notice("You [pai.can_holo ? "disabled" : "enabled"] your pAI's \
+		holomatrix."))
+	to_chat(pai, span_warning("Your owner has [pai.can_holo ? "disabled" : "enabled"] \
+		your holomatrix projectors!"))
+	pai.can_holo = !pai.can_holo
 	return TRUE
 
 /**
