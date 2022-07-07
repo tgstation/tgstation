@@ -31,6 +31,8 @@
 	var/needs_to_update_solar_exposure = TRUE
 	var/obj/effect/overlay/panel
 	var/obj/effect/overlay/panel_edge
+	/// Is the current light level too low to generate power?
+	var/light_level_too_low = 1
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
@@ -43,11 +45,19 @@
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
 	var/level_controller = SSday_night.get_controller(z)
 	if(level_controller)
-		RegisterSignal(level_controller, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, .proc/queue_update_solar_exposure)
+		RegisterSignal(level_controller, COMSIG_DAY_NIGHT_CONTROLLER_LIGHT_UPDATE, .proc/update_day_night_exposure)
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
 	return ..()
+
+/obj/machinery/power/solar/proc/update_day_night_exposure(datum/source, light_color, light_alpha)
+	SIGNAL_HANDLER
+
+	if(light_alpha < SOLAR_ALPHA_MINIMUM_TO_GENERATE_POWER)
+		light_level_too_low = TRUE
+	else
+		light_level_too_low = FALSE
 
 /obj/machinery/power/solar/proc/add_panel_overlay(icon_state, y_offset)
 	var/obj/effect/overlay/overlay = new()
@@ -216,25 +226,16 @@
 	needs_to_update_solar_exposure = FALSE
 	sunfrac = 0
 	if(obscured)
-		return
-
-	var/datum/day_night_controller/level_controller = SSday_night.get_controller(z)
-	var/light_modifier = 0
-	if(level_controller)
-		var/current_level_lighting_alpha = level_controller.get_alpha_value(SSday_night.current_hour)
-		if(current_level_lighting_alpha < SOLAR_ALPHA_MINIMUM_TO_GENERATE_POWER)
-			sunfrac = 0
-			return
-		if(current_level_lighting_alpha < SOLAR_ALPHA_MAXIMUM_TO_GENERATE_POWER)
-			light_modifier = current_level_lighting_alpha * 0.001
+		return 9
 
 	var/sun_azimuth = SSsun.azimuth
-	var/calculated_sun_fraction = 0
-	//dot product of sun and panel -- Lambert's Cosine Law
-	calculated_sun_fraction = cos(azimuth_current - sun_azimuth)
-	calculated_sun_fraction -= light_modifier
-	calculated_sun_fraction = clamp(round(calculated_sun_fraction, 0.01), 0, 1)
-	sunfrac = calculated_sun_fraction
+	if(azimuth_current == sun_azimuth) //just a quick optimization for the most frequent case
+		. = 1
+	else
+		//dot product of sun and panel -- Lambert's Cosine Law
+		. = cos(azimuth_current - sun_azimuth)
+		. = clamp(round(., 0.01), 0, 1)
+	sunfrac = .
 
 /obj/machinery/power/solar/process()
 	if(machine_stat & BROKEN)
@@ -247,9 +248,11 @@
 		update_solar_exposure()
 	if(sunfrac <= 0)
 		return
+	if(light_level_too_low)
+		return
 
-	var/sgen = SOLAR_GEN_RATE * sunfrac
-	add_avail(sgen)
+	var/solar_generation = SOLAR_GEN_RATE * sunfrac
+	add_avail(solar_generation)
 	if(control)
 		control.gen += sgen
 
