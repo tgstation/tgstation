@@ -184,6 +184,19 @@
 /obj/item/storage/box/survival/medical
 	mask_type = /obj/item/clothing/mask/breath/medical
 
+// Clown survival box
+/obj/item/storage/box/survival/hug
+	name = "box of hugs"
+	desc = "A special box for sensitive people."
+	icon_state = "hugbox"
+	illustration = "heart"
+	foldable = null
+	mask_type = null
+
+/obj/item/storage/box/survival/hug/black
+	icon_state = "hugbox_black"
+	illustration = "heart_black"
+
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
 	desc = "Contains sterile latex gloves."
@@ -855,31 +868,6 @@
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-// Clown survival box
-/obj/item/storage/box/hug/survival/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
-
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
-		new /obj/item/flashlight/flare(src)
-		new /obj/item/radio/off(src)
-
-/obj/item/storage/box/hug/black/survival/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
-
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
-		new /obj/item/flashlight/flare(src)
-		new /obj/item/radio/off(src)
 
 /obj/item/storage/box/hug/plushes
 	name = "tactical cuddle kit"
