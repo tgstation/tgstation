@@ -105,7 +105,7 @@
 	return list(
 		"Kitsunes are a species of humanoid mammalians most easily identified \
 		by their external features closely related to that of Vulpines from Earth. \
-		Be it fluffy tails, fuzzy ears, a tendency to gekker... Most Kitsunes exhibit \
+		Be it fluffy tails, fuzzy ears, a tendency to gecker... Most Kitsunes exhibit \
 		fox-like traits and are usually distinguishable from fox-people thanks to their \
 		higher number of tails."
 	)
