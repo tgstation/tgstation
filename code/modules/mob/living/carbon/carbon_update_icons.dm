@@ -250,7 +250,7 @@
 			continue
 		overlays_standing[i] = update_appearance_planes(cache_grouping, new_offset)
 
-/atom/proc/update_appearance_planes(var/list/mutable_appearance/appearances, new_offset)
+/atom/proc/update_appearance_planes(list/mutable_appearance/appearances, new_offset)
 	var/list/build_list = build_planeed_apperance_queue(appearances)
 
 	if(!length(build_list))
