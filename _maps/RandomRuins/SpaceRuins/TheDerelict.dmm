@@ -406,12 +406,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/gravity_generator)
-"cH" = (
-/obj/machinery/gravity_generator/main/station{
-	on = 0
-	},
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/gravity_generator)
 "cM" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
@@ -696,13 +690,6 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/singularity_engine)
 "ej" = (
-/turf/open/floor/iron,
-/area/ruin/space/derelict/gravity_generator)
-"ek" = (
-/obj/structure/closet/radiation,
-/obj/structure/sign/warning/radiation/rad_area{
-	pixel_x = 32
-	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/gravity_generator)
 "el" = (
@@ -3006,6 +2993,10 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
+"FB" = (
+/obj/machinery/gravity_generator/main,
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/gravity_generator)
 "FU" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -3410,6 +3401,11 @@
 /obj/item/pen,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
+"Xe" = (
+/obj/structure/closet/radiation,
+/obj/structure/sign/warning/radiation/rad_area/directional/east,
+/turf/open/floor/iron,
+/area/ruin/space/derelict/gravity_generator)
 "Xq" = (
 /obj/item/stack/cable_coil/cut,
 /obj/effect/mapping_helpers/broken_floor,
@@ -7566,7 +7562,7 @@ aa
 cl
 cp
 co
-cH
+FB
 cO
 cO
 RF
@@ -7687,7 +7683,7 @@ dg
 cO
 cl
 dV
-ek
+Xe
 ey
 dW
 dW

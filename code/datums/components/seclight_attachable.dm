@@ -131,10 +131,8 @@
 
 	// Make a new toggle light item action for our parent
 	var/obj/item/item_parent = parent
-	var/datum/action/item_action/toggle_seclight/toggle_action = new(item_parent)
+	var/datum/action/item_action/toggle_seclight/toggle_action = item_parent.add_item_action(/datum/action/item_action/toggle_seclight)
 	toggle_action_ref = WEAKREF(toggle_action)
-	if(attacher && item_parent.loc == attacher)
-		toggle_action.Grant(attacher)
 
 	update_light()
 

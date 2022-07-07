@@ -31,10 +31,9 @@
 /area/station/maintenance/central/greater)
 "o" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/sign/warning{
+/obj/structure/sign/warning/directional/north{
 	desc = "A warning sign to watch for loose rocks.";
-	name = "COLLAPSE HAZARD sign";
-	pixel_y = 32
+	name = "COLLAPSE HAZARD sign"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)

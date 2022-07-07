@@ -288,9 +288,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "iz" = (
@@ -385,9 +383,7 @@
 "kM" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery,
-/obj/structure/sign/warning/explosives{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/explosives/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "kO" = (
@@ -1000,9 +996,7 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 8
 	},
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Cz" = (
@@ -1095,9 +1089,7 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
-/obj/structure/sign/warning/vacuum{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Fv" = (
@@ -1397,9 +1389,7 @@
 "QY" = (
 /obj/structure/chair/stool/directional/north,
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/departments/security{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/security/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Ru" = (
@@ -1547,9 +1537,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "XW" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/machinery/light/directional/south,
 /obj/structure/closet/crate/bin,
 /obj/structure/window/reinforced/tinted{

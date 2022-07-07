@@ -216,12 +216,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
-"bi" = (
-/obj/machinery/gravity_generator/main/station,
-/turf/open/floor/iron{
-	dir = 8
-	},
-/area/station/engineering/gravity_generator)
 "bj" = (
 /obj/machinery/light/directional/south,
 /obj/structure/table,
@@ -1602,6 +1596,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/construction)
+"Rd" = (
+/obj/machinery/gravity_generator/main,
+/turf/open/floor/iron{
+	dir = 8
+	},
+/area/station/engineering/gravity_generator)
 "Re" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1639,6 +1639,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction)
+"Uc" = (
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "Um" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
@@ -3009,7 +3013,7 @@ eb
 eb
 bu
 cD
-bE
+Uc
 bE
 Rl
 Ra
@@ -3703,7 +3707,7 @@ ak
 dV
 aK
 dV
-bi
+Rd
 dV
 by
 bV

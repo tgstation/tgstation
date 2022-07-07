@@ -51,7 +51,7 @@
 	var/obj/item/food/clothing/moth_snack
 
 /obj/item/clothing/Initialize(mapload)
-	if((clothing_flags & VOICEBOX_TOGGLABLE))
+	if(clothing_flags & VOICEBOX_TOGGLABLE)
 		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)

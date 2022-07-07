@@ -79,6 +79,8 @@ export const setClientTheme = (name) => {
       'asset_cache_browser.text-color': '#000000',
       'tooltip.background-color': 'none',
       'tooltip.text-color': '#000000',
+      'input.background-color': '#FFFFFF',
+      'input.text-color': '#000000',
     });
   }
   if (name === 'dark') {
@@ -129,6 +131,8 @@ export const setClientTheme = (name) => {
       'asset_cache_browser.text-color': COLOR_DARK_TEXT,
       'tooltip.background-color': COLOR_DARK_BG,
       'tooltip.text-color': COLOR_DARK_TEXT,
+      'input.background-color': COLOR_DARK_BG_DARKER,
+      'input.text-color': COLOR_DARK_TEXT,
     });
   }
 };

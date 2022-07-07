@@ -1,609 +1,425 @@
-#define TARGET_CLOSEST 0
-#define TARGET_RANDOM 1
-
-
-/obj/effect/proc_holder
-	var/panel = "Debug"//What panel the proc holder needs to go on.
-	var/active = FALSE //Used by toggle based abilities.
-	var/ranged_mousepointer
-	var/mob/living/ranged_ability_user
-	var/ranged_clickcd_override = -1
-	var/has_action = TRUE
-	var/datum/action/spell_action/action = null
-	var/action_icon = 'icons/mob/actions/actions_spells.dmi'
-	var/action_icon_state = "spell_default"
-	var/action_background_icon_state = "bg_spell"
-	var/base_action = /datum/action/spell_action
-	var/datum/weakref/owner
-
-/obj/effect/proc_holder/Initialize(mapload, mob/living/new_owner)
-	. = ..()
-	owner = WEAKREF(new_owner)
-	if(has_action)
-		action = new base_action(src)
-
-/obj/effect/proc_holder/Destroy()
-	if(!QDELETED(action))
-		qdel(action)
-	action = null
-	return ..()
-
-/obj/effect/proc_holder/proc/on_gain(mob/living/user)
-	return
-
-/obj/effect/proc_holder/proc/on_lose(mob/living/user)
-	return
-
-/obj/effect/proc_holder/proc/fire(mob/living/user)
-	return TRUE
-
-/obj/effect/proc_holder/proc/get_panel_text()
-	return ""
-
-GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
-
-/obj/effect/proc_holder/Destroy()
-	QDEL_NULL(action)
-	if(ranged_ability_user)
-		remove_ranged_ability()
-	return ..()
-
-/obj/effect/proc_holder/singularity_act()
-	return
-
-/obj/effect/proc_holder/singularity_pull()
-	return
-
-/obj/effect/proc_holder/proc/InterceptClickOn(mob/living/caller, params, atom/A)
-	if(caller.ranged_ability != src || ranged_ability_user != caller) //I'm not actually sure how these would trigger, but, uh, safety, I guess?
-		to_chat(caller, span_warning("<b>[caller.ranged_ability.name]</b> has been disabled."))
-		caller.ranged_ability.remove_ranged_ability()
-		return TRUE //TRUE for failed, FALSE for passed.
-	if(ranged_clickcd_override >= 0)
-		ranged_ability_user.next_click = world.time + ranged_clickcd_override
-	else
-		ranged_ability_user.next_click = world.time + CLICK_CD_CLICK_ABILITY
-	ranged_ability_user.face_atom(A)
-	return FALSE
-
-/obj/effect/proc_holder/proc/add_ranged_ability(mob/living/user, msg, forced)
-	if(!user || !user.client)
-		return
-	if(user.ranged_ability && user.ranged_ability != src)
-		if(forced)
-			to_chat(user, span_warning("<b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>."))
-			user.ranged_ability.remove_ranged_ability()
-		else
-			return
-	user.ranged_ability = src
-	user.click_intercept = src
-	user.update_mouse_pointer()
-	ranged_ability_user = user
-	if(msg)
-		to_chat(ranged_ability_user, msg)
-	active = TRUE
-	update_appearance()
-
-/obj/effect/proc_holder/proc/remove_ranged_ability(msg)
-	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
-		return
-	ranged_ability_user.ranged_ability = null
-	ranged_ability_user.click_intercept = null
-	ranged_ability_user.update_mouse_pointer()
-	if(msg)
-		to_chat(ranged_ability_user, msg)
-	ranged_ability_user = null
-	active = FALSE
-	update_appearance()
-
-/obj/effect/proc_holder/spell
+/**
+ * # The spell action
+ *
+ * This is the base action for how many of the game's
+ * spells (and spell adjacent) abilities function.
+ * These spells function off of a cooldown-based system.
+ *
+ * ## Pre-spell checks:
+ * - [can_cast_spell][/datum/action/cooldown/spell/can_cast_spell] checks if the OWNER
+ * of the spell is able to cast the spell.
+ * - [is_valid_target][/datum/action/cooldown/spell/is_valid_target] checks if the TARGET
+ * THE SPELL IS BEING CAST ON is a valid target for the spell. NOTE: The CAST TARGET is often THE SAME as THE OWNER OF THE SPELL,
+ * but is not always - depending on how [Pre Activate][/datum/action/cooldown/spell/PreActivate] is resolved.
+ * - [can_invoke][/datum/action/cooldown/spell/can_invoke] is run in can_cast_spell to check if
+ * the OWNER of the spell is able to say the current invocation.
+ *
+ * ## The spell chain:
+ * - [before_cast][/datum/action/cooldown/spell/before_cast] is the last chance for being able
+ * to interrupt a spell cast. This returns a bitflag. if SPELL_CANCEL_CAST is set, the spell will not continue.
+ * - [spell_feedback][/datum/action/cooldown/spell/spell_feedback] is called right before cast, and handles
+ * invocation and sound effects. Overridable, if you want a special method of invocation or sound effects,
+ * or you want your spell to handle invocation / sound via special means.
+ * - [cast][/datum/action/cooldown/spell/cast] is where the brunt of the spell effects should be done
+ * and implemented.
+ * - [after_cast][/datum/action/cooldown/spell/after_cast] is the aftermath - final effects that follow
+ * the main cast of the spell. By now, the spell cooldown has already started
+ *
+ * ## Other procs called / may be called within the chain:
+ * - [invocation][/datum/action/cooldown/spell/invocation] handles saying any vocal (or emotive) invocations the spell
+ * may have, and can be overriden or extended. Called by spell_feedback.
+ * - [reset_spell_cooldown][/datum/action/cooldown/spell/reset_spell_cooldown] is a way to handle reverting a spell's
+ * cooldown and making it ready again if it fails to go off at any point. Not called anywhere by default. If you
+ * want to cancel a spell in before_cast and would like the cooldown restart, call this.
+ *
+ * ## Other procs of note:
+ * - [level_spell][/datum/action/cooldown/spell/level_spell] is where the process of adding a spell level is handled.
+ * this can be extended if you wish to add unique effects on level up for wizards.
+ * - [delevel_spell][/datum/action/cooldown/spell/delevel_spell] is where the process of removing a spell level is handled.
+ * this can be extended if you wish to undo unique effects on level up for wizards.
+ * - [update_spell_name][/datum/action/cooldown/spell/update_spell_name] updates the prefix of the spell name based on its level.
+ */
+/datum/action/cooldown/spell
 	name = "Spell"
 	desc = "A wizard spell."
+	background_icon_state = "bg_spell"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "spell_default"
+	check_flags = AB_CHECK_CONSCIOUS
 	panel = "Spells"
-	var/sound = null //The sound the spell makes when it is cast
-	anchored = TRUE // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
-	pass_flags = PASSTABLE
-	density = FALSE
-	opacity = FALSE
 
-	///checked by some holy sects to punish the caster for casting things that do not align with their sect's alignment - see magic.dm in defines to learn more
+	/// The sound played on cast.
+	var/sound = null
+	/// The school of magic the spell belongs to.
+	/// Checked by some holy sects to punish the
+	/// caster for casting things that do not align
+	/// with their sect's alignment - see magic.dm in defines to learn more
 	var/school = SCHOOL_UNSET
-
-	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
-
-	var/charge_max = 10 SECONDS //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
-	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
-	var/still_recharging_msg = "<span class='notice'>The spell is still recharging.</span>"
-	var/recharging = TRUE
-
-	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
-	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
-
-	var/clothes_req = TRUE //see if it requires clothes
-	var/human_req = FALSE //spell can only be cast by humans
-	var/nonabstract_req = FALSE //spell can only be cast by mobs that are physical entities
-	var/stat_allowed = FALSE //see if it requires being conscious/alive, need to set to 1 for ghostpells
-	var/phase_allowed = FALSE // If true, the spell can be cast while phased, eg. blood crawling, ethereal jaunting
-
-	/// This determines what type of antimagic is needed to block the spell (MAGIC_RESISTANCE, MAGIC_RESISTANCE_MIND, MAGIC_RESISTANCE_HOLY)
+	/// If the spell uses the wizard spell rank system, the cooldown reduction per rank of the spell
+	var/cooldown_reduction_per_rank = 0 SECONDS
+	/// What is uttered when the user casts the spell
+	var/invocation
+	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE
+	var/invocation_self_message
+	/// What type of invocation the spell is.
+	/// Can be "none", "whisper", "shout", "emote"
+	var/invocation_type = INVOCATION_NONE
+	/// Flag for certain states that the spell requires the user be in to cast.
+	var/spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NO_ANTIMAGIC
+	/// This determines what type of antimagic is needed to block the spell.
+	/// (MAGIC_RESISTANCE, MAGIC_RESISTANCE_MIND, MAGIC_RESISTANCE_HOLY)
+	/// If SPELL_REQUIRES_NO_ANTIMAGIC is set in Spell requirements,
+	/// The spell cannot be cast if the caster has any of the antimagic flags set.
 	var/antimagic_flags = MAGIC_RESISTANCE
-
-	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
-	var/invocation_emote_self = null
-	var/invocation_type = INVOCATION_NONE //can be none, whisper, emote and shout
-	var/range = 7 //the range of the spell; outer radius for aoe spells
-	var/message = "" //whatever it says to the guy affected by it
-	var/selection_type = "view" //can be "range" or "view"
-	var/spell_level = 0 //if a spell can be taken multiple times, this raises
-	var/level_max = 4 //The max possible level_max is 4
-	var/cooldown_min = 0 //This defines what spell quickened four times has as a cooldown. Make sure to set this for every spell
-	var/player_lock = TRUE //If it can be used by simple mobs
-
-	var/overlay = 0
-	var/overlay_icon = 'icons/obj/wizard.dmi'
-	var/overlay_icon_state = "spell"
-	var/overlay_lifespan = 0
-
-	var/sparks_spread = 0
-	var/sparks_amt = 0 //cropped at 10
+	/// The current spell level, if taken multiple times by a wizard
+	var/spell_level = 1
+	/// The max possible spell level
+	var/spell_max_level = 5
+	/// If set to a positive number, the spell will produce sparks when casted.
+	var/sparks_amt = 0
 	/// The typepath of the smoke to create on cast.
-	var/smoke_spread = null
-	/// The amount of smoke to create on case. This is a range so a value of 5 will create enough smoke to cover everything within 5 steps.
+	var/smoke_type
+	/// The amount of smoke to create on cast. This is a range, so a value of 5 will create enough smoke to cover everything within 5 steps.
 	var/smoke_amt = 0
 
-	var/centcom_cancast = TRUE //Whether or not the spell should be allowed on z2
+/datum/action/cooldown/spell/Grant(mob/grant_to)
+	// If our spell is mind-bound, we only wanna grant it to our mind
+	if(istype(target, /datum/mind))
+		var/datum/mind/mind_target = target
+		if(mind_target.current != grant_to)
+			return
 
-	action_icon = 'icons/mob/actions/actions_spells.dmi'
-	action_icon_state = "spell_default"
-	action_background_icon_state = "bg_spell"
-	base_action = /datum/action/spell_action/spell
-
-/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(SEND_SIGNAL(user, COMSIG_MOB_PRE_CAST_SPELL, src) & COMPONENT_CANCEL_SPELL)
-		return FALSE
-
-	if(player_lock)
-		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
-			to_chat(user, span_warning("You shouldn't have this spell! Something's wrong."))
-			return FALSE
-	else
-		if(!(src in user.mob_spell_list))
-			return FALSE
-
-	var/turf/T = get_turf(user)
-	if(is_centcom_level(T.z) && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
-		to_chat(user, span_warning("You can't cast this spell here!"))
-		return FALSE
-
-	if(!skipcharge)
-		if(!charge_check(user))
-			return FALSE
-
-	if(user.stat && !stat_allowed)
-		to_chat(user, span_warning("Not when you're incapacitated!"))
-		return FALSE
-
-	if(!user.can_cast_magic(antimagic_flags))
-		return FALSE
-
-	if(!phase_allowed && istype(user.loc, /obj/effect/dummy) || HAS_TRAIT(user, TRAIT_ROD_FORM))
-		to_chat(user, span_warning("[name] cannot be cast unless you are completely manifested in the material plane!"))
-		return FALSE
-
-	var/mob/living/L = user
-	if(istype(L) && (invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !L.can_speak_vocal())
-		to_chat(user, span_warning("You can't get the words out!"))
-		return FALSE
-
-	if(ishuman(user))
-
-		var/mob/living/carbon/human/H = user
-
-		if(clothes_req)
-			if(!(H.wear_suit?.clothing_flags & CASTING_CLOTHES))
-				to_chat(H, span_warning("You don't feel strong enough without your robe!"))
-				return FALSE
-			if(!(H.head?.clothing_flags & CASTING_CLOTHES))
-				to_chat(H, span_warning("You don't feel strong enough without your hat!"))
-				return FALSE
-	else
-		if(clothes_req || human_req)
-			to_chat(user, span_warning("This spell can only be cast by humans!"))
-			return FALSE
-		if(nonabstract_req && (isbrain(user) || ispAI(user)))
-			to_chat(user, span_warning("This spell can only be cast by physical beings!"))
-			return FALSE
-
-
-	if(!skipcharge)
-		switch(charge_type)
-			if("recharge")
-				charge_counter = 0 //doesn't start recharging until the targets selecting ends
-			if("charges")
-				charge_counter-- //returns the charge if the targets selecting fails
-			if("holdervar")
-				adjust_var(user, holder_var_type, holder_var_amount)
-	if(action)
-		action.UpdateButtons()
-	return TRUE
-
-/obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
-	switch(charge_type)
-		if("recharge")
-			if(charge_counter < charge_max)
-				if(!silent)
-					to_chat(user, still_recharging_msg)
-				return FALSE
-		if("charges")
-			if(!charge_counter)
-				if(!silent)
-					to_chat(user, span_warning("[name] has no charges left!"))
-				return FALSE
-	return TRUE
-
-/obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
-	switch(invocation_type)
-		if(INVOCATION_SHOUT)
-			if(prob(50))//Auto-mute? Fuck that noise
-				user.say(invocation, forced = "spell")
-			else
-				user.say(replacetext(invocation," ","`"), forced = "spell")
-		if(INVOCATION_WHISPER)
-			if(prob(50))
-				user.whisper(invocation)
-			else
-				user.whisper(replacetext(invocation," ","`"))
-		if(INVOCATION_EMOTE)
-			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
-
-/obj/effect/proc_holder/spell/proc/playMagSound()
-	playsound(get_turf(usr), sound,50,TRUE)
-
-/obj/effect/proc_holder/spell/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSfastprocess, src)
+	if(!owner)
+		return
 
-	still_recharging_msg = span_warning("[name] is still recharging!")
-	charge_counter = charge_max
+	// Register some signals so our button's icon stays up to date
+	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
+		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
+	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
+		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
+	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
+	owner.client?.stat_panel.send_message("check_spells")
 
-/obj/effect/proc_holder/spell/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	qdel(action)
+/datum/action/cooldown/spell/Remove(mob/living/remove_from)
+
+	remove_from.client?.stat_panel.send_message("check_spells")
+	UnregisterSignal(remove_from, list(
+		COMSIG_MOB_AFTER_EXIT_JAUNT,
+		COMSIG_MOB_ENTER_JAUNT,
+		COMSIG_MOB_EQUIPPED_ITEM,
+		COMSIG_MOVABLE_Z_CHANGED,
+	))
+
 	return ..()
 
-/obj/effect/proc_holder/spell/Click()
-	if(cast_check())
-		choose_targets()
-	return 1
+/datum/action/cooldown/spell/IsAvailable()
+	return ..() && can_cast_spell(feedback = FALSE)
 
-/obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
-	return
+/datum/action/cooldown/spell/Trigger(trigger_flags, atom/target)
+	// We implement this can_cast_spell check before the parent call of Trigger()
+	// to allow people to click unavailable abilities to get a feedback chat message
+	// about why the ability is unavailable.
+	// It is otherwise redundant, however, as IsAvailable() checks can_cast_spell as well.
+	if(!can_cast_spell())
+		return FALSE
+
+	return ..()
+
+/datum/action/cooldown/spell/set_click_ability(mob/on_who)
+	if(SEND_SIGNAL(on_who, COMSIG_MOB_SPELL_ACTIVATED, src) & SPELL_CANCEL_CAST)
+		return FALSE
+
+	return ..()
+
+// Where the cast chain starts
+/datum/action/cooldown/spell/PreActivate(atom/target)
+	if(!is_valid_target(target))
+		return FALSE
+
+	return Activate(target)
+
+/// Checks if the owner of the spell can currently cast it.
+/// Does not check anything involving potential targets.
+/datum/action/cooldown/spell/proc/can_cast_spell(feedback = TRUE)
+	if(!owner)
+		CRASH("[type] - can_cast_spell called on a spell without an owner!")
+
+	// Certain spells are not allowed on the centcom zlevel
+	var/turf/caster_turf = get_turf(owner)
+	if((spell_requirements & SPELL_REQUIRES_OFF_CENTCOM) && is_centcom_level(caster_turf.z))
+		if(feedback)
+			to_chat(owner, span_warning("You can't cast [src] here!"))
+		return FALSE
+
+	if((spell_requirements & SPELL_REQUIRES_MIND) && !owner.mind)
+		// No point in feedback here, as mindless mobs aren't players
+		return FALSE
+
+	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !owner.mind?.miming)
+		// In the future this can be moved out of spell checks exactly
+		if(feedback)
+			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
+		return FALSE
+
+	// If the spell requires the user has no antimagic equipped, and they're holding antimagic
+	// that corresponds with the spell's antimagic, then they can't actually cast the spell
+	if((spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC) && !owner.can_cast_magic(antimagic_flags))
+		if(feedback)
+			to_chat(owner, span_warning("Some form of antimagic is preventing you from casting [src]!"))
+		return FALSE
+
+	if(!(spell_requirements & SPELL_CASTABLE_WHILE_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
+		if(feedback)
+			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
+		return FALSE
+
+	if(!can_invoke(feedback = feedback))
+		return FALSE
+
+	if(ishuman(owner))
+		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
+			var/mob/living/carbon/human/human_owner = owner
+			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES))
+				to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
+				return FALSE
+			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES))
+				to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+				return FALSE
+
+	else
+		// If the spell requires wizard equipment and we're not a human (can't wear robes or hats), that's just a given
+		if(spell_requirements & (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_HUMAN))
+			if(feedback)
+				to_chat(owner, span_warning("[src] can only be cast by humans!"))
+			return FALSE
+
+		if(!(spell_requirements & SPELL_CASTABLE_AS_BRAIN) && isbrain(owner))
+			if(feedback)
+				to_chat(owner, span_warning("[src] can't be cast in this state!"))
+			return FALSE
+
+		// Being put into a card form breaks a lot of spells, so we'll just forbid them in these states
+		if(ispAI(owner) || (isAI(owner) && istype(owner.loc, /obj/item/aicard)))
+			return FALSE
+
+	return TRUE
 
 /**
- * can_target: Checks if we are allowed to cast the spell on a target.
+ * Check if the target we're casting on is a valid target.
+ * For self-casted spells, the target being checked (cast_on) is the caster.
  *
- * Arguments:
- * * target The atom that is being targeted by the spell.
- * * user The mob using the spell.
- * * silent If the checks should not give any feedback messages.
+ * Return TRUE if cast_on is valid, FALSE otherwise
  */
-/obj/effect/proc_holder/spell/proc/can_target(atom/target, mob/user, silent = FALSE)
+/datum/action/cooldown/spell/proc/is_valid_target(atom/cast_on)
 	return TRUE
 
-/obj/effect/proc_holder/spell/proc/start_recharge()
-	recharging = TRUE
+// The actual cast chain occurs here, in Activate().
+// You should generally not be overriding or extending Activate() for spells.
+// Defer to any of the cast chain procs instead.
+/datum/action/cooldown/spell/Activate(atom/cast_on)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-/obj/effect/proc_holder/spell/process(delta_time)
-	if(recharging && charge_type == "recharge" && (charge_counter < charge_max))
-		charge_counter += delta_time * 10
-		if(charge_counter >= charge_max)
-			action.UpdateButtons()
-			charge_counter = charge_max
-			recharging = FALSE
+	// Pre-casting of the spell
+	// Pre-cast is the very last chance for a spell to cancel
+	// Stuff like target input can go here.
+	var/precast_result = before_cast(cast_on)
+	if(precast_result & SPELL_CANCEL_CAST)
+		return FALSE
 
-/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
-	before_cast(targets)
-	invocation(user)
-	if(user?.ckey)
-		user.log_message(span_danger("cast the spell [name]."), LOG_ATTACK)
-	if(recharge)
-		recharging = TRUE
+	// Spell is officially being cast
+	if(!(precast_result & SPELL_NO_FEEDBACK))
+		// We do invocation and sound effects here, before actual cast
+		// That way stuff like teleports or shape-shifts can be invoked before ocurring
+		spell_feedback()
+
+	// Actually cast the spell. Main effects go here
+	cast(cast_on)
+
+	if(!(precast_result & SPELL_NO_IMMEDIATE_COOLDOWN))
+		// The entire spell is done, start the actual cooldown at its set duration
+		StartCooldown()
+
+	// And then proceed with the aftermath of the cast
+	// Final effects that happen after all the casting is done can go here
+	after_cast(cast_on)
+	UpdateButtons()
+
+	return TRUE
+
+/**
+ * Actions done before the actual cast is called.
+ * This is the last chance to cancel the spell from being cast.
+ *
+ * Can be used for target selection or to validate checks on the caster (cast_on).
+ *
+ * Returns a bitflag.
+ * - SPELL_CANCEL_CAST will stop the spell from being cast.
+ * - SPELL_NO_FEEDBACK will prevent the spell from calling [proc/spell_feedback] on cast. (invocation, sounds)
+ * - SPELL_NO_IMMEDIATE_COOLDOWN will prevent the spell from starting its cooldown between cast and before after_cast.
+ */
+/datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
+	SHOULD_CALL_PARENT(TRUE)
+
+	var/sig_return = SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST, cast_on)
+	if(owner)
+		sig_return |= SEND_SIGNAL(owner, COMSIG_MOB_BEFORE_SPELL_CAST, src, cast_on)
+
+	return sig_return
+
+/**
+ * Actions done as the main effect of the spell.
+ *
+ * For spells without a click intercept, [cast_on] will be the owner.
+ * For click spells, [cast_on] is whatever the owner clicked on in casting the spell.
+ */
+/datum/action/cooldown/spell/proc/cast(atom/cast_on)
+	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_SPELL_CAST, cast_on)
+	if(owner)
+		SEND_SIGNAL(owner, COMSIG_MOB_CAST_SPELL, src, cast_on)
+		if(owner.ckey)
+			owner.log_message("cast the spell [name][cast_on != owner ? " on / at [cast_on]":""].", LOG_ATTACK)
+
+/**
+ * Actions done after the main cast is finished.
+ * This is called after the cooldown's already begun.
+ *
+ * It can be used to apply late spell effects where order matters
+ * (for example, causing smoke *after* a teleport occurs in cast())
+ * or to clean up variables or references post-cast.
+ */
+/datum/action/cooldown/spell/proc/after_cast(atom/cast_on)
+	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
+	if(!owner)
+		return
+
+	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
+
+	// Sparks and smoke can only occur if there's an owner to source them from.
+	if(sparks_amt)
+		do_sparks(sparks_amt, FALSE, get_turf(owner))
+
+	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
+		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
+		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
+		smoke.start()
+
+/// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation
+/datum/action/cooldown/spell/proc/spell_feedback()
+	if(!owner)
+		return
+
+	if(invocation_type != INVOCATION_NONE)
+		invocation()
 	if(sound)
-		playMagSound()
-	SEND_SIGNAL(user, COMSIG_MOB_CAST_SPELL, src)
-	cast(targets,user=user)
-	after_cast(targets)
-	if(action)
-		action.UpdateButtons()
+		playsound(get_turf(owner), sound, 50, TRUE)
 
-/obj/effect/proc_holder/spell/proc/before_cast(list/targets)
-	if(overlay)
-		for(var/atom/target in targets)
-			var/location
-			if(isliving(target))
-				location = target.loc
-			else if(isturf(target))
-				location = target
-			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
-			spell.icon = overlay_icon
-			spell.icon_state = overlay_icon_state
-			spell.set_anchored(TRUE)
-			spell.set_density(FALSE)
-			QDEL_IN(spell, overlay_lifespan)
-
-/obj/effect/proc_holder/spell/proc/after_cast(list/targets)
-	for(var/atom/target in targets)
-		var/location
-		if(isliving(target))
-			location = target.loc
-		else if(isturf(target))
-			location = target
-		if(isliving(target) && message)
-			to_chat(target, text("[message]"))
-		if(sparks_spread)
-			do_sparks(sparks_amt, FALSE, location)
-		if(ispath(smoke_spread, /datum/effect_system/fluid_spread/smoke)) // Dear god this code is :agony:
-			var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_spread()
-			smoke.set_up(smoke_amt, holder = src, location = location)
-			smoke.start()
-
-
-/obj/effect/proc_holder/spell/proc/cast(list/targets,mob/user = usr)
-
-/obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
-	switch(type)
-		if("view")
-			. = view(distance,center)
-		if("range")
-			. = range(distance,center)
-
-/obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
-	switch(charge_type)
-		if("recharge")
-			charge_counter = charge_max
-		if("charges")
-			charge_counter++
-		if("holdervar")
-			adjust_var(user, holder_var_type, -holder_var_amount)
-	if(action)
-		action.UpdateButtons()
-
-/obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
-	if (!istype(target))
-		return
-	switch(type)
-		if("bruteloss")
-			target.adjustBruteLoss(amount)
-		if("fireloss")
-			target.adjustFireLoss(amount)
-		if("toxloss")
-			target.adjustToxLoss(amount)
-		if("oxyloss")
-			target.adjustOxyLoss(amount)
-		if("stun")
-			target.AdjustStun(amount)
-		if("knockdown")
-			target.AdjustKnockdown(amount)
-		if("paralyze")
-			target.AdjustParalyzed(amount)
-		if("immobilize")
-			target.AdjustImmobilized(amount)
-		if("unconscious")
-			target.AdjustUnconscious(amount)
-		else
-			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existent vars
-
-/obj/effect/proc_holder/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
-	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
-	var/target_ignore_prev = 1 //only important if max_targets > 1, affects if the spell can be cast multiple times at one person from one cast
-	var/include_user = 0 //if it includes usr in the target list
-	var/random_target = 0 // chooses random viable target instead of asking the caster
-	var/random_target_priority = TARGET_CLOSEST // if random_target is enabled how it will pick the target
-
-
-/obj/effect/proc_holder/spell/aoe_turf //affects all turfs in view or range (depends)
-	var/inner_radius = -1 //for all your ring spell needs
-
-/obj/effect/proc_holder/spell/targeted/choose_targets(mob/user = usr)
-	var/list/targets = list()
-
-	switch(max_targets)
-		if(0) //unlimited
-			for(var/mob/living/target in view_or_range(range, user, selection_type))
-				if(!can_target(target, user, TRUE))
-					continue
-				targets += target
-		if(1) //single target can be picked
-			if(range < 0)
-				targets += user
+/// The invocation that accompanies the spell, called from spell_feedback() before cast().
+/datum/action/cooldown/spell/proc/invocation()
+	switch(invocation_type)
+		if(INVOCATION_SHOUT)
+			if(prob(50))
+				owner.say(invocation, forced = "spell ([src])")
 			else
-				var/possible_targets = list()
+				owner.say(replacetext(invocation," ","`"), forced = "spell ([src])")
 
-				for(var/mob/living/M in view_or_range(range, user, selection_type))
-					if(!include_user && user == M)
-						continue
-					if(!can_target(M, user, TRUE))
-						continue
-					possible_targets += M
+		if(INVOCATION_WHISPER)
+			if(prob(50))
+				owner.whisper(invocation, forced = "spell ([src])")
+			else
+				owner.whisper(replacetext(invocation," ","`"), forced = "spell ([src])")
 
-				//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
-				//Adds a safety check post-input to make sure those targets are actually in range.
-				var/mob/chosen_target
-				if(!random_target)
-					chosen_target = tgui_input_list(user, "Choose the target for the spell", "Targeting", sort_names(possible_targets))
-					if(isnull(chosen_target))
-						return
-					if(!ismob(chosen_target) || user.incapacitated())
-						return
-				else
-					switch(random_target_priority)
-						if(TARGET_RANDOM)
-							chosen_target = pick(possible_targets)
-						if(TARGET_CLOSEST)
-							for(var/mob/living/living_target in possible_targets)
-								if(chosen_target)
-									if(get_dist(user, living_target) < get_dist(user, chosen_target))
-										if(los_check(user, living_target))
-											chosen_target = living_target
-								else
-									if(los_check(user, living_target))
-										chosen_target = living_target
-				if(chosen_target in view_or_range(range, user, selection_type))
-					targets += chosen_target
+		if(INVOCATION_EMOTE)
+			owner.visible_message(invocation, invocation_self_message)
 
-		else
-			var/list/possible_targets = list()
-			for(var/mob/living/target in view_or_range(range, user, selection_type))
-				if(!can_target(target, user, TRUE))
-					continue
-				possible_targets += target
-			for(var/i in 1 to max_targets)
-				if(!length(possible_targets))
-					break
-				if(target_ignore_prev)
-					var/target = pick(possible_targets)
-					possible_targets -= target
-					targets += target
-				else
-					targets += pick(possible_targets)
+/// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
+/datum/action/cooldown/spell/proc/can_invoke(feedback = TRUE)
+	if(spell_requirements & SPELL_CASTABLE_WITHOUT_INVOCATION)
+		return TRUE
 
-	if(!include_user && (user in targets))
-		targets -= user
+	if(invocation_type == INVOCATION_NONE)
+		return TRUE
 
-	if(!length(targets)) //doesn't waste the spell
-		revert_cast(user)
-		return
-
-	perform(targets, user=user)
-
-/obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
-	var/list/targets = list()
-
-	for(var/turf/target in view_or_range(range,user,selection_type))
-		if(!can_target(target, user, TRUE))
-			continue
-		if(!(target in view_or_range(inner_radius,user,selection_type)))
-			targets += target
-
-	if(!length(targets)) //doesn't waste the spell
-		revert_cast()
-		return
-
-	perform(targets,user=user)
-
-/obj/effect/proc_holder/spell/proc/updateButtons(status_only, force)
-	action.UpdateButtons(status_only, force)
-
-/obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
-	if((human_req || clothes_req) && !ishuman(caster))
+	// If you want a spell usable by ghosts for some reason, it must be INVOCATION_NONE
+	if(!isliving(owner))
+		if(feedback)
+			to_chat(owner, span_warning("You need to be living to invoke [src]!"))
 		return FALSE
+
+	var/mob/living/living_owner = owner
+	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
+		if(feedback)
+			to_chat(owner, span_warning("You can't position your hands correctly to invoke [src]!"))
+		return FALSE
+
+	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak_vocal())
+		if(feedback)
+			to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
+		return FALSE
+
 	return TRUE
 
-/obj/effect/proc_holder/spell/targeted/proc/los_check(mob/A,mob/B)
-	//Checks for obstacles from A to B
-	var/obj/dummy = new(A.loc)
-	dummy.pass_flags |= PASSTABLE
-	var/turf/previous_step = get_turf(A)
-	var/first_step = TRUE
-	for(var/turf/next_step as anything in (get_line(A, B) - previous_step))
-		if(first_step)
-			for(var/obj/blocker in previous_step)
-				if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1))
-					continue
-				if(blocker.CanPass(dummy, get_dir(previous_step, next_step)))
-					continue
-				return FALSE // Could not leave the first turf.
-			first_step = FALSE
-		for(var/atom/movable/movable as anything in next_step)
-			if(!movable.CanPass(dummy, get_dir(next_step, previous_step)))
-				qdel(dummy)
-				return FALSE
-		previous_step = next_step
-	qdel(dummy)
+/// Resets the cooldown of the spell, sending COMSIG_SPELL_CAST_RESET
+/// and allowing it to be used immediately (+ updating button icon accordingly)
+/datum/action/cooldown/spell/proc/reset_spell_cooldown()
+	SEND_SIGNAL(src, COMSIG_SPELL_CAST_RESET)
+	next_use_time -= cooldown_time // Basically, ensures that the ability can be used now
+	UpdateButtons()
+
+/**
+ * Levels the spell up a single level, reducing the cooldown.
+ * If bypass_cap is TRUE, will level the spell up past it's set cap.
+ */
+/datum/action/cooldown/spell/proc/level_spell(bypass_cap = FALSE)
+	// Spell cannot be levelled
+	if(spell_max_level <= 1)
+		return FALSE
+
+	// Spell is at cap, and we will not bypass it
+	if(!bypass_cap && (spell_level >= spell_max_level))
+		return FALSE
+
+	spell_level++
+	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0)
+	update_spell_name()
 	return TRUE
 
-/obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
-	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
+/**
+ * Levels the spell down a single level, down to 1.
+ */
+/datum/action/cooldown/spell/proc/delevel_spell()
+	// Spell cannot be levelled
+	if(spell_max_level <= 1)
 		return FALSE
 
-	if(!charge_check(user,TRUE))
+	if(spell_level <= 1)
 		return FALSE
 
-	if(user.stat && !stat_allowed)
-		return FALSE
-
-	if(!user.can_cast_magic(antimagic_flags))
-		return FALSE
-
-	if(!ishuman(user))
-		if(clothes_req || human_req)
-			return FALSE
-		if(nonabstract_req && (isbrain(user) || ispAI(user)))
-			return FALSE
+	spell_level--
+	cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+	update_spell_name()
 	return TRUE
 
-/obj/effect/proc_holder/spell/self //Targets only the caster. Good for buffs and heals, but probably not wise for fireballs (although they usually fireball themselves anyway, honke)
-	range = -1 //Duh
+/**
+ * Updates the spell's name based on its level.
+ */
+/datum/action/cooldown/spell/proc/update_spell_name()
+	var/spell_title = ""
+	switch(spell_level)
+		if(2)
+			spell_title = "Efficient "
+		if(3)
+			spell_title = "Quickened "
+		if(4)
+			spell_title = "Free "
+		if(5)
+			spell_title = "Instant "
+		if(6)
+			spell_title = "Ludicrous "
 
-/obj/effect/proc_holder/spell/self/choose_targets(mob/user = usr)
-	if(!user)
-		revert_cast()
-		return
-	perform(null,user=user)
-
-/obj/effect/proc_holder/spell/self/basic_heal //This spell exists mainly for debugging purposes, and also to show how casting works
-	name = "Lesser Heal"
-	desc = "Heals a small amount of brute and burn damage."
-	human_req = TRUE
-	clothes_req = FALSE
-	charge_max = 100
-	cooldown_min = 50
-	invocation = "Victus sano!"
-	invocation_type = INVOCATION_WHISPER
-	school = SCHOOL_RESTORATION
-	sound = 'sound/magic/staff_healing.ogg'
-
-/obj/effect/proc_holder/spell/self/basic_heal/cast(list/targets, mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
-	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.
-	user.visible_message(span_warning("A wreath of gentle light passes over [user]!"), span_notice("You wreath yourself in healing light!"))
-	user.adjustBruteLoss(-10)
-	user.adjustFireLoss(-10)
-
-/obj/effect/proc_holder/spell/vv_get_dropdown()
-	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
-	if(clothes_req)
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_ROBELESS, "Set Robeless")
-	else
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_ROBELESS, "Unset Robeless")
-
-	if(human_req)
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_HUMANONLY, "Unset Require Humanoid Mob")
-	else
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_HUMANONLY, "Set Require Humanoid Mob")
-
-	if(nonabstract_req)
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_NONABSTRACT, "Unset Require Body")
-	else
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_NONABSTRACT, "Set Require Body")
-
-/obj/effect/proc_holder/spell/vv_do_topic(list/href_list)
-	. = ..()
-	if(href_list[VV_HK_SPELL_SET_ROBELESS])
-		clothes_req = FALSE
-		return
-	if(href_list[VV_HK_SPELL_UNSET_ROBELESS])
-		clothes_req = TRUE
-		return
-	if(href_list[VV_HK_SPELL_UNSET_HUMANONLY])
-		human_req = FALSE
-		return
-	if(href_list[VV_HK_SPELL_SET_HUMANONLY])
-		human_req = TRUE
-		return
-	if(href_list[VV_HK_SPELL_UNSET_NONABSTRACT])
-		nonabstract_req = FALSE
-		return
-	if(href_list[VV_HK_SPELL_SET_NONABSTRACT])
-		nonabstract_req = TRUE
-		return
+	name = "[spell_title][initial(name)]"
+	UpdateButtons()

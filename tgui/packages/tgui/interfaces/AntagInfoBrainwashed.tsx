@@ -55,7 +55,7 @@ export const AntagInfoBrainwashed = () => {
   );
 };
 
-const ObjectivePrintout = (_, context) => {
+const ObjectivePrintout = (props, context) => {
   const { data } = useBackend<Info>(context);
   const { objectives } = data;
   return (

@@ -1,0 +1,204 @@
+2022-07-01:
+  Guillaume Prata:
+  - qol: Hypernob Protection (given to plasmamen that are breathing Hypernob as gas)
+      is a status effect now and gives better feedback to the user.
+  - balance: Hypernob Protection gives a small slowdown.
+  Hamcha:
+  - bugfix: The agent card now correctly allows you to take anyone's identity, even
+      if their name contains numbers
+  OrionTheFox:
+  - bugfix: Chainsaws can now actually cut wood! So can the giant axe that is the
+      PKC, and other chainsaw items - but, alas, esword handles alone can not, and
+      you must actually turn them on. Also, all mining implements can mine scattered
+      stones as well!
+  - bugfix: Chainsaws are now faster when they are on, and slower when they aren't.
+  Salex08:
+  - bugfix: blacklists placeholder food items in the random food generator which caused
+      error sprites appearing
+  ShizCalev:
+  - qol: Gas filtering cloth are now smaller and can fit inside boxes!
+  chesse20:
+  - rscadd: Furry Pride Spraypaint added to spray cans
+  - rscdel: Y##f In H##l Sprapaint removed from spray cans
+  jlsnow301:
+  - code_imp: Refactored a large number of TGUI interfaces into TypeScript. If something's
+      broken, report it!
+  private-tristan:
+  - bugfix: metastation library no longer has 2 air alarms
+2022-07-02:
+  Guillaume Prata:
+  - qol: Clown/Mime survival boxes won't have a mostly pointless breathing mask, as
+      their basic mask can be used for internals.
+  - imageadd: New mime Hugbox!
+  Melbert:
+  - rscadd: The Mjolnir wizard loadout no longer scams you. It now also grants 1 level
+      of Tesla Blast!
+  - bugfix: Spells show up in the stat panel again
+  - bugfix: Fixes runtime errors that can occur if a wizard spellbook randomizes into
+      unpurchasable spells.
+  - bugfix: Genetics powers now have their own background, which apparently they have
+      always meant to have.
+  - bugfix: Fixes some cases where chaplains are unable to cast their own spells.
+  - bugfix: Fixes some granters being infinite when they should've been limited (Maint
+      loot books).
+  - bugfix: Wizard's roundend report is now more accurate in what spells they purchased.
+  - qol: Some more spells and actions now use balloon alerts.
+  - qol: Many actions will now more accurately have their icon redded out if you can't
+      use them at the moment.
+  - qol: Genetics mindread is now a pointed ability.
+  - qol: The mimery book now grants you a vow of silence action, like the guide to
+      advanced mimery.
+  - qol: Xenomorph's corrosive acid ability is now a click-to-work action, so you
+      click on what you want to acid.
+  - qol: Also, xenomorph larva now use a radial when choosing an evolution type.
+  - qol: Summon Item now takes a few seconds to remove the mark from an item, so you
+      no longer accidentally remove it.
+  - balance: The mindswap book now gives a slight message warning it's changed on
+      read.
+  - balance: Sacred Flame now lets people around them know they're actually being
+      made super flammable.
+  - balance: Olfaction can't be cast if you have no nose (you're headless).
+  - balance: Being Emotemute now prevents you from invoking spells which require emotes
+      (mime spells).
+  - balance: All wizard spells except Mindswap can't be cast if the wizard is just
+      a brain. Most spells didn't work, anyways.
+  - balance: PAIs and carded AIs can no longer cast spells. Most spells didn't work,
+      anyways.
+  - balance: You can't mindswap into PAIs and brains(?).
+  - admin: Admins can now add spells by name or typepath.
+  - admin: Spell requirements are bitflags now, so you can modify them with the bit-field
+      VV ui. Pretty neat.
+  - code_imp: proc_holders have been removed from existence.
+  - refactor: Wizard, Heretic, Revenant, and Genetics spells are now all action datums.
+  - refactor: Xenomorph, Spider, and Cytology monster abilities are now all action
+      datums.
+  - refactor: Some malf AI and cult abilities are now fully action datums instead
+      of an unholy mix of proc holder and action.
+  - refactor: Refactored how cult's blood target is set.
+  - refactor: Bloodcrawling and jaunting have been completely refactored. Blood crawling
+      has been exorcised from the living level of mobs, and the consumption part of
+      (s)laughter demons is now handled by the action itself.
+  - refactor: The wizard's teleport scroll now actually holds and casts a version
+      of the "teleport" spell, instead of fake casting it.
+  - refactor: Refactored the wizard spellbook a bit.
+  - refactor: Refactored how all item actions are applied and handled.
+  - rscdel: SDQL spells have been removed.
+  Meyhazah:
+  - imageadd: new sprites for the Chaplain's crusader, ancient, profane and follower
+      outfits.
+  NotZang:
+  - qol: Consistency with the other bot's examination text.
+  Salex08:
+  - admin: Admins can now cancel midround random events
+  TheBoondock:
+  - bugfix: fixed telekinesis teleporting gun shenanigan
+  jlsnow301:
+  - bugfix: Fixed a bug that made the hacking status display not appear
+  lizardqueenlexi:
+  - bugfix: Limb growing code now uses species_color instead of mutant_color for synthetic
+      limb coloration
+  necromanceranne:
+  - imageadd: Improves the sprites for bullets, thermal projectiles, and introduces
+      pellet sprites.
+  orthography:
+  - bugfix: fixes intercoms being the incorrect state.
+  san7890:
+  - bugfix: Chefs on IceBoxStation will now start with eggs and milk again.
+2022-07-03:
+  Pepsilawn:
+  - bugfix: Kilostation's Supermatter was made more consistent, it will no longer
+      start with its pumps lacking pressure target checking.
+  Y0SH1M4S73R:
+  - bugfix: Maids in the Mirror are unaffected by the gaze of ghosts
+  chesse20:
+  - rscadd: Furry Pride large spraypaint added to spraycans
+  san7890:
+  - qol: There is now a new preference in Game Preferences, Suppress All Ghost Rolls.
+      If you tick this preference, you will not get a singular window pop-up whenever
+      a Ghost Role is available. Intended for the few who really do need it.
+  - admin: Admins get another additional preference where Suppress All Ghost Roles
+      only works while they are currently in an adminned state. They will still get
+      ghost rolls normally when they are in a deadminned state.
+2022-07-04:
+  Melbert:
+  - code_imp: Some traits which mistakenly were sourced from a hard reference are
+      no longer.
+  Salex08:
+  - bugfix: you start with the right amount of breathing mask again
+  TheBoondock:
+  - bugfix: fixed crystalizer passing any item as the user and causing a runtime
+  - balance: Pluoxium now heals oxygen damage when breathed
+  jlsnow301:
+  - refactor: Orbit UI has been reworked.
+  san7890:
+  - bugfix: Okay, this time I promise you have eggs and milk in the IceBox Kitchen.
+2022-07-05:
+  Fikou:
+  - balance: The supermatter running into you is no longer just as deadly as you running
+      into the supermatter.
+  Guillaume Prata:
+  - qol: Miners rejoice! A few of the mostly useless and spammy messages that get
+      send to your chat were changed to balloon alerts or straight up removed. Hopefully,
+      you will have an easier time listening to the radio chatter now.
+  JohnFulpWillard:
+  - bugfix: Thief's preference icon has been fixed, and now properly has hair.
+  Mooshimi:
+  - rscdel: Removed the lightbulbs inside the Ordinance burn chambers on Kilo and
+      Icebox.
+  - rscdel: Removed the mask sign inside the turbine burn chamber on Icebox.
+  RandomGamer123:
+  - bugfix: Adds an air scrubber and vent to a section of hallway that was without
+      them on MetaStation.
+  Salex08:
+  - bugfix: fixes a major oversight with steal gun objectives
+  magatsuchi:
+  - code_imp: removes a stray verb call from the status tab
+  - rscdel: removes movement and combat mode from the status tab
+  necromanceranne:
+  - code_imp: Added code functionality for autofire windup and resetting, both redefinable.
+      Nothing uses this code just yet!
+  - bugfix: Ensures pirate outfits and justice suits are actually able to protect
+      from damage, as their armor values suggests they should.
+  - bugfix: Stops golems from wearing the armored versions of the pirate outfits.
+  vincentiusvin:
+  - refactor: Changed how canister calculate their overpressure/overtemp damage. No
+      gameplay changes expected.
+  zzzmike:
+  - bugfix: head of staff announcement added to QM
+  - bugfix: QM added to job blacklist (like other command members are)
+  - bugfix: QM added as command in CrewManifest.js
+2022-07-06:
+  Guillaume Prata:
+  - imageadd: The QM's RPG trim icon got updated to use Command's blue instead of
+      the old cargo brown.
+  Iamgoofball:
+  - bugfix: Fixes the Herald being able to drag it's mirror around.
+  - bugfix: Fixes the Structural Weakpoint Objective to do a normal, smaller explosion,
+      especially on Lowpop(~20) and gives the objective a lower weight.
+  Melbert:
+  - balance: Nettles and Deathnettles are now normal sized, up from tiny. (Number
+      per plant bag has decreased from 100 to 33.)
+  orthography:
+  - bugfix: icebox pumps now match the standard of every other map
+  - bugfix: gives access to the APC as the AI, and adds more camera coverage where
+      it belongs.
+  timothymtorres:
+  - bugfix: Fix Confusion and Self-Respiration virus symptoms to appear at final stage.
+  vincentiusvin:
+  - admin: experiment completion are now logged in research.html
+2022-07-07:
+  Crumpaloo, jlsnow301, JohnFulpWillard:
+  - rscadd: Typing indicators now use your speech bubble type, rather than all being
+      the same, so Cyborgs no longer look like a human when typing, and Lawyers have
+      that cool speech bubble again.
+  Mooshimi:
+  - refactor: Reworked the wiring in AI Sats incorporating multiple layered wiring.
+  dragomagol:
+  - bugfix: pAI screens light up with an alert when there's a personality to download!
+  lizardqueenlexi:
+  - bugfix: made plastic flaps in MetaStation deliveries area transparent
+  orthography:
+  - bugfix: Fixed sec vestibule maintenance
+  - bugfix: fixed metastation atmos areas.
+  stylemistake:
+  - bugfix: Fixed "Script Error" in tgui and tgchat (hopefully).

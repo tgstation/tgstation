@@ -127,9 +127,7 @@
 /area/station/maintenance/tram/mid)
 "O" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/east,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
