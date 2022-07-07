@@ -786,7 +786,7 @@
 
 	//EMISSIVE CODE START
 	if(blocks_emissive)
-		var/atom/location = loc || owner
+		var/atom/location = loc || owner || src
 		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, alpha = limb.alpha)
 		limb_em_block.dir = image_dir
 		limb.overlays += limb_em_block

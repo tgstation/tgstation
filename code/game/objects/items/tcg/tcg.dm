@@ -94,16 +94,18 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard/update_name(updates)
 	. = ..()
-	if(!flipped)
-		var/datum/card/template = extract_datum()
+	var/datum/card/template = extract_datum()
+	if(!flipped && template)
 		name = template.name
 	else
 		name = "Trading Card"
 
 /obj/item/tcgcard/update_desc(updates)
 	. = ..()
+	var/datum/card/template = extract_datum()
+	if(!template)
+		return
 	if(!flipped)
-		var/datum/card/template = SStrading_card_game.cached_cards[series]["ALL"][id]
 		desc = "<i>[template.desc]</i>"
 	else
 		desc = "It's the back of a trading card... no peeking!"
@@ -113,7 +115,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		icon_state = "cardback"
 		return ..()
 
-	var/datum/card/template = SStrading_card_game.cached_cards[series]["ALL"][id]
+	var/datum/card/template = extract_datum()
+	if(!template)
+		return
 	icon_state = template.icon_state
 	return ..()
 

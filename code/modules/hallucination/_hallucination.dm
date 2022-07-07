@@ -137,13 +137,14 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	SET_PLANE_EXPLICIT(current_image, PLANE_TO_TRUE(current_image.plane), new_turf)
 
 /obj/effect/hallucination/simple/proc/Show(update=1)
-	if(active)
-		if(target.client)
-			target.client.images.Remove(current_image)
-		if(update)
-			current_image = GetImage()
-		if(target.client)
-			target.client.images |= current_image
+	if(!active || !target)
+		return
+	if(target.client)
+		target.client.images.Remove(current_image)
+	if(update)
+		current_image = GetImage()
+	if(target.client)
+		target.client.images |= current_image
 
 /obj/effect/hallucination/simple/update_icon(updates=ALL, new_state, new_icon, new_px=0, new_py=0)
 	image_state = new_state

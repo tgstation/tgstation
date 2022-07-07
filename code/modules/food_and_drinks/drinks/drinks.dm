@@ -458,7 +458,7 @@
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/update_name(updates)
 	. = ..()
-	if(!length(reagents.reagent_list))
+	if(!length(reagents?.reagent_list))
 		name = "small carton"
 		return
 
@@ -480,7 +480,7 @@
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/update_desc(updates)
 	. = ..()
-	if(!length(reagents.reagent_list))
+	if(!length(reagents?.reagent_list))
 		desc = "A small carton, intended for holding drinks."
 		return
 
@@ -503,7 +503,7 @@
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/update_icon_state()
 	. = ..()
-	if(!length(reagents.reagent_list))
+	if(!length(reagents?.reagent_list))
 		icon_state = "juicebox"
 		return
 
