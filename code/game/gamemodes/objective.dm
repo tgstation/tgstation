@@ -332,7 +332,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/jailbreak/detain
 	name = "detain"
-	admin_grantable = TRUE
 
 /datum/objective/jailbreak/detain/check_completion()
 	return completed || (!considered_escaped(target) && (considered_alive(target) && target.current.onCentCom()))
@@ -545,7 +544,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	name = "nuclear"
 	explanation_text = "Destroy the station with a nuclear device."
 	martyr_compatible = TRUE
-	admin_grantable = TRUE
 	admin_grantable = TRUE
 
 /datum/objective/nuclear/check_completion()
