@@ -273,7 +273,7 @@
 	show_in_antagpanel = TRUE
 	name = "\improper Mafioso"
 	roundend_category = "The mafiosos"
-	gang_name = "Mafia"
+	gang_name = "Vialdi Crime Syndicate Incorporated"
 	gang_id = "RM"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
 		/obj/item/clothing/neck/scarf/red,
@@ -298,7 +298,7 @@
 	show_in_antagpanel = TRUE
 	name = "Mobster"
 	roundend_category = "The mobsters"
-	gang_name = "Mob"
+	gang_name = "The Borgalli Family"
 	gang_id = "IM"
 	acceptable_clothes = list(/obj/item/clothing/under/suit/checkered,
 		/obj/item/clothing/head/fedora,
@@ -320,9 +320,9 @@
 
 /datum/antagonist/gang/tunnel_snakes
 	show_in_antagpanel = TRUE
-	name = "\improper Tunnel Snake"
-	roundend_category = "The Tunnel Snakes"
-	gang_name = "Tunnel Snakes"
+	name = "\improper Maintenance Snake"
+	roundend_category = "The Maintenance Snakes"
+	gang_name = "Maintenance Snakes"
 	gang_id = "TS"
 	acceptable_clothes = list(/obj/item/clothing/under/pants/classicjeans,
 		/obj/item/clothing/suit/jacket,
@@ -343,9 +343,9 @@
 
 /datum/antagonist/gang/henchmen
 	show_in_antagpanel = TRUE
-	name = "Monarch Henchmen"
-	roundend_category = "The Monarch henchmen"
-	gang_name = "Monarch Crew"
+	name = "Tiger Henchmen"
+	roundend_category = "The Tiger henchmen"
+	gang_name = "Tiger Crew"
 	gang_id = "HENCH"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
 		/obj/item/clothing/under/suit/henchmen,
@@ -425,9 +425,9 @@
 
 /datum/antagonist/gang/dutch
 	show_in_antagpanel = TRUE
-	name = "Dutch van der Linde Outlaw"
-	roundend_category = "Dutch's outlaws"
-	gang_name = "Dutch van der Linde's Gang"
+	name = "Dodge Station Gangster"
+	roundend_category = "Dodge Station Gang"
+	gang_name = "Dodge Station Gang"
 	gang_id = "VDL"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/black,
 		/obj/item/clothing/under/costume/dutch,
@@ -476,9 +476,9 @@
 
 /datum/antagonist/gang/osi
 	show_in_antagpanel = TRUE
-	name = "\improper Office of Secret Intelligence Agent"
-	roundend_category = "O.S.I. Agents"
-	gang_name = "Office of Secret Intelligence"
+	name = "\improper Majestic 13 Agent"
+	roundend_category = "MS13 Agents"
+	gang_name = "Majestic 13"
 	gang_id = "OSI"
 	acceptable_clothes = list(/obj/item/clothing/suit/osi,
 		/obj/item/clothing/under/costume/osi,
@@ -500,9 +500,9 @@
 
 /datum/antagonist/gang/tmc
 	show_in_antagpanel = TRUE
-	name = "\improper Lost M.C. Biker"
-	roundend_category = "Lost M.C. Bikers"
-	gang_name = "The Lost M.C."
+	name = "\improper Riders of the Radstorm Biker"
+	roundend_category = "Riders of the Radstorm Bikers"
+	gang_name = "Riders of the Radstorm"
 	gang_id = "TMC"
 	acceptable_clothes = list(/obj/item/clothing/suit/tmc,
 		/obj/item/clothing/under/costume/tmc,
@@ -524,9 +524,9 @@
 
 /datum/antagonist/gang/pg
 	show_in_antagpanel = TRUE
-	name = "\improper Powder Ganger"
-	roundend_category = "Powder Gangers"
-	gang_name = "Powder Gangers"
+	name = "\improper Prisoner Liberation Front Activist"
+	roundend_category = "Prisoner Liberation Front"
+	gang_name = "Prisoner Liberation Front"
 	gang_id = "PG"
 	acceptable_clothes = list(/obj/item/clothing/suit/pg,
 		/obj/item/clothing/under/costume/pg,
@@ -549,9 +549,9 @@
 
 /datum/antagonist/gang/driscoll
 	show_in_antagpanel = TRUE
-	name = "\improper O'Driscoll Gangster"
-	roundend_category = "O'Driscoll's Gangsters"
-	gang_name = "O'Driscoll's Gang"
+	name = "Carp Rustler"
+	roundend_category = "Carp Rustlers"
+	gang_name = "Carp Rustlers"
 	gang_id = "DB"
 	acceptable_clothes = list(/obj/item/clothing/suit/driscoll,
 		/obj/item/clothing/under/costume/driscoll,
@@ -575,9 +575,9 @@
 
 /datum/antagonist/gang/deckers
 	show_in_antagpanel = TRUE
-	name = "\improper Decker"
-	roundend_category = "Deckers"
-	gang_name = "Deckers"
+	name = "\improper Cyberpunk"
+	roundend_category = "Cyberpunks"
+	gang_name = "Cyberpunks"
 	gang_id = "DK"
 	acceptable_clothes = list(/obj/item/clothing/suit/deckers,
 		/obj/item/clothing/under/costume/deckers,
@@ -602,9 +602,9 @@
 
 /datum/antagonist/gang/morningstar
 	show_in_antagpanel = TRUE
-	name = "\improper Morningstar Member"
-	roundend_category = "Morningstar Member"
-	gang_name = "Morningstar"
+	name = "\improper Soleil Corporation Employee"
+	roundend_category = "Soleil Corporation Employees"
+	gang_name = "Soleil Corporation"
 	gang_id = "MS"
 	acceptable_clothes = list(/obj/item/clothing/suit/morningstar,
 		/obj/item/clothing/under/costume/morningstar,
@@ -628,9 +628,9 @@
 
 /datum/antagonist/gang/saints
 	show_in_antagpanel = TRUE
-	name = "\improper Third Street Saints Gangster"
-	roundend_category = "Third Street Saints Gangsters"
-	gang_name = "Third Street Saints"
+	name = "\improper Third Hyperlane Angels Gangster"
+	roundend_category = "Third Hyperlane Angels Gangsters"
+	gang_name = "Third Hyperlane Angels"
 	gang_id = "TSS"
 	acceptable_clothes = list(/obj/item/clothing/suit/saints,
 		/obj/item/clothing/under/costume/saints,
@@ -655,9 +655,9 @@
 
 /datum/antagonist/gang/phantom
 	show_in_antagpanel = TRUE
-	name = "\improper Phantom Thief"
-	roundend_category = "Phantom Thieves"
-	gang_name = "Phantom Thieves of Hearts"
+	name = "\improper Honest Heart"
+	roundend_category = "Honest Hearts"
+	gang_name = "Honest Hearts"
 	gang_id = "PT"
 	acceptable_clothes = list(/obj/item/clothing/suit/phantom,
 		/obj/item/clothing/under/costume/phantom,
@@ -681,9 +681,9 @@
 
 /datum/antagonist/gang/allies
 	show_in_antagpanel = TRUE
-	name = "\improper Allies G.I."
-	roundend_category = "Allies"
-	gang_name = "Allies"
+	name = "\improper Spinward Entente G.I."
+	roundend_category = "Spinward Entente"
+	gang_name = "Spinward Entente"
 	gang_id = "ALLIES"
 	free_clothes = list(/obj/item/clothing/suit/allies,
 		/obj/item/clothing/under/costume/allies,
@@ -704,9 +704,9 @@
 
 /datum/antagonist/gang/soviet
 	show_in_antagpanel = TRUE
-	name = "\improper Soviet Conscript"
-	roundend_category = "Soviets"
-	gang_name = "Soviets"
+	name = "\improper Soviet Remnant"
+	roundend_category = "Soviet Remnants"
+	gang_name = "Soviet Remnants"
 	gang_id = "SOV"
 	free_clothes = list(/obj/item/clothing/suit/soviet,
 		/obj/item/clothing/under/costume/soviet_families,
@@ -727,9 +727,9 @@
 
 /datum/antagonist/gang/yuri
 	show_in_antagpanel = TRUE
-	name = "\improper Yuri Initiate"
-	roundend_category = "Yuri's Army"
-	gang_name = "Yuri's Army"
+	name = "\improper Zhukov's Initiate"
+	roundend_category = "Zhukov's Battalion"
+	gang_name = "Zhukov's Battalion"
 	gang_id = "YR"
 	free_clothes = list(/obj/item/clothing/suit/yuri,
 		/obj/item/clothing/under/costume/yuri,
