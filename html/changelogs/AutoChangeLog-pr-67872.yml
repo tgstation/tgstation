@@ -1,4 +1,0 @@
-author: "Crumpaloo, jlsnow301, JohnFulpWillard"
-delete-after: True
-changes: 
-  - rscadd: "Typing indicators now use your speech bubble type, rather than all being the same, so Cyborgs no longer look like a human when typing, and Lawyers have that cool speech bubble again."
