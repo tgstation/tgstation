@@ -64,7 +64,7 @@
  * * user the person doing the cleaning
  * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
  */
-/datum/component/cleaner/proc/clean(datum/source, atom/target as obj|turf|area, mob/living/user, clean_target = TRUE)
+/datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
 	//set the cleaning duration
 	var/cleaning_duration = base_cleaning_duration
 	if(user.mind) //higher cleaning skill can make the duration shorter
