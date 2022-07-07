@@ -58,6 +58,7 @@
 	icon_state = "decloner"
 	//You have no icons for energy types, you're a decloner
 	modifystate = FALSE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
