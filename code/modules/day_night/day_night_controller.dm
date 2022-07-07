@@ -225,7 +225,7 @@
  * Returns the alpha value
  */
 /datum/day_night_controller/proc/get_alpha_value(hour)
-	return alpha_lookup_table["hour"]
+	return alpha_lookup_table["[hour]"]
 
 // PRESETS
 /datum/day_night_controller/icebox
