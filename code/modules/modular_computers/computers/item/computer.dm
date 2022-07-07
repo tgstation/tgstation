@@ -156,6 +156,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 		if(card_slot2?.try_eject(user) || card_slot?.try_eject(user))
 			return TRUE
+		
+		if(inserted_pai) // Remove pAI
+			user.put_in_hands(inserted_pai)
+			to_chat(user, span_notice("You remove [inserted_pai] from the [name]."))
+			inserted_pai.slotted = FALSE
+			inserted_pai = null
+			return TRUE
+		
 		if(!istype(src, /obj/item/modular_computer/tablet))
 			return FALSE
 
@@ -300,7 +308,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID or pAI"
 	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
 
 	return CONTEXTUAL_SCREENTIP_SET
