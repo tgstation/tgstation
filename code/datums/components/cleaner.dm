@@ -11,8 +11,6 @@
 	var/skill_duration_modifier_offset
 	/// Determines what this cleaner can wash off, [the available options are found here](code/__DEFINES/cleaning.html).
 	var/cleaning_strength
-	/// Multiplies the cleaning skill experience gained from cleaning.
-	var/experience_gain_modifier
 	/// Gets called when something is successfully cleaned.
 	var/datum/callback/on_cleaned_callback
 
@@ -20,13 +18,11 @@
 	base_cleaning_duration = 3 SECONDS,
 	skill_duration_modifier_offset = 0,
 	cleaning_strength = CLEAN_SCRUB,
-	experience_gain_modifier = 1,
 	datum/callback/on_cleaned_callback = null,
 )
 	src.base_cleaning_duration = base_cleaning_duration
 	src.skill_duration_modifier_offset = skill_duration_modifier_offset
 	src.cleaning_strength = cleaning_strength
-	src.experience_gain_modifier = experience_gain_modifier
 	src.on_cleaned_callback = on_cleaned_callback
 
 /datum/component/cleaner/Destroy(force, silent)
@@ -79,7 +75,7 @@
 	if(clean_target)
 		if(isturf(target)) //cleaning the floor and every bit of filth on top of it
 			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
-				user.mind?.adjust_experience(/datum/skill/cleaning, round((cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT) * experience_gain_modifier))
+				user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
 		else if(istype(target, /obj/structure/window)) //window cleaning
 			target.set_opacity(initial(target.opacity))
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -89,6 +85,6 @@
 					window.vis_contents -= iter_blood
 					qdel(iter_blood)
 					window.bloodied = FALSE
-		user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP * experience_gain_modifier))
+		user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
 		target.wash(cleaning_strength)
 	on_cleaned_callback?.Invoke(source, target, user, clean_target)
