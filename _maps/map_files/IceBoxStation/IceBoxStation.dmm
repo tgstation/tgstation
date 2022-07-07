@@ -4044,7 +4044,6 @@
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "bmz" = (
-/obj/machinery/light/directional/south,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -5777,15 +5776,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"bKz" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/sign/warning/electric_shock/directional/south,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "bKN" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Brig Control"
@@ -18489,6 +18479,7 @@
 /area/station/medical/medbay/aft)
 "fzy" = (
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "fzA" = (
@@ -20555,6 +20546,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/chair/stool/directional/south,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/storage/art)
 "ggn" = (
@@ -25212,11 +25204,6 @@
 /obj/structure/frame/machine,
 /turf/open/floor/plating,
 /area/station/construction)
-"hFn" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/port)
 "hFr" = (
 /obj/structure/flora/grass/both/style_2,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -51937,6 +51924,7 @@
 "pRL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/storage/art)
 "pRZ" = (
@@ -54376,6 +54364,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
 "qJh" = (
@@ -62605,6 +62594,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "tmQ" = (
@@ -230400,7 +230390,7 @@ gmh
 jOt
 ozw
 aJA
-hFn
+oRM
 qIV
 pRL
 gfF
@@ -237336,7 +237326,7 @@ bWn
 ntK
 mQb
 bln
-bcN
+jII
 mpy
 ycw
 bmz
@@ -240420,10 +240410,10 @@ ygB
 vXU
 drZ
 yfF
-bcN
+jII
 mpy
 wtb
-bKz
+bmz
 qWZ
 qWZ
 qWZ
