@@ -706,8 +706,6 @@
 
 	. = list()
 
-	var/turf/our_turf = get_turf(src)
-	var/offset = GET_TURF_PLANE_OFFSET(our_turf)
 	var/image_dir = 0
 	if(dropped)
 		image_dir = SOUTH

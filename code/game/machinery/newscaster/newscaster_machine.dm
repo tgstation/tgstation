@@ -85,8 +85,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/machinery/newscaster/update_overlays()
 	. = ..()
 
-	var/turf/our_turf = get_turf(src)
-	var/offset = GET_TURF_PLANE_OFFSET(our_turf)
 
 	if(!(machine_stat & (NOPOWER|BROKEN)))
 		var/state = "[base_icon_state]_[GLOB.news_network.wanted_issue.active ? "wanted" : "normal"]"
