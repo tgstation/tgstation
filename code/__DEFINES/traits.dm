@@ -372,7 +372,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This person is blushing
 #define TRAIT_BLUSHING "blushing"
 
-#define TRAIT_DEATH_GHOST_ALERT // When this mob dies an alert appears in deadchat 
+#define TRAIT_ALERT_GHOSTS_ON_DEATH // When this mob dies an alert appears in deadchat 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
 #define TRAIT_AI_BAGATTACK "bagattack"
