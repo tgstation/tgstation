@@ -3,6 +3,28 @@
 // Wabbajack statue, a sleeping frog statue that shoots bolts of change if
 // living carbons are put on its altar/tables
 
+/obj/machinery/power/emitter/energycannon
+	name = "Energy Cannon"
+	desc = "A heavy duty industrial laser."
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "emitter_+a"
+	base_icon_state = "emitter_+a"
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
+
+	use_power = NO_POWER_USE
+	idle_power_usage = 0
+	active_power_usage = 0
+
+	active = TRUE
+	locked = TRUE
+	welded = TRUE
+
+/obj/machinery/power/emitter/energycannon/RefreshParts()
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
 /obj/machinery/power/emitter/energycannon/magical
 	name = "wabbajack statue"
 	desc = "Who am I? What is my purpose in life? What do I mean by who am I?"

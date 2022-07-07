@@ -231,3 +231,248 @@
 		rigged = DICE_BASICALLY_RIGGED
 		rigged_value = result
 	..(M)
+
+// Die of fate stuff
+/obj/item/dice/d20/fate
+	name = "\improper Die of Fate"
+	desc = "A die with twenty sides. You can feel unearthly energies radiating from it. Using this might be VERY risky."
+	icon_state = "d20"
+	sides = 20
+	microwave_riggable = FALSE
+	var/reusable = TRUE
+	var/used = FALSE
+	/// So you can't roll the die 20 times in a second and stack a bunch of effects that might conflict
+	COOLDOWN_DECLARE(roll_cd)
+
+/obj/item/dice/d20/fate/one_use
+	reusable = FALSE
+
+/obj/item/dice/d20/fate/cursed
+	name = "cursed Die of Fate"
+	desc = "A die with twenty sides. You feel that rolling this is a REALLY bad idea."
+	color = "#00BB00"
+
+	rigged = DICE_TOTALLY_RIGGED
+	rigged_value = 1
+
+/obj/item/dice/d20/fate/cursed/one_use
+	reusable = FALSE
+
+/obj/item/dice/d20/fate/stealth
+	name = "d20"
+	desc = "A die with twenty sides. The preferred die to throw at the GM."
+
+/obj/item/dice/d20/fate/stealth/one_use
+	reusable = FALSE
+
+/obj/item/dice/d20/fate/stealth/cursed
+	rigged = DICE_TOTALLY_RIGGED
+	rigged_value = 1
+
+/obj/item/dice/d20/fate/stealth/cursed/one_use
+	reusable = FALSE
+
+/obj/item/dice/d20/fate/diceroll(mob/user)
+	if(!COOLDOWN_FINISHED(src, roll_cd))
+		to_chat(user, span_warning("Hold on, [src] isn't caught up with your last roll!"))
+		return
+
+	. = ..()
+	if(used)
+		return
+
+	if(!ishuman(user) || !user.mind || IS_WIZARD(user))
+		to_chat(user, span_warning("You feel the magic of the dice is restricted to ordinary humans!"))
+		return
+
+	if(!reusable)
+		used = TRUE
+
+	var/turf/selected_turf = get_turf(src)
+	selected_turf.visible_message(span_userdanger("[src] flares briefly."))
+
+	addtimer(CALLBACK(src, .proc/effect, user, .), 1 SECONDS)
+	COOLDOWN_START(src, roll_cd, 2.5 SECONDS)
+
+/obj/item/dice/d20/fate/equipped(mob/user, slot)
+	. = ..()
+	if(!ishuman(user) || !user.mind || IS_WIZARD(user))
+		to_chat(user, span_warning("You feel the magic of the dice is restricted to ordinary humans! You should leave it alone."))
+		user.dropItemToGround(src)
+
+
+/obj/item/dice/d20/fate/proc/effect(mob/living/carbon/human/user,roll)
+	var/turf/selected_turf = get_turf(src)
+	switch(roll)
+		if(1)
+			//Dust
+			selected_turf.visible_message(span_userdanger("[user] turns to dust!"))
+			user.dust()
+		if(2)
+			//Death
+			selected_turf.visible_message(span_userdanger("[user] suddenly dies!"))
+			user.death()
+		if(3)
+			//Swarm of creatures
+			selected_turf.visible_message(span_userdanger("A swarm of creatures surrounds [user]!"))
+			for(var/direction in GLOB.alldirs)
+				var/turf/stepped_turf = get_step(get_turf(user), direction)
+				do_sparks(3, FALSE, stepped_turf)
+				new /mob/living/simple_animal/hostile/netherworld(stepped_turf)
+		if(4)
+			//Destroy Equipment
+			selected_turf.visible_message(span_userdanger("Everything [user] is holding and wearing disappears!"))
+			for(var/obj/item/non_implant in user)
+				if(istype(non_implant, /obj/item/implant))
+					continue
+				qdel(non_implant)
+		if(5)
+			//Monkeying
+			selected_turf.visible_message(span_userdanger("[user] transforms into a monkey!"))
+			user.monkeyize()
+		if(6)
+			//Cut speed
+			selected_turf.visible_message(span_userdanger("[user] starts moving slower!"))
+			user.add_movespeed_modifier(/datum/movespeed_modifier/die_of_fate)
+		if(7)
+			//Throw
+			selected_turf.visible_message(span_userdanger("Unseen forces throw [user]!"))
+			user.Stun(60)
+			user.adjustBruteLoss(50)
+			var/throw_dir = pick(GLOB.cardinals)
+			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
+			user.throw_at(throw_target, 200, 4)
+		if(8)
+			//Fuel tank Explosion
+			selected_turf.visible_message(span_userdanger("An explosion bursts into existence around [user]!"))
+			explosion(get_turf(user), devastation_range = -1, light_impact_range = 2, flame_range = 2, explosion_cause = src)
+		if(9)
+			//Cold
+			var/datum/disease/cold = new /datum/disease/cold()
+			selected_turf.visible_message(span_userdanger("[user] looks a little under the weather!"))
+			user.ForceContractDisease(cold, FALSE, TRUE)
+		if(10)
+			//Nothing
+			selected_turf.visible_message(span_userdanger("Nothing seems to happen."))
+		if(11)
+			//Cookie
+			selected_turf.visible_message(span_userdanger("A cookie appears out of thin air!"))
+			var/obj/item/food/cookie/C = new(drop_location())
+			do_smoke(0, holder = src, location = drop_location())
+			C.name = "Cookie of Fate"
+		if(12)
+			//Healing
+			selected_turf.visible_message(span_userdanger("[user] looks very healthy!"))
+			user.revive(full_heal = TRUE, admin_revive = TRUE)
+		if(13)
+			//Mad Dosh
+			selected_turf.visible_message(span_userdanger("Mad dosh shoots out of [src]!"))
+			var/turf/Start = get_turf(src)
+			for(var/direction in GLOB.alldirs)
+				var/turf/dirturf = get_step(Start,direction)
+				if(prob(50))
+					new /obj/item/stack/spacecash/c1000(dirturf)
+					continue
+				var/obj/item/storage/bag/money/bag_money = new(dirturf)
+				for(var/i in 1 to rand(5,50))
+					new /obj/item/coin/gold(bag_money)
+		if(14)
+			//Free Gun
+			selected_turf.visible_message(span_userdanger("An impressive gun appears!"))
+			do_smoke(0, holder = src, location = drop_location())
+			new /obj/item/gun/ballistic/revolver/mateba(drop_location())
+		if(15)
+			//Random One-use spellbook
+			selected_turf.visible_message(span_userdanger("A magical looking book drops to the floor!"))
+			do_smoke(0, holder = src, location = drop_location())
+			new /obj/item/book/granter/action/spell/random(drop_location())
+		if(16)
+			//Servant & Servant Summon
+			selected_turf.visible_message(span_userdanger("A Dice Servant appears in a cloud of smoke!"))
+			var/mob/living/carbon/human/human_servant = new(drop_location())
+			do_smoke(0, holder = src, location = drop_location())
+
+			human_servant.equipOutfit(/datum/outfit/butler)
+			var/datum/mind/servant_mind = new /datum/mind()
+			var/datum/antagonist/magic_servant/servant_antagonist = new
+			servant_mind.add_antag_datum(servant_antagonist)
+			servant_antagonist.setup_master(user)
+			servant_mind.transfer_to(human_servant)
+
+			var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [user.real_name]'s Servant?", ROLE_WIZARD, ROLE_WIZARD, 5 SECONDS, human_servant)
+			if(LAZYLEN(candidates))
+				var/mob/dead/observer/candidate = pick(candidates)
+				message_admins("[ADMIN_LOOKUPFLW(candidate)] was spawned as Dice Servant")
+				human_servant.key = candidate.key
+
+			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user, human_servant)
+			summon_servant.Grant(user)
+
+		if(17)
+			//Tator Kit
+			selected_turf.visible_message(span_userdanger("A suspicious box appears!"))
+			new /obj/item/storage/box/syndicate/bundle_a(drop_location())
+			do_smoke(0, holder = src, location = drop_location())
+		if(18)
+			//Captain ID
+			selected_turf.visible_message(span_userdanger("A golden identification card appears!"))
+			new /obj/item/card/id/advanced/gold/captains_spare(drop_location())
+			do_smoke(0, holder = src, location = drop_location())
+		if(19)
+			//Instrinct Resistance
+			selected_turf.visible_message(span_userdanger("[user] looks very robust!"))
+			user.physiology.brute_mod *= 0.5
+			user.physiology.burn_mod *= 0.5
+
+		if(20)
+			//Free wizard!
+			selected_turf.visible_message(span_userdanger("Magic flows out of [src] and into [user]!"))
+			user.mind.make_wizard()
+
+/datum/outfit/butler
+	name = "Butler"
+	uniform = /obj/item/clothing/under/suit/black_really
+	neck = /obj/item/clothing/neck/tie/red/tied
+	shoes = /obj/item/clothing/shoes/laceup
+	head = /obj/item/clothing/head/bowler
+	glasses = /obj/item/clothing/glasses/monocle
+	gloves = /obj/item/clothing/gloves/color/white
+
+/datum/action/cooldown/spell/summon_mob
+	name = "Summon Servant"
+	desc = "This spell can be used to call your servant, whenever you need it."
+	button_icon_state = "summons"
+
+	school = SCHOOL_CONJURATION
+	cooldown_time = 10 SECONDS
+
+	invocation = "JE VES"
+	invocation_type = INVOCATION_WHISPER
+	spell_requirements = NONE
+	spell_max_level = 0 //cannot be improved
+
+	smoke_type = /datum/effect_system/fluid_spread/smoke
+	smoke_amt = 2
+
+	var/datum/weakref/summon_weakref
+
+/datum/action/cooldown/spell/summon_mob/New(Target, mob/living/summoned_mob)
+	. = ..()
+	if(summoned_mob)
+		summon_weakref = WEAKREF(summoned_mob)
+
+/datum/action/cooldown/spell/summon_mob/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/to_summon = summon_weakref?.resolve()
+	if(QDELETED(to_summon))
+		to_chat(cast_on, span_warning("You can't seem to summon your servant - it seems they've vanished from reality, or never existed in the first place..."))
+		return
+
+	do_teleport(
+		to_summon,
+		get_turf(cast_on),
+		precision = 1,
+		asoundin = 'sound/magic/wand_teleport.ogg',
+		asoundout = 'sound/magic/wand_teleport.ogg',
+		channel = TELEPORT_CHANNEL_MAGIC,
+	)
