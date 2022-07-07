@@ -9,7 +9,7 @@
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_LITERATE,
 	)
-	mutant_bodyparts = list("wings" = "None", "ears" = "Fox", "tail_human" = "Fox")
+	mutant_bodyparts = list("wings" = "None", "ears" = "Fox", "tail_cat" = "Fox")
 	mutantears = /obj/item/organ/internal/ears/fox
 	mutant_organs = list(/obj/item/organ/external/tail/fox)
 	use_skintones = 1
@@ -34,8 +34,8 @@
 		var/mob/living/carbon/human/H = C
 		// Force everyone to have at least fox features. I am evil and fucked up. We don't want to
 		// override cat ears, so I'll do it like this. If you don't like it sue me.
-		if(H.dna.features["tail_human"] == "None")
-			H.dna.features["tail_human"] = "Fox"
+		if(H.dna.features["tail_cat"] == "None")
+			H.dna.features["tail_cat"] = "Fox"
 		if(H.dna.features["ears"] == "None")
 			H.dna.features["ears"] = "Fox"
 
@@ -44,7 +44,7 @@
 			ears.Insert(H, drop_if_replaced = FALSE)
 		else if (H.dna.features["ears"] == "Cat")
 			mutantears = /obj/item/organ/internal/ears/cat
-		if(H.dna.features["tail_human"] == "Fox")
+		if(H.dna.features["tail_cat"] == "Fox")
 			var/obj/item/organ/external/tail/fox/tail = new
 			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
 	return ..()

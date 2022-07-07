@@ -32,8 +32,8 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
-			if(H.dna.features["tail_human"] == "None" || H.dna.features["tail_human"] == "Fox")
-				H.dna.features["tail_human"] = "Cat"
+			if(H.dna.features["tail_cat"] == "None" || H.dna.features["tail_cat"] == "Fox")
+				H.dna.features["tail_cat"] = "Cat"
 			if(H.dna.features["ears"] == "None" || H.dna.features["ears"] == "Fox")
 				H.dna.features["ears"] = "Cat"
 		if(H.dna.features["ears"] == "Cat")
@@ -44,10 +44,10 @@
 		else
 			// You *could* dodge any and all ears by playing a felinid, but you'd be playing a felinid so I guess it's fair.
 			mutantears = /obj/item/organ/internal/ears
-		if(H.dna.features["tail_human"] == "Cat")
+		if(H.dna.features["tail_cat"] == "Cat")
 			var/obj/item/organ/external/tail/cat/tail = new
 			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
-		else if(H.dna.features["tail_human"] == "Fox")
+		else if(H.dna.features["tail_cat"] == "Fox")
 			mutant_organs = list(/obj/item/organ/external/tail/fox)
 		else
 			mutant_organs = list()
