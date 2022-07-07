@@ -65,8 +65,8 @@
 	return FALSE
 
 /mob/living/silicon/pai/proc/take_holo_damage(amount)
-	emitterhealth = clamp((emitterhealth - amount), -50, emittermaxhealth)
-	if(emitterhealth < 0)
+	emitter_health = clamp((emitter_health - amount), -50, emitter_max_health)
+	if(emitter_health < 0)
 		fold_in(force = TRUE)
 	if(amount > 0)
 		to_chat(src, span_userdanger("The impact degrades your holochassis!"))
@@ -85,7 +85,7 @@
 		take_holo_damage(amount * 0.25)
 
 /mob/living/silicon/pai/getBruteLoss()
-	return emittermaxhealth - emitterhealth
+	return emitter_max_health - emitter_health
 
 /mob/living/silicon/pai/getFireLoss()
-	return emittermaxhealth - emitterhealth
+	return emitter_max_health - emitter_health

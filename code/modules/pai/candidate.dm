@@ -4,8 +4,6 @@
 	var/comments
 	/// User inputted behavior description
 	var/description
-	/// The candidate's mob
-	var/mob/user
 	/// User's ckey
 	var/ckey
 	/// User's pAI name. If blank, ninja name.
@@ -14,8 +12,7 @@
 	var/ready = FALSE
 
 /datum/pai_candidate/New(mob/user)
-	ckey = user.ckey
-	user = user
+	src.ckey = user.ckey
 
 /**
  * Checks if a candidate is ready so that they may be displayed in the pAI
@@ -24,9 +21,12 @@
 /datum/pai_candidate/proc/check_ready()
 	if(!ready)
 		return FALSE
-	if(!user || !GLOB.player_list[ckey] || !isobserver(user))
-		if(SSpai.candidates[ckey])
-			SSpai.candidates.Remove(ckey)
+	for(var/mob/dead/observer/ghost as anything in GLOB.player_list)
+		if(ghost.ckey != ckey)
+			continue
+		if(ghost.client && !is_banned_from(ghost.ckey, ROLE_PAI))
+			return TRUE
+	if(SSpai.candidates[ckey])
+		SSpai.candidates.Remove(ckey)
 		return FALSE
-	return TRUE
 

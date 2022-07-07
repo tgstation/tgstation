@@ -42,7 +42,7 @@
 	/// Whether we are currently holoformed
 	var/holoform = FALSE
 	/// Whether the pAI can enter holoform or not
-	var/canholo = TRUE
+	var/can_holo = TRUE
 	/// Whether this pAI can transmit radio messages
 	var/can_transmit = TRUE
 	/// Whether this pAI can recieve radio messages
@@ -56,7 +56,7 @@
 	/// Toggles whether the Medical  HUD is active or not
 	var/medHUD = FALSE
 	/// Toggles whether the pAI can hold encryption keys or not
-	var/encryptmod = FALSE
+	var/encrypt_mod = FALSE
 	/// Toggles whether universal translator has been activated. Cannot be reversed
 	var/languages_granted = FALSE
 	/// Atmospheric analyzer
@@ -68,7 +68,7 @@
 	/// pAI Newscaster
 	var/obj/machinery/newscaster
 	/// pAI healthanalyzer
-	var/obj/item/healthanalyzer/hostscan
+	var/obj/item/healthanalyzer/host_scan
 	/// Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
 	var/obj/item/gps/pai/internal_gps
 	/// The cable we produce when hacking a door
@@ -93,12 +93,12 @@
 		"crow" = TRUE,
 	)
 
-	var/emitterhealth = 20
-	var/emittermaxhealth = 20
+	var/emitter_health = 20
+	var/emitter_max_health = 20
 	var/emitter_regen_per_second = 1.25
-	var/emittercd = 50
-	var/emitteroverloadcd = 100
-	var/emittersemicd = FALSE
+	var/emitter_cd = 50
+	var/emitter_overload_cd = 100
+	var/emitter_semi_cd = FALSE
 
 	/// Bool that determines if the pAI can refresh medical/security records.
 	var/refresh_spam = FALSE
@@ -146,8 +146,8 @@
 		newscaster = null
 	if(deleting_atom == signaler)
 		signaler = null
-	if(deleting_atom == hostscan)
-		hostscan = null
+	if(deleting_atom == host_scan)
+		host_scan = null
 	if(deleting_atom == internal_gps)
 		internal_gps = null
 	return ..()
@@ -168,7 +168,7 @@
 	job = JOB_PERSONAL_AI
 	atmos_analyzer = new /obj/item/analyzer(src)
 	signaler = new /obj/item/assembly/signaler/internal(src)
-	hostscan = new /obj/item/healthanalyzer(src)
+	host_scan = new /obj/item/healthanalyzer(src)
 	newscaster = new /obj/machinery/newscaster/pai(src)
 	if(!aicamera)
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
@@ -178,8 +178,8 @@
 
 	create_modularInterface()
 
-	emittersemicd = TRUE
-	addtimer(CALLBACK(src, .proc/emittercool), 600)
+	emitter_semi_cd = TRUE
+	addtimer(CALLBACK(src, .proc/emitter_cool), 600)
 
 	if(!holoform)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
@@ -193,7 +193,7 @@
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(newscaster)
 	QDEL_NULL(signaler)
-	QDEL_NULL(hostscan)
+	QDEL_NULL(host_scan)
 	QDEL_NULL(internal_gps)
 	if(!QDELETED(card) && loc != card)
 		card.forceMove(drop_location())
@@ -214,7 +214,7 @@
 /mob/living/silicon/pai/get_status_tab_items()
 	. += ..()
 	if(!stat)
-		. += text("Emitter Integrity: [emitterhealth * (100 / emittermaxhealth)]")
+		. += text("Emitter Integrity: [emitter_health * (100 / emitter_max_health)]")
 	else
 		. += text("Systems nonfunctional")
 
@@ -252,7 +252,7 @@
 	update_stat()
 
 /mob/living/silicon/pai/process(delta_time)
-	emitterhealth = clamp((emitterhealth + (emitter_regen_per_second * delta_time)), -50, emittermaxhealth)
+	emitter_health = clamp((emitter_health + (emitter_regen_per_second * delta_time)), -50, emitter_max_health)
 
 /mob/living/silicon/pai/can_interact_with(atom/A)
 	if(A == signaler) // Bypass for signaler
@@ -267,7 +267,7 @@
 
 /obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))
-		if(!pai.encryptmod)
+		if(!pai.encrypt_mod)
 			to_chat(user, span_alert("Encryption Key ports not configured."))
 			return
 		user.set_machine(src)

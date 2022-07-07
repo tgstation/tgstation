@@ -91,9 +91,9 @@
 	var/mob/living/carbon/holder = get(pAI.card.loc, /mob/living/carbon)
 	if(holder)
 		if (LAZYACCESS(modifiers, RIGHT_CLICK))
-			pAI.hostscan.attack_secondary(holder, pAI)
+			pAI.host_scan.attack_secondary(holder, pAI)
 		else
-			pAI.hostscan.attack(holder, pAI)
+			pAI.host_scan.attack(holder, pAI)
 	else
 		to_chat(usr, span_warning("You are not being carried by anyone!"))
 		return FALSE

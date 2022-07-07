@@ -95,18 +95,18 @@
 			if(params["jack"]  == "cable")
 				extendcable()
 		if("encryption_keys")
-			to_chat(src, span_notice("You have [!encryptmod ? "enabled" : "disabled"] encrypted radio frequencies."))
-			encryptmod = !encryptmod
+			to_chat(src, span_notice("You have [!encrypt_mod ? "enabled" : "disabled"] encrypted radio frequencies."))
+			encrypt_mod = !encrypt_mod
 			radio.subspace_transmission = !radio.subspace_transmission
 		if("host_scan")
-			if(!hostscan)
-				hostscan = new(src)
+			if(!host_scan)
+				host_scan = new(src)
 			if(params["scan"] == "scan")
-				hostscan()
+				host_scan()
 			if(params["scan"] == "wounds")
-				hostscan.attack_self(usr)
+				host_scan.attack_self(usr)
 			if(params["scan"] == "limbs")
-				hostscan.AltClick(usr)
+				host_scan.AltClick(usr)
 		if("internal_gps")
 			if(!internal_gps)
 				internal_gps = new(src)
@@ -188,11 +188,11 @@
  * Allows the pAI to scan its host's health vitals
  * An integrated health analyzer.
  */
-/mob/living/silicon/pai/proc/hostscan()
+/mob/living/silicon/pai/proc/host_scan()
 	var/mob/living/silicon/pai/pAI = usr
 	var/mob/living/carbon/holder = get(pAI.card.loc, /mob/living/carbon)
 	if(holder)
-		pAI.hostscan.attack(holder, pAI)
+		pAI.host_scan.attack(holder, pAI)
 	else
 		to_chat(usr, span_warning("You are not being carried by anyone!"))
 		return FALSE

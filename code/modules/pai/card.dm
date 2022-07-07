@@ -89,7 +89,7 @@
 		data["candidates"] = pool_candidates() || list()
 	else
 		data["pai"] = list(
-			can_holo = pai.canholo,
+			can_holo = pai.can_holo,
 			dna = pai.master_dna,
 			emagged = pai.emagged,
 			laws = pai.laws.supplied,
@@ -162,17 +162,16 @@
  */
 /obj/item/pai_card/proc/download_candidate(ckey)
 	if(pai)
-		return
+		return FALSE
 	var/datum/pai_candidate/candidate = SSpai.candidates[ckey]
 	if(isnull(candidate) || !candidate.check_ready())
 		return FALSE
-	/// The newly downloaded pAI personality
 	var/mob/living/silicon/pai/new_pai = new(src)
 	new_pai.name = candidate.name || pick(GLOB.ninja_names)
 	new_pai.real_name = new_pai.name
-	new_pai.key = candidate.user.ckey
+	new_pai.key = candidate.ckey
 	set_personality(new_pai)
-	SSpai.candidates -= candidate
+	SSpai.candidates.Remove(ckey)
 	return TRUE
 
 /** Pings ghosts to announce that someone is requesting a pAI */
@@ -247,32 +246,33 @@
 		pai.master = master.real_name
 		pai.master_dna = master.dna.unique_enzymes
 		to_chat(pai, span_notice("You have been bound to a new master."))
-		pai.emittersemicd = FALSE
+		pai.emitter_semi_cd = FALSE
 	return TRUE
 
 /** Opens a tgui alert that allows someone to enter laws. */
 /obj/item/pai_card/proc/set_laws()
 	if(!pai)
 		return FALSE
-	var/newlaws = tgui_input_text(usr, "Enter any additional directives you would like your pAI \
+	var/new_laws = tgui_input_text(usr, "Enter any additional directives you would like your pAI \
 		personality to follow. Note that these directives will not override the personality's allegiance \
 		to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", \
 		pai.laws.supplied[1], MAX_MESSAGE_LEN)
-	if(newlaws && pai)
-		pai.add_supplied_law(0,newlaws)
+	if(new_laws && pai)
+		pai.add_supplied_law(0, new_laws)
 	return TRUE
 
 /**
  * Sets the personality on the current pai_card
  *
  * Parameters:
- * personality - required - The new pAI to load into the card.
+ * downloaded - required - The new pAI to load into the card.
  */
-/obj/item/pai_card/proc/set_personality(mob/living/silicon/pai/personality)
+/obj/item/pai_card/proc/set_personality(mob/living/silicon/pai/downloaded)
 	if(pai)
 		return FALSE
-	pai = personality
+	pai = downloaded
 	emotion_icon = "null"
+	to_chat(usr, "setting")
 	update_appearance()
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
@@ -282,13 +282,13 @@
 /obj/item/pai_card/proc/toggle_holo(mob/user)
 	if(!pai)
 		return FALSE
-	if(pai.canholo)
+	if(pai.can_holo)
 		to_chat(pai, span_warning("Your owner has disabled your holomatrix projectors!"))
-		pai.canholo = FALSE
+		pai.can_holo = FALSE
 		to_chat(user, span_notice("You disable your pAI's holomatrix!"))
 	else
 		to_chat(pai, span_notice("Your owner has enabled your holomatrix projectors!"))
-		pai.canholo = TRUE
+		pai.can_holo = TRUE
 		to_chat(user, span_notice("You enable your pAI's holomatrix!"))
 	return TRUE
 

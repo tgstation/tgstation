@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(pai)
 			candidate.comments = params["comments"]
 			candidate.description = params["description"]
 			candidate.name = params["name"]
-			candidate.user = usr
+			candidate.ckey = usr.ckey
 			sanitize_details(candidate)
 			candidate.ready = TRUE
 			ui.close()
@@ -62,7 +62,6 @@ SUBSYSTEM_DEF(pai)
 			candidate.comments = params["comments"]
 			candidate.description = params["description"]
 			candidate.name = params["name"]
-			candidate.user = usr
 			sanitize_details(candidate)
 			candidate.savefile_save(usr)
 			return TRUE

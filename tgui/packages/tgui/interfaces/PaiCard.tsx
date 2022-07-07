@@ -81,12 +81,7 @@ const CandidateDisplay = (
 ) => {
   const { act } = useBackend<Data>(context);
   const {
-    candidate: {
-      comments = 'None',
-      ckey,
-      description = 'None',
-      name = 'Randomized Name',
-    },
+    candidate: { comments, ckey, description, name },
     index,
   } = props;
 
@@ -112,13 +107,15 @@ const CandidateDisplay = (
         scrollable
         title={'Candidate ' + index}>
         <Box color="green" fontSize="16px" mb={1}>
-          Name: {name}
+          Name: {name || '(Randomized Name)'}
         </Box>
         <LabeledList>
           <LabeledList.Item label="IC Description">
-            {description}
+            {description || 'None'}
           </LabeledList.Item>
-          <LabeledList.Item label="OOC Comments">{comments}</LabeledList.Item>
+          <LabeledList.Item label="OOC Comments">
+            {comments || 'None'}
+          </LabeledList.Item>
         </LabeledList>
       </Section>
     </Box>

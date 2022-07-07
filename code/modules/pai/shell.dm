@@ -1,10 +1,10 @@
 
 /mob/living/silicon/pai/proc/fold_out(force = FALSE)
-	if(emitterhealth < 0)
+	if(emitter_health < 0)
 		to_chat(src, span_warning("Your holochassis emitters are still too unstable! Please wait for automatic repair."))
 		return FALSE
 
-	if(!canholo && !force)
+	if(!can_holo && !force)
 		to_chat(src, span_warning("Your master or another force has disabled your holochassis emitters!"))
 		return FALSE
 
@@ -12,22 +12,22 @@
 		. = fold_in(force)
 		return
 
-	if(emittersemicd)
+	if(emitter_semi_cd)
 		to_chat(src, span_warning("Error: Holochassis emitters recycling. Please try again later."))
 		return FALSE
 
-	emittersemicd = TRUE
-	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
+	emitter_semi_cd = TRUE
+	addtimer(CALLBACK(src, .proc/emitter_cool), emitter_cd)
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	set_density(TRUE)
 	if(istype(card.loc, /obj/item/modular_computer))
-		var/obj/item/modular_computer/P = card.loc
-		P.inserted_pai = null
-		P.visible_message(span_notice("[src] ejects itself from [P]!"))
+		var/obj/item/modular_computer/pc = card.loc
+		pc.inserted_pai = null
+		pc.visible_message(span_notice("[src] ejects itself from [pc]!"))
 	if(isliving(card.loc))
-		var/mob/living/L = card.loc
-		if(!L.temporarilyRemoveItemFromInventory(card))
+		var/mob/living/living_holder = card.loc
+		if(!living_holder.temporarilyRemoveItemFromInventory(card))
 			to_chat(src, span_warning("Error: Unable to expand to mobile form. Chassis is restrained by some device or person."))
 			return FALSE
 	forceMove(get_turf(card))
@@ -41,15 +41,15 @@
 	visible_message(span_boldnotice("[src] folds out its holochassis emitter and forms a holoshell around itself!"))
 	holoform = TRUE
 
-/mob/living/silicon/pai/proc/emittercool()
-	emittersemicd = FALSE
+/mob/living/silicon/pai/proc/emitter_cool()
+	emitter_semi_cd = FALSE
 
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
-	emittersemicd = TRUE
+	emitter_semi_cd = TRUE
 	if(!force)
-		addtimer(CALLBACK(src, .proc/emittercool), emittercd)
+		addtimer(CALLBACK(src, .proc/emitter_cool), emitter_cd)
 	else
-		addtimer(CALLBACK(src, .proc/emittercool), emitteroverloadcd)
+		addtimer(CALLBACK(src, .proc/emitter_cool), emitter_overload_cd)
 	icon_state = "[chassis]"
 	if(!holoform)
 		. = fold_out(force)
@@ -57,8 +57,8 @@
 	visible_message(span_notice("[src] deactivates its holochassis emitter and folds back into a compact card!"))
 	stop_pulling()
 	if(istype(loc, /obj/item/clothing/head/mob_holder))
-		var/obj/item/clothing/head/mob_holder/MH = loc
-		MH.release(display_messages = FALSE)
+		var/obj/item/clothing/head/mob_holder/mob_head = loc
+		mob_head.release(display_messages = FALSE)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
@@ -137,7 +137,7 @@
 	if(loc != card)
 		visible_message(span_notice("[src] [resting? "lays down for a moment..." : "perks up from the ground."]"))
 
-/mob/living/silicon/pai/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
+/mob/living/silicon/pai/start_pulling(atom/movable/thing, state, force = move_force, supress_message = FALSE)
 	return FALSE
 
 /mob/living/silicon/pai/proc/toggle_integrated_light()
