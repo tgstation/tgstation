@@ -803,7 +803,7 @@ if (!current_tab) {
 }
 
 window.onload = function () {
-	Byond.command("Update-Verbs");
+	Byond.sendMessage("Update-Verbs");
 };
 
 Byond.subscribeTo('update_spells', function (payload) {
