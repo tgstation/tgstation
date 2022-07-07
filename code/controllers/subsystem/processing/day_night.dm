@@ -13,6 +13,8 @@ SUBSYSTEM_DEF(day_night)
 	var/current_minute = 0
 	/// A list of all currently loaded controllers to be handled
 	var/list/cached_controllers = list()
+	/// The amount of time we add every tick
+	var/tick_time = DAY_NIGHT_SUBSYSTEM_FIRE_INCREMENT
 
 /datum/controller/subsystem/day_night/Initialize(start_timeofday)
 	current_hour = rand(0, 23) // We set the starting station time to something random.
@@ -20,7 +22,7 @@ SUBSYSTEM_DEF(day_night)
 	return ..()
 
 /datum/controller/subsystem/day_night/fire(resumed)
-	current_minute += DAY_NIGHT_SUBSYSTEM_FIRE_INCREMENT
+	current_minute += tick_time
 
 	if(current_minute >= HOUR_INCREMENT)
 		var/time_delta = (current_minute - HOUR_INCREMENT) > 0 ? current_minute - HOUR_INCREMENT : 0
@@ -63,7 +65,7 @@ SUBSYSTEM_DEF(day_night)
  */
 /datum/controller/subsystem/day_night/proc/get_twelvehour_timestamp()
 	var/am_or_pm = current_hour < 12 ? "AM" : "PM"
-	var/hour_entry = current_hour > 12 ? "0[current_hour - 12]" : current_hour
+	var/hour_entry = current_hour > 12 ? "[current_hour - 12]" : "0[current_hour]"
 	var/minute_entry = current_minute < 10 ? "0[current_minute]" : current_minute
 	return "[hour_entry]:[minute_entry] [am_or_pm]"
 
