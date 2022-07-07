@@ -85,10 +85,8 @@
 /obj/item/pai_card/ui_data(mob/user)
 	. = ..()
 	var/list/data = list()
-	data["candidates"] = list()
-	data["pai"] = list()
 	if(!pai)
-		data["candidates"] = pool_candidates()
+		data["candidates"] = pool_candidates() || list()
 	else
 		data["pai"] = list(
 			can_holo = pai.canholo,
@@ -107,7 +105,7 @@
 		return FALSE
 	switch(action)
 		if("download")
-			download_candidate(params["key"])
+			download_candidate(params["ckey"])
 			return TRUE
 		if("fix_speech")
 			fix_speech()
@@ -160,12 +158,12 @@
  * Downloads a candidate from the list and removes them from SSpai.candidates
  *
  * Parameters:
- * 	key: The ckey of the candidate to download
+ * 	ckey: The ckey of the candidate to download
  */
-/obj/item/pai_card/proc/download_candidate(key)
+/obj/item/pai_card/proc/download_candidate(ckey)
 	if(pai)
 		return
-	var/datum/pai_candidate/candidate = SSpai.candidates[key]
+	var/datum/pai_candidate/candidate = SSpai.candidates[ckey]
 	if(isnull(candidate) || !candidate.check_ready())
 		return FALSE
 	/// The newly downloaded pAI personality
@@ -221,7 +219,8 @@
 	var/list/candidates = list()
 	if(pai || !length(SSpai?.candidates))
 		return candidates
-	for(var/datum/pai_candidate/checked_candidate as anything in SSpai.candidates)
+	for(var/key in SSpai.candidates)
+		var/datum/pai_candidate/checked_candidate = SSpai.candidates[key]
 		if(!checked_candidate.ready)
 			continue
 		var/list/candidate = list(

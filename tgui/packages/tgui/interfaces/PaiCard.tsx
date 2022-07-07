@@ -55,7 +55,7 @@ const PaiDownload = (props, context) => {
       fill
       scrollable
       title="pAI Candidates">
-      {!candidates.length ? (
+      {!candidates?.length ? (
         <NoticeBox>None found!</NoticeBox>
       ) : (
         <Stack fill vertical>

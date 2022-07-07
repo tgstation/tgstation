@@ -13,6 +13,10 @@
 	/// If the user has hit "submit"
 	var/ready = FALSE
 
+/datum/pai_candidate/New(mob/user)
+	ckey = user.ckey
+	user = user
+
 /**
  * Checks if a candidate is ready so that they may be displayed in the pAI
  * card's candidate window
