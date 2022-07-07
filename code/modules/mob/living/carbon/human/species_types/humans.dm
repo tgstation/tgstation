@@ -43,7 +43,7 @@
 			var/obj/item/organ/internal/ears/fox/ears = new
 			ears.Insert(H, drop_if_replaced = FALSE)
 		else if (H.dna.features["ears"] == "Cat")
-			mutantears = /obj/item/organ/ears/cat
+			mutantears = /obj/item/organ/internal/ears/cat
 		if(H.dna.features["tail_human"] == "Fox")
 			var/obj/item/organ/external/tail/fox/tail = new
 			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
