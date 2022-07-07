@@ -1,6 +1,6 @@
 /**
  * Lightzones are simple presets to determine what color and brightness the sky will be at a certain time.
- * 0 = midnight
+ * A list of lightzones must add up to 24 regarding start and end times.
  */
 /datum/lightzone
 	/// The name of this lightzone

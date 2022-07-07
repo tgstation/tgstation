@@ -596,7 +596,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			)
 		appearance_to_add.color = incoming_controller.current_light_color
-		iterating_turf.luminosity = incoming_controller.current_luminosity
+		if(incoming_controller.current_luminosity)
+			iterating_turf.luminosity = incoming_controller.current_luminosity
 		iterating_turf.underlays += appearance_to_add
 		adjacent_day_night_turf_cache[iterating_turf][DAY_NIGHT_TURF_INDEX_APPEARANCE] = appearance_to_add
 
