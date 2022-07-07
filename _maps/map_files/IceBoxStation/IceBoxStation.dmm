@@ -58688,16 +58688,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/bar)
-"scI" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "scJ" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -235110,7 +235100,7 @@ kka
 fmm
 bWn
 fTR
-scI
+eJe
 iIF
 jII
 pAZ
