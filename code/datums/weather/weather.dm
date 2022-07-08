@@ -67,7 +67,7 @@
 	/// If this bit of weather should also draw an overlay that's uneffected by lighting onto the area
 	/// Taken from weather_glow.dmi
 	var/use_glow = TRUE
-	var/list/offsets_to_glow
+	var/list/offsets_to_overlays
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -239,37 +239,55 @@
 		if(END_STAGE)
 			using_icon_state = ""
 
-	var/list/new_offsets_to_glow = list()
-	// Lemon todo: you may have trouble here bestie
+	// Note: what we do here is effectively apply two overlays to each area, for every unique multiz layer they inhabit
+	// One is the base, which will be masked by lighting. the other is "glowing", and provides a nice contrast
+	// This method of applying one overlay per z layer has some minor downsides, in that it could lead to improperly doubled effects if some have alpha
+	// I prefer it to creating 2 extra plane masters however, so it's a cost I'm willing to pay
+	// LU
+	var/list/new_offsets_to_overlays = list()
 	for(var/V in impacted_areas)
 		var/area/N = V
-		var/offset = SSmapping.max_plane_offset ? GET_Z_PLANE_OFFSET(N.z) + 1 : 1
-		if(length(new_offsets_to_glow) < offset)
-			new_offsets_to_glow.len = offset
 
-		var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, N, ABOVE_LIGHTING_PLANE, 100)
-		new_offsets_to_glow[offset] = glow_overlay
-		var/mutable_appearance/old_glow
-		if(length(offsets_to_glow) >= offset)
-			old_glow = offsets_to_glow[offset]
+		// List of overlays this area uses
+		var/list/mutable_appearance/overlays = list()
+		// List of offsets this area wants, based off its z range
+		var/list/offsets = list()
+		for(var/i_z in N.minimum_z to N.maximum_z)
+			offsets |= GET_Z_PLANE_OFFSET(i_z)
 
-		if(old_glow)
-			N.overlays -= old_glow
-		if(stage == END_STAGE)
-			N.color = null
-			N.icon_state = using_icon_state
-			N.icon = 'icons/area/areas_misc.dmi'
-			N.layer = initial(N.layer)
-			SET_PLANE_W_SCALAR(N, initial(N.plane), offset)
-			N.set_opacity(FALSE)
-		else
-			N.layer = overlay_layer
-			SET_PLANE_W_SCALAR(N, overlay_plane, offset)
-			N.icon = 'icons/effects/weather_effects.dmi'
-			N.icon_state = using_icon_state
-			N.color = weather_color
-			if(use_glow)
-				N.overlays += glow_overlay
+		// Now that we have all the offsets this area COULD be effecting, we give it overlays
+		for(var/offset in offsets)
+			var/keyd_offset = offset + 1
+			if(length(new_offsets_to_overlays) < keyd_offset)
+				new_offsets_to_overlays.len = keyd_offset
+			var/list/mutable_appearance/existing_appearances = new_offsets_to_overlays[keyd_offset]
+			if(existing_appearances)
+				overlays += existing_appearances
+				continue
 
-	offsets_to_glow = new_offsets_to_glow
+			var/list/offset_overlays = list()
+			var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', using_icon_state, overlay_layer, N, ABOVE_LIGHTING_PLANE, 100, offset_const = offset)
+			glow_overlay.color = weather_color
+			offset_overlays += glow_overlay
+
+			if(stage != END_STAGE)
+				var/mutable_appearance/weather_overlay = mutable_appearance('icons/effects/weather_effects.dmi', using_icon_state, overlay_layer, plane = overlay_plane, offset_const = offset)
+				weather_overlay.color = weather_color
+				offset_overlays += weather_overlay
+
+			new_offsets_to_overlays[keyd_offset] = offset_overlays
+			overlays += offset_overlays
+
+		var/list/mutable_appearance/old_glows = list()
+		for(var/offset in offsets)
+			offset = offset + 1
+			if(length(offsets_to_overlays) >= offset)
+				old_glows += offsets_to_overlays[offset]
+
+		if(length(old_glows))
+			N.overlays -= old_glows
+		if(length(overlays))
+			N.overlays += overlays
+
+	offsets_to_overlays = new_offsets_to_overlays
 

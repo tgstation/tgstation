@@ -15,6 +15,13 @@
 
 	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
+	/// Tracks the minimum ever seen z level inside this area
+	/// This value is not always accurate, but it always errs on the outside of correctness
+	/// So if you use this pair as a min and max range you'll never MISS anything
+	var/minimum_z = INFINITY
+	/// Tracks the maximum ever seen z level inside this area
+	var/maximum_z = 0
+
 	///Do we have an active fire alarm?
 	var/fire = FALSE
 	///A var for whether the area allows for detecting fires/etc. Disabled or enabled at a fire alarm, checked by fire locks.

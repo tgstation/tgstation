@@ -83,11 +83,18 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	else
 		newA = area_choice
 
+	var/min_z = INFINITY
+	var/max_z = 0
 	for(var/i in 1 to length(turfs))
 		var/turf/thing = turfs[i]
 		var/area/old_area = thing.loc
 		newA.contents += thing
 		thing.transfer_area_lighting(old_area, newA)
+		min_z = min(thing.z, min_z)
+		max_z = max(thing.z, max_z)
+
+	newA.minimum_z = min_z
+	newA.maximum_z = max_z
 
 	newA.reg_in_areas_in_z()
 
