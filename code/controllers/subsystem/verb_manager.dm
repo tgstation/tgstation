@@ -2,23 +2,7 @@
  * SSverb_manager, a subsystem that runs every tick and runs through its entire queue without yielding like SSinput.
  * this exists because of how the byond tick works and where user inputted verbs are put within it.
  *
- * The byond tick proceeds as follows:
- * 1. procs sleeping via walk() are resumed (i dont know why these are first)
- * 2. normal sleeping procs are resumed, in the order they went to sleep in the first place, this is where the MC wakes up and processes subsystems.
- *	a consequence of this is that the MC almost never resumes before other sleeping procs, because it only goes to sleep for 1 tick 99% of the time
- *	and 99% of procs either go to sleep for less time than the MC (which guarantees that they entered the sleep queue earlier when its time to wake up)
- *	and/or were called synchronously from the MC's execution, almost all of the time the MC is the last sleeping proc to resume in any given tick.
- *	This is good because it means the MC can account for the cost of previous resuming procs in the tick, and minimizes overtime.
- * 3. control is passed to byond after all of our code's procs stop execution for this tick
- * 4. a few small things happen in byond internals
- * 5. SendMaps is called for this tick, which processes the game state for all clients connected to the game and handles sending them changes
- * 	in appearances within their view range. This is expensive and takes up a significant portion of our tick, about 0.45% per connected player
- * 	as of 3/20/2022. meaning that with 50 players, 22.5% of our tick is being used up by just SendMaps, after all of our code has stopped executing.
- *	Thats only the average across all rounds, for most highpop rounds it can look like 0.6% of the tick per player, which is 30% for 50 players.
- * 6. After SendMaps ends, client verbs sent to the server are executed, and its the last major step before the next tick begins.
- *	During the course of the tick, a client can send a command to the server saying that they have executed any verb. The actual code defined
- *	for that /verb/name() proc isnt executed until this point, and the way the MC is designed makes this especially likely to make verbs
- *	"overrun" the bounds of the tick they executed in, stopping the other tick from starting and thus delaying the MC firing in that tick.
+ * see TICK_ORDER.md for more info on how the byond tick is structured.
  *
  * The way the MC allots its time is via TICK_LIMIT_RUNNING, it simply subtracts the cost of SendMaps (MAPTICK_LAST_INTERNAL_TICK_USAGE)
  * plus TICK_BYOND_RESERVE from the tick and uses up to that amount of time (minus the percentage of the tick used by the time it executes subsystems)
