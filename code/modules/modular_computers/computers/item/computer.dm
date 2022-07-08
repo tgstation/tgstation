@@ -305,13 +305,19 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	. += get_modular_computer_parts_examine(user)
 
-/obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID or pAI"
-	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
+	if(all_components[MC_CARD] || inserted_pai)
+		// The order is that IDs get removed first before pAIs
+		context[SCREENTIP_CONTEXT_ALT_LMB] = all_components[MC_CARD] : "Remove ID" ? "Remove pAI" 
+	if(ssd)
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
 
-	return CONTEXTUAL_SCREENTIP_SET
+	if(ssd || all_components[MC_CARD] || inserted_pai)
+		return CONTEXTUAL_SCREENTIP_SET
+	else
+		return NONE
 
 /obj/item/modular_computer/update_icon_state()
 	if(!bypass_state)
