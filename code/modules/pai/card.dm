@@ -80,9 +80,7 @@
 		ui.open()
 
 /obj/item/pai_card/ui_status(mob/user)
-	if(!slotted && (src in user))
-		return UI_INTERACTIVE
-	if(slotted && (src.loc in user))
+	if(!slotted && (src in user) || slotted && (src.loc in user))
 		return UI_INTERACTIVE
 	return ..()
 
@@ -283,7 +281,6 @@
 		return FALSE
 	pai = downloaded
 	emotion_icon = "null"
-	to_chat(usr, "setting")
 	update_appearance()
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")

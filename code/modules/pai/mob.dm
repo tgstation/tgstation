@@ -56,6 +56,8 @@
 	var/obj/item/pai_cable/hacking_cable
 	/// Whether we are currently holoformed
 	var/holoform = FALSE
+	/// Installed software on the pAI
+	var/list/installed_software = list()
 	/// Modular pc interface button
 	var/atom/movable/screen/ai/modpc/interfaceButton
 	/// Toggles whether universal translator has been activated. Cannot be reversed
@@ -70,12 +72,9 @@
 	var/list/medical_records = list()
 	/// Used as currency to purchase different abilities
 	var/ram = 100
-	/// Bool that determines if the pAI can refresh medical/security records.
-	var/refresh_spam = FALSE
 	/// Cached list for security records to send as static data
 	var/list/security_records = list()
-	/// Installed software on the pAI
-	var/list/software = list()
+
 	/// Toggles whether the Security HUD is active or not
 	var/secHUD = FALSE
 	// Onboard Items

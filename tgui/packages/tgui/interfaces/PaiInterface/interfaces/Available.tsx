@@ -2,7 +2,7 @@ import { capitalize } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, ProgressBar, Section, Table, Tooltip } from 'tgui/components';
 import { SOFTWARE_DESC } from '../constants';
-import { Available, Data } from '../types';
+import { Data } from '../types';
 
 /**
  * Renders a list of available software and the ram with which to download it
@@ -10,17 +10,17 @@ import { Available, Data } from '../types';
 export const AvailableDisplay = () => {
   return (
     <Section
-      buttons={<AvailableMemory />}
+      buttons={<MemoryDisplay />}
       fill
       scrollable
       title="Available Software">
-      <AvailableSoftware />
+      <SoftwareList />
     </Section>
   );
 };
 
 /** Displays the remaining RAM left as a progressbar. */
-const AvailableMemory = (props, context) => {
+const MemoryDisplay = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { ram } = data;
 
@@ -52,40 +52,43 @@ const AvailableMemory = (props, context) => {
 /** A list of available software.
  *  creates table rows for each, like a vendor.
  */
-const AvailableSoftware = (props, context) => {
+const SoftwareList = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { available } = data;
-  const convertedList: Available[] = Object.entries(available).map((key) => {
-    return { name: key[0], value: key[1] };
-  });
+  if (!available) {
+    return null;
+  }
+  const entries = Object.entries(available);
+  if (entries.length === 0) {
+    return null;
+  }
 
   return (
     <Table>
-      {convertedList?.map((software, index) => {
-        return <AvailableRow key={index} software={software} />;
+      {Object.entries(available)?.map(([name, cost], index) => {
+        return <ListItem cost={cost} key={index} name={name} />;
       })}
     </Table>
   );
 };
 
 /** A row for an individual software listing. */
-const AvailableRow = (props, context) => {
+const ListItem = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { ram } = data;
-  const { installed } = data;
-  const { software } = props;
-  const purchased = installed.includes(software.name);
+  const { installed, ram } = data;
+  const { cost, name } = props;
+  const purchased = installed.includes(name);
 
   return (
     <Table.Row className="candystripe">
       <Table.Cell collapsible>
-        <Box color="label">{capitalize(software)}</Box>
+        <Box color="label">{capitalize(name)}</Box>
       </Table.Cell>
       <Table.Cell collapsible>
-        <Box color={ram < software.value && 'bad'} textAlign="right">
-          {!purchased && software.value}{' '}
+        <Box color={ram < cost && 'bad'} textAlign="right">
+          {!purchased && cost}{' '}
           <Icon
-            color={purchased || ram >= software.value ? 'purple' : 'bad'}
+            color={purchased || ram >= cost ? 'purple' : 'bad'}
             name={purchased ? 'check' : 'microchip'}
           />
         </Box>
@@ -94,9 +97,9 @@ const AvailableRow = (props, context) => {
         <Button
           fluid
           mb={0.5}
-          disabled={ram < software.value || purchased}
-          onClick={() => act('buy', { selection: software.name })}
-          tooltip={SOFTWARE_DESC[software.name] || ''}
+          disabled={ram < cost || purchased}
+          onClick={() => act('buy', { selection: name })}
+          tooltip={SOFTWARE_DESC[name] || ''}
           tooltipPosition="bottom-start">
           <Icon ml={1} mr={-2} name="download" />
         </Button>

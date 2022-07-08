@@ -1,36 +1,17 @@
+import { BooleanLike } from 'common/react';
+
 export type Data = {
-  available: Available;
+  available: ReadonlyArray<{ name: string; value: number }>;
   directives: string;
-  door_jack?: string;
-  emagged: number;
+  door_jack: string | null;
+  emagged: BooleanLike;
   image: string;
   installed: ReadonlyArray<string>;
-  languages: number;
-  master: Master;
-  pda: PDA;
+  languages: BooleanLike;
+  master_dna: string | null;
+  master_name: string | null;
+  pda: { power: BooleanLike; silent: BooleanLike };
   ram: number;
-  records: Records;
-  refresh_spam: number;
+  medical_records: ReadonlyArray<Record<string, string>>;
+  security_records: ReadonlyArray<Record<string, string>>;
 };
-
-export type Available = {
-  name: string;
-  value: string | number;
-};
-
-export type Master = {
-  name: string;
-  dna: string;
-};
-
-export type PDA = {
-  power: number;
-  silent: number;
-};
-
-export type Records = Partial<{
-  medical: CrewRecord;
-  security: CrewRecord;
-}>;
-
-export type CrewRecord = ReadonlyArray<Record<string, string>>;

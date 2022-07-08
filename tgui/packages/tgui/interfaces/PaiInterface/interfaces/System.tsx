@@ -64,14 +64,14 @@ const SystemWallpaper = (props, context) => {
  */
 const SystemInfo = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { image, master } = data;
+  const { image, master_dna, master_name } = data;
 
   return (
     <Section
       buttons={
         <>
           <Button
-            disabled={!master.dna}
+            disabled={!master_dna}
             icon="dna"
             onClick={() => act('check_dna')}
             tooltip="Verifies your master's DNA. Must be carried in hand.">
@@ -89,9 +89,9 @@ const SystemInfo = (props, context) => {
       title="System Info">
       <LabeledList>
         <LabeledList.Item label="Master">
-          {master.name || 'None.'}
+          {master_name || 'None.'}
         </LabeledList.Item>
-        <LabeledList.Item label="DNA">{master.dna || 'None.'}</LabeledList.Item>
+        <LabeledList.Item label="DNA">{master_dna || 'None.'}</LabeledList.Item>
       </LabeledList>
     </Section>
   );

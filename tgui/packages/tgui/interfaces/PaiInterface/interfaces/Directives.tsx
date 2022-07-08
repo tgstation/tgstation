@@ -6,7 +6,7 @@ import { Data } from '../types';
 /** Shows the hardcoded PAI info along with any supplied orders. */
 export const DirectiveDisplay = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { directives, master } = data;
+  const { directives, master_name } = data;
 
   return (
     <Stack fill vertical>
@@ -22,7 +22,7 @@ export const DirectiveDisplay = (props, context) => {
       </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable title="Directives">
-          {!master.name ? (
+          {!master_name ? (
             'None.'
           ) : (
             <LabeledList>

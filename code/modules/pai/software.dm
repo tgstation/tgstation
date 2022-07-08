@@ -3,14 +3,14 @@
 	if(!ui)
 		ui = new(user, src, "PaiInterface", name)
 		ui.open()
+		ui.set_autoupdate(FALSE)
 
 /mob/living/silicon/pai/ui_data(mob/user)
 	var/list/data = list()
-	data["door_jack"] = hacking_cable || null
+	data["door_jack"] = hacking_cable
 	data["image"] = card.emotion_icon
-	data["installed"] = software
+	data["installed"] = installed_software
 	data["ram"] = ram
-	data["refresh_spam"] = refresh_spam
 	return data
 
 /mob/living/silicon/pai/ui_static_data(mob/user)
@@ -19,15 +19,10 @@
 	data["directives"] = laws.supplied
 	data["emagged"] = emagged
 	data["languages"] = languages_granted
-	data["master"] = list()
-	data["records"] = list()
-	if(master)
-		data["master"]["name"] = master
-		data["master"]["dna"] = master_dna
-	if("medical records" in software)
-		data["records"]["medical"] = medical_records
-	if("security records" in software)
-		data["records"]["security"] = security_records
+	data["master_name"] = master
+	data["master_dna"] = master_dna
+	data["medical_records"] = medical_records
+	data["security_records"] = security_records
 	return data
 
 /mob/living/silicon/pai/ui_act(action, list/params, datum/tgui/ui)
@@ -133,14 +128,14 @@
  * @return {bool} TRUE if the software was purchased, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/buy_software(mob/user, selection)
-	if(!available_software.Find(selection) || software.Find(selection))
+	if(!available_software.Find(selection) || installed_software.Find(selection))
 		to_chat(user, span_warning("Error: Software unavailable."))
 		CRASH("[user] tried to purchase unavailable software as a pAI.")
 	var/cost = available_software[selection]
 	if(ram < cost)
 		to_chat(user, span_warning("Error: Insufficient RAM available."))
 		CRASH("[user] tried to purchase software with insufficient RAM.")
-	software.Add(selection)
+	installed_software.Add(selection)
 	ram -= cost
 	var/datum/hud/pai/pAIhud = hud_used
 	pAIhud?.update_software_buttons()
@@ -197,8 +192,8 @@
 		to_chat(user, span_warning("No DNA detected."))
 		return FALSE
 	to_chat(user, span_boldannounce(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
-	to_chat(user, span_bold("DNA [holder.dna.unique_enzymes == user.master_dna ? \
-		"is a match" : "does not match"] our stored Master's DNA."))
+	to_chat(user, span_notice("DNA [holder.dna.unique_enzymes == user.master_dna ? \
+		"matches" : "does not match"] our stored Master's DNA."))
 	return TRUE
 
 /**
@@ -210,7 +205,7 @@
  * @return {bool} TRUE if the pAI was warned, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/check_if_installed(mob/user, selection)
-	if(software[selection])
+	if(installed_software[selection])
 		return TRUE
 	to_chat(user, span_warning("You do not have atmosphere sensor installed."))
 	stack_trace("[user] attempted to activate software they hadn't installed: [selection]")
@@ -325,28 +320,17 @@
 	return TRUE
 
 /**
- * Proc that switches whether a pAI can refresh
- * the records window again.
- */
-/mob/living/silicon/pai/proc/refresh_again()
-	refresh_spam = FALSE
-
-/**
  * Refreshes records on screen of the pAI.
  *
  * @param ui {tgui} The interface for the pAI.
  * @param list {string} The list of records to refresh.
  */
 /mob/living/silicon/pai/proc/refresh_records(datum/tgui/ui, list)
-	if(refresh_spam)
-		return FALSE
-	refresh_spam = TRUE
 	if(list == "medical")
 		medical_records = GLOB.data_core.get_general_records()
 	if(list == "security")
 		security_records = GLOB.data_core.get_security_records()
 	ui.send_full_update()
-	addtimer(CALLBACK(src, .proc/refresh_again), 3 SECONDS)
 	return TRUE
 
 /**
