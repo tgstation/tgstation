@@ -70,7 +70,11 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	var/moves_this_run = 0
 	var/deferred_clicks_this_run = 0 //acts like current_clicks but doesnt count clicks that dont get processed by SSinput
 
-	for(var/datum/callback/verb_callback/queued_click in verb_queue)
+	for(var/datum/callback/verb_callback/queued_click as anything in verb_queue)
+		if(!istype(queued_click))
+			stack_trace("non /datum/callback/verb_callback instance inside SSinput's verb_queue!")
+			continue
+
 		average_click_delay = MC_AVG_FAST_UP_SLOW_DOWN(average_click_delay, (REALTIMEOFDAY - queued_click.creation_time) SECONDS)
 		queued_click.InvokeAsync()
 

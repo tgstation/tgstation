@@ -8,7 +8,7 @@
  * when the verb finally processes but it was in range if the verb had processed immediately and overtimed.
  */
 
-///queuing tick_usage threshold for verbs that are high enough priority that they only queue if the server is overtiming. 
+///queuing tick_usage threshold for verbs that are high enough priority that they only queue if the server is overtiming.
 ///ONLY use for critical verbs
 #define VERB_OVERTIME_QUEUE_THRESHOLD 100
 ///queuing tick_usage threshold for verbs that need lower latency more than most verbs.
@@ -22,7 +22,10 @@
 ///it will runtime.
 #define TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) (_queue_verb(_verb_callback, _tick_check, _subsystem_to_use, _verification_args))
 ///queue wrapper for TRY_QUEUE_VERB() when you want to call the proc if the server isnt overloaded enough to queue
-#define QUEUE_OR_CALL_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) if(!TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args)) {_verb_callback:InvokeAsync()};
+#define QUEUE_OR_CALL_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) \
+	if(!TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args)) {\
+		_verb_callback:InvokeAsync() \
+		};
 
 //goes straight to SSverb_manager with default tick threshold
 #define DEFAULT_TRY_QUEUE_VERB(_verb_callback, _verification_args...) (TRY_QUEUE_VERB(_verb_callback, VERB_DEFAULT_QUEUE_THRESHOLD, null, _verification_args))

@@ -120,7 +120,11 @@ SUBSYSTEM_DEF(verb_manager)
 /datum/controller/subsystem/verb_manager/fire(resumed)
 	var/executed_verbs = 0
 
-	for(var/datum/callback/verb_callback/verb_callback in verb_queue)
+	for(var/datum/callback/verb_callback/verb_callback as anything in verb_queue)
+		if(!istype(verb_callback))
+			stack_trace("non /datum/callback/verb_callback inside [name]'s verb_queue!")
+			continue
+
 		verb_callback.InvokeAsync()
 		executed_verbs++
 
