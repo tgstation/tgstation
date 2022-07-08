@@ -1175,7 +1175,9 @@
 /area/shuttle/sbc_starfury)
 "ei" = (
 /obj/machinery/stasis,
-/obj/machinery/defibrillator_mount/directional/north,
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_y = 28
+	},
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "ep" = (
@@ -4077,6 +4079,11 @@
 /obj/effect/turf_decal/delivery/red,
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
+"oR" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/structure/sign/warning/deathsposal/directional/west,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/sbc_starfury)
 "oX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4985,6 +4992,10 @@
 /obj/item/analyzer,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
+"IJ" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/sbc_starfury)
 "IM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5119,6 +5130,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
+"LD" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/sbc_starfury)
 "LH" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular{
@@ -5149,11 +5168,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/shuttle/sbc_starfury)
-"MB" = (
-/obj/effect/turf_decal/tile/bar/diagonal_centre,
-/obj/structure/sign/warning/deathsposal/directional/west,
-/turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "MC" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -5335,14 +5349,6 @@
 	name = "Follows-The-Convention"
 	},
 /turf/open/floor/plating,
-/area/shuttle/sbc_starfury)
-"Pv" = (
-/obj/structure/chair/stool/bar/directional/south,
-/obj/effect/turf_decal/tile/bar/diagonal_centre,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "PF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -5564,6 +5570,10 @@
 	dir = 8
 	},
 /turf/open/floor/glass/reinforced,
+/area/shuttle/sbc_starfury)
+"Tx" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "TB" = (
 /obj/machinery/light/directional/west,
@@ -5824,10 +5834,6 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
-"Yi" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
-/area/shuttle/sbc_starfury)
 "Yq" = (
 /obj/structure/closet/secure_closet/medical2{
 	req_access = list("syndicate")
@@ -5872,10 +5878,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/shuttle/sbc_starfury)
-"ZH" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "ZK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6121,7 +6123,7 @@ PY
 cH
 Aj
 av
-Yi
+IJ
 eL
 ER
 aa
@@ -6213,9 +6215,9 @@ ae
 fz
 fK
 kx
-MB
+oR
 hf
-Pv
+LD
 id
 Tr
 ay
@@ -8131,7 +8133,7 @@ Gs
 cH
 Aj
 eK
-ZH
+Tx
 bm
 BX
 aa
