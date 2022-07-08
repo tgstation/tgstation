@@ -61,7 +61,7 @@
 
 	if(T)
 		var/should_clean = reagents.has_chemical_flag(REAGENT_CLEANS, 1)
-		SEND_SIGNAL(src, COMSIG_START_CLEANING, T, user, clean_target = should_clean)
+		start_cleaning(src, T, user, clean_target = should_clean)
 
 /obj/item/mop/cyborg/Initialize(mapload)
 	. = ..()

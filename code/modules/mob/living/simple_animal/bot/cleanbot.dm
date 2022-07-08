@@ -352,7 +352,7 @@
 		mode = BOT_CLEANING
 		update_icon_state()
 		var/turf/T = get_turf(A)
-		SEND_SIGNAL(src, COMSIG_START_CLEANING, T, src)
+		start_cleaning(src, T, src)
 		target = null
 		mode = BOT_IDLE
 		update_icon_state()

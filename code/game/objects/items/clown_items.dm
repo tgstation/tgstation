@@ -147,7 +147,7 @@
 			human_target.update_lips(null)
 		decreaseUses(src, target, user)
 		return
-	SEND_SIGNAL(src, COMSIG_START_CLEANING, target, user) //normal cleaning
+	start_cleaning(src, target, user) //normal cleaning
 
 /obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)
 	if(uses <= 0)

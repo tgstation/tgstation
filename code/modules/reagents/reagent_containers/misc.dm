@@ -156,4 +156,4 @@
 			log_combat(user, C, "touched", src, log_object)
 
 	else if(istype(A) && (src in user))
-		SEND_SIGNAL(src, COMSIG_START_CLEANING, A, user)
+		start_cleaning(src, A, user)
