@@ -174,16 +174,16 @@
 	taste_description = "laughter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.emote("laugh")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_laughter)
+/datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.emote("laugh")
+	SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_laughter)
 	..()
 
-/datum/reagent/consumable/laughter/overdose_process(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/laughter/overdose_process(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(10, delta_time))
-		to_chat(M, span_userdanger("You laugh so hard you lose your breath..."))
-		M.adjustOxyLoss(5)
-		M.emote("gasp")
+		to_chat(drinker, span_userdanger("You laugh so hard you lose your breath..."))
+		drinker.adjustOxyLoss(5)
+		drinker.emote("gasp")
 	..()
 
 /datum/reagent/consumable/superlaughter
@@ -195,17 +195,17 @@
 	taste_description = "laughter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(16, delta_time))
-		M.visible_message(span_danger("[M] bursts out into a fit of uncontrollable laughter!"), span_userdanger("You burst out in a fit of uncontrollable laughter!"))
-		M.Stun(5)
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_superlaughter)
+		drinker.visible_message(span_danger("[drinker] bursts out into a fit of uncontrollable laughter!"), span_userdanger("You burst out in a fit of uncontrollable laughter!"))
+		drinker.Stun(5)
+		SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_superlaughter)
 	..()
 
-/datum/reagent/consumable/superlaughter/overdose_process(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/superlaughter/overdose_process(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(16, delta_time))
-		to_chat(M, span_userdanger("You laugh so hard you feel your lungs hurt..."))
-		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time)
+		to_chat(drinker, span_userdanger("You laugh so hard you feel your lungs hurt..."))
+		drinker.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/potato_juice
