@@ -65,10 +65,8 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
  */
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
 	//add the cleaning overlay
-	var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
-	if(HAS_TRAIT(target, CURRENTLY_CLEANING))
-		already_cleaning = TRUE
-	else //add the trait and overlay
+	var/already_cleaning = HAS_TRAIT(target, CURRENTLY_CLEANING) //tracks if atom had the cleaning trait when you started cleaning
+	if(!already_cleaning) //add the trait and overlay
 		ADD_TRAIT(target, CURRENTLY_CLEANING, src)
 		if(target.plane > GLOB.cleaning_bubbles_lower.plane) //check if the higher overlay is necessary
 			target.add_overlay(GLOB.cleaning_bubbles_higher)
