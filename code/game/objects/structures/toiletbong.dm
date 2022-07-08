@@ -42,6 +42,9 @@
 		var/turf/toiletbong_location = loc
 		toiletbong_location.hotspot_expose(1000, 5)
 		for (var/obj/item/item in contents)
+			if (item.resistance_flags & INDESTRUCTIBLE)
+				user.balloon_alert(user, "[item.name] is blocking the pipes!")
+				continue
 			playsound(src, 'sound/items/modsuit/flamethrower.ogg', 50)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
 			puff.set_up(smokeradius, holder = src, location = user, carry = item.reagents, efficiency = 20)
