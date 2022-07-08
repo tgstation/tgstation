@@ -8,6 +8,8 @@
 	var/list/data = list()
 	data["door_jack"] = hacking_cable || null
 	data["image"] = card.emotion_icon
+	data["installed"] = software
+	data["ram"] = ram
 	data["refresh_spam"] = refresh_spam
 	return data
 
@@ -17,10 +19,8 @@
 	data["available"] = available_software
 	data["directives"] = laws.supplied
 	data["emagged"] = emagged
-	data["installed"] = software
 	data["languages"] = languages_granted
 	data["master"] = list()
-	data["ram"] = ram
 	data["records"] = list()
 	if(master)
 		data["master"]["name"] = master
@@ -44,7 +44,6 @@
 			return TRUE
 		if("buy")
 			buy_software(usr, params["selection"])
-			ui.send_full_update()
 			return TRUE
 		if("camera_zoom")
 			check_if_installed("camera zoom")
@@ -122,7 +121,7 @@
 			return TRUE
 		if("universal_translator")
 			check_if_installed("universal translator")
-			grant_languages(usr)
+			grant_languages(usr, ui)
 			return TRUE
 	return FALSE
 
@@ -180,7 +179,7 @@
  * @return {boolean} TRUE if a sample was taken, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/check_dna(mob/living/silicon/pai/user)
-	var/mob/living/carbon/holder = user.loc
+	var/mob/living/carbon/holder = holoform ? user.loc : card.loc
 	if(!iscarbon(holder))
 		to_chat(user, span_warning("You must be in someone's hands to do this!"))
 		return FALSE
@@ -228,15 +227,17 @@
 /mob/living/silicon/pai/proc/door_jack(mob/living/silicon/pai/user, jack_state)
 	switch(jack_state)
 		if("cable")
-			extend_cable(usr)
+			extend_cable(user)
 			return TRUE
 		if("cancel")
 			QDEL_NULL(hacking_cable)
+			visible_message(span_notice("The cable retracts into the pAI."))
 			return TRUE
 		if("jack")
 			if(!hacking_cable?.machine)
+				to_chat(user, span_warning("You must be connected to a machine to do this."))
 				return FALSE
-			hack_door(usr)
+			hack_door(user)
 			return TRUE
 	return FALSE
 
@@ -247,10 +248,10 @@
  * a cable which is placed either on the floor or in
  * someone's hands based (on distance).
  *
- * @param user {silicon/pai} The pAI dropping the cable
+ * @param user {mob} The pAI dropping the cable
  * @return {bool} TRUE if the cable was dropped, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/extend_cable(mob/living/silicon/pai/user)
+/mob/living/silicon/pai/proc/extend_cable(mob/user)
 	QDEL_NULL(hacking_cable) //clear any old cables
 	hacking_cable = new
 	var/mob/living/hacker = user.loc
@@ -287,12 +288,12 @@
  *
  * @return {bool} TRUE if the door was jacked, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/hack_door()
-	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
-	to_chat(usr, span_boldnotice("You begin overriding the airlock security protocols."))
+/mob/living/silicon/pai/proc/hack_door(mob/user)
+	playsound(user, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
+	balloon_alert(user, "overriding...")
 	// Now begin hacking
 	if(!do_after(src, 10 SECONDS, hacking_cable.machine, timed_action_flags = NONE, progress = TRUE))
-		to_chat(src, span_notice("Door Jack: Connection to airlock has been lost. Hack aborted."))
+		balloon_alert(user, "failed! retracting...")
 		hacking_cable.visible_message(
 			span_warning("[hacking_cable] rapidly retracts back into its spool."),\
 			span_hear("You hear a click and the sound of wire spooling rapidly."))
@@ -301,6 +302,7 @@
 			card.update_appearance()
 		return FALSE
 	var/obj/machinery/door/door = hacking_cable.machine
+	balloon_alert(user, "success!")
 	door.open()
 	QDEL_NULL(hacking_cable)
 	return TRUE
