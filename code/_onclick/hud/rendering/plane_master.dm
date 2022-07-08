@@ -511,6 +511,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_target = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list()
+	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
+	allows_offsetting = FALSE
 
 /atom/movable/screen/plane_master/hud
 	name = "HUD"

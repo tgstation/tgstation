@@ -14,7 +14,7 @@
 #define SET_PLANE(thing, new_value, z_reference) (thing.plane = MUTATE_PLANE(new_value, z_reference))
 #define SET_PLANE_W_SCALAR(thing, new_value, multiplier) (thing.plane = GET_NEW_PLANE(new_value, multiplier))
 
-// Lemon todo: 
+// Lemon todo:
 // Consider adding a low spec mode if possible, seen too many fps complaints, concerning
 // AIs can see through static via openspace, fix that too
 // Lemon todo: There's way too many get_turf(src) calls using SET_PLANE
@@ -37,4 +37,6 @@
 
 // Lemon todo: somehow ensure this works with plane offset blacklists
 // Maybe get rid of bespoke render targets, and just add a PLANE_TARGET macro or something
-#define OFFSET_RENDER_TARGET(render_target, offset) ("[(render_target)] #[(offset)]")
+#define OFFSET_RENDER_TARGET(render_target, offset) (SSmapping.render_offset_blacklist?["[render_target]"] ? \
+														_OFFSET_RENDER_TARGET(render_target, 0) : _OFFSET_RENDER_TARGET(render_target, offset))
+#define _OFFSET_RENDER_TARGET(render_target, offset) ("[(render_target)] #[(offset)]")
