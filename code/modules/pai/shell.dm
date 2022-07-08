@@ -1,116 +1,24 @@
-
-/mob/living/silicon/pai/proc/fold_out(force = FALSE)
-	if(emitter_health < 0)
-		to_chat(src, span_warning("Your holochassis emitters are still too unstable! Please wait for automatic repair."))
+/mob/living/silicon/pai/mob_try_pickup(mob/living/user, instant=FALSE)
+	if(!possible_chassis[chassis])
+		to_chat(user, span_warning("[src]'s current form isn't able to \
+			be carried!"))
 		return FALSE
+	return ..()
 
-	if(!can_holo && !force)
-		to_chat(src, span_warning("Your master or another force has disabled your holochassis emitters!"))
-		return FALSE
+/mob/living/silicon/pai/start_pulling(atom/movable/thing, state, \
+	force = move_force, supress_message = FALSE)
+	return FALSE
 
-	if(holoform)
-		. = fold_in(force)
-		return
 
-	if(emitter_semi_cd)
-		to_chat(src, span_warning("Error: Holochassis emitters recycling. Please try again later."))
-		return FALSE
-
-	emitter_semi_cd = TRUE
-	addtimer(CALLBACK(src, .proc/emitter_cool), emitter_cd)
-	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
-	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
-	set_density(TRUE)
-	if(istype(card.loc, /obj/item/modular_computer))
-		var/obj/item/modular_computer/pc = card.loc
-		pc.inserted_pai = null
-		pc.visible_message(span_notice("[src] ejects itself from [pc]!"))
-	if(isliving(card.loc))
-		var/mob/living/living_holder = card.loc
-		if(!living_holder.temporarilyRemoveItemFromInventory(card))
-			to_chat(src, span_warning("Error: Unable to expand to mobile form. Chassis is restrained by some device or person."))
-			return FALSE
-	forceMove(get_turf(card))
-	card.forceMove(src)
-	if(client)
-		client.perspective = EYE_PERSPECTIVE
-		client.eye = src
-	set_light(0)
-	icon_state = "[chassis]"
-	held_state = "[chassis]"
-	visible_message(span_boldnotice("[src] folds out its holochassis emitter and forms a holoshell around itself!"))
-	holoform = TRUE
-
-/mob/living/silicon/pai/proc/emitter_cool()
-	emitter_semi_cd = FALSE
-
-/mob/living/silicon/pai/proc/fold_in(force = FALSE)
-	emitter_semi_cd = TRUE
-	if(!force)
-		addtimer(CALLBACK(src, .proc/emitter_cool), emitter_cd)
+/mob/living/silicon/pai/update_resting()
+	. = ..()
+	if(resting)
+		icon_state = "[chassis]_rest"
 	else
-		addtimer(CALLBACK(src, .proc/emitter_cool), emitter_overload_cd)
-	icon_state = "[chassis]"
-	if(!holoform)
-		. = fold_out(force)
-		return
-	visible_message(span_notice("[src] deactivates its holochassis emitter and folds back into a compact card!"))
-	stop_pulling()
-	if(istype(loc, /obj/item/clothing/head/mob_holder))
-		var/obj/item/clothing/head/mob_holder/mob_head = loc
-		mob_head.release(display_messages = FALSE)
-	if(client)
-		client.perspective = EYE_PERSPECTIVE
-		client.eye = card
-	var/turf/T = drop_location()
-	card.forceMove(T)
-	forceMove(card)
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
-	set_density(FALSE)
-	set_light(0)
-	holoform = FALSE
-	set_resting(resting)
-
-/**
- * Sets a new holochassis skin based on a pAI's choice
- */
-/mob/living/silicon/pai/proc/choose_chassis()
-	var/list/skins = list()
-	for(var/holochassis_option in possible_chassis)
-		var/image/item_image = image(icon = src.icon, icon_state = holochassis_option)
-		skins += list("[holochassis_option]" = item_image)
-	sort_list(skins)
-
-	var/atom/anchor = get_atom_on_turf(src)
-	var/choice = show_radial_menu(src, anchor, skins, custom_check = CALLBACK(src, .proc/check_menu, anchor), radius = 40, require_near = TRUE)
-	if(!choice)
-		return FALSE
-	set_holochassis(choice)
-	to_chat(src, span_boldnotice("You switch your holochassis projection composite to [choice]."))
-	update_resting()
-
-/**
- * Sets the holochassis skin and updates the icons
- * * Arguments:
- * * choice The animal skin that will be used for the pAI holoform
- */
-/mob/living/silicon/pai/proc/set_holochassis(choice)
-	if(!choice)
-		return FALSE
-	chassis = choice
-	icon_state = "[chassis]"
-	held_state = "[chassis]"
-
-/**
- * Polymorphs the pai into a random holoform
- */
-/mob/living/silicon/pai/wabbajack()
-	if(length(possible_chassis) < 2)
-		return
-	var/holochassis = pick(possible_chassis - chassis)
-	set_holochassis(holochassis)
-	to_chat(src, span_boldnotice("Your holochassis form morphs into that of a [holochassis]."))
+		icon_state = "[chassis]"
+	if(loc != card)
+		visible_message(span_notice("[src] [resting? "lays down \
+			for a moment..." : "perks up from the ground."]"))
 
 /**
  * Checks if we are allowed to interact with a radial menu
@@ -124,22 +32,142 @@
 	if(get_turf(src) != get_turf(anchor))
 		return FALSE
 	if(!isturf(loc) && loc != card)
-		to_chat(src, span_boldwarning("You can not change your holochassis composite while not on the ground or in your card!"))
+		to_chat(src, span_boldwarning("You can not change your \
+			holochassis composite while not on the ground or in your card!"))
 		return FALSE
 	return TRUE
 
-/mob/living/silicon/pai/update_resting()
-	. = ..()
-	if(resting)
-		icon_state = "[chassis]_rest"
+/**
+ * Sets a new holochassis skin based on a pAI's choice.
+ *
+ * @return {boolean} True if the skin was successfully set.
+ * 	FALSE otherwise.
+ */
+/mob/living/silicon/pai/proc/choose_chassis()
+	var/list/skins = list()
+	for(var/holochassis_option in possible_chassis)
+		var/image/item_image = image(icon = src.icon, icon_state = holochassis_option)
+		skins += list("[holochassis_option]" = item_image)
+	sort_list(skins)
+	var/atom/anchor = get_atom_on_turf(src)
+	var/choice = show_radial_menu(src, anchor, skins, custom_check = \
+		CALLBACK(src, .proc/check_menu, anchor), radius = 40, require_near = TRUE)
+	if(!choice)
+		return FALSE
+	set_holochassis(choice)
+	to_chat(src, span_boldnotice("You switch your holochassis projection \
+		composite to [choice]."))
+	update_resting()
+	return TRUE
+
+/** Allows the pAI to switch to holochassis again. */
+/mob/living/silicon/pai/proc/emitter_cool()
+	emitter_semi_cd = FALSE
+
+/**
+ * Returns the pAI to card mode.
+ *
+ * @param force {boolean} If TRUE, the pAI will be forced to card mode.
+ * @return {boolean} TRUE if the pAI was forced to card mode.
+ * 	FALSE otherwise.
+ */
+/mob/living/silicon/pai/proc/fold_in(force = FALSE)
+	emitter_semi_cd = TRUE
+	if(!force)
+		addtimer(CALLBACK(src, .proc/emitter_cool), emitter_cd)
 	else
-		icon_state = "[chassis]"
-	if(loc != card)
-		visible_message(span_notice("[src] [resting? "lays down for a moment..." : "perks up from the ground."]"))
+		addtimer(CALLBACK(src, .proc/emitter_cool), emitter_overload_cd)
+	icon_state = "[chassis]"
+	if(!holoform)
+		. = fold_out(force)
+		return FALSE
+	visible_message(span_notice("[src] deactivates its holochassis \
+		emitter and folds back into a compact card!"))
+	stop_pulling()
+	if(istype(loc, /obj/item/clothing/head/mob_holder))
+		var/obj/item/clothing/head/mob_holder/mob_head = loc
+		mob_head.release(display_messages = FALSE)
+	if(client)
+		client.perspective = EYE_PERSPECTIVE
+		client.eye = card
+	var/turf/turf = drop_location()
+	card.forceMove(turf)
+	forceMove(card)
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
+	set_density(FALSE)
+	set_light(0)
+	holoform = FALSE
+	set_resting(resting)
+	return TRUE
 
-/mob/living/silicon/pai/start_pulling(atom/movable/thing, state, force = move_force, supress_message = FALSE)
-	return FALSE
+/**
+ * Engage holochassis form.
+ *
+ * @param force {boolean} Force the form to engage.
+ * @return {boolean} TRUE if the form was successfully engaged.
+ * 	FALSE otherwise.
+ */
+/mob/living/silicon/pai/proc/fold_out(force = FALSE)
+	if(emitter_health < 0)
+		to_chat(src, span_warning("Your holochassis emitters are \
+			still too unstable! Please wait for automatic repair."))
+		return FALSE
+	if(!can_holo && !force)
+		to_chat(src, span_warning("Your master or another force \
+			has disabled your holochassis emitters!"))
+		return FALSE
+	if(holoform)
+		. = fold_in(force)
+		return
+	if(emitter_semi_cd)
+		to_chat(src, span_warning("Error: Holochassis emitters \
+			recycling. Please try again later."))
+		return FALSE
+	emitter_semi_cd = TRUE
+	addtimer(CALLBACK(src, .proc/emitter_cool), emitter_cd)
+	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
+	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
+	set_density(TRUE)
+	if(istype(card.loc, /obj/item/modular_computer))
+		var/obj/item/modular_computer/pc = card.loc
+		pc.inserted_pai = null
+		pc.visible_message(span_notice("[src] ejects itself from [pc]!"))
+	if(isliving(card.loc))
+		var/mob/living/living_holder = card.loc
+		if(!living_holder.temporarilyRemoveItemFromInventory(card))
+			to_chat(src, span_warning("Error: Unable to expand to mobile \
+				form. Chassis is restrained by some device or person."))
+			return FALSE
+	forceMove(get_turf(card))
+	card.forceMove(src)
+	if(client)
+		client.perspective = EYE_PERSPECTIVE
+		client.eye = src
+	set_light(0)
+	icon_state = "[chassis]"
+	held_state = "[chassis]"
+	visible_message(span_boldnotice("[src] folds out its holochassis emitter \
+		and forms a holoshell around itself!"))
+	holoform = TRUE
+	return TRUE
 
+
+/**
+ * Sets the holochassis skin and updates the icons
+ *
+ * @params choice {string} - The animal skin that will be used for the pAI holoform
+ * @return {boolean} TRUE if the skin was successfully set. FALSE otherwise.
+ */
+/mob/living/silicon/pai/proc/set_holochassis(choice)
+	if(!choice)
+		return FALSE
+	chassis = choice
+	icon_state = "[chassis]"
+	held_state = "[chassis]"
+	return TRUE
+
+/** Toggles the onboard light */
 /mob/living/silicon/pai/proc/toggle_integrated_light()
 	if(!light_range)
 		set_light(brightness_power)
@@ -148,8 +176,16 @@
 		set_light(0)
 		to_chat(src, span_notice("You disable your integrated light."))
 
-/mob/living/silicon/pai/mob_try_pickup(mob/living/user, instant=FALSE)
-	if(!possible_chassis[chassis])
-		to_chat(user, span_warning("[src]'s current form isn't able to be carried!"))
+/**
+ * Polymorphs the pai into a random holoform
+ *
+ * @return {boolean} TRUE if the pai was successfully morphed. FALSE otherwise.
+ */
+/mob/living/silicon/pai/wabbajack()
+	if(length(possible_chassis) < 2)
 		return FALSE
-	return ..()
+	var/holochassis = pick(possible_chassis - chassis)
+	set_holochassis(holochassis)
+	to_chat(src, span_boldnotice("Your holochassis form morphs into \
+		that of a [holochassis]."))
+	return TRUE

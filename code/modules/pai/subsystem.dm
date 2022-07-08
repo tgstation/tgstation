@@ -2,7 +2,6 @@
 
 SUBSYSTEM_DEF(pai)
 	name = "pAI"
-
 	flags = SS_NO_INIT|SS_NO_FIRE
 
 	/// List of pAI candidates, including those not submitted.
@@ -76,9 +75,7 @@ SUBSYSTEM_DEF(pai)
  * This is the primary window proc when the pAI candidate
  * hud menu is pressed by observers.
  *
- * Arguments
- *
- * @user - The ghost doing the pressing.
+ * @params user {mob} The ghost doing the pressing.
  */
 /datum/controller/subsystem/pai/proc/recruit_window(mob/user)
 	/// Searches for a previous candidate upon opening the menu
@@ -88,7 +85,12 @@ SUBSYSTEM_DEF(pai)
 		candidates[user.ckey] = candidate
 	ui_interact(user)
 
-/** Sanitizes PAI details */
+/**
+ * Sanitizes PAI details.
+ *
+ * @params candidate {datum/pai_candidate} The candidate whose
+ * 	details are getting trimmed.
+ */
 /datum/controller/subsystem/pai/proc/sanitize_details(datum/pai_candidate/candidate)
 	if(candidate.comments)
 		candidate.comments = copytext_char(candidate.comments, 1, MAX_MESSAGE_LEN)
@@ -107,14 +109,16 @@ SUBSYSTEM_DEF(pai)
  */
 /datum/controller/subsystem/pai/proc/submit_alert()
 	if(submit_spam)
-		to_chat(usr, span_warning("Your candidacy has been submitted, but pAI cards have been alerted too recently."))
+		to_chat(usr, span_warning("Your candidacy has been submitted, \
+			but pAI cards have been alerted too recently."))
 		return FALSE
 	submit_spam = TRUE
 	for(var/obj/item/pai_card/pai_card in pai_card_list)
 		if(!pai_card.pai)
 			pai_card.alert_update()
 	to_chat(usr, span_notice("Your pAI candidacy has been submitted!"))
-	addtimer(CALLBACK(src, .proc/submit_again), SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, .proc/submit_again), SPAM_TIME, \
+		TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
 	return TRUE
 
 #undef SPAM_TIME

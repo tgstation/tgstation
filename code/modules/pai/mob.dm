@@ -10,7 +10,8 @@
 	hud_type = /datum/hud/pai
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
+	desc = "A generic pAI mobile hard-light holographics \
+		emitter. It seems to be deactivated."
 	health = 500
 	maxHealth = 500
 	layer = LOW_MOB_LAYER
@@ -23,91 +24,76 @@
 	can_buckle_to = FALSE
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 
-	/// The card we inhabit
-	var/obj/item/pai_card/card
-
-	/// Used as currency to purchase different abilities
-	var/ram = 100
-	/// Installed software on the pAI
-	var/list/software = list()
 	/// The strength of the internal flashlight
 	var/brightness_power = 5
+	/// Whether the pAI can enter holoform or not
+	var/can_holo = TRUE
+	/// Whether this pAI can recieve radio messages
+	var/can_receive = TRUE
+	/// Whether this pAI can transmit radio messages
+	var/can_transmit = TRUE
+	/// The current chasis that will appear when in holoform
+	var/chassis = "repairbot"
+	/// The card we inhabit
+	var/obj/item/pai_card/card
 	/// Changes the display to syndi if true
 	var/emagged = FALSE
-
+	/// Time between fold out
+	var/emitter_cd = 50
+	/// The health of the holochassis
+	var/emitter_health = 20
+	/// The max health of the holochassis
+	var/emitter_max_health = 20
+	/// Overloaded or emagged foldout cooldown
+	var/emitter_overload_cd = 100
+	/// Regeneration rate for the holochassis
+	var/emitter_regen_per_second = 1.25
+	/// Brief pause upon creation, etc
+	var/emitter_semi_cd = FALSE
+	/// Toggles whether the pAI can hold encryption keys or not
+	var/encrypt_mod = FALSE
+	/// The cable we produce when hacking a door
+	var/obj/item/pai_cable/hacking_cable
+	/// Whether we are currently holoformed
+	var/holoform = FALSE
+	/// Modular pc interface button
+	var/atom/movable/screen/ai/modpc/interfaceButton
+	/// Toggles whether universal translator has been activated. Cannot be reversed
+	var/languages_granted = FALSE
 	/// Name of the one who commands us
 	var/master
 	/// DNA string for owner verification
 	var/master_dna
-	/// Whether we are currently holoformed
-	var/holoform = FALSE
-	/// Whether the pAI can enter holoform or not
-	var/can_holo = TRUE
-	/// Whether this pAI can transmit radio messages
-	var/can_transmit = TRUE
-	/// Whether this pAI can recieve radio messages
-	var/can_receive = TRUE
-
-
-	// Various software-specific vars
-
-	/// Toggles whether the Security HUD is active or not
-	var/secHUD = FALSE
 	/// Toggles whether the Medical  HUD is active or not
 	var/medHUD = FALSE
-	/// Toggles whether the pAI can hold encryption keys or not
-	var/encrypt_mod = FALSE
-	/// Toggles whether universal translator has been activated. Cannot be reversed
-	var/languages_granted = FALSE
-	/// Atmospheric analyzer
-	var/obj/item/analyzer/atmos_analyzer
-	/// AI's signaler
-	var/obj/item/assembly/signaler/internal/signaler
-	/// pAI Synthesizer
-	var/obj/item/instrument/piano_synth/internal_instrument
-	/// pAI Newscaster
-	var/obj/machinery/newscaster
-	/// pAI healthanalyzer
-	var/obj/item/healthanalyzer/host_scan
-	/// Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
-	var/obj/item/gps/pai/internal_gps
-	/// The cable we produce when hacking a door
-	var/obj/item/pai_cable/hacking_cable
-
-	/// The current chasis that will appear when in holoform
-	var/chassis = "repairbot"
-	/// List of all possible chasises. TRUE means the pAI can be picked up in this chasis.
-	var/list/possible_chassis = list(
-		"cat" = TRUE,
-		"mouse" = TRUE,
-		"monkey" = TRUE,
-		"corgi" = FALSE,
-		"fox" = FALSE,
-		"repairbot" = TRUE,
-		"rabbit" = TRUE,
-		"bat" = FALSE,
-		"butterfly" = FALSE,
-		"hawk" = FALSE,
-		"lizard" = FALSE,
-		"duffel" = TRUE,
-		"crow" = TRUE,
-	)
-
-	var/emitter_health = 20
-	var/emitter_max_health = 20
-	var/emitter_regen_per_second = 1.25
-	var/emitter_cd = 50
-	var/emitter_overload_cd = 100
-	var/emitter_semi_cd = FALSE
-
-	/// Bool that determines if the pAI can refresh medical/security records.
-	var/refresh_spam = FALSE
 	/// Cached list for medical records to send as static data
 	var/list/medical_records = list()
+	/// Used as currency to purchase different abilities
+	var/ram = 100
+	/// Bool that determines if the pAI can refresh medical/security records.
+	var/refresh_spam = FALSE
 	/// Cached list for security records to send as static data
 	var/list/security_records = list()
-
-	var/list/available_software = list(
+	/// Installed software on the pAI
+	var/list/software = list()
+	/// Toggles whether the Security HUD is active or not
+	var/secHUD = FALSE
+	// Onboard Items
+	/// Atmospheric analyzer
+	var/obj/item/analyzer/atmos_analyzer
+	/// Health analyzer
+	var/obj/item/healthanalyzer/host_scan
+	/// GPS
+	var/obj/item/gps/pai/internal_gps
+	/// Music Synthesizer
+	var/obj/item/instrument/piano_synth/internal_instrument
+	/// Newscaster
+	var/obj/machinery/newscaster
+	/// Remote signaler
+	var/obj/item/assembly/signaler/internal/signaler
+	// Static lists
+	/// List of all available downloads
+	var/static/list/available_software = list(
 		"crew manifest" = 5,
 		"digital messenger" = 5,
 		"atmosphere sensor" = 5,
@@ -127,11 +113,92 @@
 		"internal gps" = 35,
 		"universal translator" = 35,
 	)
-
-	var/atom/movable/screen/ai/modpc/interfaceButton
+	/// List of all possible chasises. TRUE means the pAI can be picked up in this chasis.
+	var/static/list/possible_chassis = list(
+		"cat" = TRUE,
+		"mouse" = TRUE,
+		"monkey" = TRUE,
+		"corgi" = FALSE,
+		"fox" = FALSE,
+		"repairbot" = TRUE,
+		"rabbit" = TRUE,
+		"bat" = FALSE,
+		"butterfly" = FALSE,
+		"hawk" = FALSE,
+		"lizard" = FALSE,
+		"duffel" = TRUE,
+		"crow" = TRUE,
+	)
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
+
+/obj/item/pai_card/attackby(obj/item/used, mob/user, params)
+	if(pai && istype(used, /obj/item/encryptionkey))
+		if(!pai.encrypt_mod)
+			to_chat(user, span_alert("Encryption Key ports not configured."))
+			return
+		user.set_machine(src)
+		pai.radio.attackby(used, user, params)
+		to_chat(user, span_notice("You insert [used] into the [src]."))
+		return
+	return ..()
+
+/mob/living/silicon/pai/can_interact_with(atom/A)
+	if(A == signaler) // Bypass for signaler
+		return TRUE
+	if(A == modularInterface)
+		return TRUE
+	return ..()
+
+// See software.dm for Topic()
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, \
+	no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+	// Resting is just an aesthetic feature for them.
+	return ..(M, be_close, no_dexterity, no_tk, need_hands, TRUE)
+
+/mob/living/silicon/pai/Destroy()
+	QDEL_NULL(atmos_analyzer)
+	QDEL_NULL(internal_instrument)
+	QDEL_NULL(hacking_cable)
+	QDEL_NULL(newscaster)
+	QDEL_NULL(signaler)
+	QDEL_NULL(host_scan)
+	QDEL_NULL(internal_gps)
+	if(!QDELETED(card) && loc != card)
+		card.forceMove(drop_location())
+		// these are otherwise handled by paicard/handle_atom_del()
+		card.pai = null
+		card.emotion_icon = initial(card.emotion_icon)
+		card.update_appearance()
+	GLOB.pai_list -= src
+	return ..()
+
+/obj/item/pai_card/emag_act(mob/user)
+	if(!pai)
+		return
+	to_chat(user, span_notice("You override [pai]'s directive system, \
+		clearing its master string and supplied directive."))
+	to_chat(pai, span_userdanger("Warning: System override detected, \
+		check directive sub-system for any changes."))
+	log_game("[key_name(user)] emagged [key_name(pai)], wiping their \
+		master DNA and supplemental directive.")
+	pai.emagged = TRUE
+	pai.master = null
+	pai.master_dna = null
+	// Sets supplemental directive to this
+	pai.laws.supplied[1] = "None."
+
+/mob/living/silicon/pai/examine(mob/user)
+	. = ..()
+	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
+
+/mob/living/silicon/pai/get_status_tab_items()
+	. += ..()
+	if(!stat)
+		. += text("Emitter Integrity: [emitter_health * (100 / emitter_max_health)]")
+	else
+		. += text("Systems nonfunctional")
 
 /mob/living/silicon/pai/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == hacking_cable)
@@ -173,35 +240,14 @@
 	if(!aicamera)
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
 		aicamera.flash_enabled = TRUE
-
 	. = ..()
-
 	create_modularInterface()
-
 	emitter_semi_cd = TRUE
 	addtimer(CALLBACK(src, .proc/emitter_cool), 600)
-
 	if(!holoform)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
-
 	return INITIALIZE_HINT_LATELOAD
-
-/mob/living/silicon/pai/Destroy()
-	QDEL_NULL(atmos_analyzer)
-	QDEL_NULL(internal_instrument)
-	QDEL_NULL(hacking_cable)
-	QDEL_NULL(newscaster)
-	QDEL_NULL(signaler)
-	QDEL_NULL(host_scan)
-	QDEL_NULL(internal_gps)
-	if(!QDELETED(card) && loc != card)
-		card.forceMove(drop_location())
-		card.pai = null //these are otherwise handled by paicard/handle_atom_del()
-		card.emotion_icon = initial(card.emotion_icon)
-		card.update_appearance()
-	GLOB.pai_list -= src
-	return ..()
 
 /mob/living/silicon/pai/LateInitialize()
 	. = ..()
@@ -211,27 +257,9 @@
 	laws = new /datum/ai_laws/pai()
 	return TRUE
 
-/mob/living/silicon/pai/get_status_tab_items()
-	. += ..()
-	if(!stat)
-		. += text("Emitter Integrity: [emitter_health * (100 / emitter_max_health)]")
-	else
-		. += text("Systems nonfunctional")
-
-
-// See software.dm for Topic()
-
-/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
-	return ..(M, be_close, no_dexterity, no_tk, need_hands, TRUE) //Resting is just an aesthetic feature for them.
-
-/mob/proc/makePAI(delold)
-	var/obj/item/pai_card/card = new /obj/item/pai_card(get_turf(src))
-	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
-	pai.key = key
-	pai.name = name
-	card.set_personality(pai)
-	if(delold)
-		qdel(src)
+/mob/living/silicon/pai/process(delta_time)
+	emitter_health = clamp((emitter_health + (emitter_regen_per_second * delta_time)), \
+		-50, emitter_max_health)
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	. = ..()
@@ -241,9 +269,8 @@
 	remove_movespeed_modifier(/datum/movespeed_modifier/pai_spacewalk)
 	return TRUE
 
-/mob/living/silicon/pai/examine(mob/user)
-	. = ..()
-	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
+/obj/item/pai_card/screwdriver_act(mob/living/user, obj/item/tool)
+	return pai.radio.screwdriver_act(user, tool)
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
@@ -251,39 +278,16 @@
 	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
 
-/mob/living/silicon/pai/process(delta_time)
-	emitter_health = clamp((emitter_health + (emitter_regen_per_second * delta_time)), -50, emitter_max_health)
-
-/mob/living/silicon/pai/can_interact_with(atom/A)
-	if(A == signaler) // Bypass for signaler
-		return TRUE
-	if(A == modularInterface)
-		return TRUE
-
-	return ..()
-
-/obj/item/pai_card/screwdriver_act(mob/living/user, obj/item/tool)
-	return pai.radio.screwdriver_act(user, tool)
-
-/obj/item/pai_card/attackby(obj/item/used, mob/user, params)
-	if(pai && istype(used, /obj/item/encryptionkey))
-		if(!pai.encrypt_mod)
-			to_chat(user, span_alert("Encryption Key ports not configured."))
-			return
-		user.set_machine(src)
-		pai.radio.attackby(used, user, params)
-		to_chat(user, span_notice("You insert [used] into the [src]."))
-		return
-
-	return ..()
-
-/obj/item/pai_card/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive
-	if(!pai)
-		return
-	to_chat(user, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
-	to_chat(pai, span_userdanger("Warning: System override detected, check directive sub-system for any changes."))
-	log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
-	pai.emagged = TRUE
-	pai.master = null
-	pai.master_dna = null
-	pai.laws.supplied[1] = "None." // Sets supplemental directive to this
+/**
+ * Creates a new pAI.
+ *
+ * @param delete_old {boolean} If TRUE, deletes the old pAI if one exists.
+ */
+/mob/proc/make_pai(delete_old)
+	var/obj/item/pai_card/card = new /obj/item/pai_card(get_turf(src))
+	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
+	pai.key = key
+	pai.name = name
+	card.set_personality(pai)
+	if(delete_old)
+		qdel(src)
