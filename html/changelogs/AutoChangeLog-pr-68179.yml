@@ -1,5 +1,0 @@
-author: "orthography"
-delete-after: True
-changes: 
-  - balance: "removes the BMP spawns that are out in bum-fuck nowhere."
-  - bugfix: "fixes the lack of air in the BMP asteroid spawns."
