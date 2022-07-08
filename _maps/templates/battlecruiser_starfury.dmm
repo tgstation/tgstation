@@ -626,8 +626,16 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/sbc_starfury)
 "cr" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
+/obj/structure/cable,
+/obj/structure/sign/warning/explosives/directional/west,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 6
+	},
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/sbc_starfury)
 "cs" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -735,16 +743,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/sbc_starfury)
-"cJ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "cM" = (
 /obj/machinery/shower{
@@ -1180,12 +1178,12 @@
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "ei" = (
-/obj/structure/chair/stool/directional/west,
-/obj/machinery/light/small/directional/north,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/iron/dark,
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "ep" = (
 /obj/machinery/light/directional/north,
@@ -1303,16 +1301,12 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/sbc_starfury)
 "eG" = (
+/obj/structure/chair/stool/directional/west,
+/obj/machinery/light/small/directional/north,
 /obj/structure/cable,
-/obj/structure/sign/warning/explosives/directional/west,
-/obj/effect/turf_decal/siding/dark_red{
-	dir = 6
-	},
-/obj/structure/frame/computer{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/textured_large,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "eH" = (
 /obj/machinery/cell_charger{
@@ -3465,9 +3459,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "kJ" = (
-/obj/effect/turf_decal/tile/bar/diagonal_centre,
-/obj/structure/sign/warning/deathsposal/directional/west,
-/turf/open/floor/iron/dark/diagonal,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "kK" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -4010,12 +4006,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "ng" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/structure/sign/warning/deathsposal/directional/west,
+/turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "nk" = (
 /obj/structure/table,
@@ -4050,13 +4043,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/shuttle/sbc_starfury)
-"ot" = (
-/obj/machinery/stasis,
-/obj/machinery/defibrillator_mount/loaded{
-	pixel_y = 28
-	},
-/turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "ow" = (
 /obj/structure/closet/emcloset/anchored,
@@ -4161,6 +4147,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
+"qc" = (
+/obj/structure/cable,
+/obj/structure/chair/stool/directional/east,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_starfury)
 "qf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -4255,15 +4249,8 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "sq" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/dark_red,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "sB" = (
 /obj/effect/turf_decal/stripes/line{
@@ -4332,13 +4319,6 @@
 "uY" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
-/area/shuttle/sbc_starfury)
-"vc" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "vk" = (
 /obj/structure/cable,
@@ -4646,8 +4626,15 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/sbc_starfury)
 "BI" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_red,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "BK" = (
 /obj/machinery/light/directional/south,
@@ -4714,6 +4701,18 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
+/area/shuttle/sbc_starfury)
+"CQ" = (
+/obj/structure/frame/computer{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/sign/warning/explosives/directional/east,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/sbc_starfury)
 "CZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -4936,6 +4935,15 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
+"GF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/sbc_starfury)
 "GO" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -5041,6 +5049,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "JF" = (
@@ -5055,12 +5064,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/sbc_starfury)
 "JG" = (
-/obj/structure/cable,
-/obj/structure/chair/stool/directional/east,
-/obj/machinery/light/small/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/iron/dark,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "JL" = (
 /obj/structure/rack{
@@ -5430,12 +5435,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "Ri" = (
-/obj/structure/chair/stool/bar/directional/south,
-/obj/effect/turf_decal/tile/bar/diagonal_centre,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
+/obj/machinery/stasis,
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_y = 28
 	},
-/turf/open/floor/iron/dark/diagonal,
+/turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "Rj" = (
 /obj/machinery/door/firedoor,
@@ -5647,6 +5651,17 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
+"Vt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/dark_red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_starfury)
 "VS" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -5842,27 +5857,22 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "Za" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/dark_red{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 9
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/pod/dark,
+/area/shuttle/sbc_starfury)
+"Zl" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
-/area/shuttle/sbc_starfury)
-"Zf" = (
-/obj/structure/frame/computer{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/structure/sign/warning/explosives/directional/east,
-/obj/effect/turf_decal/siding/dark_red{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/sbc_starfury)
 "Zm" = (
 /obj/structure/cable,
@@ -6051,7 +6061,7 @@ aa
 Ue
 JF
 Fr
-eG
+cr
 cH
 eC
 cF
@@ -6119,14 +6129,14 @@ aa
 aa
 ae
 ae
-ei
+eG
 fd
 ae
 PY
 cH
 Aj
 av
-cr
+sq
 eL
 ER
 aa
@@ -6188,11 +6198,11 @@ bx
 ae
 ah
 cH
-Za
+Vt
 ae
 cu
 cH
-ng
+Zl
 ae
 ae
 ZF
@@ -6220,9 +6230,9 @@ ae
 fz
 fK
 kx
-kJ
+ng
 hf
-Ri
+ei
 id
 Tr
 ay
@@ -6470,7 +6480,7 @@ vk
 vk
 dN
 dU
-vc
+kJ
 ae
 eE
 eE
@@ -7279,7 +7289,7 @@ eN
 eu
 ae
 ae
-ot
+Ri
 aZ
 df
 Uy
@@ -7778,8 +7788,8 @@ et
 et
 Dz
 et
-ir
-fb
+GF
+eR
 ff
 ae
 Pr
@@ -7830,7 +7840,7 @@ hV
 hV
 dT
 eh
-cJ
+Za
 ae
 eE
 eE
@@ -8092,7 +8102,7 @@ bx
 ae
 BN
 vk
-sq
+BI
 ae
 Gv
 cH
@@ -8159,14 +8169,14 @@ aa
 aa
 ae
 ae
-JG
+qc
 BT
 ae
 Gs
 cH
 Aj
 eK
-BI
+JG
 bm
 BX
 aa
@@ -8227,7 +8237,7 @@ aa
 Ue
 JF
 Fr
-Zf
+CQ
 vk
 co
 vk
