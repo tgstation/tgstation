@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Airlock shock indicators on diagnostics HUDs will now correctly be removed when the door is unshocked."

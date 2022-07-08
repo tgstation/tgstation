@@ -722,7 +722,7 @@
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
-/obj/structure/closet/proc/on_magic_unlock(datum/source, obj/effect/proc_holder/spell/aoe_turf/knock/spell, mob/living/caster)
+/obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
 	locked = FALSE

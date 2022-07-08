@@ -62,7 +62,7 @@
 
 /obj/structure/bed/roller/examine(mob/user)
 	. = ..()
-	. += span_notice("You can fold it up by <b>dragging</b> it onto you.")
+	. += span_notice("You can fold it up with a Right-click.")
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
@@ -85,17 +85,18 @@
 	else
 		return ..()
 
-/obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
+/obj/structure/bed/roller/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(over_object == usr && Adjacent(usr))
-		if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
-			return FALSE
-		if(has_buckled_mobs())
-			return FALSE
-		usr.visible_message(span_notice("[usr] collapses \the [src.name]."), span_notice("You collapse \the [src.name]."))
-		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
-		usr.put_in_hands(B)
-		qdel(src)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
+		return FALSE
+	if(has_buckled_mobs())
+		return FALSE
+	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
+	var/obj/structure/bed/roller/folding_bed = new foldabletype(get_turf(src))
+	user.put_in_hands(folding_bed)
+	qdel(src)
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
 	set_density(TRUE)

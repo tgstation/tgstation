@@ -26,7 +26,7 @@ type Pai = {
   receive: BooleanLike;
 };
 
-export const PaiCard = (_, context) => {
+export const PaiCard = (props, context) => {
   const { data } = useBackend<PaiCardData>(context);
   const { pai } = data;
 
@@ -38,7 +38,7 @@ export const PaiCard = (_, context) => {
 };
 
 /** Gives a list of candidates as cards */
-const PaiDownload = (_, context) => {
+const PaiDownload = (props, context) => {
   const { act, data } = useBackend<PaiCardData>(context);
   const { candidates = [] } = data;
   const [tabInChar, setTabInChar] = useLocalState(context, 'tab', true);
@@ -132,7 +132,7 @@ const CandidateDisplay = (props, context) => {
 };
 
 /** Once a pAI has been loaded, you can alter its settings here */
-const PaiOptions = (_, context) => {
+const PaiOptions = (props, context) => {
   const { act, data } = useBackend<PaiCardData>(context);
   const { pai } = data;
   const { can_holo, dna, emagged, laws, master, name, transmit, receive } = pai;

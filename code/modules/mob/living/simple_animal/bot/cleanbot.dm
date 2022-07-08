@@ -141,6 +141,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/cleaner, 0.1 SECONDS)
 
 	chosen_name = name
 	get_targets()
@@ -350,36 +351,9 @@
 	if(ismopable(A))
 		mode = BOT_CLEANING
 		update_icon_state()
-
-		//add the cleaning overlay
-		var/already_cleaning = FALSE //tracks if atom had the cleaning trait when you started cleaning
-		if(HAS_TRAIT(A, CURRENTLY_CLEANING))
-			already_cleaning = TRUE
-		else //add the trait and overlay
-			ADD_TRAIT(A, CURRENTLY_CLEANING, src)
-			if(A.plane > GLOB.cleaning_bubbles_lower.plane) //check if the higher overlay is necessary
-				A.add_overlay(GLOB.cleaning_bubbles_higher)
-			else if(A.plane == GLOB.cleaning_bubbles_lower.plane)
-				if(A.layer > GLOB.cleaning_bubbles_lower.layer)
-					A.add_overlay(GLOB.cleaning_bubbles_higher)
-				else
-					A.add_overlay(GLOB.cleaning_bubbles_lower)
-			else //(A.plane < GLOB.cleaning_bubbles_lower.plane)
-				A.add_overlay(GLOB.cleaning_bubbles_lower)
-
-		//do the cleaning
 		var/turf/T = get_turf(A)
-		if(do_after(src, 1, target = T))
-			T.wash(CLEAN_SCRUB)
-			visible_message(span_notice("[src] cleans \the [T]."))
-			target = null
-
-		//remove the cleaning overlay
-		if(!already_cleaning)
-			A.cut_overlay(GLOB.cleaning_bubbles_lower)
-			A.cut_overlay(GLOB.cleaning_bubbles_higher)
-			REMOVE_TRAIT(A, CURRENTLY_CLEANING, src)
-
+		start_cleaning(src, T, src)
+		target = null
 		mode = BOT_IDLE
 		update_icon_state()
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))

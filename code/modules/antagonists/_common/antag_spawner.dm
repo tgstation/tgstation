@@ -261,14 +261,15 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(T)
-	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
+	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(T)
+	new /obj/effect/dummy/phased_mob(T, S)
+
 	S.key = C.key
 	S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
 	S.mind.special_role = ROLE_SLAUGHTER_DEMON
 	S.mind.add_antag_datum(antag_type)
-	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
-	Ctrl+Click a blood pool to manifest.</B>")
+	to_chat(S, span_bold("You are currently not currently in the same plane of existence as the station. \
+		Use your Blood Crawl ability near a pool of blood to manifest and wreak havoc."))
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"

@@ -489,7 +489,7 @@
 	. = ..()
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Open up when someone casts knock.
-/obj/machinery/door/proc/on_magic_unlock(datum/source, obj/effect/proc_holder/spell/aoe_turf/knock/spell, mob/living/caster)
+/obj/machinery/door/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, .proc/open)
