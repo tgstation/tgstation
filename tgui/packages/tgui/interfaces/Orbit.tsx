@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { filter, sortBy } from 'common/collections';
-import { multiline } from 'common/string';
+import { capitalizeOne, multiline } from 'common/string';
 import { Button, Collapsible, Icon, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
@@ -260,7 +260,7 @@ const ObservableItem = (
     <Button
       color={threat || color}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
-      {nameToUpper(name).slice(0, 44) /** prevents it from overflowing */}
+      {capitalizeOne(name).slice(0, 44) /** prevents it from overflowing */}
       {!!orbiters && (
         <>
           {' '}
@@ -306,10 +306,3 @@ const getThreat = (orbiters: number): THREAT => {
     return THREAT.Large;
   }
 };
-
-/**
- * Returns a string with the first letter in uppercase.
- * Unlike capitalize(), has no effect on the other letters
- */
-const nameToUpper = (name: string): string =>
-  name.replace(/^\w/, (c) => c.toUpperCase());

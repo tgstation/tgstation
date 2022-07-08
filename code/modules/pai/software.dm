@@ -173,8 +173,12 @@
  * @return {boolean} TRUE if a sample was taken, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/check_dna(mob/living/silicon/pai/user)
-	var/mob/living/carbon/holder = holoform ? user.loc : card.loc
-	if(!iscarbon(holder))
+	var/mob/living/carbon/holder
+	if(holoform && istype(loc, /obj/item/clothing/head/mob_holder))
+		holder = loc.loc
+	if(!holoform && !iscarbon(loc))
+		holder = loc
+	if(!holder)
 		to_chat(user, span_warning("You must be in someone's hands to do this!"))
 		return FALSE
 	to_chat(user, span_notice("Requesting a DNA sample."))

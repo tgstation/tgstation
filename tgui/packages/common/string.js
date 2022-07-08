@@ -77,6 +77,13 @@ export const createSearch = (searchText, stringifier) => {
   };
 };
 
+/**
+ * Capitalizes a word and lowercases the rest.
+ * @param {string} str
+ * @returns {string} capitalized string
+ *
+ * @example capitalize('heLLo') === 'Hello'
+ */
 export const capitalize = (str) => {
   // Handle array
   if (Array.isArray(str)) {
@@ -84,6 +91,43 @@ export const capitalize = (str) => {
   }
   // Handle string
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+/**
+ * Similar to capitalize, this takes a string and replaces any first letters
+ * in any words.
+ *
+ * @param {string} str
+ * @return {string} The string with the first letter capitalized.
+ *
+ * @example capitalizeAny('heLLo woRLd') === 'HeLLo WoRLd'
+ */
+export const capitalizeAny = (str) => {
+  return str.replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
+};
+
+/**
+ * Capitalizes only the first letter of the str.
+ *
+ * @param {string} str
+ * @return {string} capitalized string
+ *
+ * @example capitalizeFirst('heLLo woRLd') === 'HeLLo woRLd'
+ */
+export const capitalizeOne = (str) => {
+  return str.replace(/^\w/, (letter) => letter.toUpperCase());
+};
+
+/**
+ * Decodes any HTML entities in the string.
+ *
+ * @param {string} str An HTML encoded string.
+ * @returns {string} The string with HTML entities decoded.
+ */
+export const decodeHTML = (str) => {
+  return str.replace(/&#(\d+);/g, (_, dec) => {
+    return String.fromCharCode(dec);
+  });
 };
 
 export const toTitleCase = (str) => {

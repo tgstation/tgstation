@@ -1,4 +1,4 @@
-import { capitalize } from 'common/string';
+import { capitalizeAny } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, NoticeBox, Section, Stack } from 'tgui/components';
 import { SOFTWARE_DESC } from '../constants';
@@ -41,7 +41,7 @@ const InstalledSoftware = (props, context) => {
         installed.map((software, index) => {
           return (
             <Button key={index} onClick={() => setCurrentSelection(software)}>
-              {capitalize(software)}
+              {capitalizeAny(software)}
             </Button>
           );
         })
@@ -59,7 +59,7 @@ const InstalledInfo = (props, context) => {
   );
   const title = !currentSelection
     ? 'Select a Program'
-    : capitalize(currentSelection);
+    : capitalizeAny(currentSelection);
 
   /** Records get their own section here */
   if (currentSelection === 'medical records') {

@@ -1,4 +1,4 @@
-import { capitalize } from 'common/string';
+import { capitalizeAny } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, ProgressBar, Section, Table, Tooltip } from 'tgui/components';
 import { SOFTWARE_DESC } from '../constants';
@@ -65,7 +65,7 @@ const SoftwareList = (props, context) => {
 
   return (
     <Table>
-      {Object.entries(available)?.map(([name, cost], index) => {
+      {entries?.map(([name, cost], index) => {
         return <ListItem cost={cost} key={index} name={name} />;
       })}
     </Table>
@@ -82,7 +82,7 @@ const ListItem = (props, context) => {
   return (
     <Table.Row className="candystripe">
       <Table.Cell collapsible>
-        <Box color="label">{capitalize(name)}</Box>
+        <Box color="label">{capitalizeAny(name)}</Box>
       </Table.Cell>
       <Table.Cell collapsible>
         <Box color={ram < cost && 'bad'} textAlign="right">
