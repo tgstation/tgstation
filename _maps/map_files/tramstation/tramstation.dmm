@@ -56996,6 +56996,10 @@
 /obj/structure/cable/layer1,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"tGT" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance/storage)
 "tGW" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -117494,7 +117498,7 @@ aAU
 mAU
 jqE
 ndu
-iFb
+tGT
 fWZ
 amL
 xWN
