@@ -202,3 +202,43 @@
   - bugfix: fixed metastation atmos areas.
   stylemistake:
   - bugfix: Fixed "Script Error" in tgui and tgchat (hopefully).
+2022-07-08:
+  CursedBirb:
+  - bugfix: Qm coat can carry telebaton
+  - refactor: Qm coat is a subtype of department coat like other heads clothes
+  Guillaume Prata:
+  - qol: You fold roller beds and bodybags with a right click instead of click and
+      dragging into you.
+  - qol: You can use any sharp object to cut a bodybag's tag instead of being forced
+      to use a wirecutter.
+  Jolly:
+  - rscadd: 'KC13 (The big ruin with the drone spawners) has received some new room
+      types. bal: [KC13] The ruin now starts DEPOWERED. As some mild compensation,
+      there are more batteries in the ruin. Please don''t swallow them.'
+  - qol: KC13 has been spruced up a bit, aesthetically speaking.
+  - qol: '[KC13] Converted any full tile windows to the "hollow" window spawners (the
+      one with 4 thin windows)'
+  - bugfix: '[KC13] Fixed the stacked old AI turret in the AI upload hall.'
+  - bugfix: '[KC13] Fixed some wall mount items not being directional (icky var edits).'
+  MMMiracles:
+  - rscadd: The central service wing has been completely remapped to help put the
+      chef and bartender front-and-center for crew interactions. Hydroponics was moved
+      to the lower floor to accommodate this change.
+  Pepsilawn:
+  - bugfix: Kilostation had a few areas in space around the ordnance test site fixed
+      up.
+  Profakos:
+  - bugfix: corrected the minimum player count of a few disease events
+  VioletN:
+  - bugfix: The changeling tentacle power now properly functions the way its description
+      says it does.
+  Zonespace27:
+  - code_imp: Code for Academy, Challenge, Spacebattle, and Wild West away missions
+      has been removed
+  jlsnow301:
+  - bugfix: Syndicate fission360 apps work again
+  lizardqueenlexi:
+  - bugfix: fixed an incorrect disposals junction in Tramstation Medical department
+  orthography:
+  - balance: removes the BMP spawns that are out in bum-fuck nowhere.
+  - bugfix: fixes the lack of air in the BMP asteroid spawns.
