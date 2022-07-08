@@ -176,3 +176,9 @@
 	savefile_key = "inquisitive_ghost"
 	savefile_identifier = PREFERENCE_PLAYER
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+
+/// When enabled, prevents any and all ghost role pop-ups.
+/datum/preference/toggle/ghost_roles
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "ghost_roles"
+	savefile_identifier = PREFERENCE_PLAYER

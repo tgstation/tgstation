@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes: 
+  - bugfix: "corrected the minimum player count of a few disease events"
