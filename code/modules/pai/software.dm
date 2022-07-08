@@ -15,7 +15,6 @@
 
 /mob/living/silicon/pai/ui_static_data(mob/user)
 	var/list/data = list()
-	var/mob/living/silicon/pai/pai = user
 	data["available"] = available_software
 	data["directives"] = laws.supplied
 	data["emagged"] = emagged
@@ -25,9 +24,9 @@
 	if(master)
 		data["master"]["name"] = master
 		data["master"]["dna"] = master_dna
-	if("medical records" in pai.software)
+	if("medical records" in software)
 		data["records"]["medical"] = medical_records
-	if("security records" in pai.software)
+	if("security records" in software)
 		data["records"]["security"] = security_records
 	return data
 
@@ -136,11 +135,11 @@
 /mob/living/silicon/pai/proc/buy_software(mob/user, selection)
 	if(!available_software.Find(selection) || software.Find(selection))
 		to_chat(user, span_warning("Error: Software unavailable."))
-		return FALSE
+		CRASH("[user] tried to purchase unavailable software as a pAI.")
 	var/cost = available_software[selection]
 	if(ram < cost)
 		to_chat(user, span_warning("Error: Insufficient RAM available."))
-		return FALSE
+		CRASH("[user] tried to purchase software with insufficient RAM.")
 	software.Add(selection)
 	ram -= cost
 	var/datum/hud/pai/pAIhud = hud_used
