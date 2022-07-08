@@ -194,7 +194,7 @@
 
 
 			set_light(initial(light_range) + clamp(damage*power, 10, 50), 3, SUPERMATTER_SINGULARITY_LIGHT_COLOUR, TRUE)
-			filters_to_add |= (!final_countdown ? (list(rays_filter, outline_filter)) : (outline_filter)) // The Singularity is coming! The rays have turned into something!
+			filters_to_add |= list(rays_filter, outline_filter) // The Singularity is coming!
 			if(final_countdown)
 				var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field", frame = rand(1,4))
 				var/causality_filter = filter(type="layer", icon = causality_field, flags = FILTER_OVERLAY)
