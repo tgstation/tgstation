@@ -135,7 +135,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(mob/target)
 	var/list/targets = list(target)
-	. = list()
+	. = list(target)
 	for(var/mob/living/L in targets)
 		var/list/bloodpool = get_bloodcrawlable_pools(get_turf(L), 0)
 		if(bloodpool.len && (!faction_check_mob(L) || L.stat == DEAD))
