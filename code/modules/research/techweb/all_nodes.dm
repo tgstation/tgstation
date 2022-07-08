@@ -1126,11 +1126,11 @@
 	description = "The usefulness of computerized records, projected straight onto your eyepiece!"
 	prereq_ids = list("comp_recordkeeping", "emp_basic")
 	design_ids = list(
+		"civ_hud",
 		"diagnostic_hud",
 		"health_hud",
 		"scigoggles",
 		"security_hud",
-		"civ_hud",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
@@ -1140,13 +1140,13 @@
 	description = "Allows seeing in the dark without actual light!"
 	prereq_ids = list("integrated_HUDs", "adv_engi", "emp_adv")
 	design_ids = list(
+		"civ_hud_night",
 		"diagnostic_hud_night",
 		"health_hud_night",
 		"night_visision_goggles",
 		"nvgmesons",
 		"nv_scigoggles",
-		"security_hud_night",
-		"civ_hud_night",
+		"security_hud_night",	
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
@@ -1228,10 +1228,10 @@
 	prereq_ids = list("adv_biotech", "datatheory")
 	design_ids = list(
 		"ci-breather",
+		"ci-civhud",
 		"ci-diaghud",
 		"ci-gloweyes",
 		"ci-medhud",
-		"ci-civhud",
 		"ci-nutriment",
 		"ci-sechud",
 		"ci-welding",
