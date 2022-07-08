@@ -42,6 +42,7 @@
 /obj/structure/fans/Destroy()
 	air_update_turf(TRUE, FALSE)
 	. = ..()
+
 //Invisible, indestructible fans
 /obj/structure/fans/tiny/invisible
 	name = "air flow blocker"
