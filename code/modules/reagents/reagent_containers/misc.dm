@@ -157,9 +157,3 @@
 
 	else if(istype(A) && (src in user))
 		start_cleaning(src, A, user)
-
-		//remove the cleaning overlay
-		if(!already_cleaning)
-			A.cut_overlay(GLOB.cleaning_bubbles_lower)
-			A.cut_overlay(GLOB.cleaning_bubbles_higher)
-			REMOVE_TRAIT(A, CURRENTLY_CLEANING, src)

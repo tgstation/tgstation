@@ -63,12 +63,6 @@
 		var/should_clean = reagents.has_chemical_flag(REAGENT_CLEANS, 1)
 		start_cleaning(src, T, user, clean_target = should_clean)
 
-		//remove the cleaning overlay
-		if(!already_cleaning)
-			T.cut_overlay(GLOB.cleaning_bubbles_lower)
-			T.cut_overlay(GLOB.cleaning_bubbles_higher)
-			REMOVE_TRAIT(T, CURRENTLY_CLEANING, src)
-
 /obj/item/mop/cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
