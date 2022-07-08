@@ -2518,9 +2518,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "ie" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
@@ -3180,6 +3177,11 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/plating,
+/area/shuttle/sbc_starfury)
+"jH" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/structure/sign/warning/deathsposal/directional/west,
+/turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "jK" = (
 /obj/structure/sign/warning/electric_shock/directional/north,
@@ -4012,8 +4014,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "ng" = (
+/obj/structure/chair/stool/bar/directional/south,
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
-/obj/structure/sign/warning/deathsposal/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "nk" = (
@@ -4939,6 +4944,10 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
+"Hk" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/sbc_starfury)
 "HF" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /obj/machinery/light/small/directional/west,
@@ -5010,8 +5019,8 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "Je" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "Jf" = (
@@ -5045,7 +5054,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/sbc_starfury)
 "JG" = (
-/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/turf/closed/wall/mineral/plastitanium/nosmooth,
 /area/shuttle/sbc_starfury)
 "JL" = (
 /obj/structure/rack{
@@ -5511,6 +5520,10 @@
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/sbc_starfury)
+"SB" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/sbc_starfury)
 "SE" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -5781,6 +5794,7 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "Yc" = (
@@ -6098,7 +6112,7 @@ PY
 cH
 Aj
 av
-aH
+SB
 eL
 ER
 aa
@@ -6190,9 +6204,9 @@ ae
 fz
 fK
 kx
-ng
+jH
 hf
-hD
+ng
 id
 Tr
 ay
@@ -8108,7 +8122,7 @@ Gs
 cH
 Aj
 eK
-aH
+Hk
 bm
 BX
 aa
