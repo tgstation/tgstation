@@ -1130,6 +1130,7 @@
 		"health_hud",
 		"scigoggles",
 		"security_hud",
+		"civ_hud",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
@@ -1145,6 +1146,7 @@
 		"nvgmesons",
 		"nv_scigoggles",
 		"security_hud_night",
+		"civ_hud_night",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
@@ -1229,6 +1231,7 @@
 		"ci-diaghud",
 		"ci-gloweyes",
 		"ci-medhud",
+		"ci-civhud",
 		"ci-nutriment",
 		"ci-sechud",
 		"ci-welding",

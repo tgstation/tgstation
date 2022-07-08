@@ -55,6 +55,30 @@
 			user.say("WHY IS THERE A BAR ON MY HEAD?!!")
 	return OXYLOSS
 
+/obj/item/clothing/glasses/hud/civ
+	name = "civilian HUD"
+	desc = "A heads-up display that shows only the current job ID of the user."
+	icon_state = "civ"
+	hud_type = DATA_HUD_SECURITY_BASIC
+	hud_trait = TRAIT_CIVILIAN_HUD
+
+/obj/item/clothing/glasses/hud/civ/night
+	name = "night vision civilian HUD"
+	desc = "A civilian HUD fitted with a light amplifier."
+	icon_state = "civhudnight"
+	inhand_icon_state = "glasses"
+	darkness_view = 8
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+
+/obj/item/clothing/glasses/hud/civ/sunglasses
+	name = "civilian HUDSunglasses"
+	desc = "Sunglasses with a civilian HUD."
+	icon_state = "sunhudciv"
+	darkness_view = 1
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 1
+
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status."

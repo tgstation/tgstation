@@ -113,7 +113,7 @@
 			return
 		var/mob/living/carbon/human/human_user = usr
 		var/perpname = get_face_name(get_id_name(""))
-		if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD) && !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
+		if(!HAS_TRAIT(human_user, TRAIT_SECURITY_HUD) && !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD) && !HAS_TRAIT(human_user, TRAIT_CIVILIAN_HUD))
 			return
 		if((text2num(href_list["examine_time"]) + 1 MINUTES) < world.time)
 			to_chat(human_user, "[span_notice("It's too late to use this now!")]")

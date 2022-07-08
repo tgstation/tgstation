@@ -31,6 +31,12 @@
 		REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 	..()
 
+/obj/item/organ/internal/cyberimp/eyes/hud/civ
+	name = "Civilian HUD implant"
+	desc = "These cybernetic eye implants will display a civilian HUD over everything you see."
+	HUD_type = DATA_HUD_SECURITY_BASIC
+	HUD_trait = TRAIT_CIVILIAN_HUD
+
 /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	name = "Medical HUD implant"
 	desc = "These cybernetic eye implants will display a medical HUD over everything you see."

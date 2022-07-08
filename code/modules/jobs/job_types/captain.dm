@@ -64,7 +64,7 @@
 		)
 	belt = /obj/item/modular_computer/tablet/pda/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt
-	glasses = /obj/item/clothing/glasses/sunglasses
+	glasses = /obj/item/clothing/glasses/hud/civ/sunglasses
 	gloves = /obj/item/clothing/gloves/color/captain
 	head = /obj/item/clothing/head/caphat
 	shoes = /obj/item/clothing/shoes/sneakers/brown

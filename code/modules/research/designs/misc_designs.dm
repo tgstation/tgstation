@@ -3,6 +3,24 @@
 /////////////////HUDs////////////////////
 /////////////////////////////////////////
 
+/datum/design/civ_hud
+	name = "Civilian HUD"
+	desc = "A heads-up display that shows only the current job ID of the user."
+	id = "civ_hud"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/clothing/glasses/hud/civ
+	category = list("Equipment")
+
+/datum/design/civ_hud_night
+	name = "Night Vision Civilian HUD"
+	desc = "A civilian HUD fitted with a light amplifier."
+	id = "civ_hud_night"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = 1000, /datum/material/silver = 350)
+	build_path = /obj/item/clothing/glasses/hud/civ/night
+	category = list("Equipment")
+
 /datum/design/health_hud
 	name = "Health Scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."

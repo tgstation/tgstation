@@ -50,6 +50,24 @@
 	time = 20
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/hudsunciv
+	name = "Civilian HUDsunglasses"
+	result = /obj/item/clothing/glasses/hud/civ/sunglasses
+	time = 20
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/civ = 1,
+				  /obj/item/clothing/glasses/sunglasses = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/hudsuncivremoval
+	name = "Civilian HUD removal"
+	result = /obj/item/clothing/glasses/sunglasses
+	time = 20
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/civ/sunglasses = 1)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/hudsunsec
 	name = "Security HUDsunglasses"
 	result = /obj/item/clothing/glasses/hud/security/sunglasses

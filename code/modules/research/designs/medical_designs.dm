@@ -359,6 +359,17 @@
 	category = list("Implants", "Medical Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cyberimp_civ_hud
+	name = "Civilian HUD implant"
+	desc = "These cybernetic eye implants will display a civilian HUD over everything you see."
+	id = "ci-civhud"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 50
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 500, /datum/material/gold = 500)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/civ
+	category = list("Implants", "Medical Designs")
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/cyberimp_medical_hud
 	name = "Medical HUD Implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
