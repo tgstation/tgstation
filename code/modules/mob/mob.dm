@@ -963,11 +963,11 @@
 	return 9
 
 ///Can the mob interact() with an atom?
-/mob/proc/can_interact_with(atom/A, require_adjacent_turf_check = TRUE)
+/mob/proc/can_interact_with(atom/A, treat_mob_as_adjacent)
 	if(isAdminGhostAI(src))
 		return TRUE
 	//Return early. we do not need to check that we are on adjacent turfs (i.e we are inside a closet)
-	if (!require_adjacent_turf_check)
+	if (treat_mob_as_adjacent && src == A.loc)
 		return TRUE
 	if (Adjacent(A))
 		return TRUE
