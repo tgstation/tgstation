@@ -2051,7 +2051,6 @@
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "hd" = (
-/obj/structure/sign/warning/deathsposal/directional/north,
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -4011,6 +4010,11 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/sbc_starfury)
+"ng" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/structure/sign/warning/deathsposal/directional/west,
+/turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "nk" = (
 /obj/structure/table,
@@ -6186,7 +6190,7 @@ ae
 fz
 fK
 kx
-kx
+ng
 hf
 hD
 id
