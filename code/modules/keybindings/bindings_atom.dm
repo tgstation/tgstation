@@ -18,9 +18,11 @@
 	if(user && movement_dir) //If we're not moving, don't compensate, as byond will auto-fill dir otherwise
 		movement_dir = turn(movement_dir, -dir2angle(user.dir)) //By doing this we ensure that our input direction is offset by the client (camera) direction
 
+	if(!movement_dir)
+		return NONE
+
 	if(user?.movement_locked)
 		keybind_face_direction(movement_dir)
 	else
 		user?.Move(get_step(src, movement_dir), movement_dir)
-
-	return !!movement_dir //true if there was actually any player input
+		return !!movement_dir //true if there was actually any player input
