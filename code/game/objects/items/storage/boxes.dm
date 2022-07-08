@@ -193,6 +193,7 @@
 	foldable = null
 	mask_type = null
 
+// Mime survival box
 /obj/item/storage/box/survival/hug/black
 	icon_state = "hugbox_black"
 	illustration = "heart_black"
