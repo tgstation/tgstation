@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Dashes such as the Heirophant staff and Ninja sword should no longer permanently break on rare occasions."

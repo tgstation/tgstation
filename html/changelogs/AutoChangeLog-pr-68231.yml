@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - qol: "Sign Language users now have a unique speech indicator as well as a visual indicator of the tone of their message, making it easier to communicate both with and as a sign language user."
