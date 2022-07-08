@@ -88,15 +88,3 @@
 		user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
 		target.wash(cleaning_strength)
 	on_cleaned_callback?.Invoke(source, target, user, clean_target)
-
-/**
- * Starts cleaning something by sending the COMSIG_START_CLEANING signal.
- *
- * Arguments
- * * source the datum to send the signal from
- * * target the thing being cleaned
- * * user the person doing the cleaning
- * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
- */
-/atom/proc/start_cleaning(datum/source, atom/target, mob/living/user, clean_target = TRUE)
-	SEND_SIGNAL(source, COMSIG_START_CLEANING, target, user, clean_target)
