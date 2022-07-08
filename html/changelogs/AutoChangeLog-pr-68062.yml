@@ -1,4 +1,0 @@
-author: "Salex08"
-delete-after: True
-changes: 
-  - bugfix: "blacklists placeholder food items in the random food generator which caused error sprites appearing"

@@ -71,7 +71,7 @@
  *
  * If we, or the item we're located in, is subject to the charge spell, gain some charge back
  */
-/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/charge/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
 	// This shouldn't be running if we're not being held by a mob,

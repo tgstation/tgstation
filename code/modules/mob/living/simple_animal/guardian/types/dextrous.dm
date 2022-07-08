@@ -58,6 +58,16 @@
 			return TRUE
 	..()
 
+/mob/living/simple_animal/hostile/guardian/dextrous/get_item_by_slot(slot_id)
+	if(slot_id == ITEM_SLOT_DEX_STORAGE)
+		return internal_storage
+	return ..()
+
+/mob/living/simple_animal/hostile/guardian/dextrous/get_slot_by_item(obj/item/looking_for)
+	if(internal_storage == looking_for)
+		return ITEM_SLOT_DEX_STORAGE
+	return ..()
+
 /mob/living/simple_animal/hostile/guardian/dextrous/equip_to_slot(obj/item/I, slot)
 	if(!..())
 		return

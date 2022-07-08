@@ -369,7 +369,7 @@
 /obj/projectile/magic/sapping/on_hit(mob/living/target)
 	. = ..()
 	if(isliving(target))
-		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/sapped)
+		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, REF(src), /datum/mood_event/sapped)
 
 /obj/projectile/magic/necropotence
 	name = "bolt of necropotence"
@@ -377,20 +377,16 @@
 
 /obj/projectile/magic/necropotence/on_hit(mob/living/target)
 	. = ..()
-	if(isliving(target))
-		if(!target.mind)
-			return
+	if(!isliving(target))
+		return
 
-		to_chat(target, span_danger("Your body feels drained and there is a burning pain in your chest."))
-		target.maxHealth -= 20
-		target.health = min(target.health, target.maxHealth)
-		if(target.maxHealth <= 0)
-			to_chat(target, span_userdanger("Your weakened soul is completely consumed by the [src]!"))
-			return
-		for(var/obj/effect/proc_holder/spell/spell in target.mind.spell_list)
-			spell.charge_counter = spell.charge_max
-			spell.recharging = FALSE
-			spell.update_appearance()
+	// Performs a soul tap on living targets hit.
+	// Takes away max health, but refreshes their spell cooldowns (if any)
+	var/datum/action/cooldown/spell/tap/tap = new(src)
+	if(tap.is_valid_target(target))
+		tap.cast(target)
+
+	qdel(tap)
 
 /obj/projectile/magic/wipe
 	name = "bolt of possession"
@@ -435,17 +431,61 @@
 		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))
 		qdel(trauma)
 
-/// Gives magic projectiles a 3x3 Area of Effect range that will bump into any nearby mobs
+/// Gives magic projectiles an area of effect radius that will bump into any nearby mobs
 /obj/projectile/magic/aoe
-	name = "Area Bolt"
-	desc = "What the fuck does this do?!"
+	damage = 0
+
+	/// The AOE radius that the projectile will trigger on people.
+	var/trigger_range = 1
+	/// Whether our projectile will only be able to hit the original target / clicked on atom
+	var/can_only_hit_target = FALSE
+
+	/// Whether our projectile leaves a trail behind it  as it moves.
+	var/trail = FALSE
+	/// The duration of the trail before deleting.
+	var/trail_lifespan = 0 SECONDS
+	/// The icon the trail uses.
+	var/trail_icon = 'icons/obj/wizard.dmi'
+	/// The icon state the trail uses.
+	var/trail_icon_state = "trail"
 
 /obj/projectile/magic/aoe/Range()
-	for(var/mob/living/target in range(1, get_turf(src)))
-		if(target.stat != DEAD && target != firer)
-			return Bump(target)
-	..()
+	if(trigger_range >= 1)
+		for(var/mob/living/nearby_guy in range(trigger_range, get_turf(src)))
+			if(nearby_guy.stat == DEAD)
+				continue
+			if(nearby_guy == firer)
+				continue
+			// Bump handles anti-magic checks for us, conveniently.
+			return Bump(nearby_guy)
 
+	return ..()
+
+/obj/projectile/magic/aoe/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
+	if(can_only_hit_target && target != original)
+		return FALSE
+	return ..()
+
+/obj/projectile/magic/aoe/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(trail)
+		create_trail()
+
+/// Creates and handles the trail that follows the projectile.
+/obj/projectile/magic/aoe/proc/create_trail()
+	if(!trajectory)
+		return
+
+	var/datum/point/vector/previous = trajectory.return_vector_after_increments(1, -1)
+	var/obj/effect/overlay/trail = new /obj/effect/overlay(previous.return_turf())
+	trail.pixel_x = previous.return_px()
+	trail.pixel_y = previous.return_py()
+	trail.icon = trail_icon
+	trail.icon_state = trail_icon_state
+	//might be changed to temp overlay
+	trail.set_density(FALSE)
+	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	QDEL_IN(trail, trail_lifespan)
 
 /obj/projectile/magic/aoe/lightning
 	name = "lightning bolt"
@@ -455,29 +495,32 @@
 	nodamage = FALSE
 	speed = 0.3
 
+	/// The power of the zap itself when it electrocutes someone
 	var/zap_power = 20000
+	/// The range of the zap itself when it electrocutes someone
 	var/zap_range = 15
+	/// The flags of the zap itself when it electrocutes someone
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
-	var/chain
-	var/mob/living/caster
+	/// A reference to the chain beam between the caster and the projectile
+	var/datum/beam/chain
 
 /obj/projectile/magic/aoe/lightning/fire(setAngle)
-	if(caster)
-		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]")
-	..()
+	if(firer)
+		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]")
+	return ..()
 
 /obj/projectile/magic/aoe/lightning/on_hit(target)
 	. = ..()
 	tesla_zap(src, zap_range, zap_power, zap_flags)
 
+/obj/projectile/magic/aoe/lightning/Destroy()
+	QDEL_NULL(chain)
+	return ..()
+
 /obj/projectile/magic/aoe/lightning/no_zap
 	zap_power = 10000
 	zap_range = 4
 	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
-
-/obj/projectile/magic/aoe/lightning/Destroy()
-	qdel(chain)
-	. = ..()
 
 /obj/projectile/magic/fireball
 	name = "bolt of fireball"
@@ -486,20 +529,82 @@
 	damage_type = BRUTE
 	nodamage = FALSE
 
-	//explosion values
+	/// Heavy explosion range of the fireball
 	var/exp_heavy = 0
+	/// Light explosion range of the fireball
 	var/exp_light = 2
-	var/exp_flash = 3
+	/// Fire radius of the fireball
 	var/exp_fire = 2
+	/// Flash radius of the fireball
+	var/exp_flash = 3
 
-/obj/projectile/magic/fireball/on_hit(mob/living/target)
+/obj/projectile/magic/fireball/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
-	if(ismob(target))
-		//between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
-		target.take_overall_damage(0, 10)
+	if(isliving(target))
+		var/mob/living/mob_target = target
+		// between this 10 burn, the 10 brute, the explosion brute, and the onfire burn,
+		// you are at about 65 damage if you stop drop and roll immediately
+		mob_target.take_overall_damage(burn = 10)
 
-	var/turf/T = get_turf(target)
-	explosion(T, devastation_range = -1, heavy_impact_range = exp_heavy, light_impact_range = exp_light, flame_range = exp_fire, flash_range = exp_flash, adminlog = FALSE, explosion_cause = src)
+	var/turf/target_turf = get_turf(target)
+
+	explosion(
+		target_turf,
+		devastation_range = -1,
+		heavy_impact_range = exp_heavy,
+		light_impact_range = exp_light,
+		flame_range = exp_fire,
+		flash_range = exp_flash,
+		adminlog = FALSE,
+		explosion_cause = src,
+	)
+
+/obj/projectile/magic/aoe/magic_missile
+	name = "magic missile"
+	icon_state = "magicm"
+	range = 20
+	speed = 5
+	trigger_range = 0
+	can_only_hit_target = TRUE
+	nodamage = FALSE
+	paralyze = 6 SECONDS
+	hitsound = 'sound/magic/mm_hit.ogg'
+
+	trail = TRUE
+	trail_lifespan = 0.5 SECONDS
+	trail_icon_state = "magicmd"
+
+/obj/projectile/magic/aoe/magic_missile/lesser
+	color = "red" //Looks more culty this way
+	range = 10
+
+/obj/projectile/magic/aoe/juggernaut
+	name = "Gauntlet Echo"
+	icon_state = "cultfist"
+	alpha = 180
+	damage = 30
+	damage_type = BRUTE
+	knockdown = 50
+	hitsound = 'sound/weapons/punch3.ogg'
+	trigger_range = 0
+	antimagic_flags = MAGIC_RESISTANCE_HOLY
+	ignored_factions = list("cult")
+	range = 15
+	speed = 7
+
+/obj/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
+	. = ..()
+	var/turf/target_turf = get_turf(src)
+	playsound(target_turf, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
+	new /obj/effect/temp_visual/cult/sac(target_turf)
+	for(var/obj/adjacent_object in range(1, src))
+		if(!adjacent_object.density)
+			continue
+		if(istype(adjacent_object, /obj/structure/destructible/cult))
+			continue
+
+		adjacent_object.take_damage(90, BRUTE, MELEE, 0)
+		new /obj/effect/temp_visual/cult/turf/floor(get_turf(adjacent_object))
 
 //still magic related, but a different path
 
