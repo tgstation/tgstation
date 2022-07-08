@@ -96,7 +96,7 @@ GLOBAL_PROTECT(lua_usr)
 	var/list/result = call_function(arglist(args))
 	log_result(result, verbose = FALSE)
 	if(length(result))
-		if(islist(result["param"] && length(result["param"])))
+		if(islist(result["param"]) && length(result["param"]))
 			return result["param"][1]
 
 /datum/lua_state/proc/awaken()
