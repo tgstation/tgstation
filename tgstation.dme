@@ -4386,7 +4386,6 @@
 #include "code\modules\tgui\states\not_incapacitated.dm"
 #include "code\modules\tgui\states\notcontained.dm"
 #include "code\modules\tgui\states\observer.dm"
-#include "code\modules\tgui\states\paicard.dm"
 #include "code\modules\tgui\states\physical.dm"
 #include "code\modules\tgui\states\reverse_contained.dm"
 #include "code\modules\tgui\states\self.dm"

@@ -15,37 +15,20 @@
 
 	/// Spam alert prevention
 	var/alert_cooldown
-	/// If the pai_card is slotted in a PDA
-	var/slotted = FALSE
+	/// The emotion icon displayed.
+	var/emotion_icon = "off"
 	/// Any pAI personalities inserted
 	var/mob/living/silicon/pai/pai
-	///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
-	var/emotion_icon = "off"
 	/// Prevents a crew member from hitting "request pAI" repeatedly
 	var/request_spam = FALSE
+	/// If the pai_card is slotted in a PDA
+	var/slotted = FALSE
 
-/obj/item/pai_card/Initialize(mapload)
-	SSpai.pai_card_list += src
-	. = ..()
-	update_appearance()
-
-/obj/item/pai_card/vv_edit_var(vname, vval)
-	. = ..()
-	if(vname == NAMEOF(src, emotion_icon))
-		update_appearance()
-
-/obj/item/pai_card/handle_atom_del(atom/thing)
-	if(thing == pai) //double check /mob/living/silicon/pai/Destroy() if you change these.
-		pai = null
-		emotion_icon = initial(emotion_icon)
-		update_appearance()
-	return ..()
-
-/obj/item/pai_card/update_overlays()
-	. = ..()
-	. += "pai-[emotion_icon]"
-	if(pai?.hacking_cable)
-		. += "[initial(icon_state)]-connector"
+/obj/item/pai_card/attack_self(mob/user)
+	if (!in_range(src, user))
+		return
+	user.set_machine(src)
+	ui_interact(user)
 
 /obj/item/pai_card/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
@@ -54,23 +37,40 @@
 		QDEL_NULL(pai)
 	return ..()
 
-/obj/item/pai_card/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_they()] \
-		can't keep living without real human intimacy!"))
-	return OXYLOSS
-
-/obj/item/pai_card/attack_self(mob/user)
-	if (!in_range(src, user))
-		return
-	user.set_machine(src)
-	ui_interact(user)
-
 /obj/item/pai_card/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(pai && !pai.holoform)
 		pai.emp_act(severity)
+
+/obj/item/pai_card/handle_atom_del(atom/thing)
+	if(thing == pai) //double check /mob/living/silicon/pai/Destroy() if you change these.
+		pai = null
+		emotion_icon = initial(emotion_icon)
+		update_appearance()
+	return ..()
+
+/obj/item/pai_card/Initialize(mapload)
+	SSpai.pai_card_list += src
+	. = ..()
+	update_appearance()
+
+/obj/item/pai_card/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_they()] \
+		can't keep living without real human intimacy!"))
+	return OXYLOSS
+
+/obj/item/pai_card/update_overlays()
+	. = ..()
+	. += "pai-[emotion_icon]"
+	if(pai?.hacking_cable)
+		. += "[initial(icon_state)]-connector"
+
+/obj/item/pai_card/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, emotion_icon))
+		update_appearance()
 
 /obj/item/pai_card/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -79,8 +79,12 @@
 		ui = new(user, src, "PaiCard")
 		ui.open()
 
-/obj/item/pai_card/ui_state(mob/user)
-	return GLOB.paicard_state
+/obj/item/pai_card/ui_status(mob/user)
+	if(!slotted && (src in user))
+		return UI_INTERACTIVE
+	if(slotted && (src.loc in user))
+		return UI_INTERACTIVE
+	return ..()
 
 /obj/item/pai_card/ui_data(mob/user)
 	. = ..()
@@ -316,7 +320,7 @@
 	transmit_holder = (transmitting ? pai.can_transmit : pai.can_receive) //recycling can be fun!
 	to_chat(user, span_notice("You [transmit_holder ? "enable" : "disable"] your pAI's \
 		[transmitting ? "outgoing" : "incoming"] radio transmissions!"))
-	to_chat(pai, span_notice("Your owner has [transmit_holder ? "enabled" : "disabled"] \
+	to_chat(pai, span_warning("Your owner has [transmit_holder ? "enabled" : "disabled"] \
 		your [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
 	return TRUE
 

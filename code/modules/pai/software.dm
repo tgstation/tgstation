@@ -44,6 +44,7 @@
 			return TRUE
 		if("buy")
 			buy_software(usr, params["selection"])
+			ui.send_full_update()
 			return TRUE
 		if("camera_zoom")
 			check_if_installed("camera zoom")
@@ -55,7 +56,7 @@
 			change_image(usr)
 			return TRUE
 		if("check_dna")
-			check_dna(usr, card.loc)
+			check_dna(usr)
 			return TRUE
 		if("crew_manifest")
 			check_if_installed("crew manifest")
@@ -178,8 +179,9 @@
  * @param master {living/carbon} The holder of the pAI.
  * @return {boolean} TRUE if a sample was taken, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/check_dna(mob/living/silicon/pai/user, mob/living/carbon/holder)
-	if(!istype(holder))
+/mob/living/silicon/pai/proc/check_dna(mob/living/silicon/pai/user)
+	var/mob/living/carbon/holder = user.loc
+	if(!iscarbon(holder))
 		to_chat(user, span_warning("You must be in someone's hands to do this!"))
 		return FALSE
 	to_chat(user, span_notice("Requesting a DNA sample."))
