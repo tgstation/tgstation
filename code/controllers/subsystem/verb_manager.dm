@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(verb_manager)
  *
  * returns TRUE if the queuing was successful, FALSE otherwise.
  */
-/proc/_queue_verb(datum/callback/verb_callback/incoming_callback, tick_check, datum/controller/subsystem/verb_manager/subsystem_to_use, ...)
+/proc/_queue_verb(datum/callback/verb_callback/incoming_callback, tick_check, datum/controller/subsystem/verb_manager/subsystem_to_use = SSverb_manager, ...)
 	if(TICK_USAGE < tick_check \
 	|| QDELETED(incoming_callback) \
 	|| QDELETED(incoming_callback.object) \
@@ -76,7 +76,6 @@ SUBSYSTEM_DEF(verb_manager)
 	|| QDELING(usr))
 		return FALSE
 
-	subsystem_to_use = subsystem_to_use || SSverb_manager
 	if(!istype(subsystem_to_use))
 		return FALSE
 
