@@ -141,6 +141,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/cleaner, 0.1 SECONDS)
 
 	chosen_name = name
 	get_targets()
@@ -350,13 +351,9 @@
 	if(ismopable(A))
 		mode = BOT_CLEANING
 		update_icon_state()
-
 		var/turf/T = get_turf(A)
-		if(do_after(src, 1, target = T))
-			T.wash(CLEAN_SCRUB)
-			visible_message(span_notice("[src] cleans \the [T]."))
-			target = null
-
+		start_cleaning(src, T, src)
+		target = null
 		mode = BOT_IDLE
 		update_icon_state()
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))

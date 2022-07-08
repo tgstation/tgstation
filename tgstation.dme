@@ -743,6 +743,7 @@
 #include "code\datums\components\butchering.dm"
 #include "code\datums\components\caltrop.dm"
 #include "code\datums\components\chasm.dm"
+#include "code\datums\components\cleaner.dm"
 #include "code\datums\components\clickbox.dm"
 #include "code\datums\components\clothing_fov_visor.dm"
 #include "code\datums\components\codeword_hearing.dm"
