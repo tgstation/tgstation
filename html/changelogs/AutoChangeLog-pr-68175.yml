@@ -1,0 +1,5 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - balance: "pumps and scrubbers have their heat and pressure limit buffed to be the same as unshielded cans."
+  - balance: "cans have their release pressure buffed to 2533kpa."
