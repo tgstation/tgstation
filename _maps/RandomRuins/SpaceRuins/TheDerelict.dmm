@@ -253,44 +253,12 @@
 /obj/item/paper/crumpled,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
-"dp" = (
-/obj/machinery/door/airlock/public/glass,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
-"dq" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
-"dr" = (
-/turf/closed/wall/r_wall,
-/area/ruin/space/derelict/singularity_engine)
-"ds" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/table,
-/obj/item/paper/fluff/ruins/thederelict/equipment,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/gravity_generator)
 "dt" = (
 /obj/structure/frame/machine{
 	anchored = 1
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/bar)
-"du" = (
-/obj/machinery/light/small/directional/east,
-/obj/item/stock_parts/matter_bin{
-	pixel_x = -10;
-	pixel_y = 5
-	},
-/obj/item/stock_parts/matter_bin{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/stock_parts/matter_bin,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/gravity_generator)
 "dv" = (
 /obj/structure/cable,
 /obj/structure/rack,
@@ -299,60 +267,10 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
-"dw" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
-"dx" = (
-/obj/machinery/door/window,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
-"dy" = (
-/obj/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
-"dz" = (
-/turf/closed/wall,
-/area/ruin/space/derelict/bridge)
-"dA" = (
-/obj/structure/sign/warning/electric_shock,
-/turf/closed/wall/r_wall,
-/area/ruin/space/derelict/singularity_engine)
-"dB" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/ruin/space/derelict/singularity_engine)
-"dC" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engineering Access"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/gravity_generator)
-"dD" = (
-/obj/structure/sign/warning/secure_area{
-	name = "ENGINEERING ACCESS"
-	},
-/turf/closed/wall/r_wall,
-/area/ruin/space/derelict/gravity_generator)
 "dE" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)
-"dF" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
-"dG" = (
-/obj/structure/frame/computer,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
 "dH" = (
 /obj/structure/table_frame,
 /turf/open/floor/plating/airless,
@@ -362,39 +280,6 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/bar)
-"dJ" = (
-/obj/machinery/computer/security,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"dK" = (
-/obj/structure/table,
-/obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"dL" = (
-/obj/structure/table,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"dM" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"dN" = (
-/obj/item/grenade/empgrenade,
-/obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
 "dO" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Court Room Public Access"
@@ -406,11 +291,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/court_hall)
-"dR" = (
-/obj/machinery/light/small/directional/north,
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
 "dS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
@@ -418,13 +298,6 @@
 "dT" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/hallway/starboard_bow)
-"dV" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/gravity_generator)
-"dW" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
 "dY" = (
 /obj/machinery/door/window/left/directional/south{
 	name = "Bridge Access"
@@ -432,143 +305,22 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/command/bridge_hall)
-"dZ" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"ea" = (
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"eb" = (
-/turf/open/floor/plating,
-/area/ruin/space/derelict/bridge)
-"ec" = (
-/obj/structure/table,
-/obj/item/paper/crumpled,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"ed" = (
-/obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"ee" = (
-/obj/structure/window/reinforced,
-/obj/machinery/portable_atmospherics/canister/plasma,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
 "eh" = (
 /obj/item/paper/fluff/ruins/thederelict/syndie_mission,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
-"ei" = (
-/obj/structure/window/reinforced,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
-"ej" = (
-/turf/open/floor/iron,
-/area/ruin/space/derelict/gravity_generator)
-"el" = (
-/turf/closed/wall,
-/area/ruin/space/derelict/gravity_generator)
-"em" = (
-/obj/machinery/light/small/directional/west,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
-"en" = (
-/obj/machinery/power/emitter{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"eo" = (
-/obj/machinery/field/generator,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"eq" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
-"et" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
 "eu" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/vending_restock,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/tool_storage)
-"ev" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"ew" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 6
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"ex" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"ey" = (
-/obj/structure/noticeboard,
-/turf/closed/wall/r_wall,
-/area/ruin/space/derelict/singularity_engine)
-"ez" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
 "eA" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Air Bridge Access"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
-"eB" = (
-/obj/machinery/door/window/left/directional/east{
-	name = "Heads of Staff";
-	req_access = list("command")
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
-"eC" = (
-/obj/structure/table,
-/obj/item/pai_card,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"eD" = (
-/obj/structure/chair/stool/directional/west,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"eE" = (
-/obj/structure/table,
-/obj/item/stock_parts/cell,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"eF" = (
-/obj/item/storage/toolbox/syndicate,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
 "eG" = (
 /obj/structure/frame/machine,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -578,17 +330,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"eJ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
-"eK" = (
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
 "eL" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
@@ -602,21 +343,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"eN" = (
-/obj/item/paper/fluff/ruins/thederelict/nukie_objectives,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
-"eO" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/space/derelict/bridge/access)
-"eP" = (
-/obj/structure/table,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
 "eQ" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/chair{
@@ -624,52 +350,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/hallway/starboard_bow)
-"eS" = (
-/obj/structure/chair,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"eT" = (
-/obj/structure/table,
-/obj/item/screwdriver,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"eU" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
 "eV" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
-"eW" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 9
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"eX" = (
-/obj/item/shard,
-/obj/structure/grille/broken,
-/obj/effect/decal/remains/human{
-	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
-	name = "Syndicate agent remains"
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
-"eY" = (
-/obj/item/clothing/suit/space/eva,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"eZ" = (
-/obj/item/stack/rods,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
 "fa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -680,144 +365,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/eva)
-"fb" = (
-/obj/structure/grille,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fc" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fd" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 5
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fe" = (
-/obj/structure/table,
-/obj/item/rack_parts,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"ff" = (
-/obj/structure/window/fulltile,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
 "fg" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/singulo)
-"fh" = (
-/obj/machinery/light/small/directional/south,
-/obj/machinery/computer/terminal/derelict/bridge{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge)
-"fj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fk" = (
-/obj/item/clothing/head/helmet/space/eva,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fl" = (
-/obj/item/shard{
-	icon_state = "small"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fm" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fn" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fo" = (
-/turf/closed/wall/r_wall,
-/area/ruin/space/derelict/bridge)
-"fp" = (
-/obj/machinery/door/window{
-	name = "Captain's Quarters";
-	req_access = list("captain")
-	},
-/obj/structure/grille,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/bridge)
-"fq" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fr" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/west,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fs" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"ft" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fw" = (
-/obj/effect/mob_spawn/ghost_role/drone/derelict,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
-"fx" = (
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
-"fy" = (
-/obj/structure/table,
-/obj/item/assembly/flash/handheld,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
-"fz" = (
-/obj/structure/table,
-/obj/machinery/light/small/directional/north,
-/obj/item/electronics/airlock,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
-"fA" = (
-/obj/structure/table,
-/obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/obj/item/stock_parts/matter_bin,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
-"fB" = (
-/obj/structure/table,
-/obj/item/stock_parts/cell/high,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
 "fC" = (
 /obj/structure/chair{
 	dir = 4
@@ -828,19 +379,6 @@
 /obj/structure/chair,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
-"fE" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fF" = (
-/obj/item/storage/toolbox/electrical{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
 "fH" = (
 /obj/machinery/door/morgue{
 	name = "Chaplains Office"
@@ -848,13 +386,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/service/chapel_office)
-"fI" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 10
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
 "fJ" = (
 /obj/structure/rack,
 /obj/item/circuitboard/computer/solar_control{
@@ -863,11 +394,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
-"fK" = (
-/obj/machinery/door/window,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
 "fL" = (
 /obj/machinery/door/window/left/directional/west{
 	name = "Cell 2";
@@ -876,106 +402,23 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/cell)
-"fN" = (
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
 "fO" = (
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/cafe)
-"fP" = (
-/obj/structure/grille,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
 "fQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"fR" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Tech Storage"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
-"fS" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/bridge/access)
-"fT" = (
-/obj/structure/cable,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
 "fU" = (
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
-"fV" = (
-/obj/item/screwdriver,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fW" = (
-/obj/item/stack/rods,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fX" = (
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"fZ" = (
-/turf/closed/wall,
-/area/ruin/space/derelict/hallway/primary)
-"gb" = (
-/obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
-"gc" = (
-/obj/structure/cable,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
-"gd" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/bridge/access)
 "ge" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/tool_storage)
-"gg" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
-"gh" = (
-/obj/item/stack/ore/slag,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gi" = (
-/obj/item/shard,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gk" = (
-/turf/closed/wall/r_wall,
-/area/ruin/space/derelict/hallway/primary)
-"gl" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/hallway/primary)
 "gm" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Armory"
@@ -984,46 +427,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
-"gn" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
-"go" = (
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
-"gp" = (
-/obj/structure/window/fulltile,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
-"gq" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/bridge/access)
 "gr" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)
-"gs" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gt" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 9
-	},
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gw" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
 "gx" = (
 /obj/machinery/computer/monitor/secret{
 	dir = 4
@@ -1048,34 +455,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
-"gA" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
 "gB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
-"gC" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/unpowered/no_grav)
-"gD" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/unpowered/no_grav)
-"gE" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gF" = (
-/obj/machinery/door/window,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/hallway/primary)
 "gG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
@@ -1085,38 +470,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
-"gI" = (
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gJ" = (
-/obj/structure/grille/broken,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gK" = (
-/obj/machinery/light/small/directional/east,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gL" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/hallway/primary)
-"gM" = (
-/obj/item/crowbar,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
-"gN" = (
-/obj/structure/grille,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
 "gO" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
-<<<<<<< HEAD/area/ruin/space/derelict/bridge/access,
-/turf/open/floor/plating)
+/turf/open/floor/plating,
+/area/ruin/space/ks13/command/bridge)
 "gQ" = (
 /obj/item/stock_parts/matter_bin,
 /obj/structure/lattice,

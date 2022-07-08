@@ -2,30 +2,22 @@ import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, NoticeBox, Section, Stack } from 'tgui/components';
 import { SOFTWARE_DESC } from '../constants';
-import { Available, Data } from '../types';
+import { Data } from '../types';
 import { RecordsDisplay } from './Records';
 
-/** Renders two sections: A section of buttons and
+/**
+ * Renders two sections: A section of buttons and
  * another section that displays the selected installed
  * software info.
  */
 export const InstalledDisplay = (props, context) => {
-  const [installSelected, setInstallSelected] = useLocalState(
-    context,
-    'software',
-    ''
-  );
-  const onInstallHandler = (software: string) => {
-    setInstallSelected(software);
-  };
-
   return (
     <Stack fill vertical>
       <Stack.Item grow>
-        <InstalledSoftware onInstallClick={onInstallHandler} />
+        <InstalledSoftware />
       </Stack.Item>
       <Stack.Item grow={2}>
-        <InstalledInfo software={installSelected} />
+        <InstalledInfo />
       </Stack.Item>
     </Stack>
   );
@@ -35,16 +27,20 @@ export const InstalledDisplay = (props, context) => {
 const InstalledSoftware = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { installed = [] } = data;
-  const { onInstallClick } = props;
+  const [currentSelection, setCurrentSelection] = useLocalState(
+    context,
+    'software',
+    ''
+  );
 
   return (
     <Section fill scrollable title="Installed Software">
       {!installed.length ? (
         <NoticeBox>Nothing installed!</NoticeBox>
       ) : (
-        installed.map((software) => {
+        installed.map((software, index) => {
           return (
-            <Button key={software} onClick={() => onInstallClick(software)}>
+            <Button key={index} onClick={() => setCurrentSelection(software)}>
               {capitalize(software)}
             </Button>
           );
@@ -55,25 +51,29 @@ const InstalledSoftware = (props, context) => {
 };
 
 /** Software info for buttons clicked. */
-const InstalledInfo = (props: { software: Available['name'] }) => {
-  const { software } = props;
+const InstalledInfo = (props, context) => {
+  const [currentSelection, setCurrentSelection] = useLocalState(
+    context,
+    'software',
+    ''
+  );
+  const title = !currentSelection
+    ? 'Select a Program'
+    : capitalize(currentSelection);
 
   /** Records get their own section here */
-  if (software === 'medical records') {
+  if (currentSelection === 'medical records') {
     return <RecordsDisplay record_type="medical" />;
-  } else if (software === 'security records') {
+  } else if (currentSelection === 'security records') {
     return <RecordsDisplay record_type="security" />;
   } else {
     return (
-      <Section
-        fill
-        scrollable
-        title={!software ? 'Select a Program' : capitalize(software)}>
-        {software && (
+      <Section fill scrollable title={title}>
+        {currentSelection && (
           <Stack fill vertical>
-            <Stack.Item>{SOFTWARE_DESC[software] || ''}</Stack.Item>
+            <Stack.Item>{SOFTWARE_DESC[currentSelection] || ''}</Stack.Item>
             <Stack.Item grow>
-              <SoftwareButtons software={software} />
+              <SoftwareButtons />
             </Stack.Item>
           </Stack>
         )}
@@ -82,16 +82,21 @@ const InstalledInfo = (props: { software: Available['name'] }) => {
   }
 };
 
-/** Once a software is selected, generates custom buttons or a default
+/**
+ * Once a software is selected, generates custom buttons or a default
  * power toggle.
  */
 const SoftwareButtons = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { door_jack, languages, pda } = data;
-  const { software = '' } = props;
-  const actString: string = software?.toLowerCase().replace(/ /g, '_');
+  const [currentSelection, setCurrentSelection] = useLocalState(
+    context,
+    'software',
+    ''
+  );
+  const actString: string = currentSelection?.toLowerCase().replace(/ /g, '_');
 
-  switch (software) {
+  switch (currentSelection) {
     case 'digital messenger':
       return (
         <>
@@ -139,27 +144,6 @@ const SoftwareButtons = (props, context) => {
           </Button>
         </>
       );
-    case 'host scan': {
-      return (
-        <>
-          <Button
-            icon="search"
-            onClick={() => act('host_scan', { scan: 'scan' })}>
-            Host Scan
-          </Button>
-          <Button
-            icon="cog"
-            onClick={() => act('host_scan', { scan: 'wounds' })}>
-            Toggle Wounds
-          </Button>
-          <Button
-            icon="cog"
-            onClick={() => act('host_scan', { scan: 'limbs' })}>
-            Toggle Limbs
-          </Button>
-        </>
-      );
-    }
     case 'universal translator':
       return (
         <Button

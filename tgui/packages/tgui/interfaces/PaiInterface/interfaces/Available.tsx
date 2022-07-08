@@ -1,3 +1,4 @@
+import { capitalize } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, ProgressBar, Section, Table, Tooltip } from 'tgui/components';
 import { SOFTWARE_DESC } from '../constants';
@@ -78,9 +79,7 @@ const AvailableRow = (props, context) => {
   return (
     <Table.Row className="candystripe">
       <Table.Cell collapsible>
-        <Box color="label">
-          {software.name.replace(/^\w/, (c) => c.toUpperCase())}
-        </Box>
+        <Box color="label">{capitalize(software)}</Box>
       </Table.Cell>
       <Table.Cell collapsible>
         <Box color={ram < software.value && 'bad'} textAlign="right">
@@ -97,7 +96,8 @@ const AvailableRow = (props, context) => {
           mb={0.5}
           disabled={ram < software.value || purchased}
           onClick={() => act('buy', { selection: software.name })}
-          tooltip={SOFTWARE_DESC[software.name] || ''}>
+          tooltip={SOFTWARE_DESC[software.name] || ''}
+          tooltipPosition="bottom-start">
           <Icon ml={1} mr={-2} name="download" />
         </Button>
       </Table.Cell>
