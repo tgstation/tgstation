@@ -57,7 +57,7 @@
 
 /obj/item/clothing/glasses/hud/civ
 	name = "civilian HUD"
-	desc = "A heads-up display that shows only the current job ID of the user."
+	desc = "A heads-up display that shows the job trims of those the user looks at."
 	icon_state = "civ"
 	hud_type = DATA_HUD_SECURITY_BASIC
 	hud_trait = TRAIT_CIVILIAN_HUD
