@@ -508,9 +508,9 @@
 	set name = "Examine"
 	set category = "IC"
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/finish_examinate, examinify))
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/run_examinate, examinify))
 
-/mob/proc/finish_examinate(atom/examinify)
+/mob/proc/run_examinate(atom/examinify)
 
 	if(isturf(examinify) && !(sight & SEE_TURFS) && !(examinify in view(client ? client.view : world.view, src)))
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
@@ -654,9 +654,9 @@
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/wrap_pointed, A))
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/_pointed, A))
 
-/mob/proc/wrap_pointed(atom/pointing_at)
+/mob/proc/_pointed(atom/pointing_at)
 	if(client && !(pointing_at in view(client.view, src)))
 		return FALSE
 

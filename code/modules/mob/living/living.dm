@@ -423,7 +423,7 @@
 
 	return ..()
 
-/mob/living/wrap_pointed(atom/pointing_at)
+/mob/living/_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
 	log_message("points at [pointing_at]", LOG_EMOTE)

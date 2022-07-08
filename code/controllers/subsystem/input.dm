@@ -61,7 +61,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	return TRUE
 
 ///stupid workaround for byond not recognizing the /atom/Click typepath for the queued click callbacks
-/atom/proc/wrap_Click(location, control, params)
+/atom/proc/_Click(location, control, params)
 	if(usr)
 		Click(location, control, params)
 

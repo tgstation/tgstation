@@ -685,7 +685,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.faction = list("neutral")
 	return TRUE
 
-/mob/dead/observer/wrap_pointed(atom/pointed_at)
+/mob/dead/observer/_pointed(atom/pointed_at)
 	if(!..())
 		return FALSE
 
