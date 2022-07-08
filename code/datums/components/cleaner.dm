@@ -98,5 +98,5 @@
  * * user the person doing the cleaning
  * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
  */
-/datum/proc/start_cleaning(datum/source, atom/target, mob/living/user, clean_target = TRUE)
+/atom/proc/start_cleaning(datum/source, atom/target, mob/living/user, clean_target = TRUE)
 	SEND_SIGNAL(source, COMSIG_START_CLEANING, target, user, clean_target)
