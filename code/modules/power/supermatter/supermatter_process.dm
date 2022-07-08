@@ -199,7 +199,7 @@
 				var/icon/causality_field = new/icon('icons/obj/supermatter.dmi', "causality_field", frame = rand(1,4))
 				var/causality_filter = filter(type="layer", icon = causality_field, flags = FILTER_OVERLAY)
 				var/icon/singulo = new/icon('icons/effects/96x96.dmi', "singularity_s3", frame = rand(1,8))
-				var/singulo_filter = filter(type="layer", icon = singulo, flags = FILTER_UNDERLAY)
+				var/singulo_filter = filter(type="layer", icon = singulo, flags = FILTER_OVERLAY)
 				filters_to_add |= list(causality_filter, singulo_filter)
 
 		if(TESLA_DELAMINATION)
