@@ -1815,6 +1815,7 @@
 #include "code\game\objects\structures\electricchair.dm"
 #include "code\game\objects\structures\extinguisher.dm"
 #include "code\game\objects\structures\false_walls.dm"
+#include "code\game\objects\structures\fans.dm"
 #include "code\game\objects\structures\fence.dm"
 #include "code\game\objects\structures\fireaxe.dm"
 #include "code\game\objects\structures\fireplace.dm"
