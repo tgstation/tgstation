@@ -1,0 +1,5 @@
+author: "unit0016"
+delete-after: True
+changes: 
+  - rscadd: "The SBC Starfury has been ever-so-slightly tweaked! Two of the shuttles are now where the gunnery bays used to be, and the rest of the differences are largely cosmetic. Largely."
+  - code_imp: "Survival pod fans have been split off into their own file."
