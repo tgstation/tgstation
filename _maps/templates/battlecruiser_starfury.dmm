@@ -2352,8 +2352,9 @@
 	},
 /area/shuttle/sbc_starfury)
 "hI" = (
-/obj/effect/spawner/random/trash/bucket,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/mopbucket,
+/obj/item/mop,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/sbc_starfury)
 "hJ" = (
@@ -2737,8 +2738,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/structure/mopbucket,
-/obj/item/mop,
+/obj/effect/spawner/random/trash/bucket,
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "ix" = (
@@ -4002,10 +4002,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/shuttle/sbc_starfury)
-"nc" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating,
-/area/shuttle/sbc_starfury)
 "ne" = (
 /obj/effect/turf_decal/tile/dark_red,
 /obj/effect/turf_decal/tile/red{
@@ -4014,9 +4010,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "ng" = (
-/obj/effect/turf_decal/tile/bar/diagonal_centre,
-/obj/structure/sign/warning/deathsposal/directional/west,
-/turf/open/floor/iron/dark/diagonal,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "nk" = (
 /obj/structure/table,
@@ -4149,13 +4147,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/shuttle/sbc_starfury)
-"pT" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "qb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4364,14 +4355,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/sbc_starfury)
-"vy" = (
-/obj/structure/chair/stool/bar/directional/south,
-/obj/effect/turf_decal/tile/bar/diagonal_centre,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/diagonal,
-/area/shuttle/sbc_starfury)
 "vC" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -4409,10 +4392,6 @@
 "vT" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/shuttle/sbc_starfury)
-"vW" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "wc" = (
 /obj/structure/rack,
@@ -5171,6 +5150,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
+"MB" = (
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/structure/sign/warning/deathsposal/directional/west,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/sbc_starfury)
 "MC" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/bot,
@@ -5351,6 +5335,14 @@
 	name = "Follows-The-Convention"
 	},
 /turf/open/floor/plating,
+/area/shuttle/sbc_starfury)
+"Pv" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
 /area/shuttle/sbc_starfury)
 "PF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -5832,6 +5824,10 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
+"Yi" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/sbc_starfury)
 "Yq" = (
 /obj/structure/closet/secure_closet/medical2{
 	req_access = list("syndicate")
@@ -5876,6 +5872,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
+/area/shuttle/sbc_starfury)
+"ZH" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "ZK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6121,7 +6121,7 @@ PY
 cH
 Aj
 av
-vW
+Yi
 eL
 ER
 aa
@@ -6213,9 +6213,9 @@ ae
 fz
 fK
 kx
-ng
+MB
 hf
-vy
+Pv
 id
 Tr
 ay
@@ -6460,7 +6460,7 @@ vk
 vk
 dN
 dU
-pT
+ng
 ae
 eE
 eE
@@ -8131,7 +8131,7 @@ Gs
 cH
 Aj
 eK
-nc
+ZH
 bm
 BX
 aa
