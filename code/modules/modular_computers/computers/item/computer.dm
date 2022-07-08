@@ -311,10 +311,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(all_components[MC_CARD] || inserted_pai)
 		// The order is that IDs get removed first before pAIs
 		context[SCREENTIP_CONTEXT_ALT_LMB] = all_components[MC_CARD] ? "Remove ID" : "Remove pAI" 
-	if(ssd)
+	if(all_components[MC_SDD])
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
 
-	if(ssd || all_components[MC_CARD] || inserted_pai)
+	if(all_components[MC_SDD] || all_components[MC_CARD] || inserted_pai)
 		return CONTEXTUAL_SCREENTIP_SET
 	else
 		return NONE
