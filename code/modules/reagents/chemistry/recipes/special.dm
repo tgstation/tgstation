@@ -1,32 +1,40 @@
 GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related food types
 GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
+#define VALID_RANDOM_RECIPE_REAGENT(chemical_flags) (chemical_flags & REAGENT_CAN_BE_SYNTHESIZED && !(chemical_flags & REAGENT_NO_RANDOM_RECIPE))
+
 /proc/build_reagents_to_food()
 	. = list()
 	for (var/type in subtypesof(/obj/item/reagent_containers/food))
 		var/obj/item/reagent_containers/food/item = new type()
-		for(var/r in item.list_reagents)
-			if (!.[r])
-				.[r] = list()
-			.[r] += type
+		for(var/datum/reagent/reagent as anything in item.list_reagents)
+			var/chem_flags = initial(reagent.chemical_flags)
+			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
+				continue
+			if (!.[reagent])
+				.[reagent] = list()
+			.[reagent] += type
 		qdel(item)
 	//dang plant snowflake
 	for (var/type in subtypesof(/obj/item/seeds))
 		var/obj/item/seeds/item = new type()
-		for(var/r in item.reagents_add)
-			if (!.[r])
-				.[r] = list()
-			.[r] += type
+		for(var/datum/reagent/reagent as anything in item.reagents_add)
+			var/chem_flags = initial(reagent.chemical_flags)
+			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
+				continue
+			if (!.[reagent])
+				.[reagent] = list()
+			.[reagent] += type
 		qdel(item)
 
 ///Just grab every craftable medicine you can think off
 /proc/build_medicine_reagents()
 	. = list()
 
-	for(var/A in subtypesof(/datum/reagent/medicine))
-		var/datum/reagent/R = A
-		if(initial(R.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
-			. += R
+	for(var/datum/reagent/reagent as anything in subtypesof(/datum/reagent/medicine))
+		var/chem_flags = initial(reagent.chemical_flags)
+		if(VALID_RANDOM_RECIPE_REAGENT(chem_flags))
+			. += reagent
 
 #define RNGCHEM_INPUT "input"
 #define RNGCHEM_CATALYSTS "catalysts"
@@ -182,6 +190,31 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			return null
 		.[pathR] = textreagents[R]
 
+/datum/chemical_reaction/randomized/proc/SaveOldRecipe()
+	var/recipe_data = list()
+
+	recipe_data["timestamp"] = created
+	recipe_data["required_reagents"] = required_reagents
+	recipe_data["required_catalysts"] = required_catalysts
+
+	recipe_data["is_cold_recipe"] = is_cold_recipe
+	recipe_data["required_temp"] = required_temp
+	recipe_data["optimal_temp"] = optimal_temp
+	recipe_data["overheat_temp"] = overheat_temp
+	recipe_data["thermic_constant"] = thermic_constant
+
+	recipe_data["optimal_ph_min"] = optimal_ph_min
+	recipe_data["optimal_ph_max"] = optimal_ph_max
+	recipe_data["determin_ph_range"] = determin_ph_range
+	recipe_data["H_ion_release"] = H_ion_release
+
+	recipe_data["purity_min"] = purity_min
+
+	recipe_data["results"] = results
+	recipe_data["required_container"] = required_container
+
+	return recipe_data
+
 /datum/chemical_reaction/randomized/proc/LoadOldRecipe(recipe_data)
 	created = text2num(recipe_data["timestamp"])
 
@@ -323,3 +356,5 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	dat += "."
 	info = dat.Join("")
 	update_appearance()
+
+#undef VALID_RANDOM_RECIPE_REAGENT

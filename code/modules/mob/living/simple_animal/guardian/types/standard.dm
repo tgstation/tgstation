@@ -16,7 +16,7 @@
 	set name = "Set Battlecry"
 	set category = "Guardian"
 	set desc = "Choose what you shout as you punch people."
-	var/input = stripped_input(src,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
+	var/input = tgui_input_text(src, "What do you want your battlecry to be?", "Battle Cry", max_length = 6)
 	if(input)
 		battlecry = input
 

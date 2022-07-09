@@ -35,7 +35,14 @@
 	// At the "normal" N2 power output (with max integrity), this is 0.7, which is enough to be stopped
 	// by the walls or the radation shutters.
 	// As integrity does down, rads go up.
-	var/threshold = (THRESHOLD_EQUATION_SLOPE * power_factor + 1) ** ((1 / integrity) ** INTEGRITY_EXPONENTIAL_DEGREE)
+	var/threshold
+	switch(integrity)
+		if(0)
+			threshold = power_factor ? 0 : 1
+		if(1)
+			threshold = (THRESHOLD_EQUATION_SLOPE * power_factor + 1)
+		else
+			threshold = (THRESHOLD_EQUATION_SLOPE * power_factor + 1) ** ((1 / integrity) ** INTEGRITY_EXPONENTIAL_DEGREE)
 
 	// Calculating chance is done entirely on integrity, so that actively delaminating SMs feel more dangerous
 	var/chance = (CHANCE_EQUATION_SLOPE * (1 - integrity)) + RADIATION_CHANCE_AT_FULL_INTEGRITY

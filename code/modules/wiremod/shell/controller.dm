@@ -59,7 +59,7 @@
 	if(!user.Adjacent(source))
 		return
 	source.balloon_alert(user, "clicked primary button")
-	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 	entity.set_output(user)
 	signal.set_output(COMPONENT_SIGNAL)
 
@@ -71,7 +71,7 @@
 	if(!user.Adjacent(source))
 		return
 	source.balloon_alert(user, "clicked alternate button")
-	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 	entity.set_output(user)
 	alt.set_output(COMPONENT_SIGNAL)
 
@@ -83,6 +83,6 @@
 	if(!user.Adjacent(source))
 		return
 	source.balloon_alert(user, "clicked extra button")
-	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 	entity.set_output(user)
 	right.set_output(COMPONENT_SIGNAL)

@@ -18,7 +18,7 @@
 /datum/round_event/electrical_storm/start()
 	var/list/epicentreList = list()
 
-	for(var/i=1, i <= lightsoutAmount, i++)
+	for(var/i in 1 to lightsoutAmount)
 		var/turf/T = find_safe_turf()
 		if(istype(T))
 			epicentreList += T

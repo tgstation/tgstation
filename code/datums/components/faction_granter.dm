@@ -46,7 +46,7 @@
 	if(used)
 		to_chat(user, span_warning("The power of [parent] has been used up!"))
 		return
-	if(user.mind?.holy_role >= holy_role_required)
+	if(user.mind?.holy_role < holy_role_required)
 		to_chat(user, span_warning("You are not holy enough to invoke the power of [parent]!"))
 		return
 

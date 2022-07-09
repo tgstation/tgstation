@@ -12,6 +12,8 @@
 #define PAINT_LARGE_HORIZONTAL 2
 #define PAINT_LARGE_HORIZONTAL_ICON 'icons/effects/96x32.dmi'
 
+#define AVAILABLE_SPRAYCAN_SPACE 8 // enough to fill one radial menu page
+
 /*
  * Crayons
  */
@@ -21,6 +23,7 @@
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
+	worn_icon_state = "crayon"
 
 	var/icon_capped
 	var/icon_uncapped
@@ -43,7 +46,7 @@
 	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
-	var/static/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
+	var/static/list/graffiti_large_h = list("yiffhell", "furrypride", "secborg", "paint")
 
 	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
 
@@ -75,6 +78,7 @@
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.add_atom_colour(paint_color)
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/Initialize(mapload)
@@ -85,13 +89,15 @@
 	drawtype = pick(all_drawables)
 
 	AddElement(/datum/element/venue_price, FOOD_PRICE_EXOTIC)
+	if(can_change_colour)
+		AddComponent(/datum/component/palette, AVAILABLE_SPRAYCAN_SPACE, paint_color)
 
 	refill()
 
-/obj/item/toy/crayon/examine(mob/user)
+/obj/item/toy/crayon/set_painting_tool_color(chosen_color)
 	. = ..()
-	if(can_change_colour)
-		. += span_notice("Ctrl-click [src] while it's on your person to quickly recolour it.")
+	paint_color = chosen_color
+	update_appearance()
 
 /obj/item/toy/crayon/proc/refill()
 	if(charges == -1)
@@ -160,12 +166,6 @@
 		is_capped = !is_capped
 		to_chat(user, span_notice("The cap on [src] is now [is_capped ? "on" : "off"]."))
 		update_appearance()
-
-/obj/item/toy/crayon/CtrlClick(mob/user)
-	if(can_change_colour && !isturf(loc) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
-		select_colour(user)
-	else
-		return ..()
 
 /obj/item/toy/crayon/proc/staticDrawables()
 
@@ -246,9 +246,9 @@
 			else
 				paint_mode = PAINT_NORMAL
 		if("select_colour")
-			. = can_change_colour && select_colour(usr)
+			. = can_change_colour && pick_painting_tool_color(usr, paint_color)
 		if("enter_text")
-			var/txt = input(usr, "Choose what to write.", "Scribbles", text_buffer) as text|null
+			var/txt = tgui_input_text(usr, "Choose what to write", "Scribbles", text_buffer)
 			if(isnull(txt))
 				return
 			txt = crayon_text_strip(txt)
@@ -260,13 +260,6 @@
 			paint_mode = PAINT_NORMAL
 			drawtype = "a"
 	update_appearance()
-
-/obj/item/toy/crayon/proc/select_colour(mob/user)
-	var/chosen_colour = input(user, "", "Choose Color", paint_color) as color|null
-	if (!isnull(chosen_colour) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
-		paint_color = chosen_colour
-		return TRUE
-	return FALSE
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
 	text = copytext(text, 1, MAX_MESSAGE_LEN)
@@ -589,7 +582,7 @@
 	dye_color = DYE_RAINBOW
 
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
-	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
+	set_painting_tool_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
 	. = ..()
 
 /*
@@ -606,9 +599,7 @@
 
 /obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 7
-	STR.set_holdable(list(/obj/item/toy/crayon))
+	create_storage(canhold = list(/obj/item/toy/crayon))
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -658,6 +649,7 @@
 /obj/item/toy/crayon/spraycan
 	name = "spray can"
 	icon_state = "spraycan"
+	worn_icon_state = "spraycan"
 
 	icon_capped = "spraycan_cap"
 	icon_uncapped = "spraycan"
@@ -668,6 +660,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	desc = "A metallic container containing tasty paint."
+	w_class = WEIGHT_CLASS_SMALL
 
 	instant = TRUE
 	edible = FALSE
@@ -697,7 +690,7 @@
 		if(pre_noise || post_noise)
 			playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		if(can_change_colour)
-			paint_color = "#C0C0C0"
+			set_painting_tool_color("#C0C0C0")
 		update_appearance()
 		if(actually_paints)
 			H.update_lips("spray_face", paint_color)
@@ -710,11 +703,8 @@
 	. = ..()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
-		paint_color = pick("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF",
-		"#DA00FF")
+		set_painting_tool_color(pick("#DA0000", "#FF9300", "#FFF200", "#A8E61D", "#00B7EF", "#DA00FF"))
 	refill()
-	update_appearance()
-
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
@@ -758,6 +748,19 @@
 
 		return
 
+	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
+		if(actually_paints)
+			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
+		. = use_charges(user, 2, requires_full = FALSE)
+		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
+
+		if(pre_noise || post_noise)
+			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
+		return .
+
+
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		if(actually_paints)
 			var/color_is_dark = is_color_dark(paint_color)
@@ -767,6 +770,13 @@
 				return FALSE
 
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+			if(isitem(target) && isliving(target.loc))
+				var/obj/item/target_item = target
+				var/mob/living/holder = target.loc
+				if(holder.is_holding(target_item))
+					holder.update_inv_hands()
+				else
+					holder.update_clothing(target_item.slot_flags)
 			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)
 		. = use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
@@ -789,7 +799,7 @@
 
 	if(istype(target, /obj/item/bodypart) && actually_paints)
 		var/obj/item/bodypart/limb = target
-		if(limb.status == BODYPART_ROBOTIC)
+		if(!IS_ORGANIC_LIMB(limb))
 			var/list/skins = list()
 			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 			for(var/skin_option in style_list_icons)
@@ -809,6 +819,9 @@
 		to_chat(user, span_warning("[target] is not colorful enough, you can't match that color!"))
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return is_capped
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped
@@ -902,3 +915,5 @@
 #undef RANDOM_ORIENTED
 #undef RANDOM_RUNE
 #undef RANDOM_ANY
+
+#undef AVAILABLE_SPRAYCAN_SPACE

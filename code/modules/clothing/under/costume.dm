@@ -36,7 +36,7 @@
 	icon_state = "schoolgirl"
 	inhand_icon_state = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/schoolgirl/red
@@ -81,7 +81,7 @@
 	icon_state = "kilt"
 	inhand_icon_state = "kilt"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/kilt/highlander
@@ -97,7 +97,8 @@
 	icon_state = "gladiator"
 	inhand_icon_state = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -111,7 +112,8 @@
 	icon_state = "maid"
 	inhand_icon_state = "maid"
 	body_parts_covered = CHEST|GROIN
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/maid/Initialize(mapload)
@@ -149,13 +151,13 @@
 	name = "yellow performer's outfit"
 	icon_state = "ysing"
 	inhand_icon_state = "ysing"
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 
 /obj/item/clothing/under/costume/singer/blue
 	name = "blue performer's outfit"
 	icon_state = "bsing"
 	inhand_icon_state = "bsing"
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/mummy
 	name = "mummy wrapping"
@@ -163,7 +165,7 @@
 	icon_state = "mummy"
 	inhand_icon_state = "mummy"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -173,7 +175,7 @@
 	icon_state = "scarecrow"
 	inhand_icon_state = "scarecrow"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -183,7 +185,7 @@
 	icon_state = "draculass"
 	inhand_icon_state = "draculass"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/drfreeze
@@ -198,7 +200,7 @@
 	desc = "Who beheaded the college mascot?"
 	icon_state = "lobster"
 	inhand_icon_state = "lobster"
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/gondola
@@ -214,32 +216,27 @@
 	icon_state = "skeleton"
 	inhand_icon_state = "skeleton"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
 /obj/item/clothing/under/costume/mech_suit
-	name = "red mech pilot's suit"
-	desc = "A red mech pilot's suit. Might make your butt look big."
+	name = "mech pilot's suit"
+	desc = "A mech pilot's suit. Might make your butt look big."
 	icon_state = "red_mech_suit"
 	inhand_icon_state = "red_mech_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/mech_suit/white
-	name = "white mech pilot's suit"
-	desc = "A white mech pilot's suit. Very fetching."
-	icon_state = "white_mech_suit"
-	inhand_icon_state = "white_mech_suit"
-
-/obj/item/clothing/under/costume/mech_suit/blue
-	name = "blue mech pilot's suit"
-	desc = "A blue mech pilot's suit. For the more reluctant mech pilots."
-	icon_state = "blue_mech_suit"
-	inhand_icon_state = "blue_mech_suit"
+	unique_reskin = list(
+						"Red" = "red_mech_suit",
+						"White" = "white_mech_suit",
+						"Blue" = "blue_mech_suit",
+						"Black" = "black_mech_suit",
+						)
 
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
@@ -249,7 +246,7 @@
 	inhand_icon_state = "hostanclothes"
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 30, ACID = 30)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 30, ACID = 30)
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE

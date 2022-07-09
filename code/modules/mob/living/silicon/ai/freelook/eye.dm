@@ -35,14 +35,14 @@
 	var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 	var/list/old_images = hud_list[AI_DETECT_HUD]
 	if(!ai_detector_visible)
-		hud.remove_from_hud(src)
+		hud.remove_atom_from_hud(src)
 		QDEL_LIST(old_images)
 		return
 
-	if(!length(hud.hudusers))
+	if(!length(hud.hud_users))
 		return //no one is watching, do not bother updating anything
 
-	hud.remove_from_hud(src)
+	hud.remove_atom_from_hud(src)
 
 	var/static/list/vis_contents_opaque = list()
 	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_opaque[ai_detector_color]
@@ -61,7 +61,7 @@
 	for(var/i in (new_images.len + 1) to old_images.len)
 		qdel(old_images[i])
 	hud_list[AI_DETECT_HUD] = new_images
-	hud.add_to_hud(src)
+	hud.add_atom_to_hud(src)
 
 /mob/camera/ai_eye/proc/get_visible_turfs()
 	if(!isturf(loc))
@@ -101,24 +101,10 @@
 		if(ai.master_multicam)
 			ai.master_multicam.refresh_view()
 
-//it uses setLoc not forceMove, talks to the sillycone and not the camera mob
-/mob/camera/ai_eye/zMove(dir, feedback = FALSE)
-	if(dir != UP && dir != DOWN)
-		return FALSE
-	var/turf/target = get_step_multiz(src, dir)
-	if(!target)
-		if(feedback)
-			to_chat(ai, span_warning("There's nowhere to go in that direction!"))
-		return FALSE
-	if(!canZMove(dir, target))
-		if(feedback)
-			to_chat(ai, span_warning("You couldn't move there!"))
-		return FALSE
-	setLoc(target, TRUE)
-	return TRUE
-
-/mob/camera/ai_eye/canZMove(direction, turf/target) //cameras do not respect these FLOORS you speak so much of
-	return TRUE
+/mob/camera/ai_eye/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
+	. = ..()
+	if(.)
+		setLoc(loc, force_update = TRUE)
 
 /mob/camera/ai_eye/Move()
 	return
@@ -138,7 +124,7 @@
 	GLOB.aiEyes -= src
 	if(ai_detector_visible)
 		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
-		hud.remove_from_hud(src)
+		hud.remove_atom_from_hud(src)
 		var/list/L = hud_list[AI_DETECT_HUD]
 		QDEL_LIST(L)
 	return ..()
@@ -188,6 +174,8 @@
 
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
+		stack_trace("AI eye object wasn't found! Location: [loc] / Eyeobj: [eyeobj] / QDELETED: [QDELETED(eyeobj)] / Eye loc: [eyeobj?.loc]")
+		QDEL_NULL(eyeobj)
 		create_eye()
 
 	eyeobj?.setLoc(loc)
@@ -230,4 +218,4 @@
 	icon_state = ""
 	alpha = 100
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE
+	plane = ABOVE_GAME_PLANE

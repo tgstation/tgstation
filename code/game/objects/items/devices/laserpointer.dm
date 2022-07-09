@@ -39,6 +39,14 @@
 	. = ..()
 	diode = new /obj/item/stock_parts/micro_laser/ultra
 
+/obj/item/laser_pointer/screwdriver_act(mob/living/user, obj/item/tool)
+	if(diode)
+		tool.play_tool_sound(src)
+		to_chat(user, span_notice("You remove the [diode.name] from \the [src]."))
+		diode.forceMove(drop_location())
+		diode = null
+		return TRUE
+
 /obj/item/laser_pointer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/micro_laser))
 		if(!diode)
@@ -48,12 +56,6 @@
 			to_chat(user, span_notice("You install a [diode.name] in [src]."))
 		else
 			to_chat(user, span_warning("[src] already has a diode installed!"))
-
-	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(diode)
-			to_chat(user, span_notice("You remove the [diode.name] from \the [src]."))
-			diode.forceMove(drop_location())
-			diode = null
 	else
 		return ..()
 

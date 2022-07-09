@@ -43,6 +43,11 @@
 	return ..()
 
 /datum/lighting_object/proc/update()
+#ifdef VISUALIZE_LIGHT_UPDATES
+	affected_turf.add_atom_colour(COLOR_BLUE_LIGHT, ADMIN_COLOUR_PRIORITY)
+	animate(affected_turf, 10, color = null)
+	addtimer(CALLBACK(affected_turf, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY, COLOR_BLUE_LIGHT), 10, TIMER_UNIQUE|TIMER_OVERRIDE)
+#endif
 
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
@@ -88,12 +93,12 @@
 	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
 		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
 		affected_turf.underlays -= current_underlay
-		current_underlay.icon_state = "transparent"
+		current_underlay.icon_state = "lighting_transparent"
 		current_underlay.color = null
 		affected_turf.underlays += current_underlay
 	else if(!set_luminosity)
 		affected_turf.underlays -= current_underlay
-		current_underlay.icon_state = "dark"
+		current_underlay.icon_state = "lighting_dark"
 		current_underlay.color = null
 		affected_turf.underlays += current_underlay
 	else

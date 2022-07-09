@@ -14,11 +14,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/decon_mod = 0
 
 /obj/machinery/rnd/destructive_analyzer/RefreshParts()
+	. = ..()
 	var/T = 0
 	for(var/obj/item/stock_parts/S in component_parts)
 		T += S.rating
 	decon_mod = T
-
 
 /obj/machinery/rnd/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -90,14 +90,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 				differences[i] = value
 		if(length(worths) && !length(differences))
 			return FALSE
-		var/choice = input("Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?") in list("Proceed", "Cancel")
-		if(choice == "Cancel")
+		var/choice = tgui_alert(user, "Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?", "Destructive Analyzer", list("Proceed", "Cancel"))
+		if(choice != "Proceed")
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(src))
 			return FALSE
 		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
 		if(destroy_item(loaded_item))
-			stored_research.boost_with_path(SSresearch.techweb_node_by_id(TN.id), dpath)
+			stored_research.boost_with_item(SSresearch.techweb_node_by_id(TN.id), dpath)
 
 	else
 		var/list/point_value = techweb_item_point_check(loaded_item)
@@ -218,3 +218,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 			say("Destructive analysis failed!")
 
 	updateUsrDialog()
+
+/obj/machinery/rnd/destructive_analyzer/screwdriver_act(mob/living/user, obj/item/tool)
+	return FALSE

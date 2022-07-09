@@ -61,6 +61,7 @@
 		return TRUE
 
 	preferences.all_quirks = new_quirks
+	preferences.character_preview_view?.update_body()
 
 	return TRUE
 
@@ -79,6 +80,7 @@
 		return TRUE
 
 	preferences.all_quirks = new_quirks
+	preferences.character_preview_view?.update_body()
 
 	return TRUE
 

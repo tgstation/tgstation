@@ -19,10 +19,9 @@ export class EventEmitter {
     if (!listeners) {
       throw new Error(`There is no listeners for "${name}"`);
     }
-    this.listeners[name] = listeners
-      .filter(existingListener => {
-        return existingListener !== listener;
-      });
+    this.listeners[name] = listeners.filter((existingListener) => {
+      return existingListener !== listener;
+    });
   }
 
   emit(name, ...params) {

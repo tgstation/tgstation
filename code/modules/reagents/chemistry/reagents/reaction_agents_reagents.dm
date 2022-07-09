@@ -1,5 +1,5 @@
 /datum/reagent/reaction_agent
-	name = "reaction agent"
+	name = "Reaction Agent"
 	description = "Hello! I am a bugged reagent. Please report me for my crimes. Thank you!!"
 
 /datum/reagent/reaction_agent/intercept_reagents_transfer(datum/reagents/target, amount)
@@ -17,7 +17,7 @@
 	return TRUE
 
 /datum/reagent/reaction_agent/acidic_buffer
-	name = "Strong acidic buffer"
+	name = "Strong Acidic Buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
 	ph = 0
@@ -45,7 +45,7 @@
 	holder.remove_reagent(type, amount)
 
 /datum/reagent/reaction_agent/basic_buffer
-	name = "Strong basic buffer"
+	name = "Strong Basic Buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
 	ph = 14
@@ -74,17 +74,17 @@
 //purity testor/reaction agent prefactors
 
 /datum/reagent/prefactor_a
-	name = "Interim product alpha"
+	name = "Interim Product Alpha"
 	description = "This reagent is a prefactor to the purity tester reagent, and will react with stable plasma to create it"
 	color = "#bafa69"
 
 /datum/reagent/prefactor_b
-	name = "Interim product beta"
+	name = "Interim Product Beta"
 	description = "This reagent is a prefactor to the reaction speed agent reagent, and will react with stable plasma to create it"
 	color = "#8a3aa9"
 
 /datum/reagent/reaction_agent/purity_tester
-	name = "Purity tester"
+	name = "Purity Tester"
 	description = "This reagent will consume itself and violently react if there is a highly impure reagent in the beaker."
 	ph = 3
 	color = "#ffffff"

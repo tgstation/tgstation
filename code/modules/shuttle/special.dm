@@ -3,6 +3,28 @@
 // Wabbajack statue, a sleeping frog statue that shoots bolts of change if
 // living carbons are put on its altar/tables
 
+/obj/machinery/power/emitter/energycannon
+	name = "Energy Cannon"
+	desc = "A heavy duty industrial laser."
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "emitter_+a"
+	base_icon_state = "emitter_+a"
+	anchored = TRUE
+	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
+
+	use_power = NO_POWER_USE
+	idle_power_usage = 0
+	active_power_usage = 0
+
+	active = TRUE
+	locked = TRUE
+	welded = TRUE
+
+/obj/machinery/power/emitter/energycannon/RefreshParts()
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
 /obj/machinery/power/emitter/energycannon/magical
 	name = "wabbajack statue"
 	desc = "Who am I? What is my purpose in life? What do I mean by who am I?"
@@ -142,6 +164,7 @@
 		3. Don't get messed up in their affairs."
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
+	default_storage = null
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
@@ -273,7 +296,7 @@
 /obj/machinery/scanner_gate/luxury_shuttle/Bumped(atom/movable/AM)
 	///If the atom entering the gate is a vehicle, we store it here to add to the approved list to enter/leave the scanner gate.
 	var/obj/vehicle/vehicle
-	///We store the driver of vehicles seperately so that we can add them to the approved list once payment is fully processed.
+	///We store the driver of vehicles separately so that we can add them to the approved list once payment is fully processed.
 	var/mob/living/driver_holdout
 	if(!isliving(AM) && !isvehicle(AM))
 		alarm_beep()

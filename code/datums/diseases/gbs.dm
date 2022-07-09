@@ -9,7 +9,7 @@
 	agent = "Gravitokinetic Bipotential SADS+"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
-	permeability_mod = 1
+	spreading_modifier = 1
 	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/gbs/stage_act(delta_time, times_fired)

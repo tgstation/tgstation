@@ -340,7 +340,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/obj/item/food/grown/chili
+		/obj/item/food/grown/chili = 1
 	)
 	result = /obj/item/food/donkpocket/spicy
 	subcategory = CAT_PASTRY
@@ -432,17 +432,6 @@
 	result = /obj/item/food/muffin/booberry
 	subcategory = CAT_PASTRY
 
-
-/datum/crafting_recipe/food/moffin
-	name = "Moffin"
-	reqs = list(
-		/datum/reagent/consumable/milk = 5,
-		/obj/item/food/pastrybase = 1,
-		/obj/item/stack/sheet/cloth = 1,
-	)
-	result = /obj/item/food/muffin/moffin
-	subcategory = CAT_PASTRY
-
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
 
@@ -451,7 +440,7 @@
 	reqs = list(
 		/datum/reagent/consumable/eggyolk = 2,
 		/datum/reagent/consumable/eggwhite = 4,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/food/khachapuri

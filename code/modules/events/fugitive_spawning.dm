@@ -13,14 +13,14 @@
 /datum/round_event/ghost_role/fugitives/spawn_role()
 	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
 	for(var/turf/X in GLOB.xeno_spawn)
-		if(istype(X.loc, /area/maintenance))
+		if(istype(X.loc, /area/station/maintenance))
 			possible_spawns += X
 	if(!possible_spawns.len)
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 	var/turf/landing_turf = pick(possible_spawns)
 	var/list/possible_backstories = list()
-	var/list/candidates = get_candidates(ROLE_TRAITOR, ROLE_TRAITOR)
+	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
 	if(candidates.len >= 1) //solo refugees
 		if(prob(30))
 			possible_backstories.Add("waldo") //less common as it comes with magicks and is kind of immershun shattering

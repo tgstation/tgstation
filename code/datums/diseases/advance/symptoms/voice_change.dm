@@ -1,22 +1,13 @@
-/*
-//////////////////////////////////////
-
-Voice Change
-
-	Noticeable.
-	Lowers resistance.
-	Decreases stage speed.
-	Increased transmittable.
-	Fatal Level.
-
-Bonus
-	Changes the voice of the affected mob. Causing confusion in communication.
-
-//////////////////////////////////////
+/*Voice Change
+ * Slight stealth reduction
+ * Reduces resistance
+ * Reduces stage speed
+ * Increases transmissibility
+ * Fatal level
+ * Bonus: Changes the voice of the affected mob. Causing confusion in communication.
 */
 
 /datum/symptom/voice_change
-
 	name = "Voice Change"
 	desc = "The virus alters the pitch and tone of the host's vocal cords, changing how their voice sounds."
 	stealth = -1

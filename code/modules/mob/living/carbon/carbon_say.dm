@@ -18,7 +18,7 @@
 	return ..()
 
 /mob/living/carbon/could_speak_language(datum/language/language)
-	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
 	if(T)
 		return T.could_speak_language(language)
 	else

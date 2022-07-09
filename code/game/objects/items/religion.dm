@@ -31,7 +31,7 @@
 		return
 	user.visible_message("<span class='big notice'>[user] flourishes [src]!</span>", \
 	span_notice("You raise [src] skywards, inspiring your allies!"))
-	playsound(src, "rustle", 100, FALSE)
+	playsound(src, SFX_RUSTLE, 100, FALSE)
 	if(warcry)
 		user.say("[warcry]", forced="banner")
 	var/old_transform = user.transform
@@ -254,8 +254,7 @@
 
 /obj/item/storage/backpack/bannerpack/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
+	atom_storage.max_total_storage = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 
 /obj/item/storage/backpack/bannerpack/red
 	name = "red banner backpack"

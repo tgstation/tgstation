@@ -86,20 +86,19 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
  * called when the anonymous theme is created regardless of extra theming
  */
 /datum/anonymous_theme/proc/anonymous_all_players()
-	var/datum/anonymous_theme/theme = GLOB.current_anonymous_theme
 	for(var/mob/living/player in GLOB.player_list)
 		if(!player.mind || (!ishuman(player) && !issilicon(player)) || player.mind.assigned_role.faction != FACTION_STATION)
 			continue
 		if(issilicon(player))
-			player.fully_replace_character_name(player.real_name, theme.anonymous_ai_name(isAI(player)))
-		else
-			var/mob/living/carbon/human/human_mob = player
-			var/original_name = player.real_name //id will not be changed if you do not do this
-			randomize_human(player) //do this first so the special name can be given
-			player.fully_replace_character_name(original_name, theme.anonymous_name(player))
-			if(extras_enabled)
-				player_extras(player)
-			human_mob.dna.update_dna_identity()
+			player.fully_replace_character_name(player.real_name, anonymous_ai_name(isAI(player)))
+			return
+		var/mob/living/carbon/human/human_mob = player
+		var/original_name = player.real_name //id will not be changed if you do not do this
+		randomize_human(player) //do this first so the special name can be given
+		player.fully_replace_character_name(original_name, anonymous_name(player))
+		if(extras_enabled)
+			player_extras(player)
+		human_mob.dna.update_dna_identity()
 
 /**
  * restore_all_players: sets all crewmembers on station back to their preference name.
@@ -130,7 +129,8 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
  * * target - mob for preferences and gender
  */
 /datum/anonymous_theme/proc/anonymous_name(mob/target)
-	var/species_type = target.client.prefs.read_preference(/datum/preference/choiced/species)
+	var/datum/client_interface/client = GET_CLIENT(target)
+	var/species_type = client.prefs.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
 	return species.random_name(target.gender,1)
 
@@ -143,7 +143,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
  * Spider Clan = "'Leaping Viper' MSO"
  * Stations? = "System Port 10"
  * Arguments:
- * * is_ai - boolean to decide whether the name has "Core" (AI) or "Assistant" (Cyborg)
+ * * is_ai - boolean to decide whether the name has "Core" (AI) or JOB_ASSISTANT (Cyborg)
  */
 /datum/anonymous_theme/proc/anonymous_ai_name(is_ai = FALSE)
 	return pick(GLOB.ai_names)
@@ -167,7 +167,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 /datum/anonymous_theme/employees/anonymous_ai_name(is_ai = FALSE)
 	var/verbs = capitalize(pick(GLOB.ing_verbs))
 	var/phonetic = pick(GLOB.phonetic_alphabet)
-	return "Employee [is_ai ? "Core" : "Assistant"] [verbs] [phonetic]"
+	return "Employee [is_ai ? "Core" : JOB_ASSISTANT] [verbs] [phonetic]"
 
 /datum/anonymous_theme/wizards
 	name = "Wizard Academy"
@@ -180,7 +180,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 		/obj/item/storage/box/wizard_kit/yellow,
 		/obj/item/storage/box/wizard_kit/magusred,
 		/obj/item/storage/box/wizard_kit/magusblue,
-		/obj/item/storage/box/wizard_kit/black\
+		/obj/item/storage/box/wizard_kit/black,
 	)
 	player.put_in_hands(new random_path())
 
@@ -263,7 +263,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 
 /datum/anonymous_theme/station
 	name = "Stations?"
-	extras_prompt = "Also flip station name?"
+	extras_prompt = "Also set station name to be a random human name?"
 
 /datum/anonymous_theme/station/theme_extras()
 	set_station_name("[pick(GLOB.first_names)] [pick(GLOB.last_names)]")

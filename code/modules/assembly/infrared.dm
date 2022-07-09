@@ -18,14 +18,13 @@
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
 
-/obj/item/assembly/infra/ComponentInitialize()
-	. = ..()
-	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS
-	AddComponent(/datum/component/simple_rotation, rotation_flags, after_rotation=CALLBACK(src,.proc/after_rotation))
-
-/obj/item/assembly/infra/proc/after_rotation()
+/obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
 	refreshBeam()
+
+/obj/item/assembly/infra/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -102,8 +101,7 @@
 		for(var/i in 1 to maxlength)
 			var/obj/effect/beam/i_beam/I = new(T)
 			if(istype(holder, /obj/item/assembly_holder))
-				var/obj/item/assembly_holder/assembly_holder = holder
-				I.icon_state = "[initial(I.icon_state)]_[(assembly_holder.a_left == src) ? "l":"r"]" //Sync the offset of the beam with the position of the sensor.
+				I.icon_state = "[initial(I.icon_state)]_l" //Sync the offset of the beam with the position of the sensor.
 			else if(istype(holder, /obj/item/transfer_valve))
 				I.icon_state = "[initial(I.icon_state)]_ttv"
 			I.set_density(TRUE)

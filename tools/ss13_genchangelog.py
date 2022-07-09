@@ -53,7 +53,6 @@ validPrefixes = [
     'rscdel',
     'imageadd',
     'imagedel',
-    'expansion',
     'spellcheck',
     'experiment',
     'balance',

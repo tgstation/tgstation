@@ -58,12 +58,28 @@
 	make_reagents = list(/datum/reagent/consumable/flour = 10)
 	category = list("initial","Food")
 
+/datum/design/sugar
+	name = "10u Sugar"
+	id = "sugar"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 30)
+	make_reagents = list(/datum/reagent/consumable/sugar = 10)
+	category = list("initial","Food")
+
 /datum/design/monkey_cube
 	name = "Monkey Cube"
 	id = "mcube"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass= 250)
 	build_path = /obj/item/food/monkeycube
+	category = list("initial","Food")
+
+/datum/design/seaweed_sheet
+	name = "Seaweed sheet"
+	id = "seaweedsheet"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 30)
+	build_path = /obj/item/food/seaweedsheet
 	category = list("initial","Food")
 
 /datum/design/ez_nut   //easy nut :)

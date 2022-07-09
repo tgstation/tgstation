@@ -7,7 +7,7 @@
 /**
  * Removes excess whitespace and indentation from the string.
  */
-export const multiline = str => {
+export const multiline = (str) => {
   if (Array.isArray(str)) {
     // Small stub to allow usage as a template tag
     return multiline(str.join(''));
@@ -32,7 +32,7 @@ export const multiline = str => {
   // Remove this base indentation and trim the resulting string
   // from both ends.
   return lines
-    .map(line => line.substr(minIndent).trimRight())
+    .map((line) => line.substr(minIndent).trimRight())
     .join('\n')
     .trim();
 };
@@ -44,12 +44,13 @@ export const multiline = str => {
  *
  * Example: createGlobPattern('*@domain')('user@domain') === true
  */
-export const createGlobPattern = pattern => {
-  const escapeString = str => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+export const createGlobPattern = (pattern) => {
+  const escapeString = (str) => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+  // prettier-ignore
   const regex = new RegExp('^'
     + pattern.split(/\*+/).map(escapeString).join('.*')
     + '$');
-  return str => regex.test(str);
+  return (str) => regex.test(str);
 };
 
 /**
@@ -64,7 +65,7 @@ export const createGlobPattern = pattern => {
  */
 export const createSearch = (searchText, stringifier) => {
   const preparedSearchText = searchText.toLowerCase().trim();
-  return obj => {
+  return (obj) => {
     if (!preparedSearchText) {
       return true;
     }
@@ -72,13 +73,11 @@ export const createSearch = (searchText, stringifier) => {
     if (!str) {
       return false;
     }
-    return str
-      .toLowerCase()
-      .includes(preparedSearchText);
+    return str.toLowerCase().includes(preparedSearchText);
   };
 };
 
-export const capitalize = str => {
+export const capitalize = (str) => {
   // Handle array
   if (Array.isArray(str)) {
     return str.map(capitalize);
@@ -87,7 +86,7 @@ export const capitalize = str => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 
-export const toTitleCase = str => {
+export const toTitleCase = (str) => {
   // Handle array
   if (Array.isArray(str)) {
     return str.map(toTitleCase);
@@ -98,20 +97,21 @@ export const toTitleCase = str => {
   }
   // Handle string
   const WORDS_UPPER = ['Id', 'Tv'];
+  // prettier-ignore
   const WORDS_LOWER = [
     'A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'For', 'From', 'In',
     'Into', 'Near', 'Nor', 'Of', 'On', 'Onto', 'Or', 'The', 'To', 'With',
   ];
-  let currentStr = str.replace(/([^\W_]+[^\s-]*) */g, str => {
+  let currentStr = str.replace(/([^\W_]+[^\s-]*) */g, (str) => {
     return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
   });
   for (let word of WORDS_LOWER) {
     const regex = new RegExp('\\s' + word + '\\s', 'g');
-    currentStr = currentStr.replace(regex, str => str.toLowerCase());
+    currentStr = currentStr.replace(regex, (str) => str.toLowerCase());
   }
   for (let word of WORDS_UPPER) {
     const regex = new RegExp('\\b' + word + '\\b', 'g');
-    currentStr = currentStr.replace(regex, str => str.toLowerCase());
+    currentStr = currentStr.replace(regex, (str) => str.toLowerCase());
   }
   return currentStr;
 };
@@ -122,7 +122,7 @@ export const toTitleCase = str => {
  * @param  {String} str Encoded HTML string
  * @return {String} Decoded HTML string
  */
-export const decodeHtmlEntities = str => {
+export const decodeHtmlEntities = (str) => {
   if (!str) {
     return str;
   }
@@ -133,8 +133,9 @@ export const decodeHtmlEntities = str => {
     quot: '"',
     lt: '<',
     gt: '>',
-    apos: '\'',
+    apos: "'",
   };
+  // prettier-ignore
   return str
     // Newline tags
     .replace(/<br>/gi, '\n')
@@ -156,6 +157,7 @@ export const decodeHtmlEntities = str => {
 /**
  * Converts an object into a query string,
  */
+// prettier-ignore
 export const buildQueryString = obj => Object.keys(obj)
   .map(key => encodeURIComponent(key)
     + '=' + encodeURIComponent(obj[key]))

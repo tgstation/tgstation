@@ -41,13 +41,13 @@
 	var/temp
 	if (master)
 		laws.ion.len = master.ion.len
-		for (var/index = 1, index <= master.ion.len, index++)
+		for (var/index in 1 to master.ion.len)
 			temp = master.ion[index]
 			if (length(temp) > 0)
 				laws.ion[index] = temp
 
 		laws.hacked.len = master.hacked.len
-		for (var/index = 1, index <= master.hacked.len, index++)
+		for (var/index in 1 to master.hacked.len)
 			temp = master.hacked[index]
 			if (length(temp) > 0)
 				laws.hacked[index] = temp
@@ -59,13 +59,13 @@
 		laws.zeroth = temp
 
 		laws.inherent.len = master.inherent.len
-		for (var/index = 1, index <= master.inherent.len, index++)
+		for (var/index in 1 to master.inherent.len)
 			temp = master.inherent[index]
 			if (length(temp) > 0)
 				laws.inherent[index] = temp
 
 		laws.supplied.len = master.supplied.len
-		for (var/index = 1, index <= master.supplied.len, index++)
+		for (var/index in 1 to master.supplied.len)
 			temp = master.supplied[index]
 			if (length(temp) > 0)
 				laws.supplied[index] = temp

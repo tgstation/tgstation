@@ -126,7 +126,7 @@
 /obj/effect/station_crash
 	name = "station crash"
 	desc = "With no survivors!"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/balloons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
 	var/min_crash_strength = 3
@@ -139,7 +139,7 @@
 
 /obj/effect/station_crash/proc/shuttle_crash()
 	var/crash_strength = rand(min_crash_strength,max_crash_strength)
-	for (var/S in SSshuttle.stationary)
+	for (var/S in SSshuttle.stationary_docking_ports)
 		var/obj/docking_port/stationary/SM = S
 		if (SM.id == "emergency_home")
 			var/new_dir = turn(SM.dir, 180)

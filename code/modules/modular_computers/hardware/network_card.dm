@@ -88,10 +88,12 @@
 	if(!modularInterface.borgo)
 		return FALSE //No borg found
 
-	if(modularInterface.borgo.lockcharge)
-		return FALSE //lockdown restricts borg networking
+	var/mob/living/silicon/robot/robo = modularInterface.borgo
+	if(istype(robo))
+		if(robo.lockcharge)
+			return FALSE //lockdown restricts borg networking
 
-	if(!modularInterface.borgo.cell || modularInterface.borgo.cell.charge == 0)
-		return FALSE //borg cell dying restricts borg networking
+		if(!robo.cell || robo.cell.charge == 0)
+			return FALSE //borg cell dying restricts borg networking
 
 	return ..()

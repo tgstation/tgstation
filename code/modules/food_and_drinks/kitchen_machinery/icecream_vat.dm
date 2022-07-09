@@ -38,7 +38,7 @@
 			else
 				qdel(cone)
 
-	create_reagents(100, NO_REACT | OPENCONTAINER)
+	create_reagents(300, NO_REACT | OPENCONTAINER)
 	reagents.chem_temp = T0C //So ice doesn't melt
 	for(var/flavour in GLOB.ice_cream_flavours)
 		if(GLOB.ice_cream_flavours[flavour].hidden)

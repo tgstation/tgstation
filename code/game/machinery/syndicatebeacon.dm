@@ -57,30 +57,32 @@
 	else
 		to_chat(user, span_warning("You need to screw \the [src] to the floor first!"))
 
-/obj/machinery/power/singularity_beacon/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH)
-		if(active)
-			to_chat(user, span_warning("You need to deactivate \the [src] first!"))
-			return
+/obj/machinery/power/singularity_beacon/wrench_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(active)
+		to_chat(user, span_warning("You need to deactivate \the [src] first!"))
+		return
 
-		if(anchored)
-			set_anchored(FALSE)
-			to_chat(user, span_notice("You unbolt \the [src] from the floor and detach it from the cable."))
-			disconnect_from_network()
+	if(anchored)
+		tool.play_tool_sound(src, 50)
+		set_anchored(FALSE)
+		to_chat(user, span_notice("You unbolt \the [src] from the floor and detach it from the cable."))
+		disconnect_from_network()
+		return
+	else
+		if(!connect_to_network())
+			to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
 			return
-		else
-			if(!connect_to_network())
-				to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
-				return
-			set_anchored(TRUE)
-			to_chat(user, span_notice("You bolt \the [src] to the floor and attach it to the cable."))
-			return
-	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		user.visible_message( \
+		tool.play_tool_sound(src, 50)
+		set_anchored(TRUE)
+		to_chat(user, span_notice("You bolt \the [src] to the floor and attach it to the cable."))
+		return
+
+/obj/machinery/power/singularity_beacon/screwdriver_act(mob/living/user, obj/item/tool)
+	user.visible_message( \
 			"[user] messes with \the [src] for a bit.", \
 			span_notice("You can't fit the screwdriver into \the [src]'s bolts! Try using a wrench."))
-	else
-		return ..()
+	return TRUE
 
 /obj/machinery/power/singularity_beacon/Destroy()
 	if(active)

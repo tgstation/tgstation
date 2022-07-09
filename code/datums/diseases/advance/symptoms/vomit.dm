@@ -1,26 +1,13 @@
-/*
-//////////////////////////////////////
-
-Vomiting
-
-	Very Very Noticable.
-	Decreases resistance.
-	Doesn't increase stage speed.
-	Little transmissibility.
-	Medium Level.
-
-Bonus
-	Forces the affected mob to vomit!
-	Meaning your disease can spread via
-	people walking on vomit.
-	Makes the affected mob lose nutrition and
-	heal toxin damage.
-
-//////////////////////////////////////
+/*Vomiting
+ * Reduces stealth
+ * Slight resistance reduction
+ * Slight stage speed reduction
+ * Increases transmissibility
+ * Bonus : Forces the affected mob to vomit! Makes the affected mob lose nutrition and heal toxin damage
+and your disease can spread via people walking on vomit.
 */
 
 /datum/symptom/vomit
-
 	name = "Vomiting"
 	desc = "The virus causes nausea and irritates the stomach, causing occasional vomit."
 	stealth = -2

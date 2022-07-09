@@ -1,22 +1,12 @@
-/*
-//////////////////////////////////////
-
-Hyphema (Eye bleeding)
-
-	Slightly noticable.
-	Lowers resistance tremendously.
-	Decreases stage speed tremendously.
-	Decreases transmittablity.
-	Critical Level.
-
-Bonus
-	Causes blindness.
-
-//////////////////////////////////////
+/*Hyphema (Eye bleeding)
+ * Slightly reduces stealth
+ * Tremendously reduces resistance
+ * Tremendously reduces stage speed
+ * Greatly reduces transmissibility
+ * Critical level
+ * Bonus: Causes blindness.
 */
-
 /datum/symptom/visionloss
-
 	name = "Hyphema"
 	desc = "The virus causes inflammation of the retina, leading to eye damage and eventually blindness."
 	stealth = -1
@@ -48,7 +38,7 @@ Bonus
 	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
-	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
 		switch(A.stage)
 			if(1, 2)

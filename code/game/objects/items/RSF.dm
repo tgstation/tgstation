@@ -30,7 +30,7 @@ RSF
 	///The cost of the object we are going to dispense
 	var/dispense_cost = 0
 	w_class = WEIGHT_CLASS_NORMAL
-	///An associated list of atoms and charge costs. This can contain a seperate list, as long as it's associated item is an object
+	///An associated list of atoms and charge costs. This can contain a separate list, as long as it's associated item is an object
 	var/list/cost_by_item = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 20,
 								/obj/item/paper = 10,
 								/obj/item/storage/dice = 200,

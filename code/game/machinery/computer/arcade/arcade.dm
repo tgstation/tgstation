@@ -35,7 +35,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/talking/owl = 2,
 		/obj/item/toy/talking/griffin = 2,
 		/obj/item/coin/antagtoken = 2,
-		/obj/item/stack/tile/fakespace/loaded = 2,
 		/obj/item/stack/tile/fakepit/loaded = 2,
 		/obj/item/stack/tile/eighties/loaded = 2,
 		/obj/item/toy/toy_xeno = 2,
@@ -57,6 +56,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/plush/moth = 2,
 		/obj/item/toy/plush/pkplush = 2,
 		/obj/item/toy/plush/rouny = 2,
+		/obj/item/toy/plush/abductor = 2,
+		/obj/item/toy/plush/abductor/agent = 2,
 		/obj/item/storage/belt/military/snack = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
@@ -72,6 +73,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_keyboard = null
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
 	var/list/prize_override
 
 /obj/machinery/computer/arcade/proc/Reset()
@@ -89,7 +91,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		span_notice("You hear a flurry of buttons being pressed."))
 		say("CODE ACTIVATED: EXTRA PRIZES.")
 		prizes *= 2
-	for(var/i = 0, i < prizes, i++)
+	for(var/i in 1 to prizes)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 		if(prob(0.0001)) //1 in a million
 			new /obj/item/gun/energy/pulse/prize(src)
@@ -284,6 +286,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/gamerSkill = 0
 	if(usr?.mind)
 		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
+
+	usr.played_game()
 
 	if (!blocked && !gameover)
 		var/attackamt = rand(5,7) + rand(0, gamerSkill)
@@ -548,7 +552,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 
 			if(obj_flags & EMAGGED)
-				new /obj/effect/spawner/newbomb/timer(loc)
+				new /obj/effect/spawner/newbomb/plasma(loc, /obj/item/assembly/timer)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
@@ -559,6 +563,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				prizevend(user)
 				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
+			user.won_game()
 
 	else if(player_hp <= 0)
 		if(timer_id)
@@ -573,6 +578,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			if (istype(living_user))
 				living_user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
+		user.lost_game()
 
 	if(gameover)
 		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
@@ -598,14 +604,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return ..() //well boys we did it, lists are no more
 
 /obj/machinery/computer/arcade/battle/examine_more(mob/user)
-	var/list/msg = list(span_notice("<i>You notice some writing scribbled on the side of [src]...</i>"))
-	msg += "\t[span_info("smart -> defend, defend, light attack")]"
-	msg += "\t[span_info("shotgun -> defend, defend, power attack")]"
-	msg += "\t[span_info("short temper -> counter, counter, counter")]"
-	msg += "\t[span_info("poisonous -> light attack, light attack, light attack")]"
-	msg += "\t[span_info("chonker -> power attack, power attack, power attack")]"
-	msg += "\t[span_info("magical -> defend until outmagiced")]"
-	return msg
+	. = ..()
+	. += span_notice("<i>You notice some writing scribbled on the side of [src]...</i>")
+	. += "\t[span_info("smart -> defend, defend, light attack")]"
+	. += "\t[span_info("shotgun -> defend, defend, power attack")]"
+	. += "\t[span_info("short temper -> counter, counter, counter")]"
+	. += "\t[span_info("poisonous -> light attack, light attack, light attack")]"
+	. += "\t[span_info("chonker -> power attack, power attack, power attack")]"
+	. += "\t[span_info("magical -> defend until outmagiced")]"
+	return .
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -648,6 +655,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(!c_user.get_bodypart(BODY_ZONE_L_ARM) && !c_user.get_bodypart(BODY_ZONE_R_ARM))
 		return
 	to_chat(c_user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
+	usr.played_game()
 	if(do_after(c_user, 50, target = src))
 		to_chat(c_user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
 		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
@@ -658,10 +666,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		chopchop.dismember()
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
+		user.won_game()
 		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 		prizevend(user, rand(3,5))
 	else
 		to_chat(c_user, span_notice("You (wisely) decide against putting your hand in the machine."))
+		user.lost_game()
 
 /obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
 	name = "Mediborg's Festive Amputation Adventure"

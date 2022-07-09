@@ -8,7 +8,7 @@
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
 
-	permeability_coefficient = 0.5
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
 	var/offset = 0
@@ -31,11 +31,11 @@
 			l_leg.dismember()
 		if(r_leg)
 			r_leg.dismember()
-		playsound(user, "desecration", 50, TRUE, -1)
+		playsound(user, SFX_DESECRATION, 50, TRUE, -1)
 		return BRUTELOSS
 	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
-		for(var/i = 0, i < 3, i++)
+		for(var/i in 1 to 3)
 			sleep(3)
 			playsound(user, 'sound/weapons/genhit2.ogg', 50, TRUE)
 		return(BRUTELOSS)
@@ -47,7 +47,7 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
-	if(HAS_BLOOD_DNA(src))
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		if(clothing_flags & LARGE_WORN_ICON)
 			. += mutable_appearance('icons/effects/64x64.dmi', "shoeblood_large")
 		else
@@ -74,7 +74,7 @@
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
 	if(can_be_tied && tied == SHOES_UNTIED)
-		our_alert_ref = WEAKREF(user.throw_alert("shoealert", /atom/movable/screen/alert/shoes/untied))
+		our_alert_ref = WEAKREF(user.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
 		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_trip, override=TRUE)
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
@@ -87,7 +87,7 @@
 	if(!our_alert)
 		our_alert_ref = null
 	if(our_alert?.owner == user)
-		user.clear_alert("shoealert")
+		user.clear_alert(ALERT_SHOES_KNOT)
 	if(offset && equipped_before_drop)
 		restore_offsets(user)
 	. = ..()
@@ -97,9 +97,6 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_shoes()
-
-/obj/item/proc/negates_gravity()
-	return FALSE
 
 /**
  * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
@@ -122,11 +119,11 @@
 	tied = state
 	if(tied == SHOES_TIED)
 		if(our_guy)
-			our_guy.clear_alert("shoealert")
+			our_guy.clear_alert(ALERT_SHOES_KNOT)
 		UnregisterSignal(src, COMSIG_SHOES_STEP_ACTION)
 	else
 		if(tied == SHOES_UNTIED && our_guy && user == our_guy)
-			our_alert_ref = WEAKREF(our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/untied)) // if we're the ones unknotting our own laces, of course we know they're untied
+			our_alert_ref = WEAKREF(our_guy.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied)) // if we're the ones unknotting our own laces, of course we know they're untied
 		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_trip, override=TRUE)
 
 /**
@@ -217,7 +214,7 @@
 		our_guy.Knockdown(10)
 		our_guy.visible_message(span_danger("[our_guy] trips on [our_guy.p_their()] knotted shoelaces and falls! What a klutz!"), span_userdanger("You trip on your knotted shoelaces and fall over!"))
 		SEND_SIGNAL(our_guy, COMSIG_ADD_MOOD_EVENT, "trip", /datum/mood_event/tripped) // well we realized they're knotted now!
-		our_alert_ref = WEAKREF(our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/knotted))
+		our_alert_ref = WEAKREF(our_guy.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/knotted))
 
 	else if(tied == SHOES_UNTIED)
 		var/wiser = TRUE // did we stumble and realize our laces are undone?
@@ -249,7 +246,7 @@
 				wiser = FALSE
 		if(wiser)
 			SEND_SIGNAL(our_guy, COMSIG_ADD_MOOD_EVENT, "untied", /datum/mood_event/untied) // well we realized they're untied now!
-			our_alert_ref = WEAKREF(our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/untied))
+			our_alert_ref = WEAKREF(our_guy.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
 
 
 /obj/item/clothing/shoes/attack_hand(mob/living/carbon/human/user, list/modifiers)
@@ -263,6 +260,9 @@
 /obj/item/clothing/shoes/attack_self(mob/user)
 	. = ..()
 
+	if (!can_be_tied)
+		return
+
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		to_chat(user, span_warning("You're already interacting with [src]!"))
 		return
@@ -271,4 +271,4 @@
 
 	if(do_after(user, lace_time, target = src,extra_checks = CALLBACK(src, .proc/still_shoed, user)))
 		to_chat(user, span_notice("You [tied ? "untie" : "tie"] the laces on [src]."))
-		adjust_laces(tied ? SHOES_TIED : SHOES_UNTIED, user)
+		adjust_laces(tied ? SHOES_UNTIED : SHOES_TIED, user)

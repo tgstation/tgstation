@@ -22,6 +22,10 @@
 	var/buildstackamount = 2
 	var/bolts = TRUE
 
+/obj/structure/bed/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/soft_landing)
+
 /obj/structure/bed/examine(mob/user)
 	. = ..()
 	if(bolts)
@@ -36,12 +40,13 @@
 /obj/structure/bed/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/structure/bed/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
-		W.play_tool_sound(src)
-		deconstruct(TRUE)
-	else
-		return ..()
+/obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	if(flags_1&NODECONSTRUCT_1)
+		return TRUE
+	..()
+	weapon.play_tool_sound(src)
+	deconstruct(disassembled = TRUE)
+	return TRUE
 
 /*
  * Roller beds
@@ -57,7 +62,7 @@
 
 /obj/structure/bed/roller/examine(mob/user)
 	. = ..()
-	. += span_notice("You can fold it up by <b>dragging</b> it onto you.")
+	. += span_notice("You can fold it up with a Right-click.")
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
@@ -80,17 +85,18 @@
 	else
 		return ..()
 
-/obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
+/obj/structure/bed/roller/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(over_object == usr && Adjacent(usr))
-		if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
-			return FALSE
-		if(has_buckled_mobs())
-			return FALSE
-		usr.visible_message(span_notice("[usr] collapses \the [src.name]."), span_notice("You collapse \the [src.name]."))
-		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
-		usr.put_in_hands(B)
-		qdel(src)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
+		return FALSE
+	if(has_buckled_mobs())
+		return FALSE
+	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
+	var/obj/structure/bed/roller/folding_bed = new foldabletype(get_turf(src))
+	user.put_in_hands(folding_bed)
+	qdel(src)
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
 	set_density(TRUE)
@@ -234,3 +240,17 @@
 	name = "double bed"
 	desc = "A luxurious double bed, for those too important for small dreams."
 	icon_state = "bed_double"
+	buildstackamount = 4
+	max_buckled_mobs = 2
+	///The mob who buckled to this bed second, to avoid other mobs getting pixel-shifted before he unbuckles.
+	var/mob/living/goldilocks
+
+/obj/structure/bed/double/post_buckle_mob(mob/living/target)
+	if(buckled_mobs.len > 1 && !goldilocks) //Push the second buckled mob a bit higher from the normal lying position
+		target.pixel_y = target.base_pixel_y + 6
+		goldilocks = target
+
+/obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
+	target.pixel_y = target.base_pixel_y + target.body_position_pixel_y_offset
+	if(target == goldilocks)
+		goldilocks = null

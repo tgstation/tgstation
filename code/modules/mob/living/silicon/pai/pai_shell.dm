@@ -21,9 +21,9 @@
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	set_density(TRUE)
-	if(istype(card.loc, /obj/item/pda))
-		var/obj/item/pda/P = card.loc
-		P.pai = null
+	if(istype(card.loc, /obj/item/modular_computer))
+		var/obj/item/modular_computer/P = card.loc
+		P.inserted_pai = null
 		P.visible_message(span_notice("[src] ejects itself from [P]!"))
 	if(isliving(card.loc))
 		var/mob/living/L = card.loc
@@ -135,7 +135,7 @@
 	else
 		icon_state = "[chassis]"
 	if(loc != card)
-		visible_message(span_notice("[src] [resting? "lays down for a moment..." : "perks up from the ground"]"))
+		visible_message(span_notice("[src] [resting? "lays down for a moment..." : "perks up from the ground."]"))
 
 /mob/living/silicon/pai/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return FALSE

@@ -104,6 +104,10 @@
 		else
 			to_chat(user, span_warning("Both devices must be in attachable mode to be attached together."))
 		return
+	if(istype(W, /obj/item/assembly_holder))
+		if(!secured)
+			var/obj/item/assembly_holder/added_to_holder = W
+			added_to_holder.add_assembly(src, user)
 	..()
 
 /obj/item/assembly/screwdriver_act(mob/living/user, obj/item/I)

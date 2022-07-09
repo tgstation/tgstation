@@ -57,7 +57,6 @@
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-0.0125 * maxHealth * delta_time)
 	retreat_message_said = FALSE
 
 /obj/item/crusher_trophy/wolf_ear

@@ -3,7 +3,7 @@
 	name = "chemical press"
 	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
-
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	///maximum size of a pill
 	var/max_pill_volume = 50
 	///maximum size of a patch
@@ -24,6 +24,10 @@
 	var/pill_number = RANDOM_PILL_STYLE
 	///list of id's and icons for the pill selection of the ui
 	var/list/pill_styles
+	/// Currently selected patch style
+	var/patch_style = DEFAULT_PATCH_STYLE
+	/// List of available patch styles for UI
+	var/list/patch_styles
 	///list of products stored in the machine, so we dont have 610 pills on one tile
 	var/list/stored_products = list()
 	///max amount of pills allowed on our tile before we start storing them instead
@@ -46,8 +50,16 @@
 		SL["id"] = x
 		SL["class_name"] = assets.icon_class_name("pill[x]")
 		pill_styles += list(SL)
+	var/datum/asset/spritesheet/simple/patches_assets = get_asset_datum(/datum/asset/spritesheet/simple/patches)
+	patch_styles = list()
+	for (var/raw_patch_style in PATCH_STYLE_LIST)
+		//adding class_name for use in UI
+		var/list/patch_style = list()
+		patch_style["style"] = raw_patch_style
+		patch_style["class_name"] = patches_assets.icon_class_name(raw_patch_style)
+		patch_styles += list(patch_style)
 
-/obj/machinery/plumbing/pill_press/process()
+/obj/machinery/plumbing/pill_press/process(delta_time)
 	if(machine_stat & NOPOWER)
 		return
 	if(reagents.total_volume >= current_volume)
@@ -66,6 +78,7 @@
 			var/obj/item/reagent_containers/pill/patch/P = new(src)
 			reagents.trans_to(P, current_volume)
 			P.name = trim("[product_name] patch")
+			P.icon_state = patch_style
 			stored_products += P
 		else if (product == "bottle")
 			var/obj/item/reagent_containers/glass/bottle/P = new(src)
@@ -80,15 +93,17 @@
 			pill_amount++
 			if(pill_amount >= max_floor_products) //too much so just stop
 				break
-		if(pill_amount < max_floor_products)
+		if(pill_amount < max_floor_products && anchored)
 			var/atom/movable/AM = stored_products[1] //AM because forceMove is all we need
 			stored_products -= AM
 			AM.forceMove(drop_location())
 
+	use_power(active_power_usage * delta_time)
 
 /obj/machinery/plumbing/pill_press/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/simple/pills),
+		get_asset_datum(/datum/asset/spritesheet/simple/patches),
 	)
 
 /obj/machinery/plumbing/pill_press/ui_interact(mob/user, datum/tgui/ui)
@@ -106,6 +121,8 @@
 	data["product"] = product
 	data["min_volume"] = min_volume
 	data["max_volume"] = max_volume
+	data["patch_style"] = patch_style
+	data["patch_styles"] = patch_styles
 	return data
 
 /obj/machinery/plumbing/pill_press/ui_act(action, params)
@@ -119,7 +136,11 @@
 		if("change_current_volume")
 			current_volume = clamp(text2num(params["volume"]), min_volume, max_volume)
 		if("change_product_name")
-			product_name = html_encode(params["name"])
+			var/formatted_name = html_encode(params["name"])
+			if (length(formatted_name) > MAX_NAME_LEN)
+				product_name = copytext(formatted_name, 1, MAX_NAME_LEN+1)
+			else
+				product_name = formatted_name
 		if("change_product")
 			product = params["product"]
 			if (product == "pill")
@@ -129,3 +150,5 @@
 			else if (product == "bottle")
 				max_volume = max_bottle_volume
 			current_volume = clamp(current_volume, min_volume, max_volume)
+		if("change_patch_style")
+			patch_style = params["patch_style"]

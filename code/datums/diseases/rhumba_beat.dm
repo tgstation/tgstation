@@ -7,7 +7,7 @@
 	cures = list("plasma")
 	agent = "Unknown"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 1
+	spreading_modifier = 1
 	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/rhumba_beat/stage_act(delta_time, times_fired)
@@ -32,7 +32,7 @@
 			if(DT_PROB(10, delta_time))
 				if(prob(50))
 					affected_mob.adjust_fire_stacks(2)
-					affected_mob.IgniteMob()
+					affected_mob.ignite_mob()
 				else
 					affected_mob.emote("gasp")
 					to_chat(affected_mob, span_danger("You feel a burning beat inside..."))

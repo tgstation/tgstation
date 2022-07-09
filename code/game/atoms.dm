@@ -7,7 +7,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND|LONG_GLIDE
 
 	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
 	var/pass_flags_self = NONE
@@ -30,8 +30,12 @@
 	///Reagents holder
 	var/datum/reagents/reagents = null
 
-	///This atom's HUD (med/sec, etc) images. Associative list.
+	///all of this atom's HUD (med/sec, etc) images. Associative list of the form: list(hud category = hud image or images for that category).
+	///most of the time hud category is associated with a single image, sometimes its associated with a list of images.
+	///not every hud in this list is actually used. for ones available for others to see, look at active_hud_list.
 	var/list/image/hud_list = null
+	///all of this atom's HUD images which can actually be seen by players with that hud
+	var/list/image/active_hud_list = null
 	///HUD images that this atom can provide.
 	var/list/hud_possible
 
@@ -56,8 +60,6 @@
 	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc. Single items are stored on their own, not in a list.
 	var/list/managed_overlays
 
-	///Proximity monitor associated with this atom
-	var/datum/proximity_monitor/proximity_monitor
 	///Cooldown tick timer for buckle messages
 	var/buckle_message_cooldown = 0
 	///Last fingerprints to touch this atom
@@ -157,6 +159,11 @@
 	var/damage_deflection = 0
 
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
+	var/datum/forensics/forensics
+
+	/// the datum handler for our contents - see create_storage() for creation method
+	var/datum/storage/atom_storage
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -229,7 +236,7 @@
 	flags_1 |= INITIALIZED_1
 
 	if(loc)
-		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
+		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
 	if(greyscale_config && greyscale_colors)
 		update_greyscale()
@@ -302,10 +309,16 @@
 	if(alternate_appearances)
 		for(var/current_alternate_appearance in alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/selected_alternate_appearance = alternate_appearances[current_alternate_appearance]
-			selected_alternate_appearance.remove_from_hud(src)
+			selected_alternate_appearance.remove_atom_from_hud(src)
 
 	if(reagents)
 		QDEL_NULL(reagents)
+
+	if(forensics)
+		QDEL_NULL(forensics)
+
+	if(atom_storage)
+		QDEL_NULL(atom_storage)
 
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
@@ -320,6 +333,43 @@
 
 	return ..()
 
+/// A quick and easy way to create a storage datum for an atom
+/atom/proc/create_storage(
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+	numerical_stacking = FALSE,
+	allow_quick_gather = FALSE,
+	allow_quick_empty = FALSE,
+	collection_mode = COLLECT_ONE,
+	attack_hand_interact = TRUE,
+	list/canhold,
+	list/canthold,
+	type = /datum/storage,
+)
+
+	if(atom_storage)
+		QDEL_NULL(atom_storage)
+
+	atom_storage = new type(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
+
+	if(canhold || canthold)
+		atom_storage.set_holdable(canhold, canthold)
+
+	return atom_storage
+
+/// A quick and easy way to /clone/ a storage datum for an atom (does not copy over contents, only the datum details)
+/atom/proc/clone_storage(datum/storage/cloning)
+	if(atom_storage)
+		QDEL_NULL(atom_storage)
+
+	atom_storage = new cloning.type(src, cloning.max_slots, cloning.max_specific_storage, cloning.max_total_storage, cloning.numerical_stacking, cloning.allow_quick_gather, cloning.collection_mode, cloning.attack_hand_interact)
+
+	if(cloning.can_hold || cloning.cant_hold)
+		atom_storage.set_holdable(cloning.can_hold, cloning.cant_hold)
+
+	return atom_storage
+
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/turf/p_turf = get_turf(ricocheting_projectile)
 	var/face_direction = get_dir(src, p_turf)
@@ -328,7 +378,7 @@
 	var/a_incidence_s = abs(incidence_s)
 	if(a_incidence_s > 90 && a_incidence_s < 270)
 		return FALSE
-	if((ricocheting_projectile.flag in list(BULLET, BOMB)) && ricocheting_projectile.ricochet_incidence_leeway)
+	if((ricocheting_projectile.armor_flag in list(BULLET, BOMB)) && ricocheting_projectile.ricochet_incidence_leeway)
 		if((a_incidence_s < 90 && a_incidence_s < 90 - ricocheting_projectile.ricochet_incidence_leeway) || (a_incidence_s > 270 && a_incidence_s -270 > ricocheting_projectile.ricochet_incidence_leeway))
 			return FALSE
 	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
@@ -372,7 +422,7 @@
 		return FALSE
 
 	if(is_reserved_level(current_turf.z))
-		for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile)
+		for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
 			if(mobile_docking_port.launch_status != ENDGAME_TRANSIT)
 				continue
 			for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
@@ -387,7 +437,7 @@
 		return TRUE
 
 	//Check for centcom shuttles
-	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile)
+	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
 		if(mobile_docking_port.launch_status == ENDGAME_LAUNCHED)
 			for(var/place as anything in mobile_docking_port.shuttle_areas)
 				var/area/shuttle/shuttle_area = place
@@ -409,7 +459,7 @@
 	if(!is_centcom_level(current_turf.z))//if not, don't bother
 		return FALSE
 
-	if(istype(current_turf.loc, /area/shuttle/syndicate) || istype(current_turf.loc, /area/syndicate_mothership) || istype(current_turf.loc, /area/shuttle/assault_pod))
+	if(istype(current_turf.loc, /area/shuttle/syndicate) || istype(current_turf.loc, /area/centcom/syndicate_mothership) || istype(current_turf.loc, /area/shuttle/assault_pod))
 		return TRUE
 
 	return FALSE
@@ -565,16 +615,19 @@
 /**
  * React to a hit by a projectile object
  *
- * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile
+ * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile.
  *
  * @params
- * P - projectile
+ * hitting_projectile - projectile
  * def_zone - zone hit
  * piercing_hit - is this hit piercing or normal?
  */
 /atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
-	. = hitting_projectile.on_hit(src, 0, def_zone, piercing_hit)
+	// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
+	// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
+	var/visual_armor_check = check_projectile_armor(def_zone, hitting_projectile)
+	. = hitting_projectile.on_hit(src, visual_armor_check, def_zone, piercing_hit)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -592,10 +645,10 @@
  * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
  */
 /atom/proc/get_examine_name(mob/user)
-	. = "\a [src]"
+	. = "\a <b>[src]</b>"
 	var/list/override = list(gender == PLURAL ? "some" : "a", " ", "[name]")
 	if(article)
-		. = "[article] [src]"
+		. = "[article] <b>[src]</b>"
 		override[EXAMINE_POSITION_ARTICLE] = article
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
@@ -627,7 +680,11 @@
  * Produces a signal [COMSIG_PARENT_EXAMINE]
  */
 /atom/proc/examine(mob/user)
-	. = list("[get_examine_string(user, TRUE)].")
+	var/examine_string = get_examine_string(user, thats = TRUE)
+	if(examine_string)
+		. = list("[examine_string].")
+	else
+		. = list()
 
 	. += get_name_chaser(user)
 	if(desc)
@@ -644,7 +701,7 @@
 			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent
 					for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
-						. += "[round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
+						. += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
 					if(reagents.is_reacting)
 						. += span_warning("It is currently reacting!")
 					. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
@@ -671,6 +728,9 @@
  * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
  */
 /atom/proc/examine_more(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
+
 	. = list()
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
 
@@ -801,12 +861,12 @@
 /**
  * React to being hit by an explosion
  *
- * Default behaviour is to call [contents_explosion][/atom/proc/contents_explosion] and send the [COMSIG_ATOM_EX_ACT] signal
+ * Should be called through the [EX_ACT] wrapper macro.
+ * The wrapper takes care of the [COMSIG_ATOM_EX_ACT] signal.
+ * as well as calling [/atom/proc/contents_explosion].
  */
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
-	contents_explosion(severity, target)
-	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
 /**
  * React to a hit by a blob objecd
@@ -880,9 +940,9 @@
 	var/new_blood_dna = injected_mob.get_blood_dna_list()
 	if(!new_blood_dna)
 		return FALSE
-	var/old_length = blood_DNA_length()
+	var/old_length = GET_ATOM_BLOOD_DNA_LENGTH(src)
 	add_blood_DNA(new_blood_dna)
-	if(blood_DNA_length() == old_length)
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src) == old_length)
 		return FALSE
 	return TRUE
 
@@ -974,8 +1034,8 @@
  * TODO these should be purely component items that intercept the atom clicks higher in the
  * call chain
  */
-/atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	if(GetComponent(/datum/component/storage))
+/atom/proc/storage_contents_dump_act(obj/item/src_object, mob/user)
+	if(atom_storage)
 		return component_storage_contents_dump_act(src_object, user)
 	return FALSE
 
@@ -988,23 +1048,21 @@
  * TODO these should be purely component items that intercept the atom clicks higher in the
  * call chain
  */
-/atom/proc/component_storage_contents_dump_act(datum/component/storage/src_object, mob/user)
-	var/list/things = src_object.contents()
+/atom/proc/component_storage_contents_dump_act(obj/item/src_object, mob/user)
+	var/list/things = src_object.contents
 	var/datum/progressbar/progress = new(user, things.len, src)
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	while (do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
+	while (do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object.atom_storage, /datum/storage.proc/handle_mass_transfer, user, src)))
 		stoplag(1)
 	progress.end_progress()
-	to_chat(user, span_notice("You dump as much of [src_object.parent]'s contents [STR.insert_preposition]to [src] as you can."))
-	STR.orient2hud(user)
-	src_object.orient2hud(user)
+	to_chat(user, span_notice("You dump as much of [src_object]'s contents [atom_storage.insert_preposition]to [src] as you can."))
+	atom_storage.orient_to_hud(user)
+	src_object.atom_storage.orient_to_hud(user)
 	if(user.active_storage) //refresh the HUD to show the transfered contents
-		user.active_storage.close(user)
-		user.active_storage.show_to(user)
+		user.active_storage.refresh_views()
 	return TRUE
 
 ///Get the best place to dump the items contained in the source storage item?
-/atom/proc/get_dumping_location(obj/item/storage/source,mob/user)
+/atom/proc/get_dumping_location()
 	return null
 
 /**
@@ -1212,6 +1270,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
+	VV_DROPDOWN_OPTION(VV_HK_EDIT_COLOR_MATRIX, "Edit Color as Matrix")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 	if(greyscale_colors)
 		VV_DROPDOWN_OPTION(VV_HK_MODIFY_GREYSCALE, "Modify greyscale colors")
@@ -1306,6 +1365,10 @@
 		var/client/C = usr.client
 		C?.open_filter_editor(src)
 
+	if(href_list[VV_HK_EDIT_COLOR_MATRIX] && check_rights(R_VAREDIT))
+		var/client/C = usr.client
+		C?.open_color_matrix_editor(src)
+
 /atom/vv_get_header()
 	. = ..()
 	var/refid = REF(src)
@@ -1367,7 +1430,10 @@
 /atom/proc/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	var/act_result
 	var/signal_result
-	if(!is_right_clicking) // Left click first for sensibility
+
+	var/is_left_clicking = !is_right_clicking
+
+	if(is_left_clicking) // Left click first for sensibility
 		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
 		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, tool, processing_recipes)
 		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
@@ -1376,42 +1442,37 @@
 			process_recipes(user, tool, processing_recipes)
 		if(QDELETED(tool))
 			return TRUE
-		switch(tool_type)
-			if(TOOL_CROWBAR)
-				act_result = crowbar_act(user, tool)
-			if(TOOL_MULTITOOL)
-				act_result = multitool_act(user, tool)
-			if(TOOL_SCREWDRIVER)
-				act_result = screwdriver_act(user, tool)
-			if(TOOL_WRENCH)
-				act_result = wrench_act(user, tool)
-			if(TOOL_WIRECUTTER)
-				act_result = wirecutter_act(user, tool)
-			if(TOOL_WELDER)
-				act_result = welder_act(user, tool)
-			if(TOOL_ANALYZER)
-				act_result = analyzer_act(user, tool)
 	else
 		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, tool)
 		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
 			return TOOL_ACT_SIGNAL_BLOCKING
-		switch(tool_type)
-			if(TOOL_CROWBAR)
-				act_result = crowbar_act_secondary(user, tool)
-			if(TOOL_MULTITOOL)
-				act_result = multitool_act_secondary(user, tool)
-			if(TOOL_SCREWDRIVER)
-				act_result = screwdriver_act_secondary(user, tool)
-			if(TOOL_WRENCH)
-				act_result = wrench_act_secondary(user, tool)
-			if(TOOL_WIRECUTTER)
-				act_result = wirecutter_act_secondary(user, tool)
-			if(TOOL_WELDER)
-				act_result = welder_act_secondary(user, tool)
-			if(TOOL_ANALYZER)
-				act_result = analyzer_act_secondary(user, tool)
-	if(act_result) // A tooltype_act has completed successfully
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	switch(tool_type)
+		if(TOOL_CROWBAR)
+			act_result = is_left_clicking ? crowbar_act(user, tool) : crowbar_act_secondary(user, tool)
+		if(TOOL_MULTITOOL)
+			act_result = is_left_clicking ? multitool_act(user, tool) : multitool_act_secondary(user, tool)
+		if(TOOL_SCREWDRIVER)
+			act_result = is_left_clicking ? screwdriver_act(user, tool) : screwdriver_act_secondary(user, tool)
+		if(TOOL_WRENCH)
+			act_result = is_left_clicking ? wrench_act(user, tool) : wrench_act_secondary(user, tool)
+		if(TOOL_WIRECUTTER)
+			act_result = is_left_clicking ? wirecutter_act(user, tool) : wirecutter_act_secondary(user, tool)
+		if(TOOL_WELDER)
+			act_result = is_left_clicking ? welder_act(user, tool) : welder_act_secondary(user, tool)
+		if(TOOL_ANALYZER)
+			act_result = is_left_clicking ? analyzer_act(user, tool) : analyzer_act_secondary(user, tool)
+	if(!act_result)
+		return
+
+	// A tooltype_act has completed successfully
+	if(is_left_clicking)
+		log_tool("[key_name(user)] used [tool] on [src] at [AREACOORD(src)]")
+		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_type), src)
+	else
+		log_tool("[key_name(user)] used [tool] on [src] (right click) at [AREACOORD(src)]")
+		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
 /atom/proc/process_recipes(mob/living/user, obj/item/processed_object, list/processing_recipes)
@@ -1434,13 +1495,16 @@
 		choices += list("[initial(current_option_type.name)]" = option_image)
 
 	var/pick = show_radial_menu(user, src, choices, radius = 36, require_near = TRUE)
+	if(!pick)
+		return
 
 	StartProcessingAtom(user, processed_object, choices_to_options[pick])
 
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
+	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
 	to_chat(user, span_notice("You start working on [src]."))
-	if(process_item.use_tool(src, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
+	if(process_item.use_tool(src, user, processing_time, volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		var/list/atom/created_atoms = list()
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
@@ -1542,158 +1606,6 @@
 /atom/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
 
-/**
- * Generic logging helper
- *
- * reads the type of the log
- * and writes it to the respective log file
- * unless log_globally is FALSE
- * Arguments:
- * * message - The message being logged
- * * message_type - the type of log the message is(ATTACK, SAY, etc)
- * * color - color of the log text
- * * log_globally - boolean checking whether or not we write this log to the log file
- */
-/atom/proc/log_message(message, message_type, color=null, log_globally=TRUE)
-	if(!log_globally)
-		return
-
-	var/log_text = "[key_name(src)] [message] [loc_name(src)]"
-	switch(message_type)
-		if(LOG_ATTACK)
-			log_attack(log_text)
-		if(LOG_SAY)
-			log_say(log_text)
-		if(LOG_WHISPER)
-			log_whisper(log_text)
-		if(LOG_EMOTE)
-			log_emote(log_text)
-		if(LOG_DSAY)
-			log_dsay(log_text)
-		if(LOG_PDA)
-			log_pda(log_text)
-		if(LOG_CHAT)
-			log_chat(log_text)
-		if(LOG_COMMENT)
-			log_comment(log_text)
-		if(LOG_TELECOMMS)
-			log_telecomms(log_text)
-		if(LOG_ECON)
-			log_econ(log_text)
-		if(LOG_OOC)
-			log_ooc(log_text)
-		if(LOG_ADMIN)
-			log_admin(log_text)
-		if(LOG_ADMIN_PRIVATE)
-			log_admin_private(log_text)
-		if(LOG_ASAY)
-			log_adminsay(log_text)
-		if(LOG_OWNERSHIP)
-			log_game(log_text)
-		if(LOG_GAME)
-			log_game(log_text)
-		if(LOG_MECHA)
-			log_mecha(log_text)
-		if(LOG_SHUTTLE)
-			log_shuttle(log_text)
-		else
-			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
-			log_game(log_text)
-
-/**
- * Helper for logging chat messages or other logs with arbitrary inputs(e.g. announcements)
- *
- * This proc compiles a log string by prefixing the tag to the message
- * and suffixing what it was forced_by if anything
- * if the message lacks a tag and suffix then it is logged on its own
- * Arguments:
- * * message - The message being logged
- * * message_type - the type of log the message is(ATTACK, SAY, etc)
- * * tag - tag that indicates the type of text(announcement, telepathy, etc)
- * * log_globally - boolean checking whether or not we write this log to the log file
- * * forced_by - source that forced the dialogue if any
- */
-/atom/proc/log_talk(message, message_type, tag=null, log_globally=TRUE, forced_by=null)
-	var/prefix = tag ? "([tag]) " : ""
-	var/suffix = forced_by ? " FORCED by [forced_by]" : ""
-	log_message("[prefix]\"[message]\"[suffix]", message_type, log_globally=log_globally)
-
-/// Helper for logging of messages with only one sender and receiver
-/proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)
-	if(!tag)
-		stack_trace("Unspecified tag for private message")
-		tag = "UNKNOWN"
-
-	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
-	if(source != target)
-		target.log_talk(message, LOG_VICTIM, tag="[tag] from [key_name(source)]", log_globally=FALSE)
-
-/**
- * Log a combat message in the attack log
- *
- * Arguments:
- * * atom/user - argument is the actor performing the action
- * * atom/target - argument is the target of the action
- * * what_done - is a verb describing the action (e.g. punched, throwed, kicked, etc.)
- * * atom/object - is a tool with which the action was made (usually an item)
- * * addition - is any additional text, which will be appended to the rest of the log line
- */
-/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
-	var/ssource = key_name(user)
-	var/starget = key_name(target)
-
-	var/mob/living/living_target = target
-	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : ""
-
-	var/sobject = ""
-	if(object)
-		sobject = " with [object]"
-	var/saddition = ""
-	if(addition)
-		saddition = " [addition]"
-
-	var/postfix = "[sobject][saddition][hp]"
-
-	var/message = "has [what_done] [starget][postfix]"
-	user.log_message(message, LOG_ATTACK, color="red")
-
-	if(user != target)
-		var/reverse_message = "has been [what_done] by [ssource][postfix]"
-		target.log_message(reverse_message, LOG_VICTIM, color="orange", log_globally=FALSE)
-
-/**
- * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
- *
- * Note that this has no info on the attack that dealt the wound: information about where damage came from isn't passed to the bodypart's damaged proc. When in doubt, check the attack log for attacks at that same time
- * TODO later: Add logging for healed wounds, though that will require some rewriting of healing code to prevent admin heals from spamming the logs. Not high priority
- *
- * Arguments:
- * * victim- The guy who got wounded
- * * suffered_wound- The wound, already applied, that we're logging. It has to already be attached so we can get the limb from it
- * * dealt_damage- How much damage is associated with the attack that dealt with this wound.
- * * dealt_wound_bonus- The wound_bonus, if one was specified, of the wounding attack
- * * dealt_bare_wound_bonus- The bare_wound_bonus, if one was specified *and applied*, of the wounding attack. Not shown if armor was present
- * * base_roll- Base wounding ability of an attack is a random number from 1 to (dealt_damage ** WOUND_DAMAGE_EXPONENT). This is the number that was rolled in there, before mods
- */
-/proc/log_wound(atom/victim, datum/wound/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll)
-	if(QDELETED(victim) || !suffered_wound)
-		return
-	var/message = "has suffered: [suffered_wound][suffered_wound.limb ? " to [suffered_wound.limb.name]" : null]"// maybe indicate if it's a promote/demote?
-
-	if(dealt_damage)
-		message += " | Damage: [dealt_damage]"
-		// The base roll is useful since it can show how lucky someone got with the given attack. For example, dealing a cut
-		if(base_roll)
-			message += " (rolled [base_roll]/[dealt_damage ** WOUND_DAMAGE_EXPONENT])"
-
-	if(dealt_wound_bonus)
-		message += " | WB: [dealt_wound_bonus]"
-
-	if(dealt_bare_wound_bonus)
-		message += " | BWB: [dealt_bare_wound_bonus]"
-
-	victim.log_message(message, LOG_ATTACK, color="blue")
-
 /atom/proc/add_filter(name,priority,list/params)
 	LAZYINITLIST(filter_data)
 	var/list/copied_parameters = params.Copy()
@@ -1756,8 +1668,9 @@
 	filter_data = null
 	filters = null
 
-/atom/proc/intercept_zImpact(atom/movable/hitting_atom, levels = 1)
-	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, hitting_atom, levels)
+/atom/proc/intercept_zImpact(list/falling_movables, levels = 1)
+	SHOULD_CALL_PARENT(TRUE)
+	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, falling_movables, levels)
 
 /// Sets the custom materials for an item.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
@@ -1913,7 +1826,9 @@
  * Returns true if this atom has gravity for the passed in turf
  *
  * Sends signals [COMSIG_ATOM_HAS_GRAVITY] and [COMSIG_TURF_HAS_GRAVITY], both can force gravity with
- * the forced gravity var
+ * the forced gravity var.
+ *
+ * micro-optimized to hell because this proc is very hot, being called several times per movement every movement.
  *
  * Gravity situations:
  * * No gravity if you're not in a turf
@@ -1924,39 +1839,28 @@
  * * otherwise no gravity
  */
 /atom/proc/has_gravity(turf/gravity_turf)
-	if(!gravity_turf || !isturf(gravity_turf))
+	if(!isturf(gravity_turf))
 		gravity_turf = get_turf(src)
 
-	if(!gravity_turf)
-		return 0
-
-	var/list/forced_gravity = list()
-	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity)
-	if(!forced_gravity.len)
-		SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
-	if(forced_gravity.len)
-		var/max_grav
-		for(var/i in forced_gravity)
-			max_grav = max(max_grav, i)
-		return max_grav
-
-	if(isspaceturf(gravity_turf)) // Turf never has gravity
-		return 0
-	if(istype(gravity_turf, /turf/open/openspace)) //openspace in a space area doesn't get gravity
-		if(istype(get_area(gravity_turf), /area/space))
+		if(!gravity_turf)//no gravity in nullspace
 			return 0
 
-	var/area/turf_area = get_area(gravity_turf)
-	if(turf_area.has_gravity) // Areas which always has gravity
-		return turf_area.has_gravity
-	else
-		// There's a gravity generator on our z level
-		if(GLOB.gravity_generators["[gravity_turf.z]"])
-			var/max_grav = 0
-			for(var/obj/machinery/gravity_generator/main/main_grav_gen as anything in GLOB.gravity_generators["[gravity_turf.z]"])
-				max_grav = max(main_grav_gen.setting,max_grav)
-			return max_grav
-	return SSmapping.level_trait(gravity_turf.z, ZTRAIT_GRAVITY)
+	//the list isnt created every time as this proc is very hot, its only accessed if anything is actually listening to the signal too
+	var/static/list/forced_gravity = list()
+	if(SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity))
+		if(!length(forced_gravity))
+			SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+
+		var/max_grav = 0
+		for(var/i in forced_gravity)//our gravity is the strongest return forced gravity we get
+			max_grav = max(max_grav, i)
+		forced_gravity.Cut()
+		//cut so we can reuse the list, this is ok since forced gravity movers are exceedingly rare compared to all other movement
+		return max_grav
+
+	var/area/turf_area = gravity_turf.loc
+
+	return !gravity_turf.force_no_gravity && (SSmapping.gravity_by_z_level["[gravity_turf.z]"] || turf_area.has_gravity)
 
 /**
  * Causes effects when the atom gets hit by a rust effect from heretics
@@ -1964,7 +1868,6 @@
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
-	AddElement(/datum/element/rust)
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
@@ -2028,19 +1931,29 @@
  * Recursive getter method to return a list of all ghosts orbitting this atom
  *
  * This will work fine without manually passing arguments.
+ * * processed - The list of atoms we've already convered
+ * * source - Is this the atom for who we're counting up all the orbiters?
+ * * ignored_stealthed_admins - If TRUE, don't count admins who are stealthmoded and orbiting this
  */
-/atom/proc/get_all_orbiters(list/processed, source = TRUE)
+/atom/proc/get_all_orbiters(list/processed, source = TRUE, ignore_stealthed_admins = TRUE)
 	var/list/output = list()
-	if (!processed)
+	if(!processed)
 		processed = list()
-	if (src in processed)
+	else if(src in processed)
 		return output
-	if (!source)
+
+	if(!source)
 		output += src
+
 	processed += src
-	for (var/atom/atom_orbiter as anything in orbiters?.orbiter_list)
+	for(var/atom/atom_orbiter as anything in orbiters?.orbiter_list)
 		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
 	return output
+
+/mob/get_all_orbiters(list/processed, source = TRUE, ignore_stealthed_admins = TRUE)
+	if(!source && ignore_stealthed_admins && client?.holder?.fakekey)
+		return list()
+	return ..()
 
 /**
 * Instantiates the AI controller of this atom. Override this if you want to assign variables first.
@@ -2074,17 +1987,90 @@
 
 	return TRUE
 
-//Update the screentip to reflect what we're hoverin over
 /atom/MouseEntered(location, control, params)
-	. = ..()
-	// Statusbar
-	status_bar_set_text(usr, name)
+	SSmouse_entered.hovers[usr.client] = src
+
+/// Fired whenever this atom is the most recent to be hovered over in the tick.
+/// Preferred over MouseEntered if you do not need information such as the position of the mouse.
+/// Especially because this is deferred over a tick, do not trust that `client` is not null.
+/atom/proc/on_mouse_enter(client/client)
+	SHOULD_NOT_SLEEP(TRUE)
+
+	var/mob/user = client?.mob
+	if (isnull(user))
+		return
+
 	// Screentips
-	if(usr?.hud_used)
-		if(!usr.hud_used.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
-			usr.hud_used.screentip_text.maptext = ""
+	var/datum/hud/active_hud = user.hud_used
+	if(active_hud)
+		var/screentips_enabled = active_hud.screentips_enabled
+		if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || (flags_1 & NO_SCREENTIPS_1))
+			active_hud.screentip_text.maptext = ""
 		else
-			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.hud_used.screentip_color]: 32px'>[name]</span>")
+			active_hud.screentip_text.maptext_y = 0
+			var/lmb_rmb_line = ""
+			var/ctrl_lmb_alt_lmb_line = ""
+			var/shift_lmb_ctrl_shift_lmb_line = ""
+			var/extra_lines = 0
+			var/extra_context = ""
+
+			if (isliving(user) || isovermind(user) || isaicamera(user))
+				var/obj/item/held_item = user.get_active_held_item()
+
+				if ((flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1) || (held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS))
+					var/list/context = list()
+
+					var/contextual_screentip_returns = \
+						SEND_SIGNAL(src, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, context, held_item, user) \
+						| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
+
+					if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
+						// LMB and RMB on one line...
+						var/lmb_text = (SCREENTIP_CONTEXT_LMB in context) ? "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB]]" : ""
+						var/rmb_text = (SCREENTIP_CONTEXT_RMB in context) ? "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]" : ""
+
+						if (lmb_text)
+							lmb_rmb_line = lmb_text
+							if (rmb_text)
+								lmb_rmb_line += " | [rmb_text]"
+						else if (rmb_text)
+							lmb_rmb_line = rmb_text
+
+						// Ctrl-LMB, Alt-LMB on one line...
+						if (lmb_rmb_line != "")
+							lmb_rmb_line += "<br>"
+							extra_lines++
+						if (SCREENTIP_CONTEXT_CTRL_LMB in context)
+							ctrl_lmb_alt_lmb_line += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+						if (SCREENTIP_CONTEXT_ALT_LMB in context)
+							if (ctrl_lmb_alt_lmb_line != "")
+								ctrl_lmb_alt_lmb_line += " | "
+							ctrl_lmb_alt_lmb_line += "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB]]"
+
+						// Shift-LMB, Ctrl-Shift-LMB on one line...
+						if (ctrl_lmb_alt_lmb_line != "")
+							ctrl_lmb_alt_lmb_line += "<br>"
+							extra_lines++
+						if (SCREENTIP_CONTEXT_SHIFT_LMB in context)
+							shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB]]"
+						if (SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context)
+							if (shift_lmb_ctrl_shift_lmb_line != "")
+								shift_lmb_ctrl_shift_lmb_line += " | "
+							shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
+
+						if (shift_lmb_ctrl_shift_lmb_line != "")
+							extra_lines++
+
+						if(extra_lines)
+							extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_alt_lmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+							//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
+							active_hud.screentip_text.maptext_y = -10 + (extra_lines - 1) * -9
+
+			if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
+				active_hud.screentip_text.maptext = ""
+			else
+				//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
+				active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 32px; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
 
 /// Gets a merger datum representing the connected blob of objects in the allowed_types argument
 /atom/proc/GetMergeGroup(id, list/allowed_types)
@@ -2096,3 +2082,35 @@
 		new /datum/merger(id, allowed_types, src)
 		candidate = mergers[id]
 	return candidate
+
+/**
+ * This proc is used for telling whether something can pass by this atom in a given direction, for use by the pathfinding system.
+ *
+ * Trying to generate one long path across the station will call this proc on every single object on every single tile that we're seeing if we can move through, likely
+ * multiple times per tile since we're likely checking if we can access said tile from multiple directions, so keep these as lightweight as possible.
+ *
+ * For turfs this will only be used if pathing_pass_method is TURF_PATHING_PASS_PROC
+ *
+ * Arguments:
+ * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
+ * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
+ * * caller- The movable we're checking pass flags for, if we're making any such checks
+ * * no_id: When true, doors with public access will count as impassible
+ **/
+/atom/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
+	if(caller && (caller.pass_flags & pass_flags_self))
+		return TRUE
+	. = !density
+
+/**
+ * Starts cleaning something by sending the COMSIG_START_CLEANING signal.
+ * This signal is received by the [cleaner component](code/datums/components/cleaner.html).
+ *
+ * Arguments
+ * * source the datum to send the signal from
+ * * target the thing being cleaned
+ * * user the person doing the cleaning
+ * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
+ */
+/atom/proc/start_cleaning(datum/source, atom/target, mob/living/user, clean_target = TRUE)
+	SEND_SIGNAL(source, COMSIG_START_CLEANING, target, user, clean_target)

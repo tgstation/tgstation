@@ -2,7 +2,7 @@
 	name = "Tiny Prick"
 	desc = "Stabby stabby"
 
-/datum/action/changeling/sting/Trigger()
+/datum/action/changeling/sting/Trigger(trigger_flags)
 	var/mob/user = owner
 	if(!user || !user.mind)
 		return
@@ -20,16 +20,16 @@
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = src
 
-	user.hud_used.lingstingdisplay.icon_state = button_icon_state
-	user.hud_used.lingstingdisplay.invisibility = 0
+	changeling.lingstingdisplay.icon_state = button_icon_state
+	changeling.lingstingdisplay.invisibility = 0
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, span_warning("We retract our sting, we can't sting anyone for now."))
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = null
 
-	user.hud_used.lingstingdisplay.icon_state = null
-	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+	changeling.lingstingdisplay.icon_state = null
+	changeling.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind)
@@ -70,9 +70,9 @@
 	button_icon_state = "sting_transform"
 	chemical_cost = 50
 	dna_cost = 3
-	var/datum/changelingprofile/selected_dna = null
+	var/datum/changeling_profile/selected_dna = null
 
-/datum/action/changeling/sting/transformation/Trigger()
+/datum/action/changeling/sting/transformation/Trigger(trigger_flags)
 	var/mob/user = usr
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.chosen_sting)
@@ -175,7 +175,7 @@
 /datum/action/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	log_combat(user, target, "stung", "extraction sting")
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	if(!(changeling.has_dna(target.dna)))
+	if(!changeling.has_profile_with_dna(target.dna))
 		changeling.add_new_profile(target)
 	return TRUE
 

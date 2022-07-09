@@ -196,3 +196,9 @@ Temporary Items
 /tools/LinuxOneShot/TGS_Config
 /tools/LinuxOneShot/TGS_Instances
 /tools/LinuxOneShot/TGS_Logs
+
+# JavaScript tools
+**/node_modules
+
+# Screenshot tests
+/artifacts

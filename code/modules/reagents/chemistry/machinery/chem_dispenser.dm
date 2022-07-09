@@ -1,7 +1,7 @@
 /proc/translate_legacy_chem_id(id)
 	switch (id)
 		if ("sacid")
-			return "sulphuricacid"
+			return "sulfuricacid"
 		if ("facid")
 			return "fluorosulfuricacid"
 		if ("co2")
@@ -18,8 +18,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	base_icon_state = "dispenser"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 40
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
@@ -111,6 +109,7 @@
 		. += "<span class='notice'>The status display reads:\n\
 		Recharging <b>[recharge_amount]</b> power units per interval.\n\
 		Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.</span>"
+	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
 
 
 /obj/machinery/chem_dispenser/on_set_is_operational(old_value)
@@ -124,7 +123,7 @@
 	if (recharge_counter >= 8)
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
-			use_power(250*recharge_amount)
+			use_power(active_power_usage + recharge_amount)
 		recharge_counter = 0
 		return
 	recharge_counter += delta_time
@@ -329,7 +328,7 @@
 		if("save_recording")
 			if(!is_operational)
 				return
-			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
+			var/name = tgui_input_text(usr, "What do you want to name this recipe?", "Recipe Name", MAX_NAME_LEN)
 			if(!usr.canUseTopic(src, !issilicon(usr)))
 				return
 			if(saved_recipes[name] && tgui_alert(usr, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
@@ -339,7 +338,7 @@
 					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent)]
 					if(!dispensable_reagents.Find(reagent_id))
 						visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
-						to_chat(usr, "<span class ='danger'>[src] cannot find <b>[reagent]</b>!</span>")
+						to_chat(usr, span_warning("[src] cannot find <b>[reagent]</b>!"))
 						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
@@ -354,9 +353,12 @@
 			if(beaker)
 				beaker.reagents.ui_interact(usr)
 
+/obj/machinery/chem_dispenser/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
-	if(default_unfasten_wrench(user, I))
-		return
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_appearance()
 		return
@@ -369,7 +371,7 @@
 			return
 		replace_beaker(user, B)
 		to_chat(user, span_notice("You add [B] to [src]."))
-		updateUsrDialog()
+		ui_interact(user)
 	else if(!user.combat_mode && !istype(I, /obj/item/card/emag))
 		to_chat(user, span_warning("You can't load [I] into [src]!"))
 		return ..()
@@ -391,7 +393,7 @@
 	for(var/i in 1 to total)
 		Q.add_reagent(pick(dispensable_reagents), 10, reagtemp = dispensed_temperature)
 	R += Q
-	chem_splash(get_turf(src), 3, R)
+	chem_splash(get_turf(src), null, 3, R)
 	if(beaker?.reagents)
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
@@ -400,17 +402,22 @@
 	visible_message(span_danger("[src] malfunctions, spraying chemicals everywhere!"))
 
 /obj/machinery/chem_dispenser/RefreshParts()
+	. = ..()
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
+	var/parts_rating = 0
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		newpowereff += 0.0166666666*M.rating
+		parts_rating += M.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_amount *= C.rating
+		parts_rating += C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > 3)
 			dispensable_reagents |= upgrade_reagents
+		parts_rating += M.rating
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -431,38 +438,23 @@
 		beaker = null
 	return ..()
 
-/obj/machinery/chem_dispenser/AltClick(mob/living/user)
+/obj/machinery/chem_dispenser/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
 		return
 	replace_beaker(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/chem_dispenser/drinks/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
+/obj/machinery/chem_dispenser/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/chem_dispenser/drinks/setDir()
-	var/old = dir
-	. = ..()
-	if(dir != old)
-		update_appearance()  // the beaker needs to be re-positioned if we rotate
+/obj/machinery/chem_dispenser/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/chem_dispenser/drinks/display_beaker()
-	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
-	switch(dir)
-		if(NORTH)
-			b_o.pixel_y = 7
-			b_o.pixel_x = rand(-9, 9)
-		if(EAST)
-			b_o.pixel_x = 4
-			b_o.pixel_y = rand(-5, 7)
-		if(WEST)
-			b_o.pixel_x = -5
-			b_o.pixel_y = rand(-5, 7)
-		else//SOUTH
-			b_o.pixel_y = -7
-			b_o.pixel_x = rand(-9, 9)
-	return b_o
+/obj/machinery/chem_dispenser/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
@@ -474,7 +466,6 @@
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP // magical mystery temperature of 274.5, where ice does not melt, and water does not freeze
 	amount = 10
 	pixel_y = 6
-	layer = WALL_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
 	working_state = null
 	nopower_state = null
@@ -513,6 +504,33 @@
 		/datum/reagent/toxin/staminatoxin
 	)
 
+/obj/machinery/chem_dispenser/drinks/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
+
+/obj/machinery/chem_dispenser/drinks/setDir()
+	var/old = dir
+	. = ..()
+	if(dir != old)
+		update_appearance()  // the beaker needs to be re-positioned if we rotate
+
+/obj/machinery/chem_dispenser/drinks/display_beaker()
+	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
+	switch(dir)
+		if(NORTH)
+			b_o.pixel_y = 7
+			b_o.pixel_x = rand(-9, 9)
+		if(EAST)
+			b_o.pixel_x = 4
+			b_o.pixel_y = rand(-5, 7)
+		if(WEST)
+			b_o.pixel_x = -5
+			b_o.pixel_y = rand(-5, 7)
+		else//SOUTH
+			b_o.pixel_y = -7
+			b_o.pixel_x = rand(-9, 9)
+	return b_o
+
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."
 	obj_flags = CAN_BE_HIT | EMAGGED
@@ -540,6 +558,7 @@
 		/datum/reagent/consumable/ethanol/vodka,
 		/datum/reagent/consumable/ethanol/gin,
 		/datum/reagent/consumable/ethanol/rum,
+		/datum/reagent/consumable/ethanol/navy_rum,
 		/datum/reagent/consumable/ethanol/tequila,
 		/datum/reagent/consumable/ethanol/vermouth,
 		/datum/reagent/consumable/ethanol/cognac,
@@ -550,6 +569,7 @@
 		/datum/reagent/consumable/ethanol/creme_de_cacao,
 		/datum/reagent/consumable/ethanol/creme_de_coconut,
 		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/curacao,
 		/datum/reagent/consumable/ethanol/sake,
 		/datum/reagent/consumable/ethanol/applejack
 	)
@@ -623,6 +643,7 @@
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/abductor
 	working_state = null
 	nopower_state = null
+	use_power = NO_POWER_USE
 	dispensable_reagents = list(
 		/datum/reagent/aluminium,
 		/datum/reagent/bromine,
@@ -661,5 +682,7 @@
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin,
 		/datum/reagent/toxin/plasma,
-		/datum/reagent/uranium
+		/datum/reagent/uranium,
+		/datum/reagent/consumable/liquidelectricity/enriched,
+		/datum/reagent/medicine/c2/synthflesh
 	)

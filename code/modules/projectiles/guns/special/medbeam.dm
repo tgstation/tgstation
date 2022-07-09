@@ -38,8 +38,7 @@
  */
 /obj/item/gun/medbeam/proc/LoseTarget()
 	if(active)
-		qdel(current_beam)
-		current_beam = null
+		QDEL_NULL(current_beam)
 		active = FALSE
 		on_beam_release(current_target)
 	current_target = null
@@ -51,6 +50,7 @@
  */
 /obj/item/gun/medbeam/proc/beam_died()
 	SIGNAL_HANDLER
+	current_beam = null
 	active = FALSE //skip qdelling the beam again if we're doing this proc, because
 	if(isliving(loc))
 		to_chat(loc, span_warning("You lose control of the beam!"))
@@ -87,7 +87,7 @@
 	last_check = world.time
 
 	if(!los_check(loc, current_target))
-		qdel(current_beam)//this will give the target lost message
+		QDEL_NULL(current_beam)//this will give the target lost message
 		return
 
 	if(current_target)

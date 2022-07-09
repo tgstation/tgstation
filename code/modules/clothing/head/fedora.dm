@@ -3,7 +3,11 @@
 	icon_state = "fedora"
 	inhand_icon_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/fedora
+
+/obj/item/clothing/head/fedora/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/small/fedora)
 
 /obj/item/clothing/head/fedora/white
 	name = "white fedora"
@@ -24,3 +28,8 @@
 	sleep(10)
 	H.facial_hairstyle = "Neckbeard"
 	return(BRUTELOSS)
+
+/obj/item/clothing/head/fedora/carpskin
+	name = "carpskin fedora"
+	icon_state = "fedora_carpskin"
+	inhand_icon_state = "fedora_carpskin"
