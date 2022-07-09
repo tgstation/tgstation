@@ -8,7 +8,7 @@
 	/// Checks to see if this airlock has an unrestricted helper (will set to TRUE if present).
 	var/unres_sensor = FALSE
 	/// Unrestricted sides, or sides of the airlock that will open regardless of access
-	var/unres_sides = 0
+	var/unres_sides = NONE
 	///what name are we passing to the finished airlock
 	var/passed_name
 	///what string are we passing to the finished airlock as the cycle ID
