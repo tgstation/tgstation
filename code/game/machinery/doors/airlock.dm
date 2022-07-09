@@ -213,11 +213,14 @@
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
 
-/obj/machinery/door/airlock/vv_edit_var(var_name)
+/obj/machinery/door/airlock/vv_edit_var(var_name, vval)
 	. = ..()
 	switch (var_name)
 		if (NAMEOF(src, cyclelinkeddir))
 			cyclelinkairlock()
+		if (NAMEOF(src, secondsElectrified))
+			set_electrified(vval < MACHINE_NOT_ELECTRIFIED ? MACHINE_ELECTRIFIED_PERMANENT : secondsElectrified) //negative values are bad mkay (unless they're the intended negative value!)
+
 
 /obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
 	return !requiresID() || ..()
@@ -761,7 +764,9 @@
 		if(QDELETED(src))
 			return
 
-		secondsElectrified--
+		if(secondsElectrified <= MACHINE_NOT_ELECTRIFIED) //make sure they weren't unelectrified during the sleep.
+			break
+		secondsElectrified = max(MACHINE_NOT_ELECTRIFIED, secondsElectrified--) //safety to make sure we don't end up permanently electrified during a timed electrification.
 	// This is to protect against changing to permanent, mid loop.
 	if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
 		set_electrified(MACHINE_NOT_ELECTRIFIED)
@@ -1354,6 +1359,11 @@
 		LAZYADD(shockedby, text("\[[time_stamp()]\] [key_name(user)] - ([uppertext(message)])"))
 		log_combat(user, src, message)
 		add_hiddenprint(user)
+
+/obj/machinery/door/airlock/emp_act(severity)
+	. = ..()
+	if(secondsElectrified == MACHINE_ELECTRIFIED_PERMANENT) // door/emp_act() doesn't call the helper proc that sets diag huds.
+		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if((damage_amount >= atom_integrity) && (damage_flag == BOMB))

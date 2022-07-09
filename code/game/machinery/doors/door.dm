@@ -317,7 +317,7 @@
 		INVOKE_ASYNC(src, .proc/open)
 	if(prob(severity*10 - 20))
 		if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
-			secondsElectrified = MACHINE_ELECTRIFIED_PERMANENT
+			secondsElectrified = MACHINE_ELECTRIFIED_PERMANENT //if you change this make sure to update door/airlock/emp_act()
 			LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
 			addtimer(CALLBACK(src, .proc/unelectrify), 300)
 
