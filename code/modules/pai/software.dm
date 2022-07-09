@@ -1,4 +1,4 @@
-#define CABLE_LENGTH = 2
+#define CABLE_LENGTH 2
 
 
 /mob/living/silicon/pai/ui_interact(mob/user, datum/tgui/ui)
@@ -332,14 +332,14 @@
  * A periodic check to see if the source pAI is nearby.
  * Deletes the extended cable if the source pAI is not nearby.
  */
-/mob/living/silicon/pai/proc/handle_move(atom/movable/source, atom/old_loc, \
-	dir, forced, list/old_locs)
+/mob/living/silicon/pai/proc/handle_move(atom/movable/source, \
+	atom/old_loc,	dir, forced, list/old_locs)
 	if(ismovable(old_loc))
 		untrack(old_loc)
 	if(!IN_GIVEN_RANGE(src, hacking_cable, CABLE_LENGTH))
 		QDEL_NULL(hacking_cable)
 		visible_message(span_notice("The cable retracts into the pAI."))
-		return
+		return TRUE
 	if(ismovable(source.loc))
 		track(source.loc)
 
