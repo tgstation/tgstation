@@ -405,8 +405,7 @@
 	is_open = TRUE
 	spawn_type = /obj/item/coffee_cartridge
 
-/obj/item/storage/fancy/coffee_cart_rack/ComponentInitialize()
+/obj/item/storage/fancy/coffee_cart_rack/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 4
-	STR.set_holdable(list(/obj/item/coffee_cartridge))
+	atom_storage.max_slots = 4
+	atom_storage.set_holdable(list(/obj/item/coffee_cartridge))
