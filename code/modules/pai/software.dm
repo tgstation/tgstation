@@ -178,7 +178,7 @@
 		holder = loc.loc
 	if(!holoform && !iscarbon(loc))
 		holder = loc
-	if(!holder)
+	if(!holder || !iscarbon(holder))
 		to_chat(user, span_warning("You must be in someone's hands to do this!"))
 		return FALSE
 	to_chat(user, span_notice("Requesting a DNA sample."))

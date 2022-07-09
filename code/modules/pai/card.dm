@@ -57,8 +57,8 @@
 	update_appearance()
 
 /obj/item/pai_card/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_they()] \
-		can't keep living without real human intimacy!"))
+	user.visible_message(span_suicide("[user] is staring sadly at [src]! \
+		[user.p_they()] can't keep living without real human intimacy!"))
 	return OXYLOSS
 
 /obj/item/pai_card/update_overlays()
@@ -193,9 +193,9 @@
 	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 	to_chat(user, span_notice("You have requested pAI assistance."))
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
-	notify_ghosts("[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.", \
-		source=user, alert_overlay = alert_overlay, action=NOTIFY_ORBIT, header="pAI Request!", \
-		ignore_key = POLL_IGNORE_PAI)
+	notify_ghosts("[user] is requesting a pAI personality! Use the pAI button to submit yourself \
+		 as one.", source = user, alert_overlay = alert_overlay, action = NOTIFY_ORBIT, \
+		 flashwindow = FALSE, header = "pAI Request!", ignore_key = POLL_IGNORE_PAI)
 	addtimer(CALLBACK(src, .proc/request_again), SPAM_TIME, \
 		TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
 	return TRUE
@@ -243,7 +243,8 @@
 	if(!pai || pai.master_dna)
 		return FALSE
 	if(!iscarbon(user))
-		to_chat(user, span_warning("You don't have any DNA, or your DNA is incompatible with this device!"))
+		to_chat(user, span_warning("You don't have any DNA, or your DNA is \
+			incompatible with this device!"))
 	else
 		var/mob/living/carbon/master = user
 		pai.master = master.real_name
@@ -257,11 +258,13 @@
 	if(!pai)
 		return FALSE
 	if(!pai.master)
-		to_chat(user, span_warning("The pAI is not bound to a master! It doesn't have to listen to anyone."))
+		to_chat(user, span_warning("The pAI is not bound to a master! It doesn't \
+			have to listen to anyone."))
 		return FALSE
-	var/new_laws = tgui_input_text(usr, "Enter any additional directives you would like your pAI \
-		personality to follow. Note that these directives will not override the personality's allegiance \
-		to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", \
+	var/new_laws = tgui_input_text(usr, "Enter any additional directives you would \
+		like your pAI personality to follow. Note that these directives will not \
+		override the personality's allegiance to its imprinted master. Conflicting \
+		directives will be ignored.", "pAI Directive Configuration", \
 		pai.laws.supplied[1], 300)
 	if(!new_laws || !pai || !pai.master)
 		return FALSE
