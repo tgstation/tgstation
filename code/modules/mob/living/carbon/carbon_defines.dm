@@ -12,11 +12,11 @@
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
 	blocks_emissive = NONE
 	///List of [/obj/item/organ/internal] in the mob. They don't go in the contents for some reason I don't want to know.
-	var/list/internal_organs = list()
+	var/list/obj/item/organ/internal/internal_organs = list()
 	///Same as [above][/mob/living/carbon/var/internal_organs], but stores "slot ID" - "organ" pairs for easy access.
 	var/list/internal_organs_slot = list()
 	///List of [/obj/item/organ/external] in the mob, similarly used as internal_organs.
-	var/list/external_organs = list()
+	var/list/obj/item/organ/external/external_organs = list()
 	///Same as [above][/mob/living/carbon/var/external_organs], but stores "ID" = "organ" pairs.
 	var/list/external_organs_slot = list()
 	///Can't talk. Value goes down every life proc. NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
