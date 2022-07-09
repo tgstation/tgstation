@@ -1011,6 +1011,7 @@
 	description = "A rich, creamy spread produced by grinding peanuts."
 	taste_description = "peanuts"
 	color = "#D9A066"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
@@ -1061,12 +1062,4 @@
 	description = "A mushy pile of finely ground olives."
 	taste_description = "mushy olives"
 	color = "#adcf77"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/peanut_butter
-	name = "Peanut Butter"
-	description = "A creamy paste made from ground peanuts."
-	taste_description = "peanut butter"
-	color = "#d1942c"
-	nutriment_factor = 15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

@@ -868,11 +868,11 @@
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/sushi/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 
-/obj/item/food/granolabar
+/obj/item/food/granola_bar
 	name = "granola bar"
 	desc = "A dried mixture of oats, nuts, fruits, and chocolate condensed into a chewy bar. Makes a great snack during space-hiking."
 	icon = 'icons/obj/food/food.dmi'
-	icon_state = "granolabar"
+	icon_state = "granola_bar"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 4)
 	tastes = list("granola" = 1, "nuts" = 1, "chocolate" = 1, "raisin" = 1)
 	foodtypes = GRAIN | NUTS | FRUIT | SUGAR | DAIRY

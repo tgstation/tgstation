@@ -81,7 +81,7 @@
 	result = /obj/item/food/spicyfiletsushiroll
 	subcategory = CAT_SEAFOOD
 
-/datum/crafting_recipe/food/nigirisushi
+/datum/crafting_recipe/food/nigiri_sushi
 	name ="Nigiri sushi"
 	reqs = list(
 		/obj/item/food/seaweedsheet = 1,
@@ -89,5 +89,5 @@
 		/obj/item/food/fishmeat = 1,
 		/datum/reagent/consumable/soysauce = 2
 	)
-	result = /obj/item/food/nigirisushi
+	result = /obj/item/food/nigiri_sushi
 	subcategory = CAT_SEAFOOD

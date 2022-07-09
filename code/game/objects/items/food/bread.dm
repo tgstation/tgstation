@@ -319,11 +319,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 
-/obj/item/food/rawbreadstick
+/obj/item/food/raw_breadstick
 	name = "raw breadstick"
 	desc = "An uncooked strip of dough in the shape of a breadstick."
 	icon = 'icons/obj/food/burgerbread.dmi'
-	icon_state = "rawbreadstick"
+	icon_state = "raw_breadstick"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("raw dough" = 1)
 	foodtypes = GRAIN | DAIRY

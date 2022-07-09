@@ -587,16 +587,16 @@
 	result = /obj/item/food/cannoli
 	subcategory = CAT_PASTRY
 
-/datum/crafting_recipe/food/peanutbuttercookie
+/datum/crafting_recipe/food/peanut_butter_cookie
 	name = "Peanut butter cookie"
 	reqs = list(
 		/datum/reagent/consumable/peanut_butter = 5,
 		/obj/item/food/pastrybase = 1
 	)
-	result = /obj/item/food/cookie/peanutbutter
+	result = /obj/item/food/cookie/peanut_butter
 	subcategory = CAT_PASTRY
 
-/datum/crafting_recipe/food/rawbrowniebatter
+/datum/crafting_recipe/food/raw_brownie_batter
 	name = "Raw brownie batter"
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
@@ -605,5 +605,5 @@
 		/datum/reagent/consumable/coco = 5,
 		/obj/item/food/butter = 1
 	)
-	result = /obj/item/food/rawbrowniebatter
+	result = /obj/item/food/raw_brownie_batter
 	subcategory = CAT_PASTRY

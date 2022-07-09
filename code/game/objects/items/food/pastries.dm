@@ -302,19 +302,19 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/coco = 1)
 	ingredients = list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco)
 
-/obj/item/food/cookie/peanutbutter
+/obj/item/food/cookie/peanut_butter
 	name = "peanut butter cookie"
 	desc = "A tasty, chewy peanut butter cookie."
-	icon_state = "peanutbuttercookie"
+	icon_state = "peanut_butter_cookie"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/peanut_butter = 5)
 	tastes = list("peanut butter" = 2, "cookie" = 1)
 	foodtypes = GRAIN | JUNKFOOD | NUTS
 
-/obj/item/food/rawbrowniebatter
+/obj/item/food/raw_brownie_batter
 	name = "raw brownie batter"
 	desc = "A sticky mixture of raw brownie batter, cook it in the oven!"
 	icon = 'icons/obj/food/food.dmi'
-	icon_state = "rawbrowniebatter"
+	icon_state = "raw_brownie_batter"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("raw brownie batter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | BREAKFAST
@@ -322,11 +322,11 @@
 /obj/item/food/rawbrowniebatter/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/browniesheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
 
-/obj/item/food/browniesheet
+/obj/item/food/brownie_sheet
 	name = "brownie sheet"
 	desc = "An uncut sheet of cooked brownie, use a knife to cut it!."
 	icon = 'icons/obj/food/food.dmi'
-	icon_state = "browniesheet"
+	icon_state = "brownie_sheet"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/sugar = 12)
 	tastes = list("brownie" = 1, "chocolatey goodness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
