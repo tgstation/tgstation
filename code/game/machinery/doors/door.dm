@@ -35,7 +35,6 @@
 	var/autoclose = FALSE //does it automatically close after some time
 	var/safe = TRUE //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = FALSE //whether the door is bolted or not.
-	var/assemblytype //the type of door frame to drop during deconstruction
 	var/datum/effect_system/spark_spread/spark_system
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
