@@ -38,6 +38,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"aaT" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
 "abl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -856,6 +863,9 @@
 "apP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "apS" = (
@@ -870,6 +880,9 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "aqf" = (
@@ -1194,9 +1207,6 @@
 /turf/open/floor/glass/reinforced,
 /area/station/security/brig)
 "azK" = (
-/obj/structure/disposalpipe/trunk/multiz{
-	dir = 1
-	},
 /obj/machinery/door/window/left/directional/north{
 	dir = 2;
 	name = "Containment Pen #1";
@@ -1207,6 +1217,7 @@
 	id = "xenobiotopleft";
 	name = "Xenobio Topleft Pen Blast Door"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "azX" = (
@@ -5321,14 +5332,8 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/right)
 "bXW" = (
-/obj/machinery/holopad,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
-	},
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	name = "sorting disposal pipe (Xenobiology)";
-	sortType = 28
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -5660,12 +5665,10 @@
 	dir = 1
 	},
 /obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk/multiz/down{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
+/obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "cdt" = (
@@ -6329,9 +6332,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
 	},
-/obj/structure/disposalpipe/junction/yjunction{
-	dir = 8
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -6398,7 +6398,7 @@
 	id = "cytologylockdown";
 	name = "Cytology Lockdown"
 	},
-/obj/machinery/airalarm/directional/south,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "cpf" = (
@@ -7706,6 +7706,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
+"cIB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "cIC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8987,10 +8992,10 @@
 "dgD" = (
 /obj/structure/railing,
 /obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk/multiz/down{
-	dir = 2
-	},
 /obj/effect/turf_decal/stripes/end,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "dgR" = (
@@ -10154,6 +10159,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"dyu" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/sign/warning/deathsposal/directional/south,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "dyB" = (
 /obj/structure/closet/secure_closet/medical2,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -10331,12 +10344,12 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "dBQ" = (
@@ -10701,6 +10714,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 2
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "dIo" = (
@@ -11895,6 +11911,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"edJ" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating/airless,
+/area/mine/explored)
 "edK" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small/directional/south,
@@ -12734,6 +12757,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/trunk/multiz{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "euC" = (
@@ -14701,6 +14727,11 @@
 "fgi" = (
 /turf/closed/wall,
 /area/station/cargo/lobby)
+"fgl" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
 "fgB" = (
 /obj/structure/holohoop{
 	dir = 4
@@ -15484,6 +15515,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
+"ftl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/floor/iron/white,
+/area/station/science/cytology)
 "ftt" = (
 /obj/structure/table/glass,
 /obj/item/radio/intercom/directional/north,
@@ -15622,9 +15661,6 @@
 	},
 /area/station/service/chapel)
 "fwa" = (
-/obj/structure/disposalpipe/trunk/multiz{
-	dir = 2
-	},
 /obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	icon_state = "right";
@@ -15636,6 +15672,7 @@
 	id = "xenobiobottomleft";
 	name = "Xenobio Bottom Left Pen Blast Door"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "fwd" = (
@@ -20092,9 +20129,6 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/storage)
 "gZG" = (
-/obj/structure/disposalpipe/trunk/multiz{
-	dir = 2
-	},
 /obj/machinery/door/window/left/directional/north{
 	name = "Containment Pen #8";
 	req_access = list("xenobiology")
@@ -20104,6 +20138,7 @@
 	id = "xenobiobottomright";
 	name = "Xenobio Bottom Right Pen Blast Door"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "gZU" = (
@@ -23002,6 +23037,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"idz" = (
+/obj/structure/disposalpipe/sorting/mail/flip,
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/mine/explored)
 "idF" = (
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
@@ -23838,6 +23877,9 @@
 "itK" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/structure/disposalpipe/trunk/multiz{
+	dir = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "itW" = (
@@ -25477,10 +25519,12 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
+/obj/structure/cable,
+/obj/structure/disposalpipe/sorting/mail{
+	sortType = 28;
+	name = "sorting disposal pipe (Xenobiology)";
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "iWc" = (
@@ -25694,7 +25738,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -26600,7 +26643,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -30243,9 +30285,6 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -31070,10 +31109,10 @@
 	c_tag = "Science - Xenobiology South";
 	network = list("ss13","rd","xeno")
 	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "kPM" = (
@@ -31225,14 +31264,12 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/warning/secure_area{
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "Science - Cytology Lab";
 	dir = 9;
 	network = list("ss13","rd")
 	},
+/obj/structure/sign/warning/deathsposal/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "kSV" = (
@@ -31465,8 +31502,10 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/cargo)
 "kWg" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "kWr" = (
@@ -34616,7 +34655,6 @@
 "lZY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/corner,
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -35170,22 +35208,19 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "mkj" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 2
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -38971,7 +39006,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -39158,13 +39192,6 @@
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/left)
-"nzk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/open/floor/iron/white,
-/area/station/science/xenobiology)
 "nzn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/lattice/catwalk,
@@ -39991,9 +40018,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "nRw" = (
@@ -41601,7 +41626,6 @@
 "oya" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8;
@@ -42640,9 +42664,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -44134,10 +44155,10 @@
 /turf/open/floor/plating,
 /area/station/science/breakroom)
 "ppS" = (
+/obj/effect/turf_decal/sand/plating,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "ppX" = (
@@ -44249,9 +44270,6 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "psg" = (
-/obj/structure/disposalpipe/trunk/multiz{
-	dir = 1
-	},
 /obj/machinery/door/window/left/directional/north{
 	dir = 2;
 	name = "Containment Pen #4";
@@ -44262,6 +44280,7 @@
 	id = "xenobiotopright";
 	name = "Xenobio Top Right Pen Blast Door"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "psh" = (
@@ -44385,10 +44404,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "ptT" = (
@@ -44711,6 +44730,13 @@
 "pxW" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/safe)
+"pyb" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/mine/explored)
 "pyf" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
@@ -45135,12 +45161,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
-"pGx" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/station/science/xenobiology)
 "pGM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/xeno_spawn,
@@ -45465,9 +45485,6 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "pMA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -45477,6 +45494,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/junction/yjunction,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "pMG" = (
@@ -45945,7 +45963,7 @@
 /area/station/service/library)
 "pVr" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 5
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -47081,9 +47099,6 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "qoZ" = (
-/obj/structure/disposalpipe/trunk/multiz{
-	dir = 1
-	},
 /obj/machinery/door/window/left/directional/north{
 	dir = 2;
 	name = "Containment Pen #2";
@@ -47094,6 +47109,7 @@
 	id = "xenobiotopleft";
 	name = "Xenobio Topleft Pen Blast Door"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "qpa" = (
@@ -47474,6 +47490,9 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "quR" = (
@@ -48192,6 +48211,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 2
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "qGX" = (
@@ -48407,9 +48429,6 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "qJE" = (
-/obj/structure/disposalpipe/trunk/multiz{
-	dir = 2
-	},
 /obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	icon_state = "right";
@@ -48421,6 +48440,7 @@
 	id = "xenobiobottomright";
 	name = "Xenobio Bottom Right Pen Blast Door"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "qJG" = (
@@ -48741,6 +48761,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"qQR" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/r_wall,
+/area/station/science/cytology)
 "qQX" = (
 /obj/structure/fluff/tram_rail/end{
 	dir = 1
@@ -49037,9 +49061,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -50742,10 +50763,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "rBR" = (
@@ -52533,9 +52552,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "sdB" = (
-/obj/structure/disposalpipe/trunk/multiz{
-	dir = 2
-	},
 /obj/machinery/door/window/left/directional/north{
 	name = "Containment Pen #6";
 	req_access = list("xenobiology")
@@ -52545,6 +52561,7 @@
 	id = "xenobiobottomleft";
 	name = "Xenobio Bottom Left Pen Blast Door"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "sdD" = (
@@ -53661,9 +53678,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/west,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "sBh" = (
@@ -55044,13 +55058,13 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "sZO" = (
@@ -56355,9 +56369,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "twe" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/disposalpipe/segment{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -57127,6 +57140,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
+"tJI" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
 "tJL" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -57869,6 +57887,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "tZo" = (
@@ -60439,6 +60458,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
+"uTv" = (
+/obj/item/paper/crumpled{
+	name = "FUCK YOU!";
+	desc = "To the absolute moron who has to access this disposals... FUCK YOU IDIOT!!!! Got your ass. Ha ha."
+	},
+/turf/open/misc/asteroid/airless,
+/area/mine/explored)
 "uTz" = (
 /obj/structure/railing{
 	dir = 8
@@ -62716,6 +62742,9 @@
 /obj/structure/sink{
 	pixel_y = 15
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "vJT" = (
@@ -63089,6 +63118,13 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"vRi" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/mine/explored)
 "vRm" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Port to Filter"
@@ -63415,6 +63451,9 @@
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
+	},
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -64768,16 +64807,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
-"wwx" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/structure/sign/warning/deathsposal{
-	pixel_y = -32
-	},
-/turf/open/floor/iron/white,
-/area/station/science/xenobiology)
 "wwz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -65853,7 +65882,6 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -67401,9 +67429,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -67717,8 +67742,8 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 2
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -67847,9 +67872,6 @@
 	},
 /obj/structure/sink{
 	pixel_y = 15
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -68087,9 +68109,6 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "xBG" = (
-/obj/structure/disposalpipe/trunk/multiz{
-	dir = 1
-	},
 /obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 2;
@@ -68102,6 +68121,7 @@
 	id = "xenobiotopright";
 	name = "Xenobio Top Right Pen Blast Door"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "xBU" = (
@@ -174063,7 +174083,7 @@ dhe
 dhe
 dDG
 ppS
-ktp
+edJ
 dDG
 dhe
 dhe
@@ -174319,7 +174339,7 @@ dhe
 dhe
 dhe
 dDG
-mNq
+dOi
 dDG
 dDG
 dhe
@@ -174576,7 +174596,7 @@ dhe
 dhe
 dDG
 dDG
-mNq
+dOi
 dDG
 dhe
 dhe
@@ -174833,7 +174853,7 @@ dhe
 dhe
 lHN
 dDG
-mNq
+dOi
 dDG
 dhe
 dhe
@@ -175090,7 +175110,7 @@ dhe
 dDG
 dDG
 dDG
-mNq
+dOi
 dDG
 wZm
 dhe
@@ -175347,7 +175367,7 @@ dhe
 dhe
 dhe
 cuX
-mNq
+dOi
 dDG
 dhe
 dhe
@@ -175604,7 +175624,7 @@ dhe
 dhe
 dhe
 dDG
-mNq
+dOi
 dDG
 dhe
 dhe
@@ -175861,7 +175881,7 @@ dhe
 dhe
 wZm
 dDG
-mNq
+dOi
 dDG
 dhe
 dhe
@@ -176118,14 +176138,14 @@ dhe
 dhe
 dhe
 dDG
-mNq
+dOi
 dDG
 dDG
 dhe
 dhe
 dhe
 dhe
-dhe
+idz
 dhe
 dhe
 dhe
@@ -176375,7 +176395,7 @@ dhe
 dhe
 dhe
 dDG
-mNq
+dOi
 cuX
 dDG
 dhe
@@ -176632,7 +176652,7 @@ dhe
 dhe
 dhe
 dDG
-mNq
+dOi
 dDG
 dDG
 dDG
@@ -176889,12 +176909,12 @@ dhe
 dhe
 dDG
 dDG
-mNq
+dOi
 dDG
-dhe
-dhe
-dhe
-dhe
+htM
+dDG
+dDG
+dDG
 dhe
 dhe
 dhe
@@ -177146,17 +177166,17 @@ dhe
 dhe
 dhe
 dDG
-mNq
-htM
-dhe
-dhe
-dhe
-dhe
-dhe
-dhe
-dhe
-dhe
-dhe
+pyb
+fgl
+fgl
+fgl
+fgl
+fgl
+fgl
+fgl
+fgl
+fgl
+vRi
 dhe
 dhe
 dhe
@@ -177403,17 +177423,17 @@ hlc
 hlc
 hlc
 hlc
-pGx
 hlc
 hlc
 hlc
 hlc
 hlc
-dhe
-dhe
-dhe
-dhe
-dhe
+hlc
+dDG
+dDG
+dDG
+dDG
+dOi
 dhe
 dhe
 dhe
@@ -177666,11 +177686,11 @@ fyd
 fyd
 fyd
 hlc
-dhe
-dhe
-dhe
-dhe
-dhe
+dDG
+dDG
+dDG
+uTv
+dOi
 dhe
 dhe
 dhe
@@ -177927,7 +177947,7 @@ hlc
 hlc
 hlc
 hlc
-dhe
+dOi
 dhe
 dhe
 dhe
@@ -178184,13 +178204,13 @@ beJ
 wcb
 uaO
 hlc
+dOi
 dhe
 dhe
 dhe
 dhe
 dhe
 dhe
-jhd
 jhd
 jhd
 jhd
@@ -178431,7 +178451,7 @@ fyd
 fyd
 oCO
 uvZ
-twe
+cIB
 fuX
 fyd
 fyd
@@ -178441,13 +178461,13 @@ cXV
 cXV
 cXV
 hlc
+pyb
+tJI
+tJI
+tJI
+tJI
+aaT
 dhe
-dhe
-dhe
-dhe
-dhe
-dhe
-jhd
 jhd
 jhd
 jhd
@@ -178703,8 +178723,8 @@ hlc
 hlc
 hlc
 hlc
+mNq
 dhe
-jhd
 jhd
 jhd
 jhd
@@ -178945,7 +178965,7 @@ fyd
 fyd
 oCO
 hel
-twe
+cIB
 fuX
 fyd
 fyd
@@ -178954,14 +178974,14 @@ hlc
 mVb
 qWA
 nwp
-wwx
+uow
 hlc
 fyd
 fyd
 fyd
 hlc
+mNq
 dhe
-jhd
 jhd
 jhd
 jhd
@@ -179217,8 +179237,8 @@ fyd
 fyd
 fyd
 hlc
+mNq
 dhe
-jhd
 jhd
 jhd
 jhd
@@ -179474,8 +179494,8 @@ fyd
 fyd
 fyd
 hlc
+mNq
 dhe
-jhd
 jhd
 jhd
 jhd
@@ -179723,7 +179743,7 @@ hFK
 acj
 okP
 bXW
-nzk
+qro
 uTi
 dHs
 fyd
@@ -179731,8 +179751,8 @@ fyd
 fyd
 gNp
 hlc
+mNq
 dhe
-jhd
 jhd
 jhd
 jhd
@@ -179988,8 +180008,8 @@ fyd
 fyd
 fyd
 hlc
+mNq
 dhe
-jhd
 jhd
 jhd
 jhd
@@ -180245,8 +180265,8 @@ fyd
 fyd
 fyd
 hlc
+mNq
 dhe
-jhd
 jhd
 jhd
 jhd
@@ -180496,14 +180516,14 @@ hlc
 jkO
 cwW
 iVF
-uow
+dyu
 hlc
 fyd
 fyd
 fyd
 hlc
+mNq
 dhe
-jhd
 jhd
 jhd
 jhd
@@ -180759,8 +180779,8 @@ hlc
 hlc
 hlc
 hlc
+mNq
 dhe
-jhd
 jhd
 jhd
 jhd
@@ -181011,13 +181031,13 @@ bGr
 uin
 pMA
 cpb
-qSS
+qQR
+tJI
+tJI
+tJI
+tJI
+ktp
 dhe
-dhe
-dhe
-dhe
-dhe
-jhd
 jhd
 jhd
 jhd
@@ -181274,7 +181294,7 @@ dhe
 dhe
 lvw
 dhe
-jhd
+dhe
 jhd
 jhd
 jhd
@@ -182550,7 +182570,7 @@ kWA
 lta
 vKn
 vjb
-jhU
+ftl
 jhU
 vaT
 qSS
