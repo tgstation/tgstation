@@ -53,6 +53,7 @@
 /obj/item/clothing/suit/armor/vest/marine/medic
 	name = "tactical medic's armor vest"
 	icon_state = "marine_medic"
+	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
