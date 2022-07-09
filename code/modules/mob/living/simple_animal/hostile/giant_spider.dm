@@ -296,6 +296,8 @@
 	var/datum/action/innate/spider/comm/not_hivemind_talk = new(src)
 	not_hivemind_talk.Grant(src)
 
+	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
+
 /datum/action/innate/spider
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_alien"

@@ -1,4 +1,4 @@
 author: "orthography"
 delete-after: True
 changes: 
-  - bugfix: "fixed APC wiring"
+  - bugfix: "changes a pump subclass."

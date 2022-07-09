@@ -1,0 +1,4 @@
+author: "magatsuchi"
+delete-after: True
+changes: 
+  - refactor: "changes storage from a component to a normal datum"

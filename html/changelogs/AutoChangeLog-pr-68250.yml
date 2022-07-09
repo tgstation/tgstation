@@ -1,6 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes: 
-  - rscadd: "Added a sorting disposals pipe for the Tramstation dormitory, allowing packages to be sent there"
-  - bugfix: "Fixed two incorrect sorting disposals pipes on Tramstation that prevented packages from reaching certain destinations"
-  - bugfix: "Added four missing names to sorting disposals pipes on Tramstation"

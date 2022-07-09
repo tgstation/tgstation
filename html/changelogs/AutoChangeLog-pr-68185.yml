@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Thermomachines will properly have a dropshadow"
-  - bugfix: "Weather will be blurred as expected"
