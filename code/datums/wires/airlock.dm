@@ -217,7 +217,7 @@
 			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
 				return
 			if(!mend)
-				A.unres_sides = !A.unres_sides
+				A.unres_sides = NONE
 				A.update_appearance()
 			else
 				A.unres_sides = pick(NORTH, SOUTH, EAST, WEST)

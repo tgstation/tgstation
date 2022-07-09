@@ -45,7 +45,7 @@
 	/// Checks to see if this airlock has an unrestricted "sensor" within (will set to TRUE if present).
 	var/unres_sensor = FALSE
 	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
-	var/unres_sides = 0
+	var/unres_sides = NONE
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 	var/can_open_with_hands = TRUE /// Whether or not the door can be opened by hand (used for blast doors and shutters)
 
