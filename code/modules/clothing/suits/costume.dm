@@ -55,7 +55,11 @@
 	desc = "this pretty much looks ridiculous" //Needs no fixing
 	icon_state = "justice"
 	inhand_icon_state = "justice"
+<<<<<<< HEAD
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+=======
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
+>>>>>>> 2fa81d77e40f5f3b0e9b989c2cb015711344120a
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 
