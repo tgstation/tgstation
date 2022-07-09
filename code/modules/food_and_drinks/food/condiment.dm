@@ -285,6 +285,13 @@
 	list_reagents = list(/datum/reagent/consumable/yoghurt = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/peanut_butter
+	name = "peanut butter"
+	desc = "Tasty, fattening processed peanuts in a jar."
+	icon_state = "peanutbutter"
+	list_reagents = list(/datum/reagent/consumable/peanut_butter = 50)
+	fill_icon_thresholds = null
+
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
 
 /obj/item/reagent_containers/food/condiment/pack

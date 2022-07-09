@@ -72,3 +72,23 @@
 	)
 	result = /obj/item/food/blt
 	subcategory = CAT_SANDWICH
+
+/datum/crafting_recipe/food/peanutbutterjellysandwich
+	name = "Peanut butter and jelly sandwich"
+	reqs = list(
+		/obj/item/food/breadslice/plain = 2,
+		/datum/reagent/consumable/peanut_butter = 5,
+		/datum/reagent/consumable/cherryjelly = 5
+	)
+	result = /obj/item/food/peanutbutterjellysandwich
+	subcategory = CAT_SANDWICH
+
+/datum/crafting_recipe/food/peanutbutterbananasandwich
+	name = "Peanut butter and banana sandwich"
+	reqs = list(
+		/obj/item/food/breadslice/plain = 2,
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/food/grown/banana = 1
+	)
+	result = /obj/item/food/peanutbutterbananasandwich
+	subcategory = CAT_SANDWICH

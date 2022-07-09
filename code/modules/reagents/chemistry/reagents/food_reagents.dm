@@ -1063,3 +1063,10 @@
 	color = "#adcf77"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/peanut_butter
+	name = "Peanut Butter"
+	description = "A creamy paste made from ground peanuts."
+	taste_description = "peanut butter"
+	color = "#d1942c"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
