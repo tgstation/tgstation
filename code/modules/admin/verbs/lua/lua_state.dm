@@ -38,7 +38,8 @@ GLOBAL_PROTECT(lua_usr)
 		SSlua.sleeps += src
 
 /datum/lua_state/proc/log_result(result, verbose = TRUE)
-	if(!verbose && result["status"] != "errored" && result["status"] != "bad return")
+	if(!verbose && result["status"] != "errored" && result["status"] != "bad return" \
+		&& !(result["name"] == "input" && (result["status"] == "finished" || length(result["param"]))))
 		return
 	var/append_to_log = TRUE
 	if(log.len)
