@@ -24,7 +24,6 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
 
-	var/shockedby
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
