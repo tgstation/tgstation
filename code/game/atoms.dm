@@ -334,7 +334,8 @@
 	return ..()
 
 /// A quick and easy way to create a storage datum for an atom
-/atom/proc/create_storage(max_slots,
+/atom/proc/create_storage(
+	max_slots,
 	max_specific_storage,
 	max_total_storage,
 	numerical_stacking = FALSE,
@@ -345,7 +346,7 @@
 	list/canhold,
 	list/canthold,
 	type = /datum/storage,
-	)
+)
 
 	if(atom_storage)
 		QDEL_NULL(atom_storage)
