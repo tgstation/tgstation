@@ -67,6 +67,6 @@
 	if(!.)
 		return FALSE
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-	if(advanced_disease.stage >= 4 && causes_illiteracy)
+	if(advanced_disease.stage >= 5 && causes_illiteracy)
 		ADD_TRAIT(infected_mob, TRAIT_ILLITERATE, DISEASE_TRAIT)
 	return TRUE
