@@ -95,7 +95,7 @@
 	status += "The speed light is [A.normalspeed ? "on" : "off"]."
 	status += "The emergency light is [A.emergency ? "on" : "off"]."
 
-	if(A.unres_sensor == TRUE)
+	if(A.unres_sensor)
 		status += "The unrestricted exit display is [A.unres_sides ? "indicating that it is letting people pass from the [dir2text(REVERSE_DIR(A.unres_sides))]" : "faintly flickering"]."
 	else
 		status += "The unrestricted exit display is completely inactive."
