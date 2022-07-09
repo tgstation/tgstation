@@ -2654,12 +2654,10 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "bgD" = (
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
-	dir = 10
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "bhk" = (
@@ -6252,7 +6250,7 @@
 /area/station/science/lab)
 "clp" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/airalarm/mixingchamber{
 	dir = 1;
@@ -9059,9 +9057,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "dim" = (
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
-	dir = 4
-	},
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
@@ -18594,13 +18589,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"gyY" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/obj/effect/turf_decal/box/red,
-/turf/open/floor/iron/white,
-/area/station/science/ordnance)
 "gzi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -22428,9 +22416,10 @@
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "hUx" = (
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "hUK" = (
@@ -36483,7 +36472,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2{
 	dir = 5
 	},
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_freezer_chamber_input,
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance/freezerchamber)
 "mDT" = (
@@ -61363,7 +61352,7 @@
 /area/station/engineering/main)
 "viZ" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2,
-/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_freezer_chamber_input,
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance/freezerchamber)
 "vjb" = (
@@ -67811,7 +67800,9 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
 "xwU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
+	dir = 4
+	},
 /obj/machinery/meter,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
@@ -116987,7 +116978,7 @@ oys
 oyF
 qKF
 oyF
-gyY
+bzE
 uay
 jqE
 oXh
