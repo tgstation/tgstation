@@ -1,0 +1,4 @@
+author: "SmoSmoSmoSmok"
+delete-after: True
+changes: 
+  - code_imp: "dehardcodes admin grantable objectives list"
