@@ -10,7 +10,6 @@ export type Data = {
   languages: BooleanLike;
   master_dna: string | null;
   master_name: string | null;
-  pda: { power: BooleanLike; silent: BooleanLike };
   ram: number;
   medical_records: ReadonlyArray<Record<string, string>>;
   security_records: ReadonlyArray<Record<string, string>>;

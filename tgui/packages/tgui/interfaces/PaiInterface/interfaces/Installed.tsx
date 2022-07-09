@@ -88,7 +88,7 @@ const InstalledInfo = (props, context) => {
  */
 const SoftwareButtons = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { door_jack, languages, pda } = data;
+  const { door_jack, languages } = data;
   const [currentSelection, setCurrentSelection] = useLocalState(
     context,
     'software',
@@ -96,29 +96,6 @@ const SoftwareButtons = (props, context) => {
   );
 
   switch (currentSelection) {
-    case 'digital messenger':
-      return (
-        <>
-          <Button
-            icon="power-off"
-            onClick={() => act(currentSelection, { pda: 'power' })}
-            selected={pda.power}>
-            Power
-          </Button>
-          <Button
-            icon="volume-mute"
-            onClick={() => act(currentSelection, { pda: 'silent' })}
-            selected={pda.silent}>
-            Silent
-          </Button>
-          <Button
-            disabled={!pda.power}
-            icon="envelope"
-            onClick={() => act(currentSelection, { pda: 'message' })}>
-            Message
-          </Button>
-        </>
-      );
     case 'door jack':
       return (
         <>

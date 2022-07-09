@@ -31,9 +31,11 @@
 	. = ..()
 	if(.)
 		return
+	if(available_software[action] && !installed_software.Find(action))
+		to_chat(usr, span_warning("You do not have this software installed."))
+		CRASH("[usr] attempted to activate software they hadn't installed: [action]")
 	switch(action)
 		if("atmosphere sensor")
-			check_if_installed(usr, action)
 			if(!atmos_analyzer)
 				atmos_analyzer = new(src)
 			atmos_analyzer.attack_self(src)
@@ -42,7 +44,6 @@
 			buy_software(usr, params["selection"])
 			return TRUE
 		if("camera zoom")
-			check_if_installed(usr, action)
 			if(aicamera)
 				aicamera.adjust_zoom(usr)
 				return TRUE
@@ -54,82 +55,71 @@
 			check_dna(usr)
 			return TRUE
 		if("crew manifest")
-			check_if_installed(usr, action)
 			ai_roster()
 			return TRUE
+		if("digital messenger")
+			modularInterface?.interact(usr)
+			return TRUE
 		if("door jack")
-			check_if_installed(usr, action)
 			door_jack(usr, params["jack"])
 			return TRUE
 		if("encryption keys")
-			check_if_installed(usr, action)
 			to_chat(src, span_notice("You have [!encrypt_mod ? "enabled" \
 				: "disabled"] encrypted radio frequencies."))
 			encrypt_mod = !encrypt_mod
 			radio.subspace_transmission = !radio.subspace_transmission
 			return TRUE
 		if("host scan")
-			check_if_installed(usr, action)
 			host_scan(usr)
 			return TRUE
 		if("internal gps")
-			check_if_installed(usr, action)
 			if(!gps)
 				gps = new(src)
 			gps.attack_self(src)
 			return TRUE
 		if("loudness booster")
-			check_if_installed(usr, action)
 			if(!instrument)
 				instrument = new(src)
 			instrument.interact(src) // Open Instrument
 			return TRUE
 		if("medical HUD")
-			check_if_installed(usr, action)
 			toggle_hud(usr, "medical")
 			return TRUE
 		if("newscaster")
-			check_if_installed(usr, action)
 			if(!newscaster)
 				newscaster = new(src)
 			newscaster.ui_interact(src)
 			return TRUE
 		if("photography module")
-			check_if_installed(usr, action)
 			if(aicamera)
 				aicamera.toggle_camera_mode(usr)
 				return TRUE
 			return FALSE
 		if("printer module")
-			check_if_installed(usr, action)
 			if(aicamera)
 				aicamera.paiprint(usr)
 				return TRUE
 			return FALSE
 		if("radio")
-			check_if_installed(usr, action)
 			if(radio)
 				radio.attack_self(src)
 				return TRUE
 			return FALSE
 		if("refresh")
-			if(params["list"] == "security" && !check_if_installed(usr, "security records") \
-				|| params["list"] == "medical" && !check_if_installed(usr, "medical records"))
+			if(params["list"] == "security" && !installed_software.Find("security records") \
+				|| params["list"] == "medical" && !installed_software.Find("medical records"))
 				return FALSE
 			refresh_records(ui, params["list"])
 			return TRUE
 		if("remote signaler")
-			check_if_installed(usr, action)
 			if(!signaler)
 				signaler = new(src)
 			signaler.ui_interact(src)
 			return TRUE
 		if("security HUD")
-			check_if_installed(usr, action)
 			toggle_hud(usr, "security")
 			return TRUE
 		if("universal translator")
-			check_if_installed(usr, action)
 			grant_languages(usr, ui)
 			return TRUE
 	return FALSE
@@ -203,21 +193,6 @@
 	to_chat(user, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? \
 		"matches" : "does not match"] our stored Master's DNA."))
 	return TRUE
-
-/**
- * Error handler that catches pAIs attempting to use software
- * that hasn't been installed yet.
- *
- * @param {mob} user The pAI attempting to use the software.
- * @param {string} selection The software being used.
- * @return {bool} TRUE if the pAI was warned, FALSE otherwise.
- */
-/mob/living/silicon/pai/proc/check_if_installed(usr, mob/user, selection)
-	if(installed_software[selection])
-		return TRUE
-	to_chat(user, span_warning("You do not have atmosphere sensor installed."))
-	stack_trace("[user] attempted to activate software they hadn't installed: [selection]")
-	return FALSE
 
 /**
  * Switch that handles door jack operations.
