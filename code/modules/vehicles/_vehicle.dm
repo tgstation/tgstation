@@ -159,8 +159,22 @@
 			remove_controller_actions_by_flag(controller, i)
 	return TRUE
 
+/// To add a trailer to the vehicle in a manner that allows safe qdels
+/obj/vehicle/proc/add_trailer(obj/vehicle/added_vehicle)
+	trailer = added_vehicle
+	RegisterSignal(trailer, COMSIG_PARENT_QDELETING, .proc/remove_trailer)
+
+/// To remove a trailer from the vehicle in a manner that allows safe qdels
+/obj/vehicle/proc/remove_trailer()
+	SIGNAL_HANDLER
+	UnregisterSignal(trailer, COMSIG_PARENT_QDELETING)
+	trailer = null
+
 /obj/vehicle/Move(newloc, dir)
+	// It is unfortunate, but this is the way to make it not mess up
+	var/atom/old_loc = loc
+	// When we do this, it will set the loc to the new loc
 	. = ..()
 	if(trailer && .)
-		var/dir_to_move = get_dir(trailer.loc, newloc)
+		var/dir_to_move = get_dir(trailer.loc, old_loc)
 		step(trailer, dir_to_move)
