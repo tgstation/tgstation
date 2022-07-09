@@ -160,8 +160,8 @@
 /**
  * Downloads a candidate from the list and removes them from SSpai.candidates
  *
- * Parameters:
- * 	ckey: The ckey of the candidate to download
+ * @params {string} ckey The ckey of the candidate to download
+ * @returns {boolean} TRUE if the candidate was downloaded, FALSE if not
  */
 /obj/item/pai_card/proc/download_candidate(ckey)
 	if(pai)

@@ -1,6 +1,5 @@
 #define CABLE_LENGTH 2
 
-
 /mob/living/silicon/pai/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -126,8 +125,8 @@
  * Purchases the selected software from the list and deducts their
  * available ram.
  *
- * @param user {mob} The user purchasing the software.
- * @param selection {string} The software to purchase.
+ * @param {mob} user The user purchasing the software.
+ * @param {string} selection The software to purchase.
  * @return {bool} TRUE if the software was purchased, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/buy_software(mob/user, selection)
@@ -147,24 +146,22 @@
 /**
  * Changes the image displayed on the pAI.
  *
- * @param user {silicon/pai} The user who is changing the image.
+ * @param {mob} user The user who is changing the image.
  * @return {bool} TRUE if the image was changed, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/change_image(mob/living/silicon/pai/user)
+/mob/living/silicon/pai/proc/change_image(mob/user)
 	var/new_image = tgui_input_list(user, "Select your new display image", \
 		"Display Image", sort_list(list("happy", "cat", "extremely happy", \
 		"face",	"laugh", "off", "sad", "angry", "what", "sunglasses", "none")))
 	if(isnull(new_image))
-		to_chat(world, "Error: No image selected.")
 		return FALSE
 	switch(new_image)
 		if("None")
-			user.card.emotion_icon = "null"
+			card.emotion_icon = "null"
 		if("Extremely Happy")
-			user.card.emotion_icon = "extremely-happy"
+			card.emotion_icon = "extremely-happy"
 		else
-			user.card.emotion_icon = new_image
-	to_chat(world, "Image: [new_image]")
+			card.emotion_icon = new_image
 	user.update_appearance()
 	return TRUE
 
@@ -173,11 +170,11 @@
  * or... whatever. It must be held in order to work
  * Gives the owner a popup if they want to get the jab.
  *
- * @param user {mob} The pAI requesting the sample.
- * @param master {living/carbon} The holder of the pAI.
+ * @param {mob} user The pAI requesting the sample.
+ * @param {living/carbon} master The holder of the pAI.
  * @return {boolean} TRUE if a sample was taken, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/check_dna(mob/living/silicon/pai/user)
+/mob/living/silicon/pai/proc/check_dna(mob/user)
 	var/mob/living/carbon/holder = get_holder()
 	if(!holder)
 		to_chat(user, span_warning("You must be in someone's hands to do this!"))
@@ -197,7 +194,7 @@
 		to_chat(user, span_warning("No DNA detected."))
 		return FALSE
 	to_chat(user, span_boldannounce(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
-	to_chat(user, span_notice("DNA [holder.dna.unique_enzymes == user.master_dna ? \
+	to_chat(user, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? \
 		"matches" : "does not match"] our stored Master's DNA."))
 	return TRUE
 
@@ -205,8 +202,8 @@
  * Error handler that catches pAIs attempting to use software
  * that hasn't been installed yet.
  *
- * @param user {mob} The pAI attempting to use the software.
- * @param selection {string} The software being used.
+ * @param {mob} user The pAI attempting to use the software.
+ * @param {string} selection The software being used.
  * @return {bool} TRUE if the pAI was warned, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/check_if_installed(mob/user, selection)
@@ -219,11 +216,11 @@
 /**
  * Switch that handles door jack operations.
  *
- * @param user {silicon/pai} The user operating the door jack.
- * @param jack_state {string} The requested state of the door jack.
+ * @param {mob} user The user operating the door jack.
+ * @param {string} jack_state The requested state of the door jack.
  * @return {bool} TRUE if the door jack state was switched, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/door_jack(mob/living/silicon/pai/user, jack_state)
+/mob/living/silicon/pai/proc/door_jack(mob/user, jack_state)
 	switch(jack_state)
 		if("cable")
 			extend_cable(user)
@@ -247,7 +244,7 @@
  * a cable which is placed either on the floor or in
  * someone's hands based (on distance).
  *
- * @param user {mob} The pAI dropping the cable
+ * @param {mob} user The pAI dropping the cable
  * @return {bool} TRUE if the cable was dropped, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/extend_cable(mob/user)
@@ -271,8 +268,8 @@
  * Gets the current holder of the pAI if its
  * being carried in card or holoform.
  *
- * @param user {mob} The pAI.
- * @return {living/carbon} The holder of the pAI.
+ * @return {living/carbon || FALSE} The holder of the pAI,
+ * or FALSE if the pAI is not being carried.
  */
 /mob/living/silicon/pai/proc/get_holder()
 	var/mob/living/carbon/holder
@@ -287,8 +284,8 @@
 /**
  * Grant all languages to the current pAI.
  *
- * @param user {mob} The pAI receiving the languages.
- * @param ui {tgui} The interface for the pAI.
+ * @param {mob} user The pAI receiving the languages.
+ * @param {tgui} ui The interface for the pAI.
  * @return {bool} TRUE if the languages were granted, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/grant_languages(mob/user, datum/tgui/ui)
@@ -305,7 +302,7 @@
  * After a 10 second timer, the door will crack open,
  * provided they don't move out of the way.
  *
- * @param user {mob} The pAI attempting to hack the door.
+ * @param {mob} user The pAI attempting to hack the door.
  * @return {bool} TRUE if the door was jacked, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/hack_door(mob/user)
@@ -349,23 +346,23 @@
  * Allows the pAI to scan its host's health vitals
  * An integrated health analyzer.
  *
- * @param user {silicon/pai} The pAI requesting the scan.
+ * @param {mob} user The pAI requesting the scan.
  * @return {boolean} TRUE if the scan was successful, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/host_scan(mob/living/silicon/pai/user, scan_type)
+/mob/living/silicon/pai/proc/host_scan(mob/user)
 	if(!host_scan)
 		host_scan = new(src)
-	if(!iscarbon(user.loc))
+	if(!iscarbon(loc))
 		to_chat(user, span_warning("You are not being carried by anyone!"))
 		return FALSE
-	user.host_scan.attack(user.loc, user)
+	host_scan.attack(user.loc, user)
 	return TRUE
 
 /**
  * Refreshes records on screen of the pAI.
  *
- * @param ui {tgui} The interface for the pAI.
- * @param list {string} The list of records to refresh.
+ * @param {tgui} ui The interface for the pAI.
+ * @param {string} list The list of records to refresh.
  */
 /mob/living/silicon/pai/proc/refresh_records(datum/tgui/ui, list)
 	if(list == "medical")
@@ -378,10 +375,10 @@
 /**
  * Proc that toggles any active huds based on the option.
  *
- * @param user {silicon/pai} The pAI toggling the hud. *
- * @param option {string} The hud to toggle.
+ * @param {mob} user The pAI toggling the hud.
+ * @param {string} option The hud to toggle.
  */
-/mob/living/silicon/pai/proc/toggle_hud(mob/living/silicon/pai/user, option)
+/mob/living/silicon/pai/proc/toggle_hud(mob/user, option)
 	if(!option)
 		return FALSE
 	var/datum/atom_hud/hud

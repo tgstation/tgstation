@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(pai)
  * This is the primary window proc when the pAI candidate
  * hud menu is pressed by observers.
  *
- * @params user {mob} The ghost doing the pressing.
+ * @params {mob} user The ghost doing the pressing.
  */
 /datum/controller/subsystem/pai/proc/recruit_window(mob/user)
 	/// Searches for a previous candidate upon opening the menu
@@ -88,7 +88,7 @@ SUBSYSTEM_DEF(pai)
 /**
  * Sanitizes PAI details.
  *
- * @params candidate {datum/pai_candidate} The candidate whose
+ * @params {datum/pai_candidate} candidate The candidate whose
  * 	details are getting trimmed.
  */
 /datum/controller/subsystem/pai/proc/sanitize_details(datum/pai_candidate/candidate)

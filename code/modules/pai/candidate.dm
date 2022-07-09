@@ -16,7 +16,9 @@
 
 /**
  * Checks if a candidate is ready so that they may be displayed in the pAI
- * card's candidate window
+ * card's candidate window. Removes any non-listed candidates.
+ *
+ * @return {boolean} TRUE if the candidate is ready, FALSE if not
  */
 /datum/pai_candidate/proc/check_ready()
 	if(!ready)

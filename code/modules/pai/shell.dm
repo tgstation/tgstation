@@ -67,7 +67,7 @@
 /**
  * Returns the pAI to card mode.
  *
- * @param force {boolean} If TRUE, the pAI will be forced to card mode.
+ * @param {boolean} force If TRUE, the pAI will be forced to card mode.
  * @return {boolean} TRUE if the pAI was forced to card mode.
  * 	FALSE otherwise.
  */
@@ -104,7 +104,7 @@
 /**
  * Engage holochassis form.
  *
- * @param force {boolean} Force the form to engage.
+ * @param {boolean} force Force the form to engage.
  * @return {boolean} TRUE if the form was successfully engaged.
  * 	FALSE otherwise.
  */
@@ -156,7 +156,7 @@
 /**
  * Sets the holochassis skin and updates the icons
  *
- * @params choice {string} - The animal skin that will be used for the pAI holoform
+ * @params {string} choice - The animal skin that will be used for the pAI holoform
  * @return {boolean} TRUE if the skin was successfully set. FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/set_holochassis(choice)
