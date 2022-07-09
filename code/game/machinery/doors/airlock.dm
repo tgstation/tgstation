@@ -766,7 +766,7 @@
 
 		if(secondsElectrified <= MACHINE_NOT_ELECTRIFIED) //make sure they weren't unelectrified during the sleep.
 			break
-		secondsElectrified = max(MACHINE_NOT_ELECTRIFIED, secondsElectrified--) //safety to make sure we don't end up permanently electrified during a timed electrification.
+		secondsElectrified = max(MACHINE_NOT_ELECTRIFIED, secondsElectrified - 1) //safety to make sure we don't end up permanently electrified during a timed electrification.
 	// This is to protect against changing to permanent, mid loop.
 	if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
 		set_electrified(MACHINE_NOT_ELECTRIFIED)
