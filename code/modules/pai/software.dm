@@ -1,3 +1,6 @@
+#define CABLE_LENGTH = 2
+
+
 /mob/living/silicon/pai/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -149,9 +152,10 @@
  */
 /mob/living/silicon/pai/proc/change_image(mob/living/silicon/pai/user)
 	var/new_image = tgui_input_list(user, "Select your new display image", \
-		"Display Image", sort_list(list("Happy", "Cat", "Extremely Happy", \
-		"Face",	"Laugh", "Off", "Sad", "Angry", "What", "Sunglasses", "None")))
+		"Display Image", sort_list(list("happy", "cat", "extremely happy", \
+		"face",	"laugh", "off", "sad", "angry", "what", "sunglasses", "none")))
 	if(isnull(new_image))
+		to_chat(world, "Error: No image selected.")
 		return FALSE
 	switch(new_image)
 		if("None")
@@ -159,7 +163,8 @@
 		if("Extremely Happy")
 			user.card.emotion_icon = "extremely-happy"
 		else
-			user.card.emotion_icon = "[lowertext(new_image)]"
+			user.card.emotion_icon = new_image
+	to_chat(world, "Image: [new_image]")
 	user.update_appearance()
 	return TRUE
 
@@ -173,12 +178,8 @@
  * @return {boolean} TRUE if a sample was taken, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/check_dna(mob/living/silicon/pai/user)
-	var/mob/living/carbon/holder
-	if(holoform && istype(loc, /obj/item/clothing/head/mob_holder))
-		holder = loc.loc
-	if(!holoform && !iscarbon(loc))
-		holder = loc
-	if(!holder || !iscarbon(holder))
+	var/mob/living/carbon/holder = get_holder()
+	if(!holder)
 		to_chat(user, span_warning("You must be in someone's hands to do this!"))
 		return FALSE
 	to_chat(user, span_notice("Requesting a DNA sample."))
@@ -252,17 +253,36 @@
 /mob/living/silicon/pai/proc/extend_cable(mob/user)
 	QDEL_NULL(hacking_cable) //clear any old cables
 	hacking_cable = new
-	var/mob/living/hacker = user.loc
-	if(isliving(hacker) && hacker.put_in_hands(hacking_cable))
+	var/mob/living/carbon/hacker = get_holder()
+	if(hacker && hacker.put_in_hands(hacking_cable))
 		hacker.visible_message(span_warning("A port on [user] opens to reveal \a [hacking_cable], \
 			which you quickly grab hold of."), span_hear("You hear the soft click of a plastic  \
 			component and manage to catch the falling [hacking_cable]."))
+		track(hacking_cable)
 		return TRUE
 	hacking_cable.forceMove(drop_location())
 	hacking_cable.visible_message(span_warning("A port on [user] opens to reveal \a [hacking_cable], \
 		which promptly falls to the floor."), span_hear("You hear the soft click of a plastic component \
 		fall to the ground."))
+	track(hacking_cable)
 	return TRUE
+
+/**
+ * Gets the current holder of the pAI if its
+ * being carried in card or holoform.
+ *
+ * @param user {mob} The pAI.
+ * @return {living/carbon} The holder of the pAI.
+ */
+/mob/living/silicon/pai/proc/get_holder()
+	var/mob/living/carbon/holder
+	if(!holoform && iscarbon(card.loc))
+		holder = card.loc
+	if(holoform && istype(loc, /obj/item/clothing/head/mob_holder) && iscarbon(loc.loc))
+		holder = loc.loc
+	if(!holder || !iscarbon(holder))
+		return FALSE
+	return holder
 
 /**
  * Grant all languages to the current pAI.
@@ -282,15 +302,18 @@
 
 /**
  * Door jacking supporting proc
- * After a 10 second timer, the door will crack open, provided they don't move out of the way.
+ * After a 10 second timer, the door will crack open,
+ * provided they don't move out of the way.
  *
+ * @param user {mob} The pAI attempting to hack the door.
  * @return {bool} TRUE if the door was jacked, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/hack_door(mob/user)
 	playsound(user, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 	balloon_alert(user, "overriding...")
 	// Now begin hacking
-	if(!do_after(src, 10 SECONDS, hacking_cable.machine, timed_action_flags = NONE, progress = TRUE))
+	if(!do_after(src, 10 SECONDS, hacking_cable.machine, timed_action_flags = NONE, \
+		progress = TRUE))
 		balloon_alert(user, "failed! retracting...")
 		hacking_cable.visible_message(
 			span_warning("[hacking_cable] rapidly retracts back into its spool."),\
@@ -304,6 +327,21 @@
 	door.open()
 	QDEL_NULL(hacking_cable)
 	return TRUE
+
+/**
+ * A periodic check to see if the source pAI is nearby.
+ * Deletes the extended cable if the source pAI is not nearby.
+ */
+/mob/living/silicon/pai/proc/handle_move(atom/movable/source, atom/old_loc, \
+	dir, forced, list/old_locs)
+	if(ismovable(old_loc))
+		untrack(old_loc)
+	if(!IN_GIVEN_RANGE(src, hacking_cable, CABLE_LENGTH))
+		QDEL_NULL(hacking_cable)
+		visible_message(span_notice("The cable retracts into the pAI."))
+		return
+	if(ismovable(source.loc))
+		track(source.loc)
 
 /**
  * Host scan supporting proc
@@ -361,3 +399,19 @@
 	else
 		hud.hide_from(user)
 	return TRUE
+
+/** Tracks the associated hacking_cable */
+/mob/living/silicon/pai/proc/track(atom/movable/thing)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
+	for(var/atom/movable/location in locations)
+		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+
+/** Untracks the associated hacking_cable */
+/mob/living/silicon/pai/proc/untrack(atom/movable/thing)
+	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
+	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
+	for(var/atom/movable/location in locations)
+		UnregisterSignal(location, COMSIG_MOVABLE_MOVED)
+
+#undef CABLE_LENGTH
