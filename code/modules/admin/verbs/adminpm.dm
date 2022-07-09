@@ -304,7 +304,7 @@
 				current_ticket.MessageNoRecipient(msg)
 
 	if(external)
-		log_admin_private("PM: [key_name(src)]->External: [rawmsg]")
+		log_admin_private("PM: Ticket #[current_ticket.id]: [key_name(src)]->External: [rawmsg]")
 		for(var/client/X in GLOB.admins)
 			to_chat(X,
 				type = MESSAGE_TYPE_ADMINPM,
@@ -312,7 +312,7 @@
 				confidential = TRUE)
 	else
 		window_flash(recipient, ignorepref = TRUE)
-		log_admin_private("PM: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
+		log_admin_private("PM: Ticket #[current_ticket.id]: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
 		//we don't use message_admins here because the sender/receiver might get it too
 		for(var/client/X in GLOB.admins)
 			if(X.key!=key && X.key!=recipient.key) //check client/X is an admin and isn't the sender or recipient

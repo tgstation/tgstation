@@ -1,28 +1,33 @@
-/datum/component/storage/concrete/pockets
-	max_items = 2
-	max_w_class = WEIGHT_CLASS_SMALL
-	max_combined_w_class = 50
+/datum/storage/pockets
+	max_slots = 2
+	max_specific_storage = WEIGHT_CLASS_SMALL
+	max_total_storage = 50
 	rustle_sound = FALSE
 
-/datum/component/storage/concrete/pockets/handle_item_insertion(obj/item/I, prevent_warning, mob/user)
+/datum/storage/pockets/attempt_insert(datum/source, obj/item/to_insert, mob/user, override, force)
 	. = ..()
-	if(. && silent && !prevent_warning)
+
+	var/obj/item/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
+		return
+
+	if(. && silent && !override)
 		if(quickdraw)
-			to_chat(user, span_notice("You discreetly slip [I] into [parent]. Right-click [parent] to remove it."))
+			to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]. Right-click [resolve_parent] to remove it."))
 		else
-			to_chat(user, span_notice("You discreetly slip [I] into [parent]."))
+			to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]."))
 
-/datum/component/storage/concrete/pockets/small
-	max_items = 1
-	max_w_class = WEIGHT_CLASS_SMALL
+/datum/storage/pockets/small
+	max_slots = 1
+	max_specific_storage = WEIGHT_CLASS_SMALL
 	attack_hand_interact = FALSE
 
-/datum/component/storage/concrete/pockets/tiny
-	max_items = 1
-	max_w_class = WEIGHT_CLASS_TINY
+/datum/storage/pockets/tiny
+	max_slots = 1
+	max_specific_storage = WEIGHT_CLASS_TINY
 	attack_hand_interact = FALSE
 
-/datum/component/storage/concrete/pockets/small/fedora/Initialize()
+/datum/storage/pockets/small/fedora/New()
 	. = ..()
 	var/static/list/exception_cache = typecacheof(list(
 		/obj/item/katana,
@@ -33,35 +38,36 @@
 	))
 	exception_hold = exception_cache
 
-/datum/component/storage/concrete/pockets/small/fedora/detective
+/datum/storage/pockets/small/fedora/detective
 	attack_hand_interact = TRUE // so the detectives would discover pockets in their hats
 
-/datum/component/storage/concrete/pockets/chefhat
+/datum/storage/pockets/chefhat
 	attack_hand_interact = TRUE
-	max_items = 1
-	max_w_class = WEIGHT_CLASS_NORMAL
+	max_slots = 1
+	max_specific_storage = WEIGHT_CLASS_NORMAL
 
-/datum/component/storage/concrete/pockets/chefhat/Initialize()
+/datum/storage/pockets/chefhat/New()
 	. = ..()
 	set_holdable(list(
 		/obj/item/clothing/head/mob_holder,
 		/obj/item/food/deadmouse
 	))
 
-/datum/component/storage/concrete/pockets/chefhat/can_be_inserted(obj/item/I, stop_messages, mob/M)
+/datum/storage/pockets/chefhat/can_insert(obj/item/to_insert, mob/user, messages, force)
 	. = ..()
-	if(istype(I,/obj/item/clothing/head/mob_holder))
-		var/obj/item/clothing/head/mob_holder/mausholder = I
+	if(istype(to_insert, /obj/item/clothing/head/mob_holder))
+		var/obj/item/clothing/head/mob_holder/mausholder = to_insert
 		if(locate(/mob/living/simple_animal/mouse) in mausholder.contents)
 			return
 		return FALSE
 
-/datum/component/storage/concrete/pockets/shoes
+/datum/storage/pockets/shoes
+	max_slots = 2
 	attack_hand_interact = FALSE
 	quickdraw = TRUE
 	silent = TRUE
 
-/datum/component/storage/concrete/pockets/shoes/Initialize()
+/datum/storage/pockets/shoes/New()
 	. = ..()
 	set_holdable(list(
 		/obj/item/knife,
@@ -92,7 +98,7 @@
 		/obj/item/toy/crayon/spraycan)
 		)
 
-/datum/component/storage/concrete/pockets/shoes/clown/Initialize()
+/datum/storage/pockets/shoes/clown/New()
 	. = ..()
 	set_holdable(list(
 		/obj/item/knife,
@@ -124,13 +130,11 @@
 		/obj/item/toy/crayon/spraycan)
 		)
 
-/datum/component/storage/concrete/pockets/pocketprotector
-	max_items = 3
-	max_w_class = WEIGHT_CLASS_TINY
-	var/atom/original_parent
+/datum/storage/pockets/pocketprotector
+	max_slots = 3
+	max_specific_storage = WEIGHT_CLASS_TINY
 
-/datum/component/storage/concrete/pockets/pocketprotector/Initialize()
-	original_parent = parent
+/datum/storage/pockets/pocketprotector/New()
 	. = ..()
 	set_holdable(list( //Same items as a PDA
 		/obj/item/pen,
@@ -140,15 +144,12 @@
 		/obj/item/clothing/mask/cigarette)
 		)
 
-/datum/component/storage/concrete/pockets/pocketprotector/real_location()
-	// if the component is reparented to a jumpsuit, the items still go in the protector
-	return original_parent
-
-/datum/component/storage/concrete/pockets/helmet
+/datum/storage/pockets/helmet
+	max_slots = 2
 	quickdraw = TRUE
-	max_combined_w_class = 6
+	max_total_storage = 6
 
-/datum/component/storage/concrete/pockets/helmet/Initialize()
+/datum/storage/pockets/helmet/New()
 	. = ..()
 	set_holdable(list(/obj/item/reagent_containers/food/drinks/bottle/vodka,
 					  /obj/item/reagent_containers/food/drinks/bottle/molotov,
@@ -156,12 +157,12 @@
 					  /obj/item/ammo_box/a762))
 
 
-/datum/component/storage/concrete/pockets/void_cloak
+/datum/storage/pockets/void_cloak
 	quickdraw = TRUE
-	max_combined_w_class = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
-	max_items = 3
+	max_total_storage = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
+	max_slots = 3
 
-/datum/component/storage/concrete/pockets/void_cloak/Initialize()
+/datum/storage/pockets/void_cloak/New()
 	. = ..()
 	set_holdable(list(
 		/obj/item/ammo_box/a762/lionhunter,

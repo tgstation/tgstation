@@ -19,14 +19,23 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		var/list/choices = flist(path)
 		if(path != root)
 			choices.Insert(1,"/")
+		choices = sort_list(choices) + "Download Folder"
 
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sort_list(choices)
+		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in choices
 		switch(choice)
 			if(null)
 				return
 			if("/")
 				path = root
 				continue
+			if("Download Folder")
+				var/list/comp_flist = flist(path)
+				var/confirmation = input(src, "Are you SURE you want to download all the files in this folder? (This will open [length(comp_flist)] prompt[length(comp_flist) == 1 ? "" : "s"])", "Confirmation") in list("Yes", "No")
+				if(confirmation != "Yes")
+					continue
+				for(var/file in comp_flist)
+					src << ftp(path + file)
+				return
 		path += choice
 
 		if(copytext_char(path, -1) != "/") //didn't choose a directory, no need to iterate again
