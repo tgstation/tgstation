@@ -104,25 +104,36 @@
 	var/list/diffs = list()
 	var/list/firstdeet = first.vars
 	var/list/seconddeet = second.vars
+	var/diff_found = FALSE
 	for(var/name in first.vars)
 		var/firstv = firstdeet[name]
 		var/secondv = seconddeet[name]
-		if(firstv == secondv)
+		if(firstv ~= secondv)
 			continue
 		if((islist(firstv) || islist(secondv)) && length(firstv) == 0 && length(secondv) == 0)
+			continue
+		if(name == "vars") // Go away
+			continue
+		if(name == "comp_lookup") // This is just gonna happen with marked datums, don't care
 			continue
 		if(name == "overlays")
 			first.realize_overlays()
 			second.realize_overlays()
+			var/overlays_differ = FALSE
 			for(var/i in 1 to length(first.realized_overlays))
-				diff_appearances(first.realized_overlays[i], second.realized_overlays[i], iter + 1)
+				if(diff_appearances(first.realized_overlays[i], second.realized_overlays[i], iter + 1))
+					overlays_differ = TRUE
 
+			if(!overlays_differ)
+				continue
 
+		diff_found = TRUE
 		diffs += "Diffs detected at [name]: First ([firstv]), Second ([secondv])"
 
 	var/text = "Depth of: [iter]\n\t[diffs.Join("\n\t")]"
 	message_admins(text)
 	log_world(text)
+	return diff_found
 
 /mob/living/carbon/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
@@ -243,7 +254,7 @@
 	// Null entries will be filtered here
 	for(var/i in 1 to length(overlays_standing))
 		var/list/cache_grouping = overlays_standing[i]
-		if(!islist(cache_grouping))
+		if(cache_grouping && !islist(cache_grouping))
 			cache_grouping = list(cache_grouping)
 		// Need this so we can have an index, could build index into the list if we need to tho, check
 		if(!length(cache_grouping))
@@ -307,7 +318,6 @@
 			add_overlay(new_iter)
 			hand_back += new_iter
 
-		processing_queue[queue_index] = new_iter.appearance
 		queue_index--
 	return hand_back
 
