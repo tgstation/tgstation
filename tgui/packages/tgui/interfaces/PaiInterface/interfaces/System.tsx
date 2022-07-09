@@ -73,13 +73,13 @@ const SystemInfo = (props, context) => {
           <Button
             disabled={!master_dna}
             icon="dna"
-            onClick={() => act('check_dna')}
+            onClick={() => act('check dna')}
             tooltip="Verifies your master's DNA. Must be carried in hand.">
             Verify
           </Button>
           <Button
-            icon={ICON_MAP[image] || 'meh-blank'}
-            onClick={() => act('change_image')}
+            icon={ICON_MAP[image]}
+            onClick={() => act('change image')}
             tooltip="Change your display image.">
             Display
           </Button>

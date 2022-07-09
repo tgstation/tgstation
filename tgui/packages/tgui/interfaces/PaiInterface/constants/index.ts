@@ -16,12 +16,14 @@ export const ICON_MAP = {
   'angry': 'angry',
   'cat': 'cat',
   'extremely-happy': 'grin-beam',
-  'laugh': 'grin-squint',
+  'face': 'grin-alt',
   'happy': 'smile',
-  'off': 'power-off',
-  'sad': 'frown',
+  'laugh': 'grin-tears',
+  'null': 'meh',
+  'off': 'meh-blank',
+  'sad': 'sad-cry',
   'sunglasses': 'sun',
-  'what': 'question',
+  'what': 'frown-open',
 } as const;
 
 export const SOFTWARE_DESC = {

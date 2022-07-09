@@ -32,8 +32,8 @@
 	if(.)
 		return
 	switch(action)
-		if("atmosphere_sensor")
-			check_if_installed("atmosphere sensor")
+		if("atmosphere sensor")
+			check_if_installed(usr, action)
 			if(!atmos_analyzer)
 				atmos_analyzer = new(src)
 			atmos_analyzer.attack_self(src)
@@ -41,82 +41,95 @@
 		if("buy")
 			buy_software(usr, params["selection"])
 			return TRUE
-		if("camera_zoom")
-			check_if_installed("camera zoom")
+		if("camera zoom")
+			check_if_installed(usr, action)
 			if(aicamera)
 				aicamera.adjust_zoom(usr)
 				return TRUE
 			return FALSE
-		if("change_image")
+		if("change image")
 			change_image(usr)
 			return TRUE
-		if("check_dna")
+		if("check dna")
 			check_dna(usr)
 			return TRUE
-		if("crew_manifest")
-			check_if_installed("crew manifest")
+		if("crew manifest")
+			check_if_installed(usr, action)
 			ai_roster()
 			return TRUE
-		if("door_jack")
-			check_if_installed("door jack")
+		if("door jack")
+			check_if_installed(usr, action)
 			door_jack(usr, params["jack"])
 			return TRUE
-		if("encryption_keys")
-			check_if_installed("encryption keys")
+		if("encryption keys")
+			check_if_installed(usr, action)
 			to_chat(src, span_notice("You have [!encrypt_mod ? "enabled" \
 				: "disabled"] encrypted radio frequencies."))
 			encrypt_mod = !encrypt_mod
 			radio.subspace_transmission = !radio.subspace_transmission
 			return TRUE
-		if("host_scan")
-			check_if_installed("host scan")
+		if("host scan")
+			check_if_installed(usr, action)
 			host_scan(usr)
 			return TRUE
-		if("internal_gps")
-			check_if_installed("internal gps")
-			if(!internal_gps)
-				internal_gps = new(src)
-			internal_gps.attack_self(src)
+		if("internal gps")
+			check_if_installed(usr, action)
+			if(!gps)
+				gps = new(src)
+			gps.attack_self(src)
 			return TRUE
-		if("loudness_booster")
-			check_if_installed("loudness booster")
-			if(!internal_instrument)
-				internal_instrument = new(src)
-			internal_instrument.interact(src) // Open Instrument
+		if("loudness booster")
+			check_if_installed(usr, action)
+			if(!instrument)
+				instrument = new(src)
+			instrument.interact(src) // Open Instrument
 			return TRUE
-		if("medical_hud")
-			check_if_installed("medical hud")
+		if("medical HUD")
+			check_if_installed(usr, action)
 			toggle_hud(usr, "medical")
 			return TRUE
 		if("newscaster")
-			check_if_installed("newscaster")
+			check_if_installed(usr, action)
+			if(!newscaster)
+				newscaster = new(src)
 			newscaster.ui_interact(src)
 			return TRUE
-		if("photography_module")
-			check_if_installed("photography module")
-			aicamera.toggle_camera_mode(usr)
-			return TRUE
-		if("printer_module")
-			check_if_installed("printer module")
-			aicamera.paiprint(usr)
-			return TRUE
+		if("photography module")
+			check_if_installed(usr, action)
+			if(aicamera)
+				aicamera.toggle_camera_mode(usr)
+				return TRUE
+			return FALSE
+		if("printer module")
+			check_if_installed(usr, action)
+			if(aicamera)
+				aicamera.paiprint(usr)
+				return TRUE
+			return FALSE
 		if("radio")
-			check_if_installed("radio")
-			radio.attack_self(src)
-			return TRUE
+			check_if_installed(usr, action)
+			if(radio)
+				radio.attack_self(src)
+				return TRUE
+			return FALSE
 		if("refresh")
+			if(params["list"] == "security" && !check_if_installed(usr, "security records") \
+				|| params["list"] == "medical" && !check_if_installed(usr, "medical records"))
+				return FALSE
 			refresh_records(ui, params["list"])
 			return TRUE
-		if("remote_signaler")
-			check_if_installed("remote signaler")
+		if("remote signaler")
+			check_if_installed(usr, action)
+			if(!signaler)
+				signaler = new(src)
 			signaler.ui_interact(src)
 			return TRUE
-		if("security_hud")
-			check_if_installed("security hud")
+		if("security HUD")
+			check_if_installed(usr, action)
 			toggle_hud(usr, "security")
 			return TRUE
-		if("universal_translator")
-			check_if_installed("universal translator")
+		if("universal translator")
+			check_if_installed(usr, action)
 			grant_languages(usr, ui)
 			return TRUE
 	return FALSE
@@ -151,18 +164,11 @@
  */
 /mob/living/silicon/pai/proc/change_image(mob/user)
 	var/new_image = tgui_input_list(user, "Select your new display image", \
-		"Display Image", sort_list(list("happy", "cat", "extremely happy", \
-		"face",	"laugh", "off", "sad", "angry", "what", "sunglasses", "none")))
+		"Display Image", possible_overlays)
 	if(isnull(new_image))
 		return FALSE
-	switch(new_image)
-		if("None")
-			card.emotion_icon = "null"
-		if("Extremely Happy")
-			card.emotion_icon = "extremely-happy"
-		else
-			card.emotion_icon = new_image
-	user.update_appearance()
+	card.emotion_icon = new_image
+	card.update_appearance()
 	return TRUE
 
 /**
@@ -206,7 +212,7 @@
  * @param {string} selection The software being used.
  * @return {bool} TRUE if the pAI was warned, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/check_if_installed(mob/user, selection)
+/mob/living/silicon/pai/proc/check_if_installed(usr, mob/user, selection)
 	if(installed_software[selection])
 		return TRUE
 	to_chat(user, span_warning("You do not have atmosphere sensor installed."))
@@ -252,15 +258,16 @@
 	hacking_cable = new
 	var/mob/living/carbon/hacker = get_holder()
 	if(hacker && hacker.put_in_hands(hacking_cable))
-		hacker.visible_message(span_warning("A port on [user] opens to reveal \a [hacking_cable], \
-			which you quickly grab hold of."), span_hear("You hear the soft click of a plastic  \
-			component and manage to catch the falling [hacking_cable]."))
+		hacker.visible_message(span_warning("A port on [user] opens to reveal \a \
+			[hacking_cable], which you quickly grab hold of."), span_hear("You hear \
+			the soft click of a plastic	component and manage to catch the falling \
+			[hacking_cable]."))
 		track(hacking_cable)
 		return TRUE
 	hacking_cable.forceMove(drop_location())
-	hacking_cable.visible_message(span_warning("A port on [user] opens to reveal \a [hacking_cable], \
-		which promptly falls to the floor."), span_hear("You hear the soft click of a plastic component \
-		fall to the ground."))
+	hacking_cable.visible_message(span_warning("A port on [user] opens to reveal \a \
+		[hacking_cable], which promptly falls to the floor."), span_hear("You hear \
+		the soft click of a plastic component fall to the ground."))
 	track(hacking_cable)
 	return TRUE
 
@@ -309,7 +316,7 @@
 	playsound(user, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 	balloon_alert(user, "overriding...")
 	// Now begin hacking
-	if(!do_after(src, 10 SECONDS, hacking_cable.machine, timed_action_flags = NONE, \
+	if(!do_after(src, 15 SECONDS, hacking_cable.machine, timed_action_flags = NONE, \
 		progress = TRUE))
 		balloon_alert(user, "failed! retracting...")
 		hacking_cable.visible_message(

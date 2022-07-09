@@ -140,9 +140,9 @@
 	if(!.)
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	if(!pAI.internal_gps)
-		pAI.internal_gps = new(pAI)
-	pAI.internal_gps.attack_self(pAI)
+	if(!pAI.gps)
+		pAI.gps = new(pAI)
+	pAI.gps.attack_self(pAI)
 
 /atom/movable/screen/pai/image_take
 	name = "Take Image"

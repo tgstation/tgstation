@@ -71,7 +71,7 @@ const InstalledInfo = (props, context) => {
       <Section fill scrollable title={title}>
         {currentSelection && (
           <Stack fill vertical>
-            <Stack.Item>{SOFTWARE_DESC[currentSelection] || ''}</Stack.Item>
+            <Stack.Item>{SOFTWARE_DESC[currentSelection]}</Stack.Item>
             <Stack.Item grow>
               <SoftwareButtons />
             </Stack.Item>
@@ -94,7 +94,6 @@ const SoftwareButtons = (props, context) => {
     'software',
     ''
   );
-  const actString: string = currentSelection?.toLowerCase().replace(/ /g, '_');
 
   switch (currentSelection) {
     case 'digital messenger':
@@ -102,20 +101,20 @@ const SoftwareButtons = (props, context) => {
         <>
           <Button
             icon="power-off"
-            onClick={() => act('pda', { pda: 'power' })}
+            onClick={() => act(currentSelection, { pda: 'power' })}
             selected={pda.power}>
             Power
           </Button>
           <Button
             icon="volume-mute"
-            onClick={() => act('pda', { pda: 'silent' })}
+            onClick={() => act(currentSelection, { pda: 'silent' })}
             selected={pda.silent}>
             Silent
           </Button>
           <Button
             disabled={!pda.power}
             icon="envelope"
-            onClick={() => act('pda', { pda: 'message' })}>
+            onClick={() => act(currentSelection, { pda: 'message' })}>
             Message
           </Button>
         </>
@@ -126,20 +125,20 @@ const SoftwareButtons = (props, context) => {
           <Button
             disabled={door_jack}
             icon="plug"
-            onClick={() => act('door_jack', { jack: 'cable' })}>
+            onClick={() => act(currentSelection, { jack: 'cable' })}>
             Extend Cable
           </Button>
           <Button
             color="bad"
             disabled={!door_jack}
             icon="door-open"
-            onClick={() => act('door_jack', { jack: 'jack' })}>
+            onClick={() => act(currentSelection, { jack: 'jack' })}>
             Hack Door
           </Button>
           <Button
             disabled={!door_jack}
             icon="unlink"
-            onClick={() => act('door_jack', { jack: 'cancel' })}>
+            onClick={() => act(currentSelection, { jack: 'cancel' })}>
             Cancel
           </Button>
         </>
@@ -148,7 +147,7 @@ const SoftwareButtons = (props, context) => {
       return (
         <Button
           icon="download"
-          onClick={() => act(actString)}
+          onClick={() => act(currentSelection)}
           disabled={!!languages}>
           {!languages ? 'Install' : 'Installed'}
         </Button>
@@ -157,8 +156,8 @@ const SoftwareButtons = (props, context) => {
       return (
         <Button
           icon="power-off"
-          onClick={() => act(actString)}
-          tooltip="Attempts to toggle the module's power.">
+          onClick={() => act(currentSelection)}
+          tooltip="Attempts to enable the module.">
           Toggle
         </Button>
       );

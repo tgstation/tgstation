@@ -83,9 +83,9 @@
 	/// Health analyzer
 	var/obj/item/healthanalyzer/host_scan
 	/// GPS
-	var/obj/item/gps/pai/internal_gps
+	var/obj/item/gps/pai/gps
 	/// Music Synthesizer
-	var/obj/item/instrument/piano_synth/internal_instrument
+	var/obj/item/instrument/piano_synth/instrument
 	/// Newscaster
 	var/obj/machinery/newscaster
 	/// Remote signaler
@@ -93,20 +93,20 @@
 	// Static lists
 	/// List of all available downloads
 	var/static/list/available_software = list(
+		"atmosphere sensor" = 5,
 		"crew manifest" = 5,
 		"digital messenger" = 5,
-		"atmosphere sensor" = 5,
 		"photography module" = 5,
 		"camera zoom" = 10,
+		"host scan" = 10,
+		"medical records" = 10,
 		"printer module" = 10,
 		"remote signaler" = 10,
-		"medical records" = 10,
 		"security records" = 10,
-		"host scan" = 10,
-		"medical HUD" = 20,
-		"security HUD" = 20,
 		"loudness booster" = 20,
+		"medical HUD" = 20,
 		"newscaster" = 20,
+		"security HUD" = 20,
 		"door jack" = 25,
 		"encryption keys" = 25,
 		"internal gps" = 35,
@@ -114,20 +114,24 @@
 	)
 	/// List of all possible chasises. TRUE means the pAI can be picked up in this chasis.
 	var/static/list/possible_chassis = list(
-		"cat" = TRUE,
-		"mouse" = TRUE,
-		"monkey" = TRUE,
-		"corgi" = FALSE,
-		"fox" = FALSE,
-		"repairbot" = TRUE,
-		"rabbit" = TRUE,
 		"bat" = FALSE,
 		"butterfly" = FALSE,
+		"cat" = TRUE,
+		"corgi" = FALSE,
+		"crow" = TRUE,
+		"duffel" = TRUE,
+		"fox" = FALSE,
 		"hawk" = FALSE,
 		"lizard" = FALSE,
-		"duffel" = TRUE,
-		"crow" = TRUE,
+		"monkey" = TRUE,
+		"mouse" = TRUE,
+		"rabbit" = TRUE,
+		"repairbot" = TRUE,
 	)
+	/// List of all available card overlays.
+	var/static/list/possible_overlays = list("null", "angry", "cat", \
+		"extremely-happy", "face", "happy", "laugh", "off", "sad", \
+		"sunglasses", "what")
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
@@ -158,12 +162,12 @@
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(atmos_analyzer)
-	QDEL_NULL(internal_instrument)
+	QDEL_NULL(instrument)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(newscaster)
 	QDEL_NULL(signaler)
 	QDEL_NULL(host_scan)
-	QDEL_NULL(internal_gps)
+	QDEL_NULL(gps)
 	if(!QDELETED(card) && loc != card)
 		card.forceMove(drop_location())
 		// these are otherwise handled by paicard/handle_atom_del()
@@ -206,16 +210,16 @@
 			card.update_appearance()
 	if(deleting_atom == atmos_analyzer)
 		atmos_analyzer = null
-	if(deleting_atom == internal_instrument)
-		internal_instrument = null
+	if(deleting_atom == instrument)
+		instrument = null
 	if(deleting_atom == newscaster)
 		newscaster = null
 	if(deleting_atom == signaler)
 		signaler = null
 	if(deleting_atom == host_scan)
 		host_scan = null
-	if(deleting_atom == internal_gps)
-		internal_gps = null
+	if(deleting_atom == gps)
+		gps = null
 	return ..()
 
 /mob/living/silicon/pai/Initialize(mapload)
