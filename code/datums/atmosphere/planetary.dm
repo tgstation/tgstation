@@ -54,21 +54,19 @@
 	id = GASGIANT_DEFAULT_ATMOS
 
 	base_gases = list(
-		/datum/gas/freon=10,
-		/datum/gas/helium=10,
+		/datum/gas/hydrogen=20,
 	)
 	normal_gases = list(
-		/datum/gas/freon=10,
+		/datum/gas/hydrogen=10,
 		/datum/gas/helium=10,
 	)
 	restricted_gases = list(
-		/datum/gas/freon=10,
-		/datum/gas/helium=10,
+		/datum/gas/bz=0.1,
 	)
-	restricted_chance = 0
+	restricted_chance = 20
 
-	minimum_pressure = HAZARD_HIGH_PRESSURE + 300
-	maximum_pressure = HAZARD_HIGH_PRESSURE + 600
+	minimum_pressure = 60
+	maximum_pressure = 80
 
-	minimum_temp = 400
+	minimum_temp = 200
 	maximum_temp = 400
