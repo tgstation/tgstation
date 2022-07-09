@@ -1,0 +1,4 @@
+author: "YakumoChen"
+delete-after: True
+changes: 
+  - balance: "GPS designs can no longer be exported to autolathes."

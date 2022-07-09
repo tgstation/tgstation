@@ -1,20 +1,126 @@
 2021-06-01:
-  Mickyan:
-  - bugfix: Smoking no longer spills spaghetti from your pockets
-  - bugfix: Lit cigarettes no longer keep falling off
-  - spellcheck: Removed extra "the" from item knockdown messages
-  RaveRadbury:
-  - bugfix: Mime crayons don't make you multicolored when you eat them.
+  Arkatos:
+  - refactor: Notice board now uses tgui.
+  - bugfix: Notice boards will now properly drop their contents upon destruction.
+  FlamingLily:
+  - qol: Surgery masks no longer block surgery.
+  Gamer025:
+  - bugfix: Offering an item multiple times no longer causes runtimes
+  - bugfix: Chairs no longer runtime when being deconstructed
+  Inept:
+  - rscadd: Some new holidays have been added.
+  JohnFulpWillard:
+  - qol: Microwaves now use Right Click instead of Alt click to turn on.
+  Krysonism:
+  - imageadd: The desk, green and banana lamps have been resprited.
+  Mothblocks:
+  - bugfix: Fixed dynamic latejoins.
+  Timberpoes:
+  - bugfix: Fix oversight where Dynamic can assign antag datums to the minds of players
+      who will be forcefully returned to the lobby.
+  ninjanomnom:
+  - imageadd: Better greyscale support has been added to datum materials allowing
+      objects to have more complex compositions of sprites. The golden cleric mace
+      is extra shiny now.
+  - bugfix: Mime shoes no longer runtime when generating their icon. This may fix
+      some graphical oddity or do nothing at all since they get colored pure white
+      anyway.
+  rasepretep:
+  - code_imp: removed the piece of code that causes carpotoxin to qdel temporal scars
+      (hopefully I identified it correctly)
+2021-06-02:
+  FernandoJ8:
+  - bugfix: RD's liver now has the TRAIT_ROYAL_METABOLISM trait.
+  ModDownloading:
+  - qol: 'You can be your own character in Mafia again. Don''t worry plasmamen: you
+      don''t die from fire or lack of plasma in the mafia game, so you can be a funny
+      purple skeleton in relative peace.'
+  RandomGamer123:
+  - bugfix: Heretic's reality phase ability is no longer affected by the bag of holding
+  dragomagol:
+  - bugfix: railings drop rods on deconstruction
+  - bugfix: connected the kilo medbay lobby apc to the grid
+2021-06-03:
+  Mordent:
+  - refactor: Split DnaConsole interface into separate files.
+  RandomGamer123:
+  - bugfix: Removes random camera and railing in space near xenobio on metastation
+  - bugfix: Switchblades' blades now actually pop out like intended
+  SpaceDragon00:
+  - bugfix: Large energy crossbow now sounds like an energy crossbow
+  carshalash:
+  - qol: Makes fish affordable to common workers.
+  dragomagol:
+  - qol: newly-resprited stools and barstools are now facing tables
+  zxaber:
+  - bugfix: AIs should no longer occasionally have their lawset randomly and silently
+      returned to Asimov.
+2021-06-04:
+  GoldenAlpharex:
+  - bugfix: Custom outfits will now save their ID trim.
+  JJRcop:
+  - bugfix: Drone tools can no longer be inserted into an autolathe.
+  JohnFulpWillard:
+  - bugfix: Shaft Miners can now access Cargo on Tramstation
+  Mothblocks:
+  - qol: Controllers for circuits now use right-click instead of alt-right-click.
+  SmArtKar:
+  - bugfix: Attacking something as morph no longer floods your chat with "You're already
+      in your normal form!"
+  - bugfix: Fixed banana juice having x2 chance of appearing in mystery soup
+  - bugfix: Fixes AI screen blur not disappearing after getting creampied
+  Y0SH1M4S73R:
+  - bugfix: Local insurance providers have realized that they should advertise their
+      services BEFORE the occurrence of the very accidents they are supposed to insure
+      against.
+2021-06-05:
+  Mothblocks:
+  - balance: Increased the minimum pop for heretics to 18 players.
+  RandomGamer123:
+  - bugfix: Reaction chambers no longer drop beakers when deconstructed
+  - bugfix: Fixes split personality sometimes switching to other person upon death
+  - bugfix: Gun scopes no longer work if you don't have the gun in your hands
+  SmArtKar:
+  - bugfix: Coniine no longer makes you suffocate even after it leaves your system
+  Y0SH1M4S73R:
+  - bugfix: dynamic will no longer spawn abductors if there aren't enough applicants
+      for a proper 2-person abductor team
+  mozi_h:
+  - bugfix: Fixed a small icon inconsistency with the notice board.
+  peptron1:
+  - rscadd: Ghosts can now find out how much power is in the network by examining
+      cables
+2021-06-07:
+  'ArcaneMusic, Celotajs: ft PowerfulBacon':
+  - rscadd: Modular, GAGS winter coats and sprites.
+  - imageadd: New, high impact winter coat sprites from beestation.
+  Cimika, with thanks to NamelessFairy for additional patterns and AdipemDragon for the spray icon.:
+  - rscadd: Added the ability to dye your hair with gradients by using a hair dye
+      spray.
+  - rscadd: The new Colorist quirk, allowing you to spawn with a hair dye spray.
+  Gamer025:
+  - bugfix: The message for new duplicate keybinds should only appear once now
+  - bugfix: Resetting your keybinds to classic mode works correctly now
+  - bugfix: Hotkey mode is now actually used when new hotkeys with a default setting
+      are added
+  - bugfix: You will no longer get a duplicate keybinding conflict message for new
+      hotkeys with no default key, they will just be silently set to unbound
+  Ghilker:
+  - bugfix: fix temperature pump exploit that allows the users to go over 1e8 limiter.
+      This is done by a power usage equation that become exponential upon reaching
+      3e7 and will eat through the room APC charge (so no makeshift power drain).
+  Krysonism:
+  - imageadd: The circuit multitool has a new sprite.
+  ModDownloading:
+  - rscadd: audio_cooldown, a var for coders to use in new emotes to add a cooldown
+      for sounds when the emote is used voluntarily.
+  - rscadd: Clapping and laughing now have 5-second audio cooldowns.
+  NamelessFairy:
+  - bugfix: DeusVend's name is now consistent across both the vendor and restocking
+      unit
+  SmArtKar:
+  - bugfix: Fixed wrong icons in Orion Trail general market event
   Watermelon914:
-<<<<<<< HEAD
-  - bugfix: Fixes AND/OR gates not properly functioning because of null inputs.
-  norill:
-  - bugfix: Fixed not being able to add telecomms frequency filters
-  - bugfix: Changed the color of command frequency in telecomms and headset GUI from
-      blue to yellow to match chat color
-2021-06-09:
-  cacogen:
-=======
   - rscadd: Added the Internal GPS, Direction, Health, Pull and Signal Combiner circuit
       components.
   - rscadd: Added the Money Bot shell which can dispense and receive money and also
@@ -90,13 +196,10 @@
       to what they were before being changed, instead of their initial values
   - bugfix: Resetting a sculpture's description will no longer result in a description
       telling you to yell at Firecage
->>>>>>> 582f10eebcfe4082293bf7efaba3195041c5c5c1
   - qol: All custom names in Character Settings can now either be reset to the default
       or randomised by leaving the text box blank
   - qol: You can now pick a random religion in Character Settings by leaving the text
       box blank. Setting a religion will also set the bible name and deity if applicable
-<<<<<<< HEAD
-=======
 2021-06-10:
   Mothblocks:
   - admin: Added the ability to enforce two-factor authentication onto admins.
@@ -587,4 +690,3 @@
       components.
   - expansion: Adds USB connections for the arrest console.
   - bugfix: Fixed race conditions happening with circuits.
->>>>>>> 582f10eebcfe4082293bf7efaba3195041c5c5c1
