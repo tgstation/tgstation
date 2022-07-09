@@ -76,8 +76,6 @@
 			RegisterSignal(part, COMSIG_ATOM_EXITED, .proc/on_overslot_exit)
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
-		if(istype(part, /obj/item/clothing/shoes/mod)) //if the user has digitigrade legs, we need to redraw them when the boots are deployed
-			wearer.update_mutant_bodyparts()
 		if(!user)
 			return TRUE
 		wearer.visible_message(span_notice("[wearer]'s [part.name] deploy[part.p_s()] with a mechanical hiss."),
@@ -107,8 +105,6 @@
 		if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 			wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
 		overslotting_parts[part] = null
-	if(istype(part, /obj/item/clothing/shoes/mod)) //if the user has digitigrade legs, we need to redraw them when the boots are retracted
-		wearer.update_mutant_bodyparts()
 	if(!user)
 		return
 	wearer.visible_message(span_notice("[wearer]'s [part.name] retract[part.p_s()] back into [src] with a mechanical hiss."),
