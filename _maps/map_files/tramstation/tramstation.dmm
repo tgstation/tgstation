@@ -12758,7 +12758,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
-	sortType = 5
+	sortType = 5;
+	name = "sorting disposal pipe (Chief Engineer's Office)"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -24739,8 +24740,8 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	name = "sorting disposal pipe (Civilan Wing)";
-	sortTypes = list(16,17)
+	name = "sorting disposal pipe (Engineering Wing)";
+	sortTypes = list(4,5,6,26)
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
@@ -40404,7 +40405,8 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/sorting/mail{
-	sortType = 24
+	sortType = 24;
+	name = "sorting disposal pipe (Experimentor Lab)"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -51148,7 +51150,8 @@
 /obj/effect/landmark/start/cargo_technician,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 8;
-	sortType = 1
+	sortType = 1;
+	name = "sorting disposal pipe (Disposals)"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -54048,8 +54051,8 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
-	name = "sorting disposal pipe (Medbay)";
-	sortType = 9
+	name = "sorting disposal pipe (Chemistry)";
+	sortType = 11
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
@@ -59850,7 +59853,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
 	},
-/obj/structure/disposalpipe/junction/flip,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	name = "sorting disposal pipe (Dormitories)";
+	sortType = 26
+	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "uIj" = (
@@ -67921,7 +67927,8 @@
 	},
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	sortType = 4
+	sortType = 4;
+	name = "sorting disposal pipe (Engineering)"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
