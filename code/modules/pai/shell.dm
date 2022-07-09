@@ -23,8 +23,7 @@
 /**
  * Checks if we are allowed to interact with a radial menu
  *
- * * Arguments:
- * * anchor The atom that is anchoring the menu
+ * @param {atom} anchor The atom that is anchoring the menu
  */
 /mob/living/silicon/pai/proc/check_menu(atom/anchor)
 	if(incapacitated())
