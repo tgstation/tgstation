@@ -72,16 +72,17 @@
 		M.swap_hand()
 	return 1
 
-/atom/movable/screen/skills
-	name = "skills"
+/atom/movable/screen/navigate
+	name = "navigate"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "skills"
-	screen_loc = ui_skill_menu
+	icon_state = "navigate"
+	screen_loc = ui_navigate_menu
 
-/atom/movable/screen/skills/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.mind.print_levels(H)
+/atom/movable/screen/navigate/Click()
+	if(!isliving(usr))
+		return TRUE
+	var/mob/living/navigator = usr
+	navigator.navigate()
 
 /atom/movable/screen/craft
 	name = "crafting menu"
@@ -132,7 +133,7 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 
-	if(usr.incapacitated(ignore_stasis = TRUE))
+	if(usr.incapacitated(IGNORE_STASIS))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -246,8 +247,8 @@
 	master = new_master
 
 /atom/movable/screen/close/Click()
-	var/datum/component/storage/S = master
-	S.hide_from(usr)
+	var/datum/storage/storage = master
+	storage.hide_contents(usr)
 	return TRUE
 
 /atom/movable/screen/drop
@@ -452,7 +453,7 @@
 		return TRUE
 	if(usr.incapacitated())
 		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
+	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
@@ -573,6 +574,7 @@
 	if(choice != hud.mymob.zone_selected)
 		hud.mymob.zone_selected = choice
 		update_appearance()
+		SEND_SIGNAL(user, COMSIG_MOB_SELECTED_ZONE_SET, choice)
 
 	return TRUE
 
@@ -667,7 +669,7 @@
 	return
 
 /atom/movable/screen/splash
-	icon = 'icons/blank_title.png'
+	icon = 'icons/blanks/blank_title.png'
 	icon_state = ""
 	screen_loc = "1,1"
 	plane = SPLASHSCREEN_PLANE
@@ -754,3 +756,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		intent_icon.pixel_x = 16 * (i - 1) - 8 * length(streak)
 		add_overlay(intent_icon)
 	return ..()
+
+/atom/movable/screen/stamina
+	name = "stamina"
+	icon_state = "stamina0"
+	screen_loc = ui_stamina

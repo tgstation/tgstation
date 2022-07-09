@@ -38,7 +38,7 @@
 
 	var/atom/target_entity = target.value
 
-	if(is_in_sight(target_entity, get_turf(src)) && IN_GIVEN_RANGE(get_turf(src), target_entity, max_range))
+	if(is_in_sight(target_entity, get_location()) && IN_GIVEN_RANGE(get_location(), target_entity, max_range))
 		var/turf/location = get_turf(target_entity)
 
 		x_pos.set_output(location?.x)

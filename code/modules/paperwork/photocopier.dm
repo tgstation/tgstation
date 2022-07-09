@@ -21,9 +21,6 @@
 	icon = 'icons/obj/library.dmi'
 	icon_state = "photocopier"
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 30
-	active_power_usage = 200
 	power_channel = AREA_USAGE_EQUIP
 	max_integrity = 300
 	integrity_failure = 0.33
@@ -43,6 +40,8 @@
 	var/color_mode = PHOTO_COLOR
 	/// Indicates whether the printer is currently busy copying or not.
 	var/busy = FALSE
+	/// Variable needed to determine the selected category of forms on Photocopier.js
+	var/category
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
@@ -59,6 +58,17 @@
 	var/list/data = list()
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
+
+	try
+		var/list/blanks = json_decode(file2text("config/blanks.json"))
+		if (blanks != null)
+			data["blanks"] = blanks
+			data["category"] = category
+			data["forms_exist"] = TRUE
+		else
+			data["forms_exist"] = FALSE
+	catch()
+		data["forms_exist"] = FALSE
 
 	if(photo_copy)
 		data["is_photo"] = TRUE
@@ -160,6 +170,27 @@
 		if("set_copies")
 			num_copies = clamp(text2num(params["num_copies"]), 1, MAX_COPIES_AT_ONCE)
 			return TRUE
+		// Changes the forms displayed on Photocopier.js when you switch categories
+		if("choose_category")
+			category = params["category"]
+			return TRUE
+		// Called when you press print blank
+		if("print_blank")
+			if(busy)
+				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
+				return FALSE
+			if (toner_cartridge.charges - PAPER_TONER_USE < 0)
+				to_chat(usr, span_warning("There is not enough toner in [src] to print the form, please replace the cartridge."))
+				return FALSE
+			do_copy_loop(CALLBACK(src, .proc/make_blank_print), usr)
+			var/obj/item/paper/printblank = new /obj/item/paper (loc)
+			var/printname = params["name"]
+			var/list/printinfo
+			for(var/infoline as anything in params["info"])
+				printinfo += infoline
+			printblank.name = printname
+			printblank.info = printinfo
+			return printblank
 
 /**
  * Determines if the photocopier has enough toner to create `num_copies` amount of copies of the currently inserted item.
@@ -184,6 +215,7 @@
  */
 /obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user)
 	busy = TRUE
+	update_use_power(ACTIVE_POWER_USE)
 	var/i
 	for(i in 1 to num_copies)
 		if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
@@ -195,6 +227,7 @@
  * Sets busy to `FALSE`. Created as a proc so it can be used in callbacks.
  */
 /obj/machinery/photocopier/proc/reset_busy()
+	update_use_power(IDLE_POWER_USE)
 	busy = FALSE
 
 /**
@@ -208,19 +241,6 @@
 /obj/machinery/photocopier/proc/give_pixel_offset(obj/item/copied_item)
 	copied_item.pixel_x = copied_item.base_pixel_x + rand(-10, 10)
 	copied_item.pixel_y = copied_item.base_pixel_y + rand(-10, 10)
-
-/**
- * Handles the copying of devil contract paper. Transfers all the text, stamps and so on from the old paper, to the copy.
- *
- * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
- * Does not check if it has enough toner because devil contracts cost no toner to print.
- */
-/obj/machinery/photocopier/proc/make_devil_paper_copy()
-	if(!paper_copy)
-		return
-	var/obj/item/paper/employment_contract/E = paper_copy
-	var/obj/item/paper/employment_contract/C = new(loc, E.employee_name)
-	give_pixel_offset(C)
 
 /**
  * Handles the copying of paper. Transfers all the text, stamps and so on from the old paper, to the copy.
@@ -265,6 +285,12 @@
 	var/obj/item/documents/photocopy/copied_doc = new(loc, document_copy)
 	give_pixel_offset(copied_doc)
 	toner_cartridge.charges -= DOCUMENT_TONER_USE
+
+/**
+ * The procedure is called when printing a blank to write off toner consumption.
+ */
+/obj/machinery/photocopier/proc/make_blank_print()
+	toner_cartridge.charges -= PAPER_TONER_USE
 
 /**
  * Handles the copying of an ass photo.
@@ -332,11 +358,13 @@
 		object.forceMove(drop_location())
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
-/obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
-	if(default_unfasten_wrench(user, O))
-		return
+/obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	else if(istype(O, /obj/item/paper))
+/obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/paper))
 		if(copier_empty())
 			if(!user.temporarilyRemoveItemFromInventory(O))
 				return

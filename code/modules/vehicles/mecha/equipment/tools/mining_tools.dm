@@ -16,9 +16,9 @@
 	range = MECHA_MELEE
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
+	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
-	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
 
 /obj/item/mecha_parts/mecha_equipment/drill/Initialize(mapload)
 	. = ..()
@@ -93,20 +93,20 @@
 	drill.log_message("[user] drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
-/turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
-	for(var/turf/open/floor/plating/asteroid/M in range(1, drill.chassis))
-		if((get_dir(drill.chassis,M)&drill.chassis.dir) && !M.dug)
+/turf/open/misc/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	for(var/turf/open/misc/asteroid/M in range(1, drill.chassis))
+		if((get_dir(drill.chassis,M) & drill.chassis.dir) && !M.dug)
 			M.getDug()
 	drill.log_message("Drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
-	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment && istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
+	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.flat_equipment && istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
 		var/obj/vehicle/sealed/mecha/working/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
 		R.collect_ore()
 
-/obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/vehicle/sealed/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(..())
 		if(istype(M, /obj/vehicle/sealed/mecha/working) || istype(M, /obj/vehicle/sealed/mecha/combat))
 			return TRUE
@@ -164,20 +164,14 @@
 	name = "exosuit mining scanner"
 	desc = "Equipment for working exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
-	selectable = 0
 	equip_cooldown = 15
-	var/scanning_time = 0
+	equipment_slot = MECHA_UTILITY
 	mech_flags = EXOSUIT_MODULE_WORKING
+	var/scanning_time = 0
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
-
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/can_attach(obj/vehicle/sealed/mecha/M as obj)
-	if(..())
-		if(istype(M, /obj/vehicle/sealed/mecha/working))
-			return TRUE
-	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)

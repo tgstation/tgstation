@@ -5,7 +5,7 @@
 	inhand_icon_state = "roman"
 	strip_delay = 100
 	equip_delay_other = 100
-	permeability_coefficient = 0.9
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/griffin
@@ -13,8 +13,12 @@
 	desc = "A pair of costume boots fashioned after bird talons."
 	icon_state = "griffinboots"
 	inhand_icon_state = "griffinboots"
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
+
+/obj/item/clothing/shoes/griffin/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"
@@ -31,7 +35,7 @@
 /obj/item/clothing/shoes/bronze
 	name = "bronze boots"
 	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
-	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "clockwork_treads"
 	can_be_tied = FALSE
 

@@ -1,9 +1,11 @@
 /**********************Mine areas**************************/
 
 /area/mine
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | CULT_PERMITTED
+	ambient_buzz = 'sound/ambience/magma.ogg'
 
 /area/mine/explored
 	name = "Mine"
@@ -46,18 +48,22 @@
 	icon_state = "mining_storage"
 
 /area/mine/production
-	name = "Mining Station Starboard Wing"
+	name = "Mining Station Production Wing"
 	icon_state = "mining_production"
 
 /area/mine/abandoned
 	name = "Abandoned Mining Station"
 
 /area/mine/living_quarters
-	name = "Mining Station Port Wing"
+	name = "Mining Station Living Quarters"
 	icon_state = "mining_living"
 
 /area/mine/eva
 	name = "Mining Station EVA"
+	icon_state = "mining_eva"
+
+/area/mine/eva/lower
+	name = "Mining Station Lower EVA"
 	icon_state = "mining_eva"
 
 /area/mine/maintenance
@@ -84,7 +90,7 @@
 
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"
-	icon_state = "security"
+	icon_state = "labor_camp_security"
 	ambience_index = AMBIENCE_DANGER
 
 
@@ -93,11 +99,13 @@
 /**********************Lavaland Areas**************************/
 
 /area/lavaland
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
 	sound_environment = SOUND_AREA_LAVALAND
+	ambient_buzz = 'sound/ambience/magma.ogg'
 
 /area/lavaland/surface
 	name = "Lavaland"
@@ -147,11 +155,13 @@
 /**********************Ice Moon Areas**************************/
 
 /area/icemoon
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
 	sound_environment = SOUND_AREA_ICEMOON
+	ambient_buzz = 'sound/ambience/magma.ogg'
 
 /area/icemoon/surface
 	name = "Icemoon"
@@ -166,12 +176,19 @@
 	min_ambience_cooldown = 70 SECONDS
 	max_ambience_cooldown = 220 SECONDS
 
-/area/icemoon/surface/outdoors // weather happens here
+/area/icemoon/surface/outdoors // parent that defines if something is on the exterior of the station.
 	name = "Icemoon Wastes"
 	outdoors = TRUE
 
+/area/icemoon/surface/outdoors/nospawn // this is the area you use for stuff to not spawn, but if you still want weather.
+
 /area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NO_ALERTS | NOTELEPORT
+
+/area/icemoon/surface/outdoors/noruins // when you want random generation without the chance of getting ruins
+	icon_state = "noruins"
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED | NO_ALERTS
+	map_generator =  /datum/map_generator/cave_generator/icemoon/surface/noruins
 
 /area/icemoon/surface/outdoors/labor_camp
 	name = "Icemoon Labor Camp"
@@ -212,6 +229,10 @@
 
 /area/icemoon/underground/unexplored/rivers/deep
 	map_generator = /datum/map_generator/cave_generator/icemoon/deep
+
+/area/icemoon/underground/unexplored/rivers/deep/shoreline //use this for when you don't want mobs to spawn in certain areas in the "deep" portions. Think adjacent to rivers or station structures.
+	icon_state = "shore"
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | NO_ALERTS
 
 /area/icemoon/underground/explored // ruins can't spawn here
 	name = "Icemoon Underground"

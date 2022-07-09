@@ -52,11 +52,11 @@
 /area/shuttle/transport)
 "k" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/o2{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/crowbar,
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,

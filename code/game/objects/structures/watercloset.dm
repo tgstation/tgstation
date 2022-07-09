@@ -24,7 +24,7 @@
 		return
 	if(swirlie)
 		user.changeNext_move(CLICK_CD_MELEE)
-		playsound(src.loc, "swing_hit", 25, TRUE)
+		playsound(src.loc, SFX_SWING_HIT, 25, TRUE)
 		swirlie.visible_message(span_danger("[user] slams the toilet seat onto [swirlie]'s head!"), span_userdanger("[user] slams the toilet seat onto your head!"), span_hear("You hear reverberating porcelain."))
 		log_combat(user, swirlie, "swirlied (brute)")
 		swirlie.adjustBruteLoss(5)
@@ -159,21 +159,7 @@
 	var/exposed = 0 // can you currently put an item inside
 	var/obj/item/hiddenitem = null // what's in the urinal
 
-/obj/structure/urinal/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/structure/urinal/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/structure/urinal/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/structure/urinal/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
@@ -287,8 +273,8 @@
 
 /obj/structure/sink/Initialize(mapload, bolt)
 	. = ..()
+	create_reagents(100, NO_REACT)
 	if(has_water_reclaimer)
-		create_reagents(100, NO_REACT)
 		reagents.add_reagent(dispensedreagent, 100)
 	AddComponent(/datum/component/plumbing/simple_demand, bolt)
 
@@ -366,7 +352,7 @@
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
-			user.stuttering = baton.knockdown_time*0.5
+			user.set_timed_status_effect(baton.knockdown_time, /datum/status_effect/speech/stutter)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
@@ -451,7 +437,7 @@
 /obj/structure/sink/proc/begin_reclamation()
 	if(!reclaiming)
 		reclaiming = TRUE
-		START_PROCESSING(SSfluids, src)
+		START_PROCESSING(SSplumbing, src)
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
@@ -470,14 +456,9 @@
 	anchored = FALSE
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
-/obj/structure/sinkframe/ComponentInitialize()
+/obj/structure/sinkframe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
-
-/obj/structure/sinkframe/proc/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-	return !anchored
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/sinkframe/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/water_recycler))
@@ -576,7 +557,7 @@
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
-			user.stuttering = baton.knockdown_time*0.5
+			user.set_timed_status_effect(baton.knockdown_time, /datum/status_effect/speech/stutter)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
@@ -674,10 +655,12 @@
 	open = !open
 	if(open)
 		layer = SIGN_LAYER
+		plane = GAME_PLANE
 		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
+		plane = GAME_PLANE_UPPER
 		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
@@ -694,9 +677,9 @@
 	else
 		return ..()
 
-/obj/structure/curtain/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I, 50)
+/obj/structure/curtain/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool, time = 5 SECONDS)
 	return TRUE
 
 /obj/structure/curtain/wirecutter_act(mob/living/user, obj/item/I)
@@ -774,6 +757,7 @@
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"
 	layer = SIGN_LAYER
+	plane = GAME_PLANE
 	set_density(FALSE)
 	open = TRUE
 	set_opacity(FALSE)
@@ -781,6 +765,7 @@
 /obj/structure/curtain/cloth/fancy/mechanical/proc/close()
 	icon_state = "[icon_type]-closed"
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	set_density(TRUE)
 	open = FALSE
 	if(opaque_closed)
@@ -788,3 +773,10 @@
 
 /obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user, list/modifiers)
 		return
+
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed
+	icon_state = "cur_fancy-closed"
+
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed/Initialize(mapload)
+	. = ..()
+	close()

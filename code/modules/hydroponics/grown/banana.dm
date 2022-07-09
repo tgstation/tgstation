@@ -144,3 +144,34 @@
 /obj/item/grown/bananapeel/specialpeel/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)
+
+/obj/item/food/grown/banana/bunch
+	name = "banana bunch"
+	desc = "Am exquisite bunch of bananas. The almost otherwordly plumpness steers the mind any discening entertainer towards the divine."
+	icon_state = "banana_bunch"
+	bite_consumption_mod = 4
+	var/is_ripening = FALSE
+
+/obj/item/food/grown/banana/bunch/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/monkey_energy, 10)
+	reagents.add_reagent(/datum/reagent/consumable/banana, 10)
+
+/obj/item/food/grown/banana/bunch/proc/start_ripening()
+	if(is_ripening)
+		return
+	playsound(src, 'sound/effects/fuse.ogg', 80)
+
+	animate(src, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
+	animate(time = 1, pixel_z = 0, easing = BOUNCE_EASING)
+	addtimer(CALLBACK(src, .proc/explosive_ripening), 3 SECONDS)
+	for(var/i in 1 to 32)
+		animate(color = (i % 2) ? "#ffffff": "#ff6739", time = 1, easing = QUAD_EASING)
+
+/obj/item/food/grown/banana/bunch/proc/explosive_ripening()
+	honkerblast(src, light_range = 3, medium_range = 1)
+	for(var/mob/shook_boi in range(6, loc))
+		shake_camera(shook_boi, 3, 5)
+	var/obj/effect/decal/cleanable/food/plant_smudge/banana_smudge = new(loc)
+	banana_smudge.color = "#ffe02f"
+	qdel(src)

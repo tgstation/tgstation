@@ -1,8 +1,45 @@
+#define ADD_TREADS_STEP 1
+#define CONNECT_HYDRAULICS_STEP 2
+#define ACTIVATE_HYDRAULICS_STEP 3
+#define ADD_WIRING_STEP 4
+#define ADJUST_WIRING_STEP 5
+#define ADD_CONTROL_MODULE_STEP 6
+#define SECURE_CONTROL_MODULE_STEP 7
+#define ADD_PERIPHERALS_STEP 8
+#define SECURE_PERIPHERALS_STEP 9
+#define ADD_WEAPONS_CONTROLS_STEP 10
+#define SECURE_WEAPONS_CONTROLS_STEP 11
+#define ADD_SCANNING_MODULE_STEP 12
+#define SECURE_SCANNING_MODULE_STEP 13
+#define ADD_CAPACITOR_STEP 14
+#define SECURE_CAPACITOR_STEP 15
+#define INSTALL_BLUESPACE_STEP 16
+#define CONNECT_BLUESPACE_STEP 17
+#define ENGAGE_BLUESPACE_STEP 18
+#define ADD_CELL_STEP 19
+#define SECURE_CELL_STEP 20
+#define ADD_INTERNAL_ARMOR_STEP 21
+#define SECURE_INTERNAL_ARMOR_STEP 22
+#define WELD_INTERNAL_ARMOR_STEP 23
+#define ADD_EXTERNAL_ARMOR_STEP 24
+#define SECURE_EXTERNAL_ARMOR_STEP 25
+#define WELD_EXTERNAL_ARMOR_STEP 26
+#define INSERT_ANOMALY_CORE_STEP 27
+
 ////////////////////////////////
 ///// Construction datums //////
 ////////////////////////////////
 /datum/component/construction/mecha
 	var/base_icon
+
+	/// What construction step we're on for displaying messages to viewers
+	var/message_step = 1
+	/// If this mech has treads (Clarke)
+	var/has_treads = FALSE
+	/// If this mech has a weapons control module (Gygax, Durand, etc.)
+	var/has_weapons_module = FALSE
+	/// If this mech has a bluespace crystal in construction (Phazon)
+	var/has_bluespace_crystal = FALSE
 
 	// Component typepaths.
 	// most must be defined unless
@@ -50,7 +87,7 @@
 	..()
 	// By default, each step in mech construction has a single icon_state:
 	// "[base_icon][index - 1]"
-	// For example, Ripley's step 1 icon_state is "ripley0".
+	// For example, Ripley's step 1 icon_state is "ripley0"
 	var/atom/parent_atom = parent
 	if(!steps[index]["icon_state"] && base_icon)
 		parent_atom.icon_state = "[base_icon][index - 1]"
@@ -59,7 +96,7 @@
 	. = user.transferItemToLoc(I, parent)
 	if(.)
 		var/atom/parent_atom = parent
-		user.visible_message(span_notice("[user] connects [I] to [parent]."), span_notice("You connect [I] to [parent]."))
+		user.balloon_alert_to_viewers("connected [I]")
 		parent_atom.add_overlay(I.icon_state+"+o")
 		qdel(I)
 
@@ -252,7 +289,105 @@
 		)
 	)
 
+/// Steps must be checked for sequentially, in case we skip into another state we don't want
+/// However, if we're doing a deconstruction step (backwards) we need to check in a different order
+/datum/component/construction/mecha/proc/skip_extra_steps(diff, forward)
+	var/on_valid_step = FALSE
 
+	while (!on_valid_step)
+		// Offset the next number if it's a backwards step
+		// to ensure we're checking the correct next step
+		var/next_step = forward ? message_step : (message_step - 1)
+
+		// Some variables for what step we're on to keep the if statements reasonably long
+		var/on_weapons_step = next_step == ADD_WEAPONS_CONTROLS_STEP || next_step == SECURE_WEAPONS_CONTROLS_STEP
+		var/on_bluespace_step = next_step == INSTALL_BLUESPACE_STEP || next_step == CONNECT_BLUESPACE_STEP || next_step == ENGAGE_BLUESPACE_STEP
+
+		// Skip over steps we're not doing!
+		if(!has_treads && next_step == ADD_TREADS_STEP)
+			message_step += diff
+
+		else if(!has_weapons_module && on_weapons_step)
+			message_step += diff * 2
+
+		else if(!has_bluespace_crystal && on_bluespace_step)
+			message_step += diff * 3
+
+		else
+			on_valid_step = TRUE
+
+/// Generic mech construction messages
+/datum/component/construction/mecha/custom_action(obj/item/I, mob/living/user, diff)
+	if(!..())
+		return FALSE
+
+	var/forward = (diff == FORWARD)
+
+	skip_extra_steps(diff, forward)
+
+	// An offset is used to condense the printing of messages:
+	// When we advance a step, we display the message (i.e. step 1) and move to the next step (2)
+	// When we move back a step, we decrement the step (step 2 to 1) and then print the backwards message for that step
+	var/curr_step = forward ? message_step : (message_step - 1)
+
+	switch(curr_step)
+		if(ADD_TREADS_STEP)
+			user.balloon_alert_to_viewers("[forward ? "added" : "removed"] tread systems")
+		if(CONNECT_HYDRAULICS_STEP)
+			user.balloon_alert_to_viewers("[forward ? "connected" : "disconnected"] hydraulic systems")
+		if(ACTIVATE_HYDRAULICS_STEP)
+			user.balloon_alert_to_viewers("[forward ? "activated" : "deactivated"] hydraulic systems")
+		if(ADD_WIRING_STEP)
+			user.balloon_alert_to_viewers("[forward ? "added" : "removed"] wiring")
+		if(ADJUST_WIRING_STEP)
+			user.balloon_alert_to_viewers("[forward ? "adjusted" : "disconnected"] wiring")
+		if(ADD_CONTROL_MODULE_STEP)
+			user.balloon_alert_to_viewers("[forward ? "installed" : "removed"] central control module")
+		if(SECURE_CONTROL_MODULE_STEP)
+			user.balloon_alert_to_viewers("[forward ? "secured" : "unsecured"] central control module")
+		if(ADD_PERIPHERALS_STEP)
+			user.balloon_alert_to_viewers("[forward ? "installed" : "removed"] peripherals control module")
+		if(SECURE_PERIPHERALS_STEP)
+			user.balloon_alert_to_viewers("[forward ? "secured" : "unsecured"] peripherals control module")
+		if(ADD_WEAPONS_CONTROLS_STEP)
+			user.balloon_alert_to_viewers("[forward ? "installed" : "removed"] weapons control module")
+		if(SECURE_WEAPONS_CONTROLS_STEP)
+			user.balloon_alert_to_viewers("[forward ? "secured" : "unsecured"] weapons control module")
+		if(ADD_SCANNING_MODULE_STEP)
+			user.balloon_alert_to_viewers("[forward ? "installed" : "removed"] scanner module")
+		if(SECURE_SCANNING_MODULE_STEP)
+			user.balloon_alert_to_viewers("[forward ? "secured" : "unsecured"] scanner module")
+		if(ADD_CAPACITOR_STEP)
+			user.balloon_alert_to_viewers("[forward ? "installed" : "removed"] capacitor")
+		if(SECURE_CAPACITOR_STEP)
+			user.balloon_alert_to_viewers("[forward ? "secured" : "unsecured"] capacitor")
+		if(INSTALL_BLUESPACE_STEP)
+			user.balloon_alert_to_viewers("[forward ? "installed" : "removed"] bluespace crystal")
+		if(CONNECT_BLUESPACE_STEP)
+			user.balloon_alert_to_viewers("[forward ? "connected" : "disconnected"] bluespace crystal")
+		if(ENGAGE_BLUESPACE_STEP)
+			user.balloon_alert_to_viewers("[forward ? "engaged" : "disengaged"] bluespace crystal")
+		if(ADD_CELL_STEP)
+			user.balloon_alert_to_viewers("[forward ? "installed" : "removed"] power cell")
+		if(SECURE_CELL_STEP)
+			user.balloon_alert_to_viewers("[forward ? "secured" : "unsecured"] power cell")
+		if(ADD_INTERNAL_ARMOR_STEP)
+			user.balloon_alert_to_viewers("[forward ? "installed" : "pried off"] internal armor layer")
+		if(SECURE_INTERNAL_ARMOR_STEP)
+			user.balloon_alert_to_viewers("[forward ? "secured" : "unfastened"] internal armor layer")
+		if(WELD_INTERNAL_ARMOR_STEP)
+			user.balloon_alert_to_viewers("[forward ? "welded" : "cut off"] internal armor layer")
+		if(ADD_EXTERNAL_ARMOR_STEP)
+			user.balloon_alert_to_viewers("[forward ? "installed" : "pried off"] external armor layer")
+		if(SECURE_EXTERNAL_ARMOR_STEP)
+			user.balloon_alert_to_viewers("[forward ? "secured" : "unfastened"] external armor layer")
+		if(WELD_EXTERNAL_ARMOR_STEP)
+			user.balloon_alert_to_viewers("[forward ? "welded" : "cut off"] external armor layer")
+
+	message_step += diff
+	return TRUE
+
+//RIPLEY
 /datum/component/construction/unordered/mecha_chassis/ripley
 	result = /datum/component/construction/mecha/ripley
 	steps = list(
@@ -291,110 +426,7 @@
 		),
 	)
 
-/datum/component/construction/mecha/ripley/custom_action(obj/item/I, mob/living/user, diff)
-	if(!..())
-		return FALSE
-
-	switch(index)
-		if(1)
-			user.visible_message(span_notice("[user] connects [parent] hydraulic systems."), span_notice("You connect [parent] hydraulic systems."))
-		if(2)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] activates [parent] hydraulic systems."), span_notice("You activate [parent] hydraulic systems."))
-			else
-				user.visible_message(span_notice("[user] disconnects [parent] hydraulic systems."), span_notice("You disconnect [parent] hydraulic systems."))
-		if(3)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adds the wiring to [parent]."), span_notice("You add the wiring to [parent]."))
-			else
-				user.visible_message(span_notice("[user] deactivates [parent] hydraulic systems."), span_notice("You deactivate [parent] hydraulic systems."))
-		if(4)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adjusts the wiring of [parent]."), span_notice("You adjust the wiring of [parent]."))
-			else
-				user.visible_message(span_notice("[user] removes the wiring from [parent]."), span_notice("You remove the wiring from [parent]."))
-		if(5)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] disconnects the wiring of [parent]."), span_notice("You disconnect the wiring of [parent]."))
-		if(6)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the mainboard."), span_notice("You secure the mainboard."))
-			else
-				user.visible_message(span_notice("[user] removes the central control module from [parent]."), span_notice("You remove the central computer mainboard from [parent]."))
-		if(7)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the mainboard."), span_notice("You unfasten the mainboard."))
-		if(8)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the peripherals control module."), span_notice("You secure the peripherals control module."))
-			else
-				user.visible_message(span_notice("[user] removes the peripherals control module from [parent]."), span_notice("You remove the peripherals control module from [parent]."))
-		if(9)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the peripherals control module."), span_notice("You unfasten the peripherals control module."))
-		if(10)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the scanner module."), span_notice("You secure the scanner module."))
-			else
-				user.visible_message(span_notice("[user] removes the scanner module from [parent]."), span_notice("You remove the scanner module from [parent]."))
-		if(11)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the scanner module."), span_notice("You unfasten the scanner module."))
-		if(12)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the capacitor."), span_notice("You secure the capacitor."))
-			else
-				user.visible_message(span_notice("[user] removes the capacitor from [parent]."), span_notice("You remove the capacitor from [parent]."))
-		if(13)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I]."), span_notice("You install [I]."))
-			else
-				user.visible_message(span_notice("[user] unsecures the capacitor from [parent]."), span_notice("You unsecure the capacitor from [parent]."))
-		if(14)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the power cell."), span_notice("You secure the power cell."))
-			else
-				user.visible_message(span_notice("[user] pries the power cell from [parent]."), span_notice("You pry the power cell from [parent]."))
-		if(15)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs the internal armor layer to [parent]."), span_notice("You install the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the power cell."), span_notice("You unfasten the power cell."))
-		if(16)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the internal armor layer."), span_notice("You secure the internal armor layer."))
-			else
-				user.visible_message(span_notice("[user] pries internal armor layer from [parent]."), span_notice("You pry internal armor layer from [parent]."))
-		if(17)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds the internal armor layer to [parent]."), span_notice("You weld the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the internal armor layer."), span_notice("You unfasten the internal armor layer."))
-		if(18)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs the external reinforced armor layer to [parent]."), span_notice("You install the external reinforced armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] cuts the internal armor layer from [parent]."), span_notice("You cut the internal armor layer from [parent]."))
-		if(19)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the external armor layer."), span_notice("You secure the external reinforced armor layer."))
-			else
-				user.visible_message(span_notice("[user] pries external armor layer from [parent]."), span_notice("You pry external armor layer from [parent]."))
-		if(20)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds the external armor layer to [parent]."), span_notice("You weld the external armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the external armor layer."), span_notice("You unfasten the external armor layer."))
-	return TRUE
-
+//GYGAX
 /datum/component/construction/unordered/mecha_chassis/gygax
 	result = /datum/component/construction/mecha/gygax
 	steps = list(
@@ -410,6 +442,8 @@
 	result = /obj/vehicle/sealed/mecha/combat/gygax
 	base_icon = "gygax"
 
+	has_weapons_module = TRUE
+
 	circuit_control = /obj/item/circuitboard/mecha/gygax/main
 	circuit_periph = /obj/item/circuitboard/mecha/gygax/peripherals
 	circuit_weapon = /obj/item/circuitboard/mecha/gygax/targeting
@@ -423,120 +457,7 @@
 /datum/component/construction/mecha/gygax/action(datum/source, atom/used_atom, mob/user)
 	return INVOKE_ASYNC(src, .proc/check_step, used_atom,user)
 
-/datum/component/construction/mecha/gygax/custom_action(obj/item/I, mob/living/user, diff)
-	if(!..())
-		return FALSE
-
-	switch(index)
-		if(1)
-			user.visible_message(span_notice("[user] connects [parent] hydraulic systems."), span_notice("You connect [parent] hydraulic systems."))
-		if(2)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] activates [parent] hydraulic systems."), span_notice("You activate [parent] hydraulic systems."))
-			else
-				user.visible_message(span_notice("[user] disconnects [parent] hydraulic systems."), span_notice("You disconnect [parent] hydraulic systems."))
-		if(3)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adds the wiring to [parent]."), span_notice("You add the wiring to [parent]."))
-			else
-				user.visible_message(span_notice("[user] deactivates [parent] hydraulic systems."), span_notice("You deactivate [parent] hydraulic systems."))
-		if(4)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adjusts the wiring of [parent]."), span_notice("You adjust the wiring of [parent]."))
-			else
-				user.visible_message(span_notice("[user] removes the wiring from [parent]."), span_notice("You remove the wiring from [parent]."))
-		if(5)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] disconnects the wiring of [parent]."), span_notice("You disconnect the wiring of [parent]."))
-		if(6)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the mainboard."), span_notice("You secure the mainboard."))
-			else
-				user.visible_message(span_notice("[user] removes the central control module from [parent]."), span_notice("You remove the central computer mainboard from [parent]."))
-		if(7)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the mainboard."), span_notice("You unfasten the mainboard."))
-		if(8)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the peripherals control module."), span_notice("You secure the peripherals control module."))
-			else
-				user.visible_message(span_notice("[user] removes the peripherals control module from [parent]."), span_notice("You remove the peripherals control module from [parent]."))
-		if(9)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the peripherals control module."), span_notice("You unfasten the peripherals control module."))
-		if(10)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the weapon control module."), span_notice("You secure the weapon control module."))
-			else
-				user.visible_message(span_notice("[user] removes the weapon control module from [parent]."), span_notice("You remove the weapon control module from [parent]."))
-		if(11)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the weapon control module."), span_notice("You unfasten the weapon control module."))
-		if(12)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the scanner module."), span_notice("You secure the scanner module."))
-			else
-				user.visible_message(span_notice("[user] removes the scanner module from [parent]."), span_notice("You remove the scanner module from [parent]."))
-		if(13)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the scanner module."), span_notice("You unfasten the scanner module."))
-		if(14)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the capacitor."), span_notice("You secure the capacitor."))
-			else
-				user.visible_message(span_notice("[user] removes the capacitor from [parent]."), span_notice("You remove the capacitor from [parent]."))
-		if(15)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the capacitor."), span_notice("You unfasten the capacitor."))
-		if(16)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the power cell."), span_notice("You secure the power cell."))
-			else
-				user.visible_message(span_notice("[user] pries the power cell from [parent]."), span_notice("You pry the power cell from [parent]."))
-		if(17)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs the internal armor layer to [parent]."), span_notice("You install the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the power cell."), span_notice("You unfasten the power cell."))
-		if(18)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the internal armor layer."), span_notice("You secure the internal armor layer."))
-			else
-				user.visible_message(span_notice("[user] pries internal armor layer from [parent]."), span_notice("You pry internal armor layer from [parent]."))
-		if(19)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds the internal armor layer to [parent]."), span_notice("You weld the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the internal armor layer."), span_notice("You unfasten the internal armor layer."))
-		if(20)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] cuts the internal armor layer from [parent]."), span_notice("You cut the internal armor layer from [parent]."))
-		if(21)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures Gygax Armor Plates."), span_notice("You secure Gygax Armor Plates."))
-			else
-				user.visible_message(span_notice("[user] pries Gygax Armor Plates from [parent]."), span_notice("You pry Gygax Armor Plates from [parent]."))
-		if(22)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds Gygax Armor Plates to [parent]."), span_notice("You weld Gygax Armor Plates to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens Gygax Armor Plates."), span_notice("You unfasten Gygax Armor Plates."))
-	return TRUE
-
+//CLARKE
 /datum/component/construction/unordered/mecha_chassis/clarke
 	result = /datum/component/construction/mecha/clarke
 	steps = list(
@@ -549,6 +470,8 @@
 /datum/component/construction/mecha/clarke
 	result = /obj/vehicle/sealed/mecha/working/clarke
 	base_icon = "clarke"
+
+	has_treads = TRUE
 
 	circuit_control = /obj/item/circuitboard/mecha/clarke/main
 	circuit_periph = /obj/item/circuitboard/mecha/clarke/peripherals
@@ -589,120 +512,7 @@
 		)
 	)
 
-
-
-/datum/component/construction/mecha/clarke/custom_action(obj/item/I, mob/living/user, diff)
-	if(!..())
-		return FALSE
-
-	//TODO: better messages.
-	switch(index)
-		if(1)
-			user.visible_message(span_notice("[user] adds the tread systems."), span_notice("You add the tread systems."))
-		if(2)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] connects [parent] hydraulic systems."), span_notice("You connect [parent] hydraulic systems."))
-			else
-				user.visible_message(span_notice("[user] removes the tread systems."), span_notice("You remove the tread systems."))
-
-		if(3)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] activates [parent] hydraulic systems."), span_notice("You activate [parent] hydraulic systems."))
-			else
-				user.visible_message(span_notice("[user] disconnects [parent] hydraulic systems."), span_notice("You disconnect [parent] hydraulic systems."))
-		if(4)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adds the wiring to [parent]."), span_notice("You add the wiring to [parent]."))
-			else
-				user.visible_message(span_notice("[user] deactivates [parent] hydraulic systems."), span_notice("You deactivate [parent] hydraulic systems."))
-		if(5)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adjusts the wiring of [parent]."), span_notice("You adjust the wiring of [parent]."))
-			else
-				user.visible_message(span_notice("[user] removes the wiring from [parent]."), span_notice("You remove the wiring from [parent]."))
-		if(6)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] disconnects the wiring of [parent]."), span_notice("You disconnect the wiring of [parent]."))
-		if(7)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the mainboard."), span_notice("You secure the mainboard."))
-			else
-				user.visible_message(span_notice("[user] removes the central control module from [parent]."), span_notice("You remove the central computer mainboard from [parent]."))
-		if(8)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the mainboard."), span_notice("You unfasten the mainboard."))
-		if(9)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the peripherals control module."), span_notice("You secure the peripherals control module."))
-			else
-				user.visible_message(span_notice("[user] removes the peripherals control module from [parent]."), span_notice("You remove the peripherals control module from [parent]."))
-		if(10)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the peripherals control module."), span_notice("You unfasten the peripherals control module."))
-		if(11)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the scanner module."), span_notice("You secure the scanner module."))
-			else
-				user.visible_message(span_notice("[user] removes the scanner module from [parent]."), span_notice("You remove the scanner module from [parent]."))
-		if(12)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the scanner module."), span_notice("You unfasten the scanner module."))
-		if(13)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the capacitor."), span_notice("You secure the capacitor."))
-			else
-				user.visible_message(span_notice("[user] removes the capacitor from [parent]."), span_notice("You remove the capacitor from [parent]."))
-		if(14)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the capacitor."), span_notice("You unfasten the capacitor."))
-		if(15)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the power cell."), span_notice("You secure the power cell."))
-			else
-				user.visible_message(span_notice("[user] pries the power cell from [parent]."), span_notice("You pry the power cell from [parent]."))
-		if(16)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs the internal armor layer to [parent]."), span_notice("You install the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the power cell."), span_notice("You unfasten the power cell."))
-		if(17)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the internal armor layer."), span_notice("You secure the internal armor layer."))
-			else
-				user.visible_message(span_notice("[user] pries internal armor layer from [parent]."), span_notice("You pry internal armor layer from [parent]."))
-		if(18)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds the internal armor layer to [parent]."), span_notice("You weld the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the internal armor layer."), span_notice("You unfasten the internal armor layer."))
-		if(19)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs the external armor layer to [parent]."), span_notice("You install the external reinforced armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] cuts the internal armor layer from [parent]."), span_notice("You cut the internal armor layer from [parent]."))
-		if(20)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the external armor layer."), span_notice("You secure the external reinforced armor layer."))
-			else
-				user.visible_message(span_notice("[user] pries the external armor layer from [parent]."), span_notice("You pry the external armor layer from [parent]."))
-		if(21)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds the external armor layer to [parent]."), span_notice("You weld the external armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the external armor layer."), span_notice("You unfasten the external armor layer."))
-	return TRUE
-
-
+//HONKER
 /datum/component/construction/unordered/mecha_chassis/honker
 	result = /datum/component/construction/mecha/honker
 	steps = list(
@@ -790,33 +600,19 @@
 	..()
 
 /datum/component/construction/mecha/honker/custom_action(obj/item/I, mob/living/user, diff)
-	if(!..())
-		return FALSE
-
 	if(istype(I, /obj/item/bikehorn))
 		playsound(parent, 'sound/items/bikehorn.ogg', 50, TRUE)
-		user.visible_message(span_danger("HONK!"))
+		user.balloon_alert_to_viewers("HONK!")
 
 	//TODO: better messages.
 	switch(index)
-		if(2)
-			user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-		if(4)
-			user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-		if(6)
-			user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-		if(8)
-			user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-		if(10)
-			user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-		if(12)
-			user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-		if(14)
-			user.visible_message(span_notice("[user] puts [I] on [parent]."), span_notice("You put [I] on [parent]."))
-		if(16)
-			user.visible_message(span_notice("[user] puts [I] on [parent]."), span_notice("You put [I] on [parent]."))
+		if(2, 4, 6, 8, 10, 12)
+			user.balloon_alert_to_viewers("installed [I]")
+		if(14, 16)
+			user.balloon_alert_to_viewers("added [I]")
 	return TRUE
 
+//DURAND
 /datum/component/construction/unordered/mecha_chassis/durand
 	result = /datum/component/construction/mecha/durand
 	steps = list(
@@ -832,6 +628,8 @@
 	result = /obj/vehicle/sealed/mecha/combat/durand
 	base_icon = "durand"
 
+	has_weapons_module = TRUE
+
 	circuit_control = /obj/item/circuitboard/mecha/durand/main
 	circuit_periph = /obj/item/circuitboard/mecha/durand/peripherals
 	circuit_weapon = /obj/item/circuitboard/mecha/durand/targeting
@@ -842,123 +640,7 @@
 	outer_plating = /obj/item/mecha_parts/part/durand_armor
 	outer_plating_amount = 1
 
-/datum/component/construction/mecha/durand/custom_action(obj/item/I, mob/living/user, diff)
-	if(!..())
-		return FALSE
-
-	//TODO: better messages.
-	switch(index)
-		if(1)
-			user.visible_message(span_notice("[user] connects [parent] hydraulic systems."), span_notice("You connect [parent] hydraulic systems."))
-		if(2)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] activates [parent] hydraulic systems."), span_notice("You activate [parent] hydraulic systems."))
-			else
-				user.visible_message(span_notice("[user] disconnects [parent] hydraulic systems."), span_notice("You disconnect [parent] hydraulic systems."))
-		if(3)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adds the wiring to [parent]."), span_notice("You add the wiring to [parent]."))
-			else
-				user.visible_message(span_notice("[user] deactivates [parent] hydraulic systems."), span_notice("You deactivate [parent] hydraulic systems."))
-		if(4)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adjusts the wiring of [parent]."), span_notice("You adjust the wiring of [parent]."))
-			else
-				user.visible_message(span_notice("[user] removes the wiring from [parent]."), span_notice("You remove the wiring from [parent]."))
-		if(5)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] disconnects the wiring of [parent]."), span_notice("You disconnect the wiring of [parent]."))
-		if(6)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the mainboard."), span_notice("You secure the mainboard."))
-			else
-				user.visible_message(span_notice("[user] removes the central control module from [parent]."), span_notice("You remove the central computer mainboard from [parent]."))
-		if(7)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the mainboard."), span_notice("You unfasten the mainboard."))
-		if(8)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the peripherals control module."), span_notice("You secure the peripherals control module."))
-			else
-				user.visible_message(span_notice("[user] removes the peripherals control module from [parent]."), span_notice("You remove the peripherals control module from [parent]."))
-		if(9)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the peripherals control module."), span_notice("You unfasten the peripherals control module."))
-		if(10)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the weapon control module."), span_notice("You secure the weapon control module."))
-			else
-				user.visible_message(span_notice("[user] removes the weapon control module from [parent]."), span_notice("You remove the weapon control module from [parent]."))
-		if(11)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the weapon control module."), span_notice("You unfasten the weapon control module."))
-		if(12)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the scanner module."), span_notice("You secure the scanner module."))
-			else
-				user.visible_message(span_notice("[user] removes the scanner module from [parent]."), span_notice("You remove the scanner module from [parent]."))
-		if(13)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the scanner module."), span_notice("You unfasten the scanner module."))
-		if(14)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the capacitor."), span_notice("You secure the capacitor."))
-			else
-				user.visible_message(span_notice("[user] removes the capacitor from [parent]."), span_notice("You remove the capacitor from [parent]."))
-		if(15)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the capacitor."), span_notice("You unfasten the capacitor."))
-		if(16)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the power cell."), span_notice("You secure the power cell."))
-			else
-				user.visible_message(span_notice("[user] pries the power cell from [parent]."), span_notice("You pry the power cell from [parent]."))
-		if(17)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs the internal armor layer to [parent]."), span_notice("You install the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the power cell."), span_notice("You unfasten the power cell."))
-		if(18)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the internal armor layer."), span_notice("You secure the internal armor layer."))
-			else
-				user.visible_message(span_notice("[user] pries internal armor layer from [parent]."), span_notice("You pry internal armor layer from [parent]."))
-		if(19)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds the internal armor layer to [parent]."), span_notice("You weld the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the internal armor layer."), span_notice("You unfasten the internal armor layer."))
-		if(20)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] cuts the internal armor layer from [parent]."), span_notice("You cut the internal armor layer from [parent]."))
-		if(21)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures Durand Armor Plates."), span_notice("You secure Durand Armor Plates."))
-			else
-				user.visible_message(span_notice("[user] pries Durand Armor Plates from [parent]."), span_notice("You pry Durand Armor Plates from [parent]."))
-		if(22)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds Durand Armor Plates to [parent]."), span_notice("You weld Durand Armor Plates to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens Durand Armor Plates."), span_notice("You unfasten Durand Armor Plates."))
-	return TRUE
-
 //PHAZON
-
 /datum/component/construction/unordered/mecha_chassis/phazon
 	result = /datum/component/construction/mecha/phazon
 	steps = list(
@@ -973,6 +655,9 @@
 /datum/component/construction/mecha/phazon
 	result = /obj/vehicle/sealed/mecha/combat/phazon
 	base_icon = "phazon"
+
+	has_weapons_module = TRUE
+	has_bluespace_crystal = TRUE
 
 	circuit_control = /obj/item/circuitboard/mecha/phazon/main
 	circuit_periph = /obj/item/circuitboard/mecha/phazon/peripherals
@@ -1072,138 +757,13 @@
 	if(!..())
 		return FALSE
 
-	//TODO: better messages.
-	switch(index)
-		if(1)
-			user.visible_message(span_notice("[user] connects [parent] hydraulic systems."), span_notice("You connect [parent] hydraulic systems."))
-		if(2)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] activates [parent] hydraulic systems."), span_notice("You activate [parent] hydraulic systems."))
-			else
-				user.visible_message(span_notice("[user] disconnects [parent] hydraulic systems."), span_notice("You disconnect [parent] hydraulic systems."))
-		if(3)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adds the wiring to [parent]."), span_notice("You add the wiring to [parent]."))
-			else
-				user.visible_message(span_notice("[user] deactivates [parent] hydraulic systems."), span_notice("You deactivate [parent] hydraulic systems."))
-		if(4)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adjusts the wiring of [parent]."), span_notice("You adjust the wiring of [parent]."))
-			else
-				user.visible_message(span_notice("[user] removes the wiring from [parent]."), span_notice("You remove the wiring from [parent]."))
-		if(5)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] disconnects the wiring of [parent]."), span_notice("You disconnect the wiring of [parent]."))
-		if(6)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the mainboard."), span_notice("You secure the mainboard."))
-			else
-				user.visible_message(span_notice("[user] removes the central control module from [parent]."), span_notice("You remove the central computer mainboard from [parent]."))
-		if(7)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the mainboard."), span_notice("You unfasten the mainboard."))
-		if(8)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the peripherals control module."), span_notice("You secure the peripherals control module."))
-			else
-				user.visible_message(span_notice("[user] removes the peripherals control module from [parent]."), span_notice("You remove the peripherals control module from [parent]."))
-		if(9)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the peripherals control module."), span_notice("You unfasten the peripherals control module."))
-		if(10)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the weapon control module."), span_notice("You secure the weapon control module."))
-			else
-				user.visible_message(span_notice("[user] removes the weapon control module from [parent]."), span_notice("You remove the weapon control module from [parent]."))
-		if(11)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the weapon control module."), span_notice("You unfasten the weapon control module."))
-		if(12)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the scanner module."), span_notice("You secure the scanner module."))
-			else
-				user.visible_message(span_notice("[user] removes the scanner module from [parent]."), span_notice("You remove the scanner module from [parent]."))
-		if(13)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the scanner module."), span_notice("You unfasten the scanner module."))
-		if(14)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the capacitor."), span_notice("You secure the capacitor."))
-			else
-				user.visible_message(span_notice("[user] removes the capacitor from [parent]."), span_notice("You remove the capacitor from [parent]."))
-		if(15)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I]."), span_notice("You install [I]."))
-			else
-				user.visible_message(span_notice("[user] unsecures the capacitor from [parent]."), span_notice("You unsecure the capacitor from [parent]."))
-		if(16)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] connects the bluespace crystal."), span_notice("You connect the bluespace crystal."))
-			else
-				user.visible_message(span_notice("[user] removes the bluespace crystal from [parent]."), span_notice("You remove the bluespace crystal from [parent]."))
-		if(17)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] engages the bluespace crystal."), span_notice("You engage the bluespace crystal."))
-			else
-				user.visible_message(span_notice("[user] disconnects the bluespace crystal from [parent]."), span_notice("You disconnect the bluespace crystal from [parent]."))
-		if(18)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] disengages the bluespace crystal."), span_notice("You disengage the bluespace crystal."))
-		if(19)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the power cell."), span_notice("You secure the power cell."))
-			else
-				user.visible_message(span_notice("[user] pries the power cell from [parent]."), span_notice("You pry the power cell from [parent]."))
-		if(20)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs the phase armor layer to [parent]."), span_notice("You install the phase armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the power cell."), span_notice("You unfasten the power cell."))
-		if(21)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the phase armor layer."), span_notice("You secure the phase armor layer."))
-			else
-				user.visible_message(span_notice("[user] pries the phase armor layer from [parent]."), span_notice("You pry the phase armor layer from [parent]."))
-		if(22)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds the phase armor layer to [parent]."), span_notice("You weld the phase armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the phase armor layer."), span_notice("You unfasten the phase armor layer."))
-		if(23)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] cuts phase armor layer from [parent]."), span_notice("You cut the phase armor layer from [parent]."))
-		if(24)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures Phazon Armor Plates."), span_notice("You secure Phazon Armor Plates."))
-			else
-				user.visible_message(span_notice("[user] pries Phazon Armor Plates from [parent]."), span_notice("You pry Phazon Armor Plates from [parent]."))
-		if(25)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds Phazon Armor Plates to [parent]."), span_notice("You weld Phazon Armor Plates to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens Phazon Armor Plates."), span_notice("You unfasten Phazon Armor Plates."))
-		if(26)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] carefully inserts the bluespace anomaly core into [parent] and secures it."),
-					span_notice("You slowly place the bluespace anomaly core into its socket and close its chamber."))
+	// We've already advanced the message step in ..(), so we have to offset by one to make sure we're on the right message
+	if((message_step - 1) == INSERT_ANOMALY_CORE_STEP)
+		if(diff == FORWARD)
+			user.balloon_alert_to_viewers("inserted bluespace anomaly core")
 	return TRUE
 
-//savannah_ivanov
-
+//SAVANNAH-IVANOV
 /datum/component/construction/unordered/mecha_chassis/savannah_ivanov
 	result = /datum/component/construction/mecha/savannah_ivanov
 	steps = list(
@@ -1219,6 +779,8 @@
 	result = /obj/vehicle/sealed/mecha/combat/savannah_ivanov
 	base_icon = "savannah_ivanov"
 
+	has_weapons_module = TRUE
+
 	circuit_control = /obj/item/circuitboard/mecha/savannah_ivanov/main
 	circuit_periph = /obj/item/circuitboard/mecha/savannah_ivanov/peripherals
 	circuit_weapon = /obj/item/circuitboard/mecha/savannah_ivanov/targeting
@@ -1229,123 +791,7 @@
 	outer_plating = /obj/item/mecha_parts/part/savannah_ivanov_armor
 	outer_plating_amount = 1
 
-/datum/component/construction/mecha/savannah_ivanov/custom_action(obj/item/I, mob/living/user, diff)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	switch(index)
-		if(1)
-			user.visible_message(span_notice("[user] connects [parent] hydraulic systems."), span_notice("You connect [parent] hydraulic systems."))
-		if(2)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] activates [parent] hydraulic systems."), span_notice("You activate [parent] hydraulic systems."))
-			else
-				user.visible_message(span_notice("[user] disconnects [parent] hydraulic systems."), span_notice("You disconnect [parent] hydraulic systems."))
-		if(3)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adds the wiring to [parent]."), span_notice("You add the wiring to [parent]."))
-			else
-				user.visible_message(span_notice("[user] deactivates [parent] hydraulic systems."), span_notice("You deactivate [parent] hydraulic systems."))
-		if(4)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adjusts the wiring of [parent]."), span_notice("You adjust the wiring of [parent]."))
-			else
-				user.visible_message(span_notice("[user] removes the wiring from [parent]."), span_notice("You remove the wiring from [parent]."))
-		if(5)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] disconnects the wiring of [parent]."), span_notice("You disconnect the wiring of [parent]."))
-		if(6)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the mainboard."), span_notice("You secure the mainboard."))
-			else
-				user.visible_message(span_notice("[user] removes the central control module from [parent]."), span_notice("You remove the central computer mainboard from [parent]."))
-		if(7)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the mainboard."), span_notice("You unfasten the mainboard."))
-		if(8)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the Savannah peripherals control module."), span_notice("You secure the Savannah peripherals control module."))
-			else
-				user.visible_message(span_notice("[user] removes the Savannah peripherals control module from [parent]."), span_notice("You remove the Savannah peripherals control module from [parent]."))
-		if(9)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the Savannah peripherals control module."), span_notice("You unfasten the Savannah peripherals control module."))
-		if(10)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the Ivanov weapon control module."), span_notice("You secure the Ivanov weapon control module."))
-			else
-				user.visible_message(span_notice("[user] removes the Ivanov weapon control module from [parent]."), span_notice("You remove the Ivanov weapon control module from [parent]."))
-		if(11)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the Ivanov weapon control module."), span_notice("You unfasten the Ivanov weapon control module."))
-		if(12)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the scanner module."), span_notice("You secure the scanner module."))
-			else
-				user.visible_message(span_notice("[user] removes the scanner module from [parent]."), span_notice("You remove the scanner module from [parent]."))
-		if(13)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the scanner module."), span_notice("You unfasten the scanner module."))
-		if(14)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the capacitor."), span_notice("You secure the capacitor."))
-			else
-				user.visible_message(span_notice("[user] removes the capacitor from [parent]."), span_notice("You remove the capacitor from [parent]."))
-		if(15)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the capacitor."), span_notice("You unfasten the capacitor."))
-		if(16)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the power cell."), span_notice("You secure the power cell."))
-			else
-				user.visible_message(span_notice("[user] pries the power cell from [parent]."), span_notice("You pry the power cell from [parent]."))
-		if(17)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs the internal armor layer to [parent]."), span_notice("You install the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the power cell."), span_notice("You unfasten the power cell."))
-		if(18)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the internal armor layer."), span_notice("You secure the internal armor layer."))
-			else
-				user.visible_message(span_notice("[user] pries internal armor layer from [parent]."), span_notice("You pry internal armor layer from [parent]."))
-		if(19)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds the internal armor layer to [parent]."), span_notice("You weld the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the internal armor layer."), span_notice("You unfasten the internal armor layer."))
-		if(20)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] cuts the internal armor layer from [parent]."), span_notice("You cut the internal armor layer from [parent]."))
-		if(21)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures Savannah-Ivanov Armor Plates."), span_notice("You secure Savannah-Ivanov Armor Plates."))
-			else
-				user.visible_message(span_notice("[user] pries Savannah-Ivanov Armor Plates from [parent]."), span_notice("You pry Savannah-Ivanov Armor Plates from [parent]."))
-		if(22)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds Savannah-Ivanov Armor Plates to [parent]."), span_notice("You weld Savannah-Ivanov Armor Plates to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens Savannah-Ivanov Armor Plates."), span_notice("You unfasten Savannah-Ivanov Armor Plates."))
-	return TRUE
-
 //ODYSSEUS
-
 /datum/component/construction/unordered/mecha_chassis/odysseus
 	result = /datum/component/construction/mecha/odysseus
 	steps = list(
@@ -1370,107 +816,30 @@
 	outer_plating = /obj/item/stack/sheet/plasteel
 	outer_plating_amount = 5
 
-/datum/component/construction/mecha/odysseus/custom_action(obj/item/I, mob/living/user, diff)
-	if(!..())
-		return FALSE
-
-	//TODO: better messages.
-	switch(index)
-		if(1)
-			user.visible_message(span_notice("[user] connects [parent] hydraulic systems."), span_notice("You connect [parent] hydraulic systems."))
-		if(2)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] activates [parent] hydraulic systems."), span_notice("You activate [parent] hydraulic systems."))
-			else
-				user.visible_message(span_notice("[user] disconnects [parent] hydraulic systems."), span_notice("You disconnect [parent] hydraulic systems."))
-		if(3)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adds the wiring to [parent]."), span_notice("You add the wiring to [parent]."))
-			else
-				user.visible_message(span_notice("[user] deactivates [parent] hydraulic systems."), span_notice("You deactivate [parent] hydraulic systems."))
-		if(4)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] adjusts the wiring of [parent]."), span_notice("You adjust the wiring of [parent]."))
-			else
-				user.visible_message(span_notice("[user] removes the wiring from [parent]."), span_notice("You remove the wiring from [parent]."))
-		if(5)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] disconnects the wiring of [parent]."), span_notice("You disconnect the wiring of [parent]."))
-		if(6)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the mainboard."), span_notice("You secure the mainboard."))
-			else
-				user.visible_message(span_notice("[user] removes the central control module from [parent]."), span_notice("You remove the central computer mainboard from [parent]."))
-		if(7)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the mainboard."), span_notice("You unfasten the mainboard."))
-		if(8)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the peripherals control module."), span_notice("You secure the peripherals control module."))
-			else
-				user.visible_message(span_notice("[user] removes the peripherals control module from [parent]."), span_notice("You remove the peripherals control module from [parent]."))
-		if(9)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the peripherals control module."), span_notice("You unfasten the peripherals control module."))
-		if(10)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the scanner module."), span_notice("You secure the scanner module."))
-			else
-				user.visible_message(span_notice("[user] removes the scanner module from [parent]."), span_notice("You remove the scanner module from [parent]."))
-		if(11)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] to [parent]."), span_notice("You install [I] to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the scanner module."), span_notice("You unfasten the scanner module."))
-		if(12)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the capacitor."), span_notice("You secure the capacitor."))
-			else
-				user.visible_message(span_notice("[user] removes the capacitor from [parent]."), span_notice("You remove the capacitor from [parent]."))
-		if(13)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs [I] into [parent]."), span_notice("You install [I] into [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the capacitor."), span_notice("You unfasten the capacitor."))
-		if(14)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the power cell."), span_notice("You secure the power cell."))
-			else
-				user.visible_message(span_notice("[user] pries the power cell from [parent]."), span_notice("You pry the power cell from [parent]."))
-		if(15)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs the internal armor layer to [parent]."), span_notice("You install the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the power cell."), span_notice("You unfasten the power cell."))
-		if(16)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the internal armor layer."), span_notice("You secure the internal armor layer."))
-			else
-				user.visible_message(span_notice("[user] pries internal armor layer from [parent]."), span_notice("You pry internal armor layer from [parent]."))
-		if(17)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds the internal armor layer to [parent]."), span_notice("You weld the internal armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the internal armor layer."), span_notice("You unfasten the internal armor layer."))
-		if(18)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] installs the external armor layer to [parent]."), span_notice("You install the external reinforced armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] cuts the internal armor layer from [parent]."), span_notice("You cut the internal armor layer from [parent]."))
-		if(19)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] secures the external armor layer."), span_notice("You secure the external reinforced armor layer."))
-			else
-				user.visible_message(span_notice("[user] pries the external armor layer from [parent]."), span_notice("You pry the external armor layer from [parent]."))
-		if(20)
-			if(diff==FORWARD)
-				user.visible_message(span_notice("[user] welds the external armor layer to [parent]."), span_notice("You weld the external armor layer to [parent]."))
-			else
-				user.visible_message(span_notice("[user] unfastens the external armor layer."), span_notice("You unfasten the external armor layer."))
-	return TRUE
+#undef ADD_TREADS_STEP
+#undef CONNECT_HYDRAULICS_STEP
+#undef ACTIVATE_HYDRAULICS_STEP
+#undef ADD_WIRING_STEP
+#undef ADJUST_WIRING_STEP
+#undef ADD_CONTROL_MODULE_STEP
+#undef SECURE_CONTROL_MODULE_STEP
+#undef ADD_PERIPHERALS_STEP
+#undef SECURE_PERIPHERALS_STEP
+#undef ADD_WEAPONS_CONTROLS_STEP
+#undef SECURE_WEAPONS_CONTROLS_STEP
+#undef ADD_SCANNING_MODULE_STEP
+#undef SECURE_SCANNING_MODULE_STEP
+#undef ADD_CAPACITOR_STEP
+#undef SECURE_CAPACITOR_STEP
+#undef INSTALL_BLUESPACE_STEP
+#undef CONNECT_BLUESPACE_STEP
+#undef ENGAGE_BLUESPACE_STEP
+#undef ADD_CELL_STEP
+#undef SECURE_CELL_STEP
+#undef ADD_INTERNAL_ARMOR_STEP
+#undef SECURE_INTERNAL_ARMOR_STEP
+#undef WELD_INTERNAL_ARMOR_STEP
+#undef ADD_EXTERNAL_ARMOR_STEP
+#undef SECURE_EXTERNAL_ARMOR_STEP
+#undef WELD_EXTERNAL_ARMOR_STEP
+#undef INSERT_ANOMALY_CORE_STEP

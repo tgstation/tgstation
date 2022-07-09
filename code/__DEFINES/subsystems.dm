@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 17
+#define DB_MINOR_VERSION 22
 
 
 //! ## Timing subsystem
@@ -63,6 +63,10 @@
 ///Empty ID define
 #define TIMER_ID_NULL -1
 
+/// Used to trigger object removal from a processing list
+#define PROCESS_KILL 26
+
+
 //! ## Initialization subsystem
 
 ///New should not call Initialize
@@ -87,9 +91,6 @@
 
 ///Call qdel on the atom after intialization
 #define INITIALIZE_HINT_QDEL 2
-
-///Call qdel with a force of TRUE after initialization
-#define INITIALIZE_HINT_QDEL_FORCE 3
 
 ///type and all subtypes should always immediately call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
@@ -118,9 +119,9 @@
 #define INIT_ORDER_INSTRUMENTS 82
 #define INIT_ORDER_GREYSCALE 81
 #define INIT_ORDER_VIS 80
+#define INIT_ORDER_SECURITY_LEVEL 79 // We need to load before events so that it has a security level to choose from.
 #define INIT_ORDER_DISCORD 78
 #define INIT_ORDER_ACHIEVEMENTS 77
-#define INIT_ORDER_RESEARCH 75
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_QUIRKS 73
 #define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
@@ -133,8 +134,10 @@
 #define INIT_ORDER_TCG 55
 #define INIT_ORDER_MAPPING 50
 #define INIT_ORDER_EARLY_ASSETS 48
-#define INIT_ORDER_TIMETRACK 47
+#define INIT_ORDER_RESEARCH 47
+#define INIT_ORDER_TIMETRACK 46
 #define INIT_ORDER_NETWORKS 45
+#define INIT_ORDER_SPATIAL_GRID 43
 #define INIT_ORDER_ECONOMY 40
 #define INIT_ORDER_OUTPUTS 35
 #define INIT_ORDER_RESTAURANT 34
@@ -164,6 +167,7 @@
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
+#define FIRE_PRIORITY_PING 10
 #define FIRE_PRIORITY_IDLE_NPC 10
 #define FIRE_PRIORITY_SERVER_MAINT 10
 #define FIRE_PRIORITY_RESEARCH 10
@@ -172,6 +176,7 @@
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
 #define FIRE_PRIORITY_WET_FLOORS 20
+#define FIRE_PRIORITY_FLUIDS 20
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20
 #define FIRE_PRIORITY_NPC_MOVEMENT 21
@@ -180,7 +185,6 @@
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
 #define FIRE_PRIORITY_SPACEDRIFT 30
-#define FIRE_PRIORITY_FIELDS 30
 #define FIRE_PRIOTITY_SMOOTHING 35
 #define FIRE_PRIORITY_NETWORKS 40
 #define FIRE_PRIORITY_OBJ 40
@@ -192,14 +196,15 @@
 #define FIRE_PRIORITY_MOBS 100
 #define FIRE_PRIORITY_TGUI 110
 #define FIRE_PRIORITY_TICKER 200
-#define FIRE_PRIORITY_ATMOS_ADJACENCY 300
 #define FIRE_PRIORITY_STATPANEL 390
 #define FIRE_PRIORITY_CHAT 400
 #define FIRE_PRIORITY_RUNECHAT 410
+#define FIRE_PRIORITY_MOUSE_ENTERED 450
 #define FIRE_PRIORITY_OVERLAYS 500
 #define FIRE_PRIORITY_EXPLOSIONS 666
 #define FIRE_PRIORITY_TIMER 700
 #define FIRE_PRIORITY_SOUND_LOOPS 800
+#define FIRE_PRIORITY_SPEECH_CONTROLLER 900
 #define FIRE_PRIORITY_INPUT 1000 // This must always always be the max highest priority. Player input must never be lost.
 
 
@@ -213,7 +218,17 @@
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
 
-
+//SSticker.current_state values
+/// Game is loading
+#define GAME_STATE_STARTUP 0
+/// Game is loaded and in pregame lobby
+#define GAME_STATE_PREGAME 1
+/// Game is attempting to start the round
+#define GAME_STATE_SETTING_UP 2
+/// Game has round in progress
+#define GAME_STATE_PLAYING 3
+/// Game has round finished
+#define GAME_STATE_FINISHED 4
 
 //! ## Overlays subsystem
 
@@ -246,6 +261,7 @@
 	* * callback the callback to call on timer finish
 	* * wait deciseconds to run the timer for
 	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+	* * timer_subsystem the subsystem to insert this timer into
 */
 #define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
 
@@ -259,7 +275,7 @@
 #define SSAIR_SUPERCONDUCTIVITY 7
 #define SSAIR_PROCESS_ATOMS 8
 
-//Pipeline rebuild helper defines, these suck but it'll do for now
+//Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
 #define SSAIR_REBUILD_PIPELINE 1
 #define SSAIR_REBUILD_QUEUE 2
 
@@ -268,9 +284,28 @@
 #define SSEXPLOSIONS_TURFS 2
 #define SSEXPLOSIONS_THROWS 3
 
+// Wardrobe subsystem tasks
+#define SSWARDROBE_STOCK 1
+#define SSWARDROBE_INSPECT 2
+
+//Wardrobe cache metadata indexes
+#define WARDROBE_CACHE_COUNT 1
+#define WARDROBE_CACHE_LAST_INSPECT 2
+#define WARDROBE_CACHE_CALL_INSERT 3
+#define WARDROBE_CACHE_CALL_REMOVAL 4
+
+//Wardrobe preloaded stock indexes
+#define WARDROBE_STOCK_CONTENTS 1
+#define WARDROBE_STOCK_CALL_INSERT 2
+#define WARDROBE_STOCK_CALL_REMOVAL 3
+
+//Wardrobe callback master list indexes
+#define WARDROBE_CALLBACK_INSERT 1
+#define WARDROBE_CALLBACK_REMOVE 2
+
 // Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
 // Only use these defines if you want to access some other objects processing delta_time, otherwise use the delta_time that is sent as a parameter to process()
-#define SSFLUIDS_DT (SSfluids.wait/10)
+#define SSFLUIDS_DT (SSplumbing.wait/10)
 #define SSMACHINES_DT (SSmachines.wait/10)
 #define SSMOBS_DT (SSmobs.wait/10)
 #define SSOBJ_DT (SSobj.wait/10)

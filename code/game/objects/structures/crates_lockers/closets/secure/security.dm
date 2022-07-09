@@ -12,7 +12,7 @@
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/storage/bag/garment/captain(src)
-	new /obj/item/cartridge/captain(src)
+	new /obj/item/computer_hardware/hard_drive/portable/command/captain(src)
 	new /obj/item/storage/box/silver_ids(src)
 	new /obj/item/radio/headset/heads/captain/alt(src)
 	new /obj/item/radio/headset/heads/captain(src)
@@ -30,7 +30,7 @@
 	..()
 	new /obj/item/storage/bag/garment/hop(src)
 	new /obj/item/storage/lockbox/medal/service(src)
-	new /obj/item/cartridge/hop(src)
+	new /obj/item/computer_hardware/hard_drive/portable/command/hop(src)
 	new /obj/item/radio/headset/heads/hop(src)
 	new /obj/item/storage/box/ids(src)
 	new /obj/item/storage/box/ids(src)
@@ -52,7 +52,7 @@
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
 
-	new /obj/item/cartridge/hos(src)
+	new /obj/item/computer_hardware/hard_drive/portable/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/storage/bag/garment/hos(src)
 	new /obj/item/storage/lockbox/medal/sec(src)
@@ -95,7 +95,7 @@
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
-	req_access = list(ACCESS_SECURITY)
+	req_access = list(ACCESS_BRIG)
 	icon_state = "sec"
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
@@ -143,7 +143,7 @@
 
 /obj/structure/closet/secure_closet/detective
 	name = "\improper detective's cabinet"
-	req_access = list(ACCESS_FORENSICS_LOCKERS)
+	req_access = list(ACCESS_DETECTIVE)
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
@@ -176,15 +176,59 @@
 
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
-	req_access = list(ACCESS_BRIG)
+	req_one_access = list(ACCESS_BRIG)
 	anchored = TRUE
 	var/id = null
+
+/obj/structure/closet/secure_closet/brig/genpop
+	name = "genpop storage locker"
+	desc = "Used for storing the belongings of genpop's tourists visiting the locals."
+
+	///Reference to the ID linked to the locker, done by swiping a prisoner ID on it
+	var/datum/weakref/assigned_id_ref = null
+
+/obj/structure/closet/secure_closet/brig/genpop/Destroy()
+	assigned_id_ref = null
+	return ..()
+
+/obj/structure/closet/secure_closet/brig/genpop/examine(mob/user)
+	. = ..()
+	. += span_notice("<b>Right-click</b> with a Security-level ID to reset [src]'s registered ID.")
+
+/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/used_id, mob/user, params)
+	. = ..()
+	if(!istype(used_id, /obj/item/card/id/advanced/prisoner))
+		return
+
+	if(!assigned_id_ref)
+		say("Prisoner ID linked to locker.")
+		assigned_id_ref = WEAKREF(used_id)
+		name = "genpop storage locker - [used_id.registered_name]"
+		return
+	var/obj/item/card/id/advanced/prisoner/registered_id = assigned_id_ref.resolve()
+	if(used_id == registered_id)
+		say("Authorized ID detected. Unlocking locker and resetting ID.")
+		locked = FALSE
+		assigned_id_ref = null
+		name = initial(name)
+		update_appearance()
+
+/obj/structure/closet/secure_closet/brig/genpop/attackby_secondary(obj/item/card/id/advanced/used_id, mob/user, params)
+	. = ..()
+
+	var/list/id_access = used_id.GetAccess()
+	if(assigned_id_ref && (ACCESS_BRIG in id_access))
+		say("Authorized ID detected. Unlocking locker and resetting ID.")
+		locked = FALSE
+		assigned_id_ref = null
+		name = initial(name)
+		update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/secure_closet/evidence
 	anchored = TRUE
 	name = "Secure Evidence Closet"
-	req_access_txt = "0"
-	req_one_access_txt = list(ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS)
+	req_one_access = list("armory","detective")
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
 	..()
@@ -214,7 +258,7 @@
 /obj/structure/closet/secure_closet/contraband/heads
 	anchored = TRUE
 	name = "Contraband Locker"
-	req_access = list(ACCESS_HEADS)
+	req_access = list(ACCESS_COMMAND)
 
 /obj/structure/closet/secure_closet/armory1
 	name = "armory armor locker"
@@ -257,6 +301,8 @@
 		new /obj/item/gun/energy/e_gun(src)
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser(src)
+	for(var/i in 1 to 3)
+		new /obj/item/gun/energy/laser/thermal(src)
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"

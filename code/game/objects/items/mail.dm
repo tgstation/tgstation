@@ -69,7 +69,7 @@
 	// Add some random stamps.
 	if(stamped == TRUE)
 		var/stamp_count = rand(1, stamp_max)
-		for(var/i = 1, i <= stamp_count, i++)
+		for(var/i in 1 to stamp_count)
 			stamps += list("stamp_[rand(2, 6)]")
 	update_icon()
 
@@ -157,7 +157,7 @@
 			else
 				goodies += job_goodies
 
-	for(var/iterator = 0, iterator < goodie_count, iterator++)
+	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
 		var/atom/movable/target_atom = new target_good(src)
 		body.log_message("[key_name(body)] received [target_atom.name] in the mail ([target_good])", LOG_GAME)
@@ -263,21 +263,20 @@
 /obj/item/storage/bag/mail
 	name = "mail bag"
 	desc = "A bag for letters, envelopes, and other postage."
-	icon = 'icons/obj/library.dmi'
-	icon_state = "bookbag"
-	worn_icon_state = "bookbag"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "mailbag"
+	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/mail/ComponentInitialize()
+/obj/item/storage/bag/mail/Initialize()
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.max_w_class = WEIGHT_CLASS_NORMAL
-	storage.max_combined_w_class = 42
-	storage.max_items = 21
-	storage.display_numerical_stacking = FALSE
-	storage.set_holdable(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 42
+	atom_storage.max_slots = 21
+	atom_storage.numerical_stacking = FALSE
+	atom_storage.set_holdable(list(
 		/obj/item/mail,
-		/obj/item/small_delivery,
+		/obj/item/delivery/small,
 		/obj/item/paper
 	))
 

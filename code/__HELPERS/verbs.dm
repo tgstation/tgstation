@@ -43,9 +43,8 @@
 	for(var/thing in verbs_list)
 		var/procpath/verb_to_add = thing
 		output_list[++output_list.len] = list(verb_to_add.category, verb_to_add.name)
-	output_list = url_encode(json_encode(output_list))
 
-	target << output("[output_list];", "statbrowser:add_verb_list")
+	target.stat_panel.send_message("add_verb_list", output_list)
 
 /**
  * handles removing verb and sending it to browser to update, use this for removing verbs
@@ -91,6 +90,5 @@
 	for(var/thing in verbs_list)
 		var/procpath/verb_to_remove = thing
 		output_list[++output_list.len] = list(verb_to_remove.category, verb_to_remove.name)
-	output_list = url_encode(json_encode(output_list))
 
-	target << output("[output_list];", "statbrowser:remove_verb_list")
+	target.stat_panel.send_message("remove_verb_list", output_list)

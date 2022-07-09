@@ -1,0 +1,7 @@
+directory = "_maps/RandomRuins/LavaRuins/lavaland_surface_syndicate_base1/"
+
+[rooms.commswilding]
+modules = ["commswilding_1.dmm", "commswilding_2.dmm", "commswilding_3.dmm"]
+
+[rooms.mistake]
+modules = ["mistake_unlikely.dmm", "mistake_feasible.dmm", "mistake_inevitable.dmm"]

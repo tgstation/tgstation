@@ -24,7 +24,7 @@ other types of metals and chemistry for reagents).
 	/// Name of the created object
 	var/name = "Name"
 	/// Description of the created object
-	var/desc = "Desc"
+	var/desc = null
 	/// The ID of the design. Used for quick reference. Alphanumeric, lower-case, no symbols
 	var/id = DESIGN_ID_IGNORE
 	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[AWAY_IMPRINTER]|[PROTOLATHE]|[AWAY_LATHE]|[AUTOLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER])
@@ -85,6 +85,13 @@ other types of metals and chemistry for reagents).
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	sheet.send(user)
 	return sheet.icon_tag(id)
+
+/// Returns the description of the design
+/datum/design/proc/get_description()
+	var/obj/object_build_item_path = build_path
+
+	return isnull(desc) ? initial(object_build_item_path.desc) : desc
+
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

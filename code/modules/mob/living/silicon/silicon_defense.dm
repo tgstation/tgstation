@@ -54,7 +54,7 @@
 	if(!.)
 		return
 	adjustBruteLoss(rand(10, 15))
-	playsound(loc, "punch", 25, TRUE, -1)
+	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("[user] punches you!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You punch [src]!"))

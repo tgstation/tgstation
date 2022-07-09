@@ -15,7 +15,8 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /datum/controller/subsystem/processing/station/Initialize(timeofday)
 
 	//If doing unit tests we don't do none of that trait shit ya know?
-	#ifndef UNIT_TESTS
+	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
+	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
 	SetupTraits()
 	#endif
 
@@ -76,6 +77,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /datum/controller/subsystem/processing/station/proc/setup_trait(datum/station_trait/trait_type)
 	var/datum/station_trait/trait_instance = new trait_type()
 	station_traits += trait_instance
+	log_game("Station Trait: [trait_instance.name] chosen for this round.")
 	if(!trait_instance.blacklist)
 		return
 	for(var/i in trait_instance.blacklist)

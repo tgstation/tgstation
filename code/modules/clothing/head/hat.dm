@@ -7,6 +7,14 @@
 	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 	strip_delay = 80
 
+/obj/item/clothing/head/constable
+	name = "constable helmet"
+	desc = "A british looking helmet."
+	icon_state = "constable"
+	inhand_icon_state = "constable"
+	custom_price = PAYCHECK_COMMAND * 1.5
+	worn_y_offset = 4
+
 /obj/item/clothing/head/spacepolice
 	name = "space police cap"
 	desc = "A blue cap for patrolling the daily beat."
@@ -33,13 +41,13 @@
 	name = "plague doctor's hat"
 	desc = "These were once used by plague doctors. They're pretty much useless."
 	icon_state = "plaguedoctor"
-	permeability_coefficient = 0.01
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/head/nursehat
 	name = "nurse's hat"
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
-	dynamic_hair_suffix = ""
+
 
 	dog_fashion = /datum/dog_fashion/head/nurse
 
@@ -48,7 +56,7 @@
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
 	inhand_icon_state = "bowler"
-	dynamic_hair_suffix = ""
+
 
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
@@ -74,6 +82,36 @@
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 15, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/head/cowboy_hat_black
+	name = "desperado hat"
+	desc = "People with ropes around their necks don't always hang."
+	icon_state = "cowboy_hat_black"
+	inhand_icon_state = "cowboy_hat_black"
+
+/obj/item/clothing/head/cowboy_hat_white
+	name = "ten-gallon hat"
+	desc = "There are two kinds of people in the world: those with guns and those that dig. You dig?"
+	icon_state = "cowboy_hat_white"
+	inhand_icon_state = "cowboy_hat_white"
+
+/obj/item/clothing/head/cowboy_hat_grey
+	name = "drifter hat"
+	desc = "The hat for an assistant with no name."
+	icon_state = "cowboy_hat_grey"
+	inhand_icon_state = "cowboy_hat_grey"
+
+/obj/item/clothing/head/cowboy_hat_red
+	name = "deputy hat"
+	desc = "Don't let the garish coloration fool you. This hat has seen some terrible things."
+	icon_state = "cowboy_hat_red"
+	inhand_icon_state = "cowboy_hat_red"
+
+/obj/item/clothing/head/cowboy_hat_brown
+	name = "sheriff hat"
+	desc = "Reach for the skies, pardner."
+	icon_state = "cowboy_hat_brown"
+	inhand_icon_state = "cowboy_hat_brown"
+
 /obj/item/clothing/head/santa
 	name = "santa hat"
 	desc = "On the first day of christmas my employer gave to me!"
@@ -87,7 +125,7 @@
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat"
-	dynamic_hair_suffix = ""
+
 
 /obj/item/clothing/head/jester/alt
 	icon_state = "jester2"

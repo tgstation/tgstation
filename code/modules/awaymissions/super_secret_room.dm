@@ -4,7 +4,8 @@
 	verb_say = "intones"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "speaking_tile"
-	layer = 5
+	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	resistance_flags = INDESTRUCTIBLE
 	var/speaking = FALSE
 	var/times_spoken_to = 0
@@ -26,10 +27,10 @@
 	switch(times_spoken_to)
 		if(0)
 			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing, or make a bug report."))
-			for(var/obj/structure/signpost/salvation/S in orange(7))
-				S.invisibility = 0
-				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(1, S.loc)
+			for(var/obj/structure/signpost/salvation/sign in orange(7))
+				sign.invisibility = 0
+				var/datum/effect_system/fluid_spread/smoke/smoke = new
+				smoke.set_up(1, holder = src, location = sign.loc)
 				smoke.start()
 				break
 		if(1)
@@ -126,7 +127,7 @@
 
 /obj/item/rupee/Initialize(mapload)
 	. = ..()
-	var/newcolor = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
+	var/newcolor = pick(10;COLOR_GREEN, 5;COLOR_BLUE, 3;COLOR_RED, 1;COLOR_PURPLE)
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,

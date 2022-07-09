@@ -21,5 +21,4 @@
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/tonumber/input_received(datum/port/input/port)
-
 	output.set_output(text2num(input_port.value))

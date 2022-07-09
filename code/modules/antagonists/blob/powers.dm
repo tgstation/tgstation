@@ -3,6 +3,7 @@
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, span_warning("You cannot afford this, you need at least [cost] resources!"))
+		balloon_alert(src, "need [cost-blob_points] more resource\s!")
 		return FALSE
 	add_points(-cost)
 	return TRUE
@@ -28,8 +29,7 @@
 		if(T.density)
 			to_chat(src, span_warning("This spot is too dense to place a blob core on!"))
 			return FALSE
-		var/area/A = get_area(T)
-		if(isspaceturf(T) || A && !(A.area_flags & BLOBS_ALLOWED))
+		if(!is_valid_turf(T))
 			to_chat(src, span_warning("You cannot place your core here!"))
 			return FALSE
 		for(var/obj/O in T)
@@ -71,7 +71,11 @@
 		for(var/i in 1 to GLOB.blob_nodes.len)
 			var/obj/structure/blob/special/node/B = GLOB.blob_nodes[i]
 			nodes["Blob Node #[i] ([get_area_name(B)])"] = B
-		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
+		var/node_name = tgui_input_list(src, "Choose a node to jump to", "Node Jump", nodes)
+		if(isnull(node_name))
+			return FALSE
+		if(isnull(nodes[node_name]))
+			return FALSE
 		var/obj/structure/blob/special/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			forceMove(chosen_node.loc)
@@ -82,22 +86,27 @@
 	var/obj/structure/blob/B = (locate(/obj/structure/blob) in T)
 	if(!B)
 		to_chat(src, span_warning("There is no blob here!"))
+		balloon_alert(src, "no blob here!")
 		return
 	if(!istype(B, /obj/structure/blob/normal))
 		to_chat(src, span_warning("Unable to use this blob, find a normal one."))
+		balloon_alert(src, "need normal blob!")
 		return
 	if(needsNode)
 		var/area/A = get_area(src)
 		if(!(A.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
 			to_chat(src, span_warning("This type of blob must be placed on the station!"))
+			balloon_alert(src, "can't place off-station!")
 			return
 		if(nodes_required && !(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, T)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, T)))
 			to_chat(src, span_warning("You need to place this blob closer to a node or core!"))
+			balloon_alert(src, "too far from node or core!")
 			return //handholdotron 2000
 	if(minSeparation)
 		for(var/obj/structure/blob/L in orange(minSeparation, T))
 			if(L.type == blobstrain)
 				to_chat(src, span_warning("There is a similar blob nearby, move more than [minSeparation] tiles away from it!"))
+				L.balloon_alert(src, "too close!")
 				return
 	if(!can_buy(price))
 		return
@@ -121,9 +130,11 @@
 			to_chat(src, span_warning("This shield blob is too damaged to be modified properly!"))
 			return
 		to_chat(src, span_warning("You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity."))
-		S.change_to(/obj/structure/blob/shield/reflective, src)
+		S = S.change_to(/obj/structure/blob/shield/reflective, src)
+		S.balloon_alert(src, "upgraded to [S.name]!")
 	else
-		createSpecial(BLOB_UPGRADE_STRONG_COST, /obj/structure/blob/shield, 0, FALSE, T)
+		S = createSpecial(BLOB_UPGRADE_STRONG_COST, /obj/structure/blob/shield, 0, FALSE, T)
+		S?.balloon_alert(src, "upgraded to [S.name]!")
 
 /mob/camera/blob/proc/create_blobbernaut()
 	var/turf/T = get_turf(src)
@@ -206,6 +217,7 @@
 	if(B.point_return)
 		add_points(B.point_return)
 		to_chat(src, span_notice("Gained [B.point_return] resources from removing \the [B]."))
+		B.balloon_alert(src, "+[B.point_return] resource\s")
 	qdel(B)
 
 /mob/camera/blob/proc/expand_blob(turf/T)

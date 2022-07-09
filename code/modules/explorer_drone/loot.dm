@@ -86,6 +86,11 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	id = "weapons"
 	loot_list = list(/obj/item/gun/energy/laser,/obj/item/melee/baton/security/loaded)
 
+/// Rare fish! Of the syndicate variety
+/datum/adventure_loot_generator/simple/syndicate_fish
+	id = "syndicate_fish"
+	loot_list = list(/obj/item/storage/fish_case/syndicate)
+
 /// Pets and pet accesories in carriers
 /datum/adventure_loot_generator/pet
 	id = "pets"

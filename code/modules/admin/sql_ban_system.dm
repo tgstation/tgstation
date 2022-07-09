@@ -115,6 +115,9 @@
 
 
 /datum/admins/proc/ban_panel(player_key, player_ip, player_cid, role, duration = 1440, applies_to_admins, reason, edit_id, page, admin_key)
+	if (duration == BAN_PANEL_PERMANENT)
+		duration = null
+
 	var/panel_height = 620
 	if(edit_id)
 		panel_height = 240
@@ -276,7 +279,7 @@
 			break_counter = 0
 
 		var/list/other_job_lists = list(
-			"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC"),
+			"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC", "Urgent Adminhelp"),
 			)
 		for(var/department in other_job_lists)
 			output += "<div class='column'><label class='rolegroup [ckey(department)]'>[tgui_fancy ? "<input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""][department]</label><div class='content'>"
@@ -311,9 +314,7 @@
 				ROLE_FAMILIES,
 				ROLE_HERETIC,
 				ROLE_HIVE,
-				ROLE_INTERNAL_AFFAIRS,
 				ROLE_MALF,
-				ROLE_MONKEY,
 				ROLE_NINJA,
 				ROLE_OPERATIVE,
 				ROLE_OVERTHROW,
@@ -322,7 +323,6 @@
 				ROLE_REV_HEAD,
 				ROLE_SENTIENT_DISEASE,
 				ROLE_SPIDER,
-				ROLE_SWARMER,
 				ROLE_SYNDICATE,
 				ROLE_TRAITOR,
 				ROLE_WIZARD,
@@ -972,7 +972,7 @@
 	if(query_check_adminban_count.NextRow())
 		var/adminban_count = text2num(query_check_adminban_count.item[1])
 		var/max_adminbans = MAX_ADMINBANS_PER_ADMIN
-		if(check_rights(R_PERMISSIONS, show_msg = FALSE) && (rank.can_edit_rights & R_EVERYTHING) == R_EVERYTHING) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
+		if(check_rights(R_PERMISSIONS, show_msg = FALSE) && (can_edit_rights_flags() & R_EVERYTHING) == R_EVERYTHING) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
 			max_adminbans = MAX_ADMINBANS_PER_HEADMIN
 		if(adminban_count >= max_adminbans)
 			to_chat(usr, span_danger("You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!"), confidential = TRUE)
@@ -1008,7 +1008,6 @@
 	if(player_client)
 		build_ban_cache(player_client)
 		to_chat(player_client, span_boldannounce("[banned_player_message]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
-		to_chat(player_client, "<video controls width=\"250\" autoplay ><source src=\"https://www.tgstation13.download/byond/ban.mp4\" type=\"video/mp4\">Sorry, your browser does not support embedded videos</video>");
 		if(GLOB.admin_datums[player_client.ckey] || GLOB.deadmins[player_client.ckey])
 			is_admin = TRUE
 		if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
@@ -1018,7 +1017,6 @@
 		if(other_player_client.address == banned_player_ip || other_player_client.computer_id == banned_player_cid)
 			build_ban_cache(other_player_client)
 			to_chat(other_player_client, span_boldannounce("[banned_other_message]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
-			to_chat(other_player_client, "<video controls width=\"250\" autoplay ><source src=\"https://www.tgstation13.download/byond/ban.mp4\" type=\"video/mp4\">Sorry, your browser does not support embedded videos</video>");
 			if(GLOB.admin_datums[other_player_client.ckey] || GLOB.deadmins[other_player_client.ckey])
 				is_admin = TRUE
 			if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))

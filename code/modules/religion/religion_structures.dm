@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	layer = TABLE_LAYER
-	pass_flags_self = LETPASSTHROW
+	pass_flags_self = PASSSTRUCTURE | PASSTABLE | LETPASSTHROW
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
 	///Avoids having to check global everytime by referencing it locally.
@@ -27,8 +27,11 @@
 	return ..()
 
 /obj/structure/altar_of_gods/update_overlays()
-	. = ..()
-	. += "convertaltarcandle"
+	var/list/new_overlays = ..()
+	if(GLOB.religious_sect)
+		return new_overlays
+	new_overlays += "convertaltarcandle"
+	return new_overlays
 
 /obj/structure/altar_of_gods/attack_hand(mob/living/user, list/modifiers)
 	if(!Adjacent(user) || !user.pulling)
@@ -39,7 +42,7 @@
 	if(pushed_mob.buckled)
 		to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
 		return ..()
-	to_chat(user,"<span class='notice>You try to coax [pushed_mob] onto [src]...</span>")
+	to_chat(user, span_notice("You try to coax [pushed_mob] onto [src]..."))
 	if(!do_after(user,(5 SECONDS),target = pushed_mob))
 		return ..()
 	pushed_mob.forceMove(loc)
@@ -91,17 +94,18 @@
 
 /obj/item/ritual_totem/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, 1, FALSE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire))//one charge of anti_magic
+	AddComponent(/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
+		charges = 1, \
+		expiration = CALLBACK(src, .proc/expire), \
+	)
 	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
 
-/obj/item/ritual_totem/proc/block_magic(mob/user, major)
-	if(major)
-		to_chat(user, span_warning("[src] consumes the magic within itself!"))
-
+/// When the ritual totem is depleted of antimagic
 /obj/item/ritual_totem/proc/expire(mob/user)
-	to_chat(user, span_warning("[src] quickly decays into rot!"))
-	qdel(src)
+	to_chat(user, span_warning("[src] consumes the magic within itself and quickly decays into rot!"))
 	new /obj/effect/decal/cleanable/ash(drop_location())
+	qdel(src)
 
 /obj/item/ritual_totem/can_be_pulled(user, grab_state, force)
 	. = ..()

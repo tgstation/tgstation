@@ -22,7 +22,7 @@
 	if(!istype(H))
 		return
 
-	if(H.fire_stacks)
+	if(H.fire_stacks > 0)
 		if(extinguishes_left)
 			if(next_extinguish > world.time)
 				return
@@ -33,12 +33,13 @@
 			new /obj/effect/particle_effect/water(get_turf(H))
 
 
-//I just want the light feature of the hardsuit helmet
+//I just want the light feature of helmets
 /obj/item/clothing/head/helmet/space/plasmaman
 	name = "plasma envirosuit helmet"
 	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
 	icon = 'icons/obj/clothing/head/plasmaman_hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/plasmaman_head.dmi'
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION
 	icon_state = "plasmaman-helm"
 	inhand_icon_state = "plasmaman-helm"
 	strip_delay = 80
@@ -55,7 +56,7 @@
 	var/visor_icon = "envisor"
 	var/smile_state = "envirohelm_smile"
 	var/obj/item/clothing/head/attached_hat
-	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen/plasmaman)
+	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen)
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
@@ -76,6 +77,13 @@
 /obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
 		toggle_welding_screen(user)
+
+/obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_welding_screen))
+		toggle_welding_screen(user)
+		return
+
+	return ..()
 
 /obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_welding_screen(mob/living/user)
 	if(weldingvisortoggle(user))
@@ -259,7 +267,7 @@
 	icon_state = "atmos_envirohelm"
 	inhand_icon_state = "atmos_envirohelm"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 100, ACID = 75)
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT // Same protection as the Atmospherics hardsuit Helmet
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT // Same protection as the Atmospherics Hardhat
 
 /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
 	name = "chief engineer's plasma envirosuit helmet"
@@ -267,7 +275,7 @@
 	icon_state = "ce_envirohelm"
 	inhand_icon_state = "ce_envirohelm"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 100, ACID = 75)
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT // Same protection as the CE's hardsuit Helmet
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT // Same protection as the Atmospherics Hardhat
 
 
 /obj/item/clothing/head/helmet/space/plasmaman/cargo
@@ -300,7 +308,7 @@
 	desc = "A slight modification on a traditional voidsuit helmet, this helmet was Nanotrasen's first solution to the *logistical problems* that come with employing plasmamen. Despite their limitations, these helmets still see use by historians and old-school plasmamen alike."
 	icon_state = "prototype_envirohelm"
 	inhand_icon_state = "prototype_envirohelm"
-	actions_types = list(/datum/action/item_action/toggle_welding_screen/plasmaman)
+	actions_types = list(/datum/action/item_action/toggle_welding_screen)
 	smile_state = "prototype_smile"
 	visor_icon = "prototype_envisor"
 

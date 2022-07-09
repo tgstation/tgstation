@@ -37,7 +37,7 @@
 /datum/surgery/organ_manipulation/mechanic
 	name = "Prosthesis organ manipulation"
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
-	requires_bodypart_type = BODYPART_ROBOTIC
+	requires_bodypart_type = BODYTYPE_ROBOTIC
 	lying_required = FALSE
 	self_operable = TRUE
 	steps = list(
@@ -65,6 +65,8 @@
 	implements = list(
 		/obj/item/organ = 100,
 		/obj/item/borg/apparatus/organ_storage = 100)
+	preop_sound = 'sound/surgery/organ2.ogg'
+	success_sound = 'sound/surgery/organ1.ogg'
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55, /obj/item/kitchen/fork = 35)
 	var/current_type
 	var/obj/item/organ/target_organ
@@ -76,7 +78,9 @@
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	target_organ = null
 	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
-		if(!tool.contents.len)
+		preop_sound = initial(preop_sound)
+		success_sound = initial(success_sound)
+		if(!length(tool.contents))
 			to_chat(user, span_warning("There is nothing inside [tool]!"))
 			return -1
 		target_organ = tool.contents[1]
@@ -88,6 +92,8 @@
 		tool = target_organ
 	if(isorgan(tool))
 		current_type = "insert"
+		preop_sound = 'sound/surgery/hemostat1.ogg'
+		success_sound = 'sound/surgery/organ2.ogg'
 		target_organ = tool
 		if(target_zone != target_organ.zone || target.getorganslot(target_organ.slot))
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [parse_zone(target_zone)]!"))
@@ -109,7 +115,7 @@
 		var/list/organs = target.getorganszone(target_zone)
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
-		if(!organs.len)
+		if(!length(organs))
 			to_chat(user, span_warning("There are no removable organs in [target]'s [parse_zone(target_zone)]!"))
 			return -1
 		else
@@ -118,8 +124,11 @@
 				organs -= organ
 				organs[organ.name] = organ
 
-			target_organ = input("Remove which organ?", "Surgery", null, null) as null|anything in sort_list(organs)
-			if(target_organ && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
+			var/chosen_organ = tgui_input_list(user, "Remove which organ?", "Surgery", sort_list(organs))
+			if(isnull(chosen_organ))
+				return -1
+			target_organ = chosen_organ
+			if(user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				target_organ = organs[target_organ]
 				if(!target_organ)
 					return -1

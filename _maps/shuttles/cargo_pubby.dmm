@@ -41,7 +41,7 @@
 "k" = (
 /obj/machinery/door/poddoor{
 	id = "cargoload";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 4;
@@ -139,7 +139,7 @@
 "J" = (
 /obj/machinery/door/poddoor{
 	id = "cargounload";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 8;
@@ -163,11 +163,11 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/shuttle{
-	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	name = "Supply Shuttle Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "U" = (

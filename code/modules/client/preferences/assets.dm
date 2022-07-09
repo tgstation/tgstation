@@ -2,8 +2,9 @@
 /datum/asset/spritesheet/preferences
 	name = "preferences"
 	early = TRUE
+	cross_round_cachable = TRUE
 
-/datum/asset/spritesheet/preferences/register()
+/datum/asset/spritesheet/preferences/create_spritesheets()
 	var/list/to_insert = list()
 
 	for (var/preference_key in GLOB.preference_entries_by_key)
@@ -35,8 +36,6 @@
 	for (var/spritesheet_key in to_insert)
 		var/list/inserting = to_insert[spritesheet_key]
 		Insert(spritesheet_key, inserting[1], inserting[2])
-
-	return ..()
 
 /// Returns the key that will be used in the spritesheet for a given value.
 /datum/preference/proc/get_spritesheet_key(value)

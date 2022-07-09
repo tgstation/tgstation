@@ -1,4 +1,4 @@
-#define TANK_PLATING_SHEETS 20
+#define TANK_PLATING_SHEETS 12
 
 /obj/machinery/atmospherics/components/tank
 	icon = 'icons/obj/atmospherics/stationary_canisters.dmi'
@@ -23,7 +23,7 @@
 	smoothing_flags = SMOOTH_CORNERS | SMOOTH_OBJ
 	smoothing_groups = list(SMOOTH_GROUP_GAS_TANK)
 	canSmoothWith = list(SMOOTH_GROUP_GAS_TANK)
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 
 	greyscale_config = /datum/greyscale_config/stationary_canister
 	greyscale_colors = "#ffffff"
@@ -34,7 +34,7 @@
 	/// The volume of the gas mixture
 	var/volume = 2500 //in liters
 	/// The max pressure of the gas mixture before damaging the tank
-	var/max_pressure = 20000
+	var/max_pressure = 46000
 	/// The typepath of the gas this tank should be filled with.
 	var/gas_type = null
 
@@ -404,17 +404,14 @@
 /obj/machinery/atmospherics/components/tank/miasma
 	gas_type = /datum/gas/miasma
 
-/obj/machinery/atmospherics/components/tank/nitryl
-	gas_type = /datum/gas/nitryl
+/obj/machinery/atmospherics/components/tank/nitrium
+	gas_type = /datum/gas/nitrium
 
 /obj/machinery/atmospherics/components/tank/pluoxium
 	gas_type = /datum/gas/pluoxium
 
 /obj/machinery/atmospherics/components/tank/proto_nitrate
 	gas_type = /datum/gas/proto_nitrate
-
-/obj/machinery/atmospherics/components/tank/stimulum
-	gas_type = /datum/gas/stimulum
 
 /obj/machinery/atmospherics/components/tank/tritium
 	gas_type = /datum/gas/tritium
@@ -483,7 +480,8 @@
 
 /obj/structure/tank_frame/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	return default_unfasten_wrench(user, tool, 0.5 SECONDS)
+	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/tank_frame/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

@@ -20,8 +20,8 @@
 	icon_state = "drone_maint_grey"
 	icon_living = "drone_maint_grey"
 	icon_dead = "drone_maint_dead"
-	health = 30
-	maxHealth = 30
+	health = 45
+	maxHealth = 45
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
 	maxbodytemp = 0
@@ -39,7 +39,7 @@
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
-	has_unlimited_silicon_privilege = 1
+	has_unlimited_silicon_privilege = TRUE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
@@ -100,9 +100,9 @@
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>\n"+\
 	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"
 	/// blacklisted drone areas, direct
-	var/list/drone_area_blacklist_flat = list(/area/engineering/atmos, /area/engineering/atmospherics_engine)
+	var/list/drone_area_blacklist_flat = list(/area/station/engineering/atmos, /area/station/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
-	var/list/drone_area_blacklist_recursive = list(/area/engineering/supermatter)
+	var/list/drone_area_blacklist_recursive = list(/area/station/engineering/supermatter)
 	/// blacklisted drone machines, direct
 	var/list/drone_machinery_blacklist_flat
 	/// blacklisted drone machines, recursive/includes descendants
@@ -153,6 +153,11 @@
 		/obj/item/clothing/head,
 		/obj/item/clothing/mask,
 	)
+	/// machines whitelisted from being shy with
+	var/list/shy_machine_whitelist = list(
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+	)
 
 /mob/living/simple_animal/drone/Initialize(mapload)
 	. = ..()
@@ -177,9 +182,11 @@
 	alert_drones(DRONE_NET_CONNECT)
 
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_LITERATE, INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
@@ -243,7 +250,7 @@
 	dust()
 
 /mob/living/simple_animal/drone/examine(mob/user)
-	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!")
+	. = list("<span class='info'>This is [icon2html(src, user)] \a <b>[src]</b>!")
 
 	//Hands
 	for(var/obj/item/I in held_items)
@@ -279,7 +286,7 @@
 			. += span_deadsay("A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".")
 		else
 			. += span_deadsay("A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".")
-	. += "*---------*</span>"
+	. += "</span>"
 
 
 /mob/living/simple_animal/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
@@ -290,7 +297,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	Stun(100)
+	Stun(70)
 	to_chat(src, span_danger("<b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)..."))
 	if(severity == 1)
 		adjustBruteLoss(heavy_emp_damage)
@@ -332,9 +339,9 @@
 	var/static/list/not_shy_of = typecacheof(list(/mob/living/simple_animal/drone, /mob/living/simple_animal/bot))
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		LoadComponent(/datum/component/shy, not_shy_of, 4, "Your laws prevent this action near %TARGET.", TRUE)
+		LoadComponent(/datum/component/shy, mob_whitelist=not_shy_of, shy_range=3, message="Your laws prevent this action near %TARGET.", keyless_shy=FALSE, clientless_shy=TRUE, dead_shy=FALSE, dead_shy_immediate=TRUE, machine_whitelist=shy_machine_whitelist)
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
-		LoadComponent(/datum/component/technoshy, 5 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
+		LoadComponent(/datum/component/technoshy, 1 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
 		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, .proc/blacklist_on_try_use_machine)
 		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
@@ -352,15 +359,6 @@
 /mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(affect_silicon)
 		return ..()
-
-/mob/living/simple_animal/drone/mob_negates_gravity()
-	return TRUE
-
-/mob/living/simple_animal/drone/mob_has_gravity()
-	return ..() || mob_negates_gravity()
-
-/mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
-	return
 
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?

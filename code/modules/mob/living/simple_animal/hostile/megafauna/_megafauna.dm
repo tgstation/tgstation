@@ -25,6 +25,7 @@
 	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	/// Crusher loot dropped when the megafauna is killed with a crusher
@@ -85,7 +86,7 @@
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
-	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
 	var/crusher_kill = FALSE
 	if(crusher_dmg && crusher_loot && crusher_dmg.total_damage >= maxHealth * 0.6)
 		spawn_crusher_loot()
@@ -155,7 +156,7 @@
 
 /// Sets/adds the next time the megafauna can use a melee or ranged attack, in deciseconds. It is a list to allow using named args. Use the ignore_staggered var if youre setting the cooldown to ranged_cooldown_time.
 /mob/living/simple_animal/hostile/megafauna/proc/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
-	if(!ignore_staggered && has_status_effect(STATUS_EFFECT_STAGGER))
+	if(!ignore_staggered && has_status_effect(/datum/status_effect/stagger))
 		for(var/update in cooldown_updates)
 			cooldown_updates[update] *= 2
 	if(cooldown_updates[COOLDOWN_UPDATE_SET_MELEE])

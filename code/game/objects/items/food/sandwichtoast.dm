@@ -66,6 +66,30 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/griddle_toast
+	name = "griddle toast"
+	desc = "Thick cut bread, griddled to perfection."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "griddle_toast"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("toast" = 1)
+	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
+	slot_flags = ITEM_SLOT_MASK
+
+/obj/item/food/butteredtoast
+	name = "buttered toast"
+	desc = "Butter lightly spread over a piece of toast."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "butteredtoast"
+	bite_consumption = 3
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("butter" = 1, "toast" = 1)
+	foodtypes = GRAIN | BREAKFAST
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/food/jelliedtoast
 	name = "jellied toast"
 	desc = "A slice of toast covered with delicious jam."
@@ -84,18 +108,6 @@
 /obj/item/food/jelliedtoast/slime
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin/slimejelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
 	foodtypes = GRAIN | TOXIC | SUGAR | BREAKFAST
-
-/obj/item/food/butteredtoast
-	name = "buttered toast"
-	desc = "Butter lightly spread over a piece of toast."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "butteredtoast"
-	bite_consumption = 3
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("butter" = 1, "toast" = 1)
-	foodtypes = GRAIN | BREAKFAST
-	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/twobread
 	name = "two bread"

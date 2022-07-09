@@ -61,7 +61,7 @@
 			return // The condiment might be empty after the delay.
 		M.visible_message(span_warning("[user] fed [M] from [src]."), \
 			span_warning("[user] fed you from [src]."))
-		log_combat(user, M, "fed", reagents.log_list())
+		log_combat(user, M, "fed", reagents.get_reagent_log_string())
 	reagents.trans_to(M, 10, transfered_by = user, methods = INGEST)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE
@@ -234,6 +234,16 @@
 	list_reagents = list(/datum/reagent/consumable/rice = 30)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/cornmeal
+	name = "cornmeal box"
+	desc = "A big box of cornmeal. Great for southern style cooking."
+	icon_state = "cornmeal"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/cornmeal = 30)
+	fill_icon_thresholds = null
+
 /obj/item/reagent_containers/food/condiment/bbqsauce
 	name = "bbq sauce"
 	desc = "Hand wipes not included."
@@ -266,6 +276,13 @@
 	desc = "For the fancy chef inside everyone."
 	icon_state = "oliveoil"
 	list_reagents = list(/datum/reagent/consumable/quality_oil = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/food/condiment/yoghurt
+	name = "yoghurt carton"
+	desc = "Creamy and smooth."
+	icon_state = "yoghurt"
+	list_reagents = list(/datum/reagent/consumable/yoghurt = 50)
 	fill_icon_thresholds = null
 
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!

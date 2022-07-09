@@ -6,7 +6,14 @@
  * very similar to centcom_podlauncher in terms of how this is coded, so i kept a lot of comments from it
  */
 /datum/portrait_picker
-	var/client/holder //client of whoever is using this datum
+	/// Client of whoever is using this datum
+	var/client/holder
+	/// The last input in the search tab.
+	var/search_string
+	/// Whether the search function will check the title of the painting or the author's name.
+	var/search_mode = PAINTINGS_FILTER_SEARCH_TITLE
+	/// Stores the result of the search.
+	var/list/matching_paintings
 
 /datum/portrait_picker/New(user)//user can either be a client or a mob due to byondcode(tm)
 	if (istype(user, /client))
@@ -30,16 +37,14 @@
 
 /datum/portrait_picker/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/simple/portraits/library),
-		get_asset_datum(/datum/asset/simple/portraits/library_secure),
-		get_asset_datum(/datum/asset/simple/portraits/library_private)
+		get_asset_datum(/datum/asset/simple/portraits)
 	)
 
 /datum/portrait_picker/ui_data(mob/user)
 	var/list/data = list()
-	data["library"] = SSpersistent_paintings.paintings["library"] ? SSpersistent_paintings.paintings["library"] : 0
-	data["library_secure"] = SSpersistent_paintings.paintings["library_secure"] ? SSpersistent_paintings.paintings["library_secure"] : 0
-	data["library_private"] = SSpersistent_paintings.paintings["library_private"] ? SSpersistent_paintings.paintings["library_private"] : 0 //i'm gonna regret this, won't i?
+	data["paintings"] = matching_paintings || SSpersistent_paintings.painting_ui_data(filter = PAINTINGS_FILTER_AI_PORTRAIT)
+	data["search_string"] = search_string
+	data["search_mode"] = search_mode == PAINTINGS_FILTER_SEARCH_TITLE ? "Title" : "Author"
 	return data
 
 /datum/portrait_picker/ui_act(action, params)
@@ -47,12 +52,23 @@
 	if(.)
 		return
 	switch(action)
+		if("search")
+			if(search_string != params["to_search"])
+				search_string = params["to_search"]
+				generate_matching_paintings_list()
+			. = TRUE
+		if("change_search_mode")
+			search_mode = search_mode == PAINTINGS_FILTER_SEARCH_TITLE ? PAINTINGS_FILTER_SEARCH_CREATOR : PAINTINGS_FILTER_SEARCH_TITLE
+			generate_matching_paintings_list()
+			. = TRUE
 		if("select")
-			var/list/tab2key = list(TAB_LIBRARY = "library", TAB_SECURE = "library_secure", TAB_PRIVATE = "library_private")
-			var/folder = tab2key[params["tab"]]
-			var/list/current_list = SSpersistent_paintings.paintings[folder]
-			var/list/chosen_portrait = current_list[params["selected"]]
-			var/png = "data/paintings/[folder]/[chosen_portrait["md5"]].png"
+			//var/list/tab2key = list(TAB_LIBRARY = "library", TAB_SECURE = "library_secure", TAB_PRIVATE = "library_private")
+			//var/folder = tab2key[params["tab"]]
+			//var/list/current_list = SSpersistent_paintings.paintings[folder]
+			var/datum/painting/chosen_portrait = locate(params["selected"]) in SSpersistent_paintings.paintings
+			if(!chosen_portrait)
+				return
+			var/png = "data/paintings/images/[chosen_portrait.md5].png"
 			var/icon/portrait_icon = new(png)
 			var/mob/living/ai = holder.mob
 			var/w = portrait_icon.Width()
@@ -72,3 +88,9 @@
 			ai.cut_overlays() //so people can't keep repeatedly select portraits to add stacking overlays
 			ai.icon_state = "ai-portrait-active"//background
 			ai.add_overlay(MA)
+
+/datum/portrait_picker/proc/generate_matching_paintings_list()
+	matching_paintings = null
+	if(!search_string)
+		return
+	matching_paintings = SSpersistent_paintings.painting_ui_data(filter = PAINTINGS_FILTER_AI_PORTRAIT|search_mode, search_text = search_string)

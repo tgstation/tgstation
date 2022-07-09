@@ -6,7 +6,7 @@
 	item_flags = NOBLUDGEON
 	var/obj/machinery/machine //what machine we're currently hacking.
 
-/obj/item/pai_cable/machine/Destroy()
+/obj/item/pai_cable/Destroy()
 	machine = null
 	return ..()
 

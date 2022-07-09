@@ -110,12 +110,12 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount_per_transfer_from_this = 15
 	volume = 15
-	ignore_flags = 1 //so you can medipen through hardsuits
+	ignore_flags = 1 //so you can medipen through spacesuits
 	reagent_flags = DRAWABLE
 	flags_1 = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
-	custom_price = PAYCHECK_MEDIUM
-	custom_premium_price = PAYCHECK_HARD
+	custom_price = PAYCHECK_CREW
+	custom_premium_price = PAYCHECK_COMMAND
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -279,7 +279,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/magillitis
 	name = "experimental autoinjector"
-	desc = "A custom-frame needle injector with a small single-use reservoir, containing an experimental serum. Unlike the more common medipen frame, it cannot pierce through protective armor or hardsuits, nor can the chemical inside be extracted."
+	desc = "A custom-frame needle injector with a small single-use reservoir, containing an experimental serum. Unlike the more common medipen frame, it cannot pierce through protective armor or space suits, nor can the chemical inside be extracted."
 	icon_state = "gorillapen"
 	inhand_icon_state = "gorillapen"
 	base_icon_state = "gorillapen"
@@ -314,3 +314,13 @@
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/iron = 3.5, /datum/reagent/medicine/salglu_solution = 4)
+
+/obj/item/reagent_containers/hypospray/medipen/mutadone
+	name = "mutadone autoinjector"
+	desc = "An mutadone medipen to assist in curing genetic errors in one single injector."
+	icon_state = "penacid"
+	inhand_icon_state = "penacid"
+	base_icon_state = "penacid"
+	volume = 15
+	amount_per_transfer_from_this = 15
+	list_reagents = list(/datum/reagent/medicine/mutadone = 15)

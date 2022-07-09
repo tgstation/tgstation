@@ -2,10 +2,10 @@ import { formatTime } from '../format';
 import { Component } from 'inferno';
 
 // AnimatedNumber Copypaste
-const isSafeNumber = value => {
-  return typeof value === 'number'
-    && Number.isFinite(value)
-    && !Number.isNaN(value);
+const isSafeNumber = (value) => {
+  return (
+    typeof value === 'number' && Number.isFinite(value) && !Number.isNaN(value)
+  );
 };
 
 export class TimeDisplay extends Component {
@@ -36,7 +36,7 @@ export class TimeDisplay extends Component {
       this.last_seen_value = this.props.value;
       current = this.props.value;
     }
-    const mod = this.props.auto === "up" ? 10 : -10; // Time down by default.
+    const mod = this.props.auto === 'up' ? 10 : -10; // Time down by default.
     const value = Math.max(0, current + mod); // one sec tick
     this.setState({ value });
   }

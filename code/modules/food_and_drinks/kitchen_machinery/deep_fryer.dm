@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/reagent_containers/syringe,
 	/obj/item/reagent_containers/food/condiment,
 	/obj/item/storage,
-	/obj/item/small_delivery,
+	/obj/item/delivery,
 	/obj/item/his_grace)))
 
 /obj/machinery/deepfryer
@@ -16,8 +16,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer_off"
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
+	pass_flags_self = PASSMACHINE | LETPASSTHROW
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/deep_fryer
 	var/obj/item/food/deepfryholder/frying //What's being fried RIGHT NOW?
@@ -46,6 +46,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	return ..()
 
 /obj/machinery/deepfryer/RefreshParts()
+	. = ..()
 	var/oil_efficiency
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		oil_efficiency += M.rating
@@ -59,36 +60,36 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use]</b> units of oil per second.")
 
-/obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/pill))
+/obj/machinery/deepfryer/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/deepfryer/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/reagent_containers/pill))
 		if(!reagents.total_volume)
-			to_chat(user, span_warning("There's nothing to dissolve [I] in!"))
+			to_chat(user, span_warning("There's nothing to dissolve [weapon] in!"))
 			return
-		user.visible_message(span_notice("[user] drops [I] into [src]."), span_notice("You dissolve [I] in [src]."))
-		I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = user)
-		qdel(I)
+		user.visible_message(span_notice("[user] drops [weapon] into [src]."), span_notice("You dissolve [weapon] in [src]."))
+		weapon.reagents.trans_to(src, weapon.reagents.total_volume, transfered_by = user)
+		qdel(weapon)
 		return
 	if(!reagents.has_reagent(/datum/reagent/consumable/cooking_oil))
 		to_chat(user, span_warning("[src] has no cooking oil to fry with!"))
 		return
-	if(I.resistance_flags & INDESTRUCTIBLE)
-		to_chat(user, span_warning("You don't feel it would be wise to fry [I]..."))
+	if(weapon.resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, span_warning("You don't feel it would be wise to fry [weapon]..."))
 		return
-	if(istype(I, /obj/item/food/deepfryholder))
+	if(istype(weapon, /obj/item/food/deepfryholder))
 		to_chat(user, span_userdanger("Your cooking skills are not up to the legendary Doublefry technique."))
 		return
-	if(default_unfasten_wrench(user, I))
-		return
-	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)) //where's the open maint panel icon?!
+	if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", weapon)) //where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(I, deepfry_blacklisted_items) || is_type_in_typecache(I, GLOB.oilfry_blacklisted_items) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
+		if(is_type_in_typecache(weapon, deepfry_blacklisted_items) || is_type_in_typecache(weapon, GLOB.oilfry_blacklisted_items) || weapon.atom_storage || HAS_TRAIT(weapon, TRAIT_NODROP) || (weapon.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
-		else if(!frying && user.transferItemToLoc(I, src))
-			to_chat(user, span_notice("You put [I] into [src]."))
-			frying = new/obj/item/food/deepfryholder(src, I)
-			icon_state = "fryer_on"
-			fry_loop.start()
+		else if(!frying && user.transferItemToLoc(weapon, src))
+			fry(weapon, user)
 
 /obj/machinery/deepfryer/process(delta_time)
 	..()
@@ -106,6 +107,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		else if (cook_time >= DEEPFRYER_BURNTIME && !frying_burnt)
 			frying_burnt = TRUE
 			visible_message(span_warning("[src] emits an acrid smell!"))
+
+		use_power(active_power_usage)
 
 
 /obj/machinery/deepfryer/attack_ai(mob/user)
@@ -130,16 +133,43 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, span_warning("You need a better grip to do that!"))
 			return
-		var/mob/living/carbon/C = user.pulling
-		user.visible_message(span_danger("[user] dunks [C]'s face in [src]!"))
-		reagents.expose(C, TOUCH)
-		var/permeability = 1 - C.get_permeability_protection(list(HEAD))
-		C.apply_damage(min(30 * permeability, reagents.total_volume), BURN, BODY_ZONE_HEAD)
+		var/mob/living/carbon/dunking_target = user.pulling
+		log_combat(user, dunking_target, "dunked", null, "into [src]")
+		user.visible_message(span_danger("[user] dunks [dunking_target]'s face in [src]!"))
+		reagents.expose(dunking_target, TOUCH)
+		var/bio_multiplier = dunking_target.getarmor(BODY_ZONE_HEAD, BIO) * 0.01
+		var/target_temp = dunking_target.bodytemperature
+		var/cold_multiplier = 1
+		if(target_temp < TCMB + 10) // a tiny bit of leeway
+			dunking_target.visible_message(span_userdanger("[dunking_target] explodes from the entropic difference! Holy fuck!"))
+			dunking_target.gib()
+			log_combat(user, dunking_target, "blew up", null, "by dunking them into [src]")
+			return
+		else if(target_temp < T0C)
+			cold_multiplier += round(target_temp * 1.5 / T0C, 0.01)
+		dunking_target.apply_damage(min(30 * bio_multiplier * cold_multiplier, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		if(reagents.reagent_list) //This can runtime if reagents has nothing in it.
 			reagents.remove_any((reagents.total_volume/2))
-		C.Paralyze(60)
+		dunking_target.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	return ..()
+
+/obj/machinery/deepfryer/proc/fry(obj/item/frying_item, mob/user)
+	to_chat(user, span_notice("You put [frying_item] into [src]."))
+	if(istype(frying_item, /obj/item/freeze_cube))
+		log_bomber(user, "put a freeze cube in a", src)
+		visible_message(span_userdanger("[src] starts glowing... Oh no..."))
+		playsound(src, 'sound/effects/pray_chaplain.ogg', 100)
+		add_filter("entropic_ray", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
+		addtimer(CALLBACK(src, .proc/blow_up), 5 SECONDS)
+	frying = new /obj/item/food/deepfryholder(src, frying_item)
+	icon_state = "fryer_on"
+	fry_loop.start()
+
+/obj/machinery/deepfryer/proc/blow_up()
+	visible_message(span_userdanger("[src] blows up from the entropic reaction!"))
+	explosion(src, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5, flame_range = 7)
+	qdel(src)
 
 #undef DEEPFRYER_COOKTIME
 #undef DEEPFRYER_BURNTIME

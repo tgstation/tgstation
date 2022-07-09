@@ -26,7 +26,7 @@
 		/obj/effect/dummy/phased_mob,
 		/obj/effect/mapping_helpers,
 		/obj/effect/wisp,
-		))
+	))
 
 /datum/component/chasm/Initialize(turf/target)
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/Entered)
@@ -45,7 +45,7 @@
 
 /datum/component/chasm/proc/is_safe()
 	//if anything matching this typecache is found in the chasm, we don't drop things
-	var/static/list/chasm_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/stone_tile))
+	var/static/list/chasm_safeties_typecache = typecacheof(list(/obj/structure/lattice, /obj/structure/lattice/catwalk, /obj/structure/stone_tile))
 
 	var/atom/parent = src.parent
 	var/list/found_safeties = typecache_filter_list(parent.contents, chasm_safeties_typecache)

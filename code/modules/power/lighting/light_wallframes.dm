@@ -4,7 +4,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-item"
 	result_path = /obj/structure/light_construct
-	inverse = TRUE
+	wall_external = TRUE
 
 /obj/item/wallframe/light_fixture/small
 	name = "small light fixture frame"

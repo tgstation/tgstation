@@ -5,7 +5,8 @@
 	gain_text = ""
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_SURGERY
-
+	/// Associated antag datum, used for displaying objectives and antag hud
+	var/datum/antagonist/hypnotized/antagonist
 	var/hypnotic_phrase = ""
 	var/regex/target_phrase
 
@@ -32,7 +33,17 @@
 												"These words keep echoing in your mind. You find yourself completely fascinated by them.")]</span>")
 	to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
 										as long as you act like the words are your highest priority.</span>")
-	var/atom/movable/screen/alert/hypnosis/hypno_alert = owner.throw_alert("hypnosis", /atom/movable/screen/alert/hypnosis)
+	var/atom/movable/screen/alert/hypnosis/hypno_alert = owner.throw_alert(ALERT_HYPNOSIS, /atom/movable/screen/alert/hypnosis)
+	owner.mind.add_antag_datum(/datum/antagonist/hypnotized)
+	antagonist = owner.mind.has_antag_datum(/datum/antagonist/hypnotized)
+	antagonist.trauma = src
+
+	// Add the phrase to objectives
+	var/datum/objective/fixation = new ()
+	fixation.explanation_text = hypnotic_phrase
+	fixation.completed = TRUE
+	antagonist.objectives = list(fixation)
+
 	hypno_alert.desc = "\"[hypnotic_phrase]\"... your mind seems to be fixated on this concept."
 	..()
 
@@ -41,8 +52,9 @@
 	owner.log_message("is no longer hypnotized with the phrase '[hypnotic_phrase]'.", LOG_ATTACK)
 	log_game("[key_name(owner)] is no longer hypnotized with the phrase '[hypnotic_phrase]'.")
 	to_chat(owner, span_userdanger("You suddenly snap out of your hypnosis. The phrase '[hypnotic_phrase]' no longer feels important to you."))
-	owner.clear_alert("hypnosis")
+	owner.clear_alert(ALERT_HYPNOSIS)
 	..()
+	owner.mind.remove_antag_datum(/datum/antagonist/hypnotized)
 
 /datum/brain_trauma/hypnosis/on_life(delta_time, times_fired)
 	..()

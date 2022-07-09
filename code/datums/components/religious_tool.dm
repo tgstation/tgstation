@@ -48,8 +48,6 @@
 		after_sect_select_cb.Invoke()
 	return TRUE
 
-
-
 /**
  * Since all of these involve attackby, we require mega proc. Handles Invocation, Sacrificing, And Selection of Sects.
  */
@@ -112,6 +110,7 @@
 	switch(action)
 		if("sect_select")
 			select_sect(usr, params["path"])
+			return TRUE //they picked a sect lets update so some weird spammy shit doesn't happen
 		if("perform_rite")
 			perform_rite(usr, params["path"])
 
@@ -144,8 +143,11 @@
 	if(!ispath(text2path(path), /datum/religion_rites))
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when performing a rite.")
 		return
-	if(user.mind.holy_role == HOLY_ROLE_DEACON)
-		to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
+		if(user.mind.holy_role == HOLY_ROLE_DEACON)
+			to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+		else
+			to_chat(user, "<span class='warning'>You are not holy, and therefore cannot perform rites.")
 		return
 	if(performing_rite)
 		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
@@ -159,7 +161,10 @@
 	else
 		performing_rite.invoke_effect(user, parent)
 		easy_access_sect.adjust_favor(-performing_rite.favor_cost)
-		QDEL_NULL(performing_rite)
+		if(performing_rite.auto_delete)
+			QDEL_NULL(performing_rite)
+		else
+			performing_rite = null
 
 /**
  * Generates a list of available sects to the user. Intended to support custom-availability sects.

@@ -114,6 +114,8 @@ GLOBAL_VAR(families_override_theme)
 		current_theme = new theme_to_use
 	else
 		current_theme = new GLOB.families_override_theme
+	message_admins("Families has chosen the theme: [current_theme.name]")
+	log_game("FAMILIES: The following theme has been chosen: [current_theme.name]")
 	var/gangsters_to_make = length(current_theme.involved_gangs) * current_theme.starting_gangsters
 	for(var/i in 1 to gangsters_to_make)
 		if (!antag_candidates.len)
@@ -152,45 +154,21 @@ GLOBAL_VAR(families_override_theme)
  * * return_if_no_gangs - Boolean that determines if the proc should return FALSE should it find no eligible family members. Should be used for dynamic only.
  */
 /datum/gang_handler/proc/post_setup_analogue(return_if_no_gangs = FALSE)
-	var/replacement_gangsters = 0
-	for(var/datum/mind/gangbanger in gangbangers)
-		if(!ishuman(gangbanger.current))
-			if(!midround_ruleset)
-				GLOB.pre_setup_antags -= gangbanger
-			gangbangers.Remove(gangbanger)
-			log_game("[gangbanger] was not a human, and thus has lost their gangster role.")
-			replacement_gangsters++
-	if(replacement_gangsters)
-		for(var/j = 0, j < replacement_gangsters, j++)
-			if(!antag_candidates.len)
-				log_game("Unable to find more replacement gangsters. Not all of the gangs will spawn.")
-				break
-			var/taken = pick_n_take(antag_candidates)
-			var/datum/mind/gangbanger
-			if(istype(taken, /mob)) // boilerplate needed because antag_candidates might not contain minds
-				var/mob/T = taken
-				gangbanger = T.mind
-			else
-				gangbanger = taken
-			gangbangers += gangbanger
-			log_game("[key_name(gangbanger)] has been selected as a replacement gangster!")
-	if(!gangbangers.len)
-		if(return_if_no_gangs)
-			return FALSE // ending early is bad if we're not in dynamic
-
-	var/list/gangs_to_use = current_theme.involved_gangs
+	var/list/gangs_to_use = current_theme.involved_gangs.Copy()
 	var/amount_of_gangs = gangs_to_use.len
+	var/amount_of_gangsters = amount_of_gangs * current_theme.starting_gangsters
+	for(var/_ in 1 to amount_of_gangsters)
+		if(!gangbangers.len) // We ran out of candidates!
+			break
+		if(!gangs_to_use.len)
+			gangs_to_use = current_theme.involved_gangs.Copy()
+		var/gang_to_use = pick_n_take(gangs_to_use) // Evenly distributes Leaders among the gangs
+		var/datum/mind/gangster_mind = pick_n_take(gangbangers)
+		var/datum/antagonist/gang/new_gangster = new gang_to_use()
+		new_gangster.handler = src
+		new_gangster.starter_gangster = TRUE
+		gangster_mind.add_antag_datum(new_gangster)
 
-	for(var/_ in 1 to amount_of_gangs)
-		var/gang_to_use = pick_n_take(gangs_to_use)
-		for(var/__ in 1 to current_theme.starting_gangsters)
-			if(!gangbangers.len)
-				break
-			var/datum/mind/gangster_mind = pick_n_take(gangbangers)
-			var/datum/antagonist/gang/new_gangster = new gang_to_use()
-			new_gangster.handler = src
-			new_gangster.starter_gangster = TRUE
-			gangster_mind.add_antag_datum(new_gangster)
 
 		// see /datum/antagonist/gang/create_team() for how the gang team datum gets instantiated and added to our gangs list
 

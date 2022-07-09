@@ -65,7 +65,7 @@
 		span_notice("[user] successfully realigns some of the blood vessels in  [target]'s [parse_zone(target_zone)]!"))
 	log_combat(user, target, "excised infected flesh in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 	surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
-	pierce_wound.blood_flow -= 0.25
+	pierce_wound.adjust_blood_flow(-0.25)
 	return ..()
 
 /datum/surgery_step/repair_innards/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob = 0)
@@ -111,10 +111,10 @@
 		span_notice("[user] successfully melds some of the split blood vessels in [target]'s [parse_zone(target_zone)] with [tool]!"),
 		span_notice("[user] successfully melds some of the split blood vessels in [target]'s [parse_zone(target_zone)]!"))
 	log_combat(user, target, "dressed burns in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
-	pierce_wound.blood_flow -= 0.5
+	pierce_wound.adjust_blood_flow(-0.5)
 	if(pierce_wound.blood_flow > 0)
 		surgery.status = REALIGN_INNARDS
-		to_chat(user, span_notice("<i>There still seems to be misaligned blood vessels to finish...<i>"))
+		to_chat(user, span_notice("<i>There still seems to be misaligned blood vessels to finish...</i>"))
 	else
 		to_chat(user, span_green("You've repaired all the internal damage in [target]'s [parse_zone(target_zone)]!"))
 	return ..()

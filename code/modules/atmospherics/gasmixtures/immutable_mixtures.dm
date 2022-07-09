@@ -20,8 +20,8 @@
 /datum/gas_mixture/immutable/merge()
 	return FALSE //we're immutable.
 
-/datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
-	. = ..(sharer, 0)
+/datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, our_coeff, sharer_coeff)
+	. = ..()
 	sharer.temperature = initial_temperature
 	garbage_collect()
 

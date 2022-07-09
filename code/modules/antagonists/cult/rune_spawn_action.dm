@@ -39,7 +39,7 @@
 	if(turf_check(T))
 		var/chosen_keyword
 		if(initial(rune_type.req_keyword))
-			chosen_keyword = stripped_input(owner, "Enter a keyword for the new rune.", "Words of Power")
+			chosen_keyword = tgui_input_text(owner, "Enter a keyword for the new rune.", "Words of Power", max_length = MAX_NAME_LEN)
 			if(!chosen_keyword)
 				return
 	//the outer ring is always the same across all runes
@@ -67,8 +67,7 @@
 			scribe_mod *= 0.5
 		playsound(T, 'sound/magic/enter_blood.ogg', 100, FALSE)
 		if(do_after(owner, scribe_mod, target = owner, extra_checks = CALLBACK(owner, /mob.proc/break_do_after_checks, health, action_interrupt)))
-			var/obj/effect/rune/new_rune = new rune_type(owner.loc)
-			new_rune.keyword = chosen_keyword
+			new rune_type(owner.loc, chosen_keyword)
 		else
 			qdel(R1)
 			if(R2)

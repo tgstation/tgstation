@@ -68,10 +68,10 @@
 	var/list/point_grid[conf_set_len*2+1][conf_set_len*2+1]
 	var/list/grid = list()
 	var/datum/space_transition_point/P
-	for(var/i = 1, i<=conf_set_len*2+1, i++)
-		for(var/j = 1, j<=conf_set_len*2+1, j++)
-			P = new/datum/space_transition_point(i,j, point_grid)
-			point_grid[i][j] = P
+	for(var/x in 1 to conf_set_len*2+1)
+		for(var/y in 1 to conf_set_len*2+1)
+			P = new/datum/space_transition_point(x, y, point_grid)
+			point_grid[x][y] = P
 			grid.Add(P)
 	for(var/datum/space_transition_point/pnt in grid)
 		pnt.set_neigbours(point_grid)
@@ -125,7 +125,7 @@
 				S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
 				S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
 				S.destination_z = zdestination
-				
+
 				// Mirage border code
 				var/mirage_dir
 				if(S.x == 1 + TRANSITIONEDGE)

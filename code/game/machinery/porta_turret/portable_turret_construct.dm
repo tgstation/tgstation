@@ -15,6 +15,7 @@
 	desc = "An unfinished covered turret frame."
 	anchored = FALSE
 	density = TRUE
+	use_power = NO_POWER_USE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret" //the name applied to the product turret
 	var/obj/item/gun/installed_gun = null
@@ -178,13 +179,13 @@
 				return
 
 	if(istype(I, /obj/item/pen)) //you can rename turrets like bots!
-		var/t = stripped_input(user, "Enter new turret name", name, finish_name)
-		if(!t)
+		var/choice = tgui_input_text(user, "Enter a new turret name", "Turret Classification", finish_name, MAX_NAME_LEN)
+		if(!choice)
 			return
-		if(!Adjacent(user))
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 
-		finish_name = t
+		finish_name = choice
 		return
 	return ..()
 

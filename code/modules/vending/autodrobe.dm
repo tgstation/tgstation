@@ -31,6 +31,7 @@
 		/obj/item/clothing/head/beret = 1,
 		/obj/item/clothing/accessory/waistcoat = 1,
 		/obj/item/clothing/under/suit/black = 1,
+		/obj/item/clothing/neck/tie = 3,
 		/obj/item/clothing/head/that = 1,
 		/obj/item/clothing/under/costume/kilt = 1,
 		/obj/item/clothing/head/beret = 3,
@@ -77,23 +78,33 @@
 		/obj/item/clothing/mask/gas/sexymime = 1,
 		/obj/item/clothing/under/rank/civilian/mime/sexy = 1,
 		/obj/item/clothing/under/rank/civilian/mime/skirt = 1,
-		/obj/item/clothing/mask/animal/rat/bat = 1,
-		/obj/item/clothing/mask/animal/rat/bee = 1,
-		/obj/item/clothing/mask/animal/rat/bear = 1,
-		/obj/item/clothing/mask/animal/rat/raven = 1,
-		/obj/item/clothing/mask/animal/rat/jackal = 1,
-		/obj/item/clothing/mask/animal/rat/fox = 1,
+		/obj/item/clothing/mask/animal/small/bat = 1,
+		/obj/item/clothing/mask/animal/small/bee = 1,
+		/obj/item/clothing/mask/animal/small/bear = 1,
+		/obj/item/clothing/mask/animal/small/raven = 1,
+		/obj/item/clothing/mask/animal/small/jackal = 1,
+		/obj/item/clothing/mask/animal/small/fox = 1,
 		/obj/item/clothing/mask/animal/frog = 1,
-		/obj/item/clothing/mask/animal/rat/tribal = 1,
-		/obj/item/clothing/mask/animal/rat = 1,
+		/obj/item/clothing/mask/animal/small/tribal = 1,
+		/obj/item/clothing/mask/animal/small/rat = 1,
+		/obj/item/clothing/mask/animal/pig = 1,
+		/obj/item/clothing/mask/animal/cowmask = 1,
+		/obj/item/clothing/mask/animal/horsehead = 1,
 		/obj/item/clothing/suit/apron/overalls = 1,
 		/obj/item/clothing/head/rabbitears =1,
+		/obj/item/clothing/accessory/vest_sheriff =1,
+		/obj/item/clothing/head/cowboy_hat_brown =1,
+		/obj/item/clothing/head/cowboy_hat_red =1,
+		/obj/item/clothing/head/cowboy_hat_black =1,
 		/obj/item/clothing/head/sombrero = 1,
 		/obj/item/clothing/head/sombrero/green = 1,
 		/obj/item/clothing/suit/poncho = 1,
 		/obj/item/clothing/suit/poncho/green = 1,
 		/obj/item/clothing/suit/poncho/red = 1,
+		/obj/item/clothing/head/maidheadband = 1,
 		/obj/item/clothing/under/costume/maid = 1,
+		/obj/item/clothing/gloves/maid = 1,
+		/obj/item/clothing/neck/maid = 1,
 		/obj/item/clothing/under/rank/civilian/janitor/maid = 1,
 		/obj/item/clothing/glasses/cold=1,
 		/obj/item/clothing/glasses/heat=1,
@@ -124,15 +135,18 @@
 		/obj/item/clothing/suit/changshan_blue = 1,
 		/obj/item/clothing/suit/cheongsam_red = 1,
 		/obj/item/clothing/suit/cheongsam_blue = 1,
-		/obj/item/gohei = 1
+		/obj/item/gohei = 1,
+		/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
+		/obj/item/clothing/mask/gas/prop = 4,
+		/obj/item/clothing/mask/gas/atmosprop = 3,
 	)
 	contraband = list(
 		/obj/item/clothing/suit/judgerobe = 1,
 		/obj/item/clothing/head/powdered_wig = 1,
 		/obj/item/gun/magic/wand/nothing = 2,
-		/obj/item/clothing/glasses/sunglasses/garb = 2,
+		/obj/item/clothing/glasses/sunglasses/gar = 2,
 		/obj/item/clothing/glasses/blindfold = 1,
-		/obj/item/clothing/mask/muzzle = 2
+		/obj/item/clothing/mask/muzzle = 2,
 	)
 	premium = list(
 		/obj/item/clothing/suit/pirate/captain = 2,
@@ -150,16 +164,13 @@
 		/obj/item/clothing/under/dress/wedding_dress = 1,
 		/obj/item/clothing/under/suit/tuxedo = 1,
 		/obj/item/clothing/head/weddingveil = 1,
-		/obj/item/storage/belt/cummerbund = 1
+		/obj/item/storage/belt/cummerbund = 1,
 	)
 	refill_canister = /obj/item/vending_refill/autodrobe
-	default_price = PAYCHECK_ASSISTANT * 0.8 //Default of 40.
-	extra_price = PAYCHECK_HARD
+	default_price = PAYCHECK_CREW * 0.8 //Default of 40.
+	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask="theater-light-mask"
-
-/obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
-	return (I.type in products)
 
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."

@@ -11,11 +11,11 @@
 		var/icon = initial(quirk_type.icon)
 
 		if (isnull(icon))
-			Fail("[quirk_type] has no icon!")
+			TEST_FAIL("[quirk_type] has no icon!")
 			continue
 
 		if (icon in used_icons)
-			Fail("[icon] used in both [quirk_type] and [used_icons[icon]]!")
+			TEST_FAIL("[icon] used in both [quirk_type] and [used_icons[icon]]!")
 			continue
 
 		used_icons[icon] = quirk_type

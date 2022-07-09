@@ -1,0 +1,4 @@
+author: "Nuke"
+delete-after: True
+changes: 
+  - bugfix: "Bubblegum will now beat your ass again."

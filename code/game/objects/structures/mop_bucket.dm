@@ -20,6 +20,7 @@
 			to_chat(user, span_notice("You wet [I] in [src]."))
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 			update_appearance()
+		return TRUE //Stop the click handling chain so the mop after attack doesn't proc and you don't wet the turf the bucket is on
 	else
 		. = ..()
 		update_appearance()

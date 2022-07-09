@@ -82,7 +82,7 @@
 // Shells
 
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
-#define SHELL_FLAG_CIRCUIT_FIXED (1<<0)
+#define SHELL_FLAG_CIRCUIT_UNREMOVABLE (1<<0)
 
 /// Whether the shell needs to be anchored for the circuit to be on.
 #define SHELL_FLAG_REQUIRE_ANCHOR (1<<1)
@@ -93,7 +93,11 @@
 /// Whether the shell allows actions to be peformed on a shell if the action fails. This will additionally block the messages from being displayed.
 #define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
 
+/// Whether a circuit is not able to be modified
+#define SHELL_FLAG_CIRCUIT_UNMODIFIABLE (1<<5)
+
 // Shell capacities. These can be converted to configs very easily later
+#define SHELL_CAPACITY_TINY 12
 #define SHELL_CAPACITY_SMALL 25
 #define SHELL_CAPACITY_MEDIUM 50
 #define SHELL_CAPACITY_LARGE 100

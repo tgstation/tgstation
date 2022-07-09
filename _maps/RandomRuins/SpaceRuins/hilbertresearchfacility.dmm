@@ -1,0 +1,5422 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ao" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/stack/sheet/mineral/plasma/five{
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"az" = (
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"aX" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ba" = (
+/obj/structure/table/wood,
+/obj/item/plate,
+/obj/item/food/cherrycupcake/blue{
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"bi" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/syringe/bluespace{
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/syringe/bluespace{
+	pixel_y = 8
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/machinery/door/window/survival_pod,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"bE" = (
+/turf/open/floor/iron/stairs,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"bK" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/bag_of_holding_inert{
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"bM" = (
+/obj/effect/gibspawner/xeno,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"bN" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/stack/sheet/mineral/diamond{
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"bO" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"cg" = (
+/turf/closed/mineral/asteroid,
+/area/ruin/unpowered/no_grav)
+"ch" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"cE" = (
+/obj/structure/closet{
+	desc = "It's a storage unit for mining.";
+	icon_door = "eng_tool";
+	icon_state = "eng";
+	name = "mining closet"
+	},
+/obj/item/storage/bag/ore/holding,
+/obj/item/clothing/shoes/workboots,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/under/rank/cargo/miner,
+/obj/item/pickaxe/drill,
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/head/hardhat,
+/obj/effect/turf_decal/box,
+/obj/structure/sign/warning/docking/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"cQ" = (
+/obj/structure/closet{
+	desc = "It's a storage unit for mining.";
+	icon_door = "eng_tool";
+	icon_state = "eng";
+	name = "mining closet"
+	},
+/obj/item/storage/bag/ore/holding,
+/obj/item/clothing/shoes/workboots,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/under/rank/cargo/miner,
+/obj/item/pickaxe/drill,
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/head/hardhat,
+/obj/effect/turf_decal/box,
+/obj/structure/sign/warning/docking/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"db" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"dq" = (
+/obj/effect/turf_decal/loading_area,
+/obj/machinery/light/red/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"dA" = (
+/obj/structure/grille/broken,
+/obj/structure/shuttle/engine/propulsion/burst{
+	anchored = 0;
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"dB" = (
+/obj/machinery/chem_master,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"dD" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"dJ" = (
+/obj/structure/grille/broken,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"dO" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"eg" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"el" = (
+/obj/item/disk/cargo/bluespace_pod{
+	pixel_y = 8
+	},
+/obj/machinery/autolathe,
+/obj/machinery/light/red/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"en" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"es" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"ev" = (
+/obj/structure/table/reinforced,
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ex" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/item/clothing/glasses/science,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"eB" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 9
+	},
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"eC" = (
+/obj/structure/table/wood,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"eE" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"eG" = (
+/obj/item/transfer_valve,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"fv" = (
+/obj/machinery/door/window/left/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"fQ" = (
+/obj/structure/hedge/opaque,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"fU" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"gg" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"gm" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+	dir = 4;
+	pixel_x = 32
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"gv" = (
+/obj/structure/fluff/tram_rail,
+/obj/machinery/door/window/survival_pod,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"gx" = (
+/obj/machinery/mineral/processing_unit{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/mineral/processing_unit_console{
+	machinedir = 0;
+	pixel_x = -32
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"gB" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/grass/fairy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"gU" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ha" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"he" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"hk" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"hw" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"hB" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 5
+	},
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"hL" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"hM" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/grass/fairy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"hQ" = (
+/obj/machinery/door/puzzle/light{
+	puzzle_id = "hilbert"
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"hT" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/warning/biohazard/directional/north,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"hW" = (
+/obj/structure/spawner/nether{
+	light_color = "#FF0000";
+	light_power = 2;
+	light_range = 2;
+	max_mobs = 2
+	},
+/obj/effect/gibspawner/human,
+/obj/effect/rune/raise_dead,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ie" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/seed_extractor,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ig" = (
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"io" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"iO" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"iP" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"iS" = (
+/obj/effect/landmark/tram/middle_part/hilbert,
+/obj/machinery/light/floor{
+	brightness = 2;
+	bulb_colour = "#deefff";
+	bulb_power = 0.6
+	},
+/obj/machinery/computer/tram_controls{
+	dir = 8;
+	specific_lift_id = "tram_hilbert"
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"iY" = (
+/obj/machinery/mineral/processing_unit{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/mineral/processing_unit_console{
+	machinedir = 0;
+	pixel_x = 32
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"jt" = (
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ju" = (
+/obj/item/assembly/signaler,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"jC" = (
+/mob/living/simple_animal/slime{
+	colour = "bluespace";
+	rabid = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"jF" = (
+/obj/structure/lattice/catwalk,
+/obj/item/paper/crumpled/ruins/note_institute,
+/obj/item/pen,
+/turf/template_noop,
+/area/ruin/unpowered/no_grav)
+"jJ" = (
+/obj/item/reagent_containers/glass/beaker/bluespace{
+	pixel_y = 5
+	},
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"jK" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"jT" = (
+/obj/effect/mapping_helpers/dead_body_placer{
+	bodycount = 1
+	},
+/obj/machinery/light/small/red/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"kp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/iron,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ks" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"kw" = (
+/obj/structure/frame/machine,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ky" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"kD" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/bag/plants,
+/obj/item/plant_analyzer,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"kO" = (
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"le" = (
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ln" = (
+/obj/effect/turf_decal/loading_area,
+/obj/machinery/light/red/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"lq" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"lI" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"lL" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"lY" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"mb" = (
+/obj/structure/window/reinforced/shuttle/unanchored,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"mc" = (
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"mk" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
+/turf/template_noop,
+/area/template_noop)
+"mo" = (
+/obj/effect/turf_decal/siding/thinplating_new/light/end,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"mC" = (
+/obj/machinery/chem_mass_spec,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"mD" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/grass/fairy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"mU" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"mY" = (
+/obj/machinery/light/floor{
+	brightness = 2;
+	bulb_colour = "#deefff";
+	bulb_power = 0.6
+	},
+/turf/closed/mineral/asteroid,
+/area/ruin/unpowered/no_grav)
+"nh" = (
+/obj/effect/turf_decal/box,
+/obj/machinery/light/red/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"nk" = (
+/obj/structure/sign/departments/botany/directional/west,
+/obj/effect/turf_decal/trimline/green/mid_joiner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/arrow_cw{
+	dir = 8
+	},
+/obj/item/pickaxe/mini,
+/obj/structure/closet/emcloset/anchored,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"np" = (
+/obj/effect/turf_decal/box,
+/obj/machinery/light/red/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"nx" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"ny" = (
+/obj/structure/tank_dispenser,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"nB" = (
+/obj/structure/sign/departments/chemistry/directional/north,
+/obj/effect/turf_decal/trimline/blue/arrow_cw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/mid_joiner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"nN" = (
+/obj/effect/decal/cleanable/greenglow/ecto,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"nU" = (
+/obj/structure/sign/warning/docking/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"oi" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"on" = (
+/obj/effect/turf_decal/trimline/red/arrow_cw{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/mid_joiner{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ow" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"oI" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"oL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"pq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"pC" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"pI" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"pY" = (
+/obj/machinery/light/small/broken/directional/east,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 5
+	},
+/obj/effect/mob_spawn/corpse/human/monkey,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"qb" = (
+/obj/structure/sign/warning/docking/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"qd" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/cigarettes/cigars/havana{
+	pixel_y = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"qx" = (
+/obj/structure/lattice/catwalk,
+/obj/item/raw_anomaly_core/bluespace,
+/turf/template_noop,
+/area/ruin/unpowered/no_grav)
+"qI" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/stack/sheet/bluespace_crystal{
+	amount = 7
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"qR" = (
+/obj/machinery/door/morgue,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"qU" = (
+/obj/machinery/light/cold/directional/north,
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/glass/bottle/multiver{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"qX" = (
+/obj/effect/turf_decal/delivery/white{
+	color = "#52B4E9"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"rb" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/folder/white,
+/obj/item/reagent_containers/dropper,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"rg" = (
+/obj/item/keycard/hilbert,
+/turf/open/misc/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"ru" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"rJ" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"rM" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"rQ" = (
+/obj/machinery/door/morgue,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"rV" = (
+/obj/effect/turf_decal/trimline/green/mid_joiner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/arrow_cw{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"rW" = (
+/obj/machinery/light/cold/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/warning/directional/east,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"sj" = (
+/turf/open/floor/circuit/green/anim,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
+"sz" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"sO" = (
+/obj/effect/mob_spawn/corpse/human/monkey,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"sU" = (
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"te" = (
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"th" = (
+/obj/structure/rack,
+/obj/item/gun/syringe,
+/obj/machinery/door/window/survival_pod{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"tr" = (
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"ty" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/stock_parts/matter_bin/bluespace{
+	pixel_y = 7
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"tL" = (
+/obj/machinery/light/broken/directional/south,
+/obj/item/slime_cookie/bluespace,
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ua" = (
+/obj/structure/sign/warning/docking/directional/south,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"uf" = (
+/obj/effect/turf_decal/trimline/neutral/arrow_cw,
+/obj/effect/turf_decal/trimline/neutral/mid_joiner,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"up" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/stock_parts/matter_bin/bluespace{
+	pixel_y = 7
+	},
+/obj/item/stock_parts/matter_bin/bluespace{
+	pixel_x = -16;
+	pixel_y = 7
+	},
+/obj/machinery/light/red/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"us" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"uG" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/stock_parts/matter_bin/bluespace{
+	pixel_y = 7
+	},
+/obj/item/stock_parts/matter_bin/bluespace{
+	pixel_x = 16;
+	pixel_y = 7
+	},
+/obj/machinery/light/red/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"uV" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 5
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"uW" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/bodybag/bluespace{
+	pixel_y = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"va" = (
+/obj/machinery/research/anomaly_refinery,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"vi" = (
+/turf/template_noop,
+/area/ruin/unpowered/no_grav)
+"vq" = (
+/obj/item/toy/plush/beeplushie,
+/turf/open/floor/plating/elevatorshaft,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"vr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"vt" = (
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"vz" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/bio_suit/cmo,
+/obj/item/clothing/head/bio_hood/cmo,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/machinery/door/window/survival_pod,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"vG" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"vK" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"vN" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/grass/fairy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"vT" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/vault{
+	name = "Secured Door"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
+"vZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/loom,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"wa" = (
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"wh" = (
+/obj/structure/chair/office,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"wo" = (
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"wG" = (
+/obj/effect/turf_decal/stripes/end,
+/obj/machinery/shower{
+	pixel_y = 12
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"wI" = (
+/obj/machinery/door/poddoor/shutters/preopen,
+/obj/item/food/monkeycube,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"wJ" = (
+/obj/machinery/light/cold/directional/south,
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"wY" = (
+/mob/living/simple_animal/slime{
+	colour = "bluespace";
+	rabid = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"xb" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/seeds/tomato,
+/obj/item/seeds/tomato,
+/obj/item/seeds/tomato,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"xc" = (
+/obj/structure/displaycase{
+	start_showpiece_type = /obj/item/hilbertshotel
+	},
+/obj/machinery/light/floor{
+	brightness = 2;
+	bulb_colour = "#deefff";
+	bulb_power = 0.6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
+"xm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"xI" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod,
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+	dir = 4;
+	pixel_x = 32
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"xO" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	anchored = 0;
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"xU" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/light/cold/directional/south,
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yi" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/food/grown/banana,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yj" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yq" = (
+/obj/machinery/light/small/broken/directional/west,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yw" = (
+/obj/item/stack/sheet/iron,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yD" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/food/grown/tomato,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yI" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/grown/bananapeel/mimanapeel,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yK" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yO" = (
+/obj/structure/door_assembly/door_assembly_shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yQ" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yV" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yZ" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"za" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/smartfridge,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"zc" = (
+/obj/effect/turf_decal/trimline/blue/arrow_cw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/mid_joiner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"zq" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/food/grown/tomato/blue/bluespace,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"zu" = (
+/obj/effect/turf_decal/trimline/brown/arrow_cw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/mid_joiner{
+	dir = 1
+	},
+/obj/structure/sign/departments/cargo/directional/north,
+/obj/machinery/button/tram{
+	id = "middle_part_hilbert";
+	pixel_y = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"zw" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"zC" = (
+/obj/effect/turf_decal/trimline/brown/arrow_cw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/mid_joiner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"zF" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"zM" = (
+/obj/structure/table/wood,
+/obj/item/food/snowcones/blue,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"zO" = (
+/obj/machinery/chem_dispenser,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Af" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ax" = (
+/obj/effect/turf_decal/trimline/brown/arrow_cw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/mid_joiner{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/crowbar/large{
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"AI" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/mid_joiner{
+	dir = 1
+	},
+/obj/structure/sign/warning/explosives/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"AX" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/mid_joiner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"AZ" = (
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/reagentgrinder{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ba" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Bh" = (
+/obj/machinery/light/small/red/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Bj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Bk" = (
+/turf/closed/mineral/asteroid/porous,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Bo" = (
+/turf/closed/indestructible/riveted/plastinum,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"BF" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"BH" = (
+/obj/item/kirbyplants/photosynthetic,
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"BI" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"BJ" = (
+/turf/closed/indestructible/riveted/plastinum,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
+"BL" = (
+/obj/structure/table/wood,
+/obj/item/folder/white,
+/obj/item/stamp/rd,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"BM" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/item/kirbyplants/photosynthetic,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"BO" = (
+/obj/structure/bookcase/manuals/research_and_development,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"BQ" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner,
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/turf/open/floor/grass/fairy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"BY" = (
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Co" = (
+/obj/structure/table/wood,
+/obj/item/plate,
+/obj/item/food/pancakes/blueberry{
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"CO" = (
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"CP" = (
+/obj/machinery/door/airlock/science,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"CV" = (
+/obj/machinery/light/cold/directional/north,
+/obj/effect/turf_decal/stripes/red/corner,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"CZ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Dh" = (
+/obj/machinery/chem_heater/withbuffer,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Do" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Dy" = (
+/obj/structure/fluff/tram_rail/anchor{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"DB" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"DO" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"DR" = (
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ee" = (
+/obj/structure/filingcabinet,
+/obj/item/paper/fluff/ruins/docslabnotes,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ei" = (
+/obj/machinery/door/airlock/science,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ej" = (
+/obj/structure/light_puzzle{
+	puzzle_id = "hilbert"
+	},
+/turf/closed/indestructible/riveted/plastinum,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Eu" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"EI" = (
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"EM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"EP" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ER" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"EY" = (
+/obj/structure/closet/crate/bin,
+/obj/item/paper/crumpled/ruins/postdocs_memo,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Fg" = (
+/obj/machinery/door/airlock/cult/unruned/friendly,
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Fm" = (
+/obj/machinery/light/warm/directional/east,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Fn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/conveyor{
+	id = "hilbert1"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Fo" = (
+/obj/machinery/button/tram{
+	id = "left_part_hilbert";
+	pixel_y = 4
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Fv" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"FB" = (
+/obj/structure/table/wood,
+/obj/item/lighter,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"FC" = (
+/obj/item/storage/box/monkeycubes,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"FF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Gf" = (
+/obj/effect/landmark/tram/right_part/hilbert,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Gi" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Gl" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Gs" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/button/tram{
+	id = "right_part_hilbert";
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Gy" = (
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 8
+	},
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"GJ" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/floor,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"GP" = (
+/obj/structure/table/wood,
+/obj/item/gps/spaceruin,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"GV" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ha" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Hb" = (
+/obj/item/mop,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Hf" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Hu" = (
+/obj/machinery/door/puzzle/keycard/hilbert,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Hx" = (
+/obj/machinery/door/poddoor/shutters/preopen,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"HK" = (
+/obj/structure/closet/crate/secure/plasma,
+/obj/item/stack/ore/plasma{
+	amount = 30
+	},
+/obj/item/stack/ore/diamond{
+	amount = 5
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"HN" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/obj/effect/landmark/lift_id/hilbert,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ic" = (
+/turf/open/floor/iron/stairs{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ih" = (
+/obj/machinery/light/small/red/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Im" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/grass/fairy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"It" = (
+/obj/effect/landmark/tram/left_part/hilbert,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Iv" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/grass/fairy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Iy" = (
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
+"ID" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/grown/bananapeel,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"IO" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner,
+/obj/item/grown/bananapeel,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"IU" = (
+/obj/item/food/monkeycube,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"IW" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"IY" = (
+/turf/open/floor/iron/stairs{
+	dir = 1
+	},
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Jc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Jd" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod,
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+	dir = 8;
+	pixel_x = -32
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Jh" = (
+/obj/structure/fluff/tram_rail/anchor,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Jp" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"JL" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"JM" = (
+/obj/structure/fluff/tram_rail/anchor,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"JR" = (
+/obj/structure/fluff/tram_rail,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"JV" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"JW" = (
+/obj/machinery/light/broken/directional/north,
+/obj/machinery/monkey_recycler,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Kd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/wooden,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"KC" = (
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"KJ" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered/no_grav)
+"KL" = (
+/obj/structure/chair/stool/bar/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"KS" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/hedge/opaque,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"La" = (
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Lh" = (
+/obj/structure/fluff/tram_rail/end,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Lr" = (
+/obj/machinery/photocopier,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Lw" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"LD" = (
+/obj/machinery/light/cold/directional/south,
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"LE" = (
+/obj/item/kirbyplants/photosynthetic,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Mf" = (
+/obj/structure/girder/reinforced,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Mh" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out old messages.";
+	dir = 8;
+	name = "broken terminal"
+	},
+/obj/item/paper/fluff/ruins/romans_emails{
+	pixel_x = -10;
+	pixel_y = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Mv" = (
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"MD" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ME" = (
+/obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"MX" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Nc" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/item/kirbyplants/photosynthetic,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Nh" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/ruin/unpowered/no_grav)
+"Nl" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/food/grown/tomato/blue,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Np" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 5
+	},
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Nw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ny" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"NF" = (
+/obj/structure/grille/broken,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"NJ" = (
+/obj/effect/decal/remains/human,
+/obj/machinery/door/window/survival_pod{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 6
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"NQ" = (
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Oe" = (
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ok" = (
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"OA" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered/no_grav)
+"Pu" = (
+/obj/structure/table/wood,
+/obj/item/plate,
+/obj/item/food/burger/blue{
+	pixel_y = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Pw" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Px" = (
+/obj/machinery/door/window/left/directional/south,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"PE" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"PG" = (
+/obj/effect/turf_decal/trimline/white/arrow_cw,
+/obj/effect/turf_decal/trimline/white/mid_joiner,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"PL" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"PR" = (
+/obj/machinery/porta_turret/syndicate{
+	desc = "A ballistic machine gun auto-turret that fires bluespace bullets.";
+	lethal_projectile = /obj/projectile/magic/teleport;
+	name = "displacement turret";
+	stun_projectile = /obj/projectile/magic/teleport
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Qu" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/glass/bottle/nutrient/l4z{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/bottle/nutrient/rh{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/bottle/mutagen,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"QA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"QS" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"QU" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/obj/machinery/light/floor,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"QV" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"QY" = (
+/obj/structure/chair/stool/bar/directional/east,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Rg" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Rj" = (
+/obj/machinery/hydroponics,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Rk" = (
+/obj/structure/sign/departments/evac/directional/south,
+/obj/effect/turf_decal/trimline/white/arrow_cw,
+/obj/effect/turf_decal/trimline/white/mid_joiner,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Rq" = (
+/turf/closed/indestructible/riveted/plastinum,
+/area/ruin/unpowered/no_grav)
+"Ru" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Rw" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"RE" = (
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"RL" = (
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"RN" = (
+/obj/structure/statue/bone/rib,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"RX" = (
+/obj/machinery/door/poddoor/shutters,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Sa" = (
+/obj/effect/turf_decal/trimline/purple/arrow_cw,
+/obj/effect/turf_decal/trimline/purple/mid_joiner,
+/obj/structure/sign/departments/xenobio/directional/south,
+/obj/item/grown/log/tree{
+	pixel_y = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Sc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/chem_master/condimaster,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Sg" = (
+/obj/machinery/door/airlock/science,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Sh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Sn" = (
+/obj/structure/table/wood,
+/obj/item/stock_parts/cell/bluespace{
+	pixel_y = 4
+	},
+/obj/machinery/cell_charger{
+	pixel_y = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Sp" = (
+/obj/effect/turf_decal/trimline/purple/arrow_cw,
+/obj/effect/turf_decal/trimline/purple/mid_joiner,
+/obj/item/wrench{
+	pixel_y = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"SD" = (
+/obj/machinery/conveyor{
+	id = "hilbert2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"SH" = (
+/obj/effect/decal/remains/human,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"SR" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/grass/fairy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"SU" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 6
+	},
+/obj/item/slimecross/industrial/bluespace,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"SX" = (
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Th" = (
+/obj/effect/spawner/random/structure/closet_private,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ti" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"To" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/item/clothing/suit/toggle/labcoat,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/glasses/science,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"TE" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/hatchet,
+/obj/item/cultivator,
+/obj/item/shovel/spade,
+/obj/item/secateurs,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"TO" = (
+/obj/machinery/light/broken/directional/south,
+/obj/item/slime_extract/bluespace,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"TT" = (
+/obj/machinery/light/cold/directional/north,
+/obj/structure/hedge/opaque,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"TV" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/grown/bananapeel/bluespace,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Uc" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/food/grown/banana/bluespace,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ui" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ut" = (
+/turf/template_noop,
+/area/template_noop)
+"Uy" = (
+/obj/machinery/mineral/unloading_machine{
+	dir = 1;
+	icon_state = "unloader-corner";
+	input_dir = 1;
+	output_dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Uz" = (
+/obj/effect/turf_decal/siding/thinplating_new/light/corner,
+/obj/effect/turf_decal/siding/thinplating_new/light/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"UF" = (
+/obj/machinery/door/airlock/science,
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"UH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/biogenerator,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"UK" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/seeds/banana,
+/obj/item/seeds/banana,
+/obj/item/seeds/banana,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"UL" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/food/grown/tomato/blood,
+/turf/open/floor/glass,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Vk" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Vn" = (
+/obj/structure/dresser,
+/turf/open/floor/carpet/black,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"VD" = (
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"VT" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Wg" = (
+/obj/structure/mopbucket,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Wt" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"WA" = (
+/obj/item/storage/bag/trash/bluespace,
+/mob/living/simple_animal/hostile/rat,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"WC" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/slime{
+	colour = "bluespace";
+	rabid = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"WI" = (
+/obj/structure/table/wood,
+/obj/item/food/cornchips/blue,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"WJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"WP" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/unpowered/no_grav)
+"WY" = (
+/obj/effect/turf_decal/trimline/purple/arrow_cw,
+/obj/effect/turf_decal/trimline/purple/mid_joiner,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Xi" = (
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Xq" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/head/soft/purple{
+	pixel_y = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Xt" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Xw" = (
+/obj/structure/fluff/tram_rail,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"XI" = (
+/obj/item/pickaxe/silver,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"XN" = (
+/obj/machinery/light/broken/directional/north,
+/obj/structure/tank_holder/extinguisher,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"XP" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"XY" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/floor,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Yg" = (
+/obj/structure/table/wood,
+/obj/structure/bedsheetbin,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Yi" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"Ym" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/machinery/reagentgrinder{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Yt" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+	dir = 8;
+	pixel_x = -32
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Yv" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"YF" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/floor,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"YG" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"YL" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"YP" = (
+/obj/structure/chair/stool/bar/directional/north,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"YU" = (
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Zc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ze" = (
+/mob/living/simple_animal/slime{
+	colour = "bluespace";
+	rabid = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Zk" = (
+/obj/machinery/washing_machine,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Zy" = (
+/obj/machinery/washing_machine,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ZG" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/item/grown/bananapeel,
+/turf/open/floor/grass/fairy,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ZH" = (
+/obj/machinery/light/small/broken/directional/east,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ZM" = (
+/obj/machinery/light/small/broken/directional/west,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ZV" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+
+(1,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(2,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+Ok
+Ym
+za
+Sc
+ie
+UH
+vZ
+Qu
+Ok
+Bo
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(3,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+kD
+vt
+Iv
+BQ
+Iv
+Im
+Iv
+YF
+TE
+Bo
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(4,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+Bo
+xb
+zF
+Rj
+CO
+Rj
+CO
+Rj
+Zc
+yD
+Bo
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(5,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+Bo
+Nl
+yQ
+Rj
+CO
+Rj
+CO
+Rj
+Ti
+TV
+Bo
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(6,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+Bo
+ID
+eg
+SR
+hw
+Jp
+IO
+SR
+XY
+Nl
+Bo
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(7,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+Bo
+yi
+yQ
+Rj
+CO
+Rj
+CO
+Rj
+Zc
+Uc
+Bo
+ch
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(8,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+Bo
+zq
+yV
+Rj
+CO
+Rj
+CO
+Rj
+Zc
+ID
+Bo
+ch
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(9,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+Bo
+yD
+eg
+SR
+hw
+Jp
+IW
+SR
+XY
+UK
+Bo
+Yi
+ch
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(10,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+Bo
+yI
+yQ
+Rj
+CO
+Rj
+CO
+Rj
+Zc
+UL
+Bo
+cg
+ch
+ch
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(11,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+Bo
+Bo
+Bo
+Bo
+Ok
+yZ
+Rj
+CO
+Rj
+CO
+Rj
+QA
+Ok
+Ok
+cg
+cg
+he
+ch
+ch
+ch
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(12,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+uW
+uW
+Ok
+vq
+Bo
+GJ
+hM
+ZG
+vN
+mD
+gB
+QU
+Bo
+cg
+cg
+cg
+cg
+cg
+Yi
+ch
+ch
+ch
+Ut
+Ut
+Ut
+Ut
+"}
+(13,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+La
+La
+Ok
+Bo
+Bo
+Bo
+Ok
+CP
+Bo
+CP
+Ok
+Bo
+Ok
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+he
+ch
+ch
+Ut
+Ut
+Ut
+"}
+(14,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+Bo
+Bo
+Bo
+jT
+qX
+rM
+Bo
+cg
+cg
+Bo
+rV
+nk
+rV
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+ch
+ch
+ch
+Ut
+Ut
+"}
+(15,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+Bo
+ex
+jJ
+Bo
+nN
+qX
+rM
+Bo
+cg
+Ok
+Ok
+XP
+XP
+XP
+Ok
+Ok
+cg
+cg
+cg
+Ok
+Bo
+Bo
+Bo
+Bo
+Bo
+ch
+Yi
+ch
+Ut
+Ut
+"}
+(16,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+rb
+eB
+ks
+Ok
+Bo
+qR
+Bo
+Ok
+Bo
+Ok
+CV
+Ru
+Fo
+Ru
+LD
+Ok
+Bo
+Bo
+Bo
+Ok
+Hf
+FF
+Gl
+QV
+Bo
+Bo
+ch
+mk
+Ut
+Ut
+"}
+(17,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+qU
+Vk
+Uz
+mo
+Mv
+uV
+Rw
+wJ
+Bo
+nB
+Xi
+Do
+KC
+vG
+YG
+Rk
+Bo
+To
+To
+Ok
+Ok
+hT
+fv
+QV
+ua
+Ok
+Rq
+Rq
+Ut
+Ut
+"}
+(18,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+dB
+Vk
+kO
+Mv
+Mv
+Mv
+Mv
+Mv
+Ei
+zc
+Xi
+hk
+It
+Xw
+YG
+PG
+Sg
+CZ
+DR
+CZ
+hQ
+sU
+ev
+QV
+Ui
+en
+KJ
+OA
+Ut
+Ut
+"}
+(19,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+zO
+Np
+le
+mo
+Mv
+hL
+Jc
+xU
+Bo
+zc
+Xi
+hk
+KC
+Xw
+YG
+PG
+Bo
+wG
+rW
+lL
+Ej
+wh
+Gl
+WJ
+ua
+Ok
+Rq
+Rq
+Ut
+Ut
+"}
+(20,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Bo
+Bo
+AZ
+Dh
+mC
+Ok
+Bo
+rQ
+Ok
+Bo
+Ok
+BH
+hk
+KC
+Xw
+LE
+Ok
+Bo
+Bo
+Bo
+Bo
+Ok
+Mh
+Fv
+QV
+Af
+Bo
+ch
+mk
+Ut
+Ut
+"}
+(21,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+Bo
+Bo
+Bo
+Bo
+Bo
+bi
+sz
+Bo
+cg
+Ok
+Ok
+Dy
+KC
+Jh
+Ok
+Ok
+Wg
+Bo
+cg
+Bo
+Yv
+pq
+Nw
+bO
+db
+Bo
+ch
+Yi
+Ut
+Ut
+"}
+(22,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+vz
+te
+Bo
+cg
+cg
+Bo
+yj
+ae
+JL
+Bo
+Hb
+WA
+Bo
+cg
+Ok
+Bo
+pI
+eC
+KL
+Bo
+Ok
+cg
+cg
+ch
+Ut
+"}
+(23,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+Ok
+th
+Bo
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+RL
+Xq
+Bo
+cg
+cg
+Ok
+Bo
+Bo
+Bo
+Ok
+cg
+cg
+ch
+ch
+Ut
+"}
+(24,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+Bo
+Ok
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+Rg
+RE
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+he
+ch
+Ut
+Ut
+"}
+(25,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+Dy
+KC
+JM
+Bo
+ZV
+Xt
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+ch
+ch
+Ut
+Ut
+"}
+(26,1,1) = {"
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+JR
+Bo
+NF
+RL
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+ch
+Ut
+Ut
+"}
+(27,1,1) = {"
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+lI
+Mf
+ZV
+Rg
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(28,1,1) = {"
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+KC
+Bo
+RL
+Ok
+Ok
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(29,1,1) = {"
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+mY
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+Dy
+KC
+Jh
+Bo
+RE
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(30,1,1) = {"
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+Bk
+Ok
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(31,1,1) = {"
+Ut
+cg
+cg
+cg
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Ok
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+Bk
+Bk
+Bo
+fU
+ZM
+Bo
+yq
+Ha
+Bo
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(32,1,1) = {"
+Ut
+cg
+cg
+Bo
+Ok
+ln
+Uy
+Fn
+gx
+Fn
+nh
+Ok
+Bo
+Bo
+Ok
+cg
+cg
+Bo
+yj
+ae
+JL
+Bo
+Bk
+Bk
+Bo
+hB
+NJ
+Bo
+DO
+NJ
+Bo
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(33,1,1) = {"
+Ut
+cg
+Bo
+Ok
+cE
+wo
+VT
+dD
+VT
+lq
+ZV
+nU
+La
+ty
+Bo
+cg
+Ok
+Ok
+Dy
+KC
+Jh
+Ok
+Ok
+XI
+Bo
+EI
+Hx
+Bo
+EI
+Hx
+Bo
+cg
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(34,1,1) = {"
+cg
+cg
+Bo
+ao
+La
+gU
+xO
+MX
+dJ
+MX
+xm
+oi
+ZV
+up
+Ok
+Bo
+Ok
+BI
+hk
+KC
+Xw
+MD
+Ok
+Bo
+Bo
+kw
+wY
+IU
+sO
+kw
+Bo
+Bo
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(35,1,1) = {"
+cg
+cg
+Bo
+qI
+wo
+Wt
+yO
+HK
+ha
+iO
+MX
+ow
+La
+La
+wo
+Bo
+zu
+Xi
+Yt
+QS
+Jd
+YG
+Sa
+Bo
+XN
+La
+lY
+DR
+kp
+La
+TO
+Bo
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(36,1,1) = {"
+cg
+cg
+Bo
+el
+ZV
+Wt
+KC
+RN
+hW
+KC
+dJ
+oL
+wa
+wa
+YL
+Fg
+zC
+Xi
+Pw
+iS
+gv
+YG
+WY
+UF
+Kd
+lY
+DR
+vK
+DR
+ig
+FC
+Bo
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(37,1,1) = {"
+cg
+cg
+Bo
+bK
+La
+eE
+dA
+MX
+iO
+wo
+MX
+ow
+ZV
+La
+La
+Bo
+Ax
+Xi
+gm
+HN
+xI
+YG
+Sp
+Bo
+JW
+yw
+VD
+lY
+jC
+kw
+tL
+Bo
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(38,1,1) = {"
+cg
+cg
+Bo
+bN
+La
+iP
+Bj
+Sh
+Bj
+mb
+Sh
+pC
+wo
+uG
+Ok
+Bo
+Ok
+BI
+hk
+KC
+Xw
+MD
+Ok
+Bo
+Bo
+Ze
+La
+sO
+La
+bM
+Bo
+Bo
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(39,1,1) = {"
+cg
+cg
+Bo
+Ok
+cQ
+wo
+Ny
+dO
+Ny
+Ny
+La
+qb
+La
+ty
+Bo
+cg
+Ok
+Ok
+Dy
+KC
+Jh
+Ok
+Ok
+cg
+Bo
+EI
+wI
+Bo
+RX
+RX
+Bo
+cg
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(40,1,1) = {"
+Ut
+cg
+cg
+Bo
+Ok
+dq
+Uy
+SD
+iY
+SD
+np
+Ok
+Bo
+Bo
+Ok
+cg
+cg
+Bo
+yj
+ae
+JL
+Bo
+cg
+cg
+Bo
+yK
+us
+Bo
+BF
+WC
+Bo
+cg
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(41,1,1) = {"
+Ut
+cg
+cg
+cg
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Ok
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+cg
+cg
+Bo
+SH
+ZH
+Bo
+pY
+SU
+Bo
+cg
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(42,1,1) = {"
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+cg
+cg
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+cg
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(43,1,1) = {"
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+Dy
+KC
+Jh
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(44,1,1) = {"
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(45,1,1) = {"
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(46,1,1) = {"
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(47,1,1) = {"
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+Dy
+KC
+Jh
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(48,1,1) = {"
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(49,1,1) = {"
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+Rq
+Rq
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+hk
+KC
+Xw
+Bo
+cg
+cg
+cg
+Ok
+Bo
+Bo
+Bo
+Ok
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(50,1,1) = {"
+Ut
+cg
+cg
+cg
+cg
+cg
+Rq
+cg
+ju
+Rq
+Rq
+Rq
+rg
+cg
+cg
+cg
+cg
+Bo
+yj
+ae
+JL
+Bo
+cg
+cg
+cg
+Bo
+Vn
+oI
+ky
+Bo
+Bo
+Bo
+Bo
+Ok
+cg
+cg
+Ut
+"}
+(51,1,1) = {"
+Ut
+cg
+cg
+cg
+cg
+cg
+ch
+es
+tr
+tr
+nx
+tr
+rJ
+Rq
+cg
+cg
+Ok
+Ok
+Dy
+KC
+Jh
+Ok
+Ok
+cg
+cg
+Bo
+Th
+jt
+az
+Bo
+Vn
+JV
+ky
+Bo
+cg
+cg
+Ut
+"}
+(52,1,1) = {"
+Ut
+Ut
+cg
+cg
+cg
+ch
+Rq
+tr
+jF
+WP
+Nh
+Rq
+tr
+va
+Rq
+cg
+Ok
+BM
+hk
+KC
+Xw
+Nc
+Ok
+Bo
+Bo
+Bo
+Bo
+Bo
+EP
+Bo
+Th
+jt
+az
+Bo
+cg
+cg
+Ut
+"}
+(53,1,1) = {"
+Ut
+Ut
+Ut
+ch
+cg
+ch
+tr
+tr
+WP
+vi
+vi
+WP
+tr
+Rq
+cg
+Bo
+AI
+Xi
+hk
+KC
+Xw
+YG
+uf
+Bo
+Yg
+sU
+YU
+sU
+sU
+Bo
+Bo
+Bo
+EP
+Bo
+cg
+cg
+Ut
+"}
+(54,1,1) = {"
+Ut
+Ut
+Ut
+ch
+ch
+ch
+tr
+Nh
+WP
+vi
+vi
+WP
+Rq
+Rq
+cg
+cg
+AX
+Xi
+hk
+Gf
+Xw
+YG
+uf
+CP
+sU
+sU
+sU
+sU
+QY
+sU
+QV
+BY
+BY
+Bo
+Bo
+Bo
+Bo
+"}
+(55,1,1) = {"
+Ut
+Ut
+Ut
+cg
+ch
+Rq
+tr
+tr
+vi
+WP
+Rq
+qx
+tr
+cg
+Rq
+cg
+AX
+Xi
+DB
+KC
+Lh
+YG
+uf
+Bo
+PE
+mU
+mc
+WI
+Co
+sU
+QV
+BY
+Oe
+Bo
+oI
+Vn
+Bo
+"}
+(56,1,1) = {"
+Ut
+Ut
+cg
+cg
+cg
+ch
+Rq
+gg
+tr
+tr
+tr
+tr
+es
+Rq
+cg
+Bo
+Ok
+Gy
+zw
+Gs
+zw
+NQ
+Ok
+Bo
+Ok
+Zk
+sU
+ba
+zM
+YP
+QV
+BY
+BY
+EP
+az
+jt
+Bo
+"}
+(57,1,1) = {"
+Ut
+cg
+cg
+cg
+cg
+cg
+ch
+ch
+ch
+eG
+ny
+cg
+Rq
+cg
+Rq
+cg
+Ok
+Ok
+XP
+XP
+XP
+Ok
+Ok
+cg
+Bo
+Zy
+sU
+ME
+Fm
+sU
+QV
+BY
+BY
+Bo
+aX
+Th
+Bo
+"}
+(58,1,1) = {"
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+Rq
+cg
+Rq
+Rq
+Rq
+cg
+cg
+cg
+cg
+cg
+Bo
+on
+on
+on
+Bo
+cg
+cg
+Ok
+Bo
+Bo
+Bo
+Bo
+EP
+Bo
+jK
+Ok
+Bo
+Bo
+Bo
+Bo
+"}
+(59,1,1) = {"
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Rq
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+Bo
+CP
+Bo
+Bo
+cg
+cg
+cg
+cg
+Bo
+Th
+jt
+az
+Bo
+Gi
+Bo
+cg
+cg
+Ut
+Ut
+"}
+(60,1,1) = {"
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ok
+Ok
+Ee
+sU
+Lr
+Ok
+Ok
+cg
+cg
+cg
+Bo
+Vn
+JV
+ky
+Bo
+Bo
+Ok
+cg
+cg
+Ut
+Ut
+"}
+(61,1,1) = {"
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ok
+Ok
+Eu
+EM
+pq
+io
+Eu
+Ok
+Ok
+cg
+cg
+Ok
+Bo
+Bo
+Bo
+Ok
+cg
+cg
+cg
+cg
+Ut
+Ut
+"}
+(62,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+KS
+pq
+ER
+BY
+Lw
+pq
+ER
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(63,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+TT
+GP
+qd
+Pu
+FB
+Sn
+SX
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(64,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+fQ
+BO
+BY
+GV
+BY
+Px
+BY
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(65,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+Ok
+Ok
+BL
+EY
+BY
+BY
+PL
+Ok
+Ok
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+"}
+(66,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+Ok
+Bo
+Ok
+Hu
+Ok
+Bo
+Ok
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+Ut
+"}
+(67,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+Ic
+Bo
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+Ut
+"}
+(68,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+Ok
+Bo
+Bo
+Ok
+La
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Ok
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+Ut
+"}
+(69,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+Bo
+La
+IY
+IY
+Ih
+Bo
+PR
+KC
+KC
+PR
+KC
+KC
+PR
+Ok
+Ok
+cg
+Iy
+BJ
+BJ
+BJ
+BJ
+Ut
+"}
+(70,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+Bo
+Bh
+Bo
+Bo
+Bo
+Bo
+Bo
+Ba
+Ba
+Ba
+Ba
+Ba
+Ba
+Ba
+Ok
+Bo
+Iy
+sj
+sj
+sj
+BJ
+Ut
+"}
+(71,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+Bo
+La
+bE
+bE
+bE
+bE
+bE
+La
+La
+La
+La
+La
+La
+La
+ru
+La
+vT
+sj
+xc
+sj
+BJ
+Ut
+"}
+(72,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+Ok
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+vr
+vr
+vr
+vr
+vr
+vr
+vr
+Ok
+Bo
+Iy
+sj
+sj
+sj
+BJ
+Ut
+"}
+(73,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+Bo
+PR
+KC
+KC
+PR
+KC
+KC
+PR
+Ok
+Ok
+cg
+Iy
+BJ
+BJ
+BJ
+BJ
+Ut
+"}
+(74,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+Ok
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Bo
+Ok
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+Ut
+"}
+(75,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(76,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}
+(77,1,1) = {"
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+cg
+cg
+cg
+cg
+cg
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+Ut
+"}

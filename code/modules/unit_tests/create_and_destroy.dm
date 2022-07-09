@@ -21,15 +21,13 @@
 		/obj/effect/mob_spawn,
 		//Template type
 		/obj/structure/holosign/robot_seat,
-		//Say it with me now, type template
-		/obj/effect/mapping_helpers/component_injector,
-		//template type
-		/obj/effect/mapping_helpers/trait_injector,
 		//Singleton
 		/mob/dview,
-		//Template,
-		/obj/effect/mapping_helpers/custom_icon,
+		//Template type
+		/obj/item/bodypart,
 	)
+	//Say it with me now, type template
+	ignore += typesof(/obj/effect/mapping_helpers)
 	//This turf existing is an error in and of itself
 	ignore += typesof(/turf/baseturf_skipover)
 	ignore += typesof(/turf/baseturf_bottom)
@@ -37,12 +35,8 @@
 	ignore += typesof(/obj/item/modular_computer/tablet/integrated)
 	//This one demands a computer, ditto
 	ignore += typesof(/obj/item/modular_computer/processor)
-	//Needs special input, let's be nice
-	ignore += typesof(/obj/effect/abstract/proximity_checker)
 	//Very finiky, blacklisting to make things easier
 	ignore += typesof(/obj/item/poster/wanted)
-	//We can't pass a mind into this
-	ignore += typesof(/obj/item/phylactery)
 	//This expects a seed, we can't pass it
 	ignore += typesof(/obj/item/food/grown)
 	//Nothing to hallucinate if there's nothing to hallicinate
@@ -54,10 +48,8 @@
 	//We don't have a pod
 	ignore += typesof(/obj/effect/pod_landingzone_effect)
 	ignore += typesof(/obj/effect/pod_landingzone)
-	//We don't have a disease to pass in
-	ignore += typesof(/obj/effect/mapping_helpers/component_injector/infective)
-	//It's a trapdoor to nowhere
-	ignore += typesof(/obj/effect/mapping_helpers/trapdoor_placer)
+	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
+	ignore += typesof(/obj/effect/baseturf_helper)
 	//There's no shapeshift to hold
 	ignore += typesof(/obj/shapeshift_holder)
 	//No tauma to pass in
@@ -92,10 +84,14 @@
 	ignore += typesof(/obj/structure/alien/resin/flower_bud)
 	//Needs a linked mecha
 	ignore += typesof(/obj/effect/skyfall_landingzone)
-	//Leads to errors as a consequence of the logic behind moving back to a tile that's moving you somewhere else
-	ignore += typesof(/obj/effect/mapping_helpers/component_injector/areabound)
 	//Expects a mob to holderize, we have nothing to give
 	ignore += typesof(/obj/item/clothing/head/mob_holder)
+	//Needs cards passed into the initilazation args
+	ignore += typesof(/obj/item/toy/cards/cardhand)
+	//Needs a holodeck area linked to it which is not guarenteed to exist and technically is supposed to have a 1:1 relationship with computer anyway.
+	ignore += typesof(/obj/machinery/computer/holodeck)
+	//runtimes if not paired with a landmark
+	ignore += typesof(/obj/structure/industrial_lift)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/baseturf_count = length(spawn_at.baseturfs)
@@ -106,7 +102,7 @@
 			//We change it back to prevent pain, please don't ask
 			spawn_at.ChangeTurf(/turf/open/floor/wood, /turf/baseturf_skipover)
 			if(baseturf_count != length(spawn_at.baseturfs))
-				Fail("[type_path] changed the amount of baseturfs we have [baseturf_count] -> [length(spawn_at.baseturfs)]")
+				TEST_FAIL("[type_path] changed the amount of baseturfs we have [baseturf_count] -> [length(spawn_at.baseturfs)]")
 				baseturf_count = length(spawn_at.baseturfs)
 		else
 			var/atom/creation = new type_path(spawn_at)
@@ -152,8 +148,8 @@
 			garbage_queue_processed = TRUE
 			break
 
-		if(world.time > start_time + time_needed + 8 MINUTES)
-			Fail("Something has gone horribly wrong, the garbage queue has been processing for well over 10 minutes. What the hell did you do")
+		if(world.time > start_time + time_needed + 30 MINUTES) //If this gets us gitbanned I'm going to laugh so hard
+			TEST_FAIL("Something has gone horribly wrong, the garbage queue has been processing for well over 30 minutes. What the hell did you do")
 			break
 
 		//Immediately fire the gc right after
@@ -166,21 +162,21 @@
 	for(var/path in cache_for_sonic_speed)
 		var/datum/qdel_item/item = cache_for_sonic_speed[path]
 		if(item.failures)
-			Fail("[item.name] hard deleted [item.failures] times out of a total del count of [item.qdels]")
+			TEST_FAIL("[item.name] hard deleted [item.failures] times out of a total del count of [item.qdels]")
 		if(item.no_respect_force)
-			Fail("[item.name] failed to respect force deletion [item.no_respect_force] times out of a total del count of [item.qdels]")
+			TEST_FAIL("[item.name] failed to respect force deletion [item.no_respect_force] times out of a total del count of [item.qdels]")
 		if(item.no_hint)
-			Fail("[item.name] failed to return a qdel hint [item.no_hint] times out of a total del count of [item.qdels]")
+			TEST_FAIL("[item.name] failed to return a qdel hint [item.no_hint] times out of a total del count of [item.qdels]")
 
 	cache_for_sonic_speed = SSatoms.BadInitializeCalls
 	for(var/path in cache_for_sonic_speed)
 		var/fails = cache_for_sonic_speed[path]
 		if(fails & BAD_INIT_NO_HINT)
-			Fail("[path] didn't return an Initialize hint")
+			TEST_FAIL("[path] didn't return an Initialize hint")
 		if(fails & BAD_INIT_QDEL_BEFORE)
-			Fail("[path] qdel'd in New()")
+			TEST_FAIL("[path] qdel'd in New()")
 		if(fails & BAD_INIT_SLEPT)
-			Fail("[path] slept during Initialize()")
+			TEST_FAIL("[path] slept during Initialize()")
 
 	SSticker.delay_end = FALSE
 	//This shouldn't be needed, but let's be polite

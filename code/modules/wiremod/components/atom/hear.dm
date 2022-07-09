@@ -27,6 +27,18 @@
 	trigger_port = add_output_port("Triggered", PORT_TYPE_SIGNAL)
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
+/obj/item/circuit_component/hear/register_shell(atom/movable/shell)
+	if(parent.loc != shell)
+		shell.become_hearing_sensitive(CIRCUIT_HEAR_TRAIT)
+		RegisterSignal(shell, COMSIG_MOVABLE_HEAR, .proc/on_shell_hear)
+
+/obj/item/circuit_component/hear/unregister_shell(atom/movable/shell)
+	REMOVE_TRAIT(shell, TRAIT_HEARING_SENSITIVE, CIRCUIT_HEAR_TRAIT)
+
+/obj/item/circuit_component/hear/proc/on_shell_hear(datum/source, list/arguments)
+	SIGNAL_HANDLER
+	return Hear(arglist(arguments))
+
 /obj/item/circuit_component/hear/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods)
 	if(speaker == parent?.shell)
 		return

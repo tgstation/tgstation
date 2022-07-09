@@ -1,6 +1,8 @@
 /datum/job/chaplain
-	title = "Chaplain"
-	department_head = list("Head of Personnel")
+	title = JOB_CHAPLAIN
+	description = "Hold services and funerals, cremate people, preach your \
+		religion, protect the crew against cults."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -11,7 +13,7 @@
 	outfit = /datum/outfit/job/chaplain
 	plasmaman_outfit = /datum/outfit/plasmaman/chaplain
 
-	paycheck = PAYCHECK_EASY
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
@@ -29,7 +31,7 @@
 		/obj/item/toy/plush/ratplush = 1
 	)
 	rpg_title = "Paladin"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CAN_BE_INTERN
 
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
 
@@ -94,7 +96,7 @@
 			B.deity_name = "Anime"
 		else
 			if(new_bible == DEFAULT_BIBLE)
-				new_bible = "The Holy Book of [new_religion]"
+				new_bible = DEFAULT_BIBLE_REPLACE(new_bible)
 
 	B.name = new_bible
 
@@ -118,7 +120,7 @@
 		/obj/item/camera/spooky = 1,
 		/obj/item/stamp/chap = 1,
 		)
-	belt = /obj/item/pda/chaplain
+	belt = /obj/item/modular_computer/tablet/pda/chaplain
 	ears = /obj/item/radio/headset/headset_srv
 
 	backpack = /obj/item/storage/backpack/cultpack

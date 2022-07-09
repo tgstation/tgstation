@@ -3,7 +3,7 @@
 		return
 	//Being dead doesn't mean your temperature never changes
 
-	update_gravity(mob_has_gravity())
+	update_gravity(has_gravity())
 
 	handle_status_effects(delta_time, times_fired)
 

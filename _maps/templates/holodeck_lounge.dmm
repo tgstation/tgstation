@@ -79,7 +79,7 @@
 	},
 /area/template_noop)
 "l" = (
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/chair/stool/bar/directional/south,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -155,7 +155,7 @@
 	},
 /area/template_noop)
 "C" = (
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "D" = (
@@ -247,7 +247,6 @@
 /area/template_noop)
 "P" = (
 /obj/structure/table/wood/poker,
-/obj/structure/table/wood/poker,
 /obj/effect/holodeck_effect/cards,
 /turf/open/floor/holofloor{
 	dir = 9;
@@ -285,7 +284,7 @@
 	},
 /area/template_noop)
 "V" = (
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -303,9 +302,7 @@
 	},
 /area/template_noop)
 "Z" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 

@@ -49,8 +49,8 @@
 	. += mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay")
 
 /obj/structure/blob/special/core/update_icon()
+	. = ..()
 	color = null
-	return ..()
 
 /obj/structure/blob/special/core/ex_act(severity, target)
 	var/damage = 10 * (severity + 1) //remember, the core takes half brute damage, so this is 20/15/10 damage based on severity

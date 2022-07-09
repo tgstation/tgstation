@@ -20,8 +20,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/static/list/quirk_blacklist = list(
 		list("Blind","Nearsighted"),
 		list("Jolly","Depression","Apathetic","Hypersensitive"),
-		list("Ageusia","Vegetarian","Deviant Tastes"),
-		list("Ananas Affinity","Ananas Aversion"),
+		list("Ageusia","Vegetarian","Deviant Tastes", "Gamer"),
+		list("Ananas Affinity","Ananas Aversion", "Gamer"),
 		list("Alcohol Tolerance","Light Drinker"),
 		list("Clown Enjoyer","Mime Fan"),
 		list("Bad Touch", "Friendly"),
@@ -72,12 +72,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			badquirk = TRUE
 	if(badquirk)
 		cli.prefs.save_character()
-
-	// Assign wayfinding pinpointer granting quirk if they're new
-	if(cli.get_exp_living(TRUE) < EXP_ASSIGN_WAYFINDER && !user.has_quirk(/datum/quirk/item_quirk/needswayfinder))
-		var/datum/quirk/wayfinder = /datum/quirk/item_quirk/needswayfinder
-		if(user.add_quirk(wayfinder))
-			SSblackbox.record_feedback("nested tally", "quirks_taken", 1, list(initial(wayfinder.name)))
 
 /*
  *Randomises the quirks for a specified mob

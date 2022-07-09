@@ -15,7 +15,7 @@
 	anchored = TRUE //So it cant slide around after landing
 	anchorable = FALSE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 	density = FALSE
 	divable = FALSE
 	///List of bitflags for supply pods, see: code\__DEFINES\obj_flags.dm
@@ -78,6 +78,10 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 	delays = list(POD_TRANSIT = 25, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
+	reversing = TRUE
+	stay_after_drop = TRUE
+	leavingSound = 'sound/effects/podwoosh.ogg'
+	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE, "Mecha"=FALSE)
 
 /obj/structure/closet/supplypod/centcompod
 	style = STYLE_CENTCOM
@@ -89,7 +93,7 @@
 /obj/structure/closet/supplypod/Initialize(mapload, customStyle = FALSE)
 	. = ..()
 	if (!loc)
-		var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding] //temporary holder for supplypods mid-transit
+		var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding] //temporary holder for supplypods mid-transit
 		forceMove(shippingLane)
 	if (customStyle)
 		style = customStyle
@@ -214,7 +218,7 @@
 	stay_after_drop = FALSE
 	holder.pixel_z = initial(holder.pixel_z)
 	holder.alpha = initial(holder.alpha)
-	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding]
+	var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding]
 	forceMove(shippingLane) //Move to the centcom-z-level until the pod_landingzone says we can drop back down again
 	if (!reverse_dropoff_coords) //If we're centcom-launched, the reverse dropoff turf will be a centcom loading bay. If we're an extraction pod, it should be the ninja jail. Thus, this shouldn't ever really happen.
 		var/obj/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
@@ -270,7 +274,7 @@
 	if (explosion_sum != 0) //If the explosion list isn't all zeroes, call an explosion
 		explosion(turf_underneath, B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod), explosion_cause = src) //less advanced equipment than bluespace pod, so larger explosion when landing
 	else if (!effectQuiet && !(pod_flags & FIRST_SOUNDS)) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
-		playsound(src, "explosion", landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
+		playsound(src, SFX_EXPLOSION, landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
 	if (landingSound)
 		playsound(turf_underneath, landingSound, soundVolume, FALSE, FALSE)
 	if (effectMissile) //If we are acting like a missile, then right after we land and finish fucking shit up w explosions, we should delete
@@ -322,7 +326,7 @@
 		playsound(get_turf(holder), leavingSound, soundVolume, FALSE, FALSE)
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
-	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a seperate holder exists)
+	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a separate holder exists)
 		deleteRubble()
 		if (!effectQuiet && style != STYLE_INVISIBLE && style != STYLE_SEETHROUGH)
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
@@ -459,6 +463,7 @@
 	glow_effect.icon_state = "pod_glow_" + GLOB.podstyles[style][POD_GLOW]
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
+	glow_effect.plane = ABOVE_GAME_PLANE
 	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, .proc/remove_glow)
 
 /obj/structure/closet/supplypod/proc/endGlow()
@@ -497,6 +502,7 @@
 	icon_state = "pod_engineglow"
 	desc = ""
 	layer = GASFIRE_LAYER
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 255
 
@@ -509,7 +515,7 @@
 	alpha = max(0, 255-(amount*20))
 
 /obj/effect/supplypod_rubble //This is the object that forceMoves the supplypod to it's location
-	name = "Debris"
+	name = "debris"
 	desc = "A small crater of rubble. Closer inspection reveals the debris to be made primarily of space-grade metal fragments. You're pretty sure that this will disperse before too long."
 	icon = 'icons/obj/supplypods.dmi'
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER // We want this to go right below the layer of supplypods and supplypod_rubble's forground.
@@ -596,7 +602,7 @@
 	if(pod.effectStun) //If effectStun is true, stun any mobs caught on this pod_landingzone until the pod gets a chance to hit them
 		for (var/mob/living/target_living in get_turf(src))
 			target_living.Stun(pod.delays[POD_TRANSIT]+10, ignore_canstun = TRUE)//you ain't goin nowhere, kid.
-	if (pod.delays[POD_FALLING] == initial(pod.delays[POD_FALLING]) && pod.delays[POD_TRANSIT] + pod.delays[POD_FALLING] < pod.fallingSoundLength)
+	if (pod.delays[POD_TRANSIT] + pod.delays[POD_FALLING] < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
 		pod.fallingSound = 'sound/weapons/mortar_whistle.ogg'
 	var/soundStartTime = pod.delays[POD_TRANSIT] - pod.fallingSoundLength + pod.delays[POD_FALLING]
@@ -622,6 +628,7 @@
 	setupSmoke(rotation)
 	pod.transform = matrix().Turn(rotation)
 	pod.layer = FLY_LAYER
+	pod.plane = ABOVE_GAME_PLANE
 	if (pod.style != STYLE_INVISIBLE)
 		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) //Make the pod fall! At an angle!
 	addtimer(CALLBACK(src, .proc/endLaunch), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
@@ -633,6 +640,7 @@
 		var/obj/effect/supplypod_smoke/smoke_part = new (drop_location())
 		if (i == 1)
 			smoke_part.layer = FLY_LAYER
+			smoke_part.plane = ABOVE_GAME_PLANE
 			smoke_part.icon_state = "smoke_start"
 		smoke_part.transform = matrix().Turn(rotation)
 		smoke_effects[i] = smoke_part
@@ -653,6 +661,7 @@
 /obj/effect/pod_landingzone/proc/endLaunch()
 	pod.tryMakeRubble(drop_location())
 	pod.layer = initial(pod.layer)
+	pod.plane = initial(pod.plane)
 	pod.endGlow()
 	QDEL_NULL(helper)
 	pod.preOpen() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place

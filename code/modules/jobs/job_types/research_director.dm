@@ -1,7 +1,10 @@
 /datum/job/research_director
-	title = "Research Director"
+	title = JOB_RESEARCH_DIRECTOR
+	description = "Supervise research efforts, ensure Robotics is in working \
+		order, make sure the AI and its Cyborgs aren't rogue, replacing them if \
+		they are"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-	department_head = list("Captain")
+	department_head = list(JOB_CAPTAIN)
 	head_announce = list("Science")
 	faction = FACTION_STATION
 	total_positions = 1
@@ -25,7 +28,7 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SCI
 
-	liver_traits = list(TRAIT_ROYAL_METABOLISM)
+	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_BALLMER_SCIENTIST)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
 	bounty_types = CIV_JOB_SCI
@@ -38,7 +41,7 @@
 
 	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
 	rpg_title = "Archmagister"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -48,7 +51,7 @@
 
 
 /datum/outfit/job/rd
-	name = "Research Director"
+	name = JOB_RESEARCH_DIRECTOR
 	jobtype = /datum/job/research_director
 
 	id = /obj/item/card/id/advanced/silver
@@ -57,9 +60,8 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
 		)
-	belt = /obj/item/pda/heads/rd
+	belt = /obj/item/modular_computer/tablet/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_pocket = /obj/item/laser_pointer
@@ -72,11 +74,11 @@
 	chameleon_extras = /obj/item/stamp/rd
 	skillchips = list(/obj/item/skillchip/job/research_director)
 
-/datum/outfit/job/rd/rig
-	name = "Research Director (Hardsuit)"
+/datum/outfit/job/rd/mod
+	name = "Research Director (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/rd
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/research
+	suit = null
 	mask = /obj/item/clothing/mask/breath
-	l_hand = null
 	internals_slot = ITEM_SLOT_SUITSTORE

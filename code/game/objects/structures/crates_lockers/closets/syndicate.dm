@@ -28,7 +28,7 @@
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/storage/box/teargas(src)
 	new /obj/item/storage/backpack/duffelbag/syndie/med(src)
-	new /obj/item/pda/syndicate(src)
+	new /obj/item/modular_computer/tablet/pda/syndicate(src)
 
 /obj/structure/closet/syndicate/resources
 	desc = "An old, dusty locker."
@@ -117,7 +117,7 @@
 	/obj/item/stack/sheet/mineral/wood
 	)
 
-	for(var/i = 0, i<2, i++)
+	for(var/i in 1 to 2)
 		for(var/res in resources)
 			var/obj/item/stack/R = res
 			new res(src, initial(R.max_amount))

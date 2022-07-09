@@ -65,16 +65,14 @@
 		if(istype(turf_content, /obj/machinery/door/airlock))
 			to_chat(living_guy, span_warning("A malevolent force launches your body to the floor..."))
 			var/obj/machinery/door/airlock/darth_airlock = turf_content
-			living_guy.apply_status_effect(STATUS_EFFECT_PARALYZED, 10)
+			living_guy.apply_status_effect(/datum/status_effect/incapacitating/paralyzed, 10)
 			INVOKE_ASYNC(darth_airlock, /obj/machinery/door/airlock.proc/close, TRUE)
 			if(!permanent)
 				qdel(src)
 			return
 
-	for(var/t in get_adjacent_open_turfs(living_guy))
-		var/turf/the_turf = t
-
-		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_zFall(the_turf))
+	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
+		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_z_move(DOWN, the_turf, z_move_flags = ZMOVE_FALL_FLAGS))
 			to_chat(living_guy, span_warning("A malevolent force guides you towards the edge..."))
 			living_guy.throw_at(the_turf, 1, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
 			if(!permanent)

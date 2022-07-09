@@ -21,3 +21,4 @@ jobs:
         stale-issue-label: 'Cleanup Flagged'
         remove-issue-stale-when-updated: false
         exempt-pr-labels: 'RED LABEL,Good First PR'
+        operations-per-run: 300

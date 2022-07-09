@@ -50,7 +50,6 @@
 	plane = RENDER_PLANE_NON_GAME
 	render_relay_plane = RENDER_PLANE_MASTER
 
-
 /**
  * Plane master proc called in backdrop() that creates a relay object, sets it as needed and then adds it to the clients screen
  * Sets:
@@ -80,5 +79,5 @@
 	relay.mouse_opacity = mouse_opacity
 	relay.name = render_target
 	mymob.client.screen += relay
-	if(plane != BLACKNESS_PLANE) //internal snowflake do not touch
+	if(blend_mode != BLEND_MULTIPLY)
 		blend_mode = BLEND_DEFAULT

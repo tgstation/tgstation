@@ -18,7 +18,7 @@
 
 /obj/item/circuit_component/tempsensor/input_received(datum/port/input/port)
 	//Get current turf
-	var/turf/location = get_turf(src)
+	var/turf/location = get_location()
 	if(!location)
 		result.set_output(null)
 		return

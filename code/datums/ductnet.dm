@@ -46,7 +46,7 @@
 	if(!ducts.len) //there were no ducts, so it was a direct connection. we destroy ourselves since a ductnet with only one plumber and no ducts is worthless
 		destroy_network()
 
-///we combine ductnets. this occurs when someone connects to seperate sets of fluid ducts
+///we combine ductnets. this occurs when someone connects to separate sets of fluid ducts
 /datum/ductnet/proc/assimilate(datum/ductnet/D)
 	ducts.Add(D.ducts)
 	suppliers.Add(D.suppliers)

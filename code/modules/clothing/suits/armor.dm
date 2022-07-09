@@ -30,32 +30,29 @@
 	inhand_icon_state = "armor"
 
 /obj/item/clothing/suit/armor/vest/marine
-	name = "marine combat armor"
-	desc = "A multirole set of armor used by the marines, painted in a tacticool black color with blue markings to indicate you might be important."
+	name = "tactical armor vest"
+	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking."
 	icon_state = "marine_command"
 	inhand_icon_state = "armor"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor = list(MELEE = 40, BULLET = 50, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 20, FIRE = 40, ACID = 50, WOUND = 20)
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	heat_protection = CHEST|GROIN|LEGS|ARMS
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor = list(MELEE = 50, BULLET = 50, LASER = 30, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 40, ACID = 50, WOUND = 20)
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/armor/vest/marine/security
-	name = "marine heavy armor"
-	desc = "A heavy set of armor that still allows full mobility, offering higher protection at the cost of having red targets painted on your shoulders."
+	name = "large tactical armor vest"
 	icon_state = "marine_security"
-	armor = list(MELEE = 45, BULLET = 60, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 20, FIRE = 50, ACID = 50, WOUND = 20)
 
 /obj/item/clothing/suit/armor/vest/marine/engineer
-	name = "marine utility armor"
-	desc = "A light set of armor with a mounted satchel for storing things. You realized too late that pouches are only for looks, and don't actually work. No refunds."
+	name = "tactical utility armor vest"
 	icon_state = "marine_engineer"
-	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 70, BIO = 20, FIRE = 70, ACID = 70, WOUND = 10)
 
 /obj/item/clothing/suit/armor/vest/marine/medic
-	name = "marine medic armor"
-	desc = "Light armor with needlessly large arm and leg plates, they provide no extra protection, but you feel safer."
+	name = "tactical medic's armor vest"
 	icon_state = "marine_medic"
-	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 30, FIRE = 50, ACID = 70, WOUND = 10)
 
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
@@ -69,7 +66,7 @@
 	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = PAYCHECK_HARD
+	custom_premium_price = PAYCHECK_COMMAND
 
 /obj/item/clothing/suit/armor/vest/cuirass
 	name = "cuirass"
@@ -150,7 +147,7 @@
 	icon_state = "syndievest"
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
-	name = "captain's parade jacket"
+	name = "captain's parade coat"
 	desc = "For when an armoured vest isn't fashionable enough."
 	icon_state = "capformal"
 	inhand_icon_state = "capspacesuit"
@@ -231,21 +228,23 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	strip_delay = 80
 
+/obj/item/clothing/suit/armor/swat
+	name = "MK.I SWAT Suit"
+	desc = "A tactical suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations. It has a minor slowdown, but offers decent protection."
+	icon_state = "heavy"
+	inhand_icon_state = "swat_suit"
+	armor = list(MELEE = 40, BULLET = 30, LASER = 30,ENERGY = 40, BOMB = 50, BIO = 90, FIRE = 100, ACID = 100, WOUND = 15)
+	strip_delay = 120
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_flags = THICKMATERIAL
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
+	heat_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	slowdown = 0.7
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
 //All of the armor below is mostly unused
-
-/obj/item/clothing/head/helmet/space/hardsuit/swat/centcom
-	name = "\improper CentCom SWAT helmet"
-	icon_state = "centcomspace"
-	inhand_icon_state = "centcomspacehelmet"
-	desc = "A tactical MK.II SWAT helmet boasting better protection and a reasonable fashion sense."
-
-/obj/item/clothing/suit/space/hardsuit/swat/centcom
-	name = "\improper CentCom SWAT armor"
-	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat with the complementary gas mask. Usually given to station Captains, this one has been painted CC green with complimentary gold accents."
-	icon_state = "centcom"
-	inhand_icon_state = "centcomspacesuit"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat/centcom
-	cell = /obj/item/stock_parts/cell/super
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -372,3 +371,10 @@
 /obj/item/clothing/suit/armor/centcom_formal/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
+
+/obj/item/clothing/suit/armor/vest/hop
+	name = "head of personnel's coat"
+	desc = "A stylish coat given to a Head of Personnel."
+	icon_state = "hop_coat"
+	inhand_icon_state = "b_suit"
+	body_parts_covered = CHEST|GROIN|ARMS

@@ -28,7 +28,12 @@
 
 /obj/item/circuit_component/save_shell/proc/on_post_load(datum/source)
 	SIGNAL_HANDLER
-	loaded_shell.AddComponent(/datum/component/shell, starting_circuit = parent)
+	var/datum/component/shell/shell_component = loaded_shell.GetComponent(/datum/component/shell)
+	if(!istype(shell_component))
+		loaded_shell.AddComponent(/datum/component/shell, starting_circuit = parent)
+	else
+		QDEL_NULL(shell_component.attached_circuit)
+		shell_component.attach_circuit(parent)
 	on_loaded.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/save_shell/proc/on_pre_save_to_json(datum/source, list/general_data)
@@ -40,14 +45,6 @@
 	. = ..()
 	var/atom/movable/shell = parent.shell
 	component_data["shell_type"] = shell.type
-	var/list/shell_variables = list()
-	for(var/variable in shell.vars - GLOB.duplicate_forbidden_vars)
-		var/variable_data = shell.vars[variable]
-		if(!istext(variable_data) && !isnum(variable_data))
-			continue
-		shell_variables[variable] = variable_data
-
-	component_data["shell_variables"] = shell_variables
 
 /obj/item/circuit_component/save_shell/load_data_from_list(list/component_data)
 	if(parent.shell)
@@ -58,12 +55,8 @@
 		return ..()
 
 	loaded_shell = new shell_type(drop_location())
+	log_admin_circuit("[parent.get_creator()] spawned in [shell_type] at [ADMIN_COORDJMP(loaded_shell)].")
 	if(!loaded_shell)
 		return
 	loaded_shell.datum_flags |= DF_VAR_EDITED
-
-	var/list/shell_variables = component_data["shell_variables"]
-	for(var/variable in shell_variables - GLOB.duplicate_forbidden_vars)
-		var/variable_data = shell_variables[variable]
-		loaded_shell.vv_edit_var(variable, variable_data)
 	return ..()

@@ -1,7 +1,9 @@
 /datum/job/security_officer
-	title = "Security Officer"
+	title = JOB_SECURITY_OFFICER
+	description = "Protect company assets, follow the Standard Operating \
+		Procedure, eat donuts."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list("Head of Security")
+	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
 	spawn_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
@@ -15,7 +17,7 @@
 	outfit = /datum/outfit/job/security
 	plasmaman_outfit = /datum/outfit/plasmaman/security
 
-	paycheck = PAYCHECK_HARD
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
 	mind_traits = list(TRAIT_DONUT_LOVER)
@@ -37,7 +39,7 @@
 		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
 	rpg_title = "Guard"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
@@ -83,22 +85,22 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		if(SEC_DEPT_SUPPLY)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/supply
 			dep_trim = /datum/id_trim/job/security_officer/supply
-			destination = /area/security/checkpoint/supply
+			destination = /area/station/security/checkpoint/supply
 			accessory = /obj/item/clothing/accessory/armband/cargo
 		if(SEC_DEPT_ENGINEERING)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/engi
 			dep_trim = /datum/id_trim/job/security_officer/engineering
-			destination = /area/security/checkpoint/engineering
+			destination = /area/station/security/checkpoint/engineering
 			accessory = /obj/item/clothing/accessory/armband/engine
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/med
 			dep_trim = /datum/id_trim/job/security_officer/medical
-			destination = /area/security/checkpoint/medical
+			destination = /area/station/security/checkpoint/medical
 			accessory = /obj/item/clothing/accessory/armband/medblue
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
 			dep_trim = /datum/id_trim/job/security_officer/science
-			destination = /area/security/checkpoint/science
+			destination = /area/station/security/checkpoint/science
 			accessory = /obj/item/clothing/accessory/armband/science
 
 	if(accessory)
@@ -160,14 +162,14 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		partners += partner.real_name
 
 	if (partners.len)
-		for (var/obj/item/pda/pda as anything in GLOB.PDAs)
-			if (pda.owner in partners)
-				targets += "[pda.owner] ([pda.ownjob])"
+		for (var/obj/item/modular_computer/pda as anything in GLOB.TabletMessengers)
+			if (pda.saved_identification in partners)
+				targets += pda
 
 	if (!targets.len)
 		return
 
-	var/datum/signal/subspace/messaging/pda/signal = new(announcement_system, list(
+	var/datum/signal/subspace/messaging/tablet_msg/signal = new(announcement_system, list(
 		"name" = "Security Department Update",
 		"job" = "Automated Announcement System",
 		"message" = "Officer [officer.real_name] has been assigned to your department, [department].",
@@ -199,10 +201,9 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
+		/obj/item/evidencebag = 1,
 		)
-	belt = /obj/item/pda/security
+	belt = /obj/item/modular_computer/tablet/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
@@ -223,10 +224,20 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 	implants = list(/obj/item/implant/mindshield)
 
+/datum/outfit/job/security/mod
+	name = "Security Officer (MODsuit)"
+
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/security
+	suit = null
+	head = null
+	mask = /obj/item/clothing/mask/gas/sechailer
+	internals_slot = ITEM_SLOT_SUITSTORE
+
 /obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/radio(src)
-	secure_radio_connections = new
+	secure_radio_connections = list()
 	recalculateChannels()
 
 /obj/item/radio/headset/headset_sec/alt/department/engi

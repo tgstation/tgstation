@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = TRUE
-	flag = ENERGY
+	armor_flag = ENERGY
 
 /obj/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -34,7 +34,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = TRUE
-	flag = ENERGY
+	armor_flag = ENERGY
 
 /obj/projectile/energy/florayield/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -49,7 +49,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = TRUE
-	flag = ENERGY
+	armor_flag = ENERGY
 
 /obj/projectile/energy/florarevolution/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -57,6 +57,6 @@
 		var/mob/living/L = target
 		if(L.mob_biotypes & MOB_PLANT)
 			L.show_message(span_notice("The radiation beam leaves you feeling disoriented!"))
-			L.Dizzy(15)
+			L.set_timed_status_effect(30 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			L.emote("flip")
 			L.emote("spin")

@@ -95,9 +95,12 @@
 		return
 	return ..()
 
+/obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/structure/ai_core/attackby(obj/item/P, mob/user, params)
-	if(P.tool_behaviour == TOOL_WRENCH)
-		return default_unfasten_wrench(user, P, 20)
 	if(!anchored)
 		if(P.tool_behaviour == TOOL_WELDER && can_deconstruct)
 			if(state != EMPTY_CORE)
@@ -197,7 +200,7 @@
 						return
 
 					var/mob/living/brain/B = M.brainmob
-					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
+					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, JOB_AI) && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
 						if(!QDELETED(M))
 							to_chat(user, span_warning("This [M.name] does not seem to fit!"))
 						return

@@ -4,7 +4,7 @@
  * Previously being nonantagonists, they only have one simple objective: survive!
  */
 /datum/antagonist/enemy_of_the_revolution
-	name = "Enemy of the Revolution"
+	name = "\improper Enemy of the Revolution"
 	show_in_antagpanel = FALSE
 	suicide_cry = "FOR NANOTRASEN, NOW AND FOREVER!!"
 
@@ -21,6 +21,7 @@
 	. = ..()
 
 /datum/antagonist/enemy_of_the_revolution/greet()
+	. = ..()
 	to_chat(owner, span_userdanger("The station is lost."))
 	to_chat(owner, "<b>As a surviving loyalist of the previous system, Your days are numbered.</b>")
 	owner.announce_objectives()

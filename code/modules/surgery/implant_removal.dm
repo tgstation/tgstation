@@ -18,6 +18,7 @@
 		TOOL_CROWBAR = 65,
 		/obj/item/kitchen/fork = 35)
 	time = 64
+	success_sound = 'sound/surgery/hemostat1.ogg'
 	var/obj/item/implant/implant
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -64,7 +65,7 @@
 
 /datum/surgery/implant_removal/mechanic
 	name = "implant removal"
-	requires_bodypart_type = BODYPART_ROBOTIC
+	requires_bodypart_type = BODYTYPE_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,

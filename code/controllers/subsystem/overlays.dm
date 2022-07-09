@@ -39,21 +39,25 @@ SUBSYSTEM_DEF(overlays)
 		count = 0 //so if we runtime on the Cut, we don't try again.
 		queue.Cut(1,c+1)
 
-	for (var/thing in queue)
+	for (var/atom/atom_to_compile as anything in queue)
 		count++
-		if(thing)
-			var/atom/A = thing
-			if(A.overlays.len >= MAX_ATOM_OVERLAYS)
-				//Break it real GOOD
-				stack_trace("Too many overlays on [A.type] - [A.overlays.len], refusing to update and cutting")
-				A.overlays.Cut()
-				continue
-			STAT_START_STOPWATCH
-			COMPILE_OVERLAYS(A)
-			UNSETEMPTY(A.add_overlays)
-			UNSETEMPTY(A.remove_overlays)
-			STAT_STOP_STOPWATCH
-			STAT_LOG_ENTRY(stats, A.type)
+		if(!atom_to_compile)
+			continue
+		STAT_START_STOPWATCH
+		COMPILE_OVERLAYS(atom_to_compile)
+		UNSETEMPTY(atom_to_compile.add_overlays)
+		UNSETEMPTY(atom_to_compile.remove_overlays)
+		STAT_STOP_STOPWATCH
+		STAT_LOG_ENTRY(stats, atom_to_compile.type)
+		if(length(atom_to_compile.overlays) >= MAX_ATOM_OVERLAYS)
+			//Break it real GOOD
+			var/text_lays = overlays2text(atom_to_compile.overlays)
+			stack_trace("Too many overlays on [atom_to_compile.type] - [length(atom_to_compile.overlays)], refusing to update and cutting.\
+				\n What follows is a printout of all existing overlays at the time of the overflow \n[text_lays]")
+			atom_to_compile.overlays.Cut()
+			//Let them know they fucked up
+			atom_to_compile.add_overlay(mutable_appearance('icons/testing/greyscale_error.dmi'))
+			continue
 		if(mc_check)
 			if(MC_TICK_CHECK)
 				break
@@ -63,6 +67,19 @@ SUBSYSTEM_DEF(overlays)
 		queue.Cut(1,count+1)
 		count = 0
 
+/// Converts an overlay list into text for debug printing
+/// Of note: overlays aren't actually mutable appearances, they're just appearances
+/// Don't have access to that type tho, so this is the best you're gonna get
+/proc/overlays2text(list/overlays)
+	var/list/unique_overlays = list()
+	// As anything because we're basically doing type coerrsion, rather then actually filtering for mutable apperances
+	for(var/mutable_appearance/overlay as anything in overlays)
+		var/key = "[overlay.icon]-[overlay.icon_state]-[overlay.dir]"
+		unique_overlays[key] += 1
+	var/list/output_text = list()
+	for(var/key in unique_overlays)
+		output_text += "([key]) = [unique_overlays[key]]"
+	return output_text.Join("\n")
 
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()

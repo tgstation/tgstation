@@ -31,11 +31,6 @@
 "h" = (
 /turf/open/floor/carpet,
 /area/shuttle/escape)
-"i" = (
-/obj/structure/table/reinforced,
-/obj/item/knife/kitchen,
-/turf/open/floor/carpet,
-/area/shuttle/escape)
 "j" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -128,7 +123,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/effect/mob_spawn/human/corpse,
+/obj/effect/mob_spawn/corpse/human,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
 /obj/machinery/light/small/directional/west,
 /obj/item/food/cakeslice/birthday,
@@ -147,11 +142,6 @@
 "z" = (
 /obj/structure/table/wood,
 /obj/item/papercutter,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"A" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "B" = (
@@ -175,8 +165,18 @@
 /obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/wood,
 /area/shuttle/escape)
+"F" = (
+/obj/structure/table/reinforced,
+/obj/item/knife/kitchen,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
 "K" = (
 /obj/machinery/light_switch/directional/north,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"S" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 
@@ -221,7 +221,7 @@ m
 h
 d
 v
-A
+S
 a
 "}
 (5,1,1) = {"
@@ -248,7 +248,7 @@ a
 "}
 (7,1,1) = {"
 a
-i
+F
 o
 q
 s

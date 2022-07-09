@@ -1,7 +1,9 @@
 /datum/job/head_of_security
-	title = "Head of Security"
+	title = JOB_HEAD_OF_SECURITY
+	description = "Coordinate security personnel, ensure they are not corrupt, \
+		make sure every department is protected."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
-	department_head = list("Captain")
+	department_head = list(JOB_CAPTAIN)
 	head_announce = list(RADIO_CHANNEL_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 1
@@ -33,7 +35,7 @@
 
 	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)
 	rpg_title = "Guard Leader"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -52,10 +54,9 @@
 	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
 	suit_store = /obj/item/gun/energy/e_gun
 	backpack_contents = list(
-		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
+		/obj/item/evidencebag = 1,
 		)
-	belt = /obj/item/pda/heads/hos
+	belt = /obj/item/modular_computer/tablet/pda/heads/hos
 	ears = /obj/item/radio/headset/heads/hos/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
@@ -75,9 +76,12 @@
 		)
 	implants = list(/obj/item/implant/mindshield)
 
-/datum/outfit/job/hos/hardsuit
-	name = "Head of Security (Hardsuit)"
+/datum/outfit/job/hos/mod
+	name = "Head of Security (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/security/hos
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/safeguard
+	suit = null
+	head = null
 	mask = /obj/item/clothing/mask/gas/sechailer
+	internals_slot = ITEM_SLOT_SUITSTORE

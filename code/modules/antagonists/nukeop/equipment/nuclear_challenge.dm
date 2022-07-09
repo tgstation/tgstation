@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 	if(custom_threat == "Yes")
 		declaring_war = TRUE
-		war_declaration = stripped_input(user, "Insert your custom declaration", "Declaration")
+		war_declaration = tgui_input_text(user, "Insert your custom declaration", "Declaration", multiline = TRUE)
 		declaring_war = FALSE
 
 	if(!check_allowed(user) || !war_declaration)
@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/custom_threat = tgui_alert(usr, "Do you want to customize the declaration?", "Customize?", list("Yes", "No"))
 
 	if(custom_threat == "Yes")
-		war_declaration = stripped_input(usr, "Insert your custom declaration", "Declaration")
+		war_declaration = tgui_input_text(usr, "Insert your custom declaration", "Declaration", multiline = TRUE)
 
 	if(!war_declaration)
 		to_chat(usr, span_warning("Invalid war declaration."))
@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
 
 	for (var/datum/component/uplink/uplink in uplinks)
-		uplink.telecrystals += tc_per_nukie
+		uplink.add_telecrystals(tc_per_nukie)
 		tc_to_distribute -= tc_per_nukie
 
 	for (var/mob/living/L in orphans)
