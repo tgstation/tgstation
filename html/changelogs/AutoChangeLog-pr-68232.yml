@@ -1,4 +1,0 @@
-author: "Zonespace27"
-delete-after: True
-changes: 
-  - admin: "Get-Current-Logs and Get-Server-Logs now let you download entire folders at once"

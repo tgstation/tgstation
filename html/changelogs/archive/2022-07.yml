@@ -242,3 +242,70 @@
   orthography:
   - balance: removes the BMP spawns that are out in bum-fuck nowhere.
   - bugfix: fixes the lack of air in the BMP asteroid spawns.
+2022-07-09:
+  13spacemen:
+  - rscadd: Experimental Syndicate Teleporter is now available in the Traitor Uplink
+      for 8 TC. Warning, not as safe as Nanotrasen Teleporters.
+  Fikou:
+  - bugfix: ethereals no longer revive after being changeling drained
+  GoldenAlpharex:
+  - bugfix: Fixed trapdoors freaking out when you destroy their floor tile without
+      having a remote attached to said trapdoor.
+  LemonInTheDark:
+  - bugfix: Thermomachines will properly have a dropshadow
+  - bugfix: Weather will be blurred as expected
+  Melbert:
+  - bugfix: Dashes such as the Heirophant staff and Ninja sword should no longer permanently
+      break on rare occasions.
+  QuacksQ:
+  - spellcheck: Fixed the desc of paper walls
+  Sheits:
+  - bugfix: Fixes a stray pixel on female human sprites
+  Toto5561:
+  - imageadd: Added new bacon sprites. ~~Accidentally~~ added new mint sprite.
+  Vladoricious:
+  - qol: Tacticool turtlenecks and skirtlenecks now have suit sensors installed! No
+      more excuses. Turn em up.
+  Wallem:
+  - qol: Sign Language users now have a unique speech indicator as well as a visual
+      indicator of the tone of their message, making it easier to communicate both
+      with and as a sign language user.
+  Zonespace27:
+  - admin: Get-Current-Logs and Get-Server-Logs now let you download entire folders
+      at once
+  carshalash:
+  - balance: Syndicate no longer wants easily printed upload boards.
+  jlsnow301:
+  - bugfix: Fixed scrolling the orbit ui
+  kawoppi:
+  - bugfix: rag cleaning speed is now influenced by your cleaning skill
+  - bugfix: cleaning with a rag now gives you cleaning skill experience
+  - bugfix: rags can now be used to wash bloodied windows
+  - bugfix: soap is no longer restricted from washing worn clothing, as this doesn't
+      seem to be causing issues anymore
+  lizardqueenlexi:
+  - rscadd: Added a sorting disposals pipe for the Tramstation dormitory, allowing
+      packages to be sent there
+  - bugfix: Fixed two incorrect sorting disposals pipes on Tramstation that prevented
+      packages from reaching certain destinations
+  - bugfix: Added four missing names to sorting disposals pipes on Tramstation
+  orthography:
+  - bugfix: fixed APC wiring
+  san7890:
+  - admin: The ID of the Ticket will now show up in all associated Admin PM Messages
+      when logged.
+  sergeirocks100:
+  - imageadd: The library computer now has four directional sprites instead of just
+      one.
+  unit0016:
+  - rscadd: The SBC Starfury has been ever-so-slightly tweaked! Two of the shuttles
+      are now where the gunnery bays used to be, and the rest of the differences are
+      largely cosmetic. Largely.
+  - code_imp: Survival pod fans have been split off into their own file.
+  vincentiusvin:
+  - balance: pumps and scrubbers have their heat and pressure limit buffed to be the
+      same as unshielded cans.
+  - balance: cans have their release pressure buffed to 2533kpa.
+  zxaber:
+  - bugfix: Airlock shock indicators on diagnostics HUDs will now correctly be removed
+      when the door is unshocked.

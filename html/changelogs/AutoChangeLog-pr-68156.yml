@@ -1,7 +1,0 @@
-author: "kawoppi"
-delete-after: True
-changes: 
-  - bugfix: "rag cleaning speed is now influenced by your cleaning skill"
-  - bugfix: "cleaning with a rag now gives you cleaning skill experience"
-  - bugfix: "rags can now be used to wash bloodied windows"
-  - bugfix: "soap is no longer restricted from washing worn clothing, as this doesn't seem to be causing issues anymore"

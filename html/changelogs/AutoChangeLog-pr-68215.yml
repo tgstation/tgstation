@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - admin: "The ID of the Ticket will now show up in all associated Admin PM Messages when logged."
