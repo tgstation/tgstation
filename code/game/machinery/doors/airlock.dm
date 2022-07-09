@@ -1348,6 +1348,8 @@
 
 /obj/machinery/door/airlock/emp_act(severity)
 	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(prob(severity*10 - 20) && (secondsElectrified < 30) && (secondsElectrified != MACHINE_ELECTRIFIED_PERMANENT))
 		set_electrified(30)
 		LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
