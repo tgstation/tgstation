@@ -219,7 +219,7 @@
 		if (NAMEOF(src, cyclelinkeddir))
 			cyclelinkairlock()
 		if (NAMEOF(src, secondsElectrified))
-			set_electrified(vval < MACHINE_NOT_ELECTRIFIED ? MACHINE_ELECTRIFIED_PERMANENT : secondsElectrified) //negative values are bad mkay (unless they're the intended negative value!)
+			set_electrified(vval < MACHINE_NOT_ELECTRIFIED ? MACHINE_ELECTRIFIED_PERMANENT : vval) //negative values are bad mkay (unless they're the intended negative value!)
 
 
 /obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
@@ -1343,7 +1343,7 @@
 
 /obj/machinery/door/airlock/emp_act(severity)
 	. = ..()
-	if(prob(severity*10 - 20) && secondsElectrified == MACHINE_NOT_ELECTRIFIED)
+	if(prob(severity*10 - 20) && (secondsElectrified < 30) && (secondsElectrified != MACHINE_ELECTRIFIED_PERMANENT))
 		set_electrified(30)
 		LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
 
