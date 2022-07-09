@@ -92,7 +92,6 @@
 	integrity_failure = 0.25
 	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 	autoclose = TRUE
-	secondsElectrified = MACHINE_NOT_ELECTRIFIED //How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
 	assemblytype = /obj/structure/door_assembly
 	normalspeed = 1
 	explosion_block = 1
@@ -140,6 +139,7 @@
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 	var/air_tight = FALSE //TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
+	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED //How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
 
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
@@ -1341,6 +1341,12 @@
 		panel_open = TRUE
 	wires.cut_all()
 
+/obj/machinery/door/airlock/emp_act(severity)
+	. = ..()
+	if(prob(severity*10 - 20) && secondsElectrified == MACHINE_NOT_ELECTRIFIED)
+		set_electrified(30)
+		LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
+
 /obj/machinery/door/airlock/proc/set_electrified(seconds, mob/user)
 	secondsElectrified = seconds
 	diag_hud_set_electrified()
@@ -1359,11 +1365,6 @@
 		LAZYADD(shockedby, text("\[[time_stamp()]\] [key_name(user)] - ([uppertext(message)])"))
 		log_combat(user, src, message)
 		add_hiddenprint(user)
-
-/obj/machinery/door/airlock/emp_act(severity)
-	. = ..()
-	if(secondsElectrified == MACHINE_ELECTRIFIED_PERMANENT) // door/emp_act() doesn't call the helper proc that sets diag huds.
-		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if((damage_amount >= atom_integrity) && (damage_flag == BOMB))

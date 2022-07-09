@@ -24,7 +24,6 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
 
-	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 	var/shockedby
 	var/visible = TRUE
 	var/operating = FALSE
@@ -315,14 +314,6 @@
 		return
 	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
-	if(prob(severity*10 - 20))
-		if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
-			secondsElectrified = MACHINE_ELECTRIFIED_PERMANENT //if you change this make sure to update door/airlock/emp_act()
-			LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
-			addtimer(CALLBACK(src, .proc/unelectrify), 300)
-
-/obj/machinery/door/proc/unelectrify()
-	secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 /obj/machinery/door/update_icon_state()
 	icon_state = "[base_icon_state][density]"
