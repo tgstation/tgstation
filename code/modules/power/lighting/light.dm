@@ -21,11 +21,11 @@
 	///Amount of power used
 	var/static_power_used = 0
 	///Luminosity when on, also used in power calculation
-	var/brightness = 8
+	var/brightness = 7
 	///Basically the alpha of the emitted light source
-	var/bulb_power = 1
+	var/bulb_power = 0.8
 	///Default colour of the light.
-	var/bulb_colour = "#f3fffa"
+	var/bulb_colour = "#f3fffac4"
 	///LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/status = LIGHT_OK
 	///Should we flicker?
