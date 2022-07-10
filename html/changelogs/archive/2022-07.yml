@@ -309,3 +309,32 @@
   zxaber:
   - bugfix: Airlock shock indicators on diagnostics HUDs will now correctly be removed
       when the door is unshocked.
+2022-07-10:
+  Melbert:
+  - bugfix: Bolts of Necropotence works again.
+  - rscadd: Iceboxstation's EVA now comes kitted out with equipment that may actually
+      help you out if you want to go outside. Including special winter coats that
+      can carry big oxygen tanks and boots to prevent you from slipping on ice.
+  - rscadd: Iceboxstation's arrivals hallway, and many of the rooms around it, have
+      had their style and layouts updated slightly.
+  Nuke:
+  - bugfix: Bubblegum will now beat your ass again.
+  SmoSmoSmoSmok:
+  - code_imp: dehardcodes admin grantable objectives list
+  YakumoChen:
+  - balance: GPS designs can no longer be exported to autolathes.
+  cacogen:
+  - bugfix: The generic station name with the long number in words is rarer
+  jjpark-kb:
+  - bugfix: trailers will actually trail their attached vehicles
+  magatsuchi:
+  - refactor: changes storage from a component to a normal datum
+  orthography:
+  - bugfix: fixes the piping of the ORD lab.
+  - bugfix: changes a pump subclass.
+  timothymtorres:
+  - bugfix: Fix simple mob deaths causing deadchat notifications. Special mobs still
+      cause deadchat notifications (brood spiders, elite lavaland mobs, morphs, revenants,
+      space dragons)
+  - bugfix: Fix deafness virus symptom to be permanent if resistance threshold is
+      met.
