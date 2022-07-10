@@ -10,8 +10,7 @@
 	hud_type = /datum/hud/pai
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	desc = "A generic pAI mobile hard-light holographics \
-		emitter. It seems to be deactivated."
+	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
 	health = 500
 	maxHealth = 500
 	layer = LOW_MOB_LAYER
@@ -129,9 +128,19 @@
 		"repairbot" = TRUE,
 	)
 	/// List of all available card overlays.
-	var/static/list/possible_overlays = list("null", "angry", "cat", \
-		"extremely-happy", "face", "happy", "laugh", "off", "sad", \
-		"sunglasses", "what")
+	var/static/list/possible_overlays = list(
+		"null",
+		"angry",
+		"cat",
+		"extremely-happy",
+		"face",
+		"happy",
+		"laugh",
+		"off",
+		"sad",
+		"sunglasses",
+		"what"
+	)
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
@@ -155,8 +164,7 @@
 	return ..()
 
 // See software.dm for Topic()
-/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, \
-	no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, o_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
 	// Resting is just an aesthetic feature for them.
 	return ..(M, be_close, no_dexterity, no_tk, need_hands, TRUE)
 
@@ -180,12 +188,9 @@
 /obj/item/pai_card/emag_act(mob/user)
 	if(!pai)
 		return
-	to_chat(user, span_notice("You override [pai]'s directive system, \
-		clearing its master string and supplied directive."))
-	to_chat(pai, span_userdanger("Warning: System override detected, \
-		check directive sub-system for any changes."))
-	log_game("[key_name(user)] emagged [key_name(pai)], wiping their \
-		master DNA and supplemental directive.")
+	to_chat(user, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
+	to_chat(pai, span_userdanger("Warning: System override detected, check directive sub-system for any changes."))
+	log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
 	pai.emagged = TRUE
 	pai.master = null
 	pai.master_dna = null
@@ -261,8 +266,7 @@
 	return TRUE
 
 /mob/living/silicon/pai/process(delta_time)
-	emitter_health = clamp((emitter_health + (emitter_regen_per_second * delta_time)), \
-		-50, emitter_max_health)
+	emitter_health = clamp((emitter_health + (emitter_regen_per_second * delta_time)), -50, emitter_max_health)
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	. = ..()

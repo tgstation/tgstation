@@ -64,8 +64,7 @@
 			door_jack(usr, params["jack"])
 			return TRUE
 		if("encryption keys")
-			to_chat(src, span_notice("You have [!encrypt_mod ? "enabled" \
-				: "disabled"] encrypted radio frequencies."))
+			to_chat(src, span_notice("You have [!encrypt_mod ? "enabled" : "disabled"] encrypted radio frequencies."))
 			encrypt_mod = !encrypt_mod
 			radio.subspace_transmission = !radio.subspace_transmission
 			return TRUE
@@ -106,8 +105,7 @@
 				return TRUE
 			return FALSE
 		if("refresh")
-			if(params["list"] == "security" && !installed_software.Find("security records") \
-				|| params["list"] == "medical" && !installed_software.Find("medical records"))
+			if(params["list"] == "security" && !installed_software.Find("security records") || params["list"] == "medical" && !installed_software.Find("medical records"))
 				return FALSE
 			refresh_records(ui, params["list"])
 			return TRUE
@@ -153,8 +151,7 @@
  * @return {bool} TRUE if the image was changed, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/change_image(mob/user)
-	var/new_image = tgui_input_list(user, "Select your new display image", \
-		"Display Image", possible_overlays)
+	var/new_image = tgui_input_list(user, "Select your new display image", "Display Image", possible_overlays)
 	if(isnull(new_image))
 		return FALSE
 	card.emotion_icon = new_image
@@ -176,22 +173,15 @@
 		to_chat(user, span_warning("You must be in someone's hands to do this!"))
 		return FALSE
 	to_chat(user, span_notice("Requesting a DNA sample."))
-	if(tgui_alert(holder, "[user] is requesting a DNA sample from you. \
-		Will you allow it to confirm your identity?", "Checking DNA", \
-		list("Yes", "No")) != "Yes")
-		to_chat(user, span_warning("[holder] does not seem like [holder.p_theyre()] \
-			going to provide a DNA sample willingly."))
+	if(tgui_alert(holder, "[user] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "Checking DNA", list("Yes", "No")) != "Yes")
+		to_chat(user, span_warning("[holder] does not seem like [holder.p_theyre()]	going to provide a DNA sample willingly."))
 		return FALSE
-	holder.visible_message(span_notice("[holder] presses [holder.p_their()] \
-		thumb against [user]."), span_notice("You press your thumb against \
-		[user]."), span_notice("[user] makes a sharp clicking sound as it \
-		extracts DNA material from [holder]."))
+	holder.visible_message(span_notice("[holder] presses [holder.p_their()]	thumb against [user]."), span_notice("You press your thumb against [user]."), span_notice("[user] makes a sharp clicking sound as it extracts DNA material from [holder]."))
 	if(!holder.has_dna())
 		to_chat(user, span_warning("No DNA detected."))
 		return FALSE
 	to_chat(user, span_boldannounce(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
-	to_chat(user, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? \
-		"matches" : "does not match"] our stored Master's DNA."))
+	to_chat(user, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? "matches" : "does not match"] our stored Master's DNA."))
 	return TRUE
 
 /**
@@ -233,16 +223,11 @@
 	hacking_cable = new
 	var/mob/living/carbon/hacker = get_holder()
 	if(hacker && hacker.put_in_hands(hacking_cable))
-		hacker.visible_message(span_warning("A port on [user] opens to reveal \a \
-			[hacking_cable], which you quickly grab hold of."), span_hear("You hear \
-			the soft click of a plastic component and manage to catch the falling \
-			[hacking_cable]."))
+		hacker.visible_message(span_warning("A port on [user] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of a plastic	component and manage to catch the falling [hacking_cable]."))
 		track(hacking_cable)
 		return TRUE
 	hacking_cable.forceMove(drop_location())
-	hacking_cable.visible_message(span_warning("A port on [user] opens to reveal \a \
-		[hacking_cable], which promptly falls to the floor."), span_hear("You hear \
-		the soft click of a plastic component fall to the ground."))
+	hacking_cable.visible_message(span_warning("A port on [user] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of a plastic component fall to the ground."))
 	track(hacking_cable)
 	return TRUE
 
@@ -291,12 +276,10 @@
 	playsound(user, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 	balloon_alert(user, "overriding...")
 	// Now begin hacking
-	if(!do_after(src, 15 SECONDS, hacking_cable.machine, timed_action_flags = NONE, \
-		progress = TRUE))
+	if(!do_after(src, 15 SECONDS, hacking_cable.machine, timed_action_flags = NONE,	progress = TRUE))
 		balloon_alert(user, "failed! retracting...")
 		hacking_cable.visible_message(
-			span_warning("[hacking_cable] rapidly retracts back into its spool."),\
-			span_hear("You hear a click and the sound of wire spooling rapidly."))
+			span_warning("[hacking_cable] rapidly retracts back into its spool."), span_hear("You hear a click and the sound of wire spooling rapidly."))
 		QDEL_NULL(hacking_cable)
 		if(!QDELETED(card))
 			card.update_appearance()
@@ -311,8 +294,7 @@
  * A periodic check to see if the source pAI is nearby.
  * Deletes the extended cable if the source pAI is not nearby.
  */
-/mob/living/silicon/pai/proc/handle_move(atom/movable/source, \
-	atom/old_loc,	dir, forced, list/old_locs)
+/mob/living/silicon/pai/proc/handle_move(atom/movable/source, atom/old_loc,	dir, forced, list/old_locs)
 	if(ismovable(old_loc))
 		untrack(old_loc)
 	if(!IN_GIVEN_RANGE(src, hacking_cable, CABLE_LENGTH))

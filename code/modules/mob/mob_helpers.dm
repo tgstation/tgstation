@@ -211,9 +211,7 @@
  * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
  * * notify_volume How loud the sound should be to spook the user
  */
-/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, \
-	action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header, notify_suiciders = TRUE, \
-	notify_volume = 100) //Easy notification of ghosts.
+/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
 
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
@@ -272,10 +270,7 @@
 	if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
 		if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYTYPE_ROBOTIC))
 			human.update_damage_overlays()
-		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" : \
-			"burnt wires in"] [human]'s [affecting.name]."), span_notice("You fix some of the \
-			[brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"] \
-			[affecting.name]."))
+		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" :	"burnt wires in"] [human]'s [affecting.name]."), span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"]	[affecting.name]."))
 		return TRUE //successful heal
 
 

@@ -109,16 +109,14 @@ SUBSYSTEM_DEF(pai)
  */
 /datum/controller/subsystem/pai/proc/submit_alert()
 	if(submit_spam)
-		to_chat(usr, span_warning("Your candidacy has been submitted, \
-			but pAI cards have been alerted too recently."))
+		to_chat(usr, span_warning("Your candidacy has been submitted, but pAI cards have been alerted too recently."))
 		return FALSE
 	submit_spam = TRUE
 	for(var/obj/item/pai_card/pai_card in pai_card_list)
 		if(!pai_card.pai)
 			pai_card.alert_update()
 	to_chat(usr, span_notice("Your pAI candidacy has been submitted!"))
-	addtimer(CALLBACK(src, .proc/submit_again), SPAM_TIME, \
-		TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, .proc/submit_again), SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
 	return TRUE
 
 #undef SPAM_TIME
