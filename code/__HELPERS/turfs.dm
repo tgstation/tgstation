@@ -1,7 +1,7 @@
 ///Returns location. Returns null if no location was found.
-/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
+/proc/get_teleport_loc(turf/location, mob/target, distance = 1, density_check = FALSE, closed_turf_check = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
-Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
+Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no), closed turf checking.
 Random error in tile placement x, error in tile placement y, and block offset.
 Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.
 Negative values for offset are accepted, think of it in relation to North, -x is west, -y is south. Error defaults to positive.
@@ -63,8 +63,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return
 
 	if(!errorx && !errory)//If errorx or y were not specified.
-		if(density&&destination.density)
+		if(density_check && destination.density)
 			return
+		if(closed_turf_check && isclosedturf(destination))
+			return//If closed was specified.
 		if(destination.x>world.maxx || destination.x<1)
 			return
 		if(destination.y>world.maxy || destination.y<1)
@@ -83,8 +85,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	//Now to find a box from center location and make that our destination.
 	for(var/turf/current_turf in block(locate(center.x + b1xerror, center.y + b1yerror, location.z), locate(center.x + b2xerror, center.y + b2yerror, location.z)))
-		if(density && current_turf.density)
+		if(density_check && current_turf.density)
 			continue//If density was specified.
+		if(closed_turf_check && isclosedturf(current_turf))
+			continue//If closed was specified.
 		if(current_turf.x > world.maxx || current_turf.x < 1)
 			continue//Don't want them to teleport off the map.
 		if(current_turf.y > world.maxy || current_turf.y < 1)

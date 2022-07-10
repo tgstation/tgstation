@@ -13,7 +13,7 @@
 	TEST_ASSERT_EQUAL((the_bread in test_tray.contents), FALSE, "The bread is on the serving tray at test start")
 
 	// set the tray to single item mode the dirty way
-	var/datum/component/storage/tray_storage = test_tray.GetComponent(/datum/component/storage)
+	var/datum/storage/tray_storage = test_tray.atom_storage
 	tray_storage.collection_mode = COLLECT_ONE
 
 	test_tray.pre_attack(the_bread, human)

@@ -924,10 +924,10 @@
 					var/obj/item/stack/secondary_inserted = new secondary_stack.merge_type(null,used_amt)
 					component_parts += secondary_inserted
 				else
-					if(SEND_SIGNAL(replacer_tool, COMSIG_TRY_STORAGE_TAKE, secondary_part, src))
+					if(replacer_tool.atom_storage.attempt_remove(secondary_part, src))
 						component_parts += secondary_part
 						secondary_part.forceMove(src)
-				SEND_SIGNAL(replacer_tool, COMSIG_TRY_STORAGE_INSERT, primary_part, null, null, TRUE)
+				replacer_tool.atom_storage.attempt_insert(replacer_tool, primary_part, user, TRUE)
 				component_parts -= primary_part
 				to_chat(user, span_notice("[capitalize(primary_part.name)] replaced with [secondary_part.name]."))
 				shouldplaysound = 1 //Only play the sound when parts are actually replaced!

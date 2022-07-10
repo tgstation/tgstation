@@ -20,9 +20,9 @@
 	var/excited = TRUE
 
 	/// Max amount of heat allowed inside the machine before it starts to melt. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
-	var/temp_limit = 5000
+	var/temp_limit = 10000
 	/// Max amount of pressure allowed inside of the canister before it starts to break. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
-	var/pressure_limit = 50000
+	var/pressure_limit = 500000
 
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
