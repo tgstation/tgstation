@@ -67,9 +67,10 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!attempt_fold(user))
-		return
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	perform_fold(user)
 	qdel(src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		/**
 		  * Checks to see if we can fold. Return TRUE to actually perform the fold and delete.

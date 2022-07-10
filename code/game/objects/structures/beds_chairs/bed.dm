@@ -97,6 +97,7 @@
 	var/obj/structure/bed/roller/folding_bed = new foldabletype(get_turf(src))
 	user.put_in_hands(folding_bed)
 	qdel(src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
 	set_density(TRUE)
