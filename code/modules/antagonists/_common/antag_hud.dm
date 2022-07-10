@@ -90,3 +90,7 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	index = clamp(index, 1, antag_hud_images.len)
 	update_icon()
 	check_processing()
+
+// Shows only if they have the exact same datum, no subtypes
+/datum/atom_hud/alternate_appearance/basic/has_antagonist/exact/mobShouldSee(mob/M)
+	return !!M.mind?.has_antag_datum(antag_datum_type, check_subtypes = FALSE)

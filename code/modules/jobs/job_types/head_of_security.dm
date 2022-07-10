@@ -43,6 +43,13 @@
 /datum/job/head_of_security/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
 
+/datum/job/head_of_security/after_latejoin_spawn(mob/living/spawning)
+	. = ..()
+	if(GLOB.families_handler) // If Families is active, put this guy in the Security Family, and make him a Leader because the HoS runs Security.
+		var/datum/antagonist/gang/security/security_gangster_datum = new
+		security_gangster_datum.starter_gangster = TRUE
+		security_gangster_datum.handler = GLOB.families_handler
+		spawning.mind.add_antag_datum(security_gangster_datum)
 
 /datum/outfit/job/hos
 	name = "Head of Security"

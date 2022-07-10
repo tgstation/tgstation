@@ -50,6 +50,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_to_ghosts = FALSE
 	/// The typepath for the outfit to show in the preview for the preferences menu.
 	var/preview_outfit
+	/// What appearance hud path should we use?
+	var/antag_hud_type_to_use = /datum/atom_hud/alternate_appearance/basic/has_antagonist
 
 	//ANTAG UI
 
@@ -415,7 +417,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	QDEL_NULL(team_hud_ref)
 
 	team_hud_ref = WEAKREF(target.add_alt_appearance(
-		/datum/atom_hud/alternate_appearance/basic/has_antagonist,
+		antag_hud_type_to_use,
 		"antag_team_hud_[REF(src)]",
 		image(hud_icon, target, antag_hud_name),
 		antag_to_check || type,

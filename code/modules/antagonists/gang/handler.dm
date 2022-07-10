@@ -17,6 +17,8 @@
 GLOBAL_VAR_INIT(deaths_during_shift, 0)
 ///Forces the Families theme to be the one in this variable via variable editing. Used for debugging.
 GLOBAL_VAR(families_override_theme)
+///Holds the Families Handler for access by other parts of the code since there's no good way to get to a ruleset.
+GLOBAL_VAR(families_handler)
 
 /**
  * # Families gamemode / dynamic ruleset handler
@@ -91,6 +93,8 @@ GLOBAL_VAR(families_override_theme)
  * * revised_restricted - The restricted_jobs list or equivalent of the datum instantiating this one.
  */
 /datum/gang_handler/New(list/given_candidates, list/revised_restricted)
+	if(!GLOB.families_handler)
+		GLOB.families_handler = src
 	antag_candidates = given_candidates
 	restricted_jobs = revised_restricted
 
@@ -172,6 +176,14 @@ GLOBAL_VAR(families_override_theme)
 
 		// see /datum/antagonist/gang/create_team() for how the gang team datum gets instantiated and added to our gangs list
 
+	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
+		if(player.stat != DEAD && (player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
+			var/datum/antagonist/gang/security/security_gangster_datum = new
+			security_gangster_datum.handler = GLOB.families_handler
+			if(player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+				security_gangster_datum.starter_gangster = TRUE
+			player.mind.add_antag_datum(security_gangster_datum)
+	current_theme.post_start(src)
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	return TRUE
 
@@ -204,7 +216,7 @@ GLOBAL_VAR(families_override_theme)
 
 /// Internal. Announces the presence of families to the entire station and sets sent_announcement to true to allow other checks to occur.
 /datum/gang_handler/proc/announce_gang_locations()
-	priority_announce(current_theme.description, current_theme.name, 'sound/voice/beepsky/radio.ogg')
+	priority_announce(current_theme.description, current_theme.name, current_theme.announcement_audio)
 	sent_announcement = TRUE
 
 /// Internal. Checks if our wanted level has changed; calls update_wanted_level. Only updates wanted level post the initial announcement and until the cops show up. After that, it's locked.

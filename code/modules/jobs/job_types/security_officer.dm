@@ -65,7 +65,10 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		var/department = setup_department(spawning, spawning.client)
 		if(department)
 			announce_latejoin(spawning, department, GLOB.security_officer_distribution)
-
+	if(GLOB.families_handler) // If Families is active, put this guy in the Security Family.
+		var/datum/antagonist/gang/security/security_gangster_datum = new
+		security_gangster_datum.handler = GLOB.families_handler
+		spawning.mind.add_antag_datum(security_gangster_datum)
 
 /// Returns the department this mob was assigned to, if any.
 /datum/job/security_officer/proc/setup_department(mob/living/carbon/human/spawning, client/player_client)

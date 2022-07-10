@@ -44,6 +44,14 @@
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
+/datum/job/warden/after_latejoin_spawn(mob/living/spawning)
+	. = ..()
+	if(GLOB.families_handler) // If Families is active, put this guy in the Security Family, and make him a Leader because the Warden runs Security for the HoS.
+		var/datum/antagonist/gang/security/security_gangster_datum = new
+		security_gangster_datum.starter_gangster = TRUE
+		security_gangster_datum.handler = GLOB.families_handler
+		spawning.mind.add_antag_datum(security_gangster_datum)
+
 /datum/outfit/job/warden
 	name = "Warden"
 	jobtype = /datum/job/warden

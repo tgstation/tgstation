@@ -25,9 +25,13 @@
 	var/original_name
 	/// Type of team to create when creating the gang in the first place. Used for renames.
 	var/gang_team_type = /datum/team/gang
+	/// What sound should play when we become a gangster?
+	var/antag_sound = 'sound/ambience/antag/thatshowfamiliesworks.ogg'
 
 	/// A reference to the handler datum that manages the families gamemode. In case of no handler (admin-spawned during round), this will be null; this is fine.
 	var/datum/gang_handler/handler
+	/// What type should our HUD check for?
+	var/hud_type_check = /datum/antagonist/gang
 
 /datum/outfit/gangster
 	name = "Gangster (Preview only)"
@@ -89,7 +93,7 @@
 	my_gang.rename_gangster(owner, original_name, starter_gangster) // fully_replace_character_name
 	if(starter_gangster)
 		equip_gangster_in_inventory()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), antag_sound, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	add_objectives()
 	..()
 
@@ -110,7 +114,7 @@
 	if(starter_gangster)
 		package_spawner.Grant(owner.current)
 		package_spawner.my_gang_datum = src
-	add_team_hud(mob_override || owner.current, /datum/antagonist/gang)
+	add_team_hud(mob_override || owner.current, hud_type_check)
 
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
 	if(starter_gangster)
@@ -120,7 +124,7 @@
 /// Used to display gang objectives in the player's traitor panel
 /datum/antagonist/gang/proc/add_objectives()
 	var/datum/objective/objective = new ()
-	objective.explanation_text = my_gang.current_theme.gang_objectives[type]
+	objective.explanation_text = istype(my_gang.current_theme, /datum/gang_theme/warriors) ? "Take control of the station and become the top Family that all the other Families answer to, and bring about peace under your rule!" : my_gang.current_theme.gang_objectives[src.type]
 	objectives.Add(objective)
 
 /// Gives a gangster their equipment in their backpack and / or pockets.
@@ -163,7 +167,7 @@
 	var/list/data = list()
 	data["gang_name"] = gang_name
 	data["antag_name"] = name
-	data["gang_objective"] = my_gang.current_theme.gang_objectives[type]
+	data["gang_objective"] = istype(my_gang.current_theme, /datum/gang_theme/warriors) ? "Take control of the station and become the top Family that all the other Families answer to, and bring about peace under your rule!" : my_gang.current_theme.gang_objectives[src.type]
 
 	var/list/clothes_we_can_wear = list()
 	for(var/obj/item/accepted_item as anything in acceptable_clothes)
@@ -203,7 +207,7 @@
 	if(current_theme.everyone_objective)
 		report += "Objective: [current_theme.everyone_objective]"
 	else
-		var/assigned_objective = current_theme.gang_objectives[my_gang_datum.type]
+		var/assigned_objective = istype(current_theme, /datum/gang_theme/warriors) ? "Take control of the station and become the top Family that all the other Families answer to, and bring about peace under your rule!" : current_theme.gang_objectives[my_gang_datum.type]
 		if(assigned_objective)
 			report += "Objective: [assigned_objective]"
 		else
@@ -272,7 +276,7 @@
 /datum/antagonist/gang/russian_mafia
 	show_in_antagpanel = TRUE
 	name = "\improper Mafioso"
-	roundend_category = "The mafiosos"
+	roundend_category = "The Vialdi Crime Syndicate Incorporated"
 	gang_name = "Vialdi Crime Syndicate Incorporated"
 	gang_id = "RM"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
@@ -297,7 +301,7 @@
 /datum/antagonist/gang/italian_mob
 	show_in_antagpanel = TRUE
 	name = "Mobster"
-	roundend_category = "The mobsters"
+	roundend_category = "The Borgalli Family"
 	gang_name = "The Borgalli Family"
 	gang_id = "IM"
 	acceptable_clothes = list(/obj/item/clothing/under/suit/checkered,
@@ -318,7 +322,7 @@
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 
-/datum/antagonist/gang/tunnel_snakes
+/datum/antagonist/gang/maintenace_snakes
 	show_in_antagpanel = TRUE
 	name = "\improper Maintenance Snake"
 	roundend_category = "The Maintenance Snakes"
@@ -331,9 +335,9 @@
 		/obj/item/clothing/under/pants/classicjeans,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Snakes"
-	gang_team_type = /datum/team/gang/tunnel_snakes
+	gang_team_type = /datum/team/gang/maintenace_snakes
 
-/datum/team/gang/tunnel_snakes/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/maintenace_snakes/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)
@@ -423,7 +427,7 @@
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 
 
-/datum/antagonist/gang/dutch
+/datum/antagonist/gang/dodge_station_gang
 	show_in_antagpanel = TRUE
 	name = "Dodge Station Gangster"
 	roundend_category = "Dodge Station Gang"
@@ -439,9 +443,9 @@
 		/obj/item/clothing/suit/dutch,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Dutch"
-	gang_team_type = /datum/team/gang/dutch
+	gang_team_type = /datum/team/gang/dodge_station_gang
 
-/datum/team/gang/dutch/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/dodge_station_gang/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)
@@ -474,10 +478,10 @@
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, "Revenue Agent [last_name.match]")
 
-/datum/antagonist/gang/osi
+/datum/antagonist/gang/majestic_thirteen
 	show_in_antagpanel = TRUE
 	name = "\improper Majestic 13 Agent"
-	roundend_category = "MS13 Agents"
+	roundend_category = "Majestic 13 Agents"
 	gang_name = "Majestic 13"
 	gang_id = "OSI"
 	acceptable_clothes = list(/obj/item/clothing/suit/osi,
@@ -488,9 +492,9 @@
 		/obj/item/clothing/glasses/osi,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "OSI"
-	gang_team_type = /datum/team/gang/osi
+	gang_team_type = /datum/team/gang/majestic_thirteen
 
-/datum/team/gang/osi/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/majestic_thirteen/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)
@@ -498,7 +502,7 @@
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, "Special Agent [last_name.match]")
 
-/datum/antagonist/gang/tmc
+/datum/antagonist/gang/riders_of_the_radstorm
 	show_in_antagpanel = TRUE
 	name = "\improper Riders of the Radstorm Biker"
 	roundend_category = "Riders of the Radstorm Bikers"
@@ -512,9 +516,9 @@
 		/obj/item/clothing/head/tmc,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "LostMC"
-	gang_team_type = /datum/team/gang/tmc
+	gang_team_type = /datum/team/gang/riders_of_the_radstorm
 
-/datum/team/gang/tmc/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/riders_of_the_radstorm/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)
@@ -522,7 +526,7 @@
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 
-/datum/antagonist/gang/pg
+/datum/antagonist/gang/prisoner_liberation_front
 	show_in_antagpanel = TRUE
 	name = "\improper Prisoner Liberation Front Activist"
 	roundend_category = "Prisoner Liberation Front"
@@ -536,9 +540,9 @@
 		/obj/item/clothing/head/pg,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "PowderGang"
-	gang_team_type = /datum/team/gang/pg
+	gang_team_type = /datum/team/gang/prisoner_liberation_front
 
-/datum/team/gang/pg/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/prisoner_liberation_front/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)
@@ -547,7 +551,7 @@
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 
 
-/datum/antagonist/gang/driscoll
+/datum/antagonist/gang/carp_rustlers
 	show_in_antagpanel = TRUE
 	name = "Carp Rustler"
 	roundend_category = "Carp Rustlers"
@@ -563,9 +567,9 @@
 		/obj/item/clothing/shoes/cowboy,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Drill"
-	gang_team_type = /datum/team/gang/driscoll
+	gang_team_type = /datum/team/gang/carp_rustlers
 
-/datum/team/gang/driscoll/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/carp_rustlers/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)
@@ -653,7 +657,7 @@
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 
 
-/datum/antagonist/gang/phantom
+/datum/antagonist/gang/honest_hearts
 	show_in_antagpanel = TRUE
 	name = "\improper Honest Heart"
 	roundend_category = "Honest Hearts"
@@ -669,9 +673,9 @@
 		/obj/item/clothing/shoes/phantom,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "PhantomThieves"
-	gang_team_type = /datum/team/gang/phantom
+	gang_team_type = /datum/team/gang/honest_hearts
 
-/datum/team/gang/phantom/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/honest_hearts/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)
@@ -679,7 +683,7 @@
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 
-/datum/antagonist/gang/allies
+/datum/antagonist/gang/spinward_entente
 	show_in_antagpanel = TRUE
 	name = "\improper Spinward Entente G.I."
 	roundend_category = "Spinward Entente"
@@ -692,9 +696,9 @@
 		/obj/item/clothing/shoes/jackboots,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Allies"
-	gang_team_type = /datum/team/gang/allies
+	gang_team_type = /datum/team/gang/spinward_entente
 
-/datum/team/gang/allies/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/spinward_entente/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)
@@ -725,7 +729,7 @@
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, "Conscript [last_name.match]")
 
-/datum/antagonist/gang/yuri
+/datum/antagonist/gang/zhukov
 	show_in_antagpanel = TRUE
 	name = "\improper Zhukov's Initiate"
 	roundend_category = "Zhukov's Battalion"
@@ -738,9 +742,9 @@
 		/obj/item/clothing/shoes/jackboots,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "YuriArmy"
-	gang_team_type = /datum/team/gang/yuri
+	gang_team_type = /datum/team/gang/zhukov
 
-/datum/team/gang/yuri/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/zhukov/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)
@@ -799,7 +803,7 @@
 	name = "\improper Big Game Referee"
 	roundend_category = "Big Game Referees"
 	gang_name = "Big Game Referees"
-	gang_id = "Referees"
+	gang_id = "REFS"
 	free_clothes = list(
 		/obj/item/clothing/under/costume/big_game_referees,
 		/obj/item/clothing/head/big_game_referees,
@@ -814,5 +818,54 @@
 	last_name.Find(original_name)
 	if(starter_gangster)
 		gangster.current.fully_replace_character_name(gangster.current.real_name, "Sybil Coach [last_name.match]")
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+
+// Security is put into their own Family during Families because mechanically speaking, Security is a faction in Families. By properly integrating them into
+// the gamemode as a Family, this allows admins to keep tabs on Security during Families easier and allows us to provide better direction to Security during
+// the Families gamemode. It also allows for a better defined split between neutral parties and station-aligned parties.
+/datum/antagonist/gang/security // https://en.wikipedia.org/wiki/List_of_LASD_deputy_gangs
+	show_in_antagpanel = TRUE
+	name = "Security Officer"
+	roundend_category = "the Security Department"
+	gang_name = "Nanotrasen"
+	gang_id = "SEC"
+	acceptable_clothes = list(/obj/item/clothing/under/rank/security/officer,
+		/obj/item/clothing/suit/armor/vest/alt,
+		/obj/item/clothing/head/helmet/sec,
+		/obj/item/clothing/shoes/jackboots,
+		/obj/item/clothing/gloves/color/black)
+	free_clothes = list(/obj/item/toy/crayon/spraycan)
+	antag_hud_name = "hud_spacecop"
+	gang_team_type = /datum/team/gang/security
+	antag_sound = 'sound/effects/families_police.ogg'
+	hud_type_check = /datum/antagonist/gang/security
+
+/datum/team/gang/security/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	last_name.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+	else
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
+
+/datum/antagonist/gang/revolution
+	show_in_antagpanel = TRUE
+	name = "Revolution"
+	roundend_category = "the Revolutionaries"
+	gang_name = "Revolutionaries"
+	gang_id = "VIVA"
+	acceptable_clothes = list()
+	free_clothes = list(/obj/item/toy/crayon/spraycan)
+	antag_hud_name = "rev"
+	gang_team_type = /datum/team/gang/security
+	antag_hud_type_to_use = /datum/atom_hud/alternate_appearance/basic/has_antagonist/exact
+	hud_type_check = /datum/antagonist/gang/revolution
+
+/datum/team/gang/revolution/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	last_name.Find(original_name)
+	if(starter_gangster)
+		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
 	else
 		gangster.current.fully_replace_character_name(gangster.current.real_name, original_name)
