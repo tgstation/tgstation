@@ -23,14 +23,18 @@
 		SEND_SIGNAL(src, COMSIG_MOB_GRENADE_ARMED, user, src, det_time, delayoverride)
 	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/gas_crystal/healium_crystal
-	name = "Healium crystal"
-	desc = "A crystal made from the Healium gas, it's cold to the touch."
+/obj/item/grenade/gas_crystal/cleansing_crystal
+	name = "Cleansing crystal"
+	desc = "A crystal made from various gasses condensed down into a solid, when detonated it will scrubs out all the gasses aside from oxygen and nitrogen and refill 50 tiles in its vicinity"
 	icon_state = "healium_crystal"
 	///Range of the grenade that will cool down and affect mobs
-	var/fix_range = 7
+	var/fix_range = 50
+	///Amount of Nitrogen gas released (close to the grenade)
+	var/n2_gas_amount = 80
+	///Amount of Oxygen gas released (close to the grenade)
+	var/o2_gas_amount = 30
 
-/obj/item/grenade/gas_crystal/healium_crystal/detonate(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/cleansing_crystal/detonate(mob/living/lanced_by)
 	. = ..()
 	if(!.)
 		return
@@ -38,38 +42,44 @@
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
 	var/list/connected_turfs = detect_room(origin = get_turf(src), max_size = fix_range)
-	var/datum/gas_mixture/base_mix = new
-	base_mix.parse_gas_string(OPENTURF_DEFAULT_ATMOS)
-	for(var/turf/open/turf_fix in connected_turfs)
-		if(turf_fix.blocks_air)
+	var/turf/open/turf_loc = get_turf(src)
+	var/static/list/base_mix = list(/datum/gas/oxygen,/datum/gas/nitrogen,)
+	var/numberof_turf = length(connected_turfs)
+	var/static/list/safe_mixture = typecacheof(base_mix)
+	var/datum/gas_mixture/removed_gas = new
+
+	for(var/turf/open/turf_fix in connected_turfs)//interate through the various turf in the area
+		if(turf_fix.blocks_air)//if the turf can't contain air continue
 			continue
-		turf_fix.assume_air(base_mix)
+		var/datum/gas_mixture/contaminants = turf_fix.return_air()//environment gas mixture
+		for(var/gas_id in contaminants.gases)//interate through the gas mixtures of the turfs
+			if(safe_mixture[gas_id])//if the gas mixture contains safe gasses then move on
+				continue
+			removed_gas.assert_gas(gas_id)
+			removed_gas.gases[gas_id][MOLES] += contaminants.gases[gas_id][MOLES]//shuffle the bad gasses into another gas mixture
+			contaminants.gases[gas_id][MOLES] = 0 //remove the gasses from the environment
+		contaminants.garbage_collect()//remove the empty gasses from the list
+	var/obj/item/grenade/gas_crystal/residue_crystal/crystal = new(turf_loc)
+	crystal.filtered_gas = removed_gas
+	turf_loc.atmos_spawn_air("n2=[n2_gas_amount * numberof_turf];o2=[o2_gas_amount * numberof_turf];TEMP=273")
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/proto_nitrate_crystal
-	name = "Proto Nitrate crystal"
-	desc = "A crystal made from the Proto Nitrate gas, you can see the liquid gases inside."
-	icon_state = "proto_nitrate_crystal"
-	///Range of the grenade air refilling
-	var/refill_range = 5
-	///Amount of Nitrogen gas released (close to the grenade)
-	var/n2_gas_amount = 80
-	///Amount of Oxygen gas released (close to the grenade)
-	var/o2_gas_amount = 30
+	
+	
+/obj/item/grenade/gas_crystal/residue_crystal
+	name = "Residue crystal"
+	desc = "A crystal containing the contaminants removed by the Gaseous crystal"
+	icon_state = "proto_nitrate_crystal" 
+	var/datum/gas_mixture/filtered_gas
 
-/obj/item/grenade/gas_crystal/proto_nitrate_crystal/detonate(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/residue_crystal/detonate(mob/living/lanced_by)
 	. = ..()
-	if(!.)
+	if(!.)	
 		return
-
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
-	for(var/turf/turf_loc in view(refill_range, loc))
-		if(!isopenturf(turf_loc))
-			continue
-		var/distance_from_center = max(get_dist(turf_loc, loc), 1)
-		var/turf/open/floor_loc = turf_loc
-		floor_loc.atmos_spawn_air("n2=[n2_gas_amount / distance_from_center];o2=[o2_gas_amount / distance_from_center];TEMP=273")
+	var/turf/open/source = get_turf(src)
+	source.assume_air(filtered_gas)
 	qdel(src)
 
 /obj/item/grenade/gas_crystal/nitrous_oxide_crystal

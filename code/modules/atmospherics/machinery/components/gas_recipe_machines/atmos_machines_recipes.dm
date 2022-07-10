@@ -54,23 +54,14 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	requirements = list(/datum/gas/hydrogen = 300, /datum/gas/bz = 50)
 	products = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 1)
 
-/datum/gas_recipe/crystallizer/healium_grenade
-	id = "healium_g"
-	name = "Healium crystal"
-	min_temp = 200
-	max_temp = 400
-	energy_release = -2000000
-	requirements = list(/datum/gas/healium = 100, /datum/gas/oxygen = 120, /datum/gas/plasma = 50)
-	products = list(/obj/item/grenade/gas_crystal/healium_crystal = 1)
-
-/datum/gas_recipe/crystallizer/proto_nitrate_grenade
-	id = "proto_nitrate_g"
-	name = "Proto nitrate crystal"
-	min_temp = 200
-	max_temp = 400
-	energy_release = 1500000
-	requirements = list(/datum/gas/proto_nitrate = 100, /datum/gas/nitrogen = 80, /datum/gas/oxygen = 80)
-	products = list(/obj/item/grenade/gas_crystal/proto_nitrate_crystal = 1)
+/datum/gas_recipe/crystallizer/cleansing_crystal
+	id = "gas_g"
+	name = "Cleansing crystal"
+	min_temp = 100
+	max_temp = 500
+	energy_release = 300000
+	requirements = list(/datum/gas/nitrogen = 150, /datum/gas/oxygen = 60, /datum/gas/plasma = 100, /datum/gas/nitrous_oxide = 50)
+	products = list(/obj/item/grenade/gas_crystal/cleansing_crystal = 1)
 
 /datum/gas_recipe/crystallizer/hot_ice
 	id = "hot_ice"
