@@ -179,3 +179,14 @@
 	name = "basil boys helmet"
 	icon_state = "football_helmet_red"
 	inhand_icon_state = "football_helmet_red"
+
+/obj/item/clothing/head/tv_head
+	name = "television helmet"
+	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you."
+	icon_state = "IPC_helmet"
+	inhand_icon_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi' //Grandfathered in from the wallframe for status displays.
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	clothing_flags = SNUG_FIT
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
