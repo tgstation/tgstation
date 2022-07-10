@@ -65,6 +65,11 @@
 	explosion_block = EXPLOSION_BLOCK_PROC
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = .proc/on_magic_unlock,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/machinery/door/examine(mob/user)
 	. = ..()
 	if(red_alert_access)
@@ -483,5 +488,10 @@
 	zap_flags &= ~ZAP_OBJ_DAMAGE
 	. = ..()
 
+/// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Open up when someone casts knock.
+/obj/machinery/door/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, .proc/open)
 
 #undef DOOR_CLOSE_WAIT

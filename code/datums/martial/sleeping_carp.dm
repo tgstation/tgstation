@@ -11,15 +11,15 @@
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/A, mob/living/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
-		streak = ""
+		reset_streak(A)
 		strongPunch(A,D)
 		return TRUE
 	if(findtext(streak,LAUNCH_KICK_COMBO))
-		streak = ""
+		reset_streak(A)
 		launchKick(A,D)
 		return TRUE
 	if(findtext(streak,DROP_KICK_COMBO))
-		streak = ""
+		reset_streak(A)
 		dropKick(A,D)
 		return TRUE
 	return FALSE

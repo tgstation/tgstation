@@ -66,7 +66,7 @@ GLOBAL_VAR(command_name)
 		new_station_name = name + " "
 		name = ""
 
-	if(prob(1))
+	if(prob(0.1))
 		random = 999999999 //ridiculously long name in written numbers
 
 	// Prefix
@@ -101,7 +101,7 @@ GLOBAL_VAR(command_name)
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
 		if(999999999)
-			new_station_name = "Space Station " + convert_integer_to_words(rand(111111111,999999999), capitalise = TRUE)
+			new_station_name += convert_integer_to_words(rand(111111111,999999999), capitalise = TRUE)
 	return new_station_name
 
 /proc/syndicate_name()

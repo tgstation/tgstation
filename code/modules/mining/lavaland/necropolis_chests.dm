@@ -66,7 +66,7 @@
 		if(16)
 			new /obj/item/immortality_talisman(src)
 		if(17)
-			new /obj/item/book/granter/spell/summonitem(src)
+			new /obj/item/book/granter/action/spell/summonitem(src)
 		if(18)
 			new /obj/item/book_of_babel(src)
 		if(19)
@@ -97,7 +97,7 @@
 		if(2)
 			new /obj/item/lava_staff(src)
 		if(3)
-			new /obj/item/book/granter/spell/sacredflame(src)
+			new /obj/item/book/granter/action/spell/sacredflame(src)
 		if(4)
 			new /obj/item/dragons_blood(src)
 

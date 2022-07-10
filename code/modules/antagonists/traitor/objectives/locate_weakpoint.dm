@@ -3,6 +3,7 @@
 	objectives = list(
 		/datum/traitor_objective/locate_weakpoint = 1,
 	)
+	weight = OBJECTIVE_WEIGHT_TINY
 
 /datum/traitor_objective/locate_weakpoint
 	name = "Triangulate station's structural weakpoint and detonate an explosive charge nearby."
@@ -110,29 +111,12 @@
 	weakpoint_found = TRUE
 
 /datum/traitor_objective/locate_weakpoint/proc/create_shockwave(center_x, center_y, center_z)
-	var/severity = list(EXPLODE_LIGHT, EXPLODE_LIGHT, EXPLODE_LIGHT, EXPLODE_LIGHT, EXPLODE_HEAVY, EXPLODE_HEAVY, EXPLODE_DEVASTATE) //Can't use pick_weight because explode defines are numbers
-	var/wave_amount = rand(5, 8)
-	var/list/bombed_turfs = list()
-	for(var/i in 1 to wave_amount)
-		var/wave_angle = rand(-10, 10) + 360 / wave_amount * i
-		var/wave_distance = rand(17, 25)
-		var/turf/tentacle_ending = locate(clamp(center_x + round(cos(wave_angle) * wave_distance), 1, world.maxx), clamp(center_y + round(sin(wave_angle) * wave_distance), 1, world.maxy), center_z)
-		if(!tentacle_ending) //WUT
-			continue
-
-		var/turf/epicenter = locate(center_x, center_y, center_z)
-		for(var/turf/line_turf in get_line(epicenter, tentacle_ending))
-			for(var/turf/bomb_turf in range(1, line_turf))
-				if((bomb_turf in bombed_turfs) || bomb_turf == epicenter)
-					continue
-				bombed_turfs += bomb_turf
-				var/turf_severity = pick(severity)
-				EX_ACT(line_turf, turf_severity)
-				for(var/atom/victim in line_turf)
-					EX_ACT(victim, turf_severity - 1)
-
-		explosion(tentacle_ending, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5, explosion_cause = src)
-
+	var/turf/epicenter = locate(center_x, center_y, center_z)
+	var/lowpop = (length(GLOB.clients) <= CONFIG_GET(number/minimal_access_threshold))
+	if(lowpop)
+		explosion(epicenter, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, explosion_cause = src)
+	else
+		explosion(epicenter, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 9, explosion_cause = src)
 	priority_announce(
 				"Attention crew, it appears that a high-power explosive charge has been detonated in your station's weakpoint, causing severe structural damage.",
 				"[command_name()] High-Priority Update"

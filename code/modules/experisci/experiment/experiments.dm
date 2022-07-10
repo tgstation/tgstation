@@ -120,8 +120,8 @@
 	required_gas = /datum/gas/bz
 
 /datum/experiment/ordnance/gaseous/noblium
-	name = "Noblium Gas Shells"
-	description = "The delivery of Noblium gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	name = "Hypernoblium Gas Shells"
+	description = "The delivery of Hypernoblium gas into an area of operation might prove useful. Perform research and publish papers on this field."
 	gain = list(10,40,80)
 	target_amount = list(15,55,250)
 	experiment_proper = TRUE
@@ -175,7 +175,7 @@
 
 /datum/experiment/scanning/random/plants/traits
 	name = "Unique Biomatter Mutation Sample"
-	description = "We here at centcom are on the look out for rare and exotic plants with unique properties to brag about to our shareholders. We're looking for a sample with a very specific genes currently."
+	description = "We here at CentCom are on the look out for rare and exotic plants with unique properties to brag about to our shareholders. We're looking for a sample with a very specific genes currently."
 	performance_hint = "The wide varities of plants on station each carry various traits, some unique to them. Look for plants that may mutate into what we're looking for."
 	total_requirement = 3
 	possible_plant_genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/brewing, /datum/plant_gene/trait/juicing, /datum/plant_gene/trait/eyes, /datum/plant_gene/trait/sticky)

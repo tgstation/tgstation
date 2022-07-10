@@ -115,7 +115,7 @@
 		/obj/item/storage/box/hug/plushes = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)
-	belt = /obj/item/storage/belt/medical
+	belt = /obj/item/storage/belt/medical/ert
 	glasses = /obj/item/clothing/glasses/hud/health
 	l_hand = /obj/item/storage/medkit/regular
 	r_hand = /obj/item/gun/energy/e_gun

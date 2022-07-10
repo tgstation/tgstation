@@ -28,12 +28,12 @@
 		freezerange = radius
 	for(var/A in immune_atoms)
 		immune[A] = TRUE
-	for(var/mob/living/L in GLOB.player_list)
-		if(locate(/obj/effect/proc_holder/spell/aoe_turf/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
-			immune[L] = TRUE
-	for(var/mob/living/simple_animal/hostile/guardian/G in GLOB.parasites)
-		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/timestop) in G.summoner.mind.spell_list) //It would only make sense that a person's stand would also be immune.
-			immune[G] = TRUE
+	for(var/mob/living/to_check in GLOB.player_list)
+		if(HAS_TRAIT(to_check, TRAIT_TIME_STOP_IMMUNE))
+			immune[to_check] = TRUE
+	for(var/mob/living/simple_animal/hostile/guardian/stand in GLOB.parasites)
+		if(stand.summoner && HAS_TRAIT(stand.summoner, TRAIT_TIME_STOP_IMMUNE)) //It would only make sense that a person's stand would also be immune.
+			immune[stand] = TRUE
 	if(start)
 		INVOKE_ASYNC(src, .proc/timestop)
 

@@ -112,6 +112,10 @@
 	WIZARD_LOADOUT_SOULTAP, \
 )
 
+/// Used in logging spells for roundend results
+#define LOG_SPELL_TYPE "type"
+#define LOG_SPELL_AMOUNT "amount"
+
 ///File to the traitor flavor
 #define TRAITOR_FLAVOR_FILE "antagonist_flavor/traitor_flavor.json"
 

@@ -1,5 +1,0 @@
-author: "13spacemen, Gandalf2k15"
-delete-after: True
-changes: 
-  - rscadd: "Examining and other chat outputs now display in blocks to make them easier to see"
-  - bugfix: "AI and borgs no longer have their name show twice upon being examined"
