@@ -189,4 +189,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	clothing_flags = SNUG_FIT
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	flags_cover = HEADCOVERSEYES | MOUTHCOVERSMOUTH | PEPPERPROOF
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/head/tv_head/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
