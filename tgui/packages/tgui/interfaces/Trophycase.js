@@ -1,6 +1,6 @@
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../backend';
-import { Icon, Box, Button, Section, TextArea, Stack } from '../components';
+import { Icon, Box, Button, Dimmer, Section, TextArea, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Trophycase = (props, context) => {
@@ -54,7 +54,9 @@ const ShowpieceImage = (props, context) => {
     />
   ) : (
     <Box height="96px" width="96px">
-      <Icon name="landmark" spin />
+        <Dimmer fontSize="32px">
+          <Icon name="landmark" spin />
+        </Dimmer>
     </Box>
   );
 };
