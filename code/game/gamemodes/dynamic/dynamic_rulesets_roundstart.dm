@@ -578,7 +578,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 	)
-	required_candidates = 0 // SET THIS BACK TO 3 AFTER TESTING
+	required_candidates = 3
 	weight = 1
 	cost = 19
 	requirements = list(101,101,40,40,30,20,10,10,10,10)
