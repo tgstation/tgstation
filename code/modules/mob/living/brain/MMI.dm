@@ -62,7 +62,7 @@
 			return
 		if(!newbrain.brainmob?.mind || !newbrain.brainmob)
 			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
-			if(install == "No")
+			if(install != "Yes")
 				return
 			if(!user.transferItemToLoc(newbrain, src))
 				return

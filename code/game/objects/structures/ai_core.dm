@@ -1,3 +1,5 @@
+#define AI_CORE_BRAIN(X) X.braintype == "Android" ? "brain" : "MMI"
+
 /obj/structure/ai_core
 	density = TRUE
 	anchored = FALSE
@@ -9,7 +11,7 @@
 	var/state = EMPTY_CORE
 	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/aicore/circuit
-	var/obj/item/mmi/brain
+	var/obj/item/mmi/core_mmi
 	var/can_deconstruct = TRUE
 
 /obj/structure/ai_core/Initialize(mapload)
@@ -23,7 +25,7 @@
 		if(state != EMPTY_CORE)
 			. += span_notice("It has some <b>bolts</b> that could be tightened.")
 		else
-			. += span_notice("The frame can be <b>melted</b> down.")
+			. += span_notice("It has some <b>bolts</b> that could be tightened. The frame can be <b>melted</b> down.")
 	else
 		switch(state)
 			if(EMPTY_CORE)
@@ -33,17 +35,17 @@
 			if(SCREWED_CORE)
 				. += span_notice("The frame can be <b>wired</b>, the circuit board can be <b>unfastened</b>.")
 			if(CABLED_CORE)
-				if(!brain)
+				if(!core_mmi)
 					. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
 				else
 					var/accept_laws = TRUE
-					if(!brain?.brainmob?.mind || !brain.brainmob || brain && brain.laws.id != DEFAULT_AI_LAWID)
+					if(core_mmi.laws.id != DEFAULT_AI_LAWID || !core_mmi.brainmob || !core_mmi.brainmob?.mind)
 						accept_laws = FALSE
-					. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the[brain.braintype == "Android" ? " positronic brain" : " MMI"] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across" : ""]")
+					. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across." : ""]")
 			if(GLASS_CORE)
-				. += span_notice("The monitor [brain?.brainmob?.mind && !brain?.brainmob?.suiciding ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
+				. += span_notice("The monitor [core_mmi?.brainmob?.mind && !core_mmi?.brainmob?.suiciding ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
 			if(AI_READY_CORE)
-				. += span_notice("The monitor's connection can be <b>cut</b>[brain?.brainmob?.mind && !brain?.brainmob?.suiciding ? " the neural interface can be <b>screwed</b> in." : "."]")
+				. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !core_mmi?.brainmob?.suiciding ? " the neural interface can be <b>screwed</b> in." : "."]")
 
 /obj/structure/ai_core/handle_atom_del(atom/A)
 	if(A == circuit)
@@ -51,14 +53,14 @@
 		if((state != GLASS_CORE) && (state != AI_READY_CORE))
 			state = EMPTY_CORE
 			update_appearance()
-	if(A == brain)
-		brain = null
+	if(A == core_mmi)
+		core_mmi = null
 	return ..()
 
 
 /obj/structure/ai_core/Destroy()
 	QDEL_NULL(circuit)
-	QDEL_NULL(brain)
+	QDEL_NULL(core_mmi)
 	QDEL_NULL(laws)
 	return ..()
 
@@ -130,16 +132,23 @@
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(state == AI_READY_CORE && brain?.brainmob?.mind && !brain?.brainmob?.suiciding)
-		balloon_alert(user, "connecting neural network...")
-		if(!tool.use_tool(src, user, 10 SECONDS))
-			return
-		if(!ai_structure_to_mob())
-			return
-		balloon_alert(user, "connected neural network")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(state == AI_READY_CORE)
+		if(!core_mmi)
+			balloon_alert(user, "no brain installed!")
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+		else if(!core_mmi.brainmob?.mind || core_mmi.brainmob?.suiciding)
+			balloon_alert(user, "brain is inactive!")
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+		else
+			balloon_alert(user, "connecting neural network...")
+			if(!tool.use_tool(src, user, 10 SECONDS))
+				return TOOL_ACT_TOOLTYPE_SUCCESS
+			if(!ai_structure_to_mob())
+				return TOOL_ACT_TOOLTYPE_SUCCESS
+			balloon_alert(user, "connected neural network")
+			return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/structure/ai_core/attackby(obj/item/P, mob/user, params)
+/obj/structure/ai_core/attackby(obj/item/P, mob/living/user, params)
 	if(!anchored)
 		if(P.tool_behaviour == TOOL_WELDER && can_deconstruct)
 			if(state != EMPTY_CORE)
@@ -155,8 +164,11 @@
 				deconstruct(TRUE)
 			return
 		else
-			balloon_alert(user, "bolt it down first!")
-			return
+			if(!user.combat_mode)
+				balloon_alert(user, "bolt it down first!")
+				return
+			else
+				return ..()
 	else
 		switch(state)
 			if(EMPTY_CORE)
@@ -205,8 +217,8 @@
 					return
 			if(CABLED_CORE)
 				if(P.tool_behaviour == TOOL_WIRECUTTER)
-					if(brain)
-						balloon_alert(user, "remove the [brain.braintype == "Android" ? "brain" : "MMI"] first!")
+					if(core_mmi)
+						balloon_alert(user, "remove the [AI_CORE_BRAIN(core_mmi)] first!")
 					else
 						P.play_tool_sound(src)
 						balloon_alert(user, "cables removed")
@@ -216,7 +228,7 @@
 					return
 
 				if(istype(P, /obj/item/stack/sheet/rglass))
-					if(!brain)
+					if(!core_mmi)
 						balloon_alert(user, "add a brain first!")
 						return
 					var/obj/item/stack/sheet/rglass/G = P
@@ -232,35 +244,34 @@
 					return
 
 				if(istype(P, /obj/item/ai_module))
-					if(!brain)
+					if(!core_mmi)
 						balloon_alert(user, "no brain installed!")
 						return
-					if(!brain?.brainmob || !brain?.brainmob?.mind)
-						balloon_alert(user, "[brain.braintype == "Android" ? "brain" : "MMI"] is inactive!")
+					if(!core_mmi.brainmob || !core_mmi.brainmob?.mind || core_mmi.brainmob?.suiciding)
+						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] is inactive!")
 						return
-					if(brain && brain.laws.id != DEFAULT_AI_LAWID)
-						balloon_alert(user, "[brain.braintype == "Android" ? "brain" : "MMI"] already has set laws!")
+					if(core_mmi.laws.id != DEFAULT_AI_LAWID)
+						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] already has set laws!")
 						return
 					var/obj/item/ai_module/module = P
 					module.install(laws, user)
 					return
 
-				if(istype(P, /obj/item/mmi) && !brain)
+				if(istype(P, /obj/item/mmi) && !core_mmi)
 					var/obj/item/mmi/M = P
 					if(!M.brain_check(user))
-						var/install = tgui_alert(user, "This [M.braintype == "Android" ? "brain" : "MMI"] is inactive, would you like to make an inactive AI?", "Installing AI [M.braintype == "Android" ? "Brain" : "MMI"]", list("Yes", "No"))
-						if(install == "No")
+						var/install = tgui_alert(user, "This [AI_CORE_BRAIN(M)] is inactive, would you like to make an inactive AI?", "Installing AI [AI_CORE_BRAIN(M)]", list("Yes", "No"))
+						if(install != "Yes")
 							return
-						else
-							if(M.brainmob?.suiciding)
-								to_chat(user, span_warning("[M.name] is completely useless."))
-								return
-							if(!user.transferItemToLoc(M, src))
-								return
-							brain = M
-							balloon_alert(user, "added [brain.braintype == "Android" ? "brain" : "MMI"] to frame")
-							update_appearance()
+						if(M.brainmob?.suiciding)
+							to_chat(user, span_warning("[M.name] is completely useless!"))
 							return
+						if(!user.transferItemToLoc(M, src))
+							return
+						core_mmi = M
+						balloon_alert(user, "added [AI_CORE_BRAIN(core_mmi)] to frame")
+						update_appearance()
+						return
 
 					var/mob/living/brain/B = M.brainmob
 					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, JOB_AI) && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
@@ -270,16 +281,16 @@
 					if(!user.transferItemToLoc(M,src))
 						return
 
-					brain = M
-					balloon_alert(user, "added [brain.braintype == "Android" ? "brain" : "MMI"] to frame")
+					core_mmi = M
+					balloon_alert(user, "added [AI_CORE_BRAIN(core_mmi)] to frame")
 					update_appearance()
 					return
 
-				if(P.tool_behaviour == TOOL_CROWBAR && brain)
+				if(P.tool_behaviour == TOOL_CROWBAR && core_mmi)
 					P.play_tool_sound(src)
-					balloon_alert(user, "removed [brain.braintype == "Android" ? "brain" : "MMI"]")
-					brain.forceMove(loc)
-					brain = null
+					balloon_alert(user, "removed [AI_CORE_BRAIN(core_mmi)]")
+					core_mmi.forceMove(loc)
+					core_mmi = null
 					update_appearance()
 					return
 
@@ -293,12 +304,12 @@
 					return
 
 				if(P.tool_behaviour == TOOL_SCREWDRIVER)
-					if(brain?.brainmob?.suiciding)
+					if(core_mmi?.brainmob?.suiciding)
 						to_chat(user, span_warning("The brain installed is completely useless."))
 						return
 					P.play_tool_sound(src)
-					balloon_alert(user, "connected monitor[brain?.brainmob?.mind ? " and neural network" : ""]")
-					if(brain.brainmob?.mind)
+					balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
+					if(core_mmi.brainmob?.mind)
 						ai_structure_to_mob(from_glass_core_to_mob = TRUE)
 					else
 						state = AI_READY_CORE
@@ -318,23 +329,23 @@
 	return ..()
 
 /obj/structure/ai_core/proc/ai_structure_to_mob(from_glass_core_to_mob = FALSE)
-	var/mob/living/brain/the_brainmob = brain.brainmob
+	var/mob/living/brain/the_brainmob = core_mmi.brainmob
 	if(!the_brainmob.mind || the_brainmob.suiciding)
 		return FALSE
-	the_brainmob.mind?.remove_antags_for_borging()
+	the_brainmob.mind.remove_antags_for_borging()
 
 	var/mob/living/silicon/ai/ai_mob = null
 
-	if(brain.overrides_aicore_laws)
-		ai_mob = new /mob/living/silicon/ai(loc, brain.laws, the_brainmob)
-		brain.laws = null //Brain's law datum is being donated, so we need the brain to let it go or the GC will eat it
+	if(core_mmi.overrides_aicore_laws)
+		ai_mob = new /mob/living/silicon/ai(loc, core_mmi.laws, the_brainmob)
+		core_mmi.laws = null //MMI's law datum is being donated, so we need the MMI to let it go or the GC will eat it
 	else
 		ai_mob = new /mob/living/silicon/ai(loc, laws, the_brainmob)
 		laws = null //we're giving the new AI this datum, so let's not delete it when we qdel(src) 5 lines from now
 
-	if(brain.force_replace_ai_name)
-		ai_mob.fully_replace_character_name(ai_mob.name, brain.replacement_ai_name())
-	if(brain.braintype == "Android")
+	if(core_mmi.force_replace_ai_name)
+		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
+	if(core_mmi.braintype == "Android")
 		ai_mob.posibrain_core = TRUE
 	if(from_glass_core_to_mob)
 		SSblackbox.record_feedback("amount", "ais_created", 1)
@@ -351,7 +362,7 @@
 		if(SCREWED_CORE)
 			icon_state = "2"
 		if(CABLED_CORE)
-			if(brain)
+			if(core_mmi)
 				icon_state = "3b"
 			else
 				icon_state = "3"
@@ -362,7 +373,7 @@
 	return ..()
 
 /obj/structure/ai_core/deconstruct(disassembled = TRUE)
-	if(state == GLASS_CORE)
+	if(state >= GLASS_CORE)
 		new /obj/item/stack/sheet/rglass(loc, 2)
 	if(state >= CABLED_CORE)
 		new /obj/item/stack/cable_coil(loc, 5)
@@ -388,8 +399,15 @@ That prevents a few funky behaviors.
 	return TRUE
 
 /obj/structure/ai_core/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
-	if(state != AI_READY_CORE || !..() || brain?.brainmob?.mind || brain?.brainmob?.suiciding)
+	if(state != AI_READY_CORE || !..())
 		return
+	if(core_mmi && core_mmi.brainmob)
+		if(core_mmi.brainmob.mind)
+			to_chat(user, span_warning("[src] already contains an active mind!"))
+			return
+		else if(core_mmi.brainmob.suiciding)
+			to_chat(user, span_warning("[AI_CORE_BRAIN(core_mmi)] installed in [src] is completely useless!"))
+			return
 	//Transferring a carded AI to a core.
 	if(interaction == AI_TRANS_FROM_CARD)
 		AI.control_disabled = FALSE
@@ -406,3 +424,5 @@ That prevents a few funky behaviors.
 /obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
 	var/battery = 200 //backup battery for when the AI loses power. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core
+
+#undef AI_CORE_BRAIN

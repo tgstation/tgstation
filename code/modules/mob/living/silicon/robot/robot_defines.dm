@@ -84,7 +84,6 @@
 	var/mob/living/silicon/ai/connected_ai = null
 
 	var/opened = FALSE
-	emagged = FALSE
 	var/emag_cooldown = 0
 	var/wiresexposed = FALSE
 
