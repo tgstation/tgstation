@@ -73,7 +73,6 @@
 		// Medical
 		/datum/job/virologist,
 		// Cargo
-		/datum/job/quartermaster,
 		/datum/job/shaft_miner,
 		// Service
 		/datum/job/cook,
@@ -97,6 +96,7 @@
 		/datum/job/head_of_personnel,
 		/datum/job/chief_medical_officer,
 		/datum/job/research_director,
+		/datum/job/quartermaster,
 	)
 
 	progression_reward = list(8 MINUTES, 12 MINUTES)

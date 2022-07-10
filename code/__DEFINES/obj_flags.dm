@@ -9,7 +9,6 @@
 #define ON_BLUEPRINTS (1<<5)  //Are we visible on the station blueprints at roundstart?
 #define UNIQUE_RENAME (1<<6) // can you customize the description/name of the thing?
 #define USES_TGUI (1<<7) //put on things that use tgui on ui_interact instead of custom/old UI.
-#define FROZEN (1<<8)
 #define BLOCK_Z_OUT_DOWN (1<<9)  // Should this object block z falling from loc?
 #define BLOCK_Z_OUT_UP (1<<10) // Should this object block z uprise from loc?
 #define BLOCK_Z_IN_DOWN (1<<11) // Should this object block z falling from above?
@@ -88,6 +87,8 @@
 
 /// Flags for the gun_flags var for firearms
 #define TOY_FIREARM_OVERLAY (1<<0) // If update_overlay would add some indicator that the gun is a toy, like a plastic cap on a pistol
+/// Currently used to identify valid guns to steal
+#define NOT_A_REAL_GUN (1<<1)
 
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)

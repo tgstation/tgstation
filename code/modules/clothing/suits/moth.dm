@@ -13,7 +13,11 @@
 /obj/item/clothing/suit/mothcoat/original
 	desc = "An old-school flightsuit from the moth fleet. A perfect token of mothic survivalistic and adaptable attitude, yet a bitter reminder that with the loss of their home planet and institution of the fleet, their beloved wings remain as a burden to bear, condemned to never fly again."
 	greyscale_colors = "#dfa409"
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets
+
+/obj/item/clothing/suit/mothcoat/original/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets)
 
 /obj/item/clothing/suit/mothcoat/winter
 	name = "mothic mantella"

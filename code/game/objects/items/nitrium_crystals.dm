@@ -13,6 +13,6 @@
 	reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, 3)
 	reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, 2)
 	smoke.attach(location)
-	smoke.set_up(cloud_size, location = location, carry = reagents, silent = TRUE)
+	smoke.set_up(cloud_size, holder = src, location = location, carry = reagents, silent = TRUE)
 	smoke.start()
 	qdel(src)

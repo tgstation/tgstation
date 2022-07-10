@@ -324,6 +324,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/random/asteroids
 	icon_state = "asteroids"
+	layer = 4
 
 /atom/movable/screen/parallax_layer/planet
 	icon_state = "planet"

@@ -23,6 +23,7 @@
 		JOB_CHIEF_ENGINEER = /obj/machinery/rnd/production/protolathe/department/engineering,
 		JOB_HEAD_OF_PERSONNEL = /obj/machinery/rnd/production/techfab/department/service,
 		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
+		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
 	)
 	/// Whether this can bypass the maximum_allowed value or not
 	var/allow_more_than_max = FALSE

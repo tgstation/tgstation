@@ -301,6 +301,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// IF an object is weak against armor, this is the value that any present armor is multiplied by
 #define ARMOR_WEAKENED_MULTIPLIER 2
+/// Armor can't block more than this as a percentage
+#define ARMOR_MAX_BLOCK 90
 
 /// Return values used in item/melee/baton/baton_attack.
 /// Does a normal item attack.

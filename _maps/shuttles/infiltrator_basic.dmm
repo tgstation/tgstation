@@ -423,12 +423,11 @@
 "bK" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch{
-	req_access = list("syndicate")
-	},
+/obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/medical)
 "bM" = (
@@ -439,9 +438,8 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch{
-	req_access = list("syndicate")
-	},
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/engineering)
 "bO" = (
@@ -681,9 +679,7 @@
 "hT" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/syndicateemblem/bottom/right,
-/obj/structure/sign/departments/engineering{
-	pixel_x = 32
-	},
+/obj/structure/sign/departments/engineering/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "iE" = (
@@ -703,13 +699,12 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/shuttle/syndicate/engineering)
 "lm" = (
-/obj/machinery/door/airlock/hatch{
-	req_access = list("syndicate")
-	},
+/obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "lo" = (
@@ -720,9 +715,8 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch{
-	req_access = list("syndicate")
-	},
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/eva)
 "lJ" = (
@@ -812,9 +806,7 @@
 "ug" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/syndicateemblem/bottom/left,
-/obj/structure/sign/departments/medbay/alt{
-	pixel_x = -32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "vl" = (
@@ -993,9 +985,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "Hl" = (
-/obj/machinery/door/airlock/external/ruin{
-	req_access = list("syndicate")
-	},
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
@@ -1003,6 +993,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "In" = (
@@ -1112,10 +1103,9 @@
 /area/shuttle/syndicate/airlock)
 "Tu" = (
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch{
-	req_access = list("syndicate")
-	},
+/obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/stripes/red/line,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/hallway)
 "TD" = (

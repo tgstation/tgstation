@@ -64,7 +64,6 @@
 	name = "head of personnel's uniform"
 	icon_state = "hop"
 	inhand_icon_state = "b_suit"
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/skirt
 	name = "head of personnel's skirt"
@@ -203,7 +202,7 @@
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	name = "blue suit"
-	desc = "A classy suit and tie."
+	desc = "A classy suit."
 	icon_state = "bluesuit"
 	inhand_icon_state = "b_suit"
 	can_adjust = TRUE
@@ -211,7 +210,7 @@
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt
 	name = "blue suitskirt"
-	desc = "A classy suitskirt and tie."
+	desc = "A classy suitskirt."
 	icon_state = "bluesuit_skirt"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS

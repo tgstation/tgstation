@@ -45,6 +45,7 @@
 /code/modules/preferences_menu.dm @Mothblocks
 /code/modules/preferences_savefile.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+/tools/screenshot-test-comparison/ @Mothblocks
 
 # MrMelbert
 

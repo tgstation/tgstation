@@ -90,9 +90,9 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/grunge{
-	name = "Hotel Staff Room";
-	req_access = list("away_general")
+	name = "Hotel Staff Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
@@ -172,9 +172,10 @@
 "bN" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering{
-	name = "Utilities";
-	req_one_access = list("away_general","away_maintenance")
+	name = "Utilities"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/away/general,
+/obj/effect/mapping_helpers/airlock/access/any/away/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
@@ -470,16 +471,12 @@
 /turf/open/floor/iron/solarpanel/airless,
 /area/ruin/space/has_grav/hotel)
 "eI" = (
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel)
 "eK" = (
 /obj/structure/chair/wood,
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel/bar)
 "eR" = (
@@ -852,9 +849,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
 "id" = (
@@ -885,9 +880,7 @@
 "iq" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/comfy,
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
 "is" = (
@@ -1052,9 +1045,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/north,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/bar)
 "jf" = (
@@ -1526,17 +1517,15 @@
 "ne" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair,
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/north,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hotel/dock)
 "nf" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
-	name = "Hotel Maintenance";
-	req_access = list("away_maintenance")
+	name = "Hotel Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -1571,9 +1560,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "no" = (
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/north,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "ns" = (
@@ -1623,9 +1610,9 @@
 /area/ruin/space/has_grav/hotel/pool)
 "nP" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Hotel Maintenance";
-	req_access = list("away_maintenance")
+	name = "Hotel Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "nQ" = (
@@ -1909,9 +1896,9 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "rP" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Hotel Staff Room";
-	req_access = list("away_general")
+	name = "Hotel Staff Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1961,9 +1948,9 @@
 /area/ruin/space/has_grav/hotel)
 "sz" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Hotel Maintenance";
-	req_access = list("away_maintenance")
+	name = "Hotel Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
@@ -2091,9 +2078,10 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering{
-	name = "Utilities";
-	req_one_access = list("away_general","away_maintenance")
+	name = "Utilities"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/away/general,
+/obj/effect/mapping_helpers/airlock/access/any/away/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
@@ -2146,9 +2134,9 @@
 /area/ruin/space/has_grav/hotel)
 "vm" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Hotel Maintenance";
-	req_access = list("away_maintenance")
+	name = "Hotel Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/dock)
 "vv" = (
@@ -2182,9 +2170,9 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "vB" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Hotel Kitchen";
-	req_access = list("away_general")
+	name = "Hotel Kitchen"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/textured_half{
 	dir = 4
@@ -2392,9 +2380,9 @@
 /area/ruin/space/has_grav/hotel/bar)
 "wY" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Hotel Maintenance";
-	req_access = list("away_maintenance")
+	name = "Hotel Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/bar)
@@ -2449,9 +2437,9 @@
 /area/ruin/space/has_grav/hotel)
 "xs" = (
 /obj/machinery/door/airlock/freezer{
-	name = "Freezer";
-	req_access = list("away_general")
+	name = "Freezer"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/textured_half{
 	dir = 4
 	},
@@ -2672,9 +2660,10 @@
 /area/ruin/space/has_grav/hotel)
 "AS" = (
 /obj/machinery/door/airlock{
-	name = "Custodial Closet";
-	req_one_access = list("away_general","away_maintenance")
+	name = "Custodial Closet"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/away/general,
+/obj/effect/mapping_helpers/airlock/access/any/away/maintenance,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/hotel/custodial)
@@ -2990,9 +2979,9 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "ES" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Hotel Maintenance";
-	req_access = list("away_maintenance")
+	name = "Hotel Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
@@ -3377,9 +3366,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "JG" = (
 /obj/machinery/firealarm/directional/east,
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/north,
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "JL" = (
@@ -4093,9 +4080,7 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "Tm" = (
 /obj/machinery/oven,
-/obj/structure/sign/warning/no_smoking/circle{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/circle/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Kitchen";
 	network = list("spacehotel")
@@ -4179,9 +4164,9 @@
 /area/ruin/space/has_grav/hotel)
 "TY" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Hotel Maintenance";
-	req_access = list("away_maintenance")
+	name = "Hotel Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
@@ -4261,9 +4246,9 @@
 /area/ruin/space/has_grav/hotel)
 "UV" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Hotel Maintenance";
-	req_access = list("away_maintenance")
+	name = "Hotel Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)

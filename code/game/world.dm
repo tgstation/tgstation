@@ -142,6 +142,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
 	GLOB.world_uplink_log = "[GLOB.log_directory]/uplink.log"
 	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
+	GLOB.world_speech_indicators_log = "[GLOB.log_directory]/speech_indicators.log"
 	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
 	GLOB.world_mob_tag_log = "[GLOB.log_directory]/mob_tags.log"
@@ -339,6 +340,11 @@ GLOBAL_VAR(restart_counter)
 
 	if (features)
 		s += ": [jointext(features, ", ")]"
+
+	s += "<br>Round time: <b>[gameTimestamp("hh:mm")]</b>"
+	if(SSmapping.config)
+		s += "<br>Map: <b>[SSmapping.config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.config.map_name]</b>"
+	s += "<br>Alert level: <b>[capitalize(SSsecurity_level.get_current_level_as_text())]</b>"
 
 	status = s
 

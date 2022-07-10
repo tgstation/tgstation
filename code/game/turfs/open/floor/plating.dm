@@ -1,6 +1,6 @@
 /**
  * PLATINGS
- * 
+ *
  * Handle interaction with tiles and lets you put stuff on top of it.
  */
 /turf/open/floor/plating
@@ -23,10 +23,10 @@
 	var/allow_replacement = TRUE
 
 /turf/open/floor/plating/setup_broken_states()
-	return list("platingdmg1", "platingdmg2", "platingdmg3")
+	return list("damaged1", "damaged2", "damaged4")
 
 /turf/open/floor/plating/setup_burnt_states()
-	return list("panelscorched")
+	return list("floorscorched1", "floorscorched2")
 
 /turf/open/floor/plating/examine(mob/user)
 	. = ..()

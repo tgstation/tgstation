@@ -11,7 +11,7 @@
 						/obj/item/clothing/glasses/godeye,
 						/obj/item/melee/ghost_sword,
 						/obj/item/clothing/neck/necklace/memento_mori,
-						/obj/item/organ/heart/cursed/wizard,
+						/obj/item/organ/internal/heart/cursed/wizard,
 						/obj/item/clothing/suit/hooded/cloak/drake,
 						/obj/item/ship_in_a_bottle,
 						/obj/item/clothing/shoes/clown_shoes/banana_shoes,
@@ -43,7 +43,7 @@
 	unit_name = "major lava planet artifact"
 	export_types = list(/obj/item/hierophant_club,
 						/obj/item/melee/cleaving_saw,
-						/obj/item/organ/vocal_cords/colossus,
+						/obj/item/organ/internal/vocal_cords/colossus,
 						/obj/machinery/anomalous_crystal,
 						/obj/item/mayhem,
 						/obj/item/gun/magic/staff/spellblade,

@@ -50,7 +50,7 @@
 	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500, /datum/material/plasma = 400)
 	build_path = /obj/item/gun/energy/plasmacutter
 	category = list("Mining Designs")
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/plasmacutter_adv
 	name = "Advanced Plasma Cutter"

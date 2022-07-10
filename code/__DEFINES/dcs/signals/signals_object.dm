@@ -59,6 +59,9 @@
 /// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
 
+/// from /obj/proc/make_unfrozen()
+#define COMSIG_OBJ_UNFREEZE "obj_unfreeze"
+
 // /obj/machinery/atmospherics/components/binary/valve signals
 
 /// from /obj/machinery/atmospherics/components/binary/valve/toggle(): (on)
@@ -116,6 +119,12 @@
 #define COMSIG_ITEM_DROPPED "item_drop"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
+
+/// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
+#define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
+	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	#define COMPONENT_ACTION_HANDLED (1<<0)
+
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
 ///from base of obj/item/hit_reaction(): (list/args)
@@ -222,8 +231,6 @@
 
 ///from [/mob/living/carbon/human/Move]: ()
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"
-///from base of /obj/item/clothing/suit/space/proc/toggle_spacesuit(): (obj/item/clothing/suit/space/suit)
-#define COMSIG_SUIT_SPACE_TOGGLE "suit_space_toggle"
 
 // /obj/item/implant signals
 ///from base of /obj/item/implant/proc/activate(): ()
@@ -305,31 +312,6 @@
 	#define THRUSTER_ACTIVATION_FAILED (1<<0)
 //called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
 #define COMSIG_THRUSTER_DEACTIVATED "jetmodule_deactivated"
-
-// /obj/effect/proc_holder/spell signals
-
-///called from /obj/effect/proc_holder/spell/cast_check (src)
-#define COMSIG_MOB_PRE_CAST_SPELL "mob_cast_spell"
-	/// Return to cancel the cast from beginning.
-	#define COMPONENT_CANCEL_SPELL (1<<0)
-///called from /obj/effect/proc_holder/spell/perform (src)
-#define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
-
-/// Sent from /obj/effect/proc_holder/spell/targeted/lichdom/cast(), to the item being imbued: (mob/user)
-#define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul"
-	/// Returns to block this item from being imbued into a phylactery
-	#define COMPONENT_BLOCK_IMBUE (1 << 0)
-/// Sent from /obj/effect/proc_holder/spell/targeted/summonitem/cast(), to the item being marked : ()
-#define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"
-	/// Returns to block this item from being marked for instant summons
-	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1<<0)
-
-/// Sent from /obj/effect/proc_holder/spell/targeted/charge/cast(), to the item in hand being charged: (obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
-#define COMSIG_ITEM_MAGICALLY_CHARGED "item_magic_charged"
-	/// Returns if an item was successfuly recharged
-	#define COMPONENT_ITEM_CHARGED (1 << 0)
-	/// Returns if the item had a negative side effect occur while recharging
-	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
 
 // /obj/item/camera signals
 

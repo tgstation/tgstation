@@ -233,7 +233,7 @@
 
 /obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, location = where)
+	smoke.set_up(0, holder = src, location = where)
 	smoke.start()
 
 
@@ -310,7 +310,7 @@
 			tmp_holder.add_reagent(chosenchem , 50)
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-			smoke.set_up(0, location = src, carry = tmp_holder, silent = TRUE)
+			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 			smoke.start()
 			qdel(tmp_holder)
@@ -322,7 +322,7 @@
 			tmp_holder.my_atom = src
 			tmp_holder.add_reagent(chosenchem , 50)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-			smoke.set_up(0, location = src, carry = tmp_holder, silent = TRUE)
+			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 			smoke.start()
 			qdel(tmp_holder)
@@ -406,7 +406,7 @@
 			tmp_holder.add_reagent(/datum/reagent/consumable/frostoil, 50)
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-			smoke.set_up(0, location = src, carry = tmp_holder, silent = TRUE)
+			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 			smoke.start()
 			qdel(tmp_holder)
@@ -428,7 +428,7 @@
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message(span_warning("[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!"))
 			var/datum/effect_system/fluid_spread/smoke/smoke = new
-			smoke.set_up(0, location = loc)
+			smoke.set_up(0, holder = src, location = loc)
 			smoke.start()
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -599,7 +599,7 @@
 
 /obj/item/relic/proc/throwSmoke(turf/where)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, location = get_turf(where))
+	smoke.set_up(0, holder = src, location = get_turf(where))
 	smoke.start()
 
 /obj/item/relic/proc/corgicannon(mob/user)

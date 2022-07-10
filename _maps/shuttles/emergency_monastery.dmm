@@ -564,10 +564,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"io" = (
-/obj/structure/lattice,
-/turf/closed/mineral,
-/area/shuttle/escape)
 "it" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -1705,9 +1701,9 @@
 /area/shuttle/escape)
 "yA" = (
 /obj/machinery/door/morgue{
-	name = "Private Exhibit";
-	req_access = list("library")
+	name = "Private Exhibit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/library,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -2723,9 +2719,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ll" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2962,9 +2956,7 @@
 /area/shuttle/escape)
 "Oi" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Monastery Cemetery";
 	network = list("ss13","monastery")
@@ -5313,7 +5305,7 @@ Ho
 Ho
 Ho
 Ho
-io
+Ho
 JG
 JG
 JG
@@ -5400,7 +5392,7 @@ JG
 JG
 JG
 Ho
-io
+Ho
 Ho
 Ho
 Ho
@@ -5473,9 +5465,9 @@ JG
 Ho
 Ho
 Ho
-io
 Ho
-io
+Ho
+Ho
 JG
 PB
 JG
@@ -5568,7 +5560,7 @@ PB
 JG
 Ho
 Ho
-io
+Ho
 Ho
 Ho
 Ho
@@ -6147,7 +6139,7 @@ zE
 PB
 PB
 PB
-io
+Ho
 Ho
 Ho
 JG
@@ -6556,7 +6548,7 @@ nr
 PB
 PB
 PB
-io
+Ho
 Ho
 Ho
 Pb
@@ -6800,7 +6792,7 @@ PB
 PB
 PB
 PB
-io
+Ho
 Ho
 Ho
 Ho
@@ -7036,7 +7028,7 @@ JG
 PB
 Ho
 Ho
-io
+Ho
 Ho
 PB
 JG
@@ -7115,14 +7107,14 @@ JG
 PB
 JG
 Ho
-io
 Ho
 Ho
 Ho
 Ho
-io
 Ho
-io
+Ho
+Ho
+Ho
 Ho
 Ho
 Ho
@@ -7194,7 +7186,7 @@ Ho
 JG
 JG
 JG
-io
+Ho
 Ho
 Ho
 Ho

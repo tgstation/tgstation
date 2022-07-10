@@ -211,7 +211,7 @@
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 
-	smoke_system.set_up(3, location = src)
+	smoke_system.set_up(3, holder = src, location = src)
 	smoke_system.attach(src)
 
 	radio = new(src)

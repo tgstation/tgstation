@@ -54,6 +54,8 @@
 		if(E)
 			E.admin_setup(usr)
 			var/datum/round_event/event = E.runEvent()
+			if(event.cancel_event)
+				return
 			if(event.announceWhen>0)
 				event.processing = FALSE
 				var/prompt = tgui_alert(usr, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel"))
@@ -677,6 +679,7 @@
 		if(ishuman(L))
 			var/mob/living/carbon/human/observer = L
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit/black(observer), ITEM_SLOT_ICLOTHING)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/neck/tie/black/tied(observer), ITEM_SLOT_NECK)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), ITEM_SLOT_FEET)
 		L.Unconscious(100)
 		sleep(5)

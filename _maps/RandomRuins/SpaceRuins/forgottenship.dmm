@@ -24,9 +24,9 @@
 "ae" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "af" = (
@@ -236,9 +236,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aQ" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aR" = (
@@ -263,9 +263,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aU" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aV" = (
@@ -318,9 +318,9 @@
 "be" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bf" = (
@@ -467,9 +467,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bx" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Captain's Room";
-	req_access = list("syndicate")
+	name = "Captain's Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/poddoor{
 	id = "fscaproom";
 	name = "Captain's Blast Door";
@@ -479,9 +479,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "by" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bz" = (
@@ -521,9 +521,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bF" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
@@ -567,9 +567,9 @@
 /obj/structure/cable,
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bN" = (
@@ -708,9 +708,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ch" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Captain's Room";
-	req_access = list("syndicate")
+	name = "Captain's Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/poddoor{
 	id = "fscaproom";
 	name = "Captain's Blast Door";
@@ -744,9 +744,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cm" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cn" = (
@@ -772,9 +772,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cq" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Bridge";
-	req_access = list("syndicate")
+	name = "Bridge"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -887,9 +887,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cG" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -927,9 +927,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cK" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
@@ -1055,9 +1055,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cZ" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -1154,9 +1154,9 @@
 /obj/machinery/door/airlock/grunge{
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 0, "fire" = 90, "acid" = 90);
 	desc = "Vault airlock preventing air from going out.";
-	name = "Syndicate Vault Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Vault Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dm" = (
@@ -1170,9 +1170,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dn" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_access = list("syndicate")
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "do" = (

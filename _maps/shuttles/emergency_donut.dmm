@@ -275,9 +275,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aY" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aZ" = (

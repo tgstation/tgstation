@@ -107,9 +107,9 @@
 /area/ruin/syndicate_lava_base/telecomms)
 "y" = (
 /obj/machinery/door/airlock/security{
-	name = "Security Office";
-	req_access = list("syndicate")
+	name = "Security Office"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
@@ -171,9 +171,9 @@
 /obj/structure/cable,
 /obj/modular_map_connector,
 /obj/machinery/door/airlock/security{
-	name = "Security Office";
-	req_access = list("syndicate")
+	name = "Security Office"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/template_noop,
 /area/ruin/syndicate_lava_base/telecomms)
 "G" = (

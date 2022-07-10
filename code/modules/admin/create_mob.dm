@@ -13,7 +13,7 @@
 /proc/randomize_human(mob/living/carbon/human/human)
 	human.gender = pick(MALE, FEMALE)
 	human.physique = human.gender
-	human.real_name = random_unique_name(human.gender)
+	human.real_name = human.dna?.species.random_name(human.gender) || random_unique_name(human.gender)
 	human.name = human.real_name
 	human.underwear = random_underwear(human.gender)
 	human.underwear_color = "#[random_color()]"
@@ -30,6 +30,7 @@
 	// Mutant randomizing, doesn't affect the mob appearance unless it's the specific mutant.
 	human.dna.features["mcolor"] = "#[random_color()]"
 	human.dna.features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
+	human.dna.features["tail_cat"] = pick(GLOB.tails_list_human)
 	human.dna.features["tail_lizard"] = pick(GLOB.tails_list_lizard)
 	human.dna.features["snout"] = pick(GLOB.snouts_list)
 	human.dna.features["horns"] = pick(GLOB.horns_list)

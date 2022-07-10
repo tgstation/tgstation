@@ -2,11 +2,11 @@
 	title = JOB_SHAFT_MINER
 	description = "Travel to strange lands. Mine ores. \
 		Meet strange creatures. Kill them for their gold."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
+	department_head = list(JOB_QUARTERMASTER)
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 3
-	supervisors = "the quartermaster and the head of personnel"
+	supervisors = "the quartermaster"
 	selection_color = "#dcba97"
 	exp_granted_type = EXP_TYPE_CREW
 

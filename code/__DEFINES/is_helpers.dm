@@ -155,6 +155,9 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
+#define isspider(A) (istype(A, /mob/living/simple_animal/hostile/giant_spider))
+
+
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
@@ -200,6 +203,10 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define ismopable(A) (A && (A.layer <= FLOOR_CLEAN_LAYER)) //If something can be cleaned by floor-cleaning devices such as mops or clean bots
 
 #define isorgan(A) (istype(A, /obj/item/organ))
+
+#define isinternalorgan(A) (istype(A, /obj/item/organ/internal))
+
+#define isexternalorgan(A) (istype(A, /obj/item/organ/external))
 
 #define isclothing(A) (istype(A, /obj/item/clothing))
 

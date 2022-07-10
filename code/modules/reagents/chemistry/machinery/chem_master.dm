@@ -232,9 +232,8 @@
 	data["autoCondiStyle"] = CONDIMASTER_STYLE_AUTO
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
-		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 		data["pillBottleCurrentAmount"] = bottle.contents.len
-		data["pillBottleMaxAmount"] = STRB.max_items
+		data["pillBottleMaxAmount"] = bottle.atom_storage.max_slots
 
 	var/beaker_contents[0]
 	if(beaker)
@@ -386,10 +385,8 @@
 			var/target_loc = drop_location()
 			var/drop_threshold = INFINITY
 			if(bottle)
-				var/datum/component/storage/STRB = bottle.GetComponent(
-					/datum/component/storage)
-				if(STRB)
-					drop_threshold = STRB.max_items - bottle.contents.len
+				if(bottle.atom_storage)
+					drop_threshold = bottle.atom_storage.max_slots - bottle.contents.len
 					target_loc = bottle
 			for(var/i in 1 to amount)
 				if(i-1 < drop_threshold)
@@ -445,18 +442,17 @@
 		return FALSE
 
 	if(action == "analyze")
-		var/datum/reagent/R = GLOB.name2reagent[params["id"]]
-		if(R)
+		var/datum/reagent/analyzed_reagent = GLOB.name2reagent[params["id"]]
+		if(analyzed_reagent)
 			var/state = "Unknown"
-			if(initial(R.reagent_state) == 1)
+			if(initial(analyzed_reagent.reagent_state) == SOLID)
 				state = "Solid"
-			else if(initial(R.reagent_state) == 2)
+			else if(initial(analyzed_reagent.reagent_state) == LIQUID)
 				state = "Liquid"
-			else if(initial(R.reagent_state) == 3)
+			else if(initial(analyzed_reagent.reagent_state) == GAS)
 				state = "Gas"
-			var/const/P = 3 //The number of seconds between life ticks
-			var/T = initial(R.metabolization_rate) * (60 / P)
-			analyze_vars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "pH" = initial(R.ph))
+			var/metabolization_rate = initial(analyzed_reagent.metabolization_rate) * (60 / SSMOBS_DT)
+			analyze_vars = list("name" = initial(analyzed_reagent.name), "state" = state, "color" = initial(analyzed_reagent.color), "description" = initial(analyzed_reagent.description), "metaRate" = metabolization_rate, "overD" = initial(analyzed_reagent.overdose_threshold), "pH" = initial(analyzed_reagent.ph))
 			screen = "analyze"
 			return TRUE
 

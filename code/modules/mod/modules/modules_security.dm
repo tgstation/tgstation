@@ -1,80 +1,5 @@
 //Security modules for MODsuits
 
-///Cloaking - Lowers the user's visibility, can be interrupted by being touched or attacked.
-/obj/item/mod/module/stealth
-	name = "MOD prototype cloaking module"
-	desc = "A complete retrofitting of the suit, this is a form of visual concealment tech employing esoteric technology \
-		to bend light around the user, as well as mimetic materials to make the surface of the suit match the \
-		surroundings based off sensor data. For some reason, this tech is rarely seen."
-	icon_state = "cloak"
-	module_type = MODULE_TOGGLE
-	complexity = 4
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
-	incompatible_modules = list(/obj/item/mod/module/stealth)
-	cooldown_time = 5 SECONDS
-	/// Whether or not the cloak turns off on bumping.
-	var/bumpoff = TRUE
-	/// The alpha applied when the cloak is on.
-	var/stealth_alpha = 50
-
-/obj/item/mod/module/stealth/on_activation()
-	. = ..()
-	if(!.)
-		return
-	if(bumpoff)
-		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, .proc/unstealth)
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_unarmed_attack)
-	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
-	RegisterSignal(mod.wearer, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
-	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
-	drain_power(use_power_cost)
-
-/obj/item/mod/module/stealth/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
-	if(bumpoff)
-		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
-	UnregisterSignal(mod.wearer, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
-	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
-
-/obj/item/mod/module/stealth/proc/unstealth(datum/source)
-	SIGNAL_HANDLER
-
-	to_chat(mod.wearer, span_warning("[src] gets discharged from contact!"))
-	do_sparks(2, TRUE, src)
-	drain_power(use_power_cost)
-	on_deactivation(display_message = TRUE, deleting = FALSE)
-
-/obj/item/mod/module/stealth/proc/on_unarmed_attack(datum/source, atom/target)
-	SIGNAL_HANDLER
-
-	if(!isliving(target))
-		return
-	unstealth(source)
-
-/obj/item/mod/module/stealth/proc/on_bullet_act(datum/source, obj/projectile/projectile)
-	SIGNAL_HANDLER
-
-	if(projectile.nodamage)
-		return
-	unstealth(source)
-
-/obj/item/mod/module/stealth/ninja
-	name = "MOD advanced cloaking module"
-	desc = "The latest in stealth technology, this module is a definite upgrade over previous versions. \
-		The field has been tuned to be even more responsive and fast-acting, with enough stability to \
-		continue operation of the field even if the user bumps into others. \
-		The power draw has been reduced drastically, making this perfect for activities like \
-		standing near sentry turrets for extended periods of time."
-	icon_state = "cloak_ninja"
-	bumpoff = FALSE
-	stealth_alpha = 20
-	active_power_cost = DEFAULT_CHARGE_DRAIN
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
-	cooldown_time = 3 SECONDS
-
 ///Magnetic Harness - Automatically puts guns in your suit storage when you drop them.
 /obj/item/mod/module/magnetic_harness
 	name = "MOD magnetic harness module"
@@ -155,8 +80,8 @@
 	var/datum/reagents/capsaicin_holder = new(10)
 	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
 	var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke = new
-	smoke.set_up(1, location = get_turf(src), carry = capsaicin_holder)
-	smoke.start()
+	smoke.set_up(1, holder = src, location = get_turf(src), carry = capsaicin_holder)
+	smoke.start(log = TRUE)
 	QDEL_NULL(capsaicin_holder) // Reagents have a ref to their holder which has a ref to them. No leaks please.
 
 /obj/item/mod/module/pepper_shoulders/proc/on_check_shields()
@@ -412,3 +337,32 @@
 	projectile.damage /= damage_multiplier
 	projectile.speed /= speed_multiplier
 	projectile.cut_overlay(projectile_effect)
+
+///Active Sonar - Displays a hud circle on the turf of any living creatures in the given radius
+/obj/item/mod/module/active_sonar
+	name = "MOD active sonar"
+	desc = "Ancient tech from the 20th century, this module uses sonic waves to detect living creatures within the user's radius. \
+	Its loud ping is much harder to hide in an indoor station than in the outdoor operations it was designed for."
+	icon_state = "active_sonar"
+	module_type = MODULE_USABLE
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	complexity = 3
+	incompatible_modules = list(/obj/item/mod/module/active_sonar)
+	cooldown_time = 25 SECONDS
+
+/obj/item/mod/module/active_sonar/on_use()
+	. = ..()
+	if(!.)
+		return
+	balloon_alert(mod.wearer, "readying sonar...")
+	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	if(!do_after(mod.wearer, 1.1 SECONDS))
+		return
+	var/creatures_detected = 0
+	for(var/mob/living/creature in range(9, mod.wearer))
+		if(creature == mod.wearer || creature.stat == DEAD)
+			continue
+		new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature)
+		creatures_detected++
+	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE) // Should be audible for the radius of the sonar
+	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [creatures_detected] living beings nearby!"))

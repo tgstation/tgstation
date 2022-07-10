@@ -643,9 +643,7 @@
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "ci" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "cj" = (
@@ -720,7 +718,7 @@
 /obj/item/stack/medical/gauze,
 /obj/item/reagent_containers/food/drinks/bottle/whiskey,
 /obj/item/reagent_containers/glass/bottle/ethanol,
-/obj/item/organ/stomach,
+/obj/item/organ/internal/stomach,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)

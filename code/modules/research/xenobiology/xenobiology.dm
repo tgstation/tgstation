@@ -316,7 +316,7 @@
 			return 250
 
 		if(SLIME_ACTIVATE_MAJOR)
-			user.reagents.create_foam(/datum/effect_system/fluid_spread/foam, 20)
+			user.reagents.create_foam(/datum/effect_system/fluid_spread/foam, 20, log = TRUE)
 			user.visible_message(span_danger("Foam spews out from [user]'s skin!"), span_warning("You activate [src], and foam bursts out of your skin!"))
 			return 600
 
@@ -904,7 +904,7 @@
 	C.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
-/obj/item/slimepotion/speed/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+/obj/item/slimepotion/speed/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	if(!isitem(storage_holder))
 		return TRUE
 	if(istype(storage_holder, /obj/item/mod/control))

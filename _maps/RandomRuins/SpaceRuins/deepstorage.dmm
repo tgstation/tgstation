@@ -254,18 +254,18 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "aO" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Recycling Room";
-	req_access = list("away_general")
+	name = "Recycling Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aP" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Recycling Room";
-	req_access = list("away_general")
+	name = "Recycling Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/crusher)
@@ -746,9 +746,9 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "bX" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "General Storage";
-	req_access = list("away_general")
+	name = "General Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -1005,9 +1005,9 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "cD" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Provisions Storage";
-	req_access = list("away_general")
+	name = "Provisions Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -1425,9 +1425,9 @@
 /area/ruin/space/has_grav/deepstorage)
 "dM" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure Storage";
-	req_access = list("away_general")
+	name = "Secure Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -1528,9 +1528,9 @@
 /area/ruin/space/has_grav/deepstorage)
 "ee" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure Storage";
-	req_access = list("away_general")
+	name = "Secure Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -1591,9 +1591,9 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "en" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Canister Storage";
-	req_access = list("away_general")
+	name = "Canister Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
 "eo" = (
@@ -1618,9 +1618,9 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "er" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Airlock Control";
-	req_access = list("away_general")
+	name = "Airlock Control"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1878,18 +1878,18 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Atmospherics and Power Storage";
-	req_access = list("away_general")
+	name = "Atmospherics and Power Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "eZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/visible,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Atmospherics and Power Storage";
-	req_access = list("away_general")
+	name = "Atmospherics and Power Storage"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fa" = (
@@ -2180,9 +2180,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/warning/secure_area{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/secure_area/directional/north,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -2208,9 +2206,7 @@
 	c_tag = "Bunker entrance";
 	network = list("bunker1")
 	},
-/obj/structure/sign/warning/secure_area{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/secure_area/directional/north,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -2233,9 +2229,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2373,9 +2367,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/electric_shock/directional/south,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2430,9 +2422,9 @@
 "gz" = (
 /obj/machinery/door/airlock/highsecurity{
 	desc = "Nothing to see here, folks, just an inconspicuous airlock. Now go away!";
-	name = "Inconspicuous Airlock";
-	req_access = list("away_general")
+	name = "Inconspicuous Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
@@ -2496,9 +2488,9 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gL" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "RTG Observation";
-	req_access = list("away_general")
+	name = "RTG Observation"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2523,9 +2515,9 @@
 "gQ" = (
 /obj/machinery/door/airlock/highsecurity{
 	desc = "Nothing to see here, folks, just an inconspicuous airlock. Now go away!";
-	name = "Inconspicuous Airlock";
-	req_access = list("away_general")
+	name = "Inconspicuous Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -2542,9 +2534,7 @@
 	dir = 5
 	},
 /obj/machinery/autolathe,
-/obj/structure/sign/warning/radiation{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/radiation/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2580,9 +2570,9 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gY" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Telecomms";
-	req_access = list("away_general")
+	name = "Telecomms"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gZ" = (
@@ -2830,10 +2820,7 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "Az" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/ten_k{
-	name = "Pharmacy APC";
-	pixel_x = 25
-	},
+/obj/machinery/power/apc/ten_k/directional/east,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "AI" = (

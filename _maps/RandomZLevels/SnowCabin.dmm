@@ -185,9 +185,8 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/baseturf_helper/asteroid/snow,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "aF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -237,9 +236,8 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "aN" = (
 /obj/structure/chair/wood{
@@ -272,9 +270,8 @@
 	name = "geothermal generator"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "aR" = (
 /obj/machinery/door/window/right/directional/west{
@@ -728,7 +725,6 @@
 /obj/structure/cable,
 /obj/structure/musician/piano{
 	desc = "Very theatrical.";
-	icon_state = "piano";
 	name = "theatre piano"
 	},
 /turf/open/floor/wood,
@@ -859,9 +855,8 @@
 /area/awaymission/cabin)
 "cT" = (
 /obj/vehicle/ridden/atv,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "cU" = (
 /obj/machinery/light/directional/north,
@@ -873,15 +868,13 @@
 /area/awaymission/cabin)
 "cW" = (
 /obj/item/shovel,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "cX" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "cZ" = (
 /turf/open/floor/plating/snowed/snow_cabin,
@@ -996,9 +989,8 @@
 "du" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "dv" = (
 /obj/structure{
@@ -1011,9 +1003,8 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "dw" = (
 /mob/living/simple_animal/hostile/bear/snow{
@@ -1162,9 +1153,8 @@
 /area/awaymission/cabin)
 "ec" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "ed" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2113,9 +2103,7 @@
 "hf" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/remains/robot,
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/fire/directional/north,
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -2225,9 +2213,8 @@
 /obj/item/lightreplacer,
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "hx" = (
 /obj/structure/cable,
@@ -3038,34 +3025,8 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/caves)
 "ko" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken"
-	},
-/area/awaymission/cabin/caves)
-"kp" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken4"
-	},
-/area/awaymission/cabin/caves)
-"kq" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken5"
-	},
-/area/awaymission/cabin/caves)
-"kr" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken3"
-	},
-/area/awaymission/cabin/caves)
-"ks" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken2"
-	},
-/area/awaymission/cabin/caves)
-"ku" = (
-/turf/open/floor/wood/freezing{
-	icon_state = "wood-broken7"
-	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/freezing,
 /area/awaymission/cabin/caves)
 "kE" = (
 /obj/structure/closet,
@@ -3344,9 +3305,8 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/cabin/caves)
 "mw" = (
-/obj/structure/sign/warning{
-	name = "\improper SAWBLADE WARNING";
-	pixel_x = -32
+/obj/structure/sign/warning/directional/west{
+	name = "\improper SAWBLADE WARNING"
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
@@ -4389,9 +4349,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Lt" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/no_smoking/directional/east,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "LE" = (
@@ -4650,7 +4608,7 @@
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
 	},
-/mob/living/simple_animal/hostile/statue{
+/mob/living/simple_animal/hostile/netherworld/statue{
 	desc = "Just a snowman. Just a snowman. Oh god, it's just a snowman.";
 	faction = list("statue","mining");
 	health = 5000;
@@ -4806,9 +4764,7 @@
 	},
 /area/awaymission/cabin/caves)
 "Un" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/no_smoking/directional/west,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "Uu" = (
@@ -20995,8 +20951,8 @@ Oe
 Oe
 ki
 ki
-kq
-ks
+ko
+ko
 ki
 ki
 ki
@@ -21255,7 +21211,7 @@ ki
 ki
 ki
 ki
-ku
+ko
 ki
 Oe
 Oe
@@ -24850,7 +24806,7 @@ ki
 ki
 ki
 ki
-kr
+ko
 Oe
 Oe
 gx
@@ -25105,7 +25061,7 @@ Oe
 ki
 ki
 ki
-kp
+ko
 ki
 ki
 Oe

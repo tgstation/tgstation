@@ -27,7 +27,7 @@
 /obj/item/autosurgeon/organ/syndicate/commsagent
 	desc = "A device that automatically - painfully - inserts an implant. It seems someone's specially \
 	modified this one to only insert... tongues. Horrifying."
-	organ_type = /obj/item/organ/tongue
+	organ_type = /obj/item/organ/internal/tongue
 
 /obj/structure/closet/crate/secure/freezer/commsagent
 	name = "Assorted Tongues And Tongue Accessories"
@@ -35,14 +35,14 @@
 
 /obj/structure/closet/crate/secure/freezer/commsagent/PopulateContents()
 	. = ..() //Contains a variety of less exotic tongues (And tongue accessories) for the comms agent to mess with.
-	new /obj/item/organ/tongue(src)
-	new /obj/item/organ/tongue/lizard(src)
-	new /obj/item/organ/tongue/fly(src)
-	new /obj/item/organ/tongue/zombie(src)
-	new /obj/item/organ/tongue/bone(src)
-	new /obj/item/organ/tongue/robot(src) //DANGER! CRYSTAL HYPERSTRUCTURE-
-	new /obj/item/organ/tongue/ethereal(src)
-	new /obj/item/organ/tongue/tied(src)
+	new /obj/item/organ/internal/tongue(src)
+	new /obj/item/organ/internal/tongue/lizard(src)
+	new /obj/item/organ/internal/tongue/fly(src)
+	new /obj/item/organ/internal/tongue/zombie(src)
+	new /obj/item/organ/internal/tongue/bone(src)
+	new /obj/item/organ/internal/tongue/robot(src) //DANGER! CRYSTAL HYPERSTRUCTURE-
+	new /obj/item/organ/internal/tongue/ethereal(src)
+	new /obj/item/organ/internal/tongue/tied(src)
 	new /obj/item/autosurgeon/organ/syndicate/commsagent(src)
 	new	/obj/item/clothing/gloves/radio(src)
 

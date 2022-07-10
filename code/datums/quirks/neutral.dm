@@ -207,7 +207,7 @@
 	// We set override to TRUE as link to holder will be called whenever the preference is applied, given this quirk exists on the mob
 	RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal, override=TRUE)
 
-	var/obj/item/organ/eyes/eyes_of_the_holder = quirk_holder.getorgan(/obj/item/organ/eyes)
+	var/obj/item/organ/internal/eyes/eyes_of_the_holder = quirk_holder.getorgan(/obj/item/organ/internal/eyes)
 	if(!eyes_of_the_holder)
 		return
 
@@ -215,7 +215,7 @@
 	eyes_of_the_holder.old_eye_color_right = color
 	eyes_of_the_holder.refresh()
 
-/datum/quirk/heterochromatic/proc/check_eye_removal(datum/source, obj/item/organ/eyes/removed)
+/datum/quirk/heterochromatic/proc/check_eye_removal(datum/source, obj/item/organ/internal/eyes/removed)
 	SIGNAL_HANDLER
 
 	if(!istype(removed))
@@ -342,11 +342,11 @@
 
 /datum/quirk/item_quirk/tongue_tied/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/organ/tongue/old_tongue = human_holder.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/tongue/old_tongue = human_holder.getorganslot(ORGAN_SLOT_TONGUE)
 	old_tongue.Remove(human_holder)
 	qdel(old_tongue)
 
-	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(human_holder))
+	var/obj/item/organ/internal/tongue/tied/new_tongue = new(get_turf(human_holder))
 	new_tongue.Insert(human_holder)
 	// Only tongues of people with this quirk can't be removed. Manually spawned or found tongues can be.
 	new_tongue.organ_flags |= ORGAN_UNREMOVABLE

@@ -183,7 +183,7 @@
 			if(ingredients.len >= max_n_of_items)
 				to_chat(user, span_warning("\The [src] is full, you can't put anything in!"))
 				return TRUE
-			if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
+			if(T.atom_storage.attempt_remove(S, src))
 				loaded++
 				ingredients += S
 		if(loaded)
@@ -374,9 +374,12 @@
 	update_appearance()
 
 /// Type of microwave that automatically turns it self on erratically. Probably don't use this outside of the holodeck program "Microwave Paradise".
-/// You could also live your life with a microwave that will continously run in the background of everything and drain any hint of power. I think the former makes more sense.
+/// You could also live your life with a microwave that will continously run in the background of everything while also not having any power draw. I think the former makes more sense.
 /obj/machinery/microwave/hell
 	desc = "Cooks and boils stuff. This one appears to be a bit... off."
+	use_power = NO_POWER_USE
+	idle_power_usage = 0
+	active_power_usage = 0
 
 /obj/machinery/microwave/hell/Initialize()
 	. = ..()

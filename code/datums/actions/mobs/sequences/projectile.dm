@@ -4,5 +4,7 @@
 	button_icon_state = "sniper_zoom"
 	desc = "Allows you to shoot directly at a target while also firing around you."
 	cooldown_time = 12 SECONDS
-	sequence_actions = list(/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/direct = 0,
-							/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular/complete = 0)
+	sequence_actions = list(
+							/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/direct = 0,
+							/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular/complete = 0,
+							)

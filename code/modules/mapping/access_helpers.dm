@@ -1,5 +1,5 @@
 /obj/effect/mapping_helpers/airlock/access
-	layer = DOOR_HELPER_LAYER
+	layer = DOOR_ACCESS_HELPER_LAYER
 	icon_state = "access_helper"
 
 // These are mutually exclusive; can't have req_any and req_all
@@ -8,21 +8,14 @@
 		log_mapping("[src] at [AREACOORD(src)] tried to set req_one_access, but req_access was already set!")
 	else
 		var/list/access_list = get_access()
-		// Overwrite if there is no access set, otherwise add onto existing access
-		if(airlock.req_one_access == null)
-			airlock.req_one_access = access_list
-		else
-			airlock.req_one_access += access_list
+		airlock.req_one_access += access_list
 
 /obj/effect/mapping_helpers/airlock/access/all/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.req_one_access != null)
 		log_mapping("[src] at [AREACOORD(src)] tried to set req_one_access, but req_access was already set!")
 	else
 		var/list/access_list = get_access()
-		if(airlock.req_access == null)
-			airlock.req_access = access_list
-		else
-			airlock.req_access_txt += access_list
+		airlock.req_access += access_list
 
 /obj/effect/mapping_helpers/airlock/access/proc/get_access()
 	var/list/access = list()
@@ -52,6 +45,12 @@
 	var/list/access_list = ..()
 	access_list += ACCESS_EVA
 	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/command/minisat/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_MINISAT
+	return access_list
+
 
 /obj/effect/mapping_helpers/airlock/access/any/command/gateway/get_access()
 	var/list/access_list = ..()
@@ -347,9 +346,9 @@
 	access_list += ACCESS_CARGO
 	return access_list
 
-/obj/effect/mapping_helpers/airlock/access/any/supply/mail_sorting/get_access()
+/obj/effect/mapping_helpers/airlock/access/any/supply/shipping/get_access()
 	var/list/access_list = ..()
-	access_list += ACCESS_MAIL_SORTING
+	access_list += ACCESS_SHIPPING
 	return access_list
 
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining/get_access()
@@ -527,6 +526,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/eva/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_EVA
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/command/minisat/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_MINISAT
 	return access_list
 
 /obj/effect/mapping_helpers/airlock/access/all/command/gateway/get_access()
@@ -793,9 +797,9 @@
 	access_list += ACCESS_CARGO
 	return access_list
 
-/obj/effect/mapping_helpers/airlock/access/all/supply/mail_sorting/get_access()
+/obj/effect/mapping_helpers/airlock/access/all/supply/shipping/get_access()
 	var/list/access_list = ..()
-	access_list += ACCESS_MAIL_SORTING
+	access_list += ACCESS_SHIPPING
 	return access_list
 
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining/get_access()
