@@ -235,7 +235,7 @@
 	if(hacker && hacker.put_in_hands(hacking_cable))
 		hacker.visible_message(span_warning("A port on [user] opens to reveal \a \
 			[hacking_cable], which you quickly grab hold of."), span_hear("You hear \
-			the soft click of a plastic	component and manage to catch the falling \
+			the soft click of a plastic component and manage to catch the falling \
 			[hacking_cable]."))
 		track(hacking_cable)
 		return TRUE
