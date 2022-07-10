@@ -796,7 +796,7 @@
 	return pick("Fluffy","Bunny","Easter","Egg")
 
 /// Takes a holiday datum, a starting month, ending month, max amount of days to test in, and min/max year as input
-/// Returns a list in the form list("yyyy/mm/dd", ...) representing all days the holiday runs on in the tested range
+/// Returns a list in the form list("yyyy/m/d", ...) representing all days the holiday runs on in the tested range
 /proc/poll_holiday(datum/holiday/path, min_month, max_month, min_year, max_year, max_day)
 	var/list/deets = list()
 	for(var/year in min_year to max_year)

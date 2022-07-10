@@ -31,7 +31,7 @@
 /datum/unit_test/moth_week_2020/Run()
 	// We expect 2 year's worth of moth week, falling on the last full week of july
 	// We test ahead and behind just in case something's fucked
-	// Both lists are in the form yyyy/mm/dd
+	// Both lists are in the form yyyy/m/d
 	var/list/produced_moth_days = poll_holiday(/datum/holiday/nth_week/moth, 6, 8, 2020, 2021, 31)
 	var/list/predicted_moth_days = list()
 	for(var/day in 18 to 26) // Last full week of July 2020
