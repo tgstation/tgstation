@@ -9,7 +9,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Section, TextArea, MenuBar, Divider } from '../components';
 import { Component, createRef, RefObject } from 'inferno';
 import { createLogger } from '../logging';
-import { Dialog, SaveAsDialog, UnsavedChangesDialog } from '../components/Dialog';
+import { Dialog, OpenAsDialog, SaveAsDialog, UnsavedChangesDialog } from '../components/Dialog';
 
 const logger = createLogger('NtosNotepad');
 
@@ -39,7 +39,6 @@ enum Dialogs {
   UNSAVED_CHANGES = 1,
   SAVE_AS = 2,
   OPEN = 3,
-  PRINT,
   ABOUT = 4,
 }
 
@@ -381,12 +380,14 @@ const AboutDialog = (props: AboutDialogProps) => {
 };
 
 type NoteData = {
+  files: string;
   note: string;
 };
 type RetryActionType = (retrying?: boolean) => void;
 
 export const NtosNotepad = (props, context) => {
   const { act, data, config } = useBackend<NoteData>(context);
+  const { note, files } = data;
   const [documentName, setDocumentName] = useLocalState<string>(
     context,
     'documentName',
@@ -422,8 +423,8 @@ export const NtosNotepad = (props, context) => {
     'wordWrap',
     true,
   );
-  const closeDialog = () => setActiveDialog(Dialogs.NONE);
-  const save = (newDocumentName: string = documentName) => {
+  const handleCloseDialog = () => setActiveDialog(Dialogs.NONE);
+  const handleSave = (newDocumentName: string = documentName) => {
     logger.log(`Saving the document as ${newDocumentName}`);
     if (newDocumentName === DEFAULT_DOCUMENT_NAME) {
       logger.log(`Document name is ${newDocumentName}. New name is required.`);
@@ -431,7 +432,7 @@ export const NtosNotepad = (props, context) => {
       return;
     }
 
-    act('UpdateNote', { newnote: text });
+    act('UpdateNote', { documentName: newDocumentName, contents: text });
     setOriginalText(text);
     setDocumentName(newDocumentName);
     logger.log('Attempting to retry previous action');
@@ -460,13 +461,13 @@ export const NtosNotepad = (props, context) => {
 
     return false;
   };
-  const openDocument = (retrying = false) => {
-    if (ensureUnsavedChangesAreHandled(openDocument, retrying)) {
+  const handleOpenDocument = (documentName: string, retrying = false) => {
+    if (ensureUnsavedChangesAreHandled(() => handleOpenDocument(documentName) , retrying)) {
       return;
     }
     logger.log(`Opening a document`);
-    setDocumentName('the_note.txt');
-    const { note } = data;
+    act('OpenNote', { documentName: documentName });
+    setDocumentName(documentName);
     setOriginalText(note);
     setText(note);
   };
@@ -503,8 +504,8 @@ export const NtosNotepad = (props, context) => {
       <NtosWindow.Content>
         <Box className='NtosNotepad__layout'>
           <NtosNotepadMenuBar
-            openDocument={openDocument}
-            save={save}
+            openDocument={() => setActiveDialog(Dialogs.OPEN)}
+            save={handleSave}
             saveAsDialog={() => setActiveDialog(Dialogs.SAVE_AS)}
             exit={exit}
             newNote={newNote}
@@ -533,25 +534,33 @@ export const NtosNotepad = (props, context) => {
       {activeDialog === Dialogs.UNSAVED_CHANGES && (
         <UnsavedChangesDialog
           documentName={documentName}
-          save={
+          onSave={
             documentName === DEFAULT_DOCUMENT_NAME
               ? () => setActiveDialog(Dialogs.SAVE_AS)
-              : save
+              : handleSave
           }
-          close={closeDialog}
-          noSave={noSave}
+          onClose={handleCloseDialog}
+          onDiscard={noSave}
         />
       )}
       {activeDialog === Dialogs.SAVE_AS && (
         <SaveAsDialog
+          files={[]}
           newDocumentNameNeeded={documentName === DEFAULT_DOCUMENT_NAME}
           documentName={documentName === DEFAULT_DOCUMENT_NAME ? '*.txt' : documentName}
-          save={save}
-          close={closeDialog}
+          onSave={handleSave}
+          onClose={handleCloseDialog}
         />
       )}
       {activeDialog === Dialogs.ABOUT && (
-        <AboutDialog close={closeDialog} clientName={config.user.name} />
+        <AboutDialog close={handleCloseDialog} clientName={config.user.name} />
+      )}
+      {activeDialog === Dialogs.OPEN && (
+        <OpenAsDialog
+          files={[]}
+          onOpen={handleOpenDocument}
+          onClose={handleCloseDialog}
+        />
       )}
     </NtosWindow>
   );

@@ -7,7 +7,6 @@ import { Box } from './Box';
 import { Button } from './Button';
 import { useLocalState } from '../backend';
 import { Input } from './Input';
-import { LabeledList } from './LabeledList';
 import { Icon } from './Icon';
 
 type DialogProps = {
@@ -15,13 +14,14 @@ type DialogProps = {
   close: () => void;
   children: any;
   width?: string;
+  height?: string;
 };
 
 export const Dialog = (props: DialogProps) => {
-  const { title, close, children, width } = props;
+  const { title, close, children, width, height } = props;
   return (
     <div className="Dialog">
-      <Box className="Dialog__content" width={width || '370px'}>
+      <Box className="Dialog__content" width={width || '370px'} height={height}>
         <div className="Dialog__header">
           <div className="Dialog__title">{title}</div>
           <Box mr={2}>
@@ -65,32 +65,25 @@ Dialog.Button = DialogButton;
 
 type UnsavedChangesDialogProps = {
   documentName: string;
-  save: () => void;
-  noSave: () => void;
-  close: () => void;
+  onSave: () => void;
+  onDiscard: () => void;
+  onClose: () => void;
 };
 
 export const UnsavedChangesDialog = (props: UnsavedChangesDialogProps) => {
-  const { documentName, save, noSave, close } = props;
+  const { documentName, onSave, onDiscard, onClose } = props;
   return (
     <Dialog title="Notepad" close={close}>
       <div className="Dialog__body">
         Do you want to save changes to {documentName}?
       </div>
       <div className="Dialog__footer">
-        <DialogButton onClick={save}>Save</DialogButton>
-        <DialogButton onClick={noSave}>Don&apos;t Save</DialogButton>
-        <DialogButton onClick={close}>Cancel</DialogButton>
+        <DialogButton onClick={onSave}>Save</DialogButton>
+        <DialogButton onClick={onDiscard}>Don&apos;t Save</DialogButton>
+        <DialogButton onClick={onClose}>Cancel</DialogButton>
       </div>
     </Dialog>
   );
-};
-
-type SaveAsDialogProps = {
-  newDocumentNameNeeded: boolean;
-  documentName: string;
-  save: (newDocumentName: string) => void;
-  close: () => void;
 };
 
 type FileEntryProps = {
@@ -107,55 +100,60 @@ const FileEntry = (props: FileEntryProps) => {
   );
 }
 
-const DirectoryList = () => {
-  return (
-    <Box style={{ 'min-width': '5rem', 'max-width': '10rem', 'overflow-x': 'hidden', 'overflow-y': 'auto', 'border-right': '1px solid black' }}>
-      <ol style={{ 'list-style': 'none', 'margin': '0', 'padding': '0' }}>
-        <li style={{ 'word-wrap': 'nowrap' }} >My PDA</li>
-        <li style={{ 'word-wrap': 'nowrap' }} >WIP</li>
-        <li style={{ 'word-wrap': 'nowrap' }} >Etc</li>
-      </ol>
-    </Box>
-  )
+type FileListProps = {
+  files: string[];
 }
 
-const FileList = () => {
+const FileList = (props: FileListProps) => {
+  const {files} = props;
   return (
     <Box className='Dialog__FileList'>
-      <FileEntry name='note_0.txt' />
-      <FileEntry name='note_1.txt' />
-      <FileEntry name='note_2.txt' />
-      <FileEntry name='note_3.txt' />
-      <FileEntry name='note_0.txt' />
-      <FileEntry name='note_1.txt' />
-      <FileEntry name='note_2.txt' />
-      <FileEntry name='note_3.txt' />
-      <FileEntry name='note_1.txt' />
-      <FileEntry name='note_2.txt' />
-      <FileEntry name='note_3.txt' />
-      <FileEntry name='note_1.txt' />
-      <FileEntry name='note_2.txt' />
-      <FileEntry name='note_3.txt' />
-      <FileEntry name='note_0.txt' />
-      <FileEntry name='note_1.txt' />
-      <FileEntry name='note_2.txt' />
-      <FileEntry name='note_3.txt' />
-      <FileEntry name='note_0.txt' />
-      <FileEntry name='note_1.txt' />
-      <FileEntry name='note_2.txt' />
-      <FileEntry name='note_3.txt' />
-      <FileEntry name='note_1.txt' />
-      <FileEntry name='note_2.txt' />
-      <FileEntry name='note_3.txt' />
-      <FileEntry name='note_1.txt' />
-      <FileEntry name='note_2.txt' />
-      <FileEntry name='note_3.txt' />
+      {files.map((file) => (
+        <FileEntry key={file} name={file} />
+      ))}
     </Box>
-  )
+  );
 }
 
+type OpenAsDialogProps = {
+  files: string[];
+  onOpen: (documentName: string) => void;
+  onClose: () => void;
+}
+
+export const OpenAsDialog = (props: OpenAsDialogProps, context) => {
+  const { files, onOpen, onClose } = props;
+  const [selectedDocument, setSelectedDocument] = useLocalState<string>(context, 'selectedDocument', '');
+
+  return (
+    <Dialog title="Save As" close={close} width='80%' height='50%'>
+      <div className="Dialog__body">
+        <FileList files={files} />
+      </div>
+      <div className="Dialog__footer">
+        <div style={{ 'flex-direction': 'column', 'flex-grow': 1 }}>
+          <div className="SaveAsDialog__inputs">
+            <div>
+              <DialogButton onClick={() => onOpen("AAAA")}>Open</DialogButton>
+              <DialogButton onClick={onClose}>Cancel</DialogButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Dialog>
+  )
+};
+
+type SaveAsDialogProps = {
+  files: string[];
+  newDocumentNameNeeded: boolean;
+  documentName: string;
+  onSave: (newDocumentName: string) => void;
+  onClose: () => void;
+};
+
 export const SaveAsDialog = (props: SaveAsDialogProps, context) => {
-  const { newDocumentNameNeeded, documentName, save, close } = props;
+  const { files, newDocumentNameNeeded, documentName, onSave, onClose } = props;
   const [newDocumentName, setNewDocumentName] = useLocalState<string>(
     context,
     'newDocumentName',
@@ -168,15 +166,14 @@ export const SaveAsDialog = (props: SaveAsDialogProps, context) => {
       return;
     }
 
-    save(newDocumentName);
+    onSave(newDocumentName);
   };
 
   return (
-    <Dialog title="Save As" close={close} width='80%'>
+    <Dialog title="Save As" close={close} width='80%' height='50%'>
       <div className="Dialog__body">
         <Box style={{ 'display': 'flex', 'flex-direction': 'row' }}>
-          <DirectoryList />
-          <FileList />
+          <FileList files={files} />
         </Box>
       </div>
       <div className="Dialog__footer">
@@ -197,7 +194,7 @@ export const SaveAsDialog = (props: SaveAsDialogProps, context) => {
           <div className="SaveAsDialog__inputs">
             <div>
               <DialogButton onClick={saveWithValidName}>Save</DialogButton>
-              <DialogButton onClick={close}>Cancel</DialogButton>
+              <DialogButton onClick={onClose}>Cancel</DialogButton>
             </div>
           </div>
         </div>
