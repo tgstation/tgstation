@@ -258,7 +258,7 @@
 	var/impact = rand(round(pokie.force / 4), pokie.force)
 	applyOrganDamage(impact)
 
-	var/damage_ratio = damage_taken / max(max_health, 1)
+	var/damage_ratio = damage / max(maxHealth, 1)
 	if(owner)
 		var/obj/item/bodypart/part = owner.get_bodypart(BODY_ZONE_CHEST)
 		// Brute damage to the mob is less then to the organ, so there's a higher chance of the explosion happening before xeno death
