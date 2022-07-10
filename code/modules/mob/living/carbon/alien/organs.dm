@@ -256,15 +256,24 @@
 		return
 
 	var/impact = rand(round(pokie.force / 4), pokie.force)
+	applyOrganDamage(impact)
+
+	var/damage_ratio = damage_taken / max(max_health, 1)
 	if(owner)
 		var/obj/item/bodypart/part = owner.get_bodypart(BODY_ZONE_CHEST)
-		// Brute damage to the mob is less then to the organ, so there's a higher chance of the explosion happening before death
+		// Brute damage to the mob is less then to the organ, so there's a higher chance of the explosion happening before xeno death
 		part.receive_damage(impact / 2)
-	applyOrganDamage(impact)
+		// We choose the option that's best for the check
+		var/part_dam_ratio = part.brute_dam / max(part.max_damage, 1)
+		if(damage_ratio < part_dam_ratio)
+			damage_ratio = part_dam_ratio
+
 	play_from.visible_message(span_danger("[user] attacks [stomach_text] wall with the [pokie.name]!"), \
 			span_userdanger("[user] attacks your stomach wall with the [pokie.name]!"))
 
-	if(!prob(damage - maxHealth / 2) && damage != maxHealth)
+	// At 100% damage, the stomach burts
+	// Otherwise, we give them a -50% -> 50% chance scaling with damage dealt
+	if(!prob((damage_ratio * 100) - 50) && damage_ratio != 1)
 		playsound(play_from, 'sound/creatures/alien_organ_cut.ogg', 100, 1)
 		return
 	// Failure condition
