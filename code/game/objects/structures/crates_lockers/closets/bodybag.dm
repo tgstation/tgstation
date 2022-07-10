@@ -65,9 +65,9 @@
 /obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!attempt_fold(user))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return
 	perform_fold(user)
 	qdel(src)
 
