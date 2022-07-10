@@ -250,5 +250,6 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/moon/dug //When you want one of these to be already dug.
 	dug = TRUE
+	floor_variance = 0
 	base_icon_state = "moon_dug"
 	icon_state = "moon_dug"
