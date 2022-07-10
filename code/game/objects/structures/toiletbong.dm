@@ -11,17 +11,13 @@
 
 /obj/structure/toiletbong/Initialize()
 	. = ..()
+	create_storage()
+	atom_storage.attack_hand_interact = FALSE
+	atom_storage.set_holdable(list(/obj/item/food/))
+	atom_storage.max_total_storage = 100
+	atom_storage.max_slots = 12
 	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "toiletbong_overlay")
 	START_PROCESSING(SSobj, src)
-
-/obj/structure/toiletbong/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
-	STR.attack_hand_interact = FALSE
-	STR.set_holdable(list(/obj/item/food/))
-	STR.max_w_class = WEIGHT_CLASS_HUGE
-	STR.max_combined_w_class = WEIGHT_CLASS_HUGE * 12
-	STR.max_items = 12
 
 /obj/structure/toiletbong/update_icon()
 	. = ..()
