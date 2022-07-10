@@ -331,19 +331,13 @@
 	announcement_audio = 'sound/ambience/antag/families_radio_broadcasts/warriors.ogg'
 
 /datum/gang_theme/warriors/post_start(datum/gang_handler/handler)
-	var/list/all_non_sec_crew = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.stat != DEAD && !(player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
-			all_non_sec_crew += player.mind
 	var/list/gangs_to_use = subtypesof(/datum/antagonist/gang) - /datum/antagonist/gang/security
-	var/amount_of_gangsters = all_non_sec_crew.len
-	for(var/_ in 1 to amount_of_gangsters)
-		if(!all_non_sec_crew.len) // We ran out of candidates!
-			break
-		if(!gangs_to_use.len)
-			gangs_to_use = subtypesof(/datum/antagonist/gang) - /datum/antagonist/gang/security
-		var/gang_to_use = pick_n_take(gangs_to_use) // Evenly distributes people among the gang
-		var/datum/mind/gangster_mind = pick_n_take(all_non_sec_crew)
-		var/datum/antagonist/gang/new_gangster = new gang_to_use()
-		new_gangster.handler = handler
-		gangster_mind.add_antag_datum(new_gangster)
+	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
+		if(player.stat != DEAD && !(player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY) && player.mind)
+			if(!gangs_to_use.len)
+				gangs_to_use = subtypesof(/datum/antagonist/gang) - /datum/antagonist/gang/security
+			var/gang_to_use = pick_n_take(gangs_to_use) // Evenly distributes people among the gangs
+			var/datum/mind/gangster_mind = player.mind
+			var/datum/antagonist/gang/new_gangster = new gang_to_use()
+			new_gangster.handler = handler
+			gangster_mind.add_antag_datum(new_gangster)
