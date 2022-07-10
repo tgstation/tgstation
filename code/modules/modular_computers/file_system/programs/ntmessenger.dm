@@ -360,7 +360,8 @@
 
 /datum/computer_file/program/messenger/Topic(href, href_list)
 	..()
-
+	if(QDELETED(src))
+		return
 	if(!href_list["close"] && usr.canUseTopic(computer, BE_CLOSE, FALSE, NO_TK))
 		switch(href_list["choice"])
 			if("Message")

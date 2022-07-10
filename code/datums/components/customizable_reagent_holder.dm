@@ -28,7 +28,7 @@
 		atom/replacement,
 		fill_type,
 		ingredient_type = CUSTOM_INGREDIENT_TYPE_EDIBLE,
-		max_ingredients = MAX_ATOM_OVERLAYS - 2,
+		max_ingredients = MAX_ATOM_OVERLAYS - 3, // The cap is >= MAX_ATOM_OVERLAYS so we reserve 2 for top /bottom of item + 1 to stay under cap
 		list/obj/item/initial_ingredients = null)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -59,7 +59,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/customizable_attack)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(parent, COMSIG_ATOM_PROCESSED, .proc/on_processed)
-	ADD_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, src)
+	ADD_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, REF(src))
 
 
 /datum/component/customizable_reagent_holder/UnregisterFromParent()
@@ -69,7 +69,7 @@
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_PROCESSED,
 	))
-	REMOVE_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, src)
+	REMOVE_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, REF(src))
 
 /datum/component/customizable_reagent_holder/PostTransfer()
 	if(!isatom(parent))

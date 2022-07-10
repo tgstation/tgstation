@@ -1,7 +1,8 @@
 /obj/item/implant/tracking
 	name = "tracking implant"
 	desc = "Track with this."
-	activated = FALSE
+	actions_types = null
+
 	///for how many deciseconds after user death will the implant work?
 	var/lifespan_postmortem = 6000
 	///will people implanted with this act as teleporter beacons?

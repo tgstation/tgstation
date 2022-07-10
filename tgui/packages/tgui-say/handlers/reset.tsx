@@ -11,6 +11,7 @@ import { Modal } from '../types';
 export const handleReset = function (this: Modal, channel?: number) {
   this.fields.historyCounter = 0;
   this.fields.radioPrefix = '';
+  this.fields.tempHistory = '';
   this.fields.value = '';
   this.setState({
     buttonContent: valueExists(channel) ? CHANNELS[channel!] : '',
