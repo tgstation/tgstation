@@ -13,14 +13,14 @@ export const handleIncrementChannel = function (this: Modal) {
     this.timers.channelDebounce({ mode: true });
   }
   this.fields.radioPrefix = '';
-  if (channel === CHANNELS.length - 1) {
+  if (channel === CHANNELS.Ooc) {
     this.timers.channelDebounce({ mode: true });
     this.setState({
       buttonContent: CHANNELS[0],
       channel: 0,
     });
   } else {
-    if (channel === 2) {
+    if (channel === CHANNELS.Me) {
       // Disables thinking indicator for OOC channel
       this.timers.channelDebounce({ mode: false });
     }

@@ -12,7 +12,7 @@ export const handleComponentMount = function (this: Modal) {
     this.events.onForce();
   });
   Byond.subscribeTo('open', (data) => {
-    const channel = CHANNELS.indexOf(data.channel) || 0;
+    const channel = CHANNELS[data.channel] || 0;
     this.setState({ buttonContent: CHANNELS[channel], channel });
     setTimeout(() => {
       this.fields.innerRef.current?.focus();

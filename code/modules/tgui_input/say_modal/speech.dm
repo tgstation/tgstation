@@ -31,6 +31,8 @@
  *  boolean - on success or failure
  */
 /datum/tgui_say/proc/delegate_speech(entry, channel)
+	if(channel != OOC_CHANNEL)
+		finish_speaking(copytext_char(entry, -1))
 	switch(channel)
 		if(SAY_CHANNEL)
 			client.mob.say_verb(entry)

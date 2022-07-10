@@ -23,14 +23,24 @@
 /datum/tgui_say
 	/// The user who opened the window
 	var/client/client
-	/// Injury phrases to blurt out
-	var/list/hurt_phrases = list("GACK!", "GLORF!", "OOF!", "AUGH!", "OW!", "URGH!", "HRNK!")
 	/// Max message length
 	var/max_length = MAX_MESSAGE_LEN
+	/// The timer for typing indicators to fade out
+	var/datum/timedevent/stop_typing_timer
 	/// The modal window
 	var/datum/tgui_window/window
 	/// Boolean for whether the tgui_say was opened by the user.
 	var/window_open
+	/// Injury phrases to blurt out
+	var/static/list/hurt_phrases = list(
+		"GACK!",
+		"GLORF!",
+		"OOF!",
+		"AUGH!",
+		"OW!",
+		"URGH!",
+		"HRNK!"
+	)
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
@@ -96,7 +106,6 @@
  */
 /datum/tgui_say/proc/close()
 	window_open = FALSE
-	stop_thinking()
 	if(client.typing_indicators)
 		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client.mob)], indicators enabled.")
 	else
@@ -110,13 +119,13 @@
 	if(type == "ready")
 		load()
 		return TRUE
-	if (type == "open")
+	if(type == "open")
 		open(payload)
 		return TRUE
-	if (type == "close")
+	if(type == "close")
 		close()
 		return TRUE
-	if (type == "thinking")
+	if(type == "thinking")
 		if(payload["mode"] == TRUE)
 			start_thinking()
 			return TRUE
@@ -124,10 +133,13 @@
 			stop_thinking()
 			return TRUE
 		return FALSE
-	if (type == "typing")
+	if(type == "typing")
 		start_typing()
 		return TRUE
-	if (type == "entry" || type == "force")
+	if(type == "entry" || type == "force")
 		handle_entry(type, payload)
+		return TRUE
+	if(type == "escape")
+		finish_speaking()
 		return TRUE
 	return FALSE

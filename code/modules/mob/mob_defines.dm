@@ -231,6 +231,8 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
+	/// the last icon used for tgui say, fades rapidly
+	var/active_tonal_indicator
 	/// User is thinking in character. Used to revert to thinking state after stop_typing
 	var/thinking_IC = FALSE
 

@@ -1,5 +1,16 @@
 /** Radio channels */
-export const CHANNELS = ['Say', 'Radio', 'Me', 'OOC'] as const;
+export enum CHANNELS {
+  Say,
+  Radio,
+  Me,
+  Ooc,
+}
+
+/** Line lengths for autoexpand */
+export enum LINE_LENGTHS {
+  small = 20,
+  medium = 35,
+}
 
 /** Window sizes in pixels */
 export enum WINDOW_SIZES {
@@ -7,12 +18,6 @@ export enum WINDOW_SIZES {
   medium = 50,
   large = 70,
   width = 231,
-}
-
-/** Line lengths for autoexpand */
-export enum LINE_LENGTHS {
-  small = 20,
-  medium = 35,
 }
 
 /**
