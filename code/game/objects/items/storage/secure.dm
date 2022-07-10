@@ -33,11 +33,10 @@
 	var/can_hack_open = TRUE
 
 
-/obj/item/storage/secure/ComponentInitialize()
+/obj/item/storage/secure/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_combined_w_class = 14
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_total_storage = 14
 
 /obj/item/storage/secure/examine(mob/user)
 	. = ..()
@@ -45,7 +44,7 @@
 		. += "The service panel is currently <b>[panel_open ? "unscrewed" : "screwed shut"]</b>."
 
 /obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool)
-	if(can_hack_open && SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+	if(can_hack_open && atom_storage.locked)
 		return ..()
 	else
 		return FALSE
@@ -78,7 +77,7 @@
 	to_chat(user, span_warning("You must <b>unscrew</b> the service panel before you can pulse the wiring!"))
 
 /obj/item/storage/secure/attack_self(mob/user)
-	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
+	var/locked = atom_storage.locked
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
@@ -100,7 +99,7 @@
 				lock_code = entered_code
 				lock_set = TRUE
 			else if ((entered_code == lock_code) && lock_set)
-				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+				atom_storage.locked = TRUE
 				cut_overlays()
 				add_overlay(icon_opened)
 				entered_code = null
@@ -108,10 +107,10 @@
 				entered_code = "ERROR"
 		else
 			if (href_list["type"] == "R")
-				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+				atom_storage.locked = FALSE
 				cut_overlays()
 				entered_code = null
-				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_FROM, usr)
+				atom_storage.hide_contents(usr)
 			else
 				entered_code += text("[]", sanitize_text(href_list["type"]))
 				if (length(entered_code) > 5)
@@ -144,11 +143,10 @@
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
 
-/obj/item/storage/secure/briefcase/ComponentInitialize()
+/obj/item/storage/secure/briefcase/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 21
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 21
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 
 ///Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/storage/secure/briefcase/syndie
@@ -174,11 +172,10 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 
-/obj/item/storage/secure/safe/ComponentInitialize()
+/obj/item/storage/secure/safe/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(null, list(/obj/item/storage/secure/briefcase))
-	STR.max_w_class = 8 //??
+	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/secure/briefcase))
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
 /obj/item/storage/secure/safe/PopulateContents()
 	new /obj/item/paper(src)
@@ -219,7 +216,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 
 	lock_code = SSid_access.spare_id_safe_code
 	lock_set = TRUE
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+	atom_storage.locked = TRUE
 
 /obj/item/storage/secure/safe/caps_spare/PopulateContents()
 	new /obj/item/card/id/advanced/gold/captains_spare(src)

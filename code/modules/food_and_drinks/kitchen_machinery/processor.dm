@@ -93,7 +93,7 @@
 				continue
 			var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(S)
 			if(P)
-				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
+				if(T.atom_storage.attempt_remove(S, src))
 					LAZYADD(processor_contents, S)
 					loaded++
 
