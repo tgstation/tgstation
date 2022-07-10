@@ -963,6 +963,7 @@
 	trim_state = "trim_stationengineer"
 	sechud_icon_state = SECHUD_STATION_ENGINEER
 	minimal_access = list(
+		ACCESS_ATMOSPHERICS
 		ACCESS_AUX_BASE,
 		ACCESS_CONSTRUCTION,
 		ACCESS_ENGINEERING,
