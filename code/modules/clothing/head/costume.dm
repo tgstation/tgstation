@@ -189,7 +189,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	clothing_flags = SNUG_FIT
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-	flags_cover = HEADCOVERSEYES | MOUTHCOVERSMOUTH | PEPPERPROOF
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	var/has_FOV = TRUE
 
