@@ -4,9 +4,9 @@
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
 
 	var/list/available = list()
-	for(var/mob/thing in GLOB.mob_list)
-		if(thing.key)
-			available.Add(thing)
+	for(var/mob/player as anything in GLOB.player_list)
+		if(player.key && player.client)
+			available.Add(player)
 	var/mob/choice = tgui_input_list(usr, "Choose a player to play the pAI", "Spawn pAI", sort_names(available))
 	if(isnull(choice))
 		return
@@ -26,6 +26,6 @@
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.set_personality(pai)
-	if(SSpai[choice.key])
+	if(SSpai.candidates[choice.key])
 		SSpai.candidates.Remove(choice.key)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

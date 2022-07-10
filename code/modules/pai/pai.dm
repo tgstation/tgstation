@@ -164,7 +164,7 @@
 	return ..()
 
 // See software.dm for Topic()
-/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, o_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
 	// Resting is just an aesthetic feature for them.
 	return ..(M, be_close, no_dexterity, no_tk, need_hands, TRUE)
 

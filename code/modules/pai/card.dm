@@ -188,7 +188,7 @@
 	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 	to_chat(user, span_notice("You have requested pAI assistance."))
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
-	notify_ghosts("[user] is requesting a pAI personality! Use the pAI button to submit	yourself as one.", source = user, alert_overlay = alert_overlay, action = NOTIFY_ORBIT,	flashwindow = FALSE, header = "pAI Request!", ignore_key = POLL_IGNORE_PAI)
+	notify_ghosts("[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.", source = user, alert_overlay = alert_overlay, action = NOTIFY_ORBIT,	flashwindow = FALSE, header = "pAI Request!", ignore_key = POLL_IGNORE_PAI)
 	addtimer(CALLBACK(src, .proc/request_again), SPAM_TIME,	TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
 	return TRUE
 
