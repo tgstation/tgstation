@@ -90,7 +90,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(has_buckled_mobs())
 		return
 	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
