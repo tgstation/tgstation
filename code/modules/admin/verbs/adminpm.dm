@@ -1,7 +1,18 @@
 #define EXTERNALREPLYCOUNT 2
 #define EXTERNAL_PM_USER "IRCKEY"
 
-//allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
+// HEY FUCKO, IMPORTANT NOTE!
+// This file, and pretty much everything that directly handles ahelps, is VERY important
+// An admin pm dropping by coding error is disastorus, because it gives no feedback to admins, so they think they're being ignored
+// It is imparitive that this does not happen. Therefore, runtimes are not allowed in this file
+// Additionally, any runtimes here would cause admin tickets to leak into the runtime logs
+// This is less of a big deal, but still bad
+//
+// In service of this goal of NO RUNTIMES then, we make ABSOLUTELY sure to never trust the nullness of a value
+// That's why variables are so separated from logic here. It's not a good pattern typically, but it helps make assumptions clear here
+// If you "refactor" this to make it "cleaner" I will send you to hell
+
+/// Allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
 /client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
 	set category = null
 	set name = "Admin PM Mob"
@@ -20,7 +31,7 @@
 	cmd_admin_pm(M.client, null)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-//shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
+/// Shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
 /client/proc/cmd_admin_pm_panel()
 	set category = "Admin"
 	set name = "Admin PM"
@@ -51,6 +62,7 @@
 	cmd_admin_pm(targets[target], null)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/// Replys to some existing ahelp, reply to whom, which can be a client or ckey
 /client/proc/cmd_ahelp_reply(whom)
 	if(IsAdminAdvancedProcCall())
 		return FALSE
@@ -143,8 +155,9 @@
 	cmd_admin_pm(whom, messsage)
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
-//Fetching a message if needed. src is the sender and C is the target client
-/client/proc/cmd_admin_pm(whom, msg)
+//Fetching a message if needed.
+//whom here is a client, a ckey, or [EXTERNAL_PM_USER] if this is from tgs. message is the default message to send
+/client/proc/cmd_admin_pm(whom, message)
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
@@ -159,7 +172,7 @@
 			confidential = TRUE)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = span_notice("Message: [msg]"),
+			html = span_notice("Message: [message]"),
 			confidential = TRUE)
 		return
 
@@ -168,7 +181,7 @@
 		var/client/boi = whom
 		whom = boi.ckey
 
-	var/message_to_send = request_adminpm_message(disambiguate_client(whom), msg)
+	var/message_to_send = request_adminpm_message(disambiguate_client(whom), message)
 	if(!message_to_send)
 		return
 
@@ -492,8 +505,8 @@
 
 	// First we filter, because these procs can be called by anyone with debug, and I don't trust that check
 	// gotta make sure none's fucking about
-	send_message = adminpm_filter_text(ambiguious_recipient, log_message)
-	if(!send_message)
+	log_message = adminpm_filter_text(ambiguious_recipient, log_message)
+	if(!log_message)
 		return
 
 	var/raw_messsage = log_message
@@ -514,7 +527,7 @@
 	if(ambiguious_recipient == EXTERNAL_PM_USER)
 		// Guard against the possibility of a null, since it'll runtime and spit out the contents of what should be a private ticket.
 		if(ticket)
-			log_admin_private("PM: Ticket #[current]: [our_name]->External: [raw_messsage]")
+			log_admin_private("PM: Ticket #[ticket_id]: [our_name]->External: [raw_messsage]")
 		else
 			log_admin_private("PM: [our_name]->External: [raw_messsage]")
 		for(var/client/lad in GLOB.admins)
@@ -635,9 +648,9 @@
 				var/boinked_ckey = active_ticket?.initiator_ckey
 
 				if(!active_ticket)
-					return "Error: Ticket #[fail] not found"
+					return "Error: Ticket #[ticket_num] not found"
 				if(boinked_ckey != target)
-					return "Error: Ticket #[fail] belongs to [boinked_ckey]"
+					return "Error: Ticket #[ticket_num] belongs to [boinked_ckey]"
 
 				active_ticket.Reopen()
 				return "Ticket #[ticket_num] successfully reopened"
@@ -665,15 +678,13 @@
 	if(!recipient)
 		return "Error: No client"
 
-	var/static/stealthkey
 	var/adminname
 	if(CONFIG_GET(flag/show_irc_name))
 		adminname = tgs_tagged
 	else
 		adminname = "Administrator"
 
-	if(!stealthkey)
-		stealthkey = GenTgsStealthKey()
+	var/stealthkey = GetTgsStealthKey()
 
 	message = sanitize(copytext_char(message, 1, MAX_MESSAGE_LEN))
 	message = emoji_parse(message)
@@ -686,23 +697,23 @@
 	// The ckey of our recipient, with their mob if one exists. No link
 	var/recipient_name = key_name_admin(recipient)
 
-	message_admins("External message from [sender] to [recipient_name_linked] : [msg]")
-	log_admin_private("External PM: [sender] -> [recipient_name] : [msg]")
+	message_admins("External message from [sender] to [recipient_name_linked] : [message]")
+	log_admin_private("External PM: [sender] -> [recipient_name] : [message]")
 
-	to_chat(C,
+	to_chat(recipient,
 		type = MESSAGE_TYPE_ADMINPM,
 		html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>",
 		confidential = TRUE)
-	to_chat(C,
+	to_chat(recipient,
 		type = MESSAGE_TYPE_ADMINPM,
 		html = span_adminsay("Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [message]"),
 		confidential = TRUE)
-	to_chat(C,
+	to_chat(recipient,
 		type = MESSAGE_TYPE_ADMINPM,
 		html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
 		confidential = TRUE)
 
-	admin_ticket_log(C, "<font color='purple'>PM From [tgs_tagged]: [message]</font>", log_in_blackbox = FALSE)
+	admin_ticket_log(recipient, "<font color='purple'>PM From [tgs_tagged]: [message]</font>", log_in_blackbox = FALSE)
 
 	window_flash(recipient, ignorepref = TRUE)
 	// Nullcheck because we run a winset in window flash and I do not trust byond
@@ -713,10 +724,15 @@
 		recipient.externalreplyamount = EXTERNALREPLYCOUNT
 	return "Message Successful"
 
-/proc/GenTgsStealthKey()
-	var/stealth = generateStealthCkey()
-	GLOB.stealthminID[EXTERNAL_PM_USER] = stealth
-	return stealth
+/// Gets TGS's stealth key, generates one if none is found
+/proc/GetTgsStealthKey()
+	var/static/tgsStealthKey
+	if(tgsStealthKey)
+		return tgsStealthKey
+
+	tgsStealthKey = generateStealthCkey()
+	GLOB.stealthminID[EXTERNAL_PM_USER] = tgsStealthKey
+	return tgsStealthKey
 
 /// Takes an argument which could be either a ckey, /client, or IRC marker, and returns a client if possible
 /// Returns [EXTERNAL_PM_USER] if an IRC marker is detected
