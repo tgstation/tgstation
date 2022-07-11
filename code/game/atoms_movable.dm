@@ -597,6 +597,8 @@
 					setDir(first_step_dir)
 				else if(!inertia_moving)
 					newtonian_move(direct)
+				if(client_mobs_in_contents)
+					update_parallax_contents()
 			moving_diagonally = 0
 			return
 
