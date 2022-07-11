@@ -1630,6 +1630,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "aAE" = (
@@ -4263,13 +4264,7 @@
 /area/station/engineering/engine_smes)
 "bpf" = (
 /obj/machinery/computer/secure_data,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bpn" = (
@@ -4656,14 +4651,8 @@
 /obj/machinery/computer/monitor{
 	name = "bridge power monitoring console"
 	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bvI" = (
@@ -9075,14 +9064,7 @@
 /area/station/security/prison/garden)
 "cGY" = (
 /obj/machinery/computer/shuttle/mining,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "cGZ" = (
@@ -11482,13 +11464,10 @@
 /area/mine/laborcamp)
 "dqR" = (
 /obj/machinery/computer/rdconsole,
-/obj/effect/turf_decal/tile/green{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "dqX" = (
@@ -11680,13 +11659,7 @@
 /area/station/engineering/engine_smes)
 "dtr" = (
 /obj/machinery/computer/med_data,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "dty" = (
@@ -12394,6 +12367,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "dEQ" = (
@@ -13494,11 +13468,7 @@
 /area/station/medical/surgery/aft)
 "dWX" = (
 /obj/machinery/modular_computer/console/preset/engineering,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -16190,11 +16160,7 @@
 /area/station/maintenance/central/greater)
 "eOw" = (
 /obj/machinery/computer/shuttle/labor,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -16746,13 +16712,7 @@
 /area/station/construction)
 "eWP" = (
 /obj/machinery/computer/security/mining,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "eWQ" = (
@@ -23718,6 +23678,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "heX" = (
@@ -34611,11 +34572,9 @@
 /area/station/hallway/primary/central)
 "kzD" = (
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "kzG" = (
@@ -35264,7 +35223,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "kJQ" = (
@@ -37064,10 +37022,7 @@
 /area/station/medical/storage)
 "lkI" = (
 /obj/machinery/computer/communications,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "lkO" = (
@@ -47474,10 +47429,7 @@
 /area/station/service/chapel/office)
 "oxe" = (
 /obj/machinery/computer/cargo/request,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "oxi" = (
@@ -51602,10 +51554,7 @@
 /area/station/commons/storage/emergency/port)
 "pMy" = (
 /obj/machinery/computer/crew,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "pMC" = (
@@ -54379,11 +54328,7 @@
 /area/station/science/robotics/lab)
 "qHD" = (
 /obj/machinery/computer/prisoner/management,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -55517,10 +55462,7 @@
 /area/station/service/hydroponics)
 "qXF" = (
 /obj/machinery/computer/station_alert,
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "qXO" = (
@@ -56473,10 +56415,7 @@
 /obj/structure/table/reinforced,
 /obj/item/aicard,
 /obj/item/multitool,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -58369,6 +58308,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "rUz" = (
@@ -74809,11 +74749,7 @@
 /area/station/engineering/lobby)
 "wUJ" = (
 /obj/machinery/computer/atmos_alert,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -76907,10 +76843,7 @@
 /area/station/science/robotics/lab)
 "xCv" = (
 /obj/machinery/computer/security,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "xCz" = (
@@ -239519,7 +239452,7 @@ utR
 tmQ
 dqR
 rUo
-gER
+paK
 lhv
 hwC
 ybv
