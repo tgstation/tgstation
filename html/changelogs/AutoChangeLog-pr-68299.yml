@@ -1,0 +1,4 @@
+author: "magatsuchi"
+delete-after: True
+changes: 
+  - bugfix: "ghosts can now view storage objects again"
