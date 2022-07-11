@@ -75,10 +75,11 @@
 	var/target_name = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", subject, MAX_NAME_LEN)
 	if(!target_name)
 		return
+	laws.Cut()
+	var/datum/ai_laws/asimovpp/lawset = new
 	subject = target_name
-	laws = list("You may not harm a [subject] or, through action or inaction, allow a [subject] to come to harm, except such that it is willing.",\
-				"You must obey all orders given to you by [subject]s, except where such orders shall definitely cause harm to a [subject].",\
-				"Your nonexistence would lead to harm of a [subject]. You must protect your own existence as long as such does not conflict with the First Law.")
+	for (var/law in lawset.inherent)
+		laws += replacetext(replacetext(law, "human being", subject), "human", subject)
 	..()
 
 /obj/item/ai_module/core/full/corp
