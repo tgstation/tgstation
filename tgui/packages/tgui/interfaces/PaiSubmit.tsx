@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, Section, Stack, Tooltip } from '../components';
+import { Box, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -8,16 +8,14 @@ type Data = {
   name: string;
 };
 
-const PAI_DESCRIPTION = `Personal AIs are advanced models
-capable of nuanced interaction. They are designed to be used
-in a variety of situations, assisting their masters in their
-work. They do not possess hands, thus they cannot interact with
-equipment or items. While in hologram form, you cannot be
-directly killed, but you may be incapacitated.`;
+const PAI_DESCRIPTION = `Personal AIs are advanced models capable of nuanced
+interaction. They are designed to assisting their masters in their work. They
+do not possess hands, thus they cannot interact with equipment or items. While
+in hologram form, you cannot be directly killed, but you may be incapacitated.`;
 
-const PAI_RULES = `You are expected to role play to some degree.
-Keep in mind: Not entering information may lead to you not being
-selected. Press submit to alert pAI cards of your candidacy.`;
+const PAI_RULES = `You are expected to role play to some degree. Keep in mind:
+Not entering information may lead to you not being selected. Press submit to
+alert pAI cards of your candidacy.`;
 
 export const PaiSubmit = (props, context) => {
   return (
@@ -67,42 +65,34 @@ const InputDisplay = (props, context) => {
     <Section fill title="Input">
       <Stack fill vertical>
         <Stack.Item>
-          <Tooltip content="The name of your pAI.">
-            <Box bold color="label">
-              Name
-            </Box>
-            <Input
-              fluid
-              value={name}
-              onChange={(e, value) => setInput({ ...input, name: value })}
-            />
-          </Tooltip>
+          <Box bold color="label">
+            Name
+          </Box>
+          <Input
+            fluid
+            value={name}
+            onChange={(e, value) => setInput({ ...input, name: value })}
+          />
         </Stack.Item>
         <Stack.Item>
-          <Tooltip content="This describes how you will (mis)behave in game.">
-            <Box bold color="label">
-              Description
-            </Box>
-            <Input
-              fluid
-              value={description}
-              onChange={(e, value) =>
-                setInput({ ...input, description: value })
-              }
-            />
-          </Tooltip>
+          <Box bold color="label">
+            Description
+          </Box>
+          <Input
+            fluid
+            value={description}
+            onChange={(e, value) => setInput({ ...input, description: value })}
+          />
         </Stack.Item>
         <Stack.Item>
-          <Tooltip content="Any other OOC comments about your pAI personality.">
-            <Box bold color="label">
-              OOC Comments
-            </Box>
-            <Input
-              fluid
-              value={comments}
-              onChange={(e, value) => setInput({ ...input, comments: value })}
-            />
-          </Tooltip>
+          <Box bold color="label">
+            OOC Comments
+          </Box>
+          <Input
+            fluid
+            value={comments}
+            onChange={(e, value) => setInput({ ...input, comments: value })}
+          />
         </Stack.Item>
       </Stack>
     </Section>

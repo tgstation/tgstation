@@ -4,16 +4,16 @@ import { BlockQuote, Box, Button, LabeledList, NoticeBox, Section, Stack } from 
 import { Window } from '../layouts';
 
 type Data = {
-  candidates: Candidate[];
+  candidates: ReadonlyArray<Candidate>;
   pai: Pai;
 };
 
-type Candidate = {
+type Candidate = Readonly<{
   comments: string;
   ckey: string;
   description: string;
   name: string;
-};
+}>;
 
 type Pai = {
   can_holo: BooleanLike;

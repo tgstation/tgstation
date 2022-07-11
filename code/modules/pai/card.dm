@@ -43,7 +43,7 @@
 
 /obj/item/pai_card/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
-	SSpai.pai_card_list -= src
+	SSpai.pai_card_list.Remove(src)
 	if(!QDELETED(pai))
 		QDEL_NULL(pai)
 	return ..()
