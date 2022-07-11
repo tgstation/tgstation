@@ -58,53 +58,88 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM: You are unable to use admin PM-s (muted)."),
+			html = span_danger("Error: Admin-PM-Reply: You are unable to use admin PM-s (muted)."),
 			confidential = TRUE)
 		return
-	var/client/C
 
-	// Lemon todo: bring this behavior back, check diffs
-	if(!C)
+	// We use the ckey here rather then keeping the client to ensure resistance to client logouts mid execution
+	if(istype(whom, /client))
+		var/client/boi = whom
+		whom = boi.ckey
+
+	var/ambiguious_recipient = disambiguate_client(whom)
+	// Existing client case
+	var/client/recipient = ambiguious_recipient
+	if(!recipient)
 		if(holder)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = span_danger("Error: Admin-PM: Client not found."),
+				html = span_danger("Error: Admin-PM-Reply: Client not found."),
 				confidential = TRUE)
 		return
 
-	var/datum/admin_help/AH = C.current_ticket
+	// The ticket our recipient is using
+	var/datum/admin_help/recipient_ticket = recipient.current_ticket
+	// Any past interactions with the recipient ticket
+	var/datum/admin_help/recipient_interactions - recipient_ticket?.ticket_interactions
+	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first recieves a response
+	var/datum/admin_help/opening_interactions - recipient_ticket?.opening_responders
+	// Our recipient's admin holder, if one exists
+	var/datum/admins/recipient_holder = recipient.holder
+	// The ckey of our recipient
+	var/recipient_ckey = recipient.ckey
+	// Our recipient's fake key, if they are faking their ckey
+	var/recipient_fake_key = recipient_holder?.fake_key
+	// Our ckey, with our mob's name if one exists, formatted with a reply link
+	var/our_linked_name = key_name_admin(src)
+	// The recipient's ckey, formatted with a reply link
+	var/recipient_linked_ckey = key_name_admin(recipient, FALSE)
+	// The recipient's ckey, formatted slightly with html
+	var/formatted_recipient_ckey = key_name(recipient, FALSE, FALSE)
 
 	var/message_prompt = "Message:"
+	if(recipient_ticket)
+		message_admins("[] has started replying to [recipient_linked_ckey]'s admin help.")
+		// If none's interacted with the ticket yet
+		if(length(recipient_interactions) == 1)
+			if(length(opening_interactions)) // Inform the admin that they aren't the first
+				var/printable_interators = english_list(opening_interactions)
+				SEND_SOUND(src, sound('sound/machines/buzz-sigh.ogg', volume=30))
+				message_prompt += "\n\n**This ticket is already being responded to by: [printable_interators]**"
+			// add the admin who is currently responding to the list of people responding
+			LAZYADD(recipient_ticket.opening_responders, src)
 
-	if(AH?.opening_responders && length(AH.ticket_interactions) == 1)
-		SEND_SOUND(src, sound('sound/machines/buzz-sigh.ogg', volume=30))
-		message_prompt += "\n\n**This ticket is already being responded to by: [english_list(AH.opening_responders)]**"
+	var/request = "Private message to"
+	if(recipient_fake_key)
+		request = "[request] an Administrator."
+	else
+		request = "[request] [formatted_recipient_ckey]."
 
-	if(AH)
-		message_admins("[key_name_admin(src)] has started replying to [key_name_admin(C, 0, 0)]'s admin help.")
-		if(length(AH.ticket_interactions) == 1) // add the admin who is currently responding to the list of people responding
-			LAZYADD(AH.opening_responders, src)
+	var/messsage = input(src, message_prompt, request) as message|null
 
-	var/msg = input(src, message_prompt, "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
-	LAZYREMOVE(AH.opening_responders, src)
-	if (!msg)
-		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name_admin(C, 0, 0)]'s admin help.")
+	if(recipient_ticket)
+		LAZYREMOVE(recipient_ticket.opening_responders, src)
+
+	if (!messsage)
+		message_admins("[our_linked_name] has cancelled their reply to [recipient_linked_ckey]'s admin help.")
 		return
-	if(!C) //We lost the client during input, disconnected or relogged.
-		if(GLOB.directory[AH.initiator_ckey]) // Client has reconnected, lets try to recover
-			whom = GLOB.directory[AH.initiator_ckey]
+
+	if(!recipient) //We lost the client during input, disconnected or relogged.
+		if(GLOB.directory[recipient_ckey]) // Client has reconnected, lets try to recover
+			whom = GLOB.directory[recipient_ckey]
 		else
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = span_danger("Error: Admin-PM: Client not found."),
+				html = span_danger("Error: Admin-PM-Reply: Client not found."),
 				confidential = TRUE)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = "[span_danger("<b>Message not sent:</b>")]<br>[msg]",
+				html = "[span_danger("<b>Message not sent:</b>")]<br>[messsage]",
 				confidential = TRUE)
-			AH.AddInteraction("<b>No client found, message not sent:</b><br>[msg]")
+			if(recipient_ticket)
+				recipient_ticket.AddInteraction("<b>No client found, message not sent:</b><br>[messsage]")
 			return
-	cmd_admin_pm(whom, msg)
+	cmd_admin_pm(whom, messsage)
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
@@ -194,15 +229,25 @@
 	var/datum/admin_help/recipient_ticket = recipient.current_ticket
 	// Our current active ticket
 	var/datum/admin_help/our_ticket = current_ticket
+	// If our recipient is an admin, this is their admins datum
+	var/datum/admins/recipient_holder = recipient.holder
+	// If our recipient has a fake name, this is it
+	var/recipient_fake_key = recipient_holder?.fakekey
+	// Just the recipient's ckey, formatted for htmlifying stuff
+	var/recipient_print_key = key_name(recipient, FALSE, FALSE)
 
 	// The message we intend on returning
 	var/msg = ""
-
 	if(existing_message)
 		msg = existing_message
 	else
+		var/request = "Private message to"
+		if(recipient_fake_key)
+			request = "[request] an Administrator."
+		else
+			request = "[request] [recipient_print_key]."
 		//get message text, limit it's length.and clean/escape html
-		msg = input(src,"Message:", "Private message to [recipient.holder?.fakekey ? "an Administrator" : key_name(recipient, 0, 0)].") as message|null
+		msg = input(src,"Message:", request) as message|null
 		msg = trim(msg)
 
 	if(!msg)
