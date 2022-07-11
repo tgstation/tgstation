@@ -88,9 +88,7 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/head/hardhat,
 /obj/effect/turf_decal/box,
-/obj/structure/sign/warning/docking{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/docking/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "cQ" = (
@@ -108,9 +106,7 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/head/hardhat,
 /obj/effect/turf_decal/box,
-/obj/structure/sign/warning/docking{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/docking/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "db" = (
@@ -347,9 +343,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "hT" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/warning/biohazard{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/biohazard/directional/north,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "hW" = (
@@ -579,9 +573,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "nk" = (
-/obj/structure/sign/departments/botany{
-	pixel_x = -32
-	},
+/obj/structure/sign/departments/botany/directional/west,
 /obj/effect/turf_decal/trimline/green/mid_joiner{
 	dir = 8
 	},
@@ -608,9 +600,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "nB" = (
-/obj/structure/sign/departments/chemistry{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/chemistry/directional/north,
 /obj/effect/turf_decal/trimline/blue/arrow_cw{
 	dir = 1
 	},
@@ -624,9 +614,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "nU" = (
-/obj/structure/sign/warning/docking{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/docking/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "oi" = (
@@ -688,9 +676,7 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "qb" = (
-/obj/structure/sign/warning/docking{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/docking/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "qd" = (
@@ -776,9 +762,7 @@
 "rW" = (
 /obj/machinery/light/cold/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/warning{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/directional/east,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "sj" = (
@@ -824,9 +808,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "ua" = (
-/obj/structure/sign/warning/docking{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/docking/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "uf" = (
@@ -1139,9 +1121,7 @@
 /obj/effect/turf_decal/trimline/brown/mid_joiner{
 	dir = 1
 	},
-/obj/structure/sign/departments/cargo{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/cargo/directional/north,
 /obj/machinery/button/tram{
 	id = "middle_part_hilbert";
 	pixel_y = 4
@@ -1206,9 +1186,7 @@
 /obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 1
 	},
-/obj/structure/sign/warning/explosives{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/explosives/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "AX" = (
@@ -1960,9 +1938,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Rk" = (
-/obj/structure/sign/departments/evac{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/evac/directional/south,
 /obj/effect/turf_decal/trimline/white/arrow_cw,
 /obj/effect/turf_decal/trimline/white/mid_joiner,
 /turf/open/floor/mineral/plastitanium,
@@ -2001,9 +1977,7 @@
 "Sa" = (
 /obj/effect/turf_decal/trimline/purple/arrow_cw,
 /obj/effect/turf_decal/trimline/purple/mid_joiner,
-/obj/structure/sign/departments/xenobio{
-	pixel_y = -32
-	},
+/obj/structure/sign/departments/xenobio/directional/south,
 /obj/item/grown/log/tree{
 	pixel_y = 4
 	},

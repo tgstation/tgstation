@@ -78,6 +78,7 @@
 		return //Why
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = .proc/locker_carbon,
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = .proc/on_magic_unlock,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -247,7 +248,7 @@
 			break
 	for(var/i in reverse_range(location.get_all_contents()))
 		var/atom/movable/thing = i
-		SEND_SIGNAL(thing, COMSIG_TRY_STORAGE_HIDE_ALL)
+		thing.atom_storage?.close_all()
 
 /obj/structure/closet/proc/open(mob/living/user, force = FALSE)
 	if(!can_open(user, force))
@@ -719,5 +720,12 @@
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (locker/crate)")
 	return COMSIG_CARBON_SHOVE_HANDLED
+
+/// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
+/obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	locked = FALSE
+	INVOKE_ASYNC(src, .proc/open)
 
 #undef LOCKER_FULL

@@ -223,3 +223,11 @@
 		/obj/structure/steam_vent = 50,
 		/obj/structure/steam_vent/fast = 50,
 	)
+
+/obj/effect/spawner/random/structure/musician/piano/random_piano
+	name = "random piano spawner"
+	icon_state = "piano"
+	loot = list(
+		/obj/structure/musician/piano,
+		/obj/structure/musician/piano/minimoog,
+	)

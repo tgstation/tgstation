@@ -646,9 +646,7 @@
 "cT" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/closet/crate/secure/loot,
-/obj/structure/sign/warning/electric_shock{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
@@ -2631,9 +2629,7 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "vs" = (
-/obj/structure/sign/warning/docking{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/docking/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -2790,9 +2786,7 @@
 /turf/open/floor/iron,
 /area/mine/mechbay)
 "xX" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_x = -32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -2894,9 +2888,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/structure/sign/warning/gas_mask{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

@@ -7,36 +7,48 @@
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/Initialize(mapload)
 	real_name = name
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
-	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
-	. = ..()
+
+	var/datum/action/cooldown/spell/aoe/repulse/xeno/tail_whip = new(src)
+	tail_whip.Grant(src)
+
+	var/datum/action/cooldown/alien/evolve_to_queen/evolution = new(src)
+	evolution.Grant(src)
+
+	return ..()
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/create_internal_organs()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/internal/alien/resinspinner
 	internal_organs += new /obj/item/organ/internal/alien/acid
 	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
-	..()
+	return ..()
 
-/obj/effect/proc_holder/alien/royal/praetorian/evolve
+/datum/action/cooldown/alien/evolve_to_queen
 	name = "Evolve"
 	desc = "Produce an internal egg sac capable of spawning children. Only one queen can exist at a time."
+	button_icon_state = "alien_evolve_praetorian"
 	plasma_cost = 500
 
-	action_icon_state = "alien_evolve_praetorian"
+/datum/action/cooldown/alien/evolve_to_queen/IsAvailable()
+	. = ..()
+	if(!.)
+		return FALSE
 
-/obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/alien/humanoid/user)
-	var/obj/item/organ/internal/alien/hivenode/node = user.getorgan(/obj/item/organ/internal/alien/hivenode)
-	if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
-		to_chat(user, span_warning("Without the hivemind, you would be unfit to rule as queen!"))
+	if(!isturf(owner.loc))
 		return FALSE
-	if(node.recent_queen_death)
-		to_chat(user, span_warning("You are still too burdened with guilt to evolve into a queen."))
+
+	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
 		return FALSE
-	if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
-		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
-		user.alien_evolve(new_xeno)
-		return TRUE
-	else
-		to_chat(user, span_warning("We already have an alive queen!"))
+
+	var/mob/living/carbon/alien/humanoid/royal/evolver = owner
+	var/obj/item/organ/internal/alien/hivenode/node = evolver.getorgan(/obj/item/organ/internal/alien/hivenode)
+	if(!node || node.recent_queen_death)
 		return FALSE
+
+	return TRUE
+
+/datum/action/cooldown/alien/evolve_to_queen/Activate(atom/target)
+	var/mob/living/carbon/alien/humanoid/royal/evolver = owner
+	var/mob/living/carbon/alien/humanoid/royal/queen/new_queen = new(owner.loc)
+	evolver.alien_evolve(new_queen)
+	return TRUE

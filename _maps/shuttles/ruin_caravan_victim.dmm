@@ -250,9 +250,7 @@
 /area/shuttle/caravan/freighter1)
 "lM" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/caravan/freighter1)
 "mo" = (

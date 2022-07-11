@@ -9,7 +9,7 @@ export type Modal = {
 };
 
 type Events = {
-  onArrowKeys: (direction: number) => void;
+  onArrowKeys: (direction: number, value: string) => void;
   onBackspaceDelete: () => void;
   onClick: () => void;
   onEscape: () => void;
@@ -32,6 +32,7 @@ type Fields = {
   lightMode: boolean;
   maxLength: number;
   radioPrefix: string;
+  tempHistory: string;
   value: string;
 };
 

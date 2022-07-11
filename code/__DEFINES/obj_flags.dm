@@ -40,8 +40,6 @@
 #define IGNORE_DIGITIGRADE (1<<18)
 /// Has contextual screentips when HOVERING OVER OTHER objects
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
-/// Item still allows you to examine items while blind and actively held.
-#define BLIND_TOOL (1 << 20)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -89,6 +87,8 @@
 
 /// Flags for the gun_flags var for firearms
 #define TOY_FIREARM_OVERLAY (1<<0) // If update_overlay would add some indicator that the gun is a toy, like a plastic cap on a pistol
+/// Currently used to identify valid guns to steal
+#define NOT_A_REAL_GUN (1<<1)
 
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)

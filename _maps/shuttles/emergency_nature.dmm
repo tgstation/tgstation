@@ -69,9 +69,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/no_smoking{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cZ" = (
@@ -402,9 +400,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/obj/structure/sign/warning/no_smoking{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/no_smoking/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "mq" = (

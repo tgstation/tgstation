@@ -2719,9 +2719,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ll" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2958,9 +2956,7 @@
 /area/shuttle/escape)
 "Oi" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Monastery Cemetery";
 	network = list("ss13","monastery")

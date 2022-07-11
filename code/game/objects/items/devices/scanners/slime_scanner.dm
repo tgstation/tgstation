@@ -23,8 +23,7 @@
 	slime_scan(T, user)
 
 /proc/slime_scan(mob/living/simple_animal/slime/T, mob/living/user)
-	var/to_render = "========================\
-					\n<b>Slime scan results:</b>\
+	var/to_render = "<b>Slime scan results:</b>\
 					\n[span_notice("[T.colour] [T.is_adult ? "adult" : "baby"] slime")]\
 					\nNutrition: [T.nutrition]/[T.get_max_nutrition()]"
 	if (T.nutrition < T.get_starve_nutrition())
@@ -51,4 +50,4 @@
 	if(T.effectmod)
 		to_render += "\n[span_notice("Core mutation in progress: [T.effectmod]")]\
 					  \n[span_notice("Progress in core mutation: [T.applied] / [SLIME_EXTRACT_CROSSING_REQUIRED]")]"
-	to_chat(user, to_render + "\n========================")
+	to_chat(user, examine_block(to_render))

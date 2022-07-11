@@ -255,9 +255,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "lE" = (
-/obj/structure/sign/warning/explosives/alt{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/explosives/alt/directional/north,
 /obj/machinery/syndicatebomb/self_destruct{
 	anchored = 1
 	},
@@ -363,6 +361,7 @@
 /obj/machinery/computer/message_monitor{
 	dir = 8
 	},
+/obj/item/paper/monitorkey,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "uI" = (
@@ -964,9 +963,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/listeningstation)
 "XQ" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/iv_drip,

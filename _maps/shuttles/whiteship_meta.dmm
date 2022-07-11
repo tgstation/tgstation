@@ -159,9 +159,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
 "at" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/plating,
@@ -834,9 +832,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ci" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/built/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1489,7 +1485,7 @@
 /obj/item/shovel/spade,
 /obj/item/cultivator,
 /obj/item/plant_analyzer,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/watering_can,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -1549,9 +1545,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
 "ec" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bar)

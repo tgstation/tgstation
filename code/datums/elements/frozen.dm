@@ -13,6 +13,9 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	if(target_obj.obj_flags & FREEZE_PROOF)
 		return ELEMENT_INCOMPATIBLE
 
+	if(HAS_TRAIT(target_obj, TRAIT_FROZEN))
+		return ELEMENT_INCOMPATIBLE
+
 	ADD_TRAIT(target_obj, TRAIT_FROZEN, ELEMENT_TRAIT(type))
 	target_obj.name = "frozen [target_obj.name]"
 	target_obj.add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)

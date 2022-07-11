@@ -122,6 +122,26 @@
 	shuttleId = "mining_common"
 	possible_destinations = "commonmining_home;lavaland_common_away;landing_zone_dock;mining_public"
 
+/obj/docking_port/stationary/mining_home
+	name = "SS13: Mining Dock"
+	id = "mining_home"
+	roundstart_template = /datum/map_template/shuttle/mining/delta
+	width = 7
+	dwidth = 3
+	height = 5
+
+/obj/docking_port/stationary/mining_home/kilo
+	roundstart_template = /datum/map_template/shuttle/mining/kilo
+	height = 10
+
+/obj/docking_port/stationary/mining_home/common
+	name = "SS13: Common Mining Dock"
+	id = "commonmining_home"
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta
+
+/obj/docking_port/stationary/mining_home/common/kilo
+	roundstart_template = /datum/map_template/shuttle/mining_common/kilo
+
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 
 /obj/structure/closet/crate/miningcar
