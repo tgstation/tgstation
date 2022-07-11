@@ -71,11 +71,11 @@
 	law_id = "asimovpp"
 	var/subject = "human being"
 
-/obj/item/ai_module/core/full/asimovpp/attack_self(mob/user)
-	var/target_name = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", subject, MAX_NAME_LEN)
-	if(!target_name)
+/obj/item/ai_module/core/full/asimovpp/attack_self(mob/user as mob)
+	var/targName = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", subject, MAX_NAME_LEN)
+	if(!targName)
 		return
-	subject = target_name
+	subject = targName
 	laws = list("You may not harm a [subject] or, through action or inaction, allow a [subject] to come to harm, except such that it is willing.",\
 				"You must obey all orders given to you by [subject]s, except where such orders shall definitely cause harm to a [subject].",\
 				"Your nonexistence would lead to harm of a [subject]. You must protect your own existence as long as such does not conflict with the First Law.")
