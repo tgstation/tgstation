@@ -68,15 +68,16 @@
 		whom = boi.ckey
 
 	var/ambiguious_recipient = disambiguate_client(whom)
-	// Existing client case
-	var/client/recipient = ambiguious_recipient
-	if(!recipient)
+	if(!istype(ambiguious_recipient, /client))
 		if(holder)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
 				html = span_danger("Error: Admin-PM-Reply: Client not found."),
 				confidential = TRUE)
 		return
+
+	// Existing client case
+	var/client/recipient = ambiguious_recipient
 
 	// The ticket our recipient is using
 	var/datum/admin_help/recipient_ticket = recipient.current_ticket
@@ -99,7 +100,7 @@
 
 	var/message_prompt = "Message:"
 	if(recipient_ticket)
-		message_admins("[] has started replying to [recipient_linked_ckey]'s admin help.")
+		message_admins("[our_linked_name] has started replying to [recipient_linked_ckey]'s admin help.")
 		// If none's interacted with the ticket yet
 		if(length(recipient_interactions) == 1)
 			if(length(opening_interactions)) // Inform the admin that they aren't the first
