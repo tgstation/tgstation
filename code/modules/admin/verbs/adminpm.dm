@@ -292,26 +292,13 @@
 	if(IsAdminAdvancedProcCall())
 		return FALSE
 
-	if(prefs.muted & MUTE_ADMINHELP)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Send: You are unable to use admin PM-s (muted)."),
-			confidential = TRUE)
-		return FALSE
+	send_message = adminpm_filter_text(ambiguious_recipient, send_message)
+	if(!send_message)
+		return
 
 	if (handle_spam_prevention(send_message, MUTE_ADMINHELP))
 		// handle_spam_prevention does its own "hey buddy ya fucker up here's what happen"
 		return FALSE
-
-	//clean the message if it's not sent by a high-rank admin
-	if(!check_rights(R_SERVER|R_DEBUG, 0) || ambiguious_recipient == EXTERNAL_PM_USER)//no sending html to the poor bots
-		send_message = sanitize(copytext_char(send_message, 1, MAX_MESSAGE_LEN))
-		if(!send_message)
-			to_chat(src,
-				type = MESSAGE_TYPE_ADMINPM,
-				html = span_danger("Error: Admin-PM-Send: Your message contained only HTML, it's been sanitized away and the message disregarded."),
-				confidential = TRUE)
-			return FALSE
 
 	var/raw_messsage = send_message
 
@@ -505,22 +492,10 @@
 
 	// First we filter, because these procs can be called by anyone with debug, and I don't trust that check
 	// gotta make sure none's fucking about
-	if(prefs.muted & MUTE_ADMINHELP)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Notify: You are unable to use admin PM-s (muted)."),
-			confidential = TRUE)
+	send_message = adminpm_filter_text(ambiguious_recipient, log_message)
+	if(!send_message)
 		return
 
-	//clean the message if it's not sent by a high-rank admin
-	if(!check_rights(R_SERVER|R_DEBUG, 0) || ambiguious_recipient == EXTERNAL_PM_USER)//no sending html to the poor bots
-		log_message = sanitize(copytext_char(log_message, 1, MAX_MESSAGE_LEN))
-		if(!log_message)
-			to_chat(src,
-				type = MESSAGE_TYPE_ADMINPM,
-				html = span_danger("Error: Admin-PM-Notify: Your message contained only HTML, it's been sanitized away and the message disregarded."),
-				confidential = TRUE)
-			return
 
 	var/raw_messsage = log_message
 
@@ -575,6 +550,27 @@
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_notice("<B>PM: [our_linked_ckey]-&gt;[recipient_linked_ckey]:</B> [keyword_parsed_msg]") ,
 			confidential = TRUE)
+
+/// Accepts a message and an ambiguious recipient (some sort of client representative, or [EXTERNAL_PM_USER])
+/// Returns the filtered message if it passes all checks, or null if the send fails
+/client/proc/adminpm_filter_text(ambiguious_recipient, message)
+	if(prefs.muted & MUTE_ADMINHELP)
+		to_chat(src,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_danger("Error: Admin-PM-Notify: You are unable to use admin PM-s (muted)."),
+			confidential = TRUE)
+		return
+
+	//clean the message if it's not sent by a high-rank admin
+	if(!check_rights(R_SERVER|R_DEBUG, 0) || ambiguious_recipient == EXTERNAL_PM_USER)//no sending html to the poor bots
+		message = sanitize(copytext_char(message, 1, MAX_MESSAGE_LEN))
+		if(!message)
+			to_chat(src,
+				type = MESSAGE_TYPE_ADMINPM,
+				html = span_danger("Error: Admin-PM-Notify: Your message contained only HTML, it's been sanitized away and the message disregarded."),
+				confidential = TRUE)
+			return
+	return message
 
 #define TGS_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
 /proc/TgsPm(target,msg,sender)
@@ -708,6 +704,7 @@
 		return EXTERNAL_PM_USER
 
 	return GLOB.directory[searching_ckey]
+
 
 #undef EXTERNAL_PM_USER
 #undef EXTERNALREPLYCOUNT
