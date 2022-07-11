@@ -9,8 +9,6 @@
 	var/list/transfer_access = list()
 	/// PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.
 	var/program_state = PROGRAM_STATE_KILLED
-	/// Device that runs this program.
-	var/obj/item/modular_computer/computer
 	/// User-friendly name of this program.
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
@@ -45,15 +43,6 @@
 	var/alert_pending = FALSE
 	/// How well this program will help combat detomatix viruses.
 	var/detomatix_resistance = NONE
-
-/datum/computer_file/program/New(obj/item/modular_computer/comp = null)
-	..()
-	if(comp && istype(comp))
-		computer = comp
-
-/datum/computer_file/program/Destroy()
-	computer = null
-	. = ..()
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
