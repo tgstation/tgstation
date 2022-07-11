@@ -152,7 +152,7 @@ SUBSYSTEM_DEF(economy)
  * Iterates over every department account for the same payment.
  */
 /datum/controller/subsystem/economy/proc/departmental_payouts()
-	// son sonic speed? cache? hot over in cold food why?
+	// son sonic speed? cache? hot over in cold food why? (datum var accesses are slow, cache lists for sonic speed)
 	var/list/cached_processing = src.cached_processing
 	for(var/i in 1 to length(cached_processing))
 		var/datum/bank_account/dept_account = get_dep_account(cached_processing[i])
