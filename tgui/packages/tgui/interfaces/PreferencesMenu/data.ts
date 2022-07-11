@@ -1,26 +1,26 @@
-import { BooleanLike } from "common/react";
-import { sendAct } from "../../backend";
-import { Gender } from "./preferences/gender";
+import { BooleanLike } from 'common/react';
+import { sendAct } from '../../backend';
+import { Gender } from './preferences/gender';
 
 export enum Food {
-  Alcohol = "ALCOHOL",
-  Breakfast = "BREAKFAST",
-  Bugs = "BUGS",
-  Cloth = "CLOTH",
-  Dairy = "DAIRY",
-  Fried = "FRIED",
-  Fruit = "FRUIT",
-  Grain = "GRAIN",
-  Gross = "GROSS",
-  Junkfood = "JUNKFOOD",
-  Meat = "MEAT",
-  Nuts = "NUTS",
-  Pineapple = "PINEAPPLE",
-  Raw = "RAW",
-  Seafood = "SEAFOOD",
-  Sugar = "SUGAR",
-  Toxic = "TOXIC",
-  Vegetables = "VEGETABLES",
+  Alcohol = 'ALCOHOL',
+  Breakfast = 'BREAKFAST',
+  Bugs = 'BUGS',
+  Cloth = 'CLOTH',
+  Dairy = 'DAIRY',
+  Fried = 'FRIED',
+  Fruit = 'FRUIT',
+  Grain = 'GRAIN',
+  Gross = 'GROSS',
+  Junkfood = 'JUNKFOOD',
+  Meat = 'MEAT',
+  Nuts = 'NUTS',
+  Pineapple = 'PINEAPPLE',
+  Raw = 'RAW',
+  Seafood = 'SEAFOOD',
+  Sugar = 'SUGAR',
+  Toxic = 'TOXIC',
+  Vegetables = 'VEGETABLES',
 }
 
 export enum JobPriority {
@@ -57,7 +57,6 @@ export type Species = {
     disliked_food: Food[];
     toxic_food: Food[];
   };
-
 };
 
 export type Perk = {
@@ -105,15 +104,13 @@ export enum GamePreferencesSelectedPage {
   Keybindings,
 }
 
-export const createSetPreference = (
-  act: typeof sendAct,
-  preference: string
-) => (value: unknown) => {
-  act("set_preference", {
-    preference,
-    value,
-  });
-};
+export const createSetPreference =
+  (act: typeof sendAct, preference: string) => (value: unknown) => {
+    act('set_preference', {
+      preference,
+      value,
+    });
+  };
 
 export enum Window {
   Character = 0,
@@ -130,7 +127,7 @@ export type PreferencesMenuData = {
     features: Record<string, string>;
     game_preferences: Record<string, unknown>;
     non_contextual: {
-      random_body: RandomSetting,
+      random_body: RandomSetting;
       [otherKey: string]: unknown;
     };
     secondary_features: Record<string, unknown>;
@@ -147,14 +144,17 @@ export type PreferencesMenuData = {
     randomization: Record<string, RandomSetting>;
   };
 
-  content_unlocked: BooleanLike,
+  content_unlocked: BooleanLike;
 
   job_bans?: string[];
   job_days_left?: Record<string, number>;
-  job_required_experience?: Record<string, {
-    experience_type: string,
-    required_playtime: number,
-  }>;
+  job_required_experience?: Record<
+    string,
+    {
+      experience_type: string;
+      required_playtime: number;
+    }
+  >;
   job_preferences: Record<string, JobPriority>;
 
   keybindings: Record<string, string[]>;
@@ -179,7 +179,7 @@ export type ServerData = {
   names: {
     types: Record<string, Name>;
   };
-  quirks: QuirkInfo,
+  quirks: QuirkInfo;
   random: {
     randomizable: string[];
   };

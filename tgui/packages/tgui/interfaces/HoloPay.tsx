@@ -19,7 +19,7 @@ Use of departmental funds is prohibited. For more information, visit
 the Head of Personnel. All rights reserved. All trademarks are property
 of their respective owners.`;
 
-export const HoloPay = (_, context) => {
+export const HoloPay = (props, context) => {
   const { data } = useBackend<HoloPayData>(context);
   const { owner } = data;
   const [setupMode, setSetupMode] = useLocalState(context, 'setupMode', false);
@@ -55,7 +55,7 @@ export const HoloPay = (_, context) => {
 /**
  * Displays the current user's bank information (if any)
  */
-const AccountDisplay = (_, context) => {
+const AccountDisplay = (props, context) => {
   const { data } = useBackend<HoloPayData>(context);
   const { user } = data;
   if (!user) {
@@ -92,8 +92,8 @@ const TerminalDisplay = (props, context) => {
   const { description, force_fee, name, owner, user, shop_logo } = data;
   const { onClick } = props;
   const is_owner = owner === user?.name;
-  const cannot_pay
-    = is_owner || !user || user?.balance < 1 || user?.balance < force_fee;
+  const cannot_pay =
+    is_owner || !user || user?.balance < 1 || user?.balance < force_fee;
   const decodedName = name.replace(/&#(\d+);/g, (_, dec) => {
     return String.fromCharCode(dec);
   });
@@ -104,7 +104,8 @@ const TerminalDisplay = (props, context) => {
         is_owner && (
           <Button icon="edit" onClick={onClick}>
             Setup
-          </Button>)
+          </Button>
+        )
       }
       fill
       title="Terminal">

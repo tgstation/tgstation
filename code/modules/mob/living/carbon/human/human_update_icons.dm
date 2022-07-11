@@ -687,7 +687,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/proc/update_hud_s_store(obj/item/worn_item)
 	worn_item.screen_loc = ui_sstore1
-	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
+	if(client && hud_used?.hud_shown)
 		client.screen += worn_item
 	update_observer_view(worn_item,TRUE)
 

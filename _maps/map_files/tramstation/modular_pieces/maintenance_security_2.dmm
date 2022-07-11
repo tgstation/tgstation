@@ -1,0 +1,207 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"h" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"i" = (
+/turf/closed/wall/rust,
+/area/station/maintenance/department/security)
+"j" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"m" = (
+/turf/template_noop,
+/area/template_noop)
+"n" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"p" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security)
+"t" = (
+/turf/closed/wall,
+/area/station/maintenance/department/security)
+"x" = (
+/turf/closed/wall/rock,
+/area/station/maintenance/department/security)
+"z" = (
+/obj/modular_map_root/tramstation{
+	key = "maintenance_security_attachment"
+	},
+/turf/template_noop,
+/area/template_noop)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"K" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"R" = (
+/obj/structure/ore_box,
+/obj/item/shovel,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"S" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/security)
+"X" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+
+(1,1,1) = {"
+m
+N
+t
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+"}
+(2,1,1) = {"
+m
+N
+t
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+"}
+(3,1,1) = {"
+m
+N
+t
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+"}
+(4,1,1) = {"
+m
+N
+t
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+"}
+(5,1,1) = {"
+m
+N
+i
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+"}
+(6,1,1) = {"
+m
+E
+i
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+"}
+(7,1,1) = {"
+m
+K
+t
+t
+z
+t
+x
+x
+S
+n
+i
+t
+t
+t
+"}
+(8,1,1) = {"
+t
+K
+K
+h
+n
+n
+h
+n
+h
+n
+K
+X
+N
+j
+"}
+(9,1,1) = {"
+t
+x
+S
+R
+x
+p
+n
+t
+t
+i
+i
+t
+m
+m
+"}

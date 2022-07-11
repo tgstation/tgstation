@@ -35,10 +35,9 @@
 "z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/sign/warning/secure_area{
+/obj/structure/sign/warning/secure_area/directional/east{
 	desc = "A warning sign which reads 'CAVE IN HAZARD: WEAR PROTECTIVE HEAD GEAR'.";
-	name = "\improper CAVE IN HAZARD sign";
-	pixel_x = 32
+	name = "\improper CAVE IN HAZARD sign"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)

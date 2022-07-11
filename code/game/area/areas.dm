@@ -70,7 +70,17 @@
 	var/parallax_movedir = 0
 
 	var/ambience_index = AMBIENCE_GENERIC
+	///A list of sounds to pick from every so often to play to clients.
 	var/list/ambientsounds
+	///Does this area immediately play an ambience track upon enter?
+	var/forced_ambience = FALSE
+	///The background droning loop that plays 24/7
+	var/ambient_buzz = 'sound/ambience/shipambience.ogg'
+	///Used to decide what the minimum time between ambience is
+	var/min_ambience_cooldown = 25 SECONDS
+	///Used to decide what the maximum time between ambience is
+	var/max_ambience_cooldown = 70 SECONDS
+
 	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/cameras
@@ -93,11 +103,6 @@
 
 	///Used to decide what kind of reverb the area makes sound have
 	var/sound_environment = SOUND_ENVIRONMENT_NONE
-
-	///Used to decide what the minimum time between ambience is
-	var/min_ambience_cooldown = 30 SECONDS
-	///Used to decide what the maximum time between ambience is
-	var/max_ambience_cooldown = 90 SECONDS
 
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
@@ -403,7 +408,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Entered(atom/movable/arrived, area/old_area)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, arrived, old_area)
-	if(!LAZYACCESS(arrived.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE))
+
+	if(!arrived.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
 	for(var/atom/movable/recipient as anything in arrived.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
@@ -415,11 +421,45 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!L.ckey)
 		return
 
-	//Ship ambience just loops if turned on.
-	if(L.client?.prefs.toggles & SOUND_SHIP_AMBIENCE)
-		SEND_SOUND(L, sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+	if(old_area)
+		L.UnregisterSignal(old_area, COMSIG_AREA_POWER_CHANGE)
+	L.RegisterSignal(src, COMSIG_AREA_POWER_CHANGE, /mob/proc/refresh_looping_ambience)
+	L.refresh_looping_ambience()
+
+///Tries to play looping ambience to the mobs.
+/mob/proc/refresh_looping_ambience()
+	var/area/my_area = get_area(src)
+
+	if(!(client?.prefs.toggles & SOUND_SHIP_AMBIENCE) || !my_area.ambient_buzz)
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		return
+
+	//Lavaland always has it's ambience.
+	if(is_mining_level(my_area.z))
+		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+		return
+
+	//Station ambience is dependant on a functioning and charged APC
+	if(!my_area.apc || !my_area.apc.operating || !my_area.apc.cell?.charge)
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		return
+
+	else
+		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
 
 
+/**
+ * Called when an atom exits an area
+ *
+ * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
+ */
+/area/Exited(atom/movable/gone, direction)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
+
+	if(!gone.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
+		return
+	for(var/atom/movable/recipient as anything in gone.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
+		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
 
 ///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
 /area/proc/update_beauty()
@@ -430,20 +470,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		beauty = 0
 		return FALSE //Too big
 	beauty = totalbeauty / areasize
-
-
-/**
- * Called when an atom exits an area
- *
- * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to a list of atoms)
- */
-/area/Exited(atom/movable/gone, direction)
-	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
-	if(!LAZYACCESS(gone.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE))
-		return
-	for(var/atom/movable/recipient as anything in gone.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
-		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
-
 
 /**
  * Setup an area (with the given name)

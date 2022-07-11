@@ -356,9 +356,7 @@
 /area/shuttle/pirate)
 "aI" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -540,9 +538,7 @@
 /area/shuttle/pirate)
 "bo" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "br" = (

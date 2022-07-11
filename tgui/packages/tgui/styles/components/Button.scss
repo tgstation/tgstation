@@ -19,9 +19,7 @@ $bg-map: colors.$bg-map !default;
 @mixin button-color($color) {
   // Adapt text color to background luminance to ensure high contast
   $luminance: luminance($color);
-  $text-color: if($luminance > 0.4,
-    rgba(0, 0, 0, 1),
-    rgba(255, 255, 255, 1));
+  $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
 
   transition: color 50ms, background-color 50ms;
   background-color: $color;
@@ -61,7 +59,9 @@ $bg-map: colors.$bg-map !default;
     margin-bottom: 0;
   }
 
-  .fa, .fas, .far {
+  .fa,
+  .fas,
+  .far {
     margin-left: -0.25em;
     margin-right: -0.25em;
     min-width: 1.333em;
@@ -71,13 +71,17 @@ $bg-map: colors.$bg-map !default;
 
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
-  .fa, .fas, .far {
+  .fa,
+  .fas,
+  .far {
     margin-right: 0.25em;
   }
 }
 
 .Button--hasContent.Button--iconPosition--right {
-  .fa, .fas, .far {
+  .fa,
+  .fas,
+  .far {
     margin-right: 0px;
     margin-left: 3px;
   }
@@ -147,11 +151,11 @@ $bg-map: colors.$bg-map !default;
 .Button--verticalAlignContent--top {
   justify-content: flex-start;
 }
-  
+
 .Button--verticalAlignContent--middle {
   justify-content: center;
 }
-  
+
 .Button--verticalAlignContent--bottom {
   justify-content: flex-end;
 }

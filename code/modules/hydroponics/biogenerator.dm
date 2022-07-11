@@ -113,7 +113,7 @@
 			for(var/obj/item/food/grown/G in PB.contents)
 				if(i >= max_items)
 					break
-				if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
+				if(PB.atom_storage.attempt_remove(G, src))
 					i++
 			if(i<max_items)
 				to_chat(user, span_info("You empty the plant bag into the biogenerator."))

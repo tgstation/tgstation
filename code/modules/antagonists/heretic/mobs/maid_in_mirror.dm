@@ -22,7 +22,7 @@
 		/obj/item/clothing/suit/armor,
 		/obj/item/organ/internal/lungs,
 	)
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/mirror_walk)
+	actions_to_add = list(/datum/action/cooldown/spell/jaunt/mirror_walk)
 
 	/// Whether we take damage when we're examined
 	var/weak_on_examine = TRUE
@@ -40,6 +40,9 @@
 /mob/living/simple_animal/hostile/heretic_summon/maid_in_the_mirror/examine(mob/user)
 	. = ..()
 	if(!weak_on_examine)
+		return
+
+	if(!isliving(user) || user.stat == DEAD)
 		return
 
 	if(IS_HERETIC_OR_MONSTER(user) || user == src)

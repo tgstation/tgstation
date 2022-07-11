@@ -3,7 +3,7 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x2"
 	anchored = TRUE
-	layer = TURF_LAYER
+	layer = OBJ_LAYER
 	plane = GAME_PLANE
 	invisibility = INVISIBILITY_ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -406,8 +406,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
 	icon_state = "generic_event"
-	layer = OBJ_LAYER
-
 
 /obj/effect/landmark/event_spawn/Initialize(mapload)
 	. = ..()
@@ -519,7 +517,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/navigate_destination
 	name = "navigate verb destination"
 	icon_state = "navigate"
-	layer = OBJ_LAYER
 	var/location
 
 /obj/effect/landmark/navigate_destination/Initialize(mapload)
