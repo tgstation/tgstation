@@ -279,7 +279,7 @@
 	if(ambiguious_recipient == EXTERNAL_PM_USER)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = span_notice("PM to-<b>Admins</b>: <span class='linkify'>[raw_messsage]</span>"),
+			html = span_notice("PM to-<b>Admins</b>: [span_linkfiy(raw_messsage)]"),
 			confidential = TRUE)
 		var/datum/admin_help/new_admin_help = admin_ticket_log(src,
 			"<font color='red'>Reply PM from-<b>[name_key_with_link]</b> to <i>External</i>: [keyword_parsed_msg]</font>",
@@ -338,11 +338,11 @@
 		if(holder)
 			to_chat(recipient,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = span_danger("Admin PM from-<b>[name_key_with_link]</b>: <span class='linkify'>[keyword_parsed_msg]</span>"),
+				html = span_danger("Admin PM from-<b>[name_key_with_link]</b>: [span_linkfiy(keyword_parsed_msg)]"),
 				confidential = TRUE)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: <span class='linkify'>[keyword_parsed_msg]</span>"),
+				html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: [span_linkfiy(keyword_parsed_msg)]"),
 				confidential = TRUE)
 
 			//omg this is dumb, just fill in both their logs
@@ -361,8 +361,8 @@
 			SSblackbox.LogAhelp(ticket_id, "Reply", send_message, recip_ckey, our_ckey)
 			return TRUE
 		//recipient is an admin but sender is not
-		var/replymsg = "Reply PM from-<b>[name_key_with_link]</b>: <span class='linkify'>[keyword_parsed_msg]</span>"
-		var/player_replymsg = "Reply PM from-<b>[link_to_us]</b>: <span class='linkify'>[send_message]</span>"
+		var/replymsg = "Reply PM from-<b>[name_key_with_link]</b>: [span_linkfiy(keyword_parsed_msg)]"
+		var/player_replymsg = "Reply PM from-<b>[link_to_us]</b>: [span_linkfiy(send_message)]"
 		admin_ticket_log(src,
 			"<font color='red'>[replymsg]</font>",
 			log_in_blackbox = FALSE,
@@ -373,7 +373,7 @@
 			confidential = TRUE)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = span_notice("PM to-<b>Admins</b>: <span class='linkify'>[send_message]</span>"),
+			html = span_notice("PM to-<b>Admins</b>: [span_linkfiy(send_message)]"),
 			confidential = TRUE)
 		SSblackbox.LogAhelp(ticket_id, "Reply", send_message, recip_ckey, our_ckey)
 		return TRUE
@@ -410,7 +410,7 @@
 		confidential = TRUE)
 	to_chat(recipient,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminsay("Admin PM from-<b>[link_to_us]</b>: <span class='linkify'>[send_message]</span>"),
+		html = span_adminsay("Admin PM from-<b>[link_to_us]</b>: [span_linkfiy(send_message)]"),
 		confidential = TRUE)
 	to_chat(recipient,
 		type = MESSAGE_TYPE_ADMINPM,
@@ -418,7 +418,7 @@
 		confidential = TRUE)
 	to_chat(src,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: <span class='linkify'>[send_message]</span>"),
+		html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: [span_linkfiy(send_message)]"),
 		confidential = TRUE)
 
 	admin_ticket_log(recipient,
