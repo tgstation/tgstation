@@ -5457,13 +5457,6 @@
 /area/station/maintenance/starboard/aft)
 "bFr" = (
 /obj/structure/tank_holder/extinguisher,
-/obj/machinery/requests_console/directional/north{
-	department = "Science";
-	departmentType = 2;
-	name = "Science Requests Console";
-	receive_ore_updates = 1;
-	supplies_requestable = 1
-	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "bFs" = (
@@ -14900,12 +14893,15 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "eum" = (
-/obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
 /obj/item/kirbyplants/dead,
+/obj/machinery/computer/security/telescreen/rd{
+	dir = 4;
+	pixel_x = -26
+	},
 /turf/open/floor/iron/smooth_half,
 /area/station/command/heads_quarters/rd)
 "euq" = (
@@ -22898,6 +22894,7 @@
 	},
 /obj/structure/table,
 /obj/item/circuitboard/aicore,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/rd)
 "gSV" = (
@@ -35806,6 +35803,13 @@
 "kRi" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/item/extinguisher,
+/obj/machinery/requests_console/directional/north{
+	department = "Science";
+	departmentType = 2;
+	name = "Science Requests Console";
+	receive_ore_updates = 1;
+	supplies_requestable = 1
+	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "kRm" = (
@@ -54249,14 +54253,14 @@
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "qGi" = (
+/obj/effect/turf_decal/trimline/purple/filled/warning{
+	dir = 8
+	},
 /obj/machinery/computer/security/telescreen{
 	dir = 8;
 	name = "Xenobio Monitor";
 	network = list("xeno");
 	pixel_x = 26
-	},
-/obj/effect/turf_decal/trimline/purple/filled/warning{
-	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -57386,9 +57390,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/computer/security/telescreen/rd{
-	dir = 4;
-	pixel_x = -26
+/obj/structure/sign/plaques/kiddie/gameoflife{
+	pixel_x = -32
 	},
 /turf/open/floor/iron/smooth_corner,
 /area/station/command/heads_quarters/rd)
@@ -253619,8 +253622,8 @@ nhf
 mfV
 jSm
 ltj
-qGi
 cpg
+qGi
 cpg
 cdl
 pMF
