@@ -104,6 +104,8 @@
 		if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 			weapon.force = weapon.force / 2
 		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.inhand_icon_state))
+	else 
+		return
 
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
