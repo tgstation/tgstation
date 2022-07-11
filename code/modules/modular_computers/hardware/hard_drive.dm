@@ -125,16 +125,16 @@
 			return F
 	return null
 
-/obj/item/computer_hardware/hard_drive/Destroy()
-	QDEL_LIST(stored_files)
-	return ..()
+/// Tries to find the first file by type. Returns null on fail.
+/obj/item/computer_hardware/hard_drive/proc/find_file_by_type(filetype)
+	if(!check_functionality() || !filetype || !stored_files)
+		return null
 
-/obj/item/computer_hardware/hard_drive/Initialize(mapload)
-	. = ..()
+	for(var/datum/computer_file/comp_file in stored_files)
+		if(istype(comp_file, type))
+			return comp_file
 
-	if(default_installs)
-		install_default_programs()
-
+	return null
 
 /obj/item/computer_hardware/hard_drive/advanced
 	name = "advanced hard disk drive"
