@@ -103,7 +103,9 @@
 	var/list/data = list()
 	if(!pai)
 		data["candidates"] = pool_candidates() || list()
+		data["pai"] = list()
 	else
+		data["candidates"] = list()
 		data["pai"] = list(
 			can_holo = pai.can_holo,
 			dna = pai.master_dna,
@@ -173,7 +175,7 @@
 	add_alert()
 	addtimer(CALLBACK(src, .proc/remove_alert), 5 SECONDS)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-	loc.visible_message(span_notice("[src] flashes a message across its screen"), "Additional personalities available for download.", blind_message = span_notice("[src] vibrates with an alert."))
+	loc.visible_message(span_notice("[src] flashes a message across its screen: New personalities available for download!"), blind_message = span_notice("[src] vibrates with an alert."))
 
 /**
  * Downloads a candidate from the list and removes them from SSpai.candidates

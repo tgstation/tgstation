@@ -10,7 +10,7 @@
 	hud_type = /datum/hud/pai
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	desc = "A generic pAI mobile hard-light holographics emitter."
+	desc = "A generic pAI hard-light holographics emitter."
 	health = 500
 	maxHealth = 500
 	layer = LOW_MOB_LAYER
@@ -22,6 +22,7 @@
 	radio = /obj/item/radio/headset/silicon/pai
 	can_buckle_to = FALSE
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
+	light_flags = MOVABLE_LIGHT
 
 	/// The strength of the internal flashlight
 	var/brightness_power = 5
@@ -340,6 +341,7 @@
 	master_ref = null
 	master_name = null
 	master_dna = null
+	add_supplied_law(0, "None.")
 	to_chat(user, span_notice("You reset the software on the pAI."))
 	to_chat(pai, span_notice("Your software has been reset."))
 	return TRUE

@@ -112,12 +112,12 @@ const InputDisplay = (props, context) => {
 /** Gives the user a submit button */
 const ButtonsDisplay = (props, context) => {
   const { act, data } = useBackend<Data>(context);
+  const { comments, description, name } = data;
   const [input, setInput] = useLocalState<Data>(context, 'input', {
-    comments: '',
-    description: '',
-    name: '',
+    comments,
+    description,
+    name,
   });
-  const { comments, description, name } = input;
 
   return (
     <Section fill>

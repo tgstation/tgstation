@@ -165,7 +165,7 @@
 	if(tgui_alert(holder, "[user] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "Checking DNA", list("Yes", "No")) != "Yes")
 		to_chat(user, span_warning("[holder] does not seem like [holder.p_theyre()]	going to provide a DNA sample willingly."))
 		return FALSE
-	holder.visible_message(span_notice("[holder] presses [holder.p_their()]	thumb against [user]."), span_notice("You press your thumb against [user]."), span_notice("[user] makes a sharp clicking sound as it extracts DNA material from [holder]."))
+	holder.visible_message(span_notice("[holder] presses [holder.p_their()] thumb against [user]."), span_notice("You press your thumb against [user]."), span_notice("[user] makes a sharp clicking sound as it extracts DNA material from [holder]."))
 	if(!holder.has_dna())
 		to_chat(user, span_warning("No DNA detected."))
 		return FALSE

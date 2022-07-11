@@ -156,12 +156,9 @@
 
 /** Toggles the onboard light */
 /mob/living/silicon/pai/proc/toggle_integrated_light()
-	if(!light_range)
-		set_light(brightness_power)
-		to_chat(src, span_notice("You enable your integrated light."))
-	else
-		set_light(0)
-		to_chat(src, span_notice("You disable your integrated light."))
+	set_light(light_range ? 0 : brightness_power)
+	to_chat(src, span_notice("You [light_range ? "disable" : "enable"] your integrated light."))
+	return TRUE
 
 /**
  * Polymorphs the pai into a random holoform
