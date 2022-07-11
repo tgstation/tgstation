@@ -174,9 +174,11 @@
 	name = "Lil' Pump"
 
 /obj/machinery/portable_atmospherics/pump/lil_pump/Initialize(mapload)
+	. = ..()
 	//25% chance to occur
 	if(prob(25))
 		name = "Liler' Pump"
 		desc = "When a Lil' Pump and and portable air pump love each other very much."
-		var/matrix/new_transform = matrix()
-		new_transform.Scale(1, 0.8)
+		var/matrix/lil_pump = matrix()
+		lil_pump.Scale(0.8)
+		src.transform = lil_pump
