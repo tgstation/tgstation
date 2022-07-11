@@ -71,7 +71,7 @@
 	law_id = "asimovpp"
 	var/subject = "human being"
 
-/obj/item/ai_module/core/full/asimovpp/attack_self(mob/user as mob)
+/obj/item/ai_module/core/full/asimovpp/attack_self(mob/user)
 	var/targName = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", subject, MAX_NAME_LEN)
 	if(!targName)
 		return
