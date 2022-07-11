@@ -1,8 +1,7 @@
-import { capitalizeOne } from 'common/string';
-import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, Collapsible, Input, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs, Tooltip } from 'tgui/components';
-import { Window } from 'tgui/layouts';
+import { BooleanLike } from '../../common/react';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Collapsible, Input, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs, Tooltip } from '../components';
+import { Window } from '../layouts';
 
 type PandemicContext = {
   beaker?: Beaker;
@@ -178,10 +177,10 @@ const BeakerInfoDisplay = (props, context) => {
       <Stack.Item grow={2}>
         <LabeledList>
           <LabeledList.Item label="DNA">
-            {capitalizeOne(blood.dna)}
+            {blood.dna.replace(/^\w/, (c) => c.toUpperCase())}
           </LabeledList.Item>
           <LabeledList.Item label="Type">
-            {capitalizeOne(blood.type)}
+            {blood.type.replace(/^\w/, (c) => c.toUpperCase())}
           </LabeledList.Item>
         </LabeledList>
       </Stack.Item>
@@ -365,7 +364,7 @@ const VirusTextInfo = (props: VirusInfoProps, context) => {
         {virus.description}
       </LabeledList.Item>
       <LabeledList.Item label="Agent">
-        {capitalizeOne(virus.agent)}
+        {virus.agent.replace(/^\w/, (c) => c.toUpperCase())}
       </LabeledList.Item>
       <LabeledList.Item label="Spread">{virus.spread}</LabeledList.Item>
       <LabeledList.Item label="Possible Cure">{virus.cure}</LabeledList.Item>

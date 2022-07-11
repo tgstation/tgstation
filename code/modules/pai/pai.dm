@@ -10,7 +10,7 @@
 	hud_type = /datum/hud/pai
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	desc = "A pAI mobile hard-light holographics emitter."
+	desc = "A generic pAI mobile hard-light holographics emitter."
 	health = 500
 	maxHealth = 500
 	layer = LOW_MOB_LAYER
@@ -179,8 +179,7 @@
 
 /mob/living/silicon/pai/examine(mob/user)
 	. = ..()
-	desc += " This one appears to be a [chassis]."
-	. += "A personal AI in holochassis mode. Its master ID string seems to be [master_name]."
+	. += "A personal AI in holochassis mode. Its master ID string seems to be [master_name || "empty"]."
 
 /mob/living/silicon/pai/get_status_tab_items()
 	. += ..()
@@ -228,11 +227,8 @@
 	if(!holoform)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
+	desc = "A pAI mobile hard-light holographics emitter. This one appears in the form of a [chassis]."
 	return INITIALIZE_HINT_LATELOAD
-
-/mob/living/silicon/pai/LateInitialize()
-	. = ..()
-	modularInterface.saved_identification = name
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -269,7 +265,6 @@
 		return FALSE
 	var/mob/living/resolved_master = master_ref?.resolve()
 	if(!resolved_master)
-		to_chat(user, span_warning("Your master, [master_name], cannot be located!"))
 		reset_software()
 		return FALSE
 	return resolved_master

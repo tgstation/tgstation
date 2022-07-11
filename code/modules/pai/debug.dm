@@ -2,7 +2,7 @@
  * Takes a selected key and turns it into a pAI.
  * Ideally this is an observer, but you do not have to play nice.
  */
-/client/proc/make_pai()
+/client/proc/makepAI()
 	set category = "Admin.Fun"
 	set name = "Make pAI"
 	set desc = "Creates a pAI at your current location using the specified key."

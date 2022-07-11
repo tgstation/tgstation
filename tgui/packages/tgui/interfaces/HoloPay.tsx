@@ -1,7 +1,6 @@
-import { decodeHTML } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, Dropdown, Icon, NoticeBox, RestrictedInput, Section, Stack, Table, TextArea, Tooltip } from 'tgui/components';
-import { Window } from 'tgui/layouts';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Dropdown, Icon, NoticeBox, RestrictedInput, Section, Stack, Table, TextArea, Tooltip } from '../components';
+import { Window } from '../layouts';
 
 type HoloPayData = {
   available_logos: string[];
@@ -95,6 +94,9 @@ const TerminalDisplay = (props, context) => {
   const is_owner = owner === user?.name;
   const cannot_pay =
     is_owner || !user || user?.balance < 1 || user?.balance < force_fee;
+  const decodedName = name.replace(/&#(\d+);/g, (_, dec) => {
+    return String.fromCharCode(dec);
+  });
 
   return (
     <Section
@@ -114,7 +116,7 @@ const TerminalDisplay = (props, context) => {
         <Stack.Item grow textAlign="center">
           <Tooltip content={description} position="bottom">
             <Box color="label" fontSize="17px" overflow="hidden">
-              {decodeHTML(name)}
+              {decodedName}
             </Box>
           </Tooltip>
         </Stack.Item>
@@ -172,6 +174,9 @@ const SetupDisplay = (props, context) => {
   const { act, data } = useBackend<HoloPayData>(context);
   const { available_logos = [], force_fee, max_fee, name, shop_logo } = data;
   const { onClick } = props;
+  const decodedName = name.replace(/&#(\d+);/g, (_, dec) => {
+    return String.fromCharCode(dec);
+  });
 
   return (
     <Section
@@ -211,7 +216,7 @@ const SetupDisplay = (props, context) => {
             onChange={(_, value) => {
               value?.length > 3 && act('rename', { name: value });
             }}
-            placeholder={decodeHTML(name)}
+            placeholder={decodedName}
           />
         </Stack.Item>
         <Stack.Item>

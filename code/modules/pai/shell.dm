@@ -139,7 +139,6 @@
 	holoform = TRUE
 	return TRUE
 
-
 /**
  * Sets the holochassis skin and updates the icons
  *
@@ -152,6 +151,7 @@
 	chassis = choice
 	icon_state = "[chassis]"
 	held_state = "[chassis]"
+	desc = "A pAI mobile hard-light holographics emitter. This one appears in the form of a [chassis]."
 	return TRUE
 
 /** Toggles the onboard light */

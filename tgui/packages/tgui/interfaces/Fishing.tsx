@@ -7,6 +7,7 @@ import { backendSuspendStart, useBackend } from '../backend';
 import { Icon } from '../components';
 import { globalEvents } from '../events';
 import { Window } from '../layouts';
+import { logger } from '../logging';
 
 type Bait = {
   position: number;
@@ -224,6 +225,7 @@ class FishingMinigame extends Component<
       }
       // Try to do a short jump - these can't really be interrupted
       if (randomProb(shortJumpChance)) {
+        logger.log(`Short jump with chance ${shortJumpChance}`);
         const distanceFromTop = 0 - currentFishState.position;
         const distanceFromBottom =
           this.area_height -

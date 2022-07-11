@@ -1,7 +1,6 @@
-import { capitalizeAny } from 'common/string';
-import { useBackend } from 'tgui/backend';
-import { Button, LabeledList, Section, Stack } from 'tgui/components';
-import { Window } from 'tgui/layouts';
+import { useBackend } from '../backend';
+import { Button, LabeledList, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 type SpawnersMenuContext = {
   spawners: spawner[];
@@ -27,7 +26,7 @@ export const SpawnersMenu = (props, context) => {
               <Section
                 fill
                 // Capitalizes the spawner name
-                title={capitalizeAny(spawner.name)}
+                title={spawner.name.replace(/^\w/, (c) => c.toUpperCase())}
                 buttons={
                   <Stack>
                     <Stack.Item fontSize="14px" color="green">

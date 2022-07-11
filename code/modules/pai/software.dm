@@ -1,5 +1,3 @@
-#define CABLE_LENGTH 2
-
 /mob/living/silicon/pai/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -54,6 +52,7 @@
 			modularInterface?.interact(usr)
 			return TRUE
 		if("Door Jack")
+			// Look to door_jack.dm for implementation
 			door_jack(usr, params["mode"])
 			return TRUE
 		if("Encryption Slot")
@@ -80,7 +79,7 @@
 			use_camera(usr, params["mode"])
 			return TRUE
 		if("refresh")
-			if(params["list"] == "security" && !installed_software.Find("security records") || params["list"] == "medical" && !installed_software.Find("medical records"))
+			if(params["list"] == "security" && !installed_software.Find("Security Records") || params["list"] == "medical" && !installed_software.Find("Medical Records"))
 				return FALSE
 			refresh_records(ui, params["list"])
 			return TRUE
@@ -120,6 +119,7 @@
 			atmos_analyzer = new(src)
 		if("Digital Messenger")
 			create_modularInterface()
+			modularInterface?.saved_identification = name
 		if("Host Scan")
 			host_scan = new(src)
 		if("Internal GPS")
@@ -176,50 +176,6 @@
 	return TRUE
 
 /**
- * Switch that handles door jack operations.
- *
- * @param {mob} user The user operating the door jack.
- * @param {string} mode The requested operation of the door jack.
- * @return {bool} TRUE if the door jack state was switched, FALSE otherwise.
- */
-/mob/living/silicon/pai/proc/door_jack(mob/user, mode)
-	switch(mode)
-		if("cable")
-			extend_cable(user)
-			return TRUE
-		if("cancel")
-			QDEL_NULL(hacking_cable)
-			visible_message(span_notice("The cable retracts into the pAI."))
-			return TRUE
-		if("jack")
-			hack_door(user)
-			return TRUE
-	return FALSE
-
-/**
- * Extend cable supporting proc
- *
- * When doorjack is installed, allows the pAI to drop
- * a cable which is placed either on the floor or in
- * someone's hands based (on distance).
- *
- * @param {mob} user The pAI dropping the cable
- * @return {bool} TRUE if the cable was dropped, FALSE otherwise.
- */
-/mob/living/silicon/pai/proc/extend_cable(mob/user)
-	QDEL_NULL(hacking_cable) //clear any old cables
-	hacking_cable = new
-	var/mob/living/carbon/hacker = get_holder()
-	if(hacker && hacker.put_in_hands(hacking_cable))
-		hacker.visible_message(span_warning("A port on [user] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of a plastic	component and manage to catch the falling [hacking_cable]."))
-		track(hacking_cable)
-		return TRUE
-	hacking_cable.forceMove(drop_location())
-	hacking_cable.visible_message(span_warning("A port on [user] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of a plastic component fall to the ground."))
-	track(hacking_cable)
-	return TRUE
-
-/**
  * Grant all languages to the current pAI.
  *
  * @param {mob} user The pAI receiving the languages.
@@ -236,51 +192,6 @@
 	return TRUE
 
 /**
- * Door jacking supporting proc
- * After a 10 second timer, the door will crack open,
- * provided they don't move out of the way.
- *
- * @param {mob} user The pAI attempting to hack the door.
- * @return {bool} TRUE if the door was jacked, FALSE otherwise.
- */
-/mob/living/silicon/pai/proc/hack_door(mob/user)
-	if(!hacking_cable)
-		CRASH("[user] attempted to hack a door without a cable.")
-	if(!hacking_cable?.machine)
-		to_chat(user, span_warning("You must be connected to a machine to do this."))
-		return FALSE
-	playsound(user, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
-	balloon_alert(user, "overriding...")
-	// Now begin hacking
-	if(!do_after(src, 15 SECONDS, hacking_cable.machine, timed_action_flags = NONE,	progress = TRUE))
-		balloon_alert(user, "failed! retracting...")
-		hacking_cable.visible_message(
-			span_warning("[hacking_cable] rapidly retracts back into its spool."), span_hear("You hear a click and the sound of wire spooling rapidly."))
-		QDEL_NULL(hacking_cable)
-		if(!QDELETED(card))
-			card.update_appearance()
-		return FALSE
-	var/obj/machinery/door/door = hacking_cable.machine
-	balloon_alert(user, "success!")
-	door.open()
-	QDEL_NULL(hacking_cable)
-	return TRUE
-
-/**
- * A periodic check to see if the source pAI is nearby.
- * Deletes the extended cable if the source pAI is not nearby.
- */
-/mob/living/silicon/pai/proc/handle_move(atom/movable/source, atom/old_loc,	dir, forced, list/old_locs)
-	if(ismovable(old_loc))
-		untrack(old_loc)
-	if(!IN_GIVEN_RANGE(src, hacking_cable, CABLE_LENGTH))
-		QDEL_NULL(hacking_cable)
-		visible_message(span_notice("The cable retracts into the pAI."))
-		return TRUE
-	if(ismovable(source.loc))
-		track(source.loc)
-
-/**
  * Host scan supporting proc
  *
  * Allows the pAI to scan its host's health vitals
@@ -290,22 +201,26 @@
  * @return {boolean} TRUE if the scan was successful, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/host_scan(mob/user, mode)
-	if(mode == "master")
-		if(!master_ref)
-			to_chat(user, span_warning("You are not bound to a master!"))
-			return FALSE
-		var/resolved_master = find_master(user)
-		if(!resolved_master)
-			return FALSE
-		to_chat(user, span_notice("Your master, [master_name], is reporting the current vitals:"))
-		host_scan.attack(resolved_master, user)
-		return TRUE
 	if(mode == "target")
 		var/mob/living/target = get_holder()
 		if(!target || !isliving(target))
 			to_chat(user, span_warning("You are not being carried by anyone!"))
 			return FALSE
 		host_scan.attack(target, user)
+		return TRUE
+	if(mode == "master")
+		if(!master_ref)
+			to_chat(user, span_warning("You are not bound to a master!"))
+			return FALSE
+		var/mob/living/resolved_master = find_master(user)
+		if(!resolved_master)
+			to_chat(user, span_warning("Your master cannot be located!"))
+			return FALSE
+		if(user.z != resolved_master.z)
+			to_chat(user, span_warning("Your master, [master_name], seems to be out of range!"))
+			return FALSE
+		to_chat(user, span_notice("Your master, [master_name], is reporting the current vitals:"))
+		host_scan.attack(resolved_master, user)
 		return TRUE
 	return FALSE
 
@@ -348,20 +263,6 @@
 		hud.hide_from(user)
 	return TRUE
 
-/** Tracks the associated hacking_cable */
-/mob/living/silicon/pai/proc/track(atom/movable/thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/handle_move)
-	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
-	for(var/atom/movable/location in locations)
-		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/handle_move)
-
-/** Untracks the associated hacking_cable */
-/mob/living/silicon/pai/proc/untrack(atom/movable/thing)
-	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
-	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
-	for(var/atom/movable/location in locations)
-		UnregisterSignal(location, COMSIG_MOVABLE_MOVED)
-
 /**
  * All inclusive camera proc. Zooms, snaps, prints.
  *
@@ -380,5 +281,3 @@
 		if("zoom")
 			aicamera.adjust_zoom(user)
 	return TRUE
-
-#undef CABLE_LENGTH
