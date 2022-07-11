@@ -48,6 +48,9 @@
 		if("Crew Manifest")
 			ai_roster()
 			return TRUE
+		if("Crew Monitor")
+			GLOB.crewmonitor.show(usr, src)
+			return TRUE
 		if("Digital Messenger")
 			modularInterface?.interact(usr)
 			return TRUE
@@ -77,11 +80,6 @@
 			return TRUE
 		if("Photography Module")
 			use_camera(usr, params["mode"])
-			return TRUE
-		if("refresh")
-			if(params["list"] == "security" && !installed_software.Find("Security Records") || params["list"] == "medical" && !installed_software.Find("Medical Records"))
-				return FALSE
-			refresh_records(ui, params["list"])
 			return TRUE
 		if("Remote Signaler")
 			signaler.ui_interact(src)
@@ -223,20 +221,6 @@
 		host_scan.attack(resolved_master, user)
 		return TRUE
 	return FALSE
-
-/**
- * Refreshes records on screen of the pAI.
- *
- * @param {tgui} ui The interface for the pAI.
- * @param {string} list The list of records to refresh.
- */
-/mob/living/silicon/pai/proc/refresh_records(datum/tgui/ui, list)
-	if(list == "medical")
-		medical_records = GLOB.data_core.get_general_records()
-	if(list == "security")
-		security_records = GLOB.data_core.get_security_records()
-	ui.send_full_update()
-	return TRUE
 
 /**
  * Proc that toggles any active huds based on the option.

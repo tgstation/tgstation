@@ -11,6 +11,4 @@ export type Data = {
   master_dna: string | null;
   master_name: string | null;
   ram: number;
-  medical_records: ReadonlyArray<Record<string, string>>;
-  security_records: ReadonlyArray<Record<string, string>>;
 };

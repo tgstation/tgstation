@@ -2,7 +2,6 @@ import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, NoticeBox, Section, Stack } from 'tgui/components';
 import { SOFTWARE_DESC } from '../constants';
 import { Data } from '../types';
-import { RecordsDisplay } from './Records';
 
 /**
  * Renders two sections: A section of buttons and
@@ -58,25 +57,18 @@ const InstalledInfo = (props, context) => {
   );
   const title = !currentSelection ? 'Select a Program' : currentSelection;
 
-  /** Records get their own section here */
-  if (currentSelection === 'Medical Records') {
-    return <RecordsDisplay record_type="medical" />;
-  } else if (currentSelection === 'Security Records') {
-    return <RecordsDisplay record_type="security" />;
-  } else {
-    return (
-      <Section fill scrollable title={title}>
-        {currentSelection && (
-          <Stack fill vertical>
-            <Stack.Item>{SOFTWARE_DESC[currentSelection]}</Stack.Item>
-            <Stack.Item grow>
-              <SoftwareButtons />
-            </Stack.Item>
-          </Stack>
-        )}
-      </Section>
-    );
-  }
+  return (
+    <Section fill scrollable title={title}>
+      {currentSelection && (
+        <Stack fill vertical>
+          <Stack.Item>{SOFTWARE_DESC[currentSelection]}</Stack.Item>
+          <Stack.Item grow>
+            <SoftwareButtons />
+          </Stack.Item>
+        </Stack>
+      )}
+    </Section>
+  );
 };
 
 /**
