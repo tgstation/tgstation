@@ -170,6 +170,6 @@
 	result = /obj/item/clothing/head/tv_head
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_CROWBAR)
 	reqs = list(/obj/item/wallframe/status_display = 1)
-	time = 20
+	time = 2 SECONDS
 	category = CAT_CLOTHING
 
