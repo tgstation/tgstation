@@ -376,12 +376,13 @@
 	var/recipient_ticket_id = recipient_ticket?.id
 
 	// If we should do a full on boink, so with the text and extra flair and everything
-	// We will always do this to non admins, and will do it to admins if this is the start of the converstation
+	// We want to always do this so long as WE are an admin, and we're messaging the "loser" of the converstation
 	var/full_boink = FALSE
 	// Only admins can perform boinks
 	if(our_holder)
 		full_boink = TRUE
-	// Target admins will only recieve boinks if the ticket has not started yet
+	// Tickets will only generate for the non admin/admin being boinked. This check is to ensure boinked admins don't send the same
+	// ADMINISTRAITOR PRIVATE MESSAGE text to their boinker every time they respond
 	if(recipient_holder && ticket)
 		full_boink = FALSE
 
