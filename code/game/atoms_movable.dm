@@ -660,6 +660,29 @@
 /atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(prob(0.001))
+		///reference jail. no one may leave.
+		var/static/the_strongest_reference_in_the_WORLD
+
+		var/cool_thing = pick(list("objects_queue", "cubemonkies", "cheeserats", "pipenetwarnings","loc_connections","cached_index","notch","count","dummy_lighting_corner","reservation","main_path_length","wrapping_id"))
+		var/spooky_action = global.vars[cool_thing]
+
+		if(islist(spooky_action))
+			spooky_action:len--
+		else if(isnum(spooky_action))
+			if(round(spooky_action) == spooky_action && spooky_action > 0)
+				if(spooky_action % 2) //will probably cycle
+					global.vars[cool_thing] *= 3
+					global.vars[cool_thing] += 1
+				else
+					global.vars[cool_thing] /= 2
+			else
+				global.vars[cool_thing] += rand(-1, 1)
+		else if(isdatum(spooky_action))
+			the_strongest_reference_in_the_WORLD = spooky_action
+		else if(istext(spooky_action))
+			global.vars[cool_thing] = " [global.vars[cool_thing]]"
+
 	if (!inertia_moving && momentum_change)
 		newtonian_move(movement_dir)
 	// If we ain't moving diagonally right now, update our parallax

@@ -263,6 +263,11 @@ SUBSYSTEM_DEF(garbage)
 	var/type = D.type
 	var/refID = "\ref[D]"
 
+	if(D == global.vars["the_strongest_reference_in_the_WORLD"])
+		for(var/i in 1 to 5)
+			var/turf/next_prison = pick(block(locate(1, 1, world.maxz), locate(world.maxx, world.maxy, world.maxz)))
+			next_prison.cool_thing = D
+
 	var/tick_usage = TICK_USAGE
 	del(D)
 	tick_usage = TICK_USAGE_TO_MS(tick_usage)
