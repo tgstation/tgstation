@@ -282,7 +282,7 @@
 			span_userdanger("As your hive's food bursts out of your stomach, one thought fills your mind. \"Oh, so this is how the other side feels\""))
 	else // Just to be safe ya know?
 		play_from.visible_message(span_danger("[user] blows a hole in [stomach_text] and escapes!"), \
-			span_userdanger("[user] escapes from your [stomach_text]. Hell that hurts."))
+			span_userdanger("[user] escapes from your [stomach_text]. Hell, that hurts."))
 
 	playsound(get_turf(play_from), 'sound/creatures/alien_explode.ogg', 100, extrarange = 4)
 	eject_stomach(border_diamond_range_turfs(play_from, 6), 5, 1.5, 1)

@@ -376,7 +376,7 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/carbon/alien/humanoid/alieninated_owner = owner
 	var/obj/item/organ/internal/stomach/alien/melting_pot = alieninated_owner.getorganslot(ORGAN_SLOT_STOMACH)
 	if(!melting_pot)
-		owner.visible_message(span_clown("[src] gags, and spits up a bit of purple liquid. Ewwww"), \
+		owner.visible_message(span_clown("[src] gags, and spits up a bit of purple liquid. Ewwww."), \
 			span_alien("You feel a pain in your... chest? There's nothing there there's nothing there no no n-"))
 		return
 
