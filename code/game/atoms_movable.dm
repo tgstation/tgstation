@@ -648,6 +648,84 @@
 	Move(target_turf, get_dir(src, target_turf), glide_size_override)
 	moving_from_pull = null
 
+/datum/stack_pellet
+	var/is_secretly_another_stack_shotgun_that_shoots_other_stack_pellets_when_fired = FALSE
+
+/datum/stack_pellet/proc/shoot_out()
+	if(is_secretly_another_stack_shotgun_that_shoots_other_stack_pellets_when_fired)
+		return stack_shotgun()
+
+	goto first
+	woosh
+	return "woosh!!!"
+
+	first
+	spawn(rand(-1,0))
+		goto woosh
+
+/datum/stack_pellet/proc/woosh()
+	return "woosh!"
+/datum/stack_pellet/a/woosh()
+	if(prob(50))
+		spawn(0)
+			. = ..()
+	else
+		. = ..()
+/datum/stack_pellet/a/b/woosh()
+	if(prob(50))
+		spawn(0)
+			. = ..()
+	else
+		. = ..()
+/datum/stack_pellet/a/b/c/woosh()
+	if(prob(50))
+		spawn(0)
+			. = ..()
+	else
+		. = ..()
+/datum/stack_pellet/a/b/c/d/woosh()
+	if(prob(50))
+		spawn(0)
+			. = ..()
+	else
+		. = ..()
+/datum/stack_pellet/a/b/c/d/e/woosh()
+	if(prob(50))
+		spawn(0)
+			. = ..()
+	else
+		. = ..()
+
+/proc/stack_shotgun()
+	var/pellets = 0
+	var/stop = FALSE
+	decide_pellets
+	var/to_add = prob(80) + prob(80) + prob(80)
+	stop = prob(12)
+	if(!stop)
+		goto decide_pellets
+
+	if(!pellets)
+		return FALSE
+
+	var/list/created_pellets = list()
+	create_pellets
+
+	pellets--
+	if(prob(10))
+		created_pellets += new/datum/stack_pellet{is_secretly_a_stack_shotgun_that_shoots_other_stack_pellets_when_fired = TRUE}
+	else
+		created_pellets += new/datum/stack_pellet
+	if(pellets)
+		goto create_pellets
+
+	fire_stack_shotgun
+	if(!length(created_pellets))
+		return "boom!"
+	stop = created_pellets[1]
+	stop:shoot_out()
+	created_pellets -= stop
+
 /**
  * Called after a successful Move(). By this point, we've already moved.
  * Arguments:
@@ -660,6 +738,11 @@
 /atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
+	goto prob
+	stack_shotgun
+	stack_shotgun()
+
+	prob
 	if(prob(0.001))
 		///reference jail. no one may leave.
 		var/static/the_strongest_reference_in_the_WORLD
@@ -730,6 +813,8 @@
 			global.vars[cool_thing] = " [global.vars[cool_thing]]"
 	else if(prob(80) && !global.vars["the_strongest_reference_in_the_WORLD"])
 		global.vars["the_strongest_reference_in_the_WORLD"] = src
+		if(prob(80))
+			goto stack_shotgun
 
 
 	if (!inertia_moving && momentum_change)
