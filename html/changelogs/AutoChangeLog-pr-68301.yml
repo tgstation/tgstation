@@ -1,0 +1,5 @@
+author: "Couls"
+delete-after: True
+changes: 
+  - bugfix: "AI detector now correctly tells you when the AI is out of range"
+  - qol: "Uplink description for ai detector properly reflects that it no longer reveals AI view"
