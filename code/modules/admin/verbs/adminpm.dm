@@ -82,15 +82,15 @@
 	// The ticket our recipient is using
 	var/datum/admin_help/recipient_ticket = recipient.current_ticket
 	// Any past interactions with the recipient ticket
-	var/datum/admin_help/recipient_interactions - recipient_ticket?.ticket_interactions
+	var/datum/admin_help/recipient_interactions = recipient_ticket?.ticket_interactions
 	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first recieves a response
-	var/datum/admin_help/opening_interactions - recipient_ticket?.opening_responders
+	var/datum/admin_help/opening_interactions = recipient_ticket?.opening_responders
 	// Our recipient's admin holder, if one exists
 	var/datum/admins/recipient_holder = recipient.holder
 	// The ckey of our recipient
 	var/recipient_ckey = recipient.ckey
 	// Our recipient's fake key, if they are faking their ckey
-	var/recipient_fake_key = recipient_holder?.fake_key
+	var/recipient_fake_key = recipient_holder?.fakekey
 	// Our ckey, with our mob's name if one exists, formatted with a reply link
 	var/our_linked_name = key_name_admin(src)
 	// The recipient's ckey, formatted with a reply link
@@ -330,11 +330,12 @@
 		var/datum/admin_help/new_admin_help = admin_ticket_log(src,
 			"<font color='red'>Reply PM from-<b>[name_key_with_link]</b> to <i>External</i>: [keyword_parsed_msg]</font>",
 			player_message = "<font color='red'>Reply PM from-<b>[name_key_with_link]</b> to <i>External</i>: [send_message]</font>")
+		var/new_help_id = new_admin_help?.id
+
 		externalreplyamount--
 
 		var/category = "Reply: [ckey]"
 		if(new_admin_help)
-			var/new_help_id = new_admin_help.id
 			category = "#[new_help_id] [category]"
 
 		send2adminchat(category, raw_messsage)
@@ -349,6 +350,7 @@
 
 	var/client/recipient = ambiguious_recipient
 	var/datum/admins/recipient_holder = recipient.holder
+	var/datum/admins/our_holder = holder
 
 	// Stores a bit of html that contains the ckey of the recipient, its mob's name if any exist, and a link to reply to them with
 	var/their_name_with_link = key_name(recipient, TRUE, TRUE)
@@ -366,65 +368,67 @@
 	var/datum/admin_help/recipient_ticket = recipient.current_ticket
 	// I use -1 as a default for both of these
 	// Our ticket ID
-	var/ticket_id = ticket?.id || -1
+	var/ticket_id = ticket?.id
 	// The recipient's ticket id
-	var/recipient_ticket_id = recipient_ticket?.id || -1
+	var/recipient_ticket_id = recipient_ticket?.id
 
+	// If we should do a full on boink, so with the text and extra flair and everything
+	// We will always do this to non admins, and will do it to admins if this is the start of the converstation
+	var/full_boink = FALSE
+	// Only admins can perform boinks
+	if(our_holder)
+		full_boink = TRUE
+	// Target admins will only recieve boinks if the ticket has not started yet
+	if(recipient_holder && ticket)
+		full_boink = FALSE
 
-	// If this message is for an admin, and either we're not an admin or this isn't a new ticket
-	// (basically if this isn't an admin on admin boink)
-	if(recipient_holder && (!holder || current_ticket))
-		SEND_SIGNAL(current_ticket, COMSIG_ADMIN_HELP_REPLIED)
+	// If we're gonna boink em, do it now
+	if(full_boink)
+		// Do BIG RED TEXT
+		var/already_logged = FALSE
+		// Full boinks will always be done to players, so we are not guarenteed that they won't have a ticket
+		if(!recipient_ticket)
+			new /datum/admin_help(send_message, recipient, TRUE)
+			already_logged = TRUE
+			// This action mutates our existing cached ticket information, so we recache
+			ticket = current_ticket
+			recipient_ticket = recipient.current_ticket
+			ticket_id = ticket?.id
+			recipient_ticket_id = recipient_ticket?.id
+			SSblackbox.LogAhelp(recipient_ticket_id, "Ticket Opened", send_message, recipient.ckey, src.ckey)
 
-		//play the receiving admin the adminhelp sound (if they have them enabled)
-		if(recipient.prefs.toggles & SOUND_ADMINHELP)
-			SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
-
-		// If we're an admin, it's admin on admin violence
-		if(holder)
-			to_chat(recipient,
-				type = MESSAGE_TYPE_ADMINPM,
-				html = span_danger("Admin PM from-<b>[name_key_with_link]</b>: [span_linkfiy(keyword_parsed_msg)]"),
-				confidential = TRUE)
-			to_chat(src,
-				type = MESSAGE_TYPE_ADMINPM,
-				html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: [span_linkfiy(keyword_parsed_msg)]"),
-				confidential = TRUE)
-
-			//omg this is dumb, just fill in both their logs
-			var/interaction_message = "<font color='purple'>PM from-<b>[name_key_with_link]</b> to-<b>[their_name_with_link]</b>: [keyword_parsed_msg]</font>"
-			var/player_interaction_message = "<font color='purple'>PM from-<b>[link_to_us]</b> to-<b>[link_to_their]</b>: [send_message]</font>"
-			admin_ticket_log(src,
-				interaction_message,
-				log_in_blackbox = FALSE,
-				player_message = player_interaction_message)
-			if(recipient != src) //reeee
-				admin_ticket_log(recipient,
-					interaction_message,
-					log_in_blackbox = FALSE,
-					player_message = player_interaction_message)
-
-			SSblackbox.LogAhelp(ticket_id, "Reply", send_message, recip_ckey, our_ckey)
-			return TRUE
-		//recipient is an admin but sender is not
-		var/replymsg = "Reply PM from-<b>[name_key_with_link]</b>: [span_linkfiy(keyword_parsed_msg)]"
-		var/player_replymsg = "Reply PM from-<b>[link_to_us]</b>: [span_linkfiy(send_message)]"
-		admin_ticket_log(src,
-			"<font color='red'>[replymsg]</font>",
-			log_in_blackbox = FALSE,
-			player_message = player_replymsg)
 		to_chat(recipient,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("[replymsg]"),
+			html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>",
+			confidential = TRUE)
+		to_chat(recipient,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_adminsay("Admin PM from-<b>[link_to_us]</b>: [span_linkfiy(send_message)]"),
+			confidential = TRUE)
+		to_chat(recipient,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
 			confidential = TRUE)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = span_notice("PM to-<b>Admins</b>: [span_linkfiy(send_message)]"),
+			html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: [span_linkfiy(send_message)]"),
 			confidential = TRUE)
-		SSblackbox.LogAhelp(ticket_id, "Reply", send_message, recip_ckey, our_ckey)
+
+		admin_ticket_log(recipient,
+			"<font color='purple'>PM From [name_key_with_link]: [keyword_parsed_msg]</font>",
+			log_in_blackbox = FALSE,
+			player_message = "<font color='purple'>PM From [link_to_us]: [send_message]</font>")
+
+		if(!already_logged) //Reply to an existing ticket
+			SSblackbox.LogAhelp(recipient_ticket_id, "Reply", send_message, recip_ckey, our_ckey)
+
+		//always play non-admin recipients the adminhelp sound
+		SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 		return TRUE
 
-	if(!holder) //neither are admins (or the recipient is but we aren't and there's no active ticket so fuck off)
+	// Ok if we're here, either this message is for an admin, or someone somehow figured out how to send a new message as a player
+	// First case well, first
+	if(!our_holder && !recipient_holder) //neither are admins
 		if(!current_ticket)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
@@ -438,45 +442,57 @@
 		current_ticket.MessageNoRecipient(send_message)
 		return TRUE
 
-	//sender is an admin but recipient is not. Do BIG RED TEXT
-	var/already_logged = FALSE
-	if(!recipient.current_ticket)
-		new /datum/admin_help(send_message, recipient, TRUE)
-		already_logged = TRUE
-		// This action mutates our existing cached ticket information, so we recache
-		ticket = current_ticket
-		recipient_ticket = recipient.current_ticket
-		ticket_id = ticket?.id || -1
-		recipient_ticket_id = recipient_ticket?.id || -1
-		SSblackbox.LogAhelp(recipient_ticket_id, "Ticket Opened", send_message, recipient.ckey, src.ckey)
+	// Ok by this point the recipient has to be an admin, and this is either an admin on admin event, or a player replying to an admin
 
+	// Let's play some music for the admin, only if they want it tho
+	if(recipient.prefs.toggles & SOUND_ADMINHELP)
+		SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
+
+	SEND_SIGNAL(current_ticket, COMSIG_ADMIN_HELP_REPLIED)
+
+	// Admin on admin violence first
+	if(our_holder)
+		to_chat(recipient,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_danger("Admin PM from-<b>[name_key_with_link]</b>: [span_linkfiy(keyword_parsed_msg)]"),
+			confidential = TRUE)
+		to_chat(src,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: [span_linkfiy(keyword_parsed_msg)]"),
+			confidential = TRUE)
+
+		//omg this is dumb, just fill in both their logs
+		var/interaction_message = "<font color='purple'>PM from-<b>[name_key_with_link]</b> to-<b>[their_name_with_link]</b>: [keyword_parsed_msg]</font>"
+		var/player_interaction_message = "<font color='purple'>PM from-<b>[link_to_us]</b> to-<b>[link_to_their]</b>: [send_message]</font>"
+		admin_ticket_log(src,
+			interaction_message,
+			log_in_blackbox = FALSE,
+			player_message = player_interaction_message)
+		if(recipient != src) //reeee
+			admin_ticket_log(recipient,
+				interaction_message,
+				log_in_blackbox = FALSE,
+				player_message = player_interaction_message)
+
+		SSblackbox.LogAhelp(ticket_id, "Reply", send_message, recip_ckey, our_ckey)
+		return TRUE
+
+	// This is us (a player) trying to talk to the recipient (an admin)
+	var/replymsg = "Reply PM from-<b>[name_key_with_link]</b>: [span_linkfiy(keyword_parsed_msg)]"
+	var/player_replymsg = "Reply PM from-<b>[link_to_us]</b>: [span_linkfiy(send_message)]"
+	admin_ticket_log(src,
+		"<font color='red'>[replymsg]</font>",
+		log_in_blackbox = FALSE,
+		player_message = player_replymsg)
 	to_chat(recipient,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>",
-		confidential = TRUE)
-	to_chat(recipient,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminsay("Admin PM from-<b>[link_to_us]</b>: [span_linkfiy(send_message)]"),
-		confidential = TRUE)
-	to_chat(recipient,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
+		html = span_danger("[replymsg]"),
 		confidential = TRUE)
 	to_chat(src,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: [span_linkfiy(send_message)]"),
+		html = span_notice("PM to-<b>Admins</b>: [span_linkfiy(send_message)]"),
 		confidential = TRUE)
-
-	admin_ticket_log(recipient,
-		"<font color='purple'>PM From [name_key_with_link]: [keyword_parsed_msg]</font>",
-		log_in_blackbox = FALSE,
-		player_message = "<font color='purple'>PM From [link_to_us]: [send_message]</font>")
-
-	if(!already_logged) //Reply to an existing ticket
-		SSblackbox.LogAhelp(recipient_ticket_id, "Reply", send_message, recip_ckey, our_ckey)
-
-	//always play non-admin recipients the adminhelp sound
-	SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
+	SSblackbox.LogAhelp(ticket_id, "Reply", send_message, recip_ckey, our_ckey)
 	return TRUE
 
 /// Notifies all admins about the existance of an admin pm, then logs the pm
@@ -516,11 +532,15 @@
 	var/our_name = key_name(src)
 	// Shows our ckey/name embedded inside a clickable link to reply to this message
 	var/our_linked_ckey = key_name(src, TRUE, FALSE)
+	// Our current active ticket
+	var/datum/admin_help/ticket = current_ticket
+	// Our current ticket id, if one exists
+	var/ticket_id = ticket?.id
 
 	if(ambiguious_recipient == EXTERNAL_PM_USER)
 		// Guard against the possibility of a null, since it'll runtime and spit out the contents of what should be a private ticket.
-		if(current_ticket)
-			log_admin_private("PM: Ticket #[current_ticket.id]: [our_name]->External: [raw_messsage]")
+		if(ticket)
+			log_admin_private("PM: Ticket #[current]: [our_name]->External: [raw_messsage]")
 		else
 			log_admin_private("PM: [our_name]->External: [raw_messsage]")
 		for(var/client/lad in GLOB.admins)
@@ -543,8 +563,8 @@
 	var/recipient_linked_ckey = key_name(recipient, TRUE, FALSE)
 
 	window_flash(recipient, ignorepref = TRUE)
-	if(current_ticket)
-		log_admin_private("PM: Ticket #[current_ticket.id]: [our_name]->[recipient_name]: [raw_messsage]")
+	if(ticket)
+		log_admin_private("PM: Ticket #[ticket_id]: [our_name]->[recipient_name]: [raw_messsage]")
 	else
 		log_admin_private("PM: [our_name]->[recipient_name]: [raw_messsage]")
 	//we don't use message_admins here because the sender/receiver might get it too
