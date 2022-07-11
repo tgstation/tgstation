@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "The generic station name with the long number in words is rarer"
