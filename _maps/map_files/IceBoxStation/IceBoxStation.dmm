@@ -63297,6 +63297,10 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 9
 	},
+/obj/item/reagent_containers/pill/iron{
+	pixel_y = -12;
+	pixel_x = 13
+	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "twP" = (
