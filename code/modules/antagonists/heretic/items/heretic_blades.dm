@@ -14,6 +14,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 20
 	throwforce = 10
+	demolition_mod = 0.8
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
