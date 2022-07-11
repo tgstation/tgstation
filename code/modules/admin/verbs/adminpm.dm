@@ -314,7 +314,7 @@
 		// handle_spam_prevention does its own "hey buddy ya fucker up here's what happen"
 		return FALSE
 
-	var/raw_messsage = send_message
+	var/raw_message = send_message
 
 	if(holder)
 		send_message = emoji_parse(send_message)
@@ -326,7 +326,7 @@
 	if(ambiguious_recipient == EXTERNAL_PM_USER)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = span_notice("PM to-<b>Admins</b>: [span_linkify(raw_messsage)]"),
+			html = span_notice("PM to-<b>Admins</b>: [span_linkify(raw_message)]"),
 			confidential = TRUE)
 		var/datum/admin_help/new_admin_help = admin_ticket_log(src,
 			"<font color='red'>Reply PM from-<b>[name_key_with_link]</b> to <i>External</i>: [keyword_parsed_msg]</font>",
@@ -339,7 +339,7 @@
 		if(new_admin_help)
 			category = "#[new_help_id] [category]"
 
-		send2adminchat(category, raw_messsage)
+		send2adminchat(category, raw_message)
 		return TRUE
 
 	if(!istype(ambiguious_recipient, /client))
@@ -514,7 +514,7 @@
 	if(!log_message)
 		return
 
-	var/raw_messsage = log_message
+	var/raw_message = log_message
 
 	if(holder)
 		log_message = emoji_parse(log_message)
@@ -532,9 +532,9 @@
 	if(ambiguious_recipient == EXTERNAL_PM_USER)
 		// Guard against the possibility of a null, since it'll runtime and spit out the contents of what should be a private ticket.
 		if(ticket)
-			log_admin_private("PM: Ticket #[ticket_id]: [our_name]->External: [raw_messsage]")
+			log_admin_private("PM: Ticket #[ticket_id]: [our_name]->External: [raw_message]")
 		else
-			log_admin_private("PM: [our_name]->External: [raw_messsage]")
+			log_admin_private("PM: [our_name]->External: [raw_message]")
 		for(var/client/lad in GLOB.admins)
 			to_chat(lad,
 				type = MESSAGE_TYPE_ADMINPM,
@@ -558,9 +558,9 @@
 
 	window_flash(recipient, ignorepref = TRUE)
 	if(ticket)
-		log_admin_private("PM: Ticket #[ticket_id]: [our_name]->[recipient_name]: [raw_messsage]")
+		log_admin_private("PM: Ticket #[ticket_id]: [our_name]->[recipient_name]: [raw_message]")
 	else
-		log_admin_private("PM: [our_name]->[recipient_name]: [raw_messsage]")
+		log_admin_private("PM: [our_name]->[recipient_name]: [raw_message]")
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/lad in GLOB.admins)
 		if(lad.key == key || lad.key == recipient_key) //check to make sure client/lad isn't the sender or recipient
