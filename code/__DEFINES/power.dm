@@ -12,6 +12,8 @@
 #define WATTS / 0.002
 ///conversion ratio from watts to joules
 #define JOULES * 0.002
+///Minimum power needed for 1 joule of thermal energy.
+#define HEAT_POWER_CONVERSION 0.0001
 
 GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
 

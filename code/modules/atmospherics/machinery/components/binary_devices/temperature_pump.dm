@@ -1,5 +1,3 @@
-#define TEMPERATURE_PUMP_POWER_CONVERSION 0.001
-
 /obj/machinery/atmospherics/components/binary/temperature_pump
 	icon_state = "tpump_map-3"
 	name = "temperature pump"
@@ -33,7 +31,7 @@
 	icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/process_atmos()
-	if(!is_operational)
+	if(!on || !is_operational)
 		return
 
 	var/datum/gas_mixture/air_input = airs[1]
@@ -48,19 +46,21 @@
 	var/power_usage
 	var/input_capacity = remove_input.heat_capacity()
 	var/output_capacity = remove_output.heat_capacity()
+	var/thermal_equilibrium
 
 	//Exchange heat between the nodes.
 	if(coolant_temperature_delta)
-		var/thermal_equilibrium = (input_capacity * remove_input.temperature + output_capacity * remove_output.temperature) / (input_capacity + output_capacity)
+		thermal_equilibrium = (input_capacity * remove_input.temperature + output_capacity * remove_output.temperature) / (input_capacity + output_capacity)
 		remove_input.temperature = max(thermal_equilibrium, TCMB)
 		remove_output.temperature = max(thermal_equilibrium, TCMB)
+	else
+		thermal_equilibrium = remove_input.temperature
 
 	//Pump heat against the gradient.
-	if(on)
-		var/heat_amount = CALCULATE_CONDUCTION_ENERGY((remove_input.temperature - TCMB) * heat_transfer_rate * 0.01, input_capacity, output_capacity)
-		remove_input.temperature = max((remove_input.temperature * input_capacity - heat_amount) / input_capacity, TCMB)
-		remove_output.temperature = max((remove_output.temperature * output_capacity + heat_amount) / output_capacity, TCMB)
-		power_usage = heat_amount * TEMPERATURE_PUMP_POWER_CONVERSION
+	var/heat_amount = CALCULATE_CONDUCTION_ENERGY((thermal_equilibrium - max(thermal_equilibrium * 0.15, TCMB)) * heat_transfer_rate * 0.01, input_capacity, output_capacity)
+	remove_input.temperature = max((thermal_equilibrium * input_capacity - heat_amount) / input_capacity, TCMB)
+	remove_output.temperature = max((thermal_equilibrium * output_capacity + heat_amount) / output_capacity, TCMB)
+	power_usage = 2 * heat_amount * HEAT_POWER_CONVERSION
 	update_parents()
 
 
@@ -104,4 +104,3 @@
 				heat_transfer_rate = clamp(rate, 0, max_heat_transfer_rate)
 				investigate_log("was set to [heat_transfer_rate]% by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_appearance()
-#undef TEMPERATURE_PUMP_POWER_CONVERSION

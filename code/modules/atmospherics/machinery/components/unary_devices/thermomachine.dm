@@ -1,5 +1,3 @@
-#define THERMOMACHINE_POWER_CONVERSION 0.01
-
 /obj/machinery/atmospherics/components/unary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "thermo_base"
@@ -152,10 +150,8 @@
 
 	port.temperature = max(((port.temperature * port_capacity) + heat_amount) / port_capacity, TCMB)
 
-	heat_amount = min(abs(heat_amount), 1e8) * THERMOMACHINE_POWER_CONVERSION
-
 	// This produces a nice curve that scales decently well for really hot stuff, and is nice to not fusion. It'll do
-	var/power_usage = idle_power_usage + (heat_amount * 0.05) ** (1.05 - (5e7 * 0.16 / max(heat_amount, 5e7)))
+	var/power_usage = idle_power_usage + abs(heat_amount) * HEAT_POWER_CONVERSION
 
 	use_power(power_usage)
 	update_parents()
@@ -311,5 +307,3 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE
 	icon_state = "thermo_base_1"
-
-#undef THERMOMACHINE_POWER_CONVERSION
