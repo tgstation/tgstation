@@ -294,7 +294,7 @@
 
 	send_message = adminpm_filter_text(ambiguious_recipient, send_message)
 	if(!send_message)
-		return
+		return null
 
 	if (handle_spam_prevention(send_message, MUTE_ADMINHELP))
 		// handle_spam_prevention does its own "hey buddy ya fucker up here's what happen"
@@ -496,7 +496,6 @@
 	if(!send_message)
 		return
 
-
 	var/raw_messsage = log_message
 
 	if(holder)
@@ -532,6 +531,8 @@
 		return
 
 	var/client/recipient = ambiguious_recipient
+	// The ckey of our recipient
+	var/recipient_key = recipient.ckey
 	// Shows the recipient's ckey and the name of any mob it might be possessing
 	var/recipient_name = key_name(recipient)
 	// Shows the recipient's ckey/name embedded inside a clickable link to reply to this message
@@ -544,7 +545,7 @@
 		log_admin_private("PM: [our_name]->[recipient_name]: [raw_messsage]")
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/lad in GLOB.admins)
-		if(lad.key == key || lad.key == recipient.key) //check to make sure client/lad isn't the sender or recipient
+		if(lad.key == key || lad.key == recipient_key) //check to make sure client/lad isn't the sender or recipient
 			continue
 		to_chat(lad,
 			type = MESSAGE_TYPE_ADMINPM,
@@ -557,7 +558,7 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Notify: You are unable to use admin PM-s (muted)."),
+			html = span_danger("Error: Admin-PM-Filter: You are unable to use admin PM-s (muted)."),
 			confidential = TRUE)
 		return
 
@@ -567,88 +568,126 @@
 		if(!message)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = span_danger("Error: Admin-PM-Notify: Your message contained only HTML, it's been sanitized away and the message disregarded."),
+				html = span_danger("Error: Admin-PM-Filter: Your message contained only HTML, it's been sanitized away and the message disregarded."),
 				confidential = TRUE)
 			return
 	return message
 
 #define TGS_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
-/proc/TgsPm(target,msg,sender)
-	target = ckey(target)
-	var/client/C = GLOB.directory[target]
+/proc/TgsPm(target, message, sender)
+	var/requested_ckey = ckey(target)
+	var/ambiguious_target = disambiguate_client(requested_ckey)
 
-	var/datum/admin_help/ticket = C ? C.current_ticket : GLOB.ahelp_tickets.CKey2ActiveTicket(target)
-	var/compliant_msg = trim(lowertext(msg))
+	var/client/recipient
+	// This might seem like hiding a failure condition, but we want to be able to send commands to the ticket without the client being logged in
+	if(istype(ambiguious_target, /client))
+		recipient = ambiguious_target
+
+	// The ticket we want to talk about here. Either the target's active ticket, or the last one it had
+	var/datum/admin_help/ticket
+	if(recipient)
+		ticket = recipient.current_ticket
+	else
+		GLOB.ahelp_tickets.CKey2ActiveTicket(requested_ckey)
+	// The ticket's id
+	var/ticket_id = ticket?.id
+
+	var/compliant_msg = trim(lowertext(message))
 	var/tgs_tagged = "[sender](TGS/External)"
 	var/list/splits = splittext(compliant_msg, " ")
-	if(splits.len && splits[1] == "ticket")
-		if(splits.len < 2)
+	var/split_size = length(splits)
+
+	if(split_size && splits[1] == "ticket")
+		if(split_size < 2)
 			return TGS_AHELP_USAGE
 		switch(splits[2])
 			if("close")
 				if(ticket)
 					ticket.Close(tgs_tagged)
-					return "Ticket #[ticket.id] successfully closed"
+					return "Ticket #[ticket_id] successfully closed"
 			if("resolve")
 				if(ticket)
 					ticket.Resolve(tgs_tagged)
-					return "Ticket #[ticket.id] successfully resolved"
+					return "Ticket #[ticket_id] successfully resolved"
 			if("icissue")
 				if(ticket)
 					ticket.ICIssue(tgs_tagged)
-					return "Ticket #[ticket.id] successfully marked as IC issue"
+					return "Ticket #[ticket_id] successfully marked as IC issue"
 			if("reject")
 				if(ticket)
 					ticket.Reject(tgs_tagged)
-					return "Ticket #[ticket.id] successfully rejected"
+					return "Ticket #[ticket_id] successfully rejected"
 			if("reopen")
 				if(ticket)
-					return "Error: [target] already has ticket #[ticket.id] open"
-				var/fail = splits.len < 3 ? null : -1
-				if(!isnull(fail))
-					fail = text2num(splits[3])
-				if(isnull(fail))
+					return "Error: [target] already has ticket #[ticket_id] open"
+				var/ticket_num
+				// If the passed in command actually has a ticket id arg
+				if(split_size >= 3)
+					ticket_num = text2num(splits[3])
+
+				if(isnull(ticket_num))
 					return "Error: No/Invalid ticket id specified. [TGS_AHELP_USAGE]"
-				var/datum/admin_help/AH = GLOB.ahelp_tickets.TicketByID(fail)
-				if(!AH)
+
+				// The active ticket we're trying to reopen, if one exists
+				var/datum/admin_help/active_ticket = GLOB.ahelp_tickets.TicketByID(ticket_num)
+				// The ckey of the player to be targeted BY the ticket
+				// Not the initiator all the time
+				var/boinked_ckey = active_ticket?.initiator_ckey
+
+				if(!active_ticket)
 					return "Error: Ticket #[fail] not found"
-				if(AH.initiator_ckey != target)
-					return "Error: Ticket #[fail] belongs to [AH.initiator_ckey]"
-				AH.Reopen()
-				return "Ticket #[ticket.id] successfully reopened"
+				if(boinked_ckey != target)
+					return "Error: Ticket #[fail] belongs to [boinked_ckey]"
+
+				active_ticket.Reopen()
+				return "Ticket #[ticket_num] successfully reopened"
 			if("list")
 				var/list/tickets = GLOB.ahelp_tickets.TicketsByCKey(target)
-				if(!tickets.len)
+				var/tickets_length = length(tickets)
+
+				if(!tickets_length)
 					return "None"
-				. = ""
-				for(var/I in tickets)
-					var/datum/admin_help/AH = I
-					if(.)
-						. += ", "
-					if(AH == ticket)
-						. += "Active: "
-					. += "#[AH.id]"
-				return
+				var/list/printable_tickets = list()
+				for(var/datum/admin_help/iterated_ticket in tickets)
+					// The id of the iterated adminhelp
+					var/iterated_id = iterated_ticket.id
+					var/text = ""
+					if(iterated_ticket == ticket)
+						text += "Active: "
+					text += "#[iterated_id]"
+					printable_tickets += text
+				return printable_tickets.Join(", ")
 			else
 				return TGS_AHELP_USAGE
 		return "Error: Ticket could not be found"
 
-	var/static/stealthkey
-	var/adminname = CONFIG_GET(flag/show_irc_name) ? tgs_tagged : "Administrator"
-
-	if(!C)
+	// Now that we've handled command processing, we can actually send messages to the client
+	if(!recipient)
 		return "Error: No client"
+
+	var/static/stealthkey
+	var/adminname
+	if(CONFIG_GET(flag/show_irc_name))
+		adminname = tgs_tagged
+	else
+		adminname = "Administrator"
 
 	if(!stealthkey)
 		stealthkey = GenTgsStealthKey()
 
-	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
-	if(!msg)
+	message = sanitize(copytext_char(message, 1, MAX_MESSAGE_LEN))
+	message = emoji_parse(message)
+
+	if(!message)
 		return "Error: No message"
 
-	message_admins("External message from [sender] to [key_name_admin(C)] : [msg]")
-	log_admin_private("External PM: [sender] -> [key_name(C)] : [msg]")
-	msg = emoji_parse(msg)
+	// The ckey of our recipient, with a reply link, and their mob if one exists
+	var/recipient_name_linked = key_name_admin(recipient)
+	// The ckey of our recipient, with their mob if one exists. No link
+	var/recipient_name = key_name_admin(recipient)
+
+	message_admins("External message from [sender] to [recipient_name_linked] : [msg]")
+	log_admin_private("External PM: [sender] -> [recipient_name] : [msg]")
 
 	to_chat(C,
 		type = MESSAGE_TYPE_ADMINPM,
@@ -656,33 +695,26 @@
 		confidential = TRUE)
 	to_chat(C,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminsay("Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]"),
+		html = span_adminsay("Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [message]"),
 		confidential = TRUE)
 	to_chat(C,
 		type = MESSAGE_TYPE_ADMINPM,
 		html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
 		confidential = TRUE)
 
-	admin_ticket_log(C, "<font color='purple'>PM From [tgs_tagged]: [msg]</font>", log_in_blackbox = FALSE)
+	admin_ticket_log(C, "<font color='purple'>PM From [tgs_tagged]: [message]</font>", log_in_blackbox = FALSE)
 
-	window_flash(C, ignorepref = TRUE)
-	//always play non-admin recipients the adminhelp sound
-	SEND_SOUND(C, 'sound/effects/adminhelp.ogg')
+	window_flash(recipient, ignorepref = TRUE)
+	// Nullcheck because we run a winset in window flash and I do not trust byond
+	if(recipient)
+		//always play non-admin recipients the adminhelp sound
+		SEND_SOUND(recipient, 'sound/effects/adminhelp.ogg')
 
-	C.externalreplyamount = EXTERNALREPLYCOUNT
-
+		recipient.externalreplyamount = EXTERNALREPLYCOUNT
 	return "Message Successful"
 
 /proc/GenTgsStealthKey()
-	var/num = (rand(0,1000))
-	var/i = 0
-	while(i == 0)
-		i = 1
-		for(var/P in GLOB.stealthminID)
-			if(num == GLOB.stealthminID[P])
-				num++
-				i = 0
-	var/stealth = "@[num2text(num)]"
+	var/stealth = generateStealthCkey()
 	GLOB.stealthminID[EXTERNAL_PM_USER] = stealth
 	return stealth
 
