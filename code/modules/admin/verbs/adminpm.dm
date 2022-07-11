@@ -10,6 +10,7 @@
 //
 // In service of this goal of NO RUNTIMES then, we make ABSOLUTELY sure to never trust the nullness of a value
 // That's why variables are so separated from logic here. It's not a good pattern typically, but it helps make assumptions clear here
+// We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
 /// Allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
@@ -92,15 +93,15 @@
 	var/client/recipient = ambiguious_recipient
 
 	// The ticket our recipient is using
-	var/datum/admin_help/recipient_ticket = recipient.current_ticket
+	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// Any past interactions with the recipient ticket
 	var/datum/admin_help/recipient_interactions = recipient_ticket?.ticket_interactions
 	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first recieves a response
 	var/datum/admin_help/opening_interactions = recipient_ticket?.opening_responders
 	// Our recipient's admin holder, if one exists
-	var/datum/admins/recipient_holder = recipient.holder
+	var/datum/admins/recipient_holder = recipient?.holder
 	// The ckey of our recipient
-	var/recipient_ckey = recipient.ckey
+	var/recipient_ckey = recipient?.ckey
 	// Our recipient's fake key, if they are faking their ckey
 	var/recipient_fake_key = recipient_holder?.fakekey
 	// Our ckey, with our mob's name if one exists, formatted with a reply link
@@ -238,13 +239,13 @@
 
 	var/client/recipient = ambiguious_recipient
 	// Stored in case client is deleted between this and after the message is input
-	var/recipient_ckey = recipient.ckey
+	var/recipient_ckey = recipient?.ckey
 	// Stored in case client is deleted between this and after the message is input
-	var/datum/admin_help/recipient_ticket = recipient.current_ticket
+	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// Our current active ticket
 	var/datum/admin_help/our_ticket = current_ticket
 	// If our recipient is an admin, this is their admins datum
-	var/datum/admins/recipient_holder = recipient.holder
+	var/datum/admins/recipient_holder = recipient?.holder
 	// If our recipient has a fake name, this is it
 	var/recipient_fake_key = recipient_holder?.fakekey
 	// Just the recipient's ckey, formatted for htmlifying stuff
@@ -352,6 +353,8 @@
 	var/datum/admins/recipient_holder = recipient.holder
 	var/datum/admins/our_holder = holder
 
+	// The sound preferences of the recipient, at least that's how we'll be using it here
+	var/sound_prefs = recipient?.prefs?.toggles
 	// Stores a bit of html that contains the ckey of the recipient, its mob's name if any exist, and a link to reply to them with
 	var/their_name_with_link = key_name(recipient, TRUE, TRUE)
 	// Stores a bit of html with our ckey highlighted as a reply link
@@ -361,11 +364,11 @@
 	// Our ckey
 	var/our_ckey = ckey
 	// Recipient ckey
-	var/recip_ckey = recipient.ckey
+	var/recip_ckey = recipient?.ckey
 	// Our current ticket, can (supposedly) be null here
 	var/datum/admin_help/ticket = current_ticket
 	// The recipient's current ticket, could in theory? maybe? be null here
-	var/datum/admin_help/recipient_ticket = recipient.current_ticket
+	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// I use -1 as a default for both of these
 	// Our ticket ID
 	var/ticket_id = ticket?.id
@@ -383,6 +386,8 @@
 		full_boink = FALSE
 
 	// If we're gonna boink em, do it now
+	// It is worth noting this will always generate the target a ticket if they don't already have one (tickets will generate if a player ahelps automatically, outside this logic)
+	// So past this point, because of our block above here, we can be reasonably guarenteed that the user will have a ticket
 	if(full_boink)
 		// Do BIG RED TEXT
 		var/already_logged = FALSE
@@ -429,7 +434,7 @@
 	// Ok if we're here, either this message is for an admin, or someone somehow figured out how to send a new message as a player
 	// First case well, first
 	if(!our_holder && !recipient_holder) //neither are admins
-		if(!current_ticket)
+		if(!ticket)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
 				html = span_danger("Error: Admin-PM-Send: Non-admin to non-admin PM communication is forbidden."),
@@ -439,16 +444,16 @@
 				html = "[span_danger("<b>Message not sent:</b>")]<br>[send_message]",
 				confidential = TRUE)
 			return FALSE
-		current_ticket.MessageNoRecipient(send_message)
+		ticket.MessageNoRecipient(send_message)
 		return TRUE
 
 	// Ok by this point the recipient has to be an admin, and this is either an admin on admin event, or a player replying to an admin
 
 	// Let's play some music for the admin, only if they want it tho
-	if(recipient.prefs.toggles & SOUND_ADMINHELP)
+	if(sound_prefs & SOUND_ADMINHELP)
 		SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
-	SEND_SIGNAL(current_ticket, COMSIG_ADMIN_HELP_REPLIED)
+	SEND_SIGNAL(ticket, COMSIG_ADMIN_HELP_REPLIED)
 
 	// Admin on admin violence first
 	if(our_holder)
@@ -545,7 +550,7 @@
 
 	var/client/recipient = ambiguious_recipient
 	// The ckey of our recipient
-	var/recipient_key = recipient.ckey
+	var/recipient_key = recipient?.ckey
 	// Shows the recipient's ckey and the name of any mob it might be possessing
 	var/recipient_name = key_name(recipient)
 	// Shows the recipient's ckey/name embedded inside a clickable link to reply to this message
@@ -663,7 +668,7 @@
 				var/list/printable_tickets = list()
 				for(var/datum/admin_help/iterated_ticket in tickets)
 					// The id of the iterated adminhelp
-					var/iterated_id = iterated_ticket.id
+					var/iterated_id = iterated_ticket?.id
 					var/text = ""
 					if(iterated_ticket == ticket)
 						text += "Active: "
