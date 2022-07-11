@@ -314,7 +314,7 @@
 	return TRUE
 
 /**
- * Creates a new
+ * Creates a new pAI
  *
  * @param delete_old {boolean} If TRUE, deletes the old pAI if one exists.
  */
