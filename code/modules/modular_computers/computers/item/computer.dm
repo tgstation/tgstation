@@ -550,7 +550,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
 		return FALSE
 
-	if(program.program_start(user))
+	if(program.on_start(user))
 		active_program = program
 		program.alert_pending = FALSE
 		update_appearance()
