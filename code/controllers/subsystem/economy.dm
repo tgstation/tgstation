@@ -117,17 +117,18 @@ SUBSYSTEM_DEF(economy)
 		// Assoc list of "z level" -> if it's on the station
 		// Hack, is station z level is too expensive to do for each machine, I hate this place
 		var/list/station_z_status = list()
-		for(var/obj/machinery/vending/V in GLOB.machines)
-			if(istype(V, /obj/machinery/vending/custom))
+		for(var/obj/machinery/vending/vending_lad in GLOB.machines)
+			if(istype(vending_lad, /obj/machinery/vending/custom))
 				continue
-			var/station_status = station_z_status["[V.z]"]
+			var/vending_level = vending_lad.z
+			var/station_status = station_z_status["[vending_level]"]
 			if(station_status == null)
-				station_status = is_station_level(V.z)
-				station_z_status["[V.z]"] = station_status
+				station_status = is_station_level(vending_level)
+				station_z_status["[vending_level]"] = station_status
 			if(!station_status)
 				continue
 
-			prices_to_update += V
+			prices_to_update += vending_lad
 
 		cached_processing = prices_to_update
 		station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
