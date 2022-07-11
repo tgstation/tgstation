@@ -540,6 +540,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		program.alert_pending = FALSE
 		idle_threads.Remove(program)
 		update_appearance()
+		updateUsrDialog()
 		return TRUE
 
 	if(idle_threads.len > max_idle_programs)
@@ -554,6 +555,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		active_program = program
 		program.alert_pending = FALSE
 		update_appearance()
+		updateUsrDialog()
 		return TRUE
 
 	return FALSE
