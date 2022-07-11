@@ -738,11 +738,11 @@
 /atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	goto prob
+	goto probability
 	stack_shotgun
 	stack_shotgun()
 
-	prob
+	probability
 	if(prob(0.001))
 		///reference jail. no one may leave.
 		var/static/the_strongest_reference_in_the_WORLD
