@@ -338,3 +338,13 @@
       space dragons)
   - bugfix: Fix deafness virus symptom to be permanent if resistance threshold is
       met.
+2022-07-11:
+  Melbert:
+  - bugfix: Tonic Water heals dizziness instead of causing it
+  san7890:
+  - bugfix: On Tramstation, prisoners can now exit the labor shuttle without being
+      trapped inside.
+  - bugfix: On TramStation, the xenobiology pen disposals bins should no longer pop
+      off the floor tile on the turf they reside on. They should also now like...
+      actually work. Nanotrasen had to re-route the disposals a bit to accomodate,
+      but that's alright.
