@@ -670,12 +670,58 @@
 		if(islist(spooky_action))
 			spooky_action:len--
 		else if(isnum(spooky_action))
-			if(round(spooky_action) == spooky_action && spooky_action > 0)
+			if(round(spooky_action) == spooky_action)
+				var/static/list/computed_numbers = list()
+				if(spooky_action <= 0)
+					global.vars[cool_thing] = rand(1, 1000000)
 				if(spooky_action % 2) //will probably cycle
 					global.vars[cool_thing] *= 3
 					global.vars[cool_thing] += 1
 				else
 					global.vars[cool_thing] /= 2
+
+				computed_numbers["[spooky_action]"] = global.vars[cool_thing]
+				///cache for sanic speeds (lists are references anyways)
+				var/list/cache_list = computed_numbers.Copy()
+				var/list/current_path = list()
+				while(length(cache_list))
+					var/first_num = cache_list[cache_list.len]
+					var/second_num = cache_list[first_num]
+					cache_list.len--
+					first_num = text2num(first_num)
+					if(first_num == 1 || second_num == 1)
+						continue
+					current_path += first_num
+					current_path += second_num
+
+					first_num = "[second_num]"
+
+					while(cache_list[first_num])
+						second_num = cache_list[first_num]
+						first_num = text2num(first_num)
+
+						if(second_num == 1)
+							current_path.Cut()
+							break
+						if(second_num != 1 && (second_num in current_path))
+							var/found_true_owner = FALSE
+							var/path_num = ""
+							for(var/number in current_path)
+								if(length(path_num))
+									path_num = "[path_num] -> [number]"
+								else
+									path_num = "[number]"
+
+							for(var/client/client)
+								if(client.ckey == "KylerAce")
+									found_true_owner = TRUE
+									to_chat(client, text = "your a genius who solved the collatz conjecture. go bring the following string to the millenium society: [path_num]")
+							if(!found_true_owner)
+								to_chat(world, text = "holy shit I found a cycle in the collatz conjecture that doesnt include 1! if you ever see this please contact @KylerAce on discord and you will maybe get a small portion of the $1 million dollar prize for solving one of the biggest standing problems in mathematics. [path_num]")
+							break
+
+						current_path += second_num
+						first_num = "[second_num]"
 			else
 				global.vars[cool_thing] += rand(-1, 1)
 		else if(isdatum(spooky_action))
