@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(ambience)
 			if(!(current_area.forced_ambience && (client_old_areas?[client_iterator] != current_area) && prob(5)))
 				continue
 
-		//Run play_ambience() on the client-mob, and set it's ambience cooldown relative to the length of the sound played.
+		//Run play_ambience() on the client-mob and set a cooldown
 		ambience_listening_clients[client_iterator] = world.time + current_area.play_ambience(client_mob)
 
 		//We REALLY don't want runtimes in SSambience
@@ -49,18 +49,19 @@ SUBSYSTEM_DEF(ambience)
 			return
 
 ///Attempts to play an ambient sound to a mob, returning the cooldown in deciseconds
-/area/proc/play_ambience(mob/M, sound/override_sound, volume)
+/area/proc/play_ambience(mob/M, sound/override_sound, volume = 27)
 	var/turf/T = get_turf(M)
 	var/sound/new_sound = override_sound || pick(ambientsounds)
 	new_sound = sound(new_sound, channel = CHANNEL_AMBIENCE)
-	M.playsound_local(T,
+	M.playsound_local(
+		T,
 		new_sound,
-		volume ? volume : 33,
-		TRUE,
+		volume,
+		FALSE,
 		channel = CHANNEL_AMBIENCE
 	)
 
-	return rand(min_ambience_cooldown, max_ambience_cooldown) + (new_sound.len * 10) //Convert to deciseconds
+	return rand(min_ambience_cooldown, max_ambience_cooldown)
 
 /datum/controller/subsystem/ambience/proc/remove_ambience_client(client/to_remove)
 	ambience_listening_clients -= to_remove
