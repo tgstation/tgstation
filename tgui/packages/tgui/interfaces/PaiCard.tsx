@@ -1,6 +1,6 @@
 import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section, Stack } from '../components';
+import { BlockQuote, Box, Button, LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -139,8 +139,14 @@ const PaiOptions = (props, context) => {
             </Button>
           )}
         </LabeledList.Item>
-        {!!master && <LabeledList.Item label="DNA">{dna}</LabeledList.Item>}
-        <LabeledList.Item label="Laws">{laws}</LabeledList.Item>
+        {!!master && (
+          <LabeledList.Item color="red" label="DNA">
+            {dna}
+          </LabeledList.Item>
+        )}
+        <LabeledList.Item label="Laws">
+          <BlockQuote>{laws}</BlockQuote>
+        </LabeledList.Item>
         <LabeledList.Item label="Holoform">
           <Button
             icon={can_holo ? 'toggle-on' : 'toggle-off'}
@@ -180,7 +186,11 @@ const PaiOptions = (props, context) => {
         </LabeledList.Item>
       </LabeledList>
       {!!emagged && (
-        <Button color="bad" disabled icon="bug" mt={1}>
+        <Button
+          color="bad"
+          icon="bug"
+          mt={1}
+          onClick={() => act('reset_software')}>
           Malicious Software Detected
         </Button>
       )}

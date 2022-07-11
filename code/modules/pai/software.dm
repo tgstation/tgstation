@@ -21,7 +21,7 @@
 	data["directives"] = laws.supplied
 	data["emagged"] = emagged
 	data["languages"] = languages_granted
-	data["master_name"] = master
+	data["master_name"] = master_name
 	data["master_dna"] = master_dna
 	data["medical_records"] = medical_records
 	data["security_records"] = security_records
@@ -35,89 +35,62 @@
 		to_chat(usr, span_warning("You do not have this software installed."))
 		CRASH("[usr] attempted to activate software they hadn't installed: [action]")
 	switch(action)
-		if("atmosphere sensor")
-			if(!atmos_analyzer)
-				atmos_analyzer = new(src)
+		if("Atmospheric Sensor")
 			atmos_analyzer.attack_self(src)
 			return TRUE
 		if("buy")
 			buy_software(usr, params["selection"])
 			return TRUE
-		if("camera zoom")
-			if(aicamera)
-				aicamera.adjust_zoom(usr)
-				return TRUE
-			return FALSE
 		if("change image")
 			change_image(usr)
 			return TRUE
 		if("check dna")
 			check_dna(usr)
 			return TRUE
-		if("crew manifest")
+		if("Crew Manifest")
 			ai_roster()
 			return TRUE
-		if("digital messenger")
+		if("Digital Messenger")
 			modularInterface?.interact(usr)
 			return TRUE
-		if("door jack")
-			door_jack(usr, params["jack"])
+		if("Door Jack")
+			door_jack(usr, params["mode"])
 			return TRUE
-		if("encryption keys")
-			to_chat(src, span_notice("You have [!encrypt_mod ? "enabled" : "disabled"] encrypted radio frequencies."))
+		if("Encryption Slot")
+			to_chat(usr, span_notice("You have [!encrypt_mod ? "enabled" : "disabled"] encrypted radio frequencies."))
 			encrypt_mod = !encrypt_mod
 			radio.subspace_transmission = !radio.subspace_transmission
 			return TRUE
-		if("host scan")
-			host_scan(usr)
+		if("Host Scan")
+			host_scan(usr, params["mode"])
 			return TRUE
-		if("internal gps")
-			if(!gps)
-				gps = new(src)
-			gps.attack_self(src)
+		if("Internal GPS")
+			internal_gps.attack_self(src)
 			return TRUE
-		if("loudness booster")
-			if(!instrument)
-				instrument = new(src)
+		if("Music Synthesizer")
 			instrument.interact(src) // Open Instrument
 			return TRUE
-		if("medical HUD")
+		if("Medical HUD")
 			toggle_hud(usr, "medical")
 			return TRUE
-		if("newscaster")
-			if(!newscaster)
-				newscaster = new(src)
+		if("Newscaster")
 			newscaster.ui_interact(src)
 			return TRUE
-		if("photography module")
-			if(aicamera)
-				aicamera.toggle_camera_mode(usr)
-				return TRUE
-			return FALSE
-		if("printer module")
-			if(aicamera)
-				aicamera.paiprint(usr)
-				return TRUE
-			return FALSE
-		if("radio")
-			if(radio)
-				radio.attack_self(src)
-				return TRUE
-			return FALSE
+		if("Photography Module")
+			use_camera(usr, params["mode"])
+			return TRUE
 		if("refresh")
 			if(params["list"] == "security" && !installed_software.Find("security records") || params["list"] == "medical" && !installed_software.Find("medical records"))
 				return FALSE
 			refresh_records(ui, params["list"])
 			return TRUE
-		if("remote signaler")
-			if(!signaler)
-				signaler = new(src)
+		if("Remote Signaler")
 			signaler.ui_interact(src)
 			return TRUE
-		if("security HUD")
+		if("Security HUD")
 			toggle_hud(usr, "security")
 			return TRUE
-		if("universal translator")
+		if("Universal Translator")
 			grant_languages(usr, ui)
 			return TRUE
 	return FALSE
@@ -128,7 +101,7 @@
  *
  * @param {mob} user The user purchasing the software.
  * @param {string} selection The software to purchase.
- * @return {bool} TRUE if the software was purchased, FALSE otherwise.
+ * @return {bool} TRUE if the software was purchased, CRASH otherwise.
  */
 /mob/living/silicon/pai/proc/buy_software(mob/user, selection)
 	if(!available_software.Find(selection) || installed_software.Find(selection))
@@ -142,6 +115,24 @@
 	ram -= cost
 	var/datum/hud/pai/pAIhud = hud_used
 	pAIhud?.update_software_buttons()
+	switch(selection)
+		if("Atmospheric Sensor")
+			atmos_analyzer = new(src)
+		if("Digital Messenger")
+			create_modularInterface()
+		if("Host Scan")
+			host_scan = new(src)
+		if("Internal GPS")
+			internal_gps = new(src)
+		if("Music Synthesizer")
+			instrument = new(src)
+		if("Newscaster")
+			newscaster = new(src)
+		if("Photography Module")
+			aicamera = new(src)
+			aicamera.flash_enabled = TRUE
+		if("Remote Signaler")
+			signaler = new(src)
 	return TRUE
 
 /**
@@ -188,11 +179,11 @@
  * Switch that handles door jack operations.
  *
  * @param {mob} user The user operating the door jack.
- * @param {string} jack_state The requested state of the door jack.
+ * @param {string} mode The requested operation of the door jack.
  * @return {bool} TRUE if the door jack state was switched, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/door_jack(mob/user, jack_state)
-	switch(jack_state)
+/mob/living/silicon/pai/proc/door_jack(mob/user, mode)
+	switch(mode)
 		if("cable")
 			extend_cable(user)
 			return TRUE
@@ -201,9 +192,6 @@
 			visible_message(span_notice("The cable retracts into the pAI."))
 			return TRUE
 		if("jack")
-			if(!hacking_cable?.machine)
-				to_chat(user, span_warning("You must be connected to a machine to do this."))
-				return FALSE
 			hack_door(user)
 			return TRUE
 	return FALSE
@@ -232,23 +220,6 @@
 	return TRUE
 
 /**
- * Gets the current holder of the pAI if its
- * being carried in card or holoform.
- *
- * @return {living/carbon || FALSE} The holder of the pAI,
- * or FALSE if the pAI is not being carried.
- */
-/mob/living/silicon/pai/proc/get_holder()
-	var/mob/living/carbon/holder
-	if(!holoform && iscarbon(card.loc))
-		holder = card.loc
-	if(holoform && istype(loc, /obj/item/clothing/head/mob_holder) && iscarbon(loc.loc))
-		holder = loc.loc
-	if(!holder || !iscarbon(holder))
-		return FALSE
-	return holder
-
-/**
  * Grant all languages to the current pAI.
  *
  * @param {mob} user The pAI receiving the languages.
@@ -273,6 +244,11 @@
  * @return {bool} TRUE if the door was jacked, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/hack_door(mob/user)
+	if(!hacking_cable)
+		CRASH("[user] attempted to hack a door without a cable.")
+	if(!hacking_cable?.machine)
+		to_chat(user, span_warning("You must be connected to a machine to do this."))
+		return FALSE
 	playsound(user, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 	balloon_alert(user, "overriding...")
 	// Now begin hacking
@@ -313,14 +289,25 @@
  * @param {mob} user The pAI requesting the scan.
  * @return {boolean} TRUE if the scan was successful, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/host_scan(mob/user)
-	if(!host_scan)
-		host_scan = new(src)
-	if(!iscarbon(loc))
-		to_chat(user, span_warning("You are not being carried by anyone!"))
-		return FALSE
-	host_scan.attack(user.loc, user)
-	return TRUE
+/mob/living/silicon/pai/proc/host_scan(mob/user, mode)
+	if(mode == "master")
+		if(!master_ref)
+			to_chat(user, span_warning("You are not bound to a master!"))
+			return FALSE
+		var/resolved_master = find_master(user)
+		if(!resolved_master)
+			return FALSE
+		to_chat(user, span_notice("Your master, [master_name], is reporting the current vitals:"))
+		host_scan.attack(resolved_master, user)
+		return TRUE
+	if(mode == "target")
+		var/mob/living/target = get_holder()
+		if(!target || !isliving(target))
+			to_chat(user, span_warning("You are not being carried by anyone!"))
+			return FALSE
+		host_scan.attack(target, user)
+		return TRUE
+	return FALSE
 
 /**
  * Refreshes records on screen of the pAI.
@@ -374,5 +361,24 @@
 	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
 	for(var/atom/movable/location in locations)
 		UnregisterSignal(location, COMSIG_MOVABLE_MOVED)
+
+/**
+ * All inclusive camera proc. Zooms, snaps, prints.
+ *
+ * @param {mob} user The pAI requesting the camera.
+ * @param {string} mode The camera option to toggle.
+ * @return {boolean} TRUE if the camera worked.
+ */
+/mob/living/silicon/pai/proc/use_camera(mob/user, mode)
+	if(!aicamera)
+		CRASH("[user] tried to use the camera, but it was null.")
+	switch(mode)
+		if("camera")
+			aicamera.toggle_camera_mode(user)
+		if("printer")
+			aicamera.paiprint(user)
+		if("zoom")
+			aicamera.adjust_zoom(user)
+	return TRUE
 
 #undef CABLE_LENGTH

@@ -69,7 +69,7 @@
 /atom/movable/screen/pai/newscaster
 	name = "pAI Newscaster"
 	icon_state = "newscaster"
-	required_software = "newscaster"
+	required_software = "Newscaster"
 
 /atom/movable/screen/pai/newscaster/Click()
 	if(!..())
@@ -80,7 +80,7 @@
 /atom/movable/screen/pai/host_monitor
 	name = "Host Health Scan"
 	icon_state = "host_monitor"
-	required_software = "host scan"
+	required_software = "Host Scan"
 
 /atom/movable/screen/pai/host_monitor/Click(location, control, params)
 	. = ..()
@@ -122,6 +122,7 @@
 /atom/movable/screen/pai/modpc
 	name = "Messenger"
 	icon_state = "pda_send"
+	required_software = "Digital Messenger"
 	var/mob/living/silicon/pai/pAI
 
 /atom/movable/screen/pai/modpc/Click()
@@ -133,21 +134,21 @@
 /atom/movable/screen/pai/internal_gps
 	name = "Internal GPS"
 	icon_state = "internal_gps"
-	required_software = "internal gps"
+	required_software = "Internal GPS"
 
 /atom/movable/screen/pai/internal_gps/Click()
 	. = ..()
 	if(!.)
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	if(!pAI.gps)
-		pAI.gps = new(pAI)
-	pAI.gps.attack_self(pAI)
+	if(!pAI.internal_gps)
+		pAI.internal_gps = new(pAI)
+	pAI.internal_gps.attack_self(pAI)
 
 /atom/movable/screen/pai/image_take
 	name = "Take Image"
 	icon_state = "take_picture"
-	required_software = "photography module"
+	required_software = "Photography Module"
 
 /atom/movable/screen/pai/image_take/Click()
 	if(!..())
@@ -158,7 +159,7 @@
 /atom/movable/screen/pai/image_view
 	name = "View Images"
 	icon_state = "view_images"
-	required_software = "photography module"
+	required_software = "Photography Module"
 
 /atom/movable/screen/pai/image_view/Click()
 	if(!..())

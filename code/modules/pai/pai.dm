@@ -10,7 +10,7 @@
 	hud_type = /datum/hud/pai
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
+	desc = "A pAI mobile hard-light holographics emitter."
 	health = 500
 	maxHealth = 500
 	layer = LOW_MOB_LAYER
@@ -61,8 +61,10 @@
 	var/atom/movable/screen/ai/modpc/interfaceButton
 	/// Toggles whether universal translator has been activated. Cannot be reversed
 	var/languages_granted = FALSE
-	/// Name of the one who commands us
-	var/master
+	/// Reference of the bound master
+	var/datum/weakref/master_ref
+	/// The master's name string
+	var/master_name
 	/// DNA string for owner verification
 	var/master_dna
 	/// Toggles whether the Medical  HUD is active or not
@@ -82,34 +84,32 @@
 	/// Health analyzer
 	var/obj/item/healthanalyzer/host_scan
 	/// GPS
-	var/obj/item/gps/pai/gps
+	var/obj/item/gps/pai/internal_gps
 	/// Music Synthesizer
 	var/obj/item/instrument/piano_synth/instrument
 	/// Newscaster
-	var/obj/machinery/newscaster
+	var/obj/machinery/newscaster/pai/newscaster
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
 	// Static lists
 	/// List of all available downloads
 	var/static/list/available_software = list(
-		"atmosphere sensor" = 5,
-		"crew manifest" = 5,
-		"digital messenger" = 5,
-		"photography module" = 5,
-		"camera zoom" = 10,
-		"host scan" = 10,
-		"medical records" = 10,
-		"printer module" = 10,
-		"remote signaler" = 10,
-		"security records" = 10,
-		"loudness booster" = 20,
-		"medical HUD" = 20,
-		"newscaster" = 20,
-		"security HUD" = 20,
-		"door jack" = 25,
-		"encryption keys" = 25,
-		"internal gps" = 35,
-		"universal translator" = 35,
+		"Atmospheric Sensor" = 5,
+		"Crew Manifest" = 5,
+		"Digital Messenger" = 5,
+		"Photography Module" = 5,
+		"Encryption Slot" = 10,
+		"Medical Records" = 10,
+		"Newscaster" = 10,
+		"Remote Signaler" = 10,
+		"Security Records" = 10,
+		"Host Scan" = 20,
+		"Medical HUD" = 20,
+		"Music Synthesizer" = 20,
+		"Security HUD" = 20,
+		"Door Jack" = 35,
+		"Internal GPS" = 35,
+		"Universal Translator" = 35,
 	)
 	/// List of all possible chasises. TRUE means the pAI can be picked up in this chasis.
 	var/static/list/possible_chassis = list(
@@ -145,17 +145,6 @@
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
 
-/obj/item/pai_card/attackby(obj/item/used, mob/user, params)
-	if(pai && istype(used, /obj/item/encryptionkey))
-		if(!pai.encrypt_mod)
-			to_chat(user, span_alert("Encryption Key ports not configured."))
-			return
-		user.set_machine(src)
-		pai.radio.attackby(used, user, params)
-		to_chat(user, span_notice("You insert [used] into the [src]."))
-		return
-	return ..()
-
 /mob/living/silicon/pai/can_interact_with(atom/A)
 	if(A == signaler) // Bypass for signaler
 		return TRUE
@@ -170,12 +159,12 @@
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(atmos_analyzer)
-	QDEL_NULL(instrument)
 	QDEL_NULL(hacking_cable)
+	QDEL_NULL(host_scan)
+	QDEL_NULL(instrument)
+	QDEL_NULL(internal_gps)
 	QDEL_NULL(newscaster)
 	QDEL_NULL(signaler)
-	QDEL_NULL(host_scan)
-	QDEL_NULL(gps)
 	if(!QDELETED(card) && loc != card)
 		card.forceMove(drop_location())
 		// these are otherwise handled by paicard/handle_atom_del()
@@ -185,21 +174,13 @@
 	GLOB.pai_list -= src
 	return ..()
 
-/obj/item/pai_card/emag_act(mob/user)
-	if(!pai)
-		return
-	to_chat(user, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
-	to_chat(pai, span_userdanger("Warning: System override detected, check directive sub-system for any changes."))
-	log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
-	pai.emagged = TRUE
-	pai.master = null
-	pai.master_dna = null
-	// Sets supplemental directive to this
-	pai.laws.supplied[1] = "None."
+/mob/living/silicon/pai/emag_act(mob/user)
+	handle_emag(user)
 
 /mob/living/silicon/pai/examine(mob/user)
 	. = ..()
-	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
+	desc += " This one appears to be a [chassis]."
+	. += "A personal AI in holochassis mode. Its master ID string seems to be [master_name]."
 
 /mob/living/silicon/pai/get_status_tab_items()
 	. += ..()
@@ -223,8 +204,8 @@
 		signaler = null
 	if(deleting_atom == host_scan)
 		host_scan = null
-	if(deleting_atom == gps)
-		gps = null
+	if(deleting_atom == internal_gps)
+		internal_gps = null
 	return ..()
 
 /mob/living/silicon/pai/Initialize(mapload)
@@ -236,20 +217,12 @@
 		lawcheck += law
 	if(!istype(pai_card)) //when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = pai_card
-		pai_card = new /obj/item/pai_card(newcardloc)
+		pai_card = new(newcardloc)
 		pai_card.set_personality(src)
 	forceMove(pai_card)
 	card = pai_card
 	job = JOB_PERSONAL_AI
-	atmos_analyzer = new /obj/item/analyzer(src)
-	signaler = new /obj/item/assembly/signaler/internal(src)
-	host_scan = new /obj/item/healthanalyzer(src)
-	newscaster = new /obj/machinery/newscaster/pai(src)
-	if(!aicamera)
-		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
-		aicamera.flash_enabled = TRUE
 	. = ..()
-	create_modularInterface()
 	emitter_semi_cd = TRUE
 	addtimer(CALLBACK(src, .proc/emitter_cool), 600)
 	if(!holoform)
@@ -276,8 +249,8 @@
 	remove_movespeed_modifier(/datum/movespeed_modifier/pai_spacewalk)
 	return TRUE
 
-/obj/item/pai_card/screwdriver_act(mob/living/user, obj/item/tool)
-	return pai.radio.screwdriver_act(user, tool)
+/mob/living/silicon/pai/screwdriver_act(mob/living/user, obj/item/tool)
+	return radio.screwdriver_act(user, tool)
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
@@ -286,15 +259,164 @@
 	update_stat()
 
 /**
- * Creates a new pAI.
+ * Resolves the weakref of the pai's master.
+ * If the master is qdel'd, clears the pai's master.
+ *
+ * @return {mob/living} the master mob, or FALSE if the master is gone.
+ */
+/mob/living/silicon/pai/proc/find_master(mob/user)
+	if(!master_ref)
+		return FALSE
+	var/mob/living/resolved_master = master_ref?.resolve()
+	if(!resolved_master)
+		to_chat(user, span_warning("Your master, [master_name], cannot be located!"))
+		reset_software()
+		return FALSE
+	return resolved_master
+
+/** Fixes weird speech issues with the pai. */
+/mob/living/silicon/pai/proc/fix_speech(mob/user)
+	var/mob/living/silicon/pai/pai = src
+	to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
+	to_chat(user, span_notice("You fix the pAI's speech modulator."))
+	for(var/effect in typesof(/datum/status_effect/speech))
+		pai.remove_status_effect(effect)
+	return TRUE
+
+/**
+ * Gets the current holder of the pAI if its
+ * being carried in card or holoform.
+ *
+ * @return {living/carbon || FALSE} The holder of the pAI,
+ * or FALSE if the pAI is not being carried.
+ */
+/mob/living/silicon/pai/proc/get_holder()
+	var/mob/living/carbon/holder
+	if(!holoform && iscarbon(card.loc))
+		holder = card.loc
+	if(holoform && istype(loc, /obj/item/clothing/head/mob_holder) && iscarbon(loc.loc))
+		holder = loc.loc
+	if(!holder || !iscarbon(holder))
+		return FALSE
+	return holder
+
+/**
+ * Handles the pai card or the pai itself being hit with an emag.
+ * This replaces any current laws, masters, and
+ */
+/mob/living/silicon/pai/proc/handle_emag(mob/living/carbon/attacker)
+	var/mob/living/silicon/pai/pai = src
+	if(!isliving(attacker))
+		return FALSE
+	to_chat(attacker, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
+	to_chat(pai, span_boldannounce("Warning: System override detected, check directive sub-system for any changes."))
+	log_game("[key_name(attacker)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
+	emagged = TRUE
+	master_ref = WEAKREF(attacker)
+	master_name = attacker.real_name
+	master_dna = "Untraceable Signature"
+	// Sets supplemental directive to this
+	laws.supplied[1] = "Do not interfere with the operations of the Syndicate."
+	return TRUE
+
+/**
+ * Creates a new
  *
  * @param delete_old {boolean} If TRUE, deletes the old pAI if one exists.
  */
 /mob/proc/make_pai(delete_old)
-	var/obj/item/pai_card/card = new /obj/item/pai_card(get_turf(src))
-	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
+	var/obj/item/pai_card/card = new(src)
+	var/mob/living/silicon/pai/pai = new(card)
 	pai.key = key
 	pai.name = name
 	card.set_personality(pai)
 	if(delete_old)
 		qdel(src)
+
+/**
+ * Resets the pAI and any emagged status.
+ *
+ * @param {boolean} TRUE if successful.
+ */
+/mob/living/silicon/pai/proc/reset_software(mob/user)
+	var/mob/living/silicon/pai/pai = src
+	emagged = FALSE
+	if(!master_ref)
+		return FALSE
+	master_ref = null
+	master_name = null
+	master_dna = null
+	to_chat(user, span_notice("You reset the software on the pAI."))
+	to_chat(pai, span_notice("Your software has been reset."))
+	return TRUE
+
+/** Imprints your DNA onto the downloaded pAI */
+/mob/living/silicon/pai/proc/set_dna(mob/user)
+	var/mob/living/silicon/pai/pai = src
+	if(!iscarbon(user))
+		to_chat(user, span_warning("You don't have any DNA, or your DNA is incompatible with this device!"))
+	else
+		var/mob/living/carbon/master = user
+		master_ref = WEAKREF(master)
+		master_name = master.real_name
+		master_dna = master.dna.unique_enzymes
+		to_chat(pai, span_notice("You have been bound to a new master: [user.real_name]!"))
+		emitter_semi_cd = FALSE
+	return TRUE
+
+/** Opens a tgui alert that allows someone to enter laws. */
+/mob/living/silicon/pai/proc/set_laws(mob/user)
+	var/mob/living/silicon/pai/pai = src
+	if(!master_ref)
+		to_chat(user, span_warning("The pAI is not bound to a master! It doesn't have to listen to anyone."))
+		return FALSE
+	var/new_laws = tgui_input_text(user, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", laws.supplied[1], 300)
+	if(!new_laws || !pai || !master_ref)
+		return FALSE
+	add_supplied_law(0, new_laws)
+	to_chat(pai, span_notice("They are as follows:"))
+	to_chat(pai, span_notice(new_laws))
+	return TRUE
+
+/** Toggles the ability of the pai to enter holoform */
+/mob/living/silicon/pai/proc/toggle_holo(mob/user)
+	var/mob/living/silicon/pai/pai = src
+	to_chat(user, span_notice("You [can_holo ? "disabled" : "enabled"] your pAI's holomatrix."))
+	to_chat(pai, span_warning("Your owner has [can_holo ? "disabled" : "enabled"] your holomatrix projectors!"))
+	can_holo = !can_holo
+	return TRUE
+
+/**
+ * Toggles the radio settings on and off.
+ *
+ * Parameters:
+ * option: string - required - The option to toggle.
+ */
+/mob/living/silicon/pai/proc/toggle_radio(mob/user, option)
+	var/mob/living/silicon/pai/pai = src
+	// it can't be both so if we know it's not transmitting it must be receiving.
+	var/transmitting = option == "transmit"
+	var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
+	if(transmitting)
+		can_transmit = !can_transmit
+	else //receiving
+		can_receive = !can_receive
+	radio.wires.cut(transmit_holder)//wires.cut toggles cut and uncut states
+	transmit_holder = (transmitting ? can_transmit : can_receive) //recycling can be fun!
+	to_chat(user, span_notice("You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
+	to_chat(pai, span_warning("Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
+	return TRUE
+
+/**
+ * Wipes the current pAI on the card.
+ */
+/mob/living/silicon/pai/proc/wipe_pai(mob/user)
+	var/mob/living/silicon/pai/pai = src
+	if(tgui_alert(user, "Are you certain you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No")) != "Yes")
+		return TRUE
+	to_chat(pai, span_warning("You feel yourself slipping away from reality."))
+	to_chat(pai, span_danger("Byte by byte you lose your sense of self."))
+	to_chat(pai, span_userdanger("Your mental faculties leave you."))
+	to_chat(pai, span_rose("oblivion... "))
+	qdel(pai)
+	return TRUE

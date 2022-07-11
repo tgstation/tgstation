@@ -24,6 +24,17 @@
 	/// If the pai_card is slotted in a PDA
 	var/slotted = FALSE
 
+/obj/item/pai_card/attackby(obj/item/used, mob/user, params)
+	if(pai && istype(used, /obj/item/encryptionkey))
+		if(!pai.encrypt_mod)
+			to_chat(user, span_alert("Encryption Key ports not configured."))
+			return
+		user.set_machine(src)
+		pai.radio.attackby(used, user, params)
+		to_chat(user, span_notice("You insert [used] into the [src]."))
+		return
+	return ..()
+
 /obj/item/pai_card/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
@@ -36,6 +47,10 @@
 	if(!QDELETED(pai))
 		QDEL_NULL(pai)
 	return ..()
+
+/obj/item/pai_card/emag_act(mob/user)
+	if(pai)
+		pai.handle_emag(user)
 
 /obj/item/pai_card/emp_act(severity)
 	. = ..()
@@ -94,7 +109,7 @@
 			dna = pai.master_dna,
 			emagged = pai.emagged,
 			laws = pai.laws.supplied,
-			master = pai.master,
+			master = pai.master_name,
 			name = pai.name,
 			transmit = pai.can_transmit,
 			receive = pai.can_receive,
@@ -105,30 +120,36 @@
 	. = ..()
 	if(.)
 		return FALSE
+	// Actions that don't require a pAI
+	if(action == "download")
+		download_candidate(params["ckey"])
+		return TRUE
+	if(action == "request")
+		find_pai(usr)
+		return TRUE
+	if(!pai)
+		return FALSE
 	switch(action)
-		if("download")
-			download_candidate(params["ckey"])
-			return TRUE
 		if("fix_speech")
-			fix_speech(usr)
+			pai.fix_speech(usr)
 			return TRUE
-		if("request")
-			find_pai(usr)
-			return TRUE
+		if("reset_software")
+			pai.reset_software(usr)
+			return FALSE
 		if("set_dna")
-			set_dna(usr)
+			pai.set_dna(usr)
 			return TRUE
 		if("set_laws")
-			set_laws(usr)
+			pai.set_laws(usr)
 			return TRUE
 		if("toggle_holo")
-			toggle_holo(usr)
+			pai.toggle_holo(usr)
 			return TRUE
 		if("toggle_radio")
-			toggle_radio(usr, params["option"])
+			pai.toggle_radio(usr, params["option"])
 			return TRUE
 		if("wipe_pai")
-			wipe_pai(usr)
+			pai.wipe_pai(usr)
 			return TRUE
 	return FALSE
 
@@ -192,16 +213,6 @@
 	addtimer(CALLBACK(src, .proc/request_again), SPAM_TIME,	TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
 	return TRUE
 
-/** Fixes weird speech issues with the pai. */
-/obj/item/pai_card/proc/fix_speech(mob/user)
-	if(!pai)
-		return
-	to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
-	to_chat(user, span_notice("You fix the pAI's speech modulator."))
-	for(var/effect in typesof(/datum/status_effect/speech))
-		pai.remove_status_effect(effect)
-	return TRUE
-
 /**
  * Gathers a list of candidates to display in the download candidate
  * window. If the candidate isn't marked ready, ie they have not
@@ -230,35 +241,6 @@
 /obj/item/pai_card/proc/request_again()
 	request_spam = FALSE
 
-/** Imprints your DNA onto the downloaded pAI */
-/obj/item/pai_card/proc/set_dna(mob/user)
-	if(!pai || pai.master_dna)
-		return FALSE
-	if(!iscarbon(user))
-		to_chat(user, span_warning("You don't have any DNA, or your DNA is incompatible with this device!"))
-	else
-		var/mob/living/carbon/master = user
-		pai.master = master.real_name
-		pai.master_dna = master.dna.unique_enzymes
-		to_chat(pai, span_notice("You have been bound to a new master: [master]!"))
-		pai.emitter_semi_cd = FALSE
-	return TRUE
-
-/** Opens a tgui alert that allows someone to enter laws. */
-/obj/item/pai_card/proc/set_laws(mob/user)
-	if(!pai)
-		return FALSE
-	if(!pai.master)
-		to_chat(user, span_warning("The pAI is not bound to a master! It doesn't have to listen to anyone."))
-		return FALSE
-	var/new_laws = tgui_input_text(usr, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], 300)
-	if(!new_laws || !pai || !pai.master)
-		return FALSE
-	pai.add_supplied_law(0, new_laws)
-	to_chat(pai, span_notice("They are as follows:"))
-	to_chat(pai, span_notice(new_laws))
-	return TRUE
-
 /**
  * Sets the personality on the current pai_card
  *
@@ -273,52 +255,6 @@
 	update_appearance()
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
-	return TRUE
-
-/** Toggles the ability of the pai to enter holoform */
-/obj/item/pai_card/proc/toggle_holo(mob/user)
-	if(!pai)
-		return FALSE
-	to_chat(user, span_notice("You [pai.can_holo ? "disabled" : "enabled"] your pAI's holomatrix."))
-	to_chat(pai, span_warning("Your owner has [pai.can_holo ? "disabled" : "enabled"] your holomatrix projectors!"))
-	pai.can_holo = !pai.can_holo
-	return TRUE
-
-/**
- * Toggles the radio settings on and off from the pAI.
- *
- * Parameters:
- * option: string - required - The option to toggle.
- */
-/obj/item/pai_card/proc/toggle_radio(mob/user, option)
-	if(!pai)
-		return FALSE
-	// it can't be both so if we know it's not transmitting it must be receiving.
-	var/transmitting = option == "transmit"
-	var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
-	if(transmitting)
-		pai.can_transmit = !pai.can_transmit
-	else //receiving
-		pai.can_receive = !pai.can_receive
-	pai.radio.wires.cut(transmit_holder)//wires.cut toggles cut and uncut states
-	transmit_holder = (transmitting ? pai.can_transmit : pai.can_receive) //recycling can be fun!
-	to_chat(user, span_notice("You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
-	to_chat(pai, span_warning("Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
-	return TRUE
-
-/**
- * Wipes the current pAI on the card.
- */
-/obj/item/pai_card/proc/wipe_pai(mob/user)
-	if(!pai)
-		return FALSE
-	if(tgui_alert(user, "Are you certain you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No")) != "Yes")
-		return TRUE
-	to_chat(pai, span_warning("You feel yourself slipping away from reality."))
-	to_chat(pai, span_danger("Byte by byte you lose your sense of self."))
-	to_chat(pai, span_userdanger("Your mental faculties leave you."))
-	to_chat(pai, span_rose("oblivion... "))
-	qdel(pai)
 	return TRUE
 
 #undef SPAM_TIME

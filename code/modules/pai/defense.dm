@@ -44,7 +44,7 @@
 		visible_message(span_notice("[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field."))
 		return
 	user.do_attack_animation(src)
-	if(user.name != master)
+	if(user.name != master_name)
 		visible_message(span_danger("[user] stomps on [src]!."))
 		take_holo_damage(2)
 		return

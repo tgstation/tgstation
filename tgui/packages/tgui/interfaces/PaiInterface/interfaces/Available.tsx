@@ -1,4 +1,3 @@
-import { capitalizeAny } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, ProgressBar, Section, Table, Tooltip } from 'tgui/components';
 import { SOFTWARE_DESC } from '../constants';
@@ -82,7 +81,7 @@ const ListItem = (props, context) => {
   return (
     <Table.Row className="candystripe">
       <Table.Cell collapsible>
-        <Box color="label">{capitalizeAny(name)}</Box>
+        <Box color="label">{name}</Box>
       </Table.Cell>
       <Table.Cell collapsible>
         <Box color={ram < cost && 'bad'} textAlign="right">
@@ -99,7 +98,7 @@ const ListItem = (props, context) => {
           mb={0.5}
           disabled={ram < cost || purchased}
           onClick={() => act('buy', { selection: name })}
-          tooltip={SOFTWARE_DESC[name] || ''}
+          tooltip={SOFTWARE_DESC[name]}
           tooltipPosition="bottom-start">
           <Icon ml={1} mr={-2} name="download" />
         </Button>

@@ -1,4 +1,3 @@
-import { capitalizeAny } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, NoticeBox, Section, Stack } from 'tgui/components';
 import { SOFTWARE_DESC } from '../constants';
@@ -41,7 +40,7 @@ const InstalledSoftware = (props, context) => {
         installed.map((software, index) => {
           return (
             <Button key={index} onClick={() => setCurrentSelection(software)}>
-              {capitalizeAny(software)}
+              {software}
             </Button>
           );
         })
@@ -57,14 +56,12 @@ const InstalledInfo = (props, context) => {
     'software',
     ''
   );
-  const title = !currentSelection
-    ? 'Select a Program'
-    : capitalizeAny(currentSelection);
+  const title = !currentSelection ? 'Select a Program' : currentSelection;
 
   /** Records get their own section here */
-  if (currentSelection === 'medical records') {
+  if (currentSelection === 'Medical Records') {
     return <RecordsDisplay record_type="medical" />;
-  } else if (currentSelection === 'security records') {
+  } else if (currentSelection === 'Security Records') {
     return <RecordsDisplay record_type="security" />;
   } else {
     return (
@@ -88,7 +85,7 @@ const InstalledInfo = (props, context) => {
  */
 const SoftwareButtons = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { door_jack, languages } = data;
+  const { door_jack, languages, master_name } = data;
   const [currentSelection, setCurrentSelection] = useLocalState(
     context,
     'software',
@@ -96,31 +93,74 @@ const SoftwareButtons = (props, context) => {
   );
 
   switch (currentSelection) {
-    case 'door jack':
+    case 'Door Jack':
       return (
         <>
           <Button
             disabled={door_jack}
             icon="plug"
-            onClick={() => act(currentSelection, { jack: 'cable' })}>
+            onClick={() => act(currentSelection, { mode: 'cable' })}
+            tooltip="Drops a cable. Insert into a compatible airlock.">
             Extend Cable
           </Button>
           <Button
             color="bad"
             disabled={!door_jack}
             icon="door-open"
-            onClick={() => act(currentSelection, { jack: 'jack' })}>
+            onClick={() => act(currentSelection, { mode: 'jack' })}
+            tooltip="Begins overriding the airlock security protocols.">
             Hack Door
           </Button>
           <Button
             disabled={!door_jack}
             icon="unlink"
-            onClick={() => act(currentSelection, { jack: 'cancel' })}>
+            onClick={() => act(currentSelection, { mode: 'cancel' })}>
             Cancel
           </Button>
         </>
       );
-    case 'universal translator':
+    case 'Host Scan':
+      return (
+        <>
+          <Button
+            icon="hand-holding-heart"
+            onClick={() => act(currentSelection, { mode: 'target' })}
+            tooltip="Must be held or scooped up to scan.">
+            Scan Holder
+          </Button>
+          <Button
+            disabled={!master_name}
+            icon="user-cog"
+            onClick={() => act(currentSelection, { mode: 'master' })}
+            tooltip="Scans any bound masters.">
+            Scan Master
+          </Button>
+        </>
+      );
+    case 'Photography Module':
+      return (
+        <>
+          <Button
+            icon="camera-retro"
+            onClick={() => act(currentSelection, { mode: 'camera' })}
+            tooltip="Toggles the camera. Click an area to take a photo.">
+            Camera
+          </Button>
+          <Button
+            icon="print"
+            onClick={() => act(currentSelection, { mode: 'printer' })}
+            tooltip="Gives a list of stored photos.">
+            Printer
+          </Button>
+          <Button
+            icon="search-plus"
+            onClick={() => act(currentSelection, { mode: 'zoom' })}
+            tooltip="Adjusts zoom level on future photographs.">
+            Zoom
+          </Button>
+        </>
+      );
+    case 'Universal Translator':
       return (
         <Button
           icon="download"
