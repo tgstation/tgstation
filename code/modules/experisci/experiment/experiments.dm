@@ -307,3 +307,28 @@
 		/obj/machinery/chem_mass_spec = 3
 	)
 	required_stock_part = /obj/item/stock_parts/micro_laser/ultra
+
+/datum/experiment/scanning/random/mecha_damage_scan
+	name = "Exosuit Materials 1: Stress Failure Test"
+	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
+	exp_tag = "Scan"
+	possible_types = list(/obj/vehicle/sealed/mecha)
+	total_requirement = 2
+	///Damage percent that each mech needs to be at for a scan to work.
+	var/damage_percent
+
+/datum/experiment/scanning/random/mecha_damage_scan/New()
+	. = ..()
+	damage_percent = rand(15, 95)
+	//updating the description with the damage_percent var set
+	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to those made with more traditional means. Damage a few exosuits to exactly [damage_percent]% integrity and scan them to help us determine how the armor fails under stress."
+
+/datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
+	var/found_percent = round(target.get_integrity() / target.max_integrity, 0.01) * 100
+	return ..() && (found_percent == damage_percent)
+
+/datum/experiment/scanning/random/mecha_destroyed_scan
+	name = "Exosuit Materials 2: Excessive Damage Test"
+	description = "As an extension of testing exosuit damage results, scanning examples of complete structural failure will accelerate our material stress simulations."
+	possible_types = list(/obj/structure/mecha_wreckage)
+	total_requirement = 2
