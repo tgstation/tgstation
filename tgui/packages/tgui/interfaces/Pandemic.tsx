@@ -1,4 +1,4 @@
-import { capitalizeOne } from 'common/string';
+import { capitalizeFirst } from 'common/string';
 import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Box, Button, Collapsible, Input, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs, Tooltip } from 'tgui/components';
@@ -178,10 +178,10 @@ const BeakerInfoDisplay = (props, context) => {
       <Stack.Item grow={2}>
         <LabeledList>
           <LabeledList.Item label="DNA">
-            {capitalizeOne(blood.dna)}
+            {capitalizeFirst(blood.dna)}
           </LabeledList.Item>
           <LabeledList.Item label="Type">
-            {capitalizeOne(blood.type)}
+            {capitalizeFirst(blood.type)}
           </LabeledList.Item>
         </LabeledList>
       </Stack.Item>
@@ -365,7 +365,7 @@ const VirusTextInfo = (props: VirusInfoProps, context) => {
         {virus.description}
       </LabeledList.Item>
       <LabeledList.Item label="Agent">
-        {capitalizeOne(virus.agent)}
+        {capitalizeFirst(virus.agent)}
       </LabeledList.Item>
       <LabeledList.Item label="Spread">{virus.spread}</LabeledList.Item>
       <LabeledList.Item label="Possible Cure">{virus.cure}</LabeledList.Item>

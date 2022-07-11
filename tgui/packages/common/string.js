@@ -94,15 +94,15 @@ export const capitalize = (str) => {
 };
 
 /**
- * Similar to capitalize, this takes a string and replaces any first letters
+ * Similar to capitalize, this takes a string and replaces all first letters
  * of any words.
  *
  * @param {string} str
- * @return {string} The string with the first letter capitalized.
+ * @return {string} The string with the first letters capitalized.
  *
- * @example capitalizeAny('heLLo woRLd') === 'HeLLo WoRLd'
+ * @example capitalizeAll('heLLo woRLd') === 'HeLLo WoRLd'
  */
-export const capitalizeAny = (str) => {
+export const capitalizeAll = (str) => {
   return str.replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
 };
 
@@ -114,20 +114,8 @@ export const capitalizeAny = (str) => {
  *
  * @example capitalizeFirst('heLLo woRLd') === 'HeLLo woRLd'
  */
-export const capitalizeOne = (str) => {
+export const capitalizeFirst = (str) => {
   return str.replace(/^\w/, (letter) => letter.toUpperCase());
-};
-
-/**
- * Decodes any HTML entities in the string.
- *
- * @param {string} str An HTML encoded string.
- * @returns {string} The string with HTML entities decoded.
- */
-export const decodeHTML = (str) => {
-  return str.replace(/&#(\d+);/g, (_, dec) => {
-    return String.fromCharCode(dec);
-  });
 };
 
 export const toTitleCase = (str) => {

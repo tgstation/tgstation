@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { filter, sortBy } from 'common/collections';
-import { capitalizeOne, multiline } from 'common/string';
+import { capitalizeFirst, multiline } from 'common/string';
 import { Button, Collapsible, Icon, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
@@ -260,7 +260,7 @@ const ObservableItem = (
     <Button
       color={threat || color}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
-      {capitalizeOne(name).slice(0, 44) /** prevents it from overflowing */}
+      {capitalizeFirst(name).slice(0, 44) /** prevents it from overflowing */}
       {!!orbiters && (
         <>
           {' '}

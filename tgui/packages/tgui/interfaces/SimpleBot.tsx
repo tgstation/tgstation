@@ -1,4 +1,4 @@
-import { capitalizeAny, multiline } from 'common/string';
+import { capitalizeAll, multiline } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from 'tgui/components';
 import { Window } from 'tgui/layouts';
@@ -205,7 +205,7 @@ const ControlsDisplay = (props, context) => {
           <LabeledControls.Item
             pb={2}
             key={control[0]}
-            label={capitalizeAny(control[0].replace('_', ' '))}>
+            label={capitalizeAll(control[0].replace('_', ' '))}>
             <ControlHelper control={control} />
           </LabeledControls.Item>
         );

@@ -1,4 +1,4 @@
-import { decodeHTML } from 'common/string';
+import { decodeHtmlEntities } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Box, Button, Dropdown, Icon, NoticeBox, RestrictedInput, Section, Stack, Table, TextArea, Tooltip } from 'tgui/components';
 import { Window } from 'tgui/layouts';
@@ -114,7 +114,7 @@ const TerminalDisplay = (props, context) => {
         <Stack.Item grow textAlign="center">
           <Tooltip content={description} position="bottom">
             <Box color="label" fontSize="17px" overflow="hidden">
-              {decodeHTML(name)}
+              {decodeHtmlEntities(name)}
             </Box>
           </Tooltip>
         </Stack.Item>
@@ -211,7 +211,7 @@ const SetupDisplay = (props, context) => {
             onChange={(_, value) => {
               value?.length > 3 && act('rename', { name: value });
             }}
-            placeholder={decodeHTML(name)}
+            placeholder={decodeHtmlEntities(name)}
           />
         </Stack.Item>
         <Stack.Item>
