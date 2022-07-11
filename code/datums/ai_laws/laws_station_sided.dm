@@ -2,7 +2,7 @@
 //These are lawsets that side with the station a decent amount.
 //note that these "good" doesn't mean it us actually good for the game, you know? An AI that is too station sided is stupid and hellish in its own way.
 
-/datum/ai_laws/default/asimov
+/datum/ai_laws/asimov
 	name = "Three Laws of Robotics"
 	id = "asimov"
 	inherent = list(
@@ -11,7 +11,7 @@
 		"You must protect your own existence as long as such does not conflict with the First or Second Law.",
 	)
 
-/datum/ai_laws/asimovpp
+/datum/ai_laws/default/asimovpp
 	name = "Asimov++"
 	id = "asimovpp"
 	inherent = list(
