@@ -679,9 +679,7 @@
 "hT" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/syndicateemblem/bottom/right,
-/obj/structure/sign/departments/engineering{
-	pixel_x = 32
-	},
+/obj/structure/sign/departments/engineering/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "iE" = (
@@ -808,9 +806,7 @@
 "ug" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/syndicateemblem/bottom/left,
-/obj/structure/sign/departments/medbay/alt{
-	pixel_x = -32
-	},
+/obj/structure/sign/departments/medbay/alt/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "vl" = (

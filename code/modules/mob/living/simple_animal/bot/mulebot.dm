@@ -52,7 +52,6 @@
 
 	var/obj/item/stock_parts/cell/cell /// Internal Powercell
 	var/cell_move_power_usage = 1///How much power we use when we move.
-	var/bloodiness = 0 ///If we've run over a mob, how many tiles will we leave tracks on while moving
 	var/num_steps = 0 ///The amount of steps we should take until we rest for a time.
 
 
@@ -281,7 +280,7 @@
 			if(usr.has_unlimited_silicon_privilege)
 				bot_cover_flags ^= BOT_COVER_LOCKED
 				. = TRUE
-		if("power")
+		if("on")
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
 			else if(bot_cover_flags & BOT_COVER_OPEN)
@@ -479,18 +478,6 @@
 		pathset = TRUE //Indicates the AI's custom path is initialized.
 		start()
 
-/mob/living/simple_animal/bot/mulebot/Move(atom/newloc, direct) //handle leaving bloody tracks. can't be done via Moved() since that can end up putting the tracks somewhere BEFORE we get bloody.
-	if(!bloodiness) //important to check this first since Bump() is called in the Move() -> Entered() chain
-		return ..()
-	var/atom/oldLoc = loc
-	. = ..()
-	if(!last_move || isspaceturf(oldLoc)) //if we didn't sucessfully move, or if our old location was a spaceturf.
-		return
-	var/obj/effect/decal/cleanable/blood/tracks/B = new(oldLoc)
-	B.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
-	B.setDir(direct)
-	bloodiness--
-
 /mob/living/simple_animal/bot/mulebot/Moved()
 	. = ..()
 	if(has_gravity())
@@ -686,26 +673,33 @@
 	return ..()
 
 // when mulebot is in the same loc
-/mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/H)
-	log_combat(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
-	H.visible_message(span_danger("[src] drives over [H]!"), \
-					span_userdanger("[src] drives over you!"))
+/mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/crushed)
+	log_combat(src, crushed, "run over", addition = "(DAMTYPE: [uppertext(BRUTE)])")
+	crushed.visible_message(
+		span_danger("[src] drives over [crushed]!"),
+		span_userdanger("[src] drives over you!"),
+	)
+
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
-	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, MELEE))
-	H.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST, run_armor_check(BODY_ZONE_CHEST, MELEE))
-	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG, run_armor_check(BODY_ZONE_L_LEG, MELEE))
-	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG, run_armor_check(BODY_ZONE_R_LEG, MELEE))
-	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM, run_armor_check(BODY_ZONE_L_ARM, MELEE))
-	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM, run_armor_check(BODY_ZONE_R_ARM, MELEE))
+	var/damage = rand(5, 15)
+	crushed.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, MELEE))
+	crushed.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST, run_armor_check(BODY_ZONE_CHEST, MELEE))
+	crushed.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, run_armor_check(BODY_ZONE_L_LEG, MELEE))
+	crushed.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, run_armor_check(BODY_ZONE_R_LEG, MELEE))
+	crushed.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, run_armor_check(BODY_ZONE_L_ARM, MELEE))
+	crushed.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, run_armor_check(BODY_ZONE_R_ARM, MELEE))
 
-	var/turf/T = get_turf(src)
-	T.add_mob_blood(H)
+	add_mob_blood(crushed)
 
-	var/list/blood_dna = H.get_blood_dna_list()
-	add_blood_DNA(blood_dna)
-	bloodiness += 4
+	var/turf/below_us = get_turf(src)
+	below_us.add_mob_blood(crushed)
+
+	AddComponent(/datum/component/blood_walk, \
+		blood_type = /obj/effect/decal/cleanable/blood/tracks, \
+		target_dir_change = TRUE, \
+		transfer_blood_dna = TRUE, \
+		max_blood = 4)
 
 // player on mulebot attempted to move
 /mob/living/simple_animal/bot/mulebot/relaymove(mob/living/user, direction)

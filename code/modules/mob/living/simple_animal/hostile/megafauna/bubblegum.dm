@@ -100,7 +100,10 @@ Difficulty: Hard
 	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
 	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
 	if(spawn_blood)
-		AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/bubblegum, 'sound/effects/meteorimpact.ogg', 200)
+		AddComponent(/datum/component/blood_walk, \
+			blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
+			sound_played = 'sound/effects/meteorimpact.ogg', \
+			sound_volume = 200)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Destroy()
 	QDEL_NULL(triple_charge)
@@ -130,8 +133,8 @@ Difficulty: Hard
 	else
 		hallucination_charge_surround.Trigger(target = target)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(mob/target)
-	var/list/targets = list(target)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood()
+	var/list/targets = ListTargets()
 	. = list()
 	for(var/mob/living/L in targets)
 		var/list/bloodpool = get_bloodcrawlable_pools(get_turf(L), 0)

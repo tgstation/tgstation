@@ -10,51 +10,52 @@ import { Window } from '../layouts';
 import { logger } from '../logging';
 
 type Bait = {
-  position: number,
-  height: number,
-  velocity: number
-}
+  position: number;
+  height: number;
+  velocity: number;
+};
 
 type Fish = {
-  position: number
-  height: number
-  velocity: number
-  target: number | null
-}
+  position: number;
+  height: number;
+  velocity: number;
+  target: number | null;
+};
 
-type FishAI = "dumb" | "zippy" | "slow"
+type FishAI = 'dumb' | 'zippy' | 'slow';
 
 enum ReelingState {
   Idle,
-  Reeling
+  Reeling,
 }
 
 type FishingMinigameProps = {
-  difficulty: number,
-  fish_ai: FishAI
-  special_rules: SpecialRule[],
-  background: string,
-  win: (perfect: boolean) => void,
-  lose: () => void
-}
+  difficulty: number;
+  fish_ai: FishAI;
+  special_rules: SpecialRule[];
+  background: string;
+  win: (perfect: boolean) => void;
+  lose: () => void;
+};
 
 type FishingMinigameState = {
   completion: number;
   bait: Bait;
   fish: Fish;
-}
+};
 
-type SpecialRule = "weighted" | "limit_loss" | "heavy"
+type SpecialRule = 'weighted' | 'limit_loss' | 'heavy';
 
-
-class FishingMinigame
-  extends Component<FishingMinigameProps, FishingMinigameState> {
+class FishingMinigame extends Component<
+  FishingMinigameProps,
+  FishingMinigameState
+> {
   animation_id: number;
   last_frame: number;
   reeling: ReelingState = ReelingState.Idle;
   perfect: boolean = true;
   area_height: number = 1000;
-  state: FishingMinigameState
+  state: FishingMinigameState;
   currentVelocityLimit: number = 200;
   // Difficulty & special rules dependent variables
   completionLossPerSecond: number;
@@ -77,7 +78,9 @@ class FishingMinigame
     // Set things depending on difficulty
     const baitHeight = 170 + (150 - props.difficulty);
 
-    this.completionLossPerSecond = props.special_rules.includes('limit_loss') ? -4 : -6;
+    this.completionLossPerSecond = props.special_rules.includes('limit_loss')
+      ? -4
+      : -6;
     this.baitBounceCoeff = props.special_rules.includes('weighted') ? 0.1 : 0.6;
     this.idleVelocity = props.special_rules.includes('heavy') ? 10 : 0;
 
@@ -126,16 +129,16 @@ class FishingMinigame
     document.addEventListener('mousedown', this.handle_mousedown);
     document.addEventListener('mouseup', this.handle_mouseup);
     this.animation_id = window.requestAnimationFrame(this.updateAnimation);
-    globalEvents.on("byond/mousedown", this.handle_mousedown);
-    globalEvents.on("byond/mouseup", this.handle_mouseup);
+    globalEvents.on('byond/mousedown', this.handle_mousedown);
+    globalEvents.on('byond/mouseup', this.handle_mouseup);
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handle_mousedown);
     document.removeEventListener('mouseup', this.handle_mouseup);
     window.cancelAnimationFrame(this.animation_id);
-    globalEvents.off("byond/mousedown", this.handle_mousedown);
-    globalEvents.off("byond/mouseup", this.handle_mouseup);
+    globalEvents.off('byond/mousedown', this.handle_mousedown);
+    globalEvents.off('byond/mouseup', this.handle_mouseup);
   }
 
   updateAnimation(timestamp: DOMHighResTimeStamp) {
@@ -159,28 +162,27 @@ class FishingMinigame
     const seconds = delta / 1000;
     const { fish: currentFishState } = this.state;
 
-    const longJumpChance = this.baseLongJumpChancePerSecond
-    * this.props.difficulty
-    * seconds
-    * 100;
+    const longJumpChance =
+      this.baseLongJumpChancePerSecond * this.props.difficulty * seconds * 100;
 
-    const shortJumpChance = this.baseShortJumpChancePerSecond
-    * this.props.difficulty
-    * seconds
-    * 100;
+    const shortJumpChance =
+      this.baseShortJumpChancePerSecond * this.props.difficulty * seconds * 100;
 
     const nextFishState = { ...currentFishState };
 
     // Switching to new long jump target can interrupt any other
-    if ((this.interruptMove || currentFishState.target === null)
-    && randomProb(longJumpChance)) {
+    if (
+      (this.interruptMove || currentFishState.target === null) &&
+      randomProb(longJumpChance)
+    ) {
       /*
        Move at least 0.75 to full of the availible bar in given direction,
        and more likely to move in the direction where there's more space
       */
       const distanceFromTop = 0 - currentFishState.position;
-      const distanceFromBottom = this.area_height
-      - (currentFishState.position + currentFishState.height);
+      const distanceFromBottom =
+        this.area_height -
+        (currentFishState.position + currentFishState.height);
 
       const absTop = Math.abs(distanceFromTop);
       const absBottom = Math.abs(distanceFromBottom);
@@ -190,8 +192,7 @@ class FishingMinigame
       if (randomProb(topChance)) {
         // Moving to top
         const delta = Math.floor(distanceFromTop * randomNumber(0.75, 1));
-      }
-      else {
+      } else {
         // Moving to bottom
         const delta = Math.floor(distanceFromBottom * randomNumber(0.75, 1));
       }
@@ -200,8 +201,9 @@ class FishingMinigame
       this.currentVelocityLimit = this.longJumpVelocityLimit;
     }
 
-    const activeTarget = currentFishState.target
-    && Math.abs(currentFishState.target - currentFishState.position) > 5;
+    const activeTarget =
+      currentFishState.target &&
+      Math.abs(currentFishState.target - currentFishState.position) > 5;
 
     if (activeTarget) {
       // Move towards target
@@ -211,21 +213,23 @@ class FishingMinigame
       const diffCoeff = 0.3 * this.props.difficulty + 0.5;
       const targetAcceleration = distance * diffCoeff * seconds;
 
-      nextFishState.velocity
-      = (currentFishState.velocity * friction) + targetAcceleration;
-    }
-    else {
+      nextFishState.velocity =
+        currentFishState.velocity * friction + targetAcceleration;
+    } else {
       // If we have the target but we're close enough, mark as target reached
-      if (currentFishState.target
-        && Math.abs(currentFishState.target - currentFishState.position) < 5) {
+      if (
+        currentFishState.target &&
+        Math.abs(currentFishState.target - currentFishState.position) < 5
+      ) {
         nextFishState.target = null;
       }
       // Try to do a short jump - these can't really be interrupted
       if (randomProb(shortJumpChance)) {
         logger.log(`Short jump with chance ${shortJumpChance}`);
         const distanceFromTop = 0 - currentFishState.position;
-        const distanceFromBottom = this.area_height
-        - (currentFishState.position + currentFishState.height);
+        const distanceFromBottom =
+          this.area_height -
+          (currentFishState.position + currentFishState.height);
         let possibleMoves: number[] = [];
         if (Math.abs(distanceFromBottom) > 100) {
           possibleMoves.push(randomInteger(100, 200));
@@ -243,11 +247,11 @@ class FishingMinigame
     nextFishState.velocity = clamp(
       nextFishState.velocity + this.idleVelocity,
       -this.currentVelocityLimit,
-      this.currentVelocityLimit);
+      this.currentVelocityLimit
+    );
 
-    nextFishState.position = currentFishState.position
-    + seconds
-    * currentFishState.velocity;
+    nextFishState.position =
+      currentFishState.position + seconds * currentFishState.velocity;
 
     // Top bound
     if (nextFishState.position < 0) {
@@ -289,8 +293,7 @@ class FishingMinigame
       newPosition = 0;
       if (this.reeling === ReelingState.Reeling) {
         newVelocity = 0;
-      }
-      else {
+      } else {
         newVelocity = -bait.velocity * bounce_coeff;
       }
     }
@@ -300,14 +303,15 @@ class FishingMinigame
       newVelocity = -bait.velocity * bounce_coeff;
     }
 
-    const acceleration = this.reeling === ReelingState.Reeling
-      ? acceleration_up : acceleration_down;
+    const acceleration =
+      this.reeling === ReelingState.Reeling
+        ? acceleration_up
+        : acceleration_down;
     const velocity_change = acceleration * seconds;
     // Slowdown both ways when on fish
     if (this.fishOnBait(fish, bait)) {
       newVelocity += on_point_coeff * velocity_change;
-    }
-    else {
+    } else {
       newVelocity += velocity_change;
     }
 
@@ -336,8 +340,7 @@ class FishingMinigame
     let completion_delta = 0;
     if (this.fishOnBait(fish, bait)) {
       completion_delta = seconds * completion_gain_per_second;
-    }
-    else {
+    } else {
       completion_delta = seconds * completion_lost_per_second;
       this.perfect = false;
     }
@@ -381,20 +384,28 @@ class FishingMinigame
 
   render() {
     const { completion, fish, bait } = this.state;
-    const posToStyle = (value: number) => (value / this.area_height * 100);
+    const posToStyle = (value: number) => (value / this.area_height) * 100;
     const background_image = resolveAsset(this.props.background);
     return (
       <div class="fishing">
         <div class="main">
-          <div class="background" style={{ "background-image": `url("${background_image}")` }}>
-            <div class="bait" style={{
-              height: `${posToStyle(bait.height)}%`,
-              top: `${posToStyle(bait.position)}%`,
-            }} />
-            <div class="fish" style={{
-              top: `${posToStyle(fish.position)}%`,
-              height: `${posToStyle(fish.height)}%`,
-            }} ><Icon name="fish" />
+          <div
+            class="background"
+            style={{ 'background-image': `url("${background_image}")` }}>
+            <div
+              class="bait"
+              style={{
+                height: `${posToStyle(bait.height)}%`,
+                top: `${posToStyle(bait.position)}%`,
+              }}
+            />
+            <div
+              class="fish"
+              style={{
+                top: `${posToStyle(fish.position)}%`,
+                height: `${posToStyle(fish.height)}%`,
+              }}>
+              <Icon name="fish" />
             </div>
           </div>
         </div>
@@ -403,16 +414,17 @@ class FishingMinigame
             <div class="bar" style={{ height: `${Math.round(completion)}%` }} />
           </div>
         </div>
-      </div>);
+      </div>
+    );
   }
 }
 
 type FishingData = {
-  difficulty: number,
-  fish_ai: FishAI
-  special_effects: SpecialRule[]
+  difficulty: number;
+  fish_ai: FishAI;
+  special_effects: SpecialRule[];
   background_image: string;
-}
+};
 
 export const Fishing = (props, context) => {
   const { act, data } = useBackend<FishingData>(context);
@@ -424,9 +436,10 @@ export const Fishing = (props, context) => {
           fish_ai={data.fish_ai}
           special_rules={data.special_effects}
           background={data.background_image}
-          win={(perfect) => act("win", { perfect: perfect })}
-          lose={() => act("lose")} />
+          win={(perfect) => act('win', { perfect: perfect })}
+          lose={() => act('lose')}
+        />
       </Window.Content>
-    </Window>);
+    </Window>
+  );
 };
-

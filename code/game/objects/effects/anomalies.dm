@@ -428,10 +428,10 @@
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += T
 
-/obj/effect/anomaly/delimber
-	name = "delimber anomaly"
-	icon_state = "delimber_anomaly"
-	aSignal = /obj/item/assembly/signaler/anomaly/delimber
+/obj/effect/anomaly/bioscrambler
+	name = "bioscrambler anomaly"
+	icon_state = "bioscrambler_anomaly"
+	aSignal = /obj/item/assembly/signaler/anomaly/bioscrambler
 	immortal = TRUE
 	/// Cooldown for every anomaly pulse
 	COOLDOWN_DECLARE(pulse_cooldown)
@@ -448,7 +448,7 @@
 	var/static/list/l_legs
 	var/static/list/r_legs
 
-/obj/effect/anomaly/delimber/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
 	if(!chests)
 		chests = typesof(/obj/item/bodypart/chest)
@@ -463,7 +463,7 @@
 	if(!r_legs)
 		r_legs = typesof(/obj/item/bodypart/r_leg)
 
-/obj/effect/anomaly/delimber/anomalyEffect(delta_time)
+/obj/effect/anomaly/bioscrambler/anomalyEffect(delta_time)
 	. = ..()
 
 	if(!COOLDOWN_FINISHED(src, pulse_cooldown))
@@ -473,7 +473,7 @@
 
 	swap_parts(range)
 
-/obj/effect/anomaly/delimber/proc/swap_parts(swap_range)
+/obj/effect/anomaly/bioscrambler/proc/swap_parts(swap_range)
 	for(var/mob/living/carbon/nearby in range(swap_range, src))
 		if(nearby.run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [src]!") >= 100)
 			continue //We are protected

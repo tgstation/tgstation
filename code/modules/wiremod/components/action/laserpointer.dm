@@ -1,4 +1,3 @@
-
 /**
  * # laser pointer Component
  *
@@ -9,9 +8,6 @@
 	desc = "A component that shines a high powered light at a target."
 	category = "Action"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
-
-/// The Laser Pointer Variables
-	var/turf/pointer_loc
 
 	/// The input port
 	var/datum/port/input/target_input
@@ -47,7 +43,7 @@
 
 	var/atom/target = target_input.value
 	var/atom/movable/shell = parent.shell
-	var/turf/targloc = get_turf(target)
+	var/turf/target_location = get_turf(target)
 
 
 	var/pointer_icon_state = lasercolour_option.value
@@ -56,20 +52,17 @@
 	if(get_dist(current_turf, target) > max_range || current_turf.z != target.z)
 		return
 
-	/// only has cyborg flashing since felinid moving spikes time dilation when spammed and the other two features of laserpointers would be unbalanced when spammed
+	// only has cyborg flashing since felinid moving spikes time dilation when spammed and the other two features of laserpointers would be unbalanced when spammed
 	if(iscyborg(target))
 		var/mob/living/silicon/silicon = target
 		log_combat(shell, silicon, "shone in the sensors", src)
-		silicon.flash_act(affect_silicon = 1) /// no stunning, just a blind
+		silicon.flash_act(affect_silicon = TRUE) /// no stunning, just a blind
 		to_chat(silicon, span_danger("Your sensors were overloaded by a weakened laser shone by [shell]!"))
 
-
-	///laserpointer image
-	var/image/laser_location = image('icons/obj/guns/projectiles.dmi',targloc,"[pointer_icon_state]_laser",10)
+	var/image/laser_location = image('icons/obj/guns/projectiles.dmi',target_location,"[pointer_icon_state]_laser",10)
 
 	laser_location.pixel_x = clamp(target.pixel_x + image_pixel_x.value,-15,15)
 	laser_location.pixel_y = clamp(target.pixel_y + image_pixel_y.value,-15,15)
 
-	flick_overlay_view(laser_location, targloc, 10)
-
-
+	target_location.add_overlay(laser_location)
+	addtimer(CALLBACK(target_location, /atom/proc/cut_overlay, laser_location), 1 SECONDS)

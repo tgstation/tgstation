@@ -486,7 +486,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					to_chat(user, span_warning("[src]'s compartment is full."))
 					break
 				if(canLoadItem(the_item) && loadingAttempt(the_item,user))
-					SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, the_item, src, TRUE)
+					T.atom_storage?.attempt_remove(the_item, src)
 					loaded++
 				else
 					denied_items++
@@ -1329,6 +1329,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	icon_state = "greed"
 	icon_deny = "greed-deny"
 	panel_type = "panel4"
+	max_integrity = 700
+	max_loaded_items = 40
 	light_mask = "greed-light-mask"
 	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
 

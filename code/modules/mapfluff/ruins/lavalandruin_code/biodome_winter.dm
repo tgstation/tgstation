@@ -41,8 +41,9 @@
 		if(hit_object.resistance_flags & FREEZE_PROOF)
 			hit_object.visible_message(span_warning("[hit_object] is freeze-proof!"))
 			return
-		if(!(hit_object.obj_flags & FROZEN))
-			hit_object.make_frozen_visual()
+		if(HAS_TRAIT(hit_object, TRAIT_FROZEN))
+			return
+		hit_object.AddElement(/datum/element/frozen)
 	else if(isliving(hit_atom))
 		var/mob/living/hit_mob = hit_atom
 		SSmove_manager.stop_looping(hit_mob) //stops them mid pathing even if they're stunimmune

@@ -51,11 +51,11 @@
 		return TRUE
 
 	if(!cell)
-		to_chat(user, span_warning("[src] doesn't have a power cell installed!"))
+		balloon_alert(user, "no cell installed!")
 		return TRUE
 
 	if(!cell.charge)
-		to_chat(user, span_warning("[src]'s battery is dead!"))
+		balloon_alert(user, "no charge!")
 		return TRUE
 	return FALSE
 
@@ -116,7 +116,7 @@
 	if(C)
 		var/done_any = FALSE
 		if(C.charge >= C.maxcharge)
-			to_chat(user, span_notice("[A] is fully charged!"))
+			balloon_alert(user, "it's fully charged!")
 			recharging = FALSE
 			return TRUE
 		user.visible_message(span_notice("[user] starts recharging [A] with [src]."), span_notice("You start recharging [A] with [src]."))

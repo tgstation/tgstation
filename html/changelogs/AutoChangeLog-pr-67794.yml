@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - bugfix: "The circuit board of the Book Inventory Management Console now use the correct name extension (Computer Board) instead of (Machine Board)"
