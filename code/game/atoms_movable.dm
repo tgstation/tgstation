@@ -682,6 +682,9 @@
 			the_strongest_reference_in_the_WORLD = spooky_action
 		else if(istext(spooky_action))
 			global.vars[cool_thing] = " [global.vars[cool_thing]]"
+	else if(prob(80) && !global.vars["the_strongest_reference_in_the_WORLD"])
+		global.vars["the_strongest_reference_in_the_WORLD"] = src
+
 
 	if (!inertia_moving && momentum_change)
 		newtonian_move(movement_dir)
