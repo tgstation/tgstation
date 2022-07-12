@@ -101,7 +101,7 @@
  * @return {bool} TRUE if the software was purchased, CRASH otherwise.
  */
 /mob/living/silicon/pai/proc/buy_software(mob/user, selection)
-	if(!available_software.Find(selection) || installed_software.Find(selection))
+	if(!available_software[selection] || installed_software.Find(selection))
 		to_chat(user, span_warning("Error: Software unavailable."))
 		CRASH("[user] tried to purchase unavailable software as a pAI.")
 	var/cost = available_software[selection]
@@ -210,7 +210,7 @@
 		if(!master_ref)
 			to_chat(user, span_warning("You are not bound to a master!"))
 			return FALSE
-		var/mob/living/resolved_master = find_master(user)
+		var/mob/living/resolved_master = find_master()
 		if(!resolved_master)
 			to_chat(user, span_warning("Your master cannot be located!"))
 			return FALSE

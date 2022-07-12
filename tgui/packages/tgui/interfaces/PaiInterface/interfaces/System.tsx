@@ -91,7 +91,9 @@ const SystemInfo = (props, context) => {
         <LabeledList.Item label="Master">
           {master_name || 'None.'}
         </LabeledList.Item>
-        <LabeledList.Item label="DNA">{master_dna || 'None.'}</LabeledList.Item>
+        <LabeledList.Item color={master_dna && 'red'} label="DNA">
+          {master_dna || 'None.'}
+        </LabeledList.Item>
       </LabeledList>
     </Section>
   );

@@ -22,10 +22,13 @@
 	radio = /obj/item/radio/headset/silicon/pai
 	can_buckle_to = FALSE
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
-	light_flags = MOVABLE_LIGHT
+	light_system = MOVABLE_LIGHT
+	light_range = 3
+	light_flags = LIGHT_ATTACHED
+	light_color = "#00ff88"
 
-	/// The strength of the internal flashlight
-	var/brightness_power = 5
+	/// Status of the integrated light
+	var/integrated_light = FALSE
 	/// Whether the pAI can enter holoform or not
 	var/can_holo = TRUE
 	/// Whether this pAI can recieve radio messages
@@ -171,7 +174,7 @@
 		card.pai = null
 		card.emotion_icon = initial(card.emotion_icon)
 		card.update_appearance()
-	GLOB.pai_list -= src
+	GLOB.pai_list.Remove(src)
 	return ..()
 
 /mob/living/silicon/pai/emag_act(mob/user)
@@ -184,9 +187,9 @@
 /mob/living/silicon/pai/get_status_tab_items()
 	. += ..()
 	if(!stat)
-		. += text("Emitter Integrity: [emitter_health * (100 / emitter_max_health)]")
+		. += text("Emitter Integrity: [emitter_health * (100 / emitter_max_health)].")
 	else
-		. += text("Systems nonfunctional")
+		. += text("Systems nonfunctional.")
 
 /mob/living/silicon/pai/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == hacking_cable)
@@ -224,6 +227,7 @@
 	. = ..()
 	emitter_semi_cd = TRUE
 	addtimer(CALLBACK(src, .proc/emitter_cool), 600)
+	toggle_integrated_light(FALSE)
 	if(!holoform)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
@@ -256,11 +260,11 @@
 
 /**
  * Resolves the weakref of the pai's master.
- * If the master is qdel'd, clears the pai's master.
+ * If the master has been deleted, calls reset_software().
  *
  * @return {mob/living} the master mob, or FALSE if the master is gone.
  */
-/mob/living/silicon/pai/proc/find_master(mob/user)
+/mob/living/silicon/pai/proc/find_master()
 	if(!master_ref)
 		return FALSE
 	var/mob/living/resolved_master = master_ref?.resolve()
@@ -269,7 +273,12 @@
 		return FALSE
 	return resolved_master
 
-/** Fixes weird speech issues with the pai. */
+/**
+ * Fixes weird speech issues with the pai.
+ *
+ * @param {mob} user - The user performing the action.
+ * @return {boolean} - TRUE if successful.
+ */
 /mob/living/silicon/pai/proc/fix_speech(mob/user)
 	var/mob/living/silicon/pai/pai = src
 	to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
@@ -282,8 +291,8 @@
  * Gets the current holder of the pAI if its
  * being carried in card or holoform.
  *
- * @return {living/carbon || FALSE} The holder of the pAI,
- * or FALSE if the pAI is not being carried.
+ * @return {living/carbon || FALSE} - The holder of the pAI,
+ * 	or FALSE if the pAI is not being carried.
  */
 /mob/living/silicon/pai/proc/get_holder()
 	var/mob/living/carbon/holder
@@ -297,7 +306,10 @@
 
 /**
  * Handles the pai card or the pai itself being hit with an emag.
- * This replaces any current laws, masters, and
+ * This replaces any current laws, masters, and DNA.
+ *
+ * @param {living/carbon} attacker - The user performing the action.
+ * @return {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/handle_emag(mob/living/carbon/attacker)
 	var/mob/living/silicon/pai/pai = src
@@ -315,9 +327,9 @@
 	return TRUE
 
 /**
- * Creates a new pAI
+ * Creates a new pAI.
  *
- * @param delete_old {boolean} If TRUE, deletes the old pAI if one exists.
+ * @param {boolean} delete_old - If TRUE, deletes the old pAI.
  */
 /mob/proc/make_pai(delete_old)
 	var/obj/item/pai_card/card = new(src)
@@ -331,7 +343,8 @@
 /**
  * Resets the pAI and any emagged status.
  *
- * @param {boolean} TRUE if successful.
+ * @param {mob} user - The user performing the action.
+ * @return {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/reset_software(mob/user)
 	var/mob/living/silicon/pai/pai = src
@@ -346,21 +359,31 @@
 	to_chat(pai, span_notice("Your software has been reset."))
 	return TRUE
 
-/** Imprints your DNA onto the downloaded pAI */
+/**
+ * Imprints your DNA onto the downloaded pAI
+ *
+ * @param {mob} user - The user performing the imprint.
+ * @return {boolean} - TRUE if successful, FALSE if not.
+ */
 /mob/living/silicon/pai/proc/set_dna(mob/user)
 	var/mob/living/silicon/pai/pai = src
 	if(!iscarbon(user))
 		to_chat(user, span_warning("You don't have any DNA, or your DNA is incompatible with this device!"))
-	else
-		var/mob/living/carbon/master = user
-		master_ref = WEAKREF(master)
-		master_name = master.real_name
-		master_dna = master.dna.unique_enzymes
-		to_chat(pai, span_notice("You have been bound to a new master: [user.real_name]!"))
-		emitter_semi_cd = FALSE
+		return FALSE
+	var/mob/living/carbon/master = user
+	master_ref = WEAKREF(master)
+	master_name = master.real_name
+	master_dna = master.dna.unique_enzymes
+	to_chat(pai, span_notice("You have been bound to a new master: [user.real_name]!"))
+	emitter_semi_cd = FALSE
 	return TRUE
 
-/** Opens a tgui alert that allows someone to enter laws. */
+/**
+ * Opens a tgui alert that allows someone to enter laws.
+ *
+ * @param {mob} user - The user performing the law change.
+ * @return {boolean} - TRUE if successful, FALSE if not.
+ */
 /mob/living/silicon/pai/proc/set_laws(mob/user)
 	var/mob/living/silicon/pai/pai = src
 	if(!master_ref)
@@ -374,7 +397,12 @@
 	to_chat(pai, span_notice(new_laws))
 	return TRUE
 
-/** Toggles the ability of the pai to enter holoform */
+/**
+ * Toggles the ability of the pai to enter holoform
+ *
+ * @param {mob} user - The user performing the toggle.
+ * @return {boolean} - TRUE if successful, FALSE if not.
+ */
 /mob/living/silicon/pai/proc/toggle_holo(mob/user)
 	var/mob/living/silicon/pai/pai = src
 	to_chat(user, span_notice("You [can_holo ? "disabled" : "enabled"] your pAI's holomatrix."))
@@ -385,8 +413,8 @@
 /**
  * Toggles the radio settings on and off.
  *
- * Parameters:
- * option: string - required - The option to toggle.
+ * @param {mob} user - The user performing the radio change.
+ * @param {string} option - The option being toggled.
  */
 /mob/living/silicon/pai/proc/toggle_radio(mob/user, option)
 	var/mob/living/silicon/pai/pai = src
@@ -405,11 +433,14 @@
 
 /**
  * Wipes the current pAI on the card.
+ *
+ * @param {mob} user - The user performing the action.
+ * @return {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/wipe_pai(mob/user)
 	var/mob/living/silicon/pai/pai = src
 	if(tgui_alert(user, "Are you certain you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No")) != "Yes")
-		return TRUE
+		return FALSE
 	to_chat(pai, span_warning("You feel yourself slipping away from reality."))
 	to_chat(pai, span_danger("Byte by byte you lose your sense of self."))
 	to_chat(pai, span_userdanger("Your mental faculties leave you."))

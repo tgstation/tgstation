@@ -18,6 +18,14 @@ Not entering information may lead to you not being selected. Press submit to
 alert pAI cards of your candidacy.`;
 
 export const PaiSubmit = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const { comments, description, name } = data;
+  const [input, setInput] = useLocalState<Data>(context, 'input', {
+    comments,
+    description,
+    name,
+  });
+
   return (
     <Window width={400} height={460} title="pAI Candidacy Menu">
       <Window.Content>
@@ -26,10 +34,10 @@ export const PaiSubmit = (props, context) => {
             <DetailsDisplay />
           </Stack.Item>
           <Stack.Item>
-            <InputDisplay />
+            <InputDisplay input={input} setInput={setInput} />
           </Stack.Item>
           <Stack.Item>
-            <ButtonsDisplay />
+            <ButtonsDisplay input={input} />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -53,13 +61,8 @@ const DetailsDisplay = (props, context) => {
 
 /** Input boxes for submission details */
 const InputDisplay = (props, context) => {
-  const { data } = useBackend<Data>(context);
-  const { comments, description, name } = data;
-  const [input, setInput] = useLocalState<Data>(context, 'input', {
-    comments,
-    description,
-    name,
-  });
+  const { input, setInput } = props;
+  const { name, description, comments } = input;
 
   return (
     <Section fill title="Input">
@@ -101,13 +104,9 @@ const InputDisplay = (props, context) => {
 
 /** Gives the user a submit button */
 const ButtonsDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
-  const { comments, description, name } = data;
-  const [input, setInput] = useLocalState<Data>(context, 'input', {
-    comments,
-    description,
-    name,
-  });
+  const { act } = useBackend<Data>(context);
+  const { input } = props;
+  const { name, description, comments } = input;
 
   return (
     <Section fill>

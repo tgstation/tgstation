@@ -17,10 +17,20 @@
 	if(loc != card)
 		visible_message(span_notice("[src] [resting? "lays down for a moment..." : "perks up from the ground."]"))
 
+/mob/living/silicon/pai/wabbajack()
+	if(length(possible_chassis) < 2)
+		return FALSE
+	var/holochassis = pick(possible_chassis - chassis)
+	set_holochassis(holochassis)
+	to_chat(src, span_boldnotice("Your holochassis form morphs into that of a [holochassis]."))
+	return TRUE
+
 /**
  * Checks if we are allowed to interact with a radial menu
  *
- * @param {atom} anchor The atom that is anchoring the menu
+ * @param {atom} anchor - The atom that is anchoring the menu.
+ * @return {boolean} - TRUE if we are allowed to interact with the menu,
+ * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/check_menu(atom/anchor)
 	if(incapacitated())
@@ -35,7 +45,7 @@
 /**
  * Sets a new holochassis skin based on a pAI's choice.
  *
- * @return {boolean} True if the skin was successfully set.
+ * @return {boolean} - True if the skin was successfully set.
  * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/choose_chassis()
@@ -60,8 +70,8 @@
 /**
  * Returns the pAI to card mode.
  *
- * @param {boolean} force If TRUE, the pAI will be forced to card mode.
- * @return {boolean} TRUE if the pAI was forced to card mode.
+ * @param {boolean} force - If TRUE, the pAI will be forced to card mode.
+ * @return {boolean} - TRUE if the pAI was forced to card mode.
  * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
@@ -88,7 +98,7 @@
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	set_density(FALSE)
-	set_light(0)
+	toggle_integrated_light(FALSE)
 	holoform = FALSE
 	set_resting(resting)
 	return TRUE
@@ -96,8 +106,8 @@
 /**
  * Engage holochassis form.
  *
- * @param {boolean} force Force the form to engage.
- * @return {boolean} TRUE if the form was successfully engaged.
+ * @param {boolean} force - Force the form to engage.
+ * @return {boolean} - TRUE if the form was successfully engaged.
  * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/fold_out(force = FALSE)
@@ -132,7 +142,7 @@
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
-	set_light(0)
+	toggle_integrated_light(FALSE)
 	icon_state = "[chassis]"
 	held_state = "[chassis]"
 	visible_message(span_boldnotice("[src] folds out its holochassis emitter and forms a holoshell around itself!"))
@@ -142,8 +152,8 @@
 /**
  * Sets the holochassis skin and updates the icons
  *
- * @params {string} choice - The animal skin that will be used for the pAI holoform
- * @return {boolean} TRUE if the skin was successfully set. FALSE otherwise.
+ * @params {string} choice - The skin that will be used for the pAI holoform
+ * @return {boolean} - TRUE if the skin was successfully set. FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/set_holochassis(choice)
 	if(!choice)
@@ -154,21 +164,17 @@
 	desc = "A pAI mobile hard-light holographics emitter. This one appears in the form of a [chassis]."
 	return TRUE
 
-/** Toggles the onboard light */
-/mob/living/silicon/pai/proc/toggle_integrated_light()
-	set_light(light_range ? 0 : brightness_power)
-	to_chat(src, span_notice("You [light_range ? "disable" : "enable"] your integrated light."))
-	return TRUE
-
 /**
- * Polymorphs the pai into a random holoform
+ * Toggles the onboard light
  *
- * @return {boolean} TRUE if the pai was successfully morphed. FALSE otherwise.
+ * @param {boolean} mode - If specified, explicitly sets mode.
+ * 	If not specified, toggles the mode.
+ * @return {boolean} - TRUE if the light was toggled.
  */
-/mob/living/silicon/pai/wabbajack()
-	if(length(possible_chassis) < 2)
-		return FALSE
-	var/holochassis = pick(possible_chassis - chassis)
-	set_holochassis(holochassis)
-	to_chat(src, span_boldnotice("Your holochassis form morphs into that of a [holochassis]."))
+/mob/living/silicon/pai/proc/toggle_integrated_light(mode)
+	if(isnull(mode))
+		mode = !integrated_light
+		to_chat(src, span_notice("You [mode ? "enable" : "disable"] your integrated light."))
+	integrated_light = mode
+	set_light_on(mode)
 	return TRUE

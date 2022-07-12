@@ -103,9 +103,7 @@
 	var/list/data = list()
 	if(!pai)
 		data["candidates"] = pool_candidates() || list()
-		data["pai"] = list()
 	else
-		data["candidates"] = list()
 		data["pai"] = list(
 			can_holo = pai.can_holo,
 			dna = pai.master_dna,

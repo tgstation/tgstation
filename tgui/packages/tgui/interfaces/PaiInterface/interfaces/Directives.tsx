@@ -1,5 +1,5 @@
 import { useBackend } from 'tgui/backend';
-import { Box, LabeledList, Section, Stack } from 'tgui/components';
+import { BlockQuote, Box, LabeledList, Section, Stack } from 'tgui/components';
 import { DIRECTIVE_COMPREHENSION, DIRECTIVE_ORDER } from '../constants';
 import { Data } from '../types';
 
@@ -30,7 +30,7 @@ export const DirectiveDisplay = (props, context) => {
                 Serve your master.
               </LabeledList.Item>
               <LabeledList.Item label="Supplemental">
-                <Box wrap>{directives}</Box>
+                <BlockQuote>{directives}</BlockQuote>
               </LabeledList.Item>
             </LabeledList>
           )}
