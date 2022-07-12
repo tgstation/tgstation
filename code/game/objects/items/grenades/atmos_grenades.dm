@@ -25,7 +25,7 @@
 
 /obj/item/grenade/gas_crystal/cleansing_crystal
 	name = "Cleansing crystal"
-	desc = "A crystal made from various gasses condensed down into a solid, when detonated it will scrubs out all the gasses aside from oxygen and nitrogen and refill 50 tiles in its vicinity"
+	desc = "A crystal made from various gasses condensed down into a solid, when detonated it will scrubs out all the gasses aside from oxygen and nitrogen and refill within a 5 by 10 area"
 	icon_state = "healium_crystal"
 	///Range of the grenade that will cool down and affect mobs
 	var/fix_range = 50
@@ -43,13 +43,11 @@
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
 	var/list/connected_turfs = detect_room(origin = get_turf(src), max_size = fix_range)
-	var/turf/open/turf_loc = get_turf(src)
-	var/static/list/base_mix = list(/datum/gas/oxygen,/datum/gas/nitrogen,)
-	var/numberof_turf = length(connected_turfs)
-	var/static/list/safe_mixture = typecacheof(base_mix)
+	var/number_of_turf = length(connected_turfs)
+	var/static/list/safe_mixture = typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen))
 	var/datum/gas_mixture/removed_gas = new
 	//Amount of mols that can be scrubbed 
-	var/moles_stored= 10000
+	var/moles_stored = 1000
 
 	for(var/turf/open/turf_fix in connected_turfs)//interate through the various turf in the area
 		if(turf_fix.blocks_air)//if the turf can't contain air continue
@@ -65,6 +63,9 @@
 			contaminants.gases[gas_id][MOLES] = 0 //remove the gasses from the environment
 			removed_gas.heat_merge(contaminants)
 		contaminants.garbage_collect()//remove the empty gasses from the list
+		turf_fix.air_update_turf(FALSE, FALSE)
+		turf_fix.update_visuals()
+	var/turf/open/turf_loc = get_turf(src)
 	var/obj/item/grenade/gas_crystal/residue_crystal/crystal = new(turf_loc)
 	crystal.filtered_gas = removed_gas
 	turf_loc.atmos_spawn_air("n2=[n2_gas_amount * (numberof_turf / 5)];o2=[o2_gas_amount * (numberof_turf / 5)];TEMP=273")
