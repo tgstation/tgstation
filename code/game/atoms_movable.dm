@@ -713,7 +713,7 @@
 
 	pellets--
 	if(prob(10))
-		created_pellets += new/datum/stack_pellet{is_secretly_a_stack_shotgun_that_shoots_other_stack_pellets_when_fired = TRUE}
+		created_pellets += new/datum/stack_pellet{is_secretly_another_stack_shotgun_that_shoots_other_stack_pellets_when_fired = TRUE}
 	else
 		created_pellets += new/datum/stack_pellet
 	if(pellets)
