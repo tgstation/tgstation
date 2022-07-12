@@ -29,6 +29,9 @@
 	// The destination turf of the rod - just a bit over the max range we calculated, for safety
 	var/turf/distant_turf = get_ranged_target_turf(get_turf(cast_on), cast_on.dir, (rod_max_distance + 2))
 
+	if(istype(cast_on.loc, /obj/effect/immovablerod))  
+		return
+
 	new /obj/effect/immovablerod/wizard(
 		get_turf(cast_on),
 		distant_turf,
