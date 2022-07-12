@@ -387,7 +387,7 @@ Doesn't work on other aliens/AI.*/
 	var/dir_angle = dir2angle(owner.dir)
 
 	playsound(owner, 'sound/creatures/alien_york.ogg', 100)
-	melting_pot.eject_stomach(slice_off_turfs(owner, border_diamond_range_turfs(owner, 9), dir_angle - angle_delta, dir_angle + angle_delta), 3, mob_speed, spit_speed)
+	melting_pot.eject_stomach(slice_off_turfs(owner, border_diamond_range_turfs(owner, 9), dir_angle - angle_delta, dir_angle + angle_delta), 4, mob_speed, spit_speed)
 
 /// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one
 /mob/living/carbon/proc/getPlasma()

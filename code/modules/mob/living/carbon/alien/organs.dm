@@ -313,14 +313,14 @@
 			span_userdanger("[user] escapes from your [stomach_text]. Hell, that hurts."))
 
 	playsound(get_turf(play_from), 'sound/creatures/alien_explode.ogg', 100, extrarange = 4)
-	eject_stomach(border_diamond_range_turfs(play_from, 6), 5, 1.5, 1)
+	eject_stomach(border_diamond_range_turfs(play_from, 6), 5, 1.5, 1, 8)
 	shake_camera(user, 1 SECONDS, 3)
 	if(owner)
 		shake_camera(owner, 2, 5)
 		owner.gib()
 	qdel(src)
 
-/obj/item/organ/internal/stomach/alien/proc/eject_stomach(list/turf/targets, spit_range, content_speed, particle_delay)
+/obj/item/organ/internal/stomach/alien/proc/eject_stomach(list/turf/targets, spit_range, content_speed, particle_delay, particle_count=4)
 	var/atom/spit_as = owner || src
 	/// Throw out the stuff in our stomach
 	for(var/atom/movable/thing as anything in stomach_contents)
@@ -328,7 +328,7 @@
 		if(length(targets))
 			thing.throw_at(pick(targets), spit_range, content_speed, thrower = spit_as, spin = TRUE)
 
-	for(var/a in 1 to 5)
+	for(var/a in 1 to particle_count)
 		if(!length(targets))
 			break
 		var/obj/effect/particle_effect/water/extinguisher/stomach_acid/acid = new (get_turf(spit_as))
@@ -337,4 +337,4 @@
 		acid.reagents = acid_reagents
 		acid_reagents.my_atom = acid
 		acid_reagents.add_reagent(/datum/reagent/toxin/acid, 30)
-		acid.move_at(my_target, particle_delay, 3)
+		acid.move_at(my_target, particle_delay, spit_range)
