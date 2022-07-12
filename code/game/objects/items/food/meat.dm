@@ -172,6 +172,16 @@
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
+/obj/item/food/tempeh
+	name = "tempeh"
+	desc = "Fungus fermented soybean cake."
+	icon_state = "tempeh"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("tempeh" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
+
 /obj/item/food/tofu
 	name = "tofu"
 	desc = "We all love tofu."
