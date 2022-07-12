@@ -466,7 +466,7 @@
 	new_profile.physique = target.physique
 
 	// Grab the target's quirks.
-	for(var/datum/quirk/target_quirk in target.quirks)
+	for(var/datum/quirk/target_quirk as anything in target.quirks)
 		LAZYADD(new_profile.quirks, new target_quirk.type)
 
 	// Clothes, of course
