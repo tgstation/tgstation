@@ -86,7 +86,6 @@
 
 		var/datum/action/changeling/humanform/hf = new()
 		changeling_datum.purchased_powers += hf
-		hf.Grant(origin.current)
 		changeling_datum.regain_powers()
 		
 	owner.gib()
