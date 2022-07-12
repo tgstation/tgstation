@@ -192,7 +192,7 @@
 	name = "tempeh slice"
 	desc = "A slice of tempeh"
 	icon = 'icons/obj/food/food.dmi'
-	icon_state "tempehslice"
+	icon_state = "tempehslice"
 	food_reagents = 
 	tastes = list("tempeh" = 1)
 	foodtypes = VEGETABLES
