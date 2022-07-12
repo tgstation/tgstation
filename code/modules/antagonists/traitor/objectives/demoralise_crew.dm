@@ -31,15 +31,25 @@
 	return TRUE
 
 /// Handles receiving a mood event, increasing your progress towards success.
-/datum/traitor_objective/demoralise/proc/on_mood_event(atom/source, mob/owner)
+/**
+ * Handles an event which increases your progress towards success.
+ *
+ * Arguments
+ * * source - Source atom of the signal.
+ * * victim - Whoever it was you just triggered some kind of effect on.
+ */
+/datum/traitor_objective/demoralise/proc/on_mood_event(atom/source, mob/victim)
 	SIGNAL_HANDLER
+	if (victim == handler.owner)
+		return
+
 	demoralised_crew_events++
 	if (demoralised_crew_events >= demoralised_crew_required)
-		on_success(owner)
+		on_success()
 		succeed_objective()
 
-/datum/traitor_objective/demoralise/proc/on_success(mob/owner)
-	to_chat(owner, span_nicegreen("The crew look despondent. Mission accomplished."))
+/datum/traitor_objective/demoralise/proc/on_success()
+	to_chat(handler.owner, span_nicegreen("The crew look despondent. Mission accomplished."))
 
 #undef MAX_CREW_RATIO
 #undef MIN_CREW_DEMORALISED

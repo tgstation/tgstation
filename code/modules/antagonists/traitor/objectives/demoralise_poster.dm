@@ -35,8 +35,8 @@
 				var/obj/item/poster/traitor/added_poster = new /obj/item/poster/traitor(posterbox)
 				var/obj/structure/sign/poster/traitor/poster_when_placed = added_poster.poster_structure
 				posters += poster_when_placed
-				poster_when_placed.owner = user
 				RegisterSignal(poster_when_placed, COMSIG_DEMORALISING_EVENT, .proc/on_mood_event)
+				RegisterSignal(poster_when_placed, COMSIG_POSTER_TRAP_SUCCEED, .proc/on_mood_event)
 				RegisterSignal(poster_when_placed, COMSIG_PARENT_QDELETING, .proc/on_poster_destroy)
 
 			user.put_in_hands(posterbox)
@@ -44,9 +44,8 @@
 
 #undef POSTERS_PROVIDED
 
-/datum/traitor_objective/demoralise/poster/on_success(mob/owner)
+/datum/traitor_objective/demoralise/poster/on_success()
 	. = ..()
-
 	for (var/poster in posters)
 		UnregisterSignal(poster, COMSIG_DEMORALISING_EVENT)
 		UnregisterSignal(poster, COMSIG_PARENT_QDELETING)
@@ -62,10 +61,8 @@
 	posters.Remove(poster)
 	UnregisterSignal(poster, COMSIG_DEMORALISING_EVENT)
 	if (length(posters) <= 0)
-		to_chat(poster.owner, span_warning("The trackers on your propaganda posters have stopped responding."))
+		to_chat(handler.owner, span_warning("The trackers on your propaganda posters have stopped responding."))
 		fail_objective()
-
-/**** Poster Item ****/
 
 /obj/item/poster/traitor
 	name = "random traitor poster"
@@ -78,15 +75,13 @@
 	poster_item_icon_state = "rolled_traitor"
 	// This stops people hiding their sneaky posters behind signs
 	layer = CORGI_ASS_PIN_LAYER
-	/// The traitor who posted this poster
-	var/mob/owner
-	/// Component which makes people sad if they're nearby
+	/// Proximity sensor to make people sad if they're nearby
 	var/datum/proximity_monitor/advanced/demoraliser/demoraliser
 
 /obj/structure/sign/poster/traitor/on_placed_poster(mob/user)
 	. = ..()
 	var/datum/demoralise_moods/poster/mood_category = new()
-	demoraliser = new(src, 7, owner, mood_category)
+	demoraliser = new(src, 7, TRUE, mood_category)
 
 /obj/structure/sign/poster/traitor/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -96,18 +91,6 @@
 /obj/structure/sign/poster/traitor/Destroy()
 	QDEL_NULL(demoraliser)
 	. = ..()
-
-/**
- * Called when a shard embeds in someone's hand from pulling down a poster.
- * This also gives objective progress because it makes the target sad.
- *
- * Arguments
- * * victim - Whoever just got some glass stuck in their hand
- */
-/obj/structure/sign/poster/traitor/trap_succeeded(mob/victim)
-	// You don't get points for ripping up your own posters and hurting yourself.
-	if (victim != owner)
-		SEND_SIGNAL(src, COMSIG_DEMORALISING_EVENT, owner)
 
 /obj/structure/sign/poster/traitor/random
 	name = "random seditious poster"

@@ -74,12 +74,10 @@
 	UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(rune, COMSIG_DEMORALISING_EVENT)
 
-/datum/traitor_objective/demoralise/graffiti/on_success(mob/owner)
+/datum/traitor_objective/demoralise/graffiti/on_success()
 	. = ..()
 	UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(rune, COMSIG_DEMORALISING_EVENT)
-
-/**** Syndicate spraycan ****/
 
 // Extending the existing spraycan item was more trouble than it was worth, I don't want or need this to be able to draw arbitrary shapes.
 /obj/item/traitor_spraycan
@@ -144,8 +142,6 @@
 
 	draw_rune(user, target_turf, target_turfs)
 
-#define RUNE_DRAW_STEP 3 SECONDS
-
 /**
  * Draw your stage one rune on the ground and store it.
  *
@@ -156,9 +152,8 @@
 /obj/item/traitor_spraycan/proc/draw_rune(mob/living/user, turf/target_turf)
 	user.balloon_alert(user, "drawing outline...")
 	drawing_rune = TRUE
-	if ((try_draw_step("drawing outline...", user, target_turf)))
+	if (try_draw_step("drawing outline...", user, target_turf))
 		rune = new /obj/effect/decal/cleanable/traitor_rune(target_turf)
-		rune.owner = user
 		RegisterSignal(rune, COMSIG_PARENT_QDELETING, .proc/on_rune_destroyed)
 		try_complete_rune(user, rune)
 
@@ -181,12 +176,12 @@
  */
 /obj/item/traitor_spraycan/proc/try_draw_step(start_output, mob/living/user, atom/target)
 	user.balloon_alert(user, "[start_output]")
-	if (!do_after(user, RUNE_DRAW_STEP, target))
+	if (!do_after(user, 3 SECONDS, target))
 		user.balloon_alert(user, "interrupted!")
 		drawing_rune = FALSE
 		return FALSE
 
-	spray_sound()
+	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	drawing_rune = FALSE
 	return TRUE
 
@@ -194,9 +189,6 @@
 #define RUNE_STAGE_COLOURED 1
 #define RUNE_STAGE_COMPLETE 2
 #define RUNE_STAGE_REMOVABLE 3
-
-/obj/item/traitor_spraycan/proc/spray_sound()
-	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
 /**
  * Try to upgrade a floor rune to its next stage.
@@ -208,30 +200,30 @@
 /obj/item/traitor_spraycan/proc/try_complete_rune(mob/living/user, obj/effect/decal/cleanable/traitor_rune/rune)
 	switch(rune.drawn_stage)
 		if (RUNE_STAGE_OUTLINE)
-			if (try_draw_step("... finalising design...", user, rune))
-				if (rune)
-					rune.set_stage(RUNE_STAGE_COLOURED)
-					try_complete_rune(user, rune)
-				else
-					user.balloon_alert(user, "graffiti was destroyed!")
+			if (!try_draw_step("... finalising design...", user, rune))
+				return
+			if (rune)
+				rune.set_stage(RUNE_STAGE_COLOURED)
+				try_complete_rune(user, rune)
+			else
+				user.balloon_alert(user, "graffiti was destroyed!")
 
 		if (RUNE_STAGE_COLOURED)
-			if (try_draw_step("... applying final coating...", user, rune))
-				if (rune)
-					user.balloon_alert(user, "finished!")
-					rune.set_stage(RUNE_STAGE_COMPLETE)
-					expended = TRUE
-					desc = "A suspicious looking spraycan, it's all out of paint."
-					// No turning back.
-					UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
-					SEND_SIGNAL(src, COMSIG_TRAITOR_GRAFFITI_DRAWN, rune)
-				else
-					user.balloon_alert(user, "graffiti was destroyed!")
+			if (!try_draw_step("... applying final coating...", user, rune))
+				return
+			if (rune)
+				user.balloon_alert(user, "finished!")
+				rune.set_stage(RUNE_STAGE_COMPLETE)
+				expended = TRUE
+				desc = "A suspicious looking spraycan, it's all out of paint."
+				// No turning back.
+				UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
+				SEND_SIGNAL(src, COMSIG_TRAITOR_GRAFFITI_DRAWN, rune)
+			else
+				user.balloon_alert(user, "graffiti was destroyed!")
 
 		if (RUNE_STAGE_COMPLETE, RUNE_STAGE_REMOVABLE)
 			user.balloon_alert(user, "there's nothing more to do here.")
-
-#undef RUNE_DRAW_STEP
 
 /// Copying the functionality from normal spraycans, but doesn't need all the optional checks
 /obj/item/traitor_spraycan/suicide_act(mob/user)
@@ -243,12 +235,10 @@
 	var/mob/living/carbon/human/H = user
 	user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
 	user.say("WITNESS ME!!", forced="spraycan suicide")
-	spray_sound()
+	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	H.update_lips("spray_face", paint_color)
 
 	return (OXYLOSS)
-
-/**** Syndicate logo 'rune' graffiti ****/
 
 /obj/effect/decal/cleanable/traitor_rune
 	name = "syndicate graffiti"
@@ -265,11 +255,9 @@
 	var/slip_time = 6 SECONDS
 	var/slip_flags = NO_SLIP_WHEN_WALKING
 
-	/// The traitor who drew this
-	var/mob/owner
 	/// The stage of drawing we have reached
 	var/drawn_stage = RUNE_STAGE_OUTLINE
-	/// Component which makes people sad if they're nearby
+	/// Proximity sensor to make people sad if they're nearby
 	var/datum/proximity_monitor/advanced/demoraliser/demoraliser
 	/// Whether we protect the rune from being cleaned up
 	var/clean_proof = FALSE
@@ -279,7 +267,7 @@
 /obj/effect/decal/cleanable/traitor_rune/traitor/Destroy()
 	deltimer(protected_timer)
 	QDEL_NULL(demoraliser)
-	. = ..()
+	return ..()
 
 /obj/effect/decal/cleanable/traitor_rune/HasProximity(atom/movable/proximity_check_mob as mob|obj)
 	. = ..()
@@ -294,8 +282,7 @@
  */
 /obj/effect/decal/cleanable/traitor_rune/proc/slip(mob/living/victim)
 	if(!(victim.movement_type & FLYING) && victim.slip(slip_time, src, slip_flags))
-		if (victim != owner)
-			SEND_SIGNAL(src, COMSIG_DEMORALISING_EVENT, owner)
+		SEND_SIGNAL(src, COMSIG_DEMORALISING_EVENT, victim)
 
 /**
  * Sets the "drawing stage" of the rune.
@@ -320,7 +307,7 @@
 			icon_state = "traitor_rune_sheen"
 			desc = "A large depiction of the Syndicate logo. It looks slippery."
 			var/datum/demoralise_moods/graffiti/mood_category = new()
-			demoraliser = new(src, 7, owner, mood_category)
+			demoraliser = new(src, 7, TRUE, mood_category)
 			clean_proof = TRUE
 			protected_timer = addtimer(CALLBACK(src, .proc/set_stage, RUNE_STAGE_REMOVABLE), 5 MINUTES)
 

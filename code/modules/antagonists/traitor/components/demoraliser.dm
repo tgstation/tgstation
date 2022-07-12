@@ -6,13 +6,10 @@
  * - Sends a signal if a mood is successfully applied.
  */
 /datum/proximity_monitor/advanced/demoraliser
-	var/mob/owner
 	var/datum/demoralise_moods/moods
 
-/datum/proximity_monitor/advanced/demoraliser/New(atom/_host, range, mob/owner, datum/demoralise_moods/moods)
-	..(_host, range, TRUE)
-
-	src.owner = owner
+/datum/proximity_monitor/advanced/demoraliser/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/demoralise_moods/moods)
+	. = ..()
 	src.moods = moods
 	RegisterSignal(host, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
@@ -23,10 +20,8 @@
 /datum/proximity_monitor/advanced/demoraliser/field_turf_crossed(atom/movable/crossed, turf/location)
 	if (!ishuman(crossed))
 		return
-
 	if (!can_see(crossed, host, current_range))
 		return
-
 	on_seen(crossed)
 
 /*
@@ -36,7 +31,6 @@
  */
 /datum/proximity_monitor/advanced/demoraliser/proc/on_examine(datum/source, mob/examiner)
 	SIGNAL_HANDLER
-
 	if (ishuman(examiner))
 		on_seen(examiner)
 
@@ -67,9 +61,7 @@
 		to_chat(viewer, span_notice("[moods.crew_notification]"))
 		SEND_SIGNAL(viewer, COMSIG_ADD_MOOD_EVENT, moods.mood_category, moods.crew_mood)
 
-	// You don't get points for looking at your own stuff.
-	if (viewer != owner)
-		SEND_SIGNAL(host, moods.mood_signal, owner)
+	SEND_SIGNAL(host, COMSIG_DEMORALISING_EVENT, viewer)
 
 /**
  * Returns true if the viewer already has been given feelings, false if they haven't.
@@ -86,35 +78,26 @@
 
 	return FALSE
 
-/**** Moods ****/
-
 /// Mood application categories for this objective
 /// Used to reduce duplicate code for applying moods to players based on their state
-/datum/demoralise_moods/
+/datum/demoralise_moods
 	/// Mood category to apply to moods
 	var/mood_category
-	/// Event signal to send when mood is applied
-	var/mood_signal = COMSIG_DEMORALISING_EVENT
-
 	/// Text to display to an antagonist upon receiving this mood
 	var/antag_notification
 	/// Mood datum to apply to an antagonist
-	var/datum/mood_event/antag_mood
+	var/mood_event/antag_mood
 	/// Text to display to a crew member upon receiving this mood
 	var/crew_notification
 	/// Mood datum to apply to a crew member
-	var/datum/mood_event/crew_mood
+	var/mood_event/crew_mood
 	/// Text to display to a head of staff upon receiving this mood
 	var/authority_notification
 	/// Mood datum to apply to a head of staff or security
-	var/datum/mood_event/authority_mood
-
-/**** Poster Moods ****/
-
-#define EVIL_POSTER_MOODLET_CATEGORY "evil poster"
+	var/mood_event/authority_mood
 
 /datum/demoralise_moods/poster
-	mood_category = EVIL_POSTER_MOODLET_CATEGORY
+	mood_category = "evil poster"
 	antag_notification = "Nice poster."
 	antag_mood = /datum/mood_event/traitor_poster_antag
 	crew_notification = "Wait, is what that poster says true?"
@@ -140,14 +123,8 @@
 	timeout = 2 MINUTES
 	hidden = TRUE
 
-#undef EVIL_POSTER_MOODLET_CATEGORY
-
-/**** graffiti Moods ****/
-
-#define EVIL_GRAFFITI_MOODLET_CATEGORY	"evil graffiti"
-
 /datum/demoralise_moods/graffiti
-	mood_category = EVIL_GRAFFITI_MOODLET_CATEGORY
+	mood_category = "evil graffiti"
 	antag_notification = "A three headed snake. Nice."
 	antag_mood = /datum/mood_event/traitor_graffiti_antag
 	crew_notification = "Is that... a three headed snake?"
@@ -172,5 +149,3 @@
 	mood_change = -3
 	timeout = 2 MINUTES
 	hidden = TRUE
-
-#undef EVIL_GRAFFITI_MOODLET_CATEGORY

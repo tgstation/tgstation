@@ -33,14 +33,17 @@
 		RegisterSignal(poster_structure, COMSIG_PARENT_QDELETING, .proc/react_to_deletion)
 
 /obj/item/poster/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/shard))
-		if (poster_structure.trap)
-			to_chat(user, span_warning("This poster is already booby-trapped!"))
-		else
-			if(!user.transferItemToLoc(I, poster_structure))
-				return
-			poster_structure.trap = I
-			to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
+	if(!istype(I, /obj/item/shard))
+		return ..()
+
+	if (poster_structure.trap)
+		to_chat(user, span_warning("This poster is already booby-trapped!"))
+	else
+		if(!user.transferItemToLoc(I, poster_structure))
+			return
+
+		poster_structure.trap = I
+		to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
 
 /obj/item/poster/Destroy()
 	poster_structure = null
@@ -145,14 +148,11 @@
 		visible_message(span_notice("A [trap.name] falls from behind the poster.") )
 		trap.forceMove(user.drop_location())
 	else
-		trap_succeeded()
-
-/obj/structure/sign/poster/proc/trap_succeeded(mob/user)
+		SEND_SIGNAL(src, COMSIG_POSTER_TRAP_SUCCEED, user)
 
 /obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
 	if (!istype(user))
 		return FALSE
-
 	return (!user.gloves && !HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
 
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
