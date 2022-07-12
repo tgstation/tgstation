@@ -154,7 +154,7 @@
 	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	pAI.aicamera.toggle_camera_mode(usr)
+	pAI.camera.toggle_camera_mode(usr)
 
 /atom/movable/screen/pai/image_view
 	name = "View Images"
@@ -165,7 +165,7 @@
 	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	pAI.aicamera.viewpictures(usr)
+	pAI.camera.viewpictures(usr)
 
 /atom/movable/screen/pai/radio
 	name = "radio"

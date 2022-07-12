@@ -21,8 +21,6 @@
 	data["languages"] = languages_granted
 	data["master_name"] = master_name
 	data["master_dna"] = master_dna
-	data["medical_records"] = medical_records
-	data["security_records"] = security_records
 	return data
 
 /mob/living/silicon/pai/ui_act(action, list/params, datum/tgui/ui)
@@ -70,7 +68,7 @@
 			internal_gps.attack_self(src)
 			return TRUE
 		if("Music Synthesizer")
-			instrument.interact(src) // Open Instrument
+			instrument.interact(src)
 			return TRUE
 		if("Medical HUD")
 			toggle_hud(usr, "medical")
@@ -79,6 +77,7 @@
 			newscaster.ui_interact(src)
 			return TRUE
 		if("Photography Module")
+			// Look to pai_camera.dm for implementation
 			use_camera(usr, params["mode"])
 			return TRUE
 		if("Remote Signaler")
@@ -127,8 +126,8 @@
 		if("Newscaster")
 			newscaster = new(src)
 		if("Photography Module")
-			aicamera = new(src)
-			aicamera.flash_enabled = TRUE
+			camera = new(src)
+			camera.flash_enabled = TRUE
 		if("Remote Signaler")
 			signaler = new(src)
 	return TRUE
@@ -157,6 +156,9 @@
  * @return {boolean} TRUE if a sample was taken, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/check_dna(mob/user)
+	if(emagged) // Their master DNA signature is scrambled anyway
+		to_chat(user, span_syndradio("You are not at liberty to do this! All agents are clandestine."))
+		return FALSE
 	var/mob/living/carbon/holder = get_holder()
 	if(!holder)
 		to_chat(user, span_warning("You must be in someone's hands to do this!"))
@@ -245,23 +247,4 @@
 		hud.show_to(user)
 	else
 		hud.hide_from(user)
-	return TRUE
-
-/**
- * All inclusive camera proc. Zooms, snaps, prints.
- *
- * @param {mob} user The pAI requesting the camera.
- * @param {string} mode The camera option to toggle.
- * @return {boolean} TRUE if the camera worked.
- */
-/mob/living/silicon/pai/proc/use_camera(mob/user, mode)
-	if(!aicamera)
-		CRASH("[user] tried to use the camera, but it was null.")
-	switch(mode)
-		if("camera")
-			aicamera.toggle_camera_mode(user)
-		if("printer")
-			aicamera.paiprint(user)
-		if("zoom")
-			aicamera.adjust_zoom(user)
 	return TRUE

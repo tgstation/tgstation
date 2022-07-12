@@ -25,10 +25,9 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	light_flags = LIGHT_ATTACHED
-	light_color = "#00ff88"
+	light_color = COLOR_PAI_GREEN
+	light_on = FALSE
 
-	/// Status of the integrated light
-	var/integrated_light = FALSE
 	/// Whether the pAI can enter holoform or not
 	var/can_holo = TRUE
 	/// Whether this pAI can recieve radio messages
@@ -61,8 +60,6 @@
 	var/holoform = FALSE
 	/// Installed software on the pAI
 	var/list/installed_software = list()
-	/// Modular pc interface button
-	var/atom/movable/screen/ai/modpc/interfaceButton
 	/// Toggles whether universal translator has been activated. Cannot be reversed
 	var/languages_granted = FALSE
 	/// Reference of the bound master
@@ -73,13 +70,8 @@
 	var/master_dna
 	/// Toggles whether the Medical  HUD is active or not
 	var/medHUD = FALSE
-	/// Cached list for medical records to send as static data
-	var/list/medical_records = list()
 	/// Used as currency to purchase different abilities
 	var/ram = 100
-	/// Cached list for security records to send as static data
-	var/list/security_records = list()
-
 	/// Toggles whether the Security HUD is active or not
 	var/secHUD = FALSE
 	// Onboard Items
@@ -93,6 +85,10 @@
 	var/obj/item/instrument/piano_synth/instrument
 	/// Newscaster
 	var/obj/machinery/newscaster/pai/newscaster
+	/// PDA
+	var/atom/movable/screen/ai/modpc/interfaceButton
+	/// Photography module
+	var/obj/item/camera/siliconcam/pai_camera/camera
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
 	// Static lists
@@ -148,20 +144,21 @@
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
 
-/mob/living/silicon/pai/can_interact_with(atom/A)
-	if(A == signaler) // Bypass for signaler
+/mob/living/silicon/pai/can_interact_with(atom/target)
+	if(target == signaler) // Bypass for signaler
 		return TRUE
-	if(A == modularInterface)
+	if(target == modularInterface)
 		return TRUE
 	return ..()
 
 // See software.dm for Topic()
-/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+/mob/living/silicon/pai/canUseTopic(atom/movable/movable, be_close = FALSE, no_dexterity = FALSE, no_tk = FALSE, need_hands = FALSE, floor_okay = FALSE)
 	// Resting is just an aesthetic feature for them.
-	return ..(M, be_close, no_dexterity, no_tk, need_hands, TRUE)
+	return ..(movable, be_close, no_dexterity, no_tk, need_hands, TRUE)
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(atmos_analyzer)
+	QDEL_NULL(camera)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(host_scan)
 	QDEL_NULL(instrument)
@@ -198,16 +195,18 @@
 			card.update_appearance()
 	if(deleting_atom == atmos_analyzer)
 		atmos_analyzer = null
+	if(deleting_atom == camera)
+		camera = null
+	if(deleting_atom == host_scan)
+		host_scan = null
+	if(deleting_atom == internal_gps)
+		internal_gps = null
 	if(deleting_atom == instrument)
 		instrument = null
 	if(deleting_atom == newscaster)
 		newscaster = null
 	if(deleting_atom == signaler)
 		signaler = null
-	if(deleting_atom == host_scan)
-		host_scan = null
-	if(deleting_atom == internal_gps)
-		internal_gps = null
 	return ..()
 
 /mob/living/silicon/pai/Initialize(mapload)
@@ -227,7 +226,6 @@
 	. = ..()
 	emitter_semi_cd = TRUE
 	addtimer(CALLBACK(src, .proc/emitter_cool), 600)
-	toggle_integrated_light(FALSE)
 	if(!holoform)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)

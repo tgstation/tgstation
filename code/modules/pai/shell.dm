@@ -98,7 +98,7 @@
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	set_density(FALSE)
-	toggle_integrated_light(FALSE)
+	set_light_on(FALSE)
 	holoform = FALSE
 	set_resting(resting)
 	return TRUE
@@ -142,7 +142,7 @@
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = src
-	toggle_integrated_light(FALSE)
+	set_light_on(FALSE)
 	icon_state = "[chassis]"
 	held_state = "[chassis]"
 	visible_message(span_boldnotice("[src] folds out its holochassis emitter and forms a holoshell around itself!"))
@@ -167,14 +167,9 @@
 /**
  * Toggles the onboard light
  *
- * @param {boolean} mode - If specified, explicitly sets mode.
- * 	If not specified, toggles the mode.
  * @return {boolean} - TRUE if the light was toggled.
  */
-/mob/living/silicon/pai/proc/toggle_integrated_light(mode)
-	if(isnull(mode))
-		mode = !integrated_light
-		to_chat(src, span_notice("You [mode ? "enable" : "disable"] your integrated light."))
-	integrated_light = mode
-	set_light_on(mode)
+/mob/living/silicon/pai/proc/toggle_integrated_light()
+	set_light_on(!light_on)
+	to_chat(src, span_notice("You [light_on ? "enable" : "disable"] your integrated light."))
 	return TRUE
