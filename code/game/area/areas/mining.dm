@@ -77,12 +77,18 @@
 	name = "Mining Station Production Maintenance"
 
 /area/mine/maintenance/living
+	name = "Mining Station Living Quarters Maintenance"
+
+/area/mine/maintenance/living/north
 	name = "Mining Station Living Quarters North Maintenance"
 
 /area/mine/maintenance/living/south
 	name = "Mining Station Living Quarters South Maintenance"
 
 /area/mine/maintenance/public
+	name = "Mining Station Public Maintenance"
+
+/area/mine/maintenance/public/north
 	name = "Mining Station Public North Maintenance"
 
 /area/mine/maintenance/public/south
