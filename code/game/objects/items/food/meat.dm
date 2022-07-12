@@ -173,14 +173,30 @@
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
 /obj/item/food/tempeh
-	name = "tempeh"
-	desc = "Fungus fermented soybean cake."
+	name = "raw tempeh block"
+	desc = "Fungus fermented soybean cake, warm to the touch"
+	icon = 'icons/obj/food/food.dmi'
 	icon_state = "tempeh"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("tempeh" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+
+// sliceable into 4xtempehslices
+/obj/item/food/tempeh/raw/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE)
+
+
+/obj/item/food/tempehslice
+	name = "tempeh slice"
+	desc = "A slice of tempeh"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state "tempehslice"
+	food_reagents = 
+	tastes = list("tempeh" = 1)
+	foodtypes = VEGETABLES
+	
 
 /obj/item/food/tofu
 	name = "tofu"
