@@ -21,16 +21,22 @@
 	var/contents_tag = "errors"
 	/// What type of thing to fill this storage with.
 	var/spawn_type = null
+	/// How many of the things to fill this storage with.
+	var/spawn_count = 0
 	/// Whether the container is open or not
 	var/is_open = FALSE
 	/// What this container folds up into when it's empty.
 	var/obj/fold_result = /obj/item/stack/sheet/cardboard
 
+/obj/item/storage/fancy/Initialize()
+	. = ..()
+
+	atom_storage.max_slots = spawn_count
+
 /obj/item/storage/fancy/PopulateContents()
 	if(!spawn_type)
 		return
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	for(var/i = 1 to STR.max_items)
+	for(var/i = 1 to spawn_count)
 		new spawn_type(src)
 
 /obj/item/storage/fancy/update_icon_state()
@@ -80,16 +86,15 @@
 	icon_state = "donutbox_open" //composite image used for mapping
 	base_icon_state = "donutbox"
 	spawn_type = /obj/item/food/donut/plain
+	spawn_count = 6
 	is_open = TRUE
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
 
-/obj/item/storage/fancy/donut_box/ComponentInitialize()
+/obj/item/storage/fancy/donut_box/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/food/donut))
+	atom_storage.set_holdable(list(/obj/item/food/donut))
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
 	. = ..()
@@ -131,13 +136,12 @@
 	name = "egg box"
 	desc = "A carton for containing eggs."
 	spawn_type = /obj/item/food/egg
+	spawn_count = 12
 	contents_tag = "egg"
 
-/obj/item/storage/fancy/egg_box/ComponentInitialize()
+/obj/item/storage/fancy/egg_box/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 12
-	STR.set_holdable(list(/obj/item/food/egg))
+	atom_storage.set_holdable(list(/obj/item/food/egg))
 
 /*
  * Candle Box
@@ -154,13 +158,9 @@
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/candle
+	spawn_count = 5
 	is_open = TRUE
 	contents_tag = "candle"
-
-/obj/item/storage/fancy/candle_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
 
 /obj/item/storage/fancy/candle_box/attack_self(mob/user)
 	if(!contents.len)
@@ -184,6 +184,7 @@
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
+	spawn_count = 6
 	custom_price = PAYCHECK_CREW
 	age_restricted = TRUE
 	contents_tag = "cigarette"
@@ -208,15 +209,13 @@
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"
 	desc = "An old cigarette packet with the back torn off, worth less than nothing now."
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 0
+	atom_storage.max_slots = 0
 	return
 
-/obj/item/storage/fancy/cigarettes/ComponentInitialize()
+/obj/item/storage/fancy/cigarettes/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	atom_storage.quickdraw = TRUE
+	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
@@ -224,18 +223,6 @@
 	. += span_notice("Alt-click to extract contents.")
 	if(spawn_coupon)
 		. += span_notice("There's a coupon on the back of the pack! You can tear it off once it's empty.")
-
-/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
-		return
-	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
-	if(W && contents.len > 0)
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
-		user.put_in_hands(W)
-		contents -= W
-		to_chat(user, span_notice("You take \a [W] out of the pack."))
-	else
-		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
 
 /obj/item/storage/fancy/cigarettes/update_icon_state()
 	. = ..()
@@ -266,24 +253,6 @@
 
 		. += "[use_icon_state]_[cig_position]"
 		cig_position++
-
-/obj/item/storage/fancy/cigarettes/attack(mob/living/carbon/target, mob/living/carbon/user)
-	if(!istype(target))
-		return
-
-	var/obj/item/clothing/mask/cigarette/cig = locate() in contents
-	if(!cig)
-		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
-		return
-	if(target != user || !contents.len || user.wear_mask)
-		return ..()
-
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, cig, target)
-	target.equip_to_slot_if_possible(cig, ITEM_SLOT_MASK)
-	contents -= cig
-	to_chat(user, span_notice("You take \a [cig] out of the pack."))
-	return
-
 
 /obj/item/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"
@@ -388,11 +357,10 @@
 	spawn_type = /obj/item/rollingpaper
 	custom_price = PAYCHECK_LOWER
 
-/obj/item/storage/fancy/rollingpapers/ComponentInitialize()
+/obj/item/storage/fancy/rollingpapers/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 10
-	STR.set_holdable(list(/obj/item/rollingpaper))
+	atom_storage.max_slots = 10
+	atom_storage.set_holdable(list(/obj/item/rollingpaper))
 
 ///Overrides to do nothing because fancy boxes are fucking insane.
 /obj/item/storage/fancy/rollingpapers/update_icon_state()
@@ -417,14 +385,13 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	contents_tag = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE
 
-/obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
+/obj/item/storage/fancy/cigarettes/cigars/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
-	STR.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
+	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	. = ..()
@@ -469,12 +436,11 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	contents_tag = "chocolate"
 	spawn_type = /obj/item/food/tinychocolate
+	spawn_count = 8
 
-/obj/item/storage/fancy/heart_box/ComponentInitialize()
+/obj/item/storage/fancy/heart_box/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 8
-	STR.set_holdable(list(/obj/item/food/tinychocolate))
+	atom_storage.set_holdable(list(/obj/item/food/tinychocolate))
 
 
 /obj/item/storage/fancy/nugget_box
@@ -485,9 +451,8 @@
 	base_icon_state = "nuggetbox"
 	contents_tag = "nugget"
 	spawn_type = /obj/item/food/nugget
+	spawn_count = 6
 
-/obj/item/storage/fancy/nugget_box/ComponentInitialize()
+/obj/item/storage/fancy/nugget_box/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/food/nugget))
+	atom_storage.set_holdable(list(/obj/item/food/nugget))
