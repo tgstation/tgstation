@@ -1,0 +1,9 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "EMP'd airlocks will now have the proper shocked door overlay."
+  - bugfix: "Fixed airlocks sometimes becoming permanently electrified after being unelectrified (honk)"
+  - bugfix: "Fixed airlocks sometimes showing as electrified even though they are not."
+  - bugfix: "Fixed a scenario where varedited airlocks could sometimes become inadvertently permanently electrified."
+  - bugfix: "Fixed EMP'd airlocks which were manually electrified after becoming unelectrified."
+  - bugfix: "EMPing an airlock which is already temporarily electrified will now reset its timer if it has less than 30 seconds remaining."
