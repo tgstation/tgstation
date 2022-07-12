@@ -1,3 +1,4 @@
+import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from 'tgui/backend';
 import { BlockQuote, Box, LabeledList, Section, Stack } from 'tgui/components';
 import { DIRECTIVE_COMPREHENSION, DIRECTIVE_ORDER } from '../constants';
@@ -30,7 +31,7 @@ export const DirectiveDisplay = (props, context) => {
                 Serve your master.
               </LabeledList.Item>
               <LabeledList.Item label="Supplemental">
-                <BlockQuote>{directives}</BlockQuote>
+                <BlockQuote>{decodeHtmlEntities(directives)}</BlockQuote>
               </LabeledList.Item>
             </LabeledList>
           )}

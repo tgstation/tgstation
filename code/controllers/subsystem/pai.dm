@@ -48,11 +48,10 @@ SUBSYSTEM_DEF(pai)
 		return FALSE
 	switch(action)
 		if("submit")
-			candidate.comments = params["comments"]
-			candidate.description = params["description"]
-			candidate.name = params["name"]
+			candidate.comments = trim(params["comments"], MAX_BROADCAST_LEN)
+			candidate.description = trim(params["description"], MAX_BROADCAST_LEN)
+			candidate.name = trim(params["name"], MAX_NAME_LEN)
 			candidate.ckey = usr.ckey
-			sanitize_details(candidate)
 			candidate.ready = TRUE
 			ui.close()
 			submit_alert()
@@ -61,12 +60,10 @@ SUBSYSTEM_DEF(pai)
 			candidate.comments = params["comments"]
 			candidate.description = params["description"]
 			candidate.name = params["name"]
-			sanitize_details(candidate)
 			candidate.savefile_save(usr)
 			return TRUE
 		if("load")
 			candidate.savefile_load(usr)
-			sanitize_details(candidate)
 			ui.send_full_update()
 			return TRUE
 	return FALSE
@@ -84,21 +81,6 @@ SUBSYSTEM_DEF(pai)
 		candidate = new /datum/pai_candidate(user)
 		candidates[user.ckey] = candidate
 	ui_interact(user)
-
-/**
- * Sanitizes PAI details.
- *
- * @params {datum/pai_candidate} candidate The candidate whose
- * 	details are getting trimmed.
- */
-/datum/controller/subsystem/pai/proc/sanitize_details(datum/pai_candidate/candidate)
-	if(candidate.comments)
-		candidate.comments = copytext_char(candidate.comments, 1, MAX_MESSAGE_LEN)
-	if(candidate.description)
-		candidate.description = copytext_char(candidate.description, 1, MAX_MESSAGE_LEN)
-	if(candidate.name)
-		candidate.name = copytext_char(candidate.name, 1, MAX_NAME_LEN)
-	return TRUE
 
 /** Allows the candidate to spam pai_cards again. */
 /datum/controller/subsystem/pai/proc/submit_again()

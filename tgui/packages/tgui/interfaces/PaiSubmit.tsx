@@ -1,6 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { logger } from '../logging';
 
 type Data = {
   comments: string;
@@ -9,7 +10,7 @@ type Data = {
 };
 
 const PAI_DESCRIPTION = `Personal AIs are advanced models capable of nuanced
-interaction. They are designed to assisting their masters in their work. They
+interaction. They are designed to assist their masters in their work. They
 do not possess hands, thus they cannot interact with equipment or items. While
 in hologram form, you cannot be directly killed, but you may be incapacitated.`;
 
@@ -25,6 +26,7 @@ export const PaiSubmit = (props, context) => {
     description,
     name,
   });
+  logger.log(input);
 
   return (
     <Window width={400} height={460} title="pAI Candidacy Menu">
@@ -73,6 +75,7 @@ const InputDisplay = (props, context) => {
           </Box>
           <Input
             fluid
+            maxLength={41}
             value={name}
             onChange={(e, value) => setInput({ ...input, name: value })}
           />
@@ -83,6 +86,7 @@ const InputDisplay = (props, context) => {
           </Box>
           <Input
             fluid
+            maxLength={100}
             value={description}
             onChange={(e, value) => setInput({ ...input, description: value })}
           />
@@ -93,6 +97,7 @@ const InputDisplay = (props, context) => {
           </Box>
           <Input
             fluid
+            maxLength={100}
             value={comments}
             onChange={(e, value) => setInput({ ...input, comments: value })}
           />
@@ -106,14 +111,14 @@ const InputDisplay = (props, context) => {
 const ButtonsDisplay = (props, context) => {
   const { act } = useBackend<Data>(context);
   const { input } = props;
-  const { name, description, comments } = input;
+  const { comments, description, name } = input;
 
   return (
     <Section fill>
       <Stack>
         <Stack.Item>
           <Button
-            onClick={() => act('save', { candidate: input })}
+            onClick={() => act('save', { comments, description, name })}
             tooltip="Saves your candidate data locally.">
             SAVE
           </Button>

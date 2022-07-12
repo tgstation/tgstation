@@ -1,3 +1,4 @@
+import { decodeHtmlEntities } from 'common/string';
 import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
 import { BlockQuote, Box, Button, LabeledList, NoticeBox, Section, Stack } from '../components';
@@ -32,7 +33,9 @@ export const PaiCard = (props, context) => {
 
   return (
     <Window width={400} height={400} title="pAI Options Menu">
-      <Window.Content>{!pai ? <PaiDownload /> : <PaiOptions />}</Window.Content>
+      <Window.Content scrollable>
+        {!pai ? <PaiDownload /> : <PaiOptions />}
+      </Window.Content>
     </Window>
   );
 };
@@ -43,32 +46,33 @@ const PaiDownload = (props, context) => {
   const { candidates = [] } = data;
 
   return (
-    <Section
-      buttons={
-        <Button
-          icon="bell"
-          onClick={() => act('request')}
-          tooltip="Request candidates.">
-          Request
-        </Button>
-      }
-      fill
-      scrollable
-      title="pAI Candidates">
-      {!candidates?.length ? (
-        <NoticeBox>None found!</NoticeBox>
-      ) : (
-        <Stack fill vertical>
-          {candidates.map((candidate, index) => {
-            return (
-              <Stack.Item key={index}>
-                <CandidateDisplay candidate={candidate} index={index + 1} />
-              </Stack.Item>
-            );
-          })}
-        </Stack>
-      )}
-    </Section>
+    <Stack fill vertical>
+      <Stack.Item>
+        <NoticeBox info>
+          <Stack fill>
+            <Stack.Item grow fontSize="16px">
+              pAI Candidates
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color="good"
+                icon="bell"
+                onClick={() => act('request')}
+                tooltip="Request more candidates from beyond.">
+                Request
+              </Button>
+            </Stack.Item>
+          </Stack>
+        </NoticeBox>
+      </Stack.Item>
+      {candidates.map((candidate, index) => {
+        return (
+          <Stack.Item key={index}>
+            <CandidateDisplay candidate={candidate} index={index + 1} />
+          </Stack.Item>
+        );
+      })}
+    </Stack>
   );
 };
 
@@ -86,39 +90,37 @@ const CandidateDisplay = (
   } = props;
 
   return (
-    <Box
-      style={{
-        'background': '#111111',
-        'border': '1px solid #4972a1',
-        'border-radius': '5px',
-        'padding': '1rem',
-      }}>
-      <Section
-        buttons={
-          <Button
-            icon="download"
-            onClick={() => act('download', { ckey })}
-            tooltip="Accepts this pAI candidate.">
-            Download
-          </Button>
-        }
-        fill
-        height={12}
-        scrollable
-        title={'Candidate ' + index}>
-        <Box color="green" fontSize="16px" mb={1}>
-          Name: {name || '(Randomized Name)'}
-        </Box>
-        <LabeledList>
-          <LabeledList.Item label="IC Description">
-            {description || 'None'}
-          </LabeledList.Item>
-          <LabeledList.Item label="OOC Comments">
-            {comments || 'None'}
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
-    </Box>
+    <Section
+      buttons={
+        <Button icon="save" onClick={() => act('download', { ckey })}>
+          Download
+        </Button>
+      }
+      overflow="hidden"
+      title={`Candidate ${index}`}>
+      <Stack vertical>
+        <Stack.Item>
+          <Box color="label" mb={1}>
+            Name:
+          </Box>
+          <Box color="green">{name}</Box>
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item>
+          <Box color="label" mb={1}>
+            IC Description:
+          </Box>
+          {description}
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item>
+          <Box color="label" mb={1}>
+            OOC Notes:
+          </Box>
+          {comments}
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
@@ -145,7 +147,7 @@ const PaiOptions = (props, context) => {
           </LabeledList.Item>
         )}
         <LabeledList.Item label="Laws">
-          <BlockQuote>{laws}</BlockQuote>
+          <BlockQuote>{decodeHtmlEntities(laws)}</BlockQuote>
         </LabeledList.Item>
         <LabeledList.Item label="Holoform">
           <Button
