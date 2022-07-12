@@ -42143,16 +42143,16 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "kAu" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=hall7";
-	location = "hall6"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=hall7";
+	location = "hall6"
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "kAv" = (
@@ -68575,14 +68575,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
-"rmn" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=hall8";
-	location = "hall7"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/exit/departure_lounge)
 "rmw" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -71492,15 +71484,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"rWO" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=hall9";
-	location = "hall8"
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/aft)
 "rXd" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -72376,14 +72359,14 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "sio" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=hall10";
-	location = "hall9"
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=hall8";
+	location = "hall7"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
@@ -90611,6 +90594,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"wNF" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=hall9";
+	location = "hall8"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "wNN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/left/directional/north{
@@ -91849,6 +91840,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
+"xdF" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=hall10";
+	location = "hall9"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/aft)
 "xdP" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -135928,7 +135930,7 @@ fNx
 crR
 hkO
 qYl
-rWO
+whK
 hiV
 ldW
 ssV
@@ -140296,7 +140298,7 @@ whK
 whK
 wwy
 whK
-qAW
+xdF
 sio
 whK
 cJX
@@ -140340,8 +140342,8 @@ cGq
 cMY
 kWI
 jkH
-rmn
 jkH
+wNF
 jkH
 jkH
 jCN
