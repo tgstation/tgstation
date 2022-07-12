@@ -36,7 +36,7 @@
 	return TRUE
 
 /datum/action/cooldown/spell/tap/is_valid_target(atom/cast_on)
-	return isliving(cast_on) && !HAS_TRAIT(owner, TRAIT_NO_SOUL)
+	return isliving(cast_on) && !HAS_TRAIT(cast_on, TRAIT_NO_SOUL)
 
 /datum/action/cooldown/spell/tap/cast(mob/living/cast_on)
 	. = ..()

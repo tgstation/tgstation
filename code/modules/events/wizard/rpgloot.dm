@@ -86,10 +86,10 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 
 		if(istype(fantasy_item, /obj/item/storage))
 			var/obj/item/storage/storage_item = fantasy_item
-			var/datum/component/storage/storage_component = storage_item.GetComponent(/datum/component/storage)
-			if(prob(upgrade_scroll_chance) && storage_item.contents.len < storage_component.max_items && !storage_item.invisibility)
+			var/datum/storage/storage_component = storage_item.atom_storage
+			if(prob(upgrade_scroll_chance) && storage_item.contents.len < storage_component.max_slots && !storage_item.invisibility)
 				var/obj/item/upgradescroll/scroll = new(get_turf(storage_item))
-				SEND_SIGNAL(storage_item, COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
+				storage_item.atom_storage?.attempt_insert(storage_item, scroll, null, TRUE)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
 				if(isturf(scroll.loc))
 					qdel(scroll)
