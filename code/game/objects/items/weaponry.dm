@@ -766,7 +766,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(target.dir & turn(target_to_user, 270))
 		angle = 90
 	if(target.dir & (target_to_user|turn(target_to_user, 180)))
-		angle = 180
+		angle = 360
 	var/turf/return_to_sender = get_ranged_target_turf_direct(user, throw_datum.starting_turf, round(target.throw_range * 1.5, 1), offset = angle + (rand(-1, 1) * 10))
 	throw_datum.finalize(hit = FALSE)
 	target.mouse_opacity = MOUSE_OPACITY_TRANSPARENT //dont mess with our ball
