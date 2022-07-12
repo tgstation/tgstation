@@ -160,7 +160,7 @@
 			if(params["is_disk"])
 				return
 
-			return open_program(usr, hard_drive.find_file_by_name(params["name"]))
+			open_program(usr, hard_drive.find_file_by_name(params["name"]))
 
 		if("PC_toggle_light")
 			return toggle_flashlight()
