@@ -51318,10 +51318,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
-/obj/item/computer_hardware/hard_drive/portable/scipaper_program{
-	pixel_x = 4;
-	pixel_y = -2
-	},
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "rLJ" = (

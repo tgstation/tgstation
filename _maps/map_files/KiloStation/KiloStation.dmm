@@ -64763,10 +64763,7 @@
 	pixel_y = -3
 	},
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable/scipaper_program{
-	pixel_x = 2;
-	pixel_y = 1
-	},
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
 "syu" = (

@@ -67965,10 +67965,7 @@
 /obj/item/computer_hardware/hard_drive/portable{
 	pixel_x = -2
 	},
-/obj/item/computer_hardware/hard_drive/portable/scipaper_program{
-	pixel_x = -5;
-	pixel_y = 6
-	},
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
 "uWW" = (
