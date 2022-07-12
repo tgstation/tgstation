@@ -7,6 +7,7 @@
  * Egg Box
  * Candle Box
  * Cigarette Box
+ * Rolling Paper Pack
  * Cigar Case
  * Heart Shaped Box w/ Chocolates
  */
@@ -355,6 +356,7 @@
 	base_icon_state = "cig_paper_pack"
 	contents_tag = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
+	spawn_count = 10
 	custom_price = PAYCHECK_LOWER
 
 /obj/item/storage/fancy/rollingpapers/Initialize()
