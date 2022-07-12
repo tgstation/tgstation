@@ -361,7 +361,6 @@
 
 /obj/item/storage/fancy/rollingpapers/Initialize()
 	. = ..()
-	atom_storage.max_slots = 10
 	atom_storage.set_holdable(list(/obj/item/rollingpaper))
 
 ///Overrides to do nothing because fancy boxes are fucking insane.
