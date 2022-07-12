@@ -86,15 +86,15 @@
 	/// Text to display to an antagonist upon receiving this mood
 	var/antag_notification
 	/// Mood datum to apply to an antagonist
-	var/mood_event/antag_mood
+	var/datum/mood_event/antag_mood
 	/// Text to display to a crew member upon receiving this mood
 	var/crew_notification
 	/// Mood datum to apply to a crew member
-	var/mood_event/crew_mood
+	var/datum/mood_event/crew_mood
 	/// Text to display to a head of staff upon receiving this mood
 	var/authority_notification
 	/// Mood datum to apply to a head of staff or security
-	var/mood_event/authority_mood
+	var/datum/mood_event/authority_mood
 
 /datum/demoralise_moods/poster
 	mood_category = "evil poster"
