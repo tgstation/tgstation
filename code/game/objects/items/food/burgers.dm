@@ -429,7 +429,7 @@
 /obj/item/food/burger/crazy/process(delta_time) // DIT EES HORRIBLE
 	if(DT_PROB(2.5, delta_time))
 		var/datum/effect_system/fluid_spread/smoke/bad/green/smoke = new
-		smoke.set_up(0, location = src)
+		smoke.set_up(0, holder = src, location = src)
 		smoke.start()
 
 // empty burger you can customize

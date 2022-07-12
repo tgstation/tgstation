@@ -111,9 +111,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "ao" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/machinery/light/small/built/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
@@ -1788,9 +1786,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
 "dT" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/machinery/light/small/built/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,

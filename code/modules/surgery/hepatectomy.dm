@@ -14,7 +14,7 @@
 	organ_to_manipulate = ORGAN_SLOT_LIVER
 
 /datum/surgery/hepatectomy/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/liver/target_liver = target.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/internal/liver/target_liver = target.getorganslot(ORGAN_SLOT_LIVER)
 	if(target_liver?.damage > 50 && !(target_liver.organ_flags & ORGAN_FAILING))
 		return TRUE
 

@@ -3,7 +3,7 @@
 	desc = "Used to view and edit personnel's security records."
 	icon_screen = "security"
 	icon_keyboard = "security_key"
-	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS, ACCESS_HOP)
+	req_one_access = list(ACCESS_SECURITY, ACCESS_HOP)
 	circuit = /obj/item/circuitboard/computer/secure_data
 	light_color = COLOR_SOFT_RED
 	var/rank = null
@@ -502,7 +502,7 @@ What a mess.*/
 				else if(I && check_access(I))
 					active1 = null
 					active2 = null
-					authenticated = I.registered_name
+					authenticated = (I.registered_name ? I.registered_name : "Unknown")
 					rank = I.assignment
 					screen = 1
 				else

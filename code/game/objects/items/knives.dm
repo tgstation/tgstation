@@ -10,6 +10,7 @@
 	desc = "The original knife, it is said that all other knives are only copies of this one."
 	flags_1 = CONDUCT_1
 	force = 10
+	demolition_mod = 0.75
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'

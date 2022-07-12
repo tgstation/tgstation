@@ -33,7 +33,7 @@
 	if(!client_mob)
 		return
 
-	UnregisterSignal(client_mob, list(COMSIG_MOB_LOGOUT, COMSIG_MOVABLE_Z_CHANGED))
+	UnregisterSignal(client_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOVABLE_Z_CHANGED))
 
 /datum/component/zparallax/proc/refresh_client()
 	tracked = client_mob.client

@@ -263,9 +263,6 @@
 	outfit = /datum/outfit/syndicatespace/syndicrew
 	spawner_job_path = /datum/job/syndicate_cybersun
 
-/datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
-	H.faction |= ROLE_SYNDICATE
-
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/special(mob/living/new_spawn)
 	. = ..()
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
@@ -283,27 +280,30 @@
 	outfit = /datum/outfit/syndicatespace/syndicaptain
 	spawner_job_path = /datum/job/syndicate_cybersun_captain
 
-/datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
-	H.faction |= ROLE_SYNDICATE
-
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/captain/Destroy()
 	new /obj/structure/fluff/empty_sleeper/syndicate/captain(get_turf(src))
 	return ..()
 
-/datum/outfit/syndicatespace/syndicrew
-	name = "Syndicate Ship Crew Member"
+/datum/outfit/syndicatespace
+	name = "Syndicate Ship Base"
 	uniform = /obj/item/clothing/under/syndicate/combat
-	glasses = /obj/item/clothing/glasses/night
-	mask = /obj/item/clothing/mask/gas/syndicate
 	ears = /obj/item/radio/headset/syndicate/alt
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack
-	l_pocket = /obj/item/gun/ballistic/automatic/pistol
-	r_pocket = /obj/item/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
 	implants = list(/obj/item/implant/weapons_auth)
+
+/datum/outfit/syndicatespace/post_equip(mob/living/carbon/human/syndie_scum)
+	syndie_scum.faction |= ROLE_SYNDICATE
+
+/datum/outfit/syndicatespace/syndicrew
+	name = "Syndicate Ship Crew Member"
+	glasses = /obj/item/clothing/glasses/night
+	mask = /obj/item/clothing/mask/gas/syndicate
+	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/knife/combat/survival
 
 /datum/outfit/syndicatespace/syndicaptain
 	name = "Syndicate Ship Captain"
@@ -311,11 +311,6 @@
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	head = /obj/item/clothing/head/hos/beret/syndicate
 	ears = /obj/item/radio/headset/syndicate/alt/leader
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	back = /obj/item/storage/backpack
 	r_pocket = /obj/item/knife/combat/survival
-	belt = /obj/item/storage/belt/military/assault
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
-	implants = list(/obj/item/implant/weapons_auth)
 	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password, /obj/item/gun/ballistic/automatic/pistol/aps)

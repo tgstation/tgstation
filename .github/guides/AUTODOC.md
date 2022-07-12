@@ -3,7 +3,7 @@
 
 [BYOND]: https://secure.byond.com/
 
-[DMDOC]: https://github.com/SpaceManiac/SpacemanDMM/tree/master/src/dmdoc
+[DMDOC]: https://github.com/SpaceManiac/SpacemanDMM/tree/master/crates/dmdoc
 
 [DMDOC] is a documentation generator for DreamMaker, the scripting language
 of the [BYOND] game engine. It produces simple static HTML files based on

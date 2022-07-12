@@ -35,11 +35,11 @@
 /datum/custom_order/moth_clothing/New(datum/venue/our_venue)
 	var/mob/living/carbon/buffet = our_venue.restaurant_portal?.turned_on_portal?.resolve()
 	if (!istype(buffet)) // Always asks for the clothes that you have on, but this is a fallback.
-		wanted_clothing_type = pick_weight(
+		wanted_clothing_type = pick_weight(list(
 			/obj/item/clothing/head/chefhat = 3,
 			/obj/item/clothing/shoes/sneakers/black = 3,
 			/obj/item/clothing/gloves/color/black = 1,
-		)
+		))
 		return
 
 	var/list/orderable = list()

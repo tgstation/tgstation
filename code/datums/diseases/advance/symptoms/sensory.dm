@@ -43,7 +43,7 @@
 
 
 	if(A.stage >= 3)
-		M.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/dizziness)
+		M.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
 		M.adjust_drowsyness(-2)
 		M.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/speech/slurring/drunk)
 		M.adjust_timed_status_effect(-2 SECONDS, /datum/status_effect/confusion)
@@ -90,12 +90,12 @@
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
 		if(4, 5)
-			var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+			var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
 			if(ears)
 				ears.adjustEarDamage(-4, -4)
 			M.adjust_blindness(-2)
 			M.adjust_blurriness(-2)
-			var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+			var/obj/item/organ/internal/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 			if(!eyes) // only dealing with eye stuff from here on out
 				return
 			eyes.applyOrganDamage(-2)

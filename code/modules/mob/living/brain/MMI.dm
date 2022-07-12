@@ -10,7 +10,7 @@
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
-	var/obj/item/organ/brain/brain = null //The actual brain
+	var/obj/item/organ/internal/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
@@ -36,7 +36,7 @@
 	if(!brain)
 		icon_state = "[base_icon_state]_off"
 		return ..()
-	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/brain/alien) ? "_alien" : null]"
+	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/internal/brain/alien) ? "_alien" : null]"
 	return ..()
 
 /obj/item/mmi/update_overlays()
@@ -52,8 +52,8 @@
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
-		var/obj/item/organ/brain/newbrain = O
+	if(istype(O, /obj/item/organ/internal/brain)) //Time to stick a brain in it --NEO
+		var/obj/item/organ/internal/brain/newbrain = O
 		if(brain)
 			to_chat(user, span_warning("There's already a brain in the MMI!"))
 			return
@@ -88,7 +88,7 @@
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		update_appearance()
-		if(istype(brain, /obj/item/organ/brain/alien))
+		if(istype(brain, /obj/item/organ/internal/brain/alien))
 			braintype = "Xenoborg" //HISS....Beep.
 		else
 			braintype = "Cyborg"
@@ -141,7 +141,7 @@
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
+		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
 		newbrain.forceMove(src)
 		brain = newbrain
 	else if(!brain)
@@ -151,7 +151,7 @@
 
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_appearance()
-	if(istype(brain, /obj/item/organ/brain/alien))
+	if(istype(brain, /obj/item/organ/internal/brain/alien))
 		braintype = "Xenoborg" //HISS....Beep.
 	else
 		braintype = "Cyborg"

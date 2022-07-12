@@ -76,7 +76,7 @@
 	if(!isliving(arrived))
 		return
 	var/mob/living/victim = arrived
-	if(!(victim.movement_type & FLYING) && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
+	if(!(victim.movement_type & (FLYING | FLOATING)) && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
 		callback.Invoke(victim)
 
 /*

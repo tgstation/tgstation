@@ -13,6 +13,9 @@
 			ui.close()
 		return
 
+	if(!user.can_read(src, check_for_light = FALSE))
+		return
+
 	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS) && !allow_chunky)
 		to_chat(user, span_warning("Your fingers are too big to use this right now!"))
 		return

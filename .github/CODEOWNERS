@@ -45,6 +45,7 @@
 /code/modules/preferences_menu.dm @Mothblocks
 /code/modules/preferences_savefile.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+/tools/screenshot-test-comparison/ @Mothblocks
 
 # MrMelbert
 
@@ -135,6 +136,7 @@
 
 /_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
 /icons/ @Imaginos16 @Krysonism @Twaticus
+/icons/ass/ @Ghilker @tralezab
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne

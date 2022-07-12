@@ -1068,6 +1068,7 @@
 	materials = list(/datum/material/iron = 6000, /datum/material/uranium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	research_icon_state = "security-plating"
+	build_type = PROTOLATHE
 
 /datum/design/mod_plating/cosmohonk
 	id = "mod_plating_cosmohonk"
@@ -1345,9 +1346,16 @@
 /datum/design/module/mister_atmos
 	name = "MOD Module: Resin Mister"
 	id = "mod_mister_atmos"
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500, /datum/material/silver = 1000, /datum/material/titanium = 1500, /datum/material/uranium = 500)
+	materials = list(/datum/material/glass = 1000, /datum/material/titanium = 1500)
 	build_path = /obj/item/mod/module/mister/atmos
 	department_type = MODULE_ENGINEERING
+
+/datum/design/module/mod_holster
+	name = "MOD Module: Holster"
+	id = "mod_holster"
+	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
+	build_path = /obj/item/mod/module/holster
+	department_type = MODULE_SECURITY
 
 //MODsuit bepis modules
 
@@ -1380,3 +1388,17 @@
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/uranium = 1000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/mod/module/anomaly_locked/kinesis
 	department_type = MODULE_ENGINEERING
+
+/datum/design/module/mod_sonar
+	name = "MOD Module: Active Sonar"
+	id = "mod_sonar"
+	materials = list(/datum/material/titanium = 250, /datum/material/glass = 1000, /datum/material/gold = 500, /datum/material/uranium = 250)
+	build_path = /obj/item/mod/module/active_sonar
+	department_type = MODULE_SECURITY
+
+/datum/design/module/projectile_dampener
+	name = "MOD Module: Projectile Dampener"
+	id = "mod_projectile_dampener"
+	materials = list(/datum/material/iron = 1000, /datum/material/bluespace = 500)
+	build_path = /obj/item/mod/module/projectile_dampener
+	department_type = MODULE_SECURITY

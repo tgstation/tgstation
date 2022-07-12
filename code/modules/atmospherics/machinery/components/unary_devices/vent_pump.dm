@@ -210,10 +210,12 @@
 	if("purge" in signal.data)
 		pressure_checks &= ~EXT_BOUND
 		pump_direction = SIPHONING
+		investigate_log("pump direction was set to [pump_direction] by [key_name(signal_sender)]", INVESTIGATE_ATMOS)
 
 	if("stabilize" in signal.data)
 		pressure_checks |= EXT_BOUND
 		pump_direction = RELEASING
+		investigate_log("pump direction was set to [pump_direction] by [key_name(signal_sender)]", INVESTIGATE_ATMOS)
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])

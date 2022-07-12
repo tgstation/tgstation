@@ -1,12 +1,4 @@
-import {
-  Box,
-  Stack,
-  Section,
-  Button,
-  Input,
-  Dropdown,
-  Icon,
-} from '../../components';
+import { Box, Stack, Section, Button, Input, Dropdown, Icon } from '../../components';
 import { Component } from 'inferno';
 import { shallowDiffers } from 'common/react';
 
@@ -14,8 +6,8 @@ export class VariableMenu extends Component {
   constructor() {
     super();
     this.state = {
-      variable_name: "",
-      variable_type: "any",
+      variable_name: '',
+      variable_type: 'any',
     };
   }
 
@@ -47,10 +39,7 @@ export class VariableMenu extends Component {
       types,
       ...rest
     } = this.props;
-    const {
-      variable_name,
-      variable_type,
-    } = this.state;
+    const { variable_name, variable_type } = this.state;
 
     return (
       <Section
@@ -58,21 +47,19 @@ export class VariableMenu extends Component {
         {...rest}
         fill
         buttons={
-          <Button
-            icon="times"
-            color="transparent"
-            mr={2}
-            onClick={onClose}
-          />
-        }
-      >
+          <Button icon="times" color="transparent" mr={2} onClick={onClose} />
+        }>
         <Stack height="100%">
           <Stack.Item grow={1} mr={2}>
             <Section fill scrollable>
               <Stack vertical fill>
-                {variables.map(val => (
+                {variables.map((val) => (
                   <Stack.Item key={val.name}>
-                    <Box backgroundColor="transparent" px="1px" py="1px" height="100%">
+                    <Box
+                      backgroundColor="transparent"
+                      px="1px"
+                      py="1px"
+                      height="100%">
                       <Stack>
                         <Stack.Item basis="50%" grow>
                           <Box width="100%" overflow="hidden">
@@ -80,11 +67,7 @@ export class VariableMenu extends Component {
                           </Box>
                         </Stack.Item>
                         <Stack.Item minWidth="80px">
-                          <Button
-                            textAlign="center"
-                            fluid
-                            color={val.color}
-                          >
+                          <Button textAlign="center" fluid color={val.color}>
                             {val.datatype}
                           </Button>
                         </Stack.Item>
@@ -92,28 +75,26 @@ export class VariableMenu extends Component {
                           <Button
                             fluid
                             onMouseDown={(e) =>
-                              handleMouseDownSetter(e, val.name)}
+                              handleMouseDownSetter(e, val.name)
+                            }
                             color={val.color}
                             disabled={!!val.is_list}
-                            tooltip={
-                              multiline`
+                            tooltip={multiline`
                             Drag me onto the circuit's grid
-                            to make a setter for this variable`
-                            }
+                            to make a setter for this variable`}
                             icon="pen"
                           />
                         </Stack.Item>
                         <Stack.Item>
                           <Button
                             fluid
-                            tooltip={
-                              multiline`
+                            tooltip={multiline`
                             Drag me onto the circuit's grid
-                            to make a getter for this variable`
-                            }
+                            to make a getter for this variable`}
                             color={val.color}
                             onMouseDown={(e) =>
-                              handleMouseDownGetter(e, val.name)}
+                              handleMouseDownGetter(e, val.name)
+                            }
                             icon="book-open"
                           />
                         </Stack.Item>
@@ -138,9 +119,11 @@ export class VariableMenu extends Component {
                   <Input
                     placeholder="Name"
                     fluid
-                    onChange={(e, nameVal) => this.setState({
-                      variable_name: nameVal,
-                    })}
+                    onChange={(e, nameVal) =>
+                      this.setState({
+                        variable_name: nameVal,
+                      })
+                    }
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -153,9 +136,11 @@ export class VariableMenu extends Component {
                         color="black"
                         width="100%"
                         over
-                        onSelected={(selectedVal) => this.setState({
-                          variable_type: selectedVal,
-                        })}
+                        onSelected={(selectedVal) =>
+                          this.setState({
+                            variable_type: selectedVal,
+                          })
+                        }
                       />
                     </Stack.Item>
                     <Stack.Item>
@@ -163,9 +148,9 @@ export class VariableMenu extends Component {
                         height="100%"
                         color="green"
                         onClick={(e) =>
-                          onAddVariable(variable_name, variable_type, false, e)}
-                        fluid
-                      >
+                          onAddVariable(variable_name, variable_type, false, e)
+                        }
+                        fluid>
                         <IconButton icon="plus" />
                       </Button>
                     </Stack.Item>
@@ -174,9 +159,9 @@ export class VariableMenu extends Component {
                         height="100%"
                         color="green"
                         onClick={(e) =>
-                          onAddVariable(variable_name, variable_type, true, e)}
-                        fluid
-                      >
+                          onAddVariable(variable_name, variable_type, true, e)
+                        }
+                        fluid>
                         <IconButton icon="list" />
                       </Button>
                     </Stack.Item>
@@ -195,12 +180,7 @@ const IconButton = (props, context) => {
   return (
     <Stack fill align="center">
       <Stack.Item grow basis="content">
-        <Icon
-          name={props.icon}
-          size={1}
-          width="100%"
-          m="0em"
-        />
+        <Icon name={props.icon} size={1} width="100%" m="0em" />
       </Stack.Item>
     </Stack>
   );

@@ -2,8 +2,8 @@
 	name = "airlock painter"
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks. Use it on an airlock during or after construction to change the paintjob. Alt-Click to remove the ink cartridge."
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "paint sprayer"
-	inhand_icon_state = "paint sprayer"
+	icon_state = "paint_sprayer"
+	inhand_icon_state = "paint_sprayer"
 	worn_icon_state = "painter"
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -56,16 +56,16 @@
 //because you're expecting user input.
 /obj/item/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		to_chat(user, span_warning("There is no toner cartridge installed in [src]!"))
+		balloon_alert(user, "no cartridge!")
 		return FALSE
 	else if(ink.charges < 1)
-		to_chat(user, span_warning("[src] is out of ink!"))
+		balloon_alert(user, "out of ink!")
 		return FALSE
 	else
 		return TRUE
 
 /obj/item/airlock_painter/suicide_act(mob/user)
-	var/obj/item/organ/lungs/L = user.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/L = user.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(can_use(user) && L)
 		user.visible_message(span_suicide("[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -153,7 +153,7 @@
 	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed. Alt-Click to remove the ink cartridge."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "decal_sprayer"
-	inhand_icon_state = "decalsprayer"
+	inhand_icon_state = "decal_sprayer"
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	initial_ink_type = /obj/item/toner/large
 	/// The current direction of the decal being printed
@@ -211,7 +211,7 @@
 /obj/item/airlock_painter/decal/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
-		to_chat(user, span_notice("You need to get closer!"))
+		balloon_alert(user, "get closer!")
 		return
 
 	if(isfloorturf(target) && use_paint(user))

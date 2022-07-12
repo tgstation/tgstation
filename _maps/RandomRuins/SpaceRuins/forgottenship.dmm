@@ -24,9 +24,9 @@
 "ae" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate ship airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "af" = (
@@ -99,7 +99,7 @@
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor{
 	id = "fslockdown";
-	name = "Ship blast door";
+	name = "Ship Blast Door";
 	state_open = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -125,7 +125,7 @@
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
-	req_one_access_txt = "150";
+	req_access = list("syndicate");
 	secure = 1
 	},
 /obj/item/coin/antagtoken,
@@ -177,7 +177,7 @@
 	name = "Ship turret control panel";
 	pixel_y = 32;
 	req_access = null;
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -193,7 +193,7 @@
 /obj/machinery/button/door{
 	id = "fscaproom";
 	name = "Room shutters control";
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -236,9 +236,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aQ" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aR" = (
@@ -263,9 +263,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aU" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate ship airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aV" = (
@@ -302,7 +302,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bd" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
@@ -318,9 +318,9 @@
 "be" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate ship airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bf" = (
@@ -332,7 +332,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/circuitboard/machine/circuit_imprinter/offstation,
 /obj/item/circuitboard/machine/protolathe/offstation,
@@ -364,7 +364,7 @@
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/glasses/welding,
 /obj/structure/closet/crate/secure/engineering{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
@@ -376,7 +376,7 @@
 /obj/machinery/button/door{
 	id = "fslockdown";
 	name = "Window shutters";
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -388,7 +388,7 @@
 /obj/machinery/mineral/ore_redemption{
 	name = "Syndicate ore redemption machine";
 	ore_multiplier = 4;
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
@@ -405,7 +405,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bp" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/mining_scanner,
 /obj/item/pickaxe/drill,
@@ -431,7 +431,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bu" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/toy/nuke,
 /obj/item/clothing/under/chameleon,
@@ -457,7 +457,7 @@
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
-	req_one_access_txt = "150";
+	req_access = list("syndicate");
 	secure = 1
 	},
 /obj/item/crowbar/red,
@@ -467,21 +467,21 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bx" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Captain's room";
-	req_one_access_txt = "150"
+	name = "Captain's Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/poddoor{
 	id = "fscaproom";
-	name = "Captain's blast door";
+	name = "Captain's Blast Door";
 	state_open = 1
 	},
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "by" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bz" = (
@@ -492,7 +492,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bA" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/clothing/head/helmet/space/syndicate/black/engie,
 /obj/item/clothing/suit/space/syndicate/black/engie,
@@ -521,9 +521,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bF" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate ship airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
@@ -567,9 +567,9 @@
 /obj/structure/cable,
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate ship airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bN" = (
@@ -613,7 +613,7 @@
 /obj/machinery/computer/security/telescreen/interrogation{
 	name = "Cameras monitor";
 	network = list("fsci");
-	req_one_access_txt = "150";
+	req_access = list("syndicate");
 	screen_loc = ""
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -642,7 +642,7 @@
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
-	req_one_access_txt = "150";
+	req_access = list("syndicate");
 	secure = 1
 	},
 /obj/item/crowbar/red,
@@ -681,7 +681,7 @@
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
-	req_one_access_txt = "150";
+	req_access = list("syndicate");
 	secure = 1
 	},
 /obj/item/ammo_box/c9mm,
@@ -689,7 +689,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cf" = (
 /obj/structure/displaycase{
-	req_one_access_txt = "150";
+	req_access = list("syndicate");
 	start_showpiece_type = /obj/item/gun/ballistic/automatic/pistol/deagle/camo
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -701,19 +701,19 @@
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
-	req_one_access_txt = "150";
+	req_access = list("syndicate");
 	secure = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ch" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Captain's room";
-	req_one_access_txt = "150"
+	name = "Captain's Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/poddoor{
 	id = "fscaproom";
-	name = "Captain's blast door";
+	name = "Captain's Blast Door";
 	state_open = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -744,9 +744,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cm" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cn" = (
@@ -757,24 +757,24 @@
 /obj/structure/filingcabinet,
 /obj/machinery/door/window{
 	dir = 8;
-	name = "Syndicate interior door";
-	req_one_access_txt = "150"
+	name = "Syndicate Interior Door";
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cp" = (
 /obj/machinery/door/window{
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 0, "fire" = 70, "acid" = 100);
-	name = "Control room";
-	req_one_access_txt = "150"
+	name = "Control Room";
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cq" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Bridge";
-	req_one_access_txt = "150"
+	name = "Bridge"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -786,7 +786,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cs" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/toy/sword,
 /obj/item/toy/balloon/syndicate,
@@ -812,7 +812,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cw" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/switchblade,
 /turf/open/floor/mineral/plastitanium,
@@ -835,7 +835,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cz" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/stack/sheet/mineral/titanium{
 	amount = 40
@@ -887,9 +887,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cG" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -920,16 +920,16 @@
 "cJ" = (
 /obj/machinery/door/window{
 	dir = 1;
-	name = "Spare equipment";
-	req_one_access_txt = "150"
+	name = "Spare Equipment";
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cK" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
@@ -1055,9 +1055,9 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cZ" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -1083,7 +1083,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dd" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/language_manual/codespeak_manual/unlimited,
 /turf/open/floor/pod/dark,
@@ -1098,7 +1098,7 @@
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
-	req_one_access_txt = "150";
+	req_access = list("syndicate");
 	secure = 1
 	},
 /obj/item/clothing/under/syndicate/combat,
@@ -1115,7 +1115,7 @@
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
-	req_one_access_txt = "150";
+	req_access = list("syndicate");
 	secure = 1
 	},
 /obj/item/clothing/head/hos/beret/syndicate,
@@ -1138,7 +1138,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "di" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/disk/surgery/forgottenship,
 /turf/open/floor/pod/dark,
@@ -1154,14 +1154,14 @@
 /obj/machinery/door/airlock/grunge{
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 0, "fire" = 90, "acid" = 90);
 	desc = "Vault airlock preventing air from going out.";
-	name = "Syndicate Vault Airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Vault Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dm" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/stack/ore/diamond{
 	amount = 3
@@ -1170,14 +1170,14 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dn" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_one_access_txt = "150"
+	name = "Syndicate Ship Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "do" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/stack/sheet/mineral/gold{
 	amount = 30
@@ -1190,7 +1190,7 @@
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dp" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/stack/ore/plasma{
 	amount = 19
@@ -1208,7 +1208,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "jN" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/mineral/plastitanium,
@@ -1220,7 +1220,7 @@
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
-	req_one_access_txt = "150";
+	req_access = list("syndicate");
 	secure = 1
 	},
 /obj/effect/spawner/random/contraband/armory,
@@ -1228,7 +1228,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Ia" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/maintenance,
@@ -1236,7 +1236,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "Il" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/item/melee/energy/sword/saber/red,
 /obj/machinery/light/directional/north,
@@ -1244,7 +1244,7 @@
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "WR" = (
 /obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/mineral/plastitanium,

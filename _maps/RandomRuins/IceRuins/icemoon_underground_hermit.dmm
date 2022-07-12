@@ -118,7 +118,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Rr" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Si" = (
@@ -136,7 +136,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "Xh" = (
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "XI" = (

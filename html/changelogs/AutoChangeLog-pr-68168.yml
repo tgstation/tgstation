@@ -1,0 +1,5 @@
+author: "CoffeeDragon16"
+delete-after: True
+changes: 
+  - bugfix: "golems will now have tongues again, and adamantine golems can now talk to all golems again"
+  - rscadd: "cardboard golems no longer have tongues"

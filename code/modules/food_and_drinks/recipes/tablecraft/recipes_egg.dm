@@ -3,16 +3,6 @@
 
 ////////////////////////////////////////////////EGG RECIPE's////////////////////////////////////////////////
 
-/datum/crafting_recipe/food/friedegg
-	name = "Fried egg"
-	reqs = list(
-		/datum/reagent/consumable/salt = 1,
-		/datum/reagent/consumable/blackpepper = 1,
-		/obj/item/food/egg = 1
-	)
-	result = /obj/item/food/friedegg
-	subcategory = CAT_EGG
-
 /datum/crafting_recipe/food/sausageegg
 	name = "Egg with sausage"
 	reqs = list(

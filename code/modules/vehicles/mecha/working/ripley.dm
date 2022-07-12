@@ -151,6 +151,8 @@
 	var/obj/item/mecha_parts/mecha_equipment/mining_scanner/scanner = new
 	scanner.attach(src)
 
+GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
+
 /obj/vehicle/sealed/mecha/working/ripley/cargo
 	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted."
 	name = "\improper APLU \"Big Bess\""
@@ -168,6 +170,14 @@
 	HC.attach(src)
 
 	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
+	if(!GLOB.cargo_ripley && mapload)
+		GLOB.cargo_ripley = src
+
+/obj/vehicle/sealed/mecha/working/ripley/cargo/Destroy()
+	if(GLOB.cargo_ripley == src)
+		GLOB.cargo_ripley = null
+
+	return ..()
 
 /obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/leaving, direction)
 	if(leaving in cargo)

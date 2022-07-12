@@ -218,13 +218,12 @@
 	glowth = new(owner)
 	modify()
 
+// Override modify here without a parent call, because we don't actually give an action.
 /datum/mutation/human/glow/modify()
 	if(!glowth)
 		return
-	var/power = GET_MUTATION_POWER(src)
 
-	glowth.set_light_range_power_color(range * power, glow, glow_color)
-
+	glowth.set_light_range_power_color(range * GET_MUTATION_POWER(src), glow, glow_color)
 
 /// Returns the color for the glow effect
 /datum/mutation/human/glow/proc/glow_color()
@@ -459,7 +458,7 @@
 
 	explosion(owner, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 	for(var/mob/living/carbon/human/H in view(2,owner))
-		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/internal/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		if(eyes)
 			to_chat(H, span_userdanger("You are blinded by a shower of blood!"))
 		else
@@ -484,7 +483,7 @@
 	. = ..()
 	if(.)//cant add
 		return TRUE
-	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain)
 		brain.zone = BODY_ZONE_CHEST
 
@@ -502,7 +501,7 @@
 	. = ..()
 	if(.)
 		return TRUE
-	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain) //so this doesn't instantly kill you. we could delete the brain, but it lets people cure brain issues they /really/ shouldn't be
 		brain.zone = BODY_ZONE_HEAD
 	UnregisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB)

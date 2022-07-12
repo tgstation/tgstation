@@ -467,7 +467,6 @@
 /datum/mafia_role/lawyer/proc/release(datum/mafia_controller/game)
 	SIGNAL_HANDLER
 
-	. = ..()
 	if(current_target)
 		current_target.role_flags &= ~ROLE_ROLEBLOCKED
 		current_target = null

@@ -38,7 +38,7 @@
 	else //No AI on the card, therefore the user wants to download one.
 		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 		if(AI)
-			log_combat(user, AI, "carded", src)
+			log_silicon("[key_name(user)] carded [key_name(AI)]", src)
 			update_appearance()
 			return TRUE
 	return ..()

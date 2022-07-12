@@ -57,6 +57,7 @@
 	..()
 	new /obj/item/clothing/under/suit/black(src)
 	new /obj/item/clothing/under/suit/black/skirt(src)
+	new /obj/item/clothing/neck/tie/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/storage/backpack/medic(src)
 	new /obj/item/radio/headset/headset_srvmed(src)
@@ -122,7 +123,7 @@
 
 /obj/structure/closet/secure_closet/chemical/heisenberg //contains one of each beaker, syringe etc.
 	name = "advanced chemical closet"
-	req_access = list(ACCESS_CHEMISTRY)
+	req_access = list(ACCESS_PLUMBING)
 
 /obj/structure/closet/secure_closet/chemical/heisenberg/PopulateContents()
 	..()

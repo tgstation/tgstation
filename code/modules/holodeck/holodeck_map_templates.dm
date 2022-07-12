@@ -113,6 +113,12 @@
 	description = "benis"
 	mappath = "_maps/templates/holodeck_skatepark.dmm"
 
+/datum/map_template/holodeck/microwave
+	name = "Holodeck - Microwave Paradise"
+	template_id = "holodeck_microwave"
+	description = "benis"
+	mappath = "_maps/templates/holodeck_microwave.dmm"
+
 //bad evil no good programs
 
 /datum/map_template/holodeck/medicalsim

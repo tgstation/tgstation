@@ -66,7 +66,6 @@
 	progression_maximum = 45 MINUTES
 	target_jobs = list(
 		// Cargo
-		/datum/job/quartermaster,
 		/datum/job/shaft_miner,
 		// Service
 		/datum/job/chaplain,
@@ -88,6 +87,7 @@
 		/datum/job/head_of_personnel,
 		/datum/job/chief_medical_officer,
 		/datum/job/research_director,
+		/datum/job/quartermaster,
 	)
 
 /datum/traitor_objective/destroy_heirloom/captain

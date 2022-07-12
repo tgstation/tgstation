@@ -342,13 +342,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return TRUE
 	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
 	if(sacrificial.mind && !sacrificial.suiciding)
-		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
 		stone.capture_soul(sacrificial, first_invoker, TRUE)
-		stone.invisibility = 0
 
 	if(sacrificial)
 		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
-		sacrificial.gib(TRUE)
+		sacrificial.gib()
 	return TRUE
 
 /obj/effect/rune/empower
@@ -909,7 +907,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /mob/living/carbon/human/cult_ghost/getorganszone(zone, subzones = 0)
 	. = ..()
-	for(var/obj/item/organ/brain/B in .) //they're not that smart, really
+	for(var/obj/item/organ/internal/brain/B in .) //they're not that smart, really
 		. -= B
 
 

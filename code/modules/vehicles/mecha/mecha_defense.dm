@@ -25,24 +25,31 @@
 			gear = equip_by_category[MECHA_R_ARM]
 	if(!gear)
 		return
-	var/brokenstatus = gear.get_integrity()
+	var/component_health = gear.get_integrity()
 	// always leave at least 1 health
-	brokenstatus--
-	var/damage_to_deal = min(brokenstatus, damage)
-	if(!damage_to_deal)
+	var/damage_to_deal = min(component_health - 1, damage)
+	if(damage_to_deal <= 0)
 		return
+
 	gear.take_damage(damage_to_deal)
+	if(gear.get_integrity() <= 1)
+		to_chat(occupants, "[icon2html(src, occupants)][span_danger("[gear] is critically damaged!")]")
+		playsound(src, gear.destroy_sound, 50)
 
-/obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	. = ..()
-	if(. && atom_integrity > 0)
-		spark_system.start()
-		try_deal_internal_damage(.)
-		if(. >= 5 || prob(33))
-			to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
-		log_message("Took [.] points of damage. Damage type: [damage_type]", LOG_MECHA)
+/obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
+	var/damage_taken = ..()
+	if(damage_taken <= 0 || atom_integrity < 0)
+		return damage_taken
 
-/obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penentration)
+	spark_system.start()
+	try_deal_internal_damage(damage_taken)
+	if(damage_taken >= 5 || prob(33))
+		to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
+	log_message("Took [damage_taken] points of damage. Damage type: [damage_type]", LOG_MECHA)
+
+	return damage_taken
+
+/obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration)
 	. = ..()
 	if(attack_dir)
 		var/facing_modifier = get_armour_facing(abs(dir2angle(dir) - dir2angle(attack_dir)))
@@ -113,7 +120,13 @@
 		return BULLET_ACT_HIT
 	log_message("Hit by projectile. Type: [hitting_projectile]([hitting_projectile.damage_type]).", LOG_MECHA, color="red")
 	// yes we *have* to run the armor calc proc here I love tg projectile code too
-	try_damage_component(run_atom_armor(hitting_projectile.damage, hitting_projectile.damage_type, hitting_projectile.damage_type, 0, REVERSE_DIR(hitting_projectile.dir), hitting_projectile.armour_penetration), hitting_projectile.def_zone)
+	try_damage_component(run_atom_armor(
+		damage_amount = hitting_projectile.damage,
+		damage_type = hitting_projectile.damage_type,
+		damage_flag = hitting_projectile.armor_flag,
+		attack_dir = REVERSE_DIR(hitting_projectile.dir),
+		armour_penetration = hitting_projectile.armour_penetration,
+	), hitting_projectile.def_zone)
 	return ..()
 
 /obj/vehicle/sealed/mecha/ex_act(severity, target)
@@ -258,11 +271,26 @@
 		var/obj/item/mecha_parts/P = W
 		P.try_attach_part(user, src, FALSE)
 		return
-	. = ..()
-	log_message("Attacked by [W]. Attacker - [user], Damage - [.]", LOG_MECHA)
-	if(isliving(user))
-		var/mob/living/living_user = user
-		try_damage_component(., living_user.zone_selected)
+
+	return ..()
+
+/obj/vehicle/sealed/mecha/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!attacking_item.force)
+		return
+
+	var/damage_taken = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, 1)
+	try_damage_component(damage_taken, user.zone_selected)
+
+	var/hit_verb = length(attacking_item.attack_verb_simple) ? "[pick(attacking_item.attack_verb_simple)]" : "hit"
+	user.visible_message(
+		span_danger("[user] [hit_verb][plural_s(hit_verb)] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]"),
+		span_danger("You [hit_verb] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]"),
+		span_hear("You hear a [hit_verb]."),
+		COMBAT_MESSAGE_RANGE,
+	)
+
+	log_combat(user, src, "attacked", attacking_item)
+	log_message("Attacked by [user]. Item - [attacking_item], Damage - [damage_taken]", LOG_MECHA)
 
 /obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/I)
 	..()

@@ -47,7 +47,7 @@
 		return FALSE
 
 	var/open_turf_gases = open_turf.air.gases
-	open_turf.air.assert_gases(arglist(GLOB.hardcoded_gases))
+	open_turf.air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
 
 	var/plas = open_turf_gases[/datum/gas/plasma][MOLES]
 	var/oxy = open_turf_gases[/datum/gas/oxygen][MOLES]

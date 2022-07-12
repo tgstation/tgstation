@@ -238,7 +238,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "zr" = (
@@ -461,7 +461,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "UB" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "US" = (
@@ -469,7 +469,7 @@
 /turf/open/floor/iron/smooth_half,
 /area/ruin/powered/mailroom)
 "Vq" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Vz" = (

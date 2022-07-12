@@ -247,8 +247,8 @@
 	zombiepowder.data["method"] |= INGEST
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M, delta_time, times_fired)
-	..()
 	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && HAS_TRAIT(M, TRAIT_DEATHCOMA))
+		..()
 		return TRUE
 	switch(current_cycle)
 		if(1 to 5)
@@ -259,6 +259,8 @@
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
 		if(9 to INFINITY)
 			M.fakedeath(type)
+	..()
+	return TRUE
 
 /datum/reagent/toxin/ghoulpowder
 	name = "Ghoul Powder"

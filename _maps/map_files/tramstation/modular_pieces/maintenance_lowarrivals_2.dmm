@@ -10,14 +10,22 @@
 "c" = (
 /turf/template_noop,
 /area/template_noop)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance/glass,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/fore)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/spawner/random/engineering/toolbox,
-/obj/machinery/door/window/left/directional/south{
-	req_one_access_txt = "32;19"
-	},
+/obj/effect/mapping_helpers/airlock/access/all/command/maintenance,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)
 "n" = (
@@ -37,7 +45,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)
-"z" = (
+"A" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
@@ -64,9 +72,7 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/spawner/random/engineering/toolbox,
-/obj/machinery/door/window/right/directional/south{
-	req_one_access_txt = "32;19"
-	},
+/obj/effect/mapping_helpers/airlock/access/all/command/maintenance/obj/machinery/door/window/right/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)
 "H" = (
@@ -80,7 +86,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"M" = (
+"L" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Water Closet"
@@ -99,15 +105,6 @@
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/extinguisher_cabinet/directional/east,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/port/fore)
-"S" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance/glass,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)
 "Y" = (
@@ -150,7 +147,7 @@ v
 v
 a
 a
-M
+L
 a
 a
 "}
@@ -159,7 +156,7 @@ a
 G
 v
 v
-S
+d
 E
 v
 b
@@ -184,6 +181,6 @@ n
 a
 c
 c
-z
+A
 c
 "}

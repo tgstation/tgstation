@@ -9,8 +9,8 @@
 
 /** A simple rudimentary gasmix to information list converter. Can be used for UIs.
  * Args:
- * - gasmix: [/datum/gas_mixture]
- * - name: String used to name the list, optional.
+ * * gasmix: [/datum/gas_mixture]
+ * * name: String used to name the list, optional.
  * Returns: A list parsed_gasmixes with the following structure:
  * - parsed_gasmixes    Value: Assoc List     Desc: The thing we return
  * -- Key: name         Value: String         Desc: Gasmix Name
@@ -32,7 +32,7 @@
 	. = list(
 		"gases" = list(),
 		"reactions" = list(),
-		"name" = name,
+		"name" = format_text(name),
 		"total_moles" = null,
 		"temperature" = null,
 		"volume"= null,

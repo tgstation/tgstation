@@ -111,7 +111,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/bamboo/setup_broken_states()
-	return list("damaged")
+	return list("bamboodamaged")
 
 /turf/open/floor/grass
 	name = "grass patch"
@@ -132,7 +132,7 @@
 /turf/open/floor/grass/Initialize(mapload)
 	. = ..()
 	spawniconchange()
-	AddComponent(/datum/component/diggable, /obj/item/stack/ore/glass, 2, "uproot")
+	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, "uproot", "uproots")
 
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
@@ -170,7 +170,7 @@
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/diggable, /obj/item/stack/tile/mineral/snow, 2, "dig up")
+	AddElement(/datum/element/diggable, /obj/item/stack/tile/mineral/snow, 2)
 
 /turf/open/floor/fake_snow/setup_broken_states()
 	return list("snow_dug")
@@ -197,7 +197,7 @@
 
 /turf/open/floor/fakebasalt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/diggable, /obj/item/stack/ore/glass/basalt, 2, "dig up")
+	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass/basalt, 2)
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -219,9 +219,6 @@
 	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
-
-/turf/open/floor/carpet/setup_broken_states()
-	return list("damaged")
 
 /turf/open/floor/carpet/examine(mob/user)
 	. = ..()

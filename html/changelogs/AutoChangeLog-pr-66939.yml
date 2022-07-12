@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Trying to fireman carry someone you can't fireman carry now properly makes you not carry them permanently"

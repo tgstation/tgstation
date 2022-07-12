@@ -75,12 +75,12 @@
 
 /datum/gas_reaction/bzformation/init_factors()
 	factor = list(
-		/datum/gas/plasma = "Plasma is consumed at 2 reaction rate. If there is more plasma than nitrous oxide reaction rate is slowed down.",
-		/datum/gas/nitrous_oxide = "Nitrous oxide is consumed at 1 reaction rate. If there is less nitrous oxide than plasma the reaction rate is slowed down.",
-		/datum/gas/bz = "BZ is formed at 2.5 reaction rate. A small malus up to half a mole per tick is applied if the reaction rate is constricted by nitrous oxide.",
-		/datum/gas/oxygen = "Oxygen is produced from the BZ malus. This only happens when the reaction rate is being constricted by the amount of nitrous oxide present. I.E. amount of nitrous oxide is less than the reaction rate.", // Less than the reaction rate AND half the plasma, but suppose that's not necessary to mention.
-		"Pressure" = "The lower the pressure the faster the reaction rate goes.",
-		"Energy" = "[FIRE_CARBON_ENERGY_RELEASED] joules of energy is released per reaction rate",
+		/datum/gas/plasma = "Each mole of BZ made consumes 0.8 moles of plasma. If there is more plasma than nitrous oxide reaction rate is slowed down.",
+		/datum/gas/nitrous_oxide = "Each mole of bz made consumes 0.4 moles of Nitrous oxide. If there is less nitrous oxide than plasma the reaction rate is slowed down. At three times the amount of plasma to Nitrous oxide it will start breaking down into Nitrogen and Oxygen, the lower the ratio the more Nitrous oxide decomposes.",
+		/datum/gas/bz = "The lower the pressure and larger the volume the more bz gets made. Less nitrous oxide than plasma will slow down the reaction.",
+		/datum/gas/nitrogen = "Each mole Nitrous oxide decomposed makes 1 mol Nitrogen. Lower ratio of Nitrous oxide to Plasma means a higher ratio of decomposition to BZ production.",
+		/datum/gas/oxygen = "Each mole Nitrous oxide decomposed makes 0.5 moles Oxygen. Lower ratio of Nitrous oxide to Plasma means a higher ratio of decomposition to BZ production.",
+		"Energy" = "[BZ_FORMATION_ENERGY] joules of energy is released per mol of BZ made. Nitrous oxide decomposition releases [N2O_DECOMPOSITION_ENERGY] per mol decomposed",
 	)
 
 /datum/gas_reaction/pluox_formation/init_factors()

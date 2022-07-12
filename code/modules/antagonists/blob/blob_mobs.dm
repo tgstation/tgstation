@@ -80,7 +80,7 @@
 	SSmove_manager.jps_move(moving = src, chasing = target, delay = delay, repath_delay = 2 SECONDS, minimum_distance = minimum_distance, simulated_only = FALSE, skip_first = TRUE, timeout = 5 SECONDS, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
 	return TRUE
 
-/mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
+/mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	for(var/obj/structure/blob/B in range(1, src))
 		return 1
 	return ..()
@@ -213,7 +213,7 @@
 
 	// Attach the smoke spreader and setup/start it.
 	spores.attach(location)
-	spores.set_up(death_cloud_size, location = location, carry = reagents, silent = TRUE)
+	spores.set_up(death_cloud_size, holder = src, location = location, carry = reagents, silent = TRUE)
 	spores.start()
 	if(factory)
 		factory.spore_delay = world.time + factory.spore_cooldown //put the factory on cooldown

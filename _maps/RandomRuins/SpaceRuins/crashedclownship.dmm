@@ -44,7 +44,7 @@
 "k" = (
 /obj/structure/closet/secure_closet{
 	name = "clown locker";
-	req_access_txt = "46"
+	req_access = list("theatre")
 	},
 /obj/item/clothing/shoes/clown_shoes/banana_shoes,
 /obj/item/gps/spaceruin,

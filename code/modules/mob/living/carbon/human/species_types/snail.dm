@@ -6,6 +6,7 @@
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_NOSLIPALL,
+		TRAIT_LITERATE,
 	)
 	attack_verb = "slap"
 	attack_effect = ATTACK_EFFECT_DISARM
@@ -18,8 +19,8 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP
 	sexes = FALSE //snails are hermaphrodites
 
-	mutanteyes = /obj/item/organ/eyes/snail
-	mutanttongue = /obj/item/organ/tongue/snail
+	mutanteyes = /obj/item/organ/internal/eyes/snail
+	mutanttongue = /obj/item/organ/internal/tongue/snail
 	exotic_blood = /datum/reagent/lube
 
 	bodypart_overrides = list(

@@ -486,7 +486,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					to_chat(user, span_warning("[src]'s compartment is full."))
 					break
 				if(canLoadItem(the_item) && loadingAttempt(the_item,user))
-					SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, the_item, src, TRUE)
+					T.atom_storage?.attempt_remove(the_item, src)
 					loaded++
 				else
 					denied_items++
@@ -609,12 +609,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(6) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
 						if(O)
-							C.visible_message(span_danger("[O] explodes in a shower of gore beneath [src]!"), \
-								span_userdanger("Oh f-"))
-							O.dismember()
-							O.drop_organs()
-							qdel(O)
-							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
+							if(O.dismember())
+								C.visible_message(span_danger("[O] explodes in a shower of gore beneath [src]!"), \
+									span_userdanger("Oh f-"))
+								O.drop_organs()
+								qdel(O)
+								new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
 
 				if(prob(30))
 					C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE) // the 30% chance to spread the damage means you escape breaking any bones
@@ -1329,6 +1329,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	icon_state = "greed"
 	icon_deny = "greed-deny"
 	panel_type = "panel4"
+	max_integrity = 700
+	max_loaded_items = 40
 	light_mask = "greed-light-mask"
 	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
 

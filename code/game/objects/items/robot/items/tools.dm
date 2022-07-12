@@ -1,4 +1,4 @@
-#define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
+#define PKBORG_DAMPEN_CYCLE_DELAY 2 SECONDS
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -30,7 +30,7 @@
 	/// The owner of the dampener
 	var/mob/living/silicon/robot/host = null
 	/// The field
-	var/datum/proximity_monitor/advanced/peaceborg_dampener/dampening_field
+	var/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/dampening_field
 	var/projectile_damage_coefficient = 0.5
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
@@ -96,6 +96,8 @@
 		QDEL_NULL(dampening_field)
 	var/mob/living/silicon/robot/owner = get_host()
 	dampening_field = new(owner, field_radius, TRUE, src)
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, .proc/dampen_projectile)
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, .proc/restore_projectile)
 	owner?.model.allow_riding = FALSE
 	active = TRUE
 
@@ -158,11 +160,8 @@
 		host.cell.use(energy_recharge * delta_time * energy_recharge_cyborg_drain_coefficient)
 		energy += energy_recharge * delta_time
 
-/obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/projectile/projectile, track_projectile = TRUE)
-	if(tracked[projectile])
-		return
-	if(track_projectile)
-		tracked[projectile] = projectile.damage
+/obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/projectile/projectile)
+	tracked[projectile] = projectile.damage
 	projectile.damage *= projectile_damage_coefficient
 	projectile.speed *= projectile_speed_coefficient
 	projectile.add_overlay(projectile_effect)

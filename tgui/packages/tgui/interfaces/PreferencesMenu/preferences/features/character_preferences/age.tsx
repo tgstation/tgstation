@@ -1,6 +1,6 @@
-import { Feature, FeatureNumberInput } from "../base";
+import { Feature, FeatureNumberInput } from '../base';
 
 export const age: Feature<number> = {
-  name: "Age",
+  name: 'Age',
   component: FeatureNumberInput,
 };

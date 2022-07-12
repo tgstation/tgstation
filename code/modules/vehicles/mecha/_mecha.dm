@@ -18,7 +18,7 @@
  * Cooldown for gear is on the mech because exploits
  */
 /obj/vehicle/sealed/mecha
-	name = "mecha"
+	name = "exosuit"
 	desc = "Exosuit"
 	icon = 'icons/mecha/mecha.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -211,7 +211,7 @@
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 
-	smoke_system.set_up(3, location = src)
+	smoke_system.set_up(3, holder = src, location = src)
 	smoke_system.attach(src)
 
 	radio = new(src)

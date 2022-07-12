@@ -217,7 +217,7 @@
 
 	if(ishuman(slapped))
 		var/mob/living/carbon/human/human_slapped = slapped
-		human_slapped.dna?.species?.stop_wagging_tail(slapped)
+		SEND_SIGNAL(human_slapped, COMSIG_ORGAN_WAG_TAIL, FALSE)
 	user.do_attack_animation(slapped)
 
 	var/slap_volume = 50
@@ -569,7 +569,7 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/heartbreakee = target
-	var/obj/item/organ/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.applyOrganDamage(999)
 
 

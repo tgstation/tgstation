@@ -18,22 +18,23 @@
 		to_chat(occupants, "[icon2html(src, occupants)][span_warning("Air port connection has been severed!")]")
 		log_message("Lost connection to gas port.", LOG_MECHA)
 
-/obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0)
+// Do whatever you do to mobs to these fuckers too
+/obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	. = ..()
 	if(.)
-		return
+		return TRUE
 
-	var/atom/backup = get_spacemove_backup(movement_dir)
-	if(backup && movement_dir)
-		if(isturf(backup)) //get_spacemove_backup() already checks if a returned turf is solid, so we can just go
+	var/atom/movable/backup = get_spacemove_backup(movement_dir, continuous_move)
+	if(backup)
+		if(!istype(backup) || !movement_dir || backup.anchored || continuous_move) //get_spacemove_backup() already checks if a returned turf is solid, so we can just go
 			return TRUE
-		if(istype(backup, /atom/movable))
-			var/atom/movable/movable_backup = backup
-			if((!movable_backup.anchored) && (movable_backup.newtonian_move(turn(movement_dir, 180))))
-				step_silent = TRUE
-				if(return_drivers())
-					to_chat(occupants, "[icon2html(src, occupants)][span_info("The [src] push off [movable_backup] to propel yourself.")]")
-			return TRUE
+		last_pushoff = world.time
+		if(backup.newtonian_move(turn(movement_dir, 180), instant = TRUE))
+			backup.last_pushoff = world.time
+			step_silent = TRUE
+			if(return_drivers())
+				to_chat(occupants, "[icon2html(src, occupants)][span_info("The [src] push off [backup] to propel yourself.")]")
+		return TRUE
 
 	if(active_thrusters?.thrust(movement_dir))
 		step_silent = TRUE

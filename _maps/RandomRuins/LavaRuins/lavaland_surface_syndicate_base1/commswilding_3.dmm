@@ -25,7 +25,7 @@
 	id = "lavalandsyndi_fredrickleft";
 	name = "Security Blast Door Control";
 	pixel_y = -26;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
@@ -107,9 +107,9 @@
 /area/ruin/syndicate_lava_base/telecomms)
 "y" = (
 /obj/machinery/door/airlock/security{
-	name = "Security Office";
-	req_access_txt = "150"
+	name = "Security Office"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
@@ -171,9 +171,9 @@
 /obj/structure/cable,
 /obj/modular_map_connector,
 /obj/machinery/door/airlock/security{
-	name = "Security Office";
-	req_access_txt = "150"
+	name = "Security Office"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/template_noop,
 /area/ruin/syndicate_lava_base/telecomms)
 "G" = (
@@ -187,7 +187,7 @@
 	id = "lavalandsyndi_telecomms";
 	name = "Telecomms Blast Door Control";
 	pixel_x = 26;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/red{
@@ -238,7 +238,7 @@
 	id = "lavalandsyndi_fredrickright";
 	name = "Security Blast Door Control";
 	pixel_y = 26;
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/tile/iron/grimy,
