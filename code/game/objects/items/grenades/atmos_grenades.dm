@@ -63,6 +63,7 @@
 			removed_gas.assert_gas(gas_id)
 			removed_gas.gases[gas_id][MOLES] += contaminants.gases[gas_id][MOLES]//shuffle the bad gasses into another gas mixture
 			contaminants.gases[gas_id][MOLES] = 0 //remove the gasses from the environment
+			removed_gas.heat_merge(contaminants)
 		contaminants.garbage_collect()//remove the empty gasses from the list
 	var/obj/item/grenade/gas_crystal/residue_crystal/crystal = new(turf_loc)
 	crystal.filtered_gas = removed_gas

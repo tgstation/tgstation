@@ -142,6 +142,19 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return TRUE
 
+//Merge temperature between 2 gas mixtures
+/datum/gas_mixture/proc/heat_merge(datum/gas_mixture/giver)
+    if(!giver)
+        return
+    //heat transfer
+    if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+        var/self_heat_capacity = heat_capacity()
+        var/giver_heat_capacity = giver.heat_capacity()
+        var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
+        if(combined_heat_capacity)
+            temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
+    return
+
 ///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	if(!giver)
