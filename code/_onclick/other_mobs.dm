@@ -205,11 +205,6 @@
 	Drones
 */
 
-/mob/living/simple_animal/drone/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
-		return
-	resolve_unarmed_attack(attack_target, modifiers)
-
 /mob/living/simple_animal/drone/resolve_unarmed_attack(atom/attack_target, proximity_flag, list/modifiers)
 	attack_target.attack_drone(src, modifiers)
 
@@ -262,12 +257,8 @@
 	Hostile animals
 */
 
-/mob/living/simple_animal/hostile/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-	if(.)
-		GiveTarget(attack_target)
-
 /mob/living/simple_animal/hostile/resolve_unarmed_attack(atom/attack_target, list/modifiers)
+	GiveTarget(attack_target)
 	if(dextrous && (isitem(attack_target) || !combat_mode))
 		return ..()
 	else
