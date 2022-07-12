@@ -7,13 +7,13 @@ export const ForceEvent = (props, context) => {
     return (
       <Window title="Force Event" width={450} height={360}>
         <Window.Content scrollable>
-            <EventEmporium />
+            <EventContent />
         </Window.Content>
       </Window>
     );
 }
 
-  export const EventEmporium = (props, context) => {
+  export const EventContent = (props, context) => {
   const { act, data } = useBackend(context);
   
   const categories = Object.values(data.categories);
