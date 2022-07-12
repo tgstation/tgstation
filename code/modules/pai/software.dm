@@ -116,7 +116,6 @@
 			atmos_analyzer = new(src)
 		if("Digital Messenger")
 			create_modularInterface()
-			modularInterface?.saved_identification = name
 		if("Host Scan")
 			host_scan = new(src)
 		if("Internal GPS")
@@ -127,7 +126,6 @@
 			newscaster = new(src)
 		if("Photography Module")
 			camera = new(src)
-			camera.flash_enabled = TRUE
 		if("Remote Signaler")
 			signaler = new(src)
 	return TRUE
