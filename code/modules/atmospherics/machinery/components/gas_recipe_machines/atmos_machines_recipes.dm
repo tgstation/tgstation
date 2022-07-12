@@ -55,12 +55,12 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	products = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 1)
 
 /datum/gas_recipe/crystallizer/cleansing_crystal
-	id = "gas_g"
+	id = "cleanse_g"
 	name = "Cleansing crystal"
 	min_temp = 100
-	max_temp = 500
-	energy_release = 300000
-	requirements = list(/datum/gas/nitrogen = 150, /datum/gas/oxygen = 60, /datum/gas/plasma = 100, /datum/gas/nitrous_oxide = 50)
+	max_temp = 300
+	energy_release = 3000000
+	requirements = list(/datum/gas/nitrogen = 500, /datum/gas/oxygen = 800, /datum/gas/plasma = 1500, /datum/gas/nitrous_oxide = 700)
 	products = list(/obj/item/grenade/gas_crystal/cleansing_crystal = 1)
 
 /datum/gas_recipe/crystallizer/hot_ice

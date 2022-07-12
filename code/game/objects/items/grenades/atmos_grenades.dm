@@ -34,6 +34,7 @@
 	///Amount of Oxygen gas released (close to the grenade)
 	var/o2_gas_amount = 30
 
+
 /obj/item/grenade/gas_crystal/cleansing_crystal/detonate(mob/living/lanced_by)
 	. = ..()
 	if(!.)
@@ -47,12 +48,16 @@
 	var/numberof_turf = length(connected_turfs)
 	var/static/list/safe_mixture = typecacheof(base_mix)
 	var/datum/gas_mixture/removed_gas = new
+	//Amount of mols that can be scrubbed 
+	var/moles_stored= 10000
 
 	for(var/turf/open/turf_fix in connected_turfs)//interate through the various turf in the area
 		if(turf_fix.blocks_air)//if the turf can't contain air continue
 			continue
 		var/datum/gas_mixture/contaminants = turf_fix.return_air()//environment gas mixture
 		for(var/gas_id in contaminants.gases)//interate through the gas mixtures of the turfs
+			if(removed_gas.total_moles() >= moles_stored)
+				break
 			if(safe_mixture[gas_id])//if the gas mixture contains safe gasses then move on
 				continue
 			removed_gas.assert_gas(gas_id)
@@ -61,7 +66,7 @@
 		contaminants.garbage_collect()//remove the empty gasses from the list
 	var/obj/item/grenade/gas_crystal/residue_crystal/crystal = new(turf_loc)
 	crystal.filtered_gas = removed_gas
-	turf_loc.atmos_spawn_air("n2=[n2_gas_amount * numberof_turf];o2=[o2_gas_amount * numberof_turf];TEMP=273")
+	turf_loc.atmos_spawn_air("n2=[n2_gas_amount * (numberof_turf / 5)];o2=[o2_gas_amount * (numberof_turf / 5)];TEMP=273")
 	qdel(src)
 
 	
