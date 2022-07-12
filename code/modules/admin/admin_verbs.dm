@@ -80,38 +80,57 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/display_tags,
 	/datum/admins/proc/fishing_calculator,
 	)
-GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
+GLOBAL_LIST_INIT(admin_verbs_ban, list(
+	/client/proc/unban_panel,
+	/client/proc/ban_panel,
+	/client/proc/stickybanpanel
+	))
 GLOBAL_PROTECT(admin_verbs_ban)
-GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound, /client/proc/play_direct_mob_sound, /client/proc/play_sound, /client/proc/set_round_end_sound))
+GLOBAL_LIST_INIT(admin_verbs_sounds, list(
+	/client/proc/play_local_sound,
+	/client/proc/play_direct_mob_sound,
+	/client/proc/play_sound,
+	/client/proc/set_round_end_sound
+	))
 GLOBAL_PROTECT(admin_verbs_sounds)
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
-	/client/proc/cmd_select_equipment,
-	/client/proc/cmd_admin_gib_self,
-	/client/proc/drop_bomb,
-	/client/proc/set_dynex_scale,
-	/client/proc/drop_dynex_bomb,
 	/client/proc/cinematic,
-	/client/proc/summon_ert,
-	/client/proc/cmd_admin_add_freeform_ai_law,
-	/client/proc/object_say,
-	/client/proc/toggle_random_events,
-	/client/proc/set_ooc,
-	/client/proc/reset_ooc,
+	/client/proc/cmd_admin_emp,
+	/client/proc/cmd_admin_explosion,
+	/client/proc/cmd_admin_gib,
+	/client/proc/cmd_admin_gib_self,
+	/client/proc/cmd_admin_robotize,
+	/client/proc/drop_bomb,
+	/client/proc/drop_dynex_bomb,
+	/client/proc/everyone_random,
 	/client/proc/forceEvent,
-	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke,
-	/client/proc/run_weather,
+	/client/proc/give_disease,
+	/client/proc/give_spell,
+	/client/proc/remove_spell,
+	/client/proc/load_circuit,
+	/client/proc/makepAI,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
+	/client/proc/object_say,
+	/client/proc/play_sound,
+	/client/proc/play_direct_mob_sound,
+	/client/proc/play_local_sound,
+	/client/proc/play_web_sound,
 	/client/proc/polymorph_all,
-	/client/proc/show_tip,
+	/client/proc/set_round_end_sound,
 	/client/proc/smite,
-	/client/proc/admin_away,
-	/client/proc/add_mob_ability,
+	/client/proc/summon_ert,
 	/datum/admins/proc/station_traits_panel,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel))
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(
+	/datum/admins/proc/spawn_atom,
+	/datum/admins/proc/podspawn_atom,
+	/datum/admins/proc/spawn_cargo,
+	/datum/admins/proc/spawn_objasmob,
+	/client/proc/respawn_character,
+	/datum/admins/proc/beaker_panel
+	))
 GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 GLOBAL_PROTECT(admin_verbs_server)
