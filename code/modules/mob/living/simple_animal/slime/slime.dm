@@ -394,7 +394,7 @@
 		var/hasFound = FALSE //Have we found an extract to be added?
 		for(var/obj/item/slime_extract/S in P.contents)
 			if(S.effectmod == effectmod)
-				SEND_SIGNAL(P, COMSIG_TRY_STORAGE_TAKE, S, get_turf(src), TRUE)
+				P.atom_storage.attempt_remove(S, get_turf(src), silent = TRUE)
 				qdel(S)
 				applied++
 				hasFound = TRUE
