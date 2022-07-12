@@ -2308,8 +2308,7 @@
 "gG" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/portable_atmospherics/pump/lil_pump{
-	desc = "A betrayer to pump-kind.";
-	
+	desc = "A betrayer to pump-kind."
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
