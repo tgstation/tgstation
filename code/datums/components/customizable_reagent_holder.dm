@@ -28,7 +28,7 @@
 		atom/replacement,
 		fill_type,
 		ingredient_type = CUSTOM_INGREDIENT_TYPE_EDIBLE,
-		max_ingredients = MAX_ATOM_OVERLAYS - 2,
+		max_ingredients = MAX_ATOM_OVERLAYS - 3, // The cap is >= MAX_ATOM_OVERLAYS so we reserve 2 for top /bottom of item + 1 to stay under cap
 		list/obj/item/initial_ingredients = null)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE

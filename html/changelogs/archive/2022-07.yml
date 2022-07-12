@@ -132,3 +132,244 @@
   - refactor: Orbit UI has been reworked.
   san7890:
   - bugfix: Okay, this time I promise you have eggs and milk in the IceBox Kitchen.
+2022-07-05:
+  Fikou:
+  - balance: The supermatter running into you is no longer just as deadly as you running
+      into the supermatter.
+  Guillaume Prata:
+  - qol: Miners rejoice! A few of the mostly useless and spammy messages that get
+      send to your chat were changed to balloon alerts or straight up removed. Hopefully,
+      you will have an easier time listening to the radio chatter now.
+  JohnFulpWillard:
+  - bugfix: Thief's preference icon has been fixed, and now properly has hair.
+  Mooshimi:
+  - rscdel: Removed the lightbulbs inside the Ordinance burn chambers on Kilo and
+      Icebox.
+  - rscdel: Removed the mask sign inside the turbine burn chamber on Icebox.
+  RandomGamer123:
+  - bugfix: Adds an air scrubber and vent to a section of hallway that was without
+      them on MetaStation.
+  Salex08:
+  - bugfix: fixes a major oversight with steal gun objectives
+  magatsuchi:
+  - code_imp: removes a stray verb call from the status tab
+  - rscdel: removes movement and combat mode from the status tab
+  necromanceranne:
+  - code_imp: Added code functionality for autofire windup and resetting, both redefinable.
+      Nothing uses this code just yet!
+  - bugfix: Ensures pirate outfits and justice suits are actually able to protect
+      from damage, as their armor values suggests they should.
+  - bugfix: Stops golems from wearing the armored versions of the pirate outfits.
+  vincentiusvin:
+  - refactor: Changed how canister calculate their overpressure/overtemp damage. No
+      gameplay changes expected.
+  zzzmike:
+  - bugfix: head of staff announcement added to QM
+  - bugfix: QM added to job blacklist (like other command members are)
+  - bugfix: QM added as command in CrewManifest.js
+2022-07-06:
+  Guillaume Prata:
+  - imageadd: The QM's RPG trim icon got updated to use Command's blue instead of
+      the old cargo brown.
+  Iamgoofball:
+  - bugfix: Fixes the Herald being able to drag it's mirror around.
+  - bugfix: Fixes the Structural Weakpoint Objective to do a normal, smaller explosion,
+      especially on Lowpop(~20) and gives the objective a lower weight.
+  Melbert:
+  - balance: Nettles and Deathnettles are now normal sized, up from tiny. (Number
+      per plant bag has decreased from 100 to 33.)
+  orthography:
+  - bugfix: icebox pumps now match the standard of every other map
+  - bugfix: gives access to the APC as the AI, and adds more camera coverage where
+      it belongs.
+  timothymtorres:
+  - bugfix: Fix Confusion and Self-Respiration virus symptoms to appear at final stage.
+  vincentiusvin:
+  - admin: experiment completion are now logged in research.html
+2022-07-07:
+  Crumpaloo, jlsnow301, JohnFulpWillard:
+  - rscadd: Typing indicators now use your speech bubble type, rather than all being
+      the same, so Cyborgs no longer look like a human when typing, and Lawyers have
+      that cool speech bubble again.
+  Mooshimi:
+  - refactor: Reworked the wiring in AI Sats incorporating multiple layered wiring.
+  dragomagol:
+  - bugfix: pAI screens light up with an alert when there's a personality to download!
+  lizardqueenlexi:
+  - bugfix: made plastic flaps in MetaStation deliveries area transparent
+  orthography:
+  - bugfix: Fixed sec vestibule maintenance
+  - bugfix: fixed metastation atmos areas.
+  stylemistake:
+  - bugfix: Fixed "Script Error" in tgui and tgchat (hopefully).
+2022-07-08:
+  CursedBirb:
+  - bugfix: Qm coat can carry telebaton
+  - refactor: Qm coat is a subtype of department coat like other heads clothes
+  Guillaume Prata:
+  - qol: You fold roller beds and bodybags with a right click instead of click and
+      dragging into you.
+  - qol: You can use any sharp object to cut a bodybag's tag instead of being forced
+      to use a wirecutter.
+  Jolly:
+  - rscadd: 'KC13 (The big ruin with the drone spawners) has received some new room
+      types. bal: [KC13] The ruin now starts DEPOWERED. As some mild compensation,
+      there are more batteries in the ruin. Please don''t swallow them.'
+  - qol: KC13 has been spruced up a bit, aesthetically speaking.
+  - qol: '[KC13] Converted any full tile windows to the "hollow" window spawners (the
+      one with 4 thin windows)'
+  - bugfix: '[KC13] Fixed the stacked old AI turret in the AI upload hall.'
+  - bugfix: '[KC13] Fixed some wall mount items not being directional (icky var edits).'
+  MMMiracles:
+  - rscadd: The central service wing has been completely remapped to help put the
+      chef and bartender front-and-center for crew interactions. Hydroponics was moved
+      to the lower floor to accommodate this change.
+  Pepsilawn:
+  - bugfix: Kilostation had a few areas in space around the ordnance test site fixed
+      up.
+  Profakos:
+  - bugfix: corrected the minimum player count of a few disease events
+  VioletN:
+  - bugfix: The changeling tentacle power now properly functions the way its description
+      says it does.
+  Zonespace27:
+  - code_imp: Code for Academy, Challenge, Spacebattle, and Wild West away missions
+      has been removed
+  jlsnow301:
+  - bugfix: Syndicate fission360 apps work again
+  lizardqueenlexi:
+  - bugfix: fixed an incorrect disposals junction in Tramstation Medical department
+  orthography:
+  - balance: removes the BMP spawns that are out in bum-fuck nowhere.
+  - bugfix: fixes the lack of air in the BMP asteroid spawns.
+2022-07-09:
+  13spacemen:
+  - rscadd: Experimental Syndicate Teleporter is now available in the Traitor Uplink
+      for 8 TC. Warning, not as safe as Nanotrasen Teleporters.
+  Fikou:
+  - bugfix: ethereals no longer revive after being changeling drained
+  GoldenAlpharex:
+  - bugfix: Fixed trapdoors freaking out when you destroy their floor tile without
+      having a remote attached to said trapdoor.
+  LemonInTheDark:
+  - bugfix: Thermomachines will properly have a dropshadow
+  - bugfix: Weather will be blurred as expected
+  Melbert:
+  - bugfix: Dashes such as the Heirophant staff and Ninja sword should no longer permanently
+      break on rare occasions.
+  QuacksQ:
+  - spellcheck: Fixed the desc of paper walls
+  Sheits:
+  - bugfix: Fixes a stray pixel on female human sprites
+  Toto5561:
+  - imageadd: Added new bacon sprites. ~~Accidentally~~ added new mint sprite.
+  Vladoricious:
+  - qol: Tacticool turtlenecks and skirtlenecks now have suit sensors installed! No
+      more excuses. Turn em up.
+  Wallem:
+  - qol: Sign Language users now have a unique speech indicator as well as a visual
+      indicator of the tone of their message, making it easier to communicate both
+      with and as a sign language user.
+  Zonespace27:
+  - admin: Get-Current-Logs and Get-Server-Logs now let you download entire folders
+      at once
+  carshalash:
+  - balance: Syndicate no longer wants easily printed upload boards.
+  jlsnow301:
+  - bugfix: Fixed scrolling the orbit ui
+  kawoppi:
+  - bugfix: rag cleaning speed is now influenced by your cleaning skill
+  - bugfix: cleaning with a rag now gives you cleaning skill experience
+  - bugfix: rags can now be used to wash bloodied windows
+  - bugfix: soap is no longer restricted from washing worn clothing, as this doesn't
+      seem to be causing issues anymore
+  lizardqueenlexi:
+  - rscadd: Added a sorting disposals pipe for the Tramstation dormitory, allowing
+      packages to be sent there
+  - bugfix: Fixed two incorrect sorting disposals pipes on Tramstation that prevented
+      packages from reaching certain destinations
+  - bugfix: Added four missing names to sorting disposals pipes on Tramstation
+  orthography:
+  - bugfix: fixed APC wiring
+  san7890:
+  - admin: The ID of the Ticket will now show up in all associated Admin PM Messages
+      when logged.
+  sergeirocks100:
+  - imageadd: The library computer now has four directional sprites instead of just
+      one.
+  unit0016:
+  - rscadd: The SBC Starfury has been ever-so-slightly tweaked! Two of the shuttles
+      are now where the gunnery bays used to be, and the rest of the differences are
+      largely cosmetic. Largely.
+  - code_imp: Survival pod fans have been split off into their own file.
+  vincentiusvin:
+  - balance: pumps and scrubbers have their heat and pressure limit buffed to be the
+      same as unshielded cans.
+  - balance: cans have their release pressure buffed to 2533kpa.
+  zxaber:
+  - bugfix: Airlock shock indicators on diagnostics HUDs will now correctly be removed
+      when the door is unshocked.
+2022-07-10:
+  Melbert:
+  - bugfix: Bolts of Necropotence works again.
+  - rscadd: Iceboxstation's EVA now comes kitted out with equipment that may actually
+      help you out if you want to go outside. Including special winter coats that
+      can carry big oxygen tanks and boots to prevent you from slipping on ice.
+  - rscadd: Iceboxstation's arrivals hallway, and many of the rooms around it, have
+      had their style and layouts updated slightly.
+  Nuke:
+  - bugfix: Bubblegum will now beat your ass again.
+  SmoSmoSmoSmok:
+  - code_imp: dehardcodes admin grantable objectives list
+  YakumoChen:
+  - balance: GPS designs can no longer be exported to autolathes.
+  cacogen:
+  - bugfix: The generic station name with the long number in words is rarer
+  jjpark-kb:
+  - bugfix: trailers will actually trail their attached vehicles
+  magatsuchi:
+  - refactor: changes storage from a component to a normal datum
+  orthography:
+  - bugfix: fixes the piping of the ORD lab.
+  - bugfix: changes a pump subclass.
+  timothymtorres:
+  - bugfix: Fix simple mob deaths causing deadchat notifications. Special mobs still
+      cause deadchat notifications (brood spiders, elite lavaland mobs, morphs, revenants,
+      space dragons)
+  - bugfix: Fix deafness virus symptom to be permanent if resistance threshold is
+      met.
+2022-07-11:
+  Melbert:
+  - bugfix: Tonic Water heals dizziness instead of causing it
+  san7890:
+  - bugfix: On Tramstation, prisoners can now exit the labor shuttle without being
+      trapped inside.
+  - bugfix: On TramStation, the xenobiology pen disposals bins should no longer pop
+      off the floor tile on the turf they reside on. They should also now like...
+      actually work. Nanotrasen had to re-route the disposals a bit to accomodate,
+      but that's alright.
+2022-07-12:
+  Couls:
+  - bugfix: AI detector now correctly tells you when the AI is out of range
+  - qol: Uplink description for ai detector properly reflects that it no longer reveals
+      AI view
+  Kapu1178:
+  - soundadd: Random ambience volume has been reduced.
+  RimiNosha:
+  - qol: Lavaland ambiance is now much less loud and unpleasant.
+  Salex08:
+  - bugfix: fixes silver spawned food not being disgusting
+  Timberpoes:
+  - bugfix: Admins will no longer get ADMIN LOG message spam when reproductive extracts
+      are fed.
+  magatsuchi:
+  - bugfix: properly updates storage object icon states
+  - bugfix: ghosts can now view storage objects again
+  - bugfix: boxes can no longer fit normal sized objects
+  san7890:
+  - rscadd: Across all five station's, that little bartender's cubby area is now known
+      as the "backroom". How spooky.
+  - bugfix: TramStation's Bar Lounge now has an air alarm.
+  zxaber:
+  - rscadd: Added new experiments for unlocking the path to Durand, Gygax, and Phazon
+      exosuits. Weapons tech and Advanced Weapons tech are no longer required.

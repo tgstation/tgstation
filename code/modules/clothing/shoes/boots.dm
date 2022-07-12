@@ -8,8 +8,12 @@
 	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 90, FIRE = 70, ACID = 50)
 	strip_delay = 40
 	resistance_flags = NONE
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 12 SECONDS
+
+/obj/item/clothing/shoes/combat/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/combat/sneakboots
 	name = "sneakboots"
@@ -37,8 +41,12 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 90, FIRE = 0, ACID = 0)
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/jackboots/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -53,8 +61,12 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
+
+/obj/item/clothing/shoes/winterboots/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/winterboots/ice_boots
 	name = "ice hiking boots"
@@ -62,6 +74,19 @@
 	icon_state = "iceboots"
 	inhand_icon_state = "iceboots"
 	clothing_flags = NOSLIP_ICE
+
+// A pair of ice boots intended for general crew EVA use - see EVA winter coat for comparison.
+/obj/item/clothing/shoes/winterboots/ice_boots/eva
+	name = "\proper Endotherm hiking boots"
+	desc = "A heavy pair of boots with grips applied to the bottom to keep the wearer vertical while walking in freezing conditions."
+	icon_state = "iceboots_eva"
+	w_class = WEIGHT_CLASS_BULKY
+	slowdown = 0.25
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 50, FIRE = 50, ACID = 10)
+	strip_delay = 4 SECONDS
+	equip_delay_other = 4 SECONDS
+	clothing_flags = NOSLIP_ICE|THICKMATERIAL
+	resistance_flags = NONE
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
@@ -73,9 +98,13 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 80, FIRE = 0, ACID = 0)
 	strip_delay = 20
 	equip_delay_other = 40
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
 	species_exception = list(/datum/species/golem/uranium)
+
+/obj/item/clothing/shoes/workboots/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -88,8 +117,12 @@
 	desc = "Comfy shoes."
 	icon_state = "rus_shoes"
 	inhand_icon_state = "rus_shoes"
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
+
+/obj/item/clothing/shoes/russian/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/discoshoes
 	name = "green lizardskin shoes"

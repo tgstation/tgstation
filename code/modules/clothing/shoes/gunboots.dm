@@ -5,7 +5,6 @@
 	inhand_icon_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	/// What projectile do we shoot?
 	var/projectile_type = /obj/projectile/bullet/c10mm
 	/// Each step, this is the chance we fire a shot
@@ -13,6 +12,9 @@
 
 /obj/item/clothing/shoes/gunboots/Initialize(mapload)
 	. = ..()
+
+	create_storage(type = /datum/storage/pockets/shoes)
+
 	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_step)
 
 /obj/item/clothing/shoes/gunboots/equipped(mob/user, slot)
