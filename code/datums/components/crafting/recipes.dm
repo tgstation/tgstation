@@ -4,20 +4,29 @@
 #define CRAFTING_MACHINERY_USE 0
 
 /datum/crafting_recipe
-	var/name = "" //in-game display name
-	var/list/reqs = list() //type paths of items consumed associated with how many are needed
-	var/list/blacklist = list() //type paths of items explicitly not allowed as an ingredient
-	var/result //type path of item resulting from this craft
+	///in-game display name
+	var/name = ""
+	///type paths of items consumed associated with how many are needed
+	var/list/reqs = list()
+	///type paths of items explicitly not allowed as an ingredient
+	var/list/blacklist = list()
+	///type path of item resulting from this craft
+	var/result
 	/// String defines of items needed but not consumed. Lazy list.
 	var/list/tool_behaviors
 	/// Type paths of items needed but not consumed. Lazy list.
 	var/list/tool_paths
-	var/time = 3 SECONDS //time in deciseconds
-	var/list/parts = list() //type paths of items that will be placed in the result
-	var/list/chem_catalysts = list() //like tool_behaviors but for reagents
-	var/category = CAT_NONE //where it shows up in the crafting UI
+	///time in seconds. Remember to use the SECONDS define!
+	var/time = 3 SECONDS
+	///type paths of items that will be placed in the result
+	var/list/parts = list()
+	///like tool_behaviors but for reagents
+	var/list/chem_catalysts = list()
+	///where it shows up in the crafting UI
+	var/category = CAT_NONE
 	var/subcategory = CAT_NONE
-	var/always_available = TRUE //Set to FALSE if it needs to be learned first.
+	///Set to FALSE if it needs to be learned first.
+	var/always_available = TRUE
 	/// Additonal requirements text shown in UI
 	var/additional_req_text
 	///Required machines for the craft, set the assigned value of the typepath to CRAFTING_MACHINERY_CONSUME or CRAFTING_MACHINERY_USE. Lazy associative list: type_path key -> flag value.
