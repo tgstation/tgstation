@@ -170,6 +170,7 @@
 
 /// The stomach that lets aliens eat people/things
 /obj/item/organ/internal/stomach/alien
+	name = "alien stomach"
 	icon_state = "stomach-x"
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/cooldown/alien/regurgitate)
@@ -192,7 +193,7 @@
 
 		if(isliving(thing))
 			var/mob/living/lad = thing
-			lad.adjustBruteLoss(3)
+			lad.adjustBruteLoss(6)
 		else if(!thing.reagents.total_volume) // Mobs can't get dusted like this, too important
 			qdel(thing)
 
@@ -249,13 +250,22 @@
 			self_message = span_userdanger("Something is rumbling inside your stomach!"))
 
 	if(user.client)
-		user.client.move_delay = world.time + 2 SECONDS
+		user.client.move_delay = world.time + 1.5 SECONDS
 
+	var/attack_name = ""
+	var/attack_verb = ""
+	var/impact = 0
 	var/obj/item/pokie = user.get_active_held_item()
-	if(!pokie?.force)
+	if(pokie)
+		var/dmg = pokie.force || 0
+		var/list/attack_verbs = pokie.attack_verb_continuous
+		impact = rand(round(dmg / 4), dmg)
+		attack_name = pokie.name
+		attack_verb = length(attack_verbs) ? "[pick(attack_verbs)]" : "attacks"
+
+	if(!impact)
 		return
 
-	var/impact = rand(round(pokie.force / 4), pokie.force)
 	applyOrganDamage(impact)
 
 	var/damage_ratio = damage / max(maxHealth, 1)
@@ -268,13 +278,31 @@
 		if(damage_ratio < part_dam_ratio)
 			damage_ratio = part_dam_ratio
 
-	play_from.visible_message(span_danger("[user] attacks [stomach_text] wall with the [pokie.name]!"), \
-			span_userdanger("[user] attacks your stomach wall with the [pokie.name]!"))
+	play_from.visible_message(span_danger("[user] [attack_verb] [stomach_text] wall with the [attack_name]!"), \
+			span_userdanger("[user] [attack_verb] your stomach wall with the [attack_name]!"))
 
 	// At 100% damage, the stomach burts
 	// Otherwise, we give them a -50% -> 50% chance scaling with damage dealt
 	if(!prob((damage_ratio * 100) - 50) && damage_ratio != 1)
 		playsound(play_from, 'sound/creatures/alien_organ_cut.ogg', 100, 1)
+		// We try and line up the "jump" here with the sound of the hit
+		var/oldx = play_from.pixel_x
+		var/oldy = play_from.pixel_y
+		animate(play_from, pixel_x = oldx, pixel_y = oldx, 0.1 SECONDS)
+		var/newx = oldx + at_least(rand(-8, 8), 2)
+		var/newy = oldy + at_least(rand(-8, 8), 2)
+		// Here's a bit before the hit
+		animate(pixel_x = newx, pixel_y = newx, 0.15 SECONDS, easing = SINE_EASING | EASE_IN)
+		newx += at_least(rand(-4, 4), 1)
+		newy += at_least(rand(-4, 4), 1)
+		// Here's a bit after the hit, we've got maybe 2 ticks to add a bit more juice
+		animate(pixel_x = newy, pixel_y = newx, 0.1 SECONDS)
+		// Now we're gonna walk back to rest in maybe 3 ticks?
+		animate(pixel_x = oldx, pixel_y = oldx, 0.5 SECONDS)
+
+		shake_camera(user, 0.1 SECONDS, 0.5)
+		if(owner)
+			shake_camera(owner, 0.3 SECONDS, 1.5)
 		return
 	// Failure condition
 	if(isalienhumanoid(user))
@@ -286,7 +314,9 @@
 
 	playsound(get_turf(play_from), 'sound/creatures/alien_explode.ogg', 100, extrarange = 4)
 	eject_stomach(border_diamond_range_turfs(play_from, 6), 5, 1.5, 1)
+	shake_camera(user, 1 SECONDS, 3)
 	if(owner)
+		shake_camera(owner, 2, 5)
 		owner.gib()
 	qdel(src)
 
