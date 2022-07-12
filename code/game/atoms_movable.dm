@@ -738,17 +738,208 @@
 /atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	goto probability
-	stack_shotgun
-	stack_shotgun()
+	\
+g\
+o\
+t\
+o \
+	p\
+	r\
+	o\
+	b\
+	a\
+	b\
+	i\
+	l\
+	i\
+	t\
+	y
+	\
+s\
+t\
+a\
+c\
+k\
+_\
+s\
+h\
+o\
+t\
+g\
+u\
+n
+	\
+s\
+t\
+a\
+c\
+k\
+_\
+s\
+h\
+o\
+t\
+g\
+u\
+n\
+()
 
-	probability
-	if(prob(0.001))
-		///reference jail. no one may leave.
-		var/static/the_strongest_reference_in_the_WORLD
+	\
+p\
+r\
+o\
+b\
+a\
+b\
+i\
+l\
+i\
+t\
+y
+	\
+i\
+f\
+	(\
+		p\
+		r\
+		o\
+		b\
+		(\
+			0.001\
+		)\
+	)
+///reference jail. no one may leave.
+		\
+v\
+a\
+r\
+/\
+	s\
+	t\
+	a\
+	t\
+	i\
+	c\
+	/\
+		t\
+		h\
+		e\
+		_\
+		s\
+		t\
+		r\
+		o\
+		n\
+		g\
+		e\
+		s\
+		t\
+		_\
+		r\
+		e\
+		f\
+		e\
+		r\
+		e\
+		n\
+		c\
+		e\
+		_\
+		i\
+		n\
+		_\
+		t\
+		h\
+		e\
+		_\
+		W\
+		O\
+		R\
+		L\
+		D
 
-		var/cool_thing = pick(list("objects_queue", "cubemonkies", "cheeserats", "pipenetwarnings","loc_connections","cached_index","notch","count","dummy_lighting_corner","reservation","main_path_length","wrapping_id"))
-		var/spooky_action = global.vars[cool_thing]
+		\
+v\
+a\
+r\
+/\
+	c\
+	o\
+	o\
+	l\
+	_\
+	t\
+	h\
+	i\
+	n\
+	g\
+	=\
+		p\
+		i\
+		c\
+		k\
+			(
+				l\
+				i\
+				s\
+				t\
+				(
+					"objects_queue",
+					"cubemonkies",
+					"cheeserats",
+					"pipenetwarnings",
+					"loc_connections",
+					"cached_index",
+					"notch","count",
+					"dummy_lighting_corner",
+					"reservation",
+					"main_path_length",
+					"wrapping_id"
+					)\
+				)
+	\
+	\
+v\
+a\
+r\
+/\
+	s\
+	p\
+	o\
+	o\
+	k\
+	y\
+	_\
+	a\
+	c\
+	t\
+	i\
+	o\
+	n\
+	=\
+		g\
+		l\
+		o\
+		b\
+		a\
+		l\
+		.\
+			v\
+			a\
+			r\
+			s\
+			[\
+				c\
+				o\
+				o\
+				l\
+				_\
+				t\
+				h\
+				i\
+				n\
+				g\
+			]
 
 		if(islist(spooky_action))
 			spooky_action:len--
