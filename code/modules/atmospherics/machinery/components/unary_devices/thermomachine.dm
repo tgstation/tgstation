@@ -150,8 +150,10 @@
 
 	port.temperature = max(((port.temperature * port_capacity) + heat_amount) / port_capacity, TCMB)
 
+	heat_amount = abs(heat_amount) * HEAT_POWER_CONVERSION
+
 	// This produces a nice curve that scales decently well for really hot stuff, and is nice to not fusion. It'll do
-	var/power_usage = idle_power_usage + abs(heat_amount) * HEAT_POWER_CONVERSION
+	var/power_usage = idle_power_usage + heat_amount ** (1.16 - (5e5 * 0.16 / max(heat_amount, 5e5)))
 
 	use_power(power_usage)
 	update_parents()
