@@ -118,5 +118,5 @@
 	splint_factor = 0.5
 	custom_price = PAYCHECK_CREW
 	merge_type = /obj/item/stack/sticky_tape/surgical
-	greyscale_colors = "#5FA4CC#BD6A62"
+	greyscale_colors = "#70BAE7#BD6A62"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/surgical

@@ -80,7 +80,7 @@
 /obj/item/clothing/mask/muzzle/tape/surgical
 	name = "surgical tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. As long as you apply this to your patient, you won't hear their screams of pain!"
-	greyscale_colors = "#5FA4CC"
+	greyscale_colors = "#70BAE7"
 	equip_delay_other = 30
 	strip_delay = 30
 
