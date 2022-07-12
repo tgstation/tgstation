@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - bugfix: "properly updates storage object icon states"
