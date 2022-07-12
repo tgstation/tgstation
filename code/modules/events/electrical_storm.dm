@@ -5,6 +5,8 @@
 	min_players = 5
 	weight = 20
 	alert_observers = FALSE
+	category = EVENT_CAT_ENGINEERING
+	description = "Destroys all lights in a large area."
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount = 1
