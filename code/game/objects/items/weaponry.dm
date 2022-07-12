@@ -690,6 +690,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/homerun_ready = FALSE
 	/// Can we launch mobs thrown at us away?
 	var/mob_thrower = FALSE
+	/// List of all thrown datums we sent.
+	var/list/thrown_datums = list()
 
 /obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
@@ -703,12 +705,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			desc = "You gotta know what a crumpet is to understand cricket."
 
 	AddElement(/datum/element/kneecapping)
-
-/obj/item/melee/baseball_bat/homerun
-	name = "home run bat"
-	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
-	homerun_able = TRUE
-	mob_thrower = TRUE
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
@@ -741,11 +737,26 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/whack_speed = (prob(60) ? 1 : 4)
 		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
+/obj/item/melee/baseball_bat/Destroy(force)
+	for(var/target in thrown_datums)
+		var/datum/thrownthing/throw_datum = thrown_datums[target]
+		throw_datum.callback.Invoke()
+	thrown_datums.Cut()
+	return ..()
+
 /obj/item/melee/baseball_bat/pre_attack(atom/movable/target, mob/living/user, params)
-	if(!istype(target))
+	var/turf/target_turf = get_turf(target)
+	if(!target_turf)
 		return ..()
+	for(var/atom/movable/atom as anything in target_turf)
+		if(!try_launch(atom, user))
+			continue
+		return TRUE
+	return ..()
+
+/obj/item/melee/baseball_bat/proc/try_launch(atom/movable/target, mob/living/user)
 	if(!target.throwing || (ismob(target) && !mob_thrower))
-		return ..()
+		return FALSE
 	var/datum/thrownthing/throw_datum = target.throwing
 	var/datum_throw_speed = throw_datum.speed
 	var/angle = 0
@@ -754,11 +765,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		angle = 270
 	if(target.dir & turn(target_to_user, 270))
 		angle = 90
-	if(target.dir & turn(target_to_user, 180))
+	if(target.dir & (target_to_user|turn(target_to_user, 180)))
 		angle = 180
-	if(target.dir & target_to_user)
-		angle = 360
-	var/turf/return_to_sender = get_ranged_target_turf_direct(user, throw_datum.starting_turf, round(target.throw_range * 1.5, 1), offset = angle + (rand(-1, 1) * 15))
+	var/turf/return_to_sender = get_ranged_target_turf_direct(user, throw_datum.starting_turf, round(target.throw_range * 1.5, 1), offset = angle + (rand(-1, 1) * 10))
 	throw_datum.finalize(hit = FALSE)
 	target.mouse_opacity = MOUSE_OPACITY_TRANSPARENT //dont mess with our ball
 	target.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
@@ -778,10 +787,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	target.add_filter("baseball_launch", 3, motion_blur_filter(1, 3))
 	target.throwforce *= 2
 	target.throw_at(target_turf, get_dist(target, target_turf), datum_throw_speed + 1, user, callback = CALLBACK(src, .proc/on_hit, target))
+	thrown_datums[target] = target.throwing
 
 /obj/item/melee/baseball_bat/proc/on_hit(atom/movable/target)
 	target.remove_filter("baseball_launch")
 	target.throwforce *= 0.5
+	thrown_datums -= target
+
+/obj/item/melee/baseball_bat/homerun
+	name = "home run bat"
+	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
+	homerun_able = TRUE
+	mob_thrower = TRUE
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"

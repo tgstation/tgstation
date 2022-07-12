@@ -862,10 +862,6 @@
 	throw_range = 9
 	throw_speed = 0.5
 
-/obj/item/toy/beach_ball/baseball/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/clickbox, min_scale = 2)
-
 /*
  * Clockwork Watch
  */
