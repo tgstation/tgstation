@@ -129,12 +129,12 @@
 	else
 		request = "[request] [formatted_recipient_ckey]."
 
-	var/messsage = input(src, message_prompt, request) as message|null
+	var/message = input(src, message_prompt, request) as message|null
 
 	if(recipient_ticket)
 		LAZYREMOVE(recipient_ticket.opening_responders, src)
 
-	if (!messsage)
+	if (!message)
 		message_admins("[our_linked_name] has cancelled their reply to [recipient_linked_ckey]'s admin help.")
 		return
 
@@ -148,12 +148,12 @@
 				confidential = TRUE)
 			to_chat(src,
 				type = MESSAGE_TYPE_ADMINPM,
-				html = "[span_danger("<b>Message not sent:</b>")]<br>[messsage]",
+				html = "[span_danger("<b>Message not sent:</b>")]<br>[message]",
 				confidential = TRUE)
 			if(recipient_ticket)
-				recipient_ticket.AddInteraction("<b>No client found, message not sent:</b><br>[messsage]")
+				recipient_ticket.AddInteraction("<b>No client found, message not sent:</b><br>[message]")
 			return
-	cmd_admin_pm(whom, messsage)
+	cmd_admin_pm(whom, message)
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed.
