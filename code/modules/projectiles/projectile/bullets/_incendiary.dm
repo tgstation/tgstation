@@ -22,7 +22,7 @@
 		new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
 
-/// Incendienary bullet that more closely resembles a real flamethrower sorta deal, no visible bullet, just flames.
+/// Incendiary bullet that more closely resembles a real flamethrower sorta deal, no visible bullet, just flames.
 /obj/projectile/bullet/incendiary/fire
 	damage = 15
 	range = 6
