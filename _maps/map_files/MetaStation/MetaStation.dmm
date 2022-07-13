@@ -40053,7 +40053,9 @@
 	dir = 9
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_hardware/hard_drive/portable/scipaper_program{
+	pixel_x = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "okQ" = (
