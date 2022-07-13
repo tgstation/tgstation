@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		var/giver_heat_capacity = giver.heat_capacity()
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity)
-    		temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity	
+			temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity	
 		return
 
 ///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
