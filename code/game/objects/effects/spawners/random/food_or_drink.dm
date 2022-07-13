@@ -228,6 +228,7 @@
 		/obj/item/reagent_containers/food/condiment/bbqsauce = 1,
 		/obj/item/reagent_containers/food/condiment/soysauce = 1,
 		/obj/item/reagent_containers/food/condiment/vinegar = 1,
+		/obj/item/reagent_containers/food/condiment/peanut_butter = 1,
 		/obj/item/reagent_containers/food/condiment/quality_oil = 1,
 	)
 
