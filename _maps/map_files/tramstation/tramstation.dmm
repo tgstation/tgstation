@@ -11287,6 +11287,7 @@
 	network = list("ss13","rd")
 	},
 /obj/structure/cable,
+/obj/structure/sign/departments/aiupload/directional/east,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "dUa" = (
@@ -24619,6 +24620,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
 	},
+/obj/structure/sign/departments/telecomms/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "iGV" = (
@@ -27314,8 +27316,8 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Command - Bridge South"
 	},
-/obj/machinery/newscaster/directional/south,
 /obj/structure/cable,
+/obj/structure/sign/departments/vault/directional/south,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "jDm" = (
@@ -42868,6 +42870,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "oUY" = (
@@ -55274,6 +55277,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
+"tih" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/sign/departments/rndserver/directional/east,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "tix" = (
 /obj/structure/bed{
 	dir = 4
@@ -65374,6 +65387,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
+/obj/structure/sign/departments/aisat/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/transit_tube)
 "wIz" = (
@@ -181384,7 +181398,7 @@ cEy
 jPy
 ugl
 nHd
-wVj
+tih
 wVj
 kEA
 hwM
