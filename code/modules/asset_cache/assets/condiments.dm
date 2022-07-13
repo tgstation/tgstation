@@ -17,5 +17,4 @@
 		"frostoil" = 'icons/ui_icons/condiments/coldsauce.png',
 		"bbqsauce" = 'icons/ui_icons/condiments/bbqsauce.png',
 		"cornoil" = 'icons/ui_icons/condiments/oliveoil.png',
-		"peanutbutter" = 'icons/ui_icons/condiments/peanutbutter.png',
 	)
