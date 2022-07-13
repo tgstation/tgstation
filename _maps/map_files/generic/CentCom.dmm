@@ -11778,6 +11778,10 @@
 	pixel_x = -4;
 	pixel_y = 17
 	},
+/obj/item/storage/box/syringes{
+	pixel_y = 17;
+	pixel_x = 4
+	},
 /obj/item/assembly/igniter{
 	pixel_x = 7;
 	pixel_y = 6
