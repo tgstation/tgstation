@@ -76,6 +76,9 @@
 /obj/item/organ/internal/tongue/could_speak_language(language)
 	return is_type_in_typecache(language, languages_possible)
 
+/obj/item/organ/internal/tongue/get_availability(datum/species/owner_species)
+	return !(NO_TONGUE in owner_species.species_traits)
+
 /obj/item/organ/internal/tongue/lizard
 	name = "forked tongue"
 	desc = "A thin and long muscle typically found in reptilian races, apparently moonlights as a nose."

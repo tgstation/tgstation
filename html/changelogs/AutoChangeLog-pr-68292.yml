@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "The CE can now trim people's IDs to Atmospherics Technician"
+  - bugfix: "The HoS can no longer trim people's IDs to Lawyers."

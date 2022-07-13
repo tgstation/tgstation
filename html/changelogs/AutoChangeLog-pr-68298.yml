@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - bugfix: "boxes can no longer fit normal sized objects"
