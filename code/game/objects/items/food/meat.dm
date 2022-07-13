@@ -177,8 +177,8 @@
 	desc = "Fungus fermented soybean cake, warm to the touch"
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "tempeh"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
-	tastes = list("tempeh" = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8)
+	tastes = list("earthy" = 3, "nutty" = 2, "bland" = 1 )
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
@@ -190,13 +190,21 @@
 
 /obj/item/food/tempehslice
 	name = "tempeh slice"
-	desc = "A slice of tempeh"
+	desc = "A slice of goodness, a slice of tempeh"
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "tempehslice"
-	food_reagents = 
-	tastes = list("tempeh" = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("earthy" = 3, "nutty" = 2, "bland" = 1)
 	foodtypes = VEGETABLES
 	
+/obj/item/food/tempehblend
+	name = "tempeh blend"
+	desc = "a mix of soybeans and mushroom seeds, it's alive, it's moving?"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "tempehslice"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("nutty" = 2, "bland" = 2)
+	foodtypes = VEGETABLES | GROSS
 
 /obj/item/food/tofu
 	name = "tofu"

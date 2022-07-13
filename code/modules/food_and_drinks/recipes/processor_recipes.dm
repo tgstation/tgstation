@@ -91,9 +91,9 @@
 	output = /obj/item/food/fries
 
 /datum/food_processor_process/tempeh
-	input = /obj/item/food/grown/soybeans
-	output = /obj/item/food/tempeh/raw
-	var/food_multiplier = 1
+	input = /obj/item/food/tempehblend
+	output = /obj/item/food/tempeh
+	var/food_multiplier = 2
 
 /datum/food_processor_process/spidereggs
 	input = /obj/item/food/spidereggs
