@@ -101,7 +101,7 @@
 	return
 
 /// Generates a piece of trash based on our plant item. Used by [/datum/element/food_trash].
-/// location - Optional. If passed, generates the item at the passed location instead of inside src.
+/// location - Optional. If passed, generates the item at the passed location instead of at src's drop location.
 /obj/item/food/grown/proc/generate_trash(atom/location)
 	// If this is some type of grown thing, we pass a seed arg into its Inititalize()
 	if(ispath(trash_type, /obj/item/grown) || ispath(trash_type, /obj/item/food/grown))
