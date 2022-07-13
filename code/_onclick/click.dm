@@ -218,13 +218,10 @@
 		--depth
 
 		for(var/atom/target in checking)  // will filter out nulls
-			if(isnull(target))
-				continue
-
 			if(closed[target] || isarea(target))  // avoid infinity situations
 				continue
 
-			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1) || target.loc.atom_storage) //Directly accessible atoms
+			if(isturf(target) || isturf(target.loc) || (target in direct_access) || (ismovable(target) && target.flags_1 & IS_ONTOP_1) || target.loc?.atom_storage) //Directly accessible atoms
 				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 					return TRUE
 
@@ -233,7 +230,7 @@
 			if (!target.loc)
 				continue
 
-			if(target.loc.atom_storage)
+			if(target.loc?.atom_storage)
 				next += target.loc
 
 		checking = next
