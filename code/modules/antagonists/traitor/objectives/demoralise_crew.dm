@@ -18,7 +18,7 @@
 
 	progression_maximum = 30 MINUTES
 
-	abstract_type = /datum/traitor_objective/demoralise/
+	abstract_type = /datum/traitor_objective/demoralise
 
 	/// How many 'mood events' are required?
 	var/demoralised_crew_required = 0
@@ -36,20 +36,17 @@
  *
  * Arguments
  * * source - Source atom of the signal.
- * * victim - Whoever it was you just triggered some kind of effect on.
+ * * victim - Mind of whoever it was you just triggered some kind of effect on.
  */
-/datum/traitor_objective/demoralise/proc/on_mood_event(atom/source, mob/victim)
+/datum/traitor_objective/demoralise/proc/on_mood_event(atom/source, datum/mind/victim)
 	SIGNAL_HANDLER
 	if (victim == handler.owner)
 		return
 
 	demoralised_crew_events++
 	if (demoralised_crew_events >= demoralised_crew_required)
-		on_success()
+		to_chat(handler.owner, span_nicegreen("The crew look despondent. Mission accomplished."))
 		succeed_objective()
-
-/datum/traitor_objective/demoralise/proc/on_success()
-	to_chat(handler.owner, span_nicegreen("The crew look despondent. Mission accomplished."))
 
 #undef MAX_CREW_RATIO
 #undef MIN_CREW_DEMORALISED

@@ -71,13 +71,13 @@
 /datum/traitor_objective/demoralise/graffiti/proc/on_rune_destroyed(obj/effect/decal/cleanable/traitor_rune/rune)
 	SIGNAL_HANDLER
 	fail_objective()
-	UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(rune, COMSIG_DEMORALISING_EVENT)
 
-/datum/traitor_objective/demoralise/graffiti/on_success()
+/datum/traitor_objective/demoralise/graffiti/ungenerate_objective()
 	. = ..()
-	UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(rune, COMSIG_DEMORALISING_EVENT)
+	if (rune)
+		UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(rune, COMSIG_DEMORALISING_EVENT)
+		rune = null
 
 // Extending the existing spraycan item was more trouble than it was worth, I don't want or need this to be able to draw arbitrary shapes.
 /obj/item/traitor_spraycan
@@ -93,8 +93,6 @@
 	var/paint_color = "#780000"
 	var/static/list/no_draw_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
 
-	/// If you've started drawing a rune you can't start again somewhere else
-	var/obj/effect/decal/cleanable/traitor_rune/rune
 	/// Are we currently drawing? Used to prevent spam clicks for do_while
 	var/drawing_rune = FALSE
 	/// Set to true if we finished drawing something, this spraycan is now useless
@@ -102,7 +100,6 @@
 
 /obj/item/traitor_spraycan/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
-
 	if (expended)
 		user.balloon_alert(user, "all out of paint...")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -117,7 +114,8 @@
 	if (isturf(target))
 		try_draw_new_rune(user, target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	else if (target == rune)
+
+	if (istype(target, /obj/effect/decal/cleanable/traitor_rune))
 		try_complete_rune(user, target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -130,17 +128,13 @@
  * * target_turf - the place the rune's being drawn
  */
 /obj/item/traitor_spraycan/proc/try_draw_new_rune(mob/living/user, turf/target_turf)
-	if (rune)
-		user.balloon_alert(user, "you've already started drawing somewhere else!")
-		return
-
 	var/list/target_turfs = RANGE_TURFS(1, target_turf)
 	for(var/turf/nearby_turf as anything in target_turfs)
 		if (!isopenturf(nearby_turf) || is_type_in_typecache(nearby_turf, no_draw_turfs))
 			user.balloon_alert(user, "you need a clear 3x3 area!")
 			return
 
-	draw_rune(user, target_turf, target_turfs)
+	draw_rune(user, target_turf)
 
 /**
  * Draw your stage one rune on the ground and store it.
@@ -153,18 +147,8 @@
 	user.balloon_alert(user, "drawing outline...")
 	drawing_rune = TRUE
 	if (try_draw_step("drawing outline...", user, target_turf))
-		rune = new /obj/effect/decal/cleanable/traitor_rune(target_turf)
-		RegisterSignal(rune, COMSIG_PARENT_QDELETING, .proc/on_rune_destroyed)
-		try_complete_rune(user, rune)
-
-/**
- * Called when the rune we were drawing is cleaned up.
- * If you haven't reached the final stage yet this is fine and you can start over.
- */
-/obj/item/traitor_spraycan/proc/on_rune_destroyed()
-	SIGNAL_HANDLER
-	UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
-	rune = null
+		try_complete_rune(user, new /obj/effect/decal/cleanable/traitor_rune(target_turf))
+	drawing_rune = FALSE
 
 /**
  * Holder for repeated code to do something after a message and a set amount of time.
@@ -178,11 +162,9 @@
 	user.balloon_alert(user, "[start_output]")
 	if (!do_after(user, 3 SECONDS, target))
 		user.balloon_alert(user, "interrupted!")
-		drawing_rune = FALSE
 		return FALSE
 
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
-	drawing_rune = FALSE
 	return TRUE
 
 #define RUNE_STAGE_OUTLINE 0
@@ -269,10 +251,10 @@
 	QDEL_NULL(demoraliser)
 	return ..()
 
-/obj/effect/decal/cleanable/traitor_rune/HasProximity(atom/movable/proximity_check_mob as mob|obj)
-	. = ..()
+/obj/effect/decal/cleanable/traitor_rune/HasProximity(atom/movable/proximity_check_mob)
 	if (isliving(proximity_check_mob) && get_dist(proximity_check_mob, src) <= 1)
 		slip(proximity_check_mob)
+	return ..()
 
 /**
  * Makes someone fall over. If it's not the traitor, this counts as demoralising the crew.
@@ -282,7 +264,7 @@
  */
 /obj/effect/decal/cleanable/traitor_rune/proc/slip(mob/living/victim)
 	if(!(victim.movement_type & FLYING) && victim.slip(slip_time, src, slip_flags))
-		SEND_SIGNAL(src, COMSIG_DEMORALISING_EVENT, victim)
+		SEND_SIGNAL(src, COMSIG_DEMORALISING_EVENT, victim.mind)
 
 /**
  * Sets the "drawing stage" of the rune.

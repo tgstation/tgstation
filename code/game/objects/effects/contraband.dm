@@ -81,7 +81,8 @@
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
 	var/poster_item_icon_state = "rolled_poster"
 	var/poster_item_type = /obj/item/poster
-	var/obj/item/shard/trap = null
+	///A sharp shard of material can be hidden inside of a poster, attempts to embed when it is torn down.
+	var/obj/item/shard/trap
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()

@@ -18,7 +18,7 @@
 	return ..()
 
 /datum/proximity_monitor/advanced/demoraliser/field_turf_crossed(atom/movable/crossed, turf/location)
-	if (!ishuman(crossed))
+	if (!isliving(crossed))
 		return
 	if (!can_see(crossed, host, current_range))
 		return
@@ -31,7 +31,7 @@
  */
 /datum/proximity_monitor/advanced/demoraliser/proc/on_examine(datum/source, mob/examiner)
 	SIGNAL_HANDLER
-	if (ishuman(examiner))
+	if (isliving(examiner))
 		on_seen(examiner)
 
 /**
@@ -42,13 +42,13 @@
  * Arguments
  * * viewer - Whoever is looking at this.
  */
-/datum/proximity_monitor/advanced/demoraliser/proc/on_seen(mob/living/carbon/human/viewer)
+/datum/proximity_monitor/advanced/demoraliser/proc/on_seen(mob/living/viewer)
 	if (!viewer.mind)
 		return
 	// If you're not conscious you're too busy or dead to look at propaganda
 	if (viewer.stat != CONSCIOUS)
 		return
-	if (has_poster_mood_already(viewer))
+	if (was_demoralised(viewer))
 		return
 
 	if (is_special_character(viewer))
@@ -61,7 +61,7 @@
 		to_chat(viewer, span_notice("[moods.crew_notification]"))
 		SEND_SIGNAL(viewer, COMSIG_ADD_MOOD_EVENT, moods.mood_category, moods.crew_mood)
 
-	SEND_SIGNAL(host, COMSIG_DEMORALISING_EVENT, viewer)
+	SEND_SIGNAL(host, COMSIG_DEMORALISING_EVENT, viewer.mind)
 
 /**
  * Returns true if the viewer already has been given feelings, false if they haven't.
@@ -69,8 +69,11 @@
  * Arguments
  * * viewer - Whoever just saw the parent.
  */
-/datum/proximity_monitor/advanced/demoraliser/proc/has_poster_mood_already(mob/living/carbon/human/viewer)
+/datum/proximity_monitor/advanced/demoraliser/proc/was_demoralised(mob/living/viewer)
 	var/datum/component/mood/mood = viewer.GetComponent(/datum/component/mood)
+	if (!mood)
+		return FALSE
+
 	for(var/i in mood.mood_events)
 		var/datum/mood_event/moodlet = mood.mood_events[i]
 		if (moodlet.category == moods.mood_category)

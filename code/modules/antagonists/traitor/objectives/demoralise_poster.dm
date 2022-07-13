@@ -9,7 +9,7 @@
 	/// Have we handed out a box of stuff yet?
 	var/granted_posters = FALSE
 	/// All of the posters the traitor gets, if this list is empty they've failed
-	var/list/posters = list()
+	var/list/obj/structure/sign/poster/traitor/posters = list()
 
 /datum/traitor_objective/demoralise/poster/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
@@ -36,7 +36,7 @@
 				var/obj/structure/sign/poster/traitor/poster_when_placed = added_poster.poster_structure
 				posters += poster_when_placed
 				RegisterSignal(poster_when_placed, COMSIG_DEMORALISING_EVENT, .proc/on_mood_event)
-				RegisterSignal(poster_when_placed, COMSIG_POSTER_TRAP_SUCCEED, .proc/on_mood_event)
+				RegisterSignal(poster_when_placed, COMSIG_POSTER_TRAP_SUCCEED, .proc/on_triggered_trap)
 				RegisterSignal(poster_when_placed, COMSIG_PARENT_QDELETING, .proc/on_poster_destroy)
 
 			user.put_in_hands(posterbox)
@@ -44,11 +44,22 @@
 
 #undef POSTERS_PROVIDED
 
-/datum/traitor_objective/demoralise/poster/on_success()
+/datum/traitor_objective/demoralise/poster/ungenerate_objective()
 	. = ..()
 	for (var/poster in posters)
 		UnregisterSignal(poster, COMSIG_DEMORALISING_EVENT)
 		UnregisterSignal(poster, COMSIG_PARENT_QDELETING)
+	posters.Cut()
+
+/**
+ * Called if someone gets glass stuck in their hand from one of your posters.
+ *
+ * Arguments
+ * * victim - A mob who just got something stuck in their hand.
+ */
+/datum/traitor_objective/demoralise/poster/proc/on_triggered_trap(mob/victim)
+	SIGNAL_HANDLER
+	on_mood_event(victim.mind)
 
 /**
  * Handles a poster being destroyed, increasing your progress towards failure.
@@ -79,18 +90,18 @@
 	var/datum/proximity_monitor/advanced/demoraliser/demoraliser
 
 /obj/structure/sign/poster/traitor/on_placed_poster(mob/user)
-	. = ..()
 	var/datum/demoralise_moods/poster/mood_category = new()
 	demoraliser = new(src, 7, TRUE, mood_category)
+	return ..()
 
 /obj/structure/sign/poster/traitor/attackby(obj/item/I, mob/user, params)
-	. = ..()
 	if (I.tool_behaviour == TOOL_WIRECUTTER)
 		QDEL_NULL(demoraliser)
+	return ..()
 
 /obj/structure/sign/poster/traitor/Destroy()
 	QDEL_NULL(demoraliser)
-	. = ..()
+	return ..()
 
 /obj/structure/sign/poster/traitor/random
 	name = "random seditious poster"
