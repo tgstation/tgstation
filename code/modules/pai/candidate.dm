@@ -18,7 +18,7 @@
  * Checks if a candidate is ready so that they may be displayed or
  * downloaded. Removes any invalid entries.
  *
- * @return {boolean} TRUE if the candidate is ready, FALSE if not
+ * @returns {boolean} - TRUE if the candidate is ready, FALSE if not
  */
 /datum/pai_candidate/proc/check_ready()
 	var/mob/candidate_mob = get_mob_by_key(ckey)
