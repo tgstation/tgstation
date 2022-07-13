@@ -101,13 +101,6 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "T" = (
-/obj/effect/step_trigger/teleport_fancy{
-	entersmoke = 1;
-	entersparks = 1;
-	locationx = 78;
-	locationy = 113;
-	uses = 0
-	},
 /obj/structure/fluff{
 	desc = "You're not sure if walking into this is a great idea...";
 	icon = 'icons/effects/eldritch.dmi';

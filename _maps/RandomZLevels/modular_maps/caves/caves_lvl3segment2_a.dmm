@@ -368,9 +368,9 @@
 /obj/structure/closet/crate/grave,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/stack/sheet/bone,
-/obj/item/book/granter/spell/charge,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/head/wizard,
+/obj/item/book/granter/action/spell/charge,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "xo" = (

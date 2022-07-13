@@ -5,6 +5,7 @@
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
+	var/loadmap = TRUE //dont forget to remove this testing for smoothing issue
 
 	/// Points to a .toml file storing configuration data about the modules associated with this root
 	var/config_file = null
@@ -15,7 +16,8 @@ INITIALIZE_IMMEDIATE(/obj/modular_map_root)
 
 /obj/modular_map_root/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/load_map)
+	if(loadmap)
+		INVOKE_ASYNC(src, .proc/load_map)
 
 /// Randonly selects a map file from the TOML config specified in config_file, loads it, then deletes itself.
 /obj/modular_map_root/proc/load_map()

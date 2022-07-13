@@ -248,13 +248,6 @@
 /turf/open/misc/snow,
 /area/template_noop)
 "ir" = (
-/obj/effect/step_trigger/teleport_fancy{
-	entersmoke = 1;
-	entersparks = 1;
-	locationx = 27;
-	locationy = 236;
-	uses = 0
-	},
 /obj/structure/fluff{
 	desc = "You're not sure if walking into this is a great idea...";
 	icon = 'icons/effects/eldritch.dmi';
@@ -266,13 +259,6 @@
 "lL" = (
 /obj/structure/flora/tree/pine/xmas/presents,
 /obj/item/a_gift,
-/turf/open/misc/snow,
-/area/template_noop)
-"lQ" = (
-/obj/effect/step_trigger/message{
-	message = "Please do not come back any time soon, these sorts of things should be kept to a one-in-a-lifetime experience if possible.";
-	name = "leaving message in the tear"
-	},
 /turf/open/misc/snow,
 /area/template_noop)
 "mJ" = (
@@ -296,14 +282,6 @@
 /area/template_noop)
 "Fx" = (
 /turf/closed/mineral/snowmountain,
-/area/template_noop)
-"IO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/step_trigger/message{
-	message = "Life has many doors small one, some are best left closed. Hurry now, before someone less... lenient notices you.";
-	name = "initial warning in the tear"
-	},
-/turf/open/indestructible,
 /area/template_noop)
 
 (1,1,1) = {"
@@ -640,7 +618,7 @@ aU
 aV
 aX
 aM
-IO
+aJ
 aM
 aM
 aM
@@ -1237,7 +1215,7 @@ an
 an
 aM
 aL
-lQ
+xa
 aM
 aM
 aM

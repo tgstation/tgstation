@@ -49,10 +49,6 @@
 /obj/structure/table/abductor,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/misc/ayylmao)
-"bT" = (
-/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
 "cn" = (
 /obj/machinery/door/poddoor{
 	id = "exhibitstorage"
@@ -225,9 +221,6 @@
 /area/awaymission/caves/misc/ayylmao/office)
 "gu" = (
 /obj/structure/table/abductor,
-/obj/singularity/academy{
-	name = "Exhibit 0000Sl - BIG SUCK"
-	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/office)
 "gv" = (
@@ -725,13 +718,6 @@
 	icon = 'icons/effects/eldritch.dmi';
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
-	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersmoke = 1;
-	entersparks = 1;
-	locationx = 78;
-	locationy = 113;
-	uses = 0
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/holding_cell)
@@ -2513,7 +2499,7 @@ EN
 zA
 cp
 LD
-bT
+Gh
 KZ
 io
 VK

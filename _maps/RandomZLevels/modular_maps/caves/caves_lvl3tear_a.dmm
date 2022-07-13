@@ -144,14 +144,6 @@
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
 	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersmoke = 1;
-	entersparks = 1;
-	locationx = 52;
-	locationy = 213;
-	name = "rift teleport to mechabay";
-	uses = 0
-	},
 /turf/open/misc/asteroid,
 /area/template_noop)
 "E" = (
@@ -172,13 +164,6 @@
 /area/template_noop)
 "J" = (
 /turf/template_noop,
-/area/template_noop)
-"L" = (
-/obj/effect/step_trigger/message{
-	message = "Life has many doors small one, some are best left closed. Hurry now, before someone less... lenient notices you.";
-	name = "initial warning in the tear"
-	},
-/turf/open/misc/asteroid/basalt,
 /area/template_noop)
 "M" = (
 /obj/effect/turf_decal/stripes/box,
@@ -221,13 +206,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible,
-/area/template_noop)
-"V" = (
-/obj/effect/step_trigger/message{
-	message = "Please do not come back any time soon, these sorts of things should be kept to a one-in-a-lifetime experience if possible.";
-	name = "leaving message in the tear"
-	},
-/turf/open/misc/asteroid,
 /area/template_noop)
 "W" = (
 /turf/closed/indestructible/reinforced,
@@ -529,7 +507,7 @@ J
 J
 J
 M
-L
+k
 M
 J
 J
@@ -1219,7 +1197,7 @@ J
 J
 J
 J
-V
+r
 J
 W
 J

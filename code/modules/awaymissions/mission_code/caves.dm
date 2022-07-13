@@ -1,6 +1,7 @@
 //Modular Map marker
 /obj/modular_map_root/caves
 	config_file = "strings/modular_maps/caves.toml"
+	loadmap = TRUE
 
 //Map objects
 /obj/structure/clockcult_tower

@@ -121,13 +121,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood/large,
 /area/template_noop)
-"ov" = (
-/obj/effect/step_trigger/message{
-	message = "Please do not come back any time soon, these sorts of things should be kept to a one-in-a-lifetime experience if possible.";
-	name = "leaving message in the tear"
-	},
-/turf/open/floor/wood/large,
-/area/template_noop)
 "pA" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -255,14 +248,6 @@
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
 	},
-/obj/effect/step_trigger/teleport_fancy{
-	entersmoke = 1;
-	entersparks = 1;
-	locationx = 54;
-	locationy = 185;
-	name = "rift teleport to storage bay";
-	uses = 0
-	},
 /turf/open/floor/carpet,
 /area/template_noop)
 "GN" = (
@@ -354,18 +339,6 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
-/area/template_noop)
-"ST" = (
-/obj/effect/step_trigger/message{
-	message = "Life has many doors small one, some are best left closed. Hurry now, before someone less... lenient notices you.";
-	name = "initial warning in the tear"
-	},
-/obj/effect/light_emitter{
-	name = "outdoor light";
-	set_cap = 3;
-	set_luminosity = 6
-	},
-/turf/open/water/beach,
 /area/template_noop)
 "Tn" = (
 /obj/effect/overlay/palmtree_l,
@@ -795,7 +768,7 @@ aJ
 aJ
 aJ
 aJ
-ST
+Ln
 aJ
 aJ
 aJ
@@ -1506,7 +1479,7 @@ aJ
 aJ
 aJ
 aJ
-ov
+Ig
 aJ
 aJ
 Ig
