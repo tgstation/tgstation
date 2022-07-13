@@ -174,7 +174,7 @@
 
 /obj/item/food/tempeh
 	name = "raw tempeh block"
-	desc = "Fungus fermented soybean cake, warm to the touch"
+	desc = "Fungus fermented soybean cake, warm to the touch."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "tempeh"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8)
@@ -190,7 +190,7 @@
 //add an icon for slices
 /obj/item/food/tempehslice
 	name = "tempeh slice"
-	desc = "A slice of goodness, a slice of tempeh"
+	desc = "A slice of goodness, a slice of tempeh."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "tempehslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
@@ -200,7 +200,7 @@
 //add an icon for blends
 /obj/item/food/tempehblend
 	name = "tempeh blend"
-	desc = "a mix of soybeans and mushroom seeds, it's alive, it's moving?"
+	desc = "a mix of soybeans and mushroom seeds, it's alive, it's moving?."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "tempehslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
