@@ -184,7 +184,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 
 // sliceable into 4xtempehslices
-/obj/item/food/tempeh/raw/MakeProcessable()
+/obj/item/food/tempeh/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE)
 
 //add an icon for slices
