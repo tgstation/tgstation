@@ -162,7 +162,7 @@ const CodewordsSection = (props, context) => {
             You have not been supplied with codewords. You will have to
             use alternative methods to find potential allies. Proceed with
             caution, however, as everyone is a potential foe.
-          </BlockQuote> 
+          </BlockQuote>
         )) || (
           <>
             <Stack.Item grow basis={0}>
