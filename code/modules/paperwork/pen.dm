@@ -235,6 +235,10 @@
 	sharpness = SHARP_POINTY
 	armour_penetration = 20
 	bare_wound_bonus = 10
+	light_color = COLOR_SOFT_RED
+	light_range = 1.5
+	light_power = 0.5
+	light_on = FALSE
 	/// The real name of our item when extended.
 	var/hidden_name = "energy dagger"
 	/// The real desc of our item when extended.
@@ -293,6 +297,7 @@
 	updateEmbedding()
 	balloon_alert(user, "[hidden_name] [active ? "active":"concealed"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/pen/survival
