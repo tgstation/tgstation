@@ -1,0 +1,5 @@
+author: "Fikou, sprite by Mooster"
+delete-after: True
+changes: 
+  - rscadd: "Baseballs are now available in the Baseball Field on the Holodeck."
+  - rscadd: "Baseball Bats can now hit thrown objects mid-air to send them back."

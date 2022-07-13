@@ -20,33 +20,26 @@
 	var/dist = get_dist(user, target)
 	if(dist > HIEROPHANT_BLINK_RANGE)
 		user.balloon_alert(user, "destination out of range!")
-		return
+		return FALSE
 	var/turf/target_turf = get_turf(target)
 	if(target_turf.is_blocked_turf_ignore_climbable())
 		user.balloon_alert(user, "destination blocked!")
-		return
+		return FALSE
+
 	. = ..()
-	if(!current_charges)
-		var/obj/item/hierophant_club/club = src.target
-		if(istype(club))
-			club.blink_charged = FALSE
-			club.update_appearance()
+	var/obj/item/hierophant_club/club = target
+	if(!istype(club))
+		return
+
+	club.update_appearance(UPDATE_ICON_STATE)
 
 /datum/action/innate/dash/hierophant/charge()
+	. = ..()
 	var/obj/item/hierophant_club/club = target
-	if(istype(club))
-		club.blink_charged = TRUE
-		club.update_appearance()
-
-	current_charges = clamp(current_charges + 1, 0, max_charges)
-
-	if(recharge_sound)
-		playsound(dashing_item, recharge_sound, 50, TRUE)
-
-	if(!owner)
+	if(!istype(club))
 		return
-	owner.update_action_buttons_icon()
-	to_chat(owner, span_notice("[src] now has [current_charges]/[max_charges] charges."))
+
+	club.update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/hierophant_club
 	name = "hierophant club"
@@ -74,16 +67,14 @@
 	var/datum/action/innate/dash/hierophant/blink
 	/// Whether the blink ability is activated. IF TRUE, left clicking a location will blink to it. If FALSE, this is disabled.
 	var/blink_activated = TRUE
-	/// Whether the blink is charged. Set and unset by the blink action. Used as part of setting the appropriate icon states.
-	var/blink_charged = TRUE
 
 /obj/item/hierophant_club/Initialize(mapload)
 	. = ..()
 	blink = new(src)
 
 /obj/item/hierophant_club/Destroy()
-	. = ..()
 	QDEL_NULL(blink)
+	return ..()
 
 /obj/item/hierophant_club/ComponentInitialize()
 	. = ..()
@@ -120,7 +111,7 @@
 		blink.teleport(user, target)
 
 /obj/item/hierophant_club/update_icon_state()
-	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
+	icon_state = inhand_icon_state = "hierophant_club[blink?.current_charges > 0 ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
 	return ..()
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)

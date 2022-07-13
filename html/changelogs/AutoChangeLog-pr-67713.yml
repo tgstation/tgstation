@@ -1,0 +1,7 @@
+author: "Ebb"
+delete-after: True
+changes: 
+  - rscadd: "You can now rip pieces of tape off of tape rolls and use them to tape people's mouth closed by putting it on them as a mask. Either through the stripping menu or hitting them with the tape while not on combat mode. Different tape piece types have different properties."
+  - rscadd: "Super pointy tape is now obtainable in-game by researching illegal tech."
+  - rscadd: "Super pointy tape is now available in the traitor uplink."
+  - soundadd: "Tape now makes sounds."

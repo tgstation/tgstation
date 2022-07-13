@@ -6,12 +6,10 @@
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/item/storage/drone_tools/Initialize(mapload)
+/obj/item/storage/drone_tools/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
-/obj/item/storage/drone_tools/ComponentInitialize()
-	. = ..()
 	var/static/list/drone_builtins = list(
 		/obj/item/crowbar/drone,
 		/obj/item/screwdriver/drone,
@@ -19,12 +17,11 @@
 		/obj/item/weldingtool/drone,
 		/obj/item/wirecutters/drone,
 	)
-	var/datum/component/storage/storage_component = GetComponent(/datum/component/storage)
-	storage_component.max_combined_w_class = 40
-	storage_component.max_w_class = WEIGHT_CLASS_NORMAL
-	storage_component.max_items = 5
-	storage_component.rustle_sound = FALSE
-	storage_component.set_holdable(drone_builtins)
+	atom_storage.max_total_storage = 40
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_slots = 5
+	atom_storage.rustle_sound = FALSE
+	atom_storage.set_holdable(drone_builtins)
 
 
 /obj/item/storage/drone_tools/PopulateContents()

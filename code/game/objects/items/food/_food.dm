@@ -116,3 +116,8 @@
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+
+/obj/item/food/mark_silver_slime_reaction()
+	//Adds this flag to prevent it from exporting for profit from cargo
+	food_flags |= FOOD_SILVER_SPAWNED
+	return ..()
