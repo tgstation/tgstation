@@ -10,6 +10,7 @@
 
 /datum/action/cooldown/mob_cooldown/transform_weapon/Activate(atom/target_atom)
 	do_transform(target_atom)
+	StartCooldown(rand(cooldown_time, max_cooldown_time), 0)
 
 /datum/action/cooldown/mob_cooldown/transform_weapon/proc/do_transform(atom/target)
 	if(!istype(owner, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner))

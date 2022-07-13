@@ -13,6 +13,7 @@
 
 /datum/action/cooldown/mob_cooldown/fire_breath/Activate(atom/target_atom)
 	attack_sequence(target_atom)
+	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/fire_breath/proc/attack_sequence(atom/target)
 	playsound(owner.loc, fire_sound, 200, TRUE)

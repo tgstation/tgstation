@@ -19,6 +19,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
 	attack_sequence(owner, target_atom)
+	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/proc/attack_sequence(mob/living/firer, atom/target)
 	shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
@@ -285,7 +286,6 @@
 	cooldown_time = 2.5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
-	StartCooldown(30 SECONDS)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 	Remove(owner)
@@ -295,7 +295,7 @@
 	if(istype(firer, /mob/living/simple_animal/hostile/megafauna/colossus))
 		colossus = firer
 		colossus.say("Perish.", spans = list("colossus", "yell"))
-	
+
 	var/finale_counter = 10
 	for(var/i in 1 to 20)
 		if(finale_counter > 4 && colossus)

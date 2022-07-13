@@ -7,6 +7,7 @@
 
 /datum/action/cooldown/mob_cooldown/meteors/Activate(atom/target_atom)
 	create_meteors(target_atom)
+	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/meteors/proc/create_meteors(atom/target)
 	if(!target)

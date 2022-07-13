@@ -23,6 +23,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
+	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/charge/proc/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	do_charge(owner, target_atom, charge_delay, charge_past)
@@ -67,6 +68,7 @@
 
 	// Yes this is disgusting. But we need to queue this stuff, and this code just isn't setup to support that right now. So gotta do it with sleeps
 	sleep(time_to_hit + charge_speed)
+	charger.setDir(dir)
 
 	return TRUE
 

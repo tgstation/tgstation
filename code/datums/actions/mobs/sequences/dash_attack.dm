@@ -6,6 +6,6 @@
 	cooldown_time = 3 SECONDS
 	shared_cooldown = MOB_SHARED_COOLDOWN_2
 	sequence_actions = list(
-							/datum/action/cooldown/mob_cooldown/dash = 0.1 SECONDS,
-							/datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator = 0,
-							)
+		/datum/action/cooldown/mob_cooldown/dash = 0.1 SECONDS,
+		/datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator = 0,
+	)

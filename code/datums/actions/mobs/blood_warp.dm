@@ -4,7 +4,6 @@
 	button_icon_state = "floor1"
 	desc = "Allows you to teleport to blood at a clicked position."
 	cooldown_time = 0
-	shared_cooldown = MOB_SHARED_COOLDOWN_1
 	/// The range of turfs to try to jaunt to from around the target
 	var/pick_range = 5
 	/// The range of turfs if a client is using this ability
@@ -14,6 +13,7 @@
 
 /datum/action/cooldown/mob_cooldown/blood_warp/Activate(atom/target_atom)
 	blood_warp(target_atom)
+	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/blood_warp/proc/blood_warp(atom/target)
 	if(owner.Adjacent(target))

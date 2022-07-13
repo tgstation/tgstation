@@ -11,6 +11,7 @@
 
 /datum/action/cooldown/mob_cooldown/dash/Activate(atom/target_atom)
 	dash_to(target_atom)
+	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/dash/proc/dash_to(atom/dash_target)
 	var/list/accessable_turfs = list()

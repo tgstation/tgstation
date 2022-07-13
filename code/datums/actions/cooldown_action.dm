@@ -64,12 +64,12 @@
 		ability.Grant(granted_to)
 
 /datum/action/cooldown/Remove(mob/removed_from)
-	. = ..()
 	UnregisterSignal(removed_from, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 	if(click_to_activate && removed_from.click_intercept == src)
 		unset_click_ability(removed_from, refund_cooldown = FALSE)
 	for(var/datum/action/cooldown/ability as anything in initialized_actions)
 		ability.Remove(removed_from)
+	return ..()
 
 /datum/action/cooldown/IsAvailable()
 	return ..() && (next_use_time <= world.time)
@@ -97,7 +97,10 @@
 		for(var/datum/action/cooldown/shared_ability in owner.actions - src)
 			if(!(shared_cooldown & shared_ability.shared_cooldown))
 				continue
-			shared_ability.StartCooldownSelf(override_cooldown_time)
+			if(isnum(override_cooldown_time))
+				shared_ability.StartCooldownSelf(override_cooldown_time)
+			else
+				shared_ability.StartCooldownSelf(cooldown_time)
 
 	StartCooldownSelf(override_cooldown_time)
 
@@ -162,7 +165,6 @@
 
 	// And if we reach here, the action was complete successfully
 	if(unset_after_click)
-		StartCooldown()
 		unset_click_ability(caller, refund_cooldown = FALSE)
 	caller.next_click = world.time + click_cd_override
 
@@ -176,7 +178,6 @@
 	. = Activate(target)
 	// There is a possibility our action (or owner) is qdeleted in Activate().
 	if(!QDELETED(src) && !QDELETED(owner))
-		StartCooldown()
 		SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_FINISHED, src)
 
 /// To be implemented by subtypes (if not generic)
@@ -187,6 +188,7 @@
 			ability.initialized_actions = list()
 		addtimer(CALLBACK(ability, .proc/Activate, target), total_delay)
 		total_delay += initialized_actions[ability]
+	StartCooldown()
 
 /datum/action/cooldown/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
 	. = ..()
