@@ -112,7 +112,7 @@ SUBSYSTEM_DEF(points_of_interest)
 			continue
 
 		var/mob/target_mob = mob_poi.target
-		var/name = avoid_assoc_duplicate_keys(target_mob.name, used_name_list) + target_mob.get_realname_string()
+		var/name = avoid_assoc_duplicate_keys(target_mob.real_name, used_name_list)
 
 		// Add the ghost/dead tag to the end of dead mob POIs.
 		if(append_dead_role && target_mob.stat == DEAD)
