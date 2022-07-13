@@ -870,7 +870,7 @@
 
 /obj/item/food/granola_bar
 	name = "granola bar"
-	desc = "A dried mixture of oats, nuts, fruits, and chocolate condensed into a chewy bar. Makes a great snack during space-hiking."
+	desc = "A dried mixture of oats, nuts, fruits, and chocolate condensed into a chewy bar. Makes a great snack while space-hiking."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "granola_bar"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 4)
