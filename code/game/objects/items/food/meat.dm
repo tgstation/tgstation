@@ -187,7 +187,7 @@
 /obj/item/food/tempeh/raw/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE)
 
-
+//add an icon for slices
 /obj/item/food/tempehslice
 	name = "tempeh slice"
 	desc = "A slice of goodness, a slice of tempeh"
@@ -196,7 +196,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("earthy" = 3, "nutty" = 2, "bland" = 1)
 	foodtypes = VEGETABLES
-	
+
+//add an icon for blends
 /obj/item/food/tempehblend
 	name = "tempeh blend"
 	desc = "a mix of soybeans and mushroom seeds, it's alive, it's moving?"
