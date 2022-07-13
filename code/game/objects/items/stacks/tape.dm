@@ -15,7 +15,8 @@
 	splint_factor = 0.65
 	merge_type = /obj/item/stack/sticky_tape
 	var/list/conferred_embed = EMBED_HARMLESS
-	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape //The tape type you get when ripping off a piece of tape.
+	///The tape type you get when ripping off a piece of tape.
+	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape
 	greyscale_config = /datum/greyscale_config/tape
 	greyscale_colors = "#B2B2B2#BD6A62"
 

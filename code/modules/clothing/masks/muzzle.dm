@@ -39,7 +39,9 @@
 	greyscale_config = /datum/greyscale_config/tape_piece
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn
 	greyscale_colors = "#B2B2B2"
+	///Dertermines wether the tape piece does damage when ripped off of someone.
 	var/harmful_strip = FALSE
+	///The ammount of damage dealt when the tape piece is ripped off of someone.
 	var/stripping_damage = 0
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
