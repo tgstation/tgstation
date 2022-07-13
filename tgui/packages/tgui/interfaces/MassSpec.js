@@ -22,8 +22,7 @@ export const MassSpec = (props, context) => {
   return (
     <Window width={490} height={650}>
       <Window.Content scrollable>
-        <Section
-          title="Mass Spectroscopy">
+        <Section title="Mass Spectroscopy">
           {(beaker1Contents.length && (
             <MassSpectroscopy
               lowerRange={lowerRange}
