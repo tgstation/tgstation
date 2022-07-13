@@ -236,9 +236,9 @@
 	armour_penetration = 20
 	bare_wound_bonus = 10
 	light_system = MOVABLE_LIGHT
-	light_color = COLOR_SOFT_RED
 	light_range = 1.5
-	light_power = 0.5
+	light_power = 0.75
+	light_color = COLOR_SOFT_RED
 	light_on = FALSE
 	/// The real name of our item when extended.
 	var/hidden_name = "energy dagger"
