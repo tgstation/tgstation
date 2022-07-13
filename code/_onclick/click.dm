@@ -218,6 +218,9 @@
 		--depth
 
 		for(var/atom/target in checking)  // will filter out nulls
+			if(isnull(target))
+				continue
+
 			if(closed[target] || isarea(target))  // avoid infinity situations
 				continue
 
