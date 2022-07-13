@@ -203,14 +203,14 @@ while read f; do
     t=$(tail -c2 "$f"; printf x); r1="${nl}$"; r2="${nl}${r1}"
     if [[ ! ${t%x} =~ $r1 ]]; then
 		echo
-        echo -e "${RED}file $f is missing a trailing newline${NC}"
+        echo -e "${RED}ERROR: file $f is missing a trailing newline${NC}"
         st=1
     fi;
 done < <(find . -type f -name '*.dm')
 echo -e "${BLUE}Checking for common mistakes...${NC}"
 if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
 	echo
-    echo -e "${RED}changed files contains proc argument starting with 'var'${NC}"
+    echo -e "${RED}ERROR: changed files contains proc argument starting with 'var'${NC}"
     st=1
 fi;
 if grep 'balloon_alert\(".+"\)' code/**/*.dm; then
@@ -230,22 +230,22 @@ if grep -i 'centcomm' _maps/**/*.dmm; then
 fi;
 if grep -ni 'nanotransen' code/**/*.dm; then
 	echo
-    echo -e "${RED}Misspelling(s) of nanotrasen detected in code, please remove the extra N(s).${NC}"
+    echo -e "${RED}ERROR: Misspelling(s) of nanotrasen detected in code, please remove the extra N(s).${NC}"
     st=1
 fi;
 if grep -ni 'nanotransen' _maps/**/*.dmm; then
 	echo
-    echo -e "${RED}Misspelling(s) of nanotrasen detected in maps, please remove the extra N(s).${NC}"
+    echo -e "${RED}ERROR: Misspelling(s) of nanotrasen detected in maps, please remove the extra N(s).${NC}"
     st=1
 fi;
 if ls _maps/*.json | grep -P "[A-Z]"; then
 	echo
-    echo -e "${RED}Uppercase in a map json detected, these must be all lowercase.${NC}"
+    echo -e "${RED}ERROR: Uppercase in a map json detected, these must be all lowercase.${NC}"
     st=1
 fi;
 if grep -i '/obj/effect/mapping_helpers/custom_icon' _maps/**/*.dmm; then
 	echo
-    echo -e "${RED}Custom icon helper found. Please include dmis as standard assets instead for built-in maps.${NC}"
+    echo -e "${RED}ERROR: Custom icon helper found. Please include dmis as standard assets instead for built-in maps.${NC}"
     st=1
 fi;
 for json in _maps/*.json
@@ -256,7 +256,7 @@ do
         if [ ! -f $filename ]
         then
 			echo
-            echo -e "${RED}found invalid file reference to $filename in _maps/$json ${NC}"
+            echo -e "${RED}ERROR: found invalid file reference to $filename in _maps/$json ${NC}"
             st=1
         fi
     done < <(jq -r '[.map_file] | flatten | .[]' $json)
