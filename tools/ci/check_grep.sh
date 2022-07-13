@@ -168,11 +168,11 @@ if grep -P '^/*var/' code/**/*.dm; then
 fi;
 echo "Checking for whitespace issues"
 if grep -P '(^ {2})|(^ [^ * ])|(^    +)' code/**/*.dm; then
-    echo "space indentation detected"
+    echo "ERROR: space indentation detected"
     st=1
 fi;
 if grep -P '^\t+ [^ *]' code/**/*.dm; then
-    echo "mixed <tab><space> indentation detected"
+    echo "ERROR: mixed <tab><space> indentation detected"
     st=1
 fi;
 nl='
