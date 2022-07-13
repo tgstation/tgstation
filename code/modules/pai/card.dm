@@ -116,13 +116,13 @@
 		)
 	return data
 
-/obj/item/pai_card/ui_act(action, list/params)
+/obj/item/pai_card/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return FALSE
 	// Actions that don't require a pAI
 	if(action == "download")
-		download_candidate(params["ckey"])
+		download_candidate(usr, params["ckey"])
 		return TRUE
 	if(action == "request")
 		find_pai(usr)
@@ -150,6 +150,7 @@
 			return TRUE
 		if("wipe_pai")
 			pai.wipe_pai(usr)
+			ui.close()
 			return TRUE
 	return FALSE
 
@@ -178,14 +179,15 @@
 /**
  * Downloads a candidate from the list and removes them from SSpai.candidates
  *
- * @params {string} ckey The ckey of the candidate to download
- * @returns {boolean} TRUE if the candidate was downloaded, FALSE if not
+ * @param {string} ckey The ckey of the candidate to download
+ * @returns {boolean} - TRUE if the candidate was downloaded, FALSE if not
  */
-/obj/item/pai_card/proc/download_candidate(ckey)
+/obj/item/pai_card/proc/download_candidate(mob/user, ckey)
 	if(pai)
 		return FALSE
 	var/datum/pai_candidate/candidate = SSpai.candidates[ckey]
-	if(isnull(candidate) || !candidate.check_ready())
+	if(!candidate?.check_ready())
+		to_chat(user, span_warning("Download interrupted: Candidate unavailable. Please try again."))
 		return FALSE
 	var/mob/living/silicon/pai/new_pai = new(src)
 	new_pai.name = candidate.name || pick(GLOB.ninja_names)
@@ -195,7 +197,12 @@
 	SSpai.candidates.Remove(ckey)
 	return TRUE
 
-/** Pings ghosts to announce that someone is requesting a pAI */
+/**
+ * Pings ghosts to announce that someone is requesting a pAI
+ *
+ * @param {mob} user - The user who is requesting a pAI
+ * @returns {boolean} - TRUE if the pAI was requested, FALSE if not
+ */
 /obj/item/pai_card/proc/find_pai(mob/user)
 	if(pai)
 		return FALSE
@@ -218,23 +225,22 @@
  * window. If the candidate isn't marked ready, ie they have not
  * pressed submit, they will be skipped over.
  *
- * @return - An array of candidate objects.
+ * @returns - An array of candidate objects.
  */
 /obj/item/pai_card/proc/pool_candidates()
 	var/list/candidates = list()
 	if(pai || !length(SSpai?.candidates))
 		return candidates
 	for(var/key in SSpai.candidates)
-		var/datum/pai_candidate/checked_candidate = SSpai.candidates[key]
-		if(!checked_candidate.ready)
+		var/datum/pai_candidate/candidate = SSpai.candidates[key]
+		if(!candidate?.check_ready())
 			continue
-		var/list/candidate = list(
-			comments = checked_candidate.comments,
-			ckey = checked_candidate.ckey,
-			description = checked_candidate.description,
-			name = checked_candidate.name,
-		)
-		candidates += list(candidate)
+		candidates += list(list(
+			ckey = candidate.ckey,
+			comments = candidate.comments,
+			description = candidate.description,
+			name = candidate.name,
+		))
 	return candidates
 
 /** Cooldown for requesting pAIs from ghosts  */
@@ -244,8 +250,7 @@
 /**
  * Sets the personality on the current pai_card
  *
- * Parameters:
- * downloaded - required - The new pAI to load into the card.
+ * @param {silicon/pai} downloaded - The new pAI to load into the card.
  */
 /obj/item/pai_card/proc/set_personality(mob/living/silicon/pai/downloaded)
 	if(pai)

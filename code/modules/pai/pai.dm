@@ -260,7 +260,8 @@
  * Resolves the weakref of the pai's master.
  * If the master has been deleted, calls reset_software().
  *
- * @return {mob/living} the master mob, or FALSE if the master is gone.
+ * @returns {mob/living || FALSE} - The master mob, or
+ * 	FALSE if the master is gone.
  */
 /mob/living/silicon/pai/proc/find_master()
 	if(!master_ref)
@@ -275,7 +276,7 @@
  * Fixes weird speech issues with the pai.
  *
  * @param {mob} user - The user performing the action.
- * @return {boolean} - TRUE if successful.
+ * @returns {boolean} - TRUE if successful.
  */
 /mob/living/silicon/pai/proc/fix_speech(mob/user)
 	var/mob/living/silicon/pai/pai = src
@@ -289,7 +290,7 @@
  * Gets the current holder of the pAI if its
  * being carried in card or holoform.
  *
- * @return {living/carbon || FALSE} - The holder of the pAI,
+ * @returns {living/carbon || FALSE} - The holder of the pAI,
  * 	or FALSE if the pAI is not being carried.
  */
 /mob/living/silicon/pai/proc/get_holder()
@@ -307,7 +308,7 @@
  * This replaces any current laws, masters, and DNA.
  *
  * @param {living/carbon} attacker - The user performing the action.
- * @return {boolean} - TRUE if successful, FALSE if not.
+ * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/handle_emag(mob/living/carbon/attacker)
 	var/mob/living/silicon/pai/pai = src
@@ -342,7 +343,7 @@
  * Resets the pAI and any emagged status.
  *
  * @param {mob} user - The user performing the action.
- * @return {boolean} - TRUE if successful, FALSE if not.
+ * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/reset_software(mob/user)
 	var/mob/living/silicon/pai/pai = src
@@ -361,7 +362,7 @@
  * Imprints your DNA onto the downloaded pAI
  *
  * @param {mob} user - The user performing the imprint.
- * @return {boolean} - TRUE if successful, FALSE if not.
+ * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/set_dna(mob/user)
 	var/mob/living/silicon/pai/pai = src
@@ -380,7 +381,7 @@
  * Opens a tgui alert that allows someone to enter laws.
  *
  * @param {mob} user - The user performing the law change.
- * @return {boolean} - TRUE if successful, FALSE if not.
+ * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/set_laws(mob/user)
 	var/mob/living/silicon/pai/pai = src
@@ -399,7 +400,7 @@
  * Toggles the ability of the pai to enter holoform
  *
  * @param {mob} user - The user performing the toggle.
- * @return {boolean} - TRUE if successful, FALSE if not.
+ * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/toggle_holo(mob/user)
 	var/mob/living/silicon/pai/pai = src
@@ -433,7 +434,7 @@
  * Wipes the current pAI on the card.
  *
  * @param {mob} user - The user performing the action.
- * @return {boolean} - TRUE if successful, FALSE if not.
+ * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/wipe_pai(mob/user)
 	var/mob/living/silicon/pai/pai = src
@@ -443,5 +444,7 @@
 	to_chat(pai, span_danger("Byte by byte you lose your sense of self."))
 	to_chat(pai, span_userdanger("Your mental faculties leave you."))
 	to_chat(pai, span_rose("oblivion... "))
+	balloon_alert(user, "deleted")
+	playsound(src, "sound/machines/buzz-two.ogg", 30, TRUE)
 	qdel(pai)
 	return TRUE

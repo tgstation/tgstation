@@ -38,9 +38,9 @@
 /**
  * All inclusive camera proc. Zooms, snaps, prints.
  *
- * @param {mob} user The pAI requesting the camera.
- * @param {string} mode The camera option to toggle.
- * @return {boolean} TRUE if the camera worked.
+ * @param {mob} user - The pAI requesting the camera.
+ * @param {string} mode - The camera option to toggle.
+ * @return {boolean} - TRUE if the camera worked.
  */
 /mob/living/silicon/pai/proc/use_camera(mob/user, mode)
 	if(!camera)

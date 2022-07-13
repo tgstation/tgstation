@@ -3,9 +3,9 @@
 /**
  * Switch that handles door jack operations.
  *
- * @param {mob} user The user operating the door jack.
- * @param {string} mode The requested operation of the door jack.
- * @return {bool} TRUE if the door jack state was switched, FALSE otherwise.
+ * @param {mob} user - The user operating the door jack.
+ * @param {string} mode - The requested operation of the door jack.
+ * @returns {boolean} - TRUE if the door jack state was switched, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/door_jack(mob/user, mode)
 	switch(mode)
@@ -28,8 +28,8 @@
  * a cable which is placed either on the floor or in
  * someone's hands based (on distance).
  *
- * @param {mob} user The pAI dropping the cable
- * @return {bool} TRUE if the cable was dropped, FALSE otherwise.
+ * @param {mob} user - The pAI dropping the cable
+ * @returns {boolean} - TRUE if the cable was dropped, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/extend_cable(mob/user)
 	QDEL_NULL(hacking_cable) //clear any old cables
@@ -100,8 +100,8 @@
  * After a 15 second timer, the door will crack open,
  * provided they don't move out of the way.
  *
- * @param {mob} user The pAI attempting to hack the door.
- * @return {bool} TRUE if the door was jacked, FALSE otherwise.
+ * @param {mob} user - The pAI attempting to hack the door.
+ * @returns {boolean} - TRUE if the door was jacked, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/hack_door(mob/user)
 	if(!hacking_cable)

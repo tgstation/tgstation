@@ -15,20 +15,16 @@
 	src.ckey = user.ckey
 
 /**
- * Checks if a candidate is ready so that they may be displayed in the pAI
- * card's candidate window. Removes any non-listed candidates.
+ * Checks if a candidate is ready so that they may be displayed or
+ * downloaded. Removes any invalid entries.
  *
  * @return {boolean} TRUE if the candidate is ready, FALSE if not
  */
 /datum/pai_candidate/proc/check_ready()
+	var/mob/candidate_mob = get_mob_by_key(ckey)
+	if(!candidate_mob?.client || !isobserver(candidate_mob) || is_banned_from(ckey, ROLE_PAI))
+		SSpai.candidates -= ckey
+		return FALSE
 	if(!ready)
 		return FALSE
-	for(var/mob/dead/observer/ghost as anything in GLOB.player_list)
-		if(ghost.ckey != ckey)
-			continue
-		if(ghost.client && !is_banned_from(ghost.ckey, ROLE_PAI))
-			return TRUE
-	if(SSpai.candidates[ckey])
-		SSpai.candidates.Remove(ckey)
-		return FALSE
-
+	return TRUE

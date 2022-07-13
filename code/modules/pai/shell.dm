@@ -29,7 +29,7 @@
  * Checks if we are allowed to interact with a radial menu
  *
  * @param {atom} anchor - The atom that is anchoring the menu.
- * @return {boolean} - TRUE if we are allowed to interact with the menu,
+ * @returns {boolean} - TRUE if we are allowed to interact with the menu,
  * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/check_menu(atom/anchor)
@@ -45,7 +45,7 @@
 /**
  * Sets a new holochassis skin based on a pAI's choice.
  *
- * @return {boolean} - True if the skin was successfully set.
+ * @returns {boolean} - True if the skin was successfully set.
  * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/choose_chassis()
@@ -71,7 +71,7 @@
  * Returns the pAI to card mode.
  *
  * @param {boolean} force - If TRUE, the pAI will be forced to card mode.
- * @return {boolean} - TRUE if the pAI was forced to card mode.
+ * @returns {boolean} - TRUE if the pAI was forced to card mode.
  * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
@@ -107,7 +107,7 @@
  * Engage holochassis form.
  *
  * @param {boolean} force - Force the form to engage.
- * @return {boolean} - TRUE if the form was successfully engaged.
+ * @returns {boolean} - TRUE if the form was successfully engaged.
  * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/fold_out(force = FALSE)
@@ -152,8 +152,8 @@
 /**
  * Sets the holochassis skin and updates the icons
  *
- * @params {string} choice - The skin that will be used for the pAI holoform
- * @return {boolean} - TRUE if the skin was successfully set. FALSE otherwise.
+ * @param {string} choice - The skin that will be used for the pAI holoform
+ * @returns {boolean} - TRUE if the skin was successfully set. FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/set_holochassis(choice)
 	if(!choice)
@@ -167,7 +167,7 @@
 /**
  * Toggles the onboard light
  *
- * @return {boolean} - TRUE if the light was toggled.
+ * @returns {boolean} - TRUE if the light was toggled.
  */
 /mob/living/silicon/pai/proc/toggle_integrated_light()
 	set_light_on(!light_on)

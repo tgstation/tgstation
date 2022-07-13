@@ -103,22 +103,34 @@ const CandidateDisplay = (
           <Box color="label" mb={1}>
             Name:
           </Box>
-          <Box color="green">{name}</Box>
+          {name ? (
+            <Box color="green">{name}</Box>
+          ) : (
+            'None provided - name will be randomized.'
+          )}
         </Stack.Item>
-        <Stack.Divider />
-        <Stack.Item>
-          <Box color="label" mb={1}>
-            IC Description:
-          </Box>
-          {description}
-        </Stack.Item>
-        <Stack.Divider />
-        <Stack.Item>
-          <Box color="label" mb={1}>
-            OOC Notes:
-          </Box>
-          {comments}
-        </Stack.Item>
+        {!!description && (
+          <>
+            <Stack.Divider />
+            <Stack.Item>
+              <Box color="label" mb={1}>
+                IC Description:
+              </Box>
+              {description}
+            </Stack.Item>
+          </>
+        )}
+        {!!comments && (
+          <>
+            <Stack.Divider />
+            <Stack.Item>
+              <Box color="label" mb={1}>
+                OOC Notes:
+              </Box>
+              {comments}
+            </Stack.Item>
+          </>
+        )}
       </Stack>
     </Section>
   );
@@ -130,6 +142,7 @@ const PaiOptions = (props, context) => {
   const {
     pai: { can_holo, dna, emagged, laws, master, name, transmit, receive },
   } = data;
+  const suppliedLaws = laws[0] ? decodeHtmlEntities(laws[0]) : 'None';
 
   return (
     <Section fill scrollable title={`Settings: ${name.toUpperCase()}`}>
@@ -147,7 +160,7 @@ const PaiOptions = (props, context) => {
           </LabeledList.Item>
         )}
         <LabeledList.Item label="Laws">
-          <BlockQuote>{decodeHtmlEntities(laws)}</BlockQuote>
+          <BlockQuote>{suppliedLaws}</BlockQuote>
         </LabeledList.Item>
         <LabeledList.Item label="Holoform">
           <Button

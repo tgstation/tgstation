@@ -95,9 +95,9 @@
  * Purchases the selected software from the list and deducts their
  * available ram.
  *
- * @param {mob} user The user purchasing the software.
- * @param {string} selection The software to purchase.
- * @return {bool} TRUE if the software was purchased, CRASH otherwise.
+ * @param {mob} user - - The user purchasing the software.
+ * @param {string} selection - The software to purchase.
+ * @returns {boolean} - TRUE if the software was purchased, CRASH otherwise.
  */
 /mob/living/silicon/pai/proc/buy_software(mob/user, selection)
 	if(!available_software[selection] || installed_software.Find(selection))
@@ -133,8 +133,8 @@
 /**
  * Changes the image displayed on the pAI.
  *
- * @param {mob} user The user who is changing the image.
- * @return {bool} TRUE if the image was changed, FALSE otherwise.
+ * @param {mob} user - The user who is changing the image.
+ * @returns {boolean} - TRUE if the image was changed, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/change_image(mob/user)
 	var/new_image = tgui_input_list(user, "Select your new display image", "Display Image", possible_overlays)
@@ -149,9 +149,8 @@
  * or... whatever. It must be held in order to work
  * Gives the owner a popup if they want to get the jab.
  *
- * @param {mob} user The pAI requesting the sample.
- * @param {living/carbon} master The holder of the pAI.
- * @return {boolean} TRUE if a sample was taken, FALSE otherwise.
+ * @param {mob} user - The pAI requesting the sample.
+ * @returns {boolean} - TRUE if a sample was taken, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/check_dna(mob/user)
 	if(emagged) // Their master DNA signature is scrambled anyway
@@ -176,9 +175,9 @@
 /**
  * Grant all languages to the current pAI.
  *
- * @param {mob} user The pAI receiving the languages.
- * @param {tgui} ui The interface for the pAI.
- * @return {bool} TRUE if the languages were granted, FALSE otherwise.
+ * @param {mob} user - The pAI receiving the languages.
+ * @param {tgui} ui - The interface for the pAI.
+ * @returns {boolean} - TRUE if the languages were granted, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/grant_languages(mob/user, datum/tgui/ui)
 	if(languages_granted)
@@ -195,8 +194,8 @@
  * Allows the pAI to scan its host's health vitals
  * An integrated health analyzer.
  *
- * @param {mob} user The pAI requesting the scan.
- * @return {boolean} TRUE if the scan was successful, FALSE otherwise.
+ * @param {mob} user - The pAI requesting the scan.
+ * @returns {boolean} - TRUE if the scan was successful, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/host_scan(mob/user, mode)
 	if(mode == "target")
@@ -225,8 +224,8 @@
 /**
  * Proc that toggles any active huds based on the option.
  *
- * @param {mob} user The pAI toggling the hud.
- * @param {string} option The hud to toggle.
+ * @param {mob} user - The pAI toggling the hud.
+ * @param {string} option - The hud to toggle.
  */
 /mob/living/silicon/pai/proc/toggle_hud(mob/user, option)
 	if(!option)
