@@ -62,6 +62,8 @@
 #define DATA_HUD_SENTIENT_DISEASE 8
 #define DATA_HUD_AI_DETECT 9
 #define DATA_HUD_FAN 10
+#define DATA_HUD_BLOODSUCKER   11
+#define DATA_HUD_MHUNTER       12
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

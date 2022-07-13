@@ -263,3 +263,8 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define OBJECTIVE_WEIGHT_DEFAULT 10
 #define OBJECTIVE_WEIGHT_BIG	 15
 #define OBJECTIVE_WEIGHT_HUGE	 20
+
+//Bloodsuckers
+#define IS_BLOODSUCKER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bloodsucker))
+#define IS_VASSAL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/vassal))
+#define IS_MONSTERHUNTER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/monsterhunter))

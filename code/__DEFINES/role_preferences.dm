@@ -18,6 +18,7 @@
 #define ROLE_THIEF "Thief"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
+#define ROLE_BLOODSUCKER "Bloodsucker"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -39,11 +40,13 @@
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
+#define ROLE_VAMPIRICACCIDENT "Vampiric Accident"
 
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
 #define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"
+#define ROLE_BLOODSUCKERBREAKOUT "Bloodsucker Breakout"
 
 // Other roles
 #define ROLE_SYNDICATE "Syndicate"
@@ -73,6 +76,7 @@
 #define ROLE_SLAUGHTER_DEMON "Slaughter Demon"
 #define ROLE_MORPH "Morph"
 #define ROLE_SANTA "Santa"
+#define ROLE_MONSTERHUNTER "Monster Hunter"
 
 //Spawner roles
 #define ROLE_GHOST_ROLE "Ghost Role"
@@ -118,6 +122,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_THIEF = 0,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
+	ROLE_BLOODSUCKER,
 
 	// Midround
 	ROLE_ABDUCTOR = 0,
@@ -139,11 +144,13 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SPACE_DRAGON = 0,
 	ROLE_SPIDER = 0,
 	ROLE_WIZARD_MIDROUND = 14,
+	ROLE_VAMPIRICACCIDENT,
 
 	// Latejoin
 	ROLE_HERETIC_SMUGGLER = 0,
 	ROLE_PROVOCATEUR = 14,
 	ROLE_SYNDICATE_INFILTRATOR = 0,
+	ROLE_BLOODSUCKERBREAKOUT,
 
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_PAI = 0,

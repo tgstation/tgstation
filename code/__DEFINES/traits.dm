@@ -215,6 +215,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
 #define TRAIT_TOXINLOVER "toxinlover"
+#define TRAIT_TOXIMMUNE         "toxin_immune"
 /// Gets a mood boost from being in the hideout.
 #define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
@@ -335,6 +336,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOODY_MESS "bloody_mess"
 /// from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
 #define TRAIT_COAGULATING "coagulating"
+// Your heart doesn't beat
+#define TRAIT_NOPULSE "nopulse" 
+// Falsifies Health analyzer blood levels
+#define TRAIT_MASQUERADE "masquerade" 
+// Your body is literal room temperature. Does not make you immune to the temp 
+#define TRAIT_COLDBLOODED "coldblooded" 
 /// From anti-convulsant medication against seizures.
 #define TRAIT_ANTICONVULSANT "anticonvulsant"
 /// The holder of this trait has antennae or whatever that hurt a ton when noogied
@@ -764,6 +771,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define MADE_UNCLONEABLE "made-uncloneable"
+#define BLOODSUCKER_TRAIT "bloodsucker_trait"
+#define FRENZY_TRAIT "frenzy_trait"
 #define TIMESTOP_TRAIT "timestop"
 #define LIFECANDLE_TRAIT "lifecandle"
 #define VENTCRAWLING_TRAIT "ventcrawling"
