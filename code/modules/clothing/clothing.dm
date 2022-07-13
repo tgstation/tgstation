@@ -113,6 +113,8 @@
 /obj/item/clothing/attack(mob/living/M, mob/living/user, params)
 	if(user.combat_mode || !ismoth(M) || ispickedupmob(src))
 		return ..()
+	if(clothing_flags & INEDIBLE_CLOTHING)
+		return ..()
 	if(isnull(moth_snack))
 		moth_snack = new
 		moth_snack.name = name
