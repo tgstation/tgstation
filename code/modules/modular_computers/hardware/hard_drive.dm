@@ -24,14 +24,14 @@
 /obj/item/computer_hardware/hard_drive/on_install(obj/item/modular_computer/install_into, mob/living/user)
 	. = ..()
 	// whoever tried to set the ref to the computer in new, is it okay if i could come to your house someday, yeah?
-	for(var/datum/computer_file/file in stored_files)
+	for(var/datum/computer_file/file as anything in stored_files)
 		file.computer = holder
 
 /obj/item/computer_hardware/hard_drive/on_remove(obj/item/modular_computer/remove_from, mob/user)
 	remove_from.shutdown_computer()
 	for(var/datum/computer_file/program/program in stored_files)
 		program.computer = null
-	. = ..()
+	return ..()
 
 /obj/item/computer_hardware/hard_drive/proc/install_default_programs()
 	store_file(new /datum/computer_file/program/computerconfig) // Computer configuration utility, allows hardware control and displays more info than status bar
@@ -148,8 +148,8 @@
 	if(!check_functionality() || !filetype || !stored_files)
 		return null
 
-	for(var/datum/computer_file/comp_file in stored_files)
-		if(istype(comp_file, type))
+	for(var/datum/computer_file/comp_file as anything in stored_files)
+		if(istype(comp_file, filetype))
 			return comp_file
 
 	return null
