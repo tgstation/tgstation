@@ -235,6 +235,7 @@
 	sharpness = SHARP_POINTY
 	armour_penetration = 20
 	bare_wound_bonus = 10
+	light_system = MOVABLE_LIGHT
 	light_color = COLOR_SOFT_RED
 	light_range = 1.5
 	light_power = 0.5
