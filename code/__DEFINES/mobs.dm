@@ -110,7 +110,6 @@
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
-#define SPECIES_ALIEN "alien"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
