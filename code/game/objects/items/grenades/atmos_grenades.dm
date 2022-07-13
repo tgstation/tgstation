@@ -68,7 +68,7 @@
 	var/turf/open/turf_loc = get_turf(src)
 	var/obj/item/grenade/gas_crystal/residue_crystal/crystal = new(turf_loc)
 	crystal.filtered_gas = removed_gas
-	turf_loc.atmos_spawn_air("n2=[n2_gas_amount * (numberof_turf / 5)];o2=[o2_gas_amount * (numberof_turf / 5)];TEMP=273")
+	turf_loc.atmos_spawn_air("n2=[n2_gas_amount * (number_of_turf / 5)];o2=[o2_gas_amount * (number_of_turf / 5)];TEMP=273")
 	qdel(src)
 
 	
