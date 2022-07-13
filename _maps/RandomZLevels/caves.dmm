@@ -1092,7 +1092,6 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "fk" = (
@@ -1788,10 +1787,6 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/obj/effect/landmark/lift_id{
-	specific_lift_id = s
-	},
-/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "ih" = (
@@ -2358,9 +2353,6 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
 "lf" = (
-/obj/effect/landmark/tram/caves/lower,
-/obj/structure/industrial_lift/tram,
-/obj/machinery/computer/tram_controls/caves,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "lg" = (
@@ -5389,7 +5381,6 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Al" = (
@@ -5468,15 +5459,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
-"AG" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/computer/tram_controls/caves{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/awaymission/caves/main_outpost/seconadry/research)
 "AI" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -6984,15 +6966,10 @@
 /obj/item/circuitboard/machine/telecomms/relay,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/main_outpost)
-"IW" = (
-/obj/effect/landmark/tram/caves/middle,
-/turf/open/lava/smooth/lava_land_surface,
-/area/awaymission/caves/bmp_asteroid)
 "IZ" = (
 /obj/structure/railing{
 	dir = 10
 	},
-/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Ja" = (
@@ -7012,7 +6989,6 @@
 /area/awaymission/caves/main_outpost/seconadry/secpost)
 "Je" = (
 /obj/structure/railing,
-/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Jf" = (
@@ -7022,7 +6998,6 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Jg" = (
@@ -8471,7 +8446,6 @@
 /obj/structure/railing{
 	dir = 6
 	},
-/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Ql" = (
@@ -8936,10 +8910,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/main_outpost/dorm)
-"SE" = (
-/obj/effect/landmark/tram/caves/upper,
-/turf/open/lava/smooth/lava_land_surface,
-/area/awaymission/caves/bmp_asteroid)
 "SL" = (
 /turf/closed/indestructible/rock{
 	name = "collapsed dense rock"
@@ -9037,7 +9007,6 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Tj" = (
@@ -19544,22 +19513,6 @@ ZZ
 ZZ
 rs
 ZZ
-SE
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-rs
-ZZ
 ZZ
 ZZ
 ZZ
@@ -19594,7 +19547,23 @@ rs
 ZZ
 ZZ
 ZZ
-IW
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+rs
+ZZ
+ZZ
+ZZ
+ZZ
 ZZ
 ZZ
 ZZ
@@ -20155,7 +20124,7 @@ rs
 lx
 Vt
 cK
-AG
+Ue
 Ue
 Ue
 pT
