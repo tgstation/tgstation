@@ -132,18 +132,8 @@
 		if(!reagent)
 			continue
 		//Split like this so it's easier for people to edit this function in a child
-		convert_into_failed(reagent, holder)
 		reaction_clear_check(reagent, holder)
 	holder.chem_temp = cached_temp
-
-/**
- * Converts a reagent into the type specified by the failed_chem var of the input reagent
- *
- * Arguments:
- * * reagent - the target reagent to convert
- */
-/datum/chemical_reaction/proc/convert_into_failed(datum/reagent/reagent, datum/reagents/holder)
-	return
 
 /**
  * REACTION_CLEAR handler

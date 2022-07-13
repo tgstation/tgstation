@@ -1,20 +1,26 @@
 import { round } from 'common/math';
 import { useBackend } from '../backend';
-import { Box, Button, Section, Slider, Table } from '../components';
+import { Box, Button, Dimmer, Icon, Section, Slider, Table } from '../components';
 import { Window } from '../layouts';
 
 export const MassSpec = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    processing,
     lowerRange,
     upperRange,
     graphUpperRange,
     graphLowerRange,
+    eta,
     beaker1CurrentVolume,
+    beaker2CurrentVolume,
     beaker1MaxVolume,
+    beaker2MaxVolume,
     peakHeight,
     beaker1,
+    beaker2,
     beaker1Contents = [],
+    beaker2Contents = [],
   } = data;
 
   const centerValue = (lowerRange + upperRange) / 2;
@@ -22,7 +28,30 @@ export const MassSpec = (props, context) => {
   return (
     <Window width={490} height={650}>
       <Window.Content scrollable>
-        <Section title="Mass Spectroscopy">
+        {!!processing && (
+          <Dimmer fontSize="32px">
+            <Icon name="cog" spin={1} />
+            {' Purifying... ' + round(eta) + 's'}
+          </Dimmer>
+        )}
+        <Section
+          title="Mass Spectroscopy"
+          buttons={
+            <Button
+              icon="power-off"
+              content="Start"
+              disabled={!!processing || !beaker1Contents.length || !beaker2}
+              tooltip={
+                !beaker1Contents.length
+                  ? 'Missing input reagents!'
+                  : !beaker2
+                    ? 'Missing an output beaker!'
+                    : 'Begin purifying'
+              }
+              tooltipPosition="left"
+              onClick={() => act('activate')}
+            />
+          }>
           {(beaker1Contents.length && (
             <MassSpectroscopy
               lowerRange={lowerRange}
@@ -56,6 +85,34 @@ export const MassSpec = (props, context) => {
             )
           }>
           <BeakerMassProfile loaded={!!beaker1} beaker={beaker1Contents} />
+          {!!beaker1Contents.length && (
+            <Box>{'Eta of selection: ' + round(eta) + ' seconds'}</Box>
+          )}
+        </Section>
+        <Section
+          title="Output beaker"
+          buttons={
+            !!beaker2Contents && (
+              <>
+                {!!beaker2MaxVolume && (
+                  <Box inline color="label" mr={2}>
+                    {beaker2CurrentVolume} / {beaker2MaxVolume} units
+                  </Box>
+                )}
+                <Button
+                  icon="eject"
+                  content="Eject"
+                  disabled={!beaker2}
+                  onClick={() => act('eject2')}
+                />
+              </>
+            )
+          }>
+          <BeakerMassProfile
+            loaded={!!beaker2}
+            beaker={beaker2Contents}
+            details
+          />
         </Section>
       </Window.Content>
     </Window>
