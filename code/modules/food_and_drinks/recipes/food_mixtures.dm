@@ -29,8 +29,9 @@
 		new /obj/item/food/tofu(location)
 	return
 
+//temporary
 /datum/chemical_reaction/food/tempehblend
-	required_reagents = list(/datum/reagent/consumable/soybeans = 5, /datum/reagent/consumable/mushroom = 2)
+	required_reagents = list(/datum/reagent/consumable/soymilk = 5, /datum/reagent/consumable/blood = 2)
 
 /datum/chemical_reaction/food/tempehblend/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
