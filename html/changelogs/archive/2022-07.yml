@@ -373,3 +373,38 @@
   zxaber:
   - rscadd: Added new experiments for unlocking the path to Durand, Gygax, and Phazon
       exosuits. Weapons tech and Advanced Weapons tech are no longer required.
+2022-07-13:
+  CoffeeDragon16:
+  - bugfix: golems will now have tongues again, and adamantine golems can now talk
+      to all golems again
+  - rscadd: cardboard golems no longer have tongues
+  EOBGames:
+  - rscadd: A whole host of new posters have just become available.
+  - rscadd: 'For the architects among you: a number of new aesthetic options are available
+      for mapping with. Let your creativity free!'
+  ReinaCoder:
+  - imageadd: The safe and floor safes have been resprited
+  ShizCalev:
+  - bugfix: EMP'd airlocks will now have the proper shocked door overlay.
+  - bugfix: Fixed airlocks sometimes becoming permanently electrified after being
+      unelectrified (honk)
+  - bugfix: Fixed airlocks sometimes showing as electrified even though they are not.
+  - bugfix: Fixed a scenario where varedited airlocks could sometimes become inadvertently
+      permanently electrified.
+  - bugfix: Fixed EMP'd airlocks which were manually electrified after becoming unelectrified.
+  - bugfix: EMPing an airlock which is already temporarily electrified will now reset
+      its timer if it has less than 30 seconds remaining.
+  Spookuni:
+  - qol: Genetics gets a back desk now for easier interaction with passing maintenance
+      dwellers
+  Thunder12345:
+  - rscadd: The mining outpost was unfortunately destroyed in an industrial accident.
+      A replacement has been constructed on a group of islands in the magma sea.
+  jlsnow301:
+  - admin: Fixed many "admin.fun" listings that were incorrect or missing.
+  orthography:
+  - bugfix: asimov++ is now editable
+  unit0016:
+  - rscadd: On Icebox, The RD's office and the AI's upload have received murals.
+  - balance: That one table in the middle of the Icebox upload is gone. Yes, this
+      is a balance change.
