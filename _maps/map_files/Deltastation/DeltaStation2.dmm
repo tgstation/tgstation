@@ -9491,7 +9491,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/item/computer_hardware/hard_drive/portable/scipaper_program{
+/obj/item/computer_hardware/hard_drive/portable/ordnance{
 	pixel_x = 4;
 	pixel_y = 1
 	},

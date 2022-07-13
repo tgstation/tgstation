@@ -40053,7 +40053,7 @@
 	dir = 9
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/item/computer_hardware/hard_drive/portable/scipaper_program{
+/obj/item/computer_hardware/hard_drive/portable/ordnance{
 	pixel_x = 1
 	},
 /turf/open/floor/iron/white,

@@ -59397,7 +59397,7 @@
 /obj/item/computer_hardware/hard_drive/portable{
 	pixel_x = -2
 	},
-/obj/item/computer_hardware/hard_drive/portable/scipaper_program{
+/obj/item/computer_hardware/hard_drive/portable/ordnance{
 	pixel_x = -5;
 	pixel_y = 6
 	},

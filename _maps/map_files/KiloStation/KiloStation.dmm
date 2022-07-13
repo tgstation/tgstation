@@ -64763,7 +64763,7 @@
 	pixel_y = -3
 	},
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable/scipaper_program{
+/obj/item/computer_hardware/hard_drive/portable/ordnance{
 	pixel_x = 2;
 	pixel_y = 1
 	},
