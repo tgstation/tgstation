@@ -754,7 +754,10 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "Aa" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
 /obj/structure/mirror/directional/west,

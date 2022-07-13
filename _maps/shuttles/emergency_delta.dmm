@@ -265,7 +265,10 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "au" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -359,7 +362,8 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "aJ" = (
-/obj/machinery/shower/directional/west{
+/obj/machinery/shower{
+	dir = 8;
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/tile/blue,

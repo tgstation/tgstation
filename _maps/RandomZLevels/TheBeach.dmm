@@ -508,13 +508,17 @@
 "bM" = (
 /obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/sand,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bN" = (
 /obj/structure/mirror/directional/west,
 /obj/effect/turf_decal/sand,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bO" = (

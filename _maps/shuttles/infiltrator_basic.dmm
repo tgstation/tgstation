@@ -1006,7 +1006,10 @@
 /turf/open/floor/iron/dark/textured_corner,
 /area/shuttle/syndicate/engineering)
 "JQ" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white/side,

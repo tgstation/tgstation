@@ -397,13 +397,17 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "bi" = (
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 25
+	},
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "bj" = (
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 25
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -1371,7 +1375,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 25
+	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -1481,7 +1487,9 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 25
+	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -2489,7 +2497,9 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ga" = (
-/obj/structure/sink/kitchen/directional/south,
+/obj/structure/sink/kitchen{
+	pixel_y = 28
+	},
 /turf/open/floor/iron/showroomfloor{
 	heat_capacity = 1e+006
 	},
@@ -2670,7 +2680,9 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gE" = (
-/obj/structure/sink/kitchen/directional/south,
+/obj/structure/sink/kitchen{
+	pixel_y = 28
+	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -4734,7 +4746,9 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "la" = (
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 15
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -4743,7 +4757,9 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lb" = (
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 25
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -7383,7 +7399,10 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "pY" = (
 /obj/structure/mirror/directional/east,
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -7477,7 +7496,10 @@
 /area/awaymission/undergroundoutpost45/research)
 "qm" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -11
+	},
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -7574,7 +7596,10 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "qx" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -7849,7 +7874,10 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rc" = (
 /obj/structure/mirror/directional/east,
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
@@ -8674,7 +8702,9 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "sA" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /obj/item/soap/nanotrasen,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -8688,7 +8718,9 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "sC" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
@@ -9101,7 +9133,9 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ts" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
@@ -9413,13 +9447,17 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/research)
 "tX" = (
-/obj/machinery/shower/directional/north,
+/obj/machinery/shower{
+	dir = 1
+	},
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "tY" = (
-/obj/machinery/shower/directional/north,
+/obj/machinery/shower{
+	dir = 1
+	},
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/iron/freezer{
 	heat_capacity = 1e+006
@@ -10568,7 +10606,10 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wL" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/machinery/light/small/directional/south,
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/freezer{
@@ -11832,7 +11873,9 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "NR" = (
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 25
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/no_smoking/directional/west,
 /obj/effect/turf_decal/stripes/line{

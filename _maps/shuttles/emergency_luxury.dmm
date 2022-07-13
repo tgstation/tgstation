@@ -736,7 +736,9 @@
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ct" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "cu" = (
