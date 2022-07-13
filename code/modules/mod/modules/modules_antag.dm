@@ -450,7 +450,7 @@
 	old_size = null
 	if(!mod.loc)
 		return
-	var/datum/component/storage/holding_storage = mod.loc.GetComponent(/datum/component/storage)
-	if(!holding_storage || holding_storage.max_w_class >= mod.w_class)
+	var/datum/storage/holding_storage = mod.loc.atom_storage
+	if(!holding_storage || holding_storage.max_specific_storage >= mod.w_class)
 		return
 	mod.forceMove(drop_location())

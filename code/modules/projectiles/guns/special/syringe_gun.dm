@@ -23,6 +23,7 @@
 	var/list/syringes = list()
 	var/max_syringes = 1 ///The number of syringes it can store.
 	var/has_syringe_overlay = TRUE ///If it has an overlay for inserted syringes. If true, the overlay is determined by the number of syringes inserted into it.
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/syringe/Initialize(mapload)
 	. = ..()

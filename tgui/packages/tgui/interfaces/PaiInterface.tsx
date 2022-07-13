@@ -103,7 +103,7 @@ const ICON_MAP = {
   'what': 'question',
 };
 
-export const PaiInterface = (_, context) => {
+export const PaiInterface = (props, context) => {
   const [tab, setTab] = useLocalState(context, 'tab', 1);
   const setTabHandler = (tab: number) => {
     setTab(tab);
@@ -176,7 +176,7 @@ const SystemDisplay = () => {
 };
 
 /** Renders some ASCII art. Changes to red on emag. */
-const SystemWallpaper = (_, context) => {
+const SystemWallpaper = (props, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { emagged } = data;
 
@@ -221,7 +221,7 @@ const SystemWallpaper = (_, context) => {
 /** Displays master info.
  * You can check their DNA and change your image here.
  */
-const SystemInfo = (_, context) => {
+const SystemInfo = (props, context) => {
   const { act, data } = useBackend<PaiInterfaceData>(context);
   const { image, master } = data;
 
@@ -258,7 +258,7 @@ const SystemInfo = (_, context) => {
 };
 
 /** Shows the hardcoded PAI info along with any supplied orders. */
-const DirectiveDisplay = (_, context) => {
+const DirectiveDisplay = (props, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { directives, master } = data;
 
@@ -298,7 +298,7 @@ const DirectiveDisplay = (_, context) => {
  * another section that displays the selected installed
  * software info.
  */
-const InstalledDisplay = (_, context) => {
+const InstalledDisplay = (props, context) => {
   const [installSelected, setInstallSelected] = useLocalState(
     context,
     'software',
@@ -559,7 +559,7 @@ const AvailableDisplay = () => {
 };
 
 /** Displays the remaining RAM left as a progressbar. */
-const AvailableMemory = (_, context) => {
+const AvailableMemory = (props, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { ram } = data;
 
@@ -589,7 +589,7 @@ const AvailableMemory = (_, context) => {
 /** A list of available software.
  *  creates table rows for each, like a vendor.
  */
-const AvailableSoftware = (_, context) => {
+const AvailableSoftware = (props, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { available } = data;
   const convertedList: Available[] = Object.entries(available).map((key) => {

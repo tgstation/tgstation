@@ -27,7 +27,7 @@
 	add_movespeed_modifier((m_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run)
 
 /mob/living/proc/update_turf_movespeed(turf/open/T)
-	if(isopenturf(T))
+	if(isopenturf(T) && !is_type_on_turf(T, /obj/structure/lattice/catwalk))
 		if(T.slowdown != current_turf_slowdown)
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, multiplicative_slowdown = T.slowdown)
 			current_turf_slowdown = T.slowdown
