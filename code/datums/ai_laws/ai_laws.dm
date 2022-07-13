@@ -35,7 +35,7 @@
 
 	switch(CONFIG_GET(number/default_laws))
 		if(CONFIG_ASIMOV)
-			return /datum/ai_laws/default/asimovpp
+			return /datum/ai_laws/default/asimov
 		if(CONFIG_CUSTOM)
 			return /datum/ai_laws/custom
 		if(CONFIG_RANDOM)
@@ -69,7 +69,7 @@
 
 	if(!lawtype)
 		WARNING("No LAW_WEIGHT entries.")
-		lawtype = /datum/ai_laws/default/asimovpp
+		lawtype = /datum/ai_laws/default/asimov
 
 	return lawtype
 
