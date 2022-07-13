@@ -12,7 +12,6 @@
 	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
-	var/can_deconstruct = TRUE
 
 /obj/structure/ai_core/Initialize(mapload)
 	. = ..()
@@ -65,19 +64,23 @@
 	return ..()
 
 /obj/structure/ai_core/deactivated
-	name = "inactive AI"
 	icon_state = "ai-empty"
 	anchored = TRUE
 	state = AI_READY_CORE
 
-/obj/structure/ai_core/deactivated/Initialize(mapload)
+/obj/structure/ai_core/deactivated/Initialize(mapload, posibrain = FALSE)
 	. = ..()
 	circuit = new(src)
+	if(posibrain)
+		core_mmi = new/obj/item/mmi/posibrain(src)
+	else
+		core_mmi = new(src)
+		core_mmi.brain = new(core_mmi)
+		core_mmi.update_appearance()
 
 /obj/structure/ai_core/latejoin_inactive
 	name = "networked AI core"
 	desc = "This AI core is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
-	can_deconstruct = FALSE
 	icon_state = "ai-empty"
 	anchored = TRUE
 	state = AI_READY_CORE
@@ -88,6 +91,9 @@
 /obj/structure/ai_core/latejoin_inactive/Initialize(mapload)
 	. = ..()
 	circuit = new(src)
+	core_mmi = new(src)
+	core_mmi.brain = new(core_mmi)
+	core_mmi.update_appearance()
 	GLOB.latejoin_ai_cores += src
 
 /obj/structure/ai_core/latejoin_inactive/Destroy()
@@ -150,7 +156,7 @@
 
 /obj/structure/ai_core/attackby(obj/item/P, mob/living/user, params)
 	if(!anchored)
-		if(P.tool_behaviour == TOOL_WELDER && can_deconstruct)
+		if(P.tool_behaviour == TOOL_WELDER)
 			if(state != EMPTY_CORE)
 				balloon_alert(user, "core must be empty to deconstruct it!")
 				return
@@ -346,7 +352,7 @@
 	if(core_mmi.force_replace_ai_name)
 		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	if(core_mmi.braintype == "Android")
-		ai_mob.posibrain_core = TRUE
+		ai_mob.posibrain_inside = TRUE
 	if(from_glass_core_to_mob)
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 	deadchat_broadcast(" has been brought online at <b>[get_area_name(ai_mob, format_text = TRUE)]</b>.", span_name("[ai_mob]"), follow_target = ai_mob, message_type = DEADCHAT_ANNOUNCEMENT)
@@ -417,6 +423,10 @@ That prevents a few funky behaviors.
 		to_chat(user, "[span_boldnotice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
 		AI.battery = circuit.battery
+		if(core_mmi.braintype == "Android")
+			AI.posibrain_inside = TRUE
+		else
+			AI.posibrain_inside = FALSE
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
 		to_chat(user, span_alert("There is no AI loaded on this terminal."))
