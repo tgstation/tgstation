@@ -25097,6 +25097,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"iRr" = (
+/obj/structure/chair,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/checker,
+/area/station/commons/lounge)
 "iRs" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/structure/cable,
@@ -51305,22 +51310,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/security/processing)
-"rLy" = (
-/obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable{
-	pixel_x = -4;
-	pixel_y = -3
-	},
-/obj/item/computer_hardware/hard_drive/portable{
-	pixel_x = 2;
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 6
-	},
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
-/turf/open/floor/iron/white,
-/area/station/science/ordnance/office)
 "rLJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -55211,6 +55200,22 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"tdY" = (
+/obj/structure/table,
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 6
+	},
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/turf/open/floor/iron/white,
+/area/station/science/ordnance/office)
 "tea" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/stripes/line{
@@ -116251,7 +116256,7 @@ puw
 xnc
 bbi
 pDe
-rLy
+tdY
 tGb
 bbe
 vfZ
@@ -166595,7 +166600,7 @@ gyr
 upn
 rBF
 mHc
-cxc
+iRr
 lWy
 vyH
 qGw

@@ -323,7 +323,7 @@ GLOBAL_VAR(restart_counter)
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
 
-	if (features)
+	if(length(features))
 		s += ": [jointext(features, ", ")]"
 
 	s += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
