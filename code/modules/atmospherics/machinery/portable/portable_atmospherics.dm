@@ -17,7 +17,7 @@
 	///Volume (in L) of the inside of the machine
 	var/volume = 0
 	///Used to track if anything of note has happen while running process_atmos(). 
-	///Treat it as a process_atmos() scope var, we just declare it here to pass it within parent calls.
+	///Treat it as a process_atmos() scope var, we just declare it here to pass it between parent calls.
 	///Should start as false on every process by the way.
 	var/excited = FALSE
 
