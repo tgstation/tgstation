@@ -103,3 +103,8 @@
 		emagged = TRUE
 		smokeradius = 2
 		to_chat(user, span_boldwarning("The [emag_card.name] falls into the toilet. You fish it back out. Looks like you broke the toilet."))
+
+/obj/structure/toiletbong/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/card/emag))
+		return
+	. = ..()
