@@ -178,7 +178,9 @@
 
 /// Captain's log
 /// Credits to goonstation13 for orginal SS13 lore
-/// https://wiki.ss13.co/Storyline and https://www.youtube.com/watch?v=7M-JPH5SOmI
+/// https://wiki.ss13.co/Storyline
+/// https://www.youtube.com/watch?v=7M-JPH5SOmI (old video)
+/// https://www.youtube.com/watch?v=FHH1vfY6HTA (new video)
 /obj/item/tape/captains_log
 	name = "captain's log"
 	desc = "A dusty old tape."
