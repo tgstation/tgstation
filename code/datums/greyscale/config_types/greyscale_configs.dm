@@ -327,7 +327,7 @@
 
 /datum/greyscale_config/suspenders/worn
 	name = "Worn Suspenders"
-	icon_file = 'icons/mob/clothing/suit.dmi'
+	icon_file = 'icons/mob/clothing/suits/utility.dmi'
 	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
 
 /datum/greyscale_config/giftdeliverybox

@@ -2,6 +2,7 @@
 	name = "wet floor sign"
 	desc = "Caution! Wet Floor!"
 	icon_state = "caution"
+	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 1

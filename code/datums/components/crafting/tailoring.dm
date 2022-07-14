@@ -124,7 +124,7 @@
 
 /datum/crafting_recipe/ghostsheet
 	name = "Ghost Sheet"
-	result = /obj/item/clothing/suit/ghost_sheet
+	result = /obj/item/clothing/suit/costume/ghost_sheet
 	time = 5
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/bedsheet = 1)
