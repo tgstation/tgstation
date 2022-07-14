@@ -19,8 +19,6 @@
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 6) //stronger healing
-		power = 2
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
 	. = ..()
