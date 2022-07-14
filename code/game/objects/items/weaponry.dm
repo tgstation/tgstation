@@ -684,8 +684,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
 	w_class = WEIGHT_CLASS_HUGE
-	var/homerun_ready = 0
-	var/homerun_able = 0
+	/// Are we able to do a homerun?
+	var/homerun_able = FALSE
+	/// Are we ready to do a homerun?
+	var/homerun_ready = FALSE
+	/// Can we launch mobs thrown at us away?
+	var/mob_thrower = FALSE
+	/// List of all thrown datums we sent.
+	var/list/thrown_datums = list()
 
 /obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
@@ -700,25 +706,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	AddElement(/datum/element/kneecapping)
 
-/obj/item/melee/baseball_bat/homerun
-	name = "home run bat"
-	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
-	homerun_able = 1
-
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
-		..()
-		return
+		return ..()
 	if(homerun_ready)
 		to_chat(user, span_warning("You're already ready to do a home run!"))
-		..()
-		return
+		return ..()
 	to_chat(user, span_warning("You begin gathering strength..."))
 	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
-	if(do_after(user, 90, target = src))
+	if(do_after(user, 9 SECONDS, target = src))
 		to_chat(user, span_userdanger("You gather power! Time for a home run!"))
-		homerun_ready = 1
-	..()
+		homerun_ready = TRUE
+	return ..()
 
 /obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -732,11 +731,76 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
-		homerun_ready = 0
+		homerun_ready = FALSE
 		return
 	else if(!target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
 		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+
+/obj/item/melee/baseball_bat/Destroy(force)
+	for(var/target in thrown_datums)
+		var/datum/thrownthing/throw_datum = thrown_datums[target]
+		throw_datum.callback.Invoke()
+	thrown_datums.Cut()
+	return ..()
+
+/obj/item/melee/baseball_bat/pre_attack(atom/movable/target, mob/living/user, params)
+	var/turf/target_turf = get_turf(target)
+	if(!target_turf)
+		return ..()
+	for(var/atom/movable/atom as anything in target_turf)
+		if(!try_launch(atom, user))
+			continue
+		return TRUE
+	return ..()
+
+/obj/item/melee/baseball_bat/proc/try_launch(atom/movable/target, mob/living/user)
+	if(!target.throwing || (ismob(target) && !mob_thrower))
+		return FALSE
+	var/datum/thrownthing/throw_datum = target.throwing
+	var/datum_throw_speed = throw_datum.speed
+	var/angle = 0
+	var/target_to_user = get_dir(target, user)
+	if(target.dir & turn(target_to_user, 90))
+		angle = 270
+	if(target.dir & turn(target_to_user, 270))
+		angle = 90
+	if(target.dir & turn(target_to_user, 180))
+		angle = 180
+	if(target.dir & target_to_user)
+		angle = 360
+	var/turf/return_to_sender = get_ranged_target_turf_direct(user, throw_datum.starting_turf, round(target.throw_range * 1.5, 1), offset = angle + (rand(-1, 1) * 10))
+	throw_datum.finalize(hit = FALSE)
+	target.mouse_opacity = MOUSE_OPACITY_TRANSPARENT //dont mess with our ball
+	target.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
+	animate(target, 0.5 SECONDS, color = null, flags = ANIMATION_PARALLEL)
+	user.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3)
+	animate(user, 0.5 SECONDS, color = null, flags = ANIMATION_PARALLEL)
+	playsound(src, 'sound/items/baseballhit.ogg', 100, TRUE)
+	user.do_attack_animation(target, used_item = src)
+	ADD_TRAIT(user, TRAIT_IMMOBILIZED, type)
+	addtimer(CALLBACK(src, .proc/launch_back, target, user, return_to_sender, datum_throw_speed), 0.5 SECONDS)
+	return TRUE
+
+/obj/item/melee/baseball_bat/proc/launch_back(atom/movable/target, mob/living/user, turf/target_turf, datum_throw_speed)
+	playsound(target, 'sound/magic/tail_swing.ogg', 50, TRUE)
+	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, type)
+	target.mouse_opacity = initial(target.mouse_opacity)
+	target.add_filter("baseball_launch", 3, motion_blur_filter(1, 3))
+	target.throwforce *= 2
+	target.throw_at(target_turf, get_dist(target, target_turf), datum_throw_speed + 1, user, callback = CALLBACK(src, .proc/on_hit, target))
+	thrown_datums[target] = target.throwing
+
+/obj/item/melee/baseball_bat/proc/on_hit(atom/movable/target)
+	target.remove_filter("baseball_launch")
+	target.throwforce *= 0.5
+	thrown_datums -= target
+
+/obj/item/melee/baseball_bat/homerun
+	name = "home run bat"
+	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
+	homerun_able = TRUE
+	mob_thrower = TRUE
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"
@@ -745,15 +809,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "baseball_bat_metal"
 	force = 12
 	throwforce = 15
+	mob_thrower = TRUE
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
-	var/picksound = rand(1,2)
-	var/turf = get_turf(src)
-	if(picksound == 1)
-		playsound(turf, 'sound/weapons/effects/batreflect1.ogg', 50, TRUE)
-	if(picksound == 2)
-		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, TRUE)
-	return 1
+	playsound(src, pick('sound/weapons/effects/batreflect1.ogg', 'sound/weapons/effects/batreflect2.ogg'), 50, TRUE)
+	return TRUE
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"
