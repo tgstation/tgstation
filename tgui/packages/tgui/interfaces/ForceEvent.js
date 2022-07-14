@@ -8,7 +8,7 @@ export const ForceEvent = (props, context) => {
   return (
     <Window title="Force Event" width={450} height={450}>
       <Window.Content scrollable>
-      <Stack fill vertical>
+        <Stack fill vertical>
           <Stack.Item>
             <EventSearch />
           </Stack.Item>
@@ -16,15 +16,15 @@ export const ForceEvent = (props, context) => {
             <EventOptionsPanel />
           </Stack.Item>
           <Stack.Item grow>
-            <EventContent/>
+            <EventContent />
           </Stack.Item>
-      </Stack>
+        </Stack>
       </Window.Content>
     </Window>
   );
 };
 
-export const EventSearch = (props, context) =>  {
+export const EventSearch = (props, context) => {
   const [searchQuery, setSearchQuery] = useLocalState(
     context,
     'searchQuery',
@@ -48,31 +48,27 @@ export const EventSearch = (props, context) =>  {
         </Stack.Item>
       </Stack>
     </Section>
-  )
-}
+  );
+};
 
 export const EventOptionsPanel = (props, context) => {
   const { data } = useBackend(context);
 
-    const [announce, setAnnounce] = useLocalState(
-      context,
-      'announce',
-      true
-    );
+  const [announce, setAnnounce] = useLocalState(context, 'announce', true);
 
-    return (
-      <Stack vertical fill>
-        <Stack.Item>
-          <Button.Checkbox
-            fluid
-            checked={announce}
-            onClick={() => ( setAnnounce(!announce) ) }>
-            Announce event to the crew { announce }
-          </Button.Checkbox>
-        </Stack.Item>
-      </Stack>
-    )
-}
+  return (
+    <Stack vertical fill>
+      <Stack.Item>
+        <Button.Checkbox
+          fluid
+          checked={announce}
+          onClick={() => setAnnounce(!announce)}>
+          Announce event to the crew {announce}
+        </Button.Checkbox>
+      </Stack.Item>
+    </Stack>
+  );
+};
 
 export const EventContent = (props, context) => {
   const { data } = useBackend(context);
@@ -92,15 +88,15 @@ export const EventContent = (props, context) => {
   };
 
   return (
-      <Section>
-        <Stack vertical fill>
-            {categories.sort(nameSorter).map((category) => (
-              <Stack.Item mt={0.2}>
-                    <EventList category={category} />
-              </Stack.Item>
-            ))}
-        </Stack>
-      </Section>
+    <Section>
+      <Stack vertical fill>
+        {categories.sort(nameSorter).map((category) => (
+          <Stack.Item mt={0.2}>
+            <EventList category={category} />
+          </Stack.Item>
+        ))}
+      </Stack>
+    </Section>
   );
 };
 
@@ -111,7 +107,9 @@ export const EventList = (props, context) => {
   const [announce] = useLocalState(context, 'announce', true);
 
   const filtered_events = flow([
-    filter((event) => event.name?.toLowerCase().includes(searchQuery.toLowerCase())),
+    filter((event) =>
+      event.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
     sortBy((event) => event.name),
   ])(category.events || []);
 
@@ -120,7 +118,6 @@ export const EventList = (props, context) => {
   }
 
   return (
-    
     <Section title={category.name}>
       <Table>
         {filtered_events.map((event) => {
@@ -136,7 +133,7 @@ export const EventList = (props, context) => {
                   onClick={() =>
                     act('forceevent', {
                       type: event.type,
-                      announce: announce
+                      announce: announce,
                     })
                   }
                 />
