@@ -25,6 +25,8 @@
 		/mob/dview,
 		//Template type
 		/obj/item/bodypart,
+		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
+		/obj/merge_conflict_marker,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -92,8 +94,6 @@
 	ignore += typesof(/obj/machinery/computer/holodeck)
 	//runtimes if not paired with a landmark
 	ignore += typesof(/obj/structure/industrial_lift)
-	//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
-	ignore += typesof(/obj/merge_conflict_marker)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/baseturf_count = length(spawn_at.baseturfs)
