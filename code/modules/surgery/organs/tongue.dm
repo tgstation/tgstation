@@ -77,7 +77,7 @@
 	return is_type_in_typecache(language, languages_possible)
 
 /obj/item/organ/internal/tongue/get_availability(datum/species/owner_species)
-	return !(NOTONGUE in owner_species.species_traits)
+	return !(NO_TONGUE in owner_species.species_traits)
 
 /obj/item/organ/internal/tongue/lizard
 	name = "forked tongue"

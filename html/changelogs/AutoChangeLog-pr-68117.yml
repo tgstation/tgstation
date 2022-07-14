@@ -1,7 +1,0 @@
-author: "Christmas5"
-delete-after: True
-changes: 
-  - rscadd: "Shapeshifting now updates your age, physique, hair gradients, neck items and underwear colour."
-  - rscadd: "The Human form ability now uses a radial menu."
-  - bugfix: "Human form should now update your species accordingly."
-  - bugfix: "Last resort doesn't respawn you as an actual monkey, but as a monkeyized human."

@@ -408,3 +408,44 @@
   - rscadd: On Icebox, The RD's office and the AI's upload have received murals.
   - balance: That one table in the middle of the Icebox upload is gone. Yes, this
       is a balance change.
+2022-07-14:
+  ANAME593:
+  - balance: heretic blades do 20 damage up from 17, have 35% armor penetration, but
+      deal 20% less damage to structures like lockers
+  ArcaneMusic:
+  - code_imp: Crafting recipes now uniformly use the same style for how long they
+      take.
+  Christmas5:
+  - rscadd: Shapeshifting now updates your age, physique, hair gradients, neck items
+      and underwear colour.
+  - rscadd: The Human form ability now uses a radial menu.
+  - bugfix: Human form should now update your species accordingly.
+  - bugfix: Last resort doesn't respawn you as an actual monkey, but as a monkeyized
+      human.
+  CoffeeDragon16:
+  - bugfix: ethereals will now properly spawn with tongues
+  Ebb:
+  - rscadd: You can now rip pieces of tape off of tape rolls and use them to tape
+      people's mouth closed by putting it on them as a mask. Either through the stripping
+      menu or hitting them with the tape while not on combat mode. Different tape
+      piece types have different properties.
+  - rscadd: Super pointy tape is now obtainable in-game by researching illegal tech.
+  - rscadd: Super pointy tape is now available in the traitor uplink.
+  - soundadd: Tape now makes sounds.
+  Fikou, sprite by Mooster:
+  - rscadd: Baseballs are now available in the Baseball Field on the Holodeck.
+  - rscadd: Baseball Bats can now hit thrown objects mid-air to send them back.
+  JohnFulpWillard:
+  - bugfix: The CE can now trim people's IDs to Atmospherics Technician
+  - bugfix: The HoS can no longer trim people's IDs to Lawyers.
+  MMMiracles:
+  - bugfix: The service hallway on Tram now has an APC, as well as a public cut through
+      between the two smaller hallways on the lower floor.
+  magatsuchi:
+  - bugfix: safes open correctly once again
+  necromanceranne:
+  - imageadd: Improves upon the Makarov's colours.
+  - rscadd: There is (in no way) now a 10mm Makarov that (wasn't) added to the game.
+  zxaber:
+  - imageadd: The Airlock Shock Indicator seen when using a Diagnostics Hud has a
+      new sprite.
