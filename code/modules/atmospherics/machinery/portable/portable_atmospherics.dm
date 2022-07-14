@@ -18,7 +18,7 @@
 	var/volume = 0
 	///Used to track if anything of note has happen while running process_atmos(). 
 	///Treat it as a process_atmos() scope var, we just declare it here to pass it between parent calls.
-	///Should start false on start of every process_atmos() proc, since true means we'll process again next tick.
+	///Should be false on start of every process_atmos() proc, since true means we'll process again next tick.
 	var/excited = FALSE
 
 	/// Max amount of heat allowed inside the machine before it starts to melt. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
