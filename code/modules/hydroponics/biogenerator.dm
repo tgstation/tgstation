@@ -148,11 +148,20 @@
 	else
 		to_chat(user, span_warning("You cannot put this in [src.name]!"))
 
-/obj/machinery/biogenerator/AltClick(mob/living/user)
+/obj/machinery/biogenerator/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && can_interact(user))
-		eject_beaker(user)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
+		return
+	eject_beaker(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/machinery/biogenerator/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/obj/machinery/biogenerator/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 /**
  * activate: Activates biomass processing and converts all inserted grown products into biomass
  *
