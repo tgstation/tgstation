@@ -46,9 +46,17 @@
 "mN" = (
 /turf/closed/wall/mineral/wood,
 /area/ruin/powered/shuttle)
+"oD" = (
+/obj/machinery/autolathe,
+/turf/open/floor/plating,
+/area/ruin/powered/shuttle)
 "oJ" = (
 /obj/structure/sink,
 /turf/open/floor/plating,
+/area/ruin/powered/shuttle)
+"oK" = (
+/obj/item/circuitboard/machine/mining_equipment_vendor/golem,
+/turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "pI" = (
 /obj/item/chair/wood/wings,
@@ -95,6 +103,10 @@
 	},
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
+/area/ruin/powered/shuttle)
+"NB" = (
+/obj/item/circuitboard/machine/ore_redemption,
+/turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "Oe" = (
 /obj/item/seeds/plump,
@@ -320,8 +332,8 @@ bz
 gr
 bW
 cI
-cI
-cI
+NB
+oD
 mN
 mN
 mN
@@ -336,7 +348,7 @@ YN
 YN
 YN
 ei
-gr
+oK
 gr
 XI
 wH
