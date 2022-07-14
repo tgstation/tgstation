@@ -176,12 +176,14 @@
 	icon_state = "turretCover"
 	density = TRUE
 
-///Captain's log
+/// Captain's log
+/// Credits to goonstation13 for orginal SS13 lore
+/// https://wiki.ss13.co/Storyline and https://www.youtube.com/watch?v=7M-JPH5SOmI
 /obj/item/tape/captains_log
 	name = "captain's log"
 	desc = "A dusty old tape."
 	icon_state = "tape_blue"
-	used_capacity = max_capacity  // so the tape is full
+	used_capacity = 10 MINUTES // so the tape is full and can't be recorded over
 	storedinfo = list( // the captain recorded this in several segements
 		// 1st monologue (start of shift)
 		"\[00:02\] Every single day I spend on this station I become more and more certain that this was some kind of macabre punishment assignment.",
