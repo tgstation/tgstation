@@ -81,8 +81,6 @@
 		return
 	if(A.totalTransmittable() >= 6)
 		nearspace_penalty = 1
-	if(A.totalStageSpeed() >= 6)
-		power = 2
 
 /datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
 	if(direction == ZTRAIT_UP)
@@ -201,6 +199,7 @@
 	threshold_descs = list(
 		"Resistance 7" = "Increases chem removal speed.",
 		"Stage Speed 6" = "Consumed chemicals nourish the host.",
+		"Stage Speed 6" = "Increases chem removal speed, does not stack with Resistance 7",
 	)
 
 /datum/symptom/heal/chem/Start(datum/disease/advance/A)
@@ -283,15 +282,14 @@
 	level = 6
 	passive_message = "<span class='notice'>You feel tingling on your skin as light passes over it.</span>"
 	threshold_descs = list(
-		"Stage Speed 8" = "Doubles healing speed.",
+		"Stage Speed 6" = "Doubles healing speed.",
 	)
 
 /datum/symptom/heal/darkness/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 8)
-		power = 2
+
 
 /datum/symptom/heal/darkness/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
@@ -344,7 +342,8 @@
 	threshold_descs = list(
 		"Stealth 2" = "Host appears to die when falling into a coma.",
 		"Resistance 4" = "The virus also stabilizes the host while they are in critical condition.",
-		"Stage Speed 7" = "Increases healing speed.",
+		"Stage Speed 6" = "Increases healing speed.",
+		"Stage Speed 7" = "Decreases healing speed slightly.",
 	)
 
 /datum/symptom/heal/coma/Start(datum/disease/advance/A)
@@ -439,15 +438,13 @@
 	var/absorption_coeff = 1
 	threshold_descs = list(
 		"Resistance 5" = "Water is consumed at a much slower rate.",
-		"Stage Speed 7" = "Increases healing speed.",
+		"Stage Speed 6" = "Increases healing speed.",
 	)
 
 /datum/symptom/heal/water/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 7)
-		power = 2
 	if(A.totalResistance() >= 5)
 		absorption_coeff = 0.25
 
@@ -501,15 +498,13 @@
 	var/temp_rate = 1
 	threshold_descs = list(
 		"Transmission 6" = "Increases temperature adjustment rate.",
-		"Stage Speed 7" = "Increases healing speed.",
+		"Stage Speed 6" = "Increases healing speed.",
 	)
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 7)
-		power = 2
 	if(A.totalTransmittable() >= 6)
 		temp_rate = 4
 
@@ -575,6 +570,7 @@
 	threshold_descs = list(
 		"Transmission 6" = "Additionally heals cellular damage.",
 		"Resistance 7" = "Increases healing speed.",
+		"Stage Speed 6" = "Increases healing speed, does not stack with Resistance 7.",
 	)
 
 /datum/symptom/heal/radiation/Start(datum/disease/advance/A)
