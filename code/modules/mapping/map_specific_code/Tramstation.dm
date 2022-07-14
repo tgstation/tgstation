@@ -35,7 +35,15 @@
 /obj/modular_map_root/tramstation/maintenance_upperbarright/attachment_b
 	key = "maintenance_upperbarright_attachment_b"
 
+//right of medical upper floor, connects to science
+/obj/modular_map_root/tramstation/maintenance_uppermedsci
+	key = "maintenance_uppermedsci"
 
+/obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_a
+	key = "maintenance_uppermedsci_attachment_a"
+
+/obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_b
+	key = "maintenance_uppermedsci_attachment_b"
 
 /obj/item/paper/fluff/genpop_instructions
 	name = "Genpop - Inmate Processing and You"
