@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - code_imp: "Crafting recipes now uniformly use the same style for how long they take."
