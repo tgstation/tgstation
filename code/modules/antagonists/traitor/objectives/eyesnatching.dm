@@ -78,7 +78,7 @@
 		possible_targets += possible_target
 
 	for(var/datum/traitor_objective/eyesnatching/objective as anything in possible_duplicates)
-		possible_targets -= objective.victim
+		possible_targets -= objective.victim?.mind
 
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
