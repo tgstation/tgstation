@@ -43,7 +43,7 @@
 
 /turf/closed/indestructible/weeb
 	name = "paper wall"
-	desc = "Reinforced paper walling. Someone really doesn't you to leave."
+	desc = "Reinforced paper walling. Someone really doesn't want you to leave."
 	icon = 'icons/obj/smooth_structures/paperframes.dmi'
 	icon_state = "paperframes-0"
 	base_icon_state = "paperframes"

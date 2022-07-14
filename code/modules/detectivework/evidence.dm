@@ -28,7 +28,7 @@
 	if(!istype(I) || I.anchored)
 		return
 
-	if(SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE) && SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE))
+	if(loc.atom_storage && I.atom_storage)
 		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
 		return TRUE //begone infinite storage ghosts, begone from me
 
@@ -53,8 +53,8 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(SEND_SIGNAL(I.loc, COMSIG_CONTAINS_STORAGE)) //in a container.
-			SEND_SIGNAL(I.loc, COMSIG_TRY_STORAGE_TAKE, I, src)
+		if(I.loc.atom_storage) //in a container.
+			I.loc.atom_storage.attempt_remove(I, src)
 		if(!user.dropItemToGround(I))
 			return
 
