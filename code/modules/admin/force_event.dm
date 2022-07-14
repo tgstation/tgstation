@@ -61,11 +61,8 @@
             var/datum/round_event_control/E = locate(event_to_run_type) in SSevents.control
             if(E)
                 E.admin_setup(usr)
-                var/datum/round_event/event = E.runEvent()
-
+                var/datum/round_event/event = E.runEvent(announce_chance_override = announce_event ? 100 : 0)
                 if(event.cancel_event)
                     return
-                event.announceChance = announce_event ? 100 : 0;
-
                 message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
                 log_admin("[key_name(usr)] has triggered an event. ([E.name])")

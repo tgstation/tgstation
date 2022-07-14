@@ -95,7 +95,13 @@
 		log_admin_private("[key_name(usr)] cancelled event [name].")
 		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
 
-/datum/round_event_control/proc/runEvent(random = FALSE)
+/*
+Runs the event
+* Arguments:
+* - random: shows if the event was triggered randomly, or by on purpose by an admin or an item
+* - announce_chance_override: if the value is not null, overrides the announcement chance when an admin calls an event
+*/
+/datum/round_event_control/proc/runEvent(random = FALSE, announce_chance_override = null)
 	/*
 	* We clear our signals first so we dont cancel a wanted event by accident,
 	* the majority of time the admin will probably want to cancel a single midround spawned random events
@@ -107,6 +113,9 @@
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
 	occurrences++
+
+	if(announce_chance_override != null)
+		E.announceChance = announce_chance_override
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	triggering = TRUE
@@ -145,7 +154,7 @@
 
 	var/startWhen = 0 //When in the lifetime to call start().
 	var/announceWhen = 0 //When in the lifetime to call announce(). If you don't want it to announce use announceChance, below.
-	var/announceChance = 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Called in process, and for a second time in ion storms.
+	var/announceChance = 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Called in process, and for a second time in the ion storm event.
 	var/endWhen = 0 //When in the lifetime the event should end.
 
 	var/activeFor = 0 //How long the event has existed. You don't need to change this.
