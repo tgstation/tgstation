@@ -145,7 +145,7 @@
 
 	var/startWhen = 0 //When in the lifetime to call start().
 	var/announceWhen = 0 //When in the lifetime to call announce(). If you don't want it to announce use announceChance, below.
-	var/announceChance = 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Used in ion storms currently.
+	var/announceChance = 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Called in process, and for a second time in ion storms.
 	var/endWhen = 0 //When in the lifetime the event should end.
 
 	var/activeFor = 0 //How long the event has existed. You don't need to change this.

@@ -12,6 +12,9 @@ export const ForceEvent = (props, context) => {
           <Stack.Item>
             <EventSearch />
           </Stack.Item>
+          <Stack.Item>
+            <EventOptionsPanel />
+          </Stack.Item>
           <Stack.Item grow>
             <EventContent/>
           </Stack.Item>
@@ -48,6 +51,29 @@ export const EventSearch = (props, context) =>  {
   )
 }
 
+export const EventOptionsPanel = (props, context) => {
+  const { data } = useBackend(context);
+
+    const [announce, setAnnounce] = useLocalState(
+      context,
+      'announce',
+      true
+    );
+
+    return (
+      <Stack vertical fill>
+        <Stack.Item>
+          <Button.Checkbox
+            fluid
+            checked={announce}
+            onClick={() => ( setAnnounce(!announce) ) }>
+            Announce event to the crew { announce }
+          </Button.Checkbox>
+        </Stack.Item>
+      </Stack>
+    )
+}
+
 export const EventContent = (props, context) => {
   const { data } = useBackend(context);
 
@@ -81,12 +107,8 @@ export const EventContent = (props, context) => {
 export const EventList = (props, context) => {
   const { act } = useBackend(context);
   const { category } = props;
-
-  const [searchQuery, setSearchQuery] = useLocalState(
-    context,
-    'searchQuery',
-    ''
-  );
+  const [searchQuery] = useLocalState(context, 'searchQuery', '');
+  const [announce] = useLocalState(context, 'announce', true);
 
   const filtered_events = flow([
     filter((event) => event.name?.toLowerCase().includes(searchQuery.toLowerCase())),
@@ -114,6 +136,7 @@ export const EventList = (props, context) => {
                   onClick={() =>
                     act('forceevent', {
                       type: event.type,
+                      announce: announce
                     })
                   }
                 />

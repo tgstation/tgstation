@@ -51,6 +51,7 @@
         return
     switch(action)
         if("forceevent")
+            var/announce_event = params["announce"]
             var/string_path = params["type"]
             if(!string_path)
                 return
@@ -61,19 +62,10 @@
             if(E)
                 E.admin_setup(usr)
                 var/datum/round_event/event = E.runEvent()
+
                 if(event.cancel_event)
                     return
-                if(event.announceWhen>0)
-                    event.processing = FALSE
-                    var/prompt = tgui_alert(usr, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel"))
-                    switch(prompt)
-                        if("Yes")
-                            event.announceChance = 100
-                        if("Cancel")
-                            event.kill()
-                            return
-                        if("No")
-                            event.announceChance = 0
-                    event.processing = TRUE
+                event.announceChance = announce_event ? 100 : 0;
+
                 message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
                 log_admin("[key_name(usr)] has triggered an event. ([E.name])")
