@@ -91,7 +91,7 @@ Possible to do for anyone motivated enough:
 	. = ..()
 	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
 	plane = FLOOR_PLANE
-	update_overlays()
+	update_appearance()
 
 /obj/machinery/holopad/secure
 	name = "secure holopad"

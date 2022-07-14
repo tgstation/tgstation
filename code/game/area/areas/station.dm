@@ -15,6 +15,7 @@
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
 	forced_ambience = TRUE
 	ambient_buzz = 'sound/ambience/source_corridor2.ogg'
+	ambient_buzz_vol = 20
 
 //Maintenance - Departmental
 
@@ -579,6 +580,10 @@
 	name = "\improper Atrium"
 	icon_state = "bar"
 	sound_environment = SOUND_AREA_WOODFLOOR
+
+/area/station/service/bar/backroom
+	name = "\improper Bar Backroom"
+	icon_state = "bar_backroom"
 
 /area/station/service/electronic_marketing_den
 	name = "\improper Electronic Marketing Den"

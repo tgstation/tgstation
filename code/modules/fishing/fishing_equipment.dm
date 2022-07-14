@@ -70,12 +70,11 @@
 	inhand_icon_state = "artistic_toolbox"
 	material_flags = NONE
 
-/obj/item/storage/toolbox/ComponentInitialize()
+/obj/item/storage/toolbox/Initialize()
 	. = ..()
 	// Can hold fishing rod despite the size
 	var/static/list/exception_cache = typecacheof(/obj/item/fishing_rod)
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.exception_hold = exception_cache
+	atom_storage.exception_hold = exception_cache
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
 	new /obj/item/bait_can/worm(src)

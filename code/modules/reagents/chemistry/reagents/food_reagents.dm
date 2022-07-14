@@ -177,7 +177,7 @@
 	if(is_type_in_typecache(exposed_obj, GLOB.oilfry_blacklisted_items) || (exposed_obj.resistance_flags & INDESTRUCTIBLE))
 		exposed_obj.loc.visible_message(span_notice("The hot oil has no effect on [exposed_obj]!"))
 		return
-	if(SEND_SIGNAL(exposed_obj, COMSIG_CONTAINS_STORAGE))
+	if(exposed_obj.atom_storage)
 		exposed_obj.loc.visible_message(span_notice("The hot oil splatters about as [exposed_obj] touches it. It seems too full to cook properly!"))
 		return
 	exposed_obj.loc.visible_message(span_warning("[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow."))

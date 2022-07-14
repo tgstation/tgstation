@@ -8,10 +8,8 @@
 
 /obj/item/storage/dice/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.allow_quick_gather = TRUE
-	storage.click_gather = TRUE
-	storage.set_holdable(list(/obj/item/dice))
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.set_holdable(list(/obj/item/dice))
 
 /obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
