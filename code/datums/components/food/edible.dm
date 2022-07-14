@@ -85,6 +85,7 @@ Behavior that's still missing from this component that original food items had t
 		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
 		RegisterSignal(parent, COMSIG_GRILL_FOOD, .proc/GrillFood)
 		RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_ACT, .proc/OnMicrowaved)
+		RegisterSignal(parent, COMSIG_FOOD_SILVER_SPAWNED, .proc/on_silver_slime_reaction)
 		RegisterSignal(parent, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/used_to_customize)
 
 		var/obj/item/item = parent
@@ -518,6 +519,11 @@ Behavior that's still missing from this component that original food items had t
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(customized, COMSIG_EDIBLE_INGREDIENT_ADDED, src)
+
+///Adds this flag to the item to make it taste disgusting
+/datum/component/edible/proc/on_silver_slime_reaction(obj/item/source)
+	SIGNAL_HANDLER
+	food_flags |= FOOD_SILVER_SPAWNED
 
 ///Response to an edible ingredient being added to parent.
 /datum/component/edible/proc/edible_ingredient_added(datum/source, datum/component/edible/ingredient)
