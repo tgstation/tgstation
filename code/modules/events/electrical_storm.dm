@@ -4,7 +4,6 @@
 	earliest_start = 10 MINUTES
 	min_players = 5
 	weight = 20
-	alert_observers = FALSE
 	category = EVENT_CAT_ENGINEERING
 	description = "Destroys all lights in a large area."
 
