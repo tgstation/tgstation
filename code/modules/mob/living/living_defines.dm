@@ -145,21 +145,16 @@
 
 	///how much blood the mob has
 	var/blood_volume = 0
-	///Any ranged ability the mob has, as a click override
-	var/obj/effect/proc_holder/ranged_ability
 
 	///0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
 	var/see_override = 0
 
 	///a list of all status effects the mob has
 	var/list/status_effects
-
 	var/list/implants = null
 
 	///used for database logging
 	var/last_words
-
-	var/list/obj/effect/proc_holder/abilities = list()
 
 	///whether this can be picked up and held.
 	var/can_be_held = FALSE

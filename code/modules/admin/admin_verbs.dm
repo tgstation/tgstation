@@ -75,7 +75,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/respawn_character,
 	/datum/admins/proc/open_borgopanel,
 	/datum/admins/proc/view_all_circuits,
-	/datum/admins/proc/view_all_sdql_spells,
 	/datum/admins/proc/known_alts_panel,
 	/datum/admins/proc/paintings_manager,
 	/datum/admins/proc/display_tags,
@@ -195,13 +194,13 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/datum/admins/proc/create_or_modify_area,
 	/client/proc/check_timer_sources,
 	/client/proc/toggle_cdn,
-	/client/proc/cmd_sdql_spell_menu,
 	/client/proc/adventure_manager,
 	/client/proc/load_circuit,
 	/client/proc/cmd_admin_toggle_fov,
 	/client/proc/cmd_admin_debug_traitor_objectives,
 	/client/proc/spawn_debug_full_crew,
 	/client/proc/validate_puzzgrids,
+	/client/proc/debug_spell_requirements,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -661,12 +660,29 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
 
+	var/which = tgui_alert(usr, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
+	if(!which)
+		return
+	if(QDELETED(spell_recipient))
+		to_chat(usr, span_warning("The intended spell recipient no longer exists."))
+		return
+
 	var/list/spell_list = list()
-	var/type_length = length_char("/obj/effect/proc_holder/spell") + 2
-	for(var/spell in GLOB.spells)
-		spell_list[copytext_char("[spell]", type_length)] = spell
-	var/spell_desc = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in sort_list(spell_list)
-	if(!spell_desc)
+	for(var/datum/action/cooldown/spell/to_add as anything in subtypesof(/datum/action/cooldown/spell))
+		var/spell_name = initial(to_add.name)
+		if(spell_name == "Spell") // abstract or un-named spells should be skipped.
+			continue
+
+		if(which == "Name")
+			spell_list[spell_name] = to_add
+		else
+			spell_list += to_add
+
+	var/chosen_spell = tgui_input_list(usr, "Choose the spell to give to [spell_recipient]", "ABRAKADABRA", sort_list(spell_list))
+	if(isnull(chosen_spell))
+		return
+	var/datum/action/cooldown/spell/spell_path = which == "Typepath" ? chosen_spell : spell_list[chosen_spell]
+	if(!ispath(spell_path))
 		return
 
 	var/robeless = (tgui_alert(usr, "Would you like to force this spell to be robeless?", "Robeless Casting?", list("Force Robeless", "Use Spell Setting")) == "Force Robeless")
@@ -676,37 +692,43 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		return
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] gave [key_name(spell_recipient)] the spell [spell_desc][robeless ? " (Forced robeless)" : ""].")
-	message_admins(span_adminnotice("[key_name_admin(usr)] gave [key_name_admin(spell_recipient)] the spell [spell_desc][spell_desc][robeless ? " (Forced robeless)" : ""]."))
+	log_admin("[key_name(usr)] gave [key_name(spell_recipient)] the spell [chosen_spell][robeless ? " (Forced robeless)" : ""].")
+	message_admins("[key_name_admin(usr)] gave [key_name_admin(spell_recipient)] the spell [chosen_spell][robeless ? " (Forced robeless)" : ""].")
 
-	var/spell_path = spell_list[spell_desc]
-	var/obj/effect/proc_holder/spell/new_spell = new spell_path()
+	var/datum/action/cooldown/spell/new_spell = new spell_path(spell_recipient.mind || spell_recipient)
 
 	if(robeless)
-		new_spell.clothes_req = FALSE
+		new_spell.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
 
-	if(spell_recipient.mind)
-		spell_recipient.mind.AddSpell(new_spell)
-	else
-		spell_recipient.AddSpell(new_spell)
-		message_admins(span_danger("Spells given to mindless mobs will not be transferred in mindswap or cloning!"))
+	new_spell.Grant(spell_recipient)
+
+	if(!spell_recipient.mind)
+		to_chat(usr, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
+			and as such will not be transferred if their mind changes body (Such as from Mindswap)."))
 
 /client/proc/remove_spell(mob/removal_target in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Remove Spell"
 	set desc = "Remove a spell from the selected mob."
 
-	var/target_spell_list = length(removal_target?.mind?.spell_list) ? removal_target.mind.spell_list : removal_target.mob_spell_list
+	var/list/target_spell_list = list()
+	for(var/datum/action/cooldown/spell/spell in removal_target.actions)
+		target_spell_list[spell.name] = spell
 
 	if(!length(target_spell_list))
 		return
 
-	var/obj/effect/proc_holder/spell/removed_spell = input("Choose the spell to remove", "NO ABRAKADABRA") as null|anything in sort_list(target_spell_list)
-	if(removed_spell)
-		removal_target.mind.RemoveSpell(removed_spell)
-		log_admin("[key_name(usr)] removed the spell [removed_spell] from [key_name(removal_target)].")
-		message_admins(span_adminnotice("[key_name_admin(usr)] removed the spell [removed_spell] from [key_name_admin(removal_target)]."))
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/chosen_spell = tgui_input_list(usr, "Choose the spell to remove from [removal_target]", "ABRAKADABRA", sort_list(target_spell_list))
+	if(isnull(chosen_spell))
+		return
+	var/datum/action/cooldown/spell/to_remove = target_spell_list[chosen_spell]
+	if(!istype(to_remove))
+		return
+
+	qdel(to_remove)
+	log_admin("[key_name(usr)] removed the spell [chosen_spell] from [key_name(removal_target)].")
+	message_admins("[key_name_admin(usr)] removed the spell [chosen_spell] from [key_name_admin(removal_target)].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_disease(mob/living/T in GLOB.mob_living_list)
 	set category = "Admin.Fun"
@@ -931,3 +953,41 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		CHECK_TICK
 
 	to_chat(admin, "[number_made] crewmembers have been created.")
+
+/// Debug verb for seeing at a glance what all spells have as set requirements
+/client/proc/debug_spell_requirements()
+	set name = "Show Spell Requirements"
+	set category = "Debug"
+
+	var/header = "<tr><th>Name</th> <th>Requirements</th>"
+	var/all_requirements = list()
+	for(var/datum/action/cooldown/spell/spell as anything in typesof(/datum/action/cooldown/spell))
+		if(initial(spell.name) == "Spell")
+			continue
+
+		var/list/real_reqs = list()
+		var/reqs = initial(spell.spell_requirements)
+		if(reqs & SPELL_CASTABLE_AS_BRAIN)
+			real_reqs += "Castable as brain"
+		if(reqs & SPELL_CASTABLE_WHILE_PHASED)
+			real_reqs += "Castable phased"
+		if(reqs & SPELL_REQUIRES_HUMAN)
+			real_reqs += "Must be human"
+		if(reqs & SPELL_REQUIRES_MIME_VOW)
+			real_reqs += "Must be miming"
+		if(reqs & SPELL_REQUIRES_MIND)
+			real_reqs += "Must have a mind"
+		if(reqs & SPELL_REQUIRES_NO_ANTIMAGIC)
+			real_reqs += "Must have no antimagic"
+		if(reqs & SPELL_REQUIRES_OFF_CENTCOM)
+			real_reqs += "Must be off central command z-level"
+		if(reqs & SPELL_REQUIRES_WIZARD_GARB)
+			real_reqs += "Must have wizard clothes"
+
+		all_requirements += "<tr><td>[initial(spell.name)]</td> <td>[english_list(real_reqs, "No requirements")]</td></tr>"
+
+	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
+	var/page_contents = "[page_style]<table style=\"width:100%\">[header][jointext(all_requirements, "")]</table>"
+	var/datum/browser/popup = new(mob, "spellreqs", "Spell Requirements", 600, 400)
+	popup.set_content(page_contents)
+	popup.open()

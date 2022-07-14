@@ -10,10 +10,9 @@
 	resistance_flags = FLAMMABLE
 	var/title = "book"
 
-/obj/item/storage/book/ComponentInitialize()
+/obj/item/storage/book/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 1
+	atom_storage.max_slots = 1
 
 /obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, span_notice("The pages of [title] have been cut out!"))

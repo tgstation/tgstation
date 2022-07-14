@@ -231,8 +231,6 @@
 
 ///from [/mob/living/carbon/human/Move]: ()
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"
-///from base of /obj/item/clothing/suit/space/proc/toggle_spacesuit(): (obj/item/clothing/suit/space/suit)
-#define COMSIG_SUIT_SPACE_TOGGLE "suit_space_toggle"
 
 // /obj/item/implant signals
 ///from base of /obj/item/implant/proc/activate(): ()
@@ -314,34 +312,6 @@
 	#define THRUSTER_ACTIVATION_FAILED (1<<0)
 //called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
 #define COMSIG_THRUSTER_DEACTIVATED "jetmodule_deactivated"
-
-// /obj/effect/proc_holder/spell signals
-
-///called from /obj/effect/proc_holder/spell/cast_check (src)
-#define COMSIG_MOB_PRE_CAST_SPELL "mob_cast_spell"
-	/// Return to cancel the cast from beginning.
-	#define COMPONENT_CANCEL_SPELL (1<<0)
-///called from /obj/effect/proc_holder/spell/perform (src)
-#define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
-
-/// Sent from /obj/effect/proc_holder/spell/targeted/lichdom/cast(), to the item being imbued: (mob/user)
-#define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul"
-	/// Returns to block this item from being imbued into a phylactery
-	#define COMPONENT_BLOCK_IMBUE (1 << 0)
-/// Sent from /obj/effect/proc_holder/spell/targeted/summonitem/cast(), to the item being marked : ()
-#define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"
-	/// Returns to block this item from being marked for instant summons
-	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1<<0)
-
-/// Sent from /obj/effect/proc_holder/spell/targeted/charge/cast(), to the item in hand being charged: (obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
-#define COMSIG_ITEM_MAGICALLY_CHARGED "item_magic_charged"
-	/// Returns if an item was successfuly recharged
-	#define COMPONENT_ITEM_CHARGED (1 << 0)
-	/// Returns if the item had a negative side effect occur while recharging
-	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
-
-/// Sent from /obj/effect/proc_holder/spell/aoe_turf/knock/cast(), to every nearby turf: (obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
-#define COMSIG_ATOM_MAGICALLY_UNLOCKED "atom_magic_unlock"
 
 // /obj/item/camera signals
 

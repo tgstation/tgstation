@@ -9,6 +9,9 @@
 	},
 /obj/docking_port/mobile/syndicate_fighter/fighter_three,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_fighter3)
 "f" = (
@@ -18,7 +21,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter3)
 "g" = (
 /obj/structure/shuttle/engine/propulsion/burst,
@@ -35,14 +38,14 @@
 	pixel_x = 25;
 	specialfunctions = 4
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter3)
 "y" = (
 /obj/machinery/computer/security{
 	dir = 8;
 	network = list("SBC_Fighter2")
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter3)
 "E" = (
 /obj/machinery/turretid{
@@ -59,17 +62,14 @@
 	dir = 1;
 	name = "tactical chair"
 	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter3)
 "F" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 9
-	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Left Side";
-	network = list("SBC_Fighter3");
-	pixel_x = -32;
-	pixel_y = -11
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter3)
@@ -77,38 +77,27 @@
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 5
 	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Right Side";
-	network = list("SBC_Fighter3");
-	pixel_x = 32;
-	pixel_y = -11
-	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter3)
 "I" = (
 /obj/machinery/porta_turret/syndicate/energy/heavy{
 	dir = 1
 	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Front Side";
-	network = list("SBC_Fighter3");
-	pixel_x = 11;
-	pixel_y = 32
-	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter3)
 "J" = (
 /obj/machinery/computer/shuttle/starfury/fighter/fighter_three,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter3)
 "Q" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/end,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter3)
 "T" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_three{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter3)
 "Z" = (
 /obj/structure/rack,
@@ -117,7 +106,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter3)
 
 (1,1,1) = {"

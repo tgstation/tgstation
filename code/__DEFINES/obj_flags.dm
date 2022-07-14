@@ -65,6 +65,8 @@
 #define PLASMAMAN_PREVENT_IGNITION (1<<18)
 /// Usable as casting clothes by wizards (only matters for suits and headwear)
 #define CASTING_CLOTHES (1<<19)
+///Moths can't eat the clothing that has this flag.
+#define INEDIBLE_CLOTHING (1<<20)
 
 /// Flags for the organ_flags var on /obj/item/organ
 
@@ -87,6 +89,8 @@
 
 /// Flags for the gun_flags var for firearms
 #define TOY_FIREARM_OVERLAY (1<<0) // If update_overlay would add some indicator that the gun is a toy, like a plastic cap on a pistol
+/// Currently used to identify valid guns to steal
+#define NOT_A_REAL_GUN (1<<1)
 
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)
