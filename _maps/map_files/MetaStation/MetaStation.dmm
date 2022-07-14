@@ -18195,9 +18195,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "gLy" = (
-/obj/machinery/portable_atmospherics/pump{
-	name = "Lil Pump"
-	},
+/obj/machinery/portable_atmospherics/pump/lil_pump,
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
 	},
