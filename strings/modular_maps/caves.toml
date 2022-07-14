@@ -39,40 +39,44 @@ modules = ["caves_lvl2encounter3_a.dmm", "caves_lvl2encounter3_b.dmm", "caves_lv
 modules = ["caves_lvl2encounter4_a.dmm", "caves_lvl2encounter4_b.dmm", "caves_lvl2encounter4_c.dmm"]
 
 #Research outpost on the 2nd floor#
+#All have similar loot apart from the loot in the site director's office, mostly just layout changes to keep it interesting
 [rooms.caves_lvl2researchpost]
 modules = ["caves_lvl2researchpost_a.dmm", "caves_lvl2researchpost_b.dmm", "caves_lvl2researchpost_c.dmm"]
 
-#Spooky rift room oooOoooOooOooo
+#4th wall breaking room only occasionally accessible
+#A - Mining centric
+#B - Station centric
+#C - Beach centric
 [rooms.caves_lvl3tear]
 modules = ["caves_lvl3tear_a.dmm", "caves_lvl3tear_b.dmm", "caves_lvl3tear_c.dmm"]
 
 #1st segment of 3 on the 3rd floor
-#A - Ashwalker village
+#A - Ashwalker village (stealth optional?)
 #B - Mining strip with blocked passage that needs blown up
-#C - idk yet lol
+#C - Mining post with mass driver jumps
 [rooms.caves_lvl3segment1]
 modules = ["caves_lvl3segment1_a.dmm", "caves_lvl3segment1_b.dmm", "caves_lvl3segment1_c.dmm"]
 
 #2nd segment of 3 on the 3rd floor
 #A - Undead crypt
 #B - Ayylmao zone
-#C - Research away mission but less ass
+#C - Research away mission but less bad
 [rooms.caves_lvl3segment2]
 modules = ["caves_lvl3segment2_a.dmm", "caves_lvl3segment2_b.dmm", "caves_lvl3segment2_c.dmm"]
 
 #3rd segment of 3 on the 3rd floor
 #A - Ant nest
 #B - Bootleg hell zone
-#C - idk yet lol
+#C - Abandoned outpost
 [rooms.caves_lvl3segment3]
 modules = ["caves_lvl3segment3_a.dmm", "caves_lvl3segment3_b.dmm", "caves_lvl3segment3_c.dmm"]
 
 #4th floor leading up to the boss arena
-#A - idk yet lol
-#B - idk yet lol
-#C - idk yet lol
+#A - Lava lake with several islands
+#B - Central cave with multiple tunnels
+#C - Matrix zone (coders HATE ratvar)
 [rooms.caves_lvl4]
-modules = ["caves_lvl4_b.dmm", "caves_lvl4_b.dmm", "caves_lvl4_b.dmm"]
+modules = ["caves_lvl4_a.dmm", "caves_lvl4_b.dmm", "caves_lvl4_c.dmm"]
 
 #4th floor boss arena
 #A - idk yet lol

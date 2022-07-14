@@ -554,6 +554,10 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
+"Fq" = (
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 "Gc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -843,6 +847,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"VL" = (
+/obj/structure/flora/rock/pile,
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "Wu" = (
 /obj/effect/mine/explosive{
@@ -3118,7 +3127,7 @@ rx
 tb
 CD
 bT
-rx
+Fq
 cu
 cu
 nI
@@ -3173,7 +3182,7 @@ cu
 cu
 rx
 rx
-rx
+Fq
 tb
 QS
 bT
@@ -4239,7 +4248,7 @@ rx
 tb
 CD
 bT
-rx
+Fq
 rx
 rb
 rx
@@ -4293,7 +4302,7 @@ rb
 rb
 rb
 Vh
-rb
+VL
 rx
 tb
 QS

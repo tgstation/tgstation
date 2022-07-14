@@ -31,9 +31,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/catwalk_floor/iron_dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "as" = (
 /obj/machinery/mineral/processing_unit{
@@ -147,9 +145,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron_dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "bn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -263,7 +259,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "gU" = (
 /obj/machinery/conveyor{
@@ -676,9 +672,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/catwalk_floor/iron_dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "wu" = (
 /obj/structure/ore_box,
@@ -1224,9 +1218,7 @@
 /area/awaymission/caves/misc/mining_post)
 "Nw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron_dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "NM" = (
 /obj/structure/cable,
@@ -1412,7 +1404,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "To" = (
 /obj/structure/marker_beacon/yellow,
@@ -1437,7 +1429,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "TH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1518,7 +1510,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "VR" = (
 /obj/machinery/conveyor{

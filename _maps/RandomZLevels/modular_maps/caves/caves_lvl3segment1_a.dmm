@@ -136,7 +136,9 @@
 /area/awaymission/caves/misc/ashwalker_village)
 "fr" = (
 /obj/structure/stone_tile/slab,
-/obj/structure/closet/crate,
+/obj/structure/closet/crate{
+	name = "ritual supplies"
+	},
 /obj/item/clothing/mask/cigarette/rollie/cannabis,
 /obj/item/clothing/mask/cigarette/rollie/cannabis,
 /obj/item/clothing/mask/cigarette/rollie/cannabis,
@@ -557,7 +559,7 @@
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/ashwalker{
-	name = "Breaks-It-Down"
+	name = "Pops-And-Locks"
 	},
 /obj/structure/chair/stool/bamboo,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -573,11 +575,6 @@
 	name = "ashen sand"
 	},
 /area/template_noop)
-"tz" = (
-/obj/structure/stone_tile/slab/burnt,
-/obj/structure/closet/crate/wooden,
-/turf/open/indestructible/boss,
-/area/awaymission/caves/misc/ashwalker_village)
 "tB" = (
 /obj/structure/stone_tile/burnt{
 	dir = 1
@@ -688,7 +685,7 @@
 /obj/item/stack/sheet/mineral/bananium{
 	amount = 10
 	},
-/obj/item/pickaxe/drill,
+/obj/item/pickaxe/drill/jackhammer,
 /turf/open/indestructible/boss,
 /area/awaymission/caves/misc/ashwalker_village)
 "xR" = (
@@ -4596,7 +4593,7 @@ jJ
 Aa
 BI
 CJ
-tz
+Zz
 Sq
 Wk
 Wk

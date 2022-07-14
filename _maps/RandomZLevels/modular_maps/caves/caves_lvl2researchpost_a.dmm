@@ -845,9 +845,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
-/turf/open/floor/catwalk_floor/iron_dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
 "qr" = (
 /obj/structure/table/wood,
@@ -1133,9 +1131,7 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
 	},
-/turf/open/floor/catwalk_floor/iron_dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
 "uN" = (
 /turf/open/chasm/lavaland,
@@ -1195,6 +1191,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/sign/clock/directional/north,
 /turf/open/floor/iron{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -1795,9 +1792,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
-/turf/open/floor/catwalk_floor/iron_dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
 "IM" = (
 /obj/structure/cable,

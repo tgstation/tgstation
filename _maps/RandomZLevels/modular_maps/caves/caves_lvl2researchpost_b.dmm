@@ -72,7 +72,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "cb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1078,7 +1078,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "wF" = (
 /obj/effect/turf_decal/bot,
@@ -1340,8 +1340,8 @@
 	dir = 8
 	},
 /obj/effect/gibspawner/human,
-/obj/item/clothing/suit/armor/reactive/delimbering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/clothing/suit/armor/reactive/bioscrambling,
 /turf/open/floor/iron/cafeteria{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -2296,7 +2296,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "Yg" = (
 /obj/machinery/door/airlock{
