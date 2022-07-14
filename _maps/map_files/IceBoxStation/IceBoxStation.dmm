@@ -3842,7 +3842,6 @@
 /turf/open/floor/plating,
 /area/station/medical/morgue)
 "bji" = (
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -27145,7 +27144,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "ikO" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/qm)
 "ikW" = (
@@ -62494,6 +62493,7 @@
 "tkk" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "tkB" = (
