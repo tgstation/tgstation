@@ -125,7 +125,6 @@
 /area/ruin/powered)
 "C" = (
 /obj/structure/tubes,
-/obj/item/crowbar,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
@@ -167,6 +166,10 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered)
+"K" = (
+/obj/item/circuitboard/machine/mining_equipment_vendor/golem,
+/turf/open/misc/asteroid/basalt,
+/area/ruin/powered)
 "L" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
@@ -176,9 +179,17 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
+"N" = (
+/obj/machinery/autolathe,
+/turf/open/floor/plating,
+/area/ruin/powered)
 "P" = (
 /turf/template_noop,
 /area/template_noop)
+"Q" = (
+/obj/item/circuitboard/machine/ore_redemption,
+/turf/open/misc/asteroid/basalt,
+/area/ruin/powered)
 "S" = (
 /obj/item/clothing/head/helmet/space/orange,
 /turf/open/misc/asteroid{
@@ -318,7 +329,7 @@ b
 b
 b
 c
-f
+Q
 o
 q
 o
@@ -333,14 +344,14 @@ s
 (9,1,1) = {"
 a
 b
-f
+K
 i
 g
 f
 f
 o
 o
-o
+N
 t
 t
 t
