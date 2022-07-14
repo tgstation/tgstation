@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "On TramStation, the xenobiology pen disposals bins should no longer pop off the floor tile on the turf they reside on. They should also now like... actually work. Nanotrasen had to re-route the disposals a bit to accomodate, but that's alright."

@@ -34,6 +34,21 @@
 	desc = "A billboard advertising Azik Interstellar and their newest model: the Autocrat Solar Sailer. Azik Interstellar: Tiziran Refinement for Galactic Necessities."
 	icon_state = "billboard_azik"
 
+/obj/structure/billboard/cvr
+	name = "\improper Charlemagne von Rheinland billboard"
+	desc = "A billboard advertising Charlemagne von Rheinland's Germania-class superyacht. Charlemagne von Rheinland: Die Werft der Könige."
+	icon_state = "billboard_cvr"
+
+/obj/structure/billboard/twenty_four_seven
+	name = "\improper 24-Seven billboard"
+	desc = "A billboard advertising 24-Seven's new range of limited-edition Slushee flavours. 24-Seven: All Day, Everyday."
+	icon_state = "billboard_twenty_four_seven"
+
+/obj/structure/billboard/starway
+	name = "\improper Starway Transit billboard"
+	desc = "A billboard advertising Starway Transit's direct flight from New Moscow to New York: only 2000 credits for an economy class berth. Starway: Your Ticket to the Stars."
+	icon_state = "billboard_starway"
+
 /obj/structure/billboard/lizards_gas
 	name = "\improper The Lizard's Gas billboard"
 	desc = "A billboard labelling the gas station known as 'The Lizard's Gas'. It's been lost to time, and this is the only known gas station of its type. It's hard to see why it flopped based on the quality of the billboard."

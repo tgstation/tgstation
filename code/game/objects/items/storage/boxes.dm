@@ -36,6 +36,7 @@
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	update_appearance()
 
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)
@@ -687,7 +688,7 @@
 /obj/item/storage/box/snappops/PopulateContents()
 	for(var/i in 1 to 8)
 		new /obj/item/toy/snappop(src)
-		
+
 /obj/item/storage/box/matches
 	name = "matchbox"
 	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
