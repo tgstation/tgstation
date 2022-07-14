@@ -11,7 +11,6 @@
 	symptom_delay_max = 1
 	var/passive_message = "" //random message to infected but not actively healing people
 	threshold_descs = list(
-		"Stage Speed 6" = "Doubles healing speed.",
 		"Stealth 4" = "Healing will no longer be visible to onlookers.",
 	)
 
