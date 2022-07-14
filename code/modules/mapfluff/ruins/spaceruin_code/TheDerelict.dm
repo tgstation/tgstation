@@ -175,3 +175,96 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
 	density = TRUE
+
+///Captain's log
+/obj/item/tape/captains_log
+	name = "captain's log"
+	desc = "A dusty old tape."
+	icon_state = "tape_blue"
+	used_capacity = max_capacity  // so the tape is full
+	storedinfo = list( // the captain recorded this in several segements
+		// 1st monologue (start of shift)
+		"\[00:02\] Every single day I spend on this station I become more and more certain that this was some kind of macabre punishment assignment.",
+		"\[00:05\] I don't know what I did to deserve being consigned to this glued together ball of orbital wreckage, but someones got it out for me.", 
+		"\[00:08\] On the station I may well be called Captain, but the title brings with it all the prestige and responsibility of some kind of fucking manchild kindergarten teacher.",
+		"\[00:11\] To think NanoTrasen loves to call this hellhole a 'State of the Art Orbital Plasma Research Facility'.",
+		"\[00:13\] If I remember correctly though, it was all about the Plasma. It was like the new oil.",
+		"\[00:16\] As soon as we got all the fun exploration and discovery shit out of the way, we started drilling.",
+		"\[00:19\] All the companies and industries wanted to guzzle it up despite the fact we knew jack shit about it and still don't, but that didn't stop them.",
+		// 2nd monologue (early shift)
+		"\[15:05\] So they give me a crew of scientists and engineers to research and harness this so called plasma.",
+		"\[15:08\] Not to mention the incompetent security.",
+		"\[15:09\] The homicidal chefs.",
+		"\[15:10\] Suspicious fucking detective.",
+		"\[15:11\] Useless clown.",
+		"\[15:12\] And batshit fucking janitors.",
+		"\[15:13\] That includes the crotchety fucking IBM piece of shit we're supposed to call an AI and it's legion of cyborg assholes.",
+		"\[15:18\] If this wasn't bad enough there is the wizards federation to worry about. Crazy bastards.",
+		"\[15:23\] What can be worse than a bunch of plasma-humping-space-freaks? The syndicate. Hell bent on nuking everything we've accomplished to kingdom come.",
+		"\[15:26\] Yet the crew still goes about their daily business, constantly looking over their shoulder in suspicion of one another.",
+		"\[15:30\] And who wouldn't? Even the monkeys on board for genetic testing are monitored 24/7.",
+		"\[15:33\] Despite it all though, these cruel, paranoid, rejects spend every waking hour perfecting their robust combat skills.",
+		"\[15:37\] Or wondering in awe, at the promise plasma has to offer.",
+		"\[15:39\] And if things go wrong it's hardly a problem.",
+		"\[15:42\] Our advanced genetics and medical staff can ensure a 2nd life in matter of minutes.",
+		// 3rd monologue (middle shift)
+		"\[28:03\] I don't know why i'm even recording this...",
+		"\[28:05\] I sure as hell don't need it for myself.",
+		"\[28:07\] Sure, I could upload it with all the evidence and dirt i've found over the years on Nanotrasen, but what's the point?", 
+		"\[28:13\] Who would give a shit other than corporate making me suddenly disappear?", 
+		"\[28:15\] I suppose I could send and upload it to the network and let people make their own judgements.", 
+		"\[28:19\] After all, i'm the one sitting out here in deep space, cruising along leisurely.",
+		// 4th monologue (end of shift)
+		"\[47:01\] I don't care what they call me back on the station - I'm not a traitor.",
+		"\[47:03\] I'm a man of principles and standards.",
+		"\[47:05\] And if lives get in the way of those principles, so be it.",
+		"\[47:08\] I'd say I'm the better man here.",
+		"\[47:10\] Once they called me captain, but when it's all said and done, I'll be a hero.",
+		"\[47:15\] If you run across this transmission by chance, get you pudgy little nerd ass over to space station 13 and start busting heads.",
+		"\[47:20\] (farting noises)",
+	)
+	timestamp = list(
+		// 1st monologue (start of shift)
+		2 SECONDS,
+		5 SECONDS,
+		8 SECONDS,
+		11 SECONDS,
+		13 SECONDS,
+		16 SECONDS,
+		19 SECONDS,
+		// 2nd monologue (early shift)
+		15 MINUTES + 5 SECONDS,
+		15 MINUTES + 8 SECONDS,
+		15 MINUTES + 9 SECONDS,
+		15 MINUTES + 10 SECONDS,
+		15 MINUTES + 11 SECONDS,
+		15 MINUTES + 12 SECONDS,
+		15 MINUTES + 13 SECONDS,
+		15 MINUTES + 18 SECONDS,
+		15 MINUTES + 23 SECONDS,
+		15 MINUTES + 26 SECONDS,
+		15 MINUTES + 30 SECONDS,
+		15 MINUTES + 33 SECONDS,
+		15 MINUTES + 37 SECONDS,
+		15 MINUTES + 39 SECONDS,
+		15 MINUTES + 42 SECONDS,
+		// 3rd monologue (middle shift)
+		28 MINUTES + 3 SECONDS,
+		28 MINUTES + 5 SECONDS,
+		28 MINUTES + 7 SECONDS,
+		28 MINUTES + 13 SECONDS,
+		28 MINUTES + 15 SECONDS,
+		28 MINUTES + 19 SECONDS,
+		// 4th monologue (end of shift)
+		47 MINUTES + 1 SECONDS,
+		47 MINUTES + 3 SECONDS,
+		47 MINUTES + 5 SECONDS,
+		47 MINUTES + 8 SECONDS,
+		47 MINUTES + 10 SECONDS,
+		47 MINUTES + 15 SECONDS,
+		47 MINUTES + 20 SECONDS,
+	)
+
+/obj/item/tape/captains_log/Initialize(mapload)
+	..()
+	unspool() // the tape spawns damaged
