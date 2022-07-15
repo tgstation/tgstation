@@ -105,19 +105,19 @@
 			else
 				to_chat(user, span_warning("The cover is already unlocked!"))
 			return
-		if(wiresexposed)
+		if(R.wiresexposed)
 			to_chat(user, span_warning("You must unexpose the wires first!"))
 			return
 		if(R.emagged)
 			to_chat(user, span_warning("It looks like [R] is already hacked."))
 			return
-		if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/malf_ai))
+		if(R.connected_ai && R.connected_ai.mind && R.connected_ai.mind.has_antag_datum(/datum/antagonist/malf_ai))
 			to_chat(R, span_danger("ALERT: Foreign software execution prevented."))
 			R.logevent("ALERT: Foreign software execution prevented.")
 			to_chat(R.connected_ai, span_danger("ALERT: Cyborg unit \[[R]\] successfully defended against subversion."))
 			log_silicon("HACK: [key_name(user)] attempted to hack cyborg [key_name(R)], but they were slaved to traitor AI [R.connected_ai].")
 			return
-		if(shell) 
+		if(R.shell) 
 			to_chat(user, span_boldwarning("[R] seems to be controlled remotely! Hacking the interface may not work as expected."))
 			return
 		R.SetEmagged(1)
