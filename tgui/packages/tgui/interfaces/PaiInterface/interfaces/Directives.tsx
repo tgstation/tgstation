@@ -7,7 +7,10 @@ import { Data } from '../types';
 /** Shows the hardcoded PAI info along with any supplied orders. */
 export const DirectiveDisplay = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { directives, master_name } = data;
+  const { directives = [], master_name } = data;
+  const displayedLaw = directives?.length
+    ? decodeHtmlEntities(directives[0])
+    : 'None.';
 
   return (
     <Stack fill vertical>
@@ -31,7 +34,7 @@ export const DirectiveDisplay = (props, context) => {
                 Serve your master.
               </LabeledList.Item>
               <LabeledList.Item label="Supplemental">
-                <BlockQuote>{decodeHtmlEntities(directives)}</BlockQuote>
+                <BlockQuote>{displayedLaw}</BlockQuote>
               </LabeledList.Item>
             </LabeledList>
           )}
