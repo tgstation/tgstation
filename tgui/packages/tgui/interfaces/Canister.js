@@ -22,6 +22,8 @@ export const Canister = (props, context) => {
     maxReleasePressure,
     hasHypernobCrystal,
     reactionSuppressionEnabled,
+    hasCell,
+    cellCharge,
     pressureLimit,
     valveOpen,
     isPrototype,
@@ -154,8 +156,8 @@ export const Canister = (props, context) => {
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Cell Charge">
-                  {data.has_cell
-                  ? data.cell_charge + '%'
+                  {hasCell
+                  ? cellCharge + '%'
                   : 'Missing Cell'}
                 </LabeledList.Item>
                 {!!hasHypernobCrystal && (

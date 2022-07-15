@@ -646,8 +646,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		)
 	. += list(
 		"shielding" = shielding_powered,
-		"has_cell" = (internal_cell ? TRUE : FALSE),
-		"cell_charge" = internal_cell?.percent()
+		"hasCell" = (internal_cell ? TRUE : FALSE),
+		"cellCharge" = internal_cell?.percent()
 	)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
