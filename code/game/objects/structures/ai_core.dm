@@ -316,7 +316,7 @@
 					P.play_tool_sound(src)
 					balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
 					if(core_mmi.brainmob?.mind)
-						ai_structure_to_mob(from_glass_core_to_mob = TRUE)
+						ai_structure_to_mob()
 					else
 						state = AI_READY_CORE
 						update_appearance()
@@ -334,12 +334,13 @@
 					return
 	return ..()
 
-/obj/structure/ai_core/proc/ai_structure_to_mob(from_glass_core_to_mob = FALSE)
+/obj/structure/ai_core/proc/ai_structure_to_mob()
 	var/mob/living/brain/the_brainmob = core_mmi.brainmob
 	if(!the_brainmob.mind || the_brainmob.suiciding)
 		return FALSE
 	the_brainmob.mind.remove_antags_for_borging()
-
+	if(!the_brainmob.mind.has_ever_been_ai)
+		SSblackbox.record_feedback("amount", "ais_created", 1)
 	var/mob/living/silicon/ai/ai_mob = null
 
 	if(core_mmi.overrides_aicore_laws)
@@ -353,8 +354,6 @@
 		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	if(core_mmi.braintype == "Android")
 		ai_mob.posibrain_inside = TRUE
-	if(from_glass_core_to_mob)
-		SSblackbox.record_feedback("amount", "ais_created", 1)
 	deadchat_broadcast(" has been brought online at <b>[get_area_name(ai_mob, format_text = TRUE)]</b>.", span_name("[ai_mob]"), follow_target = ai_mob, message_type = DEADCHAT_ANNOUNCEMENT)
 	qdel(src)
 	return TRUE
