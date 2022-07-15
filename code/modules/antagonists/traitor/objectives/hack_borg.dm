@@ -94,7 +94,7 @@
 			to_chat(user, span_warning("You need to hack a functioning cyborg, not a broken one!"))
 			return
 		if(!R.mind || !R.client)
-			to_chat(user, span_warning("It looks like [R] controling interface doesn't function. Hacking it will make no sense."))
+			to_chat(user, span_warning("It looks like [R] controlling interface doesn't function. Hacking it will make no sense."))
 			return
 		if(!R.opened)//Cover is closed
 			if(R.locked)
