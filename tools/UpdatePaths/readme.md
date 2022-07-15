@@ -18,7 +18,7 @@ If you have a path labeled `/obj/structure/door/airlock/science/closed/rd` and w
 
 Simply create a `.TXT` file and type this on a line:
 
-/obj/structure/door/airlock/science/closed/rd : /obj/structure/door/airlock/science/rd/closed{@OLD}
+`/obj/structure/door/airlock/science/closed/rd : /obj/structure/door/airlock/science/rd/closed{@OLD}`
 
 The path on the left is the old, the path on the right is the new. It is seperated by a ":"
 If you want to make multiple path changes in one script, simply add more changes on new lines.
