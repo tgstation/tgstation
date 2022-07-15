@@ -1,4 +1,0 @@
-author: "Salex08"
-delete-after: True
-changes: 
-  - bugfix: "eyesnatcher objective wont cause runtime errors anymore"

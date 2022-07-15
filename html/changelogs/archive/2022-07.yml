@@ -449,3 +449,17 @@
   zxaber:
   - imageadd: The Airlock Shock Indicator seen when using a Diagnostics Hud has a
       new sprite.
+2022-07-15:
+  Mothblocks:
+  - soundadd: Power is no longer required for ambience.
+  Salex08:
+  - bugfix: eyesnatcher objective wont cause runtime errors anymore
+  TheBoondock:
+  - bugfix: fixed attaching a knife to cleanbot succeeding even when user has NO_DROP
+  jlsnow301:
+  - code_imp: New string ops for tgui
+  - bugfix: Removed some errant loggers left in UIs
+  orthography:
+  - rscadd: Adds a new possible cosmetic change to the ordinance lab.
+  timothymtorres:
+  - bugfix: Fix rolling paper pack spawning empty
