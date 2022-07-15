@@ -398,7 +398,7 @@
 /mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
 	var/mmi_type
 	if(posibrain_inside)
-		mmi_type = new/obj/item/mmi/posibrain(src)
+		mmi_type = new/obj/item/mmi/posibrain(src, FALSE)
 	else
 		mmi_type = new/obj/item/mmi(src)
 	if(hack_software)

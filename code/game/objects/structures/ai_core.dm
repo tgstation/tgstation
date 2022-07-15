@@ -72,7 +72,7 @@
 	. = ..()
 	circuit = new(src)
 	if(posibrain)
-		core_mmi = new/obj/item/mmi/posibrain(src)
+		core_mmi = new/obj/item/mmi/posibrain(src, FALSE)
 	else
 		core_mmi = new(src)
 		core_mmi.brain = new(core_mmi)
