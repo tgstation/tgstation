@@ -1,6 +1,15 @@
 import { capitalizeAll, multiline } from 'common/string';
 import { useBackend } from 'tgui/backend';
-import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from 'tgui/components';
+import {
+  Button,
+  Icon,
+  LabeledControls,
+  NoticeBox,
+  Section,
+  Slider,
+  Stack,
+  Tooltip,
+} from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
 type SimpleBotContext = {
@@ -72,7 +81,8 @@ const TabDisplay = (props, context) => {
         icon={locked ? 'lock' : 'lock-open'}
         onClick={() => act('lock')}
         selected={locked}
-        tooltip={`${locked ? 'Unlock' : 'Lock'} the control panel.`}>
+        tooltip={`${locked ? 'Unlock' : 'Lock'} the control panel.`}
+      >
         Controls Lock
       </Button>
     </>
@@ -95,7 +105,8 @@ const HackButton = (props, context) => {
         !emagged
           ? 'Unlocks the safety protocols.'
           : 'Resets the bot operating system.'
-      }>
+      }
+    >
       {emagged ? 'Malfunctional' : 'Safety Lock'}
     </Button>
   );
@@ -111,7 +122,8 @@ const PaiButton = (props, context) => {
       <Button
         color="transparent"
         icon="robot"
-        tooltip={multiline`Insert an active PAI card to control this device.`}>
+        tooltip={multiline`Insert an active PAI card to control this device.`}
+      >
         No PAI Inserted
       </Button>
     );
@@ -121,7 +133,8 @@ const PaiButton = (props, context) => {
         disabled={!card_inserted}
         icon="eject"
         onClick={() => act('eject_pai')}
-        tooltip={multiline`Ejects the current PAI.`}>
+        tooltip={multiline`Ejects the current PAI.`}
+      >
         Eject PAI
       </Button>
     );
@@ -150,7 +163,8 @@ const SettingsDisplay = (props, context) => {
         <Tooltip
           content={`${
             !airplane_mode ? 'Disables' : 'Enables'
-          } remote access via console.`}>
+          } remote access via console.`}
+        >
           <Icon
             size={2}
             name="plane"
@@ -163,7 +177,8 @@ const SettingsDisplay = (props, context) => {
         <Tooltip
           content={`${
             patrol_station ? 'Disables' : 'Enables'
-          } automatic station patrol.`}>
+          } automatic station patrol.`}
+        >
           <Icon
             size={2}
             name="map-signs"
@@ -178,7 +193,8 @@ const SettingsDisplay = (props, context) => {
             maintenance_lock
               ? 'Opens the maintenance hatch for repairs.'
               : 'Closes the maintenance hatch.'
-          }>
+          }
+        >
           <Icon
             size={2}
             name="toolbox"
@@ -205,7 +221,8 @@ const ControlsDisplay = (props, context) => {
           <LabeledControls.Item
             pb={2}
             key={control[0]}
-            label={capitalizeAll(control[0].replace('_', ' '))}>
+            label={capitalizeAll(control[0].replace('_', ' '))}
+          >
             <ControlHelper control={control} />
           </LabeledControls.Item>
         );
@@ -250,7 +267,8 @@ const MedbotSync = (props, context) => {
   return (
     <Tooltip
       content={multiline`Synchronize surgical data with research network.
-       Improves Tending Efficiency.`}>
+       Improves Tending Efficiency.`}
+    >
       <Icon
         color="purple"
         name="cloud-download-alt"
@@ -295,7 +313,8 @@ const FloorbotTiles = (props, context) => {
       disabled={!control[1]}
       icon={control[1] ? 'eject' : ''}
       onClick={() => act('eject_tiles')}
-      tooltip="Number of floor tiles contained in the bot.">
+      tooltip="Number of floor tiles contained in the bot."
+    >
       {control[1] ? `${control[1]}` : 'Empty'}
     </Button>
   );
@@ -312,14 +331,10 @@ const FloorbotLine = (props, context) => {
         color={control[1] ? 'good' : 'gray'}
         name={control[1] ? 'compass' : 'toggle-off'}
         onClick={() => act('line_mode')}
-        size={!control[1] ? 2 : 1.5}>
+        size={!control[1] ? 2 : 1.5}
+      >
         {' '}
-        {control[1]
-          ? control[1]
-            .toString()
-            .charAt(0)
-            .toUpperCase()
-          : ''}
+        {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
       </Icon>
     </Tooltip>
   );

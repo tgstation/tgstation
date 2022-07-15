@@ -26,10 +26,12 @@ const Story = (props, context) => {
           onClick={() => {
             localStorage.clear();
             storage.clear();
-          }}>
+          }}
+        >
           Clear
         </Button>
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Keys in use">
           {localStorage.length}

@@ -54,7 +54,8 @@ export const DecalPainter = (props, context) => {
                   act('select color', {
                     color: color.color,
                   })
-                }>
+                }
+              >
                 <ColorBox color={color.color} mr={0.5} />
                 {color.name}
               </Button>
@@ -63,7 +64,8 @@ export const DecalPainter = (props, context) => {
           {supports_custom_color && (
             <Button
               selected={custom_color_selected}
-              onClick={() => act('pick custom color')}>
+              onClick={() => act('pick custom color')}
+            >
               <ColorBox color={data.current_custom_color} mr={0.5} />
               Custom
             </Button>
@@ -93,7 +95,8 @@ export const DecalPainter = (props, context) => {
                   direction="column"
                   wrap="nowrap"
                   align="fill"
-                  justify="fill">
+                  justify="fill"
+                >
                   {data.dir_list.map((dir) => {
                     const selected =
                       decal.decal === data.current_decal &&
@@ -148,7 +151,8 @@ const IconButton = (props: IconButtonParams, context) => {
           decal: props.decal,
           dir: props.dir,
         })
-      }>
+      }
+    >
       <div className={icon} style={{ display: 'block' }} />
     </Button>
   );

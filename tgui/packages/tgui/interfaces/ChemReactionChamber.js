@@ -1,5 +1,15 @@
 import { useBackend, useLocalState } from '../backend';
-import { AnimatedNumber, Box, Button, Input, LabeledList, NumberInput, Section, RoundGauge, Stack } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Input,
+  LabeledList,
+  NumberInput,
+  Section,
+  RoundGauge,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 import { round, toFixed } from 'common/math';
 
@@ -54,7 +64,8 @@ export const ChemReactionChamber = (props, context) => {
                     />
                   </Stack.Item>
                 </Stack>
-              }>
+              }
+            >
               <Stack vertical>
                 <Stack.Item>
                   <Stack fill>
@@ -132,11 +143,13 @@ export const ChemReactionChamber = (props, context) => {
                     fontSize="16px"
                     inline
                     bold
-                    color={emptying ? 'bad' : 'good'}>
+                    color={emptying ? 'bad' : 'good'}
+                  >
                     {emptying ? 'Emptying' : 'Filling'}
                   </Box>
                 )
-              }>
+              }
+            >
               <Stack vertical fill>
                 <Stack.Item>
                   <LabeledList>

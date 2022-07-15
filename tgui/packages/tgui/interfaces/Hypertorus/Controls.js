@@ -1,5 +1,15 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from '../../components';
+import {
+  Box,
+  Button,
+  Icon,
+  Knob,
+  LabeledControls,
+  LabeledList,
+  NumberInput,
+  Section,
+  Tooltip,
+} from '../../components';
 import { getGasLabel } from '../../constants';
 import { HelpDummy, HoverHelp } from './helpers';
 
@@ -168,7 +178,8 @@ export const HypertorusWasteRemove = (props, context) => {
               />
               Waste remove:
             </>
-          }>
+          }
+        >
           <Button
             icon={data.waste_remove ? 'power-off' : 'times'}
             content={data.waste_remove ? 'On' : 'Off'}
@@ -182,7 +193,8 @@ export const HypertorusWasteRemove = (props, context) => {
               <HelpDummy />
               Moderator filtering rate:
             </>
-          }>
+          }
+        >
           <NumberInput
             animated
             value={parseFloat(data.mod_filtering_rate)}
@@ -202,7 +214,8 @@ export const HypertorusWasteRemove = (props, context) => {
               <HelpDummy />
               Filter from moderator mix:
             </>
-          }>
+          }
+        >
           {filterTypes.map((filter) => (
             <Button
               key={filter.gas_id}

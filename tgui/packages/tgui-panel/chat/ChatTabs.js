@@ -19,7 +19,8 @@ const UnreadCountWidget = ({ value }) => (
       'line-height': '1.55em',
       'background-color': 'crimson',
       'color': '#fff',
-    }}>
+    }}
+  >
     {Math.min(value, 99)}
   </Box>
 );
@@ -47,7 +48,8 @@ export const ChatTabs = (props, context) => {
                     pageId: page.id,
                   })
                 )
-              }>
+              }
+            >
               {page.name}
             </Tabs.Tab>
           ))}

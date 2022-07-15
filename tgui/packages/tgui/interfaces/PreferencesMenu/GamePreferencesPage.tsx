@@ -36,7 +36,8 @@ export const GamePreferencesPage = (props, context) => {
           as="span"
           style={{
             'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
-          }}>
+          }}
+        >
           {nameInner}
         </Box>
       );

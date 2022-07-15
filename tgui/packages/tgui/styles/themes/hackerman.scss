@@ -9,11 +9,11 @@
 @use '../colors.scss' with (
   $primary: #00ff00,
   $fg-map-keys: (),
-  $bg-map-keys: (),
+  $bg-map-keys: ()
 );
 @use '../base.scss' with (
   $color-bg: #121b12,
-  $color-bg-grad-spread: 0%,
+  $color-bg-grad-spread: 0%
 );
 
 .theme-hackerman {

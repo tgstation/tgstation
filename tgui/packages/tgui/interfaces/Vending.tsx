@@ -1,7 +1,16 @@
 import { classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
 import { useBackend } from 'tgui/backend';
-import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui/components';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
 type VendingData = {
@@ -152,7 +161,8 @@ const ProductDisplay = (props, context) => {
             {(user && user.cash) || 0} cr <Icon name="coins" color="gold" />
           </Box>
         )
-      }>
+      }
+    >
       <Table>
         {inventory.map((product) => (
           <VendingRow
@@ -264,7 +274,8 @@ const ProductStock = (props) => {
         (remaining <= 0 && 'bad') ||
         (!custom && remaining <= product.max_amount / 2 && 'average') ||
         'good'
-      }>
+      }
+    >
       {remaining} left
     </Box>
   );
@@ -290,7 +301,8 @@ const ProductButton = (props, context) => {
         act('dispense', {
           'item': product.name,
         })
-      }>
+      }
+    >
       {customPrice}
     </Button>
   ) : (
@@ -301,7 +313,8 @@ const ProductButton = (props, context) => {
         act('vend', {
           'ref': product.ref,
         })
-      }>
+      }
+    >
       {standardPrice}
     </Button>
   );

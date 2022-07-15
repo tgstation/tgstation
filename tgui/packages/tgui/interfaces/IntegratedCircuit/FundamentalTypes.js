@@ -23,7 +23,8 @@ export const FUNDAMENTAL_DATA_TYPES = {
         name={name}
         setValue={setValue}
         value={value}
-        defaultValue={0}>
+        defaultValue={0}
+      >
         <NumberInput
           value={value}
           color={color}
@@ -99,7 +100,8 @@ export const FUNDAMENTAL_DATA_TYPES = {
         name={name}
         setValue={setValue}
         value={value}
-        defaultValue={''}>
+        defaultValue={''}
+      >
         <Stack>
           <Stack.Item>
             <Button

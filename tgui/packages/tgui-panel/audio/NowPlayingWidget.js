@@ -29,7 +29,8 @@ export const NowPlayingWidget = (props, context) => {
               'white-space': 'nowrap',
               'overflow': 'hidden',
               'text-overflow': 'ellipsis',
-            }}>
+            }}
+          >
             {title || 'Unknown Track'}
           </Flex.Item>
         </>

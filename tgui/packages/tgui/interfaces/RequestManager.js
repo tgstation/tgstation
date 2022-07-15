@@ -52,7 +52,8 @@ export const RequestManager = (props, context) => {
               />
               <FilterPanel />
             </>
-          }>
+          }
+        >
           {displayedRequests.map((request) => (
             <div className="RequestManager__row" key={request.id}>
               <div className="RequestManager__rowContents">
@@ -145,7 +146,8 @@ const FilterPanel = (props, context) => {
           className="RequestManager__filterPanel"
           style={{
             display: filterVisible ? 'block' : 'none',
-          }}>
+          }}
+        >
           <Table width="0">
             {Object.keys(displayTypeMap).map((type) => {
               return (
@@ -168,7 +170,8 @@ const FilterPanel = (props, context) => {
             })}
           </Table>
         </div>
-      }>
+      }
+    >
       <Button icon="cog" onClick={() => setFilterVisible(!filterVisible)}>
         Type Filter
       </Button>

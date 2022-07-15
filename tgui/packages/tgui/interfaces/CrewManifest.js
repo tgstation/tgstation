@@ -29,7 +29,8 @@ export const CrewManifest = (props, context) => {
               (dept !== 'Misc'
                 ? ` (${positions[dept].open} positions open)`
                 : '')
-            }>
+            }
+          >
             <Table>
               {Object.entries(crew).map(([crewIndex, crewMember]) => (
                 <Table.Row key={crewIndex}>
@@ -41,7 +42,8 @@ export const CrewManifest = (props, context) => {
                       'CrewManifest__Cell',
                       'CrewManifest__Icons',
                     ])}
-                    collapsing>
+                    collapsing
+                  >
                     {positions[dept].exceptions.includes(crewMember.rank) && (
                       <Tooltip content="No position limit" position="bottom">
                         <Icon className="CrewManifest__Icon" name="infinity" />
@@ -76,7 +78,8 @@ export const CrewManifest = (props, context) => {
                       'CrewManifest__Cell',
                       'CrewManifest__Cell--Rank',
                     ])}
-                    collapsing>
+                    collapsing
+                  >
                     {crewMember.rank}
                   </Table.Cell>
                 </Table.Row>

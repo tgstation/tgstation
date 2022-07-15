@@ -1,7 +1,15 @@
 import { binaryInsertWith } from 'common/collections';
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Flex, Section, Stack, Tooltip } from '../../components';
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Section,
+  Stack,
+  Tooltip,
+} from '../../components';
 import { Antagonist, Category } from './antagonists/base';
 import { PreferencesMenuData } from './data';
 
@@ -95,7 +103,8 @@ const AntagSelection = (
             Disable All
           </Button>
         </>
-      }>
+      }
+    >
       <Flex className={className} align="flex-end" wrap>
         {props.antagonists.map((antagonist) => {
           const isBanned =
@@ -112,11 +121,12 @@ const AntagSelection = (
                   isBanned || daysLeft > 0
                     ? 'banned'
                     : predictedState.has(antagonist.key)
-                      ? 'on'
-                      : 'off'
+                    ? 'on'
+                    : 'off'
                 }`,
               ])}
-              key={antagonist.key}>
+              key={antagonist.key}
+            >
               <Stack align="center" vertical>
                 <Stack.Item
                   style={{
@@ -124,7 +134,8 @@ const AntagSelection = (
                     'margin-top': 'auto',
                     'max-width': '100px',
                     'text-align': 'center',
-                  }}>
+                  }}
+                >
                   {antagonist.name}
                 </Stack.Item>
 
@@ -134,17 +145,19 @@ const AntagSelection = (
                       isBanned
                         ? `You are banned from ${antagonist.name}.`
                         : antagonist.description.map((text, index) => {
-                          return (
-                            <div key={antagonist.key + index}>
-                              {text}
-                              {index !== antagonist.description.length - 1 && (
-                                <Divider />
-                              )}
-                            </div>
-                          );
-                        })
+                            return (
+                              <div key={antagonist.key + index}>
+                                {text}
+                                {index !==
+                                  antagonist.description.length - 1 && (
+                                  <Divider />
+                                )}
+                              </div>
+                            );
+                          })
                     }
-                    position="bottom">
+                    position="bottom"
+                  >
                     <Box
                       className={'antagonist-icon-parent'}
                       onClick={() => {
@@ -157,7 +170,8 @@ const AntagSelection = (
                         } else {
                           enableAntags([antagonist.key]);
                         }
-                      }}>
+                      }}
+                    >
                       <Box
                         className={classes([
                           'antagonists96x96',

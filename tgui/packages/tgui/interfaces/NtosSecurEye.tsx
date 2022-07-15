@@ -1,7 +1,11 @@
 import { useBackend } from '../backend';
 import { Button, ByondUi } from '../components';
 import { NtosWindow } from '../layouts';
-import { prevNextCamera, selectCameras, CameraConsoleContent } from './CameraConsole';
+import {
+  prevNextCamera,
+  selectCameras,
+  CameraConsoleContent,
+} from './CameraConsole';
 
 type Data = {
   PC_device_theme: string;

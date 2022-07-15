@@ -70,7 +70,8 @@ const SnowflakeEjector = (props: { module: MechaUtility }, context) => {
                 cargoref: item.ref,
                 gear_action: 'eject',
               })
-            }>
+            }
+          >
             {'Eject'}
           </Button>
         </LabeledList.Item>
@@ -86,7 +87,8 @@ const SnowflakeExtinguisher = (props: { module: MechaUtility }, context) => {
       <ProgressBar
         value={props.module.snowflake.reagents}
         minValue={0}
-        maxValue={props.module.snowflake.total_reagents}>
+        maxValue={props.module.snowflake.total_reagents}
+      >
         {props.module.snowflake.reagents}
       </ProgressBar>
       <Button

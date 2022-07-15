@@ -1,5 +1,14 @@
 import { useBackend } from '../backend';
-import { Box, Button, Dropdown, Flex, Icon, LabeledList, Modal, Section } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Flex,
+  Icon,
+  LabeledList,
+  Modal,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const ShuttleConsole = (props, context) => {
@@ -16,7 +25,8 @@ export const ShuttleConsole = (props, context) => {
           height={12}
           fontSize="28px"
           fontFamily="monospace"
-          textAlign="center">
+          textAlign="center"
+        >
           <Flex>
             <Flex.Item mt={2}>
               <Icon name="minus-circle" />
@@ -88,7 +98,8 @@ export const ShuttleConsoleContent = (props, context) => {
       </Box>
       <Section
         title={type === 'shuttle' ? 'Shuttle Controls' : 'Base Launch Controls'}
-        level={2}>
+        level={2}
+      >
         <LabeledList>
           <LabeledList.Item label="Location">
             {docked_location || 'Not Available'}
@@ -107,7 +118,8 @@ export const ShuttleConsoleContent = (props, context) => {
                   onClick={() => act('random')}
                 />
               )
-            }>
+            }
+          >
             {(locations.length === 0 && (
               <Box mb={1.7} color="bad">
                 Not Available

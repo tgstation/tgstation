@@ -106,7 +106,8 @@ export const ShuttleManipulatorTemplates = (props, context) => {
               <Tabs.Tab
                 key={templateId}
                 selected={selectedTemplateId === templateId}
-                onClick={() => setSelectedTemplateId(templateId)}>
+                onClick={() => setSelectedTemplateId(templateId)}
+              >
                 {template.port_id}
               </Tabs.Tab>
             ))(templateObject)}
@@ -132,7 +133,8 @@ export const ShuttleManipulatorTemplates = (props, context) => {
                       })
                     }
                   />
-                }>
+                }
+              >
                 {(!!actualTemplate.description ||
                   !!actualTemplate.admin_notes) && (
                   <LabeledList>
@@ -184,7 +186,8 @@ export const ShuttleManipulatorModification = (props, context) => {
           {existingShuttle ? (
             <Section
               level={2}
-              title={'Existing Shuttle: ' + existingShuttle.name}>
+              title={'Existing Shuttle: ' + existingShuttle.name}
+            >
               <LabeledList>
                 <LabeledList.Item
                   label="Status"
@@ -198,7 +201,8 @@ export const ShuttleManipulatorModification = (props, context) => {
                         })
                       }
                     />
-                  }>
+                  }
+                >
                   {existingShuttle.status}
                   {!!existingShuttle.timer && <>({existingShuttle.timeleft})</>}
                 </LabeledList.Item>

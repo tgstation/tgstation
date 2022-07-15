@@ -94,7 +94,8 @@ export const reputationLevelsTooltip = (
                 'display': 'inline-block',
               }}
               px={0.8}
-              py={0.6}>
+              py={0.6}
+            >
               {text}
             </Box>
           </Flex.Item>
@@ -140,7 +141,8 @@ export const calculateReputationLevel = (
         'display': 'inline-block',
       }}
       px={0.8}
-      py={0.6}>
+      py={0.6}
+    >
       {reputation.title} ({displayedProgression})
     </Box>
   );

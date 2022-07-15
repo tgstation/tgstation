@@ -21,7 +21,8 @@ export const IVDrip = (props, context) => {
           <LabeledList>
             <LabeledList.Item
               label="Status"
-              color={connected ? 'good' : 'average'}>
+              color={connected ? 'good' : 'average'}
+            >
               {connected ? 'Connected' : 'Not Connected'}
             </LabeledList.Item>
             <LabeledList.Item label="Mode">
@@ -34,7 +35,8 @@ export const IVDrip = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item
               label="Attached Container"
-              color={beakerAttached ? 'good' : 'average'}>
+              color={beakerAttached ? 'good' : 'average'}
+            >
               <Box as="span" mr={2}>
                 {beakerAttached
                   ? 'Container Attached'

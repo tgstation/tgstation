@@ -3,7 +3,15 @@ import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
-import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section, Stack } from '../components';
+import {
+  Button,
+  Divider,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { Window } from '../layouts';
 
@@ -45,7 +53,8 @@ export const BluespaceVendor = (props, context) => {
                     onClick={() => act('tank_expel')}
                   />
                 </>
-              }>
+              }
+            >
               <Stack>
                 <Stack.Item>
                   <NumberInput
@@ -93,7 +102,8 @@ export const BluespaceVendor = (props, context) => {
                   and finally press start on the gas of your choice!
                 `}
                 />
-              }>
+              }
+            >
               <LabeledList>
                 {bluespace_network_gases.map((gas) => (
                   <>
@@ -109,7 +119,8 @@ export const BluespaceVendor = (props, context) => {
                           color={getGasColor(gas.name)}
                           value={gas.amount}
                           minValue={0}
-                          maxValue={gasMax}>
+                          maxValue={gasMax}
+                        >
                           {toFixed(gas.amount, 2) + ' moles'}
                         </ProgressBar>
                       </Stack.Item>

@@ -1,6 +1,16 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 
 export const InsertedSkillchip = (props, context) => {
@@ -44,7 +54,8 @@ export const InsertedSkillchip = (props, context) => {
             content="Eject"
           />
         </>
-      }>
+      }
+    >
       <Stack fill align="center">
         <Stack.Item>
           <Icon m={1} size={3} name={skill_icon} />
@@ -68,7 +79,8 @@ export const InsertedSkillchip = (props, context) => {
             {!!implantable_reason && (
               <LabeledList.Item
                 label="Error"
-                color={implantable ? 'good' : 'bad'}>
+                color={implantable ? 'good' : 'bad'}
+              >
                 {implantable_reason}
               </LabeledList.Item>
             )}
@@ -156,7 +168,8 @@ export const ImplantedSkillchips = (props, context) => {
                     'bad') ||
                   'grey'
                 }
-                textAlign="center">
+                textAlign="center"
+              >
                 {skill.complexity}
               </Table.Cell>
               <Table.Cell bold color="good" textAlign="center">

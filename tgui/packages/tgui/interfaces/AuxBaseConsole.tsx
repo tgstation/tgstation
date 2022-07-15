@@ -35,21 +35,24 @@ export const AuxBaseConsole = (props, context) => {
   return (
     <Window
       width={turrets.length ? 620 : 350}
-      height={turrets.length ? 310 : 260}>
+      height={turrets.length ? 310 : 260}
+    >
       <Window.Content scrollable={!!turrets.length}>
         <Tabs>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 1}
-            onClick={() => setTab(1)}>
+            onClick={() => setTab(1)}
+          >
             {type === 'shuttle' ? 'Shuttle Launch' : 'Base Launch'}
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 2}
-            onClick={() => setTab(2)}>
+            onClick={() => setTab(2)}
+          >
             Turrets ({turrets.length})
           </Tabs.Tab>
         </Tabs>
@@ -77,7 +80,8 @@ export const AuxBaseConsoleContent = (props, context) => {
             onClick={() => act('turrets_power')}
           />
         )
-      }>
+      }
+    >
       {!turrets.length ? (
         <NoticeBox>No connected turrets</NoticeBox>
       ) : (

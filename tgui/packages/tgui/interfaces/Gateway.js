@@ -1,5 +1,12 @@
 import { useBackend } from '../backend';
-import { Box, Button, Icon, NoticeBox, ProgressBar, Section } from '../components';
+import {
+  Box,
+  Button,
+  Icon,
+  NoticeBox,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const Gateway = () => {
@@ -55,7 +62,8 @@ const GatewayContent = (props, context) => {
                 act('activate', {
                   destination: dest.ref,
                 })
-              }>
+              }
+            >
               Activate
             </Button>
           )) || (

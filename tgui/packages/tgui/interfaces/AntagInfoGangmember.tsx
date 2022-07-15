@@ -17,7 +17,8 @@ export const AntagInfoGangmember = (props, context) => {
       <Window.Content
         style={{
           'background-image': 'none',
-        }}>
+        }}
+      >
         <Section fill>
           <Stack vertical>
             <Stack.Item textColor="red" fontSize="20px">
@@ -68,8 +69,8 @@ const GangClothesPrintout = (props, context) => {
       <BlockQuote>
         {gang_clothes && gang_clothes.length
           ? gang_clothes.map((clothes_item) => (
-            <Stack.Item key={clothes_item}>- {clothes_item}</Stack.Item>
-          ))
+              <Stack.Item key={clothes_item}>- {clothes_item}</Stack.Item>
+            ))
           : '- Anything!'}
       </BlockQuote>
     </Stack>

@@ -18,7 +18,8 @@ export const NtosCrewManifest = (props, context) => {
               disabled={!have_printer}
               onClick={() => act('PRG_print')}
             />
-          }>
+          }
+        >
           {map((entries, department) => (
             <Section key={department} level={2} title={department}>
               <Table>

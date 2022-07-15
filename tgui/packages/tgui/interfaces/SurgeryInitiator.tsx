@@ -97,7 +97,8 @@ class SurgeryInitiatorInner extends Component<
                       surgery.blocked ? 'Their body is covered!' : undefined
                     }
                     key={surgery.name}
-                    fluid>
+                    fluid
+                  >
                     {surgery.name}
                   </Button>
                 ))}

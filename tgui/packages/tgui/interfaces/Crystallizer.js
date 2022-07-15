@@ -1,5 +1,12 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, ProgressBar, Section, NumberInput, Box } from '../components';
+import {
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+  NumberInput,
+  Box,
+} from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { toFixed } from 'common/math';
 import { Window } from '../layouts';
@@ -88,7 +95,8 @@ export const Crystallizer = (props, context) => {
                   good: [logScale(80), logScale(600)],
                   average: [logScale(600), logScale(5000)],
                   bad: [logScale(5000), Infinity],
-                }}>
+                }}
+              >
                 {toFixed(internal_temperature) + ' K'}
               </ProgressBar>
             </LabeledList.Item>
@@ -102,7 +110,8 @@ export const Crystallizer = (props, context) => {
                   color={getGasColor(gas.name)}
                   value={gas.amount}
                   minValue={0}
-                  maxValue={1000}>
+                  maxValue={1000}
+                >
                   {toFixed(gas.amount, 2) + ' moles'}
                 </ProgressBar>
               </LabeledList.Item>

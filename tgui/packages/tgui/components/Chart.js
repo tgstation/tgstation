@@ -101,7 +101,8 @@ class LineChart extends Component {
                 right: 0,
                 bottom: 0,
                 overflow: 'hidden',
-              }}>
+              }}
+            >
               <polyline
                 transform={`scale(1, -1) translate(0, -${viewBox[1]})`}
                 fill={fillColor}

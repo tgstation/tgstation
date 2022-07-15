@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Flex, Input, NoticeBox, Section } from '../components';
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Input,
+  NoticeBox,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const MechpadControl = (props, context) => {
@@ -27,7 +35,8 @@ export const MechpadControl = (props, context) => {
           color="bad"
           onClick={() => act('remove')}
         />
-      }>
+      }
+    >
       {(!connected_mechpad && (
         <Box color="bad" textAlign="center">
           No Pad Connected.

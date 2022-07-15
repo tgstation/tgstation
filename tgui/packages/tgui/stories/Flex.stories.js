@@ -29,7 +29,8 @@ const Story = (props, context) => {
             fluid
             onClick={() =>
               setDirection(direction === 'column' ? 'row' : 'column')
-            }>
+            }
+          >
             {`Flex direction="${direction}"`}
           </Button>
           <Button fluid onClick={() => setGrow(Number(!grow))}>
@@ -41,7 +42,8 @@ const Story = (props, context) => {
           <Button
             fluid
             selected={hasTitle}
-            onClick={() => setHasTitle(!hasTitle)}>
+            onClick={() => setHasTitle(!hasTitle)}
+          >
             {`Section title`}
           </Button>
         </Section>
@@ -51,7 +53,8 @@ const Story = (props, context) => {
           <Flex.Item
             mr={direction === 'row' && 1}
             mb={direction === 'column' && 1}
-            grow={grow}>
+            grow={grow}
+          >
             <Section title={hasTitle && 'Section 1'} fill={fill}>
               Content
             </Section>

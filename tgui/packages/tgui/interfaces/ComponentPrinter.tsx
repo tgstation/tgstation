@@ -1,6 +1,12 @@
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Material, MaterialAmount, MaterialFormatting, Materials, MATERIAL_KEYS } from './common/Materials';
+import {
+  Material,
+  MaterialAmount,
+  MaterialFormatting,
+  Materials,
+  MATERIAL_KEYS,
+} from './common/Materials';
 import { Window } from '../layouts';
 import { Box, Button, Input, Section, Stack, Tabs } from '../components';
 
@@ -112,7 +118,8 @@ export const ComponentPrinter = (props, context) => {
                             key={category}
                             onClick={() => setCurrentCategory(category)}
                             selected={category === currentCategory}
-                            fluid>
+                            fluid
+                          >
                             {category}
                           </Tabs.Tab>
                         );
@@ -159,10 +166,12 @@ export const ComponentPrinter = (props, context) => {
                                       data.materials
                                     )
                                   }
-                                  px={1.5}>
+                                  px={1.5}
+                                >
                                   Print
                                 </Button>
-                              }>
+                              }
+                            >
                               <Box inline width="100%">
                                 {design.description}
                               </Box>

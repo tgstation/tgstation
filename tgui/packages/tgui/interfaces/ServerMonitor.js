@@ -1,5 +1,15 @@
 import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Input, Button, Table, LabeledList, Flex, Divider, NoticeBox } from '../components';
+import {
+  Section,
+  Stack,
+  Input,
+  Button,
+  Table,
+  LabeledList,
+  Flex,
+  Divider,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
 
 const PacketInfo = (props, context) => {
@@ -45,7 +55,8 @@ const ServerScreen = (props, context) => {
               icon="home"
               onClick={() => act('return_home')}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Network">{network}</LabeledList.Item>
             <LabeledList.Item label="Server">{server.name}</LabeledList.Item>
@@ -107,7 +118,8 @@ const MainScreen = (props, context) => {
               disabled={servers.length === 0}
               onClick={() => act('clear_buffer')}
             />
-          }>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Address</Table.Cell>

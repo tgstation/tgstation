@@ -1,5 +1,10 @@
 import { classes } from 'common/react';
-import { FeatureChoiced, FeatureChoicedServerData, FeatureValueProps, sortChoices } from '../base';
+import {
+  FeatureChoiced,
+  FeatureChoicedServerData,
+  FeatureValueProps,
+  sortChoices,
+} from '../base';
 import { Box, Dropdown, Stack } from '../../../../../components';
 
 const UIStyleInput = (

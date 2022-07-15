@@ -1,6 +1,12 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, LabeledControls, NumberInput, RoundGauge, Section } from '../components';
+import {
+  Button,
+  LabeledControls,
+  NumberInput,
+  RoundGauge,
+  Section,
+} from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 

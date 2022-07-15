@@ -1,6 +1,15 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Section, Box, Button, Flex, Icon, LabeledList, Table, Tooltip } from '../components';
+import {
+  Section,
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  Table,
+  Tooltip,
+} from '../components';
 import { sortBy } from 'common/collections';
 
 const ExperimentStages = (props) => {
@@ -34,11 +43,13 @@ const ExperimentStageRow = (props) => {
   return (
     <Table.Row
       className={`ExperimentStage__StageContainer
-        ${completion ? 'complete' : 'incomplete'}`}>
+        ${completion ? 'complete' : 'incomplete'}`}
+    >
       <Table.Cell
         collapsing
         className={`ExperimentStage__Indicator ${type}`}
-        color={completion ? 'good' : 'bad'}>
+        color={completion ? 'good' : 'bad'}
+      >
         {(type === 'bool' && <Icon name={value ? 'check' : 'times'} />) ||
           (type === 'integer' && `${value}/${altValue}`) ||
           (type === 'float' && `${value * 100}%`) ||
@@ -60,7 +71,8 @@ export const TechwebServer = (props, context) => {
       <Flex
         align="center"
         justify="space-between"
-        className="ExperimentTechwebServer__WebHeader">
+        className="ExperimentTechwebServer__WebHeader"
+      >
         <Flex.Item className="ExperimentTechwebServer__WebName">
           {servers[0].web_id} / {servers[0].web_org}
         </Flex.Item>
@@ -136,7 +148,8 @@ export const ExperimentConfigure = (props, context) => {
             {servers.some((e) => e.selected) && (
               <Section
                 title="Experiments"
-                className="ExperimentConfigure__ExperimentsContainer">
+                className="ExperimentConfigure__ExperimentsContainer"
+              >
                 <Flex.Item mb={1}>
                   {(experiments.length &&
                     always_active &&
@@ -161,7 +174,8 @@ export const ExperimentConfigure = (props, context) => {
                 className="ExperimentConfigure__PerformExperiment"
                 onClick={() => act('start_experiment_callback')}
                 disabled={!experiments.some((e) => e.selected)}
-                icon="flask">
+                icon="flask"
+              >
                 Perform Experiment
               </Button>
             </Flex.Item>
@@ -198,12 +212,12 @@ export const Experiment = (props, context) => {
         }
         backgroundColor={selected ? 'good' : '#40628a'}
         className="ExperimentConfigure__ExperimentName"
-        disabled={controllable && !selectable}>
+        disabled={controllable && !selectable}
+      >
         <Flex align="center" justify="space-between">
           <Flex.Item
-            color={
-              !controllable || selectable ? 'white' : 'rgba(0, 0, 0, 0.6)'
-            }>
+            color={!controllable || selectable ? 'white' : 'rgba(0, 0, 0, 0.6)'}
+          >
             {name}
           </Flex.Item>
           <Flex.Item
@@ -211,7 +225,8 @@ export const Experiment = (props, context) => {
               !controllable || selectable
                 ? 'rgba(255, 255, 255, 0.5)'
                 : 'rgba(0, 0, 0, 0.5)'
-            }>
+            }
+          >
             <Box className="ExperimentConfigure__TagContainer">
               {tag}
               <Tooltip content={performance_hint} position="bottom-start">

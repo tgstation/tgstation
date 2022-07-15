@@ -1,7 +1,15 @@
 import { createSearch } from 'common/string';
 import { sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from '../components';
+import {
+  Box,
+  Button,
+  Input,
+  NoticeBox,
+  Section,
+  Collapsible,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 
 export const Stack = (props, context) => {
@@ -42,7 +50,8 @@ export const Stack = (props, context) => {
                 mx={1}
               />
             </>
-          }>
+          }
+        >
           {(items.length === 0 && <NoticeBox>No recipes found.</NoticeBox>) || (
             <RecipeList recipes={items} />
           )}

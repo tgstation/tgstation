@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, Input, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  Input,
+  Section,
+  Stack,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
 // byond defines for the program state
@@ -203,7 +211,8 @@ export const NtosNetChat = (props, context) => {
                             <Stack.Item
                               basis={0}
                               grow
-                              color={client_color(client)}>
+                              color={client_color(client)}
+                            >
                               {client.name}
                             </Stack.Item>
                             {client !== this_client && (

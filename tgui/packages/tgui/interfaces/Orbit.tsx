@@ -1,7 +1,14 @@
 import { useBackend, useLocalState } from '../backend';
 import { filter, sortBy } from 'common/collections';
 import { capitalizeFirst, multiline } from 'common/string';
-import { Button, Collapsible, Icon, Input, Section, Stack } from '../components';
+import {
+  Button,
+  Collapsible,
+  Icon,
+  Input,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 
@@ -230,7 +237,8 @@ const ObservableSection = (props: SectionProps, context) => {
         bold
         color={color}
         open={color !== 'grey'}
-        title={title + ` - (${filteredSection.length})`}>
+        title={title + ` - (${filteredSection.length})`}
+      >
         {filteredSection.map((poi, index) => {
           return <ObservableItem color={color} item={poi} key={index} />;
         })}
@@ -259,7 +267,8 @@ const ObservableItem = (
   return (
     <Button
       color={threat || color}
-      onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
+      onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
+    >
       {capitalizeFirst(name).slice(0, 44) /** prevents it from overflowing */}
       {!!orbiters && (
         <>

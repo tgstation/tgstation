@@ -2,7 +2,14 @@ import { Loader } from './common/Loader';
 import { InputButtons } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
 import { useBackend, useLocalState } from '../backend';
-import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z } from '../../common/keycodes';
+import {
+  KEY_A,
+  KEY_DOWN,
+  KEY_ESCAPE,
+  KEY_ENTER,
+  KEY_UP,
+  KEY_Z,
+} from '../../common/keycodes';
 import { Window } from '../layouts';
 
 type ListInputData = {
@@ -132,7 +139,8 @@ export const ListInputModal = (props, context) => {
             event.preventDefault();
             act('cancel');
           }
-        }}>
+        }}
+      >
         <Section
           buttons={
             <Button
@@ -150,7 +158,8 @@ export const ListInputModal = (props, context) => {
           }
           className="ListInput__Section"
           fill
-          title={message}>
+          title={message}
+        >
           <Stack fill vertical>
             <Stack.Item grow>
               <ListDisplay
@@ -213,7 +222,8 @@ const ListDisplay = (props, context) => {
             style={{
               'animation': 'none',
               'transition': 'none',
-            }}>
+            }}
+          >
             {item.replace(/^\w/, (c) => c.toUpperCase())}
           </Button>
         );

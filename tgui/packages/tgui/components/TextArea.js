@@ -175,7 +175,8 @@ export class TextArea extends Component {
     return (
       <Box
         className={classes(['TextArea', fluid && 'TextArea--fluid', className])}
-        {...rest}>
+        {...rest}
+      >
         <textarea
           ref={this.textareaRef}
           className="TextArea__textarea"

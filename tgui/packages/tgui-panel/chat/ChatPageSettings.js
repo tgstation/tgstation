@@ -5,7 +5,14 @@
  */
 
 import { useDispatch, useSelector } from 'common/redux';
-import { Button, Collapsible, Divider, Input, Section, Stack } from 'tgui/components';
+import {
+  Button,
+  Collapsible,
+  Divider,
+  Input,
+  Section,
+  Stack,
+} from 'tgui/components';
 import { removeChatPage, toggleAcceptedType, updateChatPage } from './actions';
 import { MESSAGE_TYPES } from './constants';
 import { selectCurrentChatPage } from './selectors';
@@ -40,7 +47,8 @@ export const ChatPageSettings = (props, context) => {
                   pageId: page.id,
                 })
               )
-            }>
+            }
+          >
             Remove
           </Button>
         </Stack.Item>
@@ -60,7 +68,8 @@ export const ChatPageSettings = (props, context) => {
                   type: typeDef.type,
                 })
               )
-            }>
+            }
+          >
             {typeDef.name}
           </Button.Checkbox>
         ))}
@@ -78,7 +87,8 @@ export const ChatPageSettings = (props, context) => {
                     type: typeDef.type,
                   })
                 )
-              }>
+              }
+            >
               {typeDef.name}
             </Button.Checkbox>
           ))}

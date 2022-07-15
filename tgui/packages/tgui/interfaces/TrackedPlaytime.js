@@ -31,7 +31,8 @@ const PlaytimeSection = (props) => {
               p={0.5}
               style={{
                 'vertical-align': 'middle',
-              }}>
+              }}
+            >
               <Box align="right">{jobName}</Box>
             </Table.Cell>
             <Table.Cell>
@@ -93,11 +94,13 @@ export const TrackedPlaytime = (props, context) => {
                 !!isAdmin && (
                   <Button.Checkbox
                     checked={!!exemptStatus}
-                    onClick={() => act('toggle_exempt')}>
+                    onClick={() => act('toggle_exempt')}
+                  >
                     Job Playtime Exempt
                   </Button.Checkbox>
                 )
-              }>
+              }
+            >
               <PlaytimeSection playtimes={jobPlaytimes} />
             </Section>
             <Section title="Special">

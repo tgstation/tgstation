@@ -1,4 +1,12 @@
-import { Box, Stack, Section, Button, Input, Dropdown, Icon } from '../../components';
+import {
+  Box,
+  Stack,
+  Section,
+  Button,
+  Input,
+  Dropdown,
+  Icon,
+} from '../../components';
 import { Component } from 'inferno';
 import { shallowDiffers } from 'common/react';
 
@@ -48,7 +56,8 @@ export class VariableMenu extends Component {
         fill
         buttons={
           <Button icon="times" color="transparent" mr={2} onClick={onClose} />
-        }>
+        }
+      >
         <Stack height="100%">
           <Stack.Item grow={1} mr={2}>
             <Section fill scrollable>
@@ -59,7 +68,8 @@ export class VariableMenu extends Component {
                       backgroundColor="transparent"
                       px="1px"
                       py="1px"
-                      height="100%">
+                      height="100%"
+                    >
                       <Stack>
                         <Stack.Item basis="50%" grow>
                           <Box width="100%" overflow="hidden">
@@ -150,7 +160,8 @@ export class VariableMenu extends Component {
                         onClick={(e) =>
                           onAddVariable(variable_name, variable_type, false, e)
                         }
-                        fluid>
+                        fluid
+                      >
                         <IconButton icon="plus" />
                       </Button>
                     </Stack.Item>
@@ -161,7 +172,8 @@ export class VariableMenu extends Component {
                         onClick={(e) =>
                           onAddVariable(variable_name, variable_type, true, e)
                         }
-                        fluid>
+                        fluid
+                      >
                         <IconButton icon="list" />
                       </Button>
                     </Stack.Item>

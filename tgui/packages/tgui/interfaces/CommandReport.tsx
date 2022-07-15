@@ -1,5 +1,12 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Dropdown, Input, Section, Stack, TextArea } from '../components';
+import {
+  Button,
+  Dropdown,
+  Input,
+  Section,
+  Stack,
+  TextArea,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -18,7 +25,8 @@ export const CommandReport = () => {
       title="Create Command Report"
       width={325}
       height={525}
-      theme="admin">
+      theme="admin"
+    >
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -114,7 +122,8 @@ const ReportText = (props, context) => {
           <Button.Checkbox
             fluid
             checked={announce_contents}
-            onClick={() => act('toggle_announce')}>
+            onClick={() => act('toggle_announce')}
+          >
             Announce Contents
           </Button.Checkbox>
         </Stack.Item>

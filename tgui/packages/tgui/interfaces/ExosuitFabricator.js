@@ -2,8 +2,20 @@ import { uniqBy } from 'common/collections';
 import { createSearch } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Icon, Input, ProgressBar, Section, Stack } from '../components';
-import { Materials, MaterialAmount, MaterialFormatting } from './common/Materials';
+import {
+  Box,
+  Button,
+  Icon,
+  Input,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../components';
+import {
+  Materials,
+  MaterialAmount,
+  MaterialFormatting,
+} from './common/Materials';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -143,7 +155,8 @@ export const ExosuitFabricator = (props, context) => {
                 <Section fill title="Settings">
                   <Button.Checkbox
                     onClick={() => setDisplayMatCost(!displayMatCost)}
-                    checked={displayMatCost}>
+                    checked={displayMatCost}
+                  >
                     Display Material Costs
                   </Button.Checkbox>
                 </Section>
@@ -161,7 +174,8 @@ export const ExosuitFabricator = (props, context) => {
                       content="R&D Sync"
                       onClick={() => act('sync_rnd')}
                     />
-                  }>
+                  }
+                >
                   <PartSets />
                 </Section>
               </Stack.Item>
@@ -203,7 +217,8 @@ const PartSets = (props, context) => {
         fluid
         color="transparent"
         selected={set === selectedPartTab}
-        onClick={() => setSelectedPartTab(set)}>
+        onClick={() => setSelectedPartTab(set)}
+      >
         {set}
       </Button>
     ));
@@ -335,7 +350,8 @@ const PartCategory = (props, context) => {
             })
           }
         />
-      }>
+      }
+    >
       {!parts.length && placeholder}
       {parts.map((part) => (
         <Fragment key={part.name}>
@@ -374,7 +390,8 @@ const PartCategory = (props, context) => {
                 <Stack.Item
                   key={material}
                   width="50px"
-                  color={COLOR_KEYS[part.format[material].color]}>
+                  color={COLOR_KEYS[part.format[material].color]}
+                >
                   <MaterialAmount
                     formatting={MaterialFormatting.Money}
                     style={{
@@ -430,7 +447,8 @@ const Queue = (props, context) => {
                 />
               )}
             </>
-          }>
+          }
+        >
           <Stack fill vertical>
             <Stack.Item>
               <BeingBuilt />
