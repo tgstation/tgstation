@@ -1051,7 +1051,7 @@
 /atom/proc/component_storage_contents_dump_act(obj/item/src_object, mob/user)
 	var/list/things = src_object.contents
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object.atom_storage, /datum/storage.proc/handle_mass_transfer, user, src)))
+	while (do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object.atom_storage, /datum/storage.proc/handle_mass_transfer, user, src, /* override = */ TRUE)))
 		stoplag(1)
 	progress.end_progress()
 	to_chat(user, span_notice("You dump as much of [src_object]'s contents [atom_storage.insert_preposition]to [src] as you can."))
