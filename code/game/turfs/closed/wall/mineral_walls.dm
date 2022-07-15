@@ -58,7 +58,7 @@
 	icon_state = "bananium_wall-0"
 	base_icon_state = "bananium_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	hardness = 95 //it's banana
+	hardness = 70 //it's banana
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BANANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_BANANIUM_WALLS)
@@ -180,7 +180,7 @@
 /turf/closed/wall/mineral/wood/nonmetal
 	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
 	girder_type = /obj/structure/barricade/wooden
-	hardness = 50
+	hardness = 67 //a bit weaker than iron (60)
 
 /turf/closed/wall/mineral/bamboo
 	name = "bamboo wall"
