@@ -113,7 +113,7 @@
 		var/datum/mind/recipient = recipient_ref.resolve()
 		// If the recipient's mind has gone, then anyone can open their mail
 		// whether a mind can actually be qdel'd is an exercise for the reader
-		if(recipient && recipient != user?.mind)
+		if(recipient && recipient.name != user.real_name)
 			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
 			return
 
