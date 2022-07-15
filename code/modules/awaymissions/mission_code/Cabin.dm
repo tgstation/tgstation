@@ -103,6 +103,24 @@
 		..()
 		new L.plank_type(src.loc, 1 + round(potency / 25))
 
+/obj/structure/ladder/unbreakable/rune
+	name = "\improper Teleportation Rune"
+	desc = "Could lead anywhere."
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "1"
+	color = rgb(0,0,255)
+
+/obj/structure/ladder/unbreakable/rune/Initialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
+
+/obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
+	user.visible_message(span_notice("[user] activates \the [src]."), span_notice("You activate \the [src]."))
+
+/obj/structure/ladder/unbreakable/rune/use(mob/user, is_ghost=FALSE)
+	if(is_ghost || !IS_WIZARD(user))
+		..()
+
 /*Cabin's forest. Removed in the new cabin map since it was buggy and I prefer manual placement.*/
 /datum/map_generator/snowy
 	modules = list(/datum/map_generator_module/bottomlayer/snow, \

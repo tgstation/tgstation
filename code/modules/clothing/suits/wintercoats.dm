@@ -38,6 +38,38 @@
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
 
+// An coat intended for use for general crew EVA, with values close to those of the space suits found in EVA normally
+// Slight extra armor, bulky size, slows you down, can carry a large oxygen tank, won't burn off.
+/obj/item/clothing/suit/hooded/wintercoat/eva
+	name = "\proper Endotherm winter coat"
+	desc = "A thickly padded winter coat to keep the wearer well insulated no matter the circumstances. It has a harness for a larger oxygen tank attached to the back."
+	icon_state = "coateva"
+	w_class = WEIGHT_CLASS_BULKY
+	slowdown = 0.75
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 50, FIRE = 50, ACID = 20)
+	strip_delay = 6 SECONDS
+	equip_delay_other = 6 SECONDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT // Protects very cold.
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT // Protects a little hot.
+	flags_inv = HIDEJUMPSUIT
+	clothing_flags = THICKMATERIAL
+	resistance_flags = NONE
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/eva
+
+/obj/item/clothing/suit/hooded/wintercoat/eva/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/tank/internals
+
+/obj/item/clothing/head/hooded/winterhood/eva
+	name = "\proper Endotherm winter hood"
+	desc = "A thickly padded hood attached to an even thicker coat."
+	icon_state = "hood_eva"
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 50, FIRE = 50, ACID = 20)
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL|SNUG_FIT // Snug fit doesn't really matter, but might as well
+	resistance_flags = NONE
+
 // CentCom
 /obj/item/clothing/suit/hooded/wintercoat/centcom
 	name = "centcom winter coat"
@@ -402,14 +434,20 @@
 	icon_state = "hood_cargo"
 
 // Quartermaster
-/obj/item/clothing/suit/hooded/wintercoat/qm
+/obj/item/clothing/suit/hooded/wintercoat/cargo/qm
 	name = "quartermaster's winter coat"
 	desc = "A dark brown winter coat that has a golden crate pin for its zipper pully."
 	icon_state = "coatqm"
 	inhand_icon_state = "coatqm"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/qm
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/cargo/qm
 
-/obj/item/clothing/head/hooded/winterhood/qm
+/obj/item/clothing/suit/hooded/wintercoat/cargo/qm/Initialize(mapload)
+	. = ..()
+	allowed += list(
+		/obj/item/melee/baton/telescopic,
+	)
+	
+/obj/item/clothing/head/hooded/winterhood/cargo/qm
 	desc = "A dark brown winter hood"
 	icon_state = "hood_qm"
 
