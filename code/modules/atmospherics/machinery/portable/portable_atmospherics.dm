@@ -24,6 +24,11 @@
 	/// Max amount of pressure allowed inside of the canister before it starts to break. [PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT] is special value meaning we are immune.
 	var/pressure_limit = 500000
 
+	/// Should reactions inside the object be suppressed
+	var/suppress_reactions = FALSE
+	/// Is there a hypernoblium crystal inserted into this
+	var/nob_crystal_inserted = FALSE
+
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
 	air_contents = new
@@ -35,6 +40,9 @@
 	disconnect()
 	air_contents = null
 	SSair.stop_processing_machine(src)
+
+	if(nob_crystal_inserted)
+		new /obj/item/hypernoblium_crystal(src)
 
 	return ..()
 
@@ -50,9 +58,10 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
-	excited = (excited | air_contents.react(src))
-	if(!excited)
-		return PROCESS_KILL
+	if(!suppress_reactions)
+		excited = (excited | air_contents.react(src))
+		if(!excited)
+			return PROCESS_KILL
 	excited = FALSE
 
 /// Take damage if a variable is exceeded. Damage is equal to temp/limit * heat/limit.
