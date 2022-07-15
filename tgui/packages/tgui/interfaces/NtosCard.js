@@ -1,15 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Box,
-  Button,
-  Dropdown,
-  Input,
-  NoticeBox,
-  NumberInput,
-  Section,
-  Stack,
-  Tabs,
-} from '../components';
+import { Box, Button, Dropdown, Input, NoticeBox, NumberInput, Section, Stack, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
@@ -74,8 +64,7 @@ export const NtosCardContent = (props, context) => {
               }
               tooltipPosition="left"
             />
-          }
-        >
+          }>
           <TemplateDropdown templates={templates} />
         </Section>
       )}
@@ -129,8 +118,7 @@ const IDCardTabs = (props, context) => {
         altSelection
         selected={'login' === selectedTab}
         color={'login' === selectedTab ? 'green' : 'default'}
-        onClick={() => setSelectedTab('login')}
-      >
+        onClick={() => setSelectedTab('login')}>
         Login ID
       </Tabs.Tab>
       <Tabs.Tab
@@ -138,8 +126,7 @@ const IDCardTabs = (props, context) => {
         altSelection
         selected={'modify' === selectedTab}
         color={'modify' === selectedTab ? 'green' : 'default'}
-        onClick={() => setSelectedTab('modify')}
-      >
+        onClick={() => setSelectedTab('modify')}>
         Target ID
       </Tabs.Tab>
     </Tabs>
@@ -170,8 +157,7 @@ export const IDCardLogin = (props, context) => {
             }}
           />
         </>
-      }
-    >
+      }>
       <Stack wrap="wrap">
         <Stack.Item width="100%">
           <Button

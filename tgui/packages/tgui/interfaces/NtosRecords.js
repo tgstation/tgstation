@@ -46,8 +46,7 @@ export const NtosRecords = (props, context) => {
                       record.fingerprint
                   )
                 )
-              }
-            >
+              }>
               <Box bold>
                 <Icon name="user" mr={1} />
                 {record.name}
@@ -84,8 +83,7 @@ export const NtosRecords = (props, context) => {
                       record.p_stat
                   )
                 )
-              }
-            >
+              }>
               <Box bold>
                 <Icon name="user" mr={1} />
                 {record.name}

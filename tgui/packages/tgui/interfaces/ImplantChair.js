@@ -19,15 +19,14 @@ export const ImplantChair = (props, context) => {
                   data.occupant.stat === 0
                     ? 'good'
                     : data.occupant.stat === 1
-                    ? 'average'
-                    : 'bad'
-                }
-              >
+                      ? 'average'
+                      : 'bad'
+                }>
                 {data.occupant.stat === 0
                   ? 'Conscious'
                   : data.occupant.stat === 1
-                  ? 'Unconcious'
-                  : 'Dead'}
+                    ? 'Unconcious'
+                    : 'Dead'}
               </LabeledList.Item>
             )}
           </LabeledList>

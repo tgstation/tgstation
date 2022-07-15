@@ -182,8 +182,7 @@ export const NtosMessenger = (props, context) => {
                       job: messenger.job,
                       ref: messenger.ref,
                     })
-                  }
-                >
+                  }>
                   {messenger.name} ({messenger.job})
                 </Button>
               ))}

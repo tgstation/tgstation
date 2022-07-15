@@ -1,11 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  BlockQuote,
-  Button,
-  LabeledList,
-  ProgressBar,
-  Section,
-} from '../components';
+import { BlockQuote, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 export const Intellicard = (props, context) => {
@@ -35,8 +29,7 @@ export const Intellicard = (props, context) => {
                 onClick={() => act('wipe')}
               />
             )
-          }
-        >
+          }>
           {!!name && (
             <LabeledList>
               <LabeledList.Item label="Status" color={offline ? 'bad' : 'good'}>

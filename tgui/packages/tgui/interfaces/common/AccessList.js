@@ -153,8 +153,7 @@ export const FormatWildcards = (props, context) => {
       {showBasic && (
         <Tabs.Tab
           selected={selectedWildcard === 'None'}
-          onClick={() => setWildcardTab('None')}
-        >
+          onClick={() => setWildcardTab('None')}>
           Trim:
           <br />
           {basicUsed + '/' + basicMax}
@@ -174,8 +173,7 @@ export const FormatWildcards = (props, context) => {
           <Tabs.Tab
             key={wildcard}
             selected={selectedWildcard === wildcard}
-            onClick={() => setWildcardTab(wildcard)}
-          >
+            onClick={() => setWildcardTab(wildcard)}>
             {wildcard + ':'}
             <br />
             {wcLeftStr}
@@ -209,8 +207,7 @@ const RegionTabList = (props, context) => {
             minWidth={'100%'}
             altSelection
             selected={access.name === selectedAccessName}
-            onClick={() => setSelectedAccessName(access.name)}
-          >
+            onClick={() => setSelectedAccessName(access.name)}>
             {access.name}
           </Tabs.Tab>
         );

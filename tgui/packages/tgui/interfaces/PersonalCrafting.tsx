@@ -177,8 +177,7 @@ export const PersonalCrafting = (props, context) => {
                           category: category.dm_category,
                           subcategory: category.dm_subcategory,
                         })
-                      }
-                    >
+                      }>
                       {category.name}
                     </Button>
                   ))}
@@ -203,8 +202,7 @@ export const PersonalCrafting = (props, context) => {
                     onClick={() => act('toggle_recipes')}
                   />
                 </>
-              }
-            >
+              }>
               <Section fill scrollable>
                 {busy ? (
                   <Dimmer fontSize="32px">
@@ -253,8 +251,7 @@ const CraftingList = (props: CraftingListProps, context) => {
             recipe: recipe.ref,
           });
         }
-      }}
-    >
+      }}>
       <div className="PersonalCraftingGridItem__content">
         <div className="PersonalCraftingGridItem__name">{recipe.name}</div>
         {!!recipe.req_text &&

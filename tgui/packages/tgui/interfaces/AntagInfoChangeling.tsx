@@ -71,8 +71,7 @@ const IntroductionSection = (props, context) => {
     <Section
       fill
       title="Intro"
-      scrollable={!!objectives && objectives.length > 4}
-    >
+      scrollable={!!objectives && objectives.length > 4}>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
           You are the Changeling from the
@@ -164,8 +163,7 @@ const MemoriesSection = (props, context) => {
             help you impersonate your target!
           `}
         />
-      }
-    >
+      }>
       {(!memories && (
         <Box>
           {!stolen_antag_info && (
@@ -200,8 +198,7 @@ const VictimPatternsSection = (props, context) => {
     <Section
       fill
       scrollable={!!stolen_antag_info}
-      title="Additional Stolen Information"
-    >
+      title="Additional Stolen Information">
       {!!stolen_antag_info && stolen_antag_info}
     </Section>
   );
@@ -214,8 +211,7 @@ export const AntagInfoChangeling = (props, context) => {
       <Window.Content
         style={{
           'backgroundImage': 'none',
-        }}
-      >
+        }}>
         <Stack vertical fill>
           <Stack.Item maxHeight={13.2}>
             <IntroductionSection />

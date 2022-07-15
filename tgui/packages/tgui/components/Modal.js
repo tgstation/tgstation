@@ -14,8 +14,7 @@ export const Modal = (props) => {
     <Dimmer>
       <div
         className={classes(['Modal', className, computeBoxClassName(rest)])}
-        {...computeBoxProps(rest)}
-      >
+        {...computeBoxProps(rest)}>
         {children}
       </div>
     </Dimmer>

@@ -2,14 +2,7 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from '../../backend';
-import {
-  Box,
-  Button,
-  LabeledList,
-  NumberInput,
-  ProgressBar,
-  Section,
-} from '../../components';
+import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from '../../components';
 import { getGasColor, getGasLabel } from '../../constants';
 import { HelpDummy, HoverHelp } from './helpers';
 
@@ -80,8 +73,7 @@ const GasList = (props, context) => {
             <HoverHelp content={rateHelp} />
             Injection control:
           </>
-        }
-      >
+        }>
         <Button
           disabled={data.start_power === 0 || data.start_cooling === 0}
           icon={data[input_switch] ? 'power-off' : 'times'}
@@ -111,14 +103,12 @@ const GasList = (props, context) => {
                 {labelPrefix}
                 {getGasLabel(gas.id)}:
               </>
-            }
-          >
+            }>
             <ProgressBar
               color={getGasColor(gas.id)}
               value={gas.amount}
               minValue={0}
-              maxValue={minimumScale}
-            >
+              maxValue={minimumScale}>
               {toFixed(gas.amount, 2) + ' moles'}
             </ProgressBar>
           </LabeledList.Item>

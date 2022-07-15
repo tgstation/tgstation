@@ -37,8 +37,7 @@ export const AiAirlock = (props, context) => {
                   content="Disrupt"
                   onClick={() => act('disrupt-main')}
                 />
-              }
-            >
+              }>
               {data.power.main ? 'Online' : 'Offline'}{' '}
               {((!data.wires.main_1 || !data.wires.main_2) &&
                 '[Wires have been cut!]') ||
@@ -55,8 +54,7 @@ export const AiAirlock = (props, context) => {
                   content="Disrupt"
                   onClick={() => act('disrupt-backup')}
                 />
-              }
-            >
+              }>
               {data.power.backup ? 'Online' : 'Offline'}{' '}
               {((!data.wires.backup_1 || !data.wires.backup_2) &&
                 '[Wires have been cut!]') ||
@@ -87,8 +85,7 @@ export const AiAirlock = (props, context) => {
                     onClick={() => act('shock-perm')}
                   />
                 </>
-              }
-            >
+              }>
               {data.shock === 2 ? 'Safe' : 'Electrified'}{' '}
               {(!data.wires.shock && '[Wires have been cut!]') ||
                 (data.shock_timeleft > 0 && `[${data.shock_timeleft}s]`) ||
@@ -109,8 +106,7 @@ export const AiAirlock = (props, context) => {
                   disabled={!data.wires.id_scanner}
                   onClick={() => act('idscan-toggle')}
                 />
-              }
-            >
+              }>
               {!data.wires.id_scanner && '[Wires have been cut!]'}
             </LabeledList.Item>
             <LabeledList.Item
@@ -136,8 +132,7 @@ export const AiAirlock = (props, context) => {
                   disabled={!data.wires.bolts}
                   onClick={() => act('bolt-toggle')}
                 />
-              }
-            >
+              }>
               {!data.wires.bolts && '[Wires have been cut!]'}
             </LabeledList.Item>
             <LabeledList.Item
@@ -151,8 +146,7 @@ export const AiAirlock = (props, context) => {
                   disabled={!data.wires.lights}
                   onClick={() => act('light-toggle')}
                 />
-              }
-            >
+              }>
               {!data.wires.lights && '[Wires have been cut!]'}
             </LabeledList.Item>
             <LabeledList.Item
@@ -166,8 +160,7 @@ export const AiAirlock = (props, context) => {
                   disabled={!data.wires.safe}
                   onClick={() => act('safe-toggle')}
                 />
-              }
-            >
+              }>
               {!data.wires.safe && '[Wires have been cut!]'}
             </LabeledList.Item>
             <LabeledList.Item
@@ -181,8 +174,7 @@ export const AiAirlock = (props, context) => {
                   disabled={!data.wires.timing}
                   onClick={() => act('speed-toggle')}
                 />
-              }
-            >
+              }>
               {!data.wires.timing && '[Wires have been cut!]'}
             </LabeledList.Item>
             <LabeledList.Divider />
@@ -197,8 +189,7 @@ export const AiAirlock = (props, context) => {
                   disabled={data.locked || data.welded}
                   onClick={() => act('open-close')}
                 />
-              }
-            >
+              }>
               {!!(data.locked || data.welded) && (
                 <span>
                   [Door is {data.locked ? 'bolted' : ''}

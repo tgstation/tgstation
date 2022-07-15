@@ -7,12 +7,7 @@ import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
 import { Box, Tabs, Button, Stack, Section, Tooltip } from '../../components';
 import { Objective, ObjectiveMenu } from './ObjectiveMenu';
-import {
-  calculateProgression,
-  calculateReputationLevel,
-  reputationDefault,
-  reputationLevelsTooltip,
-} from './calculateReputationLevel';
+import { calculateProgression, calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
 
 type UplinkItem = {
   id: string;
@@ -283,8 +278,7 @@ export class Uplink extends Component<{}, UplinkState> {
                                           : 'green'
                                       }
                                       ml={1}
-                                      mr={1}
-                                    >
+                                      mr={1}>
                                       {progressionPercentage}%
                                     </Box>
                                     {progressionPercentage < 0
@@ -298,8 +292,7 @@ export class Uplink extends Component<{}, UplinkState> {
                             </Box>
                           )) ||
                           'Your current level of reputation. You are a respected elite and do not need to improve your reputation.'
-                        }
-                      >
+                        }>
                         {/* If we have no progression,
                       just give them a generic title */}
                         {has_progression
@@ -322,15 +315,13 @@ export class Uplink extends Component<{}, UplinkState> {
                       {!!has_objectives && (
                         <Tabs.Tab
                           selected={currentTab === 0}
-                          onClick={() => this.setState({ currentTab: 0 })}
-                        >
+                          onClick={() => this.setState({ currentTab: 0 })}>
                           Objectives
                         </Tabs.Tab>
                       )}
                       <Tabs.Tab
                         selected={currentTab === 1 || !has_objectives}
-                        onClick={() => this.setState({ currentTab: 1 })}
-                      >
+                        onClick={() => this.setState({ currentTab: 1 })}>
                         Market
                       </Tabs.Tab>
                     </Tabs>

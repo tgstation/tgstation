@@ -99,8 +99,7 @@ export class ComponentMenu extends Component {
         onMouseUp={(event) => {
           event.preventDefault();
         }}
-        scrollable
-      >
+        scrollable>
         <Stack vertical>
           <Stack.Item>
             <Dropdown
@@ -138,14 +137,12 @@ export class ComponentMenu extends Component {
                 <Stack.Item
                   key={val.type}
                   mt={1}
-                  onMouseDown={(e) => onMouseDownComponent(e, val)}
-                >
+                  onMouseDown={(e) => onMouseDownComponent(e, val)}>
                   <Box
                     backgroundColor={val.color || 'blue'}
                     py={1}
                     px={1}
-                    className="ObjectComponent__Titlebar"
-                  >
+                    className="ObjectComponent__Titlebar">
                     <Stack>
                       <Stack.Item grow={1} unselectable="on">
                         {val.name}
@@ -165,8 +162,7 @@ export class ComponentMenu extends Component {
                     className="ObjectComponent__Content"
                     unselectable="on"
                     py={1}
-                    px={1}
-                  >
+                    px={1}>
                     <Stack>
                       <Stack.Item grow>
                         <Stack vertical fill>

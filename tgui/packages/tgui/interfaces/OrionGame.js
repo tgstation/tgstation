@@ -129,8 +129,7 @@ const AdventureStatus = (props, context) => {
             onClick={() => act('random_kill')}
           />
         )
-      }
-    >
+      }>
       <Stack mb={-1} fill>
         <Stack.Item grow mb={-0.5}>
           {settlers?.map((settler) => (
@@ -259,8 +258,7 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
             content="Back to Main Menu"
             onClick={() => act('back_to_menu')}
           />
-        }
-      >
+        }>
         <Box fontSize="11px">
           In the 2200&apos;s, the Orion trail was established as a dangerous yet
           opportunistic trail through space for those willing to risk it. Many
@@ -487,8 +485,7 @@ const ORION_STATUS_MARKET = (props, context) => {
                 onClick={() => act('leave_spaceport')}
               />
             </>
-          }
-        >
+          }>
           <Stack fill textAlign="center" vertical>
             <Stack.Item grow>
               <Box mb={-2} bold fontSize="15px">

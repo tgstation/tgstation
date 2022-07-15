@@ -1,18 +1,7 @@
 import { round, toFixed } from 'common/math';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import {
-  AnimatedNumber,
-  Box,
-  Button,
-  Flex,
-  Icon,
-  NumberInput,
-  ProgressBar,
-  RoundGauge,
-  Section,
-  Table,
-} from '../components';
+import { AnimatedNumber, Box, Button, Flex, Icon, NumberInput, ProgressBar, RoundGauge, Section, Table } from '../components';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
@@ -58,8 +47,7 @@ export const ChemHeater = (props, context) => {
                 onClick={() => act('power')}
               />
             </Flex>
-          }
-        >
+          }>
           <Table>
             <Table.Row>
               <Table.Cell bold collapsing color="label">
@@ -125,8 +113,7 @@ export const ChemHeater = (props, context) => {
               </Table.Cell>
               <Table.Cell
                 color={COLORS.reagent.acidicbuffer}
-                textAlign="center"
-              >
+                textAlign="center">
                 {acidicBufferVol + 'u'}
               </Table.Cell>
               <Table.Cell>
@@ -231,8 +218,7 @@ export const ChemHeater = (props, context) => {
                   </AnimatedNumber>
                 </Flex.Item>
               </Flex>
-            }
-          >
+            }>
             {(activeReactions.length === 0 && (
               <Box color="label">No active reactions.</Box>
             )) || (
@@ -295,8 +281,7 @@ export const ChemHeater = (props, context) => {
                           textAlign={'center'}
                           icon={reaction.overheat && 'thermometer-full'}
                           width={7}
-                          color={reaction.overheat ? 'red' : 'label'}
-                        >
+                          color={reaction.overheat ? 'red' : 'label'}>
                           {reaction.targetVol}u
                         </ProgressBar>
                       )) || (
@@ -333,8 +318,7 @@ export const ChemHeater = (props, context) => {
                 />
               </>
             )
-          }
-        >
+          }>
           <BeakerContents
             beakerLoaded={isBeakerLoaded}
             beakerContents={beakerContents}

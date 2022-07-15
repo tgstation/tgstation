@@ -31,8 +31,7 @@ export const Electropack = (props, context) => {
                     })
                   }
                 />
-              }
-            >
+              }>
               <NumberInput
                 animate
                 unit="kHz"
@@ -62,8 +61,7 @@ export const Electropack = (props, context) => {
                     })
                   }
                 />
-              }
-            >
+              }>
               <NumberInput
                 animate
                 step={1}

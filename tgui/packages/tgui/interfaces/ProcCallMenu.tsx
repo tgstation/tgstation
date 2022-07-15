@@ -1,13 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import {
-  Stack,
-  Section,
-  Input,
-  Button,
-  Dropdown,
-  NoticeBox,
-} from '../components';
+import { Stack, Section, Input, Button, Dropdown, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 type Port = {

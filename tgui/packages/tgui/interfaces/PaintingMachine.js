@@ -35,8 +35,7 @@ export const PaintingMachine = (props, context) => {
                 })
               }
             />
-          }
-        >
+          }>
           <Stack vertical>
             <Stack.Item height="100%">
               <EjectButton
@@ -78,8 +77,7 @@ export const PaintingMachine = (props, context) => {
                 tooltipPosition="left"
               />
             </>
-          }
-        >
+          }>
           <Stack vertical>
             <Stack.Item height="100%">
               <EjectButton

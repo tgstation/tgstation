@@ -3,15 +3,7 @@ import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Box, Button, Section, Stack } from '../../components';
 import { MutationInfo } from './MutationInfo';
-import {
-  CLEAR_GENE,
-  GENE_COLORS,
-  MUT_NORMAL,
-  NEXT_GENE,
-  PREV_GENE,
-  SUBJECT_DEAD,
-  SUBJECT_TRANSFORMING,
-} from './constants';
+import { CLEAR_GENE, GENE_COLORS, MUT_NORMAL, NEXT_GENE, PREV_GENE, SUBJECT_DEAD, SUBJECT_TRANSFORMING } from './constants';
 
 const GenomeImage = (props, context) => {
   const { url, selected, onClick } = props;
@@ -69,8 +61,7 @@ const GeneCycler = (props, context) => {
           pulseAction: PREV_GENE,
           alias: alias,
         });
-      }}
-    >
+      }}>
       {gene}
     </Button>
   );
@@ -171,8 +162,7 @@ export const DnaConsoleSequencer = (props, context) => {
           <Section
             title="Sequences"
             height="214px"
-            overflowY={mutations.length > 8 && 'scroll'}
-          >
+            overflowY={mutations.length > 8 && 'scroll'}>
             {mutations.map((mutation) => (
               <GenomeImage
                 key={mutation.Alias}
@@ -245,8 +235,7 @@ export const DnaConsoleSequencer = (props, context) => {
                   }
                 />
               )
-            }
-          >
+            }>
             <GenomeSequencer mutation={mutation} />
           </Section>
         )}

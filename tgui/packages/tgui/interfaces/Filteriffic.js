@@ -2,18 +2,7 @@ import { map } from 'common/collections';
 import { toFixed } from 'common/math';
 import { numberOfDecimalDigits } from '../../common/math';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Box,
-  Button,
-  Collapsible,
-  ColorBox,
-  Dropdown,
-  Input,
-  LabeledList,
-  NoticeBox,
-  NumberInput,
-  Section,
-} from '../components';
+import { Box, Button, Collapsible, ColorBox, Dropdown, Input, LabeledList, NoticeBox, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 const FilterIntegerEntry = (props, context) => {
@@ -251,8 +240,7 @@ const FilterEntry = (props, context) => {
             onClick={() => act('remove_filter', { name: name })}
           />
         </>
-      }
-    >
+      }>
       <Section level={2}>
         <LabeledList>
           {targetFilterPossibleKeys.map((entryName) => {
@@ -337,8 +325,7 @@ export const Filteriffic = (props, context) => {
                 })
               }
             />
-          }
-        >
+          }>
           {!hasFilters ? (
             <Box>No filters</Box>
           ) : (

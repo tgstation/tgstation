@@ -90,8 +90,7 @@ const ApprenticeSelection = (props, context) => {
                   act('buy', {
                     school: schoolTitle,
                   })
-                }
-              >
+                }>
                 Select
               </Button>
             </Stack.Item>

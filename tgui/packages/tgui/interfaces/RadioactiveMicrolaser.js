@@ -18,8 +18,7 @@ export const RadioactiveMicrolaser = (props, context) => {
       title="Radioactive Microlaser"
       width={320}
       height={335}
-      theme="syndicate"
-    >
+      theme="syndicate">
       <Window.Content>
         <Section>
           <LabeledList>

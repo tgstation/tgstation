@@ -126,8 +126,7 @@ export const CameraConsoleContent = (props, context) => {
                 act('switch_camera', {
                   name: camera.name,
                 })
-              }
-            >
+              }>
               {camera.name}
             </div>
           ))}

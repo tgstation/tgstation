@@ -139,8 +139,7 @@ export const TraitorObjectiveDebug = (props, context) => {
         top={0}
         left={`${i}%`}
         width="2px"
-        backgroundColor="green"
-      >
+        backgroundColor="green">
         <Box
           position="absolute"
           top={0}
@@ -158,8 +157,7 @@ export const TraitorObjectiveDebug = (props, context) => {
           left={1}
           style={{
             'z-index': 5,
-          }}
-        >
+          }}>
           {/* Time in minutes of this threshold */}
           {Math.round((sizeLimit * (i / 100)) / 600)} mins
         </Box>
@@ -218,8 +216,7 @@ export const TraitorObjectiveDebug = (props, context) => {
                   <Tabs.Tab
                     key={value.sort}
                     selected={value.name === sortingFunc}
-                    onClick={() => setSortingFunc(value.name)}
-                  >
+                    onClick={() => setSortingFunc(value.name)}>
                     {value.name}
                   </Tabs.Tab>
                 ))}
@@ -229,16 +226,14 @@ export const TraitorObjectiveDebug = (props, context) => {
               <Tabs height="100%" width="100%" fluid textAlign="center">
                 <Tabs.Tab
                   selected={currentTab === 'All'}
-                  onClick={() => setCurrentTab('All')}
-                >
+                  onClick={() => setCurrentTab('All')}>
                   All
                 </Tabs.Tab>
                 {objective_data.map((value) => (
                   <Tabs.Tab
                     key={value.name}
                     selected={value.name === currentTab}
-                    onClick={() => setCurrentTab(value.name)}
-                  >
+                    onClick={() => setCurrentTab(value.name)}>
                     {value.name}
                   </Tabs.Tab>
                 ))}
@@ -248,14 +243,12 @@ export const TraitorObjectiveDebug = (props, context) => {
               <Tabs width="100%" fluid textAlign="center">
                 <Tabs.Tab
                   selected={sortDirection === true}
-                  onClick={() => setSortingDirection(true)}
-                >
+                  onClick={() => setSortingDirection(true)}>
                   Ascending
                 </Tabs.Tab>
                 <Tabs.Tab
                   selected={sortDirection === false}
-                  onClick={() => setSortingDirection(false)}
-                >
+                  onClick={() => setSortingDirection(false)}>
                   Descending
                 </Tabs.Tab>
               </Tabs>
@@ -268,8 +261,7 @@ export const TraitorObjectiveDebug = (props, context) => {
           fill
           backgroundColor="black"
           left={0}
-          top="100px"
-        >
+          top="100px">
           {lines}
           <Stack vertical mt={8}>
             {objectivesToRender.map((value, index) => (
@@ -301,8 +293,7 @@ export const TraitorObjectiveDebug = (props, context) => {
                     </LabeledList>
                   </Box>
                 }
-                position="top"
-              >
+                position="top">
                 <Box
                   backgroundColor="red"
                   position="absolute"
@@ -312,8 +303,7 @@ export const TraitorObjectiveDebug = (props, context) => {
                   width="3px"
                   height="100%"
                   top={0}
-                  opacity={0.8}
-                >
+                  opacity={0.8}>
                   <Box
                     position="absolute"
                     top={0}
@@ -329,8 +319,7 @@ export const TraitorObjectiveDebug = (props, context) => {
             content={`Expected Progression: ${Math.floor(
               current_progression / 600
             )} mins`}
-            position="top"
-          >
+            position="top">
             <Box
               position="absolute"
               left={`${
@@ -340,8 +329,7 @@ export const TraitorObjectiveDebug = (props, context) => {
               height="100%"
               top={0}
               opacity={1}
-              backgroundColor="pink"
-            >
+              backgroundColor="pink">
               <Box
                 position="absolute"
                 top={0}
@@ -377,16 +365,14 @@ const ObjectiveBox = (props: ObjectiveBoxProps, context) => {
         (objective.progression_minimum / sizeLimit) * window.innerWidth
       }px`}
       width={width}
-      height="95px"
-    >
+      height="95px">
       <Stack vertical width="100%">
         <Stack.Item
           style={{
             'text-overflow': 'ellipsis',
             'white-space': 'nowrap',
             'overflow': 'hidden',
-          }}
-        >
+          }}>
           {objective.name}
         </Stack.Item>
         <Stack.Item>
@@ -412,8 +398,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps, context) => {
             }px`}
             style={{
               'white-space': 'nowrap',
-            }}
-          >
+            }}>
             {objective.progression_reward[0] / 600}
             &nbsp;to {objective.progression_reward[1] / 600} pr
           </Box>
@@ -427,8 +412,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps, context) => {
             width={`${objective.telecrystal_reward[1] * 10}px`}
             style={{
               'white-space': 'nowrap',
-            }}
-          >
+            }}>
             {objective.telecrystal_reward[0]}
             &nbsp;to {objective.telecrystal_reward[1]} tc
           </Box>

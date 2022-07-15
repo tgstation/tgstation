@@ -60,8 +60,7 @@ export class Blink extends Component {
       <span
         style={{
           visibility: this.state.hidden ? 'hidden' : 'visible',
-        }}
-      >
+        }}>
         {props.children}
       </span>
     );

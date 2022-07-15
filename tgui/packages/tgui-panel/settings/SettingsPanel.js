@@ -7,21 +7,7 @@
 import { toFixed } from 'common/math';
 import { useLocalState } from 'tgui/backend';
 import { useDispatch, useSelector } from 'common/redux';
-import {
-  Box,
-  Button,
-  ColorBox,
-  Divider,
-  Dropdown,
-  Flex,
-  Input,
-  LabeledList,
-  NumberInput,
-  Section,
-  Stack,
-  Tabs,
-  TextArea,
-} from 'tgui/components';
+import { Box, Button, ColorBox, Divider, Dropdown, Flex, Input, LabeledList, NumberInput, Section, Stack, Tabs, TextArea } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
 import { rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
@@ -47,8 +33,7 @@ export const SettingsPanel = (props, context) => {
                       tabId: tab.id,
                     })
                   )
-                }
-              >
+                }>
                 {tab.name}
               </Tabs.Tab>
             ))}
@@ -213,8 +198,7 @@ export const SettingsGeneral = (props, context) => {
                 matchWord: !matchWord,
               })
             )
-          }
-        >
+          }>
           Match word
         </Button.Checkbox>
         <Button.Checkbox
@@ -225,8 +209,7 @@ export const SettingsGeneral = (props, context) => {
                 matchCase: !matchCase,
               })
             )
-          }
-        >
+          }>
           Match case
         </Button.Checkbox>
       </Box>

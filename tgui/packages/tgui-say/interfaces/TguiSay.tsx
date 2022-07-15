@@ -51,8 +51,7 @@ export class TguiSay extends Component<{}, State> {
             <button
               className={getCss('button', theme)}
               onclick={onClick}
-              type="submit"
-            >
+              type="submit">
               {buttonContent}
             </button>
           )}

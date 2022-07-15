@@ -14,8 +14,7 @@ export const LabeledControls = (props) => {
       wrap={wrap}
       align="stretch"
       justify="space-between"
-      {...rest}
-    >
+      {...rest}>
       {children}
     </Flex>
   );
@@ -31,8 +30,7 @@ const LabeledControlsItem = (props) => {
         align="center"
         textAlign="center"
         justify="space-between"
-        {...rest}
-      >
+        {...rest}>
         <Flex.Item />
         <Flex.Item>{children}</Flex.Item>
         <Flex.Item color="label">{label}</Flex.Item>

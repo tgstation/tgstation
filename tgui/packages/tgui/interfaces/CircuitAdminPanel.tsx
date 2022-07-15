@@ -26,8 +26,7 @@ export const CircuitAdminPanel = (props, context) => {
                 <Button
                   onClick={() => {
                     act('disable_circuit_sound');
-                  }}
-                >
+                  }}>
                   Disable all circuit sound emitters
                 </Button>
               </Stack.Item>

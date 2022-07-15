@@ -1,25 +1,9 @@
 import { uniqBy } from 'common/collections';
 import { useBackend } from '../../backend';
-import {
-  Box,
-  Button,
-  Collapsible,
-  Stack,
-  LabeledList,
-  Section,
-  Tabs,
-} from '../../components';
+import { Box, Button, Collapsible, Stack, LabeledList, Section, Tabs } from '../../components';
 import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 import { MutationInfo } from './MutationInfo';
-import {
-  STORAGE_CONS_SUBMODE_CHROMOSOMES,
-  STORAGE_CONS_SUBMODE_MUTATIONS,
-  STORAGE_DISK_SUBMODE_ENZYMES,
-  STORAGE_DISK_SUBMODE_MUTATIONS,
-  STORAGE_MODE_ADVINJ,
-  STORAGE_MODE_CONSOLE,
-  STORAGE_MODE_DISK,
-} from './constants';
+import { STORAGE_CONS_SUBMODE_CHROMOSOMES, STORAGE_CONS_SUBMODE_MUTATIONS, STORAGE_DISK_SUBMODE_ENZYMES, STORAGE_DISK_SUBMODE_MUTATIONS, STORAGE_MODE_ADVINJ, STORAGE_MODE_CONSOLE, STORAGE_MODE_DISK } from './constants';
 
 export const DnaConsoleStorage = (props, context) => {
   const { data, act } = useBackend(context);
@@ -93,8 +77,7 @@ const DnaConsoleAdvancedInjectors = (props, context) => {
                 }
               />
             </>
-          }
-        >
+          }>
           <StorageMutations
             mutations={injector.mutations}
             customMode={`advinj${advInjectors.findIndex(
@@ -228,8 +211,7 @@ const StorageChromosomes = (props, context) => {
                   act('set_view', {
                     storageChromoName: chromo.Name,
                   })
-                }
-              >
+                }>
                 {chromo.Name}
               </Tabs.Tab>
             ))}
@@ -300,8 +282,7 @@ const StorageMutations = (props, context) => {
                   act('set_view', {
                     [`storage${mode}MutationRef`]: mutation.ByondRef,
                   })
-                }
-              >
+                }>
                 {mutation.Name}
               </Tabs.Tab>
             ))}

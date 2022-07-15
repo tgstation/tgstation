@@ -27,8 +27,7 @@ export const NtosMain = (props, context) => {
       }
       theme={device_theme}
       width={400}
-      height={500}
-    >
+      height={500}>
       <NtosWindow.Content scrollable>
         {Boolean(has_light || removable_media.length) && (
           <Section>
@@ -39,8 +38,7 @@ export const NtosMain = (props, context) => {
                     width="144px"
                     icon="lightbulb"
                     selected={light_on}
-                    onClick={() => act('PC_toggle_light')}
-                  >
+                    onClick={() => act('PC_toggle_light')}>
                     Flashlight: {light_on ? 'ON' : 'OFF'}
                   </Button>
                   <Button ml={1} onClick={() => act('PC_light_color')}>
@@ -85,8 +83,7 @@ export const NtosMain = (props, context) => {
                   onClick={() => act('PC_Imprint_ID', { name: 'ID' })}
                 />
               </>
-            }
-          >
+            }>
             <Table>
               <Table.Row>
                 ID Name: {login.IDName} ({proposed_login.IDName})
@@ -185,8 +182,7 @@ export const NtosMain = (props, context) => {
                 disabled={!disk_name}
                 onClick={() => act('PC_Eject_Disk', { name: 'remove_disk' })}
               />
-            }
-          >
+            }>
             <Table>
               {disk_programs.map((program) => (
                 <Table.Row key={program.name}>

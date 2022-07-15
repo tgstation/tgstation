@@ -256,8 +256,7 @@ const PaperSheetView = (props, context) => {
       position="relative"
       backgroundColor={backgroundColor}
       width="100%"
-      height="100%"
-    >
+      height="100%">
       <Box
         className="Paper__Page"
         fillPositionedParent
@@ -520,8 +519,7 @@ class PaperSheetEdit extends Component {
                 this.state.previewSelected === 'Edit' ? 'grey' : 'white'
               }
               selected={this.state.previewSelected === 'Edit'}
-              onClick={() => this.setState({ previewSelected: 'Edit' })}
-            >
+              onClick={() => this.setState({ previewSelected: 'Edit' })}>
               Edit
             </Tabs.Tab>
             <Tabs.Tab
@@ -542,8 +540,7 @@ class PaperSheetEdit extends Component {
                   };
                   return new_state;
                 })
-              }
-            >
+              }>
               Preview
             </Tabs.Tab>
             <Tabs.Tab
@@ -553,8 +550,8 @@ class PaperSheetEdit extends Component {
                 this.state.previewSelected === 'confirm'
                   ? 'red'
                   : this.state.previewSelected === 'save'
-                  ? 'grey'
-                  : 'white'
+                    ? 'grey'
+                    : 'white'
               }
               selected={
                 this.state.previewSelected === 'confirm' ||
@@ -577,8 +574,7 @@ class PaperSheetEdit extends Component {
                 } else {
                   this.setState({ previewSelected: 'confirm' });
                 }
-              }}
-            >
+              }}>
               {this.state.previewSelected === 'confirm' ? 'Confirm' : 'Save'}
             </Tabs.Tab>
           </Tabs>
@@ -684,8 +680,7 @@ export const PaperSheet = (props, context) => {
       title={name}
       theme="paper"
       width={sizeX || 400}
-      height={sizeY || 500}
-    >
+      height={sizeY || 500}>
       <Window.Content backgroundColor={paper_color} scrollable>
         <Box id="page" fitted fillPositionedParent>
           {decide_mode(edit_mode)}

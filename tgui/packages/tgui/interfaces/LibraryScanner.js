@@ -31,8 +31,7 @@ const BookScanning = (props, context) => {
               textAlign="center"
               icon="eject"
               onClick={() => act('eject')}
-              disabled={!has_book}
-            >
+              disabled={!has_book}>
               Eject Book
             </Button>
           </Stack.Item>
@@ -43,8 +42,7 @@ const BookScanning = (props, context) => {
               onClick={() => act('scan')}
               color="good"
               icon="qrcode"
-              disabled={!has_book}
-            >
+              disabled={!has_book}>
               Scan Book
             </Button>
           </Stack.Item>
@@ -55,8 +53,7 @@ const BookScanning = (props, context) => {
               icon="fire"
               onClick={() => act('clear')}
               color="bad"
-              disabled={!has_cache}
-            >
+              disabled={!has_cache}>
               Clear Cache
             </Button>
           </Stack.Item>

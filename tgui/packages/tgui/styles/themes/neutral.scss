@@ -9,14 +9,14 @@
 $neutral: #ffb300;
 
 @use '../colors.scss' with (
-  $primary: $neutral,
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
+   $primary: $neutral,
+   $fg-map-keys: (),
+   $bg-map-keys: (),
+ );
 @use '../base.scss' with (
-  $color-bg: color.scale($neutral, $lightness: -40%),
-  $color-bg-grad-spread: 6%
-);
+   $color-bg: color.scale($neutral, $lightness: -40%),
+   $color-bg-grad-spread: 6%,
+ );
 
 .theme-neutral {
   // Components

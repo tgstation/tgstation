@@ -58,8 +58,7 @@ export const FishCatalog = (props, context) => {
                   selected={f === currentFish}
                   onClick={() => {
                     setCurrentFish(f);
-                  }}
-                >
+                  }}>
                   {f.name}
                 </Button>
               ))}
@@ -73,8 +72,7 @@ export const FishCatalog = (props, context) => {
                 currentFish
                   ? capitalize(currentFish.name)
                   : sponsored_by + ' Fish Index'
-              }
-            >
+              }>
               {currentFish && (
                 <LabeledList>
                   <LabeledList.Item label="Description">

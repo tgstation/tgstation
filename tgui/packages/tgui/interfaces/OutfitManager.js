@@ -33,8 +33,7 @@ export const OutfitManager = (props, context) => {
                 onClick={() => act('new')}
               />
             </>
-          }
-        >
+          }>
           <Stack vertical>
             {outfits?.map((outfit) => (
               <Stack.Item key={outfit.ref}>
@@ -46,8 +45,7 @@ export const OutfitManager = (props, context) => {
                       'overflow': 'hidden',
                       'white-space': 'nowrap',
                       'text-overflow': 'ellipsis',
-                    }}
-                  >
+                    }}>
                     <Button
                       fluid
                       style={{

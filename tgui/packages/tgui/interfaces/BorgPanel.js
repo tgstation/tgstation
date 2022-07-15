@@ -23,8 +23,7 @@ export const BorgPanel = (props, context) => {
               content="Rename"
               onClick={() => act('rename')}
             />
-          }
-        >
+          }>
           <LabeledList>
             <LabeledList.Item label="Status">
               <Button
@@ -147,8 +146,7 @@ export const BorgPanel = (props, context) => {
               selected={borg.lawupdate}
               onClick={() => act('toggle_lawupdate')}
             />
-          }
-        >
+          }>
           {laws.map((law) => (
             <Box key={law}>{law}</Box>
           ))}

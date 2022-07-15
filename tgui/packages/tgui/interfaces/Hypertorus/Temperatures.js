@@ -48,8 +48,7 @@ const BarLabel = (props) => {
           </Box>
           <Box
             class="hypertorus__unselectable"
-            {...(Byond.IS_LTE_IE8 ? { style: { unselectable: true } } : {})}
-          >
+            {...(Byond.IS_LTE_IE8 ? { style: { unselectable: true } } : {})}>
             &nbsp;
           </Box>
         </>
@@ -150,8 +149,7 @@ export const HypertorusTemperatures = (props, context) => {
       (!!value || force) && (
         <Box
           class="hypertorus-temperatures__y-axis-tick-anchor"
-          top={`${height - y}px`}
-        >
+          top={`${height - y}px`}>
           <Box className="hypertorus-temperatures__y-axis-tick" />
           {tooltip ? <Tooltip content={tooltip}>{label}</Tooltip> : label}
         </Box>
@@ -218,8 +216,7 @@ export const HypertorusTemperatures = (props, context) => {
         <Flex
           overflowY="hidden"
           className="hypertorus-temperatures__chart"
-          justify="space-around"
-        >
+          justify="space-around">
           <TemperatureBar
             label="Fusion"
             value={internal_fusion_temperature}

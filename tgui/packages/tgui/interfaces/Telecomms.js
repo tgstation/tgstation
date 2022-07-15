@@ -1,15 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  Button,
-  Input,
-  LabeledList,
-  Section,
-  Table,
-  NoticeBox,
-  NumberInput,
-  LabeledControls,
-  Box,
-} from '../components';
+import { Button, Input, LabeledList, Section, Table, NoticeBox, NumberInput, LabeledControls, Box } from '../components';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
@@ -102,8 +92,7 @@ export const Telecomms = (props, context) => {
                               (channel) => channel.freq === changefrequency
                             ).color
                           }
-                          ml={2}
-                        >
+                          ml={2}>
                           [
                           {
                             RADIO_CHANNELS.find(
@@ -183,8 +172,7 @@ export const Telecomms = (props, context) => {
                               (channel) => channel.freq === entry
                             ).color
                           }
-                          ml={2}
-                        >
+                          ml={2}>
                           [
                           {
                             RADIO_CHANNELS.find(
@@ -219,8 +207,7 @@ export const Telecomms = (props, context) => {
                               (channel) => channel.freq === frequency
                             ).color
                           }
-                          ml={2}
-                        >
+                          ml={2}>
                           [
                           {
                             RADIO_CHANNELS.find(

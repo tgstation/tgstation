@@ -28,8 +28,7 @@ export class Thermometer extends Component {
           style={{
             'background-image':
               "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEVya3UjIyN3S/1dAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAMSURBVAjXY2hgcAAAAcQAwUlFKkkAAAAASUVORK5CYII=')",
-          }}
-        >
+          }}>
           <Stack.Item ml={1}>
             <ThermometerIcon
               temperature={data.Temperature}
@@ -58,8 +57,7 @@ const ThermometerIcon = (props) => {
           'border-bottom': 'none',
           'border-index': '0',
           'box-shadow': '4px 4px #000000',
-        }}
-      >
+        }}>
         <Box
           style={{
             'position': 'absolute',
@@ -92,8 +90,7 @@ const ThermometerIcon = (props) => {
           'border-bottom': '0.1',
           'box-shadow': '4px 4px #000000',
           'z-index': '0',
-        }}
-      >
+        }}>
         {temperature}K
       </Box>
     </Box>

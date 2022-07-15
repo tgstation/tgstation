@@ -138,8 +138,7 @@ export class Input extends Component {
           monospace && 'Input--monospace',
           className,
         ])}
-        {...rest}
-      >
+        {...rest}>
         <div className="Input__baseline">.</div>
         <input
           ref={this.inputRef}

@@ -40,8 +40,7 @@ export const Adminhelp = (props, context) => {
       <Window.Content
         style={{
           'background-image': 'none',
-        }}
-      >
+        }}>
         <Stack vertical fill>
           <Stack.Item grow>
             <TextArea
@@ -64,8 +63,7 @@ export const Adminhelp = (props, context) => {
                     backgroundColor="grey"
                     style={{
                       'font-style': 'normal',
-                    }}
-                  >
+                    }}>
                     Input &apos;{confirmationText}&apos; to proceed.
                     <Input
                       placeholder="Confirmation Prompt"

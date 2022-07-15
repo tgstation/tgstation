@@ -1,8 +1,5 @@
 import { Box, Button, Flex } from '../../components';
-import {
-  FUNDAMENTAL_DATA_TYPES,
-  DATATYPE_DISPLAY_HANDLERS,
-} from './FundamentalTypes';
+import { FUNDAMENTAL_DATA_TYPES, DATATYPE_DISPLAY_HANDLERS } from './FundamentalTypes';
 
 export const DisplayName = (props, context) => {
   const { port, isOutput, componentId, portIndex, act, ...rest } = props;
@@ -47,8 +44,7 @@ export const DisplayName = (props, context) => {
                     component_id: componentId,
                     port_id: portIndex,
                   })
-                }
-              >
+                }>
                 <Box color="white">{port.name}</Box>
               </Button>
             )) ||
@@ -58,8 +54,7 @@ export const DisplayName = (props, context) => {
           <Box
             fontSize={0.75}
             opacity={0.25}
-            textAlign={isOutput ? 'right' : 'left'}
-          >
+            textAlign={isOutput ? 'right' : 'left'}>
             {displayType || 'unknown'}
           </Box>
         </Flex.Item>

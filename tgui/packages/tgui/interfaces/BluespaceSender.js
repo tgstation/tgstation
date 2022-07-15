@@ -2,16 +2,7 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import {
-  Button,
-  Divider,
-  LabeledList,
-  NumberInput,
-  ProgressBar,
-  Section,
-  Stack,
-  Box,
-} from '../components';
+import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section, Stack, Box } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { Window } from '../layouts';
 
@@ -80,8 +71,7 @@ export const BluespaceSender = (props, context) => {
                 onClick={() => act('retrieve')}
               />
             </>
-          }
-        >
+          }>
           <Box>
             {'The vendors have made ' + data.credits + ' credits so far.'}
           </Box>
@@ -115,8 +105,7 @@ export const BluespaceSender = (props, context) => {
                       color={getGasColor(gas.name)}
                       value={gas.amount}
                       minValue={0}
-                      maxValue={gasMax}
-                    >
+                      maxValue={gasMax}>
                       {toFixed(gas.amount, 2) + ' moles'}
                     </ProgressBar>
                   </Stack.Item>

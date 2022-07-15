@@ -1,16 +1,6 @@
 import { scale, toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Box,
-  Button,
-  Stack,
-  Icon,
-  LabeledList,
-  NoticeBox,
-  ProgressBar,
-  Section,
-  Tabs,
-} from '../components';
+import { Box, Button, Stack, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
 import { NtosWindow } from '../layouts';
@@ -89,13 +79,11 @@ export const NtosNetDownloader = (props, context) => {
                     tooltip={`${downloadname}.prg downloaded`}
                   />
                 ))
-              }
-            >
+              }>
               <ProgressBar
                 value={downloading ? disk_used + downloadcompletion : disk_used}
                 minValue={0}
-                maxValue={disk_size}
-              >
+                maxValue={disk_size}>
                 <Box textAlign="left">
                   {`${disk_free_space} GQ free of ${disk_size} GQ`}
                 </Box>
@@ -110,8 +98,7 @@ export const NtosNetDownloader = (props, context) => {
                 <Tabs.Tab
                   key={category}
                   selected={category === selectedCategory}
-                  onClick={() => setSelectedCategory(category)}
-                >
+                  onClick={() => setSelectedCategory(category)}>
                   {category}
                 </Tabs.Tab>
               ))}
@@ -152,8 +139,7 @@ const Program = (props, context) => {
           width="48px"
           textAlign="right"
           color="label"
-          nowrap
-        >
+          nowrap>
           {program.size} GQ
         </Stack.Item>
         <Stack.Item shrink={0} width="134px" textAlign="right">
@@ -192,17 +178,17 @@ const Program = (props, context) => {
                   program.installed
                     ? 'good'
                     : !program.compatible
-                    ? 'bad'
-                    : 'grey'
+                      ? 'bad'
+                      : 'grey'
                 }
                 content={
                   program.installed
                     ? 'Installed'
                     : !program.compatible
-                    ? 'Incompatible'
-                    : !program.access
-                    ? 'No Access'
-                    : 'No Space'
+                      ? 'Incompatible'
+                      : !program.access
+                        ? 'No Access'
+                        : 'No Space'
                 }
               />
             )}

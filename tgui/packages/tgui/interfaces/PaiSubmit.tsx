@@ -123,16 +123,14 @@ const ButtonsDisplay = (props, context) => {
         <Stack.Item>
           <Button
             onClick={() => act('save', { candidate: input })}
-            tooltip="Saves your candidate data locally."
-          >
+            tooltip="Saves your candidate data locally.">
             SAVE
           </Button>
         </Stack.Item>
         <Stack.Item>
           <Button
             onClick={() => act('load')}
-            tooltip="Loads saved candidate data, if any."
-          >
+            tooltip="Loads saved candidate data, if any.">
             LOAD
           </Button>
         </Stack.Item>
@@ -142,8 +140,7 @@ const ButtonsDisplay = (props, context) => {
               act('submit', {
                 candidate: input,
               })
-            }
-          >
+            }>
             SUBMIT
           </Button>
         </Stack.Item>

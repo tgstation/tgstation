@@ -173,8 +173,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
         onMouseDown={this.handleStartDrawing}
         onMouseMove={this.handleDrawing}
         onMouseUp={this.handleEndDrawing}
-        onMouseOut={this.handleEndDrawing}
-      >
+        onMouseOut={this.handleEndDrawing}>
         Canvas failed to render.
       </canvas>
     );
@@ -222,8 +221,7 @@ export const Canvas = (props, context) => {
         75 +
         (data.show_plaque ? average_plaque_height : 0) +
         (data.editable && data.paint_tool_palette ? palette_height : 0)
-      }
-    >
+      }>
       <Window.Content>
         <Box textAlign="center">
           <PaintCanvas
@@ -279,8 +277,7 @@ export const Canvas = (props, context) => {
                 textColor="black"
                 textAlign="left"
                 backgroundColor="white"
-                style={{ 'border-style': 'inset' }}
-              >
+                style={{ 'border-style': 'inset' }}>
                 <Box mb={1} fontSize="18px" bold>
                   {decodeHtmlEntities(data.name)}
                 </Box>

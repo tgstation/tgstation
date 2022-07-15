@@ -89,8 +89,7 @@ const FutureStationTraitsPage = (props, context) => {
               act('setup_future_traits', {
                 station_traits: newStationTraits,
               });
-            }}
-          >
+            }}>
             Add
           </Button>
         </Stack.Item>
@@ -123,8 +122,7 @@ const FutureStationTraitsPage = (props, context) => {
                             }
                           ),
                         });
-                      }}
-                    >
+                      }}>
                       Delete
                     </Button>
                   </Stack.Item>
@@ -141,8 +139,7 @@ const FutureStationTraitsPage = (props, context) => {
                 color="red"
                 icon="times"
                 tooltip="The next round will roll station traits randomly, just like normal"
-                onClick={() => act('clear_future_traits')}
-              >
+                onClick={() => act('clear_future_traits')}>
                 Run Station Traits Normally
               </Button>
             </Box>
@@ -160,8 +157,7 @@ const FutureStationTraitsPage = (props, context) => {
                 act('setup_future_traits', {
                   station_traits: [],
                 })
-              }
-            >
+              }>
               Prevent station traits from running next round
             </Button>
           </Box>
@@ -236,16 +232,14 @@ export const StationTraitsPanel = (props, context) => {
           <Tabs.Tab
             icon="eye"
             selected={currentTab === Tab.ViewStationTraits}
-            onClick={() => setCurrentTab(Tab.ViewStationTraits)}
-          >
+            onClick={() => setCurrentTab(Tab.ViewStationTraits)}>
             View
           </Tabs.Tab>
 
           <Tabs.Tab
             icon="edit"
             selected={currentTab === Tab.SetupFutureStationTraits}
-            onClick={() => setCurrentTab(Tab.SetupFutureStationTraits)}
-          >
+            onClick={() => setCurrentTab(Tab.SetupFutureStationTraits)}>
             Edit
           </Tabs.Tab>
         </Tabs>

@@ -1,13 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  Button,
-  Section,
-  Icon,
-  Stack,
-  LabeledList,
-  Box,
-  NoticeBox,
-} from '../components';
+import { Button, Section, Icon, Stack, LabeledList, Box, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 type CellularEmporiumContext = {
@@ -51,8 +43,7 @@ export const CellularEmporium = (props, context) => {
                 />
               </Stack.Item>
             </Stack>
-          }
-        >
+          }>
           <AbilityList />
         </Section>
       </Window.Content>
@@ -96,8 +87,7 @@ const AbilityList = (props, context) => {
                   />
                 </Stack.Item>
               </Stack>
-            }
-          >
+            }>
             {ability.desc}
             <Box color="good">{ability.helptext}</Box>
           </LabeledList.Item>

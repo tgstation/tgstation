@@ -25,8 +25,7 @@ export const OreBox = (props, context) => {
       <Window.Content scrollable>
         <Section
           title="Ores"
-          buttons={<Button content="Empty" onClick={() => act('removeall')} />}
-        >
+          buttons={<Button content="Empty" onClick={() => act('removeall')} />}>
           <Table>
             <Table.Row header>
               <Table.Cell>Ore</Table.Cell>

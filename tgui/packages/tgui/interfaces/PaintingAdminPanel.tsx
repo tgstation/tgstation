@@ -40,8 +40,7 @@ export const PaintingAdminPanel = (props, context) => {
             title="Painting Information"
             buttons={
               <Button onClick={() => setChosenPaintingRef(null)}>Close</Button>
-            }
-          >
+            }>
             <img
               src={resolveAsset(`paintings_${chosenPainting.md5}`)}
               height="96px"
@@ -129,13 +128,11 @@ export const PaintingAdminPanel = (props, context) => {
                 onClick={() => {
                   setChosenPaintingRef(null);
                   act('delete', { ref: chosenPainting.ref });
-                }}
-              >
+                }}>
                 Delete
               </Button.Confirm>
               <Button
-                onClick={() => act('dumpit', { ref: chosenPainting.ref })}
-              >
+                onClick={() => act('dumpit', { ref: chosenPainting.ref })}>
                 Reset Patronage
               </Button>
             </Section>

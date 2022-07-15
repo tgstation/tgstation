@@ -38,8 +38,7 @@ export const GulagTeleporterConsole = (props, context) => {
                 onClick={() => act('teleporter_lock')}
               />
             </>
-          }
-        >
+          }>
           <LabeledList>
             <LabeledList.Item
               label="Teleporter Unit"
@@ -51,8 +50,7 @@ export const GulagTeleporterConsole = (props, context) => {
                     onClick={() => act('scan_teleporter')}
                   />
                 )
-              }
-            >
+              }>
               {teleporter ? teleporter_location : 'Not Connected'}
             </LabeledList.Item>
             <LabeledList.Item
@@ -65,8 +63,7 @@ export const GulagTeleporterConsole = (props, context) => {
                     onClick={() => act('scan_beacon')}
                   />
                 )
-              }
-            >
+              }>
               {beacon ? beacon_location : 'Not Connected'}
             </LabeledList.Item>
           </LabeledList>

@@ -1,10 +1,4 @@
-import {
-  Button,
-  TextArea,
-  Section,
-  BlockQuote,
-  NoticeBox,
-} from '../components';
+import { Button, TextArea, Section, BlockQuote, NoticeBox } from '../components';
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 
@@ -93,8 +87,7 @@ export const Interview = (props, context) => {
                 </span>
               )}
             </span>
-          }
-        >
+          }>
           {!read_only && (
             <p>
               Please answer the following questions, and press submit when you

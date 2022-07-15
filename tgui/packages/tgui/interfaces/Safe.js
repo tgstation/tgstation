@@ -93,8 +93,7 @@ const Contents = (properties, context) => {
               act('retrieve', {
                 index: index + 1,
               })
-            }
-          >
+            }>
             <Box
               as="img"
               src={item.sprite + '.png'}
@@ -115,8 +114,7 @@ const Help = (properties, context) => {
   return (
     <Section
       className="Safe__help"
-      title="Safe opening instructions (because you all keep forgetting)"
-    >
+      title="Safe opening instructions (because you all keep forgetting)">
       <Box>
         1. Turn the dial left to the first number.
         <br />

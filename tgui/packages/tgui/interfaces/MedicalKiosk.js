@@ -1,16 +1,6 @@
 import { multiline } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
-import {
-  AnimatedNumber,
-  Box,
-  Button,
-  Flex,
-  Icon,
-  LabeledList,
-  ProgressBar,
-  Section,
-  Stack,
-} from '../components';
+import { AnimatedNumber, Box, Button, Flex, Icon, LabeledList, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const MedicalKiosk = (props, context) => {

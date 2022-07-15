@@ -80,8 +80,7 @@ export const EngravedMessage = (props, context) => {
                 color="bad"
                 onClick={() => act('delete')}
               />
-            }
-          >
+            }>
             <LabeledList>
               <LabeledList.Item label="Creator Ckey">
                 {creator_key}

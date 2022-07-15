@@ -14,8 +14,7 @@ export const Layout = (props) => {
     <div className={'theme-' + theme}>
       <div
         className={classes(['Layout', className, computeBoxClassName(rest)])}
-        {...computeBoxProps(rest)}
-      >
+        {...computeBoxProps(rest)}>
         {children}
       </div>
     </div>
@@ -32,8 +31,7 @@ const LayoutContent = (props) => {
         className,
         computeBoxClassName(rest),
       ])}
-      {...computeBoxProps(rest)}
-    >
+      {...computeBoxProps(rest)}>
       {children}
     </div>
   );

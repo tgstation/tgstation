@@ -1,17 +1,6 @@
 import { round } from 'common/math';
 import { useBackend } from '../backend';
-import {
-  AnimatedNumber,
-  Box,
-  Button,
-  Flex,
-  LabeledList,
-  NumberInput,
-  ProgressBar,
-  RoundGauge,
-  Section,
-  Table,
-} from '../components';
+import { AnimatedNumber, Box, Button, Flex, LabeledList, NumberInput, ProgressBar, RoundGauge, Section, Table } from '../components';
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
 
@@ -60,8 +49,7 @@ export const ChemRecipeDebug = (props, context) => {
                 onClick={() => act('all')}
               />
             </>
-          }
-        >
+          }>
           <LabeledList>
             <LabeledList.Item label="Reactions">
               <Button icon="plus" onClick={() => act('setTargetList')} />
@@ -163,8 +151,7 @@ export const ChemRecipeDebug = (props, context) => {
         <Section title="Recipe edit">
           <LabeledList>
             <LabeledList.Item
-              label={editRecipeName ? editRecipeName : 'lookup'}
-            >
+              label={editRecipeName ? editRecipeName : 'lookup'}>
               <Button
                 icon={'flask'}
                 color="purple"
@@ -255,8 +242,7 @@ export const ChemRecipeDebug = (props, context) => {
                 </AnimatedNumber>
               </Flex.Item>
             </Flex>
-          }
-        >
+          }>
           {(activeReactions.length === 0 && (
             <Box color="label">No active reactions.</Box>
           )) || (
@@ -308,8 +294,7 @@ export const ChemRecipeDebug = (props, context) => {
                         textAlign={'center'}
                         icon={reaction.overheat && 'thermometer-full'}
                         width={7}
-                        color={reaction.overheat ? 'red' : 'label'}
-                      >
+                        color={reaction.overheat ? 'red' : 'label'}>
                         {reaction.targetVol}u
                       </ProgressBar>
                     </Table.Cell>
@@ -321,8 +306,7 @@ export const ChemRecipeDebug = (props, context) => {
         </Section>
         <Section
           title="Chamber"
-          buttons={<Box>{isActive ? 'Reacting' : 'Waiting'}</Box>}
-        >
+          buttons={<Box>{isActive ? 'Reacting' : 'Waiting'}</Box>}>
           {(chamberContents.length && (
             <BeakerContents beakerLoaded beakerContents={chamberContents} />
           )) || <Box>Nothing</Box>}

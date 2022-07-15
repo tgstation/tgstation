@@ -1,12 +1,5 @@
 import { Component } from 'inferno';
-import {
-  Box,
-  Button,
-  KeyListener,
-  Stack,
-  Tooltip,
-  TrackOutsideClicks,
-} from '../../components';
+import { Box, Button, KeyListener, Stack, Tooltip, TrackOutsideClicks } from '../../components';
 import { resolveAsset } from '../../assets';
 import { PreferencesMenuData } from './data';
 import { useBackend } from '../../backend';
@@ -134,8 +127,7 @@ class KeybindingButton extends Component<{
         textAlign="center"
         captureKeys={typingHotkey === undefined}
         onClick={onClick}
-        selected={typingHotkey !== undefined}
-      >
+        selected={typingHotkey !== undefined}>
         {typingHotkey || currentHotkey || 'Unbound'}
       </Button>
     );
@@ -162,8 +154,7 @@ const KeybindingName = (props: { keybinding: Keybinding }) => {
         as="span"
         style={{
           'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
-        }}
-      >
+        }}>
         {keybinding.name}
       </Box>
     </Tooltip>
@@ -194,8 +185,7 @@ const ResetToDefaultButton = (
         act('reset_keybinds_to_defaults', {
           keybind_name: props.keybindingId,
         });
-      }}
-    >
+      }}>
       Reset to Defaults
     </Button>
   );

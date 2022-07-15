@@ -9,18 +9,7 @@ import { decodeHtmlEntities } from 'common/string';
 import { useBackend, useSharedState, useLocalState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';
-import {
-  BlockQuote,
-  Box,
-  Button,
-  Divider,
-  LabeledList,
-  Modal,
-  Section,
-  Stack,
-  Tabs,
-  TextArea,
-} from '../components';
+import { BlockQuote, Box, Button, Divider, LabeledList, Modal, Section, Stack, Tabs, TextArea } from '../components';
 import { marked } from 'marked';
 import { sanitizeText } from '../sanitize';
 
@@ -48,15 +37,13 @@ export const Newscaster = (props, context) => {
             <Tabs.Tab
               color="Green"
               selected={screenmode === NEWSCASTER_SCREEN}
-              onClick={() => setScreenmode(NEWSCASTER_SCREEN)}
-            >
+              onClick={() => setScreenmode(NEWSCASTER_SCREEN)}>
               Newscaster
             </Tabs.Tab>
             <Tabs.Tab
               Color="Blue"
               selected={screenmode === BOUNTYBOARD_SCREEN}
-              onClick={() => setScreenmode(BOUNTYBOARD_SCREEN)}
-            >
+              onClick={() => setScreenmode(BOUNTYBOARD_SCREEN)}>
               Bounty Board
             </Tabs.Tab>
           </Tabs>
@@ -105,8 +92,7 @@ const NewscasterChannelCreation = (props, context) => {
                 act('setChannelName', {
                   channeltext: name,
                 })
-              }
-            >
+              }>
               Channel Name
             </TextArea>
           </Stack.Item>
@@ -123,8 +109,7 @@ const NewscasterChannelCreation = (props, context) => {
                 act('setChannelDesc', {
                   channeldesc: desc,
                 })
-              }
-            >
+              }>
               Channel Description
             </TextArea>
           </Stack.Item>
@@ -196,8 +181,7 @@ const NewscasterCommentCreation = (props, context) => {
               act('setCommentBody', {
                 commenttext: comment,
               })
-            }
-          >
+            }>
             Channel Name
           </TextArea>
         </Stack.Item>
@@ -454,8 +438,7 @@ const NewscasterChannelSelector = (props, context) => {
             key={activeWanted.index}
             icon={activeWanted.active ? 'skull-crossbones' : null}
             textColor={activeWanted.active ? 'red' : 'grey'}
-            onClick={() => act('toggleWanted')}
-          >
+            onClick={() => act('toggleWanted')}>
             Wanted Issue
           </Tabs.Tab>
         ))}
@@ -472,8 +455,7 @@ const NewscasterChannelSelector = (props, context) => {
               act('setChannel', {
                 channel: channel.ID,
               })
-            }
-          >
+            }>
             {channel.name}
           </Tabs.Tab>
         ))}
@@ -483,8 +465,7 @@ const NewscasterChannelSelector = (props, context) => {
           mr={1}
           textColor="white"
           color="Green"
-          onClick={() => act('startCreateChannel')}
-        >
+          onClick={() => act('startCreateChannel')}>
           Create Channel [+]
         </Tabs.Tab>
       </Tabs>
@@ -592,8 +573,7 @@ const NewscasterChannelMessages = (props, context) => {
                   }
                 />
               </>
-            }
-          >
+            }>
             <BlockQuote>
               {message.censored_message ? (
                 <Section textColor="red">

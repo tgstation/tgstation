@@ -1,10 +1,5 @@
 import { clamp } from 'common/math';
-import {
-  randomInteger,
-  randomNumber,
-  randomPick,
-  randomProb,
-} from 'common/random';
+import { randomInteger, randomNumber, randomPick, randomProb } from 'common/random';
 import { useDispatch } from 'common/redux';
 import { Component } from 'inferno';
 import { resolveAsset } from '../assets';
@@ -394,8 +389,7 @@ class FishingMinigame extends Component<
         <div class="main">
           <div
             class="background"
-            style={{ 'background-image': `url("${background_image}")` }}
-          >
+            style={{ 'background-image': `url("${background_image}")` }}>
             <div
               class="bait"
               style={{
@@ -408,8 +402,7 @@ class FishingMinigame extends Component<
               style={{
                 top: `${posToStyle(fish.position)}%`,
                 height: `${posToStyle(fish.height)}%`,
-              }}
-            >
+              }}>
               <Icon name="fish" />
             </div>
           </div>

@@ -31,8 +31,7 @@ export const BodyEntry = (props, context) => {
           color={body.occupied === 'stranger' && 'bad'}
           onClick={() => swapFunc()}
         />
-      }
-    >
+      }>
       <LabeledList>
         <LabeledList.Item label="Status" bold color={statusMap[body.status]}>
           {body.status}

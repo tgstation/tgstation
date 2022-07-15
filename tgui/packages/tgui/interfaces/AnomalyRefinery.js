@@ -1,13 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Button,
-  Icon,
-  Modal,
-  Section,
-  Stack,
-  LabeledList,
-  Box,
-} from '../components';
+import { Button, Icon, Modal, Section, Stack, LabeledList, Box } from '../components';
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
 
@@ -38,8 +30,7 @@ const AnomalyRefineryContent = (props, context) => {
               textAlign="center"
               icon="eject"
               disabled={!core || active}
-              onClick={() => act('eject_core')}
-            >
+              onClick={() => act('eject_core')}>
               {'Eject Core'}
             </Button>
           </Stack.Item>
@@ -48,8 +39,7 @@ const AnomalyRefineryContent = (props, context) => {
               fluid
               textAlign="center"
               icon={currentTab === 1 ? 'server' : 'compress-arrows-alt'}
-              onClick={() => changeTab(currentTab === 1 ? 2 : 1)}
-            >
+              onClick={() => changeTab(currentTab === 1 ? 2 : 1)}>
               {currentTab === 1 ? 'Run Simulations' : 'Implosion Control'}
             </Button>
           </Stack.Item>
@@ -59,8 +49,7 @@ const AnomalyRefineryContent = (props, context) => {
               textAlign="center"
               icon="eject"
               disabled={!valvePresent || active}
-              onClick={() => act('eject_bomb')}
-            >
+              onClick={() => act('eject_bomb')}>
               {'Eject Bomb'}
             </Button>
           </Stack.Item>
@@ -85,12 +74,10 @@ const CoreCompressorContent = (props, context) => {
               icon="compress-arrows-alt"
               backgroundColor="red"
               onClick={() => act('start_implosion')}
-              disabled={active || !valveReady || !core}
-            >
+              disabled={active || !valveReady || !core}>
               {'Implode Core'}
             </Button>
-          }
-        >
+          }>
           {!core && <Modal textAlign="center">{'No Core Inserted!'}</Modal>}
           <LabeledList>
             <LabeledList.Item label={'Name'}>
@@ -112,12 +99,10 @@ const CoreCompressorContent = (props, context) => {
             <Button
               disabled={!valveReady}
               icon="exchange-alt"
-              onClick={() => act('swap')}
-            >
+              onClick={() => act('swap')}>
               {'Swap Merging Order'}
             </Button>
-          }
-        >
+          }>
           {!valvePresent && (
             <Modal textAlign="center">{'No Bomb Inserted!'}</Modal>
           )}
@@ -191,7 +176,7 @@ const BombProcessorContent = (props, context) => {
                 reactionIncrement === 0
                   ? 'Valve status: Closed'
                   : 'Valve status: Open. Current reaction count:' +
-                    reactionIncrement
+                  reactionIncrement
               }
               icon="vial"
               tooltipPosition="left"
@@ -200,8 +185,7 @@ const BombProcessorContent = (props, context) => {
               disabled={!gasList[0].total_moles || !gasList[1].total_moles}
               content={reactionIncrement === 0 ? 'Open Valve' : 'React'}
             />
-          }
-        >
+          }>
           {!gasList[2].total_moles && (
             <Modal textAlign="center">{'No Gas Present'}</Modal>
           )}
@@ -219,8 +203,7 @@ const BombProcessorContent = (props, context) => {
                   individualGasmix.name
                     ? individualGasmix.name
                     : 'Not Available'
-                }
-              >
+                }>
                 {!individualGasmix.total_moles && (
                   <Modal textAlign="center">{'No Gas Present'}</Modal>
                 )}

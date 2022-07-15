@@ -1,16 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import {
-  BlockQuote,
-  Box,
-  Button,
-  Dimmer,
-  Icon,
-  LabeledList,
-  Modal,
-  ProgressBar,
-  Section,
-  Stack,
-} from '../components';
+import { BlockQuote, Box, Button, Dimmer, Icon, LabeledList, Modal, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
@@ -188,15 +177,13 @@ const SignalLostModal = (props, context) => {
       width={30}
       height={22}
       p={0}
-      style={{ 'border-radius': '5%' }}
-    >
+      style={{ 'border-radius': '5%' }}>
       <img src={nt_logo} width={64} height={64} />
       <Box
         backgroundColor="black"
         textColor="red"
         fontSize={2}
-        style={{ 'border-radius': '-10%' }}
-      >
+        style={{ 'border-radius': '-10%' }}>
         CONNECTION LOST
       </Box>
       <Box p={2} italic>
@@ -247,8 +234,7 @@ const DroneSelectionSection = (
                       icon="plug"
                       onClick={() =>
                         act('select_drone', { 'drone_ref': drone.ref })
-                      }
-                    >
+                      }>
                       Assume Control
                     </Button>
                   )}
@@ -290,8 +276,7 @@ const ToolSelectionModal = (props, context) => {
                     }}
                     width={6}
                     height={6}
-                    tooltip={all_tools[tool_name].description}
-                  >
+                    tooltip={all_tools[tool_name].description}>
                     <Stack vertical>
                       <Stack.Item>{capitalize(tool_name)}</Stack.Item>
                       <Stack.Item ml={2.5}>
@@ -334,8 +319,7 @@ const EquipmentBox = (
                 width={4.7}
                 tooltip={capitalize(cargo.name)}
                 tooltipPosition="right"
-                color="transparent"
-              >
+                color="transparent">
                 <Icon
                   color="white"
                   name={all_tools[cargo.name].icon}
@@ -368,8 +352,7 @@ const EquipmentBox = (
                 width={4.7}
                 tooltip={capitalize(cargo.name)}
                 tooltipPosition="right"
-                color="transparent"
-              >
+                color="transparent">
                 <Icon color="white" name="box" size={3} pl={2.2} pt={2} />
               </Button>
             </Stack.Item>
@@ -393,8 +376,7 @@ const EquipmentBox = (
       width={5}
       height={5}
       style={{ border: '2px solid black' }}
-      textAlign="center"
-    >
+      textAlign="center">
       {boxContents(cargo)}
     </Box>
   );
@@ -594,8 +576,7 @@ const TravelTargetSelectionScreen = (
               />
             </Box>
           </>
-        }
-      >
+        }>
         {sites && !sites.length && !choosingTools && <NoSiteDimmer />}
         {site && (
           <Section
@@ -629,8 +610,7 @@ const TravelTargetSelectionScreen = (
                   disabled={!can_travel}
                 />
               </>
-            }
-          >
+            }>
             <LabeledList>
               <LabeledList.Item label="Location">
                 {destination.coordinates}
@@ -722,8 +702,7 @@ const ExplorationScreen = (
           drone_integrity={drone.drone_integrity}
           drone_max_integrity={drone.drone_max_integrity}
         />
-      }
-    >
+      }>
       <Stack vertical fill>
         <Stack.Item grow>
           <LabeledList>
@@ -774,8 +753,7 @@ const EventScreen = (
           drone_integrity={drone.drone_integrity}
           drone_max_integrity={drone.drone_max_integrity}
         />
-      }
-    >
+      }>
       <Stack vertical fill textAlign="center">
         <Stack.Item>
           <Stack fill>
@@ -845,8 +823,7 @@ export const AdventureScreen = (
             drone_max_integrity={drone_max_integrity}
           />
         )
-      }
-    >
+      }>
       <Stack>
         <Stack.Item>
           <BlockQuote preserveWhitespace>

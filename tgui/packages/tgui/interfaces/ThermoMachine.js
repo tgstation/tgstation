@@ -1,12 +1,6 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import {
-  AnimatedNumber,
-  Button,
-  LabeledList,
-  NumberInput,
-  Section,
-} from '../components';
+import { AnimatedNumber, Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 export const ThermoMachine = (props, context) => {
@@ -41,8 +35,7 @@ export const ThermoMachine = (props, context) => {
               selected={data.on}
               onClick={() => act('power')}
             />
-          }
-        >
+          }>
           <LabeledList>
             <LabeledList.Item label="Target Temperature">
               <NumberInput

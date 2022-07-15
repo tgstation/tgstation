@@ -38,8 +38,7 @@ export const EmergencyShuttleConsole = (props, context) => {
                 disabled={!enabled}
                 onClick={() => act('abort')}
               />
-            }
-          >
+            }>
             <Grid>
               <Grid.Column>
                 <Button
@@ -69,16 +68,14 @@ export const EmergencyShuttleConsole = (props, context) => {
                 <Box inline bold color={emagged ? 'bad' : 'good'}>
                   {emagged ? 'ERROR' : 'Remaining: ' + authorizations_remaining}
                 </Box>
-              }
-            >
+              }>
               {authorizations.length > 0 ? (
                 authorizations.map((authorization) => (
                   <Box
                     key={authorization.name}
                     bold
                     fontSize="16px"
-                    className="candystripe"
-                  >
+                    className="candystripe">
                     {authorization.name} ({authorization.job})
                   </Box>
                 ))

@@ -1,16 +1,7 @@
 import { classes } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  Collapsible,
-  Flex,
-  NoticeBox,
-  Section,
-  Stack,
-  TimeDisplay,
-} from '../components';
+import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, TimeDisplay } from '../components';
 import { Window } from '../layouts';
 
 export const MafiaPanel = (props, context) => {
@@ -37,8 +28,7 @@ export const MafiaPanel = (props, context) => {
                   act('mf_action', {
                     atype: action,
                   })
-                }
-              >
+                }>
                 {action}
               </Button>
             </Stack.Item>
@@ -125,8 +115,7 @@ const MafiaLobby = (props, context) => {
             onClick={() => act('mf_spectate')}
           />
         </>
-      }
-    >
+      }>
       <NoticeBox info>
         The lobby currently has {readyGhosts ? readyGhosts.length : '0'}/12
         valid players signed up.
@@ -159,12 +148,10 @@ const MafiaRole = (props, context) => {
             'font-size': '14px',
             'line-height': 1.5,
             'font-weight': 'bold',
-          }}
-        >
+          }}>
           <TimeDisplay auto="down" value={timeleft} />
         </Box>
-      }
-    >
+      }>
       <Stack align="center">
         <Stack.Item grow>
           <Box bold>You are the {roleinfo.role}</Box>
@@ -222,15 +209,13 @@ const MafiaListOfRoles = (props, context) => {
               detective work revealing a changeling).`}
           />
         </>
-      }
-    >
+      }>
       <Flex direction="column">
         {all_roles?.map((r) => (
           <Flex.Item
             key={r}
             height="30px"
-            className="Section__title candystripe"
-          >
+            className="Section__title candystripe">
             <Flex height="18px" align="center" justify="space-between">
               <Flex.Item>{r}</Flex.Item>
               <Flex.Item textAlign="right">
@@ -270,8 +255,7 @@ const MafiaJudgement = (props, context) => {
             to abstaining with the middle button if you reconsider.
           `}
         />
-      }
-    >
+      }>
       <Flex justify="space-around">
         <Button
           icon="smile-beam"
@@ -290,8 +274,7 @@ const MafiaJudgement = (props, context) => {
           icon="angry"
           color="bad"
           disabled={!judgement_phase}
-          onClick={() => act('vote_guilty')}
-        >
+          onClick={() => act('vote_guilty')}>
           GUILTY!
         </Button>
       </Flex>
@@ -300,8 +283,7 @@ const MafiaJudgement = (props, context) => {
           icon="meh"
           color="white"
           disabled={!judgement_phase}
-          onClick={() => act('vote_abstain')}
-        >
+          onClick={() => act('vote_abstain')}>
           Abstain
         </Button>
       </Flex>
@@ -319,8 +301,7 @@ const MafiaPlayers = (props, context) => {
           <Flex.Item
             height="30px"
             className="Section__title candystripe"
-            key={player.ref}
-          >
+            key={player.ref}>
             <Stack height="18px" align="center">
               <Stack.Item grow color={!player.alive && 'red'}>
                 {player.name} {!player.alive && '(DEAD)'}
@@ -340,8 +321,7 @@ const MafiaPlayers = (props, context) => {
                         atype: action,
                         target: player.ref,
                       })
-                    }
-                  >
+                    }>
                     {action}
                   </Button>
                 ))}

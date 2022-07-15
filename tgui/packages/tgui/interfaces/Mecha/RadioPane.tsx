@@ -13,8 +13,7 @@ export const RadioPane = (props, context) => {
         <Button
           onClick={() => act('toggle_microphone')}
           selected={microphone}
-          icon={microphone ? 'microphone' : 'microphone-slash'}
-        >
+          icon={microphone ? 'microphone' : 'microphone-slash'}>
           {(microphone ? 'En' : 'Dis') + 'abled'}
         </Button>
       </LabeledList.Item>
@@ -22,8 +21,7 @@ export const RadioPane = (props, context) => {
         <Button
           onClick={() => act('toggle_speaker')}
           selected={speaker}
-          icon={speaker ? 'volume-up' : 'volume-mute'}
-        >
+          icon={speaker ? 'volume-up' : 'volume-mute'}>
           {(speaker ? 'En' : 'Dis') + 'abled'}
         </Button>
       </LabeledList.Item>

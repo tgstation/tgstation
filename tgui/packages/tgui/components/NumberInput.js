@@ -188,8 +188,7 @@ export class NumberInput extends Component {
         minHeight={height}
         lineHeight={lineHeight}
         fontSize={fontSize}
-        onMouseDown={this.handleDragStart}
-      >
+        onMouseDown={this.handleDragStart}>
         <div className="NumberInput__barContainer">
           <div
             className="NumberInput__bar"

@@ -4,16 +4,7 @@
  * @license MIT
  */
 
-import {
-  addChatPage,
-  changeChatPage,
-  loadChat,
-  removeChatPage,
-  toggleAcceptedType,
-  updateChatPage,
-  updateMessageCount,
-  changeScrollTracking,
-} from './actions';
+import { addChatPage, changeChatPage, loadChat, removeChatPage, toggleAcceptedType, updateChatPage, updateMessageCount, changeScrollTracking } from './actions';
 import { canPageAcceptType, createMainPage } from './model';
 
 const mainPage = createMainPage();

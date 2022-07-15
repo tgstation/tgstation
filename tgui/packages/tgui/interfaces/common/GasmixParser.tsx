@@ -52,8 +52,7 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
               gas[1]
             )
           }
-          key={gas[1]}
-        >
+          key={gas[1]}>
           {gas[2].toFixed(2) +
             ' mol (' +
             ((gas[2] / total_moles) * 100).toFixed(2) +
@@ -70,8 +69,7 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
           ) : (
             'Temperature'
           )
-        }
-      >
+        }>
         {(total_moles ? temperature.toFixed(2) : '-') + ' K'}
       </LabeledList.Item>
       <LabeledList.Item
@@ -81,8 +79,7 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
           ) : (
             'Volume'
           )
-        }
-      >
+        }>
         {(total_moles ? volume.toFixed(2) : '-') + ' L'}
       </LabeledList.Item>
       <LabeledList.Item
@@ -92,8 +89,7 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
           ) : (
             'Pressure'
           )
-        }
-      >
+        }>
         {(total_moles ? pressure.toFixed(2) : '-') + ' kPa'}
       </LabeledList.Item>
       {detailedReactions ? (
@@ -109,8 +105,7 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
               ) : (
                 reaction[1]
               )
-            }
-          >
+            }>
             {reaction[2]}
           </LabeledList.Item>
         ))
@@ -118,17 +113,17 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
         <LabeledList.Item label="Gas Reactions">
           {reactions.length
             ? reactions.map((reaction) =>
-                reactionOnClick ? (
-                  <Box mb="0.5em">
-                    <Button
-                      content={reaction[1]}
-                      onClick={() => reactionOnClick(reaction[0])}
-                    />
-                  </Box>
-                ) : (
-                  <div>{reaction[1]}</div>
-                )
+              reactionOnClick ? (
+                <Box mb="0.5em">
+                  <Button
+                    content={reaction[1]}
+                    onClick={() => reactionOnClick(reaction[0])}
+                  />
+                </Box>
+              ) : (
+                <div>{reaction[1]}</div>
               )
+            )
             : 'No reactions detected'}
         </LabeledList.Item>
       )}

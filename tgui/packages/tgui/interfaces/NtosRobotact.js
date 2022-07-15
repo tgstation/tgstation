@@ -1,15 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  AnimatedNumber,
-  Box,
-  Button,
-  Flex,
-  LabeledList,
-  ProgressBar,
-  Section,
-  Slider,
-  Tabs,
-} from '../components';
+import { AnimatedNumber, Box, Button, Flex, LabeledList, ProgressBar, Section, Slider, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosRobotact = (props, context) => {
@@ -61,16 +51,14 @@ export const NtosRobotactContent = (props, context) => {
             icon="list"
             lineHeight="23px"
             selected={tab_main === 1}
-            onClick={() => setTab_main(1)}
-          >
+            onClick={() => setTab_main(1)}>
             Status
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab_main === 2}
-            onClick={() => setTab_main(2)}
-          >
+            onClick={() => setTab_main(2)}>
             Logs
           </Tabs.Tab>
         </Tabs>
@@ -105,8 +93,7 @@ export const NtosRobotactContent = (props, context) => {
                     good: [0.5, Infinity],
                     average: [0.1, 0.5],
                     bad: [-Infinity, 0.1],
-                  }}
-                >
+                  }}>
                   <AnimatedNumber value={charge} />
                 </ProgressBar>
                 Chassis Integrity:
@@ -144,24 +131,21 @@ export const NtosRobotactContent = (props, context) => {
                     icon=""
                     lineHeight="23px"
                     selected={tab_sub === 1}
-                    onClick={() => setTab_sub(1)}
-                  >
+                    onClick={() => setTab_sub(1)}>
                     Actions
                   </Tabs.Tab>
                   <Tabs.Tab
                     icon=""
                     lineHeight="23px"
                     selected={tab_sub === 2}
-                    onClick={() => setTab_sub(2)}
-                  >
+                    onClick={() => setTab_sub(2)}>
                     Upgrades
                   </Tabs.Tab>
                   <Tabs.Tab
                     icon=""
                     lineHeight="23px"
                     selected={tab_sub === 3}
-                    onClick={() => setTab_sub(3)}
-                  >
+                    onClick={() => setTab_sub(3)}>
                     Diagnostics
                   </Tabs.Tab>
                 </Tabs>
@@ -183,8 +167,7 @@ export const NtosRobotactContent = (props, context) => {
                       />
                     </LabeledList.Item>
                     <LabeledList.Item
-                      label={'Stored Photos (' + printerPictures + ')'}
-                    >
+                      label={'Stored Photos (' + printerPictures + ')'}>
                       <Button
                         content="View"
                         disabled={!printerPictures}
@@ -237,16 +220,14 @@ export const NtosRobotactContent = (props, context) => {
                         wireAI === 'FAULT'
                           ? 'red'
                           : wireAI === 'READY'
-                          ? 'yellow'
-                          : 'green'
-                      }
-                    >
+                            ? 'yellow'
+                            : 'green'
+                      }>
                       {wireAI}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="LawSync"
-                      color={wireLaw === 'FAULT' ? 'red' : 'green'}
-                    >
+                      color={wireLaw === 'FAULT' ? 'red' : 'green'}>
                       {wireLaw}
                     </LabeledList.Item>
                     <LabeledList.Item
@@ -255,16 +236,14 @@ export const NtosRobotactContent = (props, context) => {
                         wireCamera === 'FAULT'
                           ? 'red'
                           : wireCamera === 'DISABLED'
-                          ? 'yellow'
-                          : 'green'
-                      }
-                    >
+                            ? 'yellow'
+                            : 'green'
+                      }>
                       {wireCamera}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Module Controller"
-                      color={wireModule === 'FAULT' ? 'red' : 'green'}
-                    >
+                      color={wireModule === 'FAULT' ? 'red' : 'green'}>
                       {wireModule}
                     </LabeledList.Item>
                     <LabeledList.Item
@@ -273,16 +252,14 @@ export const NtosRobotactContent = (props, context) => {
                         locomotion === 'FAULT'
                           ? 'red'
                           : locomotion === 'DISABLED'
-                          ? 'yellow'
-                          : 'green'
-                      }
-                    >
+                            ? 'yellow'
+                            : 'green'
+                      }>
                       {locomotion}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Maintenance Cover"
-                      color={cover === 'UNLOCKED' ? 'red' : 'green'}
-                    >
+                      color={cover === 'UNLOCKED' ? 'red' : 'green'}>
                       {cover}
                     </LabeledList.Item>
                   </LabeledList>
@@ -303,8 +280,7 @@ export const NtosRobotactContent = (props, context) => {
                   />
                   <Button icon="volume-off" onClick={() => act('lawchannel')} />
                 </>
-              }
-            >
+              }>
               {laws.map((law) => (
                 <Box mb={1} key={law}>
                   {law}

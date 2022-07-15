@@ -22,13 +22,11 @@ export const NtosConfiguration = (props, context) => {
             <Box inline bold mr={1}>
               Power Draw: {power_usage}W
             </Box>
-          }
-        >
+          }>
           <LabeledList>
             <LabeledList.Item
               label="Battery Status"
-              color={!battery_exists && 'average'}
-            >
+              color={!battery_exists && 'average'}>
               {battery_exists ? (
                 <ProgressBar
                   value={battery.charge}
@@ -38,8 +36,7 @@ export const NtosConfiguration = (props, context) => {
                     good: [battery.max / 2, Infinity],
                     average: [battery.max / 4, battery.max / 2],
                     bad: [-Infinity, battery.max / 4],
-                  }}
-                >
+                  }}>
                   {battery.charge} / {battery.max}
                 </ProgressBar>
               ) : (
@@ -53,8 +50,7 @@ export const NtosConfiguration = (props, context) => {
             value={disk_used}
             minValue={0}
             maxValue={disk_size}
-            color="good"
-          >
+            color="good">
             {disk_used} GQ / {disk_size} GQ
           </ProgressBar>
         </Section>
@@ -82,8 +78,7 @@ export const NtosConfiguration = (props, context) => {
                     Power Usage: {component.powerusage}W
                   </Box>
                 </>
-              }
-            >
+              }>
               {component.desc}
             </Section>
           ))}

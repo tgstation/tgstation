@@ -1,13 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  Grid,
-  LabeledList,
-  NumberInput,
-  Section,
-} from '../components';
+import { Box, Button, Grid, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -60,8 +53,7 @@ export const Bepis = (props, context) => {
                 selected={!manual_power}
                 onClick={() => act('toggle_power')}
               />
-            }
-          >
+            }>
             {BEPIS_SLOGAN}
           </Section>
           <Section
@@ -72,8 +64,7 @@ export const Bepis = (props, context) => {
                 content="Reset Account"
                 onClick={() => act('account_reset')}
               />
-            }
-          >
+            }>
             Console is currently being operated by{' '}
             {account_owner ? account_owner : 'no one'}.
           </Section>

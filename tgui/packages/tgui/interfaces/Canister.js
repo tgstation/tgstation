@@ -1,17 +1,6 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  Flex,
-  Icon,
-  Knob,
-  LabeledControls,
-  LabeledList,
-  RoundGauge,
-  Section,
-  Tooltip,
-} from '../components';
+import { Box, Button, Flex, Icon, Knob, LabeledControls, LabeledList, RoundGauge, Section, Tooltip } from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
@@ -74,8 +63,7 @@ export const Canister = (props, context) => {
                     onClick={() => act('relabel')}
                   />
                 </>
-              }
-            >
+              }>
               <LabeledControls>
                 <LabeledControls.Item minWidth="66px" label="Pressure">
                   <RoundGauge
@@ -153,8 +141,7 @@ export const Canister = (props, context) => {
                 <LabeledControls.Item mr={1} label="Port">
                   <Tooltip
                     content={portConnected ? 'Connected' : 'Disconnected'}
-                    position="top"
-                  >
+                    position="top">
                     <Box position="relative">
                       <Icon
                         size={1.25}
@@ -169,17 +156,15 @@ export const Canister = (props, context) => {
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Cell Charge">
-                  {hasCell ? cellCharge + '%' : 'Missing Cell'}
+                  {hasCell
+                  ? cellCharge + '%'
+                  : 'Missing Cell'}
                 </LabeledList.Item>
                 {!!hasHypernobCrystal && (
                   <LabeledList.Item label="Reaction Suppression">
                     <Button
-                      icon={
-                        data.reactionSuppressionEnabled ? 'snowflake' : 'times'
-                      }
-                      content={
-                        data.reactionSuppressionEnabled ? 'Enabled' : 'Disabled'
-                      }
+                      icon={data.reactionSuppressionEnabled ? 'snowflake' : 'times'}
+                      content={data.reactionSuppressionEnabled ? 'Enabled' : 'Disabled'}
                       selected={data.reactionSuppressionEnabled}
                       onClick={() => act('reaction_suppression')}
                     />
@@ -201,8 +186,7 @@ export const Canister = (props, context) => {
                     onClick={() => act('eject')}
                   />
                 )
-              }
-            >
+              }>
               {!!hasHoldingTank && (
                 <LabeledList>
                   <LabeledList.Item label="Label">
