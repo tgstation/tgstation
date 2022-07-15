@@ -103,10 +103,10 @@
 	data["direction"] = direction
 	data["connected"] = !!connected_port
 	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["target_pressure"] = round(target_pressure ? target_pressure : 0)
-	data["default_pressure"] = round(PUMP_DEFAULT_PRESSURE)
-	data["min_pressure"] = round(PUMP_MIN_PRESSURE)
-	data["max_pressure"] = round(PUMP_MAX_PRESSURE)
+	data["targetPressure"] = round(target_pressure ? target_pressure : 0)
+	data["defaultPressure"] = round(PUMP_DEFAULT_PRESSURE)
+	data["minPressure"] = round(PUMP_MIN_PRESSURE)
+	data["maxPressure"] = round(PUMP_MAX_PRESSURE)
 	data["hasHypernobCrystal"] = !!nob_crystal_inserted
 	data["reactionSuppressionEnabled"] = !!suppress_reactions
 

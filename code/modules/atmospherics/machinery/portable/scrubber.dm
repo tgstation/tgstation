@@ -117,11 +117,10 @@
 	data["hasHypernobCrystal"] = !!nob_crystal_inserted
 	data["reactionSuppressionEnabled"] = !!suppress_reactions
 
-	data["id_tag"] = -1 //must be defined in order to reuse code between portable and vent scrubbers
-	data["filter_types"] = list()
+	data["filterTypes"] = list()
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in scrubbing)))
+		data["filterTypes"] += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in scrubbing)))
 
 	if(holding)
 		data["holding"] = list()

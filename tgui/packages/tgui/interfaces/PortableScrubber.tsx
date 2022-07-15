@@ -6,7 +6,7 @@ import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
 
 type Data = {
-  filter_types: Filter[];
+  filterTypes: Filter[];
 };
 
 type Filter = {
@@ -18,14 +18,14 @@ type Filter = {
 
 export const PortableScrubber = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { filter_types = [] } = data;
+  const { filterTypes = [] } = data;
 
   return (
-    <Window width={320} height={396}>
+    <Window width={320} height={420}>
       <Window.Content>
         <PortableBasicInfo />
         <Section title="Filters">
-          {filter_types.map((filter) => (
+          {filterTypes.map((filter) => (
             <Button
               key={filter.id}
               icon={filter.enabled ? 'check-square-o' : 'square-o'}
