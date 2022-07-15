@@ -156,15 +156,17 @@ export const Canister = (props, context) => {
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Cell Charge">
-                  {hasCell
-                  ? cellCharge + '%'
-                  : 'Missing Cell'}
+                  {hasCell ? cellCharge + '%' : 'Missing Cell'}
                 </LabeledList.Item>
                 {!!hasHypernobCrystal && (
                   <LabeledList.Item label="Reaction Suppression">
                     <Button
-                      icon={data.reactionSuppressionEnabled ? 'snowflake' : 'times'}
-                      content={data.reactionSuppressionEnabled ? 'Enabled' : 'Disabled'}
+                      icon={
+                        data.reactionSuppressionEnabled ? 'snowflake' : 'times'
+                      }
+                      content={
+                        data.reactionSuppressionEnabled ? 'Enabled' : 'Disabled'
+                      }
                       selected={data.reactionSuppressionEnabled}
                       onClick={() => act('reaction_suppression')}
                     />

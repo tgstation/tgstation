@@ -3,7 +3,14 @@ import { AnimatedNumber, Box, Button, LabeledList, Section } from '../../compone
 
 export const PortableBasicInfo = (props, context) => {
   const { act, data } = useBackend(context);
-  const { connected, holding, on, pressure, hasHypernobCrystal, reactionSuppressionEnabled } = data;
+  const {
+    connected,
+    holding,
+    on,
+    pressure,
+    hasHypernobCrystal,
+    reactionSuppressionEnabled,
+  } = data;
   return (
     <>
       <Section
@@ -28,7 +35,9 @@ export const PortableBasicInfo = (props, context) => {
             <LabeledList.Item label="Reaction Suppression">
               <Button
                 icon={data.reactionSuppressionEnabled ? 'snowflake' : 'times'}
-                content={data.reactionSuppressionEnabled ? 'Enabled' : 'Disabled'}
+                content={
+                  data.reactionSuppressionEnabled ? 'Enabled' : 'Disabled'
+                }
                 selected={data.reactionSuppressionEnabled}
                 onClick={() => act('reaction_suppression')}
               />
