@@ -299,6 +299,10 @@
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
+	borg_skins = list(
+		"EggBot" = list(SKIN_ICON_STATE = "clown"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_clown"),
+	)
 
 /obj/item/robot_model/clown/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	var/obj/item/soap/nanotrasen/cyborg/soap = locate(/obj/item/soap/nanotrasen/cyborg) in basic_modules
@@ -338,6 +342,10 @@
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
+	borg_skins = list(
+		"SpiderDroid" = list(SKIN_ICON_STATE = "engineer"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_engi"),
+	)
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -363,6 +371,11 @@
 	hat_offset = -5
 	/// Weakref to the wash toggle action we own
 	var/datum/weakref/wash_toggle_ref
+
+	borg_skins = list(
+		"WasherBot" = list(SKIN_ICON_STATE = "janitor"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_janitor"),
+	)
 
 /obj/item/robot_model/janitor/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	. = ..()
@@ -624,6 +637,7 @@
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_med"),
 	)
 
 /obj/item/robot_model/miner
@@ -650,6 +664,7 @@
 		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_mine"),
 	)
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
 
@@ -749,6 +764,7 @@
 		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
 		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_service", SKIN_LIGHT_KEY = "arachne_service"),
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
@@ -773,6 +789,10 @@
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
+	borg_skins = list(
+		"SA-414-A1" = list(SKIN_ICON_STATE = "synd_sec"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_synd"),
+	)
 
 /obj/item/robot_model/syndicate/rebuild_modules()
 	..()
