@@ -1,0 +1,10 @@
+author: "LordVollkorn / Gage Gaebler"
+delete-after: True
+changes: 
+  - rscadd: "The toiletbong has been added to the game. Build it using the craftingmenu, a wrench, a flamethrower and a nearby toilet."
+  - balance: "Deconstructing a toiletbong will empty the flamethrower's plasma tank. Engineers, you may build toiletbongs for anyone without feeling guilty."
+  - rscadd: "The toiletbong can be emagged. But should you?"
+  - rscadd: "Plums have been added to Botany. Get your plum seeds today. *Click* Noice."
+  - rscadd: "Plumcake and plumcake slices have been added. Find them in the craftingmenu."
+  - rscadd: "Plumjuice and plumwine have been added. Pour yourself a glass."
+  - rscadd: "A new drink called \"The Hat\" has been added. A hat is also where you drink it from."

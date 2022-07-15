@@ -34,7 +34,11 @@ export const Canister = (props, context) => {
     restricted,
   } = data;
   return (
+<<<<<<< HEAD
     <Window width={350} height={335}>
+=======
+    <Window width={350} height={305}>
+>>>>>>> master
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item mb={1}>

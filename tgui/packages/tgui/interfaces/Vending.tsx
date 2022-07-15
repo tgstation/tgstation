@@ -1,7 +1,8 @@
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
-import { Window } from '../layouts';
+import { capitalizeAll } from 'common/string';
+import { useBackend } from 'tgui/backend';
+import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui/components';
+import { Window } from 'tgui/layouts';
 
 type VendingData = {
   onstation: boolean;
@@ -190,9 +191,7 @@ const VendingRow = (props, context) => {
       <Table.Cell collapsing>
         <ProductImage product={product} />
       </Table.Cell>
-      <Table.Cell bold>
-        {product.name.replace(/^\w/, (c) => c.toUpperCase())}
-      </Table.Cell>
+      <Table.Cell bold>{capitalizeAll(product.name)}</Table.Cell>
       <Table.Cell>
         {!!productStock?.colorable && (
           <ProductColorSelect disabled={disabled} product={product} />
