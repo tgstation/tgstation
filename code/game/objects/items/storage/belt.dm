@@ -267,7 +267,6 @@
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
-	SSwardrobe.provide_type(/obj/item/pinpointer/crew/prox, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
@@ -278,7 +277,6 @@
 /obj/item/storage/belt/medical/paramedic/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/sensor_device
-	to_preload += /obj/item/pinpointer/crew/prox
 	to_preload += /obj/item/stack/medical/gauze/twelve
 	to_preload += /obj/item/reagent_containers/syringe
 	to_preload += /obj/item/stack/medical/bone_gel
