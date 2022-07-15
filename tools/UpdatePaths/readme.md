@@ -6,13 +6,13 @@ Drag one of the scripts in the “Scripts” folder onto the .bat file “Update
 
 Use this tool before using MapMerge2 or opening the map in an map editor. This is because the map editor may discard any unknown paths not found in the `.DME` file.
 
----
-
 <h2>HOW TO MAKE A SCRIPT:</h2>
 
 This tool updates paths in the game to new paths. For instance:
 
 If you have a path labeled `/obj/structure/door/airlock/science/closed/rd` and wanted it to be `/obj/structure/door/airlock/science/rd/closed`, this tool would update it for you! This is extremely helpful if you want to be nice to people who have to resolve merge conflicts from the PRs that you make updating these areas.
+
+---
 
 <h3>How do you do it?</h3>
 
