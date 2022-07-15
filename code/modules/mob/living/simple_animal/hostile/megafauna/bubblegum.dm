@@ -133,8 +133,8 @@ Difficulty: Hard
 	else
 		hallucination_charge_surround.Trigger(target = target)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(mob/target)
-	var/list/targets = list(target)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood()
+	var/list/targets = ListTargets()
 	. = list()
 	for(var/mob/living/L in targets)
 		var/list/bloodpool = get_bloodcrawlable_pools(get_turf(L), 0)

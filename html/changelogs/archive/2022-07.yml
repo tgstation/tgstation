@@ -309,3 +309,157 @@
   zxaber:
   - bugfix: Airlock shock indicators on diagnostics HUDs will now correctly be removed
       when the door is unshocked.
+2022-07-10:
+  Melbert:
+  - bugfix: Bolts of Necropotence works again.
+  - rscadd: Iceboxstation's EVA now comes kitted out with equipment that may actually
+      help you out if you want to go outside. Including special winter coats that
+      can carry big oxygen tanks and boots to prevent you from slipping on ice.
+  - rscadd: Iceboxstation's arrivals hallway, and many of the rooms around it, have
+      had their style and layouts updated slightly.
+  Nuke:
+  - bugfix: Bubblegum will now beat your ass again.
+  SmoSmoSmoSmok:
+  - code_imp: dehardcodes admin grantable objectives list
+  YakumoChen:
+  - balance: GPS designs can no longer be exported to autolathes.
+  cacogen:
+  - bugfix: The generic station name with the long number in words is rarer
+  jjpark-kb:
+  - bugfix: trailers will actually trail their attached vehicles
+  magatsuchi:
+  - refactor: changes storage from a component to a normal datum
+  orthography:
+  - bugfix: fixes the piping of the ORD lab.
+  - bugfix: changes a pump subclass.
+  timothymtorres:
+  - bugfix: Fix simple mob deaths causing deadchat notifications. Special mobs still
+      cause deadchat notifications (brood spiders, elite lavaland mobs, morphs, revenants,
+      space dragons)
+  - bugfix: Fix deafness virus symptom to be permanent if resistance threshold is
+      met.
+2022-07-11:
+  Melbert:
+  - bugfix: Tonic Water heals dizziness instead of causing it
+  san7890:
+  - bugfix: On Tramstation, prisoners can now exit the labor shuttle without being
+      trapped inside.
+  - bugfix: On TramStation, the xenobiology pen disposals bins should no longer pop
+      off the floor tile on the turf they reside on. They should also now like...
+      actually work. Nanotrasen had to re-route the disposals a bit to accomodate,
+      but that's alright.
+2022-07-12:
+  Couls:
+  - bugfix: AI detector now correctly tells you when the AI is out of range
+  - qol: Uplink description for ai detector properly reflects that it no longer reveals
+      AI view
+  Kapu1178:
+  - soundadd: Random ambience volume has been reduced.
+  RimiNosha:
+  - qol: Lavaland ambiance is now much less loud and unpleasant.
+  Salex08:
+  - bugfix: fixes silver spawned food not being disgusting
+  Timberpoes:
+  - bugfix: Admins will no longer get ADMIN LOG message spam when reproductive extracts
+      are fed.
+  magatsuchi:
+  - bugfix: properly updates storage object icon states
+  - bugfix: ghosts can now view storage objects again
+  - bugfix: boxes can no longer fit normal sized objects
+  san7890:
+  - rscadd: Across all five station's, that little bartender's cubby area is now known
+      as the "backroom". How spooky.
+  - bugfix: TramStation's Bar Lounge now has an air alarm.
+  zxaber:
+  - rscadd: Added new experiments for unlocking the path to Durand, Gygax, and Phazon
+      exosuits. Weapons tech and Advanced Weapons tech are no longer required.
+2022-07-13:
+  CoffeeDragon16:
+  - bugfix: golems will now have tongues again, and adamantine golems can now talk
+      to all golems again
+  - rscadd: cardboard golems no longer have tongues
+  EOBGames:
+  - rscadd: A whole host of new posters have just become available.
+  - rscadd: 'For the architects among you: a number of new aesthetic options are available
+      for mapping with. Let your creativity free!'
+  ReinaCoder:
+  - imageadd: The safe and floor safes have been resprited
+  ShizCalev:
+  - bugfix: EMP'd airlocks will now have the proper shocked door overlay.
+  - bugfix: Fixed airlocks sometimes becoming permanently electrified after being
+      unelectrified (honk)
+  - bugfix: Fixed airlocks sometimes showing as electrified even though they are not.
+  - bugfix: Fixed a scenario where varedited airlocks could sometimes become inadvertently
+      permanently electrified.
+  - bugfix: Fixed EMP'd airlocks which were manually electrified after becoming unelectrified.
+  - bugfix: EMPing an airlock which is already temporarily electrified will now reset
+      its timer if it has less than 30 seconds remaining.
+  Spookuni:
+  - qol: Genetics gets a back desk now for easier interaction with passing maintenance
+      dwellers
+  Thunder12345:
+  - rscadd: The mining outpost was unfortunately destroyed in an industrial accident.
+      A replacement has been constructed on a group of islands in the magma sea.
+  jlsnow301:
+  - admin: Fixed many "admin.fun" listings that were incorrect or missing.
+  orthography:
+  - bugfix: asimov++ is now editable
+  unit0016:
+  - rscadd: On Icebox, The RD's office and the AI's upload have received murals.
+  - balance: That one table in the middle of the Icebox upload is gone. Yes, this
+      is a balance change.
+2022-07-14:
+  ANAME593:
+  - balance: heretic blades do 20 damage up from 17, have 35% armor penetration, but
+      deal 20% less damage to structures like lockers
+  ArcaneMusic:
+  - code_imp: Crafting recipes now uniformly use the same style for how long they
+      take.
+  Christmas5:
+  - rscadd: Shapeshifting now updates your age, physique, hair gradients, neck items
+      and underwear colour.
+  - rscadd: The Human form ability now uses a radial menu.
+  - bugfix: Human form should now update your species accordingly.
+  - bugfix: Last resort doesn't respawn you as an actual monkey, but as a monkeyized
+      human.
+  CoffeeDragon16:
+  - bugfix: ethereals will now properly spawn with tongues
+  Ebb:
+  - rscadd: You can now rip pieces of tape off of tape rolls and use them to tape
+      people's mouth closed by putting it on them as a mask. Either through the stripping
+      menu or hitting them with the tape while not on combat mode. Different tape
+      piece types have different properties.
+  - rscadd: Super pointy tape is now obtainable in-game by researching illegal tech.
+  - rscadd: Super pointy tape is now available in the traitor uplink.
+  - soundadd: Tape now makes sounds.
+  Fikou, sprite by Mooster:
+  - rscadd: Baseballs are now available in the Baseball Field on the Holodeck.
+  - rscadd: Baseball Bats can now hit thrown objects mid-air to send them back.
+  JohnFulpWillard:
+  - bugfix: The CE can now trim people's IDs to Atmospherics Technician
+  - bugfix: The HoS can no longer trim people's IDs to Lawyers.
+  MMMiracles:
+  - bugfix: The service hallway on Tram now has an APC, as well as a public cut through
+      between the two smaller hallways on the lower floor.
+  magatsuchi:
+  - bugfix: safes open correctly once again
+  necromanceranne:
+  - imageadd: Improves upon the Makarov's colours.
+  - rscadd: There is (in no way) now a 10mm Makarov that (wasn't) added to the game.
+  zxaber:
+  - imageadd: The Airlock Shock Indicator seen when using a Diagnostics Hud has a
+      new sprite.
+2022-07-15:
+  Mothblocks:
+  - soundadd: Power is no longer required for ambience.
+  Salex08:
+  - bugfix: eyesnatcher objective wont cause runtime errors anymore
+  TheBoondock:
+  - bugfix: fixed attaching a knife to cleanbot succeeding even when user has NO_DROP
+  jlsnow301:
+  - code_imp: New string ops for tgui
+  - bugfix: Removed some errant loggers left in UIs
+  orthography:
+  - rscadd: Adds a new possible cosmetic change to the ordinance lab.
+  timothymtorres:
+  - bugfix: Fix rolling paper pack spawning empty

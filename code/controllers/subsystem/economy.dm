@@ -60,6 +60,14 @@ SUBSYSTEM_DEF(economy)
 	var/mail_waiting = 0
 	/// Mail Holiday: AKA does mail arrive today? Always blocked on Sundays.
 	var/mail_blocked = FALSE
+	/// List used to track partially completed processing steps
+	/// Allows for proper yielding
+	var/list/cached_processing
+	/// Tracks what bit of processing we're on, so we can resume post yield in the right place
+	var/processing_part
+	/// Tracks a temporary sum of all money in the system
+	/// We need this on the subsystem because of yielding and such
+	var/temporary_total = 0
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	//removes cargo from the split
@@ -78,21 +86,57 @@ SUBSYSTEM_DEF(economy)
 	bank_accounts_by_id = SSeconomy.bank_accounts_by_id
 	dep_cards = SSeconomy.dep_cards
 
+/// Processing step defines, to track what we've done so far
+#define ECON_DEPARTMENT_STEP "econ_dpt_stp"
+#define ECON_ACCOUNT_STEP "econ_act_stp"
+#define ECON_PRICE_UPDATE_STEP "econ_prc_stp"
+
 /datum/controller/subsystem/economy/fire(resumed = 0)
-	var/temporary_total = 0
 	var/delta_time = wait / (5 MINUTES)
-	departmental_payouts()
-	station_total = 0
-	station_target_buffer += STATION_TARGET_BUFFER
-	for(var/account in bank_accounts_by_id)
-		var/datum/bank_account/bank_account = bank_accounts_by_id[account]
-		if(bank_account?.account_job && !ispath(bank_account.account_job))
-			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
-		bank_account.payday(1)
-		station_total += bank_account.account_balance
-	station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
-	if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
-		price_update()
+
+	if(!resumed)
+		temporary_total = 0
+		processing_part = ECON_DEPARTMENT_STEP
+		cached_processing = department_accounts.Copy()
+
+	if(processing_part == ECON_DEPARTMENT_STEP)
+		if(!departmental_payouts())
+			return
+
+		processing_part = ECON_ACCOUNT_STEP
+		cached_processing = bank_accounts_by_id.Copy()
+		station_total = 0
+		station_target_buffer += STATION_TARGET_BUFFER
+
+	if(processing_part == ECON_ACCOUNT_STEP)
+		if(!issue_paydays())
+			return
+
+		processing_part = ECON_PRICE_UPDATE_STEP
+		var/list/obj/machinery/vending/prices_to_update = list()
+		// Assoc list of "z level" -> if it's on the station
+		// Hack, is station z level is too expensive to do for each machine, I hate this place
+		var/list/station_z_status = list()
+		for(var/obj/machinery/vending/vending_lad in GLOB.machines)
+			if(istype(vending_lad, /obj/machinery/vending/custom))
+				continue
+			var/vending_level = vending_lad.z
+			var/station_status = station_z_status["[vending_level]"]
+			if(station_status == null)
+				station_status = is_station_level(vending_level)
+				station_z_status["[vending_level]"] = station_status
+			if(!station_status)
+				continue
+
+			prices_to_update += vending_lad
+
+		cached_processing = prices_to_update
+		station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
+
+	if(processing_part == ECON_PRICE_UPDATE_STEP)
+		if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) && !price_update())
+			return
+
 	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
 	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)
 
@@ -109,11 +153,33 @@ SUBSYSTEM_DEF(economy)
  * Iterates over every department account for the same payment.
  */
 /datum/controller/subsystem/economy/proc/departmental_payouts()
-	for(var/iteration in department_accounts)
-		var/datum/bank_account/dept_account = get_dep_account(iteration)
+	// son sonic speed? cache? hot over in cold food why? (datum var accesses are slow, cache lists for sonic speed)
+	var/list/cached_processing = src.cached_processing
+	for(var/i in 1 to length(cached_processing))
+		var/datum/bank_account/dept_account = get_dep_account(cached_processing[i])
 		if(!dept_account)
 			continue
 		dept_account.adjust_money(MAX_GRANT_DPT)
+		if(MC_TICK_CHECK)
+			cached_processing.Cut(1, i + 1)
+			return FALSE
+	return TRUE
+
+/**
+ * Issues all our bank-accounts paydays, and gets an idea of how much money is in circulation
+ */
+/datum/controller/subsystem/economy/proc/issue_paydays()
+	var/list/cached_processing = src.cached_processing
+	for(var/i in 1 to length(cached_processing))
+		var/datum/bank_account/bank_account = cached_processing[cached_processing[i]]
+		if(bank_account?.account_job && !ispath(bank_account.account_job))
+			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
+		bank_account.payday(1)
+		station_total += bank_account.account_balance
+		if(MC_TICK_CHECK)
+			cached_processing.Cut(1, i + 1)
+			return FALSE
+	return TRUE
 
 /**
  * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
@@ -121,14 +187,16 @@ SUBSYSTEM_DEF(economy)
  * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
  **/
 /datum/controller/subsystem/economy/proc/price_update()
-	for(var/obj/machinery/vending/V in GLOB.machines)
-		if(istype(V, /obj/machinery/vending/custom))
-			continue
-		if(!is_station_level(V.z))
-			continue
+	var/list/cached_processing = src.cached_processing
+	for(var/i in 1 to length(cached_processing))
+		var/obj/machinery/vending/V = cached_processing[i]
 		V.reset_prices(V.product_records, V.coin_records)
+		if(MC_TICK_CHECK)
+			cached_processing.Cut(1, i + 1)
+			return FALSE
 	earning_report = "<b>Sector Economic Report</b><br><br> Sector vendor prices is currently at <b>[SSeconomy.inflation_value()*100]%</b>.<br><br> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br><br> That's all from the <i>Nanotrasen Economist Division</i>."
 	GLOB.news_network.submit_article(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = FALSE)
+	return TRUE
 
 /**
  * Proc that returns a value meant to shift inflation values in vendors, based on how much money exists on the station.

@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Fix simple mob deaths causing deadchat notifications. Special mobs still cause deadchat notifications (brood spiders, elite lavaland mobs, morphs, revenants, space dragons)"
