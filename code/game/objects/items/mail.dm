@@ -268,14 +268,13 @@
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
 
-/obj/item/storage/bag/mail/ComponentInitialize()
+/obj/item/storage/bag/mail/Initialize()
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.max_w_class = WEIGHT_CLASS_NORMAL
-	storage.max_combined_w_class = 42
-	storage.max_items = 21
-	storage.display_numerical_stacking = FALSE
-	storage.set_holdable(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 42
+	atom_storage.max_slots = 21
+	atom_storage.numerical_stacking = FALSE
+	atom_storage.set_holdable(list(
 		/obj/item/mail,
 		/obj/item/delivery/small,
 		/obj/item/paper

@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	var/uprooting_tools = list(/obj/item/shovel)
 	var/uprooted = FALSE
 	var/previous_rotation = 0
-	
+
 	/// If false, the flora won't be able to be harvested at all. If it's true, go through checks normally to determine if the flora is able to be harvested
 	var/harvestable = TRUE
 	/// The low end of how many product_type items you get
@@ -71,10 +71,10 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	if(!required_tools)
 		required_tools = list()
 		if(flora_flags & FLORA_WOODEN)
-			required_tools += FLORA_HARVEST_WOOD_TOOLS
+			required_tools += FLORA_HARVEST_WOOD_TOOLS //This list does not include TOOL_SAW tools, they are handled seperately in can_harvest() for the purpose of on/off states
 		if(flora_flags & FLORA_STONE)
 			required_tools += FLORA_HARVEST_STONE_TOOLS
-	
+
 	//ugly-looking performance optimization. what the glob bro
 	if(!GLOB.flora_required_tools_typepaths[type])
 		GLOB.flora_required_tools_typepaths[type] = typecacheof(required_tools)
@@ -82,23 +82,23 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 		GLOB.flora_disallowed_tools_typepaths[type] = typecacheof(disallowed_tools)
 	if(!GLOB.flora_uprooting_tools_typepaths[type])
 		GLOB.flora_uprooting_tools_typepaths[type] = typecacheof(uprooting_tools)
-	
+
 	required_tools = GLOB.flora_required_tools_typepaths[type]
 	disallowed_tools = GLOB.flora_disallowed_tools_typepaths[type]
 	uprooting_tools = GLOB.flora_uprooting_tools_typepaths[type]
 
-/obj/structure/flora/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/flora/attackby(obj/item/used_item, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
 
-	if(can_uproot && is_type_in_typecache(W, uprooting_tools))
+	if(can_uproot && is_type_in_typecache(used_item, uprooting_tools))
 		if(uprooted)
 			user.visible_message(span_notice("[user] starts to replant [src]..."),
 				span_notice("You start to replant [src]..."))
 		else
 			user.visible_message(span_notice("[user] starts to uproot [src]..."),
 				span_notice("You start to uproot [src]..."))
-		W.play_tool_sound(src, 50)
+		used_item.play_tool_sound(src, 50)
 		if(!do_after(user, harvest_time, src))
 			return
 		if(uprooted)
@@ -109,21 +109,21 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 			user.visible_message(span_notice("[user] uproots [src]."),
 				span_notice("You uproot [src]."))
 			uproot(user)
-		W.play_tool_sound(src, 50)
+		used_item.play_tool_sound(src, 50)
 		return
 
-	if(!can_harvest(user, W))
+	if(!can_harvest(user, used_item))
 		return ..()
-	
+
 	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
-		span_notice("You start to [harvest_verb] [src] with [W]..."))
-	play_attack_sound(W.force)
-	if(!do_after(user, harvest_time, src))
+		span_notice("You start to [harvest_verb] [src] with [used_item]..."))
+	play_attack_sound(used_item.force)
+	if(!do_after(user, harvest_time * used_item.toolspeed, src))
 		return
 	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
 		ignored_mobs = list(user))
-	play_attack_sound(W.force)
-	
+	play_attack_sound(used_item.force)
+
 	if(harvest(user))
 		after_harvest(user)
 
@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
 		ignored_mobs = list(user))
 	play_attack_sound()
-	
+
 	if(harvest(user))
 		after_harvest(user)
 
@@ -160,7 +160,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	if(use_default_sound)
 		return ..()
 
-/* 
+/*
  * A helper proc for getting a random amount of products, associated with the flora's product list.
  * Returns: A list where each value is (product_type = amount_of_products)
  */
@@ -185,13 +185,21 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	. = FALSE
 	if(harvested || !harvestable)
 		return null
-	
+
 	if(harvesting_item)
-		if(!is_type_in_typecache(harvesting_item, required_tools))
-			return
+		//Check if its disallowed first, because we wanna cut it down in its tracks if so
 		if(is_type_in_typecache(harvesting_item, disallowed_tools))
-			return
-	return TRUE
+			return FALSE
+		//If its a required_tool then it skips all checks and gets forced to succeed (Unless its also disallowed. Which is... weird.)
+		if(is_type_in_typecache(harvesting_item, required_tools))
+			return TRUE
+		//Check to see if wooden flora is being attacked by a saw item (letting the items on/off state control this is better than putting them in the list)
+		if((flora_flags & FLORA_WOODEN) && (harvesting_item.tool_behaviour == TOOL_SAW))
+			return TRUE
+		//Check to see if stone flora is being attacked by a mining item (same reason as above)
+		if((flora_flags & FLORA_STONE) && (harvesting_item.tool_behaviour == TOOL_MINING))
+			return TRUE
+	return FALSE
 
 /*
  * This gets called after a mob tries to harvest this flora with the correct tool.
@@ -202,11 +210,11 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 /obj/structure/flora/proc/harvest(user)
 	. = FALSE
 	if(harvested && !LAZYLEN(product_types))
-		return
-	
+		return FALSE
+
 	var/list/products_to_create = get_products_list()
 	if(!products_to_create.len)
-		return
+		return FALSE
 
 	var/products_created = 0
 	var/turf/turf_below = get_turf(src)

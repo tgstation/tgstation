@@ -58,6 +58,7 @@
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -104,6 +105,7 @@
 	force = 12
 	sharpness = SHARP_EDGED
 	can_charge = FALSE
+	gun_flags = NOT_A_REAL_GUN
 
 	heat = 3800
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
@@ -198,6 +200,7 @@
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/firing_core = FALSE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/wormhole_projector/examine(mob/user)
 	. = ..()
@@ -336,6 +339,7 @@
 	automatic_charge_overlays = FALSE
 	var/power = 4
 	var/firing_core = FALSE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))

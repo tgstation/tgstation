@@ -79,26 +79,29 @@
 	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/shuffleminds/start()
-	var/list/mobs = list()
+	var/list/mobs_to_swap = list()
 
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(H.stat || !H.mind || IS_WIZARD(H))
+	for(var/mob/living/carbon/human/alive_human in GLOB.alive_mob_list)
+		if(alive_human.stat != CONSCIOUS || !alive_human.mind || IS_WIZARD(alive_human))
 			continue //the wizard(s) are spared on this one
-		mobs += H
+		mobs_to_swap += alive_human
 
-	if(!mobs)
+	if(!length(mobs_to_swap))
 		return
 
-	shuffle_inplace(mobs)
+	mobs_to_swap = shuffle(mobs_to_swap)
 
-	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new
-	while(mobs.len > 1)
-		var/mob/living/carbon/human/victim = pick(mobs)
-		mobs -= victim
-		swapper.cast(list(victim), mobs[mobs.len], TRUE)
-		mobs -= mobs[mobs.len]
+	var/datum/action/cooldown/spell/pointed/mind_transfer/swapper = new()
 
-	for(var/mob/living/carbon/human/victim in GLOB.alive_mob_list)
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(0, holder = victim, location = victim.loc)
+	while(mobs_to_swap.len > 1)
+		var/mob/living/swap_to = pick_n_take(mobs_to_swap)
+		var/mob/living/swap_from = pick_n_take(mobs_to_swap)
+
+		swapper.swap_minds(swap_to, swap_from)
+
+	qdel(swapper)
+
+	for(var/mob/living/carbon/human/alive_human in GLOB.alive_mob_list)
+		var/datum/effect_system/fluid_spread/smoke/smoke = new()
+		smoke.set_up(0, holder = alive_human, location = alive_human.loc)
 		smoke.start()

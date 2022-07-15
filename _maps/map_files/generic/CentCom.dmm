@@ -2307,9 +2307,8 @@
 /area/centcom/central_command_areas/briefing)
 "gG" = (
 /obj/effect/turf_decal/stripes/box,
-/obj/machinery/portable_atmospherics/pump{
-	desc = "A betrayer to pump-kind.";
-	name = "Lil Pump"
+/obj/machinery/portable_atmospherics/pump/lil_pump{
+	desc = "A betrayer to pump-kind."
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_bombthreat)

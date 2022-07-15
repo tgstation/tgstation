@@ -19,7 +19,6 @@
 	safe = FALSE
 	layer = BELOW_OPEN_DOOR_LAYER
 	closingLayer = CLOSED_FIREDOOR_LAYER
-	assemblytype = /obj/structure/firelock_frame
 	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 0, FIRE = 95, ACID = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 
@@ -32,6 +31,9 @@
 	///Y offset for the overlay lights, so that they line up with the thin border firelocks
 	var/light_yoffset = 0
 
+
+	///The type of door frame to drop during deconstruction
+	var/assemblytype = /obj/structure/firelock_frame
 	var/boltslocked = TRUE
 	///List of areas we handle. See CalculateAffectingAreas()
 	var/list/affecting_areas

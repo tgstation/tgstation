@@ -1,4 +1,0 @@
-author: "private-tristan"
-delete-after: True
-changes: 
-  - bugfix: "metastation library no longer has 2 air alarms"
