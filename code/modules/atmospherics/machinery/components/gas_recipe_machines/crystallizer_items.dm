@@ -3,7 +3,7 @@
 	desc = "Crystalized oxygen and hypernoblium stored in a bottle to pressureproof your clothes."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potblue"
-	var/uses = 2
+	var/uses = 1
 
 /obj/item/hypernoblium_crystal/afterattack(obj/item/clothing/worn_item, mob/user, proximity)
 	. = ..()
