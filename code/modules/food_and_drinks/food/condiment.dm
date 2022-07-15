@@ -288,7 +288,7 @@
 /obj/item/reagent_containers/food/condiment/peanut_butter
 	name = "peanut butter"
 	desc = "Tasty, fattening processed peanuts in a jar."
-	icon_state = "peanut_butter"
+	icon_state = "peanutbutter"
 	list_reagents = list(/datum/reagent/consumable/peanut_butter = 50)
 	fill_icon_thresholds = null
 
