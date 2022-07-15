@@ -620,7 +620,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"releasePressure" = round(release_pressure),
 		"valveOpen" = !!valve_open,
 		"isPrototype" = !!prototype,
-		"hasHoldingTank" = !!holding
+		"hasHoldingTank" = !!holding,
+		"hasHypernobCrystal" = !!nob_crystal_inserted,
+		"reactionSuppressionEnabled" = !!suppress_reactions
 	)
 
 	if (prototype)
@@ -760,6 +762,15 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			SSair.start_processing_machine(src)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
 			investigate_log("[key_name(usr)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
+			. = TRUE
+		if("reaction_suppression")
+			if(!nob_crystal_inserted)
+				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to toggle reaction suppression on a canister without a noblium crystal inside, possible href exploit attempt.")
+				return
+			suppress_reactions = !suppress_reactions
+			SSair.start_processing_machine(src)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			investigate_log("[key_name(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
 			. = TRUE
 
 	update_appearance()
