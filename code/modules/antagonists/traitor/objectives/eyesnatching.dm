@@ -75,10 +75,10 @@
 		if(!targets_current.getorgan(/obj/item/organ/internal/eyes))
 			continue
 
-		possible_targets += targets_current
+		possible_targets += possible_target
 
 	for(var/datum/traitor_objective/eyesnatching/objective as anything in possible_duplicates)
-		possible_targets -= objective.victim
+		possible_targets -= objective.victim?.mind
 
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
@@ -92,8 +92,8 @@
 	if(!possible_targets.len)
 		return FALSE //MISSION FAILED, WE'LL GET EM NEXT TIME
 
-	victim = pick(possible_targets)
-	var/datum/mind/victim_mind = victim.mind
+	var/datum/mind/victim_mind = pick(possible_targets)
+	victim = victim_mind.current
 
 	replace_in_name("%TARGET%", victim_mind.name)
 	replace_in_name("%JOB TITLE%", victim_mind.assigned_role.title)

@@ -106,16 +106,6 @@
 	purchasable_from = UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
 
-/datum/uplink_item/dangerous/bioterror
-	name = "Biohazardous Chemical Sprayer"
-	desc = "A handheld chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger \
-			Cooperative, the deadly blend it comes stocked with will disorient, damage, and disable your foes... \
-			Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
-	item = /obj/item/reagent_containers/spray/chemsprayer/bioterror
-	cost = 20
-	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-
 /datum/uplink_item/dangerous/shotgun
 	name = "Bulldog Shotgun"
 	desc = "A fully-loaded semi-automatic drum-fed shotgun. Compatible with all 12g rounds. Designed for close \
@@ -142,16 +132,6 @@
 	cost = 16
 	surplus = 20
 	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/dangerous/flamethrower
-	name = "Flamethrower"
-	desc = "A flamethrower, fueled by a portion of highly flammable plasma stolen previously from Nanotrasen \
-			stations. Make a statement by roasting the filth in their own greed. Use with caution."
-	item = /obj/item/flamethrower/full/tank
-	cost = 4
-	surplus = 40
-	purchasable_from = UPLINK_NUKE_OPS
-	illegal_tech = FALSE
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"

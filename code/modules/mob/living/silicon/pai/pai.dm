@@ -32,9 +32,6 @@
 	var/list/software = list()
 	/// The strength of the internal flashlight
 	var/brightness_power = 5
-	/// Changes the display to syndi if true
-	var/emagged = FALSE
-
 	/// Name of the one who commands us
 	var/master
 	/// DNA string for owner verification
@@ -277,7 +274,7 @@
 
 	return ..()
 
-/obj/item/paicard/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive
+/obj/item/paicard/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive, changes the display to syndi
 	if(!pai)
 		return
 	to_chat(user, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
