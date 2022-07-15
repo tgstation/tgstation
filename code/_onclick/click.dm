@@ -230,7 +230,7 @@
 			if (!target.loc)
 				continue
 
-			if(target.loc?.atom_storage)
+			if(target.loc.atom_storage)
 				next += target.loc
 
 		checking = next
