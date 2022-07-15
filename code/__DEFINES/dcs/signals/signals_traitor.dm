@@ -20,3 +20,6 @@
 #define COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT "traitor_bug_planted_pre_object"
 	#define COMPONENT_FORCE_PLACEMENT (1<<0)
 	#define COMPONENT_FORCE_FAIL_PLACEMENT (1<<1)
+
+/// Called when a traitor hacks a borg with a hacking device
+#define COMSIG_TRAITOR_BUG_BORG_HACKED "traitor_bug_borg_hacked"
