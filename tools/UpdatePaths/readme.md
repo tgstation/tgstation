@@ -14,7 +14,7 @@ This tool updates paths in the game to new paths. For instance:
 
 If you have a path labeled `/obj/structure/door/airlock/science/closed/rd` and wanted it to be `/obj/structure/door/airlock/science/rd/closed`, this tool would update it for you! This is extremely helpful if you want to be nice to people who have to resolve merge conflicts from the PRs that you make updating these areas.
 
-<h3>How do you do it?<h3>
+<h3>How do you do it?</h3>
 
 Simply create a `.TXT` file and type this on a line:
 
