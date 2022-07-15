@@ -742,6 +742,10 @@
 /obj/structure/sign/poster/contraband/kudzu{
 	pixel_y = 32
 	},
+/obj/item/reagent_containers/spray/plantbgone{
+	pixel_x = 10;
+	pixel_y = 5
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "ck" = (
@@ -3646,6 +3650,7 @@
 	pixel_x = -8;
 	pixel_y = -4
 	},
+/obj/item/melee/powerfist,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "kj" = (
@@ -4102,11 +4107,9 @@
 "lG" = (
 /obj/structure/table/abductor,
 /obj/machinery/recharger{
-	pixel_y = 0;
 	pixel_x = 7
 	},
 /obj/item/paper/guides/antag/abductor{
-	pixel_y = 0;
 	pixel_x = -5
 	},
 /turf/open/floor/plating/abductor,
@@ -11774,6 +11777,10 @@
 	pixel_x = -4;
 	pixel_y = 17
 	},
+/obj/item/storage/box/syringes{
+	pixel_y = 17;
+	pixel_x = 4
+	},
 /obj/item/assembly/igniter{
 	pixel_x = 7;
 	pixel_y = 6
@@ -12739,6 +12746,7 @@
 	name = "Syndicate Rapid Pipe Dispenser (RPD)";
 	pixel_y = -3
 	},
+/obj/item/flamethrower/full,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "KZ" = (
@@ -14259,6 +14267,7 @@
 	pixel_y = 2
 	},
 /obj/machinery/light/cold/directional/east,
+/obj/item/gun/syringe/syndicate,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "Pz" = (
@@ -16305,15 +16314,11 @@
 /obj/item/healthanalyzer{
 	pixel_y = 3
 	},
-/obj/item/gun/syringe{
-	pixel_x = -11;
-	pixel_y = 11
-	},
 /obj/item/plant_analyzer,
 /obj/item/clothing/glasses/science,
-/obj/item/reagent_containers/spray/plantbgone{
-	pixel_x = -21;
-	pixel_y = 5
+/obj/item/reagent_containers/spray/chemsprayer/bioterror{
+	pixel_y = 10;
+	pixel_x = -6
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
