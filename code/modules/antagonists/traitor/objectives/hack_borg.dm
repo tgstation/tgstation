@@ -22,7 +22,7 @@
 
 /datum/traitor_objective/borg_hack/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
-	if(!disk)
+	if(!hacking_thing)
 		buttons += add_ui_button("", "Clicking this will materialize a hacking device in your hand", "wifi", "summon_hacking_device")
 	return buttons
 
@@ -42,7 +42,7 @@
 	var/datum/job/job = generating_for.assigned_role
 	if(job.title in blacklisted_to)
 		return FALSE
-	if(!borg_check)
+	if(!borg_check())
 		return FALSE
 	return TRUE
 
