@@ -12,8 +12,8 @@ type Data = {
 type Filter = {
   id: string;
   enabled: BooleanLike;
-  gas_id: string;
-  gas_name: string;
+  gasId: string;
+  gasName: string;
 };
 
 export const PortableScrubber = (props, context) => {
@@ -29,11 +29,11 @@ export const PortableScrubber = (props, context) => {
             <Button
               key={filter.id}
               icon={filter.enabled ? 'check-square-o' : 'square-o'}
-              content={getGasLabel(filter.gas_id, filter.gas_name)}
+              content={getGasLabel(filter.gasId, filter.gasName)}
               selected={filter.enabled}
               onClick={() =>
                 act('toggle_filter', {
-                  val: filter.gas_id,
+                  val: filter.gasId,
                 })
               }
             />
