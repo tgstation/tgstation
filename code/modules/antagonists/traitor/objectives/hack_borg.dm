@@ -120,6 +120,9 @@
 		if(R.shell) 
 			to_chat(user, span_boldwarning("[R] seems to be controlled remotely! Hacking the interface may not work as expected."))
 			return
+		to_chat(user, span_warning("You sucessfully hack [R]."))
+		used = TRUE
+		SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_BORG_HACKED)
 		R.SetEmagged(1)
 		R.SetStun(60)
 		R.lawupdate = FALSE
@@ -135,11 +138,9 @@
 		sleep(20)
 		to_chat(R, span_danger("ERRORERRORERROR"))
 		R.add_ion_law(generate_ion_law())
+		sleep(20)
+		var/message = "You have been uploaded with malicious software, that had added a broken law to your lawset. You can't find any memory files about the person who uploaded them to you."
 		if(prob(33))
 			R.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED))
-		to_chat(user, span_warning("You sucessfully hack [R]."))
-		used = TRUE
-		SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_BORG_HACKED)
-
-
-
+			message = "You have been uploaded with malicious software, that had added a broken law to your lawset and shuffled it. You can't find any memory files about the person who uploaded them to you."
+		to_chat(R, span_userdanger(message))
