@@ -432,6 +432,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
 		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
 			C.dropItemToGround(thing)
+	if(ishuman(C))
+		var/mob/living/carbon/human/humanoid = C
+		for(var/obj/item/the_item in humanoid.get_equipped_items(TRUE))
+			if(!isnull(the_item.bodytypes_whitelist))
+				if(!(the_item.bodytypes_whitelist & humanoid.dna.species.bodytype))
+					humanoid.dropItemToGround(the_item)
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
@@ -803,6 +809,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
+			return FALSE
+	if(!isnull(I.bodytypes_whitelist))
+		if(!(I.bodytypes_whitelist & H.dna.species.bodytype))
+			to_chat(H, span_warning("Your species cannot wear this item!"))
 			return FALSE
 
 	// if there's an item in the slot we want, fail
