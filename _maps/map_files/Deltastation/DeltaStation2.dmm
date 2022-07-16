@@ -14043,6 +14043,9 @@
 /obj/item/nullrod,
 /obj/item/organ/internal/heart,
 /obj/item/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/book/granter/action/spell/smoke/lesser{
+	name = "How to Fake Farts"
+	},
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
 "dNN" = (
