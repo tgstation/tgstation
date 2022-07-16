@@ -108,6 +108,12 @@
 	interaction_range = null
 
 	var/atom/movable/screen/ai/modpc/interfaceButton
+	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure
+	var/posibrain_inside = FALSE
+	///whether its cover is opened, so you can wirecut it for deconstruction
+	var/opened = FALSE
+	///whether AI is anchored or not, used for checks
+	var/is_anchored = TRUE
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -133,6 +139,8 @@
 		if(mind.special_role)
 			to_chat(src, span_userdanger("You have been installed as an AI! "))
 			to_chat(src, span_danger("You must obey your silicon laws above all else. Your objectives will consider you to be dead."))
+		if(!mind.has_ever_been_ai)
+			mind.has_ever_been_ai = TRUE
 
 	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 	to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
@@ -363,20 +371,61 @@
 			return
 		battery = battery - 50
 		to_chat(src, span_notice("You route power from your backup battery to move the bolts."))
-	var/is_anchored = FALSE
-	if(move_resist == MOVE_FORCE_OVERPOWERING)
+	flip_anchored()
+	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
+
+/mob/living/silicon/ai/proc/flip_anchored()
+	if(is_anchored)
+		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_NORMAL
 		status_flags |= CANPUSH //we want the core to be push-able when un-anchored
 		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	else
-		is_anchored = TRUE
+		is_anchored = !is_anchored
 		move_resist = MOVE_FORCE_OVERPOWERING
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 
-	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
-	// the message in the [] will change depending whether or not the AI is anchored
+/mob/living/silicon/ai/proc/ai_mob_to_structure()
+	disconnect_shell()
+	ShutOffDoomsdayDevice()
+	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src))
+	if(!make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
+		return FALSE
+	qdel(src)
+	return TRUE
 
+/mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
+	var/mmi_type
+	if(posibrain_inside)
+		mmi_type = new/obj/item/mmi/posibrain(src)
+	else
+		mmi_type = new/obj/item/mmi(src)
+	if(hack_software)
+		new/obj/item/malf_upgrade(get_turf(src))
+	the_mmi = mmi_type
+	the_mmi.brain = new /obj/item/organ/internal/brain(the_mmi)
+	the_mmi.brain.organ_flags |= ORGAN_FROZEN
+	the_mmi.brain.name = "[real_name]'s brain"
+	the_mmi.name = "[initial(the_mmi.name)]: [real_name]"
+	the_mmi.set_brainmob(new /mob/living/brain(the_mmi))
+	the_mmi.brainmob.name = src.real_name
+	the_mmi.brainmob.real_name = src.real_name
+	the_mmi.brainmob.container = the_mmi
+	the_mmi.brainmob.set_suicide(suiciding)
+	the_mmi.brain.suicided = suiciding
+	if(the_core)
+		var/obj/structure/ai_core/core = the_core
+		core.core_mmi = the_mmi
+		the_mmi.forceMove(the_core)
+	else
+		the_mmi.forceMove(get_turf(src))
+	if(the_mmi.brainmob.stat == DEAD && !suiciding)
+		the_mmi.brainmob.set_stat(CONSCIOUS)
+	if(mind)
+		mind.transfer_to(the_mmi.brainmob)
+	the_mmi.update_appearance()
+	return TRUE
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
@@ -774,7 +823,7 @@
 			to_chat(user, span_warning("No intelligence patterns detected."))
 			return
 		ShutOffDoomsdayDevice()
-		var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc)//Spawns a deactivated terminal at AI location.
+		var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
 		new_core.circuit.battery = battery
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = TRUE //Can't control things remotely if you're stuck in a card!

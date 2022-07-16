@@ -1,0 +1,8 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - code_imp: "the igniter, mirv, and summoning components and the knockback, lifesteal, light_eater, and venomous elements are now compatible with projectile spells."
+  - code_imp: "the lifesteal, light_eater, and venomous elements are now compatible with turrets."
+  - code_imp: "deployable turrets (like the ones given to marine engineers) now properly set their fired projectiles' `fired_from` and `firer` vars to themselves and their users, respectively."
+  - refactor: "the \"fired_from\" var for projectiles (/obj/projectile) has been changed to be a /datum instead of an /atom, as there were no instances in code where it had to be an atom."
+  - code_imp: "projectile spells set their fired projectiles' `fired_from` var to themselves instead of the turf they were cast from"
