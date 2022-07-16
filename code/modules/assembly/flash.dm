@@ -257,7 +257,7 @@
 			user.visible_message(span_warning("[user] overloads [flashed_borg]'s sensors with the flash!"), span_danger("You overload [flashed_borg]'s sensors with the flash!"))
 			addtimer(CALLBACK(flashed_borg, /mob/living/silicon/robot/proc/clear_halfstun_slowdown), SILICON_HALFSTUN_LENGTH)
 			return
-		flashed_borg.Stun(rand(55,65))
+		flashed_borg.Stun(rand(60,80))
 		playsound(flashed_borg, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
 		user.visible_message(span_warning("[user] overloads [flashed_borg]'s sensors with the flash, breaking it's response program!"), span_danger("You overload [flashed_borg]'s sensors with the flash, breaking it's response program!"))
 

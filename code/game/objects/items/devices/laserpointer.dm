@@ -128,7 +128,7 @@
 				to_chat(blinded_borg, span_danger("Your sensors were overloaded by a laser!"))
 				addtimer(CALLBACK(blinded_borg, /mob/living/silicon/robot/proc/clear_halfstun_slowdown), SILICON_HALFSTUN_LENGTH)
 				return
-			blinded_borg.Stun(rand(20,40))
+			blinded_borg.Stun(rand(40,60))
 			playsound(blinded_borg, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
 			user.visible_message(span_warning("[user] overloads [blinded_borg]'s sensors with a laser, breaking it's response program!"), span_danger("You overload [blinded_borg]'s sensors with the laser, breaking it's response program!"))
 			to_chat(blinded_borg, span_danger("Your sensors were overloaded by a laser, breaking your response program!"))
