@@ -463,3 +463,47 @@
   - rscadd: Adds a new possible cosmetic change to the ordinance lab.
   timothymtorres:
   - bugfix: Fix rolling paper pack spawning empty
+2022-07-16:
+  13spacemen:
+  - rscadd: You can now deconstruct living AIs and turn them back into AI core frames
+      with MMIs/posibrains. The AI can finally be a real boy
+  - qol: AIs that are gibbed now drop MMIs/posibrains
+  - rscadd: The comedian suit and coat are now available in the AutoDrobe! Wearing
+      them may make you feel like you need a psychiatrist.
+  Fikou, NecromancerAnne:
+  - balance: The Biohazard Sprayer, Power Fist, Flamethrower and Dart Pistol are no
+      longer in the nukie uplink, instead being given as bonuses in the keycarded
+      parts of the base.
+  Guillaume Prata:
+  - bugfix: Roller beds can actually fold when right clicked now.
+  Holoo-1:
+  - bugfix: fixed canister ui being too small
+  LordVollkorn / Gage Gaebler:
+  - rscadd: The toiletbong has been added to the game. Build it using the craftingmenu,
+      a wrench, a flamethrower and a nearby toilet.
+  - balance: Deconstructing a toiletbong will empty the flamethrower's plasma tank.
+      Engineers, you may build toiletbongs for anyone without feeling guilty.
+  - rscadd: The toiletbong can be emagged. But should you?
+  - rscadd: Plums have been added to Botany. Get your plum seeds today. *Click* Noice.
+  - rscadd: Plumcake and plumcake slices have been added. Find them in the craftingmenu.
+  - rscadd: Plumjuice and plumwine have been added. Pour yourself a glass.
+  - rscadd: A new drink called "The Hat" has been added. A hat is also where you drink
+      it from.
+  RandomGamer123:
+  - bugfix: You can no longer remove the turbine's rotor if its on or if its panel
+      is closed
+  SuperSlayer:
+  - spellcheck: Traitor codewords are now given by their employer, rather then by
+      The Syndicate
+  TheBoondock:
+  - rscadd: After years of research, the council of elder atmosian created and publish
+      an experimental design for a long range gas analyzer. The design specified it
+      to be coated in gold to signify the glory of atmosia.
+  magatsuchi:
+  - bugfix: mass transfer between storage no longer causes ear bleeds
+  timothymtorres:
+  - bugfix: Fix talking while mouth is gagged with tape
+  vincentiusvin:
+  - qol: Canisters, scrubbers, and pumps no longer stop reacting when wrenched.
+  - code_imp: Canisters should process once instead of twice when spawning. No gameplay
+      changes expected.

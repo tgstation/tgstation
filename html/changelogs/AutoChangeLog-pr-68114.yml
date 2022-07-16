@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer remove the turbine's rotor if its on or if its panel is closed"
