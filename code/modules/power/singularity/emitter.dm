@@ -1,8 +1,12 @@
+#define EMITTER_UNANCHORED 0
+#define EMITTER_WRENCHED 1
+#define EMITTER_WELDED 2
+
 /obj/machinery/power/emitter
 	name = "emitter"
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
 	icon = 'icons/obj/singularity.dmi'
-	icon_state = "emitter"
+	icon_state = "emitter0"
 	base_icon_state = "emitter"
 
 	anchored = FALSE
@@ -13,9 +17,11 @@
 	use_power = NO_POWER_USE
 
 	/// The icon state used by the emitter when it's on.
-	var/icon_state_on = "emitter_+a"
+	var/icon_state_on = "emitter0"
 	/// The icon state used by the emitter when it's on and low on power.
 	var/icon_state_underpowered = "emitter_+u"
+	var/state = EMITTER_UNANCHORED
+	var/previous_state = EMITTER_UNANCHORED
 	///Is the machine active?
 	var/active = FALSE
 	///Does the machine have power?
@@ -65,12 +71,14 @@
 		if(!anchored)
 			set_anchored(TRUE)
 		connect_to_network()
+		state = EMITTER_WELDED
 
 	sparks = new
 	sparks.attach(src)
 	sparks.set_up(5, TRUE, src)
 	AddComponent(/datum/component/simple_rotation)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	previous_state = state
 
 /obj/machinery/power/emitter/welded/Initialize(mapload)
 	welded = TRUE
@@ -131,11 +139,24 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon_state()
-	if(!active || !powernet)
-		icon_state = base_icon_state
-		return ..()
-	icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
-	return ..()
+	cut_overlays()
+	icon_state = "emitter[state]"
+	if(state != previous_state)
+		flick("emitterflick-[previous_state][state]", src)
+		previous_state = state
+
+	if(powered && powernet && avail(active_power_usage) && active)
+		var/image/emitterbeam = image(icon,"emitter-beam")
+		emitterbeam.plane = ABOVE_LIGHTING_PLANE
+		emitterbeam.layer = LIGHTING_SECONDARY_LAYER
+		add_overlay(emitterbeam)
+
+	if(locked)
+		var/image/emitterlock = image(icon,"emitter-lock")
+		emitterlock.plane = ABOVE_LIGHTING_PLANE
+		emitterlock.layer = LIGHTING_SECONDARY_LAYER
+		add_overlay(emitterlock)
+	return..()
 
 /obj/machinery/power/emitter/interact(mob/user)
 	add_fingerprint(user)
@@ -256,6 +277,8 @@
 /obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
+	state = anchored ? EMITTER_WRENCHED : EMITTER_UNANCHORED
+	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/item)
@@ -275,6 +298,8 @@
 		welded = FALSE
 		to_chat(user, span_notice("You cut [src] free from the floor."))
 		disconnect_from_network()
+		state = EMITTER_WRENCHED
+		update_appearance()
 		update_cable_icons_on_turf(get_turf(src))
 		return TRUE
 
@@ -291,6 +316,8 @@
 	welded = TRUE
 	to_chat(user, span_notice("You weld [src] to the floor."))
 	connect_to_network()
+	state = EMITTER_WELDED
+	update_appearance()
 	update_cable_icons_on_turf(get_turf(src))
 	return TRUE
 
@@ -319,6 +346,7 @@
 		return
 	locked = !locked
 	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
+	update_appearance()
 
 /obj/machinery/power/emitter/attackby(obj/item/item, mob/user, params)
 	if(item.GetID())
@@ -373,6 +401,7 @@
 		return
 	locked = FALSE
 	obj_flags |= EMAGGED
+	update_appearance()
 	if(user)
 		user.visible_message(span_warning("[user.name] emags [src]."), span_notice("You short out the lock."))
 
@@ -547,3 +576,7 @@
 	req_access = list("science")
 	welded = TRUE
 	use_power = NO_POWER_USE
+
+#undef EMITTER_UNANCHORED
+#undef EMITTER_WRENCHED
+#undef EMITTER_WELDED
