@@ -600,7 +600,7 @@
 	inhand_icon_state = "football_armor_red"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
-/obj/item/clothing/suit/joker
+/obj/item/clothing/suit/costume/joker
 	name = "comedian coat"
 	desc = "I mean, don’t you have to be funny to be a comedian?"
 	icon_state = "joker_coat"

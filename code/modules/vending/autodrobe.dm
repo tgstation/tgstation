@@ -121,7 +121,7 @@
 		/obj/item/clothing/suit/hooded/bee_costume = 1,
 		/obj/item/clothing/suit/costume/snowman = 1,
 		/obj/item/clothing/head/snowman = 1,
-		/obj/item/clothing/suit/joker = 1,
+		/obj/item/clothing/suit/costume/joker = 1,
 		/obj/item/clothing/under/costume/joker = 1,
 		/obj/item/clothing/mask/joy = 1,
 		/obj/item/clothing/head/cueball = 1,
