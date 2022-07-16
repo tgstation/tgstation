@@ -31,7 +31,10 @@
 	var/datum/weakref/tracked_ian_ref
 	/// Weakref to the first runtime we can find at init
 	var/datum/weakref/tracked_runtime_ref
+	///Determines the probability of a malfunction.
 	var/badThingCoeff = 0
+	///Keeps track of how many times we've had a critical reaction
+	var/badThingCoeff_modifier = 0
 	var/resetTime = 15
 	var/cloneMode = FALSE
 	var/list/item_reactions = list()
@@ -89,9 +92,10 @@
 
 /obj/machinery/rnd/experimentor/RefreshParts()
 	. = ..()
+	badThingCoeff = badThingCoeff_modifier
+	resetTime = initial(resetTime)
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if(resetTime > 0 && (resetTime - M.rating) >= 1)
-			resetTime -= M.rating
+		resetTime = max(1, resetTime - M.rating)
 	for(var/obj/item/stock_parts/scanning_module/M in component_parts)
 		badThingCoeff += M.rating*2
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
@@ -247,7 +251,8 @@
 		visible_message(span_notice("[src] prods at [exp_on] with mechanical arms."))
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message(span_notice("[exp_on] is gripped in just the right way, enhancing its focus."))
-			badThingCoeff++
+			badThingCoeff_modifier++
+			RefreshParts() //recalculate badThingCoeff
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message(span_danger("[src] malfunctions and destroys [exp_on], lashing its arms out at nearby people!"))
 			for(var/mob/living/m in oview(1, src))
