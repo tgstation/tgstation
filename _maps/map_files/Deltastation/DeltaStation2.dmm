@@ -42384,6 +42384,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "lwD" = (
@@ -45532,6 +45533,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos/pumproom)
 "mnR" = (
@@ -56769,6 +56771,7 @@
 /area/station/command/heads_quarters/rd)
 "pqP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "pqX" = (
@@ -77631,6 +77634,8 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "uSR" = (
@@ -87977,6 +87982,10 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
+"xDy" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/science/genetics)
 "xDQ" = (
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
@@ -119339,8 +119348,8 @@ jIO
 fex
 pqP
 lws
-nek
-nek
+xDy
+xDy
 uSO
 swT
 khh

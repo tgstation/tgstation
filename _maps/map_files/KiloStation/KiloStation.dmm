@@ -19664,6 +19664,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/storage)
 "fIw" = (
@@ -41141,6 +41142,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/structure/filingcabinet,
+/obj/machinery/camera/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/checkpoint/medical)
 "lJR" = (
@@ -43531,6 +43533,7 @@
 /obj/structure/bodycontainer/crematorium{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/checker,
 /area/station/security/processing/cremation)
 "mtN" = (
@@ -72461,6 +72464,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
+"uFe" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/service/chapel/storage)
 "uFf" = (
 /obj/structure/closet/l3closet/janitor,
 /obj/structure/window/reinforced,
@@ -100473,7 +100481,7 @@ aeU
 aeU
 qOd
 lDK
-lqR
+uFe
 pOV
 pOV
 tiv
