@@ -316,10 +316,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/emp_act(severity)
 	. = ..()
-
 	if(. & EMP_PROTECT_SELF)
-		return
-	if(IsStun())
 		return
 	switch(severity)
 		if(1)
