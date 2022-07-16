@@ -103,7 +103,7 @@
 				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
 				return FALSE
 			if(paper_copy)
-				if(!paper_copy.get_info_length())
+				if(!length(paper_copy.info))
 					to_chat(usr, span_warning("An error message flashes across [src]'s screen: \"The supplied paper is blank. Aborting.\""))
 					return FALSE
 				// Basic paper
@@ -254,10 +254,7 @@
 	give_pixel_offset(copied_paper)
 
 	//the font color dependant on the amount of toner left.
-	var/chosen_color = toner_cartridge.charges > 10 ? "#101010" : "#808080"
-	copied_paper.info = "<font color = [chosen_color]>[copied_paper.info]</font>"
-	for(var/list/style as anything in copied_paper.add_info_style)
-		style[ADD_INFO_COLOR] = chosen_color
+	copied_paper.info = "<font color = [toner_cartridge.charges > 10 ? "#101010" : "#808080"]>[copied_paper.info]</font>"
 	copied_paper.name = paper_copy.name
 
 	toner_cartridge.charges -= PAPER_TONER_USE
