@@ -202,4 +202,6 @@
 
 /obj/item/analyzer/ranged/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	atmos_scan(user, target)
+	if(can_see(user, target, 7))
+		atmos_scan(user, target)
+	return
