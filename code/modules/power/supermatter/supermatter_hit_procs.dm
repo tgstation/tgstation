@@ -95,16 +95,16 @@
 		if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT)
 			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to \a [name] that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
 			return
-
-		if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
-			to_chat(user, span_danger("You feel that destroying the station and eveything near it is a horrible idea."))
-			return
+		
+		var/additional_admin_info = ""		
+		if(!user.mind?.has_antag_datum(/datum/antagonist))
+			additional_admin_info = " as a non-antagonist"			
 
 		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
 		if(do_after(user, 3 SECONDS, src))
-			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)]")
-			log_game("[key_name(user)] attached [destabilizing_crystal] to the supermatter at [AREACOORD(src)]")
-			investigate_log("[key_name(user)] attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
+			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)][additional_admin_info]")
+			log_game("[key_name(user)] attached [destabilizing_crystal] to the supermatter at [AREACOORD(src)][additional_admin_info]")
+			investigate_log("[key_name(user)] attached [destabilizing_crystal] to a supermatter crystal[additional_admin_info].", INVESTIGATE_ENGINE)
 			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
 			has_destabilizing_crystal = TRUE
 			cascade_initiated = TRUE
