@@ -193,10 +193,10 @@
 	var/list/tool_list = list(
 		"Wrench" = image(icon = icon, icon_state = "trench_tool"),
 		"Shovel" = image(icon = icon, icon_state = "trench_tool_shovel"),
-		"Pickaxe" = image(icon = icon, icon_state = "trench_tool_pickaxe"),
+		"Pick" = image(icon = icon, icon_state = "trench_tool_pick"),
 		)
 	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	if(!check_menu(user))
+	if(!check_menu(user) || !tool_result)
 		return
 	switch(tool_result)
 		if("Wrench")
@@ -226,7 +226,7 @@
 			usesound = 'sound/effects/picaxe1.ogg'
 			attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 			attack_verb_simple = list("hit", "pierce", "slice", "attack")
-	playsound(src, 'sound/items/change_jaws.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/items/ratchet.ogg', 50, vary = TRUE)
 	user.update_inv_hands()
 
 /obj/item/trench_tool/proc/check_menu(mob/user)
