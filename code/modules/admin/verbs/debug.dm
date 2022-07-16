@@ -269,7 +269,7 @@
 	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_areatest(on_station)
+/client/proc/cmd_admin_areatest(on_station, filter_maint)
 	set category = "Mapping"
 	set name = "Test Areas"
 
@@ -296,6 +296,9 @@
 		log_message = "station z-levels"
 	else
 		log_message = "all z-levels"
+	if(filter_maint)
+		dat += "<b>Maintenance Areas Filtered Out</b>"
+		log_message += ", with no maintenance areas"
 
 	message_admins(span_adminnotice("[key_name_admin(usr)] used the Test Areas debug command checking [log_message]."))
 	log_admin("[key_name(usr)] used the Test Areas debug command checking [log_message].")
@@ -308,6 +311,8 @@
 			var/turf/picked = pick(area_turfs)
 			if(is_station_level(picked.z))
 				if(!(A.type in areas_all) && !is_type_in_typecache(A, station_areas_blacklist))
+					if(filter_maint && istype(A, /area/station/maintenance))
+						continue
 					areas_all.Add(A.type)
 		else if(!(A.type in areas_all))
 			areas_all.Add(A.type)
@@ -446,6 +451,11 @@
 	set category = "Mapping"
 	set name = "Test Areas (STATION Z)"
 	cmd_admin_areatest(TRUE)
+
+/client/proc/cmd_admin_areatest_station_no_maintenance()
+	set category = "Mapping"
+	set name = "Test Areas (STATION Z - NO MAINT)"
+	cmd_admin_areatest(TRUE, TRUE)
 
 /client/proc/cmd_admin_areatest_all()
 	set category = "Mapping"
