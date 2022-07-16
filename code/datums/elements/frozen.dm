@@ -38,7 +38,11 @@
 /datum/element/frozen/proc/shatter_on_throw(datum/target)
 	SIGNAL_HANDLER
 	var/obj/obj_target = target
-	obj_target.visible_message(span_danger("[obj_target] shatters into a million pieces!"))
+	var/lastkey = obj_target.fingerprintslast
+	if(lastkey)
+		var/mob/toucher = get_mob_by_key(lastkey)
+		obj_target.visible_message(span_danger("[obj_target] shatters into a million pieces!"))
+		log_combat(toucher, target, "shattered")
 	qdel(obj_target)
 
 /datum/element/frozen/proc/on_moved(datum/target)
