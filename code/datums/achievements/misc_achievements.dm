@@ -205,3 +205,23 @@
 	desc = "Ignore the warning label on a springlock MODsuit."
 	database_id = MEDAL_SPRINGLOCK
 	icon = "springlock"
+
+/datum/award/achievement/misc/cruiser
+	name = "Battlecruiser Operational"
+	desc = "Reveal station coordinates to nearby Syndicate Battlecruiser as a traitor."
+	database_id = MEDAL_CRUISER
+
+/datum/award/achievement/misc/tot_dragon
+	name = "Stations and Dragons"
+	desc = "Turn yourself into a space dragon as a traitor."
+	database_id = MEDAL_DRAGON
+
+/datum/award/achievement/misc/zombie
+	name = "The Man behind The Outbreak"
+	desc = "Get a romerol bioterror kit from The Syndicate."
+	database_id = MEDAL_ZOMBIE
+
+/datum/award/achievement/misc/supermatter_cascade
+	name = "Unstable"
+	desc = "Trigger supermatter cascade with a destabilizing crystal."
+	database_id = MEDAL_CASCADE

@@ -43,6 +43,10 @@
 #define MEDAL_CLICKBAIT "Clickbait"
 #define MEDAL_NARSUPREME "Narsupreme"
 #define MEDAL_SPRINGLOCK "The Man Inside the Modsuit"
+#define MEDAL_CRUISER "Battlecruiser Operational"
+#define MEDAL_DRAGON "Stations and Dragons"
+#define MEDAL_ZOMBIE "The Man behind The Outbreak"
+#define MEDAL_CASCADE "Unstable"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"

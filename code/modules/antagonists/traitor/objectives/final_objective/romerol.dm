@@ -39,6 +39,7 @@
 				to_chat(user, span_warning("You must be in [initial(romerol_spawnarea_type.name)] to recieve the bioterror agent."))
 				return
 			sent_romerol = TRUE
+			user.client?.give_award(/datum/award/achievement/misc/zombie, user)
 			podspawn(list(
 				"target" = get_turf(user),
 				"style" = STYLE_SYNDICATE,

@@ -96,6 +96,10 @@
 			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to \a [name] that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
 			return
 
+		if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
+			to_chat(user, span_danger("You feel that destroying the station and eveything near it is a horrible idea."))
+			return
+
 		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
 		if(do_after(user, 3 SECONDS, src))
 			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)]")
@@ -106,6 +110,7 @@
 			cascade_initiated = TRUE
 			damage += 100
 			matter_power += 500
+			user.client?.give_award(/datum/award/achievement/misc/supermatter_cascade, user)
 			addtimer(CALLBACK(src, .proc/announce_incoming_cascade), 2 MINUTES)
 			qdel(destabilizing_crystal)
 		return

@@ -98,6 +98,7 @@
 		return
 	var/mob/living/simple_animal/hostile/space_dragon/new_dragon = user.change_mob_type(/mob/living/simple_animal/hostile/space_dragon, location = loc, delete_old_mob = TRUE)
 	new_dragon.permanant_empower()
+	new_dragon.client?.give_award(/datum/award/achievement/misc/tot_dragon, new_dragon)
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	qdel(src)
 
