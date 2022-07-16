@@ -167,6 +167,14 @@
 	cost = 10
 	purchasable_from = UPLINK_NUKE_OPS
 
+/datum/uplink_item/dangerous/pistol_nukeop
+	name = "Ansem Pistol"
+	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+			with suppressors."
+	item = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	cost = 6
+	purchasable_from = UPLINK_NUKE_OPS
+
 /datum/uplink_item/dangerous/surplus_smg
 	name = "Surplus SMG"
 	desc = "A horribly outdated automatic weapon. Why would you want to use this?"
@@ -212,6 +220,37 @@
 	name = "9mm Stechkin APS Magazine"
 	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS machine pistol."
 	item = /obj/item/ammo_box/magazine/m9mm_aps
+	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistol_nukeop
+	name = "10mm Handgun Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol."
+	item = /obj/item/ammo_box/magazine/m10mm
+	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistolap_nukeop
+	name = "10mm Armour Piercing Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
+			These rounds are less effective at injuring the target but penetrate protective gear."
+	item = /obj/item/ammo_box/magazine/m10mm/ap
+	cost = 3
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistolhp_nukeop
+	name = "10mm Hollow Point Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
+			These rounds are more damaging but ineffective against armour."
+	item = /obj/item/ammo_box/magazine/m10mm/hp
+	cost = 3
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistolfire_nukeop
+	name = "10mm Incendiary Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
+			Loaded with incendiary rounds which inflict less damage, but ignite the target."
+	item = /obj/item/ammo_box/magazine/m10mm/fire
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS
 

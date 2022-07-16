@@ -165,13 +165,20 @@
 	new /obj/item/radio/off(src)
 
 // Syndie survival box
-/obj/item/storage/box/survival/syndie //why is this its own thing if it's just the engi box with a syndie mask and medipen?
-	name = "extended-capacity survival box"
-	desc = "A box with the bare essentials of ensuring the survival of you and others. This one is labelled to contain an extended-capacity tank."
+/obj/item/storage/box/survival/syndie
+	name = "operation-ready survival box"
+	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank."
+	icon_state = "syndiebox"
+	illustration = "extendedtank"
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 	medipen_type = null
-	illustration = "extendedtank"
+
+/obj/item/storage/box/survival/syndie/PopulateContents()
+	..()
+	new /obj/item/crowbar/red(src)
+	new /obj/item/screwdriver/red(src)
+	new /obj/item/weldingtool/mini(src)
 
 // Security survival box
 /obj/item/storage/box/survival/security
