@@ -132,9 +132,6 @@
 	set category="Server"
 	set desc="Prevent the server from restarting"
 	set name="Delay Round End"
-	if(!check_rights(R_SERVER))
-		return
-
 	if(SSticker.delay_end)
 		tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
 		return
