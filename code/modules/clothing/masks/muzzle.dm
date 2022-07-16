@@ -33,7 +33,7 @@
 	worn_icon_state = "tape_piece_worn"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
-	clothing_flags = INEDIBLE_CLOTHING
+	clothing_flags = INEDIBLE_CLOTHING|BLOCKS_SPEECH
 	equip_delay_other = 40
 	strip_delay = 40
 	greyscale_config = /datum/greyscale_config/tape_piece
