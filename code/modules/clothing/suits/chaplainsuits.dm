@@ -4,6 +4,15 @@
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	worn_icon = 'icons/mob/clothing/suits/chaplain.dmi'
 
+/obj/item/clothing/suit/chaplainsuit/armor
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80, WOUND = 20)
+	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+	strip_delay = 80
+	equip_delay_other = 60
+
 /obj/item/clothing/suit/hooded/chaplainsuit
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
@@ -32,14 +41,14 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
-/obj/item/clothing/suit/chaplainsuit/studentuni
+/obj/item/clothing/suit/chaplainsuit/armor/studentuni
 	name = "student robe"
 	desc = "The uniform of a bygone institute of learning."
 	icon_state = "studentuni"
 	inhand_icon_state = "studentuni"
 	body_parts_covered = ARMS|CHEST
 
-/obj/item/clothing/suit/chaplainsuit/witchhunter
+/obj/item/clothing/suit/chaplainsuit/armor/witchhunter
 	name = "witchunter garb"
 	desc = "This worn outfit saw much use back in the day."
 	icon_state = "witchhunter"
@@ -99,7 +108,7 @@
 	strip_delay = 8 SECONDS
 	dog_fashion = null
 
-/obj/item/clothing/suit/chaplainsuit/clock
+/obj/item/clothing/suit/chaplainsuit/armor/clock
 	name = "forgotten armour"
 	desc = "It sounds like hissing steam, ticking cogs, gone silent, It looks like a dead machine, trying to tick with life."
 	icon_state = "clockwork_cuirass"
@@ -119,7 +128,7 @@
 	strip_delay = 80
 	dog_fashion = null
 
-/obj/item/clothing/suit/chaplainsuit/templar
+/obj/item/clothing/suit/chaplainsuit/armor/templar
 	name = "crusader armour"
 	desc = "God wills it!"
 	icon_state = "knight_templar"
@@ -142,7 +151,7 @@
 	icon_state = "knight_ancient"
 	inhand_icon_state = "knight_ancient"
 
-/obj/item/clothing/suit/chaplainsuit/ancient
+/obj/item/clothing/suit/chaplainsuit/armor/ancient
 	name = "ancient armour"
 	desc = "Defend the treasure..."
 	icon_state = "knight_ancient"
@@ -164,13 +173,13 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
-/obj/item/clothing/suit/chaplainsuit/adept
+/obj/item/clothing/suit/chaplainsuit/armor/adept
 	name = "adept robes"
 	desc = "The ideal outfit for burning the unfaithful."
 	icon_state = "crusader"
 	inhand_icon_state = "crusader"
 
-/obj/item/clothing/suit/chaplainsuit/crusader
+/obj/item/clothing/suit/chaplainsuit/armor/crusader
 	name = "Crusader's Armour"
 	desc = "Armour that's comprised of metal and cloth."
 	icon_state = "crusader"
@@ -179,10 +188,10 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
 
-/obj/item/clothing/suit/chaplainsuit/crusader/red
+/obj/item/clothing/suit/chaplainsuit/armor/crusader/red
 	icon_state = "crusader-red"
 
-/obj/item/clothing/suit/chaplainsuit/crusader/blue
+/obj/item/clothing/suit/chaplainsuit/armor/crusader/blue
 	icon_state = "crusader-blue"
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie
