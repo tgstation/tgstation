@@ -6096,6 +6096,10 @@
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron,
 /area/station/security/processing)
+"ciV" = (
+/mob/living/carbon/human/species/monkey/punpun,
+/turf/open/floor/iron/dark,
+/area/station/service/bar)
 "cjd" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
@@ -167398,7 +167402,7 @@ nKz
 rro
 fZR
 sBh
-nKz
+ciV
 crT
 wcv
 mHc
