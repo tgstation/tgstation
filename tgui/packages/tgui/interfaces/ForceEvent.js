@@ -8,9 +8,9 @@ export const ForceEvent = (props, context) => {
   return (
     <Window title="Force Event" width={450} height={450}>
       <Window.Content scrollable>
-            <EventSearch />
-            <EventOptionsPanel />
-            <EventContent />
+        <EventSearch />
+        <EventOptionsPanel />
+        <EventContent />
       </Window.Content>
     </Window>
   );
@@ -49,12 +49,12 @@ export const EventOptionsPanel = (props, context) => {
   const [announce, setAnnounce] = useLocalState(context, 'announce', true);
 
   return (
-        <Button.Checkbox
-          fluid
-          checked={announce}
-          onClick={() => setAnnounce(!announce)}>
-          Announce event to the crew
-        </Button.Checkbox>
+    <Button.Checkbox
+      fluid
+      checked={announce}
+      onClick={() => setAnnounce(!announce)}>
+      Announce event to the crew
+    </Button.Checkbox>
   );
 };
 
@@ -62,9 +62,7 @@ export const EventContent = (props, context) => {
   const { data } = useBackend(context);
 
   const categories = Object.values(data.categories);
-  const sortCategories = sortBy(
-	(category) => category.name
-  );
+  const sortCategories = sortBy((category) => category.name);
 
   return (
     <Section>
