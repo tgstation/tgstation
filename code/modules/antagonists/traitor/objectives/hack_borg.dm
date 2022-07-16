@@ -120,6 +120,7 @@
 			return
 		to_chat(user, span_warning("You sucessfully hack [R]."))
 		used = TRUE
+		R.emag_cooldown = world.time + 150
 		SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_BORG_HACKED)
 		R.SetEmagged(1)
 		R.SetStun(60)
