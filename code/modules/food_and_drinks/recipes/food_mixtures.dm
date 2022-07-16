@@ -24,7 +24,7 @@
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/candycorn
-	required_reagents = list(/datum/reagent/consumable/corn_oil = 5)
+	required_reagents = list(/datum/reagent/consumable/cornoil = 5)
 	required_catalysts = list(/datum/reagent/consumable/sugar = 5)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
