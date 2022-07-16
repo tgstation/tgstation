@@ -373,3 +373,137 @@
   zxaber:
   - rscadd: Added new experiments for unlocking the path to Durand, Gygax, and Phazon
       exosuits. Weapons tech and Advanced Weapons tech are no longer required.
+2022-07-13:
+  CoffeeDragon16:
+  - bugfix: golems will now have tongues again, and adamantine golems can now talk
+      to all golems again
+  - rscadd: cardboard golems no longer have tongues
+  EOBGames:
+  - rscadd: A whole host of new posters have just become available.
+  - rscadd: 'For the architects among you: a number of new aesthetic options are available
+      for mapping with. Let your creativity free!'
+  ReinaCoder:
+  - imageadd: The safe and floor safes have been resprited
+  ShizCalev:
+  - bugfix: EMP'd airlocks will now have the proper shocked door overlay.
+  - bugfix: Fixed airlocks sometimes becoming permanently electrified after being
+      unelectrified (honk)
+  - bugfix: Fixed airlocks sometimes showing as electrified even though they are not.
+  - bugfix: Fixed a scenario where varedited airlocks could sometimes become inadvertently
+      permanently electrified.
+  - bugfix: Fixed EMP'd airlocks which were manually electrified after becoming unelectrified.
+  - bugfix: EMPing an airlock which is already temporarily electrified will now reset
+      its timer if it has less than 30 seconds remaining.
+  Spookuni:
+  - qol: Genetics gets a back desk now for easier interaction with passing maintenance
+      dwellers
+  Thunder12345:
+  - rscadd: The mining outpost was unfortunately destroyed in an industrial accident.
+      A replacement has been constructed on a group of islands in the magma sea.
+  jlsnow301:
+  - admin: Fixed many "admin.fun" listings that were incorrect or missing.
+  orthography:
+  - bugfix: asimov++ is now editable
+  unit0016:
+  - rscadd: On Icebox, The RD's office and the AI's upload have received murals.
+  - balance: That one table in the middle of the Icebox upload is gone. Yes, this
+      is a balance change.
+2022-07-14:
+  ANAME593:
+  - balance: heretic blades do 20 damage up from 17, have 35% armor penetration, but
+      deal 20% less damage to structures like lockers
+  ArcaneMusic:
+  - code_imp: Crafting recipes now uniformly use the same style for how long they
+      take.
+  Christmas5:
+  - rscadd: Shapeshifting now updates your age, physique, hair gradients, neck items
+      and underwear colour.
+  - rscadd: The Human form ability now uses a radial menu.
+  - bugfix: Human form should now update your species accordingly.
+  - bugfix: Last resort doesn't respawn you as an actual monkey, but as a monkeyized
+      human.
+  CoffeeDragon16:
+  - bugfix: ethereals will now properly spawn with tongues
+  Ebb:
+  - rscadd: You can now rip pieces of tape off of tape rolls and use them to tape
+      people's mouth closed by putting it on them as a mask. Either through the stripping
+      menu or hitting them with the tape while not on combat mode. Different tape
+      piece types have different properties.
+  - rscadd: Super pointy tape is now obtainable in-game by researching illegal tech.
+  - rscadd: Super pointy tape is now available in the traitor uplink.
+  - soundadd: Tape now makes sounds.
+  Fikou, sprite by Mooster:
+  - rscadd: Baseballs are now available in the Baseball Field on the Holodeck.
+  - rscadd: Baseball Bats can now hit thrown objects mid-air to send them back.
+  JohnFulpWillard:
+  - bugfix: The CE can now trim people's IDs to Atmospherics Technician
+  - bugfix: The HoS can no longer trim people's IDs to Lawyers.
+  MMMiracles:
+  - bugfix: The service hallway on Tram now has an APC, as well as a public cut through
+      between the two smaller hallways on the lower floor.
+  magatsuchi:
+  - bugfix: safes open correctly once again
+  necromanceranne:
+  - imageadd: Improves upon the Makarov's colours.
+  - rscadd: There is (in no way) now a 10mm Makarov that (wasn't) added to the game.
+  zxaber:
+  - imageadd: The Airlock Shock Indicator seen when using a Diagnostics Hud has a
+      new sprite.
+2022-07-15:
+  Mothblocks:
+  - soundadd: Power is no longer required for ambience.
+  Salex08:
+  - bugfix: eyesnatcher objective wont cause runtime errors anymore
+  TheBoondock:
+  - bugfix: fixed attaching a knife to cleanbot succeeding even when user has NO_DROP
+  jlsnow301:
+  - code_imp: New string ops for tgui
+  - bugfix: Removed some errant loggers left in UIs
+  orthography:
+  - rscadd: Adds a new possible cosmetic change to the ordinance lab.
+  timothymtorres:
+  - bugfix: Fix rolling paper pack spawning empty
+2022-07-16:
+  13spacemen:
+  - rscadd: You can now deconstruct living AIs and turn them back into AI core frames
+      with MMIs/posibrains. The AI can finally be a real boy
+  - qol: AIs that are gibbed now drop MMIs/posibrains
+  - rscadd: The comedian suit and coat are now available in the AutoDrobe! Wearing
+      them may make you feel like you need a psychiatrist.
+  Fikou, NecromancerAnne:
+  - balance: The Biohazard Sprayer, Power Fist, Flamethrower and Dart Pistol are no
+      longer in the nukie uplink, instead being given as bonuses in the keycarded
+      parts of the base.
+  Guillaume Prata:
+  - bugfix: Roller beds can actually fold when right clicked now.
+  Holoo-1:
+  - bugfix: fixed canister ui being too small
+  LordVollkorn / Gage Gaebler:
+  - rscadd: The toiletbong has been added to the game. Build it using the craftingmenu,
+      a wrench, a flamethrower and a nearby toilet.
+  - balance: Deconstructing a toiletbong will empty the flamethrower's plasma tank.
+      Engineers, you may build toiletbongs for anyone without feeling guilty.
+  - rscadd: The toiletbong can be emagged. But should you?
+  - rscadd: Plums have been added to Botany. Get your plum seeds today. *Click* Noice.
+  - rscadd: Plumcake and plumcake slices have been added. Find them in the craftingmenu.
+  - rscadd: Plumjuice and plumwine have been added. Pour yourself a glass.
+  - rscadd: A new drink called "The Hat" has been added. A hat is also where you drink
+      it from.
+  RandomGamer123:
+  - bugfix: You can no longer remove the turbine's rotor if its on or if its panel
+      is closed
+  SuperSlayer:
+  - spellcheck: Traitor codewords are now given by their employer, rather then by
+      The Syndicate
+  TheBoondock:
+  - rscadd: After years of research, the council of elder atmosian created and publish
+      an experimental design for a long range gas analyzer. The design specified it
+      to be coated in gold to signify the glory of atmosia.
+  magatsuchi:
+  - bugfix: mass transfer between storage no longer causes ear bleeds
+  timothymtorres:
+  - bugfix: Fix talking while mouth is gagged with tape
+  vincentiusvin:
+  - qol: Canisters, scrubbers, and pumps no longer stop reacting when wrenched.
+  - code_imp: Canisters should process once instead of twice when spawning. No gameplay
+      changes expected.

@@ -26,7 +26,7 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm
 	cost = 1
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	illegal_tech = FALSE
 
 // Medium progression cost
@@ -38,7 +38,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm/ap
 	cost = 2
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/pistolhp
 	name = "9mm Hollow Point Magazine"
@@ -47,7 +47,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm/hp
 	cost = 3
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/pistolfire
 	name = "9mm Incendiary Magazine"
@@ -56,7 +56,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm/fire
 	cost = 2
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
