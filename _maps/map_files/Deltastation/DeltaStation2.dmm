@@ -14040,11 +14040,20 @@
 /area/station/commons/fitness/recreation)
 "dNG" = (
 /obj/structure/table/wood/fancy,
-/obj/item/nullrod,
-/obj/item/organ/internal/heart,
-/obj/item/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/nullrod{
+	pixel_y = 3;
+	pixel_x = -9
+	},
+/obj/item/organ/internal/heart{
+	pixel_x = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = 6;
+	pixel_y = 16
+	},
 /obj/item/book/granter/action/spell/smoke/lesser{
-	name = "How to Fake Farts"
+	name = "How to Fake Farts";
+	pixel_x = 6
 	},
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
