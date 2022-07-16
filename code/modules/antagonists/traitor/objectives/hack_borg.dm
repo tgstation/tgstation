@@ -56,8 +56,6 @@
 			continue
 		if(!borgo.mind || !borgo.client)
 			continue
-		if(borgo.connected_ai && borgo.connected_ai.mind && borgo.connected_ai.mind.has_antag_datum(/datum/antagonist/malf_ai))
-			continue
 		return TRUE
 	return FALSE
 		
