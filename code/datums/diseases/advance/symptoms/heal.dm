@@ -11,12 +11,6 @@
 	symptom_delay_max = 1
 	var/passive_message = "" //random message to infected but not actively healing people
 
-/datum/symptom/heal/Start(datum/disease/advance/A)
-	. = ..()
-	// Anything put in here will apply to all other healing symptoms.
-	// Do not put anything here.
-	if(!.)
-		return
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
 	. = ..()
