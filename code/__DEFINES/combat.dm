@@ -140,6 +140,8 @@
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))
 
+//Silicon slowdown
+#define SILICON_HALFSTUN_LENGTH 40
 
 //Combat object defines
 

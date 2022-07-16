@@ -114,16 +114,26 @@
 
 	//robots
 	else if(iscyborg(target))
-		var/mob/living/silicon/S = target
-		log_combat(user, S, "shone in the sensors", src)
+		var/mob/living/silicon/blinded_borg = target
+		log_combat(user, blinded_borg, "shone in the sensors", src)
 		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating))
-			S.flash_act(affect_silicon = 1)
-			S.Paralyze(rand(100,200))
-			to_chat(S, span_danger("Your sensors were overloaded by a laser!"))
-			outmsg = span_notice("You overload [S] by shining [src] at [S.p_their()] sensors.")
+			if(blinded_borg.IsStun())
+				user.visible_message(span_warning("[user] fails to overload [blinded_borg] with the laser!"), span_warning("You fail to overload [blinded_borg] with the laser!"))
+				return
+			if(!blinded_borg.has_movespeed_modifier(/datum/movespeed_modifier/silicon_halfstun))
+				blinded_borg.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/silicon_halfstun, TRUE, multiplicative_slowdown = 1)
+				playsound(blinded_borg, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
+				user.visible_message(span_warning("[user] overloads [blinded_borg]'s sensors with a laser!"), span_danger("You overload [blinded_borg]'s sensors with the laser!"))
+				to_chat(blinded_borg, span_danger("Your sensors were overloaded by a laser!"))
+				addtimer(CALLBACK(blinded_borg, /mob/living/silicon/robot/proc/clear_halfstun_slowdown), SILICON_HALFSTUN_LENGTH)
+				return
+			blinded_borg.Stun(rand(20,40))
+			playsound(blinded_borg, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
+			user.visible_message(span_warning("[user] overloads [blinded_borg]'s sensors with a laser, breaking it's response program!"), span_danger("You overload [blinded_borg]'s sensors with the laser, breaking it's response program!"))
+			to_chat(blinded_borg, span_danger("Your sensors were overloaded by a laser, breaking your response program!"))
 		else
-			outmsg = span_warning("You fail to overload [S] by shining [src] at [S.p_their()] sensors!")
+			outmsg = span_warning("You fail to overload [blinded_borg] with the laser!")
 
 	//cameras
 	else if(istype(target, /obj/machinery/camera))

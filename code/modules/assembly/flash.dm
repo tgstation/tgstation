@@ -242,18 +242,24 @@
 		flash_carbon(M, user, confusion_duration = 5 SECONDS, targeted = TRUE)
 		return
 	if(issilicon(M))
-		var/mob/living/silicon/robot/flashed_borgo = M
-		log_combat(user, flashed_borgo, "flashed", src)
+		var/mob/living/silicon/robot/flashed_borg = M
+		log_combat(user, flashed_borg, "flashed", src)
 		update_icon(ALL, TRUE)
-		if(!flashed_borgo.flash_act(affect_silicon = TRUE))
-			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
+		if(!flashed_borg.flash_act(affect_silicon = TRUE))
+			user.visible_message(span_warning("[user] fails to blind [flashed_borg] with the flash!"), span_warning("You fail to blind [flashed_borg] with the flash!"))
 			return
-		flashed_borgo.Paralyze(rand(80,120))
-		flashed_borgo.set_timed_status_effect(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER, /datum/status_effect/confusion, only_if_higher = TRUE)
-		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))
-		return
-
-	user.visible_message(span_warning("[user] fails to blind [M] with the flash!"), span_warning("You fail to blind [M] with the flash!"))
+		if(flashed_borg.IsStun())
+			user.visible_message(span_warning("[user] fails to blind [flashed_borg] with the flash!"), span_warning("You fail to blind [flashed_borg] with the flash!"))
+			return
+		if(!flashed_borg.has_movespeed_modifier(/datum/movespeed_modifier/silicon_halfstun))
+			flashed_borg.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/silicon_halfstun, TRUE, multiplicative_slowdown = 1)
+			playsound(flashed_borg, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
+			user.visible_message(span_warning("[user] overloads [flashed_borg]'s sensors with the flash!"), span_danger("You overload [flashed_borg]'s sensors with the flash!"))
+			addtimer(CALLBACK(flashed_borg, /mob/living/silicon/robot/proc/clear_halfstun_slowdown), SILICON_HALFSTUN_LENGTH)
+			return
+		flashed_borg.Stun(rand(55,65))
+		playsound(flashed_borg, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
+		user.visible_message(span_warning("[user] overloads [flashed_borg]'s sensors with the flash, breaking it's response program!"), span_danger("You overload [flashed_borg]'s sensors with the flash, breaking it's response program!"))
 
 /obj/item/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)

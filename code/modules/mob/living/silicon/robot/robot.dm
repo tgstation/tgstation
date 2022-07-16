@@ -1018,3 +1018,6 @@
 /// Draw power from the robot
 /mob/living/silicon/robot/proc/draw_power(power_to_draw)
 	cell?.use(power_to_draw)
+
+/mob/living/silicon/robot/proc/clear_halfstun_slowdown()
+	remove_movespeed_modifier(/datum/movespeed_modifier/silicon_halfstun)
