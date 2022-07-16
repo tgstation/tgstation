@@ -725,7 +725,7 @@
 	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val = 0.3
-	inverse_chem = /datum/reagent/impurity/inacusiate //I think this can stay
+	inverse_chem = /datum/reagent/impurity/inacusiate
 
 /datum/reagent/medicine/inacusiate/on_mob_add(mob/living/owner, amount)
 	. = ..()
