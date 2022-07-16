@@ -73825,9 +73825,7 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
-/obj/machinery/portable_atmospherics/pump{
-	name = "Lil Pump"
-	},
+/obj/machinery/portable_atmospherics/pump/lil_pump,
 /obj/machinery/camera/directional/west{
 	c_tag = "Ordnance Mixing Lab";
 	name = "science camera";

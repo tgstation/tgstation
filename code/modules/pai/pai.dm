@@ -38,8 +38,6 @@
 	var/chassis = "repairbot"
 	/// The card we inhabit
 	var/obj/item/pai_card/card
-	/// Changes the display to syndi if true
-	var/emagged = FALSE
 	/// Time between fold out
 	var/emitter_cd = 50
 	/// The health of the holochassis
