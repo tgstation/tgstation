@@ -271,3 +271,11 @@
 	result = /obj/item/food/granola_bar
 	subcategory = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/onigiri
+	name = "Onigiri"
+	reqs = list(
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/seaweedsheet = 1,
+	)
+	result = /obj/item/food/onigiri
+	subcategory = CAT_MISCFOOD
