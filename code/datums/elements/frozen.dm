@@ -41,8 +41,8 @@
 	var/lastkey = obj_target.fingerprintslast
 	if(lastkey)
 		var/mob/toucher = get_mob_by_key(lastkey)
-		obj_target.visible_message(span_danger("[obj_target] shatters into a million pieces!"))
 		log_combat(toucher, target, "shattered")
+	obj_target.visible_message(span_danger("[obj_target] shatters into a million pieces!"))
 	qdel(obj_target)
 
 /datum/element/frozen/proc/on_moved(datum/target)
