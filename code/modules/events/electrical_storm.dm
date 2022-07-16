@@ -4,7 +4,7 @@
 	earliest_start = 10 MINUTES
 	min_players = 5
 	weight = 20
-	category = EVENT_CAT_ENGINEERING
+	category = EVENT_CATEGORY_ENGINEERING
 	description = "Destroys all lights in a large area."
 
 /datum/round_event/electrical_storm

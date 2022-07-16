@@ -58,11 +58,10 @@
 			var/event_to_run_type = text2path(string_path)
 			if(!event_to_run_type)
 				return
-			var/datum/round_event_control/E = locate(event_to_run_type) in SSevents.control
-			if(E)
-				E.admin_setup(usr)
-				var/datum/round_event/event = E.runEvent(announce_chance_override = announce_event ? 100 : 0)
-				if(event.cancel_event)
-					return
-				message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
-				log_admin("[key_name(usr)] has triggered an event. ([E.name])")
+			var/datum/round_event_control/event = locate(event_to_run_type) in SSevents.control
+			if(!event)
+				return
+			event.admin_setup(usr)
+			event.runEvent(announce_chance_override = announce_event ? 100 : 0, admin_forced = TRUE)
+			message_admins("[key_name_admin(usr)] has triggered an event. ([event.name])")
+			log_admin("[key_name(usr)] has triggered an event. ([event.name])")

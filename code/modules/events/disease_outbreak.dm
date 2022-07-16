@@ -4,7 +4,7 @@
 	max_occurrences = 1
 	min_players = 10
 	weight = 5
-	category = EVENT_CAT_HEALTH
+	category = EVENT_CATEGORY_HEALTH
 	description = "A classic or advanced disease will infect some crewmembers."
 
 /datum/round_event/disease_outbreak

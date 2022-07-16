@@ -210,7 +210,7 @@
 	typepath = /datum/round_event/ghost_role/morph
 	weight = 0 //Admin only
 	max_occurrences = 1
-	category = EVENT_CAT_ENTITIES
+	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a hungry shapeshifting blobby creature."
 
 /datum/round_event/ghost_role/morph

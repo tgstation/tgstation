@@ -5,7 +5,7 @@
 	weight = 20
 	max_occurrences = 4
 	earliest_start = 10 MINUTES
-	category = EVENT_CAT_BUREAUCRATIC
+	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "A pod containing a random supply crate lands on the station."
 
 ///Spawns a cargo pod containing a random cargo supply pack on a random area of the station

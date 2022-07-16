@@ -36,7 +36,7 @@
 		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
 
 /datum/round_event_control/wizard
-	category = EVENT_CAT_WIZARD
+	category = EVENT_CATEGORY_WIZARD
 	wizardevent = TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
@@ -101,7 +101,7 @@ Runs the event
 * - random: shows if the event was triggered randomly, or by on purpose by an admin or an item
 * - announce_chance_override: if the value is not null, overrides the announcement chance when an admin calls an event
 */
-/datum/round_event_control/proc/runEvent(random = FALSE, announce_chance_override = null)
+/datum/round_event_control/proc/runEvent(random = FALSE, announce_chance_override = null, admin_forced = FALSE)
 	/*
 	* We clear our signals first so we dont cancel a wanted event by accident,
 	* the majority of time the admin will probably want to cancel a single midround spawned random events
@@ -120,7 +120,7 @@ Runs the event
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	triggering = TRUE
 
-	if (alert_observers)
+	if (alert_observers && !admin_forced)
 		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
 		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 

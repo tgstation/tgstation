@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/grey_tide
 	max_occurrences = 2
 	min_players = 5
-	category = EVENT_CAT_ENGINEERING
+	category = EVENT_CATEGORY_ENGINEERING
 	description = "Bolts open all doors in one or more departments."
 
 /datum/round_event/grey_tide

@@ -7,7 +7,7 @@
 	min_players = 15
 	max_occurrences = 3
 	earliest_start = 25 MINUTES
-	category = EVENT_CAT_SPACE
+	category = EVENT_CATEGORY_SPACE
 	description = "A regular meteor wave."
 
 /datum/round_event/meteor_wave

@@ -5,7 +5,7 @@
 	weight = 7
 	max_occurrences = 1
 	min_players = 25
-	category = EVENT_CAT_HEALTH
+	category = EVENT_CATEGORY_HEALTH
 	description = "Spawns a sentient disease, who wants to infect as many people as possible."
 
 /datum/round_event/ghost_role/sentient_disease

@@ -5,7 +5,7 @@
 	weight = -1
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
-	category = EVENT_CAT_HOLIDAY
+	category = EVENT_CATEGORY_HOLIDAY
 	description = "Hides surprise filled easter eggs in maintenance."
 
 /datum/round_event/easter/announce(fake)
@@ -18,7 +18,7 @@
 	typepath = /datum/round_event/rabbitrelease
 	weight = 5
 	max_occurrences = 10
-	category = EVENT_CAT_HOLIDAY
+	category = EVENT_CATEGORY_HOLIDAY
 	description = "Summons a wave of cute rabbits."
 
 /datum/round_event/rabbitrelease/announce(fake)

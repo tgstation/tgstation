@@ -7,7 +7,7 @@
 	min_players = 20
 
 	dynamic_should_hijack = TRUE
-	category = EVENT_CAT_ENTITIES
+	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a new blob overmind."
 
 /datum/round_event_control/blob/canSpawnEvent(players)

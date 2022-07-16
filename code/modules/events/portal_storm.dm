@@ -4,7 +4,7 @@
 	weight = 2
 	min_players = 15
 	earliest_start = 30 MINUTES
-	category = EVENT_CAT_ENTITIES
+	category = EVENT_CATEGORY_ENTITIES
 	description = "Syndicate troops pour out of portals."
 
 /datum/round_event/portal_storm/syndicate_shocktroop
@@ -17,7 +17,7 @@
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
 	weight = 0
 	max_occurrences = 0
-	category = EVENT_CAT_ENTITIES
+	category = EVENT_CATEGORY_ENTITIES
 	description = "Nar'sie constructs pour out of portals."
 
 /datum/round_event/portal_storm/portal_storm_narsie

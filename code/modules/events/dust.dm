@@ -5,7 +5,7 @@
 	max_occurrences = 1000
 	earliest_start = 0 MINUTES
 	alert_observers = FALSE
-	category = EVENT_CAT_SPACE
+	category = EVENT_CATEGORY_SPACE
 	description = "A single space dust is hurled at the station."
 
 /datum/round_event/space_dust
@@ -22,7 +22,7 @@
 	weight = 0
 	max_occurrences = 0
 	earliest_start = 0 MINUTES
-	category = EVENT_CAT_SPACE
+	category = EVENT_CATEGORY_SPACE
 	description = "The station is pelted by an extreme amount of sand for several minutes."
 
 /datum/round_event/sandstorm

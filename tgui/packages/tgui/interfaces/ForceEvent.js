@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Stack, Button, Icon, Input, Section, Table } from '../components';
+import { Stack, Button, Icon, Input, Section, Table } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
@@ -8,17 +8,9 @@ export const ForceEvent = (props, context) => {
   return (
     <Window title="Force Event" width={450} height={450}>
       <Window.Content scrollable>
-        <Stack fill vertical>
-          <Stack.Item>
             <EventSearch />
-          </Stack.Item>
-          <Stack.Item>
             <EventOptionsPanel />
-          </Stack.Item>
-          <Stack.Item grow>
             <EventContent />
-          </Stack.Item>
-        </Stack>
       </Window.Content>
     </Window>
   );
@@ -57,16 +49,12 @@ export const EventOptionsPanel = (props, context) => {
   const [announce, setAnnounce] = useLocalState(context, 'announce', true);
 
   return (
-    <Stack vertical fill>
-      <Stack.Item>
         <Button.Checkbox
           fluid
           checked={announce}
           onClick={() => setAnnounce(!announce)}>
-          Announce event to the crew {announce}
+          Announce event to the crew
         </Button.Checkbox>
-      </Stack.Item>
-    </Stack>
   );
 };
 
@@ -74,24 +62,15 @@ export const EventContent = (props, context) => {
   const { data } = useBackend(context);
 
   const categories = Object.values(data.categories);
-
-  const nameSorter = (a, b) => {
-    const nameA = a.name.toLowerCase();
-    const nameB = b.name.toLowerCase();
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-    return 0;
-  };
+  const sortCategories = sortBy(
+	(category) => category.name
+  );
 
   return (
     <Section>
       <Stack vertical fill>
-        {categories.sort(nameSorter).map((category) => (
-          <Stack.Item mt={0.2}>
+        {sortCategories(categories).map((category) => (
+          <Stack.Item mt={0.2} key={category.name}>
             <EventList category={category} />
           </Stack.Item>
         ))}

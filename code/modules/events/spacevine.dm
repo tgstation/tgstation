@@ -48,7 +48,7 @@
 	weight = 15
 	max_occurrences = 3
 	min_players = 10
-	category = EVENT_CAT_ENTITIES
+	category = EVENT_CATEGORY_ENTITIES
 	description = "Kudzu begins to overtake the station. Might spawn man-traps."
 
 /datum/round_event/spacevine

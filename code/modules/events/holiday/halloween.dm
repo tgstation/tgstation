@@ -5,7 +5,7 @@
 	weight = -1 //forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
-	category = EVENT_CAT_HOLIDAY
+	category = EVENT_CATEGORY_HOLIDAY
 	description = "Gives everyone treats, and turns Ian and Poly into their festive versions."
 
 /datum/round_event/spooky/start()

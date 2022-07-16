@@ -7,7 +7,7 @@
 	max_occurrences = 1
 	min_players = 5
 	dynamic_should_hijack = TRUE
-	category = EVENT_CAT_ENTITIES
+	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns an angry, soul sucking ghost."
 
 

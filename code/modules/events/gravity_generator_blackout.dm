@@ -2,7 +2,7 @@
 	name = "Gravity Generator Blackout"
 	typepath = /datum/round_event/gravity_generator_blackout
 	weight = 30
-	category = EVENT_CAT_ENGINEERING
+	category = EVENT_CATEGORY_ENGINEERING
 	description = "Turns off the gravity generator."
 
 /datum/round_event_control/gravity_generator_blackout/canSpawnEvent()

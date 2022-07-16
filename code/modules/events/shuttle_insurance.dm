@@ -4,7 +4,7 @@
 	name = "Shuttle Insurance"
 	typepath = /datum/round_event/shuttle_insurance
 	max_occurrences = 1
-	category = EVENT_CAT_BUREAUCRATIC
+	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "A sketchy but legit insurance offer."
 
 /datum/round_event_control/shuttle_insurance/canSpawnEvent(players)

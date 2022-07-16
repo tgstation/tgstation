@@ -12,7 +12,7 @@
 	weight = -1 //forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
-	category = EVENT_CAT_HOLIDAY
+	category = EVENT_CATEGORY_HOLIDAY
 	description = "Puts people on dates! They must protect each other. Sometimes a vengeful third wheel spawns."
 
 /datum/round_event/valentines/start()

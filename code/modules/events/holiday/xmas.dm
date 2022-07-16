@@ -74,7 +74,7 @@
 	weight = 20
 	max_occurrences = 1
 	earliest_start = 30 MINUTES
-	category = EVENT_CAT_HOLIDAY
+	category = EVENT_CATEGORY_HOLIDAY
 	description = "Spawns santa, who shall roam the station, handing out gifts."
 
 /datum/round_event/santa

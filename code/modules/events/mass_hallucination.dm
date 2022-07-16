@@ -4,7 +4,7 @@
 	weight = 10
 	max_occurrences = 2
 	min_players = 1
-	category = EVENT_CAT_HEALTH
+	category = EVENT_CATEGORY_HEALTH
 	description = "Multiple crewmembers start to hallucinate the same thing."
 
 /datum/round_event/mass_hallucination

@@ -6,7 +6,7 @@
 	earliest_start = 20 MINUTES
 	min_players = 20
 	dynamic_should_hijack = TRUE
-	category = EVENT_CAT_INVASION
+	category = EVENT_CATEGORY_INVASION
 	description = "A space ninja infiltrates the station."
 
 /datum/round_event/ghost_role/space_ninja
