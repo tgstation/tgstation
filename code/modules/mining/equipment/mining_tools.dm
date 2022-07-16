@@ -226,7 +226,7 @@
 			usesound = 'sound/effects/picaxe1.ogg'
 			attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 			attack_verb_simple = list("hit", "pierce", "slice", "attack")
-	playsound(src, )
+	playsound(src, 'sound/items/change_jaws.ogg', 50, vary = TRUE)
 	user.update_inv_hands()
 
 /obj/item/trench_tool/proc/check_menu(mob/user)
