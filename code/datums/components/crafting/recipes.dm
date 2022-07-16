@@ -61,6 +61,16 @@
 		return TRUE
 	return FALSE
 
+/datum/crafting_recipe/cable_coil
+	name = "Cable Coil"
+	result = /obj/item/stack/cable_coil
+	reqs = list(/datum/reagent/fuel = 10,
+				/obj/item/stack/rods = 2,)
+	parts = list(obj/item/stack/rods = 2)
+	time = 2.5 SECONDS
+	category = CAT_MACHINE
+	subcategory = CAT_ELECTRIC
+
 /datum/crafting_recipe/improv_explosive
 	name = "IED"
 	result = /obj/item/grenade/iedcasing

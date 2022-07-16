@@ -21,6 +21,11 @@
 					CAT_WEAPON,
 					CAT_AMMO,
 				),
+				CAT_MACHINE = list(
+					CAT_BOARD,
+					CAT_ELECTRIC,
+					CAT_PARTS,
+				),
 				CAT_ROBOT = CAT_NONE,
 				CAT_MISC = CAT_NONE,
 				CAT_PRIMAL = CAT_NONE,
