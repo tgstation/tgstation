@@ -542,7 +542,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/paper/crumpled/ruins/note_institute/Initialize(mapload)
 	. = ..()
-	info = {"Note to the Institute<br>
+	default_raw_text = {"Note to the Institute<br>
 	If you're reading this, I hope you're from the Institute. First things first, I should apologise. I won't be coming back to teach in the new semester.<br>
 	We've made some powerful enemies. Very powerful. More powerful than any of you can imagine, and so we can't come back.<br>
 	So, we've made the decision to vanish. Perhaps more literally than you might think. Do not try to find us- for your own safety.<br>
@@ -552,7 +552,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/paper/crumpled/ruins/postdocs_memo
 	name = "memo to the postdocs"
-	info = {"Memo to the Postdocs
+	default_raw_text = {"Memo to the Postdocs
 	Remember, if you're going in to retrieve the prototype for any reason (not that you should be without my supervision), that the security systems are always live- they have no shutoff.<br>
 	Instead, remember: what you can't see can't hurt you.<br>
 	Take care of the lab during my vacation. See you all in June.<br>
@@ -560,7 +560,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/paper/crumpled/ruins/hotel_note
 	name = "hotel note"
-	info = {"Hotel Note<br>
+	default_raw_text = {"Hotel Note<br>
 	Well, you figured out the puzzle. Looks like someone's done their homework on my research.<br>
 	I suppose you deserve to know some more about our situation. Our research has attracted some undue attention and so, for our own safety, we've taken to the Bluespace.<br>
 	Yes, you did read that correctly. I'm sure the physics and maths would bore you, but in layman's terms, the manifested link to the Bluespace the crystals provide can be exploited. With the correct technology, one can "surf" the Bluespace, as Jen likes to call it.<br>
@@ -571,7 +571,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/paper/fluff/ruins/docslabnotes
 	name = "lab notebook page"
-	info = {"Laboratory Notebook<br>
+	default_raw_text = {"Laboratory Notebook<br>
 	PROPERTY OF DOCTOR D. HILBERT<br>
 	May 10th, 2555<br>
 	Finally, my new facility is complete, and not a moment too soon!<br>
@@ -594,7 +594,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/paper/fluff/ruins/romans_emails
 	name = "e-mail readout - 14.05.2558"
-	info = {"Logs of Roman P.<br>
+	default_raw_text = {"Logs of Roman P.<br>
 	<h4>New Job</h4><br>
 	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
 	Hello sis! Figured I should update you on what's going on with the career change.<br>

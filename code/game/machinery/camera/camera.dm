@@ -325,15 +325,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			return
 
 	// OTHER
-	if((istype(I, /obj/item/paper) || istype(I, /obj/item/modular_computer/tablet)) && isliving(user))
+	if(istype(I, /obj/item/modular_computer/tablet) && isliving(user))
 		var/mob/living/paper_user = user
 
 		var/itemname = ""
 		var/info = ""
-		if(istype(I, /obj/item/paper))
-			var/obj/item/paper/pressed_paper = I
-			itemname = pressed_paper.name
-			info = pressed_paper.info
 		if(istype(I, /obj/item/modular_computer/tablet))
 			var/obj/item/modular_computer/tablet/computer = I
 			itemname = computer.name

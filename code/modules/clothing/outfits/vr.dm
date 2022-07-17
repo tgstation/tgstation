@@ -39,4 +39,4 @@
 
 /obj/item/paper/fluff/vr/fluke_ops
 	name = "Where is my uplink?"
-	info = "Use the radio in your backpack."
+	default_raw_text = "Use the radio in your backpack."

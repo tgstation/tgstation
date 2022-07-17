@@ -15,6 +15,7 @@ import { Box, Flex, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
 import { sanitizeText } from '../sanitize';
+import { logger } from '../logging';
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
 
 // Hacky, yes, works?...yes
@@ -405,7 +406,7 @@ class PaperSheetEdit extends Component {
       field_counter,
       edit_usr,
     } = data;
-    const out = { text: text };
+    const out = { text: text, field_counter: field_counter, original_text: value };
     // check if we are adding to paper, if not
     // we still have to check if someone entered something
     // into the fields
@@ -470,7 +471,10 @@ class PaperSheetEdit extends Component {
   finalUpdate(new_text) {
     const { act } = useBackend(this.context);
     const final_processing = this.createPreview(new_text, true);
+    const nuText = final_processing.text;
+    final_processing.text = final_processing.original_text;
     act('save', final_processing);
+    final_processing.text = nuText;
     this.setState(() => { return {
       textarea_text: "",
       previewSelected: "save",
@@ -529,6 +533,7 @@ class PaperSheetEdit extends Component {
               }
               onClick={() => {
                 if (this.state.previewSelected === 'confirm') {
+                  logger.log(this.state.textarea_text);
                   this.finalUpdate(this.state.textarea_text);
                 } else if (this.state.previewSelected === 'Edit') {
                   this.setState(() => {

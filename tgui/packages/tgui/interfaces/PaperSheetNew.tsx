@@ -7,7 +7,7 @@
  * @author Changes Ghommie
  * @author Changes Timberpoes
  * @license MIT
- */
+
 
 // import { classes } from 'common/react';
 // import { Component } from 'inferno';
@@ -180,3 +180,4 @@ export const PaperSheet = (props, context) => {
     </Window>
   );
 };
+*/

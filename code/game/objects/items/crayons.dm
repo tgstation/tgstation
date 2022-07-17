@@ -497,6 +497,14 @@
 		if(get_area(G) == territory)
 			return G
 
+/obj/item/toy/crayon/get_writing_implement_details()
+	return list(
+		interaction_mode = MODE_WRITING,
+		font = CRAYON_FONT,
+		color = paint_color,
+		use_bold = TRUE,
+	)
+
 /obj/item/toy/crayon/red
 	name = "red crayon"
 	icon_state = "crayonred"
