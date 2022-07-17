@@ -223,7 +223,7 @@
 
 /obj/item/reagent_containers/borghypo/examine(mob/user)
 	. = ..()
-	. += "Currently loaded: [selected_reagent]. [selected_reagent.description]"
+	. += "Currently loaded: [selected_reagent ? "[selected_reagent]. [selected_reagent.description]" : "nothing."]"
 	. += span_notice("<i>Alt+Click</i> to change transfer amount. Currently set to [amount_per_transfer_from_this]u.")
 
 /obj/item/reagent_containers/borghypo/AltClick(mob/living/user)
