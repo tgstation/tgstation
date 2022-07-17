@@ -29,7 +29,7 @@ Putting `{@OLD}` is important since otherwise, UpdatePaths will automatically di
 
 ### On Variable Editing
 
-If you do not want any variable edits to carry over, you can simply skip adding the `{@OLD}` tag (although this is not advisable under normal circumstances). There are also a bunch of neat features you can use with UpdatePaths variable filtering, such as ensuring all new paths get a certain variable edit, filtering old paths if they have a certain variable edit, or even splitting one path into multiple paths on a map. You can find out more about this by reading `https://github.com/tgstation/tgstation/blob/master/tools/UpdatePaths/__main__.py#L9`.
+If you do not want any variable edits to carry over, you can simply skip adding the `{@OLD}` tag (although this is not advisable under normal circumstances). There are also a bunch of neat features you can use with UpdatePaths variable filtering, such as ensuring all new paths get a certain variable edit, filtering old paths if they have a certain variable edit, or even splitting one path into multiple paths on a map. You can find out more about this by reading https://github.com/tgstation/tgstation/blob/master/tools/UpdatePaths/__main__.py#L9.
 
 If you get lost, look at other scripts for examples.
 
