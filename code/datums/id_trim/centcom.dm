@@ -186,7 +186,7 @@
 /datum/id_trim/centcom/ert/clown
 	assignment = JOB_ERT_CLOWN
 	trim_state = "trim_clown"
-	subdepartment_color = "#FF00FF" // RIP Rainbow trim, a real one
+	subdepartment_color = "#FF00FF"
 	sechud_icon_state = SECHUD_ENTERTAINMENT_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/clown/New()
