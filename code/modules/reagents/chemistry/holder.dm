@@ -782,11 +782,6 @@
 		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
 			inverse_reagent.name = reagent.name//Negative effects are hidden
 		return FALSE //prevent addition
-	else if(reagent.impure_chem)
-		var/impure_vol = added_volume * (1 - added_purity) //turns impure ratio into impure chem
-		add_reagent(reagent.impure_chem, impure_vol, FALSE, added_purity = 1-reagent.creation_purity)
-		if(!(reagent.chemical_flags & REAGENT_SPLITRETAINVOL))
-			return added_volume - impure_vol
 	return added_volume
 
 ///Processes any chems that have the REAGENT_IGNORE_STASIS bitflag ONLY
@@ -1673,21 +1668,9 @@
 			data["reagent_mode_reagent"]["addictions"] = list()
 			data["reagent_mode_reagent"]["addictions"] = parse_addictions(reagent)
 
-
-			var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
-			if(impure_reagent)
-				data["reagent_mode_reagent"] += list("impureReagent" = impure_reagent.name, "impureId" = impure_reagent.type)
-
 			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
 			if(inverse_reagent)
 				data["reagent_mode_reagent"] += list("inverseReagent" = inverse_reagent.name, "inverseId" = inverse_reagent.type)
-
-			var/datum/reagent/failed_reagent = GLOB.chemical_reagents_list[reagent.failed_chem]
-			if(failed_reagent)
-				data["reagent_mode_reagent"] += list("failedReagent" = failed_reagent.name, "failedId" = failed_reagent.type)
-
-			if(istype(reagent, /datum/reagent/impurity))
-				data["reagent_mode_reagent"] += list("isImpure" = TRUE)
 
 			if(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
 				data["reagent_mode_reagent"] += list("deadProcess" = TRUE)

@@ -24,7 +24,7 @@
 		/obj/item/weldingtool = 8,
 		/obj/item/clothing/head/welding = 8,
 		/obj/item/light/tube = 10,
-		/obj/item/clothing/suit/fire = 4,
+		/obj/item/clothing/suit/utility/fire = 4,
 		/obj/item/stock_parts/scanning_module = 5,
 		/obj/item/stock_parts/micro_laser = 5,
 		/obj/item/stock_parts/matter_bin = 5,

@@ -37808,7 +37808,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/clothing/suit/fire/firefighter{
+/obj/item/clothing/suit/utility/fire/firefighter{
 	pixel_y = 5
 	},
 /obj/item/clothing/mask/breath,
@@ -75194,7 +75194,7 @@
 /area/station/maintenance/fore)
 "vtv" = (
 /obj/structure/table/bronze,
-/obj/item/clothing/suit/bronze,
+/obj/item/clothing/suit/costume/bronze,
 /obj/item/clothing/shoes/bronze{
 	pixel_x = -12
 	},
@@ -76579,7 +76579,7 @@
 /area/station/maintenance/disposal/incinerator)
 "vKp" = (
 /obj/item/clothing/head/cardborg,
-/obj/item/clothing/suit/cardborg,
+/obj/item/clothing/suit/costume/cardborg,
 /obj/structure/closet/cardboard/metal,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/plating,
@@ -82648,7 +82648,7 @@
 /area/station/maintenance/starboard)
 "xun" = (
 /obj/structure/table,
-/obj/item/clothing/suit/justice,
+/obj/item/clothing/suit/costume/justice,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
