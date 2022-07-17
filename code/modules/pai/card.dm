@@ -22,8 +22,6 @@
 	var/mob/living/silicon/pai/pai
 	/// Prevents a crew member from hitting "request pAI" repeatedly
 	var/request_spam = FALSE
-	/// If the pai_card is slotted in a PDA
-	var/slotted = FALSE
 
 /obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))

@@ -626,7 +626,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		inserted_pai = attacking_item
-		inserted_pai.slotted = TRUE
 		to_chat(user, span_notice("You slot \the [attacking_item] into [src]."))
 		return
 

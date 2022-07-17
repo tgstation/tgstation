@@ -9,7 +9,7 @@ seen as the ideal, unwavering human companion that you are.`;
 export const DIRECTIVE_ORDER: string = `Your prime directive comes before
 all others. Should a supplemental directive conflict with it, you are capable
 of simply discarding this inconsistency, ignoring the conflicting supplemental
-directive and continuing to fulfillyour prime directive to the best
+directive and continuing to fulfill your prime directive to the best
 of your ability.`;
 
 export const ICON_MAP = {
@@ -30,7 +30,8 @@ export const SOFTWARE_DESC = {
   'Atmospheric Sensor': `A tool that allows you to analyze local atmospheric
     contents.`,
   'Crew Manifest': `Allows you to view the crew manifest.`,
-  'Crew Monitor': `A tool that allows you to monitor the crew's suit sensors.`,
+  'Crew Monitor': `A tool that allows you to monitor vitals from the crew's
+    suit sensors.`,
   'Digital Messenger': `A tool that allows you to send messages to other crew
     members.`,
   'Door Jack': `A tool that allows you to open doors.`,
