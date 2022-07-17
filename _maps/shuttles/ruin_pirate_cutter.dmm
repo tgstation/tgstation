@@ -7,7 +7,7 @@
 	name = "pirate outfits"
 	},
 /obj/item/clothing/head/collectable/pirate,
-/obj/item/clothing/suit/pirate,
+/obj/item/clothing/suit/costume/pirate,
 /obj/item/clothing/under/costume/pirate,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/head/bandana,
@@ -240,7 +240,7 @@
 	name = "pirate outfits"
 	},
 /obj/item/clothing/head/collectable/pirate,
-/obj/item/clothing/suit/pirate,
+/obj/item/clothing/suit/costume/pirate,
 /obj/item/clothing/under/costume/pirate,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/head/bandana,

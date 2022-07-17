@@ -547,7 +547,7 @@
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape/simulation)
 "xP" = (
-/obj/structure/grille/indestructable,
+/obj/structure/grille/indestructible,
 /turf/open/floor/plating,
 /area/shuttle/escape/simulation)
 "yk" = (
@@ -1088,7 +1088,7 @@
 "RV" = (
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/suit/fire/firefighter,
+/obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /obj/machinery/light/directional/west,

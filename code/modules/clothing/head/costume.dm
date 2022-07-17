@@ -111,8 +111,8 @@
 	..()
 	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		var/mob/living/carbon/human/H = user
-		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
-			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
+		if(istype(H.wear_suit, /obj/item/clothing/suit/costume/cardborg))
+			var/obj/item/clothing/suit/costume/cardborg/CB = H.wear_suit
 			CB.disguise(user, src)
 
 /obj/item/clothing/head/cardborg/dropped(mob/living/user)

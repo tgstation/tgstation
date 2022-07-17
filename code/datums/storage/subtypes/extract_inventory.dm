@@ -25,7 +25,6 @@
 	if(!parentSlimeExtract)
 		return
 
-	message_admins(parentSlimeExtract.contents.len)
 	if(parentSlimeExtract.contents.len >= max_slots)
 		QDEL_LIST(parentSlimeExtract.contents)
 		createExtracts(user)

@@ -7,7 +7,7 @@
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 
 
-/obj/item/clothing/suit/beekeeper_suit
+/obj/item/clothing/suit/utility/beekeeper_suit
 	name = "beekeeper suit"
 	desc = "Keeps the lil buzzing buggers away from your squishy bits."
 	icon_state = "beekeeper"
