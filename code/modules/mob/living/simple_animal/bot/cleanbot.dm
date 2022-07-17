@@ -96,15 +96,17 @@
 	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
 
 /mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/W, mob/user)
-	if(in_range(src, user))
-		to_chat(user, span_notice("You attach \the [W] to \the [src]."))
-		user.transferItemToLoc(W, src)
+	if(in_range(src, user) && user.transferItemToLoc(W, src))
+		balloon_alert(user, "attached")
 		weapon = W
 		weapon_orig_force = weapon.force
 		if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 			weapon.force = weapon.force / 2
 		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.inhand_icon_state))
-
+		return TRUE
+	balloon_alert(user, "couldn't attach!")
+	return FALSE
+		
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
 

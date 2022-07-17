@@ -181,7 +181,7 @@
 		planted_on.vis_contents -= src
 	return ..()
 
-/obj/item/traitor_bug/Moved(atom/OldLoc, Dir)
+/obj/item/traitor_bug/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(planted_on)
 		planted_on.vis_contents -= src
