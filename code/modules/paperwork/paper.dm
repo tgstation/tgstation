@@ -225,6 +225,7 @@
 	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
+	update_static_data()
 
 /obj/item/paper/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku..."))
@@ -343,22 +344,27 @@
 
 	static_data["raw_text_input"] = list()
 	for(var/datum/paper_input/text_input as anything in raw_text_inputs)
-		static_data["raw_text_input"] += text_input.to_list()
+		static_data["raw_text_input"] += list(text_input.to_list())
 
 	static_data["raw_field_input"] = list()
 	for(var/datum/paper_field/field_input as anything in raw_field_input_data)
-		static_data["raw_field_input"] += field_input.to_list()
+		static_data["raw_field_input"] += list(field_input.to_list())
 
 	static_data["raw_stamp_input"] = list()
 	for(var/datum/paper_stamp/stamp_input as anything in raw_stamp_data)
-		static_data["raw_stamp_input"] += stamp_input.to_list()
+		static_data["raw_stamp_input"] += list(stamp_input.to_list())
 
 	static_data["max_length"] = MAX_PAPER_LENGTH
 	static_data["paper_color"] = color ? color : COLOR_WHITE
+	static_data["paper_name"] = name
+
+	static_data["default_pen_font"] = PEN_FONT
+	static_data["default_pen_color"] = COLOR_BLACK
+
+	return static_data;
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
-	data["edit_usr"] = "[user.real_name]"
 
 	var/obj/item/holding = user.get_active_held_item()
 	// Use a clipboard's pen, if applicable
@@ -387,7 +393,7 @@
 	var/mob/user = ui.user
 
 	switch(action)
-		if("stamp")
+		if("add_stamp")
 			var/obj/item/holding = user.get_active_held_item()
 			var/stamp_info = holding?.get_writing_implement_details()
 			if(!stamp_info || (stamp_info["interaction_mode"] != MODE_STAMPING))
@@ -418,7 +424,7 @@
 			update_appearance()
 			update_static_data(user, ui)
 			return TRUE
-		if("save")
+		if("add_text")
 			var/paper_input = params["text"]
 			var/this_input_length = length(paper_input)
 
@@ -464,6 +470,8 @@
 
 			update_static_data(user, ui)
 			update_appearance()
+			return TRUE
+		if("fill_input_field")
 			return TRUE
 
 /obj/item/paper/ui_host(mob/user)
@@ -514,7 +522,7 @@
 	var/stamp_x = 0
 	/// Y position of stamp.
 	var/stamp_y = 0
-	/// Rotation of stamp.
+	/// Rotation of stamp in degrees. 0 to 359.
 	var/rotation = 0
 
 /datum/paper_stamp/New(_class, _stamp_x, _stamp_y, _rotation)
@@ -561,9 +569,6 @@
 	color = pick(COLOR_RED, COLOR_LIME, COLOR_LIGHT_ORANGE, COLOR_DARK_PURPLE, COLOR_FADED_PINK, COLOR_BLUE_LIGHT)
 
 /obj/item/paper/natural
-
-/obj/item/paper/natural/Initialize(mapload)
-	. = ..()
 	color = COLOR_OFF_WHITE
 
 /obj/item/paper/crumpled

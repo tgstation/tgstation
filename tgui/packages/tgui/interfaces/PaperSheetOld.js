@@ -1,9 +1,5 @@
 /**
  * @file
- * @copyright 2020 WarlockD (https://github.com/warlockd)
- * @author Original WarlockD (https://github.com/warlockd)
- * @author Changes stylemistake
- * @author Changes ThePotato97
  * @license MIT
  */
 
