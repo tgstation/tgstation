@@ -917,7 +917,7 @@
 			if(do_after(user, 2 SECONDS)) // Doesn't technically require a spraycan's cap to be off but shhh
 				department_color_override = our_crayon.paint_color
 				balloon_alert(user, "recolored")
-			else return
+			return
 		else if(do_after(user, 1 SECONDS))
 			subdepartment_color_override = our_crayon.paint_color
 			balloon_alert(user, "recolored")
