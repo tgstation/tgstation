@@ -216,12 +216,13 @@
 		if(WIRE_UNRESTRICTED_EXIT) // If you cut this wire, the unrestricted helper goes way. If you mend it, it'll go "haywire" and pick a new direction at random. Might have to cut/mend a time or two to get the direction you want.
 			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
 				return
-			if(!mend)
-				A.unres_sides = NONE
-				A.update_appearance()
-			else
+			if(mend)
 				A.unres_sides = pick(NORTH, SOUTH, EAST, WEST)
 				A.update_appearance()
+			else
+				A.unres_sides = NONE
+				A.update_appearance()
+
 
 /datum/wires/airlock/can_reveal_wires(mob/user)
 	if(HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
