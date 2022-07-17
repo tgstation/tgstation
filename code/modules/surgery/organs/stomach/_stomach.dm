@@ -152,7 +152,7 @@
 		else if(human.satiety < 0)
 			human.satiety++
 			if(DT_PROB(round(-human.satiety/77), delta_time))
-				human.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+				human.set_jitter_if_lower(10 SECONDS)
 			hunger_rate = 3 * HUNGER_FACTOR
 		hunger_rate *= human.physiology.hunger_mod
 		human.adjust_nutrition(-hunger_rate * delta_time)
@@ -216,17 +216,17 @@
 		var/pukeprob = 2.5 + (0.025 * disgust)
 		if(disgust >= DISGUST_LEVEL_GROSS)
 			if(DT_PROB(5, delta_time))
-				disgusted.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/speech/stutter)
-				disgusted.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/confusion)
+				disgusted.adjust_stutter(2 SECONDS)
+				disgusted.adjust_confusion(2 SECONDS)
 			if(DT_PROB(5, delta_time) && !disgusted.stat)
 				to_chat(disgusted, span_warning("You feel kind of iffy..."))
-			disgusted.adjust_timed_status_effect(-6 SECONDS, /datum/status_effect/jitter)
+			disgusted.adjust_jitter(-6 SECONDS)
 		if(disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
-				disgusted.adjust_timed_status_effect(2.5 SECONDS, /datum/status_effect/confusion)
-				disgusted.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/speech/stutter)
+				disgusted.adjust_confusion(2.5 SECONDS)
+				disgusted.adjust_stutter(2 SECONDS)
 				disgusted.vomit(10, distance = 0, vomit_type = NONE)
-			disgusted.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+			disgusted.set_dizzy_if_lower(10 SECONDS)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(DT_PROB(13, delta_time))
 				disgusted.blur_eyes(3) //We need to add more shit down here

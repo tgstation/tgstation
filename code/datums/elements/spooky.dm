@@ -21,8 +21,8 @@
 		var/mob/living/carbon/human/U = user
 		if(!istype(U.dna.species, /datum/species/skeleton))
 			U.adjustStaminaLoss(35) //Extra Damage
-			U.set_timed_status_effect(70 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-			U.set_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+			U.set_jitter_if_lower(70 SECONDS)
+			U.set_stutter(40 SECONDS)
 			if(U.getStaminaLoss() > 95)
 				to_chat(U, "<font color ='red', size ='4'><B>Your ears weren't meant for this spectral sound.</B></font>")
 				INVOKE_ASYNC(src, .proc/spectral_change, U)
@@ -35,16 +35,16 @@
 		if(istype(H.dna.species, /datum/species/zombie))
 			H.adjustStaminaLoss(25)
 			H.Paralyze(15) //zombies can't resist the doot
-		C.set_timed_status_effect(70 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-		C.set_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+		C.set_jitter_if_lower(70 SECONDS)
+		C.set_stutter(40 SECONDS)
 		if((!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
 			C.adjustStaminaLoss(25) //boneless humanoids don't lose the will to live
 		to_chat(C, "<font color='red' size='4'><B>DOOT</B></font>")
 		INVOKE_ASYNC(src, .proc/spectral_change, H)
 
 	else //the sound will spook monkeys.
-		C.set_timed_status_effect(30 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-		C.set_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+		C.set_jitter_if_lower(30 SECONDS)
+		C.set_stutter(40 SECONDS)
 
 /datum/element/spooky/proc/spectral_change(mob/living/carbon/human/H, mob/user)
 	if((H.getStaminaLoss() > 95) && (!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))

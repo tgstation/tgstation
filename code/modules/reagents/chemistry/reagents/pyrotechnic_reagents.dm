@@ -117,7 +117,7 @@
 	..()
 	if(!isplasmaman(M))
 		return
-	M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
+	M.set_drugginess(30 SECONDS * REM * delta_time)
 	if(M.hallucination < volume)
 		M.hallucination += 5 * REM * delta_time
 

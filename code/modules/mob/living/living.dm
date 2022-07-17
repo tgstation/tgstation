@@ -2262,4 +2262,4 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!isnum(duration) || duration <= 0 || QDELETED(src) || !check_rights(NONE))
 		return
 
-	adjust_timed_status_effect(duration SECONDS, impediments[chosen])
+	adjust_timed_status_effect(duration * 1 SECONDS, impediments[chosen])

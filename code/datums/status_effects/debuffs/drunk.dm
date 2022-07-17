@@ -157,27 +157,27 @@
 
 	// There's always a 30% chance to gain some drunken slurring
 	if(prob(30))
-		owner.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk)
+		owner.adjust_slurring(4 SECONDS)
 
 	// And drunk people will always lose jitteriness
-	owner.adjust_timed_status_effect(-6 SECONDS, /datum/status_effect/jitter)
+	owner.adjust_jitter(-6 SECONDS)
 
 	// Over 11, we will constantly gain slurring up to 10 seconds of slurring.
 	if(drunk_value >= 11)
-		owner.adjust_timed_status_effect(2.4 SECONDS, /datum/status_effect/speech/slurring/drunk, max_duration = 10 SECONDS)
+		owner.adjust_slurring_up_to(2.4 SECONDS, 10 SECONDS)
 
 	// Over 41, we have a 30% chance to gain confusion, and we will always have 20 seconds of dizziness.
 	if(drunk_value >= 41)
 		if(prob(30))
-			owner.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/confusion)
+			owner.adjust_confusion(2 SECONDS)
 
-		owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		owner.set_dizzy_if_lower(20 SECONDS)
 
 	// Over 51, we have a 3% chance to gain a lot of confusion and vomit, and we will always have 50 seconds of dizziness
 	if(drunk_value >= 51)
-		owner.set_timed_status_effect(50 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		owner.set_dizzy_if_lower(50 SECONDS)
 		if(prob(3))
-			owner.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
+			owner.adjust_confusion(15 SECONDS)
 			if(iscarbon(owner))
 				var/mob/living/carbon/carbon_owner = owner
 				carbon_owner.vomit() // Vomiting clears toxloss - consider this a blessing

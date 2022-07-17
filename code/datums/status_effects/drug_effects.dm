@@ -49,7 +49,7 @@
 		return FALSE
 	var/amplitude = rand(1 SECONDS, 3 SECONDS)
 	duration = amplitude
-	owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	owner.set_jitter_if_lower(100 SECONDS)
 	owner.Paralyze(duration)
 	owner.visible_message(span_warning("[owner] drops to the ground as [owner.p_they()] start seizing up."), \
 	span_warning("[pick("You can't collect your thoughts...", "You suddenly feel extremely dizzy...", "You cant think straight...","You can't move your face properly anymore...")]"))

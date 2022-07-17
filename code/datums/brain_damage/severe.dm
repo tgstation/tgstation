@@ -193,9 +193,9 @@
 			else
 				to_chat(owner, span_warning("You can't stop shaking..."))
 
-			owner.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
-			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/confusion)
-			owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			owner.adjust_dizzy(40 SECONDS)
+			owner.adjust_confusion(20 SECONDS)
+			owner.set_jitter_if_lower(40 SECONDS)
 
 		if(3, 4)
 			if(high_stress)
@@ -307,7 +307,7 @@
 	scan_desc = "dyslexia"
 	gain_text = "<span class='warning'>You have trouble reading or writing...</span>"
 	lose_text = "<span class='notice'>Your suddenly remember how to read and write.</span>"
-	
+
 /datum/brain_trauma/severe/dyslexia/on_gain()
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
 	..()

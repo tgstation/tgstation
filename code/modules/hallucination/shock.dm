@@ -20,7 +20,7 @@
 	target.staminaloss += 50
 	target.Stun(4 SECONDS)
 	target.do_jitter_animation(300) // Maximum jitter
-	target.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
+	target.adjust_jitter(20 SECONDS)
 	addtimer(CALLBACK(src, .proc/shock_drop), 2 SECONDS)
 
 /datum/hallucination/shock/proc/reset_shock_animation()

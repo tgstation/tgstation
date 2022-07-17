@@ -64,11 +64,11 @@
 			human_in_range.hallucination = min(human_in_range.hallucination + 5, 120)
 
 		if(DT_PROB(40, delta_time))
-			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			human_in_range.set_jitter_if_lower(10 SECONDS)
 
 		if(human_in_range.getStaminaLoss() <= 85 && DT_PROB(30, delta_time))
 			human_in_range.emote(pick("giggle", "laugh"))
 			human_in_range.adjustStaminaLoss(10)
 
 		if(DT_PROB(25, delta_time))
-			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+			human_in_range.set_dizzy_if_lower(10 SECONDS)

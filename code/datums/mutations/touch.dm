@@ -28,7 +28,7 @@
 		if(carbon_victim.electrocute_act(15, caster, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN))//doesnt stun. never let this stun
 			carbon_victim.dropItemToGround(carbon_victim.get_active_held_item())
 			carbon_victim.dropItemToGround(carbon_victim.get_inactive_held_item())
-			carbon_victim.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
+			carbon_victim.adjust_confusion(15 SECONDS)
 			carbon_victim.visible_message(
 				span_danger("[caster] electrocutes [victim]!"),
 				span_userdanger("[caster] electrocutes you!"),

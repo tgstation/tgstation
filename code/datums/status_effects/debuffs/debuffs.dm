@@ -769,7 +769,7 @@
 /datum/status_effect/trance/tick()
 	if(stun)
 		owner.Stun(6 SECONDS, TRUE)
-	owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
+	owner.set_dizzy(40 SECONDS)
 
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
@@ -889,7 +889,7 @@
 				span_notice("[H]'s hand convulses, and they drop their [I.name]!"),
 				span_userdanger("Your hand convulses violently, and you drop what you were holding!"),
 			)
-			H.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/jitter)
+			H.adjust_jitter(10 SECONDS)
 
 /atom/movable/screen/alert/status_effect/convulsing
 	name = "Shaky Hands"
@@ -1008,8 +1008,8 @@
 		if(0 to 10)
 			human_owner.vomit()
 		if(20 to 30)
-			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			human_owner.set_dizzy_if_lower(100 SECONDS)
+			human_owner.set_jitter_if_lower(100 SECONDS)
 		if(30 to 40)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 5)
 		if(40 to 50)
@@ -1025,7 +1025,7 @@
 		if(90 to 95)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
-			human_owner.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/confusion)
+			human_owner.adjust_confusion(12 SECONDS)
 
 /datum/status_effect/amok
 	id = "amok"

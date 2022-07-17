@@ -153,11 +153,11 @@
 		apply_damage(stamina, STAMINA, null, blocked)
 
 	if(jitter && (status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
-		adjust_timed_status_effect(jitter, /datum/status_effect/jitter)
+		adjust_jitter(jitter)
 	if(slur)
-		adjust_timed_status_effect(slur, /datum/status_effect/speech/slurring/drunk)
+		adjust_slurring(slur)
 	if(stutter)
-		adjust_timed_status_effect(stutter, /datum/status_effect/speech/stutter)
+		adjust_stutter(stutter)
 
 	return TRUE
 
