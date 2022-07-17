@@ -225,7 +225,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aiupload, 32)
 /obj/structure/sign/departments/aisat
 	name = "\improper AI Satellite sign"
 	sign_change_name = "Location - AI Satellite"
-	desc = "A sign labelling the AI's heavily-fortifited satellite."
+	desc = "A sign labelling the AI's heavily-fortified satellite."
 	icon_state = "aisat"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aisat, 32)
