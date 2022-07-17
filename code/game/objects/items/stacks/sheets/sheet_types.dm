@@ -468,7 +468,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
  */
 GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("box", /obj/item/storage/box), \
-	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/costume/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
@@ -578,7 +578,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("bronze pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze/seethru, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bronze floor tile", /obj/item/stack/tile/bronze, 1, 4, 20), \
 	new/datum/stack_recipe("bronze hat", /obj/item/clothing/head/bronze), \
-	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/bronze), \
+	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/costume/bronze), \
 	new/datum/stack_recipe("bronze boots", /obj/item/clothing/shoes/bronze), \
 	null,
 	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \

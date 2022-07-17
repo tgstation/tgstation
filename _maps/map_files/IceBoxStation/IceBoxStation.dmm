@@ -1247,7 +1247,7 @@
 /area/station/science/xenobiology)
 "aut" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/fire/firefighter,
+/obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/gas,
 /obj/item/extinguisher,
@@ -7262,7 +7262,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "cfS" = (
-/obj/item/clothing/suit/snowman{
+/obj/item/clothing/suit/costume/snowman{
 	name = "Man of Snow"
 	},
 /obj/item/clothing/head/snowman{
@@ -9862,7 +9862,7 @@
 /obj/item/honey_frame,
 /obj/item/honey_frame,
 /obj/item/honey_frame,
-/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/item/clothing/suit/hooded/bee_costume,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/hooded/bee_hood,
@@ -10845,8 +10845,8 @@
 	network = list("isolation");
 	pixel_y = -32
 	},
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket{
+/obj/item/clothing/suit/jacket/straight_jacket,
+/obj/item/clothing/suit/jacket/straight_jacket{
 	pixel_x = 6
 	},
 /obj/machinery/camera/directional/east{
@@ -22091,7 +22091,7 @@
 /area/station/maintenance/port/aft)
 "gFR" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/head/radiation,
 /obj/item/geiger_counter,
 /obj/effect/turf_decal/stripes/line{
@@ -22875,7 +22875,7 @@
 /area/station/medical/break_room)
 "gSr" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/head/radiation,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -27417,7 +27417,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "ipP" = (
 /obj/structure/bed,
-/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/suit/jacket/straight_jacket,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/white/textured,
@@ -45890,7 +45890,7 @@
 	anchored = 1
 	},
 /obj/item/clothing/under/pants/track,
-/obj/item/clothing/suit/ianshirt,
+/obj/item/clothing/suit/costume/ianshirt,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "nXH" = (

@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes: 
+  - bugfix: "Tramstation's shutters are directional once again"

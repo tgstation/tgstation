@@ -56,7 +56,7 @@
 
 /obj/item/storage/backpack/holding/Initialize()
 	. = ..()
-	
+
 	create_storage(max_specific_storage = WEIGHT_CLASS_GIGANTIC, max_total_storage = 35, max_slots = 30, type = /datum/storage/bag_of_holding)
 	atom_storage.allow_big_nesting = TRUE
 
@@ -367,7 +367,7 @@
 	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
 
 /obj/item/storage/backpack/duffelbag/explorer
-	name = "explorator's duffel bag"
+	name = "explorer duffel bag"
 	desc = "A large duffel bag for holding extra exotic treasures."
 	icon_state = "duffel-explorer"
 	inhand_icon_state = "duffel-explorer"
@@ -523,7 +523,7 @@
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
 	new /obj/item/surgical_drapes(src)
-	new /obj/item/clothing/suit/straight_jacket(src)
+	new /obj/item/clothing/suit/jacket/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
 	new /obj/item/blood_filter(src)

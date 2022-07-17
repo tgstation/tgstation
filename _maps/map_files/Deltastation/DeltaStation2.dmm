@@ -8596,7 +8596,7 @@
 /area/station/maintenance/port/fore)
 "ckB" = (
 /obj/structure/closet/secure_closet/hop,
-/obj/item/clothing/suit/ianshirt,
+/obj/item/clothing/suit/costume/ianshirt,
 /obj/item/bedsheet/ian,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hop)
@@ -20242,7 +20242,7 @@
 /area/station/science/research)
 "fyD" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/cardborg,
+/obj/item/clothing/suit/costume/cardborg,
 /obj/item/clothing/head/cardborg,
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -30276,7 +30276,7 @@
 /area/station/engineering/atmos/project)
 "ilz" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/fire/firefighter,
+/obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /obj/effect/decal/cleanable/dirt,
@@ -39635,7 +39635,7 @@
 /obj/item/clothing/head/fedora/det_hat{
 	icon_state = "curator"
 	},
-/obj/item/clothing/suit/det_suit{
+/obj/item/clothing/suit/jacket/det_suit{
 	icon_state = "curator"
 	},
 /obj/item/clothing/under/rank/security/detective,
@@ -69245,7 +69245,7 @@
 /area/station/maintenance/aft)
 "sJM" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/justice,
+/obj/item/clothing/suit/costume/justice,
 /obj/item/clothing/head/helmet/justice/escape{
 	name = "justice helmet"
 	},
@@ -83611,7 +83611,7 @@
 /area/station/maintenance/port/lesser)
 "wsH" = (
 /obj/structure/bed,
-/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/blindfold,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -86090,7 +86090,7 @@
 /area/station/cargo/qm)
 "xdJ" = (
 /obj/structure/table,
-/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
@@ -89563,7 +89563,7 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/blindfold,
 /obj/effect/turf_decal/tile/red/half/contrasted{

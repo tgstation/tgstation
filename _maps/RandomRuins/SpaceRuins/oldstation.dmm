@@ -8557,8 +8557,8 @@
 /area/ruin/space/ancientstation/beta/hall)
 "Tx" = (
 /obj/structure/closet/radiation,
-/obj/item/clothing/suit/radiation,
-/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/utility/radiation,
+/obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/head/radiation,
 /obj/item/clothing/head/radiation,
 /obj/item/geiger_counter,

@@ -16,7 +16,7 @@
 /obj/effect/spawner/costume/chicken
 	name = "chicken costume spawner"
 	items = list(
-		/obj/item/clothing/suit/chickensuit,
+		/obj/item/clothing/suit/costume/chickensuit,
 		/obj/item/clothing/head/chicken,
 		/obj/item/food/egg,
 	)
@@ -137,7 +137,7 @@
 	name = "pirate costume spawner"
 	items = list(
 		/obj/item/clothing/under/costume/pirate,
-		/obj/item/clothing/suit/pirate,
+		/obj/item/clothing/suit/costume/pirate,
 		/obj/effect/spawner/random/clothing/pirate_or_bandana,
 		/obj/item/clothing/glasses/eyepatch,
 	)
@@ -152,7 +152,7 @@
 /obj/effect/spawner/costume/imperium_monk
 	name = "imperium monk costume spawner"
 	items = list(
-		/obj/item/clothing/suit/imperium_monk,
+		/obj/item/clothing/suit/costume/imperium_monk,
 		/obj/effect/spawner/random/clothing/twentyfive_percent_cyborg_mask,
 	)
 
