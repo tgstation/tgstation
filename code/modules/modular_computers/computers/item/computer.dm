@@ -551,14 +551,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
 		return FALSE
 
-	if(program.on_start(user))
-		active_program = program
-		program.alert_pending = FALSE
-		update_appearance()
-		updateUsrDialog()
-		return TRUE
+	if(!program.on_start(user))
+		return FALSE
 
-	return FALSE
+	active_program = program
+	program.alert_pending = FALSE
+	update_appearance()
+	updateUsrDialog()
+	return TRUE
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)

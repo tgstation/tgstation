@@ -138,20 +138,9 @@
 	if(!stored_files)
 		return null
 
-	for(var/datum/computer_file/F in stored_files)
+	for(var/datum/computer_file/F as anything in stored_files)
 		if(F.filename == filename)
 			return F
-	return null
-
-/// Tries to find the first file by type. Returns null on fail.
-/obj/item/computer_hardware/hard_drive/proc/find_file_by_type(filetype)
-	if(!check_functionality() || !filetype || !stored_files)
-		return null
-
-	for(var/datum/computer_file/comp_file as anything in stored_files)
-		if(istype(comp_file, filetype))
-			return comp_file
-
 	return null
 
 /obj/item/computer_hardware/hard_drive/advanced
