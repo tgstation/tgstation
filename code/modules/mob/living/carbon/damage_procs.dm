@@ -61,7 +61,6 @@
 		amount += BP.burn_dam
 	return amount
 
-
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
