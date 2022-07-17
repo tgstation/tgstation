@@ -20,7 +20,7 @@
 			} \
 		} \
 		if (duration) { \
-			addtimer(CALLBACK(target, .proc/REMOVE_TRAIT, target, trait), duration, TIMER_UNIQUE|TIMER_OVERRIDE); \
+			addtimer(CALLBACK(target, .proc/REMOVE_TRAIT, target, trait, source), duration, TIMER_UNIQUE|TIMER_OVERRIDE); \
 		} \
 	} while (0)
 #define REMOVE_TRAIT(target, trait, sources) \
