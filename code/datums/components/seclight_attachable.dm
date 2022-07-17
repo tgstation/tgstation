@@ -183,17 +183,12 @@
 /datum/component/seclite_attachable/proc/on_parent_deconstructed(obj/item/source, disassembled)
 	SIGNAL_HANDLER
 
-	// Our light is gone already for some reason
+	// Our light is gone already - Probably destroyed by whatever destroyed our parent. Just remove it.
 	if(QDELETED(light))
 		remove_light()
 		return
 
-	// We were deconstructed by force, and shouldn't drop something
-	if(!disassembled)
-		QDEL_NULL(light)
-		return
-
-	// We were dissassembled by hand, and should drop the light
+	// We were deconstructed in any other way, so we can just drop the light on the ground (which removes it via signal).
 	light.forceMove(source.drop_location())
 
 /// Signal proc for [COMSIG_PARENT_QDELETING] that deletes our light if our parent is deleted.
