@@ -260,7 +260,7 @@
 	var/temperature = air.temperature
 
 	var/burned_fuel = min(cached_gases[/datum/gas/hydrogen][MOLES] / FIRE_HYDROGEN_BURN_RATE_DELTA, cached_gases[/datum/gas/oxygen][MOLES] / (FIRE_HYDROGEN_BURN_RATE_DELTA * HYDROGEN_OXYGEN_FULLBURN), cached_gases[/datum/gas/hydrogen][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(0.5))
-	if(burned_fuel <= 0 || (cached_gases[/datum/gas/hydrogen][MOLES] - burned_fuel < 0) || (cached_gases[/datum/gas/oxygen][MOLES] - burned_fuel * 0.5 < 0)) //Shouldn't produce gas from nothing.
+	if(burned_fuel <= 0 || cached_gases[/datum/gas/hydrogen][MOLES] - burned_fuel < 0 || cached_gases[/datum/gas/oxygen][MOLES] - burned_fuel * 0.5 < 0) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
 	cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel
@@ -314,7 +314,7 @@
 	var/temperature = air.temperature
 
 	var/burned_fuel = min(cached_gases[/datum/gas/tritium][MOLES] / FIRE_TRITIUM_BURN_RATE_DELTA, cached_gases[/datum/gas/oxygen][MOLES] / (FIRE_TRITIUM_BURN_RATE_DELTA * TRITIUM_OXYGEN_FULLBURN), cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(0.5))
-	if(burned_fuel <= 0 || (cached_gases[/datum/gas/tritium][MOLES] - burned_fuel < 0) || (cached_gases[/datum/gas/oxygen][MOLES] - burned_fuel * 0.5 < 0)) //Shouldn't produce gas from nothing.
+	if(burned_fuel <= 0 || cached_gases[/datum/gas/tritium][MOLES] - burned_fuel < 0 || cached_gases[/datum/gas/oxygen][MOLES] - burned_fuel * 0.5 < 0) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
 	cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel
