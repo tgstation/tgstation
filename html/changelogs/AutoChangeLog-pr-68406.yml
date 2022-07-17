@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fix holoparasites to inherit language from their masters to aid communication"
