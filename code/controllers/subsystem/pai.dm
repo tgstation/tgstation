@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(pai)
 	/// Searches for a previous candidate upon opening the menu
 	var/datum/pai_candidate/candidate = candidates[user.ckey]
 	if(isnull(candidate))
-		candidate = new /datum/pai_candidate(user)
+		candidate = new(user)
 		candidates[user.ckey] = candidate
 	ui_interact(user)
 

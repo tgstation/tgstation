@@ -72,6 +72,7 @@
 	var/ram = 100
 	/// Toggles whether the Security HUD is active or not
 	var/secHUD = FALSE
+
 	// Onboard Items
 	/// Atmospheric analyzer
 	var/obj/item/analyzer/atmos_analyzer
@@ -84,11 +85,12 @@
 	/// Newscaster
 	var/obj/machinery/newscaster/pai/newscaster
 	/// PDA
-	var/atom/movable/screen/ai/modpc/interfaceButton
+	var/atom/movable/screen/ai/modpc/pda_button
 	/// Photography module
 	var/obj/item/camera/siliconcam/pai_camera/camera
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
+
 	// Static lists
 	/// List of all available downloads
 	var/static/list/available_software = list(
@@ -177,7 +179,7 @@
 
 /mob/living/silicon/pai/examine(mob/user)
 	. = ..()
-	. += "A personal AI in holochassis mode. Its master ID string seems to be [master_name || "empty"]."
+	. += "Its master ID string seems to be [master_name || "empty"]."
 
 /mob/living/silicon/pai/get_status_tab_items()
 	. += ..()
@@ -223,12 +225,12 @@
 	job = JOB_PERSONAL_AI
 	. = ..()
 	emitter_semi_cd = TRUE
-	addtimer(CALLBACK(src, .proc/emitter_cool), 600)
+	addtimer(CALLBACK(src, .proc/emitter_cool), 400)
 	if(!holoform)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
-	desc = "A pAI mobile hard-light holographics emitter. This one appears in the form of a [chassis]."
-	return INITIALIZE_HINT_LATELOAD
+	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
+	return
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()

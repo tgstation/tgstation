@@ -10,17 +10,17 @@
 	var/mob/choice = tgui_input_list(usr, "Choose a player to play the pAI", "Spawn pAI", sort_names(available))
 	if(isnull(choice))
 		return
+
+	var/chosen_name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text|null
+	if (isnull(chosen_name))
+		return
+
 	if(!isobserver(choice))
 		var/confirm = tgui_alert(usr, "[choice.key] isn't ghosting right now. Are you sure you want to yank them out of their body and place them in this pAI?", "Spawn pAI Confirmation", list("Yes", "No"))
 		if(confirm != "Yes")
 			return
 	var/obj/item/pai_card/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-
-	var/chosen_name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text|null
-
-	if (isnull(chosen_name))
-		return
 
 	pai.name = chosen_name
 	pai.real_name = pai.name

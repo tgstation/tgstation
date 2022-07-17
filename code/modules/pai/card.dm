@@ -3,6 +3,7 @@
 /obj/item/pai_card
 	name = "personal AI device"
 	icon = 'icons/obj/aicards.dmi'
+	desc = "Downloads personal AI assistants to accompany its owner or others."
 	icon_state = "pai"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -36,7 +37,7 @@
 	return ..()
 
 /obj/item/pai_card/attack_self(mob/user)
-	if (!in_range(src, user))
+	if(!in_range(src, user))
 		return
 	user.set_machine(src)
 	ui_interact(user)
@@ -56,7 +57,7 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(pai && !pai.holoform)
+	if(!pai?.holoform)
 		pai.emp_act(severity)
 
 /obj/item/pai_card/handle_atom_del(atom/thing)
@@ -94,7 +95,7 @@
 		ui.open()
 
 /obj/item/pai_card/ui_status(mob/user)
-	if(!slotted && (src in user) || slotted && (src.loc in user))
+	if(user in get_nested_locs(src))
 		return UI_INTERACTIVE
 	return ..()
 
