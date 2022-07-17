@@ -35319,7 +35319,7 @@
 	},
 /obj/item/clipboard,
 /obj/item/paper/crumpled{
-	info = "The safes have been locked and scrambled. Three thousand space dollars, a bandolier, a custom shotgun, and a lazarus injector have been safely deposited.";
+	default_raw_text = "The safes have been locked and scrambled. Three thousand space dollars, a bandolier, a custom shotgun, and a lazarus injector have been safely deposited.";
 	name = "bank statement"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -42349,7 +42349,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/human,
 /obj/item/paper/crumpled{
-	info = "This isn't funny, I'm trapped on the least fun room on the station.";
+	default_raw_text = "This isn't funny, I'm trapped on the least fun room on the station.";
 	name = "poorly written complaint"
 	},
 /turf/open/floor/iron/dark,

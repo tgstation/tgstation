@@ -1795,7 +1795,7 @@
 	specialfunctions = 4
 	},
 /obj/item/paper/crumpled{
-	info = "<i>Remember! Corporate spent a lot of money to create this state of the art fashion show. If we EVER even so much as HEAR a rumor that a news crew or corporate rep is coming by, this place needs to be in TIP TOP condition. It's all of our asses (and our pensions) if it's not.";
+	default_raw_text = "<i>Remember! Corporate spent a lot of money to create this state of the art fashion show. If we EVER even so much as HEAR a rumor that a news crew or corporate rep is coming by, this place needs to be in TIP TOP condition. It's all of our asses (and our pensions) if it's not.";
 	name = "Crumpled Memo"
 	},
 /turf/open/floor/iron/smooth,
