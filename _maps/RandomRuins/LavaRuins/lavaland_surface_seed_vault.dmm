@@ -184,12 +184,19 @@
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aC" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aD" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
@@ -202,7 +209,7 @@
 /obj/item/honey_frame,
 /obj/item/queen_bee/bought,
 /obj/item/clothing/head/beekeeper_head,
-/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/machinery/light/directional/west,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
@@ -239,7 +246,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aK" = (
-/obj/structure/sink/directional/west,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
@@ -342,7 +352,7 @@
 /obj/item/honey_frame,
 /obj/item/queen_bee/bought,
 /obj/item/clothing/head/beekeeper_head,
-/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
@@ -354,7 +364,11 @@
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aZ" = (
-/obj/structure/sink/directional/east,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/dark,

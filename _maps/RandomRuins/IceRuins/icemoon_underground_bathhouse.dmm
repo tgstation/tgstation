@@ -18,11 +18,14 @@
 /area/ruin/powered/bathhouse)
 "e" = (
 /obj/structure/mirror/directional/north,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 20
+	},
 /turf/open/floor/iron/white,
 /area/ruin/powered/bathhouse)
 "f" = (
-/obj/machinery/shower/directional/south{
+/obj/machinery/shower{
+	pixel_y = 16;
 	reagent_id = /datum/reagent/water/holywater
 	},
 /obj/structure/curtain,

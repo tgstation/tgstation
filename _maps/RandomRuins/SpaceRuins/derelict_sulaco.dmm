@@ -698,7 +698,9 @@
 "XC" = (
 /obj/structure/curtain,
 /obj/item/soap/deluxe,
-/obj/machinery/shower/directional/north,
+/obj/machinery/shower{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/unpowered)
 "YA" = (

@@ -271,14 +271,18 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aY" = (
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 18
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aZ" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ba" = (
-/obj/machinery/shower/directional/south,
+/obj/machinery/shower{
+	pixel_y = 18
+	},
 /obj/machinery/vending/wallmed/directional/north{
 	use_power = 0
 	},

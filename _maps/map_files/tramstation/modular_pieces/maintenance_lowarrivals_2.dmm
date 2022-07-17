@@ -110,9 +110,10 @@
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mirror/directional/north,
-/obj/structure/sink/kitchen/directional/south{
+/obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink"
+	name = "old sink";
+	pixel_y = 12
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)

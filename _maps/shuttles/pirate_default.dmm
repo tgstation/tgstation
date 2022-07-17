@@ -685,7 +685,9 @@
 /area/shuttle/pirate)
 "bK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/directional/south,
+/obj/structure/sink{
+	pixel_y = 24
+	},
 /obj/structure/toilet{
 	dir = 8
 	},
@@ -1010,8 +1012,9 @@
 /area/shuttle/pirate)
 "Gk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/shower/directional/south{
-	name = "decontamination shower"
+/obj/machinery/shower{
+	name = "decontamination shower";
+	pixel_y = 12
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/window{

@@ -34,7 +34,9 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "al" = (
-/obj/machinery/shower/directional/west,
+/obj/machinery/shower{
+	dir = 8
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "am" = (
@@ -60,7 +62,9 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ap" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ar" = (
