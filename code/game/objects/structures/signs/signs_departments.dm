@@ -90,7 +90,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/science/alt, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/xenobio, 32)
 
 /obj/structure/sign/departments/rndserver
-	name ="\improper R&D  Server sign"
+	name ="\improper R&D Server sign"
 	sign_change_name = "Department - Science: R&D Server"
 	desc = "A sign labelling an area where scientific data is stored."
 	icon_state = "rndserver"
