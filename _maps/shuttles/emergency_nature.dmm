@@ -1107,7 +1107,7 @@
 	dir = 6
 	},
 /obj/structure/table/glass,
-/obj/item/clothing/suit/monkeysuit{
+/obj/item/clothing/suit/costume/monkeysuit{
 	pixel_x = -2;
 	pixel_y = 4
 	},

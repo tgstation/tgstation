@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/armor
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	allowed = null
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN

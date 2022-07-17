@@ -1584,7 +1584,7 @@
 
 /obj/item/storage/box/hero/PopulateContents()
 	new /obj/item/clothing/head/fedora/curator(src)
-	new /obj/item/clothing/suit/curator(src)
+	new /obj/item/clothing/suit/jacket/curator(src)
 	new /obj/item/clothing/under/rank/civilian/curator/treasure_hunter(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/melee/curator_whip(src)
@@ -1638,41 +1638,41 @@
 
 /obj/item/storage/box/holy/clock/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain/clock(src)
-	new /obj/item/clothing/suit/armor/riot/chaplain/clock(src)
+	new /obj/item/clothing/suit/chaplainsuit/armor/clock(src)
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
 
 /obj/item/storage/box/holy/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain(src)
-	new /obj/item/clothing/suit/armor/riot/chaplain(src)
+	new /obj/item/clothing/suit/chaplainsuit/armor/templar(src)
 
 /obj/item/storage/box/holy/student
 	name = "Profane Scholar Kit"
 
 /obj/item/storage/box/holy/student/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/studentuni(src)
+	new /obj/item/clothing/suit/chaplainsuit/armor/studentuni(src)
 	new /obj/item/clothing/head/helmet/chaplain/cage(src)
 
 /obj/item/storage/box/holy/sentinel
 	name = "Stone Sentinel Kit"
 
 /obj/item/storage/box/holy/sentinel/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/ancient(src)
+	new /obj/item/clothing/suit/chaplainsuit/armor/ancient(src)
 	new /obj/item/clothing/head/helmet/chaplain/ancient(src)
 
 /obj/item/storage/box/holy/witchhunter
 	name = "Witchhunter Kit"
 
 /obj/item/storage/box/holy/witchhunter/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/witchhunter(src)
+	new /obj/item/clothing/suit/chaplainsuit/armor/witchhunter(src)
 	new /obj/item/clothing/head/helmet/chaplain/witchunter_hat(src)
 
 /obj/item/storage/box/holy/adept
 	name = "Divine Adept Kit"
 
 /obj/item/storage/box/holy/adept/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/chaplain/adept(src)
+	new /obj/item/clothing/suit/chaplainsuit/armor/adept(src)
 	new /obj/item/clothing/head/helmet/chaplain/adept(src)
 
 /obj/item/storage/box/holy/follower

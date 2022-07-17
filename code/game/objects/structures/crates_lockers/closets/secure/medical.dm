@@ -62,7 +62,7 @@
 	new /obj/item/storage/backpack/medic(src)
 	new /obj/item/radio/headset/headset_srvmed(src)
 	new /obj/item/clipboard(src)
-	new /obj/item/clothing/suit/straight_jacket(src)
+	new /obj/item/clothing/suit/jacket/straight_jacket(src)
 	new /obj/item/clothing/ears/earmuffs(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/clothing/glasses/blindfold(src)
