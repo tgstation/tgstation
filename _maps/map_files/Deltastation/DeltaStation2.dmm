@@ -81557,6 +81557,10 @@
 /obj/item/newspaper,
 /obj/item/clothing/head/bowler,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/clothing/head/festive{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/theater/abandoned)
 "vTG" = (

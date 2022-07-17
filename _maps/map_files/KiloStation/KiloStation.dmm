@@ -80476,6 +80476,10 @@
 	},
 /obj/item/poster/random_official,
 /obj/effect/turf_decal/stripes/corner,
+/obj/item/clothing/head/festive{
+	pixel_x = -4;
+	pixel_y = 6
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "wNf" = (
