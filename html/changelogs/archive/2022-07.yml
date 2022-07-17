@@ -507,3 +507,39 @@
   - qol: Canisters, scrubbers, and pumps no longer stop reacting when wrenched.
   - code_imp: Canisters should process once instead of twice when spawning. No gameplay
       changes expected.
+2022-07-17:
+  Cheshify:
+  - rscdel: Removed the ability to have impure or failed chems
+  - balance: A number of impurities in chemicals are now inverses
+  - bugfix: Mannitol now has a working inverse
+  D4C-420:
+  - imageadd: Unique sprite for the Hypernob crystal from atmos
+  Fikou:
+  - bugfix: modsuit flamethrower will no longer push objects
+  Fikou, NecromancerAnne, Wallem:
+  - qol: nuke ops emergency box now contains a crowbar, screwdriver and mini welder
+  - rscdel: nuke ops leader krav maga is removed
+  - balance: nuke op survival knife has been replaced with an energy dagger
+  - balance: energy daggers have light armor penetration and wound bonus
+  - qol: energy daggers now emit a soft red light
+  - balance: nuke op makarov has been replaced by the ansem, a 10mm clandestine pistol.
+  - rscadd: nuke op diamond drill has been replaced with an entrenching tool, a more
+      compact wrench/pickaxe/shovel
+  Melbert:
+  - qol: 'Icebox: The Quartermaster''s office has had its windows reinforced.'
+  Mooshimi:
+  - bugfix: Fixed some strengths on mineral walls, making them harder to break through
+      via hulk and mechs.
+  Y0SH1M4S73R:
+  - code_imp: the igniter, mirv, and summoning components and the knockback, lifesteal,
+      light_eater, and venomous elements are now compatible with projectile spells.
+  - code_imp: the lifesteal, light_eater, and venomous elements are now compatible
+      with turrets.
+  - code_imp: deployable turrets (like the ones given to marine engineers) now properly
+      set their fired projectiles' `fired_from` and `firer` vars to themselves and
+      their users, respectively.
+  - refactor: the "fired_from" var for projectiles (/obj/projectile) has been changed
+      to be a /datum instead of an /atom, as there were no instances in code where
+      it had to be an atom.
+  - code_imp: projectile spells set their fired projectiles' `fired_from` var to themselves
+      instead of the turf they were cast from
