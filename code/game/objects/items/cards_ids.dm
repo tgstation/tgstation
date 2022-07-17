@@ -915,7 +915,7 @@
 		var/obj/item/toy/crayon/our_crayon = W
 		if(tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment")) == "Department")
 			if(do_after(user, 2 SECONDS)) // Doesn't technically require a spraycan's cap to be off but shhh
-				src.department_color_override = our_crayon.paint_color
+				department_color_override = our_crayon.paint_color
 				balloon_alert(user, "Recolored!")
 			else return
 		else if(do_after(user, 1 SECONDS))
