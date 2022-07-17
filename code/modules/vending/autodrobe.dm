@@ -149,6 +149,7 @@
 		/obj/item/clothing/glasses/sunglasses/gar = 2,
 		/obj/item/clothing/glasses/blindfold = 1,
 		/obj/item/clothing/mask/muzzle = 2,
+		/obj/item/clothing/head/tv_head = 1,
 	)
 	premium = list(
 		/obj/item/clothing/suit/costume/pirate/captain = 2,
