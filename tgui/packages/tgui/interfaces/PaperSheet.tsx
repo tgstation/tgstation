@@ -3,10 +3,11 @@
  */
 
  import { useBackend, useLocalState } from '../backend';
- import { Box, Flex, Tabs, TextArea } from '../components';
+ import { Box, Flex, Section, TextArea } from '../components';
  import { Window } from '../layouts';
  import { sanitizeText } from '../sanitize';
  import { marked } from 'marked';
+ import { Component, createRef, RefObject } from 'inferno';
 
 type PaperContext = {
   // ui_static_data
@@ -196,8 +197,26 @@ const runMarkedDefault = (value) => {
   });
 };
 
-export const TabView = (props, context) => {
-  const { act, data } = useBackend<PaperContext>(context);
+export class TabView extends Component {
+  scrollableRef: RefObject<HTMLDivElement>;
+  lastDistanceFromBottom: number;
+  onScrollHandler: ((this: GlobalEventHandlers, ev: Event) => any);
+
+  constructor(props, context) {
+    super(props, context);
+    this.scrollableRef = createRef();
+    this.lastDistanceFromBottom = 0;
+
+    this.onScrollHandler = (ev: Event) => {
+      const scrollable = (ev.currentTarget as HTMLDivElement);
+      if(scrollable) {
+        this.lastDistanceFromBottom = scrollable.scrollHeight - scrollable.scrollTop;
+      }
+    };
+  }
+
+  render() {
+    const { data } = useBackend<PaperContext>(this.context);
   const {
     default_pen_font,
     default_pen_color,
@@ -209,87 +228,40 @@ export const TabView = (props, context) => {
   const useColor = held_item_details?.color || default_pen_color;
   const useBold = held_item_details?.use_bold || false;
 
-  const [currentTab, setCurrentTab] = useLocalState(
-    context,
-    'tabView',
-    Mode.edit,
-  );
-
-  const [saveTabState, setSaveTabState] = useLocalState(
-    context,
-    'saveTabState',
-    SaveTabState.normal,
-  );
-
   const [textAreaContents, setTextAreaContents] = useLocalState(
-    context,
+    this.context,
     'textAreaContents',
     "",
   );
 
+    return (
+      <Flex direction="column" fillPositionedParent>
+        <Flex.Item grow={3} basis={1}>
+            <PreviewView scrollableRef={this.scrollableRef} handleOnScroll={this.onScrollHandler} />
+        </Flex.Item>
+        <Flex.Item shrink={1} height="150px">
+          <TextArea
+            value={textAreaContents}
+            textColor={useColor}
+            fontFamily={useFont}
+            bold={useBold}
+            height={"100%"}
+            backgroundColor={paper_color}
+            onInput={(e, value) => {
+              setTextAreaContents(value);
+              if(this.scrollableRef.current) {
+                let thisDistFromBottom = this.scrollableRef.current.scrollHeight - this.scrollableRef.current.scrollTop;
+                this.scrollableRef.current.scrollTop += thisDistFromBottom - this.lastDistanceFromBottom;
+                // this.lastKnownScroll = this.scrollableRef.current.scrollTop;
+              }
+            }} />
+        </Flex.Item>
+      </Flex>
+    );
+  }
 
-  return (
-    <Flex direction="column" fillPositionedParent>
-        <Flex.Item>
-          <Tabs>
-            <Tabs.Tab
-              textColor={'black'}
-              backgroundColor={
-                (currentTab === Mode.edit) ? 'grey' : 'white'
-              }
-              selected={currentTab === Mode.edit}
-              onClick={() => setCurrentTab(Mode.edit)}>
-              Edit
-            </Tabs.Tab>
-            <Tabs.Tab
-              textColor={'black'}
-              backgroundColor={
-                (currentTab === Mode.preview) ? 'grey' : 'white'
-              }
-              selected={currentTab === Mode.edit}
-              onClick={() => setCurrentTab(Mode.preview)}>
-              Preview
-            </Tabs.Tab>
-            <Tabs.Tab
-              textColor={'black'}
-              backgroundColor={
-                ((saveTabState === SaveTabState.confirmSave) && "red")
-                || "white"
-              }
-              selected={(saveTabState === SaveTabState.confirmSave)}
-              onClick={() => {
-                if ((saveTabState === SaveTabState.normal)) {
-                  setSaveTabState(SaveTabState.confirmSave);
-                }
-                else {
-                  act("add_text", { text: textAreaContents });
-                  setSaveTabState(SaveTabState.normal);
-                  setTextAreaContents("");
-                }
-              }}>
-              {(saveTabState === SaveTabState.confirmSave) ? 'Confirm' : 'Save'}
-            </Tabs.Tab>
-          </Tabs>
-        </Flex.Item>
-        <Flex.Item grow={1} basis={1}>
-          {(currentTab === Mode.edit && (
-            <>
-              <PreviewView />
-              <TextArea
-                value={textAreaContents}
-                textColor={useColor}
-                fontFamily={useFont}
-                bold={useBold}
-                height={"200px"}
-                backgroundColor={paper_color}
-                onInput={(e, value) => { setTextAreaContents(value); }}
-              />
-            </>
-          )) || (<PreviewView />)}
-        </Flex.Item>
-    </Flex>
-  );
-};
+
+}
 
 export const PreviewView = (props, context) => {
   const { data } = useBackend<PaperContext>(context);
@@ -323,20 +295,28 @@ export const PreviewView = (props, context) => {
       "</span>",
   };
 
+  const {
+    scrollableRef,
+    handleOnScroll,
+  } = props;
+
   return (
-    <Box
-      position="relative"
-      backgroundColor={paper_color}
-      width="100%">
+    <Section
+      fill
+      fitted
+      scrollable
+      scrollableRef={scrollableRef}
+      onScroll={handleOnScroll}>
       <Box
-        className="Paper__Page"
         fillPositionedParent
-        width="100%"
-        height="100%"
+        position="relative"
+        bottom={"100%"}
+        minHeight="100%"
+        backgroundColor={paper_color}
+        className="Paper__Page"
         dangerouslySetInnerHTML={textHTML}
-        p="10px"
-      />
-    </Box>
+        p="10px" />
+    </Section>
   );
 };
 
@@ -357,11 +337,8 @@ export const PaperSheet = (props, context) => {
       theme="paper"
       width={400}
       height={500}>
-      <Window.Content backgroundColor={paper_color} scrollable>
-        <Box fitted fillPositionedParent>
-          {(canEdit(held_item_details) && (<TabView />))
-          || <PreviewView />}
-        </Box>
+      <Window.Content backgroundColor={paper_color}>
+        <TabView />
       </Window.Content>
     </Window>
   );
