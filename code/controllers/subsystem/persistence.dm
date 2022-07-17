@@ -407,14 +407,7 @@ SUBSYSTEM_DEF(persistence)
 	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
 		var/datum/chemical_reaction/randomized/R = get_chemical_reaction(randomized_type) //ew, would be nice to add some simple tracking
 		if(R?.persistent)
-			var/recipe_data = list()
-			recipe_data["timestamp"] = R.created
-			recipe_data["required_reagents"] = R.required_reagents
-			recipe_data["required_catalysts"] = R.required_catalysts
-			recipe_data["required_temp"] = R.required_temp
-			recipe_data["is_cold_recipe"] = R.is_cold_recipe
-			recipe_data["results"] = R.results
-			recipe_data["required_container"] = "[R.required_container]"
+			var/list/recipe_data = R.SaveOldRecipe()
 			file_data["[R.type]"] = recipe_data
 
 	fdel(json_file)

@@ -26,11 +26,12 @@
 	if (EMERGENCY_PAST_POINT_OF_NO_RETURN)
 		return
 
+	var/spawn_heavy = prob(get_heavy_midround_injection_chance())
+
 	last_midround_injection_attempt = world.time
 	next_midround_injection = null
 	forced_injection = FALSE
 
-	var/spawn_heavy = prob(get_heavy_midround_injection_chance())
 	dynamic_log("A midround ruleset is rolling, and will be [spawn_heavy ? "HEAVY" : "LIGHT"].")
 
 	random_event_hijacked = HIJACKED_NOTHING

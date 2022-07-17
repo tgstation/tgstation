@@ -327,7 +327,7 @@
 
 /datum/greyscale_config/suspenders/worn
 	name = "Worn Suspenders"
-	icon_file = 'icons/mob/clothing/suit.dmi'
+	icon_file = 'icons/mob/clothing/suits/utility.dmi'
 	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
 
 /datum/greyscale_config/giftdeliverybox
@@ -539,3 +539,63 @@
 /datum/greyscale_config/vape/open_high
 	name = "Open Vape High"
 	json_config = 'code/datums/greyscale/json_configs/vape_open_high.json'
+
+/datum/greyscale_config/ties
+	name = "Ties"
+	icon_file = 'icons/obj/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ties.json'
+
+/datum/greyscale_config/ties_worn
+	name = "Worn Ties"
+	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ties_worn.json'
+
+/datum/greyscale_config/heck_suit
+	name = "H.E.C.K. Suit"
+	icon_file = 'icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_suit.json'
+
+/datum/greyscale_config/heck_suit/worn
+	name = "H.E.C.K. Suit Worn"
+	icon_file = 'icons/mob/clothing/suits/armor.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_suit_worn.json'
+
+/datum/greyscale_config/heck_helmet
+	name = "H.E.C.K. Helmet"
+	icon_file = 'icons/obj/clothing/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_helmet.json'
+
+/datum/greyscale_config/heck_helmet/worn
+	name = "H.E.C.K. Helmet Worn"
+	icon_file = 'icons/mob/clothing/head.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_helmet_worn.json'
+
+/datum/greyscale_config/tape
+	name = "Tape"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape.json'
+
+/datum/greyscale_config/tape/spikes
+	name = "Spiked Tape"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_spikes.json'
+
+/datum/greyscale_config/tape_piece
+	name = "Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece.json'
+
+/datum/greyscale_config/tape_piece/spikes
+	name = "Spiked Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes.json'
+
+/datum/greyscale_config/tape_piece/worn
+	name = "Worn Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece_worn.json'
+
+/datum/greyscale_config/tape_piece/worn/spikes
+	name = "Worn Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes_worn.json'

@@ -70,6 +70,9 @@
 					if(IsJobUnavailable(job_datum.title, TRUE) != JOB_AVAILABLE)
 						continue
 					dept_data += job_datum.title
+			if(dept_data.len <= 0) //Congratufuckinglations
+				tgui_alert(src, "There are literally no random jobs available for you on this server, ahelp for assistance.")
+				return
 			var/random = pick(dept_data)
 			var/randomjob = "<p><center><a href='byond://?src=[REF(src)];SelectedJob=[random]'>[random]</a></center><center><a href='byond://?src=[REF(src)];SelectedJob=Random'>Reroll</a></center><center><a href='byond://?src=[REF(src)];cancrand=[1]'>Cancel</a></center></p>"
 			var/datum/browser/popup = new(src, "randjob", "<div align='center'>Random Job</div>", 200, 150)
@@ -202,7 +205,7 @@
 	if(SSshuttle.arrivals)
 		close_spawn_windows() //In case we get held up
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
-			src << tgui_alert(usr,"The arrivals shuttle is currently malfunctioning! You cannot join.")
+			tgui_alert(usr,"The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
 
 		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
@@ -439,5 +442,6 @@
 	if (I)
 		I.ui_interact(src)
 
-	// Add verb for re-opening the interview panel, and re-init the verbs for the stat panel
+	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
 	add_verb(src, /mob/dead/new_player/proc/open_interview)
+	add_verb(client, /client/verb/fix_tgui_panel)

@@ -19,7 +19,6 @@
 	safe = FALSE
 	layer = BELOW_OPEN_DOOR_LAYER
 	closingLayer = CLOSED_FIREDOOR_LAYER
-	assemblytype = /obj/structure/firelock_frame
 	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 0, FIRE = 95, ACID = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 
@@ -32,6 +31,9 @@
 	///Y offset for the overlay lights, so that they line up with the thin border firelocks
 	var/light_yoffset = 0
 
+
+	///The type of door frame to drop during deconstruction
+	var/assemblytype = /obj/structure/firelock_frame
 	var/boltslocked = TRUE
 	///List of areas we handle. See CalculateAffectingAreas()
 	var/list/affecting_areas
@@ -82,7 +84,7 @@
 	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/merger_adding)
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/merger_removing)
 	GetMergeGroup(merger_id, merger_typecache)
-	register_adjacent_turfs(src)
+	register_adjacent_turfs()
 
 	if(alarm_type) // Fucking subtypes fucking mappers fucking hhhhhhhh
 		start_activation_process(alarm_type)
@@ -124,7 +126,7 @@
 
 	if (isnull(held_item))
 		if(density)
-			if(isalienadult(living_user) || issilicon(living_user))
+			if(isalienhumanoid(living_user) || issilicon(living_user))
 				context[SCREENTIP_CONTEXT_LMB] = "Open"
 				return CONTEXTUAL_SCREENTIP_SET
 			if(!living_user.combat_mode)
@@ -215,28 +217,40 @@
 			var/turf/checked_turf = get_step(get_turf(firelock), dir)
 			if(!checked_turf)
 				continue
+			if(isclosedturf(checked_turf))
+				continue
 			process_results(checked_turf)
 
-/obj/machinery/door/firedoor/proc/register_adjacent_turfs(atom/loc)
+/obj/machinery/door/firedoor/proc/register_adjacent_turfs()
+	if(!loc)
+		return
+
+	var/turf/our_turf = get_turf(loc)
+	RegisterSignal(our_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
 	for(var/dir in GLOB.cardinals)
-		var/turf/checked_turf = get_step(get_turf(loc), dir)
+		var/turf/checked_turf = get_step(our_turf, dir)
 
 		if(!checked_turf)
 			continue
+		if(isclosedturf(checked_turf))
+			continue
 		process_results(checked_turf)
 		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
-		RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
 
 
-/obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/loc)
+/obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/old_loc)
+	if(!loc)
+		return
+
+	var/turf/our_turf = get_turf(old_loc)
+	UnregisterSignal(our_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 	for(var/dir in GLOB.cardinals)
-		var/turf/checked_turf = get_step(get_turf(loc), dir)
+		var/turf/checked_turf = get_step(our_turf, dir)
 
 		if(!checked_turf)
 			continue
 
 		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
-		UnregisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/datum/gas_mixture/environment = checked_turf.return_air()
@@ -638,10 +652,10 @@
 			new /obj/item/electronics/firelock (targetloc)
 	qdel(src)
 
-/obj/machinery/door/firedoor/Moved(atom/oldloc)
+/obj/machinery/door/firedoor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	unregister_adjacent_turfs(oldloc)
-	register_adjacent_turfs(src)
+	unregister_adjacent_turfs(old_loc)
+	register_adjacent_turfs()
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
@@ -677,7 +691,7 @@
 			light_xoffset = -2
 	update_icon()
 
-/obj/machinery/door/firedoor/border_only/Moved()
+/obj/machinery/door/firedoor/border_only/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	adjust_lights_starting_offset()
 
@@ -686,7 +700,7 @@
 	if(!(border_dir == dir)) //Make sure looking at appropriate border
 		return TRUE
 
-/obj/machinery/door/firedoor/border_only/CanAStarPass(obj/item/card/id/ID, to_dir)
+/obj/machinery/door/firedoor/border_only/CanAStarPass(obj/item/card/id/ID, to_dir, no_id = FALSE)
 	return !density || (dir != to_dir)
 
 /obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)

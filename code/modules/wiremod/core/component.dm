@@ -303,12 +303,12 @@
 /// Called when this component is about to be added to an integrated_circuit.
 /obj/item/circuit_component/proc/add_to(obj/item/integrated_circuit/added_to)
 	if(circuit_flags & CIRCUIT_FLAG_ADMIN)
-		ADD_TRAIT(added_to, TRAIT_CIRCUIT_UNDUPABLE, src)
+		ADD_TRAIT(added_to, TRAIT_CIRCUIT_UNDUPABLE, REF(src))
 	return TRUE
 
 /// Called when this component is removed from an integrated_circuit.
 /obj/item/circuit_component/proc/removed_from(obj/item/integrated_circuit/removed_from)
-	REMOVE_TRAIT(removed_from, TRAIT_CIRCUIT_UNDUPABLE, src)
+	REMOVE_TRAIT(removed_from, TRAIT_CIRCUIT_UNDUPABLE, REF(src))
 	return
 
 /**

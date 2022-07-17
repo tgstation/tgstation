@@ -166,6 +166,9 @@ LOG_TOOLS
 ## Log all timers on timer auto reset
 # LOG_TIMERS_ON_BUCKET_RESET
 
+## log speech indicators
+LOG_SPEECH_INDICATORS
+
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
 

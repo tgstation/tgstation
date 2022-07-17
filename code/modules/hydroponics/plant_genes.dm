@@ -651,8 +651,8 @@
 	var/splat_location = get_turf(target)
 	var/range = sqrt(our_seed.potency * 0.1)
 	smoke.attach(splat_location)
-	smoke.set_up(round(range), location = splat_location, carry = our_plant.reagents, silent = FALSE)
-	smoke.start()
+	smoke.set_up(round(range), holder = our_plant, location = splat_location, carry = our_plant.reagents, silent = FALSE)
+	smoke.start(log = TRUE)
 	our_plant.reagents.clear_reagents()
 
 /// Makes the plant and its seeds fireproof. From lavaland plants.
@@ -854,7 +854,7 @@
 /datum/plant_gene/trait/never_mutate
 	name = "Prosophobic Inclination"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
-	
+
 /// Prevents stat mutation caused by instability.  Trait acts as a tag for hydroponics.dm to recognise.
 /datum/plant_gene/trait/stable_stats
 	name = "Symbiotic Resilience"

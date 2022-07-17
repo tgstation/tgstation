@@ -11,6 +11,7 @@
 	flags_1 = CONDUCT_1 | IS_PLAYER_COLORABLE_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
+	demolition_mod = 0.5
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
 	throw_speed = 3
@@ -140,3 +141,10 @@
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5
 	random_color = FALSE
+
+/obj/item/screwdriver/red
+	random_color = FALSE
+
+/obj/item/screwdriver/red/Initialize(mapload)
+	. = ..()
+	set_greyscale(colors=list(screwdriver_colors["red"]))

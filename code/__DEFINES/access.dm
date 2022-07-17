@@ -71,7 +71,7 @@
 
 ///Cargo general access
 #define ACCESS_CARGO "cargo"
-#define ACCESS_MAIL_SORTING "mail_sorting"
+#define ACCESS_SHIPPING "shipping"
 /// For releasing minerals from the ORM
 #define ACCESS_MINERAL_STOREROOM "mineral_storeroom"
 #define ACCESS_MINING_STATION "mining_station"
@@ -234,81 +234,82 @@
 
 /// Departmental/general/common area accesses. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON)
 #define COMMON_ACCESS list( \
+	ACCESS_ATMOSPHERICS, \
+	ACCESS_AUX_BASE, \
+	ACCESS_BAR, \
+	ACCESS_BRIG, \
+	ACCESS_BRIG_ENTRANCE, \
+	ACCESS_CARGO, \
+	ACCESS_CHAPEL_OFFICE, \
+	ACCESS_CONSTRUCTION, \
+	ACCESS_COURT, \
+	ACCESS_CREMATORIUM, \
+	ACCESS_DETECTIVE, \
+	ACCESS_ENGINE_EQUIP, \
+	ACCESS_ENGINEERING, \
+	ACCESS_EXTERNAL_AIRLOCKS, \
+	ACCESS_GENETICS, \
+	ACCESS_HYDROPONICS, \
+	ACCESS_JANITOR, \
+	ACCESS_KITCHEN, \
+	ACCESS_LAWYER, \
+	ACCESS_LIBRARY, \
+	ACCESS_MAINT_TUNNELS, \
 	ACCESS_MECH_MINING, \
 	ACCESS_MECH_MEDICAL, \
 	ACCESS_MECH_SECURITY, \
 	ACCESS_MECH_SCIENCE, \
 	ACCESS_MECH_ENGINE, \
-	ACCESS_AUX_BASE, \
-	ACCESS_PSYCHOLOGY, \
-	ACCESS_PHARMACY, \
-	ACCESS_NETWORK, \
-	ACCESS_WEAPONS, \
-	ACCESS_MINERAL_STOREROOM, \
-	ACCESS_BRIG_ENTRANCE, \
-	ACCESS_XENOBIOLOGY, \
-	ACCESS_MINING_STATION, \
-	ACCESS_MAIL_SORTING, \
-	ACCESS_MINING, \
-	ACCESS_RESEARCH, \
-	ACCESS_THEATRE, \
-	ACCESS_SURGERY, \
-	ACCESS_COURT, \
-	ACCESS_QM, \
-	ACCESS_VIROLOGY, \
-	ACCESS_LAWYER, \
-	ACCESS_LIBRARY, \
-	ACCESS_HYDROPONICS, \
-	ACCESS_PLUMBING, \
-	ACCESS_CONSTRUCTION, \
-	ACCESS_CARGO, \
-	ACCESS_ROBOTICS, \
-	ACCESS_KITCHEN, \
-	ACCESS_CREMATORIUM, \
-	ACCESS_JANITOR, \
-	ACCESS_BAR, \
-	ACCESS_CHAPEL_OFFICE, \
-	ACCESS_EXTERNAL_AIRLOCKS, \
-	ACCESS_MAINT_TUNNELS, \
-	ACCESS_ENGINE_EQUIP, \
-	ACCESS_ENGINEERING, \
-	ACCESS_GENETICS, \
-	ACCESS_SCIENCE, \
-	ACCESS_MORGUE, \
 	ACCESS_MEDICAL, \
-	ACCESS_DETECTIVE, \
-	ACCESS_BRIG, \
-	ACCESS_SECURITY, \
-	ACCESS_ATMOSPHERICS, \
-	ACCESS_ORDNANCE_STORAGE, \
+	ACCESS_MINERAL_STOREROOM, \
+	ACCESS_MINING, \
+	ACCESS_MINING_STATION, \
+	ACCESS_MORGUE, \
+	ACCESS_NETWORK, \
 	ACCESS_ORDNANCE, \
+	ACCESS_ORDNANCE_STORAGE, \
+	ACCESS_PHARMACY, \
+	ACCESS_PLUMBING, \
+	ACCESS_PSYCHOLOGY, \
+	ACCESS_QM, \
+	ACCESS_RESEARCH, \
+	ACCESS_ROBOTICS, \
+	ACCESS_SCIENCE, \
+	ACCESS_SECURITY, \
 	ACCESS_SERVICE, \
+	ACCESS_SHIPPING, \
+	ACCESS_SURGERY, \
+	ACCESS_THEATRE, \
+	ACCESS_VIROLOGY, \
+	ACCESS_WEAPONS, \
+	ACCESS_XENOBIOLOGY, \
 )
 
 /// Command staff/secure accesses, think bridge/armoury, ai_upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
-	ACCESS_MINISAT, \
-	ACCESS_TCOMMS, \
-	ACCESS_KEYCARD_AUTH, \
-	ACCESS_RC_ANNOUNCE, \
-	ACCESS_VAULT, \
-	ACCESS_TECH_STORAGE, \
-	ACCESS_COMMAND, \
-	ACCESS_TELEPORTER, \
-	ACCESS_ARMORY, \
 	ACCESS_AI_UPLOAD, \
+	ACCESS_ALL_PERSONAL_LOCKERS, \
+	ACCESS_ARMORY, \
 	ACCESS_CHANGE_IDS, \
+	ACCESS_COMMAND, \
 	ACCESS_EVA, \
 	ACCESS_GATEWAY, \
-	ACCESS_ALL_PERSONAL_LOCKERS, \
+	ACCESS_KEYCARD_AUTH, \
+	ACCESS_MINISAT, \
+	ACCESS_RC_ANNOUNCE, \
+	ACCESS_TCOMMS, \
+	ACCESS_TECH_STORAGE, \
+	ACCESS_TELEPORTER, \
+	ACCESS_VAULT, \
 )
 
 /// Private head of staff offices, usually only granted to most cards by trimming. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_PRV_COMMAND)
 #define PRIVATE_COMMAND_ACCESS list( \
-	ACCESS_HOS, \
-	ACCESS_HOP, \
 	ACCESS_CE, \
 	ACCESS_CMO, \
+	ACCESS_HOS, \
+	ACCESS_HOP, \
+	ACCESS_QM, \
 	ACCESS_RD, \
 )
 
@@ -320,33 +321,33 @@
 #define CENTCOM_ACCESS list( \
 	ACCESS_CENT_BAR, \
 	ACCESS_CENT_CAPTAIN, \
-	ACCESS_CENT_TELEPORTER, \
-	ACCESS_CENT_STORAGE, \
+	ACCESS_CENT_GENERAL, \
 	ACCESS_CENT_LIVING, \
 	ACCESS_CENT_MEDICAL, \
 	ACCESS_CENT_SPECOPS, \
+	ACCESS_CENT_STORAGE, \
+	ACCESS_CENT_TELEPORTER, \
 	ACCESS_CENT_THUNDER, \
-	ACCESS_CENT_GENERAL, \
 )
 
 /// Syndicate areas off station. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SYNDICATE)
 #define SYNDICATE_ACCESS list( \
-	ACCESS_SYNDICATE_LEADER, \
 	ACCESS_SYNDICATE, \
+	ACCESS_SYNDICATE_LEADER, \
 )
 
 /// Away missions/gateway/space ruins.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_AWAY)
 #define AWAY_ACCESS list( \
-	ACCESS_AWAY_GENERAL, \
 	ACCESS_AWAY_COMMAND, \
-	ACCESS_AWAY_MAINTENANCE, \
-	ACCESS_AWAY_MEDICAL, \
-	ACCESS_AWAY_SEC, \
 	ACCESS_AWAY_ENGINEERING, \
+	ACCESS_AWAY_GENERAL, \
 	ACCESS_AWAY_GENERIC1, \
 	ACCESS_AWAY_GENERIC2, \
 	ACCESS_AWAY_GENERIC3, \
 	ACCESS_AWAY_GENERIC4, \
+	ACCESS_AWAY_MAINTENANCE, \
+	ACCESS_AWAY_MEDICAL, \
+	ACCESS_AWAY_SEC, \
 )
 
 /// Weird internal Cult access that prevents non-cult from using their doors.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SPECIAL)
@@ -366,106 +367,106 @@
 #define REGION_GENERAL "General"
 /// Used to seed the accesses_by_region list in SSid_access. A list of general service accesses that are overseen by the HoP.
 #define REGION_ACCESS_GENERAL list( \
-	ACCESS_KITCHEN, \
 	ACCESS_BAR, \
-	ACCESS_HYDROPONICS, \
-	ACCESS_JANITOR, \
 	ACCESS_CHAPEL_OFFICE, \
 	ACCESS_CREMATORIUM, \
-	ACCESS_LIBRARY, \
-	ACCESS_THEATRE, \
+	ACCESS_HYDROPONICS, \
+	ACCESS_JANITOR, \
+	ACCESS_KITCHEN, \
 	ACCESS_LAWYER, \
+	ACCESS_LIBRARY, \
 	ACCESS_SERVICE, \
+	ACCESS_THEATRE, \
 )
 /// Name for the Security region.
 #define REGION_SECURITY "Security"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all security regional accesses that are overseen by the HoS.
 #define REGION_ACCESS_SECURITY list( \
-	ACCESS_BRIG_ENTRANCE, \
-	ACCESS_WEAPONS, \
-	ACCESS_SECURITY, \
-	ACCESS_BRIG, \
 	ACCESS_ARMORY, \
-	ACCESS_DETECTIVE, \
+	ACCESS_BRIG, \
+	ACCESS_BRIG_ENTRANCE, \
 	ACCESS_COURT, \
-	ACCESS_MECH_SECURITY, \
+	ACCESS_DETECTIVE, \
 	ACCESS_HOS, \
+	ACCESS_MECH_SECURITY, \
+	ACCESS_SECURITY, \
+	ACCESS_WEAPONS, \
 )
 /// Name for the Medbay region.
 #define REGION_MEDBAY "Medbay"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all medbay regional accesses that are overseen by the CMO.
 #define REGION_ACCESS_MEDBAY list( \
+	ACCESS_CMO, \
+	ACCESS_MECH_MEDICAL, \
 	ACCESS_MEDICAL, \
 	ACCESS_MORGUE, \
-	ACCESS_PLUMBING, \
-	ACCESS_VIROLOGY, \
-	ACCESS_SURGERY, \
-	ACCESS_MECH_MEDICAL, \
-	ACCESS_CMO, \
 	ACCESS_PHARMACY, \
+	ACCESS_PLUMBING, \
 	ACCESS_PSYCHOLOGY, \
+	ACCESS_SURGERY, \
+	ACCESS_VIROLOGY, \
 )
 /// Name for the Research region.
 #define REGION_RESEARCH "Research"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
 #define REGION_ACCESS_RESEARCH list( \
-	ACCESS_RESEARCH, \
-	ACCESS_SCIENCE, \
-	ACCESS_ORDNANCE, \
-	ACCESS_ORDNANCE_STORAGE, \
 	ACCESS_GENETICS, \
-	ACCESS_ROBOTICS, \
-	ACCESS_XENOBIOLOGY, \
 	ACCESS_MECH_SCIENCE, \
 	ACCESS_MINISAT, \
-	ACCESS_RD, \
 	ACCESS_NETWORK, \
+	ACCESS_ORDNANCE, \
+	ACCESS_ORDNANCE_STORAGE, \
+	ACCESS_RD, \
+	ACCESS_RESEARCH, \
+	ACCESS_ROBOTICS, \
+	ACCESS_SCIENCE, \
+	ACCESS_XENOBIOLOGY, \
 )
 /// Name for the Engineering region.
 #define REGION_ENGINEERING "Engineering"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all engineering regional accesses that are overseen by the CE.
 #define REGION_ACCESS_ENGINEERING list( \
-	ACCESS_CONSTRUCTION, \
+	ACCESS_ATMOSPHERICS, \
 	ACCESS_AUX_BASE, \
-	ACCESS_MAINT_TUNNELS, \
+	ACCESS_CE, \
+	ACCESS_CONSTRUCTION, \
 	ACCESS_ENGINEERING, \
 	ACCESS_ENGINE_EQUIP, \
 	ACCESS_EXTERNAL_AIRLOCKS, \
-	ACCESS_TECH_STORAGE, \
-	ACCESS_ATMOSPHERICS, \
+	ACCESS_MAINT_TUNNELS, \
 	ACCESS_MECH_ENGINE, \
-	ACCESS_TCOMMS, \
 	ACCESS_MINISAT, \
-	ACCESS_CE, \
+	ACCESS_TCOMMS, \
+	ACCESS_TECH_STORAGE, \
 )
 /// Name for the Supply region.
 #define REGION_SUPPLY "Supply"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
 #define REGION_ACCESS_SUPPLY list( \
-	ACCESS_MAIL_SORTING, \
-	ACCESS_MINING, \
-	ACCESS_MINING_STATION, \
+	ACCESS_CARGO, \
 	ACCESS_MECH_MINING, \
 	ACCESS_MINERAL_STOREROOM, \
-	ACCESS_CARGO, \
+	ACCESS_MINING, \
+	ACCESS_MINING_STATION, \
 	ACCESS_QM, \
+	ACCESS_SHIPPING, \
 	ACCESS_VAULT, \
 )
 /// Name for the Command region.
 #define REGION_COMMAND "Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all command regional accesses that are overseen by the Captain.
 #define REGION_ACCESS_COMMAND list( \
-	ACCESS_COMMAND, \
-	ACCESS_RC_ANNOUNCE, \
-	ACCESS_KEYCARD_AUTH, \
-	ACCESS_CHANGE_IDS, \
 	ACCESS_AI_UPLOAD, \
-	ACCESS_TELEPORTER, \
+	ACCESS_ALL_PERSONAL_LOCKERS, \
+	ACCESS_CAPTAIN, \
+	ACCESS_CHANGE_IDS, \
+	ACCESS_COMMAND, \
 	ACCESS_EVA, \
 	ACCESS_GATEWAY, \
-	ACCESS_ALL_PERSONAL_LOCKERS, \
 	ACCESS_HOP, \
-	ACCESS_CAPTAIN, \
+	ACCESS_KEYCARD_AUTH, \
+	ACCESS_RC_ANNOUNCE, \
+	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
 )
 /// Name for the Centcom region.
@@ -491,6 +492,7 @@
 	/obj/item/modular_computer/tablet/pda/warden = list(REGION_SECURITY), \
 	/obj/item/modular_computer/tablet/pda/janitor = list(REGION_GENERAL), \
 	/obj/item/modular_computer/tablet/pda/science = list(REGION_RESEARCH), \
+	/obj/item/modular_computer/tablet/pda/heads/quartermaster = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/heads/hop = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/heads/hos = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/heads/cmo = list(REGION_COMMAND), \
@@ -498,7 +500,6 @@
 	/obj/item/modular_computer/tablet/pda/heads/rd = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/heads/captain = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/cargo = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/tablet/pda/quartermaster = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/tablet/pda/shaftminer = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/tablet/pda/chaplain = list(REGION_GENERAL), \
 	/obj/item/modular_computer/tablet/pda/lawyer = list(REGION_GENERAL, REGION_SECURITY), \
@@ -514,13 +515,13 @@
 
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.
 #define REGION_AREA_STATION list( \
+	REGION_COMMAND, \
+	REGION_ENGINEERING, \
 	REGION_GENERAL, \
-	REGION_SECURITY, \
 	REGION_MEDBAY, \
 	REGION_RESEARCH, \
-	REGION_ENGINEERING, \
+	REGION_SECURITY, \
 	REGION_SUPPLY, \
-	REGION_COMMAND, \
 )
 
 /// Used in ID card access adding procs. Will try to add all accesses and utilises free wildcards, skipping over any accesses it can't add.

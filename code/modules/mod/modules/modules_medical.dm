@@ -25,18 +25,18 @@
 
 /obj/item/mod/module/health_analyzer/add_ui_data()
 	. = ..()
-	.["userhealth"] = mod.wearer ? mod.wearer.health : 0
-	.["usermaxhealth"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
-	.["userbrute"] = mod.wearer ? mod.wearer.getBruteLoss() : 0
-	.["userburn"] = mod.wearer ? mod.wearer.getFireLoss() : 0
-	.["usertoxin"] = mod.wearer ? mod.wearer.getToxLoss() : 0
-	.["useroxy"] = mod.wearer ? mod.wearer.getOxyLoss() : 0
+	.["userhealth"] = mod.wearer?.health || 0
+	.["usermaxhealth"] = mod.wearer?.getMaxHealth() || 0
+	.["userbrute"] = mod.wearer?.getBruteLoss() || 0
+	.["userburn"] = mod.wearer?.getFireLoss() || 0
+	.["usertoxin"] = mod.wearer?.getToxLoss() || 0
+	.["useroxy"] = mod.wearer?.getOxyLoss() || 0
 
 /obj/item/mod/module/health_analyzer/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
-	if(!isliving(target))
+	if(!isliving(target) || !mod.wearer.can_read(src))
 		return
 	switch(mode)
 		if(HEALTH_SCAN)

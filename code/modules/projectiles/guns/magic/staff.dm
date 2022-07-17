@@ -11,14 +11,12 @@
 /obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
 	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) \
 		&& !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic) \
-		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion))
+		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion) \
+		&& !allow_intruder_use)
 		return FALSE
 	return TRUE
 
 /obj/item/gun/magic/staff/check_botched(mob/living/user, atom/target)
-	if(allow_intruder_use)
-		return ..()
-
 	if(!is_wizard_or_friend(user))
 		return !on_intruder_use(user, target)
 	return ..()

@@ -6,7 +6,7 @@
 
 /obj/item/paper/fluff/ruins/oldstation/damagereport
 	name = "Damage Report"
-	info = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics, partially destroyed. Engine Core, destroyed.<br><br><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via solar array. Reestablish station atmospherics system to restore air."
+	info = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics and Engine Core, partially destroyed.<br><br><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via solar array. Reestablish station atmospherics system to restore air."
 
 /obj/item/paper/fluff/ruins/oldstation/protosuit
 	name = "B01-MOD modular suit Report"
@@ -66,10 +66,30 @@
 
 /obj/item/paper/fluff/ruins/oldstation/survivor_note
 	name = "To those who find this"
-	info = "You can barely make out a faded message... <br><br>I come back to the station after a simple mining mission, and nobody is here. Well, they COULD have gone to cryo... I didn't really check. Doesn't matter, I have bigger issues now. There is something out there. \
-	I have no fucking idea what they are, all I know is that they don't like me. On occasion I hear them hissing and clawing on the airlock... good idea I barricaded the way in. Bad news: the transit tube is still broken, the damn engineers never fixed it. \
-	So basically, I'm stuck here until someone comes to rescue us. And I have no food or water. <br>If you're reading this, I'm probably dead. These things have taken over part of Delta station, and I think they somehow came from the AI core... \
-	Whatever you do, DON'T OPEN THE FIRELOCKS unless you have something to kill them. Look in security, maybe there might be some gear left in there. <br><br>So hungry... I don't want to go out like this..."
+	info = "I was on a mission of an exploration drone reclamation, when I lost the signal. I've had just enough pressure to make it back to the station.... But this is really bad... <br><br> \
+	Beta looks like a smashed tin can, and Alpha is gone completely. I didn't manage to find anyone except those sleeping beauties and something I don't even know how to explain. The blood and gore is everywhere, those things took out the entire R&D. \
+	They're hissing and crawling behind the maintenance hatch that I welded off to not let them in.<br><br> \
+	I had a proximity sensor with me, so I donated my left cybernetic arm to make this little fella. One of janitor's bucket served as a perfect casing for him. <br><br> \
+	Here I thought that I'll die of malnutrition, when I started feeling the symptoms of hypercapnia. I will turn you off to save the battery. It's time for both us to sleep, little guy.<br><br> \
+	If you're reading this, I'm probably dead. I've opened Ramboo's maintenance pannel with my ID. Please let him help to clean up my remains..."
+
+/obj/item/paper/fluff/ruins/oldstation/biolab_note_molly
+	name = "Diary note - Molly"
+	info = "It has been several months since our Molly passed away. She was our most valuable crew member, especially compared to that prick that happily threw a party to make sure `that beef won't go to waste`...<br><br> \
+	Oh, how I miss her warm milk...<br><br>I've put Molly's biopsy in the fridge and almost completed the solution.<br><br> \
+	Next steps:<ul><li>Pour the broth to the growing vat (beaker nearby)</li><li>Add one dropper of the solution</li><li>Add Molly's biopsy to the vat</li></ul> \
+	Just need to make sure to use the correct bottle this time... I'll even mark it as `<b>Solution for Molly</b>`, or I tend to mix things up... <br>I can already feel the endorphin release from hugging her again.<br><br> \
+	If everything goes well, I will try out those slimes the papers praising as the future of science. They say that the cell lines may be found on anything moldy and rotting, and these small blobs have crazy mutation potential when properly fed."
+
+/obj/item/paper/fluff/ruins/oldstation/biolab_note_emergency
+	name = "Diary note - Emergency"
+	info = "OH GOD, the station is still creaking from a heavy impact in the port direction. The power is down, coms not responding, the air supply pipe depressurized and I can feel the artificial gravity weakening. \
+	The whole department is running around in panic. I'll just pray that engineers won't let the engine delaminate.<br><br> ...And the alien spawn have broken out of the containment area due to the impact and slipped into the vent.<br><br> \
+	I have a bad feeling about this, but I doubt that now is the right time to make guys hunt for what they call my `pet cockroach`... And RD is scary..."
+
+/obj/item/paper/fluff/ruins/oldstation/apc_note
+	name = "DO NOT TOUCH!"
+	info = "This is a spare pre-charged APC battery for emergencies ONLY. DO NOT use it for stun prods, Bob."
 
 /obj/machinery/mod_installer
 	name = "modular outerwear device installator"
@@ -187,3 +207,54 @@
 		balloon_alert(user, "it's locked!")
 		return
 	open_machine()
+
+/obj/effect/spawner/structure/window/reinforced/damaged
+	name = "damaged reinforced window spawner"
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/fulltile/damaged)
+
+/obj/structure/window/reinforced/fulltile/damaged
+	var/integrity_min_factor = 0.2
+	var/integrity_max_factor = 0.8
+
+/obj/structure/window/reinforced/fulltile/damaged/Initialize(mapload)
+	. = ..()
+	atom_integrity = rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor)
+
+/obj/item/petri_dish/oldstation
+	name = "molly's biopsy"
+	desc = "You can see a moldy piece of sandwich inside the dish. Maybe it helped to preserve the bacteria for that long."
+
+/obj/item/petri_dish/oldstation/Initialize(mapload)
+	. = ..()
+	sample = new
+	sample.GenerateSample(CELL_LINE_TABLE_COW, null, 1, 0)
+	var/datum/biological_sample/contamination = new
+	contamination.GenerateSample(CELL_LINE_TABLE_GRAPE, null, 1, 0)
+	sample.Merge(contamination)
+	sample.sample_color = COLOR_SAMPLE_BROWN
+	update_appearance()
+
+/obj/item/reagent_containers/glass/beaker/oldstation
+	name = "cultivation broth"
+	amount_per_transfer_from_this = 50
+	list_reagents = list(
+		// Required for CELL_LINE_TABLE_COW
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/cellulose = 5,
+		// Required for CELL_LINE_TABLE_GRAPE
+		/datum/reagent/toxin/slimejelly = 5,
+		/datum/reagent/yuck = 5,
+		/datum/reagent/consumable/vitfro = 5,
+		// Supplementary for CELL_LINE_TABLE_GRAPE
+		/datum/reagent/liquidgibs = 5
+	)
+
+/obj/machinery/computer/old
+	name = "old computer"
+	circuit = /obj/item/circuitboard/computer
+
+/obj/machinery/computer/old/Initialize(mapload)
+	icon_keyboard = pick("generic_key", "med_key")
+	icon_screen = pick("generic", "comm_monitor", "comm_logs")
+	. = ..()

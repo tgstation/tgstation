@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "as" = (
 /obj/machinery/door/airlock/public,
-/turf/closed/mineral/random/snow,
+/turf/open/misc/snow,
 /area/icemoon/surface/outdoors/nospawn)
 "ax" = (
 /obj/effect/turf_decal/stripes/white/line{

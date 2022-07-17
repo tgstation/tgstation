@@ -15,12 +15,12 @@ type TextInputData = {
   title: string;
 };
 
-export const TextInputModal = (_, context) => {
+export const TextInputModal = (props, context) => {
   const { act, data } = useBackend<TextInputData>(context);
   const {
     large_buttons,
     max_length,
-    message = "",
+    message = '',
     multiline,
     placeholder,
     timeout,
@@ -38,11 +38,11 @@ export const TextInputModal = (_, context) => {
     setInput(value);
   };
   // Dynamically changes the window height based on the message.
-  const windowHeight
-    = 135
-    + (message.length > 30 ? Math.ceil(message.length / 4) : 0)
-    + (multiline || input.length >= 30 ? 75 : 0)
-    + (message.length && large_buttons ? 5 : 0);
+  const windowHeight =
+    135 +
+    (message.length > 30 ? Math.ceil(message.length / 4) : 0) +
+    (multiline || input.length >= 30 ? 75 : 0) +
+    (message.length && large_buttons ? 5 : 0);
 
   return (
     <Window title={title} width={325} height={windowHeight}>
@@ -90,15 +90,10 @@ const InputArea = (props, context) => {
       autoSelect
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
-      onKeyDown={(event) => {
-        const keyCode = window.event ? event.which : event.keyCode;
-        if (keyCode === KEY_ENTER) {
-          act('submit', { entry: input });
-          event.preventDefault();
-        }
-        if (keyCode === KEY_ESCAPE) {
-          act('cancel');
-        }
+      onEscape={() => act('cancel')}
+      onEnter={(event) => {
+        act('submit', { entry: input });
+        event.preventDefault();
       }}
       onInput={(_, value) => onType(value)}
       placeholder="Type something..."

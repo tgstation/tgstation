@@ -88,9 +88,8 @@
 	icon_state = "room_background"
 	flags_1 = NOJAUNT
 
-/area/ai_multicam_room
+/area/centcom/ai_multicam_room
 	name = "ai_multicam_room"
-	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "ai_camera_room"
 	static_lighting = FALSE
 

@@ -12,7 +12,7 @@
 	},
 /area/awaymission/beach)
 "ac" = (
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "ad" = (
 /turf/open/misc/beach/coastline_b{
@@ -125,7 +125,7 @@
 	},
 /obj/item/clothing/head/pirate,
 /obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/suit/pirate,
+/obj/item/clothing/suit/costume/pirate,
 /obj/item/claymore/cutlass{
 	desc = "A piratey, foam sword used by kids to train themselves in the business of \"negotiating\" the transfer of treasure.";
 	force = 0;
@@ -141,7 +141,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "av" = (
-/turf/open/water/beach{
+/turf/open/water/beach/biodome{
 	desc = "What's the difference?";
 	name = "coastline water"
 	},
@@ -208,7 +208,7 @@
 	pixel_x = -16;
 	pixel_y = 1
 	},
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "aK" = (
 /mob/living/simple_animal/crab,
@@ -371,14 +371,14 @@
 "bs" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "changlinhut2";
-	name = "changing room"
+	name = "Changing Room"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bt" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "changlinhut1";
-	name = "changing room"
+	name = "Changing Room"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -601,7 +601,7 @@
 "bX" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "toilet1";
-	name = "restroom stall"
+	name = "Restroom Stall"
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/white,
@@ -609,7 +609,7 @@
 "bY" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "toilet2";
-	name = "restroom stall"
+	name = "Restroom Stall"
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/white,
@@ -936,7 +936,7 @@
 /obj/item/clothing/head/collectable/paper{
 	desc = "What looks like an ordinary paper hat is actually a rare and valuable collector's edition paper hat. Keep away from fire, Curators, and ocean waves."
 	},
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "da" = (
 /mob/living/simple_animal/parrot,

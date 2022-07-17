@@ -130,7 +130,7 @@
 	var/subsystem_type = /datum/controller/subsystem/machines
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
-	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
 	var/fair_market_price = 69
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
@@ -561,6 +561,10 @@
 		to_chat(user, span_warning("This machine requires sight to use."))
 		return FALSE
 
+	// machines have their own lit up display screens and LED buttons so we don't need to check for light
+	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_LITERACY) && !user.can_read(src, check_for_light = FALSE))
+		return FALSE
+
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
 		return FALSE
 
@@ -741,6 +745,7 @@
 	LAZYCLEARLIST(component_parts)
 	return ..()
 
+
 /**
  * Spawns a frame where this machine is. If the machine was not disassmbled, the
  * frame is spawned damaged. If the frame couldn't exist on this turf, it's smashed
@@ -919,10 +924,10 @@
 					var/obj/item/stack/secondary_inserted = new secondary_stack.merge_type(null,used_amt)
 					component_parts += secondary_inserted
 				else
-					if(SEND_SIGNAL(replacer_tool, COMSIG_TRY_STORAGE_TAKE, secondary_part, src))
+					if(replacer_tool.atom_storage.attempt_remove(secondary_part, src))
 						component_parts += secondary_part
 						secondary_part.forceMove(src)
-				SEND_SIGNAL(replacer_tool, COMSIG_TRY_STORAGE_INSERT, primary_part, null, null, TRUE)
+				replacer_tool.atom_storage.attempt_insert(replacer_tool, primary_part, user, TRUE)
 				component_parts -= primary_part
 				to_chat(user, span_notice("[capitalize(primary_part.name)] replaced with [secondary_part.name]."))
 				shouldplaysound = 1 //Only play the sound when parts are actually replaced!

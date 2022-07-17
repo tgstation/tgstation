@@ -5,10 +5,11 @@
 	program_icon_state = "command"
 	program_state = PROGRAM_STATE_BACKGROUND
 	extended_desc = "This program allows old-school communication with other modular devices."
-	size = 8
+	size = 0
+	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
+	available_on_ntnet = FALSE
 	usage_flags = PROGRAM_TABLET
 	ui_header = "ntnrc_idle.gif"
-	available_on_ntnet = TRUE
 	tgui_id = "NtosMessenger"
 	program_icon = "comment-alt"
 	alert_able = TRUE
@@ -131,6 +132,9 @@
 		if("PDA_sendEveryone")
 			if(!sending_and_receiving)
 				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
+				return
+			if(!spam_mode)
+				to_chat(usr, span_notice("ERROR: Device does not have mass-messaging perms."))
 				return
 
 			var/list/targets = list()
@@ -347,7 +351,7 @@
 		if(signal.data["emojis"] == TRUE)//so will not parse emojis as such from pdas that don't send emojis
 			inbound_message = emoji_parse(inbound_message)
 
-		if(ringer_status)
+		if(ringer_status && L.is_literate())
 			to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")
 
 
@@ -356,7 +360,8 @@
 
 /datum/computer_file/program/messenger/Topic(href, href_list)
 	..()
-
+	if(QDELETED(src))
+		return
 	if(!href_list["close"] && usr.canUseTopic(computer, BE_CLOSE, FALSE, NO_TK))
 		switch(href_list["choice"])
 			if("Message")

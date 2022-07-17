@@ -364,7 +364,7 @@
 
 /obj/effect/resin_container/proc/Smoke()
 	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
-	foaming.set_up(4, location = src)
+	foaming.set_up(4, holder = src, location = loc)
 	foaming.start()
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
@@ -470,3 +470,6 @@
 	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
 	update_appearance()
 	user.update_inv_back() //for overlays update
+
+/datum/action/item_action/activate_injector
+	name = "Activate Injector"

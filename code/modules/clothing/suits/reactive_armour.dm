@@ -11,7 +11,7 @@
 		/obj/effect/anomaly/grav = /obj/item/clothing/suit/armor/reactive/repulse,
 		/obj/effect/anomaly/flux = /obj/item/clothing/suit/armor/reactive/tesla,
 		/obj/effect/anomaly/bluespace = /obj/item/clothing/suit/armor/reactive/teleport,
-		/obj/effect/anomaly/delimber = /obj/item/clothing/suit/armor/reactive/delimbering,
+		/obj/effect/anomaly/bioscrambler = /obj/item/clothing/suit/armor/reactive/bioscrambling,
 		/obj/effect/anomaly/hallucination = /obj/item/clothing/suit/armor/reactive/hallucinating,
 		)
 
@@ -150,7 +150,7 @@
 /obj/item/clothing/suit/armor/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out jets of flame!"))
 	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
-	for(var/mob/living/carbon/carbon_victim in range(6, owner))
+	for(var/mob/living/carbon/carbon_victim in range(6, get_turf(src)))
 		if(carbon_victim != owner)
 			carbon_victim.adjust_fire_stacks(8)
 			carbon_victim.ignite_mob()
@@ -375,10 +375,10 @@
 		near.hallucination += 25 * dist
 		near.hallucination = clamp(near.hallucination, 0, 150)
 
-//Delimbering
+//Bioscrambling
 
-/obj/item/clothing/suit/armor/reactive/delimbering
-	name = "reactive delimbering armor"
+/obj/item/clothing/suit/armor/reactive/bioscrambling
+	name = "reactive bioscrambling armor"
 	desc = "An experimental suit of armor with sensitive detectors hooked up to a biohazard release valve. It scrambles the bodies of those around."
 	cooldown_message = span_danger("The connection is currently out of sync... Recalibrating.")
 	emp_message = span_warning("You feel the armor squirm.")
@@ -393,7 +393,7 @@
 	var/static/list/l_legs
 	var/static/list/r_legs
 
-/obj/item/clothing/suit/armor/reactive/delimbering/Initialize(mapload)
+/obj/item/clothing/suit/armor/reactive/bioscrambling/Initialize(mapload)
 	. = ..()
 	if(!chests)
 		chests = typesof(/obj/item/bodypart/chest)
@@ -408,24 +408,24 @@
 	if(!r_legs)
 		r_legs = typesof(/obj/item/bodypart/r_leg)
 
-/obj/item/clothing/suit/armor/reactive/delimbering/cooldown_activation(mob/living/carbon/human/owner)
+/obj/item/clothing/suit/armor/reactive/bioscrambling/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	sparks.set_up(1, 1, src)
 	sparks.start()
 	..()
 
-/obj/item/clothing/suit/armor/reactive/delimbering/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/bioscrambling/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], biohazard body scramble released!"))
-	delimber_pulse(owner, FALSE)
+	bioscrambler_pulse(owner, FALSE)
 	return TRUE
 
-/obj/item/clothing/suit/armor/reactive/delimbering/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/bioscrambling/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of biohazard material into [owner] from the surrounding environment!"))
-	delimber_pulse(owner, TRUE)
+	bioscrambler_pulse(owner, TRUE)
 	return TRUE
 
-/obj/item/clothing/suit/armor/reactive/delimbering/proc/delimber_pulse(mob/living/carbon/human/owner, can_hit_owner = FALSE)
-	for(var/mob/living/carbon/nearby in range(range, src))
+/obj/item/clothing/suit/armor/reactive/bioscrambling/proc/bioscrambler_pulse(mob/living/carbon/human/owner, can_hit_owner = FALSE)
+	for(var/mob/living/carbon/nearby in range(range, get_turf(src)))
 		if(!can_hit_owner && nearby == owner)
 			continue
 		if(nearby.run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [src]!") >= 100)

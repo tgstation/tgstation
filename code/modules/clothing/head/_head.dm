@@ -3,7 +3,6 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
-	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
 
 ///Special throw_impact for hats to frisbee hats at people to place them on their heads/attempt to de-hat them.

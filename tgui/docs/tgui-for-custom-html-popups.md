@@ -85,9 +85,9 @@ You can also do the same by splitting your code into separate files, and then le
 
 ```dm
 window.initialize(
-  inline_html = file2text('code/modules/thing/thing.html'),
-  inline_js = file2text('code/modules/thing/thing.js'),
-  inline_css = file2text('code/modules/thing/thing.css'),
+  inline_html = file("code/modules/thing/thing.html"),
+  inline_js = file("code/modules/thing/thing.js"),
+  inline_css = file("code/modules/thing/thing.css"),
 )
 ```
 

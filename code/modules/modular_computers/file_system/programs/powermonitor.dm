@@ -9,7 +9,7 @@
 	ui_header = "power_norm.gif"
 	transfer_access = list(ACCESS_ENGINEERING)
 	usage_flags = PROGRAM_CONSOLE
-	requires_ntnet = 0
+	requires_ntnet = FALSE
 	size = 8
 	tgui_id = "NtosPowerMonitor"
 	program_icon = "plug"

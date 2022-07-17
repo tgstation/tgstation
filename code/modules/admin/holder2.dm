@@ -30,9 +30,7 @@ GLOBAL_PROTECT(href_token)
 	var/href_token
 
 	/// Link from the database pointing to the admin's feedback forum
-	var/cached_forum_link
-	/// Last access time in deciseconds (playing nice with the MSO 10 second rule)
-	var/last_forum_access_time
+	var/cached_feedback_link
 
 	var/deadmined
 
@@ -172,21 +170,32 @@ GLOBAL_PROTECT(href_token)
 
 /// Returns the feedback forum thread for the admin holder's owner, as according to DB.
 /datum/admins/proc/feedback_link()
-	if(world.time - last_forum_access_time <= 10 SECONDS)
-		return cached_forum_link
+	// This intentionally does not follow the 10-second maximum TTL rule,
+	// as this can be reloaded through the Reload-Admins verb.
+	if (cached_feedback_link == NO_FEEDBACK_LINK)
+		return null
 
-	last_forum_access_time = world.time
+	if (!isnull(cached_feedback_link))
+		return cached_feedback_link
+
+	if (!SSdbcore.IsConnected())
+		return FALSE
 
 	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
 
 	if(!feedback_query.Execute())
 		log_sql("Error retrieving feedback link for [src]")
-		return cached_forum_link
+		qdel(feedback_query)
+		return FALSE
+
 	if(!feedback_query.NextRow())
+		qdel(feedback_query)
 		return FALSE // no feedback link exists
 
-	cached_forum_link = feedback_query.item[1]
-	return cached_forum_link
+	cached_feedback_link = feedback_query.item[1] || NO_FEEDBACK_LINK
+	qdel(feedback_query)
+
+	return cached_feedback_link
 
 /datum/admins/proc/check_for_rights(rights_required)
 	if(rights_required && !(rights_required & rank_flags()))

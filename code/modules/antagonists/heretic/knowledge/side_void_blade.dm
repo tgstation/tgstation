@@ -112,6 +112,7 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = -30
 	bare_wound_bonus = 15
+	demolition_mod = 1.5
 
 /obj/item/risen_hand/Initialize(mapload)
 	. = ..()
@@ -128,19 +129,6 @@
 		icon_state = "[base_icon_state]_right"
 	else
 		icon_state = "[base_icon_state]_left"
-
-/obj/item/risen_hand/pre_attack(atom/hit, mob/living/user, params)
-	. = ..()
-	if(.)
-		return
-
-	// If it's a structure or machine, we get a damage bonus (allowing us to break down doors)
-	if(isstructure(hit) || ismachinery(hit))
-		force = initial(force) * 1.5
-
-	// If it's another other item make sure we're at normal force
-	else
-		force = initial(force)
 
 /datum/heretic_knowledge/rune_carver
 	name = "Carving Knife"
@@ -177,7 +165,7 @@
 		/obj/item/stack/sheet/mineral/titanium = 5,
 		/obj/item/clothing/suit/armor = 1,
 		/obj/item/assembly/flash = 1,
-		/obj/item/organ/lungs = 1,
+		/obj/item/organ/internal/lungs = 1,
 	)
 	cost = 1
 	route = PATH_SIDE

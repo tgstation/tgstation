@@ -98,7 +98,7 @@
 #define GRAVITATIONAL_ANOMALY "gravitational_anomaly"
 #define FLUX_ANOMALY "flux_anomaly"
 #define PYRO_ANOMALY "pyro_anomaly"
-#define DELIMBER_ANOMALY "delimber_anomaly"
+#define BIOSCRAMBLER_ANOMALY "bioscrambler_anomaly"
 #define HALLUCINATION_ANOMALY "hallucination_anomaly"
 #define VORTEX_ANOMALY "vortex_anomaly"
 
@@ -121,3 +121,10 @@
 #define MAX_SPACE_EXPOSURE_DAMAGE 10
 
 #define SUPERMATTER_CASCADE_PERCENT 80
+
+/// The divisor scaling value for cubic power loss.
+#define POWERLOSS_CUBIC_DIVISOR 500
+/// The rate at which the linear power loss function scales with power.
+#define POWERLOSS_LINEAR_RATE 0.83
+/// How much a psychologist can reduce power loss.
+#define PSYCHOLOGIST_POWERLOSS_REDUCTION 0.2

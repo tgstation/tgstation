@@ -315,3 +315,76 @@
 /obj/effect/decal/cleanable/ants/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "[icon_state]_light", alpha = src.alpha)
+
+/obj/effect/decal/cleanable/fuel_pool
+	name = "pool of fuel"
+	desc = "A pool of flammable fuel. Its probably wise to clean this off before something ignites it..."
+	icon_state = "fuel_pool"
+	layer = LOW_OBJ_LAYER
+	beauty = -50
+	clean_type = CLEAN_TYPE_BLOOD
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	/// Maximum amount of hotspots this pool can create before deleting itself
+	var/burn_amount = 3
+	/// Is this fuel pool currently burning?
+	var/burning = FALSE
+	/// Type of hotspot fuel pool spawns upon being ignited
+	var/hotspot_type = /obj/effect/hotspot
+
+/obj/effect/decal/cleanable/fuel_pool/Initialize(mapload, burn_stacks)
+	. = ..()
+	for(var/obj/effect/decal/cleanable/fuel_pool/pool in get_turf(src)) //Can't use locate because we also belong to that turf
+		if(pool == src)
+			continue
+		pool.burn_amount =  max(min(pool.burn_amount + burn_stacks, 10), 1)
+		return INITIALIZE_HINT_QDEL
+
+	if(burn_stacks)
+		burn_amount = max(min(burn_stacks, 10), 1)
+
+/obj/effect/decal/cleanable/fuel_pool/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	ignite()
+
+/**
+ * Ignites the fuel pool. This should be the only way to ignite fuel pools.
+ */
+/obj/effect/decal/cleanable/fuel_pool/proc/ignite()
+	if(burning)
+		return
+	burning = TRUE
+	burn_process()
+
+/**
+ * Spends 1 burn_amount and spawns a hotspot. If burn_amount is equal to 0, deletes the fuel pool.
+ * Else, queues another call of this proc upon hotspot getting deleted and ignites other fuel pools around itself after 0.5 seconds.
+ * THIS SHOULD NOT BE CALLED DIRECTLY.
+ */
+/obj/effect/decal/cleanable/fuel_pool/proc/burn_process()
+	SIGNAL_HANDLER
+
+	burn_amount -= 1
+	var/obj/effect/hotspot/hotspot = new hotspot_type(get_turf(src))
+	addtimer(CALLBACK(src, .proc/ignite_others), 0.5 SECONDS)
+
+	if(!burn_amount)
+		qdel(src)
+		return
+
+	RegisterSignal(hotspot, COMSIG_PARENT_QDELETING, .proc/burn_process)
+
+/**
+ * Ignites other oil pools around itself.
+ */
+/obj/effect/decal/cleanable/fuel_pool/proc/ignite_others()
+	for(var/obj/effect/decal/cleanable/fuel_pool/oil in range(1, get_turf(src)))
+		oil.ignite()
+
+/obj/effect/decal/cleanable/fuel_pool/bullet_act(obj/projectile/hit_proj)
+	. = ..()
+	ignite()
+
+/obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, params)
+	if(item.ignition_effect(src, user))
+		ignite()
+	return ..()

@@ -107,23 +107,21 @@
 				set_anchored(FALSE)
 
 		if(BOOKCASE_FINISHED)
-			var/datum/component/storage/STR = I.GetComponent(/datum/component/storage)
 			if(isbook(I))
 				if(!user.transferItemToLoc(I, src))
 					return
 				update_appearance()
-			else if(STR)
+			else if(atom_storage)
 				for(var/obj/item/T in I.contents)
 					if(istype(T, /obj/item/book) || istype(T, /obj/item/spellbook))
-						STR.remove_from_storage(T, src)
+						atom_storage.attempt_remove(T, src)
 				to_chat(user, span_notice("You empty \the [I] into \the [src]."))
 				update_appearance()
 			else if(istype(I, /obj/item/pen))
-				if(!user.is_literate())
-					to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
+				if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
 					return
 				var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
-				if(!user.canUseTopic(src, BE_CLOSE))
+				if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
 					return
 				if(!newname)
 					return

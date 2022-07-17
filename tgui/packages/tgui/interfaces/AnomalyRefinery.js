@@ -1,13 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Button,
-  Icon,
-  Modal,
-  Section,
-  Stack,
-  LabeledList,
-  Box,
-} from '../components';
+import { Button, Icon, Modal, Section, Stack, LabeledList, Box } from '../components';
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
 
@@ -21,7 +13,6 @@ export const AnomalyRefinery = (props, context) => {
     </Window>
   );
 };
-
 
 const AnomalyRefineryContent = (props, context) => {
   const { act, data } = useBackend(context);
@@ -70,8 +61,8 @@ const AnomalyRefineryContent = (props, context) => {
 
 const CoreCompressorContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const { core, requiredRadius, gasList, valveReady, active, valvePresent }
-    = data;
+  const { core, requiredRadius, gasList, valveReady, active, valvePresent } =
+    data;
   return (
     <>
       <Stack.Item grow>
@@ -89,7 +80,9 @@ const CoreCompressorContent = (props, context) => {
           }>
           {!core && <Modal textAlign="center">{'No Core Inserted!'}</Modal>}
           <LabeledList>
-            <LabeledList.Item label={'Name'}>{core ? core : '-'}</LabeledList.Item>
+            <LabeledList.Item label={'Name'}>
+              {core ? core : '-'}
+            </LabeledList.Item>
             <LabeledList.Item label={'Required Radius'}>
               {requiredRadius
                 ? requiredRadius + ' tiles'
@@ -110,23 +103,25 @@ const CoreCompressorContent = (props, context) => {
               {'Swap Merging Order'}
             </Button>
           }>
-          {!valvePresent && <Modal textAlign="center">{'No Bomb Inserted!'}</Modal>}
+          {!valvePresent && (
+            <Modal textAlign="center">{'No Bomb Inserted!'}</Modal>
+          )}
           <Stack align="center">
             <Stack.Item grow textAlign="center">
               <Box height={2} width="100%" bold>
-                {'Giver Tank ('
-              + (gasList[1].name ? gasList[1].name : 'Not Available')
-              + ')'}
+                {'Giver Tank (' +
+                  (gasList[1].name ? gasList[1].name : 'Not Available') +
+                  ')'}
               </Box>
               <Box height={2} width="100%">
                 {(gasList[1].total_moles
                   ? String(gasList[0].total_moles.toFixed(2))
-                  : '-')
-              + ' moles at '
-              + (gasList[1].total_moles
-                ? String(gasList[1].temperature.toFixed(2))
-                : '-')
-              + ' Kelvin'}
+                  : '-') +
+                  ' moles at ' +
+                  (gasList[1].total_moles
+                    ? String(gasList[1].temperature.toFixed(2))
+                    : '-') +
+                  ' Kelvin'}
               </Box>
               <Box height={2} width="100%">
                 {(gasList[1].total_moles
@@ -139,19 +134,19 @@ const CoreCompressorContent = (props, context) => {
             </Stack.Item>
             <Stack.Item grow textAlign="center">
               <Box height={2} width="100%" bold>
-                {'Target Tank ('
-              + (gasList[0].name ? gasList[0].name : 'Not Available')
-              + ')'}
+                {'Target Tank (' +
+                  (gasList[0].name ? gasList[0].name : 'Not Available') +
+                  ')'}
               </Box>
               <Box height={2} width="100%">
                 {(gasList[0].total_moles
                   ? String(gasList[0].total_moles.toFixed(2))
-                  : '-')
-              + ' moles at '
-              + (gasList[0].total_moles
-                ? String(gasList[0].temperature.toFixed(2))
-                : '-')
-              + ' Kelvin'}
+                  : '-') +
+                  ' moles at ' +
+                  (gasList[0].total_moles
+                    ? String(gasList[0].temperature.toFixed(2))
+                    : '-') +
+                  ' Kelvin'}
               </Box>
               <Box height={2} width="100%">
                 {(gasList[1].total_moles
@@ -180,15 +175,16 @@ const BombProcessorContent = (props, context) => {
               tooltip={
                 reactionIncrement === 0
                   ? 'Valve status: Closed'
-                  : 'Valve status: Open. Current reaction count:'
-                + (reactionIncrement)
+                  : 'Valve status: Open. Current reaction count:' +
+                  reactionIncrement
               }
               icon="vial"
               tooltipPosition="left"
               onClick={() => act('react')}
               textAlign="center"
               disabled={!gasList[0].total_moles || !gasList[1].total_moles}
-              content={reactionIncrement === 0 ? 'Open Valve' : 'React'} />
+              content={reactionIncrement === 0 ? 'Open Valve' : 'React'}
+            />
           }>
           {!gasList[2].total_moles && (
             <Modal textAlign="center">{'No Gas Present'}</Modal>
@@ -204,7 +200,9 @@ const BombProcessorContent = (props, context) => {
                 fill
                 scrollable
                 title={
-                  individualGasmix.name ? individualGasmix.name : 'Not Available'
+                  individualGasmix.name
+                    ? individualGasmix.name
+                    : 'Not Available'
                 }>
                 {!individualGasmix.total_moles && (
                   <Modal textAlign="center">{'No Gas Present'}</Modal>

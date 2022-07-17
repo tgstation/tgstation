@@ -43,13 +43,15 @@ export const SupermatterMonitorContent = (props, context) => {
   return (
     <Section
       title={SM_uid + '. ' + SM_area_name}
-      buttons={!singlecrystal && (
-        <Button
-          icon="arrow-left"
-          content="Back"
-          onClick={() => act('PRG_clear')}
-        />
-      )}>
+      buttons={
+        !singlecrystal && (
+          <Button
+            icon="arrow-left"
+            content="Back"
+            onClick={() => act('PRG_clear')}
+          />
+        )
+      }>
       <Stack>
         <Stack.Item width="270px">
           <Section title="Metrics">
@@ -181,7 +183,8 @@ const SupermatterList = (props, context) => {
                 onClick={() =>
                   act('PRG_set', {
                     target: sm.uid,
-                  })}
+                  })
+                }
               />
             </Table.Cell>
           </Table.Row>

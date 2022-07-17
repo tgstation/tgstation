@@ -300,3 +300,18 @@
 /datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()
 	to_chat(owner, span_warning("The words trigger something deep within you, and you feel your consciousness slipping away..."))
 	owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
+
+/datum/brain_trauma/severe/dyslexia
+	name = "Dyslexia"
+	desc = "Patient is unable to read or write."
+	scan_desc = "dyslexia"
+	gain_text = "<span class='warning'>You have trouble reading or writing...</span>"
+	lose_text = "<span class='notice'>Your suddenly remember how to read and write.</span>"
+	
+/datum/brain_trauma/severe/dyslexia/on_gain()
+	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
+	..()
+
+/datum/brain_trauma/severe/dyslexia/on_lose()
+	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
+	..()

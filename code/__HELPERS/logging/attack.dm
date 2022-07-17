@@ -53,7 +53,7 @@
 /proc/log_wound(atom/victim, datum/wound/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll)
 	if(QDELETED(victim) || !suffered_wound)
 		return
-	var/message = "has suffered: [suffered_wound][suffered_wound.limb ? " to [suffered_wound.limb.name]" : null]"// maybe indicate if it's a promote/demote?
+	var/message = "has suffered: [suffered_wound][suffered_wound.limb ? " to [suffered_wound.limb.plaintext_zone]" : null]"// maybe indicate if it's a promote/demote?
 
 	if(dealt_damage)
 		message += " | Damage: [dealt_damage]"

@@ -21,7 +21,7 @@
 	name = "captain PDA"
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#FFD55B"
-	insert_type = /obj/item/pen/fountain
+	insert_type = /obj/item/pen/fountain/captain
 
 /obj/item/modular_computer/tablet/pda/heads/captain/Initialize(mapload)
 	. = ..()
@@ -34,6 +34,8 @@
 
 /obj/item/modular_computer/tablet/pda/heads/hop
 	name = "head of personnel PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
+	greyscale_colors = "#374f7e#a52f29#a52f29"
 	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -69,7 +71,6 @@
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
-		/datum/computer_file/program/power_monitor,
 		/datum/computer_file/program/supermatter_monitor,
 	)
 
@@ -101,6 +102,29 @@
 		/datum/computer_file/program/phys_scanner/chemistry,
 		/datum/computer_file/program/signal_commander,
 	)
+
+/obj/item/modular_computer/tablet/pda/heads/quartermaster/Initialize(mapload)
+	. = ..()
+	install_component(new /obj/item/computer_hardware/printer/mini)
+
+/obj/item/modular_computer/tablet/pda/heads/quartermaster
+	name = "quartermaster PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#D6B328#6506CA#927444"
+	insert_type = /obj/item/pen/survival
+	default_applications = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/shipping,
+		/datum/computer_file/program/robocontrol,
+	)
+
+/obj/item/modular_computer/tablet/pda/heads/quartermaster/Initialize(mapload)
+	. = ..()
+	install_component(new /obj/item/computer_hardware/printer/mini)
 
 /**
  * Security
@@ -144,7 +168,6 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D99A2E#69DBF3#E3DF3D"
 	default_applications = list(
-		/datum/computer_file/program/power_monitor,
 		/datum/computer_file/program/supermatter_monitor,
 	)
 
@@ -231,24 +254,6 @@
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/robocontrol,
 	)
-
-/obj/item/modular_computer/tablet/pda/quartermaster/Initialize(mapload)
-	. = ..()
-	install_component(new /obj/item/computer_hardware/printer/mini)
-
-/obj/item/modular_computer/tablet/pda/quartermaster
-	name = "quartermaster PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#D6B328#6506CA#927444"
-	default_applications = list(
-		/datum/computer_file/program/shipping,
-		/datum/computer_file/program/budgetorders,
-		/datum/computer_file/program/robocontrol,
-	)
-
-/obj/item/modular_computer/tablet/pda/quartermaster/Initialize(mapload)
-	. = ..()
-	install_component(new /obj/item/computer_hardware/printer/mini)
 
 /obj/item/modular_computer/tablet/pda/shaftminer
 	name = "shaft miner PDA"

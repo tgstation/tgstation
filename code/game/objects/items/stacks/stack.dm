@@ -357,7 +357,7 @@
 		return
 	if(!is_valid_recipe(recipe, recipes)) //href exploit protection
 		return
-	if(!multiplier || (multiplier <= 0)) //href exploit protection
+	if(!multiplier || multiplier < 1) //href exploit protection
 		return
 	if(!building_checks(builder, recipe, multiplier))
 		return
@@ -670,6 +670,7 @@
 	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
 	. = F
 	F.copy_evidences(src)
+	loc.atom_storage?.refresh_views()
 	if(user)
 		if(!user.put_in_hands(F, merge_stacks = FALSE))
 			F.forceMove(user.drop_location())
