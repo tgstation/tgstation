@@ -74,7 +74,7 @@
 	for(var/atom/atom in orange(1,src))
 		SEND_SIGNAL(atom, COMSIG_ATOM_PROPAGATE_RAD_PULSE, src)
 
-/proc/get_rad_turfs(atom/source, var/max_range)
+/proc/get_rad_turfs(atom/source, max_range)
 	var/list/turfs = list()
 	for(var/turf/turf in range(max_range, source))
 		turfs += turf
