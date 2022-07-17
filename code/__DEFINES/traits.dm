@@ -117,28 +117,6 @@
 #define HAS_TRAIT_FROM_ONLY(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]) && (length(target.status_traits[trait]) == 1))
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits?[trait] && (length(target.status_traits[trait] - source) > 0))
 
-// This trait gets added on a timer and then gets removed when the time is up
-// Adding the same trait twice while the timer is still active, resets the timer
-#define ADD_EXPIRING_TRAIT(target, trait, source, time) \
-	
-	do { \
-		var/list/_L; \
-		if (!target.status_traits) { \
-			target.status_traits = list(); \
-			_L = target.status_traits; \
-			_L[trait] = list(source); \
-			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
-		} else { \
-			_L = target.status_traits; \
-			if (_L[trait]) { \
-				_L[trait] |= list(source); \
-			} else { \
-				_L[trait] = list(source); \
-				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
-			} \
-		} \
-	} while (0)
-
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
 */
