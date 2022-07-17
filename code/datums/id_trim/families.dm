@@ -2,8 +2,8 @@
 /datum/id_trim/space_police
 	assignment = "Space Police"
 	trim_state = "trim_securityofficer"
-	department_color = "#134975"
-	subdepartment_color = "#CB0000"
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_SECURITY_RED
 
 /datum/id_trim/space_police/New()
 	. = ..()

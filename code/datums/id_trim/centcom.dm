@@ -4,8 +4,8 @@
 	assignment = JOB_CENTCOM
 	trim_state = "trim_centcom"
 	sechud_icon_state = SECHUD_CENTCOM
-	department_color = "#134975"
-	subdepartment_color = "#134975"
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_CENTCOM_BLUE
 
 /// Trim for Centcom VIPs
 /datum/id_trim/centcom/vip
@@ -17,8 +17,8 @@
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
 	assignment = JOB_CENTCOM_CUSTODIAN
 	trim_state = "trim_janitor"
-	department_color = "#134975"
-	subdepartment_color = "#58C800"
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_SERVICE_LIME
 
 /// Trim for Centcom Thunderdome Overseers.
 /datum/id_trim/centcom/thunderdome_overseer
@@ -126,7 +126,7 @@
 /datum/id_trim/centcom/ert/security
 	assignment = JOB_ERT_OFFICER
 	trim_state = "trim_securityofficer"
-	subdepartment_color = "#CB0000"
+	subdepartment_color = COLOR_SECURITY_RED
 	sechud_icon_state = SECHUD_SECURITY_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/security/New()
@@ -138,7 +138,7 @@
 /datum/id_trim/centcom/ert/engineer
 	assignment = JOB_ERT_ENGINEER
 	trim_state = "trim_stationengineer"
-	subdepartment_color = "#FFA62B"
+	subdepartment_color = COLOR_ENGINEERING_ORANGE
 	sechud_icon_state = SECHUD_ENGINEERING_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/engineer/New()
@@ -150,7 +150,7 @@
 /datum/id_trim/centcom/ert/medical
 	assignment = JOB_ERT_MEDICAL_DOCTOR
 	trim_state = "trim_medicaldoctor"
-	subdepartment_color = "#5B97BC"
+	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_MEDICAL_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/medical/New()
@@ -174,7 +174,7 @@
 /datum/id_trim/centcom/ert/janitor
 	assignment = JOB_ERT_JANITOR
 	trim_state = "trim_ert_janitor"
-	subdepartment_color = "#58C800"
+	subdepartment_color = COLOR_SERVICE_LIME
 	sechud_icon_state = SECHUD_JANITORIAL_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/janitor/New()
@@ -186,7 +186,7 @@
 /datum/id_trim/centcom/ert/clown
 	assignment = JOB_ERT_CLOWN
 	trim_state = "trim_clown"
-	subdepartment_color = "#FF00FF"
+	subdepartment_color = COLOR_MAGENTA
 	sechud_icon_state = SECHUD_ENTERTAINMENT_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/clown/New()

@@ -2,9 +2,8 @@
 /datum/id_trim/admin
 	assignment = "Jannie"
 	trim_state = "trim_janitor"
-	department_color = "#134975"
-	subdepartment_color = "#58C800"
-
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_SERVICE_LIME
 /datum/id_trim/admin/New()
 	. = ..()
 	// Every single access in the game, all on one handy trim.
@@ -14,8 +13,8 @@
 /datum/id_trim/highlander
 	assignment = "Highlander"
 	trim_state = "trim_ert_deathcommando"
-	department_color = "#134975"
-	subdepartment_color = "#58C800"
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_SERVICE_LIME
 
 /datum/id_trim/highlander/New()
 	. = ..()

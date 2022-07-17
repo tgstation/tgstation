@@ -2,8 +2,8 @@
 /datum/id_trim/syndicom
 	assignment = "Syndicate Overlord"
 	trim_state = "trim_syndicate"
-	department_color = "#F10303"
-	subdepartment_color = "#F10303"
+	department_color = COLOR_SYNDIE_RED
+	subdepartment_color = COLOR_SYNDIE_RED
 	sechud_icon_state = SECHUD_SYNDICATE
 	access = list(ACCESS_SYNDICATE)
 
@@ -38,8 +38,8 @@
 /datum/id_trim/chameleon/operative
 	assignment = "Syndicate Operative"
 	trim_state = "trim_syndicate"
-	department_color = "#F10303"
-	subdepartment_color = "#F10303"
+	department_color = COLOR_SYNDIE_RED
+	subdepartment_color = COLOR_SYNDIE_RED
 
 /// Trim for Chameleon ID cards. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
 /datum/id_trim/chameleon/operative/clown
