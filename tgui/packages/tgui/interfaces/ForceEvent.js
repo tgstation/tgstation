@@ -65,7 +65,7 @@ export const EventContent = (props, context) => {
   const sortCategories = sortBy((category) => category.name);
 
   return sortCategories(categories).map((category) => (
-    <EventList category={category} />
+    <EventList category={category} key={category.name} />
   ));
 };
 
