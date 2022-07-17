@@ -191,13 +191,13 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	var/has_FOV = TRUE
+	var/has_fov = TRUE
 
 /obj/item/clothing/head/tv_head/Initialize(mapload)
 	. = ..()
-	if(has_FOV)
+	if(has_fov)
 		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 
 /obj/item/clothing/head/tv_head/fov_less
 	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you. It's very easy to see out of this one."
-	has_FOV = FALSE
+	has_fov = FALSE
