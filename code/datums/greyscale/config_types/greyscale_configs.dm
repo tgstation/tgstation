@@ -327,7 +327,7 @@
 
 /datum/greyscale_config/suspenders/worn
 	name = "Worn Suspenders"
-	icon_file = 'icons/mob/clothing/suit.dmi'
+	icon_file = 'icons/mob/clothing/suits/utility.dmi'
 	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
 
 /datum/greyscale_config/giftdeliverybox
@@ -557,7 +557,7 @@
 
 /datum/greyscale_config/heck_suit/worn
 	name = "H.E.C.K. Suit Worn"
-	icon_file = 'icons/mob/clothing/suit.dmi'
+	icon_file = 'icons/mob/clothing/suits/armor.dmi'
 	json_config = 'code/datums/greyscale/json_configs/heck_suit_worn.json'
 
 /datum/greyscale_config/heck_helmet

@@ -374,10 +374,10 @@
 		/obj/item/clothing/head/beanie/yellow,
 		/obj/item/clothing/mask/bandana/gold,
 		/obj/item/clothing/head/hardhat,
-		/obj/item/clothing/suit/yakuza)
+		/obj/item/clothing/suit/costume/yakuza)
 	free_clothes = list(/obj/item/clothing/under/costume/yakuza,
 		/obj/item/clothing/shoes/yakuza,
-		/obj/item/clothing/suit/yakuza,
+		/obj/item/clothing/suit/costume/yakuza,
 		/obj/item/clothing/head/hardhat,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Tojo"
@@ -426,12 +426,12 @@
 	gang_id = "VDL"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/black,
 		/obj/item/clothing/under/costume/dutch,
-		/obj/item/clothing/suit/dutch,
+		/obj/item/clothing/suit/costume/dutch,
 		/obj/item/clothing/head/bowler,
 		/obj/item/clothing/mask/bandana/black)
 	free_clothes = list(/obj/item/clothing/under/costume/dutch,
 		/obj/item/clothing/head/bowler,
-		/obj/item/clothing/suit/dutch,
+		/obj/item/clothing/suit/costume/dutch,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Dutch"
 	gang_team_type = /datum/team/gang/dutch
@@ -451,10 +451,10 @@
 	roundend_category = "IRS Agents"
 	gang_name = "Internal Revenue Service"
 	gang_id = "IRS"
-	acceptable_clothes = list(/obj/item/clothing/suit/irs,
+	acceptable_clothes = list(/obj/item/clothing/suit/costume/irs,
 		/obj/item/clothing/under/costume/irs,
 		/obj/item/clothing/head/irs)
-	free_clothes = list(/obj/item/clothing/suit/irs,
+	free_clothes = list(/obj/item/clothing/suit/costume/irs,
 		/obj/item/clothing/under/costume/irs,
 		/obj/item/clothing/head/irs,
 		/obj/item/toy/crayon/spraycan)
@@ -475,10 +475,10 @@
 	roundend_category = "O.S.I. Agents"
 	gang_name = "Office of Secret Intelligence"
 	gang_id = "OSI"
-	acceptable_clothes = list(/obj/item/clothing/suit/osi,
+	acceptable_clothes = list(/obj/item/clothing/suit/costume/osi,
 		/obj/item/clothing/under/costume/osi,
 		/obj/item/clothing/glasses/osi)
-	free_clothes = list(/obj/item/clothing/suit/osi,
+	free_clothes = list(/obj/item/clothing/suit/costume/osi,
 		/obj/item/clothing/under/costume/osi,
 		/obj/item/clothing/glasses/osi,
 		/obj/item/toy/crayon/spraycan)
@@ -499,10 +499,10 @@
 	roundend_category = "Lost M.C. Bikers"
 	gang_name = "The Lost M.C."
 	gang_id = "TMC"
-	acceptable_clothes = list(/obj/item/clothing/suit/tmc,
+	acceptable_clothes = list(/obj/item/clothing/suit/costume/tmc,
 		/obj/item/clothing/under/costume/tmc,
 		/obj/item/clothing/head/tmc)
-	free_clothes = list(/obj/item/clothing/suit/tmc,
+	free_clothes = list(/obj/item/clothing/suit/costume/tmc,
 		/obj/item/clothing/under/costume/tmc,
 		/obj/item/clothing/head/tmc,
 		/obj/item/toy/crayon/spraycan)
@@ -523,10 +523,10 @@
 	roundend_category = "Powder Gangers"
 	gang_name = "Powder Gangers"
 	gang_id = "PG"
-	acceptable_clothes = list(/obj/item/clothing/suit/pg,
+	acceptable_clothes = list(/obj/item/clothing/suit/costume/pg,
 		/obj/item/clothing/under/costume/pg,
 		/obj/item/clothing/head/pg)
-	free_clothes = list(/obj/item/clothing/suit/pg,
+	free_clothes = list(/obj/item/clothing/suit/costume/pg,
 		/obj/item/clothing/under/costume/pg,
 		/obj/item/clothing/head/pg,
 		/obj/item/toy/crayon/spraycan)
@@ -548,11 +548,11 @@
 	roundend_category = "O'Driscoll's Gangsters"
 	gang_name = "O'Driscoll's Gang"
 	gang_id = "DB"
-	acceptable_clothes = list(/obj/item/clothing/suit/driscoll,
+	acceptable_clothes = list(/obj/item/clothing/suit/costume/driscoll,
 		/obj/item/clothing/under/costume/driscoll,
 		/obj/item/clothing/mask/gas/driscoll,
 		/obj/item/clothing/shoes/cowboy)
-	free_clothes = list(/obj/item/clothing/suit/driscoll,
+	free_clothes = list(/obj/item/clothing/suit/costume/driscoll,
 		/obj/item/clothing/under/costume/driscoll,
 		/obj/item/clothing/mask/gas/driscoll,
 		/obj/item/clothing/shoes/cowboy,
@@ -574,11 +574,11 @@
 	roundend_category = "Deckers"
 	gang_name = "Deckers"
 	gang_id = "DK"
-	acceptable_clothes = list(/obj/item/clothing/suit/deckers,
+	acceptable_clothes = list(/obj/item/clothing/suit/costume/deckers,
 		/obj/item/clothing/under/costume/deckers,
 		/obj/item/clothing/head/deckers,
 		/obj/item/clothing/shoes/deckers)
-	free_clothes = list(/obj/item/clothing/suit/deckers,
+	free_clothes = list(/obj/item/clothing/suit/costume/deckers,
 		/obj/item/clothing/under/costume/deckers,
 		/obj/item/clothing/head/deckers,
 		/obj/item/clothing/shoes/deckers,
@@ -601,11 +601,11 @@
 	roundend_category = "Morningstar Member"
 	gang_name = "Morningstar"
 	gang_id = "MS"
-	acceptable_clothes = list(/obj/item/clothing/suit/morningstar,
+	acceptable_clothes = list(/obj/item/clothing/suit/costume/morningstar,
 		/obj/item/clothing/under/costume/morningstar,
 		/obj/item/clothing/head/morningstar,
 		/obj/item/clothing/shoes/morningstar)
-	free_clothes = list(/obj/item/clothing/suit/morningstar,
+	free_clothes = list(/obj/item/clothing/suit/costume/morningstar,
 		/obj/item/clothing/under/costume/morningstar,
 		/obj/item/clothing/head/morningstar,
 		/obj/item/clothing/shoes/morningstar,
@@ -627,11 +627,11 @@
 	roundend_category = "Third Street Saints Gangsters"
 	gang_name = "Third Street Saints"
 	gang_id = "TSS"
-	acceptable_clothes = list(/obj/item/clothing/suit/saints,
+	acceptable_clothes = list(/obj/item/clothing/suit/costume/saints,
 		/obj/item/clothing/under/costume/saints,
 		/obj/item/clothing/head/saints,
 		/obj/item/clothing/shoes/saints)
-	free_clothes = list(/obj/item/clothing/suit/saints,
+	free_clothes = list(/obj/item/clothing/suit/costume/saints,
 		/obj/item/clothing/under/costume/saints,
 		/obj/item/clothing/head/saints,
 		/obj/item/clothing/shoes/saints,
@@ -654,11 +654,11 @@
 	roundend_category = "Phantom Thieves"
 	gang_name = "Phantom Thieves of Hearts"
 	gang_id = "PT"
-	acceptable_clothes = list(/obj/item/clothing/suit/phantom,
+	acceptable_clothes = list(/obj/item/clothing/suit/costume/phantom,
 		/obj/item/clothing/under/costume/phantom,
 		/obj/item/clothing/glasses/phantom,
 		/obj/item/clothing/shoes/phantom)
-	free_clothes = list(/obj/item/clothing/suit/phantom,
+	free_clothes = list(/obj/item/clothing/suit/costume/phantom,
 		/obj/item/clothing/under/costume/phantom,
 		/obj/item/clothing/glasses/phantom,
 		/obj/item/clothing/shoes/phantom,
@@ -680,7 +680,7 @@
 	roundend_category = "Allies"
 	gang_name = "Allies"
 	gang_id = "ALLIES"
-	free_clothes = list(/obj/item/clothing/suit/allies,
+	free_clothes = list(/obj/item/clothing/suit/costume/allies,
 		/obj/item/clothing/under/costume/allies,
 		/obj/item/clothing/head/allies,
 		/obj/item/clothing/gloves/color/black,
@@ -703,7 +703,7 @@
 	roundend_category = "Soviets"
 	gang_name = "Soviets"
 	gang_id = "SOV"
-	free_clothes = list(/obj/item/clothing/suit/soviet,
+	free_clothes = list(/obj/item/clothing/suit/costume/soviet,
 		/obj/item/clothing/under/costume/soviet_families,
 		/obj/item/clothing/head/ushanka/soviet,
 		/obj/item/clothing/gloves/color/black,
@@ -726,7 +726,7 @@
 	roundend_category = "Yuri's Army"
 	gang_name = "Yuri's Army"
 	gang_id = "YR"
-	free_clothes = list(/obj/item/clothing/suit/yuri,
+	free_clothes = list(/obj/item/clothing/suit/costume/yuri,
 		/obj/item/clothing/under/costume/yuri,
 		/obj/item/clothing/head/yuri,
 		/obj/item/clothing/gloves/color/black,
@@ -749,7 +749,7 @@
 	roundend_category = "Sybil Slickers"
 	gang_name = "Sybil Slickers"
 	gang_id = "SS"
-	free_clothes = list(/obj/item/clothing/suit/sybil_slickers,
+	free_clothes = list(/obj/item/clothing/suit/costume/sybil_slickers,
 		/obj/item/clothing/under/costume/sybil_slickers,
 		/obj/item/clothing/head/sybil_slickers,
 		/obj/item/clothing/gloves/tackler/football,
@@ -772,7 +772,7 @@
 	roundend_category = "Basil Boys"
 	gang_name = "Basil Boys"
 	gang_id = "BB"
-	free_clothes = list(/obj/item/clothing/suit/basil_boys,
+	free_clothes = list(/obj/item/clothing/suit/costume/basil_boys,
 		/obj/item/clothing/under/costume/basil_boys,
 		/obj/item/clothing/head/basil_boys,
 		/obj/item/clothing/gloves/tackler/football,

@@ -65,7 +65,7 @@
 	if(user.combat_mode || .)
 		return
 
-	if(item.w_class > max_weight)
+	if(item.w_class > max_weight && !istype(item, /obj/item/storage/bag))
 		balloon_alert(user, "item too big!")
 		return
 
@@ -73,8 +73,14 @@
 		balloon_alert(user, "at maximum capacity!")
 		return
 
-	add_item(item)
+	if(istype(item, /obj/item/storage/bag))
+		for(var/obj/item/bag_item in item.contents)
+			if(length(stored_items) >= capacity)
+				break
+			add_item(bag_item)
+		return
 
+	add_item(item)
 
 /obj/structure/dispenser_bot/wrench_act(mob/living/user, obj/item/tool)
 	if(locked)
