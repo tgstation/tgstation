@@ -231,7 +231,8 @@
 			living_players -= player // We don't autotator people with roles already
 
 /datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE)
-	if (!check_candidates())
+	if (required_candidates > living_players.len)
+		log_game("DYNAMIC: FAIL: [src] does not have enough candidates, using living_players ([required_candidates] needed, [living_players.len] found)")
 		return FALSE
 	return ..()
 
