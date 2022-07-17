@@ -55878,6 +55878,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "toq" = (
