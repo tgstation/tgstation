@@ -41,17 +41,17 @@
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
-/obj/item/storage/belt/utility/ComponentInitialize()
+/obj/item/storage/belt/utility/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 21
-	STR.set_holdable(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 21
+	atom_storage.set_holdable(list(
 		/obj/item/airlock_painter,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler,
 		/obj/item/clothing/gloves,
 		/obj/item/construction/rcd,
+		/obj/item/construction/rld,
 		/obj/item/crowbar,
 		/obj/item/extinguisher/mini,
 		/obj/item/flashlight,
@@ -205,12 +205,11 @@
 	inhand_icon_state = "medical"
 	worn_icon_state = "medical"
 
-/obj/item/storage/belt/medical/ComponentInitialize()
+/obj/item/storage/belt/medical/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 21
-	STR.set_holdable(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 21
+	atom_storage.set_holdable(list(
 		/obj/item/bikehorn/rubberducky,
 		/obj/item/blood_filter,
 		/obj/item/bonesetter,
@@ -287,6 +286,30 @@
 	to_preload += /obj/item/reagent_containers/glass/bottle/formaldehyde
 	return to_preload
 
+/obj/item/storage/belt/medical/ert
+	preload = TRUE
+
+/obj/item/storage/belt/medical/ert/PopulateContents()
+	SSwardrobe.provide_type(/obj/item/sensor_device, src)
+	SSwardrobe.provide_type(/obj/item/pinpointer/crew, src)
+	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
+	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
+	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
+	SSwardrobe.provide_type(/obj/item/surgical_drapes, src)
+	update_appearance()
+
+/obj/item/storage/belt/medical/ert/get_types_to_preload()
+	var/list/to_preload = list()
+	to_preload += /obj/item/sensor_device
+	to_preload += /obj/item/pinpointer/crew
+	to_preload += /obj/item/scalpel/advanced
+	to_preload += /obj/item/retractor/advanced
+	to_preload += /obj/item/stack/medical/bone_gel
+	to_preload += /obj/item/cautery/advanced
+	to_preload += /obj/item/surgical_drapes
+	return to_preload
+
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
@@ -295,12 +318,11 @@
 	worn_icon_state = "security"
 	content_overlays = TRUE
 
-/obj/item/storage/belt/security/ComponentInitialize()
+/obj/item/storage/belt/security/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.set_holdable(list(
+	atom_storage.max_slots = 5
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/assembly/flash/handheld,
@@ -335,10 +357,9 @@
 	content_overlays = FALSE
 	custom_premium_price = PAYCHECK_COMMAND * 3
 
-/obj/item/storage/belt/security/webbing/ComponentInitialize()
+/obj/item/storage/belt/security/webbing/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
+	atom_storage.max_slots = 6
 
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
@@ -348,13 +369,12 @@
 	worn_icon_state = "explorer1"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/mining/ComponentInitialize()
+/obj/item/storage/belt/mining/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 20
-	STR.set_holdable(list(
+	atom_storage.max_slots = 6
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 20
+	atom_storage.set_holdable(list(
 		/obj/item/analyzer,
 		/obj/item/clothing/gloves,
 		/obj/item/crowbar,
@@ -366,7 +386,7 @@
 		/obj/item/lighter,
 		/obj/item/mining_scanner,
 		/obj/item/multitool,
-		/obj/item/organ/regenerative_core,
+		/obj/item/organ/internal/regenerative_core,
 		/obj/item/pickaxe,
 		/obj/item/radio,
 		/obj/item/reagent_containers/food/drinks,
@@ -410,10 +430,9 @@
 	inhand_icon_state = "ebelt"
 	worn_icon_state = "ebelt"
 
-/obj/item/storage/belt/mining/primitive/ComponentInitialize()
+/obj/item/storage/belt/mining/primitive/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
+	atom_storage.max_slots = 5
 
 /obj/item/storage/belt/soulstone
 	name = "soul stone belt"
@@ -422,11 +441,10 @@
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
 
-/obj/item/storage/belt/soulstone/ComponentInitialize()
+/obj/item/storage/belt/soulstone/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(
+	atom_storage.max_slots = 6
+	atom_storage.set_holdable(list(
 		/obj/item/soulstone
 		))
 
@@ -446,11 +464,10 @@
 	worn_icon_state = "championbelt"
 	custom_materials = list(/datum/material/gold=400)
 
-/obj/item/storage/belt/champion/ComponentInitialize()
+/obj/item/storage/belt/champion/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 1
-	STR.set_holdable(list(
+	atom_storage.max_slots = 1
+	atom_storage.set_holdable(list(
 		/obj/item/clothing/mask/luchador
 		))
 
@@ -469,10 +486,9 @@
 	worn_icon_state = "militarywebbing"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/storage/belt/military/ComponentInitialize()
+/obj/item/storage/belt/military/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/belt/military/snack
 	name = "tactical snack rig"
@@ -482,12 +498,11 @@
 	var/sponsor = pick("Donk Co.", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
 	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
 
-/obj/item/storage/belt/military/snack/ComponentInitialize()
+/obj/item/storage/belt/military/snack/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.set_holdable(list(
+	atom_storage.max_slots = 6
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.set_holdable(list(
 		/obj/item/food,
 		/obj/item/reagent_containers/food/drinks
 		))
@@ -553,10 +568,9 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
 
-/obj/item/storage/belt/military/assault/ComponentInitialize()
+/obj/item/storage/belt/military/assault/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
+	atom_storage.max_slots = 6
 
 /obj/item/storage/belt/military/assault/full/PopulateContents()
 	generate_items_inside(list(
@@ -571,14 +585,13 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "grenadebeltnew"
 
-/obj/item/storage/belt/grenade/ComponentInitialize()
+/obj/item/storage/belt/grenade/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 30
-	STR.display_numerical_stacking = TRUE
-	STR.max_combined_w_class = 60
-	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.set_holdable(list(
+	atom_storage.max_slots = 30
+	atom_storage.numerical_stacking = TRUE
+	atom_storage.max_total_storage = 60
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
+	atom_storage.set_holdable(list(
 		/obj/item/food/grown/cherry_bomb,
 		/obj/item/food/grown/firelemon,
 		/obj/item/grenade,
@@ -611,11 +624,10 @@
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
 
-/obj/item/storage/belt/wands/ComponentInitialize()
+/obj/item/storage/belt/wands/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.set_holdable(list(
+	atom_storage.max_slots = 6
+	atom_storage.set_holdable(list(
 		/obj/item/gun/magic/wand
 		))
 
@@ -638,12 +650,11 @@
 	inhand_icon_state = "janibelt"
 	worn_icon_state = "janibelt"
 
-/obj/item/storage/belt/janitor/ComponentInitialize()
+/obj/item/storage/belt/janitor/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
-	STR.set_holdable(list(
+	atom_storage.max_slots = 6
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
+	atom_storage.set_holdable(list(
 		/obj/item/assembly/mousetrap,
 		/obj/item/clothing/gloves,
 		/obj/item/flashlight,
@@ -674,13 +685,12 @@
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
 
-/obj/item/storage/belt/bandolier/ComponentInitialize()
+/obj/item/storage/belt/bandolier/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 18
-	STR.max_combined_w_class = 18
-	STR.display_numerical_stacking = TRUE
-	STR.set_holdable(list(
+	atom_storage.max_slots = 18
+	atom_storage.max_total_storage = 18
+	atom_storage.numerical_stacking = TRUE
+	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/a762,
 		/obj/item/ammo_casing/shotgun,
 		))
@@ -694,11 +704,10 @@
 	dying_key = DYE_REGISTRY_FANNYPACK
 	custom_price = PAYCHECK_CREW * 2
 
-/obj/item/storage/belt/fannypack/ComponentInitialize()
+/obj/item/storage/belt/fannypack/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 3
-	STR.max_w_class = WEIGHT_CLASS_SMALL
+	atom_storage.max_slots = 3
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/belt/fannypack/black
 	name = "black fannypack"
@@ -768,14 +777,14 @@
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/sabre/ComponentInitialize()
+/obj/item/storage/belt/sabre/Initialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 1
-	STR.rustle_sound = FALSE
-	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.set_holdable(list(
+
+	atom_storage.max_slots = 1
+	atom_storage.rustle_sound = FALSE
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
+	atom_storage.set_holdable(list(
 		/obj/item/melee/sabre,
 		))
 
@@ -817,12 +826,11 @@
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 
-/obj/item/storage/belt/plant/ComponentInitialize()
+/obj/item/storage/belt/plant/Initialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.set_holdable(list(
+	atom_storage.max_slots = 6
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
 		/obj/item/cultivator,
 		/obj/item/geneshears,
 		/obj/item/graft,

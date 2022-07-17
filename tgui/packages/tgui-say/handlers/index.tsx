@@ -20,7 +20,7 @@ import { Modal } from '../types';
  *
  * return -- object: events
  */
-export const eventHandlerMap = (parent: Modal): Modal["events"] => {
+export const eventHandlerMap = (parent: Modal): Modal['events'] => {
   return {
     onArrowKeys: handleArrowKeys.bind(parent),
     onBackspaceDelete: handleBackspaceDelete.bind(parent),

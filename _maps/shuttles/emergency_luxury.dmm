@@ -643,9 +643,7 @@
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "ci" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "cj" = (

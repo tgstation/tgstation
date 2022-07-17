@@ -549,7 +549,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 		var/cursetime = 3 MINUTES
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
-		var/security_num = seclevel2num(get_security_level())
+		var/security_num = SSsecurity_level.get_current_level_as_number()
 		var/set_coefficient = 1
 
 		if(totalcurses == 0)
@@ -628,7 +628,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 	var/mob/living/carbon/C = user
 	var/turf/mobloc = get_turf(C)
-	var/turf/destination = get_teleport_loc(mobloc,C,9,1,3,1,0,1)
+	var/turf/destination = get_teleport_loc(location = mobloc, target = C, distance = 9, density_check = TRUE, errorx = 3, errory = 1, eoffsety = 1)
 
 	if(destination)
 		uses--

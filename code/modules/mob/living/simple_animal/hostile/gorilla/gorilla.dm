@@ -21,7 +21,7 @@
 	response_disarm_simple = "challenge"
 	response_harm_continuous = "thumps"
 	response_harm_simple = "thump"
-	speed = 1
+	speed = 0.5
 	melee_damage_lower = 15
 	melee_damage_upper = 18
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)

@@ -31,18 +31,18 @@
  *  boolean - on success or failure
  */
 /datum/tgui_say/proc/delegate_speech(entry, channel)
-	if(channel == OOC_CHANNEL)
-		client.ooc(entry)
-		return TRUE
 	switch(channel)
+		if(SAY_CHANNEL)
+			client.mob.say_verb(entry)
+			return TRUE
 		if(RADIO_CHANNEL)
 			client.mob.say_verb(";" + entry)
 			return TRUE
 		if(ME_CHANNEL)
 			client.mob.me_verb(entry)
 			return TRUE
-		if(SAY_CHANNEL)
-			client.mob.say_verb(entry)
+		if(OOC_CHANNEL)
+			client.ooc(entry)
 			return TRUE
 	return FALSE
 

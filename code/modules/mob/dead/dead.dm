@@ -55,7 +55,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/proc/server_hop()
 	set category = "OOC"
-	set name = "Server Hop!"
+	set name = "Server Hop"
 	set desc= "Jump to the other server"
 	if(notransform)
 		return

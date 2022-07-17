@@ -945,16 +945,16 @@
 		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
 		RegisterSignal(source.loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
-/obj/item/card/id/advanced/Moved(atom/OldLoc, Dir)
+/obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 
-	if(istype(OldLoc, /obj/item/storage/wallet))
-		UnregisterSignal(OldLoc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if(istype(old_loc, /obj/item/storage/wallet))
+		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-	if(istype(OldLoc, /obj/item/computer_hardware/card_slot))
-		var/obj/item/computer_hardware/card_slot/slot = OldLoc
+	if(istype(old_loc, /obj/item/computer_hardware/card_slot))
+		var/obj/item/computer_hardware/card_slot/slot = old_loc
 
-		UnregisterSignal(OldLoc, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(old_loc, COMSIG_MOVABLE_MOVED)
 
 		if(istype(slot.holder, /obj/item/modular_computer/tablet))
 			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
@@ -1297,6 +1297,7 @@
 	chameleon_card_action.chameleon_type = /obj/item/card/id/advanced
 	chameleon_card_action.chameleon_name = "ID Card"
 	chameleon_card_action.initialize_disguises()
+	add_item_action(chameleon_card_action)
 
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
@@ -1483,7 +1484,7 @@
 		if(popup_input == "Forge/Reset")
 			if(!forged)
 				var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
-				input_name = sanitize_name(input_name)
+				input_name = sanitize_name(input_name, allow_numbers = TRUE)
 				if(!input_name)
 					// Invalid/blank names give a randomly generated one.
 					if(user.gender == MALE)

@@ -276,6 +276,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/cascade_initiated = FALSE
 	///Reference to the warp effect
 	var/atom/movable/supermatter_warp_effect/warp
+	///The power threshold required to transform the powerloss function into a linear function from a cubic function.
+	var/powerloss_linear_threshold = 0
+	///The offset of the linear powerloss function set so the transition is differentiable.
+	var/powerloss_linear_offset = 0
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
@@ -332,6 +336,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/update_constants()
 	pressure_bonus_derived_steepness = (1 - 1 / pressure_bonus_max_multiplier) / (pressure_bonus_max_pressure ** pressure_bonus_curve_angle)
 	pressure_bonus_derived_constant = 1 / pressure_bonus_max_multiplier - pressure_bonus_derived_steepness
+	powerloss_linear_threshold = sqrt(POWERLOSS_LINEAR_RATE / 3 * POWERLOSS_CUBIC_DIVISOR ** 3)
+	powerloss_linear_offset = -1 * powerloss_linear_threshold * POWERLOSS_LINEAR_RATE + (powerloss_linear_threshold / POWERLOSS_CUBIC_DIVISOR) ** 3
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
 	. = ..()
@@ -555,8 +561,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			new /obj/effect/anomaly/hallucination(local_turf, has_changed_lifespan ? rand(150, 250) : null, FALSE)
 		if(VORTEX_ANOMALY)
 			new /obj/effect/anomaly/bhole(local_turf, 20, FALSE)
-		if(DELIMBER_ANOMALY)
-			new /obj/effect/anomaly/delimber(local_turf, null, FALSE)
+		if(BIOSCRAMBLER_ANOMALY)
+			new /obj/effect/anomaly/bioscrambler(local_turf, null, FALSE)
 
 /obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))

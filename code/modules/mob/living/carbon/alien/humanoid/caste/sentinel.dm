@@ -6,8 +6,9 @@
 	icon_state = "aliens"
 
 /mob/living/carbon/alien/humanoid/sentinel/Initialize(mapload)
-	AddAbility(new /obj/effect/proc_holder/alien/sneak)
-	. = ..()
+	var/datum/action/cooldown/alien/sneak/sneaky_beaky = new(src)
+	sneaky_beaky.Grant(src)
+	return ..()
 
 /mob/living/carbon/alien/humanoid/sentinel/create_internal_organs()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel

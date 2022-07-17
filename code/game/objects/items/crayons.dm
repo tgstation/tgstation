@@ -46,7 +46,7 @@
 	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
-	var/static/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
+	var/static/list/graffiti_large_h = list("yiffhell", "furrypride", "secborg", "paint")
 
 	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
 
@@ -599,9 +599,7 @@
 
 /obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 7
-	STR.set_holdable(list(/obj/item/toy/crayon))
+	create_storage(canhold = list(/obj/item/toy/crayon))
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -822,7 +820,7 @@
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+/obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return is_capped
 
 /obj/item/toy/crayon/spraycan/update_icon_state()

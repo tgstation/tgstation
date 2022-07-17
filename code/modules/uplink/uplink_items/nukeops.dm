@@ -106,16 +106,6 @@
 	purchasable_from = UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
 
-/datum/uplink_item/dangerous/bioterror
-	name = "Biohazardous Chemical Sprayer"
-	desc = "A handheld chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger \
-			Cooperative, the deadly blend it comes stocked with will disorient, damage, and disable your foes... \
-			Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
-	item = /obj/item/reagent_containers/spray/chemsprayer/bioterror
-	cost = 20
-	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-
 /datum/uplink_item/dangerous/shotgun
 	name = "Bulldog Shotgun"
 	desc = "A fully-loaded semi-automatic drum-fed shotgun. Compatible with all 12g rounds. Designed for close \
@@ -142,16 +132,6 @@
 	cost = 16
 	surplus = 20
 	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/dangerous/flamethrower
-	name = "Flamethrower"
-	desc = "A flamethrower, fueled by a portion of highly flammable plasma stolen previously from Nanotrasen \
-			stations. Make a statement by roasting the filth in their own greed. Use with caution."
-	item = /obj/item/flamethrower/full/tank
-	cost = 4
-	surplus = 40
-	purchasable_from = UPLINK_NUKE_OPS
-	illegal_tech = FALSE
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
@@ -185,6 +165,14 @@
 			with suppressors. The gun fires in three round bursts."
 	item = /obj/item/gun/ballistic/automatic/pistol/aps
 	cost = 10
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/dangerous/pistol_nukeop
+	name = "Ansem Pistol"
+	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+			with suppressors."
+	item = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	cost = 6
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/surplus_smg
@@ -232,6 +220,37 @@
 	name = "9mm Stechkin APS Magazine"
 	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS machine pistol."
 	item = /obj/item/ammo_box/magazine/m9mm_aps
+	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistol_nukeop
+	name = "10mm Handgun Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol."
+	item = /obj/item/ammo_box/magazine/m10mm
+	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistolap_nukeop
+	name = "10mm Armour Piercing Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
+			These rounds are less effective at injuring the target but penetrate protective gear."
+	item = /obj/item/ammo_box/magazine/m10mm/ap
+	cost = 3
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistolhp_nukeop
+	name = "10mm Hollow Point Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
+			These rounds are more damaging but ineffective against armour."
+	item = /obj/item/ammo_box/magazine/m10mm/hp
+	cost = 3
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistolfire_nukeop
+	name = "10mm Incendiary Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
+			Loaded with incendiary rounds which inflict less damage, but ignite the target."
+	item = /obj/item/ammo_box/magazine/m10mm/fire
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS
 

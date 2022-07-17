@@ -439,6 +439,20 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+
+/////////////////////////////////////////
+/////////////Hydroponics/////////////////
+/////////////////////////////////////////
+
+/datum/design/adv_watering_can
+	name = "Advanced Watering Can"
+	id = "adv_watering_can"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 200)
+	build_path = /obj/item/reagent_containers/glass/watering_can/advanced
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
 /////////////////////////////////////////
 /////////////Holobarriers////////////////
 /////////////////////////////////////////
@@ -660,7 +674,14 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
-
+/datum/design/super_pointy_tape
+	name = "Super Pointy Tape"
+	id = "super_pointy_tape"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 3000, /datum/material/plastic = 2000)
+	build_path = /obj/item/stack/sticky_tape/pointy/super
+	category = list("Equipment")
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /////////////////////////////////////////
 ////////////Tackle Gloves////////////////

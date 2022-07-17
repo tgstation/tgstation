@@ -155,6 +155,9 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
+#define isspider(A) (istype(A, /mob/living/simple_animal/hostile/giant_spider))
+
+
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
@@ -268,3 +271,5 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define is_security_officer_job(job_type) (istype(job_type, /datum/job/security_officer))
 #define is_research_director_job(job_type) (istype(job_type, /datum/job/research_director))
 #define is_unassigned_job(job_type) (istype(job_type, /datum/job/unassigned))
+
+#define isprojectilespell(thing) (istype(thing, /datum/action/cooldown/spell/pointed/projectile))

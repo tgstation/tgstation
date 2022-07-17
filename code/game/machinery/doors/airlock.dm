@@ -92,9 +92,6 @@
 	integrity_failure = 0.25
 	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 	autoclose = TRUE
-	secondsElectrified = MACHINE_NOT_ELECTRIFIED //How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
-	assemblytype = /obj/structure/door_assembly
-	normalspeed = 1
 	explosion_block = 1
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 	smoothing_groups = list(SMOOTH_GROUP_AIRLOCK)
@@ -102,6 +99,8 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	blocks_emissive = NONE // Custom emissive blocker. We don't want the normal behavior.
 
+	///The type of door frame to drop during deconstruction
+	var/assemblytype = /obj/structure/door_assembly
 	var/security_level = 0 //How much are wires secured
 	var/aiControlDisabled = AI_WIRE_NORMAL //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = FALSE // if true, this door can't be hacked by the AI
@@ -121,6 +120,8 @@
 	var/obj/item/seal
 	var/detonated = FALSE
 	var/abandoned = FALSE
+	///Controls if the door closes quickly or not. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
+	var/normalspeed = TRUE
 	var/cutAiWire = FALSE
 	var/autoname = FALSE
 	var/doorOpen = 'sound/machines/airlock.ogg'
@@ -140,6 +141,10 @@
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 	var/air_tight = FALSE //TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
+	///Logging for door electrification.
+	var/shockedby
+	///How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
+	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
@@ -213,11 +218,14 @@
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
 
-/obj/machinery/door/airlock/vv_edit_var(var_name)
+/obj/machinery/door/airlock/vv_edit_var(var_name, vval)
 	. = ..()
 	switch (var_name)
 		if (NAMEOF(src, cyclelinkeddir))
 			cyclelinkairlock()
+		if (NAMEOF(src, secondsElectrified))
+			set_electrified(vval < MACHINE_NOT_ELECTRIFIED ? MACHINE_ELECTRIFIED_PERMANENT : vval) //negative values are bad mkay (unless they're the intended negative value!)
+
 
 /obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
 	return !requiresID() || ..()
@@ -761,7 +769,9 @@
 		if(QDELETED(src))
 			return
 
-		secondsElectrified--
+		if(secondsElectrified <= MACHINE_NOT_ELECTRIFIED) //make sure they weren't unelectrified during the sleep.
+			break
+		secondsElectrified = max(MACHINE_NOT_ELECTRIFIED, secondsElectrified - 1) //safety to make sure we don't end up permanently electrified during a timed electrification.
 	// This is to protect against changing to permanent, mid loop.
 	if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
 		set_electrified(MACHINE_NOT_ELECTRIFIED)
@@ -1335,6 +1345,14 @@
 	if(!panel_open)
 		panel_open = TRUE
 	wires.cut_all()
+
+/obj/machinery/door/airlock/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
+	if(prob(severity*10 - 20) && (secondsElectrified < 30) && (secondsElectrified != MACHINE_ELECTRIFIED_PERMANENT))
+		set_electrified(30)
+		LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
 
 /obj/machinery/door/airlock/proc/set_electrified(seconds, mob/user)
 	secondsElectrified = seconds

@@ -15,8 +15,7 @@
   width: 5px;
 }
 
-@each $channel,
-$color in colors.$channel-map {
+@each $channel, $color in colors.$channel-map {
   $darkened: darken($color, 20%);
 
   .dragzone-bottom-#{$channel} {

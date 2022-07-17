@@ -554,8 +554,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cb" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_x = 32;
+/obj/structure/sign/departments/medbay/alt/directional/east{
 	pixel_y = -32
 	},
 /turf/open/floor/iron,
@@ -1032,9 +1031,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "di" = (
-/obj/structure/sign/warning/electric_shock{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/electric_shock/directional/east,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -1065,9 +1062,7 @@
 /area/shuttle/escape)
 "dl" = (
 /obj/structure/table,
-/obj/structure/sign/warning/engine_safety{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/engine_safety/directional/south,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8

@@ -414,8 +414,7 @@
 /area/shuttle/caravan/freighter3)
 "gy" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32;
+/obj/structure/sign/warning/vacuum/directional/west{
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -650,8 +649,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32;
+/obj/structure/sign/warning/vacuum/directional/west{
 	pixel_y = 32
 	},
 /turf/open/floor/plating/airless,
@@ -927,8 +925,7 @@
 /area/shuttle/caravan/freighter3)
 "je" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32;
+/obj/structure/sign/warning/vacuum/directional/west{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1112,8 +1109,7 @@
 "kb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32;
+/obj/structure/sign/warning/vacuum/directional/west{
 	pixel_y = -32
 	},
 /turf/open/floor/iron/dark/airless,

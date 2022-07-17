@@ -943,19 +943,13 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/cargo)
 "gf" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/vacuum/directional/south,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/cargo)
 "gg" = (
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
-/obj/structure/sign/warning/xeno_mining{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/fire/directional/north,
+/obj/structure/sign/warning/xeno_mining/directional/south,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/cargo)
 "gh" = (
@@ -1219,9 +1213,7 @@
 /area/ruin/syndicate_lava_base/virology)
 "hv" = (
 /obj/machinery/disposal/bin,
-/obj/structure/sign/warning/deathsposal{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/deathsposal/directional/east,
 /obj/effect/turf_decal/stripes/red/box,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -1307,9 +1299,7 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/virology)
 "hI" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/directional/west,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/main)
 "hJ" = (
@@ -1318,9 +1308,7 @@
 /area/ruin/syndicate_lava_base/main)
 "hK" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/sign/warning/fire{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/fire/directional/east,
 /obj/structure/closet/emcloset/anchored,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/flashlight/seclite,
@@ -1905,9 +1893,7 @@
 	dir = 8
 	},
 /obj/machinery/power/smes/engineering,
-/obj/structure/sign/warning/electric_shock{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/electric_shock/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2170,9 +2156,7 @@
 /turf/closed/wall/mineral/plastitanium/explosive,
 /area/ruin/syndicate_lava_base/arrivals)
 "mq" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/directional/west,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/arrivals)
 "mr" = (
@@ -2180,9 +2164,7 @@
 /area/ruin/syndicate_lava_base/arrivals)
 "ms" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/sign/warning/fire{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/fire/directional/east,
 /obj/structure/closet/emcloset/anchored,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/flashlight/seclite,
@@ -2473,9 +2455,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/syndicate_lava_base/medbay)
 "ou" = (
-/obj/structure/sign/warning/explosives/alt{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/explosives/alt/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/circuit/red,
@@ -2511,12 +2491,8 @@
 /turf/open/floor/engine/vacuum,
 /area/ruin/syndicate_lava_base/engineering)
 "oD" = (
-/obj/structure/sign/warning/xeno_mining{
-	pixel_x = -32
-	},
-/obj/structure/sign/warning/fire{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/xeno_mining/directional/west,
+/obj/structure/sign/warning/fire/directional/east,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/arrivals)
 "oF" = (
@@ -2528,9 +2504,7 @@
 /turf/open/floor/engine/vacuum,
 /area/ruin/syndicate_lava_base/engineering)
 "oI" = (
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32
-	},
+/obj/structure/sign/warning/vacuum/directional/west,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/arrivals)
@@ -4721,9 +4695,7 @@
 "ZG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/radiation/rad_area{
-	pixel_y = -32
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/south,
 /obj/effect/turf_decal/stripes,
 /obj/structure/closet/radiation,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{

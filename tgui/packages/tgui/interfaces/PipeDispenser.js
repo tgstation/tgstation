@@ -5,16 +5,14 @@ import { ICON_BY_CATEGORY_NAME, ColorItem, LayerSelect, SmartPipeBlockSection } 
 
 const PipeTypeSection = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    categories = [],
-  } = data;
-  const [
-    categoryName,
-    setCategoryName,
-  ] = useLocalState(context, 'categoryName');
-  const shownCategory = categories
-    .find(category => category.cat_name === categoryName)
-    || categories[0];
+  const { categories = [] } = data;
+  const [categoryName, setCategoryName] = useLocalState(
+    context,
+    'categoryName'
+  );
+  const shownCategory =
+    categories.find((category) => category.cat_name === categoryName) ||
+    categories[0];
   return (
     <Section fill scrollable>
       <Tabs>
@@ -29,18 +27,21 @@ const PipeTypeSection = (props, context) => {
           </Tabs.Tab>
         ))}
       </Tabs>
-      {shownCategory?.recipes.map(recipe => (
+      {shownCategory?.recipes.map((recipe) => (
         <Button
           key={recipe.pipe_index}
           fluid
           ellipsis
           content={recipe.pipe_name}
           title={recipe.pipe_name}
-          onClick={() => act('pipe_type', {
-            pipe_type: recipe.pipe_index,
-            pipe_dir: recipe.dir,
-            category: shownCategory.cat_name,
-          })} />
+          onClick={() =>
+            act('pipe_type', {
+              pipe_type: recipe.pipe_index,
+              pipe_dir: recipe.dir,
+              category: shownCategory.cat_name,
+            })
+          }
+        />
       ))}
     </Section>
   );
@@ -48,13 +49,9 @@ const PipeTypeSection = (props, context) => {
 
 export const PipeDispenser = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    category: rootCategoryIndex,
-  } = data;
+  const { category: rootCategoryIndex } = data;
   return (
-    <Window
-      width={450}
-      height={575}>
+    <Window width={450} height={575}>
       <Window.Content>
         <Stack fill vertical>
           {rootCategoryIndex === 0 && (

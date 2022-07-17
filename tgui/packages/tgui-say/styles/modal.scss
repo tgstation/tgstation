@@ -45,17 +45,18 @@
 }
 
 /** Creates an animated border for each channel */
-@each $channel,
-$color in colors.$channel-map {
+@each $channel, $color in colors.$channel-map {
   .modal-#{$channel} {
     &:after {
       animation: gradient 10s linear infinite;
-      background: linear-gradient(to right,
-          darken($color, 35%),
-          $color,
-          lighten($color, 10%),
-          $color,
-          darken($color, 35%));
+      background: linear-gradient(
+        to right,
+        darken($color, 35%),
+        $color,
+        lighten($color, 10%),
+        $color,
+        darken($color, 35%)
+      );
       background-position: 0% 0%;
       background-size: 500% auto;
       bottom: 0px;
