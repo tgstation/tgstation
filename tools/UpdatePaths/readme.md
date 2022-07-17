@@ -1,12 +1,12 @@
-<h1>UpdatePaths</h1>
+# UpdatePaths
 
-<h2>HOW TO USE:</h2>
+## How To Use:
 
 Drag one of the scripts in the “Scripts” folder onto the .bat file “Update Paths” to open it with the `.bat` file (or use the Python script directly depending on your operating system). Let the script run to completion.
 
 Use this tool before using MapMerge2 or opening the map in an map editor. This is because the map editor may discard any unknown paths not found in the /tg/station environment (or what it builds after parsing `tgstation.dme`).
 
-<h2>HOW TO MAKE A SCRIPT:</h2>
+## Scriptmaking:
 
 This tool updates paths in the game to new paths. For instance:
 
@@ -14,7 +14,7 @@ If you have a path labeled `/obj/structure/door/airlock/science/closed/rd` and w
 
 ---
 
-<h3>How do you do it?</h3>
+### How do I do it?
 
 Simply create a `.TXT` file and type this on a line:
 
@@ -27,7 +27,7 @@ Putting `{@OLD}` is important since otherwise, UpdatePaths will automatically di
 
 ---
 
-<h3>On Variable Editing</h3>
+### On Variable Editing
 
 If you do not want any variable edits to carry over, you can simply skip adding the `{@OLD}` tag (although this is not advisable under normal circumstances). There are also a bunch of neat features you can use with UpdatePaths variable filtering, such as ensuring all new paths get a certain variable edit, filtering old paths if they have a certain variable edit, or even splitting one path into multiple paths on a map. You can find out more about this by reading `https://github.com/tgstation/tgstation/blob/master/tools/UpdatePaths/__main__.py#L9`.
 
