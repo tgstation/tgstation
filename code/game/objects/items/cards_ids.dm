@@ -920,7 +920,7 @@
 			else return
 		else if(do_after(user, 1 SECONDS))
 			subdepartment_color_override = our_crayon.paint_color
-			balloon_alert(user, "Recolored!")
+			balloon_alert(user, "recolored")
 		update_icon()
 
 /obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user)
