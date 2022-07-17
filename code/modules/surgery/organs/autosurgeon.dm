@@ -47,7 +47,7 @@
 			return
 
 		if(organ_whitelist.len)
-			var/obj/item/organ/organ_whitelisted
+			var/organ_whitelisted
 			for(var/whitelisted_organ in organ_whitelist)
 				if(istype(loaded_organ, whitelisted_organ))
 					organ_whitelisted = TRUE
