@@ -223,7 +223,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/telecomms/alt, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aiupload, 32)
 
 /obj/structure/sign/departments/aisat
-	name = "\improper AI Sattelite sign"
+	name = "\improper AI Satellite sign"
 	sign_change_name = "Location - AI Satellite"
 	desc = "A sign labelling a sattelite where the AI is installed."
 	icon_state = "aisat"
