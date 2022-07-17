@@ -64,17 +64,9 @@ export const EventContent = (props, context) => {
   const categories = Object.values(data.categories);
   const sortCategories = sortBy((category) => category.name);
 
-  return (
-    <Section>
-      <Stack vertical fill>
-        {sortCategories(categories).map((category) => (
-          <Stack.Item mt={0.2} key={category.name}>
-            <EventList category={category} />
-          </Stack.Item>
-        ))}
-      </Stack>
-    </Section>
-  );
+  return sortCategories(categories).map((category) => (
+    <EventList category={category} />
+  ));
 };
 
 export const EventList = (props, context) => {
