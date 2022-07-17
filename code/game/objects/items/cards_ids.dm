@@ -914,10 +914,10 @@
 	if(istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/our_crayon = W
 		if(tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment")) == "Department")
-			if(do_after(user, 2 SECONDS)) // Doesn't technically require a spraycan's cap to be off but shhh
-				department_color_override = our_crayon.paint_color
-				balloon_alert(user, "recolored")
-			return
+			if(!do_after(user, 2 SECONDS)) // Doesn't technically require a spraycan's cap to be off but shhh
+				return
+			department_color_override = our_crayon.paint_color
+			balloon_alert(user, "recolored")
 		else if(do_after(user, 1 SECONDS))
 			subdepartment_color_override = our_crayon.paint_color
 			balloon_alert(user, "recolored")
