@@ -919,7 +919,7 @@
 				balloon_alert(user, "Recolored!")
 			else return
 		else if(do_after(user, 1 SECONDS))
-			src.subdepartment_color_override = our_crayon.paint_color
+			subdepartment_color_override = our_crayon.paint_color
 			balloon_alert(user, "Recolored!")
 		update_icon()
 
