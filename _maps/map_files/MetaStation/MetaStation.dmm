@@ -7465,9 +7465,7 @@
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
 "cOX" = (
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -25716,9 +25714,7 @@
 /area/station/cargo/storage)
 "jhD" = (
 /obj/structure/closet/radiation,
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -28376,6 +28372,7 @@
 /obj/item/chisel{
 	pixel_y = 7
 	},
+/obj/machinery/camera/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
 "kcu" = (
@@ -38138,8 +38135,7 @@
 	pixel_y = 8
 	},
 /obj/item/pen/fountain{
-	pixel_x = 6;
-	pixel_y = 0
+	pixel_x = 6
 	},
 /obj/item/pen/blue{
 	pixel_x = -5;
@@ -38457,6 +38453,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
+"nEZ" = (
+/obj/machinery/plate_press,
+/obj/effect/turf_decal/bot,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron,
+/area/station/security/prison/work)
 "nFa" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
@@ -53406,9 +53408,7 @@
 	c_tag = "Gravity Generator Foyer"
 	},
 /obj/structure/closet/radiation,
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -68513,9 +68513,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/warning/radiation/rad_area/directional/north{
-	dir = 1
-	},
+/obj/structure/sign/warning/radiation/rad_area/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -90837,7 +90835,7 @@ mAe
 ihb
 nyf
 uZa
-sWF
+nEZ
 wZz
 bmX
 qOT

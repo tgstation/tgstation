@@ -6344,6 +6344,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
@@ -18105,7 +18106,6 @@
 /area/station/security/processing)
 "ftM" = (
 /obj/machinery/button/door/directional/north{
-	pixel_y = 24;
 	pixel_x = -25;
 	name = "Kitchen Lockdown";
 	req_access = list("kitchen");
@@ -19598,6 +19598,7 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/head/fedora,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
 "fRP" = (
@@ -26945,6 +26946,7 @@
 	},
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/camera/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "iiH" = (
@@ -37127,6 +37129,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
 "lmm" = (
@@ -42734,9 +42737,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/door/window/right/directional/east{
-	dir = 4
-	},
+/obj/machinery/door/window/right/directional/east,
 /obj/structure/sign/warning/cold_temp/directional/south,
 /turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
@@ -46849,8 +46850,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchencounter";
-	name = "Kitchen Counter Shutters";
-	dir = 2
+	name = "Kitchen Counter Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
@@ -50638,6 +50638,7 @@
 	},
 /obj/structure/chair,
 /obj/machinery/camera/autoname/directional/west,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
 "pxu" = (
@@ -66282,7 +66283,6 @@
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/turf_decal/tile/blue/diagonal_edge,
 /obj/machinery/vending/wardrobe/chef_wardrobe{
-	pixel_y = 0;
 	pixel_x = -2
 	},
 /obj/item/radio/intercom/directional/west,
@@ -72806,8 +72806,7 @@
 "wrE" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/glass/fifty{
-	pixel_x = 2;
-	pixel_y = 0
+	pixel_x = 2
 	},
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/cable_coil{

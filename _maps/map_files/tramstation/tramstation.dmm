@@ -3538,6 +3538,14 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
+"bvR" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "bwd" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -3972,6 +3980,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "bDo" = (
@@ -5567,6 +5576,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/camera/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "cbm" = (
@@ -6546,6 +6556,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
+"crq" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "crr" = (
 /obj/structure/table/glass,
 /obj/item/book/manual/wiki/cytology{
@@ -6608,12 +6625,10 @@
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "csq" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "csz" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -22441,6 +22456,7 @@
 "hUj" = (
 /obj/effect/turf_decal/stripes/line,
 /mob/living/simple_animal/bot/secbot/beepsky/armsky,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "hUx" = (
@@ -36974,6 +36990,7 @@
 "mKP" = (
 /obj/vehicle/ridden/secway,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "mKQ" = (
@@ -37169,6 +37186,11 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/right)
+"mNA" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "mNN" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
@@ -41583,6 +41605,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"otW" = (
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/glass/reinforced,
+/area/station/ai_monitored/turret_protected/aisat/hallway)
 "ouJ" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 9
@@ -41983,6 +42009,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"oDw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/ai_monitored/security/armory)
 "oEf" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -51763,6 +51796,13 @@
 "rOu" = (
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
+"rOA" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/glass/reinforced,
+/area/station/ai_monitored/turret_protected/aisat/hallway)
 "rOB" = (
 /obj/structure/rack,
 /obj/item/stack/cable_coil/five,
@@ -66133,6 +66173,11 @@
 /obj/structure/weightmachine/stacklifter,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
+"wTa" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "wTy" = (
 /obj/machinery/button/crematorium{
 	id = "crematoriumChapel";
@@ -155596,12 +155641,12 @@ dEv
 hgn
 hgn
 hgn
-xhQ
+cvx
 mUl
 tXi
 mkz
 hUj
-hgn
+mNA
 ycK
 etH
 bLT
@@ -155853,11 +155898,11 @@ dEv
 sab
 uPZ
 eSj
-xhQ
-csq
+cvx
+tGX
 mlS
 hLx
-avY
+oDw
 hgn
 jMX
 wZs
@@ -156114,7 +156159,7 @@ bKl
 qOD
 iHb
 avY
-hgn
+mNA
 mzH
 dEv
 rUc
@@ -156371,7 +156416,7 @@ jlQ
 tuU
 aEy
 hgn
-hgn
+csq
 kkV
 dEv
 lAW
@@ -178548,7 +178593,7 @@ vMO
 sXX
 toa
 xjr
-hTG
+wTa
 hlc
 fyd
 fyd
@@ -178793,7 +178838,7 @@ pJF
 gxz
 tPZ
 tPZ
-joR
+crq
 tby
 gyB
 oPT
@@ -181623,7 +181668,7 @@ wVj
 wVj
 kEA
 hwM
-hwM
+bvR
 hwM
 hwM
 faF
@@ -182718,7 +182763,7 @@ dVM
 rOT
 rSB
 dVM
-fho
+rOA
 cEb
 gFf
 wbW
@@ -183494,7 +183539,7 @@ oMI
 gFf
 uqS
 cSe
-uqS
+otW
 gFf
 gFf
 gFf
