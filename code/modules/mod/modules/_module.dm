@@ -47,6 +47,7 @@
 	var/allowed_inactive = FALSE
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
+	cooldown_timer = 2
 
 /obj/item/mod/module/Initialize(mapload)
 	. = ..()
