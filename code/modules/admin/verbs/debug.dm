@@ -965,3 +965,9 @@
 				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Suit Storage slot."), confidential = TRUE)
 #endif
+
+/*
+/client/proc/add_mood_event()
+	set category = "Debug"
+	set name = "Add Mood Event"
+*/
