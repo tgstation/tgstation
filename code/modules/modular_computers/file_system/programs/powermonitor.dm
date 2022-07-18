@@ -24,7 +24,7 @@
 	var/next_record = 0
 
 
-/datum/computer_file/program/power_monitor/run_program(mob/living/user)
+/datum/computer_file/program/power_monitor/on_start(mob/living/user)
 	. = ..(user)
 	search()
 	history["supply"] = list()

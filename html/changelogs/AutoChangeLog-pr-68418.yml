@@ -1,0 +1,4 @@
+author: "SuperSlayer"
+delete-after: True
+changes: 
+  - balance: "Baton resistance trait now prevents getting knockdowned by batons, instead of just shortening knockdown duration"

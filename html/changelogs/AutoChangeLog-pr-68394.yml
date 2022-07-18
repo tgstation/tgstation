@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - bugfix: "Speedloaders and stripper clips can once again can load in ammo of the same caliber. Detectives rejoice!"

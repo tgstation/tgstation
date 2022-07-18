@@ -9,8 +9,6 @@
 	var/list/transfer_access = list()
 	/// PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.
 	var/program_state = PROGRAM_STATE_KILLED
-	/// Device that runs this program.
-	var/obj/item/modular_computer/computer
 	/// User-friendly name of this program.
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
@@ -45,15 +43,6 @@
 	var/alert_pending = FALSE
 	/// How well this program will help combat detomatix viruses.
 	var/detomatix_resistance = NONE
-
-/datum/computer_file/program/New(obj/item/modular_computer/comp = null)
-	..()
-	if(comp && istype(comp))
-		computer = comp
-
-/datum/computer_file/program/Destroy()
-	computer = null
-	. = ..()
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
@@ -108,7 +97,7 @@
 	return TRUE
 
 /**
- *Check if the user can run program. Only humans and silicons can operate computer. Automatically called in run_program()
+ *Check if the user can run program. Only humans and silicons can operate computer. Automatically called in on_start()
  *ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
  *NT Software Hub is checking available software), a list can be given to be used instead.
  *Arguments:
@@ -167,7 +156,7 @@
 
 // This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
 // When implementing new program based device, use this to run the program.
-/datum/computer_file/program/proc/run_program(mob/living/user)
+/datum/computer_file/program/proc/on_start(mob/living/user)
 	if(can_run(user, 1))
 		if(requires_ntnet)
 			var/obj/item/card/id/ID
