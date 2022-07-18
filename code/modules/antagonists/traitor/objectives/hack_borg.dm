@@ -104,7 +104,7 @@
 				balloon_alert(user, "already unlocked!")
 			return
 		if(R.wiresexposed)
-			to_chat(user, span_warning("You must unexpose the wires first!"))
+			balloon_alert(user, "unexpose the wires first!")
 			return
 		if(R.emagged)
 			to_chat(user, span_warning("It looks like [R] is already hacked."))
