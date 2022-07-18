@@ -812,8 +812,12 @@
 	else
 		return element
 
+#define REFIFY_KVPIFY_MAX_LENGTH 1000
+
 /// Returns a copy of the list where any element that is a datum or the world is converted into a ref
 /proc/refify_list(list/target_list)
+	if(length(target_list) > REFIFY_KVPIFY_MAX_LENGTH)
+		return "list\[[length(target_list)]\]"
 	var/list/ret = list()
 	for(var/i in 1 to target_list.len)
 		var/key = target_list[i]
@@ -844,6 +848,8 @@
  * so that list keys that are themselves lists can be fully json-encoded
  */
 /proc/kvpify_list(list/target_list, depth = INFINITY)
+	if(length(target_list) > REFIFY_KVPIFY_MAX_LENGTH)
+		return "list\[[length(target_list)]\]"
 	var/list/ret = list()
 	for(var/i in 1 to target_list.len)
 		var/key = target_list[i]
@@ -860,6 +866,8 @@
 		else
 			ret += list(list("key" = i, "value" = new_key))
 	return ret
+
+#undef REFIFY_KVPIFY_MAX_LENGTH
 
 /// Compares 2 lists, returns TRUE if they are the same
 /proc/deep_compare_list(list/list_1, list/list_2)
