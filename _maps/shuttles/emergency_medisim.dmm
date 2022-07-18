@@ -501,10 +501,7 @@
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape/simulation)
 "uM" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "uW" = (
@@ -533,8 +530,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "xy" = (
-/obj/machinery/shower{
-	dir = 8;
+/obj/machinery/shower/directional/west{
 	name = "emergency shower"
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
