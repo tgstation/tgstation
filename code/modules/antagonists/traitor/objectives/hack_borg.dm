@@ -89,7 +89,7 @@
 			return
 		var/mob/living/silicon/robot/R = target
 		if(R.stat == DEAD)
-			to_chat(user, span_warning("You need to hack a functioning cyborg, not a broken one!"))
+			balloon_alert(user, "it's broken!")
 			return
 		if(!R.mind || !R.client)
 			to_chat(user, span_warning("It looks like [R]'s controlling interface doesn't function. Hacking it will make no sense."))
