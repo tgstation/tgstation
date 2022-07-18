@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes: 
-  - bugfix: "signalCommander now works without altering the default frequency"

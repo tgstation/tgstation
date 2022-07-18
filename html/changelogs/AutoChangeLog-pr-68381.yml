@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Banana Glutton's ability will no longer break after eating a banana."

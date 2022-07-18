@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Airlocks made from custom materials are now properly colored instead of being forced to use the color of the first material used."

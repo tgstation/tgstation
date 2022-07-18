@@ -1,0 +1,4 @@
+author: "TheBoondock"
+delete-after: True
+changes: 
+  - bugfix: "fixed ranged analyzer being able to scan out of view targets"
