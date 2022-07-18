@@ -38,6 +38,17 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/main_outpost/seconadry/research)
+"ai" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "aj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/rods,
@@ -218,18 +229,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/main_outpost/seconadry/between_access)
-"aS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock";
-	req_access_txt = "200"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "aV" = (
 /obj/structure/sink{
 	dir = 8;
@@ -360,12 +359,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
-"bv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
 "bw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/xeno_mining/directional/south,
@@ -421,6 +414,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/security,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
+"bF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "bG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -502,6 +499,13 @@
 /obj/item/stack/rods,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
+"bY" = (
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
+	dir = 4
+	},
+/obj/structure/sign/clock/directional/east,
+/turf/open/floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/research)
 "ca" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/atmospherics/components/unary/passive_vent{
@@ -523,17 +527,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/awaymission/caves/bmp_asteroid/level_two)
-"cg" = (
-/obj/structure/cable,
-/obj/machinery/light/dim/directional/west,
-/obj/structure/closet/crate/trashcart,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/structure/sign/warning/electric_shock/directional/west,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
 "ch" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -729,6 +722,12 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/recycle)
+"di" = (
+/obj/machinery/atmospherics/components/tank/oxygen,
+/obj/structure/cable,
+/obj/structure/sign/warning/engine_safety/directional/north,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "dj" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -828,6 +827,12 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/third_outpost)
+"dM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "dO" = (
 /turf/open/chasm/lavaland,
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -873,15 +878,10 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/recycle)
-"ea" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/awaymission/caves/main_outpost/storage)
+"eb" = (
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "ec" = (
 /turf/closed/wall,
 /area/awaymission/caves/main_outpost)
@@ -967,17 +967,21 @@
 	},
 /turf/open/floor/pod,
 /area/awaymission/caves/third_outpost/pod)
+"ex" = (
+/obj/structure/cable,
+/obj/machinery/light/dim/directional/west,
+/obj/structure/closet/crate/trashcart,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/structure/sign/warning/electric_shock/directional/west,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "ez" = (
 /obj/item/soap/nanotrasen,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/main_outpost)
-"eA" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister,
-/turf/open/floor/plating,
-/area/awaymission/caves/second_outpost/rest)
 "eB" = (
 /turf/open/indestructible/necropolis,
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -993,12 +997,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
-"eE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "eF" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/mecha_part_fabricator/maint,
@@ -1048,6 +1046,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
+"eU" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/electrical,
+/obj/item/crowbar,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "eV" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -1143,18 +1147,10 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
-"fu" = (
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/transit)
 "fv" = (
 /obj/machinery/light/dim/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/recycle)
-"fw" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
 "fz" = (
 /obj/effect/landmark/awaystart,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1206,22 +1202,14 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/barracks)
-"fJ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
 "fL" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
-"fO" = (
-/obj/machinery/atmospherics/components/tank/oxygen,
+"fP" = (
 /obj/structure/cable,
-/obj/structure/sign/warning/engine_safety/directional/north,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/engineering)
 "fQ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1347,11 +1335,10 @@
 /area/awaymission/caves/main_outpost/rec)
 "gr" = (
 /obj/structure/cable,
-/obj/machinery/light/dim/directional/west,
-/obj/machinery/atmospherics/components/tank/oxygen,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
+/obj/machinery/light/small/directional/north,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/transit)
 "gs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1414,14 +1401,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/engineering)
-"gH" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
 "gI" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
@@ -1549,6 +1528,10 @@
 /obj/structure/railing,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
+"hi" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "hl" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
@@ -1634,6 +1617,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/second_outpost/tunnel)
+"hr" = (
+/obj/structure/cable,
+/obj/structure/sign/warning/electric_shock/directional/east,
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/transit)
 "hs" = (
 /obj/structure/cable,
 /obj/machinery/power/smes/engineering,
@@ -1649,10 +1638,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"hv" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "hw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
@@ -1712,6 +1697,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
+"hJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "hK" = (
 /obj/structure/ladder/unbreakable{
 	id = "caves1"
@@ -1729,9 +1718,12 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost)
 "hN" = (
-/obj/machinery/power/smes/engineering,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/transit)
 "hO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
@@ -1756,6 +1748,11 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
+"hY" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/second_outpost/rest)
 "id" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -1773,6 +1770,21 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
+"ie" = (
+/obj/structure/bed,
+/obj/item/bedsheet/brown,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/button/door/directional/east{
+	id = "CavesCabin2";
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/structure/sign/poster/official/wtf_is_co2{
+	pixel_y = 32
+	},
+/turf/open/floor/carpet,
+/area/awaymission/caves/main_outpost/dorm)
 "ig" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 1
@@ -1873,10 +1885,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/recycle)
-"ix" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/awaymission/caves/main_outpost/seconadry/research/living)
 "iA" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -1929,12 +1937,23 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/caves/third_outpost/transit)
+"iK" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/transit)
 "iL" = (
 /obj/item/stack/sheet/mineral/sandbags{
 	amount = 12
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_three)
+"iM" = (
+/obj/structure/cable,
+/obj/machinery/light/dim/directional/west,
+/obj/machinery/atmospherics/components/tank/oxygen,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "iN" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
@@ -2039,6 +2058,19 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
+"jv" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/moth_epi{
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/main_outpost/storage)
 "jx" = (
 /obj/structure/flora/ash/cap_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -2097,10 +2129,19 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost)
-"jJ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
+"jI" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Delta Outpost Life Support";
+	network = list("caveslvl1")
+	},
+/obj/structure/rack,
+/obj/item/wormhole_jaunter,
+/obj/item/wormhole_jaunter{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "jL" = (
 /obj/machinery/door/airlock/survival_pod/glass{
 	name = "Tool Storage"
@@ -2686,6 +2727,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost)
+"mk" = (
+/obj/machinery/atmospherics/components/tank/oxygen,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "mn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/directional/east{
@@ -2711,6 +2757,10 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost)
+"mx" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "my" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Storage Wing"
@@ -2747,19 +2797,6 @@
 /obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
-"mJ" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Delta Outpost Life Support";
-	network = list("caveslvl1")
-	},
-/obj/structure/rack,
-/obj/item/wormhole_jaunter,
-/obj/item/wormhole_jaunter{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
 "mK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2920,12 +2957,6 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/caves/main_outpost/dorm)
-"no" = (
-/obj/structure/cable,
-/obj/machinery/light/small/directional/north,
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/transit)
 "np" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -2938,6 +2969,13 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/main_outpost/rec)
+"nu" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/obj/structure/sign/clock/directional/east,
+/obj/structure/sign/calendar/directional/north,
+/turf/open/floor/carpet,
+/area/awaymission/caves/main_outpost/dorm)
 "nw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/tank_dispenser/oxygen{
@@ -3002,10 +3040,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
-"nE" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
 "nK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3059,6 +3093,13 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/awaymission/caves/second_outpost/tunnel)
+"nW" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/second_outpost/rest)
 "nX" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
@@ -3066,6 +3107,19 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
+"oa" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 10
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid/level_three)
+"ob" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "od" = (
 /obj/modular_map_root/caves{
 	key = "caves_lvl3tear";
@@ -3092,6 +3146,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/main_outpost/seconadry/between_access)
+"oi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "oj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3158,6 +3216,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/bmp_asteroid)
+"oA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/transit)
 "oC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
@@ -3244,6 +3306,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/caves/third_outpost/transit)
+"oS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/warning,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid/level_three)
 "oT" = (
 /turf/closed/wall,
 /area/awaymission/caves/second_outpost/barracks)
@@ -3299,6 +3366,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
+"pl" = (
+/obj/modular_map_root/caves{
+	key = "caves_lvl3segment2";
+	name = "lvl3segment2"
+	},
+/turf/closed/indestructible/rock,
+/area/awaymission/caves/bmp_asteroid/level_three)
 "pm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -3311,11 +3385,6 @@
 /obj/item/emptysandbag,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
-"pq" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/second_outpost/rest)
 "pr" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/rack,
@@ -3490,6 +3559,19 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/barracks)
+"qd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/hatch{
+	name = "Life Support Access"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/engineering,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "qe" = (
 /obj/structure/stone_tile/block,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -3530,19 +3612,17 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/tunnel)
 "qs" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/transit)
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "qt" = (
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high/empty,
 /obj/structure/table/reinforced,
 /turf/open/floor/pod,
 /area/awaymission/caves/third_outpost/pod)
-"qu" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/awaymission/caves/main_outpost/seconadry/research)
+"qw" = (
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/transit)
 "qx" = (
 /turf/closed/wall,
 /area/awaymission/caves/main_outpost/seconadry/engineering)
@@ -3568,10 +3648,6 @@
 /obj/structure/railing/corner,
 /turf/open/floor/plating/elevatorshaft,
 /area/awaymission/caves/bmp_asteroid)
-"qG" = (
-/obj/machinery/atmospherics/pipe/layer_manifold,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "qH" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
@@ -3668,6 +3744,16 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/storage)
+"rc" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "re" = (
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3675,9 +3761,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
-"rf" = (
-/turf/closed/indestructible/riveted,
-/area/awaymission/caves/bmp_asteroid/level_three)
 "rg" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/pod,
@@ -3710,11 +3793,6 @@
 "rm" = (
 /turf/open/indestructible/necropolis,
 /area/awaymission/caves/second_outpost/tunnel)
-"rn" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/tank/oxygen,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "ro" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/vending/cigarette,
@@ -4131,11 +4209,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
-"sR" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
 "sS" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
@@ -4206,15 +4279,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
-"tj" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Delta Outpost Secondary Life Support";
-	network = list("caveslvl1")
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/sign/warning/electric_shock/directional/south,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "tk" = (
 /obj/structure/railing/corner,
 /turf/open/chasm/lavaland,
@@ -4291,6 +4355,14 @@
 /obj/item/pen,
 /turf/open/floor/iron/grimy,
 /area/awaymission/caves/second_outpost/rest)
+"tD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "tH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -4327,6 +4399,12 @@
 /obj/structure/flora/ash/tall_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
+"tU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "tW" = (
 /turf/closed/mineral/random/volcanic/lava_land_surface/hardened/labormineral,
 /area/awaymission/caves/bmp_asteroid)
@@ -4344,13 +4422,6 @@
 "ub" = (
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/recycle)
-"ud" = (
-/obj/modular_map_root/caves{
-	key = "caves_lvl3segment3";
-	name = "lvl3segment3"
-	},
-/turf/closed/indestructible/riveted,
-/area/awaymission/caves/bmp_asteroid/level_three)
 "ui" = (
 /obj/structure/lattice/lava{
 	base_icon_state = "lattice";
@@ -4424,11 +4495,10 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/awaymission/caves/third_outpost/transit)
-"uv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/airalarm/directional/east,
-/turf/open/floor/plating,
-/area/awaymission/caves/second_outpost/rest)
+"uy" = (
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "uA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -4787,10 +4857,6 @@
 /obj/structure/railing/corner,
 /turf/open/lava/smooth/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
-"vW" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "vY" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
@@ -4836,6 +4902,13 @@
 /obj/item/trash/can,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research/living)
+"wk" = (
+/obj/modular_map_root/caves{
+	key = "caves_lvl3segment3";
+	name = "lvl3segment3"
+	},
+/turf/closed/indestructible/rock,
+/area/awaymission/caves/bmp_asteroid/level_three)
 "wm" = (
 /obj/structure/table_frame,
 /obj/effect/decal/cleanable/dirt,
@@ -4909,10 +4982,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
-"wA" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/transit)
 "wC" = (
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
@@ -5083,6 +5152,13 @@
 /obj/structure/sign/clock/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/storage)
+"xo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid/level_three)
 "xp" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -5229,11 +5305,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/main_outpost/dorm)
-"xU" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
 "xV" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -5282,14 +5353,6 @@
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/carpet,
 /area/awaymission/caves/second_outpost/barracks)
-"yp" = (
-/obj/structure/closet/crate/trashcart,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "yq" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -5305,6 +5368,11 @@
 /obj/item/pickaxe,
 /turf/open/floor/plating/elevatorshaft,
 /area/awaymission/caves/bmp_asteroid)
+"yt" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "yu" = (
 /turf/closed/wall,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
@@ -5332,6 +5400,12 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/storage)
+"yD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/tank/oxygen,
+/obj/structure/sign/warning/engine_safety/directional/north,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "yE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -5362,22 +5436,11 @@
 /obj/item/weldingtool,
 /turf/open/floor/iron,
 /area/awaymission/caves/third_outpost/transit)
-"yL" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/machinery/button/door/directional/east{
-	id = "CavesCabin2";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	specialfunctions = 4
-	},
-/turf/open/floor/carpet,
-/area/awaymission/caves/main_outpost/dorm)
-"yP" = (
-/obj/machinery/atmospherics/components/tank/oxygen,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
+"yO" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "yR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -5442,14 +5505,6 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/main_outpost/seconadry/research/living)
-"zj" = (
-/obj/structure/closet/crate/trashcart,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "zk" = (
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
@@ -5509,21 +5564,10 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"zy" = (
-/obj/structure/cable,
-/obj/machinery/power/smes/engineering,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "zz" = (
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
-"zA" = (
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/awaymission/caves/main_outpost/seconadry/research)
 "zB" = (
 /obj/modular_map_root/caves{
 	key = "caves_lvl2researchpost";
@@ -5814,10 +5858,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
-"AT" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/indestructible/rock,
-/area/awaymission/caves/bmp_asteroid/level_three)
 "AX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
@@ -5828,10 +5868,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
-"AY" = (
-/obj/machinery/atmospherics/components/tank/oxygen,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/transit)
 "Ba" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5858,6 +5894,12 @@
 /obj/machinery/stasis/survival_pod,
 /turf/open/floor/pod,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
+"Bg" = (
+/obj/item/wrench,
+/obj/item/circuit_component/airlock,
+/obj/structure/sign/flag/nanotrasen/directional/east,
+/turf/open/floor/iron/grimy,
+/area/awaymission/caves/second_outpost/rest)
 "Bh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6009,6 +6051,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
+"BG" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
+/obj/machinery/door/airlock/hatch{
+	name = "Life Support Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/engineering,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "BH" = (
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/dirt,
@@ -6047,13 +6100,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/main_outpost)
-"BO" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/item/chair,
-/turf/open/floor/iron{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/main_outpost/rec)
 "BQ" = (
 /turf/open/floor/iron/recharge_floor,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
@@ -6112,13 +6158,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost)
-"Ch" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/transit)
 "Ci" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -6170,12 +6209,6 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
-"Cv" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/tank/oxygen,
-/obj/structure/sign/warning/engine_safety/directional/north,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
 "Cy" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -6311,6 +6344,13 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
+"Dj" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/second_outpost/rest)
 "Dk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -6346,6 +6386,17 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
+"Ds" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
+/obj/machinery/door/airlock/hatch{
+	name = "Life Support Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/engineering,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/second_outpost/rest)
 "Dw" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -6380,11 +6431,6 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/between_access)
-"DF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "DG" = (
 /obj/structure/flora/ash/stem_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -6486,6 +6532,11 @@
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/awaymission/caves/bmp_asteroid)
+"Ek" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/second_outpost/rest)
 "Em" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -6497,12 +6548,6 @@
 /obj/item/pickaxe/drill,
 /turf/open/floor/iron,
 /area/awaymission/caves/third_outpost)
-"Ep" = (
-/obj/structure/cable,
-/obj/machinery/light/small/directional/east,
-/obj/structure/sign/warning/electric_shock/directional/east,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
 "Eq" = (
 /obj/machinery/mineral/stacking_unit_console{
 	machinedir = 8;
@@ -6532,11 +6577,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/barracks)
-"Ew" = (
-/obj/item/wrench,
-/obj/item/circuit_component/airlock,
-/turf/open/floor/iron/grimy,
-/area/awaymission/caves/second_outpost/rest)
 "Ex" = (
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
@@ -6833,6 +6873,11 @@
 "FI" = (
 /turf/closed/wall,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
+"FJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "FP" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -7017,6 +7062,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/science,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
+"GJ" = (
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/research)
 "GK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/screwdriver,
@@ -7024,10 +7076,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
-"GL" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
 "GO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7132,6 +7180,19 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/bmp_asteroid)
+"Hv" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/sign/warning/engine_safety/directional/west,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
+"Hw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "Hx" = (
 /obj/structure/table,
 /obj/item/clipboard,
@@ -7153,6 +7214,11 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/barracks)
+"HE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/transit)
 "HF" = (
 /obj/modular_map_root/caves{
 	key = "caves_lvl2encounter3";
@@ -7190,6 +7256,14 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
+"HO" = (
+/obj/structure/closet/crate/trashcart,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "HR" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -7198,10 +7272,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/barracks)
-"HT" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
 "HW" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/caves/main_outpost/seconadry/storage)
@@ -7235,6 +7305,11 @@
 /obj/structure/sign/clock/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/depo)
+"Ih" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "Ii" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -7251,10 +7326,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/main_outpost/dorm)
-"Ik" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/second_outpost/rest)
 "Il" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
@@ -7275,19 +7346,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/depo)
-"Iw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/hatch{
-	name = "Life Support Access"
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/engineering,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
 "IA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -7296,6 +7354,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/tunnel)
+"IC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "IG" = (
 /obj/effect/turf_decal/box,
 /obj/structure/closet/crate/secure/science{
@@ -7412,11 +7476,30 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/engineering)
+"Jn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "Jp" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/second_outpost/barracks)
+"Jq" = (
+/obj/structure/rack,
+/obj/item/stack/cable_coil,
+/obj/item/wrench,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/gas/explorer,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/transit)
 "Js" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/cable,
@@ -7466,6 +7549,12 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
+"JG" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "JI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -7636,10 +7725,6 @@
 /obj/item/stack/rods,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/main_outpost/seconadry/research)
-"Kw" = (
-/obj/machinery/atmospherics/components/tank/oxygen,
-/turf/open/floor/plating,
-/area/awaymission/caves/second_outpost/rest)
 "Kx" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -7846,12 +7931,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/pod,
 /area/awaymission/caves/third_outpost/pod)
-"Lh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/power/smes/engineering,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
 "Li" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/box,
@@ -7906,6 +7985,11 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/pod,
 /area/awaymission/caves/third_outpost/pod)
+"Lu" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "Lw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -8027,12 +8111,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost)
-"Md" = (
-/obj/structure/rack,
-/obj/item/storage/toolbox/electrical,
-/obj/item/crowbar,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
 "Mj" = (
 /turf/open/misc/asteroid/snow{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -8105,6 +8183,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/main_outpost/seconadry/research)
+"Mz" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Delta Outpost Secondary Life Support";
+	network = list("caveslvl1")
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/sign/warning/electric_shock/directional/south,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "MA" = (
 /obj/structure/railing{
 	dir = 10
@@ -8389,12 +8476,6 @@
 	name = "collapsed dense rock"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"NQ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "NR" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -8596,6 +8677,11 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/barracks)
+"OO" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/tank/oxygen,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "OP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -8621,11 +8707,10 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"Pc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
+"Pb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/second_outpost/rest)
 "Pg" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -8742,11 +8827,6 @@
 /obj/structure/rack,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
-"PF" = (
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
 "PI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/red,
@@ -8776,12 +8856,6 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
-"PQ" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/caves/main_outpost/seconadry/research)
 "PR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8800,6 +8874,12 @@
 /obj/structure/girder,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/tunnel)
+"PW" = (
+/obj/structure/cable,
+/obj/machinery/light/small/directional/east,
+/obj/structure/sign/warning/electric_shock/directional/east,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "PZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -8828,15 +8908,17 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/main_outpost)
+"Qk" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "Ql" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/carpet/black,
 /area/awaymission/caves/main_outpost/seconadry/mecha/living)
-"Qm" = (
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "Qn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/xeno_mining{
@@ -8937,14 +9019,6 @@
 /obj/structure/sign/warning/xeno_mining/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/caves/third_outpost)
-"QL" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/structure/sign/warning/engine_safety/directional/west,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/engineering)
 "QM" = (
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 8
@@ -9009,13 +9083,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/barracks)
-"Rb" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/second_outpost/rest)
 "Rc" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/punching_bag,
@@ -9177,6 +9244,10 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
+"RV" = (
+/obj/machinery/atmospherics/components/tank/oxygen,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/second_outpost/rest)
 "RW" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "caves_base";
@@ -9222,6 +9293,14 @@
 /obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
+"Sh" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/item/chair,
+/obj/structure/sign/flag/nanotrasen/directional/east,
+/turf/open/floor/iron{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/main_outpost/rec)
 "Si" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -9342,14 +9421,9 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"SQ" = (
-/obj/structure/rack,
-/obj/item/stack/cable_coil,
-/obj/item/wrench,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/clothing/mask/gas/explorer,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/transit)
+"SP" = (
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "ST" = (
 /obj/structure/flora/ash/cacti,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -9358,6 +9432,12 @@
 /obj/structure/table,
 /turf/open/floor/carpet/red,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
+"SX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/sign/clock/directional/west,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/main_outpost/seconadry/research)
 "SY" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -9397,6 +9477,11 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
+"Te" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/shipping_container/nakamura,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid/level_three)
 "Tg" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table,
@@ -9579,6 +9664,10 @@
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_three)
+"Ug" = (
+/obj/machinery/atmospherics/components/tank/oxygen,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/engineering)
 "Uh" = (
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 1
@@ -9628,6 +9717,10 @@
 /obj/structure/flora/rock/pile,
 /turf/open/indestructible/necropolis,
 /area/awaymission/caves/bmp_asteroid/level_two)
+"Uu" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid/level_three)
 "Uv" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/window/reinforced/spawner/west,
@@ -9851,6 +9944,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
+"VI" = (
+/obj/machinery/atmospherics/components/tank/oxygen,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/third_outpost/transit)
+"VM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/engineering)
 "VN" = (
 /obj/structure/stone_tile/burnt{
 	dir = 1
@@ -9925,10 +10026,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/rec)
-"Wd" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/engineering)
 "We" = (
 /obj/machinery/power/rtg,
 /obj/structure/cable,
@@ -10032,11 +10129,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
-"WA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/transit)
 "WD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -10112,29 +10204,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/tunnel)
-"Xb" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock";
-	req_access_txt = "200"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
-"Xd" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4
-	},
-/obj/machinery/door/airlock/hatch{
-	name = "Life Support Access"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/engineering,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
 "Xf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -10203,11 +10272,6 @@
 /obj/structure/shipping_container/donk_co,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
-"Xv" = (
-/obj/machinery/atmospherics/components/tank/oxygen,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
 "Xw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/directional/west,
@@ -10241,17 +10305,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
-"XG" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4
-	},
-/obj/machinery/door/airlock/hatch{
-	name = "Life Support Access"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/engineering,
-/turf/open/floor/plating,
-/area/awaymission/caves/second_outpost/rest)
 "XH" = (
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
@@ -10448,15 +10501,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"Yx" = (
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/engineering)
-"Yz" = (
-/obj/structure/cable,
-/obj/structure/sign/warning/electric_shock/directional/east,
-/obj/machinery/power/smes/engineering,
-/turf/open/floor/plating,
-/area/awaymission/caves/third_outpost/transit)
 "YA" = (
 /obj/effect/turf_decal/trimline/yellow/corner,
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -10558,6 +10602,11 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/awaymission/caves/main_outpost/seconadry/research)
+"YV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/main_outpost/engineering)
 "YY" = (
 /obj/structure/stone_tile/slab/burnt,
 /turf/open/indestructible/boss,
@@ -10704,17 +10753,13 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/depo)
 "ZR" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
+/obj/structure/closet/crate/trashcart,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/engineering)
-"ZT" = (
-/obj/modular_map_root/caves{
-	key = "caves_lvl3segment2";
-	name = "lvl3segment2"
-	},
-/turf/closed/indestructible/riveted,
-/area/awaymission/caves/bmp_asteroid/level_three)
 "ZU" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 1
@@ -11139,7 +11184,6 @@ VP
 VP
 VP
 ab
-AT
 TH
 TH
 TH
@@ -11173,95 +11217,96 @@ TH
 TH
 TH
 TH
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-rf
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-rf
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
 ab
 "}
 (3,1,1) = {"
@@ -11452,7 +11497,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -11488,7 +11533,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -11518,7 +11563,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (4,1,1) = {"
@@ -11709,7 +11754,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -11745,7 +11790,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -11775,7 +11820,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (5,1,1) = {"
@@ -11798,11 +11843,11 @@ Ii
 ng
 ng
 LK
-hN
-gH
-cg
-nE
-Yx
+eb
+tD
+ex
+fP
+SP
 EC
 bU
 bU
@@ -11966,7 +12011,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -12002,7 +12047,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -12032,7 +12077,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (6,1,1) = {"
@@ -12055,11 +12100,11 @@ IV
 TW
 BA
 LK
-fO
-HT
-bv
-Yx
-mJ
+di
+oi
+ob
+SP
+jI
 EC
 yZ
 vJ
@@ -12223,7 +12268,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -12259,7 +12304,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -12289,7 +12334,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (7,1,1) = {"
@@ -12312,11 +12357,11 @@ Ii
 BA
 wv
 LK
-Xv
-fw
-fw
-nE
-PF
+mk
+YV
+YV
+fP
+yO
 EC
 bU
 bU
@@ -12480,7 +12525,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -12516,7 +12561,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -12546,7 +12591,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (8,1,1) = {"
@@ -12571,7 +12616,7 @@ ng
 LK
 EC
 EC
-Xd
+BG
 Rk
 EC
 EC
@@ -12737,7 +12782,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -12773,7 +12818,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -12803,7 +12848,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (9,1,1) = {"
@@ -12994,7 +13039,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -13030,7 +13075,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -13060,7 +13105,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (10,1,1) = {"
@@ -13211,7 +13256,7 @@ QH
 ta
 QH
 bJ
-ja
+Uf
 ja
 ja
 TI
@@ -13251,7 +13296,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -13287,7 +13332,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -13317,7 +13362,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (11,1,1) = {"
@@ -13508,7 +13553,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -13544,7 +13589,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -13574,7 +13619,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (12,1,1) = {"
@@ -13765,7 +13810,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -13801,7 +13846,7 @@ am
 am
 am
 am
-ud
+wk
 am
 am
 am
@@ -13831,7 +13876,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (13,1,1) = {"
@@ -13855,7 +13900,7 @@ Ow
 KK
 gx
 Ow
-yL
+ie
 uW
 Ow
 GO
@@ -14022,7 +14067,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -14058,7 +14103,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -14088,7 +14133,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (14,1,1) = {"
@@ -14226,11 +14271,11 @@ ab
 TH
 am
 dV
-yP
-GL
+Ug
+hJ
 jD
 dV
-Iw
+qd
 dV
 QH
 QH
@@ -14279,7 +14324,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -14315,7 +14360,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -14345,7 +14390,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (15,1,1) = {"
@@ -14453,7 +14498,7 @@ IT
 IT
 IT
 IT
-ix
+hE
 fS
 hE
 hE
@@ -14483,11 +14528,11 @@ ab
 TH
 am
 dV
-Cv
-sR
-sR
-sR
-fJ
+yD
+Qk
+Qk
+Qk
+IC
 dV
 ja
 ja
@@ -14536,7 +14581,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -14572,7 +14617,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -14602,7 +14647,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (16,1,1) = {"
@@ -14740,11 +14785,11 @@ ab
 TH
 am
 dV
-Lh
-jJ
-jJ
-jJ
-Pc
+tU
+bF
+bF
+bF
+Hw
 dV
 am
 am
@@ -14793,7 +14838,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -14829,7 +14874,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -14859,7 +14904,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (17,1,1) = {"
@@ -14998,10 +15043,10 @@ TH
 am
 dV
 Sc
-Ep
-Wd
-Md
-xU
+PW
+mx
+eU
+Ih
 dV
 am
 am
@@ -15012,8 +15057,20 @@ gv
 gv
 ja
 ja
+Uf
 ja
 ja
+ja
+ja
+am
+am
+am
+am
+ja
+ja
+ja
+Uf
+Uf
 Uf
 am
 am
@@ -15021,12 +15078,6 @@ am
 am
 am
 am
-ja
-ja
-ja
-Uf
-Uf
-Uf
 am
 am
 am
@@ -15044,13 +15095,13 @@ am
 am
 am
 am
+TH
 am
 am
 am
 am
 am
 am
-rf
 am
 am
 am
@@ -15080,13 +15131,13 @@ am
 am
 am
 am
+TH
 am
 am
 am
 am
 am
 am
-rf
 am
 am
 am
@@ -15110,13 +15161,7 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
+TH
 ab
 "}
 (18,1,1) = {"
@@ -15270,8 +15315,10 @@ ja
 ja
 ja
 ja
-Uf
-pz
+ja
+ja
+ja
+ja
 am
 am
 am
@@ -15305,9 +15352,9 @@ am
 am
 am
 am
+TH
 am
 am
-rf
 am
 am
 am
@@ -15341,9 +15388,9 @@ am
 am
 am
 am
+TH
 am
 am
-rf
 am
 am
 am
@@ -15371,9 +15418,7 @@ am
 am
 am
 am
-am
-am
-am
+TH
 ab
 "}
 (19,1,1) = {"
@@ -15527,6 +15572,10 @@ XQ
 XQ
 XQ
 kB
+xo
+xo
+oa
+ja
 am
 am
 am
@@ -15560,11 +15609,11 @@ am
 am
 am
 am
+TH
 am
 am
 am
 am
-rf
 am
 am
 am
@@ -15596,11 +15645,11 @@ am
 am
 am
 am
+TH
 am
 am
 am
 am
-rf
 am
 am
 am
@@ -15626,11 +15675,7 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
+TH
 ab
 "}
 (20,1,1) = {"
@@ -15643,7 +15688,7 @@ Fk
 Wb
 bC
 Tg
-BO
+Sh
 Wc
 uA
 Qi
@@ -15784,6 +15829,10 @@ qt
 rl
 wD
 kB
+Uu
+Uu
+oS
+Uf
 am
 am
 am
@@ -15817,11 +15866,11 @@ am
 am
 am
 am
+TH
 am
 am
 am
 am
-rf
 am
 am
 am
@@ -15853,11 +15902,11 @@ am
 am
 am
 am
+TH
 am
 am
 am
 am
-rf
 am
 am
 am
@@ -15883,11 +15932,7 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
+TH
 ab
 "}
 (21,1,1) = {"
@@ -15909,7 +15954,7 @@ Ow
 Jd
 xx
 Ow
-Jd
+nu
 xx
 Ow
 aV
@@ -16041,6 +16086,10 @@ AR
 QA
 AR
 kB
+Uu
+Te
+oS
+Uf
 am
 am
 am
@@ -16074,11 +16123,11 @@ am
 am
 am
 am
+TH
 am
 am
 am
 am
-rf
 am
 am
 am
@@ -16110,11 +16159,11 @@ am
 am
 am
 am
+TH
 am
 am
 am
 am
-rf
 am
 am
 am
@@ -16140,11 +16189,7 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
+TH
 ab
 "}
 (22,1,1) = {"
@@ -16298,6 +16343,10 @@ QA
 QA
 Lt
 kB
+Uu
+Uu
+oS
+pz
 am
 am
 am
@@ -16331,11 +16380,11 @@ am
 am
 am
 am
+TH
 am
 am
 am
 am
-rf
 am
 am
 am
@@ -16367,11 +16416,11 @@ am
 am
 am
 am
+TH
 am
 am
 am
 am
-rf
 am
 am
 am
@@ -16397,11 +16446,7 @@ am
 am
 am
 am
-am
-am
-am
-am
-am
+TH
 ab
 "}
 (23,1,1) = {"
@@ -16555,6 +16600,9 @@ oE
 oL
 fA
 kB
+Uu
+Uu
+oS
 am
 am
 am
@@ -16589,10 +16637,10 @@ am
 am
 am
 am
+TH
 am
 am
 am
-rf
 am
 am
 am
@@ -16625,10 +16673,10 @@ am
 am
 am
 am
+TH
 am
 am
 am
-rf
 am
 am
 am
@@ -16655,10 +16703,7 @@ am
 am
 am
 am
-am
-am
-am
-am
+TH
 ab
 "}
 (24,1,1) = {"
@@ -16849,7 +16894,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -16885,7 +16930,7 @@ am
 am
 am
 am
-rf
+TH
 am
 am
 am
@@ -16915,7 +16960,7 @@ am
 am
 am
 am
-am
+TH
 ab
 "}
 (25,1,1) = {"
@@ -17050,6 +17095,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -17105,8 +17151,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -17141,8 +17187,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -17171,8 +17217,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (26,1,1) = {"
@@ -17184,7 +17229,7 @@ aa
 aa
 Tc
 xn
-ea
+jv
 ha
 Cn
 kV
@@ -17307,6 +17352,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -17362,8 +17408,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -17398,8 +17444,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -17428,8 +17474,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (27,1,1) = {"
@@ -17564,6 +17609,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -17619,8 +17665,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -17655,8 +17701,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -17685,8 +17731,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (28,1,1) = {"
@@ -17821,6 +17866,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -17876,8 +17922,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -17912,8 +17958,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -17942,8 +17988,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (29,1,1) = {"
@@ -18078,6 +18123,7 @@ ZZ
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -18133,8 +18179,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -18169,8 +18215,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -18199,8 +18245,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (30,1,1) = {"
@@ -18335,6 +18380,7 @@ ZZ
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -18390,8 +18436,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -18426,8 +18472,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -18456,8 +18502,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (31,1,1) = {"
@@ -18592,6 +18637,7 @@ ZZ
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -18647,8 +18693,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -18683,8 +18729,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -18713,8 +18759,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (32,1,1) = {"
@@ -18849,6 +18894,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -18904,8 +18950,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -18940,8 +18986,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -18970,8 +19016,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (33,1,1) = {"
@@ -19082,7 +19127,7 @@ ZZ
 ZZ
 rs
 rs
-qu
+Vt
 Vt
 Vt
 LB
@@ -19106,6 +19151,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -19161,8 +19207,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -19197,8 +19243,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -19227,8 +19273,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (34,1,1) = {"
@@ -19363,6 +19408,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -19418,8 +19464,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -19454,8 +19500,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -19484,8 +19530,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (35,1,1) = {"
@@ -19597,7 +19642,7 @@ ZZ
 rs
 lx
 Vt
-PQ
+GJ
 mf
 mf
 mf
@@ -19608,7 +19653,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-qu
+Vt
 Vt
 ih
 Ey
@@ -19620,6 +19665,7 @@ Mr
 Mr
 VP
 ab
+TH
 am
 am
 am
@@ -19675,8 +19721,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -19711,8 +19757,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -19741,8 +19787,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (36,1,1) = {"
@@ -19877,6 +19922,7 @@ GX
 Mr
 VP
 ab
+TH
 am
 am
 am
@@ -19932,8 +19978,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -19968,8 +20014,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -19998,8 +20044,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (37,1,1) = {"
@@ -20134,6 +20179,7 @@ Mr
 Mr
 VP
 ab
+TH
 am
 am
 am
@@ -20189,8 +20235,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -20225,8 +20271,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -20255,8 +20301,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (38,1,1) = {"
@@ -20391,6 +20436,7 @@ GX
 Mr
 VP
 ab
+TH
 am
 am
 am
@@ -20446,8 +20492,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -20482,8 +20528,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -20512,8 +20558,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (39,1,1) = {"
@@ -20648,6 +20693,7 @@ Mr
 Mr
 VP
 ab
+TH
 am
 am
 am
@@ -20703,8 +20749,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -20739,8 +20785,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -20769,8 +20815,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (40,1,1) = {"
@@ -20882,7 +20927,7 @@ ZZ
 rs
 Ro
 Vt
-zA
+bY
 hl
 CI
 Ct
@@ -20905,6 +20950,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -20960,8 +21006,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -20996,8 +21042,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -21026,8 +21072,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (41,1,1) = {"
@@ -21162,6 +21207,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -21217,8 +21263,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -21253,8 +21299,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -21283,8 +21329,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (42,1,1) = {"
@@ -21419,6 +21464,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -21474,8 +21520,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -21510,8 +21556,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -21540,8 +21586,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (43,1,1) = {"
@@ -21676,6 +21721,7 @@ ZZ
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -21731,8 +21777,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -21767,8 +21813,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -21797,8 +21843,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (44,1,1) = {"
@@ -21933,6 +21978,7 @@ ZZ
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -21988,8 +22034,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -22024,8 +22070,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -22054,8 +22100,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (45,1,1) = {"
@@ -22190,6 +22235,7 @@ ZZ
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -22245,8 +22291,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -22281,8 +22327,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -22311,8 +22357,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (46,1,1) = {"
@@ -22447,6 +22492,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -22502,8 +22548,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -22538,8 +22584,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -22568,8 +22614,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (47,1,1) = {"
@@ -22704,6 +22749,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -22759,8 +22805,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -22795,8 +22841,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -22825,8 +22871,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (48,1,1) = {"
@@ -22961,6 +23006,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -23016,8 +23062,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -23052,8 +23098,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -23082,8 +23128,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (49,1,1) = {"
@@ -23218,6 +23263,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -23273,8 +23319,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -23309,8 +23355,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -23339,8 +23385,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (50,1,1) = {"
@@ -23475,6 +23520,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -23530,8 +23576,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -23566,8 +23612,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -23596,8 +23642,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (51,1,1) = {"
@@ -23732,6 +23777,7 @@ ZZ
 ZZ
 VP
 ab
+TH
 am
 am
 am
@@ -23787,8 +23833,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -23823,8 +23869,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -23853,8 +23899,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (52,1,1) = {"
@@ -23989,6 +24034,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -24044,8 +24090,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -24080,8 +24126,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -24110,8 +24156,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (53,1,1) = {"
@@ -24218,7 +24263,7 @@ aa
 aa
 aa
 ZZ
-qu
+Vt
 Vt
 ZZ
 gf
@@ -24246,6 +24291,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -24301,8 +24347,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -24337,8 +24383,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -24367,8 +24413,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (54,1,1) = {"
@@ -24476,7 +24521,7 @@ aa
 aa
 ZZ
 Gw
-gf
+SX
 rs
 rs
 Rn
@@ -24503,6 +24548,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -24558,8 +24604,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -24594,8 +24640,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -24624,8 +24670,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (55,1,1) = {"
@@ -24760,6 +24805,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -24815,8 +24861,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -24851,8 +24897,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -24881,8 +24927,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (56,1,1) = {"
@@ -25017,6 +25062,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -25072,8 +25118,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -25108,8 +25154,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -25138,8 +25184,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (57,1,1) = {"
@@ -25274,6 +25319,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -25329,8 +25375,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -25365,8 +25411,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -25395,8 +25441,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (58,1,1) = {"
@@ -25531,6 +25576,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -25586,8 +25632,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -25622,8 +25668,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -25652,8 +25698,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (59,1,1) = {"
@@ -25788,6 +25833,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -25843,8 +25889,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -25879,8 +25925,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -25909,8 +25955,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (60,1,1) = {"
@@ -26045,6 +26090,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -26100,8 +26146,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -26136,8 +26182,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -26166,8 +26212,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (61,1,1) = {"
@@ -26302,6 +26347,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -26357,8 +26403,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -26393,8 +26439,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -26423,8 +26469,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (62,1,1) = {"
@@ -26494,10 +26539,10 @@ IT
 IT
 aa
 qx
-zy
-QL
-gr
-ZR
+yt
+Hv
+iM
+Lu
 Jj
 Qp
 kL
@@ -26559,6 +26604,7 @@ IT
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -26614,8 +26660,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -26650,8 +26696,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -26680,8 +26726,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (63,1,1) = {"
@@ -26752,9 +26797,9 @@ qx
 qx
 qx
 cF
-NQ
-rn
-tj
+JG
+OO
+Mz
 kL
 kL
 kL
@@ -26816,6 +26861,7 @@ IT
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -26871,8 +26917,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -26907,8 +26953,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -26937,8 +26983,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (64,1,1) = {"
@@ -27009,9 +27054,9 @@ qx
 km
 qx
 rJ
-eE
-hv
-ZR
+dM
+hi
+Lu
 Jj
 Qp
 kL
@@ -27073,6 +27118,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -27128,8 +27174,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -27164,8 +27210,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -27194,8 +27240,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (65,1,1) = {"
@@ -27266,9 +27311,9 @@ UQ
 gD
 iv
 DB
-qG
-vW
-DF
+uy
+VM
+FJ
 kL
 kL
 kL
@@ -27330,6 +27375,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -27385,8 +27431,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -27421,8 +27467,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -27451,8 +27497,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (66,1,1) = {"
@@ -27523,9 +27568,9 @@ qx
 qx
 qx
 qx
-yp
-zj
-Qm
+ZR
+HO
+qs
 qx
 aa
 aa
@@ -27587,6 +27632,7 @@ aa
 aa
 VP
 ab
+TH
 am
 am
 am
@@ -27642,8 +27688,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -27678,8 +27724,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -27708,8 +27754,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (67,1,1) = {"
@@ -27844,6 +27889,29 @@ aa
 aa
 VP
 ab
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
 am
 am
 am
@@ -27877,6 +27945,7 @@ am
 am
 am
 am
+TH
 am
 am
 am
@@ -27900,7 +27969,6 @@ am
 am
 am
 am
-rf
 am
 am
 am
@@ -27913,6 +27981,7 @@ am
 am
 am
 am
+TH
 am
 am
 am
@@ -27936,37 +28005,13 @@ am
 am
 am
 am
-rf
 am
 am
 am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
+TH
 ab
 "}
 (68,1,1) = {"
@@ -28123,6 +28168,7 @@ ab
 ab
 ab
 ab
+TH
 am
 am
 am
@@ -28156,8 +28202,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -28192,8 +28238,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -28222,8 +28268,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (69,1,1) = {"
@@ -28380,6 +28425,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -28413,8 +28459,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -28449,8 +28495,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -28479,8 +28525,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (70,1,1) = {"
@@ -28637,6 +28682,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -28670,8 +28716,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -28706,8 +28752,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -28736,8 +28782,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (71,1,1) = {"
@@ -28894,6 +28939,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -28927,8 +28973,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -28963,8 +29009,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -28993,8 +29039,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (72,1,1) = {"
@@ -29151,6 +29196,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -29184,8 +29230,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -29220,8 +29266,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -29250,8 +29296,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (73,1,1) = {"
@@ -29408,6 +29453,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -29441,8 +29487,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -29477,8 +29523,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -29507,8 +29553,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (74,1,1) = {"
@@ -29665,6 +29710,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -29698,8 +29744,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -29734,8 +29780,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -29764,8 +29810,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (75,1,1) = {"
@@ -29922,6 +29967,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -29955,8 +30001,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -29991,8 +30037,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -30021,8 +30067,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (76,1,1) = {"
@@ -30179,6 +30224,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -30212,8 +30258,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -30248,8 +30294,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -30278,8 +30324,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (77,1,1) = {"
@@ -30436,6 +30481,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -30469,8 +30515,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -30505,8 +30551,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -30535,8 +30581,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (78,1,1) = {"
@@ -30693,6 +30738,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -30726,8 +30772,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -30762,8 +30808,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -30792,8 +30838,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (79,1,1) = {"
@@ -30950,6 +30995,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -30983,8 +31029,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -31019,8 +31065,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -31049,8 +31095,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (80,1,1) = {"
@@ -31207,6 +31252,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -31240,8 +31286,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -31276,8 +31322,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -31306,8 +31352,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (81,1,1) = {"
@@ -31464,6 +31509,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -31497,8 +31543,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -31533,8 +31579,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -31563,8 +31609,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (82,1,1) = {"
@@ -31721,6 +31766,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -31754,8 +31800,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -31790,8 +31836,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -31820,8 +31866,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (83,1,1) = {"
@@ -31978,6 +32023,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -32011,8 +32057,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -32047,8 +32093,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -32077,8 +32123,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (84,1,1) = {"
@@ -32235,6 +32280,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -32268,8 +32314,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -32304,8 +32350,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -32334,8 +32380,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (85,1,1) = {"
@@ -32492,6 +32537,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -32525,8 +32571,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -32561,8 +32607,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -32591,8 +32637,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (86,1,1) = {"
@@ -32749,6 +32794,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -32782,8 +32828,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -32818,8 +32864,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -32848,8 +32894,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (87,1,1) = {"
@@ -33006,6 +33051,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -33039,8 +33085,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -33075,8 +33121,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -33105,8 +33151,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (88,1,1) = {"
@@ -33263,6 +33308,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -33296,8 +33342,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -33332,8 +33378,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -33362,8 +33408,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (89,1,1) = {"
@@ -33520,6 +33565,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -33553,8 +33599,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -33589,8 +33635,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -33619,8 +33665,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (90,1,1) = {"
@@ -33777,6 +33822,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -33810,8 +33856,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -33846,8 +33892,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -33876,8 +33922,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (91,1,1) = {"
@@ -34034,6 +34079,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -34067,8 +34113,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -34103,8 +34149,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -34133,8 +34179,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (92,1,1) = {"
@@ -34291,6 +34336,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -34324,8 +34370,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -34360,8 +34406,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -34390,8 +34436,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (93,1,1) = {"
@@ -34548,6 +34593,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -34581,8 +34627,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -34617,8 +34663,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -34647,8 +34693,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (94,1,1) = {"
@@ -34805,6 +34850,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -34838,8 +34884,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -34874,8 +34920,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -34904,8 +34950,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (95,1,1) = {"
@@ -35062,6 +35107,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -35095,8 +35141,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -35131,8 +35177,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -35161,8 +35207,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (96,1,1) = {"
@@ -35319,6 +35364,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -35352,8 +35398,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -35388,8 +35434,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -35418,8 +35464,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (97,1,1) = {"
@@ -35576,6 +35621,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -35609,8 +35655,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -35645,8 +35691,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -35675,8 +35721,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (98,1,1) = {"
@@ -35833,6 +35878,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -35866,8 +35912,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -35902,8 +35948,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -35932,8 +35978,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (99,1,1) = {"
@@ -36090,6 +36135,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -36123,8 +36169,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -36159,8 +36205,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -36189,8 +36235,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (100,1,1) = {"
@@ -36347,6 +36392,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -36380,8 +36426,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -36416,8 +36462,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -36446,8 +36492,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (101,1,1) = {"
@@ -36604,6 +36649,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -36637,8 +36683,8 @@ am
 am
 am
 am
+pl
 am
-ZT
 am
 am
 am
@@ -36673,8 +36719,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -36703,8 +36749,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (102,1,1) = {"
@@ -36861,6 +36906,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -36894,8 +36940,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -36930,8 +36976,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -36960,8 +37006,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (103,1,1) = {"
@@ -37118,6 +37163,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -37151,8 +37197,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -37187,8 +37233,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -37217,8 +37263,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (104,1,1) = {"
@@ -37375,6 +37420,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -37408,8 +37454,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -37444,8 +37490,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -37474,8 +37520,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (105,1,1) = {"
@@ -37632,6 +37677,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -37665,8 +37711,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -37701,8 +37747,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -37731,8 +37777,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (106,1,1) = {"
@@ -37889,6 +37934,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -37922,8 +37968,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -37958,8 +38004,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -37988,8 +38034,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (107,1,1) = {"
@@ -38146,6 +38191,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -38179,8 +38225,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -38215,8 +38261,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -38245,8 +38291,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (108,1,1) = {"
@@ -38403,6 +38448,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -38436,8 +38482,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -38472,8 +38518,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -38502,8 +38548,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (109,1,1) = {"
@@ -38660,6 +38705,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -38693,8 +38739,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -38729,8 +38775,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -38759,8 +38805,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (110,1,1) = {"
@@ -38917,6 +38962,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -38950,8 +38996,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -38986,8 +39032,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -39016,8 +39062,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (111,1,1) = {"
@@ -39174,6 +39219,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -39207,8 +39253,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -39243,8 +39289,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -39273,8 +39319,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (112,1,1) = {"
@@ -39431,6 +39476,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -39464,8 +39510,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -39500,8 +39546,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -39530,8 +39576,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (113,1,1) = {"
@@ -39688,6 +39733,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -39721,8 +39767,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -39757,8 +39803,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -39787,8 +39833,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (114,1,1) = {"
@@ -39945,6 +39990,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -39978,8 +40024,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -40014,8 +40060,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -40044,8 +40090,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (115,1,1) = {"
@@ -40202,6 +40247,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -40235,8 +40281,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -40271,8 +40317,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -40301,8 +40347,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (116,1,1) = {"
@@ -40459,6 +40504,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -40492,8 +40538,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -40528,8 +40574,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -40558,8 +40604,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (117,1,1) = {"
@@ -40716,6 +40761,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -40749,8 +40795,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -40785,8 +40831,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -40815,8 +40861,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (118,1,1) = {"
@@ -40973,6 +41018,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -41006,8 +41052,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -41042,8 +41088,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -41072,8 +41118,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (119,1,1) = {"
@@ -41230,6 +41275,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -41263,8 +41309,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -41299,8 +41345,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -41329,8 +41375,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (120,1,1) = {"
@@ -41487,6 +41532,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -41520,8 +41566,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -41556,8 +41602,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -41586,8 +41632,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (121,1,1) = {"
@@ -41744,6 +41789,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -41777,8 +41823,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -41813,8 +41859,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -41843,8 +41889,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (122,1,1) = {"
@@ -42001,6 +42046,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -42034,8 +42080,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -42070,8 +42116,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -42100,8 +42146,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (123,1,1) = {"
@@ -42258,6 +42303,7 @@ Mt
 Mt
 Mt
 ab
+TH
 am
 am
 am
@@ -42291,8 +42337,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -42327,8 +42373,8 @@ am
 am
 am
 am
+TH
 am
-rf
 am
 am
 am
@@ -42357,8 +42403,7 @@ am
 am
 am
 am
-am
-am
+TH
 ab
 "}
 (124,1,1) = {"
@@ -42515,107 +42560,107 @@ Mt
 Mt
 Mt
 ab
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-rf
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-rf
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
-am
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
 ab
 "}
 (125,1,1) = {"
@@ -47033,7 +47078,7 @@ wd
 wd
 wd
 wd
-Xb
+rc
 wd
 dO
 dO
@@ -47050,7 +47095,7 @@ dO
 dO
 dO
 wd
-Xb
+Jn
 wd
 wd
 wd
@@ -47547,7 +47592,7 @@ nR
 Wq
 Wq
 wd
-aS
+ai
 wd
 dO
 dO
@@ -47564,7 +47609,7 @@ dO
 dO
 Wq
 wd
-aS
+ai
 wd
 Ao
 Tx
@@ -48051,10 +48096,10 @@ Wq
 XJ
 mL
 RE
-Rb
-Ik
-Ik
-Kw
+Dj
+Pb
+Pb
+RV
 Vh
 ad
 ad
@@ -48309,9 +48354,9 @@ XJ
 XJ
 XJ
 QT
-pq
-uv
-eA
+hY
+Ek
+nW
 Vh
 ad
 ad
@@ -48566,7 +48611,7 @@ ad
 ad
 Vh
 Vh
-XG
+Ds
 Vh
 Vh
 Vh
@@ -50108,7 +50153,7 @@ dO
 Wq
 Vh
 Sw
-Ew
+Bg
 du
 RA
 yf
@@ -58420,8 +58465,8 @@ gu
 gu
 gu
 gu
-AY
-qs
+VI
+oA
 gu
 YQ
 YQ
@@ -58677,8 +58722,8 @@ zf
 Wp
 CR
 gu
-AY
-qs
+VI
+oA
 gu
 YQ
 YQ
@@ -58934,8 +58979,8 @@ bs
 Gc
 uu
 Bp
-WA
-qs
+HE
+oA
 gu
 gu
 YQ
@@ -59191,9 +59236,9 @@ iJ
 oR
 Vc
 gu
-no
-fu
-SQ
+gr
+qw
+Jq
 Yh
 Yh
 Yh
@@ -59448,9 +59493,9 @@ gu
 Fa
 gu
 gu
-Yz
-Ch
-wA
+hr
+hN
+iK
 mo
 vr
 Yh

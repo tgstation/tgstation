@@ -202,7 +202,7 @@
 "oa" = (
 /obj/structure/stone_tile/slab,
 /mob/living/simple_animal/hostile/giant_spider/hunter{
-	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/indestructible/boss,
@@ -263,22 +263,6 @@
 "qU" = (
 /obj/structure/stone_tile/block,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"ru" = (
-/obj/structure/necropolis_gate,
-/obj/machinery/door/puzzle/keycard{
-	desc = "A strange gate with runes on it with a slot seemingly for some sort of key, or maybe blade?";
-	name = "Necropolis Gate";
-	open_message = "You slot the blade into the hole and it shudders to life, grinding open.";
-	puzzle_id = "justwipedouttomatotown"
-	},
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/open/indestructible/boss,
 /area/template_noop)
 "sN" = (
 /obj/structure/stone_tile/slab,
@@ -389,6 +373,19 @@
 	},
 /turf/open/indestructible/boss,
 /area/template_noop)
+"zl" = (
+/obj/structure/stone_tile/slab,
+/mob/living/simple_animal/hostile/mimic/crate{
+	faction = list("mimic","skeleton")
+	},
+/obj/item/keycard{
+	desc = "it works okay i'll make it look cool later";
+	name = "card for the exit gate";
+	puzzle_id = "justwipedouttomatotown"
+	},
+/obj/item/stack/sheet/bone,
+/turf/open/indestructible/boss,
+/area/template_noop)
 "zr" = (
 /obj/structure/closet/crate/grave,
 /obj/item/stack/sheet/bone{
@@ -443,7 +440,7 @@
 "CP" = (
 /obj/structure/stone_tile/slab,
 /mob/living/simple_animal/hostile/giant_spider/hunter{
-	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	},
 /turf/open/indestructible/boss,
 /area/template_noop)
@@ -533,17 +530,6 @@
 	desc = "An iron door with the name 'Reigns-Most-Supreme'. A small plaque underneath reads 'Believed to reign supreme, only to have a panic attack once given actual responsibility.'.";
 	name = "burial door - 'Reigns-Most-Supreme'"
 	},
-/turf/open/indestructible/boss,
-/area/template_noop)
-"JE" = (
-/obj/structure/stone_tile/slab,
-/mob/living/simple_animal/hostile/mimic/crate{
-	faction = list("mimic","skeleton")
-	},
-/obj/item/keycard{
-	puzzle_id = "justwipedouttomatotown"
-	},
-/obj/item/stack/sheet/bone,
 /turf/open/indestructible/boss,
 /area/template_noop)
 "JH" = (
@@ -641,7 +627,7 @@
 /obj/structure/stone_tile/slab,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /mob/living/simple_animal/hostile/giant_spider/hunter{
-	atmos_requirements = list("min_oxy"=0,"max_oxy"=0,"min_plas"=0,"max_plas"=0,"min_co2"=0,"max_co2"=0,"min_n2"=0,"max_n2"=0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/indestructible/boss,
@@ -668,14 +654,16 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/indestructible/boss,
 /area/template_noop)
-"Tk" = (
-/obj/structure/necropolis_gate,
-/obj/structure/stone_tile/slab,
-/turf/open/indestructible/boss,
-/area/template_noop)
 "TR" = (
 /obj/modular_map_connector,
 /turf/closed/indestructible/riveted/boss,
+/area/template_noop)
+"Ue" = (
+/obj/structure/necropolis_gate{
+	open = 1
+	},
+/obj/structure/stone_tile/slab,
+/turf/open/indestructible/boss,
 /area/template_noop)
 "UJ" = (
 /obj/structure/stone_tile/block{
@@ -706,6 +694,24 @@
 	dir = 8
 	},
 /obj/structure/mineral_door/transparent,
+/turf/open/indestructible/boss,
+/area/template_noop)
+"Xy" = (
+/obj/machinery/door/puzzle/keycard{
+	desc = "A strange gate with runes on it with a slot seemingly for some sort of key, or maybe blade?";
+	name = "Necropolis Gate";
+	open_message = "You slot the blade into the hole and it shudders to life, grinding open.";
+	puzzle_id = "justwipedouttomatotown"
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/necropolis_gate{
+	open = 1
+	},
 /turf/open/indestructible/boss,
 /area/template_noop)
 "ZO" = (
@@ -1141,7 +1147,7 @@ Vw
 eC
 eC
 eC
-ru
+Xy
 Kt
 "}
 (12,1,1) = {"
@@ -2306,7 +2312,7 @@ Vw
 Py
 de
 DC
-JE
+zl
 de
 hQ
 Ia
@@ -4500,7 +4506,7 @@ zJ
 "}
 (98,1,1) = {"
 DC
-Tk
+Ue
 Kt
 xo
 DC

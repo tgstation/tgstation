@@ -23,9 +23,6 @@
 "an" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
-"aw" = (
-/turf/closed/indestructible/riveted,
-/area/template_noop)
 "ax" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
@@ -40,6 +37,20 @@
 "aN" = (
 /turf/closed/indestructible/rock,
 /area/template_noop)
+"aO" = (
+/obj/machinery/light/dim/directional/south,
+/obj/structure/flora/bush/leafy,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"aQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/window/right/directional/north{
+	name = "Pen Access";
+	req_access_txt = "away_generic4"
+	},
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
 "aR" = (
 /turf/template_noop,
 /area/template_noop)
@@ -83,6 +94,23 @@
 /obj/item/radio/off,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
+"cM" = (
+/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/rack,
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/telekinesis);
+	name = "DNA injector - (Telekinesis)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/mindreader);
+	name = "DNA injector - (Mind Reader)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/badblink);
+	name = "DNA injector - (Spatial Instability)"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "cU" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -124,6 +152,21 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/misc/syndicate)
+"dI" = (
+/obj/structure/flora/tree/palm/style_random,
+/obj/item/food/grown/banana,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"dJ" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "High Security Gene Vault - Notable Individuals"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "dL" = (
 /obj/structure/lattice/lava{
 	base_icon_state = "lattice";
@@ -182,11 +225,23 @@
 /obj/machinery/recharger,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
+"eB" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "eF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/stairs,
 /area/awaymission/caves/misc/syndicate/gateway)
+"eL" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table/wood,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
 "eW" = (
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/vault)
@@ -199,6 +254,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
+"eZ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
 "fc" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -220,6 +282,30 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
+"fn" = (
+/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/rack,
+/obj/item/dnainjector/paranoia,
+/obj/item/dnainjector/spastic,
+/obj/item/dnainjector/stuttmut,
+/obj/item/dnainjector/clumsymut,
+/obj/item/dnainjector/coughmut,
+/obj/item/dnainjector/mutemut,
+/obj/item/dnainjector/twoleftfeet,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"fp" = (
+/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/rack,
+/obj/item/dnainjector/olfaction,
+/obj/item/dnainjector/glow,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"fA" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/flora/tree/palm/style_random,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
 "fB" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -229,6 +315,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
+"fD" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Gene Vault - Body Modifications"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "fM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/stairs,
@@ -259,12 +354,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/vault)
-"fX" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate/vault)
 "gc" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -275,10 +364,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
-"gj" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate/genetics)
+"ge" = (
+/obj/machinery/oven,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
 "gk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -291,11 +381,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
-"gm" = (
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/structure/rack,
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
 "gC" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/chair{
@@ -303,11 +388,31 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
+"gK" = (
+/obj/structure/closet/crate/secure{
+	name = "Gene Reversal Storage"
+	},
+/obj/machinery/light/dim/directional/south,
+/obj/item/dnainjector/antiswedish,
+/obj/item/dnainjector/antichav,
+/obj/item/dnainjector/antielvis,
+/obj/item/dnainjector/antipiglatin,
+/obj/item/dnainjector/antitour,
+/obj/item/dnainjector/antiwacky,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "gP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate/genetics)
+"gR" = (
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/rack,
+/obj/item/dnainjector/olfaction,
+/obj/item/dnainjector/glow,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "gU" = (
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -315,6 +420,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
+"gY" = (
+/obj/item/food/grown/banana,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
 "gZ" = (
 /obj/effect/turf_decal/trimline/neutral/corner{
 	dir = 1
@@ -331,6 +440,25 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/caves/misc/syndicate/vault)
+"hv" = (
+/obj/machinery/light/dim/directional/north,
+/obj/structure/closet/crate/secure{
+	name = "Gene Reversal Storage"
+	},
+/obj/item/dnainjector/antiglow,
+/obj/item/dnainjector/antiolfaction,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"hI" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/clock/directional/north,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
 "ic" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/north,
@@ -348,11 +476,27 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
+"ik" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
 "iw" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
 	},
 /obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"iN" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/genetics)
 "iQ" = (
@@ -378,6 +522,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/vault)
+"ja" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/calendar/directional/north,
+/obj/structure/table/wood,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
 "jd" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
@@ -386,6 +536,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"jn" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/vault)
 "jo" = (
@@ -419,6 +576,26 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/syndicate)
+"jV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"kh" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/obj/machinery/airalarm/directional/south,
+/obj/structure/sign/calendar/directional/east,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"kk" = (
+/obj/machinery/porta_turret/syndicate/pod,
+/obj/effect/turf_decal/stripes/box,
+/obj/structure/sign/clock/directional/north,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
 "ko" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
@@ -440,6 +617,14 @@
 "kY" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/caves/misc/syndicate/gateway)
+"lc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "lh" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -469,12 +654,55 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/generic4,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/syndicate/vault)
-"lR" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
+"lL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/table,
+/obj/item/wrench,
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 3;
+	pixel_y = 5
 	},
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate)
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate/genetics)
+"lM" = (
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/rack,
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/insulated);
+	name = "DNA injector - (Insulated)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/temperature_adaptation);
+	name = "DNA injector - (Temperature Adaptation)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/thermal);
+	name = "DNA injector - (Thermal Vision)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/xray);
+	name = "DNA injector - (Xray Vision)"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"lN" = (
+/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/rack,
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/gigantism);
+	name = "DNA injector - (Gigantism)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/gigantism);
+	name = "DNA injector - (Gigantism)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/gigantism);
+	name = "DNA injector - (Gigantism)"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "lS" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
@@ -501,12 +729,9 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/misc/syndicate)
-"mO" = (
-/obj/structure/closet/crate/secure{
-	name = "Gene Storage"
-	},
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/iron/smooth_large,
+"mE" = (
+/obj/structure/sign/clock/directional/east,
+/turf/open/floor/iron/smooth,
 /area/awaymission/caves/misc/syndicate/vault)
 "mV" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -537,11 +762,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
-"nK" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/grass,
-/area/awaymission/caves/misc/syndicate/genetics)
 "nN" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -559,27 +779,16 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/generic4,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/syndicate/vault)
-"nX" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/layer_manifold,
-/obj/machinery/door/airlock/hatch{
-	name = "Life Support"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/syndicate)
 "oc" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/dim/directional/east,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/genetics)
-"op" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/obj/machinery/light/dim/directional/north,
-/turf/open/floor/iron,
-/area/awaymission/caves/misc/syndicate)
+"oA" = (
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
 "oF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -600,11 +809,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/vault)
-"pc" = (
-/obj/structure/window/reinforced/plasma/spawner/west,
-/obj/structure/rack,
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
+"pj" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/sign/warning/engine_safety/directional/east,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
 "pr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -622,18 +834,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
-"pD" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 10
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate/gateway)
-"pL" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate/genetics)
 "pU" = (
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 8
@@ -642,11 +842,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/misc/syndicate/vault)
-"pY" = (
+"qb" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
 	},
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
 "qe" = (
@@ -658,10 +858,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
-"qi" = (
-/obj/structure/window/reinforced/spawner/north,
-/turf/open/floor/grass,
-/area/awaymission/caves/misc/syndicate/genetics)
+"qz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/shoes/combat,
+/obj/item/ammo_box/magazine/m9mm{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "qA" = (
 /obj/structure/toilet,
 /obj/machinery/button/door/directional/west{
@@ -702,6 +909,30 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
+"qX" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"ra" = (
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/rack,
+/obj/item/dnainjector/swedishmut,
+/obj/item/dnainjector/chavmut,
+/obj/item/dnainjector/elvismut,
+/obj/item/dnainjector/piglatinmut,
+/obj/item/dnainjector/tourmut,
+/obj/item/dnainjector/wackymut,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"rb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/crowbar/power/syndicate,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "rh" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/door/firedoor,
@@ -725,17 +956,26 @@
 /obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
-"rW" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 6
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate/gateway)
 "rX" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
+"so" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"sr" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/dim/directional/west,
+/obj/item/storage/box/monkeycubes/syndicate,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
 "sy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/stairs,
@@ -813,14 +1053,6 @@
 /obj/item/gun/ballistic/automatic/pistol/no_mag,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/barracks)
-"tE" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate/genetics)
 "tI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -852,15 +1084,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
-/area/awaymission/caves/misc/syndicate/vault)
-"tY" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Gene Vault"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/smooth_large,
 /area/awaymission/caves/misc/syndicate/vault)
 "uc" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell{
@@ -907,6 +1130,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/syndicate/vault)
+"uY" = (
+/obj/machinery/light/dim/directional/south,
+/obj/structure/closet/crate/secure{
+	name = "Gene Reversal Storage"
+	},
+/obj/item/dnainjector/antidwarf,
+/obj/item/dnainjector/antidwarf,
+/obj/item/dnainjector/antigigantism,
+/obj/item/dnainjector/antigigantism,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "uZ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
@@ -946,6 +1180,12 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/misc/syndicate)
+"vA" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
 "vF" = (
 /obj/machinery/power/rtg/lavaland,
 /obj/effect/turf_decal/stripes/line{
@@ -982,6 +1222,41 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/misc/syndicate/vault)
+"wu" = (
+/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/rack,
+/obj/item/dnainjector/swedishmut,
+/obj/item/dnainjector/chavmut,
+/obj/item/dnainjector/elvismut,
+/obj/item/dnainjector/piglatinmut,
+/obj/item/dnainjector/tourmut,
+/obj/item/dnainjector/wackymut,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"wF" = (
+/obj/machinery/light/dim/directional/west,
+/obj/item/dnainjector/antiparanoia,
+/obj/item/dnainjector/antispastic,
+/obj/structure/closet/crate/secure{
+	name = "Gene Reversal Storage"
+	},
+/obj/item/dnainjector/antistutt,
+/obj/item/dnainjector/anticlumsy,
+/obj/item/dnainjector/anticough,
+/obj/item/dnainjector/antimute,
+/obj/item/dnainjector/antitwoleftfeet,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"wK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/syndicate)
+"wQ" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "xg" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1001,10 +1276,33 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
+"xw" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/syndie,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/sign/flag/mars/directional/east,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
 "xC" = (
 /obj/item/soap/syndie,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/freezer,
+/area/awaymission/caves/misc/syndicate)
+"xD" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/noticeboard/directional/north,
+/obj/item/paper{
+	info = "Due to recent reports of lowered morale during long-term recon missions, we have decided to borrow one of the very few popular Nanotrasen policies by hiring a rental clown. May the next upcoming 42 cycles be filled with laughter and joy as he entertains all of you. Reminder that he is a rental and the company we are hiring from expect him to come back alive and intact.";
+	name = "morale update"
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
 "xF" = (
 /obj/structure/sink{
@@ -1018,20 +1316,14 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/misc/syndicate)
-"xR" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "High Security Gene Vault"
+"xZ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/machinery/door/airlock/hatch{
+	name = "Life Support"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
-"yc" = (
-/obj/structure/table/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/kitchen,
+/obj/effect/mapping_helpers/airlock/access/all/away/generic4,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/syndicate)
 "yh" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -1056,6 +1348,14 @@
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/misc/syndicate)
+"yn" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/obj/machinery/light/dim/directional/north,
+/obj/item/plate,
+/obj/item/food/pie/cream,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
 "yp" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -1073,10 +1373,49 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
+"yC" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
 "yS" = (
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate/gateway)
+"zh" = (
+/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/structure/rack,
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/insulated);
+	name = "DNA injector - (Insulated)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/temperature_adaptation);
+	name = "DNA injector - (Temperature Adaptation)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/thermal);
+	name = "DNA injector - (Thermal Vision)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/xray);
+	name = "DNA injector - (Xray Vision)"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"zs" = (
+/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/rack,
+/obj/item/dnainjector/paranoia,
+/obj/item/dnainjector/spastic,
+/obj/item/dnainjector/stuttmut,
+/obj/item/dnainjector/clumsymut,
+/obj/item/dnainjector/coughmut,
+/obj/item/dnainjector/mutemut,
+/obj/item/dnainjector/twoleftfeet,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "zC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -1086,11 +1425,6 @@
 "zK" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/kitchen,
-/area/awaymission/caves/misc/syndicate)
-"zO" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
 "zQ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
@@ -1106,10 +1440,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
-"Ac" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/syndicate)
 "As" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/door/firedoor,
@@ -1117,13 +1447,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
-"Az" = (
-/obj/structure/closet/crate/secure{
-	name = "Gene Storage"
-	},
-/obj/machinery/light/dim/directional/north,
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
+"AE" = (
+/obj/structure/flora/bush/grassy,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
 "AM" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Gateway Access"
@@ -1168,6 +1495,16 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate/genetics)
+"Bd" = (
+/obj/machinery/light/dim/directional/south,
+/obj/item/dnainjector/timed/hulk,
+/obj/item/dnainjector/timed/hulk,
+/obj/structure/closet/crate/secure{
+	name = "High Value Gene Extracts";
+	tamperproof = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "Bk" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Access"
@@ -1183,6 +1520,11 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/vault)
+"Bn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/closet/toolcloset,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/syndicate)
 "Bu" = (
 /obj/structure/cable,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -1210,16 +1552,28 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/misc/syndicate/vault)
+"BY" = (
+/obj/machinery/light/dim/directional/north,
+/obj/structure/closet/crate/secure{
+	name = "Gene Reversal Storage"
+	},
+/obj/item/dnainjector/antiinsulated,
+/obj/item/dnainjector/antithermal,
+/obj/item/dnainjector/antifire,
+/obj/item/dnainjector/antixray,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"Cj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/shipping_container/gorlex,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "Co" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate/genetics)
-"Cs" = (
-/obj/machinery/oven,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/misc/syndicate)
 "Cz" = (
 /obj/structure/bed{
 	dir = 4
@@ -1267,12 +1621,6 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/misc/syndicate)
-"Di" = (
-/obj/structure/cable,
-/obj/machinery/power/smes/engineering,
-/obj/structure/sign/warning/electric_shock/directional/west,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/syndicate)
 "Dn" = (
 /obj/structure/chair/office/tactical{
 	dir = 4
@@ -1287,6 +1635,26 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/genetics)
+"Ds" = (
+/obj/structure/table/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/condiment/peppermill,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"Dt" = (
+/obj/machinery/light/dim/directional/west,
+/obj/structure/closet/crate/secure{
+	name = "Gene Reversal Storage"
+	},
+/obj/item/dnainjector/antitele,
+/obj/item/dnainjector/antimindread,
+/obj/item/dnainjector/antispatialinstability,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "Dx" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -1294,6 +1662,23 @@
 /obj/machinery/light/dim/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/vault)
+"DA" = (
+/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/rack,
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/telekinesis);
+	name = "DNA injector - (Telekinesis)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/mindreader);
+	name = "DNA injector - (Mind Reader)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/badblink);
+	name = "DNA injector - (Spatial Instability)"
+	},
+/turf/open/floor/iron/smooth_large,
 /area/awaymission/caves/misc/syndicate/vault)
 "DG" = (
 /obj/structure/closet/crate{
@@ -1305,12 +1690,21 @@
 /obj/item/clothing/gloves/combat,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/barracks)
-"DQ" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/obj/machinery/airalarm/directional/south,
-/turf/open/floor/iron,
-/area/awaymission/caves/misc/syndicate)
+"DR" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table/wood,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/barracks)
+"DT" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Gene Vault - Miscellaneous"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "DV" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1334,6 +1728,23 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/barracks)
+"Ev" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Ew" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Gene Vault - Height Differences"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "EL" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/plasma/spawner/east,
@@ -1355,6 +1766,10 @@
 	dir = 8
 	},
 /turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
+"EZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/syndicate)
 "Fb" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -1404,11 +1819,19 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate/genetics)
-"FX" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate/barracks)
+"Ge" = (
+/obj/machinery/light/dim/directional/west,
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
+"Gi" = (
+/obj/machinery/light/dim/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/syndicate)
 "Gn" = (
 /obj/machinery/light/dim/directional/west,
 /obj/effect/turf_decal/trimline/neutral/corner{
@@ -1424,16 +1847,28 @@
 /obj/structure/cable,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/syndicate)
-"GE" = (
-/obj/structure/window/reinforced/plasma/spawner/north,
-/obj/structure/rack,
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
 "GG" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
+"GQ" = (
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/rack,
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/dwarfism);
+	name = "DNA injector - (Dwarfism)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/dwarfism);
+	name = "DNA injector - (Dwarfism)"
+	},
+/obj/item/dnainjector/timed{
+	add_mutations = list(/datum/mutation/human/dwarfism);
+	name = "DNA injector - (Dwarfism)"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "GT" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -1461,6 +1896,22 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/genetics)
+"Ha" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/flora/tree/palm/style_random,
+/obj/effect/overlay/coconut,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
+"He" = (
+/obj/structure/chair/office/tactical{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/syndicate/ranged/shotgun{
+	name = "Syndicate Shotgunner"
+	},
+/obj/structure/sign/calendar/directional/west,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/syndicate/vault)
 "Hf" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/table,
@@ -1479,9 +1930,26 @@
 /obj/machinery/griddle,
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/misc/syndicate)
+"Hp" = (
+/obj/structure/safe,
+/obj/item/dnainjector/lasereyesmut,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
+"Hx" = (
+/obj/machinery/porta_turret/syndicate/pod,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
 "HM" = (
 /obj/structure/flora/ash/cacti,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"HT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
 "HV" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -1489,15 +1957,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/genetics)
-"Id" = (
-/obj/structure/chair/office/tactical{
-	dir = 4
-	},
-/mob/living/simple_animal/hostile/syndicate/ranged/shotgun{
-	name = "Syndicate Shotgunner"
-	},
-/turf/open/floor/iron/smooth,
-/area/awaymission/caves/misc/syndicate/vault)
 "It" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -1505,9 +1964,24 @@
 /obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
-"IF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+"Iy" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table,
+/obj/item/storage/box/rxglasses,
+/obj/item/storage/pill_bottle/mutadone,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"II" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"IO" = (
+/mob/living/carbon/human/species/monkey{
+	faction = list("neutral","monkey","Syndicate")
+	},
 /turf/open/floor/grass,
 /area/awaymission/caves/misc/syndicate/genetics)
 "IR" = (
@@ -1587,6 +2061,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
+"JW" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Gene Vault - Mental Capacity"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "Kf" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/corner{
@@ -1594,13 +2077,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
-"Ku" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate)
+"Kz" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/flora/bush/grassy,
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
 "KH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
@@ -1719,10 +2201,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
-"MH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/grass,
-/area/awaymission/caves/misc/syndicate/genetics)
 "MR" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -1748,6 +2226,19 @@
 /area/awaymission/caves/misc/syndicate)
 "NN" = (
 /turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"NS" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
+/obj/structure/sign/warning/electric_shock/directional/west,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/syndicate)
+"NW" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/obj/item/kitchen/fork,
+/turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
 "Oa" = (
 /obj/structure/flora/rock/pile,
@@ -1859,6 +2350,13 @@
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/grass,
 /area/awaymission/caves/misc/syndicate/genetics)
+"PU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "PW" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table,
@@ -1883,6 +2381,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/vault)
+"Qp" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Gene Vault - Disabilities"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "QC" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/smooth,
@@ -1891,11 +2398,6 @@
 /obj/machinery/light/dim/directional/west,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
-"QQ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/syndicate)
 "QY" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -1920,22 +2422,19 @@
 /obj/item/bedsheet/syndie,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/barracks)
-"Rp" = (
-/obj/structure/chair/office/tactical{
-	dir = 4
-	},
-/mob/living/simple_animal/hostile/syndicate/ranged/shotgun{
-	name = "Syndicate Shotgunner"
-	},
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/smooth,
-/area/awaymission/caves/misc/syndicate/vault)
 "Rv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/genetics)
+"RD" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/gateway)
 "Sf" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/chair/stool/bar/directional/east,
@@ -1955,6 +2454,16 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/misc/syndicate)
+"Sr" = (
+/obj/structure/closet/crate/secure{
+	name = "High Value Gene Extracts";
+	tamperproof = 1
+	},
+/obj/machinery/light/dim/directional/north,
+/obj/item/dnainjector/timed/h2m,
+/obj/item/dnainjector/timed/h2m,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "Ss" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Genetics Access"
@@ -1972,13 +2481,18 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/genetics)
-"Sy" = (
-/obj/machinery/light/dim/directional/west,
-/obj/effect/turf_decal/trimline/neutral/corner{
-	dir = 1
+"SB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
-/turf/open/floor/iron/smooth,
-/area/awaymission/caves/misc/syndicate/vault)
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"SD" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "SI" = (
 /obj/structure/curtain,
 /obj/machinery/shower{
@@ -2040,6 +2554,13 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/barracks)
+"TA" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "TL" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron/dark,
@@ -2058,11 +2579,6 @@
 /obj/machinery/cell_charger,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
-"UD" = (
-/obj/machinery/light/dim/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/syndicate)
 "UF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
@@ -2076,6 +2592,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
+"UT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "UZ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -2088,10 +2612,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
-"Vl" = (
-/obj/structure/safe,
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
 "Vr" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -2112,13 +2632,30 @@
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
-"Wb" = (
-/obj/structure/closet/crate/secure{
-	name = "Gene Storage"
+"VE" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
-/obj/machinery/light/dim/directional/south,
-/turf/open/floor/iron/smooth_large,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"VK" = (
+/obj/structure/table/reinforced,
+/obj/item/folder/red,
+/obj/item/folder/blue{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/smooth,
 /area/awaymission/caves/misc/syndicate/vault)
+"Wd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "Wh" = (
 /turf/closed/indestructible/syndicate,
 /area/awaymission/caves/misc/syndicate/vault)
@@ -2129,20 +2666,28 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate/genetics)
-"Wk" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
+"Wq" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Gene Vault - Voices of The World"
 	},
-/obj/machinery/light/dim/directional/north,
+/obj/effect/mapping_helpers/airlock/access/all/away/generic3,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate/genetics)
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "Wt" = (
 /obj/structure/dresser,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/barracks)
+"Wu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/window/right/directional/north{
+	name = "Pen Access";
+	req_access_txt = "away_generic4"
+	},
+/turf/open/floor/grass,
+/area/awaymission/caves/misc/syndicate/genetics)
 "WA" = (
 /obj/machinery/deepfryer,
 /obj/machinery/airalarm/directional/north,
@@ -2191,11 +2736,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/generic4,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/syndicate/vault)
-"Xw" = (
-/obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/rack,
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
 "XL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -2211,6 +2751,10 @@
 /area/awaymission/caves/misc/syndicate/genetics)
 "Yo" = (
 /turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
+"Yu" = (
+/obj/structure/flora/bush/leafy,
+/turf/open/floor/grass,
 /area/awaymission/caves/misc/syndicate/genetics)
 "YZ" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -2246,9 +2790,13 @@
 "ZI" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/caves/misc/syndicate/barracks)
+"ZT" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 
 (1,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -2287,7 +2835,7 @@ aa
 aR
 "}
 (2,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -2326,7 +2874,7 @@ aa
 aR
 "}
 (3,1,1) = {"
-aw
+aN
 aa
 ax
 ax
@@ -2365,7 +2913,7 @@ aa
 aR
 "}
 (4,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -2404,7 +2952,7 @@ aa
 aR
 "}
 (5,1,1) = {"
-aw
+aN
 aa
 aa
 ax
@@ -2443,7 +2991,7 @@ aa
 aR
 "}
 (6,1,1) = {"
-aw
+aN
 aa
 aa
 ax
@@ -2482,7 +3030,7 @@ aa
 aR
 "}
 (7,1,1) = {"
-aw
+aN
 aa
 aa
 Tc
@@ -2521,7 +3069,7 @@ aa
 aR
 "}
 (8,1,1) = {"
-aw
+aN
 aa
 aa
 ax
@@ -2560,7 +3108,7 @@ aa
 aR
 "}
 (9,1,1) = {"
-aw
+aN
 aa
 CH
 ax
@@ -2599,7 +3147,7 @@ ax
 aR
 "}
 (10,1,1) = {"
-aw
+aN
 aa
 CH
 ax
@@ -2638,7 +3186,7 @@ ax
 aR
 "}
 (11,1,1) = {"
-aw
+aN
 aa
 ax
 ax
@@ -2677,7 +3225,7 @@ ax
 aR
 "}
 (12,1,1) = {"
-aw
+aN
 aa
 ax
 ax
@@ -2716,7 +3264,7 @@ ax
 aR
 "}
 (13,1,1) = {"
-aw
+aN
 aa
 ax
 ax
@@ -2755,7 +3303,7 @@ ax
 aR
 "}
 (14,1,1) = {"
-aw
+aN
 ax
 ax
 ax
@@ -2794,7 +3342,7 @@ aa
 aR
 "}
 (15,1,1) = {"
-aw
+aN
 ax
 aa
 ax
@@ -2833,7 +3381,7 @@ aa
 aR
 "}
 (16,1,1) = {"
-aw
+aN
 ax
 aa
 ax
@@ -2872,7 +3420,7 @@ aa
 aR
 "}
 (17,1,1) = {"
-aw
+aN
 ax
 aa
 aa
@@ -2911,7 +3459,7 @@ aa
 aR
 "}
 (18,1,1) = {"
-aw
+aN
 ax
 aa
 aa
@@ -2950,7 +3498,7 @@ aa
 aR
 "}
 (19,1,1) = {"
-aw
+aN
 ax
 ax
 aa
@@ -2989,7 +3537,7 @@ aa
 aR
 "}
 (20,1,1) = {"
-aw
+aN
 aa
 ax
 aa
@@ -3028,7 +3576,7 @@ aa
 aR
 "}
 (21,1,1) = {"
-aw
+aN
 aa
 ax
 aa
@@ -3067,7 +3615,7 @@ aa
 aR
 "}
 (22,1,1) = {"
-aw
+aN
 aa
 ax
 aa
@@ -3106,7 +3654,7 @@ aa
 aR
 "}
 (23,1,1) = {"
-aw
+aN
 aa
 Oa
 ax
@@ -3145,7 +3693,7 @@ aa
 aR
 "}
 (24,1,1) = {"
-aw
+aN
 aa
 aa
 ax
@@ -3184,7 +3732,7 @@ aa
 aR
 "}
 (25,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -3223,7 +3771,7 @@ aa
 aR
 "}
 (26,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -3262,7 +3810,7 @@ aa
 aR
 "}
 (27,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -3301,7 +3849,7 @@ aa
 aR
 "}
 (28,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -3340,7 +3888,7 @@ aa
 aR
 "}
 (29,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -3357,7 +3905,7 @@ an
 dL
 Wh
 Wh
-Vl
+Hp
 Wh
 Wh
 dL
@@ -3379,7 +3927,7 @@ aa
 aR
 "}
 (30,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -3418,7 +3966,7 @@ aa
 aR
 "}
 (31,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -3457,7 +4005,7 @@ aa
 aR
 "}
 (32,1,1) = {"
-aw
+aN
 aa
 aa
 Oa
@@ -3473,9 +4021,9 @@ Wh
 Wh
 Wh
 Wh
-Az
+Sr
 ug
-Wb
+Bd
 Wh
 Wh
 Wh
@@ -3496,7 +4044,7 @@ aa
 aR
 "}
 (33,1,1) = {"
-aw
+aN
 aa
 aa
 ax
@@ -3508,17 +4056,17 @@ an
 an
 dL
 Wh
-Xw
-mO
-GE
+DA
+Dt
+cM
 dy
 SQ
 ug
 SQ
 dy
-Xw
-mO
-GE
+fn
+wF
+zs
 Wh
 dL
 an
@@ -3535,11 +4083,11 @@ aa
 aR
 "}
 (34,1,1) = {"
-aw
+aN
 aa
 aa
-ax
-ax
+II
+SB
 an
 an
 dL
@@ -3574,12 +4122,12 @@ aa
 aR
 "}
 (35,1,1) = {"
-aw
+aN
 aa
-aa
-ax
-ax
-an
+Wd
+TA
+eB
+so
 an
 dL
 Wh
@@ -3587,15 +4135,15 @@ Wh
 Wh
 Wh
 dy
-tY
+JW
 dy
 dy
 dy
-xR
+dJ
 dy
 dy
 dy
-tY
+Qp
 dy
 Wh
 Wh
@@ -3613,32 +4161,32 @@ aa
 aR
 "}
 (36,1,1) = {"
-aw
+aN
 aa
-aa
-ax
-an
-an
+jV
+rb
+qz
+SD
 an
 dL
 Wh
-gm
+lM
 AU
 dy
 iR
 pU
-Sy
-Rp
+Ge
+He
 Vv
 pU
 EO
-Id
+He
 Gn
 pU
 Fs
 dy
 zC
-gm
+GQ
 Wh
 dL
 an
@@ -3652,32 +4200,32 @@ aa
 aR
 "}
 (37,1,1) = {"
-aw
+aN
 aa
-aa
-ax
-ax
-an
+jV
+ZT
+Cj
+SD
 an
 dL
 Wh
-Az
+BY
 jz
-tY
+fD
 Lb
 tn
 QC
 Pj
-QC
+VK
 tP
 QC
 Pj
 QC
 wt
 eg
-tY
+Ew
 jz
-Wb
+uY
 Wh
 dL
 an
@@ -3691,16 +4239,16 @@ aa
 aR
 "}
 (38,1,1) = {"
-aw
+aN
 aa
-aa
-ax
-ax
-an
+jV
+ZT
+ZT
+SD
 an
 dL
 Wh
-pc
+zh
 tM
 dy
 gZ
@@ -3716,7 +4264,7 @@ tP
 er
 dy
 XL
-pc
+lN
 Wh
 dL
 an
@@ -3730,12 +4278,12 @@ aa
 aR
 "}
 (39,1,1) = {"
-aw
+aN
 aa
-aa
-Oa
-ax
-ax
+lc
+VE
+wQ
+UT
 an
 dL
 Wh
@@ -3769,16 +4317,16 @@ aa
 aR
 "}
 (40,1,1) = {"
-aw
+aN
 aa
 aa
-Oa
-ax
+HT
+PU
 ax
 ax
 dL
 Wh
-gm
+gR
 AU
 dy
 yj
@@ -3787,14 +4335,14 @@ Jz
 Jz
 Vr
 Jb
-Jz
-Jz
+oA
+mE
 Jz
 tP
 Ll
 dy
 zC
-gm
+ra
 Wh
 dL
 an
@@ -3808,7 +4356,7 @@ aa
 aR
 "}
 (41,1,1) = {"
-aw
+aN
 aa
 ax
 Oa
@@ -3817,9 +4365,9 @@ ax
 an
 dL
 Wh
-Az
+hv
 jz
-tY
+DT
 Lb
 tP
 Jz
@@ -3831,9 +4379,9 @@ Wh
 Jz
 tP
 eg
-tY
+Wq
 jz
-Wb
+gK
 Wh
 dL
 an
@@ -3847,7 +4395,7 @@ aa
 aR
 "}
 (42,1,1) = {"
-aw
+aN
 aa
 Oa
 Qc
@@ -3856,7 +4404,7 @@ an
 an
 dL
 Wh
-pc
+fp
 tM
 dy
 gZ
@@ -3872,7 +4420,7 @@ AW
 er
 dy
 XL
-pc
+wu
 Wh
 dL
 an
@@ -3886,7 +4434,7 @@ Qc
 aR
 "}
 (43,1,1) = {"
-aw
+aN
 aa
 ax
 Oa
@@ -3925,7 +4473,7 @@ Oa
 aa
 "}
 (44,1,1) = {"
-aw
+aN
 aa
 ax
 ax
@@ -3964,7 +4512,7 @@ Oa
 aa
 "}
 (45,1,1) = {"
-aw
+aN
 aa
 aa
 ax
@@ -3979,7 +4527,7 @@ dL
 dy
 dy
 dy
-fX
+jn
 fV
 Pf
 dh
@@ -4003,7 +4551,7 @@ ax
 ax
 "}
 (46,1,1) = {"
-aw
+aN
 aa
 aa
 ax
@@ -4021,7 +4569,7 @@ dy
 dy
 Dx
 iX
-uC
+eZ
 dy
 dy
 dL
@@ -4042,7 +4590,7 @@ ax
 ax
 "}
 (47,1,1) = {"
-aw
+aN
 aa
 aa
 an
@@ -4068,8 +4616,8 @@ lp
 lp
 jw
 ac
-pL
-gj
+sr
+Iy
 lp
 lp
 dL
@@ -4081,7 +4629,7 @@ ax
 EN
 "}
 (48,1,1) = {"
-aw
+aN
 aa
 aa
 dL
@@ -4120,7 +4668,7 @@ ax
 EN
 "}
 (49,1,1) = {"
-aw
+aN
 aa
 aa
 dL
@@ -4149,9 +4697,9 @@ Ba
 Jp
 Yo
 zQ
-qi
-Zp
-Zp
+Ha
+Yu
+IO
 lp
 dL
 aa
@@ -4159,7 +4707,7 @@ EN
 Oa
 "}
 (50,1,1) = {"
-aw
+aN
 aa
 aa
 dL
@@ -4170,7 +4718,7 @@ Ri
 JN
 eA
 UQ
-pD
+ik
 kY
 dL
 dL
@@ -4189,8 +4737,8 @@ FL
 uc
 zQ
 Ye
-Zp
-PM
+IO
+aO
 lp
 dL
 aa
@@ -4198,7 +4746,7 @@ ax
 ax
 "}
 (51,1,1) = {"
-aw
+aN
 aa
 aa
 dL
@@ -4220,16 +4768,16 @@ bR
 sO
 dZ
 lp
-nN
+Ev
 uh
 LT
 MT
 LT
 jD
 dz
-MH
-Zp
-Zp
+Wu
+AE
+gY
 lp
 dL
 aa
@@ -4237,7 +4785,7 @@ Oa
 ax
 "}
 (52,1,1) = {"
-aw
+aN
 aa
 aa
 dL
@@ -4261,14 +4809,14 @@ eb
 Ss
 Fx
 iQ
-LT
+lL
 LS
 ha
 lV
 zQ
-nK
+Kz
 Zp
-Zp
+IO
 lp
 dL
 aa
@@ -4276,7 +4824,7 @@ Oa
 ax
 "}
 (53,1,1) = {"
-aw
+aN
 aa
 aa
 dL
@@ -4292,7 +4840,7 @@ kY
 sO
 sO
 sO
-lR
+qb
 vQ
 zT
 sO
@@ -4305,9 +4853,9 @@ fQ
 LT
 jD
 sD
-IF
-Zp
-Zp
+aQ
+dI
+Yu
 lp
 dL
 aa
@@ -4315,7 +4863,7 @@ Oa
 ax
 "}
 (54,1,1) = {"
-aw
+aN
 aa
 aa
 dL
@@ -4326,7 +4874,7 @@ IR
 gc
 Uk
 fB
-rW
+RD
 kY
 xC
 SI
@@ -4337,7 +4885,7 @@ sO
 sO
 dL
 lp
-tE
+iN
 uh
 uG
 LT
@@ -4345,7 +4893,7 @@ gP
 qB
 KN
 Lf
-Zp
+IO
 PM
 lp
 dL
@@ -4354,7 +4902,7 @@ ax
 ax
 "}
 (55,1,1) = {"
-aw
+aN
 aa
 aa
 dL
@@ -4376,16 +4924,16 @@ dZ
 dL
 dL
 lp
-Wk
+hI
 Ld
 Wi
 Wi
 Co
 Rv
 KN
-qi
+fA
 Zp
-Zp
+AE
 lp
 dL
 aa
@@ -4393,7 +4941,7 @@ ax
 ax
 "}
 (56,1,1) = {"
-aw
+aN
 aa
 aa
 dL
@@ -4432,7 +4980,7 @@ ax
 EN
 "}
 (57,1,1) = {"
-aw
+aN
 aa
 an
 dL
@@ -4459,7 +5007,7 @@ lp
 jw
 ff
 oc
-gj
+Iy
 lp
 lp
 dL
@@ -4471,7 +5019,7 @@ ax
 EN
 "}
 (58,1,1) = {"
-aw
+aN
 aa
 dL
 dL
@@ -4510,7 +5058,7 @@ ax
 Oa
 "}
 (59,1,1) = {"
-aw
+aN
 aa
 dL
 ZI
@@ -4521,7 +5069,7 @@ Cz
 Pm
 Cz
 Tu
-FX
+eL
 ZI
 BC
 MR
@@ -4549,20 +5097,20 @@ EN
 Oa
 "}
 (60,1,1) = {"
-aw
+aN
 aa
 dL
 ZI
-FX
+eL
 lh
 Ep
 Ep
 Ep
 Ep
 TL
-FX
+eL
 ZI
-Ku
+xD
 NN
 NN
 NN
@@ -4588,7 +5136,7 @@ EN
 Oa
 "}
 (61,1,1) = {"
-aw
+aN
 aa
 dL
 ZI
@@ -4608,10 +5156,10 @@ sM
 eX
 CE
 sO
-Di
+NS
 jO
 jo
-Ac
+EZ
 sO
 dL
 an
@@ -4627,7 +5175,7 @@ ax
 Oa
 "}
 (62,1,1) = {"
-aw
+aN
 aa
 dL
 ZI
@@ -4646,11 +5194,11 @@ dZ
 dZ
 sO
 qe
-nX
-QQ
-QQ
-Ac
-UD
+xZ
+wK
+wK
+EZ
+Gi
 sO
 dL
 an
@@ -4666,7 +5214,7 @@ ax
 Oa
 "}
 (63,1,1) = {"
-aw
+aN
 aa
 dL
 ZI
@@ -4684,12 +5232,12 @@ lk
 xg
 rM
 sF
-rC
+vA
 sO
 ur
-jO
+pj
 jo
-Ac
+Bn
 sO
 dL
 an
@@ -4705,18 +5253,18 @@ Oa
 Qc
 "}
 (64,1,1) = {"
-aw
+aN
 aa
 dL
 ZI
-FX
+ja
 Ow
 Ep
 Ep
 Ep
 Ep
 TL
-FX
+DR
 ZI
 ZA
 NN
@@ -4744,20 +5292,20 @@ ax
 Oa
 "}
 (65,1,1) = {"
-aw
+aN
 aa
 dL
 ZI
 ZI
-Py
+xw
 Pv
 Rm
 nl
 Rm
 ae
-FX
+eL
 ZI
-pY
+qX
 vc
 ef
 vU
@@ -4783,7 +5331,7 @@ ax
 ax
 "}
 (66,1,1) = {"
-aw
+aN
 aa
 dL
 dL
@@ -4822,7 +5370,7 @@ ax
 ax
 "}
 (67,1,1) = {"
-aw
+aN
 aa
 an
 dL
@@ -4840,7 +5388,7 @@ BE
 Zi
 DV
 yA
-li
+yC
 YZ
 sO
 dL
@@ -4861,7 +5409,7 @@ ax
 ax
 "}
 (68,1,1) = {"
-aw
+aN
 aa
 an
 an
@@ -4873,7 +5421,7 @@ an
 an
 dL
 sO
-op
+yn
 qR
 BE
 PA
@@ -4900,7 +5448,7 @@ ax
 ax
 "}
 (69,1,1) = {"
-aw
+aN
 aa
 aa
 an
@@ -4912,14 +5460,14 @@ an
 an
 dL
 sO
-YZ
+NW
 gC
-BE
+GG
 Zi
 BE
 BE
 li
-DQ
+kh
 sO
 dL
 an
@@ -4939,7 +5487,7 @@ ax
 ax
 "}
 (70,1,1) = {"
-aw
+aN
 aa
 aa
 an
@@ -4952,12 +5500,12 @@ an
 dL
 sO
 sO
-GG
-zO
+kk
+BE
 Fe
 td
 Sf
-BE
+Hx
 sO
 sO
 dL
@@ -4978,7 +5526,7 @@ ax
 ax
 "}
 (71,1,1) = {"
-aw
+aN
 aa
 aa
 ax
@@ -4993,7 +5541,7 @@ dL
 sO
 sO
 rn
-yc
+Ds
 zK
 zK
 sO
@@ -5017,7 +5565,7 @@ ax
 ax
 "}
 (72,1,1) = {"
-aw
+aN
 aa
 aa
 ax
@@ -5056,7 +5604,7 @@ ax
 ax
 "}
 (73,1,1) = {"
-aw
+aN
 aa
 aa
 Oa
@@ -5095,7 +5643,7 @@ ax
 ax
 "}
 (74,1,1) = {"
-aw
+aN
 aa
 aa
 Oa
@@ -5134,7 +5682,7 @@ ax
 ax
 "}
 (75,1,1) = {"
-aw
+aN
 aa
 aa
 Oa
@@ -5148,7 +5696,7 @@ an
 an
 dL
 sO
-Cs
+ge
 ER
 rn
 aC
@@ -5173,7 +5721,7 @@ ax
 ax
 "}
 (76,1,1) = {"
-aw
+aN
 aa
 aa
 Oa
@@ -5212,7 +5760,7 @@ Oa
 ax
 "}
 (77,1,1) = {"
-aw
+aN
 aa
 aa
 TM
@@ -5251,7 +5799,7 @@ Oa
 ax
 "}
 (78,1,1) = {"
-aw
+aN
 aa
 aa
 ax
@@ -5290,7 +5838,7 @@ Oa
 ax
 "}
 (79,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5329,7 +5877,7 @@ Oa
 ax
 "}
 (80,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5368,7 +5916,7 @@ ax
 ax
 "}
 (81,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5407,7 +5955,7 @@ ax
 ax
 "}
 (82,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5446,7 +5994,7 @@ ax
 ax
 "}
 (83,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5485,7 +6033,7 @@ ax
 ax
 "}
 (84,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5524,7 +6072,7 @@ ax
 aR
 "}
 (85,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5563,7 +6111,7 @@ Oa
 aR
 "}
 (86,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5602,7 +6150,7 @@ ax
 aR
 "}
 (87,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5641,7 +6189,7 @@ ax
 aR
 "}
 (88,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5680,7 +6228,7 @@ ax
 aR
 "}
 (89,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5719,7 +6267,7 @@ ax
 aR
 "}
 (90,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5758,7 +6306,7 @@ ax
 aR
 "}
 (91,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5797,7 +6345,7 @@ ax
 aR
 "}
 (92,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5836,7 +6384,7 @@ ax
 aR
 "}
 (93,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5875,7 +6423,7 @@ aa
 aR
 "}
 (94,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5914,7 +6462,7 @@ aa
 aR
 "}
 (95,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -5953,7 +6501,7 @@ aa
 aR
 "}
 (96,1,1) = {"
-aw
+aN
 aa
 an
 aa
@@ -6226,7 +6774,7 @@ aa
 aR
 "}
 (103,1,1) = {"
-aw
+aN
 aa
 aa
 Oa
@@ -6265,7 +6813,7 @@ aa
 aR
 "}
 (104,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6304,7 +6852,7 @@ aa
 aR
 "}
 (105,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6343,7 +6891,7 @@ aa
 aR
 "}
 (106,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6382,7 +6930,7 @@ aa
 aR
 "}
 (107,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6421,7 +6969,7 @@ aa
 aR
 "}
 (108,1,1) = {"
-aw
+aN
 aa
 ax
 ax
@@ -6460,7 +7008,7 @@ aa
 aR
 "}
 (109,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6499,7 +7047,7 @@ aa
 aR
 "}
 (110,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6538,7 +7086,7 @@ aa
 aR
 "}
 (111,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6577,7 +7125,7 @@ aa
 aR
 "}
 (112,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6616,7 +7164,7 @@ aa
 aR
 "}
 (113,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6655,7 +7203,7 @@ aa
 aR
 "}
 (114,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6694,7 +7242,7 @@ aa
 aR
 "}
 (115,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6733,7 +7281,7 @@ aa
 aR
 "}
 (116,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6772,7 +7320,7 @@ aa
 aR
 "}
 (117,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6811,7 +7359,7 @@ aa
 aR
 "}
 (118,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6850,7 +7398,7 @@ aa
 aR
 "}
 (119,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6889,7 +7437,7 @@ aa
 aR
 "}
 (120,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6928,7 +7476,7 @@ aa
 aR
 "}
 (121,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -6967,7 +7515,7 @@ aa
 aR
 "}
 (122,1,1) = {"
-aw
+aN
 aa
 aa
 aa
@@ -7006,7 +7554,7 @@ aa
 aR
 "}
 (123,1,1) = {"
-aw
+aN
 aa
 aN
 aN
