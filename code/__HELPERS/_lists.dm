@@ -874,6 +874,9 @@
 	if(!islist(list_1) || !islist(list_2))
 		return FALSE
 
+	if(list_1 == list_2)
+		return TRUE
+
 	if(list_1.len != list_2.len)
 		return FALSE
 
