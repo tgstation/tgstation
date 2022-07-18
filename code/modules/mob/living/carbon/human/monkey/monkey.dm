@@ -34,18 +34,6 @@
 
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
-/obj/item/clothing/under/punpun
-	name = "fancy uniform"
-	desc = "It looks like it was tailored for a monkey."
-	icon = 'icons/obj/clothing/under/civilian.dmi'
-	worn_icon = MONKEY_UNIFORM_FILE
-	icon_state = "punpun"
-	can_adjust = FALSE
-	female_sprite_flags = NO_FEMALE_UNIFORM
-	species_exception = list(/datum/species/monkey)
-	bodytypes_whitelist = BODYTYPE_MONKEY
-	supports_variations_flags = CLOTHING_MONKEY_VARIATION
-
 /mob/living/carbon/human/species/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
 	name = "Pun Pun" //C A N O N
 	unique_name = FALSE
@@ -88,7 +76,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		equip_to_slot_or_del(new relic_hat, ITEM_SLOT_HEAD)
 	if(relic_mask)
 		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)
-	equip_to_slot_or_del(new /obj/item/clothing/under/punpun(src), ITEM_SLOT_ICLOTHING)
+	equip_to_slot_or_del(new /obj/item/clothing/under/suit/waiter(src), ITEM_SLOT_ICLOTHING)
 
 /mob/living/carbon/human/species/monkey/punpun/Destroy()
 	if(GLOB.the_one_and_only_punpun == src)
