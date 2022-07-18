@@ -10,13 +10,13 @@
 	help_verb = /mob/living/proc/CQC_help
 	block_chance = 75
 	smashes_tables = TRUE
-	var/old_grab_state = null
-	var/restraining = FALSE
 	display_combos = TRUE
+	var/old_grab_state = null
+	var/mob/restraining_mob
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
-	if(new_target)
-		restraining = FALSE
+	if(new_target && new_target != restraining_mob)
+		restraining_mob = null
 	return ..()
 
 /datum/martial_art/cqc/proc/check_streak(mob/living/A, mob/living/D)
@@ -87,7 +87,7 @@
 	return TRUE
 
 /datum/martial_art/cqc/proc/Restrain(mob/living/A, mob/living/D)
-	if(restraining)
+	if(restraining_mob)
 		return
 	if(!can_use(A))
 		return FALSE
@@ -98,8 +98,8 @@
 		to_chat(A, span_danger("You lock [D] into a restraining position!"))
 		D.adjustStaminaLoss(20)
 		D.Stun(10 SECONDS)
-		restraining = TRUE
-		addtimer(VARSET_CALLBACK(src, restraining, FALSE), 50, TIMER_UNIQUE)
+		restraining_mob = D
+		addtimer(VARSET_CALLBACK(src, restraining_mob, null), 50, TIMER_UNIQUE)
 		return TRUE
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/A, mob/living/D)
@@ -176,7 +176,7 @@
 	if(check_streak(A,D))
 		return TRUE
 	if(prob(65))
-		if(!D.stat || !D.IsParalyzed() || !restraining)
+		if(!D.stat || !D.IsParalyzed() || !restraining_mob)
 			I = D.get_active_held_item()
 			D.visible_message(span_danger("[A] strikes [D]'s jaw with their hand!"), \
 							span_userdanger("Your jaw is struck by [A], you feel disoriented!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
@@ -192,17 +192,17 @@
 		to_chat(A, span_warning("You fail to disarm [D]!"))
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 	log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
-	if(restraining && A.pulling == D)
+	if(A.pulling == restraining_mob)
 		log_combat(A, D, "knocked out (Chokehold)(CQC)")
 		D.visible_message(span_danger("[A] puts [D] into a chokehold!"), \
 						span_userdanger("You're put into a chokehold by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
 		to_chat(A, span_danger("You put [D] into a chokehold!"))
 		D.SetSleeping(40 SECONDS)
-		restraining = FALSE
+		restraining_mob = null
 		if(A.grab_state < GRAB_NECK && !HAS_TRAIT(A, TRAIT_PACIFISM))
 			A.setGrabState(GRAB_NECK)
 	else
-		restraining = FALSE
+		restraining_mob = null
 		return FALSE
 	return TRUE
 
