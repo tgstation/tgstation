@@ -211,3 +211,5 @@
 #define SCRN_OBJ_IN_LIST "list"
 /// In the collapseable palette
 #define SCRN_OBJ_IN_PALETTE "palette"
+///Inserted first in the list
+#define SCRN_OBJ_INSERT_FIRST "first"

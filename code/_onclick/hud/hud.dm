@@ -357,6 +357,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			listed_actions.insert_action(button)
 		if(SCRN_OBJ_IN_PALETTE)
 			palette_actions.insert_action(button)
+		if(SCRN_OBJ_INSERT_FIRST)
+			listed_actions.insert_action(button, index = 1)
+			position = SCRN_OBJ_IN_LIST
 		else // If we don't have it as a define, this is a screen_loc, and we should be floating
 			floating_actions += button
 			button.screen_loc = position

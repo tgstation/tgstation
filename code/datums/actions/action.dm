@@ -30,6 +30,7 @@
 	var/icon_icon = 'icons/hud/actions.dmi'
 	/// This is the icon state for the icon that appears OVER the button background
 	var/button_icon_state = "default"
+	var/button_overlay_state
 	///List of all mobs that are viewing our action button -> A unique movable for them to view.
 	var/list/viewers = list()
 
@@ -165,6 +166,11 @@
 				button.icon_state = background_icon_state
 
 		ApplyIcon(button, force)
+
+	if(button_overlay_state)
+		button.cut_overlay(button.button_overlay)
+		button.button_overlay = mutable_appearance(icon = 'icons/hud/actions.dmi', icon_state = button_overlay_state)
+		button.add_overlay(button.button_overlay)
 
 	var/available = IsAvailable()
 	if(available)
