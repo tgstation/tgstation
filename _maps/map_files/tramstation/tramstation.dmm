@@ -216,6 +216,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/spawner/random/trash/grime,
 /turf/open/floor/iron,
 /area/station/science/auxlab)
 "afg" = (
@@ -22009,7 +22010,6 @@
 /area/station/security/courtroom)
 "hMR" = (
 /obj/machinery/light/directional/north,
-/obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/plating,
 /area/station/science/auxlab)
 "hMT" = (
@@ -26360,7 +26360,6 @@
 "jmq" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
-/obj/effect/spawner/random/trash/grime,
 /turf/open/floor/iron,
 /area/station/science/auxlab)
 "jmA" = (
@@ -31920,7 +31919,6 @@
 /turf/open/floor/iron/freezer,
 /area/station/science/lower)
 "ldJ" = (
-/obj/effect/spawner/random/trash/grime,
 /turf/open/floor/plating,
 /area/station/science/auxlab)
 "ldK" = (
@@ -33268,10 +33266,6 @@
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron,
 /area/station/security/prison)
-"lAB" = (
-/obj/item/stack/sheet/glass/fifty,
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "lAO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/effect/turf_decal/bot,
@@ -34802,6 +34796,10 @@
 /obj/item/radio/intercom/prison/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison)
+"meC" = (
+/obj/item/stack/sheet/glass/fifty,
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/mine/explored)
 "meD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -119057,7 +119055,7 @@ duT
 dhe
 dhe
 dDG
-lAB
+meC
 dhe
 dhe
 dhe
