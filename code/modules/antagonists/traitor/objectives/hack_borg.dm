@@ -118,7 +118,7 @@
 		if(R.shell) 
 			to_chat(user, span_boldwarning("[R] seems to be controlled remotely! Hacking the interface may not work as expected."))
 			return
-		to_chat(user, span_warning("You sucessfully hack [R]."))
+		balloon_alert(user, "successfully hacked")
 		used = TRUE
 		R.emag_cooldown = world.time + 15 SECONDS
 		SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_BORG_HACKED)
