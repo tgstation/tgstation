@@ -96,9 +96,9 @@
 			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to \a [name] that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
 			return
 		
-		var/additional_admin_info = ""		
+		var/additional_admin_info = ""
 		if(!user.mind?.has_antag_datum(/datum/antagonist))
-			additional_admin_info = " as a non-antagonist"			
+			additional_admin_info = " as a non-antagonist"
 
 		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
 		if(do_after(user, 3 SECONDS, src))
