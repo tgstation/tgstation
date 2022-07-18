@@ -184,6 +184,7 @@
 
 /obj/item/trench_tool/examine(mob/user)
 	. = ..()
+	. += span_notice("Use in hand to switch configuration.")
 	. += span_notice("It functions as a [tool_behaviour] tool.")
 
 /obj/item/trench_tool/attack_self(mob/user, modifiers)
