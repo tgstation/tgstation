@@ -1,11 +1,3 @@
-/datum/uplink_item/bundles_tc/chemical
-	name = "Bioterror bundle"
-	desc = "For the madman: Contains a handheld Bioterror chem sprayer, a Bioterror foam grenade, a box of lethal chemicals, a dart pistol, \
-			box of syringes, Donksoft assault rifle, and some riot darts. Remember: Seal suit and equip internals before use."
-	item = /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle
-	cost = 30 // normally 42
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-
 /datum/uplink_item/bundles_tc/bulldog
 	name = "Bulldog bundle"
 	desc = "Lean and mean: Optimized for people that want to get up close and personal. Contains the popular \
@@ -179,14 +171,6 @@
 	surplus = 25
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/dangerous/aps
-	name = "Stechkin APS Machine Pistol"
-	desc = "An ancient Soviet machine pistol, refurbished for the modern age. Uses 9mm auto rounds in 15-round magazines and is compatible \
-			with suppressors. The gun fires in three round bursts."
-	item = /obj/item/gun/ballistic/automatic/pistol/aps
-	cost = 10
-	purchasable_from = UPLINK_NUKE_OPS
-
 /datum/uplink_item/dangerous/surplus_smg
 	name = "Surplus SMG"
 	desc = "A horribly outdated automatic weapon. Why would you want to use this?"
@@ -200,7 +184,7 @@
 	item = /obj/item/gun/ballistic/automatic/c20r/toy
 	cost = 5
 	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/foammachinegun
 	name = "Toy Machine Gun"
@@ -209,16 +193,7 @@
 	item = /obj/item/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
 	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-
-/datum/uplink_item/stealthy_weapons/combatglovesplus
-	name = "Combat Gloves Plus"
-	desc = "A pair of gloves that are fireproof and electrically insulated, however unlike the regular Combat Gloves these use nanotechnology \
-			to teach the martial art of krav maga to the wearer."
-	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
-	cost = 5
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-	surplus = 0
+	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/stealthy_weapons/cqc
 	name = "CQC Manual"
@@ -227,13 +202,6 @@
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	cost = 13
 	surplus = 0
-
-/datum/uplink_item/ammo/pistolaps
-	name = "9mm Stechkin APS Magazine"
-	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS machine pistol."
-	item = /obj/item/ammo_box/magazine/m9mm_aps
-	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
@@ -407,14 +375,6 @@
 	item = /obj/item/ammo_casing/caseless/rocket/hedp
 	cost = 6
 
-/datum/uplink_item/ammo/bioterror
-	name = "Box of Bioterror Syringes"
-	desc = "A box full of preloaded syringes, containing various chemicals that seize up the victim's motor \
-			and broca systems, making it impossible for them to move or speak for some time."
-	item = /obj/item/storage/box/syndie_kit/bioterror
-	cost = 6
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-
 /datum/uplink_item/ammo/surplus_smg
 	name = "Surplus SMG Magazine"
 	desc = "A cylindrical magazine designed for the PP-95 SMG."
@@ -436,16 +396,6 @@
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
 	cost = 6
 	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/explosives/bioterrorfoam
-	name = "Bioterror Foam Grenade"
-	desc = "A powerful chemical foam grenade which creates a deadly torrent of foam that will mute, blind, confuse, \
-			mutate, and irritate carbon lifeforms. Specially brewed by Tiger Cooperative chemical weapons specialists \
-			using additional spore toxin. Ensure suit is sealed before use."
-	item = /obj/item/grenade/chem_grenade/bioterrorfoam
-	cost = 5
-	surplus = 35
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/explosives/bombanana
 	name = "Bombanana"
@@ -656,15 +606,6 @@
 	name = "MODsuit Holster Module"
 	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
 	item = /obj/item/mod/module/holster
-	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-
-/datum/uplink_item/device_tools/magboots
-	name = "Blood-Red Magboots"
-	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station \
-			during gravitational generator failures. These reverse-engineered knockoffs of Nanotrasen's \
-			'Advanced Magboots' slow you down in simulated-gravity environments much like the standard issue variety."
-	item = /obj/item/clothing/shoes/magboots/syndie
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
