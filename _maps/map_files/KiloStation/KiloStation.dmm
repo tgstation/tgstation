@@ -1370,7 +1370,7 @@
 /area/station/security/execution/education)
 "apM" = (
 /turf/open/floor/carpet/orange,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "aqe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2323,7 +2323,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "aEO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5178,7 +5178,7 @@
 	pixel_y = -10
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "bBS" = (
 /turf/closed/wall/r_wall,
 /area/station/command/teleporter)
@@ -8551,7 +8551,7 @@
 "cBP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "cBW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
@@ -13003,7 +13003,7 @@
 	network = list("ss13","qm")
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "dSe" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
@@ -13373,7 +13373,7 @@
 /area/station/hallway/primary/central/fore)
 "dYw" = (
 /turf/closed/wall,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "dYy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -26110,7 +26110,7 @@
 	dir = 9
 	},
 /turf/open/floor/wood,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "hwA" = (
 /turf/closed/wall/rust,
 /area/station/maintenance/solars/starboard/aft)
@@ -31257,7 +31257,7 @@
 	dir = 6
 	},
 /turf/open/floor/wood,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "iNc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -34622,7 +34622,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/carpet/orange,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "jNR" = (
 /obj/structure/girder,
 /obj/effect/decal/cleanable/dirt,
@@ -39621,7 +39621,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "lnm" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -47677,7 +47677,7 @@
 	dir = 10
 	},
 /turf/open/floor/wood,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "nEA" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -48392,7 +48392,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/wood,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "nPl" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -52169,7 +52169,7 @@
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/computer/security/qm,
 /turf/open/floor/iron/dark,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "oXx" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/disposalpipe/segment,
@@ -56222,7 +56222,7 @@
 	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "qew" = (
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
@@ -56936,7 +56936,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/carpet/orange,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "qny" = (
 /obj/machinery/mineral/stacking_machine{
 	input_dir = 2
@@ -71857,7 +71857,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "uvm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -79342,7 +79342,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/orange,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "wyO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -81447,7 +81447,7 @@
 	},
 /obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/iron/dark,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "xcV" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -82881,7 +82881,7 @@
 	},
 /obj/machinery/pdapainter/supply,
 /turf/open/floor/iron/dark,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "xye" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -85183,7 +85183,7 @@
 	name = "Quartermaster's Office"
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/qm)
+/area/station/command/heads_quarters/qm)
 "yfA" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/medical{
