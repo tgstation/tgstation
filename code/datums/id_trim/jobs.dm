@@ -922,8 +922,10 @@
 		ACCESS_HOS,
 		)
 	job = /datum/job/security_officer
-	/// List of bonus departmental accesses that departmental sec officers get.
+	/// List of bonus departmental accesses that departmental sec officers get by default.
 	var/department_access = list()
+	/// List of bonus departmental accesses that departmental sec officers get in relation to how many overall security officers there are.
+	var/scaling_access = list()
 
 /datum/id_trim/job/security_officer/refresh_trim_access()
 	. = ..()
@@ -935,30 +937,41 @@
 	if(CONFIG_GET(flag/security_has_maint_access))
 		access |= list(ACCESS_MAINT_TUNNELS)
 
+	// This is directly tied into calculations derived via a config entered variable, as well as the amount of players in the shift.
+	// Thus, it makes it possible to judge if departmental security officers should have more access to their department on a lower population shift.
+	var/datum/job/J = SSjob.GetJob(JOB_SECURITY_OFFICER)
+	var/minimal_security_officers = 5 // We do not spawn in any more lockers if there are 5 or less security officers, so let's start balancing here.
+	if((J.spawn_positions - 5) <= 0)
+		access |= scaling_access
+
 	access |= department_access
 
 /datum/id_trim/job/security_officer/supply
 	assignment = "Security Officer (Cargo)"
 	subdepartment_color = COLOR_CARGO_BROWN
 	department_access = list(
-		ACCESS_AUX_BASE,
 		ACCESS_CARGO,
 		ACCESS_MINING,
-		ACCESS_MINING_STATION,
 		ACCESS_SHIPPING,
 		)
+	scaling_access = list(
+		ACCESS_AUX_BASE,
+		ACCESS_MINING_STATION,
+	)
 
 /datum/id_trim/job/security_officer/engineering
 	assignment = "Security Officer (Engineering)"
 	subdepartment_color = COLOR_ENGINEERING_ORANGE
 	department_access = list(
 		ACCESS_ATMOSPHERICS,
+		ACCESS_ENGINEERING,
+		)
+	scaling_access = list(
 		ACCESS_AUX_BASE,
 		ACCESS_CONSTRUCTION,
-		ACCESS_ENGINEERING,
 		ACCESS_ENGINE_EQUIP,
 		ACCESS_TCOMMS,
-		)
+	)
 
 /datum/id_trim/job/security_officer/medical
 	assignment = "Security Officer (Medical)"
@@ -966,25 +979,29 @@
 	department_access = list(
 		ACCESS_MEDICAL,
 		ACCESS_MORGUE,
+	)
+	scaling_access = list(
 		ACCESS_PHARMACY,
 		ACCESS_PLUMBING,
-		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
-		)
+		ACCESS_SURGERY,
+	)
 
 /datum/id_trim/job/security_officer/science
 	assignment = "Security Officer (Science)"
 	subdepartment_color = COLOR_SCIENCE_PINK
 	department_access = list(
+		ACCESS_RESEARCH,
+		ACCESS_ROBOTICS,
+		ACCESS_SCIENCE,
+		)
+	scaling_access = list(
 		ACCESS_AUX_BASE,
 		ACCESS_GENETICS,
 		ACCESS_ORDNANCE,
 		ACCESS_ORDNANCE_STORAGE,
-		ACCESS_RESEARCH,
-		ACCESS_ROBOTICS,
-		ACCESS_SCIENCE,
 		ACCESS_XENOBIOLOGY,
-		)
+	)
 
 /datum/id_trim/job/shaft_miner
 	assignment = "Shaft Miner"
