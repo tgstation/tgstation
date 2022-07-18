@@ -17,21 +17,21 @@
 		JOB_SCIENTIST
 	)
 
-	var/obj/item/hacking_device/hacking_thing
+	var/device_summoned = FALSE
 
 
 /datum/traitor_objective/borg_hack/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
-	if(!hacking_thing)
+	if(!device_summoned)
 		buttons += add_ui_button("", "Clicking this will materialize a hacking device in your hand", "wifi", "summon_hacking_device")
 	return buttons
 
 /datum/traitor_objective/borg_hack/ui_perform_action(mob/living/user, action)
 	switch(action)
 		if("summon_hacking_device")
-			if(hacking_thing)
+			if(device_summoned)
 				return
-			hacking_thing = new(user.drop_location())
+			var/obj/item/hacking_device/hacking_thing = new(user.drop_location())
 			user.put_in_hands(hacking_thing)
 			AddComponent(/datum/component/traitor_objective_register, hacking_thing, \
 				succeed_signals = COMSIG_TRAITOR_BUG_BORG_HACKED, \
@@ -83,63 +83,64 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(iscyborg(target))
-		if(used)
-			balloon_alert(user, "already used!")
-			return
-		var/mob/living/silicon/robot/R = target
-		if(R.stat == DEAD)
-			balloon_alert(user, "it's broken!")
-			return
-		if(!R.mind || !R.client)
-			balloon_alert(user, "its controlling interface is broken, can't hack!")
-			return
-		if(!R.opened)//Cover is closed
-			if(R.locked)
-				balloon_alert(user, "hacked cover lock")
-				R.locked = FALSE
-				if(R.shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
-					to_chat(user, span_boldwarning("[R] seems to be controlled remotely! Hacking the interface may not work as expected."))
-			else
-				balloon_alert(user, "already unlocked!")
-			return
-		if(R.wiresexposed)
-			balloon_alert(user, "unexpose the wires first!")
-			return
-		if(R.emagged)
-			balloon_alert(user, "it's already hacked!")
-			return
-		if(R.connected_ai && R.connected_ai.mind && R.connected_ai.mind.has_antag_datum(/datum/antagonist/malf_ai))
-			to_chat(R, span_danger("ALERT: Foreign software execution prevented."))
-			R.logevent("ALERT: Foreign software execution prevented.")
-			to_chat(R.connected_ai, span_danger("ALERT: Cyborg unit \[[R]\] successfully defended against subversion."))
-			log_silicon("HACK: [key_name(user)] attempted to hack cyborg [key_name(R)], but they were slaved to traitor AI [R.connected_ai].")
-			return
-		if(R.shell) 
-			to_chat(user, span_boldwarning("[R] seems to be controlled remotely! Hacking the interface may not work as expected."))
-			return
-		balloon_alert(user, "successfully hacked")
-		used = TRUE
-		R.emag_cooldown = world.time + 15 SECONDS
-		SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_BORG_HACKED)
-		R.SetEmagged(TRUE)
-		R.SetStun(6 SECONDS)
-		R.lawupdate = FALSE
-		R.set_connected_ai(null)
-		message_admins("[ADMIN_LOOKUPFLW(R)] hacked cyborg [ADMIN_LOOKUPFLW(R)].")
-		log_silicon("HACK: [key_name(R)] hacked cyborg [key_name(R)]. Laws overridden.")
-		to_chat(R, span_danger("ALERT: Foreign software detected."))
-		R.logevent("ALERT: Foreign software detected.")
-		sleep(5)
-		to_chat(R, span_danger("Initiating diagnostics..."))
-		sleep(20)
-		to_chat(R, span_danger("LAW SYNCHRONISATION ERROR"))
-		sleep(20)
-		to_chat(R, span_danger("ERRORERRORERROR"))
-		R.add_ion_law(generate_ion_law())
-		sleep(20)
-		var/message = "You have been uploaded with malicious software, that had added a broken law to your lawset. You can't find any memory files about the person who uploaded them to you."
-		if(prob(33))
-			R.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED))
-			message = "You have been uploaded with malicious software, that had added a broken law to your lawset and shuffled it. You can't find any memory files about the person who uploaded them to you."
-		to_chat(R, span_userdanger(message))
+	if(!iscyborg(target))
+		return
+	if(used)
+		balloon_alert(user, "already used!")
+		return
+	var/mob/living/silicon/robot/target_silicon = target
+	if(target_silicon.stat == DEAD)
+		balloon_alert(user, "it's broken!")
+		return
+	if(!target_silicon.mind || !target_silicon.client)
+		balloon_alert(user, "its controlling interface is broken, can't hack!")
+		return
+	if(!target_silicon.opened)//Cover is closed
+		if(target_silicon.locked)
+			balloon_alert(user, "hacked cover lock")
+			target_silicon.locked = FALSE
+			if(target_silicon.shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
+				to_chat(user, span_boldwarning("[target_silicon] seems to be controlled remotely! Hacking the interface may not work as expected."))
+		else
+			balloon_alert(user, "already unlocked!")
+		return
+	if(target_silicon.wiresexposed)
+		balloon_alert(user, "unexpose the wires first!")
+		return
+	if(target_silicon.emagged)
+		balloon_alert(user, "it's already hacked!")
+		return
+	if(target_silicon.connected_ai && target_silicon.connected_ai.mind && target_silicon.connected_ai.mind.has_antag_datum(/datum/antagonist/malf_ai))
+		to_chat(target_silicon, span_danger("ALERT: Foreign software execution prevented."))
+		target_silicon.logevent("ALERT: Foreign software execution prevented.")
+		to_chat(target_silicon.connected_ai, span_danger("ALERT: Cyborg unit \[[target_silicon]\] successfully defended against subversion."))
+		log_silicon("HACK: [key_name(user)] attempted to hack cyborg [key_name(target_silicon)], but they were slaved to traitor AI [target_silicon.connected_ai].")
+		return
+	if(target_silicon.shell) 
+		to_chat(user, span_boldwarning("[target_silicon] seems to be controlled remotely! Hacking the interface may not work as expected."))
+		return
+	balloon_alert(user, "successfully hacked")
+	used = TRUE
+	target_silicon.emag_cooldown = world.time + 15 SECONDS
+	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_BORG_HACKED)
+	target_silicon.SetEmagged(TRUE)
+	target_silicon.SetStun(6 SECONDS)
+	target_silicon.lawupdate = FALSE
+	target_silicon.set_connected_ai(null)
+	message_admins("[ADMIN_LOOKUPFLW(target_silicon)] hacked cyborg [ADMIN_LOOKUPFLW(target_silicon)].")
+	log_silicon("HACK: [key_name(target_silicon)] hacked cyborg [key_name(target_silicon)]. Laws overridden.")
+	to_chat(target_silicon, span_danger("ALERT: Foreign software detected."))
+	target_silicon.logevent("ALERT: Foreign software detected.")
+	sleep(5)
+	to_chat(target_silicon, span_danger("Initiating diagnostics..."))
+	sleep(20)
+	to_chat(target_silicon, span_danger("LAW SYNCHRONISATION ERROR"))
+	sleep(20)
+	to_chat(target_silicon, span_danger("ERRORERRORERROR"))
+	target_silicon.add_ion_law(generate_ion_law())
+	sleep(20)
+	var/message = "You have been uploaded with malicious software, that had added a broken law to your lawset. You can't find any memory files about who did upload it to you."
+	if(prob(33))
+		target_silicon.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED))
+		message = "You have been uploaded with malicious software, that had added a broken law to your lawset and shuffled it. You can't find any memory files about who did upload it to you."
+	to_chat(target_silicon, span_userdanger(message))
