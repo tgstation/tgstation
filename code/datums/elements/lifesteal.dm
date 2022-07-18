@@ -11,7 +11,7 @@
 
 /datum/element/lifesteal/Attach(datum/target, flat_heal)
 	. = ..()
-	if(isgun(target))
+	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target))
 		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(target))
 		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
@@ -40,7 +40,7 @@
 		return
 	do_lifesteal(attacker, target)
 
-/datum/element/lifesteal/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
+/datum/element/lifesteal/proc/projectile_hit(datum/fired_from, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
 
 	do_lifesteal(firer, target)

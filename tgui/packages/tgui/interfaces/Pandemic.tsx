@@ -1,7 +1,8 @@
-import { BooleanLike } from '../../common/react';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Collapsible, Input, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs, Tooltip } from '../components';
-import { Window } from '../layouts';
+import { capitalizeFirst } from 'common/string';
+import { BooleanLike } from 'common/react';
+import { useBackend, useLocalState } from 'tgui/backend';
+import { Box, Button, Collapsible, Input, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs, Tooltip } from 'tgui/components';
+import { Window } from 'tgui/layouts';
 
 type PandemicContext = {
   beaker?: Beaker;
@@ -86,7 +87,7 @@ type ThresholdDisplayProps = {
   thresholds: Threshold[];
 };
 
-export const Pandemic = (_, context) => {
+export const Pandemic = (props, context) => {
   const { data } = useBackend<PandemicContext>(context);
   const { has_beaker, has_blood } = data;
 
@@ -109,7 +110,7 @@ export const Pandemic = (_, context) => {
 };
 
 /** Displays loaded container info, if it exists */
-const BeakerDisplay = (_, context) => {
+const BeakerDisplay = (props, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
   const { has_beaker, beaker, has_blood } = data;
   const cant_empty = !has_beaker || !beaker?.volume;
@@ -165,7 +166,7 @@ const BeakerDisplay = (_, context) => {
 };
 
 /** Displays info about the blood type, beaker capacity - volume */
-const BeakerInfoDisplay = (_, context) => {
+const BeakerInfoDisplay = (props, context) => {
   const { data } = useBackend<PandemicContext>(context);
   const { beaker, blood } = data;
   if (!beaker || !blood) {
@@ -177,10 +178,10 @@ const BeakerInfoDisplay = (_, context) => {
       <Stack.Item grow={2}>
         <LabeledList>
           <LabeledList.Item label="DNA">
-            {blood.dna.replace(/^\w/, (c) => c.toUpperCase())}
+            {capitalizeFirst(blood.dna)}
           </LabeledList.Item>
           <LabeledList.Item label="Type">
-            {blood.type.replace(/^\w/, (c) => c.toUpperCase())}
+            {capitalizeFirst(blood.type)}
           </LabeledList.Item>
         </LabeledList>
       </Stack.Item>
@@ -206,7 +207,7 @@ const BeakerInfoDisplay = (_, context) => {
 };
 
 /** If antibodies are present, returns buttons to create vaccines */
-const AntibodyInfoDisplay = (_, context) => {
+const AntibodyInfoDisplay = (props, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
   const { is_ready, resistances = [] } = data;
   if (!resistances) {
@@ -240,7 +241,7 @@ const AntibodyInfoDisplay = (_, context) => {
 };
 
 /** Displays info for the loaded blood, if any */
-const SpecimenDisplay = (_, context) => {
+const SpecimenDisplay = (props, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
   const [tab, setTab] = useLocalState(context, 'tab', 0);
   const { is_ready, viruses = [] } = data;
@@ -364,7 +365,7 @@ const VirusTextInfo = (props: VirusInfoProps, context) => {
         {virus.description}
       </LabeledList.Item>
       <LabeledList.Item label="Agent">
-        {virus.agent.replace(/^\w/, (c) => c.toUpperCase())}
+        {capitalizeFirst(virus.agent)}
       </LabeledList.Item>
       <LabeledList.Item label="Spread">{virus.spread}</LabeledList.Item>
       <LabeledList.Item label="Possible Cure">{virus.cure}</LabeledList.Item>

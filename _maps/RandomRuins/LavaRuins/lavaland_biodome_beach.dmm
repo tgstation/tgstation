@@ -584,7 +584,7 @@
 	},
 /obj/item/clothing/neck/beads,
 /obj/item/clothing/glasses/sunglasses/reagent,
-/obj/item/clothing/suit/hawaiian,
+/obj/item/clothing/suit/costume/hawaiian,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "sV" = (
@@ -1265,7 +1265,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/blue,
-/obj/item/clothing/suit/ianshirt,
+/obj/item/clothing/suit/costume/ianshirt,
 /obj/item/clothing/shoes/sandal{
 	desc = "A very fashionable pair of flip-flops.";
 	name = "flip-flops"

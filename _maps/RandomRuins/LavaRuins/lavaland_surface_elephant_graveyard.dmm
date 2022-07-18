@@ -117,7 +117,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/clothing/head/fedora/curator,
-/obj/item/clothing/suit/curator,
+/obj/item/clothing/suit/jacket/curator,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "cm" = (

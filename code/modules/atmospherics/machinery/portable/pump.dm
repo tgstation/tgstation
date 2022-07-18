@@ -13,10 +13,6 @@
 	icon_state = "siphon"
 	density = TRUE
 	max_integrity = 250
-	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
-	var/heat_limit = 5000
-	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
-	var/pressure_limit = 50000
 	///Is the machine on?
 	var/on = FALSE
 	///What direction is the machine pumping (into pump/port or out to the tank/area)?
@@ -43,11 +39,7 @@
 		. += "siphon-connector"
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
-	var/pressure = air_contents.return_pressure()
-	var/temperature = air_contents.return_temperature()
-	///function used to check the limit of the pumps and also set the amount of damage that the pump can receive, if the heat and pressure are way higher than the limit the more damage will be done
-	if(temperature > heat_limit || pressure > pressure_limit)
-		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
+	if(take_atmos_damage())
 		excited = TRUE
 		return ..()
 
@@ -177,3 +169,16 @@
 /obj/machinery/portable_atmospherics/pump/unregister_holding()
 	on = FALSE
 	return ..()
+
+/obj/machinery/portable_atmospherics/pump/lil_pump
+	name = "Lil' Pump"
+
+/obj/machinery/portable_atmospherics/pump/lil_pump/Initialize(mapload)
+	. = ..()
+	//25% chance to occur
+	if(prob(25))
+		name = "Liler' Pump"
+		desc = "When a Lil' Pump and a portable air pump love each other very much."
+		var/matrix/lil_pump = matrix()
+		lil_pump.Scale(0.8)
+		src.transform = lil_pump

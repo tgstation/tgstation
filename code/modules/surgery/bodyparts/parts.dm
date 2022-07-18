@@ -249,6 +249,7 @@
 	wound_resistance = -10
 	px_x = 5
 	px_y = -3
+	
 /obj/item/bodypart/r_arm/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_r_arm"

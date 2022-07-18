@@ -1,7 +1,8 @@
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
-import { Window } from '../layouts';
+import { capitalizeAll } from 'common/string';
+import { useBackend } from 'tgui/backend';
+import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui/components';
+import { Window } from 'tgui/layouts';
 
 type VendingData = {
   onstation: boolean;
@@ -62,7 +63,7 @@ type CustomInput = {
   img: string;
 };
 
-export const Vending = (_, context) => {
+export const Vending = (props, context) => {
   const { data } = useBackend<VendingData>(context);
   const { onstation } = data;
 
@@ -85,7 +86,7 @@ export const Vending = (_, context) => {
 };
 
 /** Displays user details if an ID is present and the user is on the station */
-export const UserDetails = (_, context) => {
+export const UserDetails = (props, context) => {
   const { data } = useBackend<VendingData>(context);
   const { user } = data;
 
@@ -115,7 +116,7 @@ export const UserDetails = (_, context) => {
 };
 
 /** Displays  products in a section, with user balance at top */
-const ProductDisplay = (_, context) => {
+const ProductDisplay = (props, context) => {
   const { data } = useBackend<VendingData>(context);
   const {
     onstation,
@@ -190,9 +191,7 @@ const VendingRow = (props, context) => {
       <Table.Cell collapsing>
         <ProductImage product={product} />
       </Table.Cell>
-      <Table.Cell bold>
-        {product.name.replace(/^\w/, (c) => c.toUpperCase())}
-      </Table.Cell>
+      <Table.Cell bold>{capitalizeAll(product.name)}</Table.Cell>
       <Table.Cell>
         {!!productStock?.colorable && (
           <ProductColorSelect disabled={disabled} product={product} />
