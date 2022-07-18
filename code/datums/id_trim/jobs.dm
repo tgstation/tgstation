@@ -941,7 +941,7 @@
 	// Thus, it makes it possible to judge if departmental security officers should have more access to their department on a lower population shift.
 	var/datum/job/J = SSjob.GetJob(JOB_SECURITY_OFFICER)
 	var/minimal_security_officers = 5 // We do not spawn in any more lockers if there are 5 or less security officers, so let's start balancing here.
-	if((J.spawn_positions - 5) <= 0)
+	if((J.spawn_positions - minimal_security_officers) <= 0)
 		access |= scaling_access
 
 	access |= department_access
@@ -953,7 +953,7 @@
 		ACCESS_CARGO,
 		ACCESS_MINING,
 		ACCESS_SHIPPING,
-		)
+	)
 	scaling_access = list(
 		ACCESS_AUX_BASE,
 		ACCESS_MINING_STATION,
@@ -965,7 +965,7 @@
 	department_access = list(
 		ACCESS_ATMOSPHERICS,
 		ACCESS_ENGINEERING,
-		)
+	)
 	scaling_access = list(
 		ACCESS_AUX_BASE,
 		ACCESS_CONSTRUCTION,
@@ -994,7 +994,7 @@
 		ACCESS_RESEARCH,
 		ACCESS_ROBOTICS,
 		ACCESS_SCIENCE,
-		)
+	)
 	scaling_access = list(
 		ACCESS_AUX_BASE,
 		ACCESS_GENETICS,
