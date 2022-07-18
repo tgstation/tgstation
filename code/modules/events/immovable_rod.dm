@@ -223,10 +223,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	// If we Bump into a turf, turf go boom.
 	if(isturf(clong))
 
-		if(istype(clong, /turf/closed/wall/r_wall)) //Except full-constructed r_walls, which just get knocked down a few pegs
+		if(istype(clong, /turf/closed/wall/r_wall)) //Except full-constructed R_walls, which just get knocked down a few pegs
 			var/turf/closed/wall/r_wall/stronkwall = clong
 			if(stronkwall.d_state < 3)
-				stronkwall.d_state += 4 //The larger the number, the further along the deconstruction path. //R_walls will not survive two rod hits
+				stronkwall.d_state += 4 //The larger the number, the further along the deconstruction path. R_walls will not survive two rod hits
 				stronkwall.update_appearance()
 				return ..()
 
