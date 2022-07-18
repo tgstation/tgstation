@@ -1,0 +1,8 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - bugfix: "Shower and sink dismantling is now consistent."
+  - bugfix: "Hydroponics tray plumbing connections now accept water without clogging."
+  - rscadd: "Showers now have 3 selectable auto-shutoff modes."
+  - qol: "Sinks and showers are now constructed with the player facing the wall."
+  - imageadd: "Visuals improved on plumbing connections for offset appliances, like sinks and showers."
