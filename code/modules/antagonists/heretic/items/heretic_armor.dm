@@ -9,7 +9,7 @@
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/heretic_focus)
+	
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	name = "ominous armor"
@@ -106,7 +106,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	item_flags |= EXAMINE_SKIP
 	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
-	RemoveElement(/datum/element/heretic_focus)
+
 
 	if(isliving(loc))
 		loc.balloon_alert(loc, "cloak hidden")
