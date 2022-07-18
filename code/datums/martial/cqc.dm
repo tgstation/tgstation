@@ -175,6 +175,17 @@
 	var/obj/item/I = null
 	if(check_streak(A,D))
 		return TRUE
+	log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
+	if(restraining_mob && A.pulling == restraining_mob)
+		log_combat(A, D, "knocked out (Chokehold)(CQC)")
+		D.visible_message(span_danger("[A] puts [D] into a chokehold!"), \
+						span_userdanger("You're put into a chokehold by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
+		to_chat(A, span_danger("You put [D] into a chokehold!"))
+		D.SetSleeping(40 SECONDS)
+		restraining_mob = null
+		if(A.grab_state < GRAB_NECK && !HAS_TRAIT(A, TRAIT_PACIFISM))
+			A.setGrabState(GRAB_NECK)
+		return TRUE
 	if(prob(65))
 		if(!D.stat || !D.IsParalyzed() || !restraining_mob)
 			I = D.get_active_held_item()
@@ -191,20 +202,8 @@
 						span_userdanger("You're nearly disarmed by [A]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, span_warning("You fail to disarm [D]!"))
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-	log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
-	if(A.pulling == restraining_mob)
-		log_combat(A, D, "knocked out (Chokehold)(CQC)")
-		D.visible_message(span_danger("[A] puts [D] into a chokehold!"), \
-						span_userdanger("You're put into a chokehold by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
-		to_chat(A, span_danger("You put [D] into a chokehold!"))
-		D.SetSleeping(40 SECONDS)
-		restraining_mob = null
-		if(A.grab_state < GRAB_NECK && !HAS_TRAIT(A, TRAIT_PACIFISM))
-			A.setGrabState(GRAB_NECK)
-	else
-		restraining_mob = null
-		return FALSE
-	return TRUE
+	return FALSE
+
 
 /mob/living/proc/CQC_help()
 	set name = "Remember The Basics"
