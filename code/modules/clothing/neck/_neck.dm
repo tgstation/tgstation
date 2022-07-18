@@ -290,6 +290,11 @@
 	icon_state = "stripedbluescarf"
 	custom_price = PAYCHECK_CREW * 0.2
 
+/obj/item/clothing/neck/syndiescarf
+	name = "suspicious looking striped scarf"
+	desc = "Ready to operate."
+	icon_state = "syndiescarf"
+
 /obj/item/clothing/neck/petcollar
 	name = "pet collar"
 	desc = "It's for pets."

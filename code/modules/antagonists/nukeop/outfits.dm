@@ -25,10 +25,6 @@
 
 	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
 
-/datum/outfit/syndicate/no_crystals
-	name = "Syndicate Operative - Reinforcement"
-	tc = 0
-
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_SYNDICATE)
@@ -61,3 +57,52 @@
 		/obj/item/gun/ballistic/automatic/pistol/clandestine,
 		/obj/item/pen/edagger,
 	)
+
+/datum/outfit/syndicate/reinforcement
+	name = "Syndicate Operative - Reinforcement"
+	tc = 0
+
+/datum/outfit/syndicate/reinforcement/gorlex
+	name = "Syndicate Operative - Gorlex Reinforcement"
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	head = /obj/item/clothing/head/helmet/swat
+	neck = /obj/item/clothing/neck/syndiescarf
+	glasses = /obj/item/clothing/glasses/cold
+
+/datum/outfit/syndicate/reinforcement/cybersun
+	name = "Syndicate Operative - Cybersun Reinforcement"
+	uniform = /obj/item/clothing/under/syndicate/combat
+	suit = /obj/item/clothing/suit/jacket/det_suit/dark
+	gloves = /obj/item/clothing/gloves/fingerless
+	glasses = /obj/item/clothing/glasses/sunglasses
+	mask = /obj/item/clothing/mask/cigarette/cigar
+
+/datum/outfit/syndicate/reinforcement/donk
+	name = "Syndicate Operative - Donk Reinforcement"
+	suit = /obj/item/clothing/suit/hazardvest
+	head = /obj/item/clothing/head/hardhat/orange
+	shoes = /obj/item/clothing/shoes/workboots
+	glasses = /obj/item/clothing/glasses/meson
+
+/datum/outfit/syndicate/reinforcement/waffle
+	name = "Syndicate Operative - Waffle Reinforcement"
+	uniform = /obj/item/clothing/under/syndicate/camo
+	suit = /obj/item/clothing/suit/armor/vest
+	head = /obj/item/clothing/head/helmet/blueshirt
+	glasses = /obj/item/clothing/glasses/welding/up
+
+/datum/outfit/syndicate/reinforcement/interdyne
+	name = "Syndicate Operative - Interdyne Reinforcement"
+	uniform = /obj/item/clothing/under/syndicate/scrubs
+	suit = /obj/item/clothing/suit/toggle/labcoat/interdyne
+	head = /obj/item/clothing/head/beret/medical
+	gloves = /obj/item/clothing/gloves/color/latex
+	neck = /obj/item/clothing/neck/stethoscope
+	glasses = /obj/item/clothing/glasses/hud/health
+	mask = /obj/item/clothing/mask/breath/medical
+
+/datum/outfit/syndicate/reinforcement/mi13
+	name = "Syndicate Operative - MI13 Reinforcement"
+	uniform = /obj/item/clothing/under/syndicate/sniper
+	shoes = /obj/item/clothing/shoes/laceup
+	glasses = /obj/item/clothing/glasses/sunglasses/big

@@ -101,7 +101,7 @@
 	icon_state = "locator"
 	var/borg_to_spawn
 	var/special_role_name = ROLE_NUCLEAR_OPERATIVE ///The name of the special role given to the recruit
-	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/no_crystals ///The applied outfit
+	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement ///The applied outfit
 	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop ///The antag datam applied
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
