@@ -236,7 +236,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(isobj(clong))
 
 		if(istype(clong, /obj/structure/window/reinforced)) //R_Windows can take a hit. But only once.
-			//var/obj/structure/window/reinforced/stronkglass = clong
 			if(clong.atom_integrity > (clong.max_integrity * 0.6)) //Futureproofing in case of R_window buff. We're checking for, and then taking, 60% of the window's health.
 				clong.take_damage((clong.max_integrity * 0.6))
 				return ..()
