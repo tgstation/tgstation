@@ -51,7 +51,7 @@
 		. += span_notice("There is a small <i>paper</i> placard on the assembly labelled \"[doorname]\".")
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pen))
+	if(istype(W, /obj/item/pen) && !user.combat_mode)
 		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, MAX_NAME_LEN)
 		if(!t)
 			return
