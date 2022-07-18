@@ -107,7 +107,7 @@
 			balloon_alert(user, "unexpose the wires first!")
 			return
 		if(R.emagged)
-			to_chat(user, span_warning("It looks like [R] is already hacked."))
+			balloon_alert(user, "it's already hacked!")
 			return
 		if(R.connected_ai && R.connected_ai.mind && R.connected_ai.mind.has_antag_datum(/datum/antagonist/malf_ai))
 			to_chat(R, span_danger("ALERT: Foreign software execution prevented."))
