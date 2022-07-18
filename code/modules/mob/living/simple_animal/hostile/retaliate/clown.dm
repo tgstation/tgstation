@@ -436,22 +436,25 @@
 ///This proc eats the atom, certain funny items are stored directly in the prank pouch while bananas grant a heal based on their potency and the peels are retained in the pouch.
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/eat_atom(atom/movable/eaten_atom)
 
-	var/static/funny_items = list(/obj/item/food/pie/cream,
-								/obj/item/food/grown/tomato,
-								/obj/item/food/meatclown)
+	var/static/funny_items = list(
+		/obj/item/food/pie/cream,
+		/obj/item/food/grown/tomato,
+		/obj/item/food/meatclown,
+	)
 
 	visible_message(span_warning("[src] eats [eaten_atom]!"), span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom
 
-	else if(istype(eaten_atom, /obj/item/food/grown/banana))
-		var/obj/item/food/grown/banana/banana_morsel = eaten_atom
-		adjustBruteLoss(-banana_morsel.seed.potency * 0.25)
-		prank_pouch += banana_morsel.generate_trash(src)
-		qdel(eaten_atom)
 	else
+		if(istype(eaten_atom, /obj/item/food/grown/banana))
+			var/obj/item/food/grown/banana/banana_morsel = eaten_atom
+			adjustBruteLoss(-banana_morsel.seed.potency * 0.25)
+			prank_pouch += banana_morsel.generate_trash(src)
+
 		qdel(eaten_atom)
+
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 

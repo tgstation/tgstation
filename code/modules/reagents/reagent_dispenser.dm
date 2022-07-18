@@ -97,7 +97,7 @@
 	tank_leak()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/structure/reagent_dispensers/Moved(atom/OldLoc, Dir)
+/obj/structure/reagent_dispensers/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	tank_leak()
 

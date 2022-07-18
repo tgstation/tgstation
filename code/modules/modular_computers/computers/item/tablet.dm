@@ -199,7 +199,7 @@
 	borgo = null
 	return ..()
 
-/obj/item/modular_computer/tablet/integrated/turn_on(mob/user)
+/obj/item/modular_computer/tablet/integrated/turn_on(mob/user, open_ui = FALSE)
 	if(borgo?.stat != DEAD)
 		return ..()
 	return FALSE
