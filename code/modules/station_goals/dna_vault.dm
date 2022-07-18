@@ -1,7 +1,7 @@
 //Crew has to create dna vault
 // Cargo can order DNA samplers + DNA vault boards
-// DNA vault requires x animals ,y plants, z human dna
-// DNA vaults require high tier stock parts and cold
+// DNA vault requires x animals, y plants, z human dna
+// DNA vaults require high tier stock parts
 // After completion each crewmember can receive single upgrade chosen out of 2 for the mob.
 #define VAULT_TOXIN "Toxin Adaptation"
 #define VAULT_NOBREATH "Lung Enhancement"
@@ -187,7 +187,7 @@
 		return ..()
 
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H,upgrade_type)
-	if(!(upgrade_type in power_lottery[H]))
+	if(!(upgrade_type in power_lottery[H])||(HAS_TRAIT(H, TRAIT_VIRUSIMMUNE))||(HAS_TRAIT(H, TRAIT_NOBREATH))||(HAS_TRAIT(H, TRAIT_RESISTHEAT))||(HAS_TRAIT(H, TRAIT_NOFIRE))||(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))||(H.next_move_modifier == 0.5)||(H.has_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup))||(H.dna.species.armor==30)||(H.dna.species.stunmod==0.5))
 		return
 	var/datum/species/S = H.dna.species
 	switch(upgrade_type)
