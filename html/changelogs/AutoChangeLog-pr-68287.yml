@@ -1,5 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes: 
-  - bugfix: "Fixed body_parts_covered on various suits to be consistent with their sprites"
-  - bugfix: "Made digitigrade legs properly draw as non-digitigrade when wearing suits that cover the legs"

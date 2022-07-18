@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - bugfix: "Fixes N2O formation consuming twice the amount of nitrogen and oxygen than it should be."

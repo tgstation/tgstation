@@ -543,3 +543,85 @@
       it had to be an atom.
   - code_imp: projectile spells set their fired projectiles' `fired_from` var to themselves
       instead of the turf they were cast from
+2022-07-18:
+  13spacemen:
+  - bugfix: Tramstation's shutters are directional once again
+  ArcaneMusic:
+  - rscadd: Television themed headgear has arrived! Hack a costume vendor or hollow
+      out an unsecured status display to make one. Just be careful not to get flashed
+      while wearing one.
+  ChakatStormCloud:
+  - bugfix: 'Virology: all healing symptoms no longer receive an accidental power
+      boost at Stage Speed 6.'
+  Ghommie:
+  - bugfix: You can now recolor graffiti to dark colors.
+  JohnFulpWillard:
+  - bugfix: Fixed several instances where we should check internal organs for external
+      organs
+  Kylerace:
+  - bugfix: diagonal movement in space works again
+  LemonInTheDark:
+  - balance: Humanoid xenos can now eat people by aggressively grabbing their target,
+      and dragging them onto themselves. Sneak a knife in and start moving to really
+      ruin a filthy ghost role user's day
+  Melbert:
+  - bugfix: Thermal Vision mutation is no longer 1/10th its intended duration
+  - bugfix: Banana Glutton's ability will no longer break after eating a banana.
+  Moose1002:
+  - qol: Dispenser shells can now be filled from storage bags for easy bulk filling.
+  Mooshimi:
+  - rscadd: Festive paper hats have appeared in maintenance on every map. Central
+      Command is going to get angry if you keep partying like this...
+  - bugfix: Closed the trapdoor to space under a holo firelock in lower tram maint.
+  Pickle-Coding:
+  - bugfix: Fixes N2O formation consuming twice the amount of nitrogen and oxygen
+      than it should be.
+  Profakos:
+  - bugfix: signalCommander now works without altering the default frequency
+  Rhials:
+  - spellcheck: Fixes typos in certain away mission items.
+  ShizCalev:
+  - bugfix: Fixed the Eastern airlocks to the Space Hotel not being cyclelinked.
+  - bugfix: Added various missing air alarms, APCs, and cameras across all station
+      maps.
+  - bugfix: Pun Pun has been added to the bar on tramstation!
+  Timberpoes:
+  - bugfix: Fix issue when the connected database dies but the connection check still
+      returns "online" where players would be unable to join the shift because the
+      game thinks they haven't unlocked any jobs at all.
+  Tristrian:
+  - bugfix: The mining wardrobe locker contains an explorer duffel bag instead of
+      a normal one now
+  - spellcheck: '"explorator''s duffel bag" is now called "explorer duffel bag"'
+  Twaticus:
+  - bugfix: centcom gasmask appears on mob again
+  - bugfix: tile reskinner correctly shows new tiles
+  - bugfix: plasmaman glove inhands no longer appear as a plasmaman suit
+  - bugfix: wheelchairs gained their wheel back
+  celulamp:
+  - bugfix: Candy Corn craftable with 5 Corn Oil 5 Sugar
+  itseasytosee:
+  - bugfix: Holding people at gunpoint has been restored to its former glory, it can
+      once again be used at range, and allows the person holding up to move within
+      two tiles of the target.
+  kawoppi:
+  - rscadd: added animation for cleaning things with soap, mops, rags or cleanbots
+  - imageadd: added cleaning bubbles animation
+  lizardqueenlexi:
+  - bugfix: Fixed body_parts_covered on various suits to be consistent with their
+      sprites
+  - bugfix: Made digitigrade legs properly draw as non-digitigrade when wearing suits
+      that cover the legs
+  necromanceranne:
+  - balance: Gives the battlecruiser operatives the Ansem Pistol.
+  - bugfix: Gives the battlecruiser crew internals boxes.
+  - bugfix: Speedloaders and stripper clips can once again can load in ammo of the
+      same caliber. Detectives rejoice!
+  orthography:
+  - bugfix: puts beartraps in the tramstation janitor closet.
+  raffclar:
+  - bugfix: Fixed mecha cargo names breaking the utility module interface
+  timothymtorres:
+  - bugfix: Fix holoparasites to inherit language from their masters to aid communication
+  unit0016:
+  - refactor: ID Card department colors are now greyscaled. Say whuh!?
