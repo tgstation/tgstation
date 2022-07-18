@@ -10,12 +10,11 @@ import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'inferno';
 import { clamp } from 'common/math';
-import { logger } from '../logging';
 
-const Z_INDEX_PREVIEW = 0;
-const Z_INDEX_TEXTAREA = 3;
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
+
+const TEXTAREA_INPUT_HEIGHT = 200;
 
 type PaperContext = {
   // ui_static_data
@@ -97,12 +96,9 @@ const canStamp = (heldItemDetails?: WritingImplement): boolean => {
 const createPreview = (
   inputList: PaperInput[] | undefined,
   stampList: StampInput[] | undefined,
-  currentTextInput: string | undefined,
+  currentTextInput: PaperInput | undefined,
   defaultFont: string,
-  defaultColor: string,
-  penFont: string | undefined,
-  penColor: string | undefined,
-  penBold: boolean | undefined
+  defaultColor: string
 ) => {
   let output = '';
 
@@ -119,13 +115,15 @@ const createPreview = (
     output += formatAndProcessRawText(rawText, fontFace, fontColor, fontBold);
   });
 
-  if (currentTextInput?.length) {
-    const fontColor = penColor || defaultColor;
-    const fontFace = penFont || defaultFont;
-    const fontBold = penBold || false;
+  const textAreaInput = currentTextInput?.raw_text;
+
+  if (textAreaInput?.length) {
+    const fontColor = currentTextInput?.color || defaultColor;
+    const fontFace = currentTextInput?.font || defaultFont;
+    const fontBold = currentTextInput?.bold || false;
 
     output += formatAndProcessRawText(
-      currentTextInput,
+      textAreaInput,
       fontFace,
       fontColor,
       fontBold
@@ -306,7 +304,6 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
       stampYOffset,
     ];
 
-    logger.log(pos);
     return pos;
   }
 
@@ -405,8 +402,16 @@ export class PrimaryView extends Component {
     const [textAreaContents, setTextAreaContents] = useLocalState(
       this.context,
       'textAreaContents',
-      ''
+      {
+        raw_text: '',
+        font: default_pen_font,
+        color: default_pen_color,
+        bold: false,
+      }
     );
+
+    const interactMode =
+      held_item_details?.interaction_mode || InteractionType.reading;
 
     return (
       <>
@@ -418,26 +423,36 @@ export class PrimaryView extends Component {
               handleOnScroll={this.onScrollHandler}
             />
           </Flex.Item>
-          <Flex.Item shrink={1} height="150px" style={{ 'z-index': 2 }}>
-            <TextArea
-              value={textAreaContents}
-              textColor={useColor}
-              fontFamily={useFont}
-              bold={useBold}
-              height={'100%'}
-              backgroundColor={paper_color}
-              onInput={(e, value) => {
-                setTextAreaContents(value);
-                if (this.scrollableRef.current) {
-                  let thisDistFromBottom =
-                    this.scrollableRef.current.scrollHeight -
-                    this.scrollableRef.current.scrollTop;
-                  this.scrollableRef.current.scrollTop +=
-                    thisDistFromBottom - this.lastDistanceFromBottom;
-                }
-              }}
-            />
-          </Flex.Item>
+          {interactMode === InteractionType.writing && (
+            <Flex.Item
+              shrink={1}
+              height={TEXTAREA_INPUT_HEIGHT + 'px'}
+              style={{ 'z-index': 2 }}>
+              <TextArea
+                value={textAreaContents.raw_text}
+                textColor={useColor}
+                fontFamily={useFont}
+                bold={useBold}
+                height={'100%'}
+                backgroundColor={paper_color}
+                onInput={(e, text) => {
+                  setTextAreaContents({
+                    raw_text: text,
+                    font: useFont,
+                    color: useColor,
+                    bold: useBold,
+                  });
+                  if (this.scrollableRef.current) {
+                    let thisDistFromBottom =
+                      this.scrollableRef.current.scrollHeight -
+                      this.scrollableRef.current.scrollTop;
+                    this.scrollableRef.current.scrollTop +=
+                      thisDistFromBottom - this.lastDistanceFromBottom;
+                  }
+                }}
+              />
+            </Flex.Item>
+          )}
         </Flex>
       </>
     );
@@ -455,17 +470,19 @@ export const PreviewView = (props, context) => {
     paper_color,
   } = data;
 
-  const [textAreaContents] = useLocalState(context, 'textAreaContents', '');
+  const [textAreaContents] = useLocalState(context, 'textAreaContents', {
+    raw_text: '',
+    font: default_pen_font,
+    color: default_pen_color,
+    bold: false,
+  });
 
   const parsedAndSanitisedHTML = createPreview(
     raw_text_input,
     raw_stamp_input,
     textAreaContents,
     default_pen_font,
-    default_pen_color,
-    held_item_details?.font,
-    held_item_details?.color,
-    held_item_details?.use_bold
+    default_pen_color
   );
 
   const textHTML = {
@@ -523,17 +540,20 @@ export const StampView = (props, context) => {
 
 export const PaperSheet = (props, context) => {
   const { data } = useBackend<PaperContext>(context);
-  const {
-    raw_field_input,
-    raw_stamp_input,
-    max_length,
-    paper_color,
-    paper_name,
-    held_item_details,
-  } = data;
+  const { paper_color, paper_name, held_item_details } = data;
+
+  const interactMode =
+    held_item_details?.interaction_mode || InteractionType.reading;
 
   return (
-    <Window title={paper_name} theme="paper" width={400} height={500}>
+    <Window
+      title={paper_name}
+      theme="paper"
+      width={400}
+      height={
+        500 +
+        (interactMode === InteractionType.writing ? TEXTAREA_INPUT_HEIGHT : 0)
+      }>
       <Window.Content backgroundColor={paper_color}>
         <PrimaryView />
       </Window.Content>
