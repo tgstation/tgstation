@@ -222,10 +222,25 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	// If we Bump into a turf, turf go boom.
 	if(isturf(clong))
+
+		if(istype(clong, /turf/closed/wall/r_wall)) //Except full-constructed r_walls, which just get knocked down a few pegs
+			var/turf/closed/wall/r_wall/stronkwall = clong
+			if(stronkwall.d_state < 3)
+				stronkwall.d_state += 4 //The larger the number, the further along the deconstruction path. //R_walls will not survive two rod hits
+				stronkwall.update_appearance()
+				return ..()
+
 		SSexplosions.highturf += clong
 		return ..()
 
 	if(isobj(clong))
+
+		if(istype(clong, /obj/structure/window/reinforced)) //R_Windows can take a hit. But only once.
+			//var/obj/structure/window/reinforced/stronkglass = clong
+			if(clong.atom_integrity > (clong.max_integrity * 0.6)) //Futureproofing in case of R_window buff. We're checking for, and then taking, 60% of the window's health.
+				clong.take_damage((clong.max_integrity * 0.6))
+				return ..()
+
 		var/obj/clong_obj = clong
 		clong_obj.take_damage(INFINITY, BRUTE, NONE, TRUE, dir, INFINITY)
 		return ..()
