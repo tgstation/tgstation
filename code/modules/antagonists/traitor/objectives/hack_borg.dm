@@ -13,7 +13,7 @@
 
 	var/list/blacklisted_to = list(
 		JOB_ROBOTICIST,  
-		JOB_RESEARCH_DIRECTOR,  ///To easy to complete
+		JOB_RESEARCH_DIRECTOR,  //To easy to complete
 		JOB_SCIENTIST
 	)
 
