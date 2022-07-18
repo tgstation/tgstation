@@ -300,7 +300,7 @@
 	desc = "A slice of bread soaked in a beaten egg mixture. Put it on a griddle to start cooking!."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "raw_frenchtoast"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2,)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("raw egg" = 2, "soaked bread" = 1)
 	foodtypes = GRAIN | RAW | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
@@ -313,8 +313,32 @@
 	desc = "A slice of bread soaked in an egg mixture and grilled until golden-brown. Drizzled with syrup!."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "frenchtoast"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2,)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("french toast" = 1, "syrup" = 1, "golden deliciousness" = 1)
 	foodtypes = GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+
+/obj/item/food/raw_breadstick
+	name = "raw breadstick"
+	desc = "An uncooked strip of dough in the shape of a breadstick."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "raw_breadstick"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("raw dough" = 1)
+	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/rawbreadstick/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/breadstick, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+
+/obj/item/food/breadstick
+	name = "breadstick"
+	desc = "A delicious, buttery breadstick. Highly addictive, but oh-so worth it."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "breadstick"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("fluffy bread" = 1, "butter" = 2)
+	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE
