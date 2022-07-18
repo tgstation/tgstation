@@ -29,7 +29,6 @@
 
 
 /obj/structure/dispenser_bot/proc/add_item(mob/user, obj/item/to_add)
-	to_chat(user, span_notice("You insert [to_add] into the dispenser."))
 	balloon_alert(user, "inserted item")
 	stored_items += to_add
 	to_add.forceMove(src)
@@ -65,7 +64,7 @@
 /obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
-	if(istype(item, /obj/item/wrench) || istype(item, /obj/item/multitool/circuit) || istype(item, /obj/item/integrated_circuit))
+	if(istype(item, /obj/item/wrench) || istype(item, /obj/item/multitool) || istype(item, /obj/item/integrated_circuit))
 		return ..()
 	if(item.w_class > max_weight && !istype(item, /obj/item/storage/bag))
 		balloon_alert(user, "item too big!")
