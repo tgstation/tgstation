@@ -288,13 +288,14 @@
 	while((brute > 0 || burn > 0) && length(not_full))
 		if(!length(parts))
 			parts = not_full.Copy()
+
+		var/brute_per_part = round(brute/length(parts), DAMAGE_PRECISION)
+		var/burn_per_part = round(burn/length(parts), DAMAGE_PRECISION)
+
 		var/obj/item/bodypart/picked = pick_n_take(parts)
 		if(picked.get_damage() >= picked.max_damage)
 			not_full -= picked
 			continue
-
-		var/brute_per_part = round(brute/length(parts), DAMAGE_PRECISION)
-		var/burn_per_part = round(burn/length(parts), DAMAGE_PRECISION)
 
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
