@@ -13,10 +13,6 @@
 	src.moods = moods
 	RegisterSignal(host, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
-/datum/proximity_monitor/advanced/demoraliser/Destroy()
-	UnregisterSignal(host, COMSIG_PARENT_EXAMINE)
-	return ..()
-
 /datum/proximity_monitor/advanced/demoraliser/field_turf_crossed(atom/movable/crossed, turf/location)
 	if (!isliving(crossed))
 		return
@@ -74,12 +70,7 @@
 	if (!mood)
 		return FALSE
 
-	for(var/i in mood.mood_events)
-		var/datum/mood_event/moodlet = mood.mood_events[i]
-		if (moodlet.category == moods.mood_category)
-			return TRUE
-
-	return FALSE
+	return mood.has_mood_of_category(moods.mood_category)
 
 /// Mood application categories for this objective
 /// Used to reduce duplicate code for applying moods to players based on their state

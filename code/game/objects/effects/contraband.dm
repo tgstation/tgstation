@@ -36,14 +36,15 @@
 	if(!istype(I, /obj/item/shard))
 		return ..()
 
-	if (poster_structure.trap)
+	if (poster_structure.trap?.resolve())
 		to_chat(user, span_warning("This poster is already booby-trapped!"))
-	else
-		if(!user.transferItemToLoc(I, poster_structure))
-			return
+		return
 
-		poster_structure.trap = I
-		to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
+	if(!user.transferItemToLoc(I, poster_structure))
+		return
+
+	poster_structure.trap = WEAKREF(I)
+	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
 
 /obj/item/poster/Destroy()
 	poster_structure = null
@@ -82,7 +83,7 @@
 	var/poster_item_icon_state = "rolled_poster"
 	var/poster_item_type = /obj/item/poster
 	///A sharp shard of material can be hidden inside of a poster, attempts to embed when it is torn down.
-	var/obj/item/shard/trap
+	var/datum/weakref/trap
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
@@ -141,13 +142,14 @@
 	qdel(src)
 
 /obj/structure/sign/poster/proc/spring_trap(mob/user)
-	if (!trap)
+	var/obj/item/shard/payload = trap?.resolve()
+	if (!payload)
 		return
 
 	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
-	if(!can_embed_trap(user) || !trap.tryEmbed(user.get_active_hand(), TRUE))
-		visible_message(span_notice("A [trap.name] falls from behind the poster.") )
-		trap.forceMove(user.drop_location())
+	if(!can_embed_trap(user) || !payload.tryEmbed(user.get_active_hand(), TRUE))
+		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
+		payload.forceMove(user.drop_location())
 	else
 		SEND_SIGNAL(src, COMSIG_POSTER_TRAP_SUCCEED, user)
 

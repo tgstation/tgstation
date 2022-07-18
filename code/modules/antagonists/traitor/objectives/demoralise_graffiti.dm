@@ -128,8 +128,7 @@
  * * target_turf - the place the rune's being drawn
  */
 /obj/item/traitor_spraycan/proc/try_draw_new_rune(mob/living/user, turf/target_turf)
-	var/list/target_turfs = RANGE_TURFS(1, target_turf)
-	for(var/turf/nearby_turf as anything in target_turfs)
+	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, target_turf))
 		if (!isopenturf(nearby_turf) || is_type_in_typecache(nearby_turf, no_draw_turfs))
 			user.balloon_alert(user, "you need a clear 3x3 area!")
 			return
@@ -144,11 +143,8 @@
  * * target_turf - the place the rune's being drawn
  */
 /obj/item/traitor_spraycan/proc/draw_rune(mob/living/user, turf/target_turf)
-	user.balloon_alert(user, "drawing outline...")
-	drawing_rune = TRUE
 	if (try_draw_step("drawing outline...", user, target_turf))
 		try_complete_rune(user, new /obj/effect/decal/cleanable/traitor_rune(target_turf))
-	drawing_rune = FALSE
 
 /**
  * Holder for repeated code to do something after a message and a set amount of time.
@@ -159,12 +155,15 @@
  * * target - what they're trying to draw, or the place they are trying to draw on
  */
 /obj/item/traitor_spraycan/proc/try_draw_step(start_output, mob/living/user, atom/target)
+	drawing_rune = TRUE
 	user.balloon_alert(user, "[start_output]")
 	if (!do_after(user, 3 SECONDS, target))
 		user.balloon_alert(user, "interrupted!")
+		drawing_rune = FALSE
 		return FALSE
 
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
+	drawing_rune = FALSE
 	return TRUE
 
 #define RUNE_STAGE_OUTLINE 0
@@ -184,25 +183,23 @@
 		if (RUNE_STAGE_OUTLINE)
 			if (!try_draw_step("... finalising design...", user, rune))
 				return
-			if (rune)
-				rune.set_stage(RUNE_STAGE_COLOURED)
-				try_complete_rune(user, rune)
-			else
+			if (!rune)
 				user.balloon_alert(user, "graffiti was destroyed!")
+				return
+			rune.set_stage(RUNE_STAGE_COLOURED)
+			try_complete_rune(user, rune)
 
 		if (RUNE_STAGE_COLOURED)
 			if (!try_draw_step("... applying final coating...", user, rune))
 				return
-			if (rune)
-				user.balloon_alert(user, "finished!")
-				rune.set_stage(RUNE_STAGE_COMPLETE)
-				expended = TRUE
-				desc = "A suspicious looking spraycan, it's all out of paint."
-				// No turning back.
-				UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
-				SEND_SIGNAL(src, COMSIG_TRAITOR_GRAFFITI_DRAWN, rune)
-			else
+			if (!rune)
 				user.balloon_alert(user, "graffiti was destroyed!")
+				return
+			user.balloon_alert(user, "finished!")
+			rune.set_stage(RUNE_STAGE_COMPLETE)
+			expended = TRUE
+			desc = "A suspicious looking spraycan, it's all out of paint."
+			SEND_SIGNAL(src, COMSIG_TRAITOR_GRAFFITI_DRAWN, rune)
 
 		if (RUNE_STAGE_COMPLETE, RUNE_STAGE_REMOVABLE)
 			user.balloon_alert(user, "there's nothing more to do here.")
