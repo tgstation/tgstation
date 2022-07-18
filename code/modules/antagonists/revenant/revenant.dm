@@ -153,10 +153,10 @@
 
 /mob/living/simple_animal/revenant/get_status_tab_items()
 	. = ..()
-	. += "Current essence: [essence]/[essence_regen_cap]E"
-	. += "Stolen essence: [essence_accumulated]E"
-	. += "Unused stolen essence: [essence_excess]E"
-	. += "Stolen perfect souls: [perfectsouls]"
+	. += "Current Essence: [essence >= essence_regen_cap ? essence : "[essence] / [essence_regen_cap]"]E"
+	. += "Total Essence Stolen: [essence_accumulated]SE"
+	. += "Unused Stolen Essence: [essence_excess]SE"
+	. += "Perfect Souls Stolen: [perfectsouls]"
 
 /mob/living/simple_animal/revenant/update_health_hud()
 	if(hud_used)
