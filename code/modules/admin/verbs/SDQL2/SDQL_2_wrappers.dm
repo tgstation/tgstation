@@ -7,7 +7,7 @@
 	if(target)
 		animate(target, appearance = set_vars, time, loop, easing, flags)
 	else
-		animate(appearance = set_vars, time, easing = easing)
+		animate(appearance = set_vars, time, easing = easing, flags)
 
 /proc/_arccos(A)
 	return arccos(A)
@@ -253,7 +253,7 @@
 
 /proc/_winset(player, control_id, params)
 	winset(player, control_id, params)
-	
+
 /proc/_winget(player, control_id, params)
 	winget(player, control_id, params)
 
