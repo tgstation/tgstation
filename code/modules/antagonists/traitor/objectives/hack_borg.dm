@@ -92,7 +92,7 @@
 			balloon_alert(user, "it's broken!")
 			return
 		if(!R.mind || !R.client)
-			to_chat(user, span_warning("It looks like [R]'s controlling interface doesn't function. Hacking it will make no sense."))
+			balloon_alert(user, "its controlling interface is broken, can't hack!")
 			return
 		if(!R.opened)//Cover is closed
 			if(R.locked)
