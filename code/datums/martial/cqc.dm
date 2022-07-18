@@ -15,26 +15,27 @@
 	display_combos = TRUE
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
-	. = ..()
-	restraining = FALSE
+	if(new_target)
+		restraining = FALSE
+	return ..()
 
 /datum/martial_art/cqc/proc/check_streak(mob/living/A, mob/living/D)
 	if(!can_use(A))
 		return FALSE
 	if(findtext(streak,SLAM_COMBO))
-		reset_streak(A)
+		reset_streak()
 		return Slam(A,D)
 	if(findtext(streak,KICK_COMBO))
-		reset_streak(A)
+		reset_streak()
 		return Kick(A,D)
 	if(findtext(streak,RESTRAIN_COMBO))
-		reset_streak(A)
+		reset_streak()
 		return Restrain(A,D)
 	if(findtext(streak,PRESSURE_COMBO))
-		reset_streak(A)
+		reset_streak()
 		return Pressure(A,D)
 	if(findtext(streak,CONSECUTIVE_COMBO))
-		reset_streak(A)
+		reset_streak()
 		return Consecutive(A,D)
 	return FALSE
 
@@ -47,7 +48,7 @@
 		to_chat(A, span_danger("You slam [D] into the ground!"))
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, TRUE, -1)
 		D.apply_damage(10, BRUTE)
-		D.Paralyze(120)
+		D.Paralyze(12 SECONDS)
 		log_combat(A, D, "slammed (CQC)")
 		return TRUE
 
@@ -70,7 +71,7 @@
 						span_userdanger("You're knocked unconscious by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
 		to_chat(A, span_danger("You kick [D]'s head, knocking [D.p_them()] out!"))
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, TRUE, -1)
-		D.SetSleeping(300)
+		D.SetSleeping(30 SECONDS)
 		D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 		. = TRUE
 
@@ -96,7 +97,7 @@
 						span_userdanger("You're locked into a restraining position by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
 		to_chat(A, span_danger("You lock [D] into a restraining position!"))
 		D.adjustStaminaLoss(20)
-		D.Stun(100)
+		D.Stun(10 SECONDS)
 		restraining = TRUE
 		addtimer(VARSET_CALLBACK(src, restraining, FALSE), 50, TIMER_UNIQUE)
 		return TRUE
@@ -163,7 +164,7 @@
 		to_chat(A, span_danger("You leg sweep [D]!"))
 		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 		D.apply_damage(10, BRUTE)
-		D.Paralyze(60)
+		D.Paralyze(6 SECONDS)
 		log_combat(A, D, "sweeped (CQC)")
 	return TRUE
 
@@ -196,7 +197,7 @@
 		D.visible_message(span_danger("[A] puts [D] into a chokehold!"), \
 						span_userdanger("You're put into a chokehold by [A]!"), span_hear("You hear shuffling and a muffled groan!"), null, A)
 		to_chat(A, span_danger("You put [D] into a chokehold!"))
-		D.SetSleeping(400)
+		D.SetSleeping(40 SECONDS)
 		restraining = FALSE
 		if(A.grab_state < GRAB_NECK && !HAS_TRAIT(A, TRAIT_PACIFISM))
 			A.setGrabState(GRAB_NECK)
