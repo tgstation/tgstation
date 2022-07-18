@@ -471,7 +471,7 @@
 /client/proc/cmd_admin_areatest_station_no_maintenance()
 	set category = "Mapping"
 	set name = "Test Areas (STATION - NO MAINT)"
-	cmd_admin_areatest(TRUE, TRUE)
+	cmd_admin_areatest(on_station = TRUE, filter_maint = TRUE)
 
 /client/proc/cmd_admin_areatest_all()
 	set category = "Mapping"
