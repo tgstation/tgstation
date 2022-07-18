@@ -1,0 +1,4 @@
+author: "VioletN"
+delete-after: True
+changes: 
+  - bugfix: "The supermatter engine can spawn bioscrambler anomalies when delaminating again."

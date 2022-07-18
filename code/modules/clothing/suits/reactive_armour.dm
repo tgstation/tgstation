@@ -354,6 +354,7 @@
 /obj/item/clothing/suit/armor/reactive/hallucinating/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out mental pulses!"))
 	hallucination_pulse(owner)
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -417,11 +418,13 @@
 /obj/item/clothing/suit/armor/reactive/bioscrambling/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], biohazard body scramble released!"))
 	bioscrambler_pulse(owner, FALSE)
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/bioscrambling/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of biohazard material into [owner] from the surrounding environment!"))
 	bioscrambler_pulse(owner, TRUE)
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/bioscrambling/proc/bioscrambler_pulse(mob/living/carbon/human/owner, can_hit_owner = FALSE)

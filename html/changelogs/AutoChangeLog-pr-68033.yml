@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "diagonal movement in space works again"

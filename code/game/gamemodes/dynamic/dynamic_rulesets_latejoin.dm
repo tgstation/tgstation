@@ -18,18 +18,23 @@
 			candidates.Remove(P)
 
 /datum/dynamic_ruleset/latejoin/ready(forced = 0)
-	if (!forced)
-		var/job_check = 0
-		if (enemy_roles.len > 0)
-			for (var/mob/M in GLOB.alive_player_list)
-				if (M.stat == DEAD)
-					continue // Dead players cannot count as opponents
-				if (M.mind && (M.mind.assigned_role.title in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role.title in restricted_roles)))
-					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+	if (forced)
+		return ..()
 
-		var/threat = round(mode.threat_level/10)
-		if (job_check < required_enemies[threat])
-			return FALSE
+	var/job_check = 0
+	if (enemy_roles.len > 0)
+		for (var/mob/M in GLOB.alive_player_list)
+			if (M.stat == DEAD)
+				continue // Dead players cannot count as opponents
+			if (M.mind && (M.mind.assigned_role.title in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role.title in restricted_roles)))
+				job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+
+	var/threat = round(mode.threat_level/10)
+
+	if (job_check < required_enemies[threat])
+		log_game("DYNAMIC: FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
+		return FALSE
+
 	return ..()
 
 /datum/dynamic_ruleset/latejoin/execute()

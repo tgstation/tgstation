@@ -3,9 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/obj/machinery/shower{
-	pixel_y = 12
-	},
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/powered/snow_biodome)
 "ac" = (
@@ -37,9 +35,7 @@
 /turf/open/floor/circuit,
 /area/ruin/powered/snow_biodome)
 "ai" = (
-/obj/structure/sink{
-	pixel_y = 26
-	},
+/obj/structure/sink/directional/south,
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/powered/snow_biodome)
