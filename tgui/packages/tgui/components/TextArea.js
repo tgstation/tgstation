@@ -168,6 +168,7 @@ export class TextArea extends Component {
       value,
       maxLength,
       placeholder,
+      scrollbar,
       ...boxProps
     } = this.props;
     // Box props
@@ -178,7 +179,10 @@ export class TextArea extends Component {
         {...rest}>
         <textarea
           ref={this.textareaRef}
-          className="TextArea__textarea"
+          className={classes([
+            'TextArea__textarea',
+            scrollbar && 'TextArea__textarea--scrollable',
+          ])}
           placeholder={placeholder}
           onChange={this.handleOnChange}
           onKeyDown={this.handleKeyDown}

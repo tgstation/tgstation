@@ -10,6 +10,7 @@ import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'inferno';
 import { clamp } from 'common/math';
+import { logger } from '../logging';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
@@ -96,9 +97,12 @@ const canStamp = (heldItemDetails?: WritingImplement): boolean => {
 const createPreview = (
   inputList: PaperInput[] | undefined,
   stampList: StampInput[] | undefined,
-  currentTextInput: PaperInput | undefined,
+  textAreaText: string | null,
   defaultFont: string,
-  defaultColor: string
+  defaultColor: string,
+  heldFont: string | undefined,
+  heldColor: string | undefined,
+  heldBold: boolean | undefined
 ) => {
   let output = '';
 
@@ -115,15 +119,13 @@ const createPreview = (
     output += formatAndProcessRawText(rawText, fontFace, fontColor, fontBold);
   });
 
-  const textAreaInput = currentTextInput?.raw_text;
-
-  if (textAreaInput?.length) {
-    const fontColor = currentTextInput?.color || defaultColor;
-    const fontFace = currentTextInput?.font || defaultFont;
-    const fontBold = currentTextInput?.bold || false;
+  if (textAreaText?.length) {
+    const fontColor = heldColor || defaultColor;
+    const fontFace = heldFont || defaultFont;
+    const fontBold = heldBold || false;
 
     output += formatAndProcessRawText(
-      textAreaInput,
+      textAreaText,
       fontFace,
       fontColor,
       fontBold
@@ -399,15 +401,10 @@ export class PrimaryView extends Component {
     const useColor = held_item_details?.color || default_pen_color;
     const useBold = held_item_details?.use_bold || false;
 
-    const [textAreaContents, setTextAreaContents] = useLocalState(
+    const [textAreaText, setTextAreaText] = useLocalState(
       this.context,
-      'textAreaContents',
-      {
-        raw_text: '',
-        font: default_pen_font,
-        color: default_pen_color,
-        bold: false,
-      }
+      'textAreaText',
+      ''
     );
 
     const interactMode =
@@ -424,24 +421,18 @@ export class PrimaryView extends Component {
             />
           </Flex.Item>
           {interactMode === InteractionType.writing && (
-            <Flex.Item
-              shrink={1}
-              height={TEXTAREA_INPUT_HEIGHT + 'px'}
-              style={{ 'z-index': 2 }}>
+            <Flex.Item shrink={1} height={TEXTAREA_INPUT_HEIGHT + 'px'}>
               <TextArea
-                value={textAreaContents.raw_text}
+                scrollbar
+                className="TextArea--onlytopborder"
+                value={textAreaText}
                 textColor={useColor}
                 fontFamily={useFont}
                 bold={useBold}
                 height={'100%'}
                 backgroundColor={paper_color}
                 onInput={(e, text) => {
-                  setTextAreaContents({
-                    raw_text: text,
-                    font: useFont,
-                    color: useColor,
-                    bold: useBold,
-                  });
+                  setTextAreaText(text);
                   if (this.scrollableRef.current) {
                     let thisDistFromBottom =
                       this.scrollableRef.current.scrollHeight -
@@ -466,23 +457,25 @@ export const PreviewView = (props, context) => {
     raw_stamp_input,
     default_pen_font,
     default_pen_color,
-    held_item_details,
     paper_color,
+    held_item_details,
   } = data;
 
-  const [textAreaContents] = useLocalState(context, 'textAreaContents', {
-    raw_text: '',
-    font: default_pen_font,
-    color: default_pen_color,
-    bold: false,
-  });
+  const [textAreaText] = useLocalState(context, 'textAreaText', '');
+
+  logger.log(held_item_details);
 
   const parsedAndSanitisedHTML = createPreview(
     raw_text_input,
     raw_stamp_input,
-    textAreaContents,
+    held_item_details?.interaction_mode === InteractionType.writing
+      ? textAreaText
+      : null,
     default_pen_font,
-    default_pen_color
+    default_pen_color,
+    held_item_details?.font,
+    held_item_details?.color,
+    held_item_details?.use_bold
   );
 
   const textHTML = {
