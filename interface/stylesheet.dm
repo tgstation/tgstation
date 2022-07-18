@@ -42,7 +42,7 @@ em						{font-style: normal;	font-weight: bold;}
 .binarysay a:active, .binarysay a:visited {color: #88ff88;}
 .radio					{color: #008000;}
 .sciradio				{color: #993399;}
-.comradio				{color: #948f02;}
+.comradio				{color: #204090;}
 .secradio				{color: #a30000;}
 .medradio				{color: #337296;}
 .engradio				{color: #fb5613;}

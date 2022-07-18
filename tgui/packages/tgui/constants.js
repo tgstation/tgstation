@@ -109,7 +109,7 @@ export const RADIO_CHANNELS = [
   {
     name: 'Command',
     freq: 1353,
-    color: '#fcdf03',
+    color: '#5f5cff',
   },
   {
     name: 'Medical',
