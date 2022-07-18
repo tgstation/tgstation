@@ -940,7 +940,7 @@
 	// This is directly tied into calculations derived via a config entered variable, as well as the amount of players in the shift.
 	// Thus, it makes it possible to judge if departmental security officers should have more access to their department on a lower population shift.
 	var/datum/job/J = SSjob.GetJob(JOB_SECURITY_OFFICER)
-	var/minimal_security_officers = 5 // We do not spawn in any more lockers if there are 5 or less security officers, so let's start balancing here.
+	var/minimal_security_officers = 3 // We do not spawn in any more lockers if there are 5 or less security officers, so let's keep it lower than that number.
 	if((J.spawn_positions - minimal_security_officers) <= 0)
 		access |= scaling_access
 
@@ -983,8 +983,8 @@
 	scaling_access = list(
 		ACCESS_PHARMACY,
 		ACCESS_PLUMBING,
-		ACCESS_VIROLOGY,
 		ACCESS_SURGERY,
+		ACCESS_VIROLOGY,
 	)
 
 /datum/id_trim/job/security_officer/science
@@ -992,14 +992,14 @@
 	subdepartment_color = COLOR_SCIENCE_PINK
 	department_access = list(
 		ACCESS_RESEARCH,
-		ACCESS_ROBOTICS,
 		ACCESS_SCIENCE,
 	)
 	scaling_access = list(
 		ACCESS_AUX_BASE,
 		ACCESS_GENETICS,
-		ACCESS_ORDNANCE,
 		ACCESS_ORDNANCE_STORAGE,
+		ACCESS_ORDNANCE,
+		ACCESS_ROBOTICS,
 		ACCESS_XENOBIOLOGY,
 	)
 
