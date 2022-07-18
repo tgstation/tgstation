@@ -101,7 +101,7 @@
 				if(R.shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
 					to_chat(user, span_boldwarning("[R] seems to be controlled remotely! Hacking the interface may not work as expected."))
 			else
-				to_chat(user, span_warning("The cover is already unlocked!"))
+				balloon_alert(user, "already unlocked!")
 			return
 		if(R.wiresexposed)
 			to_chat(user, span_warning("You must unexpose the wires first!"))
