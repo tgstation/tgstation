@@ -184,7 +184,7 @@
 	SIGNAL_HANDLER
 
 	// Our light is gone already - Probably destroyed by whatever destroyed our parent. Just remove it.
-	if(QDELETED(light))
+	if(QDELETED(light) || !is_light_removable)
 		remove_light()
 		return
 
