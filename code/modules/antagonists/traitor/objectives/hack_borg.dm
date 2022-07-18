@@ -122,7 +122,7 @@
 		used = TRUE
 		R.emag_cooldown = world.time + 150
 		SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_BORG_HACKED)
-		R.SetEmagged(1)
+		R.SetEmagged(TRUE)
 		R.SetStun(60)
 		R.lawupdate = FALSE
 		R.set_connected_ai(null)
