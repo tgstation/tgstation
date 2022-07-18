@@ -1,13 +1,4 @@
-/obj/item/clothing/neck/heretic_focus
-	name = "Amber Focus"
-	desc = "A amber focusing glass that provides a link to the world beyond. The necklace seems to twitch, but only when you look at it from the corner of your eye."
-	icon_state = "eldritch_necklace"
-	w_class = WEIGHT_CLASS_SMALL
-	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/heretic_focus/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/heretic_focus)
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"
