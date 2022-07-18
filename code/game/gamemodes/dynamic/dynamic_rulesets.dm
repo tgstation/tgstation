@@ -104,10 +104,18 @@
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 
 	if(minimum_players > population)
+		log_game("DYNAMIC: FAIL: [src] failed acceptable: minimum_players ([minimum_players]) > population ([population])")
 		return FALSE
+
 	if(maximum_players > 0 && population > maximum_players)
+		log_game("DYNAMIC: FAIL: [src] failed acceptable: maximum_players ([maximum_players]) < population ([population])")
 		return FALSE
-	return (threat_level >= requirements[indice_pop])
+
+	if (threat_level < requirements[indice_pop])
+		log_game("DYNAMIC: FAIL: [src] failed acceptable: threat_level ([threat_level]) < requirement ([requirements[indice_pop]])")
+		return FALSE
+
+	return TRUE
 
 /// When picking rulesets, if dynamic picks the same one multiple times, it will "scale up".
 /// However, doing this blindly would result in lowpop rounds (think under 10 people) where over 80% of the crew is antags!
@@ -158,9 +166,7 @@
 /// Remember that on roundstart no one knows what their job is at this point.
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
 /datum/dynamic_ruleset/proc/ready(forced = 0)
-	if (required_candidates > candidates.len)
-		return FALSE
-	return TRUE
+	return check_candidates()
 
 /// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
 /// This one only handles refunding the threat, override in ruleset to clean up the rest.
@@ -177,6 +183,14 @@
 			if(istype(DR, type))
 				weight = max(weight-repeatable_weight_decrease,1)
 	return weight
+
+/// Checks if there are enough candidates to run, and logs otherwise
+/datum/dynamic_ruleset/proc/check_candidates()
+	if (required_candidates <= candidates.len)
+		return TRUE
+
+	log_game("DYNAMIC: FAIL: [src] does not have enough candidates ([required_candidates] needed, [candidates.len] found)")
+	return FALSE
 
 /// Here you can remove candidates that do not meet your requirements.
 /// This means if their job is not correct or they have disconnected you can remove them from candidates here.
