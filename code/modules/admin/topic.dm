@@ -160,9 +160,7 @@
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
 
 	else if(href_list["delay_round_end"])
-		if(!check_rights(R_SERVER))
-			return
-
+		// Permissions are checked in delay_round_end
 		delay_round_end()
 
 	else if(href_list["undelay_round_end"])
