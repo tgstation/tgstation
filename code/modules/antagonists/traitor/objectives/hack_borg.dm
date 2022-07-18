@@ -85,7 +85,7 @@
 		return
 	if(iscyborg(target))
 		if(used)
-			to_chat(user, span_warning("The [src] is already used!"))
+			balloon_alert(user, "already used!")
 			return
 		var/mob/living/silicon/robot/R = target
 		if(R.stat == DEAD)
