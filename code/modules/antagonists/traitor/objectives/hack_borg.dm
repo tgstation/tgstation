@@ -123,7 +123,7 @@
 		R.emag_cooldown = world.time + 15 SECONDS
 		SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_BORG_HACKED)
 		R.SetEmagged(TRUE)
-		R.SetStun(60)
+		R.SetStun(6 SECONDS)
 		R.lawupdate = FALSE
 		R.set_connected_ai(null)
 		message_admins("[ADMIN_LOOKUPFLW(R)] hacked cyborg [ADMIN_LOOKUPFLW(R)].")
