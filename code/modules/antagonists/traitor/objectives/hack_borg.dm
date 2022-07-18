@@ -96,7 +96,7 @@
 			return
 		if(!R.opened)//Cover is closed
 			if(R.locked)
-				to_chat(user, span_notice("You hack the cover lock."))
+				balloon_alert(user, "hacked cover lock")
 				R.locked = FALSE
 				if(R.shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
 					to_chat(user, span_boldwarning("[R] seems to be controlled remotely! Hacking the interface may not work as expected."))
