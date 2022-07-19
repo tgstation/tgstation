@@ -312,9 +312,7 @@
 	},
 /area/template_noop)
 "qV" = (
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/machinery/shower/directional/east,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -516,9 +514,7 @@
 	},
 /area/template_noop)
 "Ck" = (
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/machinery/shower/directional/east,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},

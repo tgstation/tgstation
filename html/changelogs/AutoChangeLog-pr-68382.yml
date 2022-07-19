@@ -1,0 +1,5 @@
+author: "Whoneedspacee"
+delete-after: True
+changes: 
+  - bugfix: "Fixed megafauna not having melee cooldown times after ability usage."
+  - admin: "Mob ability verbs expanded greatly, allowing for creation of custom ability sequences and allowing easy removal of already added actions."

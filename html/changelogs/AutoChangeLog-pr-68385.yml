@@ -1,6 +1,0 @@
-author: "Cheshify"
-delete-after: True
-changes: 
-  - rscdel: "Removed the ability to have impure or failed chems"
-  - balance: "A number of impurities in chemicals are now inverses"
-  - bugfix: "Mannitol now has a working inverse"

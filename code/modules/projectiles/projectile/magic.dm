@@ -466,7 +466,7 @@
 		return FALSE
 	return ..()
 
-/obj/projectile/magic/aoe/Moved(atom/OldLoc, Dir)
+/obj/projectile/magic/aoe/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(trail)
 		create_trail()

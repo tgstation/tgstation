@@ -1379,11 +1379,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -1401,10 +1397,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},

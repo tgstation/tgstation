@@ -34,7 +34,7 @@
 
 /obj/machinery/door/puzzle
 	name = "locked door"
-	desc = "This door only opens under certain conditions. It looks virtually indestructable."
+	desc = "This door only opens under certain conditions. It looks virtually indestructible."
 	icon = 'icons/obj/doors/puzzledoor/default.dmi'
 	icon_state = "door_closed"
 	explosion_block = 3
@@ -75,7 +75,7 @@
 	return TRUE
 
 /obj/machinery/door/puzzle/keycard
-	desc = "This door only opens when a keycard is swiped. It looks virtually indestructable."
+	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
 
 /obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -97,7 +97,7 @@
 	puzzle_id = "blue"
 
 /obj/machinery/door/puzzle/light
-	desc = "This door only opens when a linked mechanism is powered. It looks virtually indestructable."
+	desc = "This door only opens when a linked mechanism is powered. It looks virtually indestructible."
 
 /obj/machinery/door/puzzle/light/Initialize(mapload)
 	. = ..()
@@ -168,7 +168,7 @@
 //Light puzzle
 /obj/structure/light_puzzle
 	name = "light mechanism"
-	desc = "It's a mechanism that seems to power something when all the lights are lit up. It looks virtually indestructable."
+	desc = "It's a mechanism that seems to power something when all the lights are lit up. It looks virtually indestructible."
 	icon = 'icons/obj/puzzle_small.dmi'
 	icon_state = "light_puzzle"
 	anchored = TRUE

@@ -196,7 +196,7 @@
 "aQ" = (
 /obj/structure/closet/crate/radiation,
 /obj/item/clothing/head/radiation,
-/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/utility/radiation,
 /obj/item/geiger_counter,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)

@@ -391,6 +391,8 @@ There are several things that need to be remembered:
 
 	apply_overlay(SHOES_LAYER)
 
+	update_body_parts()
+
 
 /mob/living/carbon/human/update_inv_s_store()
 	remove_overlay(SUIT_STORE_LAYER)

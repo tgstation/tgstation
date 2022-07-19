@@ -1,5 +1,5 @@
 /// How many tiles around the target the shooter can roam without losing their shot
-#define GUNPOINT_SHOOTER_STRAY_RANGE 2
+#define GUNPOINT_SHOOTER_STRAY_RANGE 3
 /// How long it takes from the gunpoint is initiated to reach stage 2
 #define GUNPOINT_DELAY_STAGE_2 2.5 SECONDS
 /// How long it takes from stage 2 starting to move up to stage 3

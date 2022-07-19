@@ -340,6 +340,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			to_chat(user, span_warning("\The [resolve_parent] cannot hold \the [to_insert]!"))
 		return FALSE
 
+	if(HAS_TRAIT(to_insert, TRAIT_NODROP))
+		if(messages)
+			to_chat(user, span_warning("\The [to_insert] is stuck on your hand!"))
+		return FALSE
+
 	var/datum/storage/biggerfish = resolve_parent.loc.atom_storage // this is valid if the container our resolve_parent is being held in is a storage item
 
 	if(biggerfish && biggerfish.max_specific_storage < max_specific_storage)

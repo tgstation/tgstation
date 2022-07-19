@@ -24,7 +24,7 @@
 /datum/outfit/waldo
 	name = "Waldo"
 	uniform = /obj/item/clothing/under/pants/jeans
-	suit = /obj/item/clothing/suit/striped_sweater
+	suit = /obj/item/clothing/suit/costume/striped_sweater
 	head = /obj/item/clothing/head/beanie/waldo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	ears = /obj/item/radio/headset
