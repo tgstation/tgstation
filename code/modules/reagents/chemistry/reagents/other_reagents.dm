@@ -2230,6 +2230,28 @@
 	exposed_human.facial_hairstyle = "Beard (Very Long)"
 	exposed_human.update_hair()
 
+/datum/reagent/concentrated_barbers_aid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	. = ..()
+	if(current_cycle > 20 / creation_purity)
+		if(!ishuman(M))
+			return
+		var/mob/living/carbon/human/human_mob = M
+		if(creation_purity == 1 && human_mob.has_quirk(/datum/quirk/item_quirk/bald))
+			human_mob.remove_quirk(/datum/quirk/item_quirk/bald)
+		var/datum/species/species_datum = human_mob.dna?.species
+		if(!istype(species_datum))
+			return
+		if(species_datum.species_traits.Find(HAIR))
+			return
+		species_datum.species_traits |= HAIR
+		var/message
+		if(HAS_TRAIT(M, TRAIT_BALD))
+			message = span_warning("You feel your scalp mutate, but you are still hopelessly bald.")
+		else
+			message = span_notice("Your scalp mutates, a full head of hair sprouting from it.")
+		to_chat(M, message)
+		M.update_hair()
+
 /datum/reagent/baldium
 	name = "Baldium"
 	description = "A major cause of hair loss across the world."
