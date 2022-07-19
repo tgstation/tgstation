@@ -36331,9 +36331,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel)
 "jfB" = (
@@ -49737,13 +49734,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
-"mrq" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/iron/grimy,
-/area/station/service/chapel)
 "mrt" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -87618,12 +87608,6 @@
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"vUZ" = (
-/obj/structure/sign/warning/biohazard/directional/south,
-/turf/open/floor/iron/chapel{
-	dir = 5
-	},
-/area/station/service/chapel)
 "vVa" = (
 /turf/open/floor/iron/grimy,
 /area/station/service/library/abandoned)
@@ -94002,6 +93986,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint)
+"xvs" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/grimy,
+/area/station/medical/medbay)
 "xvy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -143447,8 +143438,8 @@ pKz
 mrt
 mrt
 jfA
-mrq
-vUZ
+mRV
+uan
 kvt
 sTg
 nHr
@@ -144980,7 +144971,7 @@ jOr
 fUW
 fwK
 hou
-hou
+xvs
 ftO
 cpv
 aAP
