@@ -77,7 +77,8 @@
 			visible_message(span_notice("[user] pets [src]."), \
 							span_notice("[user] pets you."), null, null, user)
 			to_chat(user, span_notice("You pet [src]."))
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT_RND, "pet_borg", /datum/mood_event/pet_borg)
+			if (user.mind.assigned_role in list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST))
+				user.mob_mood.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
 
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
