@@ -4,17 +4,12 @@ import { Component } from 'inferno';
 import { Window } from '../../layouts';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';
-import {
-  ABSOLUTE_Y_OFFSET,
-  MOUSE_BUTTON_LEFT,
-  TIME_UNTIL_PORT_RELEASE_WORKS,
-} from './constants';
+import { ABSOLUTE_Y_OFFSET, MOUSE_BUTTON_LEFT, TIME_UNTIL_PORT_RELEASE_WORKS } from './constants';
 import { Connections } from './Connections';
 import { ObjectComponent } from './ObjectComponent';
 import { DisplayComponent } from './DisplayComponent';
 import { VariableMenu } from './VariableMenu';
 import { ComponentMenu } from './ComponentMenu';
-import { logger } from '../../logging';
 
 export class IntegratedCircuit extends Component {
   constructor() {
