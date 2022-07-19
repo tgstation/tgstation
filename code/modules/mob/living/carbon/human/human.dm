@@ -40,7 +40,6 @@
 /mob/living/carbon/human/ComponentInitialize()
 	. = ..()
 	if(!CONFIG_GET(flag/disable_human_mood))
-		//AddComponent(/datum/component/mood)
 		mob_mood = new /datum/mood(src)
 
 /mob/living/carbon/human/Destroy()

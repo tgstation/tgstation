@@ -59,7 +59,7 @@
 	var/mob/living/shooter = parent
 	shooter.remove_status_effect(/datum/status_effect/holdup)
 	target.remove_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
-	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
+	target.clear_mood_event("gunpoint")
 	return ..()
 
 /datum/component/gunpoint/RegisterWithParent()
@@ -126,7 +126,7 @@
 	var/mob/living/shooter = parent
 	shooter.remove_status_effect(/datum/status_effect/holdup) // try doing these before the trigger gets pulled since the target (or shooter even) may not exist after pulling the trigger, dig?
 	target.remove_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
-	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
+	target.clear_mood_event("gunpoint")
 
 	if(point_of_no_return)
 		return

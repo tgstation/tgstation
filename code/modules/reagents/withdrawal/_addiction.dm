@@ -49,7 +49,7 @@
 	return TRUE
 
 /datum/addiction/proc/lose_addiction(datum/mind/victim_mind)
-	SEND_SIGNAL(victim_mind.current, COMSIG_CLEAR_MOOD_EVENT, "[type]_addiction")
+	victim_mind.current.clear_mood_event("[type]_addiction")
 	SEND_SIGNAL(victim_mind.current, COMSIG_CARBON_LOSE_ADDICTION, victim_mind)
 	to_chat(victim_mind.current, span_notice("You feel like you've gotten over your need for drugs."))
 	end_withdrawal(victim_mind.current)
@@ -118,7 +118,7 @@
 
 /datum/addiction/proc/end_withdrawal(mob/living/carbon/affected_carbon)
 	LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
-	SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "[type]_addiction")
+	affected_carbon.clear_mood_event("[type]_addiction")
 
 /// Called when addiction is in stage 1 every process
 /datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)

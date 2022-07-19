@@ -231,7 +231,7 @@
 		qdel(firelight_ref)
 
 	on_fire = FALSE
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
+	owner.clear_mood_event("on_fire")
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
 	cache_stacks()
 	update_overlay()

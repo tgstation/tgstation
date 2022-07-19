@@ -62,7 +62,7 @@
 		if(failed_last_breath)
 			src.add_mood_event("suffocation", /datum/mood_event/suffocation)
 		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
+			src.clear_mood_event("suffocation")
 	else
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
@@ -219,7 +219,7 @@
 		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+			src.clear_mood_event("chemical_euphoria")
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
 				Sleeping(max(AmountSleeping() + 40, 200))
@@ -229,10 +229,10 @@
 				emote(pick("giggle","laugh"))
 			src.add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+			src.clear_mood_event("chemical_euphoria")
 			clear_alert(ALERT_TOO_MUCH_N2O)
 	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+		src.clear_mood_event("chemical_euphoria")
 		clear_alert(ALERT_TOO_MUCH_N2O)
 
 	//BZ (Facepunch port of their Agent B)
@@ -269,7 +269,7 @@
 		switch(miasma_partialpressure)
 			if(0.25 to 5)
 				// At lower pp, give out a little warning
-				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+				src.clear_mood_event("smell")
 				if(prob(5))
 					to_chat(src, span_notice("There is an unpleasant smell in the air."))
 			if(5 to 20)
@@ -290,11 +290,11 @@
 					src.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 					vomit()
 			else
-				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+				src.clear_mood_event("smell")
 
 	//Clear all moods if no miasma at all
 	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+		src.clear_mood_event("smell")
 
 	breath.garbage_collect()
 

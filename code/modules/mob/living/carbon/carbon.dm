@@ -834,7 +834,7 @@
 		src.add_mood_event("handcuffed", /datum/mood_event/handcuffed)
 	else
 		clear_alert(ALERT_HANDCUFFED)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
+		src.clear_mood_event("handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
@@ -1137,10 +1137,8 @@
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
-	if(mood)
-		if(mood.sanity < SANITY_UNSTABLE)
-			return TRUE
+	if(mob_mood.sanity < SANITY_UNSTABLE)
+		return TRUE
 
 /mob/living/carbon/wash(clean_types)
 	. = ..()

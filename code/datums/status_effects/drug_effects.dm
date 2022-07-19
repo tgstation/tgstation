@@ -94,7 +94,7 @@
 	human_owner.update_body()
 	REMOVE_TRAIT(human_owner, TRAIT_BLOODSHOT_EYES, type)
 	REMOVE_TRAIT(human_owner, TRAIT_CLUMSY, type)
-	SEND_SIGNAL(human_owner, COMSIG_CLEAR_MOOD_EVENT, "stoned")
+	human_owner.clear_mood_event("stoned")
 	human_owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 /atom/movable/screen/alert/status_effect/stoned

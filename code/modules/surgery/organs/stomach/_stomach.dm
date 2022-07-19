@@ -139,8 +139,7 @@
 	if (human.nutrition > 0 && human.stat != DEAD)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
-		var/datum/component/mood/mood = human.GetComponent(/datum/component/mood)
-		if(mood && mood.sanity > SANITY_DISTURBED)
+		if(human.mob_mood && human.mob_mood.sanity > SANITY_DISTURBED)
 			hunger_rate *= max(1 - 0.002 * mood.sanity, 0.5) //0.85 to 0.75
 		// Whether we cap off our satiety or move it towards 0
 		if(human.satiety > MAX_SATIETY)
@@ -243,7 +242,7 @@
 	switch(disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
 			disgusted.clear_alert(ALERT_DISGUST)
-			SEND_SIGNAL(disgusted, COMSIG_CLEAR_MOOD_EVENT, "disgust")
+			disgusted.clear_mood_event("disgust")
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/gross)
 			disgusted.add_mood_event("disgust", /datum/mood_event/gross)
@@ -258,7 +257,7 @@
 	if(ishuman(stomach_owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.clear_alert(ALERT_DISGUST)
-		SEND_SIGNAL(human_owner, COMSIG_CLEAR_MOOD_EVENT, "disgust")
+		human_owner.clear_mood_event("disgust")
 		human_owner.clear_alert(ALERT_NUTRITION)
 
 	return ..()

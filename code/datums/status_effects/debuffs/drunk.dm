@@ -130,7 +130,7 @@
 
 /// Clears any side effects we set due to being drunk.
 /datum/status_effect/inebriated/drunk/proc/clear_effects()
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, id)
+	owner.clear_mood_event(id)
 
 	if(owner.sound_environment_override == SOUND_ENVIRONMENT_PSYCHOTIC)
 		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE

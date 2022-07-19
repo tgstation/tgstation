@@ -171,9 +171,8 @@
 		var/healing = HEALING_SLEEP_DEFAULT
 
 		// having high spirits helps us recover
-		var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
-		if(mood != null)
-			switch(mood.sanity_level)
+		if(owner.mob_mood)
+			switch(owner.mob_mood.sanity_level)
 				if(SANITY_LEVEL_GREAT)
 					healing = 0.2
 				if(SANITY_LEVEL_NEUTRAL)
@@ -750,7 +749,7 @@
 /datum/status_effect/gonbola_pacify/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, type)
+	owner.clear_mood_event(type)
 	return ..()
 
 /datum/status_effect/trance

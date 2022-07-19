@@ -135,9 +135,8 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
-	if(mood)
-		switch(mood.shown_mood)
+	if(mob_mood)
+		switch(mob_mood.shown_mood)
 			if(-INFINITY to MOOD_LEVEL_SAD4)
 				. += "[t_He] look[p_s()] depressed."
 			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)

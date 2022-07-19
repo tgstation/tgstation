@@ -6,7 +6,7 @@
 
 /datum/reagent/drug/on_mob_end_metabolize(mob/living/M)
 	if(trippy)
-		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[type]_high")
+		M.clear_mood_event("[type]_high")
 
 /datum/reagent/drug/space_drugs
 	name = "Space Drugs"
@@ -275,7 +275,7 @@
 
 /datum/reagent/drug/happiness/on_mob_delete(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_FEARLESS, type)
-	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "happiness_drug")
+	L.clear_mood_event("happiness_drug")
 	..()
 
 /datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -494,7 +494,7 @@
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_end_metabolize(mob/living/psychonaut)
 	. = ..()
-	SEND_SIGNAL(psychonaut, COMSIG_CLEAR_MOOD_EVENT, "tripping")
+	psychonaut.clear_mood_event("tripping")
 	if(!psychonaut.hud_used)
 		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
@@ -552,7 +552,7 @@
 /datum/reagent/drug/blastoff/on_mob_end_metabolize(mob/living/dancer)
 	. = ..()
 
-	SEND_SIGNAL(dancer, COMSIG_CLEAR_MOOD_EVENT, "vibing")
+	dancer.clear_mood_event("vibing")
 	UnregisterSignal(dancer, COMSIG_MOB_EMOTED("flip"))
 	UnregisterSignal(dancer, COMSIG_MOB_EMOTED("spin"))
 

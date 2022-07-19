@@ -242,7 +242,7 @@
 	M.regenerate_icons()
 	M.pixel_y -= -GUILLOTINE_HEAD_OFFSET // Move their body back
 	M.layer -= GUILLOTINE_LAYER_DIFF
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "dying")
+	M.clear_mood_event("dying")
 	..()
 
 /obj/structure/guillotine/can_be_unfasten_wrench(mob/user, silent)

@@ -300,8 +300,7 @@
 					msg += "[t_He] seem[p_s()] winded.\n"
 				if (getToxLoss() >= 10)
 					msg += "[t_He] seem[p_s()] sickly.\n"
-				var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
-				if(mood.sanity <= SANITY_DISTURBED)
+				if(mob_mood.sanity <= SANITY_DISTURBED)
 					msg += "[t_He] seem[p_s()] distressed.\n"
 					user.add_mood_event("empath", /datum/mood_event/sad_empath, src)
 				if (is_blind())

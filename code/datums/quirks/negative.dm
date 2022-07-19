@@ -27,7 +27,7 @@
 	var/obj/item/storage/equipped_backpack = backpack?.resolve()
 	if(equipped_backpack)
 		UnregisterSignal(equipped_backpack, COMSIG_ITEM_POST_UNEQUIP)
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "back_pain")
+		quirk_holder.clear_mood_event("back_pain")
 
 /// Signal handler for when the quirk_holder equips an item. If it's a backpack, adds the back_pain mood event.
 /datum/quirk/badback/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
@@ -46,7 +46,7 @@
 	SIGNAL_HANDLER
 
 	UnregisterSignal(source, COMSIG_ITEM_POST_UNEQUIP)
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "back_pain")
+	quirk_holder.clear_mood_event("back_pain")
 	backpack = null
 	RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
@@ -214,15 +214,15 @@
 	var/obj/family_heirloom = heirloom?.resolve()
 
 	if(family_heirloom && (family_heirloom in quirk_holder.get_all_contents()))
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
+		quirk_holder.clear_mood_event("family_heirloom_missing")
 		quirk_holder.add_mood_event("family_heirloom", /datum/mood_event/family_heirloom)
 	else
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
+		quirk_holder.clear_mood_event("family_heirloom")
 		quirk_holder.add_mood_event("family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
 
 /datum/quirk/item_quirk/family_heirloom/remove()
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
+	quirk_holder.clear_mood_event("family_heirloom_missing")
+	quirk_holder.clear_mood_event("family_heirloom")
 
 /datum/quirk/frail
 	name = "Frail"
@@ -257,14 +257,12 @@
 	hardcore_value = 3
 
 /datum/quirk/hypersensitive/add()
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
-	if(mood)
-		mood.mood_modifier += 0.5
+	if (quirk_holder.mob_mood)
+		quirk_holder.mob_mood.mood_modifier += 0.5
 
 /datum/quirk/hypersensitive/remove()
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
-	if(mood)
-		mood.mood_modifier -= 0.5
+	if (quirk_holder.mob_mood)
+		quirk_holder.mob_mood.mood_modifier -= 0.5
 
 /datum/quirk/light_drinker
 	name = "Light Drinker"
@@ -321,7 +319,7 @@
 
 /datum/quirk/nyctophobia/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+	quirk_holder.clear_mood_event("nyctophobia")
 
 /// Called when the quirk holder moves. Updates the quirk holder's mood.
 /datum/quirk/nyctophobia/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
@@ -343,7 +341,7 @@
 	var/lums = holder_turf.get_lumcount()
 
 	if(lums > LIGHTING_TILE_IS_DARK)
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+		quirk_holder.clear_mood_event("nyctophobia")
 		return
 
 	if(quirk_holder.m_intent == MOVE_INTENT_RUN)
@@ -519,10 +517,9 @@
 	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
 
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
 	var/moodmod
-	if(mood)
-		moodmod = (1+0.02*(50-(max(50, mood.mood_level*(7-mood.sanity_level))))) //low sanity levels are better, they max at 6
+	if(quirk_holder.mob_mood)
+		moodmod = (1+0.02*(50-(max(50, quirk_holder.mob_mood.mood_level*(7-quirk_holder.mob_mood.sanity_level))))) //low sanity levels are better, they max at 6
 	else
 		moodmod = (1+0.02*(50-(max(50, 0.1*quirk_holder.nutrition))))
 	var/nearby_people = 0
@@ -736,7 +733,7 @@
 	if (istype(mask_item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/storage/fancy/cigarettes/cigarettes = drug_container_type
 		if(istype(mask_item, initial(cigarettes.spawn_type)))
-			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
+			quirk_holder.clear_mood_event("wrong_cigs")
 			return
 		quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
 
@@ -839,8 +836,7 @@
 		return
 
 	new /obj/effect/temp_visual/annoyed(quirk_holder.loc)
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
-	if(mood.sanity <= SANITY_NEUTRAL)
+	if(quirk_holder.mob_mood.sanity <= SANITY_NEUTRAL)
 		quirk_holder.add_mood_event("bad_touch", /datum/mood_event/very_bad_touch)
 	else
 		quirk_holder.add_mood_event("bad_touch", /datum/mood_event/bad_touch)
@@ -855,7 +851,7 @@
 	processing_quirk = TRUE
 
 /datum/quirk/claustrophobia/remove()
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia")
+	quirk_holder.clear_mood_event("claustrophobia")
 
 /datum/quirk/claustrophobia/process(delta_time)
 	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
@@ -869,7 +865,7 @@
 			break
 
 	if(!nick_spotted && isturf(quirk_holder.loc))
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia", /datum/mood_event/claustrophobia)
+		quirk_holder.clear_mood_event("claustrophobia")
 		return
 
 	quirk_holder.add_mood_event("claustrophobia", /datum/mood_event/claustrophobia)

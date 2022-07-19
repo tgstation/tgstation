@@ -105,7 +105,7 @@
 	var/mob/living/carbon/victim = parent
 	if(victim && !victim.has_embedded_objects())
 		victim.clear_alert(ALERT_EMBEDDED_OBJECT)
-		SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+		victim.clear_mood_event("embedded")
 	if(weapon)
 		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	weapon = null

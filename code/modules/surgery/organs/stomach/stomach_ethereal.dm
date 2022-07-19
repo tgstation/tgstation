@@ -23,7 +23,7 @@
 	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
 	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
 
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "charge")
+	owner.clear_mood_event("charge")
 	carbon.clear_alert(ALERT_ETHEREAL_CHARGE)
 	carbon.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 
@@ -74,7 +74,7 @@
 			if(DT_PROB(5, delta_time)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(carbon)
 		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "charge")
+			owner.clear_mood_event("charge")
 			carbon.clear_alert(ALERT_ETHEREAL_CHARGE)
 			carbon.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 

@@ -19,7 +19,7 @@
 /datum/status_effect/drugginess/on_remove()
 	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
 
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, id)
+	owner.clear_mood_event(id)
 	owner.clear_fullscreen(id)
 	if(owner.sound_environment_override == SOUND_ENVIRONMENT_DRUGGED)
 		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE

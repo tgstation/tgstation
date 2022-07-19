@@ -421,7 +421,7 @@
 			switch(miasma_pp)
 				if(0.25 to 5)
 					// At lower pp, give out a little warning
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+					owner.clear_mood_event("smell")
 					if(prob(5))
 						to_chat(owner, span_notice("There is an unpleasant smell in the air."))
 				if(5 to 15)
@@ -442,7 +442,7 @@
 						owner.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
 				else
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+					owner.clear_mood_event("smell")
 
 			// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
 			// Then again, this is a purely hypothetical scenario and hardly reachable
@@ -452,12 +452,12 @@
 
 		// Clear out moods when no miasma at all
 		else
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+			owner.clear_mood_event("smell")
 
 		if (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
 			owner.add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else if (n2o_euphoria == EUPHORIA_INACTIVE && healium_euphoria == EUPHORIA_INACTIVE)
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+			owner.clear_mood_event("chemical_euphoria")
 		// Activate mood on first flag, remove on second, do nothing on third.
 
 		handle_breath_temperature(breath, breather)

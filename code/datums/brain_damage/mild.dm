@@ -55,7 +55,7 @@
 /datum/brain_trauma/mild/dumbness/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
 	owner.remove_status_effect(/datum/status_effect/speech/stutter/derpspeech)
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "dumb")
+	owner.clear_mood_event("dumb")
 	return ..()
 
 /datum/brain_trauma/mild/speech_impediment

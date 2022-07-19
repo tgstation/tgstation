@@ -170,7 +170,7 @@ Primarily used in reagents/reaction_agents
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
-	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "[type]_overdose")
+	L.clear_mood_event("[type]_overdose")
 	return
 
 /// Called when this reagent first starts being metabolized by a liver

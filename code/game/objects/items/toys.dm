@@ -183,13 +183,13 @@
 
 /obj/item/toy/balloon/syndicate/dropped(mob/user)
 	if(user)
-		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+		user.clear_mood_event("badass_antag")
 	. = ..()
 
 /obj/item/toy/balloon/syndicate/Destroy()
 	if(ismob(loc))
 		var/mob/M = loc
-		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+		M.clear_mood_event("badass_antag")
 	. = ..()
 
 /obj/item/toy/balloon/arrest

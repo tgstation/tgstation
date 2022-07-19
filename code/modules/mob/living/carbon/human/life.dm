@@ -75,7 +75,7 @@
 	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)
 		src.add_mood_event("brain_damage", /datum/mood_event/brain_damage)
 	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
+		src.clear_mood_event("brain_damage")
 	return ..()
 
 /mob/living/carbon/human/breathe()

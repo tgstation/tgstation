@@ -121,7 +121,7 @@
 		embedded.forceMove(src) // It'll self remove via signal reaction, just need to move it
 	if(!phantom_owner.has_embedded_objects())
 		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
-		SEND_SIGNAL(phantom_owner, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+		phantom_owner.clear_mood_event("embedded")
 
 	if(!special)
 		if(phantom_owner.dna)

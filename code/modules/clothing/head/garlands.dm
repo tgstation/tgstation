@@ -11,4 +11,4 @@
 
 /obj/item/clothing/head/garland/dropped(mob/user)
 	. = ..()
-	SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "garland")
+	user.clear_mood_event("garland")

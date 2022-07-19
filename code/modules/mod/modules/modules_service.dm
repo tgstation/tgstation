@@ -79,4 +79,4 @@
 		qdel(mod.boots.GetComponent(/datum/component/squeak))
 	mod.wearer.RemoveElement(/datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
-		SEND_SIGNAL(mod.wearer, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")
+		mod.wearer.clear_mood_event("clownshoes")

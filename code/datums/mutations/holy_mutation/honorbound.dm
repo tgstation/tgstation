@@ -33,7 +33,7 @@
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, .proc/attack_honor)
 
 /datum/mutation/human/honorbound/on_losing(mob/living/carbon/human/owner)
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "honorbound")
+	owner.clear_mood_event("honorbound")
 	UnregisterSignal(owner, list(
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_HULK_ATTACK,

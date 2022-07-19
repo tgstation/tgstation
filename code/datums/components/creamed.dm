@@ -45,7 +45,8 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	A.cut_overlay(creamface)
 	qdel(creamface)
 	if(ishuman(A))
-		SEND_SIGNAL(A, COMSIG_CLEAR_MOOD_EVENT, "creampie")
+		var/mob/living/carbon/human/human_parent
+		human_parent.clear_mood_event("creampie")
 	return ..()
 
 /datum/component/creamed/RegisterWithParent()

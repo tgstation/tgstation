@@ -139,7 +139,7 @@
 		affected_human.adjust_timed_status_effect(6 SECONDS, /datum/status_effect/dizziness, max_duration = 80 SECONDS)
 		affected_human.adjust_timed_status_effect(0.5 SECONDS * delta_time, /datum/status_effect/confusion, max_duration = 20 SECONDS)
 	else
-		SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "too_bright")
+		affected_carbon.clear_mood_event("too_bright")
 
 /datum/addiction/maintenance_drugs/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
