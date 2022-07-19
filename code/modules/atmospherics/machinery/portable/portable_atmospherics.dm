@@ -67,10 +67,9 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
-	if(!suppress_reactions)
-		excited = (excited | air_contents.react(src))
-		if(!excited)
-			return PROCESS_KILL
+	excited = (!suppress_reactions && (excited || air_contents.react(src)))
+	if(!excited)
+		return PROCESS_KILL
 	excited = FALSE
 
 /// Take damage if a variable is exceeded. Damage is equal to temp/limit * heat/limit.
