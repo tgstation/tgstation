@@ -625,3 +625,80 @@
   - bugfix: Fix holoparasites to inherit language from their masters to aid communication
   unit0016:
   - refactor: ID Card department colors are now greyscaled. Say whuh!?
+2022-07-19:
+  13spacemen:
+  - bugfix: Carding an AI or deconstructing it will not ping ghosts about its positronic
+      brain
+  - bugfix: Ejecting a brain from an MMI will correctly transfer the guy in the MMI
+      to the ejected brain
+  - bugfix: You can (un)anchor AIs with a wrench
+  - qol: Changed the AI/borg hacked laws font color to be more readable
+  D4C-420:
+  - bugfix: fixed bioscrambler armor not having a cooldown when activated or emp'ed
+  - bugfix: fixed hallucination armor not having a cooldown when activated.
+  Guillaume Prata:
+  - qol: Be polite! While on walk intent you won't bump, swap places or push other
+      people now.
+  Jolly:
+  - bugfix: At Central Command, NanoTrasen's elite architects have noticed that they
+      built a door inside a window outside the Thunderdome and have decided to remove
+      it.
+  Kubisopplay:
+  - qol: makes borg hypo behave slightly saner
+  Melbert:
+  - bugfix: Fixes a runtime with seclite mounts being deconstructed.
+  MidoriWroth:
+  - rscadd: Added growable peanuts! Grow them in botany for a snack, or grind them
+      into peanut butter
+  - rscadd: Added 4 different peanut and peanut butter-based recipes
+  - rscadd: Added brownies. Yes, I know, finally
+  - rscadd: Added breadsticks, as if food addiction couldn't get worse
+  - rscadd: Added a simple nigiri sushi, for a little more sushi variety. Expect more
+      in the future.
+  - rscadd: Added a customizable onigiri dish, let your dreams come true.
+  - qol: Meatball noodle soup now requires grown peanuts instead of Gallery's peanuts
+  - imageadd: New sprites for all the new foods!
+  PositiveEntropy, Triiodine:
+  - imageadd: Resprites all backpacks and satchels in their entirety!
+  ShizCalev:
+  - bugfix: Snow golems will no longer be told to put on their wizard robes when trying
+      to throw snowballs!
+  - bugfix: Sloths loaded in ruins will no longer sometimes become Cargo's sloth!
+  - spellcheck: Tweaked the stat panel for revenants to make their essence readout
+      a little more clear.
+  - bugfix: Jaunting/incorporeal mobs will no longer be inserted into morgue trays
+      / cremators when they close.
+  - bugfix: Cremators will no longer cremate jaunting / incorporeal mobs.
+  - bugfix: Jaunting out of a morgue tray / cremator will now properly update its
+      sprite.
+  SuperNovaa41:
+  - rscdel: Removed the families gamemode.
+  SuperSlayer:
+  - balance: Baton resistance trait now prevents getting knockdowned by batons, instead
+      of just shortening knockdown duration
+  Tastyfish:
+  - bugfix: Shower and sink dismantling is now consistent.
+  - bugfix: Hydroponics tray plumbing connections now accept water without clogging.
+  - rscadd: Showers now have 3 selectable auto-shutoff modes.
+  - qol: Sinks and showers are now constructed with the player facing the wall.
+  - imageadd: Visuals improved on plumbing connections for offset appliances, like
+      sinks and showers.
+  TheBoondock:
+  - bugfix: fixed ranged analyzer being able to scan out of view targets
+  VioletN:
+  - bugfix: The supermatter engine can spawn bioscrambler anomalies when delaminating
+      again.
+  distributivgesetz:
+  - bugfix: Fix a runtime when replying to PDA messages through chat.
+  - code_imp: Small code improvements for modular computers and files.
+  magatsuchi:
+  - bugfix: you can no longer put undroppable items into storage
+  ninjanomnom:
+  - bugfix: Airlocks made from custom materials are now properly colored instead of
+      being forced to use the color of the first material used.
+  san7890:
+  - rscadd: Have you noticed the unrestricted directional airlock helpers on doors?
+      You know, the little lights under door that allow anyone to pass through. After
+      a few long hours in the lab, assistants have found a display hidden deep within
+      the machinations of the airlock that allow you to either flip the direction
+      of this Unrestricted Exit or disable it entirely.

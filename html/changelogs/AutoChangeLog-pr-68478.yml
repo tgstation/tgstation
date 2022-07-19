@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Jaunting/incorporeal mobs will no longer be inserted into morgue trays / cremators when they close."
-  - bugfix: "Cremators will no longer cremate jaunting / incorporeal mobs."
-  - bugfix: "Jaunting out of a morgue tray / cremator will now properly update its sprite."
