@@ -38,8 +38,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/static/gl_uid = 1
 	///Tracks the bolt color we are using
 	var/zap_icon = DEFAULT_ZAP_ICON_STATE
-	///The portion of the gasmix we're on that we should remove
-	var/gasefficency = 0.15
 
 	///Are we exploding?
 	var/final_countdown = FALSE
@@ -281,6 +279,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The offset of the linear powerloss function set so the transition is differentiable.
 	var/powerloss_linear_offset = 0
 
+	///The portion of the gasmix we're on that we should remove
+	var/absorption_ratio = 0.15
+	/// The gasmix we just recently absorbed. Tile's air multiplied by absorption_ratio
+	var/datum/gas_mixture/absorbed_gasmix
+
+	/// How we are delaminating.
+	var/datum/sm_delam_strat/delamination_strategy
+	/// Whether the current delamination_strategy is forced or not.
+	var/forced_delam = FALSE
+
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	uid = gl_uid++
@@ -371,7 +379,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	data["SM_power"] = power
 	data["SM_ambienttemp"] = air.temperature
 	data["SM_ambientpressure"] = air.return_pressure()
-	data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / gasefficency
+	data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / absorption_ratio
 	data["SM_moles"] = 0
 	data["SM_uid"] = uid
 	var/area/active_supermatter_area = get_area(src)
@@ -713,7 +721,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	base_icon_state = "darkmatter_shard"
 	icon_state = "darkmatter_shard"
 	anchored = FALSE
-	gasefficency = 0.125
+	absorption_ratio = 0.125
 	explosion_power = 12
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER

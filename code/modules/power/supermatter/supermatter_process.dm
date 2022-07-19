@@ -23,7 +23,7 @@
 	var/datum/gas_mixture/removed
 	if(produces_gas)
 		//Remove gas from surrounding area
-		removed = env.remove(gasefficency * env.total_moles())
+		removed = env.remove(absorption_ratio * env.total_moles())
 	else
 		// Pass all the gas related code an empty gas container
 		removed = new()
@@ -463,3 +463,20 @@
 		priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
 			a subject within [station_name()], a resonance collapse may occur.",
 			"Nanotrasen Star Observation Association")
+
+/**
+ * Sets the delam of our sm.
+ * 
+ * Args:
+ * * forced_delam_path: Optional typepath of a [/datum/sm_delam_strat]. Filling this will force the sm to execute that kind of delam.
+ */
+/obj/machinery/power/supermatter_crystal/proc/set_delam(datum/forced_delam_path)
+	if(forced_delam_path)
+		forced_delam = TRUE
+		delamination_strategy = GLOB.sm_delam_strat_list[forced_delam_path]
+	if(forced_delam)
+		return
+	for (var/delam_path in GLOB.sm_delam_strat_list)
+		var/datum/sm_delam_strat/delam = GLOB.sm_delam_strat_list[delam_path]
+		if(delam.can_apply(src))
+			delamination_strategy = delam

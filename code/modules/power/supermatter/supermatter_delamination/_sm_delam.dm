@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 	/datum/sm_delam_strat/cascade = new /datum/sm_delam_strat/cascade,
 	/datum/sm_delam_strat/singularity = new /datum/sm_delam_strat/singularity,
 	/datum/sm_delam_strat/tesla = new /datum/sm_delam_strat/tesla,
-	/datum/sm_delam_strat/default = new /datum/sm_delam_strat/default,
+	/datum/sm_delam_strat/explosive = new /datum/sm_delam_strat/explosive,
 ))
 
 /datum/sm_delam_strat
@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 
 /// Start counting down, means SM is about to blow. Can still be healed though.
 /datum/sm_delam_strat/proc/count_down(obj/machinery/power/supermatter_crystal/sm)
+	return FALSE
 
 /// Means our integrity is going down.
 /datum/sm_delam_strat/proc/delamination_warning(obj/machinery/power/supermatter_crystal/sm)
