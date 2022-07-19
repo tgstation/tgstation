@@ -42,7 +42,7 @@
 
 /datum/brain_trauma/mild/dumbness/on_gain()
 	ADD_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "dumb", /datum/mood_event/oblivious)
+	owner.add_mood_event("dumb", /datum/mood_event/oblivious)
 	return ..()
 
 /datum/brain_trauma/mild/dumbness/on_life(delta_time, times_fired)

@@ -51,7 +51,7 @@
 
 	target.do_alert_animation()
 	target.playsound_local(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
-	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gunpoint", /datum/mood_event/gunpoint)
+	target.add_mood_event("gunpoint", /datum/mood_event/gunpoint)
 
 	addtimer(CALLBACK(src, .proc/update_stage, 2), GUNPOINT_DELAY_STAGE_2)
 

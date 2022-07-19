@@ -10,7 +10,7 @@
 /datum/status_effect/drugginess/on_apply()
 	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/remove_drugginess)
 
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, id, /datum/mood_event/high)
+	owner.add_mood_event(id, /datum/mood_event/high)
 	owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/high)
 	owner.sound_environment_override = SOUND_ENVIRONMENT_DRUGGED
 	owner.grant_language(/datum/language/beachbum, TRUE, TRUE, id)

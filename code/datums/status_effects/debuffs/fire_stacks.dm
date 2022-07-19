@@ -195,7 +195,7 @@
 		return
 
 	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * delta_time)
-	SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
+	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
 	victim.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = victim), story_value = STORY_VALUE_OKAY)
 
 /**

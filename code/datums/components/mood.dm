@@ -18,7 +18,6 @@
 
 	START_PROCESSING(SSmood, src)
 
-	//RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	//RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	//RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	//RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
@@ -45,7 +44,6 @@
 	SIGNAL_HANDLER
 
 	//if(job in list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST))
-	//	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
 
 /datum/component/mood/proc/print_mood(mob/user)
 	var/msg = "[span_info("<EM>My current mental status:</EM>")]\n"

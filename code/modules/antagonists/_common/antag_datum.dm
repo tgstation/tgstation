@@ -246,7 +246,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/give_antag_moodies()
 	if(!antag_moodlet)
 		return
-	SEND_SIGNAL(owner.current, COMSIG_ADD_MOOD_EVENT, "antag_moodlet", antag_moodlet)
+	owner.current.add_mood_event("antag_moodlet", antag_moodlet)
 
 /**
  * Proc that removes this antagonist's ascribed moodlet from the player.

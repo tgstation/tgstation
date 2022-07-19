@@ -60,7 +60,7 @@
 	if((times_fired % next_breath) == 0 || failed_last_breath)
 		breathe(delta_time, times_fired) //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
 		if(failed_last_breath)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
+			src.add_mood_event("suffocation", /datum/mood_event/suffocation)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 	else
@@ -227,7 +227,7 @@
 			clear_alert(ALERT_TOO_MUCH_N2O)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+			src.add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 			clear_alert(ALERT_TOO_MUCH_N2O)
@@ -276,18 +276,18 @@
 				//At somewhat higher pp, warning becomes more obvious
 				if(prob(15))
 					to_chat(src, span_warning("You smell something horribly decayed inside this room."))
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
+					src.add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
 			if(15 to 30)
 				//Small chance to vomit. By now, people have internals on anyway
 				if(prob(5))
 					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+					src.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 					vomit()
 			if(30 to INFINITY)
 				//Higher chance to vomit. Let the horror start
 				if(prob(25))
 					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+					src.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 					vomit()
 			else
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")

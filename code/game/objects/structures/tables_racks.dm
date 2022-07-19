@@ -164,7 +164,7 @@
 	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
 								span_userdanger("[user] slams you onto \the [src]!"))
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
-	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	pushed_mob.add_mood_event("table", /datum/mood_event/table)
 
 /obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
@@ -181,7 +181,7 @@
 	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.name] against \the [src]!"),
 								span_userdanger("[user] smashes your [banged_limb.name] against \the [src]"))
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
-	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_limbsmash, banged_limb)
+	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)

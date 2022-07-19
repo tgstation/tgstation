@@ -15,7 +15,7 @@
 		return FALSE
 
 	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/remove_jitter)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, id, /datum/mood_event/jittery)
+	owner.add_mood_event(id, /datum/mood_event/jittery)
 	return TRUE
 
 /datum/status_effect/jitter/on_remove()

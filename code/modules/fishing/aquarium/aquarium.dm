@@ -185,9 +185,9 @@
 		//All fish dead - bad mood.
 		//No fish - nothing.
 		if(alive_fish > 0)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "aquarium", /datum/mood_event/aquarium_positive)
+			user.add_mood_event("aquarium", /datum/mood_event/aquarium_positive)
 		else if(dead_fish > 0)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "aquarium", /datum/mood_event/aquarium_negative)
+			user.add_mood_event("aquarium", /datum/mood_event/aquarium_negative)
 		// Could maybe scale power of this mood with number/types of fish
 
 /obj/structure/aquarium/ui_data(mob/user)

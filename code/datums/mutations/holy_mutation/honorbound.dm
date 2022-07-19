@@ -17,7 +17,7 @@
 	if(..())
 		return
 	//moodlet
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/honorbound)
+	owner.add_mood_event("honorbound", /datum/mood_event/honorbound)
 	//checking spells cast by honorbound
 	RegisterSignal(owner, COMSIG_MOB_CAST_SPELL, .proc/spell_check)
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, .proc/staff_check)
@@ -192,14 +192,14 @@
 		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN)
 			to_chat(user, span_userdanger("[GLOB.deity] is enraged by your use of forbidden magic!"))
 			lightningbolt(user)
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/banished)
+			owner.add_mood_event("honorbound", /datum/mood_event/banished)
 			user.dna.remove_mutation(/datum/mutation/human/honorbound)
 			user.mind.holy_role = NONE
 			to_chat(user, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		else
 			to_chat(user, span_userdanger("[GLOB.deity] is angered by your use of [school] magic!"))
 			lightningbolt(user)
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
+			owner.add_mood_event("honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 
 /datum/action/cooldown/spell/pointed/declare_evil
 	name = "Declare Evil"

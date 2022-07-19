@@ -108,7 +108,7 @@
 		var/has_not_read_book = isnull(user.mind?.book_titles_read[starting_title])
 
 		if(has_not_read_book) // any new books give bonus mood
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+			user.add_mood_event("book_nerd", /datum/mood_event/book_nerd)
 			user.mind?.book_titles_read[starting_title] = TRUE
 		onclose(user, "book")
 	else

@@ -7,7 +7,7 @@
 /obj/item/clothing/head/garland/equipped(mob/user, slot)
 	. = ..()
 	if(slot_flags & slot)
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "garland", /datum/mood_event/garland)
+		user.add_mood_event("garland", /datum/mood_event/garland)
 
 /obj/item/clothing/head/garland/dropped(mob/user)
 	. = ..()

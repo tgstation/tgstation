@@ -2641,7 +2641,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	drinker.hal_screwyhud = SCREWYHUD_HEALTHY //almost makes you forget how much it hurts
-	SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
+	drinker.add_mood_event("numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
 	..()
 
 /datum/reagent/consumable/ethanol/protein_blend
@@ -2691,7 +2691,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(islizard(drinker))
-		SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
+		drinker.add_mood_event("triumph", /datum/mood_event/memories_of_home, name)
 	..()
 
 /datum/reagent/consumable/ethanol/the_juice

@@ -176,6 +176,9 @@
 	mood = 0
 	shown_mood = 0
 
+	var/mob/living/mob_parent = parent?.resolve()
+	SEND_SIGNAL(mob_parent, COMSIG_CARBON_MOOD_UPDATE)
+
 	for(var/category in mood_events)
 		var/datum/mood_event/the_event = mood_events[category]
 		mood += the_event.mood_change

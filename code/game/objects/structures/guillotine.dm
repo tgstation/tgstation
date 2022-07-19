@@ -217,7 +217,7 @@
 	if (!istype(M, /mob/living/carbon/human))
 		return
 
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "dying", /datum/mood_event/deaths_door)
+	M.add_mood_event("dying", /datum/mood_event/deaths_door)
 	var/mob/living/carbon/human/H = M
 
 	if (H.dna)

@@ -20,5 +20,5 @@
 		SEND_SIGNAL(cast_on, COMSIG_CLEAR_MOOD_EVENT, "vow")
 	else
 		to_chat(cast_on, span_notice("You break your vow of silence."))
-		SEND_SIGNAL(cast_on, COMSIG_ADD_MOOD_EVENT, "vow", /datum/mood_event/broken_vow)
+		cast_on.add_mood_event("vow", /datum/mood_event/broken_vow)
 	cast_on.update_action_buttons_icon()

@@ -113,7 +113,7 @@
 	..()
 	if(slot == ITEM_SLOT_ICLOTHING && freshly_laundered)
 		freshly_laundered = FALSE
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
+		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
 
 /obj/item/clothing/under/dropped(mob/user)
 	if(attached_accessory)

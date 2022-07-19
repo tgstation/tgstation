@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		say("CODE ACTIVATED: EXTRA PRIZES.")
 		prizes *= 2
 	for(var/i in 1 to prizes)
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
+		user.add_mood_event("arcade", /datum/mood_event/arcade)
 		if(prob(0.0001)) //1 in a million
 			new /obj/item/gun/energy/pulse/prize(src)
 			visible_message(span_notice("[src] dispenses.. woah, a gun! Way past cool."), span_notice("You hear a chime and a shot."))

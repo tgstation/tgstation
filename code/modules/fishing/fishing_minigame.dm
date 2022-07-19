@@ -79,7 +79,7 @@
 	// If fishing line breaks los / rod gets dropped / deleted
 	RegisterSignal(fishing_line, COMSIG_FISHING_LINE_SNAPPED, .proc/interrupt)
 	ADD_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fishing", /datum/mood_event/fishing)
+	user.add_mood_event("fishing", /datum/mood_event/fishing)
 	RegisterSignal(user, COMSIG_MOB_CLICKON, .proc/handle_click)
 	start_baiting_phase()
 	to_chat(user, span_notice("You start fishing..."))

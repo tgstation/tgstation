@@ -428,18 +428,18 @@
 					//At somewhat higher pp, warning becomes more obvious
 					if(prob(15))
 						to_chat(owner, span_warning("You smell something horribly decayed inside this room."))
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
+						owner.add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
 				if(15 to 30)
 					//Small chance to vomit. By now, people have internals on anyway
 					if(prob(5))
 						to_chat(owner, span_warning("The stench of rotting carcasses is unbearable!"))
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+						owner.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
 				if(30 to INFINITY)
 					//Higher chance to vomit. Let the horror start
 					if(prob(15))
 						to_chat(owner, span_warning("The stench of rotting carcasses is unbearable!"))
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+						owner.add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
 				else
 					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
@@ -455,7 +455,7 @@
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
 		if (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+			owner.add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else if (n2o_euphoria == EUPHORIA_INACTIVE && healium_euphoria == EUPHORIA_INACTIVE)
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 		// Activate mood on first flag, remove on second, do nothing on third.

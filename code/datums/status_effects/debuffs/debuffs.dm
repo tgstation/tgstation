@@ -744,7 +744,7 @@
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
 	ADD_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, type, /datum/mood_event/gondola)
+	owner.add_mood_event(type, /datum/mood_event/gondola)
 	to_chat(owner, span_notice("You suddenly feel at peace and feel no need to make any sudden or rash actions..."))
 
 /datum/status_effect/gonbola_pacify/on_remove()

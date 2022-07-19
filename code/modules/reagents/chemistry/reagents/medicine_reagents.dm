@@ -616,7 +616,7 @@
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle >= 5)
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name)
+		M.add_mood_event("numb", /datum/mood_event/narcotic_medium, name)
 	switch(current_cycle)
 		if(11)
 			to_chat(M, span_warning("You start to feel tired...") )

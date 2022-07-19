@@ -225,7 +225,7 @@
 		if(!isfelinid(exposed_mob))
 			return
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
-		SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "watersprayed", /datum/mood_event/watersprayed)
+		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/M, delta_time, times_fired)

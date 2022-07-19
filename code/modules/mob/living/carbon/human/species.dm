@@ -1487,7 +1487,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(bodytemp > bodytemp_heat_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTHEAT))
 		// Clear cold mood and apply hot mood
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+		humi.add_mood_event("hot", /datum/mood_event/hot)
 
 		//Remove any slowdown from the cold.
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
@@ -1504,7 +1504,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else if(bodytemp < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
 		// clear any hot moods and apply cold mood
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
-		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+		humi.add_mood_event("cold", /datum/mood_event/cold)
 		// Apply cold slow down
 		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		// Display alerts based how cold it is
