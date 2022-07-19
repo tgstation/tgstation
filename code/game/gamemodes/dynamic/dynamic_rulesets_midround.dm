@@ -816,7 +816,6 @@
 	minimum_players = 25
 	weight = 4
 	cost = 8
-	minimum_players = 23
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
