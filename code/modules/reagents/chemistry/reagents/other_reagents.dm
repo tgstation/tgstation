@@ -2239,7 +2239,7 @@
 		if(creation_purity == 1 && human_mob.has_quirk(/datum/quirk/item_quirk/bald))
 			human_mob.remove_quirk(/datum/quirk/item_quirk/bald)
 		var/datum/species/species_datum = human_mob.dna?.species
-		if(!istype(species_datum))
+		if(!species_datum)
 			return
 		if(species_datum.species_traits.Find(HAIR))
 			return
