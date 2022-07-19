@@ -2208,7 +2208,7 @@
 	to_chat(exposed_human, span_notice("Hair starts sprouting from your scalp."))
 	exposed_human.hairstyle = picked_hair
 	exposed_human.facial_hairstyle = picked_beard
-	exposed_human.update_hair()
+	exposed_human.update_hair(is_creating = TRUE)
 
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
@@ -2228,7 +2228,7 @@
 	to_chat(exposed_human, span_notice("Your hair starts growing at an incredible speed!"))
 	exposed_human.hairstyle = "Very Long Hair"
 	exposed_human.facial_hairstyle = "Beard (Very Long)"
-	exposed_human.update_hair()
+	exposed_human.update_hair(is_creating = TRUE)
 
 /datum/reagent/concentrated_barbers_aid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
@@ -2250,7 +2250,7 @@
 		else
 			message = span_notice("Your scalp mutates, a full head of hair sprouting from it.")
 		to_chat(M, message)
-		M.update_hair()
+		human_mob.update_hair(is_creating = TRUE)
 
 /datum/reagent/baldium
 	name = "Baldium"
@@ -2270,7 +2270,7 @@
 	to_chat(exposed_human, span_danger("Your hair is falling out in clumps!"))
 	exposed_human.hairstyle = "Bald"
 	exposed_human.facial_hairstyle = "Shaved"
-	exposed_human.update_hair()
+	exposed_human.update_hair(is_creating = TRUE)
 
 /datum/reagent/saltpetre
 	name = "Saltpetre"

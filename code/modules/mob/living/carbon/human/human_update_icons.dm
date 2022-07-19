@@ -74,8 +74,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/regenerate_icons()
 
 	if(!..())
-		update_body()
-		update_hair()
+		update_body(is_creating = TRUE)
 		update_inv_w_uniform()
 		update_inv_wear_id()
 		update_inv_gloves()
