@@ -671,14 +671,6 @@
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	restricted = TRUE
 
-/datum/uplink_item/device_tools/guerillagloves
-	name = "Guerilla Gloves"
-	desc = "A pair of highly robust combat gripper gloves that excels at performing takedowns at close range, with an added lining of insulation. Careful not to hit a wall!"
-	item = /obj/item/clothing/gloves/tackler/combat/insulated
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-	cost = 2
-	illegal_tech = FALSE
-
 /datum/uplink_item/implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
