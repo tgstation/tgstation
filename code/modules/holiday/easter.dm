@@ -36,8 +36,7 @@
 
 /obj/item/storage/basket/easter/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg, /obj/item/surprise_egg))
+	atom_storage.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg, /obj/item/surprise_egg))
 
 /obj/item/storage/basket/easter/proc/countEggs()
 	cut_overlays()
@@ -62,10 +61,11 @@
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
-/obj/item/clothing/suit/bunnysuit
+/obj/item/clothing/suit/costume/bunnysuit
 	name = "Easter Bunny Suit"
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "bunnysuit"
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL
@@ -98,7 +98,7 @@
 
 /obj/item/surprise_egg/proc/dispensePrize(turf/where)
 	var/static/list/prize_list = list(/obj/item/clothing/head/bunnyhead,
-		/obj/item/clothing/suit/bunnysuit,
+		/obj/item/clothing/suit/costume/bunnysuit,
 		/obj/item/storage/backpack/satchel/bunnysatchel,
 		/obj/item/food/grown/carrot,
 		/obj/item/toy/balloon,

@@ -269,7 +269,7 @@
 	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_areatest(on_station)
+/client/proc/cmd_admin_areatest(on_station, filter_maint)
 	set category = "Mapping"
 	set name = "Test Areas"
 
@@ -283,8 +283,24 @@
 	var/list/areas_with_LS = list()
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
-	var/static/list/station_areas_blacklist = typecacheof(list(/area/station/holodeck/rec_center, /area/shuttle, /area/station/engineering/supermatter,
-					/area/space, /area/station/solars, /area/mine, /area/ruin, /area/centcom/asteroid))
+	/**We whitelist in case we're doing something on a planetary station that shares multiple different types of areas, this should only be full of "station" area types.
+	This only goes into effect when we explicitly do the "on station" Areas Test.
+	*/
+	var/static/list/station_areas_whitelist = typecacheof(list(
+		/area/station,
+	))
+	///Additionally, blacklist in order to filter out the types of areas that can show up on station Z-levels that we never need to test for.
+	var/static/list/station_areas_blacklist = typecacheof(list(
+		/area/centcom/asteroid,
+		/area/mine,
+		/area/ruin,
+		/area/shuttle,
+		/area/space,
+		/area/station/engineering/supermatter,
+		/area/station/holodeck/rec_center,
+		/area/station/science/ordnance/bomb,
+		/area/station/solars,
+	))
 
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, "Game still loading, please hold!", confidential = TRUE)
@@ -296,6 +312,9 @@
 		log_message = "station z-levels"
 	else
 		log_message = "all z-levels"
+	if(filter_maint)
+		dat += "<b>Maintenance Areas Filtered Out</b>"
+		log_message += ", with no maintenance areas"
 
 	message_admins(span_adminnotice("[key_name_admin(usr)] used the Test Areas debug command checking [log_message]."))
 	log_admin("[key_name(usr)] used the Test Areas debug command checking [log_message].")
@@ -307,7 +326,9 @@
 				continue
 			var/turf/picked = pick(area_turfs)
 			if(is_station_level(picked.z))
-				if(!(A.type in areas_all) && !is_type_in_typecache(A, station_areas_blacklist))
+				if(!(A.type in areas_all) && !is_type_in_typecache(A, station_areas_blacklist) && is_type_in_typecache(A, station_areas_whitelist))
+					if(filter_maint && istype(A, /area/station/maintenance))
+						continue
 					areas_all.Add(A.type)
 		else if(!(A.type in areas_all))
 			areas_all.Add(A.type)
@@ -444,8 +465,13 @@
 
 /client/proc/cmd_admin_areatest_station()
 	set category = "Mapping"
-	set name = "Test Areas (STATION Z)"
+	set name = "Test Areas (STATION ONLY)"
 	cmd_admin_areatest(TRUE)
+
+/client/proc/cmd_admin_areatest_station_no_maintenance()
+	set category = "Mapping"
+	set name = "Test Areas (STATION - NO MAINT)"
+	cmd_admin_areatest(on_station = TRUE, filter_maint = TRUE)
 
 /client/proc/cmd_admin_areatest_all()
 	set category = "Mapping"

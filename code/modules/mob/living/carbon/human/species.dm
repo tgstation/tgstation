@@ -510,10 +510,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.blood_type = random_blood_type()
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
-	for(var/obj/item/organ/external/organ in C.internal_organs)
-		if(organ.type in external_organs)
-			organ.Remove(C)
-			qdel(organ)
+	for(var/obj/item/organ/external/organ as anything in C.external_organs)
+		organ.Remove(C)
+		qdel(organ)
 
 	//If their inert mutation is not the same, swap it out
 	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
@@ -939,7 +938,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 			return TRUE
 		if(ITEM_SLOT_BACKPACK)
-			if(H.back && SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_CAN_INSERT, I, H, TRUE))
+			if(H.back && H.back.atom_storage?.can_insert(I, H, messages = TRUE))
 				return TRUE
 			return FALSE
 	return FALSE //Unsupported slot

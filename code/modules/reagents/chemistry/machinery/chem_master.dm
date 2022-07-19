@@ -232,9 +232,8 @@
 	data["autoCondiStyle"] = CONDIMASTER_STYLE_AUTO
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
-		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 		data["pillBottleCurrentAmount"] = bottle.contents.len
-		data["pillBottleMaxAmount"] = STRB.max_items
+		data["pillBottleMaxAmount"] = bottle.atom_storage.max_slots
 
 	var/beaker_contents[0]
 	if(beaker)
@@ -386,10 +385,8 @@
 			var/target_loc = drop_location()
 			var/drop_threshold = INFINITY
 			if(bottle)
-				var/datum/component/storage/STRB = bottle.GetComponent(
-					/datum/component/storage)
-				if(STRB)
-					drop_threshold = STRB.max_items - bottle.contents.len
+				if(bottle.atom_storage)
+					drop_threshold = bottle.atom_storage.max_slots - bottle.contents.len
 					target_loc = bottle
 			for(var/i in 1 to amount)
 				if(i-1 < drop_threshold)
@@ -552,7 +549,8 @@
 			"capsaicin" = list("icon_state" = "hotsauce", "icon_empty" = "", "name" = "hotsauce bottle", "desc" = "You can almost TASTE the stomach ulcers!"),
 			"frostoil" = list("icon_state" = "coldsauce", "icon_empty" = "", "name" = "coldsauce bottle", "desc" = "Leaves the tongue numb from its passage."),
 			"cornoil" = list("icon_state" = "oliveoil", "icon_empty" = "", "name" = "corn oil bottle", "desc" = "A delicious oil used in cooking. Made from corn."),
-			"bbqsauce" = list("icon_state" = "bbqsauce", "icon_empty" = "", "name" = "bbq sauce bottle", "desc" = "Hand wipes not included.")
+			"bbqsauce" = list("icon_state" = "bbqsauce", "icon_empty" = "", "name" = "bbq sauce bottle", "desc" = "Hand wipes not included."),
+			"peanut_butter" = list("icon_state" = "peanutbutter", "icon_empty" = "", "name" = "peanut butter jar", "desc" = "A creamy paste made from ground peanuts."),
 		)
 		var/list/carton_in_hand = list(
 			"inhand_icon_state" = "carton",

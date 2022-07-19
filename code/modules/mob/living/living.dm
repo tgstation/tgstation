@@ -33,8 +33,6 @@
 		else
 			effect.be_replaced()
 
-	if(ranged_ability)
-		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
@@ -83,6 +81,10 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
+	//No bumping/swapping/pushing others if you are on walk intent
+	if(m_intent == MOVE_INTENT_WALK)
+		return TRUE
+
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
@@ -632,7 +634,7 @@
 	var/list/ret = list()
 	ret |= contents //add our contents
 	for(var/atom/iter_atom as anything in ret.Copy()) //iterate storage objects
-		SEND_SIGNAL(iter_atom, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
+		iter_atom.atom_storage?.return_inv(ret)
 	for(var/obj/item/folder/F in ret.Copy()) //very snowflakey-ly iterate folders
 		ret |= F.contents
 	return ret
@@ -726,11 +728,10 @@
 			if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
 				C.blood_volume += (excess_healing*2)//1 excess = 10 blood
 
-			for(var/i in C.internal_organs)
-				var/obj/item/organ/O = i
-				if(O.organ_flags & ORGAN_SYNTHETIC)
+			for(var/obj/item/organ/organ as anything in C.internal_organs)
+				if(organ.organ_flags & ORGAN_SYNTHETIC)
 					continue
-				O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
+				organ.applyOrganDamage(excess_healing * -1)//1 excess = 5 organ damage healed
 
 		adjustOxyLoss(-20, TRUE)
 		adjustToxLoss(-20, TRUE, TRUE) //slime friendly
@@ -748,10 +749,6 @@
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		reload_fullscreen()
 		. = TRUE
-		if(mind)
-			for(var/S in mind.spell_list)
-				var/obj/effect/proc_holder/spell/spell = S
-				spell.updateButtons()
 		if(excess_healing)
 			INVOKE_ASYNC(src, .proc/emote, "gasp")
 			log_combat(src, src, "revived")
@@ -879,8 +876,8 @@
 		var/mob/living/L = pulledby
 		L.set_pull_offsets(src, pulledby.grab_state)
 
-	if(active_storage && !((active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) || CanReach(active_storage.parent,view_only = TRUE)))
-		active_storage.close(src)
+	if(active_storage && !((active_storage.parent?.resolve() in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) || CanReach(active_storage.parent?.resolve(),view_only = TRUE)))
+		active_storage.hide_contents(src)
 
 	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
@@ -1547,24 +1544,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/on_fall()
 	return
 
-/mob/living/proc/AddAbility(obj/effect/proc_holder/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-
-/mob/living/proc/RemoveAbility(obj/effect/proc_holder/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/proc/add_abilities_to_panel()
-	var/list/L = list()
-	for(var/obj/effect/proc_holder/A in abilities)
-		L[++L.len] = list("[A.panel]",A.get_panel_text(),A.name,"[REF(A)]")
-	return L
-
 /mob/living/forceMove(atom/destination)
 	if(!currently_z_moving)
 		stop_pulling()
@@ -1669,12 +1648,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		client_eye.get_remote_view_fullscreens(src)
 	else
 		clear_fullscreen("remote_view", 0)
-
-/mob/living/update_mouse_pointer()
-	..()
-	if (client && ranged_ability?.ranged_mousepointer)
-		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
-
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)

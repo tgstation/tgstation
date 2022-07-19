@@ -97,7 +97,6 @@
 	..()
 	return late ? INITIALIZE_HINT_LATELOAD : INITIALIZE_HINT_QDEL
 
-
 //airlock helpers
 /obj/effect/mapping_helpers/airlock
 	layer = DOOR_HELPER_LAYER
@@ -195,6 +194,7 @@
 
 /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
 	airlock.unres_sides ^= dir
+	airlock.unres_sensor = TRUE
 
 /obj/effect/mapping_helpers/airlock/abandoned
 	name = "airlock abandoned helper"

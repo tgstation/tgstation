@@ -10,10 +10,20 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
-	component_type = /datum/component/storage/concrete/rped
 	var/works_from_distance = FALSE
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
+
+/obj/item/storage/part_replacer/Initialize()
+	. = ..()
+
+	atom_storage.allow_quick_empty = TRUE
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.max_slots = 50
+	atom_storage.max_total_storage = 100
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.numerical_stacking = TRUE
+	atom_storage.set_holdable(list(/obj/item/stock_parts), null)
 
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
 	if(!istype(attacked_object, /obj/machinery) && !istype(attacked_object, /obj/structure/frame/machine))
@@ -59,7 +69,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		if(works_from_distance)
 			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
 			attacked_machinery.exchange_parts(user, src)
-			return
+		return
 
 	var/obj/structure/frame/machine/attacked_frame = attacked_object
 
@@ -69,8 +79,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	if(works_from_distance)
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
 	attacked_frame.attackby(src, user)
-
-	return
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
@@ -88,10 +96,13 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	works_from_distance = TRUE
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/pshoom.ogg'
 	alt_sound = 'sound/items/pshoom_2.ogg'
-	component_type = /datum/component/storage/concrete/bluespace/rped
 
 /obj/item/storage/part_replacer/bluespace/Initialize(mapload)
 	. = ..()
+
+	atom_storage.max_slots = 400
+	atom_storage.max_total_storage = 800
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
 	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_part_exited)

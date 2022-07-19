@@ -366,7 +366,7 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
 
-	if(ismob(location) || isitem(location)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
+	if(ismob(location) || isitem(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
 		to_chat(ethereal, span_warning("You were unable to finish your crystallization, for obvious reasons."))
 		stop_crystalization_process(ethereal, FALSE)
 		return

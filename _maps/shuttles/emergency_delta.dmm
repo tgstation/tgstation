@@ -265,10 +265,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "au" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -362,8 +359,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "aJ" = (
-/obj/machinery/shower{
-	dir = 8;
+/obj/machinery/shower/directional/west{
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -569,7 +565,7 @@
 /area/shuttle/escape)
 "bl" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/fire/firefighter,
+/obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,

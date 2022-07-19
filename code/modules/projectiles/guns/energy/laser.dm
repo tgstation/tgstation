@@ -15,6 +15,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = FALSE
 	item_flags = NONE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/retro
 	name ="retro laser gun"
@@ -135,6 +136,7 @@
 	pin = /obj/item/firing_pin/tag/blue
 	ammo_x_offset = 2
 	selfcharge = TRUE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
@@ -149,6 +151,7 @@
 	pin = /obj/item/firing_pin/tag/red
 	ammo_x_offset = 2
 	selfcharge = TRUE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)

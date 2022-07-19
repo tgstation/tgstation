@@ -35,6 +35,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest_all,
 	/client/proc/cmd_admin_areatest_station,
+	/client/proc/cmd_admin_areatest_station_no_maintenance,
 	#ifdef TESTING
 	/client/proc/see_dirty_varedits,
 	#endif

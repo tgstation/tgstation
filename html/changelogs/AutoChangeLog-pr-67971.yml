@@ -1,6 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "TGUI Say now retains current messages / keying through history doesn't erase your current message."
-  - bugfix: "TextArea keydown prop has been renamed so as to not trigger double keydown events."
-  - bugfix: "TGUI say now properly expands when viewing recent messages"

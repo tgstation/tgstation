@@ -483,10 +483,10 @@ Difficulty: Hard
 	if(!blinking)
 		. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Moved(oldLoc, movement_dir)
+/mob/living/simple_animal/hostile/megafauna/hierophant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!stat && .)
-		var/obj/effect/temp_visual/hierophant/squares/HS = new(oldLoc)
+		var/obj/effect/temp_visual/hierophant/squares/HS = new(old_loc)
 		HS.setDir(movement_dir)
 		playsound(src, 'sound/mecha/mechmove04.ogg', 150, TRUE, -4)
 		if(target)

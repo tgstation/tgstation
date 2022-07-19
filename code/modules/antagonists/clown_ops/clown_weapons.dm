@@ -20,7 +20,11 @@
 	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 90, FIRE = 70, ACID = 50)
 	strip_delay = 70
 	resistance_flags = NONE
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+
+/obj/item/clothing/shoes/clown_shoes/combat/Initialize(mapload)
+	. = ..()
+	
+	create_storage(type = /datum/storage/pockets/shoes)
 
 /// Recharging rate in PPS (peels per second)
 #define BANANA_SHOES_RECHARGE_RATE 17
@@ -34,11 +38,13 @@
 	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 50, FIRE = 90, ACID = 50)
 	strip_delay = 70
 	resistance_flags = NONE
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	always_noslip = TRUE
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize(mapload)
 	. = ..()
+
+	create_storage(type = /datum/storage/pockets/shoes)
+
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	bananium.insert_amount_mat(BANANA_SHOES_MAX_CHARGE, /datum/material/bananium)
 	START_PROCESSING(SSobj, src)

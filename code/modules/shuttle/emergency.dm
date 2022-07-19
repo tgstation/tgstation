@@ -712,7 +712,7 @@
 
 /obj/item/storage/pod/attack_hand(mob/user, list/modifiers)
 	if (can_interact(user))
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, user)
+		atom_storage?.show_contents(user)
 	return TRUE
 
 /obj/item/storage/pod/MouseDrop(over_object, src_location, over_location)
