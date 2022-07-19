@@ -659,6 +659,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			for(var/_executed in rule_list)
 				var/datum/executed = _executed
 				if(blocking == executed.type)
+					log_game("DYNAMIC: FAIL: check_blocking - [blocking] conflicts with [executed.type]")
 					return TRUE
 	return FALSE
 

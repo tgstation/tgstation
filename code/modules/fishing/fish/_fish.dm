@@ -128,7 +128,7 @@
 	var/weight_mod = modifier * average_weight
 	weight = max(1,gaussian(average_weight + weight_mod, weight_deviation))
 
-/obj/item/fish/Moved(atom/OldLoc, Dir)
+/obj/item/fish/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	check_environment_after_movement()
 
