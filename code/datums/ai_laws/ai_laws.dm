@@ -31,7 +31,7 @@
 ///returns a law datum that GLOB._round_default_lawset will be set to.
 /proc/setup_round_default_laws()
 	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
-	var/list/spec_law_ids = CONFIG_GET(keyed_list/specified_laws)
+	var/list/specified_law_ids = CONFIG_GET(keyed_list/specified_laws)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
 		return pick_weighted_lawset()
@@ -40,14 +40,14 @@
 		if(CONFIG_ASIMOV)
 			return /datum/ai_laws/default/asimov
 		if(CONFIG_SPECIFIED)
-			var/list/speclaws = list()
-			for(var/lpath in subtypesof(/datum/ai_laws))
-				var/datum/ai_laws/L = lpath
-				if(initial(L.id) in spec_law_ids)
-					speclaws += lpath
+			var/list/specifiedlaws = list()
+			for(var/lawpath in subtypesof(/datum/ai_laws))
+				var/datum/ai_laws/laws = lawpath
+				if(initial(laws.id) in specified_law_ids)
+					specifiedlaws += lawpath
 			var/datum/ai_laws/lawtype
-			if(speclaws.len)
-				lawtype = pick(speclaws)
+			if(specifiedlaws.len)
+				lawtype = pick(specifiedlaws)
 			else
 				lawtype = pick(subtypesof(/datum/ai_laws/default))
 
