@@ -6,7 +6,7 @@
 	earliest_start = 5 MINUTES
 
 /datum/round_event_control/aurora_caelus/canSpawnEvent(players)
-	if(!CONFIG_GET(flag/starlight)||(SSmapping.config?.map_name=="Ice Box Station"))
+	if(!CONFIG_GET(flag/starlight)&&!(SSmapping.empty_space))
 		return FALSE
 	return ..()
 
