@@ -1,6 +1,11 @@
 #define MINOR_INSANITY_PEN 5
 #define MAJOR_INSANITY_PEN 10
 
+/**
+ * Mood datum
+ *
+ * Contains the logic for controlling a living mob's mood and sanity.
+ */
 /datum/mood
 	/// Weakref to the parent (living) mob
 	var/datum/weakref/parent
@@ -58,7 +63,6 @@
 
 /datum/mood/process(delta_time)
 	var/mob/living/mob_parent = parent?.resolve()
-
 	if (mob_parent.stat == DEAD)
 		return
 
@@ -91,6 +95,7 @@
 	if(HAS_TRAIT(mob_parent, TRAIT_JOLLY) && DT_PROB(0.416, delta_time))
 		add_mood_event("jolly", /datum/mood_event/jolly)
 
+/// Handles mood given by nutrition
 /datum/mood/proc/handle_nutrition()
 	var/mob/living/mob_parent = parent?.resolve()
 	if (HAS_TRAIT(mob_parent, TRAIT_NOHUNGER))
@@ -112,6 +117,13 @@
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_mood_event("nutrition", /datum/mood_event/starving)
 
+/**
+ * Adds a mood event to the mob
+ *
+ * Arguments:
+ * * category - (text) category of the mood event
+ * * type - (path) any /datum/mood_event
+ */
 /datum/mood/proc/add_mood_event(category, type, ...)
 	if (!ispath(type, /datum/mood_event))
 		return
@@ -129,10 +141,8 @@
 			return // Don't need to update the event.
 	var/list/params = args.Copy(3)
 
-	var/mob/living/parent_mob = parent?.resolve()
-	if (!parent_mob)
-		return
-	params.Insert(1, parent_mob)
+	var/mob/living/mob_parent = parent?.resolve()
+	params.Insert(1, mob_parent)
 	the_event = new type(arglist(params))
 
 	mood_events[category] = the_event
@@ -142,6 +152,12 @@
 	if (the_event.timeout)
 		addtimer(CALLBACK(src, .proc/clear_mood_event, category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
 
+/**
+ * Removes a mood event from the mob
+ *
+ * Arguments:
+ * * category - (Text) Removes the mood event with the given category
+ */
 /datum/mood/proc/clear_mood_event(category)
 	if (!istext(category))
 		category = REF(category)
@@ -160,8 +176,8 @@
 	mood = 0
 	shown_mood = 0
 
-	for(var/mood_event in mood_events)
-		var/datum/mood_event/the_event = mood_events[mood_event]
+	for(var/category in mood_events)
+		var/datum/mood_event/the_event = mood_events[category]
 		mood += the_event.mood_change
 		if (!the_event.hidden)
 			shown_mood += the_event.mood_change
@@ -192,11 +208,8 @@
 
 /// Updates the mob's mood icon
 /datum/mood/proc/update_mood_icon()
-	var/mob/living/parent_mob = parent?.resolve()
-	if (!parent_mob)
-		return
-
-	if (!(parent_mob.client || parent_mob.hud_used))
+	var/mob/living/mob_parent = parent?.resolve()
+	if (!(mob_parent.client || mob_parent.hud_used))
 		return
 
 	mood_screen_object.cut_overlays()
@@ -205,8 +218,8 @@
 	// lets see if we have an special icons to show instead of the normal mood levels
 	var/list/conflicting_moodies = list()
 	var/highest_absolute_mood = 0
-	for (var/mood_event in mood_events)
-		var/datum/mood_event/the_event = mood_events[mood_event]
+	for (var/category in mood_events)
+		var/datum/mood_event/the_event = mood_events[category]
 		if (!the_event.special_screen_obj)
 			continue
 		if (!the_event.special_screen_replace)
@@ -239,20 +252,19 @@
 			mood_screen_object.icon_state = "[conflicting_event.special_screen_obj]"
 			break
 
+/// Sets up the mood HUD object
 /datum/mood/proc/modify_hud(datum/source)
 	SIGNAL_HANDLER
 
-	var/mob/living/owner = parent?.resolve()
-	if (!owner)
-		return
-
-	var/datum/hud/hud = owner.hud_used
+	var/mob/living/mob_parent = parent?.resolve()
+	var/datum/hud/hud = mob_parent.hud_used
 	mood_screen_object = new
 	mood_screen_object.color = "#4b96c4"
 	hud.infodisplay += mood_screen_object
 	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(mood_screen_object, COMSIG_CLICK, .proc/hud_click)
 
+/// Removes the mood HUD object
 /datum/mood/proc/unmodify_hud(datum/source)
 	SIGNAL_HANDLER
 
@@ -264,6 +276,7 @@
 		hud.infodisplay -= mood_screen_object
 	QDEL_NULL(mood_screen_object)
 
+/// Handles clicking on the mood HUD object
 /datum/mood/proc/hud_click(datum/source, location, control, params, mob/user)
 	SIGNAL_HANDLER
 
@@ -273,6 +286,7 @@
 		return
 	print_mood(user)
 
+/// Prints the users mood, sanity, and moodies to chat
 /datum/mood/proc/print_mood(mob/user)
 	var/msg = "[span_info("<EM>My current mental status:</EM>")]\n"
 	msg += span_notice("My current sanity: ") //Long term
@@ -313,8 +327,8 @@
 
 	msg += "[span_notice("Moodlets:")]\n"//All moodlets
 	if(mood_events.len)
-		for(var/i in mood_events)
-			var/datum/mood_event/event = mood_events[i]
+		for(var/category in mood_events)
+			var/datum/mood_event/event = mood_events[category]
 			switch(event.mood_change)
 				if(-INFINITY to MOOD_LEVEL_SAD2)
 					msg += span_boldwarning(event.description + "\n")
@@ -330,6 +344,7 @@
 		msg += "[span_grey("I don't have much of a reaction to anything right now.")]\n"
 	to_chat(user, examine_block(msg))
 
+/// Updates the mob's moodies, if the area provides a mood bonus
 /datum/mood/proc/check_area_mood(datum/source, area/new_area)
 	SIGNAL_HANDLER
 
@@ -339,6 +354,7 @@
 	else
 		clear_mood_event("area")
 
+/// Updates the mob's given beauty moodie, based on the area
 /datum/mood/proc/update_beauty(area/area_to_beautify)
 	if (area_to_beautify.outdoors) // if we're outside, we don't care
 		clear_mood_event("area_beauty")
@@ -383,41 +399,42 @@
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
 	sanity = amount
-	var/mob/living/master = parent?.resolve()
-	SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE, amount) // NOVA TODO: remove
+	var/mob/living/mob_parent = parent?.resolve()
+	SEND_SIGNAL(mob_parent, COMSIG_CARBON_SANITY_UPDATE, amount)
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			set_insanity_effect(MAJOR_INSANITY_PEN)
-			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
-			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
+			mob_parent.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
+			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = SANITY_LEVEL_INSANE
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			set_insanity_effect(MINOR_INSANITY_PEN)
-			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
-			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
+			mob_parent.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
+			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = SANITY_LEVEL_CRAZY
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			set_insanity_effect(0)
-			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
-			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
+			mob_parent.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
+			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = SANITY_LEVEL_UNSTABLE
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
 			set_insanity_effect(0)
-			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
-			master.remove_actionspeed_modifier(ACTIONSPEED_ID_SANITY)
+			mob_parent.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			mob_parent.remove_actionspeed_modifier(ACTIONSPEED_ID_SANITY)
 			sanity_level = SANITY_LEVEL_DISTURBED
 		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
 			set_insanity_effect(0)
-			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
-			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
+			mob_parent.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
 			sanity_level = SANITY_LEVEL_NEUTRAL
 		if(SANITY_GREAT+1 to INFINITY)
 			set_insanity_effect(0)
-			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
-			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
+			mob_parent.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
 			sanity_level = SANITY_LEVEL_GREAT
 	update_mood_icon()
 
+/// Sets the insanity effect on the mob
 /datum/mood/proc/set_insanity_effect(newval)
 	if (newval == insanity_effect)
 		return
@@ -435,6 +452,7 @@
 		qdel(moodlet)
 	update_mood()
 
+/// Helper to forcefully drain sanity
 /datum/mood/proc/direct_sanity_drain(amount)
 	set_sanity(sanity + amount, override = TRUE)
 
