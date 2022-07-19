@@ -430,6 +430,8 @@
 
 /// Clears a mood event from the mob
 /mob/proc/clear_mood_event(category)
+	// this isn't on /mob/living because it saves a lot of needless casts
+	// in procs that provide the mob as (mob/user
 	if (!isliving(src))
 		return
 	var/mob/living/living_mob = src
