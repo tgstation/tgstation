@@ -13,8 +13,10 @@ import { CircuitInfo } from './CircuitInfo';
 import { ABSOLUTE_Y_OFFSET, MOUSE_BUTTON_LEFT, TIME_UNTIL_PORT_RELEASE_WORKS } from './constants';
 import { Connections } from './Connections';
 import { ObjectComponent } from './ObjectComponent';
+import { DisplayComponent } from './DisplayComponent';
 import { VariableMenu } from './VariableMenu';
 import { ComponentMenu } from './ComponentMenu';
+import { logger } from '../../logging';
 
 export class IntegratedCircuit extends Component {
   constructor() {
@@ -37,7 +39,7 @@ export class IntegratedCircuit extends Component {
     this.handlePortRightClick = this.handlePortRightClick.bind(this);
     this.handlePortUp = this.handlePortUp.bind(this);
 
-    this.handlePortDrag = this.handlePortDrag.bind(this);
+    this.handleDragging = this.handleDragging.bind(this);
     this.handlePortRelease = this.handlePortRelease.bind(this);
     this.handleZoomChange = this.handleZoomChange.bind(this);
     this.handleBackgroundMoved = this.handleBackgroundMoved.bind(this);
@@ -48,6 +50,7 @@ export class IntegratedCircuit extends Component {
 
     this.handleMouseDownComponent = this.handleMouseDownComponent.bind(this);
     this.handleComponentDropped = this.handleComponentDropped.bind(this);
+    this.handleDisplayLocation = this.handleDisplayLocation.bind(this);
   }
 
   // Helper function to get an element's exact position
@@ -64,6 +67,19 @@ export class IntegratedCircuit extends Component {
       x: xPos,
       y: yPos + ABSOLUTE_Y_OFFSET,
     };
+  }
+
+  handleDisplayLocation(dom) {
+    if (!dom) {
+      return;
+    }
+
+    const position = this.getPosition(dom);
+    this.setState({
+      draggingComponentPos: position,
+      draggingOffsetX: dom.offsetWidth/2,
+      draggingOffsetY: dom.offsetHeight/2,
+    });
   }
 
   handlePortLocation(port, dom) {
@@ -110,12 +126,12 @@ export class IntegratedCircuit extends Component {
       },
     });
 
-    this.handlePortDrag(event);
+    this.handleDragging(event);
 
     this.timeUntilPortReleaseTimesOut
       = Date.now() + TIME_UNTIL_PORT_RELEASE_WORKS;
 
-    window.addEventListener('mousemove', this.handlePortDrag);
+    window.addEventListener('mousemove', this.handleDragging);
     window.addEventListener('mouseup', this.handlePortRelease);
   }
 
@@ -174,7 +190,7 @@ export class IntegratedCircuit extends Component {
     input_port.connected_to.push(isOutput? port.ref : selectedPort.ref);
   }
 
-  handlePortDrag(event) {
+  handleDragging(event) {
     const { data } = useBackend(this.context);
     const { screen_x, screen_y } = data;
     this.setState((state) => ({
@@ -197,7 +213,7 @@ export class IntegratedCircuit extends Component {
       selectedPort: null,
     });
 
-    window.removeEventListener('mousemove', this.handlePortDrag);
+    window.removeEventListener('mousemove', this.handleDragging);
   }
 
   handlePortRightClick(portIndex, componentId, port, isOutput, event) {
@@ -266,12 +282,42 @@ export class IntegratedCircuit extends Component {
   }
 
   handleVarClicked(event, variable, is_setter) {
+    const component = {
+      name: is_setter? "Setter" : "Getter",
+      description: "This is a component",
+      color: "blue",
+      input_ports: [],
+      output_ports: [],
+    };
+
+    if (is_setter) {
+      component.input_ports = [
+        {
+          name: "Input",
+          type: variable.datatype,
+          color: variable.color,
+        },
+      ];
+    } else {
+      component.output_ports = [
+        {
+          name: "Value",
+          type: variable.datatype,
+          color: variable.color,
+        },
+      ];
+    }
+
     this.setState({
-      draggingVariable: variable,
+      draggingComponent: component,
+      draggingVariable: variable.name,
       variableIsSetter: is_setter,
     });
 
+    this.handleDragging(event);
+
     window.addEventListener('mouseup', this.handleVarDropped);
+    window.addEventListener('mousemove', this.handleDragging);
   }
 
   handleVarDropped(event) {
@@ -279,17 +325,27 @@ export class IntegratedCircuit extends Component {
     const {
       draggingVariable,
       variableIsSetter,
-      backgroundX,
-      backgroundY,
+      mouseX,
+      mouseY,
       zoom,
+      draggingComponentPos,
     } = this.state;
-    const {
-      screen_x,
-      screen_y,
-    } = data;
 
-    const xPos = (event.clientX - (backgroundX || screen_x));
-    const yPos = (event.clientY - (backgroundY || screen_y));
+    this.setState({
+      draggingVariable: null,
+      variableIsSetter: null,
+      draggingComponent: null,
+    });
+
+    window.removeEventListener('mousemove', this.handleDragging);
+    window.removeEventListener('mouseup', this.handleVarDropped);
+
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    const xPos = mouseX - (mouseX - draggingComponentPos.x);
+    const yPos = mouseY - (mouseY - draggingComponentPos.y);
 
     act("add_setter_or_getter", {
       variable: draggingVariable,
@@ -297,52 +353,47 @@ export class IntegratedCircuit extends Component {
       rel_x: xPos*Math.pow(zoom, -1),
       rel_y: (yPos + ABSOLUTE_Y_OFFSET)*Math.pow(zoom, -1),
     });
-
-    this.setState({
-      draggingVariable: null,
-      variableIsSetter: null,
-    });
-
-    window.removeEventListener('mouseup', this.handleVarDropped);
   }
 
 
   handleMouseDownComponent(event, component) {
     this.setState({
-      draggingComponent: component.type,
+      draggingComponent: component,
     });
 
+    this.handleDragging(event);
+
+    window.addEventListener('mousemove', this.handleDragging);
     window.addEventListener('mouseup', this.handleComponentDropped);
   }
 
   handleComponentDropped(event) {
-    const { data, act } = useBackend(this.context);
+    const { act } = useBackend(this.context);
     const {
       draggingComponent,
-      backgroundX,
-      backgroundY,
       zoom,
+      draggingComponentPos,
+      mouseX,
+      mouseY,
     } = this.state;
-    const {
-      screen_x,
-      screen_y,
-    } = data;
 
     this.setState({
       draggingComponent: null,
     });
 
     window.removeEventListener('mouseup', this.handleComponentDropped);
+    window.removeEventListener('mousemove', this.handleDragging);
 
     if (event.defaultPrevented) {
       return;
     }
-
-    const xPos = (event.clientX - (backgroundX || screen_x));
-    const yPos = (event.clientY - (backgroundY || screen_y));
+    logger.log(draggingComponentPos);
+    logger.log(mouseX, mouseY);
+    const xPos = mouseX - (mouseX - draggingComponentPos.x);
+    const yPos = mouseY - (mouseY - draggingComponentPos.y);
 
     act("print_component", {
-      component_to_print: draggingComponent,
+      component_to_print: draggingComponent.type,
       rel_x: xPos*Math.pow(zoom, -1),
       rel_y: (yPos + ABSOLUTE_Y_OFFSET)*Math.pow(zoom, -1),
     });
@@ -366,10 +417,15 @@ export class IntegratedCircuit extends Component {
       stored_designs,
     } = data;
     const {
+      mouseX,
+      mouseY,
       locations,
       selectedPort,
       variableMenuOpen,
       componentMenuOpen,
+      draggingComponent,
+      draggingOffsetX,
+      draggingOffsetY,
     } = this.state;
     const connections = [];
 
@@ -391,7 +447,7 @@ export class IntegratedCircuit extends Component {
     }
 
     if (selectedPort) {
-      const { mouseX, mouseY, zoom } = this.state;
+      const { zoom } = this.state;
       const isOutput = selectedPort.is_output;
       const portLocation = locations[selectedPort.ref];
       const mouseCoords = {
@@ -493,6 +549,16 @@ export class IntegratedCircuit extends Component {
                     act={act}
                   />
                 )
+            )}
+            {!!draggingComponent && (
+              <DisplayComponent
+                component={draggingComponent}
+                position="absolute"
+                left={`${mouseX - draggingOffsetX}px`}
+                top={`${mouseY - draggingOffsetY}px`}
+                onDisplayUpdated={this.handleDisplayLocation}
+                onDisplayLoaded={this.handleDisplayLocation}
+              />
             )}
             <Connections connections={connections} />
           </InfinitePlane>

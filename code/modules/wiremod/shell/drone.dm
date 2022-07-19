@@ -7,6 +7,8 @@
 	name = "drone"
 	icon = 'icons/obj/wiremod.dmi'
 	icon_state = "setup_medium_med"
+	maxHealth = 500
+	health = 500
 	living_flags = 0
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
@@ -21,6 +23,15 @@
 	. = ..()
 	if(health < 0)
 		gib(no_brain = TRUE, no_organs = TRUE, no_bodyparts = TRUE)
+
+/mob/living/circuit_drone/welder_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(health == maxHealth)
+		balloon_alert(user, "already at maximum integrity!")
+		return TRUE
+	if(tool.use_tool(src, user, 0.5 SECONDS, volume = 50))
+		heal_overall_damage(50, 50)
+	return TRUE
 
 /mob/living/circuit_drone/spawn_gibs()
 	new /obj/effect/gibspawner/robot(drop_location(), src, get_static_viruses())

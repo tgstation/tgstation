@@ -65,6 +65,9 @@ export class VariableMenu extends Component {
             onClick={onClose}
           />
         }
+        onMouseUp={(event) => {
+          event.preventDefault();
+        }}
       >
         <Stack height="100%">
           <Stack.Item grow={1} mr={2}>
@@ -92,7 +95,7 @@ export class VariableMenu extends Component {
                           <Button
                             fluid
                             onMouseDown={(e) =>
-                              handleMouseDownSetter(e, val.name)}
+                              handleMouseDownSetter(e, val)}
                             color={val.color}
                             disabled={!!val.is_list}
                             tooltip={
@@ -113,7 +116,7 @@ export class VariableMenu extends Component {
                             }
                             color={val.color}
                             onMouseDown={(e) =>
-                              handleMouseDownGetter(e, val.name)}
+                              handleMouseDownGetter(e, val)}
                             icon="book-open"
                           />
                         </Stack.Item>
