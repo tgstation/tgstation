@@ -175,8 +175,10 @@
  * * bold - Whether this text should be rendered completely bold.
  * * overwrite - If TRUE, will overwrite existing field ID's data if it exists.
  */
-/obj/item/paper/proc/add_field_input(field_id, text, font, color, bold, overwrite = FALSE)
+/obj/item/paper/proc/add_field_input(field_id, text, font, color, bold, signature_name, overwrite = FALSE)
 	var/datum/paper_field/field_data_datum = null
+
+	var/field_text = (text == "%sign") ? signature_name : text
 
 	for(var/datum/paper_field/field_input in raw_field_input_data)
 		if(field_input.field_index == field_id)
@@ -188,7 +190,7 @@
 	if(!field_data_datum)
 		var/new_field_input_datum = new /datum/paper_field(
 			field_id,
-			text,
+			field_text,
 			font,
 			color,
 			bold
@@ -197,7 +199,7 @@
 		return TRUE
 
 	var/new_input_datum = new /datum/paper_input(
-		text,
+		field_text,
 		font,
 		color,
 		bold,
@@ -396,6 +398,8 @@
 /obj/item/paper/ui_static_data(mob/user)
 	var/list/static_data = list()
 
+	static_data["user_name"] = user.real_name
+
 	static_data["raw_text_input"] = list()
 	for(var/datum/paper_input/text_input as anything in raw_text_inputs)
 		static_data["raw_text_input"] += list(text_input.to_list())
@@ -415,6 +419,7 @@
 
 	static_data["default_pen_font"] = PEN_FONT
 	static_data["default_pen_color"] = COLOR_BLACK
+	static_data["signature_font"] = FOUNTAIN_PEN_FONT
 
 	return static_data;
 
@@ -512,7 +517,7 @@
 
 			// tgui should prevent this outcome.
 			if(new_length > MAX_PAPER_LENGTH)
-				log_paper("[key_name(user)] wrote to [name] when it would exceed the length limit by [new_length - MAX_PAPER_LENGTH] characters: \"[paper_input]\"")
+				log_paper("[key_name(user)] tried to write to [name] when it would exceed the length limit by [new_length - MAX_PAPER_LENGTH] characters: \"[paper_input]\"")
 				return TRUE
 
 			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
@@ -561,7 +566,7 @@
 					log_paper("[key_name(user)] tried to write to invalid field [field_key] (when the paper only has [input_field_count] fields) with the following text: [field_text]")
 					return TRUE
 
-				if(!add_field_input(field_key, field_text, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"]))
+				if(!add_field_input(field_key, field_text, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], user.real_name))
 					log_paper("[key_name(user)] tried to write to field [field_key] when it already has data, with the following text: [field_text]")
 
 			update_static_data(user, ui)
@@ -663,6 +668,9 @@
 		field_index = field_index,
 		field_data = field_data.to_list(),
 	)
+
+
+/datum/paper_field/signature
 
 /obj/item/paper/construction
 

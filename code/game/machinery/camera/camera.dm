@@ -326,6 +326,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	// OTHER
 	if(istype(I, /obj/item/modular_computer/tablet) && isliving(user))
+		// TIMBERTODO - Look at camera paper showing.
 		var/mob/living/paper_user = user
 
 		var/itemname = ""

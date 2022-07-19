@@ -10,7 +10,6 @@ import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'inferno';
 import { clamp } from 'common/math';
-import { logger } from '../logging';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
@@ -19,14 +18,17 @@ const TEXTAREA_INPUT_HEIGHT = 200;
 
 type PaperContext = {
   // ui_static_data
+  user_name: string;
   raw_text_input?: PaperInput[];
   raw_field_input?: FieldInput[];
   raw_stamp_input?: StampInput[];
   max_length: number;
+  max_input_field_length: number;
   paper_color: string;
   paper_name: string;
   default_pen_font: string;
   default_pen_color: string;
+  signature_font: string;
 
   // ui_data
   held_item_details?: WritingImplement;
@@ -100,7 +102,8 @@ const createPreview = (
   textAreaText: string | null,
   defaultFont: string,
   defaultColor: string,
-  heldItemDetails: WritingImplement | undefined
+  heldItemDetails: WritingImplement | undefined,
+  signature: string
 ) => {
   let output = '';
 
@@ -127,14 +130,12 @@ const createPreview = (
       fontFace,
       fontColor,
       fontBold,
-      fieldDataList,
+      signature,
       fieldCounter,
       readOnly
     );
 
     output += processingOutput.text;
-
-    logger.log(processingOutput.fieldCount);
 
     fieldCounter = processingOutput.fieldCount;
   });
@@ -149,7 +150,7 @@ const createPreview = (
       fontFace,
       fontColor,
       fontBold,
-      null,
+      signature,
       fieldCounter,
       true
     ).text;
@@ -169,31 +170,42 @@ const getHeaderID = (header) => {
 };
 
 // Hacky, yes, works?...yes
-const textWidth = (text, font, fontsize, scalar = 1.0) => {
+const textWidth = (text, font, fontsize) => {
   // default font height is 12 in tgui
-  font = `bold ${fontsize}px ${font};`;
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d');
-  ctx.font = font;
-  const width = ctx.measureText(text).width;
-  return Math.ceil(width * scalar);
+  ctx.font = `${fontsize}px ${font}`;
+  return ctx.measureText(text).width;
 };
 
-const field_regex = /\[(_+)\]/g;
+const field_regex = /\[((?:_+)|(?:%s(?:ign)*))\]/g;
 const field_tag_regex =
   /\[<input\s+(?!disabled)(.*?)\s+id="paperfield_(?<id>\d+)"(.*?)\/>\]/gm;
-const sign_regex = /%s(?:ign)?(?=\\s|$)?/gim;
+const sign_regex = /^%s(?:ign)*$/i;
 
 const createFields = (
   txt,
   font,
   fontsize,
   color,
+  signature,
   forceReadonlyFields,
   counter = 0
 ) => {
   const ret_text = txt.replace(field_regex, (match, p1, offset, string) => {
-    const width = textWidth(match, font, fontsize, 1.35) + 'px';
+    const isSignature = p1 === '%sign' || p1 === '%s';
+
+    if (isSignature) {
+      return createSignatureField(
+        signature,
+        font,
+        fontsize,
+        color,
+        createIDHeader(counter++)
+      );
+    }
+
+    const width = textWidth(match, font, fontsize) + 'px';
     return createInputField(
       p1.length,
       width,
@@ -204,6 +216,7 @@ const createFields = (
       forceReadonlyFields
     );
   });
+
   return {
     counter,
     text: ret_text,
@@ -221,7 +234,13 @@ const createInputField = (
 ) => {
   return `[<input ${
     readOnly ? 'disabled ' : ''
-  }type="text" style="font:'${fontsize}x ${font}';color:${color};min-width:${width};max-width:${width};" id="${id}" maxlength=${length} size=${length} />]`;
+  }type="text" style="font-size:${fontsize}px; font-family: ${font};color:${color};min-width:${width};max-width:${width};" id="${id}" maxlength=${length} size=${length} />]`;
+};
+
+const createSignatureField = (signature, font, fontsize, color, id) => {
+  const width = `${textWidth(`[${signature}]`, font, fontsize)}px`;
+  const length = signature.length;
+  return `[<input disabled value="${signature}" type="text" style="font-size:${fontsize}px; font-family:${font};color:${color};min-width:${width};max-width:${width};" id="${id}" maxlength=${length} size=${length} />]`;
 };
 
 const formatAndProcessRawText = (
@@ -229,7 +248,7 @@ const formatAndProcessRawText = (
   font,
   color,
   bold,
-  fieldData,
+  signature,
   fieldCounter = 0,
   forceReadonlyFields = false
 ): { text: string; fieldCount: number } => {
@@ -245,6 +264,7 @@ const formatAndProcessRawText = (
     font,
     12,
     color,
+    signature,
     forceReadonlyFields,
     fieldCounter
   );
@@ -470,8 +490,12 @@ const hookAllFields = (raw_text, onInputHandler) => {
       }
 
       if (dom.disabled) {
+        // logger.log(`Skipped ${id}`);
+        // logger.log(`${dom.outerHTML}`);
         continue;
       }
+
+      // logger.log(`Hooked ${id}`);
 
       dom.oninput = onInputHandler;
     }
@@ -498,6 +522,7 @@ const fillAllFields = (fieldInputData: FieldInput[]) => {
     dom.value = fieldData.raw_text;
     dom.style.fontFamily = fieldData.font;
     dom.style.color = fieldData.color;
+    dom.style.fontSize = '12px';
     dom.style.fontWeight = 'bold';
   });
 };
@@ -633,6 +658,8 @@ export const PreviewView = (props, context) => {
     default_pen_color,
     paper_color,
     held_item_details,
+    signature_font,
+    user_name,
   } = data;
 
   const [textAreaText] = useLocalState(context, 'textAreaText', '');
@@ -648,7 +675,8 @@ export const PreviewView = (props, context) => {
     canEdit(held_item_details) ? textAreaText : null,
     default_pen_font,
     default_pen_color,
-    held_item_details
+    held_item_details,
+    user_name
   );
 
   const onInputHandler = (ev) => {
@@ -670,6 +698,8 @@ export const PreviewView = (props, context) => {
   const textHTML = {
     __html: '<span class="paper-text">' + parsedAndSanitisedHTML + '</span>',
   };
+
+  // logger.log(textHTML.__html);
 
   const { scrollableRef, handleOnScroll } = props;
 

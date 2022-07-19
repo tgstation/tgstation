@@ -63,7 +63,7 @@
 			inserted_item = W
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
-	// TODO - Make sure this is safe to put back in.
+	// TIMBERTODO - Make sure mod_computer scanning is safe to put back in.
 	/*if(istype(W, /obj/item/paper))
 		var/obj/item/paper/paper = W
 

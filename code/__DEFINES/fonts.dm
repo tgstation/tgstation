@@ -11,6 +11,8 @@
 #define SIGNFONT "Times New Roman"
 /// Font used by charcoal pens
 #define CHARCOAL_FONT "Candara"
+/// Font used when signing on paper.
+#define SIGNATURE_FONT "Brush Script MT"
 
 //pda fonts
 #define MONO "Monospaced"

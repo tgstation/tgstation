@@ -787,7 +787,7 @@
 	busy = TRUE
 	playsound(src, 'sound/machines/printer.ogg', 50)
 	flick("binder1", src)
-	stack_trace("TODO - Some dumbass ocelot called Timberpoes removed the book binding proc and forgot to re-add it. This was missed in code review. You're welcome.")
+	stack_trace("TIMBERTODO - Some dumbass ocelot called Timberpoes removed the book binding proc and forgot to re-add it. This was missed in code review. You're welcome.")
 	//addtimer(CALLBACK(src, .proc/bind_book, draw_from), 4.1 SECONDS)
 
 /*/obj/machinery/bookbinder/proc/bind_book(obj/item/paper/draw_from)
@@ -804,4 +804,4 @@
 	bound_book.gen_random_icon_state()
 	qdel(draw_from)*/
 
-// TODO - BOOK BINDING MAKE SURE UNSANITISED INPUT IS FINE WITH IT
+// TIMBERTODO - BOOK BINDING MAKE SURE UNSANITISED INPUT IS FINE WITH IT
