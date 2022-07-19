@@ -94,7 +94,7 @@ SUBSYSTEM_DEF(pai)
 		to_chat(usr, span_warning("Your candidacy has been submitted, but pAI cards have been alerted too recently."))
 		return FALSE
 	submit_spam = TRUE
-	for(var/obj/item/pai_card/pai_card in pai_card_list)
+	for(var/obj/item/pai_card/pai_card as anything in pai_card_list)
 		if(!pai_card.pai)
 			pai_card.alert_update()
 	to_chat(usr, span_notice("Your pAI candidacy has been submitted!"))
