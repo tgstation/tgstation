@@ -112,7 +112,7 @@
 	if(permanent)
 		return
 
-	if ("blessing" in our_guy.mob_mood.mood_events)
+	if (!("blessing" in our_guy.mob_mood.mood_events))
 		return
 
 	qdel(src)
