@@ -8,7 +8,7 @@
 	///checker on whether we have sent the crystal yet.
 	var/sent_crystal = FALSE
 
-/datum/traitor_objective/final/can_take_final_objective()
+/datum/traitor_objective/final/supermatter_cascade/can_take_final_objective()
 	. = ..()
 	if(!.)
 		return FALSE
