@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes: 
-  - bugfix: "fixed attaching a knife to cleanbot succeeding even when user has NO_DROP"

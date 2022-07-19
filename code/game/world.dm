@@ -301,12 +301,12 @@ GLOBAL_VAR(restart_counter)
 	if(LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS))
 		features += "closed"
 
-	var/s = ""
+	var/new_status = ""
 	var/hostedby
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
-			s += "<b>[server_name]</b> "
+			new_status += "<b>[server_name]</b> "
 		if(!CONFIG_GET(flag/norespawn))
 			features += "respawn"
 		if(!CONFIG_GET(flag/allow_ai))
@@ -314,7 +314,7 @@ GLOBAL_VAR(restart_counter)
 		hostedby = CONFIG_GET(string/hostedby)
 
 	if (CONFIG_GET(flag/station_name_in_hub_entry))
-		s += " &#8212; <b>[station_name()]</b>"
+		new_status += " &#8212; <b>[station_name()]</b>"
 
 	var/players = GLOB.clients.len
 
@@ -324,14 +324,16 @@ GLOBAL_VAR(restart_counter)
 		features += "hosted by <b>[hostedby]</b>"
 
 	if(length(features))
-		s += ": [jointext(features, ", ")]"
+		new_status += ": [jointext(features, ", ")]"
 
-	s += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
+	new_status += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
 	if(SSmapping.config)
-		s += "<br>Map: <b>[SSmapping.config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.config.map_name]</b>"
-	s += "<br>Alert: <b>[capitalize(SSsecurity_level.get_current_level_as_text())]</b>"
+		new_status += "<br>Map: <b>[SSmapping.config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.config.map_name]</b>"
+	var/alert_text = SSsecurity_level.get_current_level_as_text()
+	if(alert_text)
+		new_status += "<br>Alert: <b>[capitalize(alert_text)]</b>"
 
-	status = s
+	status = new_status
 
 /world/proc/update_hub_visibility(new_visibility)
 	if(new_visibility == GLOB.hub_visibility)

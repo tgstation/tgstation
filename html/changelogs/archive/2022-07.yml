@@ -449,3 +449,256 @@
   zxaber:
   - imageadd: The Airlock Shock Indicator seen when using a Diagnostics Hud has a
       new sprite.
+2022-07-15:
+  Mothblocks:
+  - soundadd: Power is no longer required for ambience.
+  Salex08:
+  - bugfix: eyesnatcher objective wont cause runtime errors anymore
+  TheBoondock:
+  - bugfix: fixed attaching a knife to cleanbot succeeding even when user has NO_DROP
+  jlsnow301:
+  - code_imp: New string ops for tgui
+  - bugfix: Removed some errant loggers left in UIs
+  orthography:
+  - rscadd: Adds a new possible cosmetic change to the ordinance lab.
+  timothymtorres:
+  - bugfix: Fix rolling paper pack spawning empty
+2022-07-16:
+  13spacemen:
+  - rscadd: You can now deconstruct living AIs and turn them back into AI core frames
+      with MMIs/posibrains. The AI can finally be a real boy
+  - qol: AIs that are gibbed now drop MMIs/posibrains
+  - rscadd: The comedian suit and coat are now available in the AutoDrobe! Wearing
+      them may make you feel like you need a psychiatrist.
+  Fikou, NecromancerAnne:
+  - balance: The Biohazard Sprayer, Power Fist, Flamethrower and Dart Pistol are no
+      longer in the nukie uplink, instead being given as bonuses in the keycarded
+      parts of the base.
+  Guillaume Prata:
+  - bugfix: Roller beds can actually fold when right clicked now.
+  Holoo-1:
+  - bugfix: fixed canister ui being too small
+  LordVollkorn / Gage Gaebler:
+  - rscadd: The toiletbong has been added to the game. Build it using the craftingmenu,
+      a wrench, a flamethrower and a nearby toilet.
+  - balance: Deconstructing a toiletbong will empty the flamethrower's plasma tank.
+      Engineers, you may build toiletbongs for anyone without feeling guilty.
+  - rscadd: The toiletbong can be emagged. But should you?
+  - rscadd: Plums have been added to Botany. Get your plum seeds today. *Click* Noice.
+  - rscadd: Plumcake and plumcake slices have been added. Find them in the craftingmenu.
+  - rscadd: Plumjuice and plumwine have been added. Pour yourself a glass.
+  - rscadd: A new drink called "The Hat" has been added. A hat is also where you drink
+      it from.
+  RandomGamer123:
+  - bugfix: You can no longer remove the turbine's rotor if its on or if its panel
+      is closed
+  SuperSlayer:
+  - spellcheck: Traitor codewords are now given by their employer, rather then by
+      The Syndicate
+  TheBoondock:
+  - rscadd: After years of research, the council of elder atmosian created and publish
+      an experimental design for a long range gas analyzer. The design specified it
+      to be coated in gold to signify the glory of atmosia.
+  magatsuchi:
+  - bugfix: mass transfer between storage no longer causes ear bleeds
+  timothymtorres:
+  - bugfix: Fix talking while mouth is gagged with tape
+  vincentiusvin:
+  - qol: Canisters, scrubbers, and pumps no longer stop reacting when wrenched.
+  - code_imp: Canisters should process once instead of twice when spawning. No gameplay
+      changes expected.
+2022-07-17:
+  Cheshify:
+  - rscdel: Removed the ability to have impure or failed chems
+  - balance: A number of impurities in chemicals are now inverses
+  - bugfix: Mannitol now has a working inverse
+  D4C-420:
+  - imageadd: Unique sprite for the Hypernob crystal from atmos
+  Fikou:
+  - bugfix: modsuit flamethrower will no longer push objects
+  Fikou, NecromancerAnne, Wallem:
+  - qol: nuke ops emergency box now contains a crowbar, screwdriver and mini welder
+  - rscdel: nuke ops leader krav maga is removed
+  - balance: nuke op survival knife has been replaced with an energy dagger
+  - balance: energy daggers have light armor penetration and wound bonus
+  - qol: energy daggers now emit a soft red light
+  - balance: nuke op makarov has been replaced by the ansem, a 10mm clandestine pistol.
+  - rscadd: nuke op diamond drill has been replaced with an entrenching tool, a more
+      compact wrench/pickaxe/shovel
+  Melbert:
+  - qol: 'Icebox: The Quartermaster''s office has had its windows reinforced.'
+  Mooshimi:
+  - bugfix: Fixed some strengths on mineral walls, making them harder to break through
+      via hulk and mechs.
+  Y0SH1M4S73R:
+  - code_imp: the igniter, mirv, and summoning components and the knockback, lifesteal,
+      light_eater, and venomous elements are now compatible with projectile spells.
+  - code_imp: the lifesteal, light_eater, and venomous elements are now compatible
+      with turrets.
+  - code_imp: deployable turrets (like the ones given to marine engineers) now properly
+      set their fired projectiles' `fired_from` and `firer` vars to themselves and
+      their users, respectively.
+  - refactor: the "fired_from" var for projectiles (/obj/projectile) has been changed
+      to be a /datum instead of an /atom, as there were no instances in code where
+      it had to be an atom.
+  - code_imp: projectile spells set their fired projectiles' `fired_from` var to themselves
+      instead of the turf they were cast from
+2022-07-18:
+  13spacemen:
+  - bugfix: Tramstation's shutters are directional once again
+  ArcaneMusic:
+  - rscadd: Television themed headgear has arrived! Hack a costume vendor or hollow
+      out an unsecured status display to make one. Just be careful not to get flashed
+      while wearing one.
+  ChakatStormCloud:
+  - bugfix: 'Virology: all healing symptoms no longer receive an accidental power
+      boost at Stage Speed 6.'
+  Ghommie:
+  - bugfix: You can now recolor graffiti to dark colors.
+  JohnFulpWillard:
+  - bugfix: Fixed several instances where we should check internal organs for external
+      organs
+  Kylerace:
+  - bugfix: diagonal movement in space works again
+  LemonInTheDark:
+  - balance: Humanoid xenos can now eat people by aggressively grabbing their target,
+      and dragging them onto themselves. Sneak a knife in and start moving to really
+      ruin a filthy ghost role user's day
+  Melbert:
+  - bugfix: Thermal Vision mutation is no longer 1/10th its intended duration
+  - bugfix: Banana Glutton's ability will no longer break after eating a banana.
+  Moose1002:
+  - qol: Dispenser shells can now be filled from storage bags for easy bulk filling.
+  Mooshimi:
+  - rscadd: Festive paper hats have appeared in maintenance on every map. Central
+      Command is going to get angry if you keep partying like this...
+  - bugfix: Closed the trapdoor to space under a holo firelock in lower tram maint.
+  Pickle-Coding:
+  - bugfix: Fixes N2O formation consuming twice the amount of nitrogen and oxygen
+      than it should be.
+  Profakos:
+  - bugfix: signalCommander now works without altering the default frequency
+  Rhials:
+  - spellcheck: Fixes typos in certain away mission items.
+  ShizCalev:
+  - bugfix: Fixed the Eastern airlocks to the Space Hotel not being cyclelinked.
+  - bugfix: Added various missing air alarms, APCs, and cameras across all station
+      maps.
+  - bugfix: Pun Pun has been added to the bar on tramstation!
+  Timberpoes:
+  - bugfix: Fix issue when the connected database dies but the connection check still
+      returns "online" where players would be unable to join the shift because the
+      game thinks they haven't unlocked any jobs at all.
+  Tristrian:
+  - bugfix: The mining wardrobe locker contains an explorer duffel bag instead of
+      a normal one now
+  - spellcheck: '"explorator''s duffel bag" is now called "explorer duffel bag"'
+  Twaticus:
+  - bugfix: centcom gasmask appears on mob again
+  - bugfix: tile reskinner correctly shows new tiles
+  - bugfix: plasmaman glove inhands no longer appear as a plasmaman suit
+  - bugfix: wheelchairs gained their wheel back
+  celulamp:
+  - bugfix: Candy Corn craftable with 5 Corn Oil 5 Sugar
+  itseasytosee:
+  - bugfix: Holding people at gunpoint has been restored to its former glory, it can
+      once again be used at range, and allows the person holding up to move within
+      two tiles of the target.
+  kawoppi:
+  - rscadd: added animation for cleaning things with soap, mops, rags or cleanbots
+  - imageadd: added cleaning bubbles animation
+  lizardqueenlexi:
+  - bugfix: Fixed body_parts_covered on various suits to be consistent with their
+      sprites
+  - bugfix: Made digitigrade legs properly draw as non-digitigrade when wearing suits
+      that cover the legs
+  necromanceranne:
+  - balance: Gives the battlecruiser operatives the Ansem Pistol.
+  - bugfix: Gives the battlecruiser crew internals boxes.
+  - bugfix: Speedloaders and stripper clips can once again can load in ammo of the
+      same caliber. Detectives rejoice!
+  orthography:
+  - bugfix: puts beartraps in the tramstation janitor closet.
+  raffclar:
+  - bugfix: Fixed mecha cargo names breaking the utility module interface
+  timothymtorres:
+  - bugfix: Fix holoparasites to inherit language from their masters to aid communication
+  unit0016:
+  - refactor: ID Card department colors are now greyscaled. Say whuh!?
+2022-07-19:
+  13spacemen:
+  - bugfix: Carding an AI or deconstructing it will not ping ghosts about its positronic
+      brain
+  - bugfix: Ejecting a brain from an MMI will correctly transfer the guy in the MMI
+      to the ejected brain
+  - bugfix: You can (un)anchor AIs with a wrench
+  - qol: Changed the AI/borg hacked laws font color to be more readable
+  D4C-420:
+  - bugfix: fixed bioscrambler armor not having a cooldown when activated or emp'ed
+  - bugfix: fixed hallucination armor not having a cooldown when activated.
+  Guillaume Prata:
+  - qol: Be polite! While on walk intent you won't bump, swap places or push other
+      people now.
+  Jolly:
+  - bugfix: At Central Command, NanoTrasen's elite architects have noticed that they
+      built a door inside a window outside the Thunderdome and have decided to remove
+      it.
+  Kubisopplay:
+  - qol: makes borg hypo behave slightly saner
+  Melbert:
+  - bugfix: Fixes a runtime with seclite mounts being deconstructed.
+  MidoriWroth:
+  - rscadd: Added growable peanuts! Grow them in botany for a snack, or grind them
+      into peanut butter
+  - rscadd: Added 4 different peanut and peanut butter-based recipes
+  - rscadd: Added brownies. Yes, I know, finally
+  - rscadd: Added breadsticks, as if food addiction couldn't get worse
+  - rscadd: Added a simple nigiri sushi, for a little more sushi variety. Expect more
+      in the future.
+  - rscadd: Added a customizable onigiri dish, let your dreams come true.
+  - qol: Meatball noodle soup now requires grown peanuts instead of Gallery's peanuts
+  - imageadd: New sprites for all the new foods!
+  PositiveEntropy, Triiodine:
+  - imageadd: Resprites all backpacks and satchels in their entirety!
+  ShizCalev:
+  - bugfix: Snow golems will no longer be told to put on their wizard robes when trying
+      to throw snowballs!
+  - bugfix: Sloths loaded in ruins will no longer sometimes become Cargo's sloth!
+  - spellcheck: Tweaked the stat panel for revenants to make their essence readout
+      a little more clear.
+  - bugfix: Jaunting/incorporeal mobs will no longer be inserted into morgue trays
+      / cremators when they close.
+  - bugfix: Cremators will no longer cremate jaunting / incorporeal mobs.
+  - bugfix: Jaunting out of a morgue tray / cremator will now properly update its
+      sprite.
+  SuperNovaa41:
+  - rscdel: Removed the families gamemode.
+  SuperSlayer:
+  - balance: Baton resistance trait now prevents getting knockdowned by batons, instead
+      of just shortening knockdown duration
+  Tastyfish:
+  - bugfix: Shower and sink dismantling is now consistent.
+  - bugfix: Hydroponics tray plumbing connections now accept water without clogging.
+  - rscadd: Showers now have 3 selectable auto-shutoff modes.
+  - qol: Sinks and showers are now constructed with the player facing the wall.
+  - imageadd: Visuals improved on plumbing connections for offset appliances, like
+      sinks and showers.
+  TheBoondock:
+  - bugfix: fixed ranged analyzer being able to scan out of view targets
+  VioletN:
+  - bugfix: The supermatter engine can spawn bioscrambler anomalies when delaminating
+      again.
+  distributivgesetz:
+  - bugfix: Fix a runtime when replying to PDA messages through chat.
+  - code_imp: Small code improvements for modular computers and files.
+  magatsuchi:
+  - bugfix: you can no longer put undroppable items into storage
+  ninjanomnom:
+  - bugfix: Airlocks made from custom materials are now properly colored instead of
+      being forced to use the color of the first material used.
+  san7890:
+  - rscadd: Have you noticed the unrestricted directional airlock helpers on doors?
+      You know, the little lights under door that allow anyone to pass through. After
+      a few long hours in the lab, assistants have found a display hidden deep within
+      the machinations of the airlock that allow you to either flip the direction
+      of this Unrestricted Exit or disable it entirely.

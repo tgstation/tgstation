@@ -32,6 +32,15 @@
 	/// The rule needs this many applicants to be properly executed.
 	var/required_applicants = 1
 
+/datum/dynamic_ruleset/midround/from_ghosts/check_candidates()
+	var/dead_count = dead_players.len + list_observers.len
+	if (required_candidates <= dead_count)
+		return TRUE
+
+	log_game("DYNAMIC: FAIL: [src], a from_ghosts ruleset, did not have enough dead candidates: [required_candidates] needed, [dead_count] found")
+
+	return FALSE
+
 /datum/dynamic_ruleset/midround/trim_candidates()
 	living_players = trim_list(GLOB.alive_player_list)
 	living_antags = trim_list(GLOB.current_living_antags)
@@ -74,18 +83,23 @@
 // IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players, you need to manually check whether there are enough candidates
 // (see /datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE) for example)
 /datum/dynamic_ruleset/midround/ready(forced = FALSE)
-	if (!forced)
-		var/job_check = 0
-		if (enemy_roles.len > 0)
-			for (var/mob/M in GLOB.alive_player_list)
-				if (M.stat == DEAD || !M.client)
-					continue // Dead/disconnected players cannot count as opponents
-				if (M.mind && (M.mind.assigned_role.title in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role.title in restricted_roles)))
-					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+	if (forced)
+		return TRUE
 
-		var/threat = round(mode.threat_level/10)
-		if (job_check < required_enemies[threat])
-			return FALSE
+	var/job_check = 0
+	if (enemy_roles.len > 0)
+		for (var/mob/M in GLOB.alive_player_list)
+			if (M.stat == DEAD || !M.client)
+				continue // Dead/disconnected players cannot count as opponents
+			if (M.mind && (M.mind.assigned_role.title in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role.title in restricted_roles)))
+				job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+
+	var/threat = round(mode.threat_level/10)
+
+	if (job_check < required_enemies[threat])
+		log_game("DYNAMIC: FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
+		return FALSE
+
 	return TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/execute()
@@ -218,6 +232,7 @@
 
 /datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE)
 	if (required_candidates > living_players.len)
+		log_game("DYNAMIC: FAIL: [src] does not have enough candidates, using living_players ([required_candidates] needed, [living_players.len] found)")
 		return FALSE
 	return ..()
 
@@ -230,84 +245,6 @@
 	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	log_game("DYNAMIC: [key_name(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	return TRUE
-
-//////////////////////////////////////////////
-//                                          //
-//                 FAMILIES                 //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/midround/families
-	name = "Family Head Aspirants"
-	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
-	persistent = TRUE
-	antag_datum = /datum/antagonist/gang
-	antag_flag = ROLE_FAMILY_HEAD_ASPIRANT
-	antag_flag_override = ROLE_FAMILIES
-	protected_roles = list(
-		JOB_HEAD_OF_PERSONNEL,
-		JOB_PRISONER,
-	)
-	restricted_roles = list(
-		JOB_AI,
-		JOB_CYBORG,
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_RESEARCH_DIRECTOR,
-		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
-	)
-	required_candidates = 3
-	weight = 2
-	cost = 19
-	requirements = list(101,101,40,40,30,20,10,10,10,10)
-	flags = HIGH_IMPACT_RULESET
-	blocking_rules = list(/datum/dynamic_ruleset/roundstart/families)
-	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
-	var/datum/gang_handler/handler
-
-/datum/dynamic_ruleset/midround/families/trim_candidates()
-	..()
-	candidates = living_players
-	for(var/mob/living/player in candidates)
-		if(issilicon(player))
-			candidates -= player
-		else if(is_centcom_level(player.z))
-			candidates -= player
-		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
-			candidates -= player
-		else if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
-			candidates -= player
-		else if(player.mind.assigned_role.title in restricted_roles)
-			candidates -= player
-
-
-/datum/dynamic_ruleset/midround/families/ready(forced = FALSE)
-	if (required_candidates > living_players.len)
-		return FALSE
-	return ..()
-
-/datum/dynamic_ruleset/midround/families/pre_execute()
-	..()
-	handler = new /datum/gang_handler(candidates,restricted_roles)
-	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
-	handler.midround_ruleset = TRUE
-	handler.use_dynamic_timing = TRUE
-	return handler.pre_setup_analogue()
-
-/datum/dynamic_ruleset/midround/families/execute()
-	return handler.post_setup_analogue(TRUE)
-
-/datum/dynamic_ruleset/midround/families/clean_up()
-	QDEL_NULL(handler)
-	..()
-
-/datum/dynamic_ruleset/midround/families/rule_process()
-	return handler.process_analogue()
-
-/datum/dynamic_ruleset/midround/families/round_result()
-	return handler.set_round_result_analogue()
 
 //////////////////////////////////////////////
 //                                          //
@@ -396,7 +333,7 @@
 	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
+	if (!check_candidates())
 		return FALSE
 	if(GLOB.wizardstart.len == 0)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
@@ -446,7 +383,7 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
+	if (!check_candidates())
 		return FALSE
 	return ..()
 

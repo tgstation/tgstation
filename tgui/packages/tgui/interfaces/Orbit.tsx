@@ -1,10 +1,9 @@
 import { useBackend, useLocalState } from '../backend';
 import { filter, sortBy } from 'common/collections';
-import { multiline } from 'common/string';
+import { capitalizeFirst, multiline } from 'common/string';
 import { Button, Collapsible, Icon, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { flow } from 'common/fp';
-import { logger } from '../logging';
 
 type AntagGroup = [string, Observable[]];
 
@@ -110,7 +109,6 @@ const ObservableSearch = (props, context) => {
       sortBy<Observable>((poi) => -(poi.orbiters || 0)),
       // Makes a single Observable[] list for an easy search
     ])([alive, antagonists, dead, ghosts, misc, npcs].flat())[0];
-    logger.log(mostRelevant);
     if (mostRelevant !== undefined) {
       act('orbit', {
         ref: mostRelevant.ref,
@@ -262,7 +260,7 @@ const ObservableItem = (
     <Button
       color={threat || color}
       onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}>
-      {nameToUpper(name).slice(0, 44) /** prevents it from overflowing */}
+      {capitalizeFirst(name).slice(0, 44) /** prevents it from overflowing */}
       {!!orbiters && (
         <>
           {' '}
@@ -308,10 +306,3 @@ const getThreat = (orbiters: number): THREAT => {
     return THREAT.Large;
   }
 };
-
-/**
- * Returns a string with the first letter in uppercase.
- * Unlike capitalize(), has no effect on the other letters
- */
-const nameToUpper = (name: string): string =>
-  name.replace(/^\w/, (c) => c.toUpperCase());

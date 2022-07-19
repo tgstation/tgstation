@@ -148,9 +148,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "wJ" = (
-/obj/structure/sink{
-	pixel_y = 20
-	},
+/obj/structure/sink/directional/south,
 /turf/open/floor/iron/showroomfloor{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},

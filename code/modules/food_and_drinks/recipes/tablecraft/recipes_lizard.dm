@@ -306,7 +306,7 @@
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/spaghetti/nizaya = 1,
 		/obj/item/food/meatball = 2,
-		/obj/item/food/peanuts = 1
+		/obj/item/food/grown/peanut = 1
 	)
 	result = /obj/item/food/soup/meatball_noodles
 	subcategory = CAT_LIZARD
