@@ -1,4 +1,4 @@
-/// Helper component that al
+/// Helper component that handles users adding/removing ports from a circuit component.
 /datum/component/circuit_component_add_port
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 
