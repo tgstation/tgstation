@@ -2,13 +2,6 @@
 "aa" = (
 /turf/closed/mineral/volcanic/lava_land_surface/hardened,
 /area/template_noop)
-"ac" = (
-/obj/structure/table/abductor,
-/obj/item/skillchip/brainwashing{
-	name = "Exhibit 4532bW - mental cleansing"
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/office)
 "ax" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
@@ -21,6 +14,12 @@
 /obj/modular_map_connector,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"aL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/sign/warning/electric_shock/directional/east,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/misc/ayylmao)
 "aN" = (
 /turf/closed/indestructible/rock,
 /area/template_noop)
@@ -51,17 +50,17 @@
 /mob/living/simple_animal/hostile/asteroid/elite/herald,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/holding_cell)
-"bD" = (
+"bR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/abductor,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/misc/ayylmao)
+"ca" = (
 /obj/effect/turf_decal/siding/purple,
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 8
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"bR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table/abductor,
-/turf/open/floor/iron/smooth,
 /area/awaymission/caves/misc/ayylmao)
 "cn" = (
 /obj/machinery/door/poddoor{
@@ -112,6 +111,21 @@
 /obj/structure/table/abductor,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/holding_cell)
+"cW" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/dim{
+	bulb_colour = "#8142F5"
+	},
+/obj/structure/sign/warning{
+	desc = "A sign warning you about something particularly scary in this chamber.";
+	name = "WARNING: Angry Marble Man";
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "da" = (
 /obj/effect/spawner/structure/window/plasma,
 /obj/structure/cable,
@@ -123,12 +137,27 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
+"dh" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/white/corner,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "dj" = (
 /obj/machinery/door/airlock/abductor,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
+"dx" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "dz" = (
 /obj/effect/turf_decal/siding/purple/corner,
 /obj/effect/turf_decal/siding/purple/corner{
@@ -224,28 +253,21 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
-"fO" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
+"fP" = (
+/obj/structure/bed/dogbed,
+/obj/structure/fluff{
+	desc = "You're not sure if walking into this is a great idea...";
+	icon = 'icons/effects/eldritch.dmi';
+	icon_state = "pierced_illusion";
+	name = "fluxating rift"
 	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 1
+/obj/effect/bump_teleporter{
+	id = null;
+	id_target = "riftenter";
+	name = "rift entrance"
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"gf" = (
-/obj/effect/turf_decal/siding/purple,
-/obj/effect/turf_decal/stripes/white/corner,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"gl" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/delivery/white,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
+/area/awaymission/caves/misc/ayylmao/holding_cell)
 "gm" = (
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/vault/alien,
@@ -287,6 +309,16 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/office)
+"he" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "hr" = (
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/vault/alien,
@@ -321,15 +353,6 @@
 "ie" = (
 /turf/closed/wall/mineral/abductor,
 /area/awaymission/caves/misc/ayylmao/office)
-"im" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 4
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
 "io" = (
 /turf/closed/indestructible/riveted{
 	base_icon_state = "alienvault";
@@ -363,26 +386,23 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/holding_cell)
+"iy" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/north{
+	id = "exhibitstorage";
+	name = "Exhibit Exit Lockdown Toggle";
+	pixel_y = 28
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "iI" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/holding_cell)
-"iO" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 1
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"jd" = (
-/obj/effect/turf_decal/siding/purple/corner,
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
 "jl" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 10
@@ -412,14 +432,6 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
-"jZ" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/delivery/white,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
 "kz" = (
 /turf/closed/indestructible/riveted{
 	base_icon_state = "alienvault";
@@ -427,6 +439,18 @@
 	icon_state = "alienvault"
 	},
 /area/template_noop)
+"kA" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "kM" = (
 /obj/structure/table/abductor,
 /obj/structure/fluff{
@@ -449,13 +473,8 @@
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "lf" = (
-/obj/effect/turf_decal/siding/purple,
-/obj/structure/sign/warning{
-	desc = "A sign warning you about something particularly scary in this chamber.";
-	name = "WARNING: Angry Marble Man";
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/stripes/white/corner,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/delivery/white,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "lN" = (
@@ -521,6 +540,10 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
+"nH" = (
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "oh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/abductor,
@@ -537,13 +560,6 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/office)
-"os" = (
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
 "ow" = (
 /obj/structure/toilet{
 	dir = 8
@@ -600,6 +616,19 @@
 /obj/structure/flora/ash/tall_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"qc" = (
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"qj" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "qk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/plush/rouny,
@@ -642,15 +671,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
-"qG" = (
-/obj/effect/turf_decal/siding/purple/end,
-/obj/structure/filingcabinet,
-/obj/item/paper{
-	info = "glub glub dub blub (please activate translation protocol v4A to accurately translate release protocol.)";
-	name = "!VITAL CONTAINMENT PROCEDURES!"
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
 "qJ" = (
 /obj/structure/chair/office/tactical{
 	dir = 4
@@ -678,12 +698,6 @@
 	dir = 6
 	},
 /turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"sy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/structure/sign/warning/electric_shock/directional/east,
-/turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/misc/ayylmao)
 "sA" = (
 /turf/closed/wall/mineral/abductor,
@@ -748,6 +762,12 @@
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 8
 	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"uj" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/delivery/white,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "ut" = (
@@ -840,21 +860,6 @@
 /obj/item/paper_bin/carbon,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
-"xd" = (
-/obj/structure/bed/dogbed,
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
-/obj/effect/bump_teleporter{
-	id = null;
-	id_target = "riftenter";
-	name = "rift entrance"
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao/holding_cell)
 "xj" = (
 /obj/structure/chair/office/tactical{
 	dir = 8
@@ -879,11 +884,12 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/office)
-"xT" = (
+"xK" = (
+/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/purple{
-	dir = 5
+	dir = 1
 	},
-/obj/effect/turf_decal/stripes/white/corner,
+/obj/effect/turf_decal/delivery/white,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "yq" = (
@@ -892,6 +898,14 @@
 	icon_state = "rplasma_window-0"
 	},
 /area/awaymission/caves/misc/ayylmao/holding_cell)
+"yt" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "zb" = (
 /obj/structure/fluff{
 	desc = "A tank filled with replacement organs. There appears to be some sort of lock on it.";
@@ -903,6 +917,15 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
+"zs" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "zI" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
@@ -912,18 +935,6 @@
 "zJ" = (
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/office)
-"Af" = (
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
 "Ah" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 9
@@ -931,30 +942,18 @@
 /obj/structure/table/abductor,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
+"Ao" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "AE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/awaymission/caves/misc/ayylmao)
-"AZ" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 4
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"Bw" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/delivery/white,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"BE" = (
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "BP" = (
 /obj/machinery/door/poddoor{
@@ -987,14 +986,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/misc/ayylmao)
-"Dp" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/siding/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/delivery/white,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
 "DA" = (
 /obj/structure/closet{
 	icon_state = "abductor";
@@ -1025,16 +1016,6 @@
 "DX" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"DZ" = (
-/obj/effect/turf_decal/siding/purple/corner,
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
@@ -1136,6 +1117,23 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ayylmao)
+"GN" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"Hb" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "He" = (
 /obj/structure/table/abductor,
 /obj/structure/fluff{
@@ -1189,10 +1187,14 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/office)
-"Jh" = (
-/obj/machinery/door/firedoor,
+"Jl" = (
 /obj/effect/turf_decal/siding/purple,
-/obj/effect/turf_decal/delivery/white,
+/obj/structure/sign/warning{
+	desc = "A sign warning you about something particularly scary in this chamber.";
+	name = "WARNING: Angry Marble Man";
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/stripes/white/corner,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "Jo" = (
@@ -1253,6 +1255,15 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/holding_cell)
+"Ld" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 4
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "LB" = (
 /obj/machinery/light/small/directional/north{
 	bulb_colour = "#8142F5"
@@ -1309,23 +1320,15 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
-"Mn" = (
-/turf/closed/wall/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"Mr" = (
-/obj/effect/turf_decal/siding/purple,
-/obj/machinery/light/dim{
-	bulb_colour = "#8142F5"
-	},
-/obj/structure/sign/warning{
-	desc = "A sign warning you about something particularly scary in this chamber.";
-	name = "WARNING: Angry Marble Man";
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 8
+"Mf" = (
+/obj/structure/table/abductor,
+/obj/item/skillchip/brainwashing{
+	name = "Exhibit 4532bW - mental cleansing"
 	},
 /turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao/office)
+"Mn" = (
+/turf/closed/wall/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "MG" = (
 /obj/structure/window/reinforced/plasma/fulltile{
@@ -1333,6 +1336,20 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ayylmao/office)
+"MK" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/effect/turf_decal/stripes/white/corner,
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"MM" = (
+/obj/effect/turf_decal/siding/purple/end,
+/obj/structure/filingcabinet,
+/obj/item/paper{
+	info = "glub glub dub blub (please activate translation protocol v4A to accurately translate release protocol.)";
+	name = "!VITAL CONTAINMENT PROCEDURES!"
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "MP" = (
 /obj/effect/turf_decal/siding/purple/corner,
 /obj/effect/turf_decal/siding/purple/corner{
@@ -1399,11 +1416,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"Ot" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/delivery/white,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "Oy" = (
@@ -1514,26 +1526,6 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/office)
-"QZ" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 8
-	},
-/obj/machinery/button/door/directional/north{
-	id = "exhibitstorage";
-	name = "Exhibit Exit Lockdown Toggle";
-	pixel_y = 28
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"Rp" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 9
-	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 8
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
 "RC" = (
 /obj/structure/flora/ash/leaf_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -1566,6 +1558,13 @@
 	},
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/plating,
+/area/awaymission/caves/misc/ayylmao)
+"SG" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "SM" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -1638,6 +1637,18 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/office)
+"UZ" = (
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
 "Ve" = (
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/hostile/asteroid/goldgrub,
@@ -1674,12 +1685,6 @@
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao/holding_cell)
-"Wa" = (
-/obj/effect/turf_decal/siding/purple,
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/delivery/white,
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
 "WX" = (
 /obj/structure/table/abductor,
 /obj/item/spear/grey_tide{
@@ -1698,12 +1703,19 @@
 /obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/ayylmao/office)
-"Xy" = (
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 8
+"XQ" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
 	},
-/obj/effect/turf_decal/siding/purple/corner,
-/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 1
+	},
+/turf/open/floor/vault/alien,
+/area/awaymission/caves/misc/ayylmao)
+"YA" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/purple,
+/obj/effect/turf_decal/delivery/white,
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "YD" = (
@@ -1799,18 +1811,6 @@
 "ZT" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 9
-	},
-/turf/open/floor/vault/alien,
-/area/awaymission/caves/misc/ayylmao)
-"ZW" = (
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
 	},
 /turf/open/floor/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
@@ -2039,10 +2039,10 @@ aa
 aa
 sA
 Ah
-QZ
+iy
 QC
 ek
-qG
+MM
 sA
 ZZ
 ZZ
@@ -2199,7 +2199,7 @@ ef
 Th
 ef
 QC
-Dp
+dx
 Zu
 pT
 gQ
@@ -2238,7 +2238,7 @@ EN
 EN
 EN
 EN
-Ot
+lf
 Ga
 gQ
 gQ
@@ -2277,7 +2277,7 @@ EN
 EN
 uT
 lN
-gl
+Hb
 Sa
 db
 gQ
@@ -2350,10 +2350,10 @@ ZZ
 aa
 aa
 Mn
-Bw
-Ot
-Ot
-Wa
+qj
+lf
+lf
+uj
 Mn
 aa
 Uo
@@ -2623,10 +2623,10 @@ UC
 hG
 ut
 yq
-im
+GN
 EN
 EN
-gf
+MK
 yq
 iI
 Gh
@@ -2662,10 +2662,10 @@ LB
 VX
 MP
 cn
-ZW
+kA
 EN
 EN
-Xy
+yt
 cp
 LD
 Gh
@@ -2701,10 +2701,10 @@ ow
 Gh
 cC
 yq
-fO
+XQ
 EN
 EN
-bD
+ca
 yq
 cN
 eS
@@ -2860,7 +2860,7 @@ io
 qw
 EN
 EN
-lf
+Jl
 io
 io
 io
@@ -2896,10 +2896,10 @@ Gh
 Gh
 cC
 yq
-im
+GN
 EN
 EN
-os
+SG
 BP
 Gh
 Gh
@@ -2935,10 +2935,10 @@ LB
 bz
 MP
 cn
-ZW
+kA
 EN
 EN
-BE
+nH
 BP
 Gh
 Gn
@@ -2974,10 +2974,10 @@ Gh
 Gh
 cC
 yq
-fO
+XQ
 EN
 EN
-jd
+qc
 BP
 Gh
 Gh
@@ -3016,7 +3016,7 @@ io
 DX
 EN
 EN
-Mr
+cW
 io
 io
 io
@@ -3169,10 +3169,10 @@ UC
 hG
 ut
 yq
-im
+GN
 EN
 EN
-gf
+MK
 yq
 iI
 Gh
@@ -3208,10 +3208,10 @@ LB
 wC
 MP
 cn
-ZW
+kA
 EN
 EN
-Xy
+yt
 cp
 LD
 Ve
@@ -3247,10 +3247,10 @@ ow
 Gh
 cC
 yq
-fO
+XQ
 EN
 EN
-bD
+ca
 yq
 iI
 Gh
@@ -3265,7 +3265,7 @@ aR
 aN
 aa
 ie
-ac
+Mf
 Xt
 Fx
 UU
@@ -3286,10 +3286,10 @@ io
 io
 io
 io
-jZ
-Ot
-Ot
-Jh
+xK
+lf
+lf
+YA
 io
 io
 io
@@ -3314,9 +3314,9 @@ SM
 PF
 gm
 MG
-Rp
-Af
-iO
+zs
+UZ
+Ao
 ef
 ef
 QC
@@ -3324,7 +3324,7 @@ ef
 ef
 ef
 ef
-Dp
+dx
 pT
 EN
 EN
@@ -3363,7 +3363,7 @@ EN
 EN
 EN
 EN
-Ot
+lf
 EN
 EN
 EN
@@ -3392,9 +3392,9 @@ SM
 PF
 gm
 MG
-xT
-DZ
-AZ
+dh
+he
+Ld
 pN
 pN
 lN
@@ -3402,7 +3402,7 @@ pN
 pN
 pN
 pN
-gl
+Hb
 db
 EN
 EN
@@ -3442,10 +3442,10 @@ io
 io
 io
 io
-jZ
-Ot
-Ot
-Jh
+xK
+lf
+lf
+YA
 io
 io
 io
@@ -3481,10 +3481,10 @@ Gh
 Gh
 cC
 yq
-im
+GN
 EN
 EN
-gf
+MK
 yq
 cN
 eS
@@ -3520,10 +3520,10 @@ LB
 LS
 MP
 cn
-ZW
+kA
 EN
 EN
-Xy
+yt
 cp
 LD
 KN
@@ -3559,10 +3559,10 @@ Gh
 Gh
 cC
 yq
-fO
+XQ
 EN
 EN
-bD
+ca
 yq
 iI
 Gh
@@ -3754,10 +3754,10 @@ Gh
 Gh
 cC
 yq
-im
+GN
 EN
 EN
-gf
+MK
 yq
 iI
 Gh
@@ -3793,10 +3793,10 @@ LB
 xD
 MP
 cn
-ZW
+kA
 EN
 EN
-Xy
+yt
 cp
 LD
 PI
@@ -3832,10 +3832,10 @@ Gh
 Gh
 cC
 yq
-fO
+XQ
 EN
 EN
-bD
+ca
 yq
 iI
 Gh
@@ -4027,10 +4027,10 @@ Gh
 Gh
 cC
 yq
-im
+GN
 EN
 EN
-gf
+MK
 yq
 iI
 Gh
@@ -4066,10 +4066,10 @@ LB
 ei
 MP
 cn
-ZW
+kA
 EN
 EN
-Xy
+yt
 cp
 LD
 xl
@@ -4105,10 +4105,10 @@ Gh
 Gh
 cC
 yq
-fO
+XQ
 EN
 EN
-bD
+ca
 yq
 iI
 Gh
@@ -4300,10 +4300,10 @@ Gh
 Gh
 cC
 yq
-im
+GN
 EN
 EN
-gf
+MK
 yq
 iI
 Gh
@@ -4339,13 +4339,13 @@ LB
 RM
 MP
 cn
-ZW
+kA
 EN
 EN
-Xy
+yt
 cp
 LD
-xd
+fP
 KZ
 io
 VK
@@ -4378,10 +4378,10 @@ Gh
 Gh
 cC
 yq
-fO
+XQ
 EN
 EN
-bD
+ca
 yq
 iI
 Gh
@@ -4573,10 +4573,10 @@ UC
 hG
 ut
 yq
-im
+GN
 EN
 EN
-gf
+MK
 yq
 iI
 Gh
@@ -4612,10 +4612,10 @@ LB
 ir
 MP
 cn
-ZW
+kA
 EN
 EN
-Xy
+yt
 cp
 LD
 cL
@@ -4651,10 +4651,10 @@ ow
 Gh
 cC
 yq
-fO
+XQ
 EN
 EN
-bD
+ca
 yq
 iI
 Gh
@@ -4807,10 +4807,10 @@ NA
 Mn
 aa
 Mn
-Bw
-Ot
-Ot
-Wa
+qj
+lf
+lf
+uj
 Mn
 VK
 Mn
@@ -4971,7 +4971,7 @@ Uo
 Uo
 Uo
 gE
-sy
+aL
 Dc
 Uo
 Uo

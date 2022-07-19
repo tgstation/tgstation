@@ -740,6 +740,12 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/bmp_asteroid)
+"dl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/iron,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "dn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
@@ -777,6 +783,9 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/barracks)
+"dx" = (
+/turf/open/chasm/lavaland,
+/area/awaymission/caves/second_outpost/tunnel)
 "dz" = (
 /obj/item/storage/toolbox/electrical,
 /turf/open/floor/iron,
@@ -810,6 +819,15 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
+"dJ" = (
+/obj/machinery/light/small/directional/north,
+/obj/effect/bump_teleporter{
+	id = "lvl1stepa";
+	id_target = "lvl1stepb";
+	name = "lvl1 stepa"
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/main_outpost/seconadry/between_access)
 "dK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/south{
@@ -939,6 +957,14 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
+"em" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/tunnel)
 "eo" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -1046,17 +1072,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/command,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
-"eT" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/smooth{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "eU" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/electrical,
@@ -1197,6 +1212,10 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
+"fG" = (
+/obj/structure/railing/corner,
+/turf/open/chasm/lavaland,
+/area/awaymission/caves/second_outpost/tunnel)
 "fH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -1543,6 +1562,14 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/engineering)
+"hj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "hl" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
@@ -2306,17 +2333,6 @@
 /obj/item/shard,
 /turf/open/floor/plating/elevatorshaft,
 /area/awaymission/caves/bmp_asteroid)
-"kk" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/bump_teleporter{
-	id = "t1a";
-	id_target = "t1b";
-	name = "lvl1 to lvl 2 a1"
-	},
-/turf/open/floor/iron/smooth{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/tunnel)
 "km" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
@@ -2475,6 +2491,14 @@
 /obj/machinery/microwave,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
+"lf" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "lg" = (
 /obj/structure/cable,
 /obj/machinery/power/floodlight,
@@ -2516,6 +2540,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
+"lo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/tunnel)
 "lq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -2581,6 +2615,12 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/rest)
+"lC" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/chasm/lavaland,
+/area/awaymission/caves/second_outpost/tunnel)
 "lD" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -2809,14 +2849,6 @@
 /obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
-"mJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/railing/corner,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/tunnel)
 "mK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2864,6 +2896,17 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/awaymission/caves/third_outpost)
+"mT" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/bmp_asteroid)
 "mU" = (
 /obj/structure/filingcabinet/security,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -3378,6 +3421,16 @@
 /obj/structure/sign/warning/xeno_mining/directional/west,
 /turf/open/floor/pod,
 /area/awaymission/caves/third_outpost/pod)
+"pj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/effect/bump_teleporter{
+	id = "lvl1stepb";
+	id_target = "lvl1stepa";
+	name = "lvl1 stepb"
+	},
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/main_outpost/seconadry/between_access)
 "pk" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -3575,13 +3628,20 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/barracks)
-"qa" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
+"pZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/mineral/titanium/tiled{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/tunnel)
+"qb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/iron,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/awaymission/caves/second_outpost/tunnel)
 "qd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3904,6 +3964,15 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
+"rH" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/bump_teleporter{
+	id = "riftexit";
+	id_target = null;
+	name = "rift exit"
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/storage)
 "rI" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -4414,12 +4483,6 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
-"tQ" = (
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/chasm/lavaland,
-/area/awaymission/caves/second_outpost/tunnel)
 "tR" = (
 /obj/structure/flora/ash/tall_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -4630,6 +4693,21 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/caves/second_outpost/barracks)
+"uV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/bump_teleporter{
+	id = "t2a";
+	id_target = "t2b";
+	name = "lvl1 to lvl 2 a2"
+	},
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/tunnel)
 "uW" = (
 /obj/item/flashlight/lamp,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4665,21 +4743,6 @@
 /obj/structure/flora/rock,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
-"vg" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/bump_teleporter{
-	id = "t2a";
-	id_target = "t2b";
-	name = "lvl1 to lvl 2 a2"
-	},
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/tunnel)
 "vi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -4705,15 +4768,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
-"vo" = (
-/obj/effect/turf_decal/delivery/white,
-/obj/effect/bump_teleporter{
-	id = "riftexit";
-	id_target = null;
-	name = "rift exit"
-	},
-/turf/open/floor/iron,
-/area/awaymission/caves/main_outpost/seconadry/storage)
 "vq" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
@@ -5011,13 +5065,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/main_outpost)
-"ww" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/titanium/tiled{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/tunnel)
 "wy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5228,12 +5275,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"xs" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/wrench,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "xu" = (
 /turf/closed/indestructible/riveted,
 /area/awaymission/caves/main_outpost/seconadry/between_access)
@@ -5342,6 +5383,14 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/main_outpost/seconadry/secpost)
+"xR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "xS" = (
 /obj/item/chair/stool,
 /obj/effect/decal/cleanable/dirt,
@@ -5860,6 +5909,14 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/storage)
+"AD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "AF" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
@@ -6444,15 +6501,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/engineering,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/second_outpost/rest)
-"Dv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/bump_teleporter{
-	id = "t1b";
-	id_target = "t1a";
-	name = "lvl2 to lvl 1 b1"
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "Dw" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -6502,6 +6550,12 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
+"DL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille/broken,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "DO" = (
 /mob/living/simple_animal/hostile/asteroid/basilisk,
 /turf/open/misc/asteroid/snow{
@@ -6733,17 +6787,6 @@
 /obj/item/mecha_parts/part/ripley_left_leg,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
-"EQ" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/smooth{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "ER" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wideplating_new{
@@ -6933,6 +6976,17 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/engineering)
+"FO" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/bmp_asteroid)
 "FP" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -7042,6 +7096,12 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/storage)
+"Go" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/wrench,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "Gr" = (
 /obj/structure/cable,
 /obj/structure/closet/emcloset,
@@ -7106,17 +7166,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
-"GH" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/smooth{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "GI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7147,15 +7196,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/main_outpost/dorm)
-"GQ" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/bump_teleporter{
-	id = "lvl1stepa";
-	id_target = "lvl1stepb";
-	name = "lvl1 stepa"
-	},
-/turf/open/floor/iron/smooth,
-/area/awaymission/caves/main_outpost/seconadry/between_access)
 "GR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
@@ -7289,13 +7329,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/barracks)
-"HD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/tunnel)
 "HE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
@@ -7416,10 +7449,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/main_outpost/dorm)
-"Im" = (
-/obj/structure/railing/corner,
-/turf/open/chasm/lavaland,
-/area/awaymission/caves/second_outpost/tunnel)
 "In" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Restroom"
@@ -7446,6 +7475,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/third_outpost/engineering)
+"ID" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/bump_teleporter{
+	id = "t3b";
+	id_target = "t3a";
+	name = "lvl2 to lvl 1 b3"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "IG" = (
 /obj/effect/turf_decal/box,
 /obj/structure/closet/crate/secure/science{
@@ -7586,14 +7624,6 @@
 /obj/item/clothing/mask/gas/explorer,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/third_outpost/transit)
-"Jr" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "Js" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/cable,
@@ -7608,20 +7638,19 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
-"Jv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "Jy" = (
 /obj/structure/railing{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
+"Jz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/tunnel)
 "JC" = (
 /obj/machinery/button/door/directional/east{
 	id = "CavesCabinC";
@@ -7692,6 +7721,19 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
+"JN" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/bmp_asteroid)
 "JQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/tank/internals/emergency_oxygen/empty,
@@ -7842,6 +7884,17 @@
 "KA" = (
 /turf/closed/wall,
 /area/awaymission/caves/bmp_asteroid/level_two)
+"KB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/bump_teleporter{
+	id = "t1a";
+	id_target = "t1b";
+	name = "lvl1 to lvl 2 a1"
+	},
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/tunnel)
 "KC" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -8451,9 +8504,6 @@
 /obj/structure/sign/calendar/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/mecha/living)
-"Ne" = (
-/turf/open/chasm/lavaland,
-/area/awaymission/caves/second_outpost/tunnel)
 "Nf" = (
 /obj/structure/window/reinforced/spawner,
 /obj/effect/turf_decal/stripes/corner{
@@ -8705,12 +8755,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/depo)
-"Ov" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/iron,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "Ow" = (
 /turf/closed/wall,
 /area/awaymission/caves/main_outpost/dorm)
@@ -8805,6 +8849,17 @@
 	},
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
+"OR" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/bmp_asteroid)
 "OS" = (
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/rest)
@@ -9030,14 +9085,6 @@
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/carpet/black,
 /area/awaymission/caves/main_outpost/seconadry/mecha/living)
-"Qm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "Qn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/xeno_mining{
@@ -9223,12 +9270,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/main_outpost)
-"Rh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/grille/broken,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "Rk" = (
 /obj/structure/sign/departments/engineering,
 /turf/closed/wall,
@@ -9258,6 +9299,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
+"Rr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/bump_teleporter{
+	id = "t2b";
+	id_target = "t2a";
+	name = "lvl2 to lvl 1 b2"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "Rt" = (
 /obj/structure/bed{
 	dir = 8
@@ -9588,19 +9642,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/bmp_asteroid)
-"Tb" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 4
-	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -9986,25 +10027,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
-"UY" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/north,
-/obj/effect/bump_teleporter{
-	id = "lvl1stepb";
-	id_target = "lvl1stepa";
-	name = "lvl1 stepb"
-	},
-/turf/open/floor/iron/smooth,
-/area/awaymission/caves/main_outpost/seconadry/between_access)
-"UZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/bump_teleporter{
-	id = "t3b";
-	id_target = "t3a";
-	name = "lvl2 to lvl 1 b3"
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "Vc" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -10419,16 +10441,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost)
-"Xq" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/tunnel)
 "Xs" = (
 /obj/structure/frame/machine,
 /obj/item/circuitboard/machine/telecomms/relay,
@@ -10475,14 +10487,6 @@
 "XH" = (
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
-"XI" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/iron,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/smooth{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/tunnel)
 "XJ" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/caves/second_outpost/rest)
@@ -10604,16 +10608,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
-"Yf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/bump_teleporter{
-	id = "t3a";
-	id_target = "t3b";
-	name = "lvl1 to lvl 2 a3"
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "Yh" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/caves/third_outpost/transit)
@@ -10671,6 +10665,16 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/security,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
+"Yp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/bump_teleporter{
+	id = "t3a";
+	id_target = "t3b";
+	name = "lvl1 to lvl 2 a3"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "Yq" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -10686,6 +10690,15 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/bmp_asteroid)
+"Yr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/bump_teleporter{
+	id = "t1b";
+	id_target = "t1a";
+	name = "lvl2 to lvl 1 b1"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/tunnel)
 "YA" = (
 /obj/effect/turf_decal/trimline/yellow/corner,
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -10751,19 +10764,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
-"YN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/bump_teleporter{
-	id = "t2b";
-	id_target = "t2a";
-	name = "lvl2 to lvl 1 b2"
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/tunnel)
 "YQ" = (
 /turf/closed/mineral/random/volcanic/lava_land_surface/hardened/labormineral,
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -23400,7 +23400,7 @@ WO
 Nv
 lm
 ye
-vo
+rH
 OI
 wT
 OI
@@ -27754,7 +27754,7 @@ aa
 aa
 aa
 xu
-GQ
+dJ
 xu
 xu
 fa
@@ -37260,7 +37260,7 @@ Jt
 Jt
 tg
 Jt
-kk
+KB
 ab
 VP
 ab
@@ -37515,9 +37515,9 @@ Ox
 RS
 IU
 IU
-Jv
-Jv
-vg
+xR
+xR
+uV
 ab
 VP
 ab
@@ -37772,9 +37772,9 @@ Ox
 Ox
 Ox
 us
-Ne
-Ne
-Ne
+dx
+dx
+dx
 ab
 VP
 ab
@@ -38028,10 +38028,10 @@ QP
 lG
 qX
 qX
-Ne
-Ne
-Ne
-Ne
+dx
+dx
+dx
+dx
 ab
 VP
 ab
@@ -38285,10 +38285,10 @@ By
 MP
 ru
 ru
-Ne
-Ne
-Ne
-Ne
+dx
+dx
+dx
+dx
 ab
 VP
 ab
@@ -38541,11 +38541,11 @@ Do
 Wa
 hG
 Wt
-Xq
-Ne
-Ne
-Ne
-Ne
+lo
+dx
+dx
+dx
+dx
 ab
 VP
 ab
@@ -38799,10 +38799,10 @@ rV
 Ox
 ox
 us
-Ne
-Ne
-Ne
-Ne
+dx
+dx
+dx
+dx
 ab
 VP
 ab
@@ -39057,9 +39057,9 @@ ul
 rG
 sx
 sx
-Qm
-tQ
-Ne
+AD
+lC
+dx
 ab
 VP
 ab
@@ -39316,7 +39316,7 @@ Jt
 Jt
 jX
 Jt
-Yf
+Yp
 ab
 VP
 ab
@@ -41357,7 +41357,7 @@ wq
 wq
 wq
 wq
-GH
+FO
 vb
 Ln
 IT
@@ -41614,7 +41614,7 @@ wq
 wq
 wq
 tk
-eT
+OR
 vb
 Ln
 ve
@@ -41849,7 +41849,7 @@ aa
 aa
 aa
 xu
-UY
+pj
 xu
 xu
 fa
@@ -41871,7 +41871,7 @@ wq
 wq
 wq
 wq
-EQ
+mT
 SL
 SL
 dj
@@ -42383,7 +42383,7 @@ Zc
 Ta
 Ta
 Ta
-Tb
+JN
 gK
 SL
 SL
@@ -44921,7 +44921,7 @@ ab
 ab
 Ag
 ab
-Dv
+Yr
 Jt
 Jt
 Jt
@@ -45178,7 +45178,7 @@ ab
 ab
 Ag
 ab
-YN
+Rr
 IU
 IU
 IU
@@ -45435,7 +45435,7 @@ ab
 ab
 Ag
 ab
-Ne
+dx
 us
 us
 us
@@ -45451,11 +45451,11 @@ cG
 cG
 kb
 Zp
-Rh
+DL
 fd
 dO
 Wq
-ww
+pZ
 ff
 Ls
 HG
@@ -45692,10 +45692,10 @@ ab
 ab
 Ag
 ab
-Ne
-Ne
-Ne
-Jr
+dx
+dx
+dx
+hj
 qX
 qX
 qX
@@ -45712,7 +45712,7 @@ sQ
 bX
 dO
 dO
-ww
+pZ
 fC
 nQ
 HG
@@ -45949,9 +45949,9 @@ ab
 ab
 Ag
 ab
-Ne
-Ne
-Ne
+dx
+dx
+dx
 ru
 ru
 ru
@@ -45966,11 +45966,11 @@ uF
 nQ
 la
 Yj
-Ov
+dl
 fd
 dO
 fd
-ww
+pZ
 co
 HG
 ru
@@ -46206,10 +46206,10 @@ ab
 ab
 Ag
 ab
-Ne
-Ne
-Ne
-qa
+dx
+dx
+dx
+lf
 Wt
 Wt
 Wt
@@ -46223,7 +46223,7 @@ co
 nQ
 qf
 us
-xs
+Go
 us
 dO
 dO
@@ -46463,8 +46463,8 @@ ab
 ab
 Ag
 ab
-Ne
-Ne
+dx
+dx
 us
 fC
 Ox
@@ -46486,9 +46486,9 @@ dO
 dO
 Wq
 Wq
-HD
+Jz
 Ox
-HD
+Jz
 Ox
 Ox
 Ox
@@ -46720,9 +46720,9 @@ ab
 ab
 Ag
 ab
-Ne
-Im
-Qm
+dx
+fG
+AD
 sx
 sx
 sx
@@ -46744,7 +46744,7 @@ dO
 dO
 dO
 Wq
-mJ
+em
 sx
 sx
 sx
@@ -46977,7 +46977,7 @@ ab
 ab
 Ag
 ab
-UZ
+ID
 fC
 Jt
 Jt
@@ -46995,7 +46995,7 @@ Jt
 Jt
 Jt
 Jt
-XI
+qb
 Wq
 dO
 dO
