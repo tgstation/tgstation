@@ -4975,6 +4975,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight.js@npm:^11.5.1":
+  version: 11.5.1
+  resolution: "highlight.js@npm:11.5.1"
+  checksum: bff556101d7691c6275ad19318e368fc971cd0621ef3d86222f5373df7d8191a2fc1ffd47f118138cbcf85e5fe91cfeefaecd6184f49a3ec18090955efc9edef
+  languageName: node
+  linkType: hard
+
 "html-element-attributes@npm:2.3.0":
   version: 2.3.0
   resolution: "html-element-attributes@npm:2.3.0"
@@ -9142,6 +9149,7 @@ resolve@^2.0.0-next.3:
     common: "workspace:*"
     dateformat: ^4.5.1
     dompurify: ^2.3.1
+    highlight.js: ^11.5.1
     inferno: ^7.4.8
     inferno-vnode-flags: ^7.4.8
     js-yaml: ^4.1.0

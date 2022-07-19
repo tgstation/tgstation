@@ -77,6 +77,8 @@
 @include meta.load-css('./layouts/TitleBar.scss');
 @include meta.load-css('./layouts/Window.scss');
 
+@include meta.load-css('highlight.js/scss/github-dark.scss');
+
 // NT Theme
 .Layout__content {
   background-image: url('../assets/bg-nanotrasen.svg');
