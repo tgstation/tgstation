@@ -59,6 +59,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	movement_type = PHASING | FLYING
 	/// The turf we're looking to coast to.
 	var/turf/destination_turf
+	///List of atoms intentionally damaged but not broken. Cleared each loop, but prevents double-tapping when moving diagonally.
+	var/list/bopped_atoms = list()
 	/// Whether we notify ghosts.
 	var/notify = TRUE
 	///We can designate a specific target to aim for, in which case we'll try to snipe them rather than just flying in a random direction
@@ -97,6 +99,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	SSaugury.unregister_doom(src)
 	destination_turf = null
 	special_target = null
+	bopped_atoms = null
 	return ..()
 
 /obj/effect/immovablerod/examine(mob/user)
@@ -132,6 +135,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	if(!loc)
 		return ..()
+
+	if((old_loc.z != z) || (get_dist(old_loc, loc) > 2))
+		bopped_atoms = list()// we looped, clear the bopped list so we can hit these atoms again
 
 	for(var/atom/movable/to_bump in loc)
 		if((to_bump != src) && !QDELETED(to_bump) && (to_bump.density || isliving(to_bump)))
@@ -224,16 +230,14 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(isturf(clong))
 
 		if(istype(clong, /turf/closed/wall/r_wall)) //Except full-constructed R_walls adjacent to space, which just get knocked down a few pegs
+			if(clong in bopped_atoms)
+				return ..() //Already hit it this loop
 			var/turf/closed/wall/r_wall/stronkwall = clong
-			if(stronkwall.d_state < 3)
-				var/adjacent_turfs = get_adjacent_open_turfs(stronkwall)
-				for(var/turf/open/neighbor in adjacent_turfs)
-					if(!TURF_SHARES(neighbor) && !istype(neighbor, /turf/open/space)) //ignoring closed sides that aren't space
-						continue
-					if(neighbor.air.return_pressure() == 0) //neighbor has no air, and is probably outside
-						stronkwall.d_state += 4 //The larger the number, the further along the deconstruction path. R_walls will not survive two rod hits
-						stronkwall.update_appearance()
-						return ..()
+			if(stronkwall.d_state < 3 && spacecheck(stronkwall))
+				stronkwall.d_state += 4 //The larger the number, the further along the deconstruction path. R_walls will not survive two rod hits
+				stronkwall.update_appearance()
+				bopped_atoms += clong
+				return ..()
 
 		SSexplosions.highturf += clong
 		return ..()
@@ -241,14 +245,13 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(isobj(clong))
 
 		if(istype(clong, /obj/structure/window/reinforced)) //R_Windows adjacent to space can take a hit. But only once.
+			if(clong in bopped_atoms)
+				return ..() //Already hit it this loop
 			if(clong.get_integrity() > (clong.max_integrity * 0.6)) //Futureproofing in case of R_window buff. We're checking for, and then taking, 60% of the window's health.
-				var/adjacent_turfs = get_adjacent_open_turfs(clong)
-				for(var/turf/open/neighbor in adjacent_turfs)
-					if(!TURF_SHARES(neighbor) && !istype(neighbor, /turf/open/space)) //ignoring closed sides that aren't space
-						continue
-					if(neighbor.air.return_pressure() == 0) //neighbor has no air, and is probably outside
-						clong.take_damage((clong.max_integrity * 0.6))
-						return ..()
+				if(spacecheck(clong))
+					clong.take_damage((clong.max_integrity * 0.6))
+					bopped_atoms += clong
+					return ..()
 
 		var/obj/clong_obj = clong
 		clong_obj.take_damage(INFINITY, BRUTE, NONE, TRUE, dir, INFINITY)
@@ -265,6 +268,27 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		return ..()
 
 	CRASH("[src] Bump()ed into non-atom thing [clong] ([clong.type])")
+
+/**
+ * Checks the air around the target atom's turf, returns TRUE
+ * if any turf is at zero atmos pressure, and FALSE if not.
+ * Used for a few atoms that don't completely get killed if
+ * that would cause a breach.
+ *
+ * Arguments
+ * * target - the atom in question.
+ */
+/obj/effect/immovablerod/proc/spacecheck(atom/target)
+	if(!target)
+		return FALSE
+	var/turf/atomloc = get_turf(target)
+	var/adjacent_turfs = get_adjacent_open_turfs(atomloc)
+	for(var/turf/open/neighbor in adjacent_turfs)
+		if(!TURF_SHARES(neighbor) && !istype(neighbor, /turf/open/space)) //ignoring closed sides that aren't space
+			continue
+		if(neighbor.air.return_pressure() == 0) //neighbor has no air, and is probably outside
+			return TRUE
+	return FALSE
 
 /obj/effect/immovablerod/proc/penetrate(mob/living/smeared_mob)
 	smeared_mob.visible_message(span_danger("[smeared_mob] is penetrated by an immovable rod!") , span_userdanger("The rod penetrates you!") , span_danger("You hear a CLANG!"))
