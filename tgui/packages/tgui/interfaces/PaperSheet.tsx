@@ -86,16 +86,6 @@ type StampPosition = {
   yOffset: number;
 };
 
-type StampProps = {
-  activeStamp: any;
-  sprite: string;
-  x: number;
-  y: number;
-  rotation: number;
-  opacity: number;
-  yOffset: number;
-};
-
 enum InteractionType {
   reading = 0,
   writing = 1,
@@ -113,6 +103,8 @@ const canEdit = (heldItemDetails?: WritingImplement): boolean => {
 // Creates the final inline HTML for previewing or reading the paper.
 const createPreview = (
   inputList: PaperInput[] | undefined,
+  dmCache: string,
+  setDMCache: (nextState: string) => void,
   fieldDataList: FieldInput[] | undefined,
   textAreaText: string | null,
   defaultFont: string,
@@ -130,29 +122,39 @@ const createPreview = (
 
   let fieldCounter = 0;
 
-  inputList?.forEach((value) => {
-    let rawText = value.raw_text.trim();
-    if (!rawText.length) {
-      return;
-    }
+  if (dmCache?.length) {
+    // logger.log(dmCache);
+    // output = dmCache;
+  } else {
+    inputList?.forEach((value) => {
+      let rawText = value.raw_text.trim();
+      if (!rawText.length) {
+        return;
+      }
 
-    const fontColor = value.color || defaultColor;
-    const fontFace = value.font || defaultFont;
-    const fontBold = value.bold || false;
+      const fontColor = value.color || defaultColor;
+      const fontFace = value.font || defaultFont;
+      const fontBold = value.bold || false;
 
-    let processingOutput = formatAndProcessRawText(
-      rawText,
-      fontFace,
-      fontColor,
-      fontBold,
-      fieldCounter,
-      readOnly
-    );
+      let processingOutput = formatAndProcessRawText(
+        rawText,
+        fontFace,
+        fontColor,
+        paperColor,
+        fontBold,
+        fieldCounter,
+        readOnly,
+        fieldDataList
+      );
 
-    output += processingOutput.text;
+      output += processingOutput.text;
 
-    fieldCounter = processingOutput.counter;
-  });
+      fieldCounter = processingOutput.counter;
+
+      // fillAllFields(fieldDataList || [], paperColor);
+    });
+    setDMCache(`${output}`);
+  }
 
   if (textAreaText?.length) {
     const fontColor = heldColor || defaultColor;
@@ -163,13 +165,12 @@ const createPreview = (
       textAreaText,
       fontFace,
       fontColor,
+      paperColor,
       fontBold,
       fieldCounter,
       true
     ).text;
   }
-
-  fillAllFields(fieldDataList || [], paperColor);
 
   return output;
 };
@@ -210,11 +211,28 @@ const createFields = (
   font: string,
   fontSize: number,
   color: string,
+  paperColor: string,
   forceReadonlyFields: boolean,
-  counter: number = 0
+  counter: number = 0,
+  fieldDataList: FieldInput[]
 ): FieldCreationReturn => {
   const ret_text = rawText.replace(fieldRegex, (match, p1, offset, string) => {
     const width = textWidth(match, font, fontSize);
+    const matchingData = fieldDataList.find(
+      (e) => e.field_index === `${counter}`
+    );
+    if (matchingData) {
+      return createFilledInputField(
+        matchingData,
+        p1.length,
+        width,
+        font,
+        fontSize,
+        color,
+        paperColor,
+        createIDHeader(counter++)
+      );
+    }
     return createInputField(
       p1.length,
       width,
@@ -237,14 +255,47 @@ const createInputField = (
   length: number,
   width: number,
   font: string,
-  fontsize: number,
+  fontSize: number,
   color: string,
   id: string,
   readOnly: boolean
 ): string => {
   return `[<input ${
     readOnly ? 'disabled ' : ''
-  }type="text" style="font-size:${fontsize}px; font-family: ${font};color:${color};min-width:${width}px;max-width:${width}px" id="${id}" maxlength=${length} size=${length} />]`;
+  }type="text" style="font-size:${fontSize}px; font-family: ${font};color:${color};min-width:${width}px;max-width:${width}px" id="${id}" maxlength=${length} size=${length} />]`;
+};
+
+// Builds an <input> field from the supplied props, pre-filled with a value and disabled.
+const createFilledInputField = (
+  field: FieldInput,
+  length: number,
+  width: number,
+  font: string,
+  fontSize: number,
+  color: string,
+  paperColor: string,
+  id: string
+): string => {
+  const fieldData = field.field_data;
+  const thing = document.createTextNode(fieldData.raw_text);
+
+  let div = document.createElement('input');
+  div.setAttribute('type', 'text');
+  div.style.fontSize = field.is_signature ? '30px' : `${fontSize}px`;
+  div.style.fontFamily = fieldData.font || font;
+  div.style.fontStyle = field.is_signature ? 'italic' : 'normal';
+  div.style.fontWeight = 'bold';
+  div.style.color = fieldData.color || color;
+  div.style.minWidth = `${width}px`;
+  div.style.maxWidth = `${width}px`;
+  div.style.backgroundColor = paperColor;
+  div.id = id;
+  div.maxLength = length;
+  div.size = length;
+  div.defaultValue = fieldData.raw_text;
+  div.disabled = true;
+
+  return div.outerHTML;
 };
 
 // Fully formats, sanitises and parses the provided raw text and wraps it
@@ -253,9 +304,11 @@ const formatAndProcessRawText = (
   rawText: string,
   font: string,
   color: string,
+  paperColor: string,
   bold: boolean,
   fieldCounter: number = 0,
-  forceReadonlyFields: boolean = false
+  forceReadonlyFields: boolean = false,
+  fieldDataList: FieldInput[] = []
 ): FieldCreationReturn => {
   // First lets make sure it ends in a new line
   rawText += rawText[rawText.length] === '\n' ? '\n' : '\n\n';
@@ -269,8 +322,10 @@ const formatAndProcessRawText = (
     font,
     12,
     color,
+    paperColor,
     forceReadonlyFields,
-    fieldCounter
+    fieldCounter,
+    fieldDataList
   );
 
   // Fourth, parse the text using markup
@@ -679,8 +734,14 @@ export const PreviewView = (props, context) => {
     {}
   );
 
+  // When we parse everything from DM-side, we can definitely cache it.
+  const [dmParsedAndSanitisedCache, setDmParsedAndSanitisedCache] =
+    useLocalState(context, 'dmParsedAndSanitisedCache', '');
+
   const parsedAndSanitisedHTML = createPreview(
     raw_text_input,
+    dmParsedAndSanitisedCache,
+    setDmParsedAndSanitisedCache,
     raw_field_input,
     canEdit(held_item_details) ? textAreaText : null,
     default_pen_font,

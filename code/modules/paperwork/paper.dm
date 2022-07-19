@@ -363,6 +363,12 @@
 
 	// Handle writing items.
 	var/writing_stats = attacking_item.get_writing_implement_details()
+
+	if(!writing_stats)
+		// TIMBERTODO - Do we still need to open the UI anyway? Doing this maintains parity with old behaviour, but seems counter-intuitive to then call parent.
+		ui_interact(user)
+		return ..()
+
 	if(writing_stats["interaction_mode"] == MODE_WRITING)
 		if(!user.can_write(attacking_item))
 			return
