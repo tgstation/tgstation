@@ -10,7 +10,6 @@ import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
 import { Component, createRef, MouseEventHandler, RefObject } from 'inferno';
 import { clamp } from 'common/math';
-import { logger } from '../logging';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
@@ -111,7 +110,7 @@ const canEdit = (heldItemDetails?: WritingImplement): boolean => {
   return heldItemDetails.interaction_mode === InteractionType.writing;
 };
 
-// This creates the html from marked text as well as the form fields
+// Creates the final inline HTML for previewing or reading the paper.
 const createPreview = (
   inputList: PaperInput[] | undefined,
   fieldDataList: FieldInput[] | undefined,
@@ -175,14 +174,17 @@ const createPreview = (
   return output;
 };
 
+// Builds a paper field ID from a number or string.
 const createIDHeader = (index: number | string): string => {
   return 'paperfield_' + index;
 };
 
+// Extracts the paper field "counter" from a full ID.
 const getHeaderID = (header: string): string => {
   return header.replace('paperfield_', '');
 };
 
+// Returns the width the text with the provided attributes would take up in px.
 const textWidth = (text: string, font: string, fontsize: number): number => {
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d');
@@ -195,10 +197,14 @@ const textWidth = (text: string, font: string, fontsize: number): number => {
   return ctx.measureText(text).width;
 };
 
+// Regex that finds [____] fields.
 const fieldRegex: RegExp = /\[((?:_+))\]/gi;
+// Regex that finds <input ... id="paperfield_x">.
 const fieldTagRegex: RegExp =
   /\[<input\s+(?!disabled)(.*?)\s+id="paperfield_(?<id>\d+)"(.*?)\/>\]/gm;
 
+// Replaces all [______] fields in raw text with fully formed <input ...>
+// fields replacements.
 const createFields = (
   rawText: string,
   font: string,
@@ -226,6 +232,7 @@ const createFields = (
   };
 };
 
+// Builds an <input> field from the supplied props.
 const createInputField = (
   length: number,
   width: number,
@@ -240,6 +247,8 @@ const createInputField = (
   }type="text" style="font-size:${fontsize}px; font-family: ${font};color:${color};min-width:${width}px;max-width:${width}px" id="${id}" maxlength=${length} size=${length} />]`;
 };
 
+// Fully formats, sanitises and parses the provided raw text and wraps it
+// as necessary.
 const formatAndProcessRawText = (
   rawText: string,
   font: string,
@@ -268,12 +277,13 @@ const formatAndProcessRawText = (
   const parsedText = runMarkedDefault(fieldedText.text);
 
   // Fifth, we wrap the created text in the writing implement properties.
-  const fontedText = setFontinText(parsedText, font, color, bold);
+  const fontedText = setFontInText(parsedText, font, color, bold);
 
   return { text: fontedText, counter: fieldedText.counter };
 };
 
-const setFontinText = (
+// Wraps the given raw text in a font span based on the supplied props.
+const setFontInText = (
   text: string,
   font: string,
   color: string,
@@ -284,6 +294,7 @@ const setFontinText = (
   }">${text}</span>`;
 };
 
+// Parses the given raw text through marked for applying markdown.
 const runMarkedDefault = (rawText: string): string => {
   // Override function, any links and images should
   // kill any other marked tokens we don't want here
@@ -311,6 +322,7 @@ const runMarkedDefault = (rawText: string): string => {
   });
 };
 
+// Stops propagation of a given event.
 const pauseEvent = (e: Event): boolean => {
   if (e.stopPropagation) {
     e.stopPropagation();
@@ -323,7 +335,7 @@ const pauseEvent = (e: Event): boolean => {
   return false;
 };
 
-// again, need the states for dragging and such
+// Handles the ghost stamp when attempting to stamp paper sheets.
 class PaperSheetStamper extends Component<PaperSheetStamperProps> {
   style: null;
   handleMouseMove: (this: Document, ev: MouseEvent) => any;
@@ -445,6 +457,7 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
   }
 }
 
+// Creates a full stamp div to render the given stamp to the preview.
 export const Stamp = (props, context): InfernoElement<HTMLDivElement> => {
   const { activeStamp, sprite, x, y, rotation, opacity, yOffset = 0 } = props;
   const stamp_transform = {
@@ -464,6 +477,7 @@ export const Stamp = (props, context): InfernoElement<HTMLDivElement> => {
   );
 };
 
+// Hooks into all input fields, registering an oninput handler.
 const hookAllFields = (
   rawText: string,
   onInputHandler: (this: GlobalEventHandlers, ev: Event) => void
@@ -485,13 +499,14 @@ const hookAllFields = (
       if (dom.disabled) {
         continue;
       }
-      logger.log(dom.outerHTML);
 
       dom.oninput = onInputHandler;
     }
   }
 };
 
+// Goes through the list of field input data and modifies all fields to be
+// filled with the appropriate data and then disables them.
 const fillAllFields = (
   fieldInputData: FieldInput[],
   paperColor: string
@@ -644,6 +659,8 @@ export class PrimaryView extends Component {
   }
 }
 
+// Real-time text preview section. When not editing, this is simply the
+// component that builds and renders the final HTML output.
 export const PreviewView = (props, context) => {
   const { data } = useBackend<PaperContext>(context);
   const {
@@ -662,12 +679,6 @@ export const PreviewView = (props, context) => {
     {}
   );
 
-  const [sigFieldData, setSigFieldData] = useLocalState(
-    context,
-    'sigFieldData',
-    {}
-  );
-
   const parsedAndSanitisedHTML = createPreview(
     raw_text_input,
     raw_field_input,
@@ -678,6 +689,8 @@ export const PreviewView = (props, context) => {
     held_item_details
   );
 
+  // When one of the <input> fields has text entered, this keeps track of it
+  // and holds the state of every modified input field.
   const onInputHandler = (ev) => {
     const input = ev.currentTarget as HTMLInputElement;
     if (input.value.length) {
@@ -690,6 +703,7 @@ export const PreviewView = (props, context) => {
     input.style.color = held_item_details?.color || default_pen_color;
   };
 
+  // If we can edit the page, we can write to existing input fields.
   if (canEdit(held_item_details)) {
     hookAllFields(parsedAndSanitisedHTML, onInputHandler);
   }
@@ -722,6 +736,7 @@ export const PreviewView = (props, context) => {
   );
 };
 
+// Renders all the stamp components for every valid stamp.
 export const StampView = (props, context) => {
   const { data } = useBackend<PaperContext>(context);
 
