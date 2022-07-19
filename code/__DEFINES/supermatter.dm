@@ -102,13 +102,6 @@
 #define HALLUCINATION_ANOMALY "hallucination_anomaly"
 #define VORTEX_ANOMALY "vortex_anomaly"
 
-//If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
-#define SUPERMATTER_DELAM_PERCENT 5
-#define SUPERMATTER_EMERGENCY_PERCENT 25
-#define SUPERMATTER_DANGER_PERCENT 50
-#define SUPERMATTER_WARNING_PERCENT 100
-#define CRITICAL_TEMPERATURE 10000
-
 #define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
 
 ///to prevent accent sounds from layering

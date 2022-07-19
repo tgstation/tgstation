@@ -87,7 +87,3 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 
 	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
 	return TRUE
-
-/// The sound we play to let people know we're delamming.
-/datum/sm_delam_strat/proc/play_sound(obj/machinery/power/supermatter_crystal/sm)
-

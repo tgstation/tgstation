@@ -39,7 +39,7 @@
 				has_been_powered = TRUE
 	else if(takes_damage)
 		damage += (projectile.damage * bullet_energy) * clamp((emergency_point - damage) / emergency_point, 0, 1)
-		if(damage > damage_penalty_point)
+		if(damage > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 	return BULLET_ACT_HIT
 

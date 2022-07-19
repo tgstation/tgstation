@@ -361,7 +361,7 @@
 	psyCoeff = clamp(psyCoeff + psy_coeff_diff, 0, 1)
 
 /obj/machinery/power/supermatter_crystal/proc/handle_high_power(datum/gas_mixture/removed)
-	if(power <= POWER_PENALTY_THRESHOLD && damage <= damage_penalty_point) //If the power is above 5000 or if the damage is above 550
+	if(power <= POWER_PENALTY_THRESHOLD && damage <= danger_point) //If the power is above 5000 or if the damage is above 550
 		return
 	var/range = 4
 	zap_cutoff = 1500
@@ -391,7 +391,7 @@
 			flags |= (ZAP_MOB_STUN | ZAP_MACHINE_EXPLOSIVE | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
 			zap_count = 4
 	//Now we deal with damage shit
-	if (damage > damage_penalty_point && prob(20))
+	if (damage > danger_point && prob(20))
 		zap_count += 1
 
 	if(zap_count >= 1)

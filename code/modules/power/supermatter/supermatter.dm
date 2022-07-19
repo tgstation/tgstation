@@ -47,19 +47,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safe_alert
 	var/damage_archived = 0
 	
-	///The point at which we should start sending messeges about the damage to the warning channel.
+	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_WARNING]
 	var/warning_point = 50
 	var/warning_channel = RADIO_CHANNEL_ENGINEERING
-	///The point at which we start sending messages to the emergency channel
-	var/emergency_point = 700
+	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_DANGER]
+	///Spawns anomalies when more damaged than this too.
+	var/danger_point = 550
+	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_EMERGENCY]
+	var/emergency_point = 675
 	var/emergency_channel = RADIO_CHANNEL_COMMON
-
-	///The alert we send when we've reached warning_point
-	var/warning_alert = "Danger! Crystal hyperstructure integrity faltering!"
-	///The point at which we delam
+	///The point at which we delam [SUPERMATTER_STATUS_DELAMINATING]
 	var/explosion_point = 900
-	///When we pass this amount of damage we start shooting bolts
-	var/damage_penalty_point = 550
 
 	///A scaling value that affects the severity of explosions.
 	var/explosion_power = 35
@@ -398,6 +396,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	return data
 
+/// Encodes the current state of the supermatter.
 /obj/machinery/power/supermatter_crystal/proc/get_status()
 	var/turf/local_turf = get_turf(src)
 	if(!local_turf)
@@ -405,24 +404,18 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/datum/gas_mixture/air = local_turf.return_air()
 	if(!air)
 		return SUPERMATTER_ERROR
-
 	var/integrity = get_integrity_percent()
-	if(integrity < SUPERMATTER_DELAM_PERCENT)
+	if(final_countdown)
 		return SUPERMATTER_DELAMINATING
-
-	if(integrity < SUPERMATTER_EMERGENCY_PERCENT)
+	if(damage >= emergency_point)
 		return SUPERMATTER_EMERGENCY
-
-	if(integrity < SUPERMATTER_DANGER_PERCENT)
-		return SUPERMATTER_DANGER
-
-	if((integrity < SUPERMATTER_WARNING_PERCENT) || (air.temperature > CRITICAL_TEMPERATURE))
+	if(damage >= danger_point)
 		return SUPERMATTER_WARNING
-
-	if(air.temperature > (CRITICAL_TEMPERATURE * 0.8))
+	if(damage >= warning_point)
+		return SUPERMATTER_WARNING
+	if(absorbed_gasmix.temperature > (T0C + HEAT_PENALTY_THRESHOLD) * 0.8)
 		return SUPERMATTER_NOTIFY
-
-	if(power > 5)
+	if(power)
 		return SUPERMATTER_NORMAL
 	return SUPERMATTER_INACTIVE
 
