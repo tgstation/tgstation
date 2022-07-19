@@ -99,6 +99,34 @@
 /obj/structure/railing/corner,
 /turf/template_noop,
 /area/template_noop)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 
 (1,1,1) = {"
 h
@@ -118,8 +146,8 @@ h
 "}
 (2,1,1) = {"
 o
-A
-A
+U
+U
 b
 C
 C
@@ -128,7 +156,7 @@ C
 C
 C
 F
-A
+U
 A
 o
 "}
@@ -184,15 +212,15 @@ h
 s
 z
 z
-z
+W
 h
 h
 C
 C
 C
 C
-z
-z
+W
+W
 z
 z
 "}
@@ -247,9 +275,9 @@ h
 (10,1,1) = {"
 o
 A
+U
 A
-A
-A
+U
 E
 C
 C
@@ -257,7 +285,7 @@ C
 C
 L
 x
-A
+U
 o
 "}
 (11,1,1) = {"
