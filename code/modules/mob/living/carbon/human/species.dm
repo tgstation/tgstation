@@ -529,6 +529,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			C.faction -= i
 
 	clear_tail_moodlets(C)
+	REMOVE_TRAIT(C, TRAIT_FAT, OBESITY)
+	SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "nutrition")
+	C.clear_alert(ALERT_NUTRITION)
 
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 

@@ -260,6 +260,8 @@
 		human_owner.clear_alert(ALERT_DISGUST)
 		SEND_SIGNAL(human_owner, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 		human_owner.clear_alert(ALERT_NUTRITION)
+		REMOVE_TRAIT(human_owner, TRAIT_FAT, OBESITY)
+		SEND_SIGNAL(human_owner, COMSIG_CLEAR_MOOD_EVENT, "nutrition")
 
 	return ..()
 
