@@ -274,15 +274,6 @@
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SERVICE
 
-/datum/design/airlock_painter/paint_sealer
-	name = "Paint Sealer"
-	id = "paint_sealer"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 50, /datum/material/glass = 10)
-	build_path = /obj/item/paint_sealer
-	category = list("initial","Tools","Tool Designs")
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SERVICE
-
 /datum/design/emergency_oxygen
 	name = "Emergency Oxygen Tank"
 	id = "emergency_oxygen"
