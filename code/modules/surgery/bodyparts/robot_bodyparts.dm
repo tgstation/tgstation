@@ -13,11 +13,11 @@
 /obj/item/bodypart/l_arm/robot
 	name = "cyborg left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	attack_verb_simple = list("slapped", "punched")
 	inhand_icon_state = "buildpipe"
-	icon_static =  'icons/mob/augmentation/augments.dmi'
-	icon = null
+	icon = 'icons/mob/augmentation/augments.dmi'
+	icon_static = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_arm"
 	is_dimorphic = FALSE
@@ -41,9 +41,9 @@
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	attack_verb_simple = list("slapped", "punched")
 	inhand_icon_state = "buildpipe"
-	icon_static =  'icons/mob/augmentation/augments.dmi'
-	icon = null
-	limb_id = "robotic"
+	icon_static = 'icons/mob/augmentation/augments.dmi'
+	icon = 'icons/mob/augmentation/augments.dmi'
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_arm"
 	is_dimorphic = FALSE
@@ -67,9 +67,9 @@
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	attack_verb_simple = list("kicked", "stomped")
 	inhand_icon_state = "buildpipe"
-	icon_static =  'icons/mob/augmentation/augments.dmi'
-	icon = null
-	limb_id = "robotic"
+	icon_static = 'icons/mob/augmentation/augments.dmi'
+	icon = 'icons/mob/augmentation/augments.dmi'
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_leg"
 	is_dimorphic = FALSE
@@ -94,8 +94,8 @@
 	attack_verb_simple = list("kicked", "stomped")
 	inhand_icon_state = "buildpipe"
 	icon_static =  'icons/mob/augmentation/augments.dmi'
-	icon = null
-	limb_id = "robotic"
+	icon = 'icons/mob/augmentation/augments.dmi'
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_leg"
 	is_dimorphic = FALSE
@@ -119,8 +119,8 @@
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	inhand_icon_state = "buildpipe"
 	icon_static =  'icons/mob/augmentation/augments.dmi'
-	icon = null
-	limb_id = "robotic"
+	icon = 'icons/mob/augmentation/augments.dmi'
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_chest"
 	is_dimorphic = FALSE
@@ -227,8 +227,8 @@
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	inhand_icon_state = "buildpipe"
 	icon_static = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
-	icon = null
+	icon = 'icons/mob/augmentation/augments.dmi'
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
@@ -249,7 +249,6 @@
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
-
 
 /obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
 	if(head_atom == flash1)
@@ -328,6 +327,7 @@
 /obj/item/bodypart/l_arm/robot/surplus
 	name = "surplus prosthetic left arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_reduction = 0
 	burn_reduction = 0
@@ -336,6 +336,7 @@
 /obj/item/bodypart/r_arm/robot/surplus
 	name = "surplus prosthetic right arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_reduction = 0
 	burn_reduction = 0
@@ -344,6 +345,7 @@
 /obj/item/bodypart/l_leg/robot/surplus
 	name = "surplus prosthetic left leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_reduction = 0
 	burn_reduction = 0
@@ -352,6 +354,7 @@
 /obj/item/bodypart/r_leg/robot/surplus
 	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
+	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_reduction = 0
 	burn_reduction = 0

@@ -18,6 +18,7 @@
 	return ..()
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
+	. = ..()
 	alert_control.ui_interact(user)
 
 /obj/machinery/computer/station_alert/on_set_machine_stat(old_value)

@@ -130,8 +130,10 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/showcase/wrench_act(mob/living/user, obj/item/tool)
-	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(deconstruction_state != SHOWCASE_CONSTRUCTED)
+		return FALSE
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 //Feedback is given in examine because showcases can basically have any sprite assigned to them
 

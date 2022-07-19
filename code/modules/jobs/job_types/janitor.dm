@@ -12,7 +12,7 @@
 	outfit = /datum/outfit/job/janitor
 	plasmaman_outfit = /datum/outfit/plasmaman/janitor
 
-	paycheck = PAYCHECK_EASY
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_JANITOR
@@ -37,16 +37,13 @@
 
 	id_trim = /datum/id_trim/job/janitor
 	uniform = /obj/item/clothing/under/rank/civilian/janitor
-	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/advanced = 1,
-		)
-	belt = /obj/item/pda/janitor
+	belt = /obj/item/modular_computer/tablet/pda/janitor
 	ears = /obj/item/radio/headset/headset_srv
 
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 	if(GARBAGEDAY in SSevents.holidays)
-		backpack_contents += /obj/item/gun/ballistic/revolver
+		backpack_contents += list(/obj/item/gun/ballistic/revolver)
 		r_pocket = /obj/item/ammo_box/a357
 
 /datum/outfit/job/janitor/get_types_to_preload()

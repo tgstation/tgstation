@@ -136,9 +136,6 @@ SUBSYSTEM_DEF(atoms)
 			if(INITIALIZE_HINT_QDEL)
 				qdel(A)
 				qdeleted = TRUE
-			if(INITIALIZE_HINT_QDEL_FORCE)
-				qdel(A, force = TRUE)
-				qdeleted = TRUE
 			else
 				BadInitializeCalls[the_type] |= BAD_INIT_NO_HINT
 

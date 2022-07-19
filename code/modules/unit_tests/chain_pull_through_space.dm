@@ -41,22 +41,15 @@
 
 	// Walk normally to the left, make sure we're still a chain
 	alice.Move(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	if (bob.x != run_loc_floor_bottom_left.x + 2)
-		return Fail("During normal move, Bob was not at the correct x ([bob.x])")
-	if (charlie.x != run_loc_floor_bottom_left.x + 3)
-		return Fail("During normal move, Charlie was not at the correct x ([charlie.x])")
+	TEST_ASSERT_EQUAL(bob.x, run_loc_floor_bottom_left.x + 2, "During normal move, Bob was not at the correct x ([bob.x])")
+	TEST_ASSERT_EQUAL(charlie.x, run_loc_floor_bottom_left.x + 3, "During normal move, Charlie was not at the correct x ([charlie.x])")
 
 	// We're going through the space turf now that should teleport us
 	alice.Move(run_loc_floor_bottom_left)
-	if (alice.z != space_tile.destination_z)
-		return Fail("Alice did not teleport to the destination z-level. Current location: ([alice.x], [alice.y], [alice.z])")
+	TEST_ASSERT_EQUAL(alice.z, space_tile.destination_z, "Alice did not teleport to the destination z-level. Current location: ([alice.x], [alice.y], [alice.z])")
 
-	if (bob.z != space_tile.destination_z)
-		return Fail("Bob did not teleport to the destination z-level. Current location: ([bob.x], [bob.y], [bob.z])")
-	if (!bob.Adjacent(alice))
-		return Fail("Bob is not adjacent to Alice. Bob is at [bob.x], Alice is at [alice.x]")
+	TEST_ASSERT_EQUAL(bob.z, space_tile.destination_z, "Bob did not teleport to the destination z-level. Current location: ([bob.x], [bob.y], [bob.z])")
+	TEST_ASSERT(bob.Adjacent(alice), "Bob is not adjacent to Alice. Bob is at [bob.x], Alice is at [alice.x]")
 
-	if (charlie.z != space_tile.destination_z)
-		return Fail("Charlie did not teleport to the destination z-level. Current location: ([charlie.x], [charlie.y], [charlie.z])")
-	if (!charlie.Adjacent(bob))
-		return Fail("Charlie is not adjacent to Bob. Charlie is at [charlie.x], Bob is at [bob.x]")
+	TEST_ASSERT_EQUAL(charlie.z, space_tile.destination_z, "Charlie did not teleport to the destination z-level. Current location: ([charlie.x], [charlie.y], [charlie.z])")
+	TEST_ASSERT(charlie.Adjacent(bob), "Charlie is not adjacent to Bob. Charlie is at [charlie.x], Bob is at [bob.x]")

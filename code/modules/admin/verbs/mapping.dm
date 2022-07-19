@@ -35,6 +35,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest_all,
 	/client/proc/cmd_admin_areatest_station,
+	/client/proc/cmd_admin_areatest_station_no_maintenance,
 	#ifdef TESTING
 	/client/proc/see_dirty_varedits,
 	#endif
@@ -459,7 +460,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	var/not_told = 0
 
 	var/list/valid_device_types = typecacheof(list(
-		/obj/machinery/computer/atmos_control, 
+		/obj/machinery/computer/atmos_control,
 		/obj/machinery/air_sensor,
 		/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
 		/obj/machinery/meter/monitored,

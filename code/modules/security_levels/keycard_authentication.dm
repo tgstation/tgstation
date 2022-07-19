@@ -9,9 +9,6 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 6
 	power_channel = AREA_USAGE_ENVIRON
 	req_access = list(ACCESS_KEYCARD_AUTH)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -46,7 +43,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	var/list/data = list()
 	data["waiting"] = waiting
 	data["auth_required"] = event_source ? event_source.event : 0
-	data["red_alert"] = (seclevel2num(get_security_level()) >= SEC_LEVEL_RED) ? 1 : 0
+	data["red_alert"] = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) ? 1 : 0
 	data["emergency_maint"] = GLOB.emergency_access
 	data["bsa_unlock"] = GLOB.bsa_unlock
 	return data
@@ -134,7 +131,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	deadchat_broadcast(" confirmed [event] at [span_name("[A2.name]")].", span_name("[confirmer]"), confirmer, message_type=DEADCHAT_ANNOUNCEMENT)
 	switch(event)
 		if(KEYCARD_RED_ALERT)
-			set_security_level(SEC_LEVEL_RED)
+			SSsecurity_level.set_level(SEC_LEVEL_RED)
 		if(KEYCARD_EMERGENCY_MAINTENANCE_ACCESS)
 			make_maint_all_access()
 		if(KEYCARD_BSA_UNLOCK)
@@ -142,7 +139,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
-	for(var/area/maintenance/A in world)
+	for(var/area/station/maintenance/A in world)
 		for(var/obj/machinery/door/airlock/D in A)
 			D.emergency = TRUE
 			D.update_icon(ALL, 0)
@@ -151,7 +148,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "enabled"))
 
 /proc/revoke_maint_all_access()
-	for(var/area/maintenance/A in world)
+	for(var/area/station/maintenance/A in world)
 		for(var/obj/machinery/door/airlock/D in A)
 			D.emergency = FALSE
 			D.update_icon(ALL, 0)

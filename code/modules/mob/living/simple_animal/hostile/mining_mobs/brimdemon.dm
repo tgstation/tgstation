@@ -44,6 +44,10 @@
 	/// A list of all the beam parts.
 	var/list/beamparts = list()
 
+/mob/living/simple_animal/hostile/asteroid/brimdemon/Destroy()
+	QDEL_LIST(beamparts)
+	return ..()
+
 /mob/living/simple_animal/hostile/asteroid/brimdemon/Login()
 	ranged = TRUE
 	return ..()
@@ -95,7 +99,7 @@
 	addtimer(CALLBACK(src, .proc/fire_laser), 1 SECONDS)
 	COOLDOWN_START(src, ranged_cooldown, ranged_cooldown_time)
 
-/mob/living/simple_animal/hostile/asteroid/brimdemon/Moved()
+/mob/living/simple_animal/hostile/asteroid/brimdemon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	check_fire()
 

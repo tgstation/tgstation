@@ -1,6 +1,9 @@
 ///Get a random food item exluding the blocked ones
 /proc/get_random_food()
-	var/list/blocked = list(/obj/item/food/bread,
+	var/list/blocked = list(
+		/obj/item/food/drug,
+		/obj/item/food/spaghetti,
+		/obj/item/food/bread,
 		/obj/item/food/breadslice,
 		/obj/item/food/cake,
 		/obj/item/food/cakeslice,

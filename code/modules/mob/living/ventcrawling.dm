@@ -83,34 +83,63 @@
  * One important thing to note however is that the movement of the client's eye is handled by the relaymove() proc in /obj/machinery/atmospherics.
  * We move first and then call update. Dont flip this around
  */
-/mob/living/proc/update_pipe_vision()
-	// Take the pipe images from the client
-	if (!isnull(client))
+/mob/living/proc/update_pipe_vision(full_refresh = FALSE)
+	// We're gonna color the lighting plane to make it darker while ventcrawling, so things look nicer
+	var/atom/movable/screen/plane_master/lighting
+	if(hud_used)
+		lighting = hud_used?.plane_masters["[LIGHTING_PLANE]"]
+
+	// Take away all the pipe images if we're not doing anything with em
+	if(isnull(client) || !HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) || !istype(loc, /obj/machinery/atmospherics) || !(movement_type & VENTCRAWLING))
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
 		pipes_shown.len = 0
+		pipetracker = null
+		lighting?.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#4d4d4d")
+		return
 
-	// Give the pipe images to the client
-	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
-		var/list/total_members = list()
-		var/obj/machinery/atmospherics/current_location = loc
-		for(var/datum/pipeline/location_pipeline in current_location.return_pipenets())
-			total_members += location_pipeline.members
-			total_members += location_pipeline.other_atmos_machines
+	// This is a bit hacky but it makes the background darker, which has a nice effect
+	lighting?.add_atom_colour("#4d4d4d", TEMPORARY_COLOUR_PRIORITY)
 
-		if(!total_members.len)
-			return
+	var/obj/machinery/atmospherics/current_location = loc
+	var/list/our_pipenets = current_location.return_pipenets()
 
-		if(client)
-			for(var/obj/machinery/atmospherics/pipenet_part in total_members)
-				// If the machinery is not in view or is not meant to be seen, continue
-				if(!in_view_range(client.mob, pipenet_part))
-					continue
-				if(!(pipenet_part.vent_movement & VENTCRAWL_CAN_SEE))
-					continue
+	// We on occasion want to do a full rebuild. this lets us do that
+	if(full_refresh)
+		for(var/image/current_image in pipes_shown)
+			client.images -= current_image
+		pipes_shown.len = 0
+		pipetracker = null
 
-				if(!pipenet_part.pipe_vision_img)
-					pipenet_part.pipe_vision_img = image(pipenet_part, pipenet_part.loc, dir = pipenet_part.dir)
-					pipenet_part.pipe_vision_img.plane = ABOVE_HUD_PLANE
-				client.images += pipenet_part.pipe_vision_img
-				pipes_shown += pipenet_part.pipe_vision_img
+	if(!pipetracker)
+		pipetracker = new()
+
+	var/turf/our_turf = get_turf(src)
+	// We're getting the smallest "range" arg we can pass to the spatial grid and still get all the stuff we need
+	// We preload a bit more then we need so movement looks ok
+	var/list/view_range = getviewsize(client.view)
+	pipetracker.set_bounds(view_range[1] + 1, view_range[2] + 1)
+
+	var/list/entered_exited_pipes = pipetracker.recalculate_type_members(our_turf, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
+	var/list/pipes_gained = entered_exited_pipes[1]
+	var/list/pipes_lost = entered_exited_pipes[2]
+
+	for(var/obj/machinery/atmospherics/pipenet_part as anything in pipes_lost)
+		if(!pipenet_part.pipe_vision_img)
+			continue
+		client.images -= pipenet_part.pipe_vision_img
+		pipes_shown -= pipenet_part.pipe_vision_img
+
+	for(var/obj/machinery/atmospherics/pipenet_part as anything in pipes_gained)
+		// If the machinery is not part of our net or is not meant to be seen, continue
+		var/list/thier_pipenets = pipenet_part.return_pipenets()
+		if(!length(thier_pipenets & our_pipenets))
+			continue
+		if(!(pipenet_part.vent_movement & VENTCRAWL_CAN_SEE))
+			continue
+
+		if(!pipenet_part.pipe_vision_img)
+			pipenet_part.pipe_vision_img = image(pipenet_part, pipenet_part.loc, dir = pipenet_part.dir)
+			pipenet_part.pipe_vision_img.plane = PIPECRAWL_IMAGES_PLANE
+		client.images += pipenet_part.pipe_vision_img
+		pipes_shown += pipenet_part.pipe_vision_img

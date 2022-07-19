@@ -7,13 +7,12 @@
 	back = /obj/item/storage/backpack/fireproof
 	ears = /obj/item/radio/headset/syndicate/alt
 	l_pocket = /obj/item/modular_computer/tablet/nukeops
+	r_pocket = /obj/item/pen/edagger
 	id = /obj/item/card/id/advanced/chameleon
-	belt = /obj/item/gun/ballistic/automatic/pistol
-	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
-		/obj/item/knife/combat/survival)
+	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine
 
 	skillchips = list(/obj/item/skillchip/disk_verifier)
-
+	box = /obj/item/storage/box/survival/syndie
 	var/tc = 25
 	var/command_radio = FALSE
 	var/uplink_type = /obj/item/uplink/nuclear
@@ -22,7 +21,6 @@
 
 /datum/outfit/syndicate/leader
 	name = "Syndicate Leader - Basic"
-	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	command_radio = TRUE
 
 	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
@@ -59,6 +57,7 @@
 	internals_slot = ITEM_SLOT_RPOCKET
 	belt = /obj/item/storage/belt/military
 	r_hand = /obj/item/gun/ballistic/shotgun/bulldog
-	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
-		/obj/item/gun/ballistic/automatic/pistol=1,\
-		/obj/item/knife/combat/survival)
+	backpack_contents = list(
+		/obj/item/gun/ballistic/automatic/pistol/clandestine,
+		/obj/item/pen/edagger,
+	)

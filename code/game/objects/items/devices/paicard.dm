@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	custom_premium_price = PAYCHECK_HARD * 1.25
+	custom_premium_price = PAYCHECK_COMMAND * 1.25
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 	/// Spam alert prevention
@@ -117,9 +117,9 @@
 		if("fix_speech")
 			to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
 			to_chat(usr, span_notice("You fix the pAI's speech modulator."))
-			pai.stuttering = 0
-			pai.slurring = 0
-			pai.derpspeech = 0
+			for(var/effect in typesof(/datum/status_effect/speech))
+				pai.remove_status_effect(effect)
+
 		if("request")
 			if(!pai)
 				SSpai.findPAI(src, usr)
@@ -187,9 +187,18 @@
 	if(!COOLDOWN_FINISHED(src, alert_cooldown))
 		return
 	COOLDOWN_START(src, alert_cooldown, 5 SECONDS)
-	flick("[initial(icon_state)]-alert", src)
+	add_alert()
+	addtimer(CALLBACK(src, .proc/remove_alert), 5 SECONDS)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	loc.visible_message(span_info("[src] flashes a message across its screen, \"Additional personalities available for download.\""), blind_message = span_notice("[src] vibrates with an alert."))
+
+/obj/item/paicard/proc/add_alert()
+	add_overlay(
+		list(mutable_appearance(icon, "[initial(icon_state)]-alert"),
+			emissive_appearance(icon, "[initial(icon_state)]-alert", alpha = src.alpha)))
+
+/obj/item/paicard/proc/remove_alert()
+	cut_overlays()
 
 /obj/item/paicard/emp_act(severity)
 	. = ..()

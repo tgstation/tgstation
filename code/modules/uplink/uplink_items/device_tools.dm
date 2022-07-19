@@ -68,6 +68,15 @@
 	item = /obj/item/storage/briefcase/launchpad
 	cost = 6
 
+/datum/uplink_item/device_tools/syndicate_teleporter
+	name = "Experimental Syndicate Teleporter"
+	desc = "A handheld device that teleports the user 4-8 meters forward. \
+			Beware, teleporting into a wall will trigger a parallel emergency teleport; \
+			however if that fails, you may need to be stitched back together. \
+			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse."
+	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
+	cost = 8
+
 /datum/uplink_item/device_tools/camera_bug
 	name = "Camera Bug"
 	desc = "Enables you to view all cameras on the main network, set up motion alerts and track a target. \
@@ -99,18 +108,18 @@
 	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/frame
-	name = "F.R.A.M.E. PDA Cartridge"
-	desc = "When inserted into a personal digital assistant, this cartridge gives you five PDA viruses which \
-			when used cause the targeted PDA to become a new uplink with zero TCs, and immediately become unlocked. \
+	name = "F.R.A.M.E. disk"
+	desc = "When inserted into a tablet, this cartridge gives you five messenger viruses which \
+			when used cause the targeted tablet to become a new uplink with zero TCs, and immediately become unlocked. \
 			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
-	item = /obj/item/cartridge/virus/frame
+	item = /obj/item/computer_hardware/hard_drive/portable/virus/frame
 	cost = 4
 	restricted = TRUE
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
-	var/obj/item/cartridge/virus/frame/target = .
+	var/obj/item/computer_hardware/hard_drive/portable/virus/frame/target = .
 	if(!target)
 		return
 	target.current_progression = uplink_handler.progression_points
@@ -189,6 +198,13 @@
 	cost = 5
 	surplus = 90
 
+/datum/uplink_item/device_tools/super_pointy_tape
+	name = "Super Pointy Tape"
+	desc = "An all-purpose super pointy tape roll. The tape is built with hundreds of tiny metal needles, the roll comes with in 5 pieces. When added to items the \
+			item that was taped will embed when thrown at people. Taping people's mouthes with it will hurt them if pulled off by someone else."
+	progression_minimum = 10 MINUTES
+	item = /obj/item/stack/sticky_tape/pointy/super
+	cost = 1
 
 // Medium progression cost
 

@@ -65,6 +65,13 @@
 	MakeGrillable()
 	MakeDecompose(mapload)
 	MakeBakeable()
+	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
+
+/obj/item/food/examine(mob/user)
+	. = ..()
+	if(foodtypes)
+		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
+		. += span_notice("It is [lowertext(english_list(types))].")
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/MakeEdible()
@@ -109,3 +116,8 @@
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+
+/obj/item/food/mark_silver_slime_reaction()
+	//Adds this flag to prevent it from exporting for profit from cargo
+	food_flags |= FOOD_SILVER_SPAWNED
+	return ..()

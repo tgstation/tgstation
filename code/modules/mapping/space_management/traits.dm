@@ -31,38 +31,45 @@
 
 /// Get a list of all z which have the specified trait
 /datum/controller/subsystem/mapping/proc/levels_by_trait(trait)
-	. = list()
-	var/list/_z_list = z_list
-	for(var/A in _z_list)
-		var/datum/space_level/S = A
-		if (S.traits[trait])
-			. += S.z_value
+	var/list/final_return = list()
+	for(var/datum/space_level/level as anything in z_list)
+		if (level.traits[trait])
+			final_return += level.z_value
+	return final_return
 
 /// Get a list of all z which have any of the specified traits
 /datum/controller/subsystem/mapping/proc/levels_by_any_trait(list/traits)
-	. = list()
-	var/list/_z_list = z_list
-	for(var/A in _z_list)
-		var/datum/space_level/S = A
+	var/list/final_return = list()
+	for(var/datum/space_level/level as anything in z_list)
 		for (var/trait in traits)
-			if (S.traits[trait])
-				. += S.z_value
+			if (level.traits[trait])
+				final_return += level.z_value
 				break
+	return final_return
+
+/// Get a list of all z which have all of the specified traits
+/datum/controller/subsystem/mapping/proc/levels_by_all_traits(list/traits)
+	var/list/final_return = list()
+	for(var/datum/space_level/level as anything in z_list)
+		if(level_has_all_traits(level.z_value, traits))
+			final_return += level.z_value
+	return final_return
 
 /// Attempt to get the turf below the provided one according to Z traits
 /datum/controller/subsystem/mapping/proc/get_turf_below(turf/T)
-	if (!T)
+	if (!T || !initialized)
 		return
-	var/offset = level_trait(T.z, ZTRAIT_DOWN)
+	var/offset = multiz_levels[T.z]["[DOWN]"]
 	if (!offset)
 		return
-	return locate(T.x, T.y, T.z + offset)
+	return locate(T.x, T.y, T.z - offset)
 
 /// Attempt to get the turf above the provided one according to Z traits
 /datum/controller/subsystem/mapping/proc/get_turf_above(turf/T)
-	if (!T)
+	if (!T || !initialized)
 		return
-	var/offset = level_trait(T.z, ZTRAIT_UP)
+
+	var/offset = multiz_levels[T.z]["[UP]"]
 	if (!offset)
 		return
 	return locate(T.x, T.y, T.z + offset)

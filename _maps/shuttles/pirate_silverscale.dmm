@@ -114,6 +114,15 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
+"ff" = (
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/shuttle/pirate)
 "fj" = (
 /obj/machinery/computer/shuttle/pirate{
 	dir = 8
@@ -231,9 +240,7 @@
 	dir = 8
 	},
 /obj/structure/mirror/directional/north,
-/obj/structure/sink{
-	pixel_y = 17
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -522,9 +529,7 @@
 	dir = 8
 	},
 /obj/structure/mirror/directional/north,
-/obj/structure/sink{
-	pixel_y = 17
-	},
+/obj/structure/sink/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -603,9 +608,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "HS" = (
-/obj/structure/musician/piano{
-	icon_state = "piano"
-	},
+/obj/structure/musician/piano,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -1293,7 +1296,7 @@ Sh
 rB
 fN
 Sv
-uP
+ff
 rB
 "}
 (16,1,1) = {"

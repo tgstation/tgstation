@@ -282,6 +282,19 @@
 	owner.say("Thank you for the fun ride, [clown.name]!")
 	clown_car.increment_thanks_counter()
 
+/datum/action/vehicle/ridden/wheelchair/bell
+	name = "Bell Ring"
+	desc = "Ring the bell."
+	icon_icon = 'icons/obj/bureaucracy.dmi'
+	button_icon_state = "desk_bell"
+	check_flags = AB_CHECK_CONSCIOUS
+	var/bell_cooldown
+
+/datum/action/vehicle/ridden/wheelchair/bell/Trigger(trigger_flags)
+	if(TIMER_COOLDOWN_CHECK(src, bell_cooldown))
+		return
+	TIMER_COOLDOWN_START(src, bell_cooldown, 0.5 SECONDS)
+	playsound(vehicle_ridden_target, 'sound/machines/microwave/microwave-end.ogg', 70)
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie
 	name = "Ollie"
@@ -291,39 +304,40 @@
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger(trigger_flags)
 	. = ..()
-	if(.)
-		var/obj/vehicle/ridden/scooter/skateboard/vehicle = vehicle_target
-		vehicle.obj_flags |= BLOCK_Z_OUT_DOWN
-		if (vehicle.grinding)
-			return
-		var/mob/living/rider = owner
-		var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
-		rider.adjustStaminaLoss(vehicle.instability* 0.75)
-		if (rider.getStaminaLoss() >= 100)
-			vehicle.obj_flags &= ~CAN_BE_HIT
-			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
-			vehicle.unbuckle_mob(rider)
-			rider.throw_at(landing_turf, 2, 2)
-			rider.Paralyze(40)
-			vehicle.visible_message(span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"))
-		else
-			rider.spin(4, 1)
-			animate(rider, pixel_y = -6, time = 4)
-			animate(vehicle, pixel_y = -6, time = 3)
-			playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
-			passtable_on(rider, VEHICLE_TRAIT)
-			vehicle.pass_flags |= PASSTABLE
-			rider.Move(landing_turf, vehicle_target.dir)
-			passtable_off(rider, VEHICLE_TRAIT)
-			vehicle.pass_flags &= ~PASSTABLE
-		if((locate(/obj/structure/table) in vehicle.loc.contents) || (locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents))
-			if(locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents)
-				rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)
-			vehicle.grinding = TRUE
-			vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
-			addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
-		else
-			vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
+	if(!.)
+		return
+	var/obj/vehicle/ridden/scooter/skateboard/vehicle = vehicle_target
+	vehicle.obj_flags |= BLOCK_Z_OUT_DOWN
+	if (vehicle.grinding)
+		return
+	var/mob/living/rider = owner
+	var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
+	rider.adjustStaminaLoss(vehicle.instability* 0.75)
+	if (rider.getStaminaLoss() >= 100)
+		vehicle.obj_flags &= ~CAN_BE_HIT
+		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
+		vehicle.unbuckle_mob(rider)
+		rider.throw_at(landing_turf, 2, 2)
+		rider.Paralyze(40)
+		vehicle.visible_message(span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"))
+		return
+	if((locate(/obj/structure/table) in landing_turf) || (locate(/obj/structure/fluff/tram_rail) in landing_turf))
+		if(locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents)
+			rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)
+		vehicle.grinding = TRUE
+		vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
+		addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
+	else
+		vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
+	rider.spin(4, 1)
+	animate(rider, pixel_y = -6, time = 4)
+	animate(vehicle, pixel_y = -6, time = 3)
+	playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
+	passtable_on(rider, VEHICLE_TRAIT)
+	vehicle.pass_flags |= PASSTABLE
+	rider.Move(landing_turf, vehicle_target.dir)
+	passtable_off(rider, VEHICLE_TRAIT)
+	vehicle.pass_flags &= ~PASSTABLE
 
 //VIM ACTION DATUMS
 
@@ -340,10 +354,11 @@
 	var/obj/vehicle/sealed/car/vim/vim_mecha = vehicle_entered_target
 	if(!COOLDOWN_FINISHED(vim_mecha, sound_cooldown))
 		vim_mecha.balloon_alert(owner, "on cooldown!")
-		return
+		return FALSE
 	COOLDOWN_START(vim_mecha, sound_cooldown, VIM_SOUND_COOLDOWN)
 	vehicle_entered_target.visible_message(span_notice("[vehicle_entered_target] [sound_message]"))
 	playsound(vim_mecha, sound_path, 75)
+	return TRUE
 
 /datum/action/vehicle/sealed/noise/chime
 	name = "Chime!"
@@ -352,6 +367,10 @@
 	sound_path = 'sound/machines/chime.ogg'
 	sound_message = "chimes!"
 
+/datum/action/vehicle/sealed/noise/chime/Trigger(trigger_flags)
+	if(..())
+		SEND_SIGNAL(vehicle_entered_target, COMSIG_VIM_CHIME_USED)
+
 /datum/action/vehicle/sealed/noise/buzz
 	name = "Buzz."
 	desc = "Negative!"
@@ -359,5 +378,13 @@
 	sound_path = 'sound/machines/buzz-sigh.ogg'
 	sound_message = "buzzes."
 
+/datum/action/vehicle/sealed/noise/buzz/Trigger(trigger_flags)
+	if(..())
+		SEND_SIGNAL(vehicle_entered_target, COMSIG_VIM_BUZZ_USED)
+
 /datum/action/vehicle/sealed/headlights/vim
 	button_icon_state = "vim_headlights"
+
+/datum/action/vehicle/sealed/headlights/vim/Trigger(trigger_flags)
+	. = ..()
+	SEND_SIGNAL(vehicle_entered_target, COMSIG_VIM_HEADLIGHTS_TOGGLED, vehicle_entered_target.headlights_toggle)

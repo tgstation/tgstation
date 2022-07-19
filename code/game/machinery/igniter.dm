@@ -5,9 +5,6 @@
 	icon_state = "igniter0"
 	base_icon_state = "igniter"
 	plane = FLOOR_PLANE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 4
 	max_integrity = 300
 	armor = list(MELEE = 50, BULLET = 30, LASER = 70, ENERGY = 50, BOMB = 20, BIO = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
@@ -33,7 +30,7 @@
 		return
 	add_fingerprint(user)
 
-	use_power(50)
+	use_power(active_power_usage)
 	on = !( on )
 	update_appearance()
 
@@ -124,7 +121,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	flick("[initial(icon_state)]-spark", src)
 	spark_system.start()
 	last_spark = world.time
-	use_power(1000)
+	use_power(active_power_usage)
 	var/turf/location = loc
 	if (isturf(location))
 		location.hotspot_expose(1000,2500,1)

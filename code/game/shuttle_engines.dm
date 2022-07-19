@@ -36,10 +36,10 @@
 		else
 			state = ENGINE_UNWRENCHED
 
-/obj/structure/shuttle/engine/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+/obj/structure/shuttle/engine/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/shuttle/engine/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -109,6 +109,7 @@
 	name = "in-wall propulsion engine"
 	icon_state = "propulsion_w"
 	density = FALSE
+	opacity = FALSE
 	smoothing_groups = list()
 
 /obj/structure/shuttle/engine/propulsion/left
@@ -148,12 +149,13 @@
 	desc = "A very large bluespace engine used to propel very large ships."
 	bound_width = 64
 	bound_height = 64
-	appearance_flags = 0
+	appearance_flags = LONG_GLIDE
 
 /obj/structure/shuttle/engine/large/in_wall
 	name = "in-wall engine"
 	icon_state = "large_engine_w"
 	density = FALSE
+	opacity = FALSE
 	smoothing_groups = list()
 
 /obj/structure/shuttle/engine/huge
@@ -164,12 +166,13 @@
 	desc = "An extremely large bluespace engine used to propel extremely large ships."
 	bound_width = 96
 	bound_height = 96
-	appearance_flags = 0
+	appearance_flags = LONG_GLIDE
 
 /obj/structure/shuttle/engine/huge/in_wall
 	name = "in-wall engine"
 	icon_state = "huge_engine_w"
 	density = FALSE
+	opacity = FALSE
 	smoothing_groups = list()
 
 #undef ENGINE_UNWRENCHED

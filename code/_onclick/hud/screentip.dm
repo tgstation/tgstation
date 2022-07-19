@@ -6,6 +6,7 @@
 	maptext_height = 480
 	maptext_width = 480
 	maptext = ""
+	layer = SCREENTIP_LAYER //Added to make screentips appear above action buttons (and other /atom/movable/screen objects)
 
 /atom/movable/screen/screentip/Initialize(mapload, _hud)
 	. = ..()

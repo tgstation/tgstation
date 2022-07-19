@@ -142,7 +142,7 @@
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
-	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/brain = 1, /obj/item/organ/heart = 1)
+	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1)
 	attack_sound = 'sound/weapons/slap.ogg'
 	attack_vis_effect = ATTACK_EFFECT_DISARM
 	attack_verb_simple = "slap"
@@ -165,7 +165,7 @@
 
 /mob/living/simple_animal/hostile/bear/butter/CheckParts(list/parts) //Borrowed code from Cak, allows the brain used to actually control the bear.
 	..()
-	var/obj/item/organ/brain/B = locate(/obj/item/organ/brain) in contents
+	var/obj/item/organ/internal/brain/B = locate(/obj/item/organ/internal/brain) in contents
 	if(!B || !B.brainmob || !B.brainmob.mind)
 		return
 	B.brainmob.mind.transfer_to(src)

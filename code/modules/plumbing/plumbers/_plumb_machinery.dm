@@ -8,20 +8,19 @@
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	icon_state = "pump"
 	density = TRUE
-	active_power_usage = 30
-	use_power = ACTIVE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 7.5
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
 	var/buffer = 50
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
-	///wheter we partake in rcd construction or not
 
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
 	set_anchored(bolt)
 	create_reagents(buffer, reagent_flags)
 	AddComponent(/datum/component/simple_rotation)
+	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
 /obj/machinery/plumbing/examine(mob/user)
 	. = ..()
@@ -30,10 +29,10 @@
 /obj/machinery/plumbing/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
-/obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+/obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	to_chat(user, span_notice("You start furiously plunging [name]."))
@@ -98,6 +97,8 @@
 /obj/machinery/plumbing/layer_manifold/Initialize(mapload, bolt, layer)
 	. = ..()
 
+	AddComponent(/datum/component/plumbing/manifold, bolt, FIRST_DUCT_LAYER)
 	AddComponent(/datum/component/plumbing/manifold, bolt, SECOND_DUCT_LAYER)
 	AddComponent(/datum/component/plumbing/manifold, bolt, THIRD_DUCT_LAYER)
 	AddComponent(/datum/component/plumbing/manifold, bolt, FOURTH_DUCT_LAYER)
+	AddComponent(/datum/component/plumbing/manifold, bolt, FIFTH_DUCT_LAYER)

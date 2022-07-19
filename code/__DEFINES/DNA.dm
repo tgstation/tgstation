@@ -17,8 +17,11 @@
 
 
 //Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you dont want people to fuck with like wizard mutate
+/// A mutation that can be activated and deactived by completing a sequence
 #define MUT_NORMAL 1
+/// A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console
 #define MUT_EXTRA 2
+/// Cannot be interacted with by players through normal means. I.E. wizards mutate
 #define MUT_OTHER 3
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
@@ -26,7 +29,8 @@
 
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
 
-#define DNA_EYE_COLOR_BLOCK 4
+#define DNA_EYE_COLOR_LEFT_BLOCK 4
+#define DNA_EYE_COLOR_RIGHT_BLOCK 4
 #define DNA_FACIAL_HAIR_COLOR_BLOCK 2
 #define DNA_FACIAL_HAIRSTYLE_BLOCK 6
 #define DNA_GENDER_BLOCK 5
@@ -36,24 +40,23 @@
 #define DNA_UNI_IDENTITY_BLOCKS 7
 
 /// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 16
+#define DNA_FEATURE_BLOCKS 15
 
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
 #define DNA_LIZARD_MARKINGS_BLOCK 3
-#define DNA_LIZARD_TAIL_BLOCK 4
-#define DNA_SNOUT_BLOCK 5
-#define DNA_HORNS_BLOCK 6
-#define DNA_FRILLS_BLOCK 7
-#define DNA_SPINES_BLOCK 8
-#define DNA_HUMAN_TAIL_BLOCK 9
+#define DNA_TAIL_BLOCK 4
+#define DNA_LIZARD_TAIL_BLOCK 5
+#define DNA_SNOUT_BLOCK 6
+#define DNA_HORNS_BLOCK 7
+#define DNA_FRILLS_BLOCK 8
+#define DNA_SPINES_BLOCK 9
 #define DNA_EARS_BLOCK 10
 #define DNA_MOTH_WINGS_BLOCK 11
 #define DNA_MOTH_ANTENNAE_BLOCK 12
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
-#define DNA_MONKEY_TAIL_BLOCK 15
-#define DNA_POD_HAIR_BLOCK 16
+#define DNA_POD_HAIR_BLOCK 15
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -72,6 +75,7 @@
 #define NOSTOMACH 10
 #define NO_DNA_COPY 11
 #define DRINKSBLOOD 12
+
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define DYNCOLORS 13
 #define AGENDER 14
@@ -90,6 +94,9 @@
 #define NOAUGMENTS 20
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
 #define BLOOD_CLANS 21
+/// Stops species from spawning with tongue. Doesn't actually make the species able to talk with no tongue
+#define NO_TONGUE 22
+
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
@@ -111,7 +118,6 @@
 #define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device" //This one ignores alphabetical order cause the arms should be together
 #define ORGAN_SLOT_STOMACH "stomach"
 #define ORGAN_SLOT_STOMACH_AID "stomach_aid"
-#define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_THRUSTERS "thrusters"
 #define ORGAN_SLOT_TONGUE "tongue"
 #define ORGAN_SLOT_VOICE "vocal_cords"
@@ -152,7 +158,8 @@
 #define G_FEMALE 2
 #define G_PLURAL 3
 
-///Organ slot processing order for life proc
+/// Defines how a mob's internal_organs_slot is ordered
+/// Exists so Life()'s organ process order is consistent
 GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_BRAIN,
 	ORGAN_SLOT_APPENDIX,
@@ -175,7 +182,6 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_HEART_AID,
 	ORGAN_SLOT_BRAIN_ANTIDROP,
 	ORGAN_SLOT_BRAIN_ANTISTUN,
-	ORGAN_SLOT_TAIL,
 	ORGAN_SLOT_PARASITE_EGG,
 	ORGAN_SLOT_REGENERATIVE_CORE,
 	ORGAN_SLOT_XENO_PLASMAVESSEL,

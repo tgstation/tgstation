@@ -55,7 +55,7 @@
 
 	var/obj/item/card/id/card = paying.get_idcard(TRUE)
 	if(card?.registered_account?.account_job?.paycheck_department == payment_department)
-		use_power(20)
+		use_power(active_power_usage)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
@@ -63,7 +63,7 @@
 	var/bonus_fee = pandemonium ? rand(10,30) : 0
 	if(attempt_charge(src, paying, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
-	use_power(20)
+	use_power(active_power_usage)
 	paying_customer = TRUE
 	icon_state = "[base_icon_state]_active"
 	say("Thank you for your patronage!")
@@ -85,12 +85,13 @@
 	icon_state = "[base_icon_state][scan_active ? "_active" : null]"
 	return ..()
 
-/obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/I) //Allows for wrenching/unwrenching the machine.
+/obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/tool) //Allows for wrenching/unwrenching the machine.
 	..()
-	default_unfasten_wrench(user, I, time = 10)
-	return TRUE
+	default_unfasten_wrench(user, tool, time = 0.1 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/medical_kiosk/RefreshParts()
+	. = ..()
 	var/obj/item/circuitboard/machine/medical_kiosk/board = circuit
 	if(board)
 		active_price = board.custom_cost
@@ -261,7 +262,7 @@
 			chemical_list += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01)))
 			if(reagent.overdosed)
 				overdose_list += list(list("name" = reagent.name))
-	var/obj/item/organ/stomach/belly = patient.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/belly = patient.getorganslot(ORGAN_SLOT_STOMACH)
 	if(belly?.reagents.reagent_list.len) //include the stomach contents if it exists
 		for(var/bile in belly.reagents.reagent_list)
 			var/datum/reagent/bit = bile

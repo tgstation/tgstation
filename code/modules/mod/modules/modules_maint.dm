@@ -14,13 +14,13 @@
 /obj/item/mod/module/springlock/on_install()
 	mod.activation_step_time *= 0.5
 
-/obj/item/mod/module/springlock/on_uninstall()
+/obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
 	mod.activation_step_time *= 2
 
 /obj/item/mod/module/springlock/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, .proc/on_wearer_exposed)
 
-/obj/item/mod/module/springlock/on_suit_deactivation()
+/obj/item/mod/module/springlock/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 
 ///Signal fired when wearer is exposed to reagents
@@ -105,15 +105,17 @@
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
 	if(selection)
-		SEND_SOUND(mod.wearer, sound(selection.song_path, volume = 50, channel = CHANNEL_JUKEBOX))
+		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, sound_to_use = sound(selection.song_path), use_reverb = FALSE)
 
-/obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
 	QDEL_NULL(rave_screen)
 	if(selection)
 		mod.wearer.stop_sound_channel(CHANNEL_JUKEBOX)
+		if(deleting)
+			return
 		SEND_SOUND(mod.wearer, sound('sound/machines/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
@@ -125,7 +127,7 @@
 	rave_number++
 	if(rave_number > length(rainbow_order))
 		rave_number = 1
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 	rave_screen.update_colour(rainbow_order[rave_number])
 
 /obj/item/mod/module/visor/rave/get_configuration()
@@ -176,7 +178,7 @@
 	icon_state = "bloon"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN*0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/balloon)
 	cooldown_time = 15 SECONDS
 
@@ -235,6 +237,8 @@
 	drain_power(use_power_cost)
 	num_sheets_dispensed++
 
+
+///Stamper - Extends a stamp that can switch between accept/deny modes.
 /obj/item/mod/module/stamp
 	name = "MOD stamper module"
 	desc = "A module installed into the wrist of the suit, this functions as a high-power stamp, \
@@ -286,14 +290,15 @@
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
-/obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE)
-	if(you_fucked_up)
+/obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
+	if(you_fucked_up && !deleting)
 		to_chat(mod.wearer, span_danger("It's too late."))
 		return FALSE
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/effects/curseattack.ogg', 50)
+	if(deleting)
+		playsound(src, 'sound/effects/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	step_count = 0
@@ -325,7 +330,7 @@
 	playsound(src, 'sound/effects/whirthunk.ogg', 75)
 	to_chat(mod.wearer, span_userdanger("That was stupid."))
 	mod.wearer.Stun(FLY_TIME, ignore_canstun = TRUE)
-	animate(mod.wearer, FLY_TIME, pixel_y = 256, alpha = 0)
+	animate(mod.wearer, FLY_TIME, pixel_z = 256, alpha = 0)
 	QDEL_IN(mod.wearer, FLY_TIME)
 
 #undef FLY_TIME

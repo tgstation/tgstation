@@ -1,7 +1,7 @@
 /obj/item/dnainjector
 	name = "\improper DNA injector"
-	desc = "This injects the person with DNA."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	desc = "A cheap single use autoinjector that injects the user with DNA."
+	icon = 'icons/obj/syringe.dmi'
 	icon_state = "dnainjector"
 	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -461,6 +461,14 @@
 /obj/item/dnainjector/antiwebbing
 	name = "\improper DNA injector (Anti-Webbing)"
 	remove_mutations = list(/datum/mutation/human/webbing)
+	
+/obj/item/dnainjector/illiterate
+	name = "\improper DNA injector (Illiterate)"
+	add_mutations = list(/datum/mutation/human/illiterate)
+
+/obj/item/dnainjector/antiilliterate
+	name = "\improper DNA injector (Anti-Illiterate)"
+	remove_mutations = list(/datum/mutation/human/illiterate)
 
 /obj/item/dnainjector/timed
 	var/duration = 600

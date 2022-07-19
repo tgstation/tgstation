@@ -3,9 +3,8 @@
 	icon = 'icons/obj/clothing/under/default.dmi'
 	worn_icon = 'icons/mob/clothing/under/default.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	permeability_coefficient = 0.9
 	slot_flags = ITEM_SLOT_ICLOTHING
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0, WOUND = 5)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0, WOUND = 5)
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -35,7 +34,7 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-	if(HAS_BLOOD_DNA(src))
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 	if(accessory_overlay)
 		. += accessory_overlay

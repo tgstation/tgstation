@@ -306,14 +306,29 @@
 				var/bw_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS]
 				var/wound_type = (initial(P.damage_type) == BRUTE) ? WOUND_BLUNT : WOUND_BURN // sharpness is handled in the wound rolling
 				wound_info_by_part -= hit_part
+
+				// technically this only checks armor worn the moment that all the pellets resolve rather than as each one hits you,
+				// but this isn't important enough to warrant all the extra loops of mostly redundant armor checks
+				var/mob/living/carbon/hit_carbon = target
+				var/armor_factor = hit_carbon.getarmor(hit_part, initial(P.armor_flag))
+				armor_factor = min(ARMOR_MAX_BLOCK, armor_factor) //cap damage reduction at 90%
+				if(armor_factor > 0)
+					if(initial(P.weak_against_armour) && armor_factor >= 0)
+						armor_factor *= ARMOR_WEAKENED_MULTIPLIER
+					damage_dealt *= armor_factor
+
 				hit_part.painless_wound_roll(wound_type, damage_dealt, w_bonus, bw_bonus, initial(P.sharpness))
 
+		var/limb_hit_text = ""
+		if(hit_part)
+			limb_hit_text = " in the [hit_part.plaintext_zone]"
+
 		if(num_hits > 1)
-			target.visible_message(span_danger("[target] is hit by [num_hits] [proj_name][plural_s(proj_name)][hit_part ? " in the [hit_part.name]" : ""][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE, target)
-			to_chat(target, span_userdanger("You're hit by [num_hits] [proj_name]s[hit_part ? " in the [hit_part.name]" : ""]!"))
+			target.visible_message(span_danger("[target] is hit by [num_hits] [proj_name][plural_s(proj_name)][limb_hit_text][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE, target)
+			to_chat(target, span_userdanger("You're hit by [num_hits] [proj_name]s[limb_hit_text]!"))
 		else
-			target.visible_message(span_danger("[target] is hit by a [proj_name][hit_part ? " in the [hit_part.name]" : ""][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE, target)
-			to_chat(target, span_userdanger("You're hit by a [proj_name][hit_part ? " in the [hit_part.name]" : ""]!"))
+			target.visible_message(span_danger("[target] is hit by a [proj_name][limb_hit_text][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE, target)
+			to_chat(target, span_userdanger("You're hit by a [proj_name][limb_hit_text]!"))
 
 	for(var/M in purple_hearts)
 		var/mob/living/martyr = M

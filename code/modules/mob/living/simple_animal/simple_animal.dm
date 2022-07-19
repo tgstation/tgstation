@@ -214,8 +214,7 @@
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
-	if (SSnpcpool.state == SS_PAUSED && LAZYLEN(SSnpcpool.currentrun))
-		SSnpcpool.currentrun -= src
+	SSnpcpool.currentrun -= src
 
 	if(nest)
 		nest.spawned_mobs -= src
@@ -262,16 +261,23 @@
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
-	if(!stop_automated_movement && wander)
-		if((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE)) //This is so it only moves if it's not inside a closet, gentics machine, etc.
-			turns_since_move++
-			if(turns_since_move >= turns_per_move)
-				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(GLOB.cardinals)
-					if(Process_Spacemove(anydir))
-						Move(get_step(src, anydir), anydir)
-						turns_since_move = 0
-			return 1
+	if(stop_automated_movement || !wander)
+		return
+	if(!isturf(loc) && !allow_movement_on_non_turfs)
+		return
+	if(!(mobility_flags & MOBILITY_MOVE)) //This is so it only moves if it's not inside a closet, gentics machine, etc.
+		return TRUE
+
+	turns_since_move++
+	if(turns_since_move < turns_per_move)
+		return TRUE
+	if(stop_automated_movement_when_pulled && pulledby) //Some animals don't move when pulled
+		return TRUE
+	var/anydir = pick(GLOB.cardinals)
+	if(Process_Spacemove(anydir))
+		Move(get_step(src, anydir), anydir)
+		turns_since_move = 0
+	return TRUE
 
 /mob/living/simple_animal/proc/handle_automated_speech(override)
 	set waitfor = FALSE
@@ -318,7 +324,7 @@
 		var/turf/open/ST = loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
+			ST.air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
 
 			var/plas = ST_gases[/datum/gas/plasma][MOLES]
 			var/oxy = ST_gases[/datum/gas/oxygen][MOLES]
@@ -490,10 +496,7 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/handle_fire(delta_time, times_fired)
-	return TRUE
-
-/mob/living/simple_animal/IgniteMob()
+/mob/living/simple_animal/ignite_mob()
 	return FALSE
 
 /mob/living/simple_animal/extinguish_mob()
@@ -555,7 +558,7 @@
 			sight = initial(sight)
 		else
 			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = 8
+		see_in_dark = NIGHTVISION_FOV_RANGE
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		return
 
@@ -612,8 +615,8 @@
 		if(H)
 			H.update_appearance()
 
-/mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
-	. = ..(I, del_on_fail, merge_stacks)
+/mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
+	. = ..()
 	update_inv_hands()
 
 /mob/living/simple_animal/update_inv_hands()
@@ -636,6 +639,8 @@
 	return ..()
 
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
+	if(QDELETED(src))
+		return
 	if(!can_have_ai && (togglestatus != AI_OFF))
 		return
 	if (AIStatus != togglestatus)

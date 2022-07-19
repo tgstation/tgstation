@@ -2,7 +2,7 @@
 "a" = (
 /obj/modular_map_connector,
 /turf/closed/wall,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 
 (1,1,1) = {"
 a

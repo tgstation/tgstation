@@ -17,30 +17,14 @@
 	force_string = "LORD SINGULOTH HIMSELF"
 	///Is it able to pull shit right now?
 	var/charged = TRUE
-	///track wielded status on item
-	var/wielded = FALSE
 
 /obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddElement(/datum/element/kneejerk)
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="[base_icon_state]1")
-
-///triggered on wield of two handed item
-/obj/item/singularityhammer/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
-
-///triggered on unwield of two handed item
-/obj/item/singularityhammer/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
 
 /obj/item/singularityhammer/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -70,7 +54,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		if(charged)
 			charged = FALSE
 			if(istype(A, /mob/living/))
@@ -95,28 +79,10 @@
 	throwforce = 30
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
-	var/wielded = FALSE // track wielded status on item
-
-/obj/item/mjollnir/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="[base_icon_state]1", attacksound=SFX_SPARKS)
-
-/// triggered on wield of two handed item
-/obj/item/mjollnir/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/mjollnir/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
 
 /obj/item/mjollnir/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -139,7 +105,7 @@
 	..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		shock(M)
 
 /obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

@@ -47,6 +47,25 @@
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"jD" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/wheelys/rollerskates,
+/turf/open/floor/eighties,
+/area/shuttle/escape)
 "ln" = (
 /obj/machinery/vending/games,
 /turf/open/floor/eighties,
@@ -422,7 +441,7 @@ HS
 HS
 pa
 Ry
-Cg
+jD
 Cg
 ce
 uN
@@ -470,7 +489,7 @@ HS
 HS
 pa
 Ry
-Cg
+jD
 Cg
 ce
 Zo

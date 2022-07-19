@@ -32,8 +32,8 @@ export const RequestManager = (props, context) => {
       (request) =>
         decodeHtmlEntities(request.message)
           .toLowerCase()
-          .includes(filterText)
-        || request.owner_name.toLowerCase().includes(filterText)
+          .includes(filterText) ||
+        request.owner_name.toLowerCase().includes(filterText)
     );
   }
 
@@ -121,7 +121,7 @@ const RequestControls = (props, context) => {
   );
 };
 
-const FilterPanel = (_, context) => {
+const FilterPanel = (props, context) => {
   const [filterVisible, setFilterVisible] = useLocalState(
     context,
     'filterVisible',

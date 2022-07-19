@@ -29,7 +29,7 @@
 	robust_searching = 1
 	stat_attack = HARD_CRIT
 	faction = list("skeleton")
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	deathmessage = "collapses into a pile of bones!"
 	del_on_death = 1
@@ -73,7 +73,7 @@
 	melee_damage_upper = 30
 	deathmessage = "collapses into a pile of bones, its gear clanging as it hits the ground!"
 	loot = list(/obj/effect/decal/remains/human,
-				/obj/item/clothing/suit/armor/riot/chaplain,
+				/obj/item/clothing/suit/chaplainsuit/armor/templar,
 				/obj/item/clothing/head/helmet/chaplain,
 				/obj/item/claymore/weak{name = "holy sword"})
 

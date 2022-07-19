@@ -25,7 +25,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	robust_searching = 1
 	faction = list("hostile")
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	deathmessage = "falls to the ground, its shard dulling to a miserable grey!"
 	footstep_type = FOOTSTEP_MOB_CLAW

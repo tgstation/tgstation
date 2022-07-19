@@ -40,7 +40,7 @@
 	//arena conditions
 	RegisterSignal(sparring, COMSIG_MOVABLE_MOVED, .proc/arena_violation)
 	//severe violations (insta violation win for other party) conditions
-	RegisterSignal(sparring, COMSIG_MOVABLE_TELEPORTED, .proc/teleport_violation)
+	RegisterSignal(sparring, COMSIG_MOVABLE_POST_TELEPORT, .proc/teleport_violation)
 	//win conditions
 	RegisterSignal(sparring, COMSIG_MOB_STATCHANGE, .proc/check_for_victory)
 	//flub conditions
@@ -62,7 +62,7 @@
 		COMSIG_MOB_GRENADE_ARMED,
 		COMSIG_MOB_ITEM_ATTACK,
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_POST_TELEPORT,
 		COMSIG_MOB_STATCHANGE,
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_HULK_ATTACK,

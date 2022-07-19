@@ -107,40 +107,40 @@
 	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
 
-/datum/greyscale_config/pda
+/datum/greyscale_config/tablet
 	name = "PDA"
-	icon_file = 'icons/obj/pda.dmi'
+	icon_file = 'icons/obj/modular_pda.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pda.json'
 
-/datum/greyscale_config/pda/chaplain
+/datum/greyscale_config/tablet/chaplain
 	name = "Chaplain PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_chaplain.json'
 
-/datum/greyscale_config/pda/captain
+/datum/greyscale_config/tablet/captain
 	name = "Captain PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_captain.json'
 
-/datum/greyscale_config/pda/clown
+/datum/greyscale_config/tablet/clown
 	name = "Clown PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_clown.json'
 
-/datum/greyscale_config/pda/head
+/datum/greyscale_config/tablet/head
 	name = "Head PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_head.json'
 
-/datum/greyscale_config/pda/mime
+/datum/greyscale_config/tablet/mime
 	name = "Mime PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_mime.json'
 
-/datum/greyscale_config/pda/stripe_split
+/datum/greyscale_config/tablet/stripe_split
 	name = "Split Stripe PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_stripe_split.json'
 
-/datum/greyscale_config/pda/stripe_thick
+/datum/greyscale_config/tablet/stripe_thick
 	name = "Thick Stripe PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_stripe_thick.json'
 
-/datum/greyscale_config/pda/stripe_thick/head
+/datum/greyscale_config/tablet/stripe_thick/head
 	name = "Head Thick Stripe PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_stripe_thick_head.json'
 
@@ -327,7 +327,7 @@
 
 /datum/greyscale_config/suspenders/worn
 	name = "Worn Suspenders"
-	icon_file = 'icons/mob/clothing/suit.dmi'
+	icon_file = 'icons/mob/clothing/suits/utility.dmi'
 	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
 
 /datum/greyscale_config/giftdeliverybox
@@ -512,3 +512,90 @@
 	name = "Worn Skull Bandana Up"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandskull_worn_up.json'
+
+/datum/greyscale_config/material_airlock
+	name = "Material Airlock"
+	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
+	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'
+
+/datum/greyscale_config/vape
+	name = "Vape"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/vape.json'
+
+/datum/greyscale_config/vape/worn
+	name = "Worn Vape"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+	json_config = 'code/datums/greyscale/json_configs/vape_worn.json'
+
+/datum/greyscale_config/vape/open_low
+	name = "Open Vape Low"
+	json_config = 'code/datums/greyscale/json_configs/vape_open_low.json'
+
+/datum/greyscale_config/vape/open_med
+	name = "Open Vape Medium"
+	json_config = 'code/datums/greyscale/json_configs/vape_open_med.json'
+
+/datum/greyscale_config/vape/open_high
+	name = "Open Vape High"
+	json_config = 'code/datums/greyscale/json_configs/vape_open_high.json'
+
+/datum/greyscale_config/ties
+	name = "Ties"
+	icon_file = 'icons/obj/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ties.json'
+
+/datum/greyscale_config/ties_worn
+	name = "Worn Ties"
+	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ties_worn.json'
+
+/datum/greyscale_config/heck_suit
+	name = "H.E.C.K. Suit"
+	icon_file = 'icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_suit.json'
+
+/datum/greyscale_config/heck_suit/worn
+	name = "H.E.C.K. Suit Worn"
+	icon_file = 'icons/mob/clothing/suits/armor.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_suit_worn.json'
+
+/datum/greyscale_config/heck_helmet
+	name = "H.E.C.K. Helmet"
+	icon_file = 'icons/obj/clothing/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_helmet.json'
+
+/datum/greyscale_config/heck_helmet/worn
+	name = "H.E.C.K. Helmet Worn"
+	icon_file = 'icons/mob/clothing/head.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heck_helmet_worn.json'
+
+/datum/greyscale_config/tape
+	name = "Tape"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape.json'
+
+/datum/greyscale_config/tape/spikes
+	name = "Spiked Tape"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_spikes.json'
+
+/datum/greyscale_config/tape_piece
+	name = "Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece.json'
+
+/datum/greyscale_config/tape_piece/spikes
+	name = "Spiked Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes.json'
+
+/datum/greyscale_config/tape_piece/worn
+	name = "Worn Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece_worn.json'
+
+/datum/greyscale_config/tape_piece/worn/spikes
+	name = "Worn Tape Piece"
+	icon_file = 'icons/obj/tapes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes_worn.json'

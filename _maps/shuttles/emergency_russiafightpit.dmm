@@ -96,7 +96,7 @@
 	name = "window shutters";
 	pixel_x = 26;
 	pixel_y = -6;
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/button/door{
@@ -104,7 +104,7 @@
 	name = "release bears";
 	pixel_x = 26;
 	pixel_y = 6;
-	req_access_txt = "20"
+	req_access = list("captain")
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -181,7 +181,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "aJ" = (
@@ -215,7 +215,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "aP" = (
@@ -279,7 +279,7 @@
 "aZ" = (
 /obj/effect/decal/cleanable/shreds,
 /obj/machinery/door/window{
-	name = "fight pit"
+	name = "Fight Pit"
 	},
 /turf/open/floor/engine,
 /area/shuttle/escape)

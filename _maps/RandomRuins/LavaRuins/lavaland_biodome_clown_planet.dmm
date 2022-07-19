@@ -704,6 +704,7 @@
 /area/ruin/powered/clownplanet)
 "Or" = (
 /obj/machinery/light/directional/east,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
 "QT" = (
@@ -1779,7 +1780,7 @@ cc
 cc
 Zg
 QT
-QT
+gX
 QT
 QT
 gX
@@ -1813,7 +1814,7 @@ aa
 aa
 aa
 QT
-gX
+QT
 QT
 QT
 QT

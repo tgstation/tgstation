@@ -11,8 +11,7 @@
 	desc = "A machine used to store data and network statistics."
 	telecomms_type = /obj/machinery/telecomms/server
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 15
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	circuit = /obj/item/circuitboard/machine/telecomms/server
 	var/list/log_entries = list()
 	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
@@ -54,6 +53,7 @@
 	if(!can_send)
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
+	use_power(idle_power_usage)
 
 // Simple log entry datum
 /datum/comm_log_entry

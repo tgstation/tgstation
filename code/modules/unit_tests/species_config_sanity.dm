@@ -17,6 +17,6 @@
 	for(var/datum/species/species_type as anything in subtypesof(/datum/species))
 		var/species_id = initial(species_type.id)
 		if(findtext(species_id, first_splitter))
-			Fail("A species ID contained a config_entry splitter: [species_type] | Splitter: (\"[first_splitter]\") | Species ID: (\"[species_id]\")")
+			TEST_FAIL("A species ID contained a config_entry splitter: [species_type] | Splitter: (\"[first_splitter]\") | Species ID: (\"[species_id]\")")
 		if(findtext(species_id, second_splitter))
-			Fail("A species ID contained a config_entry splitter: [species_type] | Splitter: (\"[second_splitter]\") | Species ID: (\"[species_id]\")")
+			TEST_FAIL("A species ID contained a config_entry splitter: [species_type] | Splitter: (\"[second_splitter]\") | Species ID: (\"[species_id]\")")

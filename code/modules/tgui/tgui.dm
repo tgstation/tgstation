@@ -37,6 +37,8 @@
 	var/datum/ui_state/state = null
 	/// Rate limit client refreshes to prevent DoS.
 	COOLDOWN_DECLARE(refresh_cooldown)
+	/// Are byond mouse events beyond the window passed in to the ui
+	var/mouse_hooked = FALSE
 
 /**
  * public
@@ -94,8 +96,9 @@
 	window.acquire_lock(src)
 	if(!window.is_ready())
 		window.initialize(
+			strict_mode = TRUE,
 			fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
-			inline_assets = list(
+			assets = list(
 				get_asset_datum(/datum/asset/simple/tgui),
 			))
 	else
@@ -111,6 +114,8 @@
 	window.send_message("update", get_payload(
 		with_data = TRUE,
 		with_static_data = TRUE))
+	if(mouse_hooked)
+		window.set_mouse_macro()
 	SStgui.on_open(src)
 
 	return TRUE
@@ -148,6 +153,18 @@
  */
 /datum/tgui/proc/set_autoupdate(autoupdate)
 	src.autoupdate = autoupdate
+
+/**
+ * public
+ *
+ * Enable/disable passing through byond mouse events to the window
+ *
+ * required value bool Enable/disable hooking.
+ */
+/datum/tgui/proc/set_mouse_hook(value)
+	src.mouse_hooked = value
+	//Handle unhooking/hooking on already open windows ?
+
 
 /**
  * public
@@ -317,7 +334,7 @@
 			if(initialized)
 				send_full_update()
 			initialized = TRUE
-		if("pingReply")
+		if("ping/reply")
 			initialized = TRUE
 		if("suspend")
 			close(can_be_suspended = TRUE)

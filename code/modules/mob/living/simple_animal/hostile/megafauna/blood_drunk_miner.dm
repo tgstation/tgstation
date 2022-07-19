@@ -37,8 +37,8 @@ Difficulty: Medium
 	ranged_cooldown_time = 1.6 SECONDS
 	pixel_x = -16
 	base_pixel_x = -16
-	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
-	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator)
+	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
+	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL

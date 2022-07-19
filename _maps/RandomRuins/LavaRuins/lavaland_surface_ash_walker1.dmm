@@ -613,13 +613,6 @@
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"cV" = (
-/obj/structure/stone_tile/cracked,
-/obj/structure/stone_tile/block{
-	dir = 8
-	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "du" = (
 /obj/structure/stone_tile/cracked{
 	dir = 1
@@ -1417,9 +1410,9 @@ aa
 (2,1,1) = {"
 aa
 ah
-ab
-aF
-cV
+ah
+ah
+ah
 ah
 ah
 bi

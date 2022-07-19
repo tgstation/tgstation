@@ -72,11 +72,11 @@
 /obj/item/mecha_ammo/missiles_he
 	name = "anti-armor missiles"
 	desc = "A box of large missiles, ready for loading into an SRM-8 exosuit missile rack."
-	icon_state = MECHA_AMMO_MISSILE_AP
+	icon_state = "missile_he"
 	rounds = 8
 	direct_load = TRUE
 	load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
-	ammo_type = "missiles_he"
+	ammo_type = MECHA_AMMO_MISSILE_AP
 
 
 /obj/item/mecha_ammo/flashbang

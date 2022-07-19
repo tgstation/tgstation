@@ -221,9 +221,10 @@
 /datum/action/changeling/weapon/tentacle
 	name = "Tentacle"
 	desc = "We ready a tentacle to grab items or victims with. Costs 10 chemicals."
-	helptext = "We can use it once to retrieve a distant item. If used on living creatures, the effect depends on the intent: \
-	In our neutral stance will simply drag them closer, Shove will grab whatever they're holding instead of them, in our Combat stance will put the \
-	victim in our hold after catching it, and will pull it in and stab it if we're also holding a sharp weapon. Cannot be used while in lesser form."
+	helptext = "We can use it once to retrieve a distant item. If used on living creatures, the effect depends on our combat mode: \
+	In our neutral stance, we will simply drag them closer; if we try to shove, we will grab whatever they're holding in their active hand instead of them; \
+	in our combat stance, we will put the victim in our hold after catching them, and we will pull them in and stab them if we're also holding a sharp weapon. \
+	Cannot be used while in lesser form."
 	button_icon_state = "tentacle"
 	chemical_cost = 10
 	dna_cost = 2
@@ -330,9 +331,6 @@
 			return
 		C.grabbedby(H)
 		C.grippedby(H, instant = TRUE) //instant aggro grab
-
-/obj/projectile/tentacle/proc/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
-	if(H.Adjacent(C))
 		for(var/obj/item/I in H.held_items)
 			if(I.get_sharpness())
 				C.visible_message(span_danger("[H] impales [C] with [H.p_their()] [I.name]!"), span_userdanger("[H] impales you with [H.p_their()] [I.name]!"))
@@ -378,11 +376,11 @@
 						return BULLET_ACT_HIT
 				if(firer_combat_mode)
 					C.visible_message(span_danger("[L] is thrown towards [H] by a tentacle!"),span_userdanger("A tentacle grabs you and throws you towards [H]!"))
-					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, .proc/tentacle_stab, H, C))
+					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, .proc/tentacle_grab, H, C))
 					return BULLET_ACT_HIT
 				else
 					C.visible_message(span_danger("[L] is grabbed by [H]'s tentacle!"),span_userdanger("A tentacle grabs you and pulls you towards [H]!"))
-					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, .proc/tentacle_grab, H, C))
+					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE)
 					return BULLET_ACT_HIT
 
 			else
@@ -476,7 +474,7 @@
 	item_flags = DROPDEL
 	clothing_flags = STOPSPRESSUREDAMAGE //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/oxygen)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90) //No armor at all.
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 90, ACID = 90) //No armor at all.
 	actions_types = list()
 	cell = null
 	show_hud = FALSE
@@ -504,7 +502,7 @@
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	item_flags = DROPDEL
 	clothing_flags = STOPSPRESSUREDAMAGE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 90, ACID = 90)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/head/helmet/space/changeling/Initialize(mapload)
@@ -535,7 +533,7 @@
 	icon_state = "lingarmor"
 	item_flags = DROPDEL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 10, BIO = 4, FIRE = 90, ACID = 90)
+	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 10, BIO = 10, FIRE = 90, ACID = 90)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
@@ -551,7 +549,7 @@
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
 	item_flags = DROPDEL
-	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 10, BIO = 4, FIRE = 90, ACID = 90)
+	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 10, BIO = 10, FIRE = 90, ACID = 90)
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 
 /obj/item/clothing/head/helmet/changeling/Initialize(mapload)

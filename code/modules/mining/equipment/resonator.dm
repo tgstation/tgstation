@@ -114,6 +114,8 @@
 
 /obj/effect/temp_visual/resonance/proc/burst()
 	SIGNAL_HANDLER
+	if(rupturing)
+		return
 	rupturing = TRUE
 	var/turf/src_turf = get_turf(src)
 	new /obj/effect/temp_visual/resonance_crush(src_turf)

@@ -25,10 +25,9 @@
 
 				//high dirt - 1/3 chance.
 	var/static/list/high_dirt_areas = typecacheof(list(
-		/area/science/test_area,
 		/area/mine/production,
 		/area/mine/living_quarters,
-		/area/commons/vacant_room/office,
+		/area/station/commons/vacant_room/office,
 		/area/ruin/space,
 	))
 	if(is_type_in_typecache(A, high_dirt_areas))
@@ -41,13 +40,13 @@
 
 		//Construction zones. Blood, sweat, and oil.  Oh, and dirt. A small colony of space-ants or two will pop up
 	var/static/list/engine_dirt_areas = typecacheof(list(
-		/area/engineering,
-		/area/command/heads_quarters/ce,
-		/area/science/robotics,
-		/area/maintenance,
-		/area/construction,
-		/area/commons/vacant_room/commissary,
-		/area/survivalpod,
+		/area/station/engineering,
+		/area/station/command/heads_quarters/ce,
+		/area/station/science/robotics,
+		/area/station/maintenance,
+		/area/station/construction,
+		/area/station/commons/vacant_room/commissary,
+		/area/misc/survivalpod,
 	))
 	if(is_type_in_typecache(A, engine_dirt_areas))
 		if(prob(3))
@@ -67,7 +66,7 @@
 
 		//Bathrooms. Blood, vomit, and shavings in the sinks.
 	var/static/list/bathroom_dirt_areas = typecacheof(list(
-		/area/commons/toilet,
+		/area/station/commons/toilet,
 		/area/awaymission/research/interior/bathroom,
 	))
 	if(is_type_in_typecache(A, bathroom_dirt_areas))
@@ -81,7 +80,7 @@
 		return
 
 	// Cargo bays covered in oil.
-	var/static/list/oily_areas = typecacheof(/area/cargo)
+	var/static/list/oily_areas = typecacheof(/area/station/cargo)
 	if(is_type_in_typecache(A, oily_areas))
 		if(prob(25))
 			new /obj/effect/decal/cleanable/oil(src)
@@ -96,9 +95,9 @@
 
 		//Areas where gibs will be present. Robusting probably happened some time ago.
 	var/static/list/gib_covered_areas = typecacheof(list(
-		/area/ai_monitored/turret_protected,
-		/area/security,
-		/area/command/heads_quarters/hos,
+		/area/station/ai_monitored/turret_protected,
+		/area/station/security,
+		/area/station/command/heads_quarters/hos,
 	))
 	if(is_type_in_typecache(A, gib_covered_areas))
 		if(prob(20))
@@ -110,8 +109,8 @@
 
 		//Kitchen areas. Broken eggs, flour, spilled milk (no crying allowed.), ants.
 	var/static/list/kitchen_dirt_areas = typecacheof(list(
-		/area/service/kitchen,
-		/area/service/cafeteria,
+		/area/station/service/kitchen,
+		/area/station/service/cafeteria,
 	))
 	if(is_type_in_typecache(A, kitchen_dirt_areas))
 		if(prob(60))
@@ -125,8 +124,8 @@
 
 		//Medical areas. Mostly clean by space-OSHA standards, but has some blood and oil spread about.
 	var/static/list/medical_dirt_areas = typecacheof(list(
-		/area/medical,
-		/area/command/heads_quarters/cmo,
+		/area/station/medical,
+		/area/station/command/heads_quarters/cmo,
 	))
 	if(is_type_in_typecache(A, medical_dirt_areas))
 		if(prob(66))
@@ -135,7 +134,7 @@
 			else
 				new /obj/effect/decal/cleanable/blood/old(src)
 		else if(prob(30))
-			if(istype(A, /area/medical/morgue))
+			if(istype(A, /area/station/medical/morgue))
 				new /obj/item/ectoplasm(src)
 			else
 				new /obj/effect/decal/cleanable/vomit/old(src)
@@ -143,8 +142,8 @@
 
 		//Science messes. Mostly green glowy stuff -WHICH YOU SHOULD NOT INJEST-.
 	var/static/list/science_dirt_areas = typecacheof(list(
-		/area/science,
-		/area/command/heads_quarters/rd,
+		/area/station/science,
+		/area/station/command/heads_quarters/rd,
 	))
 	if(is_type_in_typecache(A, science_dirt_areas))
 		if(prob(20))

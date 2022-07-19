@@ -1,6 +1,6 @@
 /// Ensures that when disassembling a machine, all the parts are given back
 /datum/unit_test/machine_disassembly/Run()
-	var/obj/machinery/freezer = allocate(/obj/machinery/atmospherics/components/binary/thermomachine/freezer)
+	var/obj/machinery/freezer = allocate(/obj/machinery/atmospherics/components/unary/thermomachine/freezer)
 
 	var/turf/freezer_location = freezer.loc
 	freezer.deconstruct()

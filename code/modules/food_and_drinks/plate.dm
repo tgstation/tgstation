@@ -104,6 +104,7 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "plate_shard1"
 	base_icon_state = "plate_shard"
+	w_class = WEIGHT_CLASS_TINY
 	force = 5
 	throwforce = 5
 	sharpness = SHARP_EDGED

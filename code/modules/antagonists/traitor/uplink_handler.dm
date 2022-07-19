@@ -127,6 +127,7 @@
 	objective.original_progression = objective.progression_reward
 	objective.update_progression_reward()
 	potential_objectives += objective
+	SStraitor.add_objective_to_list(objective, SStraitor.all_objectives_by_type)
 	return objective
 
 /datum/uplink_handler/proc/handle_duplicate(datum/traitor_objective/potential_duplicate)

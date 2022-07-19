@@ -6,7 +6,7 @@
 	program_icon_state = "alert-green"
 	extended_desc = "This program provides visual interface for a station's alarm system."
 	requires_ntnet = 1
-	size = 5
+	size = 4
 	tgui_id = "NtosStationAlertConsole"
 	program_icon = "bell"
 	/// If there is any station alert
@@ -51,7 +51,7 @@
 	if(length(alert_control.listener.alarms))
 		has_alert = TRUE
 
-/datum/computer_file/program/alarm_monitor/run_program(mob/user)
+/datum/computer_file/program/alarm_monitor/on_start(mob/user)
 	. = ..(user)
 	GLOB.alarmdisplay += src
 

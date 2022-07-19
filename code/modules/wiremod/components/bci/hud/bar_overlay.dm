@@ -59,7 +59,7 @@
 		cool_overlay,
 		owner,
 	)
-	alt_appearance.add_hud_to(owner)
+	alt_appearance.show_to(owner)
 
 	active_overlays[target_atom] = WEAKREF(alt_appearance)
 

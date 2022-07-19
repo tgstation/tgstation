@@ -108,7 +108,7 @@
 ///The implant the AI was created from
 #define BB_MOD_IMPLANT "BB_mod_implant"
 ///Range for a MOD AI controller.
-#define MOD_AI_RANGE 100
+#define MOD_AI_RANGE 200
 
 ///Vending machine AI controller blackboard keys
 #define BB_VENDING_CURRENT_TARGET "BB_vending_current_target"

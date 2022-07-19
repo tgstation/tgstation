@@ -321,7 +321,7 @@
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		var/obj/item/organ/heart/gland/G = C.getorganslot("heart")
+		var/obj/item/organ/internal/heart/gland/G = C.getorganslot("heart")
 		if(!istype(G))
 			to_chat(user, span_warning("Your target does not have an experimental gland!"))
 			return
@@ -344,8 +344,8 @@
 		if(QDELETED(G))
 			return
 
-		if(C.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(user, span_warning("Your target seems to have some sort of tinfoil protection on, blocking the message from being sent!"))
+		if(C.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+			to_chat(user, span_warning("Your target seems to have some sort of mental blockage, preventing the message from being sent! It seems you've been foiled."))
 			return
 
 		G.mind_control(command, user)
@@ -512,11 +512,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(BATON_STUN)
 			target.visible_message(span_danger("[user] stuns [target] with [src]!"),
 				span_userdanger("[user] stuns you with [src]!"))
-			target.Jitter(20)
-			target.set_confusion(max(10, target.get_confusion()))
-			target.stuttering = max(8, target.stuttering)
+			target.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			target.set_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+			target.set_timed_status_effect(16 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 			SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_STUNRESISTANCE) ? 0.1 : 1))
+			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) ? 0.1 : 1))
 		if(BATON_SLEEP)
 			SleepAttack(target,user)
 		if(BATON_CUFF)
@@ -537,21 +537,21 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/L,mob/living/user)
 	playsound(src, on_stun_sound, 50, TRUE, -1)
 	if(L.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
-		if(L.anti_magic_check(FALSE, FALSE, TRUE))
-			to_chat(user, span_warning("The specimen's tinfoil protection is interfering with the sleep inducement!"))
-			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but [L.p_their()] tinfoil protection [L.p_them()]!"), \
-								span_userdanger("You feel a strange wave of heavy drowsiness wash over you, but your tinfoil protection deflects most of it!"))
+		if(L.can_block_magic(MAGIC_RESISTANCE_MIND))
+			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
+			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but is unsuccessful!"), \
+			span_userdanger("You feel a strange wave of heavy drowsiness wash over you!"))
 			L.adjust_drowsyness(2)
 			return
 		L.visible_message(span_danger("[user] induces sleep in [L] with [src]!"), \
-							span_userdanger("You suddenly feel very drowsy!"))
+		span_userdanger("You suddenly feel very drowsy!"))
 		L.Sleeping(sleep_time)
 		log_combat(user, L, "put to sleep")
 	else
-		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(user, span_warning("The specimen's tinfoil protection is completely blocking our sleep inducement methods!"))
-			L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src], but [L.p_their()] tinfoil protection completely protected [L.p_them()]!"), \
-								span_userdanger("Any sense of drowsiness is quickly diminished as your tinfoil protection deflects the effects!"))
+		if(L.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our sleep inducement methods! It seems you've been foiled."))
+			L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src], but is unsuccessful!"), \
+			span_userdanger("Any sense of drowsiness is quickly diminished!"))
 			return
 		L.adjust_drowsyness(1)
 		to_chat(user, span_warning("Sleep inducement works fully only on stunned specimens! "))
@@ -590,7 +590,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		species = span_notice("[H.dna.species.name]")
 		if(L.mind && L.mind.has_antag_datum(/datum/antagonist/changeling))
 			species = span_warning("Changeling lifeform")
-		var/obj/item/organ/heart/gland/temp = locate() in H.internal_organs
+		var/obj/item/organ/internal/heart/gland/temp = locate() in H.internal_organs
 		if(temp)
 			helptext = span_warning("Experimental gland detected!")
 		else
@@ -733,8 +733,23 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "Abduct with style - spiky style. Prevents digital tracking."
 	icon_state = "alienhelmet"
 	inhand_icon_state = "alienhelmet"
-	blockTracking = TRUE
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+	else
+		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/clothing/head/helmet/abductor/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/clothing/head/helmet/abductor/proc/can_track(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	return COMPONENT_CANT_TRACK
 
 // Operating Table / Beds / Lockers
 

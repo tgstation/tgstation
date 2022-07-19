@@ -3,20 +3,20 @@
 	name = "\improper Jellyperson"
 	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
-	default_color = "00FF90"
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
+		TRAIT_LITERATE,
 		TRAIT_TOXINLOVER,
 	)
-	mutantlungs = /obj/item/organ/lungs/slime
+	mutantlungs = /obj/item/organ/internal/lungs/slime
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	liked_food = MEAT
+	liked_food = MEAT | BUGS
 	toxic_food = NONE
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -36,16 +36,18 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly,
 	)
 
-/datum/species/jelly/on_species_loss(mob/living/carbon/C)
+/datum/species/jelly/on_species_loss(mob/living/carbon/old_jellyperson)
 	if(regenerate_limbs)
-		regenerate_limbs.Remove(C)
+		regenerate_limbs.Remove(old_jellyperson)
+	old_jellyperson.RemoveElement(/datum/element/soft_landing)
 	..()
 
-/datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/jelly/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species)
 	..()
-	if(ishuman(C))
+	if(ishuman(new_jellyperson))
 		regenerate_limbs = new
-		regenerate_limbs.Grant(C)
+		regenerate_limbs.Grant(new_jellyperson)
+	new_jellyperson.AddElement(/datum/element/soft_landing)
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
@@ -148,7 +150,6 @@
 	name = "\improper Slimeperson"
 	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
-	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -339,7 +340,7 @@
 		switch(body.stat)
 			if(CONSCIOUS)
 				stat = "Conscious"
-			if(UNCONSCIOUS)
+			if(SOFT_CRIT to HARD_CRIT) // Also includes UNCONSCIOUS
 				stat = "Unconscious"
 			if(DEAD)
 				stat = "Dead"
@@ -443,7 +444,15 @@
 	name = "Luminescent"
 	plural_form = null
 	id = SPECIES_LUMINESCENT
-	examine_limb_id = SPECIES_JELLYPERSON
+	examine_limb_id = SPECIES_LUMINESCENT
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/luminescent,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/luminescent,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/luminescent,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/luminescent,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/luminescent,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/luminescent,
+	)
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
 	var/obj/item/slime_extract/current_extract
@@ -677,8 +686,8 @@
 	var/msg = tgui_input_text(telepath, title = "Telepathy")
 	if(isnull(msg))
 		return
-	if(recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(telepath, span_notice("As you try to communicate with [recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+	if(recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		to_chat(telepath, span_warning("As you reach into [recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
 		return
 	log_directed_talk(telepath, recipient, msg, LOG_SAY, "slime telepathy")
 	to_chat(recipient, "[span_notice("You hear an alien voice in your head... ")]<font color=#008CA2>[msg]</font>")

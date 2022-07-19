@@ -20,7 +20,7 @@
 	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	vision_range = 1 // Only attack when target is close
 	wander = FALSE
@@ -45,6 +45,7 @@
 
 /mob/living/simple_animal/hostile/morph/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
