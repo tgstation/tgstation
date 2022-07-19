@@ -7,8 +7,8 @@
 	name = "drone"
 	icon = 'icons/obj/wiremod.dmi'
 	icon_state = "setup_medium_med"
-	maxHealth = 500
-	health = 500
+	maxHealth = 300
+	health = 300
 	living_flags = 0
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
@@ -18,6 +18,16 @@
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bot_circuit()
 	), SHELL_CAPACITY_LARGE)
+
+/mob/living/circuit_drone/examine(mob/user)
+	. = ..()
+	if(health < maxHealth)
+		if(health > maxHealth/3)
+			. += "[src]'s parts look loose."
+		else
+			. += "[src]'s parts look very loose!"
+	else
+		. += "[src] is in pristine condition."
 
 /mob/living/circuit_drone/updatehealth()
 	. = ..()
@@ -29,7 +39,7 @@
 	if(health == maxHealth)
 		balloon_alert(user, "already at maximum integrity!")
 		return TRUE
-	if(tool.use_tool(src, user, 0.5 SECONDS, volume = 50))
+	if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 		heal_overall_damage(50, 50)
 	return TRUE
 
