@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	A.cut_overlay(creamface)
 	qdel(creamface)
 	if(ishuman(A))
-		var/mob/living/carbon/human/human_parent
+		var/mob/living/carbon/human/human_parent = A
 		human_parent.clear_mood_event("creampie")
 	return ..()
 
