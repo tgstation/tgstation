@@ -1,12 +1,4 @@
-import {
-  Box,
-  Stack,
-  Section,
-  Button,
-  Input,
-  Dropdown,
-  Icon,
-} from '../../components';
+import { Box, Stack, Section, Button, Input, Dropdown, Icon } from '../../components';
 import { Component } from 'inferno';
 import { shallowDiffers } from 'common/react';
 

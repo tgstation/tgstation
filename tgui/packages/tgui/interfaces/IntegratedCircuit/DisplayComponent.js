@@ -1,8 +1,4 @@
-import {
-  Button,
-  Stack,
-  Box,
-} from '../../components';
+import { Button, Stack, Box } from '../../components';
 import { Component, createRef } from 'inferno';
 import { Port } from './Port';
 import { noop } from './constants';
@@ -41,20 +37,15 @@ export class DisplayComponent extends Component {
   }
 
   render(props, context) {
-    const {
-      component,
-      fixedSize,
-      ...rest
-    } = props;
+    const { component, fixedSize, ...rest } = props;
     return (
       <Box {...rest}>
         <div ref={this.ref}>
           <Box
-            backgroundColor={component.color || "blue"}
+            backgroundColor={component.color || 'blue'}
             py={1}
             px={1}
-            className="ObjectComponent__Titlebar"
-          >
+            className="ObjectComponent__Titlebar">
             <Stack>
               <Stack.Item grow={1} unselectable="on">
                 {component.name}
@@ -80,10 +71,7 @@ export class DisplayComponent extends Component {
                 <Stack vertical fill>
                   {component.input_ports.map((port, portIndex) => (
                     <Stack.Item key={portIndex}>
-                      <Port
-                        port={port}
-                        act={noop}
-                      />
+                      <Port port={port} act={noop} />
                     </Stack.Item>
                   ))}
                 </Stack>
@@ -92,11 +80,7 @@ export class DisplayComponent extends Component {
                 <Stack vertical>
                   {component.output_ports.map((port, portIndex) => (
                     <Stack.Item key={portIndex}>
-                      <Port
-                        port={port}
-                        act={noop}
-                        isOutput
-                      />
+                      <Port port={port} act={noop} isOutput />
                     </Stack.Item>
                   ))}
                 </Stack>
