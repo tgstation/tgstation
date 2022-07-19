@@ -120,7 +120,7 @@
 
 	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, .proc/mass_empty)
 
-	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST), .proc/open_storage)
+	RegisterSignal(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST), .proc/open_storage)
 	RegisterSignal(resolve_parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/open_storage_secondary)
 
 	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, .proc/handle_enter)
