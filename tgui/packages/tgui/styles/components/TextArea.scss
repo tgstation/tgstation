@@ -31,8 +31,8 @@ $border-radius: Input.$border-radius !default;
   height: auto;
 }
 
-.TextArea--onlytopborder {
-  border-style: double hidden hidden hidden;
+.TextArea--noborder {
+  border: 0px;
 }
 
 .TextArea__textarea.TextArea__textarea--scrollable {

@@ -4,7 +4,7 @@
 
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Flex, Section, TextArea } from '../components';
+import { Button, Box, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
@@ -47,7 +47,7 @@ type StampInput = {
 };
 
 type FieldInput = {
-  field_index: number;
+  field_index: string;
   field_data: PaperInput;
 };
 
@@ -96,17 +96,23 @@ const canStamp = (heldItemDetails?: WritingImplement): boolean => {
 // This creates the html from marked text as well as the form fields
 const createPreview = (
   inputList: PaperInput[] | undefined,
-  stampList: StampInput[] | undefined,
+  fieldDataList: FieldInput[] | undefined,
   textAreaText: string | null,
   defaultFont: string,
   defaultColor: string,
-  heldFont: string | undefined,
-  heldColor: string | undefined,
-  heldBold: boolean | undefined
+  heldItemDetails: WritingImplement | undefined
 ) => {
   let output = '';
 
-  inputList?.forEach((value, index) => {
+  const readOnly = !canEdit(heldItemDetails);
+
+  const heldColor = heldItemDetails?.color;
+  const heldFont = heldItemDetails?.font;
+  const heldBold = heldItemDetails?.use_bold;
+
+  let fieldCounter = 0;
+
+  inputList?.forEach((value) => {
     let rawText = value.raw_text.trim();
     if (!rawText.length) {
       return;
@@ -116,7 +122,21 @@ const createPreview = (
     const fontFace = value.font || defaultFont;
     const fontBold = value.bold || false;
 
-    output += formatAndProcessRawText(rawText, fontFace, fontColor, fontBold);
+    let processingOutput = formatAndProcessRawText(
+      rawText,
+      fontFace,
+      fontColor,
+      fontBold,
+      fieldDataList,
+      fieldCounter,
+      readOnly
+    );
+
+    output += processingOutput.text;
+
+    logger.log(processingOutput.fieldCount);
+
+    fieldCounter = processingOutput.fieldCount;
   });
 
   if (textAreaText?.length) {
@@ -128,17 +148,91 @@ const createPreview = (
       textAreaText,
       fontFace,
       fontColor,
-      fontBold
-    );
+      fontBold,
+      null,
+      fieldCounter,
+      true
+    ).text;
   }
 
-  if (stampList?.length) {
-  }
+  fillAllFields(fieldDataList || []);
 
   return output;
 };
 
-const formatAndProcessRawText = (text, font, color, bold): string => {
+const createIDHeader = (index) => {
+  return 'paperfield_' + index;
+};
+
+const getHeaderID = (header) => {
+  return header.replace('paperfield_', '');
+};
+
+// Hacky, yes, works?...yes
+const textWidth = (text, font, fontsize, scalar = 1.0) => {
+  // default font height is 12 in tgui
+  font = `bold ${fontsize}px ${font};`;
+  const c = document.createElement('canvas');
+  const ctx = c.getContext('2d');
+  ctx.font = font;
+  const width = ctx.measureText(text).width;
+  return Math.ceil(width * scalar);
+};
+
+const field_regex = /\[(_+)\]/g;
+const field_tag_regex =
+  /\[<input\s+(?!disabled)(.*?)\s+id="paperfield_(?<id>\d+)"(.*?)\/>\]/gm;
+const sign_regex = /%s(?:ign)?(?=\\s|$)?/gim;
+
+const createFields = (
+  txt,
+  font,
+  fontsize,
+  color,
+  forceReadonlyFields,
+  counter = 0
+) => {
+  const ret_text = txt.replace(field_regex, (match, p1, offset, string) => {
+    const width = textWidth(match, font, fontsize, 1.35) + 'px';
+    return createInputField(
+      p1.length,
+      width,
+      font,
+      fontsize,
+      color,
+      createIDHeader(counter++),
+      forceReadonlyFields
+    );
+  });
+  return {
+    counter,
+    text: ret_text,
+  };
+};
+
+const createInputField = (
+  length,
+  width,
+  font,
+  fontsize,
+  color,
+  id,
+  readOnly
+) => {
+  return `[<input ${
+    readOnly ? 'disabled ' : ''
+  }type="text" style="font:'${fontsize}x ${font}';color:${color};min-width:${width};max-width:${width};" id="${id}" maxlength=${length} size=${length} />]`;
+};
+
+const formatAndProcessRawText = (
+  text,
+  font,
+  color,
+  bold,
+  fieldData,
+  fieldCounter = 0,
+  forceReadonlyFields = false
+): { text: string; fieldCount: number } => {
   // First lets make sure it ends in a new line
   text += text[text.length] === '\n' ? '\n' : '\n\n';
   // Second, we sanitize the text of html
@@ -146,22 +240,23 @@ const formatAndProcessRawText = (text, font, color, bold): string => {
   // const signed_text = signDocument(sanitized_text, color, user_name);
 
   // Third we replace the [__] with fields as markedjs fucks them up
-  /* const fielded_text = createFields(
-    signed_text,
+  const fieldedText = createFields(
+    sanitizedText,
     font,
     12,
     color,
-    field_counter
-  );*/
+    forceReadonlyFields,
+    fieldCounter
+  );
 
   // Fourth, parse the text using markup
-  const parsedText = runMarkedDefault(sanitizedText);
+  const parsedText = runMarkedDefault(fieldedText.text);
 
   // Fifth, we wrap the created text in the pin color, and font.
   // crayon is bold (<b> tags), maybe make fountain pin italic?
   const fontedText = setFontinText(parsedText, font, color, bold);
 
-  return fontedText;
+  return { text: fontedText, fieldCount: fieldedText.counter };
 };
 
 const setFontinText = (text, font, color, bold = false) => {
@@ -359,6 +454,54 @@ export const Stamp = (props, context) => {
   );
 };
 
+const hookAllFields = (raw_text, onInputHandler) => {
+  let match;
+
+  while ((match = field_tag_regex.exec(raw_text)) !== null) {
+    const id = parseInt(match.groups.id, 10);
+
+    if (!isNaN(id)) {
+      const dom = document.getElementById(
+        createIDHeader(id)
+      ) as HTMLInputElement;
+
+      if (!dom) {
+        continue;
+      }
+
+      if (dom.disabled) {
+        continue;
+      }
+
+      dom.oninput = onInputHandler;
+    }
+  }
+};
+
+const fillAllFields = (fieldInputData: FieldInput[]) => {
+  if (!fieldInputData?.length) {
+    return;
+  }
+
+  fieldInputData.forEach((field, i) => {
+    const dom = document.getElementById(
+      createIDHeader(field.field_index)
+    ) as HTMLInputElement;
+
+    if (!dom) {
+      return;
+    }
+
+    const fieldData = field.field_data;
+
+    dom.disabled = true;
+    dom.value = fieldData.raw_text;
+    dom.style.fontFamily = fieldData.font;
+    dom.style.color = fieldData.color;
+    dom.style.fontWeight = 'bold';
+  });
+};
+
 // Overarching component that holds the primary view for papercode.
 export class PrimaryView extends Component {
   // Reference that gets passed to the <Section> holding the main preview.
@@ -389,7 +532,7 @@ export class PrimaryView extends Component {
   }
 
   render() {
-    const { data } = useBackend<PaperContext>(this.context);
+    const { act, data } = useBackend<PaperContext>(this.context);
     const {
       default_pen_font,
       default_pen_color,
@@ -407,8 +550,17 @@ export class PrimaryView extends Component {
       ''
     );
 
+    const [inputFieldData, setInputFieldData] = useLocalState(
+      this.context,
+      'inputFieldData',
+      {}
+    );
+
     const interactMode =
       held_item_details?.interaction_mode || InteractionType.reading;
+
+    const savableData =
+      textAreaText.length || Object.keys(inputFieldData).length;
 
     return (
       <>
@@ -422,26 +574,48 @@ export class PrimaryView extends Component {
           </Flex.Item>
           {interactMode === InteractionType.writing && (
             <Flex.Item shrink={1} height={TEXTAREA_INPUT_HEIGHT + 'px'}>
-              <TextArea
-                scrollbar
-                className="TextArea--onlytopborder"
-                value={textAreaText}
-                textColor={useColor}
-                fontFamily={useFont}
-                bold={useBold}
-                height={'100%'}
-                backgroundColor={paper_color}
-                onInput={(e, text) => {
-                  setTextAreaText(text);
-                  if (this.scrollableRef.current) {
-                    let thisDistFromBottom =
-                      this.scrollableRef.current.scrollHeight -
-                      this.scrollableRef.current.scrollTop;
-                    this.scrollableRef.current.scrollTop +=
-                      thisDistFromBottom - this.lastDistanceFromBottom;
-                  }
-                }}
-              />
+              <Section
+                title="Insert Text"
+                fitted
+                fill
+                buttons={
+                  <Button.Confirm
+                    disabled={!savableData}
+                    content="Save"
+                    color="good"
+                    onClick={() => {
+                      if (textAreaText.length) {
+                        act('add_text', { text: textAreaText });
+                        setTextAreaText('');
+                      }
+                      if (Object.keys(inputFieldData).length) {
+                        act('fill_input_field', { field_data: inputFieldData });
+                        setInputFieldData({});
+                      }
+                    }}
+                  />
+                }>
+                <TextArea
+                  scrollbar
+                  noborder
+                  value={textAreaText}
+                  textColor={useColor}
+                  fontFamily={useFont}
+                  bold={useBold}
+                  height={'100%'}
+                  backgroundColor={paper_color}
+                  onInput={(e, text) => {
+                    setTextAreaText(text);
+                    if (this.scrollableRef.current) {
+                      let thisDistFromBottom =
+                        this.scrollableRef.current.scrollHeight -
+                        this.scrollableRef.current.scrollTop;
+                      this.scrollableRef.current.scrollTop +=
+                        thisDistFromBottom - this.lastDistanceFromBottom;
+                    }
+                  }}
+                />
+              </Section>
             </Flex.Item>
           )}
         </Flex>
@@ -454,7 +628,7 @@ export const PreviewView = (props, context) => {
   const { data } = useBackend<PaperContext>(context);
   const {
     raw_text_input,
-    raw_stamp_input,
+    raw_field_input,
     default_pen_font,
     default_pen_color,
     paper_color,
@@ -462,21 +636,36 @@ export const PreviewView = (props, context) => {
   } = data;
 
   const [textAreaText] = useLocalState(context, 'textAreaText', '');
-
-  logger.log(held_item_details);
+  const [inputFieldData, setInputFieldData] = useLocalState(
+    context,
+    'inputFieldData',
+    {}
+  );
 
   const parsedAndSanitisedHTML = createPreview(
     raw_text_input,
-    raw_stamp_input,
-    held_item_details?.interaction_mode === InteractionType.writing
-      ? textAreaText
-      : null,
+    raw_field_input,
+    canEdit(held_item_details) ? textAreaText : null,
     default_pen_font,
     default_pen_color,
-    held_item_details?.font,
-    held_item_details?.color,
-    held_item_details?.use_bold
+    held_item_details
   );
+
+  const onInputHandler = (ev) => {
+    const input = ev.currentTarget as HTMLInputElement;
+    if (input.value.length) {
+      inputFieldData[getHeaderID(input.id)] = input.value;
+    } else {
+      delete inputFieldData[getHeaderID(input.id)];
+    }
+    setInputFieldData(inputFieldData);
+    input.style.fontFamily = held_item_details?.font || default_pen_font;
+    input.style.color = held_item_details?.color || default_pen_color;
+  };
+
+  if (canEdit(held_item_details)) {
+    hookAllFields(parsedAndSanitisedHTML, onInputHandler);
+  }
 
   const textHTML = {
     __html: '<span class="paper-text">' + parsedAndSanitisedHTML + '</span>',
@@ -535,18 +724,25 @@ export const PaperSheet = (props, context) => {
   const { data } = useBackend<PaperContext>(context);
   const { paper_color, paper_name, held_item_details } = data;
 
-  const interactMode =
-    held_item_details?.interaction_mode || InteractionType.reading;
+  const writeMode = canEdit(held_item_details);
+
+  if (!writeMode) {
+    const [inputFieldData, setInputFieldData] = useLocalState(
+      context,
+      'inputFieldData',
+      {}
+    );
+    if (Object.keys(inputFieldData).length) {
+      setInputFieldData({});
+    }
+  }
 
   return (
     <Window
       title={paper_name}
       theme="paper"
-      width={400}
-      height={
-        500 +
-        (interactMode === InteractionType.writing ? TEXTAREA_INPUT_HEIGHT : 0)
-      }>
+      width={420}
+      height={500 + (writeMode ? TEXTAREA_INPUT_HEIGHT : 0)}>
       <Window.Content backgroundColor={paper_color}>
         <PrimaryView />
       </Window.Content>

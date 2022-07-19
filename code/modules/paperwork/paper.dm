@@ -54,6 +54,9 @@
 	/// Default raw text to fill this paper with on init.
 	var/default_raw_text
 
+	/// The number of input fields
+	var/input_field_count = 0
+
 /obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
@@ -151,7 +154,58 @@
 		bold,
 	)
 
+	input_field_count += get_input_field_count(text)
+
 	LAZYADD(raw_text_inputs, new_input_datum)
+
+/**
+ * This simple helper adds the supplied input field data to the paper.
+ *
+ * It will not overwrite any existing input field data by default and will early return FALSE if this scenario happens unless overwrite is
+ * set properly.
+ *
+ * Other than that, this is a God proc that does not care about max length or out-of-range IDs and expects sanity checking beforehand if
+ * you want to respect it.
+ *
+ * * Arguments:
+ * * field_id - The ID number of the field to which this data applies.
+ * * text - The text to append to the paper.
+ * * font - The font to use.
+ * * color - The font color to use.
+ * * bold - Whether this text should be rendered completely bold.
+ * * overwrite - If TRUE, will overwrite existing field ID's data if it exists.
+ */
+/obj/item/paper/proc/add_field_input(field_id, text, font, color, bold, overwrite = FALSE)
+	var/datum/paper_field/field_data_datum = null
+
+	for(var/datum/paper_field/field_input in raw_field_input_data)
+		if(field_input.field_index == field_id)
+			if(!overwrite)
+				return FALSE
+			field_data_datum = field_input
+			break
+
+	if(!field_data_datum)
+		var/new_field_input_datum = new /datum/paper_field(
+			field_id,
+			text,
+			font,
+			color,
+			bold
+		)
+		LAZYADD(raw_field_input_data, new_field_input_datum)
+		return TRUE
+
+	var/new_input_datum = new /datum/paper_input(
+		text,
+		font,
+		color,
+		bold,
+	)
+
+	field_data_datum.field_data = new_input_datum;
+
+	return TRUE
 
 /**
  * This simple helper adds the supplied stamp to the paper, appending to the end of any existing stamps.
@@ -355,6 +409,7 @@
 		static_data["raw_stamp_input"] += list(stamp_input.to_list())
 
 	static_data["max_length"] = MAX_PAPER_LENGTH
+	static_data["max_input_field_length"] = MAX_PAPER_INPUT_FIELD_LENGTH
 	static_data["paper_color"] = color ? color : COLOR_WHITE
 	static_data["paper_name"] = name
 
@@ -406,7 +461,7 @@
 			if(istype(loc, /obj/structure/noticeboard))
 				var/obj/structure/noticeboard/noticeboard = loc
 				if(!noticeboard.allowed(user))
-					log_paper("[key_name(ui.user)] tried to stap to [name] when it was on an unwritable noticeboard: \"[stamp_class]\"")
+					log_paper("[key_name(user)] tried to stap to [name] when it was on an unwritable noticeboard: \"[stamp_class]\"")
 					return TRUE
 
 			var/stamp_x = text2num(params["x"])
@@ -419,7 +474,7 @@
 				return TRUE
 
 			add_stamp(stamp_class, stamp_x, stamp_y, stamp_rotation, stamp_icon_state)
-			ui.user.visible_message(span_notice("[ui.user] stamps [src] with \the [holding.name]!"), span_notice("You stamp [src] with \the [holding.name]!"))
+			user.visible_message(span_notice("[user] stamps [src] with \the [holding.name]!"), span_notice("You stamp [src] with \the [holding.name]!"))
 
 			update_appearance()
 			update_static_data(user, ui)
@@ -429,14 +484,14 @@
 			var/this_input_length = length(paper_input)
 
 			if(this_input_length == 0)
-				to_chat(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
+				to_chat(user, pick("Writing block strikes again!", "You forgot to write anthing!"))
 				return TRUE
 
 			// If the paper is on an unwritable noticeboard, this usually shouldn't be possible.
 			if(istype(loc, /obj/structure/noticeboard))
 				var/obj/structure/noticeboard/noticeboard = loc
 				if(!noticeboard.allowed(user))
-					log_paper("[key_name(ui.user)] tried to write to [name] when it was on an unwritable noticeboard: \"[paper_input]\"")
+					log_paper("[key_name(user)] tried to write to [name] when it was on an unwritable noticeboard: \"[paper_input]\"")
 					return TRUE
 
 			var/obj/item/holding = user.get_active_held_item()
@@ -457,7 +512,7 @@
 
 			// tgui should prevent this outcome.
 			if(new_length > MAX_PAPER_LENGTH)
-				log_paper("[key_name(ui.user)] wrote to [name] when it would exceed the length limit by [new_length - MAX_PAPER_LENGTH] characters: \"[paper_input]\"")
+				log_paper("[key_name(user)] wrote to [name] when it would exceed the length limit by [new_length - MAX_PAPER_LENGTH] characters: \"[paper_input]\"")
 				return TRUE
 
 			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
@@ -472,7 +527,54 @@
 			update_appearance()
 			return TRUE
 		if("fill_input_field")
+			// If the paper is on an unwritable noticeboard, this usually shouldn't be possible.
+			if(istype(loc, /obj/structure/noticeboard))
+				var/obj/structure/noticeboard/noticeboard = loc
+				if(!noticeboard.allowed(user))
+					log_paper("[key_name(user)] tried to write to the input fields of [name] when it was on an unwritable noticeboard!")
+					return TRUE
+
+			var/obj/item/holding = user.get_active_held_item()
+			// Use a clipboard's pen, if applicable
+			if(istype(loc, /obj/item/clipboard))
+				var/obj/item/clipboard/clipboard = loc
+				// This is just so you can still use a stamp if you're holding one. Otherwise, it'll
+				// use the clipboard's pen, if applicable.
+				if(!istype(holding, /obj/item/stamp) && clipboard.pen)
+					holding = clipboard.pen
+
+			// As of the time of writing, can_write outputs a message to the user so we don't have to.
+			if(!user.can_write(holding))
+				return TRUE
+
+			// Safe to assume there are writing implement details as user.can_write(...) fails with an invalid writing implement.
+			var/writing_implement_data = holding.get_writing_implement_details()
+			var/list/field_data = params["field_data"]
+
+			for(var/field_key in field_data)
+				var/field_text = field_data[field_key]
+				var/text_length = length(field_text)
+				if(text_length > MAX_PAPER_INPUT_FIELD_LENGTH)
+					log_paper("[key_name(user)] tried to write to field [field_key] with text over the max limit ([text_length] out of [MAX_PAPER_INPUT_FIELD_LENGTH]) with the following text: [field_text]")
+					return TRUE
+				if(text2num(field_key) >= input_field_count)
+					log_paper("[key_name(user)] tried to write to invalid field [field_key] (when the paper only has [input_field_count] fields) with the following text: [field_text]")
+					return TRUE
+
+				if(!add_field_input(field_key, field_text, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"]))
+					log_paper("[key_name(user)] tried to write to field [field_key] when it already has data, with the following text: [field_text]")
+
+			update_static_data(user, ui)
 			return TRUE
+
+/obj/item/paper/proc/get_input_field_count(raw_text)
+	var/static/regex/field_regex = new(@"\[_+\]","g")
+
+	var/counter = 0
+	while(field_regex.Find(raw_text))
+		counter++
+
+	return counter
 
 /obj/item/paper/ui_host(mob/user)
 	if(istype(loc, /obj/structure/noticeboard))

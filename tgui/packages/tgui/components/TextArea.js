@@ -169,13 +169,19 @@ export class TextArea extends Component {
       maxLength,
       placeholder,
       scrollbar,
+      noborder,
       ...boxProps
     } = this.props;
     // Box props
     const { className, fluid, ...rest } = boxProps;
     return (
       <Box
-        className={classes(['TextArea', fluid && 'TextArea--fluid', className])}
+        className={classes([
+          'TextArea',
+          fluid && 'TextArea--fluid',
+          noborder && 'TextArea--noborder',
+          className,
+        ])}
         {...rest}>
         <textarea
           ref={this.textareaRef}
