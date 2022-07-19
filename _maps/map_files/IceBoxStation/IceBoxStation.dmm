@@ -60979,9 +60979,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "sJW" = (
-/obj/machinery/mineral/stacking_unit_console{
-	machinedir = 8
-	},
+/obj/machinery/mineral/stacking_unit_console,
 /turf/closed/wall,
 /area/station/maintenance/port/greater)
 "sKf" = (
