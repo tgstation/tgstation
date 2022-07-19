@@ -28,8 +28,8 @@
 	if(.)
 		return
 	if(available_software[action] && !installed_software.Find(action))
-		to_chat(usr, span_warning("You do not have this software installed."))
-		CRASH("[usr] attempted to activate software they hadn't installed: [action]")
+		balloon_alert(usr, "software unavailable")
+		return FALSE
 	switch(action)
 		if("Atmospheric Sensor")
 			atmos_analyzer.attack_self(src)
@@ -57,7 +57,7 @@
 			door_jack(usr, params["mode"])
 			return TRUE
 		if("Encryption Slot")
-			to_chat(usr, span_notice("You have [!encrypt_mod ? "enabled" : "disabled"] encrypted radio frequencies."))
+			balloon_alert(usr, "radio frequencies [!encrypt_mod ? "enabled" : "disabled"]")
 			encrypt_mod = !encrypt_mod
 			radio.subspace_transmission = !radio.subspace_transmission
 			return TRUE
@@ -101,12 +101,12 @@
  */
 /mob/living/silicon/pai/proc/buy_software(mob/user, selection)
 	if(!available_software[selection] || installed_software.Find(selection))
-		to_chat(user, span_warning("Error: Software unavailable."))
-		CRASH("[user] tried to purchase unavailable software as a pAI.")
+		balloon_alert(user, "software unavailable")
+		return FALSE
 	var/cost = available_software[selection]
 	if(ram < cost)
-		to_chat(user, span_warning("Error: Insufficient RAM available."))
-		CRASH("[user] tried to purchase software with insufficient RAM.")
+		balloon_alert(user, "insufficient ram")
+		return FALSE
 	installed_software.Add(selection)
 	ram -= cost
 	var/datum/hud/pai/pAIhud = hud_used
@@ -158,15 +158,15 @@
 		return FALSE
 	var/mob/living/carbon/holder = get_holder()
 	if(!holder)
-		to_chat(user, span_warning("You must be in someone's hands to do this!"))
+		balloon_alert(user, "not being carried")
 		return FALSE
-	to_chat(user, span_notice("Requesting a DNA sample."))
+	balloon_alert(user, "requesting DNA sample")
 	if(tgui_alert(holder, "[user] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "Checking DNA", list("Yes", "No")) != "Yes")
-		to_chat(user, span_warning("[holder] does not seem like [holder.p_theyre()]	going to provide a DNA sample willingly."))
+		balloon_alert(user, "DNA sample refused")
 		return FALSE
 	holder.visible_message(span_notice("[holder] presses [holder.p_their()] thumb against [user]."), span_notice("You press your thumb against [user]."), span_notice("[user] makes a sharp clicking sound as it extracts DNA material from [holder]."))
 	if(!holder.has_dna())
-		to_chat(user, span_warning("No DNA detected."))
+		balloon_alert(user, "no DNA detected")
 		return FALSE
 	to_chat(user, span_boldannounce(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
 	to_chat(user, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? "matches" : "does not match"] our stored Master's DNA."))
@@ -181,7 +181,6 @@
  */
 /mob/living/silicon/pai/proc/grant_languages(mob/user, datum/tgui/ui)
 	if(languages_granted)
-		to_chat(usr, span_warning("Error: You know all that there is to know!"))
 		return FALSE
 	grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
 	languages_granted = TRUE
@@ -201,22 +200,21 @@
 	if(mode == "target")
 		var/mob/living/target = get_holder()
 		if(!target || !isliving(target))
-			to_chat(user, span_warning("You are not being carried by anyone!"))
+			balloon_alert(user, "not being carried")
 			return FALSE
 		host_scan.attack(target, user)
 		return TRUE
 	if(mode == "master")
 		if(!master_ref)
-			to_chat(user, span_warning("You are not bound to a master!"))
+			balloon_alert(user, "no master detected")
 			return FALSE
 		var/mob/living/resolved_master = find_master()
 		if(!resolved_master)
-			to_chat(user, span_warning("Your master cannot be located!"))
+			balloon_alert(user, "cannot locate master")
 			return FALSE
 		if(user.z != resolved_master.z)
-			to_chat(user, span_warning("Your master, [master_name], seems to be out of range!"))
+			balloon_alert(user, "master out of range")
 			return FALSE
-		to_chat(user, span_notice("Your master, [master_name], is reporting the current vitals:"))
 		host_scan.attack(resolved_master, user)
 		return TRUE
 	return FALSE

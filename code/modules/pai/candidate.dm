@@ -11,8 +11,8 @@
 	/// If the user has hit "submit"
 	var/ready = FALSE
 
-/datum/pai_candidate/New(mob/user)
-	src.ckey = user.ckey
+/datum/pai_candidate/New(ckey)
+	src.ckey = ckey
 
 /**
  * Checks if a candidate is ready so that they may be displayed or

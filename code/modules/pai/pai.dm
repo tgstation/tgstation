@@ -230,7 +230,6 @@
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
-	return
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -275,13 +274,11 @@
 /**
  * Fixes weird speech issues with the pai.
  *
- * @param {mob} user - The user performing the action.
  * @returns {boolean} - TRUE if successful.
  */
-/mob/living/silicon/pai/proc/fix_speech(mob/user)
-	var/mob/living/silicon/pai/pai = src
-	to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
-	to_chat(user, span_notice("You fix the pAI's speech modulator."))
+/mob/living/silicon/pai/proc/fix_speech()
+	var/mob/living/silicon/pai = src
+	balloon_alert(pai, "speech modulation corrected")
 	for(var/effect in typesof(/datum/status_effect/speech))
 		pai.remove_status_effect(effect)
 	return TRUE
@@ -311,15 +308,14 @@
  * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/handle_emag(mob/living/carbon/attacker)
-	var/mob/living/silicon/pai/pai = src
 	if(!isliving(attacker))
 		return FALSE
-	to_chat(attacker, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
-	to_chat(pai, span_boldannounce("Warning: System override detected, check directive sub-system for any changes."))
-	log_game("[key_name(attacker)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
+	balloon_alert(attacker, "directive override complete")
+	balloon_alert(src, "directive override detected")
+	log_game("[key_name(attacker)] emagged [key_name(src)], wiping their master DNA and supplemental directive.")
 	emagged = TRUE
 	master_ref = WEAKREF(attacker)
-	master_name = attacker.real_name
+	master_name = "The Syndicate"
 	master_dna = "Untraceable Signature"
 	// Sets supplemental directive to this
 	laws.supplied[1] = "Do not interfere with the operations of the Syndicate."
@@ -342,11 +338,9 @@
 /**
  * Resets the pAI and any emagged status.
  *
- * @param {mob} user - The user performing the action.
  * @returns {boolean} - TRUE if successful, FALSE if not.
  */
-/mob/living/silicon/pai/proc/reset_software(mob/user)
-	var/mob/living/silicon/pai/pai = src
+/mob/living/silicon/pai/proc/reset_software()
 	emagged = FALSE
 	if(!master_ref)
 		return FALSE
@@ -354,8 +348,7 @@
 	master_name = null
 	master_dna = null
 	add_supplied_law(0, "None.")
-	to_chat(user, span_notice("You reset the software on the pAI."))
-	to_chat(pai, span_notice("Your software has been reset."))
+	balloon_alert(src, "software rebooted")
 	return TRUE
 
 /**
@@ -365,15 +358,15 @@
  * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/set_dna(mob/user)
-	var/mob/living/silicon/pai/pai = src
 	if(!iscarbon(user))
-		to_chat(user, span_warning("You don't have any DNA, or your DNA is incompatible with this device!"))
+		balloon_alert(user, "incompatible DNA signature")
+		balloon_alert(src, "incompatible DNA signature")
 		return FALSE
 	var/mob/living/carbon/master = user
 	master_ref = WEAKREF(master)
 	master_name = master.real_name
 	master_dna = master.dna.unique_enzymes
-	to_chat(pai, span_notice("You have been bound to a new master: [user.real_name]!"))
+	to_chat(src, span_boldannounce("You have been bound to a new master: [user.real_name]!"))
 	emitter_semi_cd = FALSE
 	return TRUE
 
@@ -384,39 +377,32 @@
  * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/set_laws(mob/user)
-	var/mob/living/silicon/pai/pai = src
 	if(!master_ref)
-		to_chat(user, span_warning("The pAI is not bound to a master! It doesn't have to listen to anyone."))
+		balloon_alert(user, "access denied: no master")
 		return FALSE
 	var/new_laws = tgui_input_text(user, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", laws.supplied[1], 300)
-	if(!new_laws || !pai || !master_ref)
+	if(!new_laws || !master_ref)
 		return FALSE
 	add_supplied_law(0, new_laws)
-	to_chat(pai, span_notice("They are as follows:"))
-	to_chat(pai, span_notice(new_laws))
+	to_chat(src, span_notice(new_laws))
 	return TRUE
 
 /**
  * Toggles the ability of the pai to enter holoform
  *
- * @param {mob} user - The user performing the toggle.
  * @returns {boolean} - TRUE if successful, FALSE if not.
  */
-/mob/living/silicon/pai/proc/toggle_holo(mob/user)
-	var/mob/living/silicon/pai/pai = src
-	to_chat(user, span_notice("You [can_holo ? "disabled" : "enabled"] your pAI's holomatrix."))
-	to_chat(pai, span_warning("Your owner has [can_holo ? "disabled" : "enabled"] your holomatrix projectors!"))
+/mob/living/silicon/pai/proc/toggle_holo()
+	balloon_alert(src, "holomatrix [can_holo ? "disabled" : "enabled"]")
 	can_holo = !can_holo
 	return TRUE
 
 /**
  * Toggles the radio settings on and off.
  *
- * @param {mob} user - The user performing the radio change.
  * @param {string} option - The option being toggled.
  */
-/mob/living/silicon/pai/proc/toggle_radio(mob/user, option)
-	var/mob/living/silicon/pai/pai = src
+/mob/living/silicon/pai/proc/toggle_radio(option)
 	// it can't be both so if we know it's not transmitting it must be receiving.
 	var/transmitting = option == "transmit"
 	var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
@@ -426,8 +412,7 @@
 		can_receive = !can_receive
 	radio.wires.cut(transmit_holder)//wires.cut toggles cut and uncut states
 	transmit_holder = (transmitting ? can_transmit : can_receive) //recycling can be fun!
-	to_chat(user, span_notice("You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
-	to_chat(pai, span_warning("Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
+	balloon_alert(src, "[transmitting ? "outgoing" : "incoming"] radio [transmit_holder ? "enabled" : "disabled"]")
 	return TRUE
 
 /**
@@ -437,14 +422,13 @@
  * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/wipe_pai(mob/user)
-	var/mob/living/silicon/pai/pai = src
 	if(tgui_alert(user, "Are you certain you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No")) != "Yes")
 		return FALSE
-	to_chat(pai, span_warning("You feel yourself slipping away from reality."))
-	to_chat(pai, span_danger("Byte by byte you lose your sense of self."))
-	to_chat(pai, span_userdanger("Your mental faculties leave you."))
-	to_chat(pai, span_rose("oblivion... "))
-	balloon_alert(user, "deleted")
+	to_chat(src, span_warning("You feel yourself slipping away from reality."))
+	to_chat(src, span_danger("Byte by byte you lose your sense of self."))
+	to_chat(src, span_userdanger("Your mental faculties leave you."))
+	to_chat(src, span_rose("oblivion... "))
+	balloon_alert(user, "personality wiped")
 	playsound(src, "sound/machines/buzz-two.ogg", 30, TRUE)
-	qdel(pai)
+	qdel(src)
 	return TRUE

@@ -1,4 +1,4 @@
-/client/proc/makepAI(turf/T in GLOB.mob_list)
+/client/proc/makepAI(turf/target in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Make pAI"
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
@@ -19,7 +19,7 @@
 		var/confirm = tgui_alert(usr, "[choice.key] isn't ghosting right now. Are you sure you want to yank them out of their body and place them in this pAI?", "Spawn pAI Confirmation", list("Yes", "No"))
 		if(confirm != "Yes")
 			return
-	var/obj/item/pai_card/card = new(T)
+	var/obj/item/pai_card/card = new(target)
 	var/mob/living/silicon/pai/pai = new(card)
 
 	pai.name = chosen_name

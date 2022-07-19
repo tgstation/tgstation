@@ -3,21 +3,20 @@
 /**
  * Switch that handles door jack operations.
  *
- * @param {mob} user - The user operating the door jack.
  * @param {string} mode - The requested operation of the door jack.
  * @returns {boolean} - TRUE if the door jack state was switched, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/door_jack(mob/user, mode)
+/mob/living/silicon/pai/proc/door_jack(mode)
 	switch(mode)
 		if("cable")
-			extend_cable(user)
+			extend_cable()
 			return TRUE
 		if("cancel")
 			QDEL_NULL(hacking_cable)
 			visible_message(span_notice("The cable retracts into the pAI."))
 			return TRUE
 		if("jack")
-			hack_door(user)
+			hack_door()
 			return TRUE
 	return FALSE
 
@@ -28,20 +27,19 @@
  * a cable which is placed either on the floor or in
  * someone's hands based (on distance).
  *
- * @param {mob} user - The pAI dropping the cable
  * @returns {boolean} - TRUE if the cable was dropped, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/extend_cable(mob/user)
+/mob/living/silicon/pai/proc/extend_cable()
 	QDEL_NULL(hacking_cable) //clear any old cables
 	hacking_cable = new
 	var/mob/living/carbon/hacker = get_holder()
 	if(hacker && hacker.put_in_hands(hacking_cable))
-		hacker.visible_message(span_notice("A port on [user] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of a plastic	component and manage to catch the falling [hacking_cable]."))
+		hacker.visible_message(span_notice("A port on [src] opens to reveal a cable, which you quickly grab."), span_hear("You hear the soft click of a plastic	component and manage to catch the falling cable."))
 		track_pai()
 		track_thing(hacking_cable)
 		return TRUE
 	hacking_cable.forceMove(drop_location())
-	hacking_cable.visible_message(span_notice("A port on [user] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of a plastic component fall to the ground."))
+	hacking_cable.visible_message(span_notice("A port on [src] opens to reveal a cable, which promptly falls to the floor."), span_hear("You hear the soft click of a plastic component fall to the ground."))
 	track_pai()
 	track_thing(hacking_cable)
 	return TRUE
@@ -88,7 +86,7 @@
  */
 /mob/living/silicon/pai/proc/retract_cable()
 	hacking_cable.visible_message(span_notice("The cable quickly retracts."))
-	to_chat(src, span_notice("Your door jack has retracted into its socket."))
+	balloon_alert(src, "cable retracted")
 	untrack_pai()
 	untrack_thing(hacking_cable)
 	QDEL_NULL(hacking_cable)
@@ -100,22 +98,21 @@
  * After a 15 second timer, the door will crack open,
  * provided they don't move out of the way.
  *
- * @param {mob} user - The pAI attempting to hack the door.
  * @returns {boolean} - TRUE if the door was jacked, FALSE otherwise.
  */
-/mob/living/silicon/pai/proc/hack_door(mob/user)
+/mob/living/silicon/pai/proc/hack_door()
 	if(!hacking_cable)
-		CRASH("[user] attempted to hack a door without a cable.")
-	if(!hacking_cable?.machine)
-		to_chat(user, span_warning("You must be connected to a machine to do this."))
 		return FALSE
-	playsound(user, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
-	balloon_alert(user, "overriding...")
+	if(!hacking_cable?.machine)
+		to_chat(src, span_warning("You must be connected to a machine to do this."))
+		return FALSE
+	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
+	balloon_alert(src, "overriding...")
 	// Now begin hacking
 	if(!do_after(src, 15 SECONDS, hacking_cable.machine, timed_action_flags = NONE,	progress = TRUE))
-		balloon_alert(user, "failed! retracting...")
+		balloon_alert(src, "failed! retracting...")
 		hacking_cable.visible_message(
-			span_warning("[hacking_cable] rapidly retracts back into its spool."), span_hear("You hear a click and the sound of wire spooling rapidly."))
+			span_warning("The cable rapidly retracts back into its spool."), span_hear("You hear a click and the sound of wire spooling rapidly."))
 		untrack_pai()
 		untrack_thing(hacking_cable)
 		QDEL_NULL(hacking_cable)
@@ -123,7 +120,7 @@
 			card.update_appearance()
 		return FALSE
 	var/obj/machinery/door/door = hacking_cable.machine
-	balloon_alert(user, "success!")
+	balloon_alert(src, "success!")
 	door.open()
 	untrack_pai()
 	untrack_thing(hacking_cable)

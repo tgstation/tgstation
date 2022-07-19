@@ -2,9 +2,13 @@ import { useLocalState } from 'tgui/backend';
 import { Stack, Tabs } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 import { TAB } from './constants';
-import { AvailableDisplay, DirectiveDisplay, InstalledDisplay, SystemDisplay } from './interfaces';
+import { AvailableDisplay } from './Available';
+import { DirectiveDisplay } from './Directives';
+import { InstalledDisplay } from './Installed';
+import { SystemDisplay } from './System';
+import { Data } from './types';
 
-export const PaiInterface = (props, context) => {
+export const PaiInterface = (props, context: Data) => {
   const [tab, setTab] = useLocalState(context, 'tab', TAB.System);
 
   return (

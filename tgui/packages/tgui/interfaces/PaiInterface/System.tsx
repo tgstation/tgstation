@@ -1,7 +1,7 @@
 import { useBackend } from 'tgui/backend';
 import { Box, Button, LabeledList, Section, Stack } from 'tgui/components';
-import { ICON_MAP } from '../constants';
-import { Data } from '../types';
+import { ICON_MAP } from './constants';
+import { Data } from './types';
 
 export const SystemDisplay = (props, context) => {
   return (

@@ -16,7 +16,7 @@
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE, -3)
-	to_chat(user, span_notice("Image recorded."))
+	balloon_alert(user, "image recorded")
 
 /**
  * Handles selecting and printing stored images.
@@ -29,9 +29,9 @@
 	var/mob/living/silicon/pai/pai = loc
 	var/datum/picture/selection = selectpicture(user)
 	if(!istype(selection))
-		to_chat(user, span_warning("Invalid Image."))
+		balloon_alert(user, "invalid image")
 		return FALSE
-	printpicture(user,selection)
+	printpicture(user, selection)
 	user.visible_message(span_notice("A picture appears on top of the chassis of [pai.name]!"), span_notice("You print a photograph."))
 	return TRUE
 

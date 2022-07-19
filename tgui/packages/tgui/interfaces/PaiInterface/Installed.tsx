@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, NoticeBox, Section, Stack } from 'tgui/components';
-import { SOFTWARE_DESC } from '../constants';
-import { Data } from '../types';
+import { SOFTWARE_DESC } from './constants';
+import { Data } from './types';
 
 /**
  * Renders two sections: A section of buttons and
