@@ -1,0 +1,5 @@
+author: "distributivgesetz"
+delete-after: True
+changes: 
+  - bugfix: "Fix a runtime when replying to PDA messages through chat."
+  - code_imp: "Small code improvements for modular computers and files."

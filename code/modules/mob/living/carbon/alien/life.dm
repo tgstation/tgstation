@@ -41,6 +41,10 @@
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
 
+/mob/living/carbon/alien/humanoid/Life(delta_time, times_fired)
+	. = ..()
+	handle_organs(delta_time, times_fired)
+	
 /mob/living/carbon/alien/handle_status_effects(delta_time, times_fired)
 	..()
 	//natural reduction of movement delay due to stun.

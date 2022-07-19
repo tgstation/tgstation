@@ -167,6 +167,14 @@
 	cost = 10
 	purchasable_from = UPLINK_NUKE_OPS
 
+/datum/uplink_item/dangerous/pistol_nukeop
+	name = "Ansem Pistol"
+	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+			with suppressors."
+	item = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	cost = 6
+	purchasable_from = UPLINK_NUKE_OPS
+
 /datum/uplink_item/dangerous/surplus_smg
 	name = "Surplus SMG"
 	desc = "A horribly outdated automatic weapon. Why would you want to use this?"
@@ -212,6 +220,37 @@
 	name = "9mm Stechkin APS Magazine"
 	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS machine pistol."
 	item = /obj/item/ammo_box/magazine/m9mm_aps
+	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistol_nukeop
+	name = "10mm Handgun Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol."
+	item = /obj/item/ammo_box/magazine/m10mm
+	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistolap_nukeop
+	name = "10mm Armour Piercing Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
+			These rounds are less effective at injuring the target but penetrate protective gear."
+	item = /obj/item/ammo_box/magazine/m10mm/ap
+	cost = 3
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistolhp_nukeop
+	name = "10mm Hollow Point Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
+			These rounds are more damaging but ineffective against armour."
+	item = /obj/item/ammo_box/magazine/m10mm/hp
+	cost = 3
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/ammo/pistolfire_nukeop
+	name = "10mm Incendiary Magazine"
+	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
+			Loaded with incendiary rounds which inflict less damage, but ignite the target."
+	item = /obj/item/ammo_box/magazine/m10mm/fire
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS
 
@@ -702,7 +741,7 @@
 /datum/uplink_item/implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/organ/syndicate/anti_stun
+	item = /obj/item/autosurgeon/syndicate/anti_stun
 	cost = 12
 	surplus = 0
 	purchasable_from = UPLINK_NUKE_OPS
@@ -728,7 +767,7 @@
 /datum/uplink_item/implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/organ/syndicate/reviver
+	item = /obj/item/autosurgeon/syndicate/reviver
 	cost = 8
 	surplus = 0
 	purchasable_from = UPLINK_NUKE_OPS
@@ -736,7 +775,7 @@
 /datum/uplink_item/implants/thermals
 	name = "Thermal Eyes"
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
-	item = /obj/item/autosurgeon/organ/syndicate/thermal_eyes
+	item = /obj/item/autosurgeon/syndicate/thermal_eyes
 	cost = 8
 	surplus = 0
 	purchasable_from = UPLINK_NUKE_OPS
@@ -744,7 +783,7 @@
 /datum/uplink_item/implants/xray
 	name = "X-ray Vision Implant"
 	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/organ/syndicate/xray_eyes
+	item = /obj/item/autosurgeon/syndicate/xray_eyes
 	cost = 10
 	surplus = 0
 	purchasable_from = UPLINK_NUKE_OPS

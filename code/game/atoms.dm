@@ -1845,8 +1845,7 @@
 		if(!gravity_turf)//no gravity in nullspace
 			return 0
 
-	//the list isnt created every time as this proc is very hot, its only accessed if anything is actually listening to the signal too
-	var/static/list/forced_gravity = list()
+	var/list/forced_gravity = list()
 	if(SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity))
 		if(!length(forced_gravity))
 			SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
@@ -1854,7 +1853,6 @@
 		var/max_grav = 0
 		for(var/i in forced_gravity)//our gravity is the strongest return forced gravity we get
 			max_grav = max(max_grav, i)
-		forced_gravity.Cut()
 		//cut so we can reuse the list, this is ok since forced gravity movers are exceedingly rare compared to all other movement
 		return max_grav
 

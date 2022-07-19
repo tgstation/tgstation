@@ -1,5 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes: 
-  - rscadd: "You can now deconstruct living AIs and turn them back into AI core frames with MMIs/posibrains. The AI can finally be a real boy"
-  - qol: "AIs that are gibbed now drop MMIs/posibrains"
