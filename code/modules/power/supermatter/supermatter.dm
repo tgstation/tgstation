@@ -46,16 +46,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/damage = 0
 	///The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safe_alert
 	var/damage_archived = 0
-	///Our "Shit is no longer fucked" message. We send it when damage is less then damage_archived
-	var/safe_alert = "Crystalline hyperstructure returning to safe operating parameters."
-	///The point at which we should start sending messeges about the damage to the engi channels.
+	
+	///The point at which we should start sending messeges about the damage to the warning channel.
 	var/warning_point = 50
+	var/warning_channel = RADIO_CHANNEL_ENGINEERING
+	///The point at which we start sending messages to the emergency channel
+	var/emergency_point = 700
+	var/emergency_channel = RADIO_CHANNEL_COMMON
+
 	///The alert we send when we've reached warning_point
 	var/warning_alert = "Danger! Crystal hyperstructure integrity faltering!"
-	///The point at which we start sending messages to the common channel
-	var/emergency_point = 700
-	///The alert we send when we've reached emergency_point
-	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
 	///The point at which we delam
 	var/explosion_point = 900
 	///When we pass this amount of damage we start shooting bolts
@@ -218,15 +218,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/obj/item/radio/radio
 	///The key our internal radio uses
 	var/radio_key = /obj/item/encryptionkey/headset_eng
-	///The engineering channel
-	var/engineering_channel = "Engineering"
-	///The common channel
-	var/common_channel = null
 
 	///Boolean used for logging if we've been powered
 	var/has_been_powered = FALSE
-	///Boolean used for logging if we've passed the emergency point
-	var/has_reached_emergency = FALSE
 
 	///An effect we show to admins and ghosts the percentage of delam we're at
 	var/obj/effect/countdown/supermatter/countdown
@@ -454,6 +448,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(final_countdown && !cascade_initiated)
 		. += "casuality_field"
 
+/* VIN'S PR REMOVE LATER
 /obj/machinery/power/supermatter_crystal/proc/countdown()
 	set waitfor = FALSE
 
@@ -495,7 +490,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		sleep(1 SECONDS)
 
 	delamination_event()
-
+*/
 /obj/machinery/power/supermatter_crystal/proc/delamination_event()
 	var/can_spawn_anomalies = is_station_level(loc.z) && is_main_engine && anomaly_event
 

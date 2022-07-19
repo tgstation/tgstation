@@ -18,10 +18,75 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 
 /// Start counting down, means SM is about to blow. Can still be healed though.
 /datum/sm_delam_strat/proc/count_down(obj/machinery/power/supermatter_crystal/sm)
-	return FALSE
+	set waitfor = FALSE
 
-/// Means our integrity is going down.
-/datum/sm_delam_strat/proc/delamination_warning(obj/machinery/power/supermatter_crystal/sm)
+	var/obj/item/radio/radio = sm.radio
+
+	if(sm.final_countdown) // We're already doing it go away
+		stack_trace("SM [sm] told to delaminate again while it's already delaminating.")
+		return
+	sm.final_countdown = TRUE
+	sm.update_appearance()
+
+	radio.talk_into(
+		sm,
+		"CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure.", 
+		sm.emergency_channel
+	)
+
+	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
+		var/message
+		var/healed = FALSE
+		
+		if(sm.damage < sm.explosion_point) // Cutting it a bit close there engineers
+			message = "Crystalline hyperstructure returning to safe operating parameters. Failsafe has been disengaged."
+			healed = TRUE
+		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
+			sleep(1 SECONDS)
+			continue
+		else if(i > 50)
+			message = "[DisplayTimeText(i, TRUE)] remain before causality stabilization."
+		else
+			message = "[i*0.1]..."
+
+		radio.talk_into(sm, message, sm.emergency_channel)
+		
+		if(healed)
+			sm.final_countdown = FALSE
+			sm.update_appearance()
+			return // delam averted
+		sleep(1 SECONDS)
+
+	delaminate(sm)
+
+/// Whatever we're supposed to do when a delam is currently in progress. 
+/// Mostly just to tell people how useless engi is.
+/// Returns TRUE if we just told people a delam is going on. FALSE if its healing or we didnt say anything.
+/datum/sm_delam_strat/proc/delam_progress(obj/machinery/power/supermatter_crystal/sm)
+	if(sm.damage <= sm.warning_point) // Damage is too low, lets not
+		return FALSE 
+	
+	if((REALTIMEOFDAY - sm.lastwarning) < SUPERMATTER_WARNING_DELAY)
+		return FALSE
+	sm.lastwarning = REALTIMEOFDAY
+
+	if(sm.damage > sm.damage_archived) // Healing
+		sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [sm.get_integrity_percent()]%", sm.damage_archived >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel)
+		return FALSE
+
+	if(sm.damage >= sm.emergency_point) // Taking damage, in emergency
+		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT Integrity: [sm.get_integrity_percent()]%", sm.emergency_channel)
+		sm.lastwarning = REALTIMEOFDAY - (SUPERMATTER_WARNING_DELAY / 2) // Cut the time to next announcement in half.
+		if(sm.damage_archived < sm.emergency_point) // Means we just entered it
+			sm.investigate_log("has entered the emergency point.", INVESTIGATE_ENGINE)
+			message_admins("[sm] has entered the emergency point [ADMIN_JMP(sm)].")
+	else // Taking damage, in warning
+		sm.radio.talk_into(sm, "Danger! Crystal hyperstructure integrity faltering! Integrity: [sm.get_integrity_percent()]%", sm.warning_channel)
+		if(sm.damage_archived < sm.warning_point)
+			SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_START_ALARM)
+
+	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
+	return TRUE
 
 /// The sound we play to let people know we're delamming.
 /datum/sm_delam_strat/proc/play_sound(obj/machinery/power/supermatter_crystal/sm)
