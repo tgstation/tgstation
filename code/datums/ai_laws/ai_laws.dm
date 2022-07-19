@@ -18,17 +18,20 @@
 
 /// Always make the round default asimov
 #define CONFIG_ASIMOV 0
-/// Set to a custom lawset defined by another config value
-#define CONFIG_CUSTOM 1
+/// Set to a specific lawset in the game options.
+#define CONFIG_SPECIFIED 1
 /// Set to a completely random ai law subtype, good, bad, it cares not. Careful with this one
 #define CONFIG_RANDOM 2
 /// Set to a configged weighted list of lawtypes in the config. This lets server owners pick from a pool of sane laws, it is also the same process for ian law rerolls.
 #define CONFIG_WEIGHTED 3
+/// Set to a custom lawset defined by another config value
+#define CONFIG_CUSTOM 4
 
 ///first called when something wants round default laws for the first time in a round, considers config
 ///returns a law datum that GLOB._round_default_lawset will be set to.
 /proc/setup_round_default_laws()
 	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
+	var/list/spec_law_ids = CONFIG_GET(keyed_list/specified_laws)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
 		return pick_weighted_lawset()
@@ -36,6 +39,19 @@
 	switch(CONFIG_GET(number/default_laws))
 		if(CONFIG_ASIMOV)
 			return /datum/ai_laws/default/asimov
+		if(CONFIG_SPECIFIED)
+			var/list/speclaws = list()
+			for(var/lpath in subtypesof(/datum/ai_laws))
+				var/datum/ai_laws/L = lpath
+				if(initial(L.id) in spec_law_ids)
+					speclaws += lpath
+			var/datum/ai_laws/lawtype
+			if(speclaws.len)
+				lawtype = pick(speclaws)
+			else
+				lawtype = pick(subtypesof(/datum/ai_laws/default))
+
+			return lawtype
 		if(CONFIG_CUSTOM)
 			return /datum/ai_laws/custom
 		if(CONFIG_RANDOM)

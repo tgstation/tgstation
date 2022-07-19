@@ -214,10 +214,19 @@ NEAR_DEATH_EXPERIENCE
 ## ROUNDSTART SILICON LAWS ###
 ## This controls what the AI's laws are at the start of the round.
 ## Set to 0/commented out for "off", silicons will just start with Asimov.
-## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
+## Set to 1 for "specified", silicons will start with an existing lawset. (If no specified lawset is identified, the AI will spawn with asimov.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
+## Set to 4 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
+
 DEFAULT_LAWS 0
+
+## SPECIFIED LAWS ##
+## ------------------------------------------------------------------------------------------
+## These control what lawset the AI will use, edit the specified law to an *existing* lawset to make it the default.
+## See datums\ai_laws.dm for the full law lists
+
+SPECIFIED_LAWS asimovpp
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
