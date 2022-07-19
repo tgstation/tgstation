@@ -8,7 +8,23 @@
 #define SHOWER_SPRAY_VOLUME 5
 /// How much the volume of the shower's spay reagents are amplified by when it sprays something.
 #define SHOWER_EXPOSURE_MULTIPLIER 2 // Showers effectively double exposed reagents
+/// How long we run in TIMED mode
+#define SHOWER_TIMED_LENGTH (15 SECONDS)
 
+/// Run the shower until we run out of reagents.
+#define SHOWER_MODE_UNTIL_EMPTY 0
+/// Run the shower for SHOWER_TIMED_LENGTH time, or until we run out of reagents.
+#define SHOWER_MODE_TIMED 1
+/// Run the shower forever, pausing when we run out of liquid, and then resuming later.
+#define SHOWER_MODE_FOREVER 2
+/// Number of modes to cycle through
+#define SHOWER_MODE_COUNT 3
+
+GLOBAL_LIST_INIT(shower_mode_descriptions, list(
+	"[SHOWER_MODE_UNTIL_EMPTY]" = "run until empty",
+	"[SHOWER_MODE_TIMED]" = "run for 15 seconds or until empty",
+	"[SHOWER_MODE_FOREVER]" = "keep running forever and auto turn back on",
+))
 
 /obj/machinery/shower
 	name = "shower"
@@ -16,9 +32,13 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
+	layer = ABOVE_WINDOW_LAYER
 	use_power = NO_POWER_USE
-	///Is the shower on or off?
-	var/on = FALSE
+	subsystem_type = /datum/controller/subsystem/processing/plumbing
+	///Does the user want the shower on or off?
+	var/intended_on = FALSE
+	///Is the shower actually spitting out water currently
+	var/actually_on = FALSE
 	///What temperature the shower reagents are set to.
 	var/current_temperature = SHOWER_NORMAL
 	///What sound will be played on loop when the shower is on and pouring water.
@@ -29,17 +49,45 @@
 	var/reagent_capacity = 200
 	///How many units the shower refills every second.
 	var/refill_rate = 0.5
-	/// Whether or not the shower's water reclaimer is operating.
-	var/can_refill = TRUE
-	/// Whether to allow players to toggle the water reclaimer.
-	var/can_toggle_refill = TRUE
+	///Does the shower have a water recycler to recollect it's water supply?
+	var/has_water_reclaimer = TRUE
+	///Which mode the shower is operating in.
+	var/mode = SHOWER_MODE_UNTIL_EMPTY
+	///The cooldown for SHOWER_MODE_TIMED mode.
+	COOLDOWN_DECLARE(timed_cooldown)
+	///How far to shift the sprite when placing.
+	var/pixel_shift = 16
 
-/obj/machinery/shower/Initialize(mapload)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
+
+/obj/machinery/shower/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
+
+	if(ndir)
+		dir = ndir
+
+	if(has_water_reclaimer != null)
+		src.has_water_reclaimer = has_water_reclaimer
+
+	switch(dir)
+		if(NORTH)
+			pixel_x = 0
+			pixel_y = -pixel_shift
+		if(SOUTH)
+			pixel_x = 0
+			pixel_y = pixel_shift
+		if(EAST)
+			pixel_x = -pixel_shift
+			pixel_y = 0
+		if(WEST)
+			pixel_x = pixel_shift
+			pixel_y = 0
+
 	create_reagents(reagent_capacity)
-	reagents.add_reagent(reagent_id, reagent_capacity)
+	if(src.has_water_reclaimer)
+		reagents.add_reagent(reagent_id, reagent_capacity)
 	soundloop = new(src, FALSE)
-	AddComponent(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
@@ -47,6 +95,10 @@
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
+	. += span_notice("It looks like the thermostat has an adjustment screw.")
+	if(has_water_reclaimer)
+		. += span_notice("A water recycler is installed. It looks like you could pry it out.")
+	. += span_notice("The auto shut-off is programmed to [GLOB.shower_mode_descriptions["[mode]"]].")
 	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
 
 /obj/machinery/shower/Destroy()
@@ -54,42 +106,66 @@
 	QDEL_NULL(reagents)
 	return ..()
 
-/obj/machinery/shower/interact(mob/M)
-	if(reagents.total_volume < 5)
-		to_chat(M,span_notice("\The [src] is dry."))
-		return FALSE
-	on = !on
-	update_appearance()
-	handle_mist()
-	add_fingerprint(M)
-	if(on)
-		START_PROCESSING(SSmachines, src)
-		process(SSMACHINES_DT)
-		soundloop.start()
-	else
-		soundloop.stop()
-		if(isopenturf(loc))
-			var/turf/open/tile = loc
-			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
-
-/obj/machinery/shower/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_ANALYZER)
-		to_chat(user, span_notice("The water temperature seems to be [current_temperature]."))
-	else
-		return ..()
-
-/obj/machinery/shower/multitool_act(mob/living/user, obj/item/I)
+/obj/machinery/shower/interact(mob/user)
 	. = ..()
-	if(. || !can_toggle_refill)
+	if(.)
 		return
 
-	can_refill = !can_refill
-	to_chat(user, span_notice("You [can_refill ? "en" : "dis"]able the shower's water recycler."))
-	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+	intended_on = !intended_on
+	if(!update_actually_on(intended_on))
+		balloon_alert(user, "[src] is dry!")
+		return FALSE
+
+	balloon_alert(user, "turned [intended_on ? "on" : "off"]")
+
 	return TRUE
 
+/obj/machinery/shower/analyzer_act(mob/living/user, obj/item/tool)
+	. = ..()
 
-/obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("The water temperature seems to be [current_temperature]."))
+	return TRUE
+
+/obj/machinery/shower/attackby(obj/item/tool, mob/user, params)
+	if(istype(tool, /obj/item/stock_parts/water_recycler))
+		if(has_water_reclaimer)
+			to_chat(user, span_warning("There is already has a water recycler installed."))
+			return
+
+		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		qdel(tool)
+		has_water_reclaimer = TRUE
+		begin_processing()
+
+	return ..()
+
+/obj/machinery/shower/multitool_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(.)
+		return
+
+	tool.play_tool_sound(src)
+	mode = (mode + 1) % SHOWER_MODE_COUNT
+	begin_processing()
+	to_chat(user, span_notice("You change the shower's auto shut-off mode to [GLOB.shower_mode_descriptions["[mode]"]]."))
+	return TRUE
+
+/obj/machinery/shower/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(.)
+		return
+	if(!has_water_reclaimer)
+		to_chat(user, span_warning("There isn't a water recycler to remove."))
+		return
+
+	tool.play_tool_sound(src)
+	has_water_reclaimer = FALSE
+	new/obj/item/stock_parts/water_recycler(get_turf(loc))
+	to_chat(user, span_notice("You remove the water reclaimer from [src]"))
+	return TRUE
+
+/obj/machinery/shower/screwdriver_act(mob/living/user, obj/item/I)
 	..()
 	to_chat(user, span_notice("You begin to adjust the temperature valve with \the [I]..."))
 	if(I.use_tool(src, user, 50))
@@ -106,41 +182,58 @@
 	handle_mist()
 	return TRUE
 
+/obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+
+	I.play_tool_sound(src)
+	deconstruct()
+	return TRUE
 
 /obj/machinery/shower/update_overlays()
 	. = ..()
-	if(!on)
+	if(!actually_on)
 		return
 	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
 	water_falling.plane = GAME_PLANE_UPPER
+	switch(dir)
+		if(NORTH)
+			water_falling.pixel_y += pixel_shift
+		if(SOUTH)
+			water_falling.pixel_y -= pixel_shift
+		if(EAST)
+			water_falling.pixel_x += pixel_shift
+		if(WEST)
+			water_falling.pixel_x -= pixel_shift
 	. += water_falling
 
 /obj/machinery/shower/proc/handle_mist()
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
 	// If there was already mist, and the shower was turned off (or made cold): remove the existing mist in 25 sec
 	var/obj/effect/mist/mist = locate() in loc
-	if(!mist && on && current_temperature != SHOWER_FREEZING)
+	if(!mist && actually_on && current_temperature != SHOWER_FREEZING)
 		addtimer(CALLBACK(src, .proc/make_mist), 5 SECONDS)
 
-	if(mist && (!on || current_temperature == SHOWER_FREEZING))
+	if(mist && !(actually_on && current_temperature != SHOWER_FREEZING))
 		addtimer(CALLBACK(src, .proc/clear_mist), 25 SECONDS)
 
 /obj/machinery/shower/proc/make_mist()
 	var/obj/effect/mist/mist = locate() in loc
-	if(!mist && on && current_temperature != SHOWER_FREEZING)
+	if(!mist && actually_on && current_temperature != SHOWER_FREEZING)
 		var/obj/effect/mist/new_mist = new /obj/effect/mist(loc)
 		new_mist.color = mix_color_from_reagents(reagents.reagent_list)
 
 /obj/machinery/shower/proc/clear_mist()
 	var/obj/effect/mist/mist = locate() in loc
-	if(mist && (!on || current_temperature == SHOWER_FREEZING))
+	if(mist && !(actually_on && current_temperature != SHOWER_FREEZING))
 		qdel(mist)
 
 
 /obj/machinery/shower/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(on && reagents.total_volume)
+	if(actually_on && reagents.total_volume)
 		wash_atom(AM)
 
 /obj/machinery/shower/proc/wash_atom(atom/target)
@@ -150,27 +243,76 @@
 	if(isliving(target))
 		check_heat(target)
 
-/obj/machinery/shower/process(delta_time)
-	if(on && reagents.total_volume)
-		wash_atom(loc)
-		for(var/am in loc)
-			var/atom/movable/movable_content = am
-			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
-				wash_atom(movable_content) // Reagent exposure is handled in wash_atom
+/**
+ * Toggle whether shower is actually on and outputting water.
+ * May not match what user asked to happen by clicking.
+ * Returns TRUE if the state was changed.
+ *
+ * Arguments:
+ * * new_on_state - new state
+ */
+/obj/machinery/shower/proc/update_actually_on(new_on_state)
+	if(new_on_state == actually_on)
+		return FALSE
 
-		reagents.remove_any(SHOWER_SPRAY_VOLUME)
-		return
-	on = FALSE
-	soundloop.stop()
-	handle_mist()
-	if(can_refill)
-		reagents.add_reagent(reagent_id, refill_rate * delta_time)
+	// Check if we have enough reagents to actually turn on.
+	if(new_on_state && reagents.total_volume < SHOWER_SPRAY_VOLUME)
+		return FALSE
+
+	actually_on = new_on_state
+
 	update_appearance()
-	if(reagents.total_volume == reagents.maximum_volume)
-		return PROCESS_KILL
+	handle_mist()
+	if(new_on_state)
+		begin_processing()
+		soundloop.start()
+		COOLDOWN_START(src, timed_cooldown, SHOWER_TIMED_LENGTH)
+	else
+		soundloop.stop()
+		if(isopenturf(loc))
+			var/turf/open/tile = loc
+			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
+
+	return TRUE
+
+/obj/machinery/shower/process(delta_time)
+	// the TIMED mode cutoff feature. User has to manually reactivate.
+	if(intended_on && mode == SHOWER_MODE_TIMED && COOLDOWN_FINISHED(src, timed_cooldown))
+		// the TIMED mode cutoff feature. User has to manually reactivate.
+		intended_on = FALSE
+
+	// Out of water.
+	if(actually_on && reagents.total_volume < SHOWER_SPRAY_VOLUME)
+		update_actually_on(FALSE)
+
+		// Don't turn back on.
+		if(mode != SHOWER_MODE_FOREVER)
+			intended_on = FALSE
+	else
+		// Cycle: update_actually_on() will only change state if appropriate.
+		update_actually_on(intended_on)
+
+	// Reclaim water
+	if(!actually_on)
+		if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
+			reagents.add_reagent(reagent_id, refill_rate * delta_time)
+			return 0
+
+		// FOREVER mode stays processing so it can cycle back on.
+		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
+
+	// Wash up.
+	wash_atom(loc)
+	for(var/atom/movable/movable_content as anything in loc)
+		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
+			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
+
+	reagents.remove_any(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/iron(drop_location(), 3)
+	new /obj/item/stack/sheet/iron(drop_location(), 2)
+	if(has_water_reclaimer)
+		new /obj/item/stock_parts/water_recycler(drop_location())
 	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/L)
@@ -198,14 +340,29 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/structure/showerframe/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/stock_parts/water_recycler))
-		qdel(I)
-		var/obj/machinery/shower/new_shower = new /obj/machinery/shower(loc)
-		new_shower.setDir(dir)
+/obj/structure/showerframe/attackby(obj/item/tool, mob/living/user, params)
+	if(istype(tool, /obj/item/stock_parts/water_recycler))
+		qdel(tool)
+		var/obj/machinery/shower/shower = new(loc, REVERSE_DIR(dir), TRUE)
 		qdel(src)
+		playsound(shower, 'sound/machines/click.ogg', 20, TRUE)
 		return
 	return ..()
+
+/obj/structure/showerframe/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	tool.play_tool_sound(src)
+	new/obj/machinery/shower(loc, REVERSE_DIR(dir), FALSE)
+	qdel(src)
+
+	return TRUE
+
+/obj/structure/sinkframe/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	tool.play_tool_sound(src)
+	deconstruct()
+	return TRUE
 
 /obj/structure/showerframe/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
@@ -219,6 +376,11 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+#undef SHOWER_MODE_UNTIL_EMPTY
+#undef SHOWER_MODE_TIMED
+#undef SHOWER_MODE_FOREVER
+#undef SHOWER_MODE_COUNT
+#undef SHOWER_TIMED_LENGTH
 #undef SHOWER_SPRAY_VOLUME
 #undef SHOWER_EXPOSURE_MULTIPLIER
 #undef SHOWER_BOILING_TEMP

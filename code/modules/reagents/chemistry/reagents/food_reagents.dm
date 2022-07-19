@@ -1009,6 +1009,7 @@
 	description = "A rich, creamy spread produced by grinding peanuts."
 	taste_description = "peanuts"
 	color = "#D9A066"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter

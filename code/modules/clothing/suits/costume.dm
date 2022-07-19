@@ -1,7 +1,11 @@
+/obj/item/clothing/suit/costume
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+
 /obj/item/clothing/suit/hooded/flashsuit
 	name = "flashy costume"
 	desc = "What did you expect?"
 	icon_state = "flashsuit"
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN
 	hoodtype = /obj/item/clothing/head/hooded/flashsuit
@@ -13,7 +17,7 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK|HIDESNOUT
 
-/obj/item/clothing/suit/pirate
+/obj/item/clothing/suit/costume/pirate
 	name = "pirate coat"
 	desc = "Yarr."
 	icon_state = "pirate"
@@ -22,34 +26,35 @@
 	allowed = list(/obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/food/drinks/bottle/rum)
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/suit/pirate/armored
+/obj/item/clothing/suit/costume/pirate/armored
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
 	strip_delay = 40
 	equip_delay_other = 20
 	species_exception = null
 
-/obj/item/clothing/suit/pirate/captain
+/obj/item/clothing/suit/costume/pirate/captain
 	name = "pirate captain coat"
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	inhand_icon_state = "hgpirate"
 
-/obj/item/clothing/suit/pirate/captain/armored
+/obj/item/clothing/suit/costume/pirate/armored
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
 	strip_delay = 40
 	equip_delay_other = 20
 	species_exception = null
 
-/obj/item/clothing/suit/cyborg_suit
+/obj/item/clothing/suit/costume/cyborg_suit
 	name = "cyborg suit"
 	desc = "Suit for a cyborg costume."
 	icon_state = "death"
 	inhand_icon_state = "death"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	flags_1 = CONDUCT_1
 	fire_resist = T0C+5200
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
-/obj/item/clothing/suit/justice
+/obj/item/clothing/suit/costume/justice
 	name = "justice suit"
 	desc = "this pretty much looks ridiculous" //Needs no fixing
 	icon_state = "justice"
@@ -58,7 +63,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 
-/obj/item/clothing/suit/judgerobe
+/obj/item/clothing/suit/costume/judgerobe
 	name = "judge's robe"
 	desc = "This robe commands authority."
 	icon_state = "judge"
@@ -80,19 +85,21 @@
 	desc = "A fancy purple apron for a stylish person."
 	icon_state = "purplebartenderapron"
 	inhand_icon_state = "purplebartenderapron"
-	body_parts_covered = CHEST|GROIN|LEGS
+	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/syndicatefake
 	name = "black and red space suit replica"
 	icon_state = "syndicate-black-red"
+	worn_icon = 'icons/mob/clothing/suits/spacesuit.dmi'
 	inhand_icon_state = "syndicate-black-red"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	desc = "A plastic replica of the Syndicate space suit. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	resistance_flags = NONE
 
-/obj/item/clothing/suit/hastur
+/obj/item/clothing/suit/costume/hastur
 	name = "\improper Hastur's robe"
 	desc = "Robes not meant to be worn by man."
 	icon_state = "hastur"
@@ -100,7 +107,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
-/obj/item/clothing/suit/imperium_monk
+/obj/item/clothing/suit/costume/imperium_monk
 	name = "\improper Imperium monk suit"
 	desc = "Have YOU killed a xeno today?"
 	icon_state = "imperium_monk"
@@ -109,7 +116,7 @@
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen)
 
-/obj/item/clothing/suit/chickensuit
+/obj/item/clothing/suit/costume/chickensuit
 	name = "chicken suit"
 	desc = "A suit made long ago by the ancient empire KFC."
 	icon_state = "chickensuit"
@@ -117,7 +124,7 @@
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
-/obj/item/clothing/suit/monkeysuit
+/obj/item/clothing/suit/costume/monkeysuit
 	name = "monkey suit"
 	desc = "A suit that looks like a primate."
 	icon_state = "monkeysuit"
@@ -129,6 +136,7 @@
 	name = "owl cloak"
 	desc = "A soft brown cloak made of synthetic feathers. Soft to the touch, stylish, and a 2 meter wing span that will drive the ladies mad."
 	icon_state = "owl_wings"
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "owl_wings"
 	toggle_noun = "wings"
 	body_parts_covered = ARMS|CHEST
@@ -143,25 +151,25 @@
 	icon_state = "griffin_wings"
 	inhand_icon_state = "griffin_wings"
 
-/obj/item/clothing/suit/cardborg
+/obj/item/clothing/suit/costume/cardborg
 	name = "cardborg suit"
 	desc = "An ordinary cardboard box with holes cut in the sides."
 	icon_state = "cardborg"
 	inhand_icon_state = "cardborg"
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT
 	dog_fashion = /datum/dog_fashion/back
 
-/obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/costume/cardborg/equipped(mob/living/user, slot)
 	..()
 	if(slot == ITEM_SLOT_OCLOTHING)
 		disguise(user)
 
-/obj/item/clothing/suit/cardborg/dropped(mob/living/user)
+/obj/item/clothing/suit/costume/cardborg/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("standard_borg_disguise")
 
-/obj/item/clothing/suit/cardborg/proc/disguise(mob/living/carbon/human/H, obj/item/clothing/head/cardborg/borghead)
+/obj/item/clothing/suit/costume/cardborg/proc/disguise(mob/living/carbon/human/H, obj/item/clothing/head/cardborg/borghead)
 	if(istype(H))
 		if(!borghead)
 			borghead = H.head
@@ -171,7 +179,7 @@
 			I.add_overlay(mutable_appearance('icons/mob/robots.dmi', "robot_e")) //gotta look realistic
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "standard_borg_disguise", I) //you look like a robot to robots! (including yourself because you're totally a robot)
 
-/obj/item/clothing/suit/snowman
+/obj/item/clothing/suit/costume/snowman
 	name = "snowman outfit"
 	desc = "Two white spheres covered in white glitter. 'Tis the season."
 	icon_state = "snowman"
@@ -179,36 +187,36 @@
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
-/obj/item/clothing/suit/poncho
+/obj/item/clothing/suit/costume/poncho
 	name = "poncho"
 	desc = "Your classic, non-racist poncho."
 	icon_state = "classicponcho"
 	inhand_icon_state = "classicponcho"
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/suit/poncho/green
+/obj/item/clothing/suit/costume/poncho/green
 	name = "green poncho"
 	desc = "Your classic, non-racist poncho. This one is green."
 	icon_state = "greenponcho"
 	inhand_icon_state = "greenponcho"
 
-/obj/item/clothing/suit/poncho/red
+/obj/item/clothing/suit/costume/poncho/red
 	name = "red poncho"
 	desc = "Your classic, non-racist poncho. This one is red."
 	icon_state = "redponcho"
 	inhand_icon_state = "redponcho"
 
-/obj/item/clothing/suit/poncho/ponchoshame
+/obj/item/clothing/suit/costume/poncho/ponchoshame
 	name = "poncho of shame"
 	desc = "Forced to live on your shameful acting as a fake Mexican, you and your poncho have grown inseparable. Literally."
 	icon_state = "ponchoshame"
 	inhand_icon_state = "ponchoshame"
 
-/obj/item/clothing/suit/poncho/ponchoshame/Initialize(mapload)
+/obj/item/clothing/suit/costume/poncho/ponchoshame/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
-/obj/item/clothing/suit/whitedress
+/obj/item/clothing/suit/costume/whitedress
 	name = "white dress"
 	desc = "A fancy white dress."
 	icon_state = "white_dress"
@@ -220,8 +228,9 @@
 	name = "carp costume"
 	desc = "A costume made from 'synthetic' carp scales, it smells."
 	icon_state = "carp_casual"
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "labcoat"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT //Space carp like space, so you should too
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
@@ -291,8 +300,9 @@
 	name = "corgi costume"
 	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
 	icon_state = "ian"
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "labcoat"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	//cold_protection = CHEST|GROIN|ARMS
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
@@ -312,6 +322,7 @@
 	name = "bee costume"
 	desc = "Bee the true Queen!"
 	icon_state = "bee"
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	clothing_flags = THICKMATERIAL
@@ -330,8 +341,9 @@
 	name = "bloated human suit"
 	desc = "A horribly bloated suit made from human skins."
 	icon_state = "lingspacesuit"
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "labcoat"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	allowed = list()
 	actions_types = list(/datum/action/item_action/toggle_human_head)
 	hoodtype = /obj/item/clothing/head/hooded/human_head
@@ -346,14 +358,7 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
-/obj/item/clothing/suit/security/officer/russian
-	name = "\improper Russian officer's jacket"
-	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
-	icon_state = "officertanjacket"
-	inhand_icon_state = "officertanjacket"
-	body_parts_covered = CHEST|ARMS
-
-/obj/item/clothing/suit/shrine_maiden
+/obj/item/clothing/suit/costume/shrine_maiden
 	name = "shrine maiden's outfit"
 	desc = "Makes you want to exterminate some troublesome youkai."
 	icon_state = "shrine_maiden"
@@ -361,31 +366,31 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
-/obj/item/clothing/suit/striped_sweater
+/obj/item/clothing/suit/costume/striped_sweater
 	name = "striped sweater"
 	desc = "Reminds you of someone, but you just can't put your finger on it..."
 	icon_state = "waldo_shirt"
 	inhand_icon_state = "waldo_shirt"
 
-/obj/item/clothing/suit/dracula
+/obj/item/clothing/suit/costume/dracula
 	name = "dracula coat"
 	desc = "Looks like this belongs in a very old movie set."
 	icon_state = "draculacoat"
 	inhand_icon_state = "draculacoat"
 
-/obj/item/clothing/suit/drfreeze_coat
+/obj/item/clothing/suit/costume/drfreeze_coat
 	name = "doctor freeze's labcoat"
 	desc = "A labcoat imbued with the power of features and freezes."
 	icon_state = "drfreeze_coat"
 	inhand_icon_state = "drfreeze_coat"
 
-/obj/item/clothing/suit/gothcoat
+/obj/item/clothing/suit/costume/gothcoat
 	name = "gothic coat"
 	desc = "Perfect for those who want to stalk around a corner of a bar."
 	icon_state = "gothcoat"
 	inhand_icon_state = "gothcoat"
 
-/obj/item/clothing/suit/xenos
+/obj/item/clothing/suit/costume/xenos
 	name = "xenos suit"
 	desc = "A suit made out of chitinous alien hide."
 	icon_state = "xenos"
@@ -394,42 +399,42 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
 
-/obj/item/clothing/suit/nemes
+/obj/item/clothing/suit/costume/nemes
 	name = "pharoah tunic"
 	desc = "Lavish space tomb not included."
 	icon_state = "pharoah"
 	inhand_icon_state = "pharoah"
 	body_parts_covered = CHEST|GROIN
 
-/obj/item/clothing/suit/changshan_red
+/obj/item/clothing/suit/costume/changshan_red
 	name = "red changshan"
 	desc = "A gorgeously embroidered silk shirt."
 	icon_state = "changshan_red"
 	inhand_icon_state = "changshan_red"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
-/obj/item/clothing/suit/changshan_blue
+/obj/item/clothing/suit/costume/changshan_blue
 	name = "blue changshan"
 	desc = "A gorgeously embroidered silk shirt."
 	icon_state = "changshan_blue"
 	inhand_icon_state = "changshan_blue"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
-/obj/item/clothing/suit/cheongsam_red
+/obj/item/clothing/suit/costume/cheongsam_red
 	name = "red cheongsam"
 	desc = "A gorgeously embroidered silk dress."
 	icon_state = "cheongsam_red"
 	inhand_icon_state = "cheongsam_red"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
-/obj/item/clothing/suit/cheongsam_blue
+/obj/item/clothing/suit/costume/cheongsam_blue
 	name = "blue cheongsam"
 	desc = "A gorgeously embroidered silk dress."
 	icon_state = "cheongsam_blue"
 	inhand_icon_state = "cheongsam_blue"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
-/obj/item/clothing/suit/bronze
+/obj/item/clothing/suit/costume/bronze
 	name = "bronze suit"
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
 	icon = 'icons/obj/clothing/suits.dmi'
@@ -440,6 +445,7 @@
 	name = "mystic's robe"
 	desc = "Wearing this makes you feel more attuned with the nature of the universe... as well as a bit more irresponsible. "
 	icon_state = "mysticrobe"
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "mysticrobe"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/spellbook, /obj/item/storage/book/bible)
@@ -458,17 +464,18 @@
 	name = "coordinator jacket"
 	desc = "A jacket for a party ooordinator, stylish!."
 	icon_state = "capformal"
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = "capspacesuit"
 	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 
-/obj/item/clothing/suit/hawaiian
+/obj/item/clothing/suit/costume/hawaiian
 	name = "hawaiian overshirt"
 	desc = "A cool shirt for chilling on the beach."
 	icon_state = "hawaiian_blue"
 	inhand_icon_state = "hawaiian_blue"
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/suit/yakuza
+/obj/item/clothing/suit/costume/yakuza
 	name = "tojo clan jacket"
 	desc = "The jacket of a mad dog."
 	icon_state = "MajimaJacket"
@@ -476,7 +483,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/dutch
+/obj/item/clothing/suit/costume/dutch
 	name = "dutch's jacket"
 	desc = "For those long nights on the beach in Tahiti."
 	icon_state = "DutchJacket"
@@ -485,7 +492,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/driscoll
+/obj/item/clothing/suit/costume/driscoll
 	name = "driscoll poncho"
 	desc = "Keeping you warm in the harsh cold of space."
 	icon_state = "driscoll_suit"
@@ -493,7 +500,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/irs
+/obj/item/clothing/suit/costume/irs
 	name = "internal revenue service jacket"
 	desc = "I'm crazy enough to take on The Owl, but the IRS? Nooo thank you!"
 	icon_state = "irs_suit"
@@ -501,7 +508,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/osi
+/obj/item/clothing/suit/costume/osi
 	name = "\improper O.S.I. body armor"
 	desc = "You're beyond good and evil, super man. You work for the government. And you're a tool, boy, a tool! Built for a single purpose by the United States of shut your third fucking damn eye for a fucking reason! You can't teach a hammer to love nails, son. That dog don't hunt!"
 	icon_state = "osi_suit"
@@ -509,7 +516,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/tmc
+/obj/item/clothing/suit/costume/tmc
 	name = "\improper Lost M.C. cut"
 	desc = "Making sure everyone knows you're in the best biker gang this side of Alderney."
 	icon_state = "tmc_suit"
@@ -517,7 +524,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/pg
+/obj/item/clothing/suit/costume/pg
 	name = "powder ganger jacket"
 	desc = "Remind Security of their mistakes in giving prisoners blasting charges."
 	icon_state = "pg_suit"
@@ -525,7 +532,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/deckers
+/obj/item/clothing/suit/costume/deckers
 	name = "decker hoodie"
 	desc = "Based? Based on what?"
 	icon_state = "decker_suit"
@@ -533,7 +540,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/morningstar
+/obj/item/clothing/suit/costume/morningstar
 	name = "morningstar coat"
 	desc = "This coat costs more than you've ever made in your entire life."
 	icon_state = "morningstar_suit"
@@ -541,7 +548,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/saints
+/obj/item/clothing/suit/costume/saints
 	name = "Third Street Saints fur coat"
 	desc = "Rated 10 out of 10 in Cosmo for best coat brand."
 	icon_state = "saints_suit"
@@ -551,7 +558,7 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/phantom
+/obj/item/clothing/suit/costume/phantom
 	name = "phantom thief coat"
 	desc = "Your foes will never see you coming in this stealthy yet stylish getup."
 	icon_state = "phantom_suit"
@@ -559,7 +566,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/allies
+/obj/item/clothing/suit/costume/allies
 	name = "allies body armor"
 	desc = "How 'bout some action!? Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
 	icon_state = "allies_armor"
@@ -567,35 +574,35 @@
 	body_parts_covered = CHEST|GROIN
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/suit/soviet
+/obj/item/clothing/suit/costume/soviet
 	name = "soviet armored coat"
 	desc = "Conscript reporting! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
 	icon_state = "soviet_suit"
 	inhand_icon_state = "soviet_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
-/obj/item/clothing/suit/yuri
+/obj/item/clothing/suit/costume/yuri
 	name = "yuri initiate coat"
 	desc = "Yuri is master! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
 	icon_state = "yuri_coat"
 	inhand_icon_state = "yuri_coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 
-/obj/item/clothing/suit/sybil_slickers
+/obj/item/clothing/suit/costume/sybil_slickers
 	name = "sybil slickers protective gear"
 	desc = "Given to members of the Sybil Slickers football team!"
 	icon_state = "football_armor_blue"
 	inhand_icon_state = "football_armor_blue"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
-/obj/item/clothing/suit/basil_boys
+/obj/item/clothing/suit/costume/basil_boys
 	name = "basil boys protective gear"
 	desc = "Given to members of the Basil Boys football team!"
 	icon_state = "football_armor_red"
 	inhand_icon_state = "football_armor_red"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
-/obj/item/clothing/suit/joker
+/obj/item/clothing/suit/costume/joker
 	name = "comedian coat"
 	desc = "I mean, don’t you have to be funny to be a comedian?"
 	icon_state = "joker_coat"

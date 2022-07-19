@@ -398,9 +398,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bc" = (
-/obj/structure/sink/kitchen{
-	pixel_y = 24
-	},
+/obj/structure/sink/kitchen/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bd" = (
@@ -664,10 +662,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bR" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bS" = (
@@ -881,9 +876,7 @@
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cq" = (
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/machinery/shower/directional/east,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
@@ -1084,9 +1077,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cM" = (
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/machinery/shower/directional/east,
 /obj/structure/window/reinforced/plasma,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
@@ -1095,10 +1086,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)

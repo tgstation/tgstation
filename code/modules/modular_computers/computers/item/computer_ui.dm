@@ -156,44 +156,11 @@
 			to_chat(user, span_notice("Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed."))
 
 		if("PC_runprogram")
-			var/prog = params["name"]
-			var/is_disk = params["is_disk"]
-			var/datum/computer_file/program/P = null
-			var/mob/user = usr
-
-			if(hard_drive && !is_disk)
-				P = hard_drive.find_file_by_name(prog)
-
-			if(!P || !istype(P)) // Program not found or it's not executable program.
-				to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
+			// only function of the last implementation (?)
+			if(params["is_disk"])
 				return
 
-			P.computer = src
-
-			if(!P.is_supported_by_hardware(hardware_flag, 1, user))
-				return
-
-			// The program is already running. Resume it.
-			if(P in idle_threads)
-				P.program_state = PROGRAM_STATE_ACTIVE
-				active_program = P
-				P.alert_pending = FALSE
-				idle_threads.Remove(P)
-				update_appearance()
-				return
-
-			if(idle_threads.len > max_idle_programs)
-				to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
-				return
-
-			if(P.requires_ntnet && !get_ntnet_status(P.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
-				to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
-				return
-			if(P.run_program(user))
-				active_program = P
-				P.alert_pending = FALSE
-				update_appearance()
-			return 1
+			open_program(usr, hard_drive.find_file_by_name(params["name"]))
 
 		if("PC_toggle_light")
 			return toggle_flashlight()

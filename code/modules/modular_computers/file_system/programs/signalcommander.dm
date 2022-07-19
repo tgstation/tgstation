@@ -15,6 +15,10 @@
 	/// Radio connection datum used by signalers.
 	var/datum/radio_frequency/radio_connection
 
+/datum/computer_file/program/signal_commander/New()
+	set_frequency(signal_frequency)
+	return ..()
+
 /datum/computer_file/program/signal_commander/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["frequency"] = signal_frequency
