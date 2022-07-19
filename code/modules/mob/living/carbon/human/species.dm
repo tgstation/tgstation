@@ -432,10 +432,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
 		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
 			C.dropItemToGround(thing)
-	if(C.dna)
-		for(var/obj/item/equipped_item in C.get_equipped_items(include_pockets = TRUE))
-			if(!(equipped_item.bodytypes_whitelist & C.dna.species.bodytype))
-				C.dropItemToGround(equipped_item)
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
@@ -808,9 +804,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
-	if(!(I.bodytypes_whitelist & H.dna.species.bodytype))
-		to_chat(H, span_warning("Your species cannot wear this item!"))
-		return FALSE
 
 	// if there's an item in the slot we want, fail
 	if(H.get_item_by_slot(slot))
