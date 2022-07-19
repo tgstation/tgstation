@@ -8,7 +8,7 @@ import { Button, Box, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
-import { Component, createRef, RefObject } from 'inferno';
+import { Component, createRef, MouseEventHandler, RefObject } from 'inferno';
 import { clamp } from 'common/math';
 import { logger } from '../logging';
 
@@ -75,6 +75,28 @@ type PaperSheetStamperProps = {
   scrollableRef: RefObject<HTMLDivElement>;
 };
 
+type FieldCreationReturn = {
+  counter: number;
+  text: string;
+};
+
+type StampPosition = {
+  x: number;
+  y: number;
+  rotation: number;
+  yOffset: number;
+};
+
+type StampProps = {
+  activeStamp: any;
+  sprite: string;
+  x: number;
+  y: number;
+  rotation: number;
+  opacity: number;
+  yOffset: number;
+};
+
 enum InteractionType {
   reading = 0,
   writing = 1,
@@ -89,14 +111,6 @@ const canEdit = (heldItemDetails?: WritingImplement): boolean => {
   return heldItemDetails.interaction_mode === InteractionType.writing;
 };
 
-const canStamp = (heldItemDetails?: WritingImplement): boolean => {
-  if (!heldItemDetails) {
-    return false;
-  }
-
-  return heldItemDetails.interaction_mode === InteractionType.stamping;
-};
-
 // This creates the html from marked text as well as the form fields
 const createPreview = (
   inputList: PaperInput[] | undefined,
@@ -106,7 +120,7 @@ const createPreview = (
   defaultColor: string,
   paperColor: string,
   heldItemDetails: WritingImplement | undefined
-) => {
+): string => {
   let output = '';
 
   const readOnly = !canEdit(heldItemDetails);
@@ -138,7 +152,7 @@ const createPreview = (
 
     output += processingOutput.text;
 
-    fieldCounter = processingOutput.fieldCount;
+    fieldCounter = processingOutput.counter;
   });
 
   if (textAreaText?.length) {
@@ -161,42 +175,45 @@ const createPreview = (
   return output;
 };
 
-const createIDHeader = (index) => {
+const createIDHeader = (index: number | string): string => {
   return 'paperfield_' + index;
 };
 
-const getHeaderID = (header) => {
+const getHeaderID = (header: string): string => {
   return header.replace('paperfield_', '');
 };
 
-// Hacky, yes, works?...yes
-const textWidth = (text, font, fontsize) => {
-  // default font height is 12 in tgui
+const textWidth = (text: string, font: string, fontsize: number): number => {
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d');
+
+  if (!ctx) {
+    return -1;
+  }
+
   ctx.font = `${fontsize}px ${font}`;
   return ctx.measureText(text).width;
 };
 
-const field_regex = /\[((?:_+))\]/gi;
-const field_tag_regex =
+const fieldRegex: RegExp = /\[((?:_+))\]/gi;
+const fieldTagRegex: RegExp =
   /\[<input\s+(?!disabled)(.*?)\s+id="paperfield_(?<id>\d+)"(.*?)\/>\]/gm;
 
 const createFields = (
-  txt,
-  font,
-  fontsize,
-  color,
-  forceReadonlyFields,
-  counter = 0
-) => {
-  const ret_text = txt.replace(field_regex, (match, p1, offset, string) => {
-    const width = textWidth(match, font, fontsize) + 'px';
+  rawText: string,
+  font: string,
+  fontSize: number,
+  color: string,
+  forceReadonlyFields: boolean,
+  counter: number = 0
+): FieldCreationReturn => {
+  const ret_text = rawText.replace(fieldRegex, (match, p1, offset, string) => {
+    const width = textWidth(match, font, fontSize);
     return createInputField(
       p1.length,
       width,
       font,
-      fontsize,
+      fontSize,
       color,
       createIDHeader(counter++),
       forceReadonlyFields
@@ -204,38 +221,38 @@ const createFields = (
   });
 
   return {
-    counter,
+    counter: counter,
     text: ret_text,
   };
 };
 
 const createInputField = (
-  length,
-  width,
-  font,
-  fontsize,
-  color,
-  id,
-  readOnly
-) => {
+  length: number,
+  width: number,
+  font: string,
+  fontsize: number,
+  color: string,
+  id: string,
+  readOnly: boolean
+): string => {
   return `[<input ${
     readOnly ? 'disabled ' : ''
-  }type="text" style="font-size:${fontsize}px; font-family: ${font};color:${color};min-width:${width};max-width:${width}" id="${id}" maxlength=${length} size=${length} />]`;
+  }type="text" style="font-size:${fontsize}px; font-family: ${font};color:${color};min-width:${width}px;max-width:${width}px" id="${id}" maxlength=${length} size=${length} />]`;
 };
 
 const formatAndProcessRawText = (
-  text,
-  font,
-  color,
-  bold,
-  fieldCounter = 0,
-  forceReadonlyFields = false
-): { text: string; fieldCount: number } => {
+  rawText: string,
+  font: string,
+  color: string,
+  bold: boolean,
+  fieldCounter: number = 0,
+  forceReadonlyFields: boolean = false
+): FieldCreationReturn => {
   // First lets make sure it ends in a new line
-  text += text[text.length] === '\n' ? '\n' : '\n\n';
+  rawText += rawText[rawText.length] === '\n' ? '\n' : '\n\n';
+
   // Second, we sanitize the text of html
-  const sanitizedText = sanitizeText(text);
-  // const signed_text = signDocument(sanitized_text, color, user_name);
+  const sanitizedText = sanitizeText(rawText);
 
   // Third we replace the [__] with fields as markedjs fucks them up
   const fieldedText = createFields(
@@ -250,30 +267,24 @@ const formatAndProcessRawText = (
   // Fourth, parse the text using markup
   const parsedText = runMarkedDefault(fieldedText.text);
 
-  // Fifth, we wrap the created text in the pin color, and font.
-  // crayon is bold (<b> tags), maybe make fountain pin italic?
+  // Fifth, we wrap the created text in the writing implement properties.
   const fontedText = setFontinText(parsedText, font, color, bold);
 
-  return { text: fontedText, fieldCount: fieldedText.counter };
+  return { text: fontedText, counter: fieldedText.counter };
 };
 
-const setFontinText = (text, font, color, bold = false) => {
-  return (
-    '<span style="' +
-    'color:' +
-    color +
-    ';' +
-    "font-family:'" +
-    font +
-    "';" +
-    (bold ? 'font-weight: bold;' : '') +
-    '">' +
-    text +
-    '</span>'
-  );
+const setFontinText = (
+  text: string,
+  font: string,
+  color: string,
+  bold: boolean = false
+): string => {
+  return `<span style="color:${color};font-family:${font};${
+    bold ? 'font-weight: bold;' : ''
+  }">${text}</span>`;
 };
 
-const runMarkedDefault = (value) => {
+const runMarkedDefault = (rawText: string): string => {
   // Override function, any links and images should
   // kill any other marked tokens we don't want here
   const walkTokens = (token) => {
@@ -290,7 +301,7 @@ const runMarkedDefault = (value) => {
         break;
     }
   };
-  return marked(value, {
+  return marked(rawText, {
     breaks: true,
     smartypants: true,
     smartLists: true,
@@ -300,7 +311,7 @@ const runMarkedDefault = (value) => {
   });
 };
 
-const pauseEvent = (e) => {
+const pauseEvent = (e: Event): boolean => {
   if (e.stopPropagation) {
     e.stopPropagation();
   }
@@ -334,14 +345,14 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
 
       pauseEvent(e);
       this.setState({
-        x: pos[0],
-        y: pos[1],
-        rotation: pos[2],
-        yOffset: pos[3],
+        x: pos.x,
+        y: pos.y,
+        rotation: pos.rotation,
+        yOffset: pos.yOffset,
       });
     };
 
-    this.handleMouseClick = (e) => {
+    this.handleMouseClick = (e: MouseEvent): void => {
       if (e.pageY <= 30) {
         return;
       }
@@ -355,7 +366,7 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
     };
   }
 
-  findStampPosition(e) {
+  findStampPosition(e: MouseEvent): StampPosition | void {
     let rotating;
     const scrollable = this.scrollableRef.current;
 
@@ -395,14 +406,12 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
       ? radians * (180 / Math.PI) * -1
       : this.state.rotation;
 
-    const pos = [
-      clamp(currentWidth, widthMin, widthMax),
-      clamp(currentHeight, heightMin, heightMax),
-      rotate,
-      stampYOffset,
-    ];
-
-    return pos;
+    return {
+      x: clamp(currentWidth, widthMin, widthMax),
+      y: clamp(currentHeight, heightMin, heightMax),
+      rotation: rotate,
+      yOffset: stampYOffset,
+    };
   }
 
   componentDidMount() {
@@ -436,7 +445,7 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
   }
 }
 
-export const Stamp = (props, context) => {
+export const Stamp = (props, context): InfernoElement<HTMLDivElement> => {
   const { activeStamp, sprite, x, y, rotation, opacity, yOffset = 0 } = props;
   const stamp_transform = {
     'left': x + 'px',
@@ -455,10 +464,13 @@ export const Stamp = (props, context) => {
   );
 };
 
-const hookAllFields = (raw_text, onInputHandler) => {
+const hookAllFields = (
+  rawText: string,
+  onInputHandler: (this: GlobalEventHandlers, ev: Event) => void
+): void => {
   let match;
 
-  while ((match = field_tag_regex.exec(raw_text)) !== null) {
+  while ((match = fieldTagRegex.exec(rawText)) !== null) {
     const id = parseInt(match.groups.id, 10);
 
     if (!isNaN(id)) {
@@ -480,7 +492,10 @@ const hookAllFields = (raw_text, onInputHandler) => {
   }
 };
 
-const fillAllFields = (fieldInputData: FieldInput[], paperColor: string) => {
+const fillAllFields = (
+  fieldInputData: FieldInput[],
+  paperColor: string
+): void => {
   if (!fieldInputData?.length) {
     return;
   }
@@ -498,8 +513,8 @@ const fillAllFields = (fieldInputData: FieldInput[], paperColor: string) => {
 
     dom.disabled = true;
     dom.value = fieldData.raw_text;
-    dom.style.fontFamily = fieldData.font;
-    dom.style.color = fieldData.color;
+    dom.style.fontFamily = fieldData.font || '';
+    dom.style.color = fieldData.color || '';
     dom.style.backgroundColor = paperColor;
     dom.style.fontSize = field.is_signature ? '30px' : '12px';
     dom.style.fontStyle = field.is_signature ? 'italic' : 'normal';
@@ -520,7 +535,7 @@ export class PrimaryView extends Component {
 
   // Event handler for the onscroll event. Also gets passed to the <Section>
   // holding the main preview. Updates lastDistanceFromBottom.
-  onScrollHandler: (this: GlobalEventHandlers, ev: Event) => any;
+  onScrollHandler: (this: MouseEventHandler, ev: Event) => any;
 
   constructor(props, context) {
     super(props, context);
@@ -638,8 +653,6 @@ export const PreviewView = (props, context) => {
     default_pen_color,
     paper_color,
     held_item_details,
-    signature_font,
-    user_name,
   } = data;
 
   const [textAreaText] = useLocalState(context, 'textAreaText', '');
