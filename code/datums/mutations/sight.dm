@@ -62,8 +62,7 @@
 		return
 
 	to_modify.eye_damage = 10 * GET_MUTATION_SYNCHRONIZER(src)
-	to_modify.thermal_duration = 10 * GET_MUTATION_POWER(src)
-
+	to_modify.thermal_duration = 10 SECONDS * GET_MUTATION_POWER(src)
 
 /datum/action/cooldown/spell/thermal_vision
 	name = "Activate Thermal Vision"

@@ -314,3 +314,9 @@
 	category_index = CATEGORY_SAUCES_REAGENTS
 	item_instance = /obj/item/reagent_containers/food/condiment/quality_oil
 	cost_per_order = 50 //Extra Virgin, just like you, the reader
+
+/datum/orderable_item/peanut_butter
+	name = "Peanut Butter"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/peanut_butter
+	cost_per_order = 30

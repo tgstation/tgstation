@@ -211,6 +211,16 @@
 	taste_description = "grape soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/plumjuice
+	name = "Plum Juice"
+	description = "Refreshing and slightly acidic beverage."
+	color = "#b6062c"
+	taste_description = "plums"
+	glass_icon_state = "plumjuiceglass"
+	glass_name = "glass of plum juice"
+	glass_desc = "Noice."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 /datum/reagent/consumable/milk
 	name = "Milk"
 	description = "An opaque white liquid produced by the mammary glands of mammals."

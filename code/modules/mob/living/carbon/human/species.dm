@@ -510,10 +510,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.blood_type = random_blood_type()
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
-	for(var/obj/item/organ/external/organ in C.internal_organs)
-		if(organ.type in external_organs)
-			organ.Remove(C)
-			qdel(organ)
+	for(var/obj/item/organ/external/organ as anything in C.external_organs)
+		organ.Remove(C)
+		qdel(organ)
 
 	//If their inert mutation is not the same, swap it out
 	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))

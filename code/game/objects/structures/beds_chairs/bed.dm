@@ -88,15 +88,16 @@
 /obj/structure/bed/roller/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
-		return FALSE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(has_buckled_mobs())
-		return FALSE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
 	var/obj/structure/bed/roller/folding_bed = new foldabletype(get_turf(src))
 	user.put_in_hands(folding_bed)
 	qdel(src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
 	set_density(TRUE)
@@ -104,7 +105,7 @@
 	//Push them up from the normal lying position
 	M.pixel_y = M.base_pixel_y
 
-/obj/structure/bed/roller/Moved()
+/obj/structure/bed/roller/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)

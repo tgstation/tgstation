@@ -340,6 +340,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			to_chat(user, span_warning("\The [resolve_parent] cannot hold \the [to_insert]!"))
 		return FALSE
 
+	if(HAS_TRAIT(to_insert, TRAIT_NODROP))
+		if(messages)
+			to_chat(user, span_warning("\The [to_insert] is stuck on your hand!"))
+		return FALSE
+
 	var/datum/storage/biggerfish = resolve_parent.loc.atom_storage // this is valid if the container our resolve_parent is being held in is a storage item
 
 	if(biggerfish && biggerfish.max_specific_storage < max_specific_storage)
@@ -424,17 +429,25 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  *
  * @param mob/user the user who is transferring the items
  * @param atom/going_to the atom we're transferring to
+ * @param override enable override on attempt_insert
  */
-/datum/storage/proc/handle_mass_transfer(mob/user, atom/going_to)
+/datum/storage/proc/handle_mass_transfer(mob/user, atom/going_to, override = FALSE)
 	var/obj/item/resolve_location = real_location?.resolve()
 	if(!resolve_location)
+		return
+
+	var/obj/item/resolve_parent = parent?.resolve()
+	if(!resolve_parent)
 		return
 
 	if(!going_to.atom_storage)
 		return
 
+	if(rustle_sound)
+		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
+
 	for (var/atom/thing in resolve_location.contents)
-		going_to.atom_storage.attempt_insert(src, thing, user)
+		going_to.atom_storage.attempt_insert(src, thing, user, override = override)
 
 /**
  * Provides visual feedback in chat for an item insertion

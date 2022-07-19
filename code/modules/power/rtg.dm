@@ -123,7 +123,7 @@
 	if(!is_mining_level(z))
 		power_gen = 0
 
-/obj/machinery/power/rtg/lavaland/Moved(atom/OldLoc, Dir)
+/obj/machinery/power/rtg/lavaland/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/turf/our_turf = get_turf(src)
 	if(!islava(our_turf))
