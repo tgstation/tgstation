@@ -73255,6 +73255,8 @@
 	name = "Pharmacy Requests Console";
 	receive_ore_updates = 1
 	},
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/syringes,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "sqR" = (
