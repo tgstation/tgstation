@@ -42,7 +42,6 @@
 
 /area/station/maintenance/department/eva/abandoned
 	name = "Abandoned EVA Storage"
-	icon_state = "maint_eva"
 
 /area/station/maintenance/department/electrical
 	name = "Electrical Maintenance"
@@ -552,7 +551,7 @@
 
 /area/station/service/barber
 	name = "\improper Barber"
-	icon_state = "cafeteria" // sue me
+	icon_state = "barber"
 
 /area/station/service/kitchen
 	name = "\improper Kitchen"
@@ -1200,7 +1199,6 @@
 
 /area/station/security/checkpoint/medical/medsci
 	name = "Security Post - Medsci"
-	icon_state = "checkpoint_med"
 
 /area/station/security/checkpoint/science
 	name = "Security Post - Science"
