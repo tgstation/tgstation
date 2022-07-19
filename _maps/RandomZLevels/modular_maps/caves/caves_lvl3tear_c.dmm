@@ -1,11 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"af" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/mob/living/simple_animal/hostile/asteroid/curseblob,
-/turf/open/floor/wood,
-/area/template_noop)
 "ao" = (
 /obj/modular_map_connector,
 /turf/template_noop,
@@ -28,6 +21,29 @@
 	set_luminosity = 6
 	},
 /turf/open/misc/beach/sand,
+/area/template_noop)
+"bg" = (
+/obj/effect/turf_decal/siding/wood,
+/mob/living/simple_animal/hostile/illusion{
+	deathmessage = "vanishes into thin air!";
+	multiply_chance = 25
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"ct" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/fluff{
+	desc = "You're not sure if walking into this is a great idea...";
+	icon = 'icons/effects/eldritch.dmi';
+	icon_state = "pierced_illusion";
+	name = "fluxating rift"
+	},
+/obj/effect/bump_teleporter{
+	id = null;
+	id_target = "riftexit";
+	name = "rift end"
+	},
+/turf/open/floor/carpet,
 /area/template_noop)
 "cu" = (
 /turf/open/misc/beach/coastline_t{
@@ -64,6 +80,14 @@
 /area/template_noop)
 "gt" = (
 /turf/open/misc/beach/coastline_t/sandwater_inner,
+/area/template_noop)
+"gQ" = (
+/obj/effect/bump_teleporter{
+	id = "riftenter";
+	id_target = null;
+	name = "rift start"
+	},
+/turf/open/misc/beach/sand,
 /area/template_noop)
 "iT" = (
 /obj/effect/turf_decal/siding/wood,
@@ -241,14 +265,8 @@
 	},
 /area/template_noop)
 "GE" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
-/turf/open/floor/carpet,
+/obj/structure/fans/tiny/invisible,
+/turf/template_noop,
 /area/template_noop)
 "GN" = (
 /obj/item/clothing/shoes/sandal,
@@ -310,9 +328,14 @@
 	dir = 8
 	},
 /area/template_noop)
-"MU" = (
-/obj/effect/turf_decal/siding/wood,
-/mob/living/simple_animal/hostile/asteroid/curseblob,
+"Nd" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/illusion{
+	deathmessage = "vanishes into thin air!";
+	multiply_chance = 25
+	},
 /turf/open/floor/wood,
 /area/template_noop)
 "Nl" = (
@@ -324,6 +347,17 @@
 /turf/open/misc/beach/coastline_t{
 	dir = 5
 	},
+/area/template_noop)
+"PF" = (
+/obj/structure/fans/tiny/invisible,
+/obj/structure/fluff{
+	deconstructible = 0;
+	density = 1;
+	desc = "this is cursed dawg fr fr";
+	icon_state = null;
+	name = "people blocker"
+	},
+/turf/template_noop,
 /area/template_noop)
 "PM" = (
 /obj/effect/turf_decal/siding/wood,
@@ -415,7 +449,7 @@
 (1,1,1) = {"
 aJ
 aJ
-aJ
+GE
 aJ
 aJ
 aJ
@@ -437,8 +471,9 @@ aJ
 "}
 (2,1,1) = {"
 aJ
-aJ
+GE
 aq
+GE
 aJ
 aJ
 aJ
@@ -446,8 +481,7 @@ aJ
 aJ
 aJ
 aJ
-aJ
-aJ
+PF
 aJ
 aJ
 aJ
@@ -460,18 +494,18 @@ aJ
 "}
 (3,1,1) = {"
 aJ
-aJ
+GE
 aq
+GE
 aJ
 aJ
 aJ
 aJ
+PF
 aJ
-aJ
-aJ
-aJ
+PF
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -482,21 +516,21 @@ aJ
 aJ
 "}
 (4,1,1) = {"
-aJ
+GE
 aq
 Ln
 aq
+GE
 aJ
 aJ
-aJ
-aJ
+PF
 aq
-aJ
-aJ
+PF
+PF
 aq
 aq
-aJ
-aJ
+PF
+PF
 aJ
 aJ
 aJ
@@ -505,13 +539,13 @@ aJ
 aJ
 "}
 (5,1,1) = {"
+GE
+aq
+aq
+GE
 aJ
-aq
-aq
-aJ
-aJ
-aJ
-aJ
+PF
+PF
 aq
 aq
 aq
@@ -520,7 +554,7 @@ aq
 aq
 aq
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -528,11 +562,11 @@ aJ
 aJ
 "}
 (6,1,1) = {"
+GE
+aq
+GE
 aJ
-aq
-aJ
-aJ
-aJ
+PF
 aq
 aq
 aq
@@ -544,7 +578,7 @@ jt
 jt
 aq
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -552,11 +586,11 @@ aJ
 "}
 (7,1,1) = {"
 aJ
+GE
 aJ
 aJ
 aJ
-aJ
-aJ
+PF
 aq
 da
 xe
@@ -568,7 +602,7 @@ aL
 rd
 jt
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -579,7 +613,7 @@ aJ
 aJ
 aJ
 aJ
-aJ
+PF
 aq
 da
 zp
@@ -591,23 +625,23 @@ ML
 Ix
 aL
 zK
-aJ
+PF
 aJ
 aJ
 aJ
 "}
 (9,1,1) = {"
+GE
+GE
 aJ
 aJ
 aJ
-aJ
-aJ
-aJ
+PF
 aq
 da
 zp
 Vd
-Vd
+gQ
 Vd
 Vd
 Vd
@@ -615,17 +649,17 @@ Vd
 UU
 zK
 aq
-aJ
+PF
 aJ
 aJ
 "}
 (10,1,1) = {"
 aq
 aq
+GE
 aJ
 aJ
-aJ
-aJ
+PF
 aq
 da
 zp
@@ -638,7 +672,7 @@ Vd
 UU
 zK
 aq
-aJ
+PF
 aJ
 aJ
 "}
@@ -646,9 +680,9 @@ aJ
 aq
 aq
 aq
+GE
 aJ
-aJ
-aJ
+PF
 aq
 da
 NV
@@ -661,7 +695,7 @@ TS
 mk
 zK
 aq
-aJ
+PF
 aJ
 aJ
 "}
@@ -670,8 +704,8 @@ jt
 jt
 jt
 aq
-aJ
-aJ
+GE
+PF
 aq
 aq
 EK
@@ -683,7 +717,7 @@ KA
 TQ
 TQ
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -693,9 +727,9 @@ Ix
 Ix
 aL
 zK
+GE
 aJ
-aJ
-aJ
+PF
 aq
 aq
 TQ
@@ -703,9 +737,9 @@ TQ
 TQ
 TQ
 aq
-aJ
-aJ
-aJ
+PF
+PF
+PF
 aJ
 aJ
 aJ
@@ -716,17 +750,17 @@ Vd
 Nl
 UU
 zK
+GE
 aJ
 aJ
-aJ
-aJ
+PF
 aq
 aq
 aq
 aq
 aq
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -740,15 +774,15 @@ ux
 UU
 zK
 aq
+GE
 aJ
 aJ
-aJ
-aJ
+PF
 aq
 aq
-aJ
-aJ
-aJ
+PF
+PF
+PF
 aJ
 aJ
 aJ
@@ -763,13 +797,13 @@ Bs
 mk
 zK
 aq
+GE
 aJ
 aJ
 aJ
-aJ
-aJ
+PF
 Ln
-aJ
+PF
 aJ
 aJ
 aJ
@@ -785,15 +819,15 @@ TQ
 TQ
 TQ
 aq
+GE
 aJ
 aJ
 aJ
 aJ
-aJ
-aJ
+PF
 aq
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -806,17 +840,17 @@ aJ
 (18,1,1) = {"
 aq
 aq
+GE
+GE
 aJ
 aJ
 aJ
-aJ
-aJ
-aJ
-aJ
+PF
+PF
 aq
 aq
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -828,19 +862,19 @@ aJ
 "}
 (19,1,1) = {"
 aq
+GE
 aJ
 aJ
 aJ
 aJ
-aJ
-aJ
+PF
 aq
 aq
 jt
 jt
 jt
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -850,20 +884,20 @@ aJ
 aJ
 "}
 (20,1,1) = {"
+GE
 aJ
 aJ
 aJ
 aJ
 aJ
-aJ
-aJ
+PF
 aq
 ZA
 cu
 Ix
 aL
 zK
-aJ
+PF
 aJ
 aJ
 aJ
@@ -874,11 +908,11 @@ aJ
 "}
 (21,1,1) = {"
 aq
+GE
 aJ
 aJ
 aJ
-aJ
-aJ
+PF
 aq
 da
 cu
@@ -886,8 +920,8 @@ LR
 Vd
 UU
 zK
-aJ
-aJ
+PF
+PF
 aJ
 aJ
 aJ
@@ -898,9 +932,9 @@ aJ
 (22,1,1) = {"
 aq
 aq
+GE
 aJ
-aJ
-aJ
+PF
 aq
 aq
 da
@@ -911,9 +945,9 @@ mk
 zK
 aq
 aq
-aJ
-aJ
-aJ
+PF
+PF
+PF
 aJ
 aJ
 aJ
@@ -922,9 +956,9 @@ aJ
 Ln
 aq
 aq
+GE
 aJ
-aJ
-aJ
+PF
 aq
 da
 NV
@@ -937,18 +971,18 @@ aq
 jt
 jt
 aq
-aJ
+PF
 aJ
 aJ
 "}
 (24,1,1) = {"
 aq
 aq
+GE
 aJ
 aJ
 aJ
-aJ
-aJ
+PF
 aq
 EK
 NV
@@ -961,17 +995,17 @@ cu
 aL
 rd
 jt
-aJ
+PF
 aJ
 "}
 (25,1,1) = {"
+GE
+GE
 aJ
 aJ
 aJ
 aJ
-aJ
-aJ
-aJ
+PF
 aq
 aq
 TQ
@@ -985,7 +1019,7 @@ ML
 Ix
 aL
 zK
-aJ
+PF
 "}
 (26,1,1) = {"
 aJ
@@ -995,11 +1029,11 @@ aJ
 aJ
 aJ
 aJ
-aJ
-aJ
-aJ
-aJ
-aJ
+PF
+PF
+PF
+PF
+PF
 aq
 da
 zp
@@ -1008,7 +1042,7 @@ Vd
 Vd
 UU
 zK
-aJ
+PF
 "}
 (27,1,1) = {"
 aJ
@@ -1023,7 +1057,7 @@ aJ
 aJ
 aJ
 aJ
-aJ
+PF
 da
 zp
 Vd
@@ -1031,7 +1065,7 @@ XR
 Vd
 UU
 zK
-aJ
+PF
 "}
 (28,1,1) = {"
 aJ
@@ -1043,10 +1077,10 @@ aJ
 aJ
 aJ
 aJ
+PF
+PF
 aJ
-aJ
-aJ
-aJ
+PF
 da
 NV
 tr
@@ -1054,7 +1088,7 @@ Vd
 gt
 mk
 zK
-aJ
+PF
 "}
 (29,1,1) = {"
 aJ
@@ -1065,11 +1099,11 @@ aJ
 aJ
 aJ
 aJ
-aJ
+PF
 aq
 aq
-aJ
-aJ
+PF
+PF
 aq
 EK
 NV
@@ -1077,7 +1111,7 @@ Bs
 mk
 KA
 aq
-aJ
+PF
 "}
 (30,1,1) = {"
 aJ
@@ -1086,8 +1120,8 @@ aJ
 aJ
 aJ
 aJ
-aJ
-aJ
+PF
+PF
 aq
 aq
 aq
@@ -1099,7 +1133,7 @@ TQ
 TQ
 TQ
 aq
-aJ
+PF
 aJ
 "}
 (31,1,1) = {"
@@ -1108,7 +1142,7 @@ aJ
 aJ
 aJ
 aJ
-aJ
+PF
 aq
 aq
 jt
@@ -1117,11 +1151,11 @@ jt
 aq
 Ln
 aq
-aJ
-aJ
-aJ
-aJ
-aJ
+PF
+PF
+PF
+PF
+PF
 aJ
 aJ
 "}
@@ -1131,7 +1165,7 @@ aJ
 aJ
 aJ
 aJ
-aJ
+PF
 aq
 da
 fk
@@ -1139,7 +1173,7 @@ Ix
 GN
 zK
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -1154,7 +1188,7 @@ aJ
 aJ
 aJ
 aJ
-aJ
+PF
 aq
 da
 WJ
@@ -1162,7 +1196,7 @@ gt
 ga
 zK
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -1177,7 +1211,7 @@ aJ
 aJ
 aJ
 aJ
-aJ
+PF
 aq
 da
 zp
@@ -1185,7 +1219,7 @@ UU
 KA
 aq
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -1200,14 +1234,14 @@ aJ
 aJ
 aJ
 aJ
-aJ
+PF
 aq
 da
 AD
 ug
 zK
 aq
-aJ
+PF
 aJ
 aJ
 aJ
@@ -1223,17 +1257,17 @@ aJ
 aJ
 aJ
 aJ
-aJ
+PF
 aq
 aq
 lG
 ug
 aq
 aq
+PF
 aJ
 aJ
-aJ
-aJ
+GE
 aJ
 aJ
 aJ
@@ -1247,17 +1281,17 @@ aJ
 aJ
 aJ
 aJ
-aJ
+PF
 aq
 pA
-ug
+bg
+PF
+PF
 aJ
 aJ
-aJ
-aJ
-aJ
+GE
 aq
-aJ
+GE
 aJ
 aJ
 aJ
@@ -1266,91 +1300,91 @@ aJ
 (38,1,1) = {"
 aJ
 aJ
+GE
+GE
 aJ
 aJ
 aJ
-aJ
-aJ
-aJ
-af
+PF
+pA
 ug
+PF
 aJ
 aJ
-aJ
-aJ
+GE
 aq
 aq
 aq
-aJ
+GE
 aJ
 aJ
 aJ
 "}
 (39,1,1) = {"
 aJ
-aJ
+GE
 aq
 aq
+GE
 aJ
 aJ
-aJ
-aJ
-pA
+PF
+Nd
 PM
+PF
 aJ
-aJ
-aJ
+GE
 aq
 aq
 aq
 aq
 aq
-aJ
+GE
 aJ
 aJ
 "}
 (40,1,1) = {"
-aJ
+GE
 aq
 Ln
 aq
 aq
+GE
 aJ
-aJ
-aJ
+PF
 pA
 ja
+PF
+GE
 aJ
-aJ
-aJ
-aJ
+GE
 aq
 Ln
 aq
 aq
-aJ
+GE
 aJ
 aJ
 "}
 (41,1,1) = {"
 aJ
-aJ
+GE
 aq
 aq
+GE
 aJ
 aJ
-aJ
-aJ
+PF
 SL
-aJ
-aJ
+PF
+GE
 ug
+GE
 aJ
-aJ
-aJ
+GE
 aq
 aq
-aJ
+GE
 aJ
 aJ
 aJ
@@ -1358,21 +1392,21 @@ aJ
 (42,1,1) = {"
 aJ
 aJ
-aJ
+GE
 aq
+GE
 aJ
 aJ
-aJ
-aJ
+PF
 pA
-aJ
-aJ
+PF
+GE
 jN
+GE
 aJ
 aJ
-aJ
-aJ
-aJ
+GE
+GE
 aJ
 aJ
 aJ
@@ -1382,15 +1416,15 @@ aJ
 aJ
 aJ
 aJ
+GE
 aJ
+GE
 aJ
-aJ
-aJ
-aJ
-pA
+PF
+Nd
 TU
-aJ
-aJ
+PF
+GE
 aJ
 aJ
 aJ
@@ -1406,13 +1440,13 @@ aJ
 aJ
 aJ
 aJ
-aJ
+GE
 pA
+GE
 aJ
-aJ
-aJ
+PF
 ug
-aJ
+PF
 aJ
 aJ
 aJ
@@ -1429,15 +1463,15 @@ aJ
 aJ
 aJ
 aJ
-aJ
+GE
 pA
+GE
 aJ
-aJ
-aJ
-MU
-aJ
-aJ
-aJ
+PF
+ug
+PF
+GE
+GE
 aJ
 aJ
 aJ
@@ -1453,15 +1487,15 @@ aJ
 aJ
 aJ
 aJ
+GE
 aJ
-aJ
-aJ
+PF
 DN
 ug
-aJ
+PF
 Ig
 Ig
-aJ
+GE
 aJ
 aJ
 aJ
@@ -1478,13 +1512,13 @@ aJ
 aJ
 aJ
 aJ
+PF
+Ig
+PF
 aJ
 Ig
-aJ
-aJ
 Ig
-Ig
-aJ
+GE
 aJ
 aJ
 aJ
@@ -1496,18 +1530,18 @@ aJ
 (48,1,1) = {"
 aJ
 aJ
+GE
+GE
 aJ
 aJ
-aJ
-aJ
-aJ
-aJ
+PF
+PF
 Ig
-aJ
-aJ
-aJ
-aJ
-aJ
+PF
+PF
+PF
+PF
+PF
 aJ
 aJ
 aJ
@@ -1518,11 +1552,11 @@ aJ
 "}
 (49,1,1) = {"
 aJ
-aJ
+GE
 Ig
 Ig
-aJ
-aJ
+GE
+PF
 Vk
 Ig
 Ig
@@ -1531,10 +1565,10 @@ iT
 Ig
 ou
 Ig
+PF
+PF
 aJ
-aJ
-aJ
-aJ
+GE
 aJ
 aJ
 aJ
@@ -1542,10 +1576,10 @@ aJ
 (50,1,1) = {"
 aJ
 aJ
-aJ
-aJ
-aJ
-aJ
+GE
+GE
+GE
+PF
 Vk
 DZ
 DZ
@@ -1556,31 +1590,31 @@ yz
 Dn
 Vk
 RE
-aJ
+PF
 Ie
-aJ
+GE
 aJ
 aJ
 "}
 (51,1,1) = {"
 aJ
-aJ
+GE
 Ig
 Ig
 Ig
-aJ
+PF
 Vk
 ki
 Ig
 GP
-GE
+ct
 Ig
 DH
 mV
 AL
 RE
-aJ
-aJ
+PF
+GE
 aJ
 aJ
 aJ
@@ -1588,10 +1622,10 @@ aJ
 (52,1,1) = {"
 aJ
 aJ
-aJ
-aJ
-aJ
-aJ
+GE
+GE
+GE
+PF
 Vk
 sv
 sv
@@ -1600,8 +1634,8 @@ iT
 Ig
 Hv
 Ig
-aJ
-aJ
+PF
+PF
 aJ
 aJ
 aJ
@@ -1613,16 +1647,16 @@ aJ
 aJ
 aJ
 aJ
-aJ
-aJ
-aJ
-aJ
-aJ
+GE
+GE
+PF
+PF
+PF
 Ig
 Ig
-aJ
-aJ
-aJ
+PF
+PF
+PF
 aJ
 aJ
 aJ
@@ -1635,14 +1669,14 @@ aJ
 aJ
 aJ
 aJ
-aJ
+GE
 Ig
 Ig
-aJ
+GE
 Ig
 Ig
-aJ
-aJ
+PF
+PF
 aJ
 aJ
 aJ
@@ -1659,12 +1693,12 @@ aJ
 aJ
 aJ
 aJ
-aJ
-aJ
-aJ
+GE
+GE
+GE
 Ig
 Ie
-aJ
+GE
 aJ
 aJ
 aJ
@@ -1685,8 +1719,8 @@ aJ
 aJ
 aJ
 aJ
-aJ
-aJ
+GE
+GE
 aJ
 aJ
 aJ

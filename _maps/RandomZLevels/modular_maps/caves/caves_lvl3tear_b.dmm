@@ -41,16 +41,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible,
 /area/template_noop)
-"aj" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/structure/fluff{
-	desc = "A humanoid figure shrouded by erratic static.";
-	icon = 'icons/effects/effects.dmi';
-	icon_state = "static";
-	name = "humanoid figure"
-	},
-/turf/open/indestructible,
-/area/template_noop)
 "ak" = (
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/indestructible,
@@ -131,11 +121,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/indestructible,
 /area/template_noop)
-"aC" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/rods,
-/turf/open/floor/plating/airless,
-/area/template_noop)
 "aD" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -149,10 +134,6 @@
 	},
 /obj/item/stack/sheet/iron,
 /turf/open/indestructible,
-/area/template_noop)
-"aF" = (
-/mob/living/simple_animal/hostile/asteroid/curseblob,
-/turf/open/misc/asteroid,
 /area/template_noop)
 "aH" = (
 /obj/machinery/door/firedoor/closed,
@@ -172,11 +153,6 @@
 "aJ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible,
-/area/template_noop)
-"aK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/iron,
-/turf/open/floor/plating/airless,
 /area/template_noop)
 "aL" = (
 /turf/open/misc/asteroid,
@@ -238,6 +214,17 @@
 	name = "plating"
 	},
 /area/template_noop)
+"er" = (
+/obj/structure/lattice,
+/obj/structure/fluff{
+	deconstructible = 0;
+	density = 1;
+	desc = "this is cursed dawg fr fr";
+	icon_state = null;
+	name = "people blocker"
+	},
+/turf/open/space/basic,
+/area/template_noop)
 "gK" = (
 /obj/structure/fluff{
 	desc = "A humanoid figure shrouded by erratic static.";
@@ -247,14 +234,45 @@
 	},
 /turf/open/misc/snow,
 /area/template_noop)
-"ir" = (
+"in" = (
 /obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
+	deconstructible = 0;
+	density = 1;
+	desc = "this is cursed dawg fr fr";
+	icon_state = null;
+	name = "people blocker"
 	},
-/turf/open/misc/snow,
+/turf/open/space/basic,
+/area/template_noop)
+"jX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/iron,
+/obj/item/ammo_casing/c45/ap,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/light/red/directional/east,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"kC" = (
+/obj/item/shovel,
+/turf/open/misc/asteroid,
+/area/template_noop)
+"kL" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/structure/fluff{
+	desc = "A humanoid figure shrouded by erratic static.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "static";
+	name = "humanoid figure"
+	},
+/obj/machinery/light/red/directional,
+/turf/open/indestructible,
+/area/template_noop)
+"ll" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/item/ammo_casing/c45/ap,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "lL" = (
 /obj/structure/flora/tree/pine/xmas/presents,
@@ -265,9 +283,17 @@
 /obj/structure/flora/grass/both,
 /turf/open/misc/snow,
 /area/template_noop)
+"oT" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid/dug,
+/area/template_noop)
 "tv" = (
 /obj/item/a_gift,
 /turf/open/misc/snow,
+/area/template_noop)
+"uU" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid,
 /area/template_noop)
 "xa" = (
 /turf/open/misc/snow,
@@ -276,20 +302,90 @@
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/snow,
 /area/template_noop)
+"yB" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid,
+/area/template_noop)
 "BG" = (
 /obj/structure/flora/grass/brown,
 /turf/open/misc/snow,
 /area/template_noop)
+"DG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/c45/ap,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Fi" = (
+/obj/structure/fans/tiny/invisible,
+/turf/template_noop,
+/area/template_noop)
 "Fx" = (
 /turf/closed/mineral/snowmountain,
+/area/template_noop)
+"Lg" = (
+/mob/living/simple_animal/hostile/illusion{
+	deathmessage = "vanishes into thin air!";
+	multiply_chance = 25
+	},
+/turf/open/misc/asteroid,
+/area/template_noop)
+"Oe" = (
+/obj/structure/fans/tiny/invisible,
+/obj/structure/fluff{
+	deconstructible = 0;
+	density = 1;
+	desc = "this is cursed dawg fr fr";
+	icon_state = null;
+	name = "people blocker"
+	},
+/turf/template_noop,
+/area/template_noop)
+"Oo" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/light/red/directional,
+/turf/open/indestructible,
+/area/template_noop)
+"QS" = (
+/obj/item/ammo_casing/c45/ap,
+/turf/open/space/basic,
+/area/template_noop)
+"RY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/bump_teleporter{
+	id = "riftenter";
+	id_target = null;
+	name = "rift start"
+	},
+/turf/open/indestructible,
+/area/template_noop)
+"WM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/rods,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"XM" = (
+/obj/structure/fluff{
+	desc = "You're not sure if walking into this is a great idea...";
+	icon = 'icons/effects/eldritch.dmi';
+	icon_state = "pierced_illusion";
+	name = "fluxating rift"
+	},
+/obj/effect/bump_teleporter{
+	id = null;
+	id_target = "riftexit";
+	name = "rift end"
+	},
+/turf/open/misc/snow,
 /area/template_noop)
 
 (1,1,1) = {"
 aM
-aM
+Fi
 aU
-aM
-aM
+Fi
+Fi
 aM
 aM
 aM
@@ -297,7 +393,7 @@ aM
 aM
 aw
 aM
-aM
+Fi
 aM
 aM
 aM
@@ -308,19 +404,19 @@ aM
 aM
 "}
 (2,1,1) = {"
-aM
+Fi
 aU
 aU
 aU
 aU
+Fi
 aM
 aM
 aM
 aM
-aM
-aM
-aM
-aj
+Fi
+Fi
+kL
 ad
 aM
 aM
@@ -337,13 +433,13 @@ aU
 aU
 aU
 aU
-aM
+Fi
 aM
 aM
 ad
 aE
-aM
-aM
+Fi
+Fi
 aM
 aM
 aM
@@ -354,18 +450,18 @@ aM
 aM
 "}
 (4,1,1) = {"
-aM
+Fi
 aU
 aU
 aU
 aU
+Fi
 aM
 aM
 aM
 aM
-aM
-aM
-aM
+Fi
+Oe
 aM
 ad
 aM
@@ -378,18 +474,18 @@ aM
 "}
 (5,1,1) = {"
 aM
-aM
+Fi
 aU
 aU
-aM
+Fi
 aM
 aM
 aM
 aM
 ad
-aM
+Oe
 aJ
-aM
+Oe
 ad
 aM
 aM
@@ -402,13 +498,13 @@ aM
 (6,1,1) = {"
 aM
 aM
+Fi
+Fi
 aM
 aM
 aM
-aM
-aM
-aM
-aM
+Fi
+Fi
 aP
 aN
 aJ
@@ -424,12 +520,12 @@ aM
 "}
 (7,1,1) = {"
 aM
+Fi
 aM
 aM
 aM
 aM
-aM
-aM
+Fi
 aS
 ad
 ad
@@ -446,15 +542,15 @@ aM
 aM
 "}
 (8,1,1) = {"
-aM
+Fi
 aq
+Fi
 aM
-aM
-aM
-aM
-aU
-aV
-aC
+Fi
+Fi
+QS
+er
+WM
 ai
 aI
 aJ
@@ -462,44 +558,44 @@ as
 at
 aq
 aq
-aM
-aM
+Oe
+Oe
 aM
 aM
 aM
 "}
 (9,1,1) = {"
 aM
+Fi
 aM
-aM
-aM
+Fi
 aU
 aU
-aU
-aV
-am
+in
+er
+DG
 ai
 aJ
-aJ
+RY
 aO
 aB
 aO
 aO
 aJ
 aJ
-aM
+Oe
 aM
 aM
 "}
 (10,1,1) = {"
 aM
 aM
-aM
+Fi
 aU
 aV
-aV
-am
-aK
+er
+ll
+jX
 am
 al
 af
@@ -508,8 +604,8 @@ ak
 ac
 ag
 aD
-aM
-aM
+Oe
+Oe
 aM
 aM
 aM
@@ -518,7 +614,7 @@ aM
 aM
 aM
 aM
-aM
+Fi
 aS
 ad
 ad
@@ -540,7 +636,7 @@ aM
 (12,1,1) = {"
 aM
 aM
-aM
+Fi
 aU
 aU
 aU
@@ -554,61 +650,61 @@ aA
 ad
 aM
 aM
-aM
-aM
-aM
-aM
+Fi
+Fi
+Fi
+Fi
 aM
 "}
 (13,1,1) = {"
 aM
 aM
 aM
-aM
+Fi
 aU
 aU
 aU
 aU
 aU
 ad
-aM
+Oe
 aO
 aA
 ad
 aM
-aM
+Fi
 aU
 aU
 aU
 aU
-aM
+Fi
 "}
 (14,1,1) = {"
 aM
 aM
-aM
-aM
+Fi
+Fi
 aU
 aU
 aV
 aV
 aV
 aX
-aM
+Oe
 aJ
-aA
+Oo
 ad
 aM
 aM
-aM
+Fi
 aU
 aU
-aM
+Fi
 aM
 "}
 (15,1,1) = {"
 aM
-aM
+Fi
 aU
 aU
 aU
@@ -617,21 +713,21 @@ aU
 aU
 aV
 aX
-aM
+Oe
 aJ
+Oe
 aM
 aM
 aM
 aM
-aM
-aM
+Fi
 aU
-aM
+Fi
 aM
 "}
 (16,1,1) = {"
 aM
-aM
+Fi
 aU
 aU
 aU
@@ -642,21 +738,21 @@ aU
 aX
 aQ
 aJ
-aM
+Oe
 ad
 aM
 aM
 aM
-aM
-aM
-aM
+Fi
+Fi
+Fi
 aM
 "}
 (17,1,1) = {"
 aM
 aM
-aM
-aM
+Fi
+Fi
 aU
 aU
 aU
@@ -665,38 +761,38 @@ aV
 aX
 aQ
 av
-aM
+Oe
 ad
 aM
 aM
-aM
+Fi
 aU
 aU
 aU
-aM
+Fi
 "}
 (18,1,1) = {"
 aM
 aM
 aM
 aM
-aM
-aM
+Fi
+Fi
 aU
 aU
 aU
 ad
 aN
 aY
+Oe
 aM
 aM
-aM
-aM
+Fi
 aU
 aU
 aU
 aU
-aM
+Fi
 "}
 (19,1,1) = {"
 aM
@@ -705,66 +801,66 @@ aM
 aM
 aM
 aM
-aM
-aM
-aM
-aM
+Fi
+Fi
+Fi
+Oe
 aW
 aY
+Oe
 aM
 aM
-aM
-aM
+Fi
 aU
 aU
 aU
 aU
-aM
+Fi
 "}
 (20,1,1) = {"
 aM
 aM
 aM
+Fi
+Fi
 aM
 aM
 aM
 aM
-aM
-aM
-aM
+Oe
 aY
 aY
-aM
+Oe
 ad
 aM
 aM
-aM
+Fi
 aU
 aU
 aU
-aM
+Fi
 "}
 (21,1,1) = {"
 aM
 aM
 an
 aL
+Fi
 aM
 aM
 aM
 aM
-aM
-aM
+Oe
 aL
 aY
+Oe
 aM
 aM
 aM
 aM
-aM
-aM
+Fi
 aU
-aM
+Fi
 aM
 "}
 (22,1,1) = {"
@@ -773,20 +869,20 @@ an
 aL
 aL
 az
-aM
+Fi
 an
 aM
-aM
+Oe
 aL
 aL
 aL
+Oe
 aM
 aM
 aM
 aM
 aM
-aM
-aM
+Fi
 aM
 aM
 "}
@@ -796,14 +892,14 @@ aM
 an
 an
 aL
+Fi
 aM
-aM
-aM
+Oe
 aL
 aL
 aL
-aM
-aM
+Oe
+Oe
 aM
 aM
 an
@@ -820,14 +916,14 @@ aM
 aM
 an
 aM
-aM
+Oe
 an
 aL
 aL
 aL
+uU
 aL
-aL
-aM
+Oe
 aM
 aM
 aM
@@ -841,9 +937,9 @@ aM
 aM
 aM
 aM
-aM
-aM
-aM
+Oe
+Oe
+Oe
 an
 aL
 aL
@@ -851,7 +947,7 @@ an
 an
 an
 an
-aM
+Oe
 aM
 aM
 aM
@@ -863,7 +959,7 @@ aM
 aM
 aM
 aM
-aM
+Oe
 an
 an
 an
@@ -875,7 +971,7 @@ an
 an
 an
 an
-aM
+Oe
 aM
 aM
 aM
@@ -886,19 +982,19 @@ aM
 aM
 aM
 aM
-aM
+Oe
 an
 an
 aL
 an
 aL
+yB
 aL
-aL
 an
 an
 an
 an
-aM
+Oe
 aM
 aM
 aM
@@ -909,7 +1005,7 @@ aM
 aM
 aM
 aM
-aM
+Oe
 an
 an
 aL
@@ -921,7 +1017,7 @@ aL
 an
 an
 an
-aM
+Oe
 an
 an
 aM
@@ -932,11 +1028,11 @@ aM
 aM
 aM
 aM
-aM
-aM
+Oe
+Oe
 an
 an
-aM
+Oe
 aL
 aL
 aL
@@ -944,7 +1040,7 @@ aL
 an
 an
 an
-aM
+Oe
 aM
 aM
 aM
@@ -954,21 +1050,21 @@ aM
 (30,1,1) = {"
 aM
 aM
-aM
+Oe
 an
 an
 an
-aM
-aM
-aM
+Oe
+Fi
+Oe
 ae
 aL
-aM
-aM
+Oe
+Oe
 an
 an
 an
-aM
+Oe
 aM
 aM
 aM
@@ -977,22 +1073,22 @@ aM
 (31,1,1) = {"
 aM
 aM
-aM
+Oe
 an
 aL
 an
 an
-aM
-aM
+Oe
+Oe
 aL
 aL
-aM
-aM
-aM
+Oe
+Fi
+Oe
 an
 an
-aM
-aM
+Oe
+Oe
 aM
 aM
 aM
@@ -1000,7 +1096,7 @@ aM
 (32,1,1) = {"
 aM
 aM
-aM
+Oe
 an
 aL
 an
@@ -1009,43 +1105,43 @@ an
 an
 aL
 ah
-aM
-aM
+Oe
+Oe
 an
 an
 an
 an
 an
-aM
+Oe
 aM
 aM
 "}
 (33,1,1) = {"
 aM
-aM
+Oe
 an
 an
 aL
 an
 aL
-aF
+yB
+Lg
+kC
+oT
 aL
-aL
-aL
-aL
-aL
+Lg
 aL
 aL
 aL
 an
 an
-aM
+Oe
 aM
 aM
 "}
 (34,1,1) = {"
 aM
-aM
+Oe
 an
 an
 aL
@@ -1055,20 +1151,20 @@ an
 an
 aL
 aL
+yB
 aL
-aF
-aL
-an
 aL
 an
+aL
 an
 an
-aM
+an
+Oe
 aM
 "}
 (35,1,1) = {"
 aM
-aM
+Oe
 an
 an
 aL
@@ -1077,61 +1173,61 @@ aL
 an
 an
 aL
+Lg
 aL
-aL
-aM
+Oe
 an
 an
 aL
 aL
 aL
 an
-aM
+Oe
 aM
 "}
 (36,1,1) = {"
 aM
 aM
-aM
+Oe
 an
 an
 an
 an
 an
-aM
-aM
+Oe
+Oe
 aL
 aL
-aM
+Oe
 an
 an
 an
 an
 an
 an
-aM
+Oe
 aM
 "}
 (37,1,1) = {"
 aM
 aM
 aM
-aM
+Oe
 an
 an
 an
 an
-aM
+Oe
 aL
 aL
 aL
-aM
-aM
+Oe
+Oe
 an
 an
 an
 an
-aM
+Oe
 aM
 aM
 "}
@@ -1139,21 +1235,21 @@ aM
 aM
 aM
 aM
-aM
+Oe
 an
 an
 an
-aM
-aM
+Oe
+Oe
 aL
-aM
+Oe
 aL
-aM
-aM
+Oe
+Oe
 an
 an
 an
-aM
+Oe
 aM
 aM
 aM
@@ -1162,21 +1258,21 @@ aM
 aM
 aM
 aM
-aM
+Oe
 an
 an
 an
 an
-aM
+Oe
 aL
 aL
 aL
-aM
-aM
+Oe
+Oe
 an
 an
 an
-aM
+Oe
 aM
 aM
 aM
@@ -1185,20 +1281,20 @@ aM
 aM
 aM
 aM
-aM
+Oe
 an
 an
 an
 an
-aM
-aM
+Oe
+Oe
 xa
 aL
+Oe
 aM
-aM
-aM
+Oe
 an
-aM
+Oe
 aM
 aM
 aM
@@ -1208,20 +1304,20 @@ aM
 aM
 aM
 aM
-aM
+Oe
 an
 an
 an
 an
-aM
+Oe
 aL
 xa
+Oe
+Fi
 aM
-aM
-aM
-aM
+Oe
 an
-aM
+Oe
 aM
 aM
 aM
@@ -1232,19 +1328,19 @@ aM
 aM
 aM
 aM
-aM
-aM
+Oe
+Oe
 an
-aM
-aM
+Oe
+Oe
 aL
 xa
 xa
+Oe
 aM
-aM
-aM
+Oe
 an
-aM
+Oe
 aM
 aM
 aM
@@ -1256,17 +1352,17 @@ aM
 aM
 aM
 an
-aM
+Oe
 an
-aM
-aM
+Oe
+Oe
 aL
 xa
 xa
+Oe
 aM
 aM
-aM
-aM
+Oe
 aM
 aM
 aM
@@ -1279,13 +1375,13 @@ aM
 aM
 aM
 an
+Fi
+Oe
 aM
-aM
-aM
-aM
+Oe
 aL
 xa
-aM
+Oe
 aM
 aM
 aM
@@ -1300,16 +1396,16 @@ aM
 aM
 aM
 aM
-aM
-aM
-aM
+Fi
+Fi
+Fi
 an
 aM
-aM
+Oe
 xa
 xa
 yw
-aM
+Oe
 aM
 an
 aM
@@ -1322,17 +1418,17 @@ aM
 (46,1,1) = {"
 aM
 aM
-aM
+Fi
 tv
+Fi
 aM
 aM
 aM
-aM
-aM
+Oe
 xa
 mJ
 xa
-aM
+Oe
 aM
 aM
 aM
@@ -1344,19 +1440,19 @@ aM
 "}
 (47,1,1) = {"
 aM
-aM
+Fi
 aM
 lL
 gK
-aM
-aM
-aM
+Fi
+Oe
+Oe
 xa
 xa
 mJ
 Fx
 Fx
-aM
+Oe
 aM
 aM
 aM
@@ -1367,20 +1463,20 @@ aM
 "}
 (48,1,1) = {"
 aM
-aM
+Fi
 tv
 xa
 tv
-aM
+Oe
 Fx
 mJ
 xa
-ir
+XM
 xa
 Fx
 Fx
 Fx
-aM
+Oe
 aM
 aM
 aM
@@ -1391,10 +1487,10 @@ aM
 (49,1,1) = {"
 aM
 aM
-aM
-aM
-aM
-aM
+Fi
+Fi
+Fi
+Oe
 Fx
 Fx
 xa
@@ -1402,11 +1498,11 @@ xa
 xa
 Fx
 Fx
+Oe
 aM
-aM
-aM
-aM
-aM
+Fi
+Fi
+Fi
 aM
 aM
 aM
@@ -1418,19 +1514,19 @@ aM
 aM
 aM
 aM
-aM
+Oe
 xa
 xa
 mJ
 xa
 xa
+Oe
 aM
-aM
-aM
+Fi
 xa
 xa
 xa
-aM
+Fi
 aM
 aM
 "}
@@ -1440,16 +1536,16 @@ aM
 aM
 Fx
 aM
+Fi
 aM
-aM
-aM
+Oe
 xa
 xa
 xa
+Oe
 aM
 aM
-aM
-aM
+Fi
 BG
 xa
 xa
@@ -1464,15 +1560,15 @@ Fx
 Fx
 Fx
 BG
+Fi
+Fi
+Oe
+Oe
+Oe
 aM
 aM
 aM
-aM
-aM
-aM
-aM
-aM
-aM
+Fi
 gK
 Fx
 Fx
@@ -1487,14 +1583,14 @@ Fx
 Fx
 Fx
 xa
+Fi
 aM
 aM
 aM
 aM
 aM
 aM
-aM
-aM
+Fi
 xa
 Fx
 Fx
@@ -1509,6 +1605,7 @@ aM
 aM
 Fx
 Fx
+Fi
 aM
 aM
 aM
@@ -1516,8 +1613,7 @@ aM
 aM
 aM
 aM
-aM
-aM
+Fi
 xa
 Fx
 Fx
@@ -1541,7 +1637,7 @@ aM
 aM
 aM
 aM
-aM
+Fi
 aM
 aM
 aM

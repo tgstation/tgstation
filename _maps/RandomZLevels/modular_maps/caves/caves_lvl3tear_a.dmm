@@ -13,16 +13,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible,
 /area/template_noop)
-"e" = (
-/obj/structure/railing,
-/obj/structure/lattice{
-	obj_flags = 4612
-	},
-/turf/template_noop,
-/area/template_noop)
 "f" = (
-/obj/structure/lattice{
-	obj_flags = 4612
+/obj/structure/fans/tiny/invisible,
+/obj/structure/fluff{
+	deconstructible = 0;
+	density = 1;
+	desc = "this is cursed dawg fr fr";
+	icon_state = null;
+	name = "people blocker"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -31,13 +29,16 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
 "h" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/lattice{
-	obj_flags = 4612
-	},
+/obj/structure/fans/tiny/invisible,
 /turf/template_noop,
+/area/template_noop)
+"i" = (
+/obj/effect/bump_teleporter{
+	id = "riftenter";
+	id_target = null;
+	name = "rift start"
+	},
+/turf/open/misc/asteroid/basalt,
 /area/template_noop)
 "j" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -52,9 +53,22 @@
 "k" = (
 /turf/open/misc/asteroid/basalt,
 /area/template_noop)
-"l" = (
-/mob/living/simple_animal/hostile/asteroid/curseblob,
-/turf/open/misc/asteroid/basalt,
+"m" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/lattice{
+	obj_flags = 4612
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/structure/fluff{
+	deconstructible = 0;
+	density = 1;
+	desc = "this is cursed dawg fr fr";
+	icon_state = null;
+	name = "people blocker"
+	},
+/turf/template_noop,
 /area/template_noop)
 "n" = (
 /obj/structure/fluff{
@@ -95,6 +109,20 @@
 /obj/structure/flora/rock,
 /turf/open/misc/asteroid/basalt,
 /area/template_noop)
+"t" = (
+/obj/structure/lattice{
+	obj_flags = 4612
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/structure/fluff{
+	deconstructible = 0;
+	density = 1;
+	desc = "this is cursed dawg fr fr";
+	icon_state = null;
+	name = "people blocker"
+	},
+/turf/template_noop,
+/area/template_noop)
 "u" = (
 /turf/open/indestructible,
 /area/template_noop)
@@ -122,9 +150,9 @@
 	dir = 1
 	},
 /obj/structure/lattice/lava{
-	icon_state = "lattice-255";
 	base_icon_state = "lattice";
-	icon = 'icons/obj/smooth_structures/lattice.dmi'
+	icon = 'icons/obj/smooth_structures/lattice.dmi';
+	icon_state = "lattice-255"
 	},
 /turf/open/lava/smooth,
 /area/template_noop)
@@ -134,15 +162,6 @@
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi';
 	icon_state = "Goliath";
 	name = "goliath"
-	},
-/turf/open/misc/asteroid,
-/area/template_noop)
-"D" = (
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
 	},
 /turf/open/misc/asteroid,
 /area/template_noop)
@@ -162,6 +181,20 @@
 "H" = (
 /turf/open/lava/smooth,
 /area/template_noop)
+"I" = (
+/obj/structure/fluff{
+	desc = "You're not sure if walking into this is a great idea...";
+	icon = 'icons/effects/eldritch.dmi';
+	icon_state = "pierced_illusion";
+	name = "fluxating rift"
+	},
+/obj/effect/bump_teleporter{
+	id = null;
+	id_target = "riftexit";
+	name = "rift end"
+	},
+/turf/open/misc/asteroid,
+/area/template_noop)
 "J" = (
 /turf/template_noop,
 /area/template_noop)
@@ -173,9 +206,9 @@
 "N" = (
 /obj/structure/railing,
 /obj/structure/lattice/lava{
-	icon_state = "lattice-255";
 	base_icon_state = "lattice";
-	icon = 'icons/obj/smooth_structures/lattice.dmi'
+	icon = 'icons/obj/smooth_structures/lattice.dmi';
+	icon_state = "lattice-255"
 	},
 /turf/open/lava/smooth,
 /area/template_noop)
@@ -184,6 +217,14 @@
 /area/template_noop)
 "P" = (
 /turf/closed/indestructible/fakeglass,
+/area/template_noop)
+"Q" = (
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/illusion{
+	deathmessage = "vanishes into thin air!";
+	multiply_chance = 25
+	},
+/turf/open/misc/asteroid/basalt,
 /area/template_noop)
 "R" = (
 /obj/structure/lattice{
@@ -207,12 +248,34 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible,
 /area/template_noop)
+"V" = (
+/obj/structure/railing,
+/obj/structure/lattice{
+	obj_flags = 4612
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/structure/fluff{
+	deconstructible = 0;
+	density = 1;
+	desc = "this is cursed dawg fr fr";
+	icon_state = null;
+	name = "people blocker"
+	},
+/turf/template_noop,
+/area/template_noop)
 "W" = (
 /turf/closed/indestructible/reinforced,
 /area/template_noop)
 "X" = (
 /obj/modular_map_connector,
 /turf/template_noop,
+/area/template_noop)
+"Y" = (
+/mob/living/simple_animal/hostile/illusion{
+	deathmessage = "vanishes into thin air!";
+	multiply_chance = 25
+	},
+/turf/open/misc/asteroid/basalt,
 /area/template_noop)
 "Z" = (
 /obj/structure/flora/rock/pile,
@@ -319,7 +382,7 @@ J
 J
 J
 J
-J
+h
 J
 J
 J
@@ -340,10 +403,10 @@ J
 J
 J
 J
-J
-J
+h
+h
 k
-J
+h
 J
 J
 J
@@ -361,17 +424,17 @@ J
 J
 J
 J
-J
-J
+h
+h
 k
 k
 k
 k
+h
 J
-J
-J
-J
-J
+f
+f
+f
 J
 J
 J
@@ -383,19 +446,19 @@ J
 (8,1,1) = {"
 J
 J
-J
+h
 k
 k
 k
 F
 k
+h
 J
-J
-J
+f
 c
 k
 k
-J
+f
 J
 J
 J
@@ -407,18 +470,18 @@ J
 J
 J
 J
-J
+h
 k
 F
 k
 k
-J
-J
+h
+f
 c
 c
 k
 k
-J
+f
 J
 J
 J
@@ -431,17 +494,17 @@ J
 J
 J
 J
-J
-J
+h
+h
 y
 y
-J
-J
+h
+f
+k
+i
 k
 k
-k
-k
-J
+f
 J
 J
 J
@@ -456,18 +519,18 @@ J
 J
 J
 J
+h
+h
 J
-J
-J
-J
+f
 k
 k
 k
+f
 J
 J
 J
-J
-J
+h
 J
 J
 J
@@ -482,16 +545,16 @@ J
 J
 J
 J
-J
+f
 c
 k
 k
+f
 J
 J
-J
-J
+h
 k
-J
+h
 J
 J
 "}
@@ -505,17 +568,17 @@ J
 J
 J
 J
-J
+f
 M
 k
 M
+f
 J
-J
-J
+h
 x
 Z
 c
-J
+h
 J
 "}
 (14,1,1) = {"
@@ -527,29 +590,29 @@ J
 J
 J
 J
-J
-J
+f
+f
 N
 g
 B
-J
-J
-J
+f
+f
+h
 p
 c
 c
-J
+h
 J
 "}
 (15,1,1) = {"
 J
 J
+h
+h
+h
+h
 J
-J
-J
-J
-J
-J
+f
 H
 H
 N
@@ -557,32 +620,32 @@ g
 B
 H
 H
-J
-J
+f
+h
 c
-J
+h
 J
 J
 "}
 (16,1,1) = {"
 J
-J
+h
 H
 H
 H
 H
+h
 J
-J
-J
+f
 H
 N
 g
 B
+f
+f
 J
 J
-J
-J
-J
+h
 J
 J
 J
@@ -590,20 +653,20 @@ J
 (17,1,1) = {"
 J
 J
-J
+h
 H
 H
 H
 H
-J
-J
-J
+h
+f
+f
 N
 g
 B
 H
 H
-J
+f
 J
 J
 J
@@ -614,11 +677,11 @@ J
 J
 J
 J
-J
-J
-J
-J
-J
+h
+h
+h
+h
+f
 H
 H
 N
@@ -626,10 +689,10 @@ g
 B
 H
 H
+f
 J
-J
-J
-J
+h
+h
 J
 J
 "}
@@ -640,20 +703,20 @@ J
 J
 J
 J
-J
+f
 H
 H
 H
 N
 g
 B
+f
+f
 J
-J
-J
-J
+h
 H
 H
-J
+h
 J
 "}
 (20,1,1) = {"
@@ -664,19 +727,19 @@ J
 J
 J
 J
-J
-J
-J
+f
+f
+f
 M
 k
 M
+f
 J
 J
-J
-J
+h
 H
 H
-J
+h
 J
 "}
 (21,1,1) = {"
@@ -687,18 +750,18 @@ J
 J
 J
 J
-J
-J
-J
+f
+f
+f
 k
 k
 k
+f
 J
 J
 J
-J
-J
-J
+h
+h
 J
 J
 "}
@@ -709,14 +772,14 @@ J
 J
 J
 J
-J
+f
 k
 c
 c
 k
 k
 k
-J
+f
 J
 J
 J
@@ -730,55 +793,55 @@ J
 J
 J
 J
+h
 J
-J
-J
+f
 c
 c
 c
 k
 A
-l
+k
 Z
+f
 J
 J
 J
-J
-J
-J
+h
+h
 J
 "}
 (24,1,1) = {"
 J
 J
 J
-J
+h
 G
-J
-J
+h
+f
 c
 c
 c
+Q
 b
-b
-k
+Y
 s
-J
-J
-J
-J
+f
+h
+h
+h
 s
 Z
-J
+h
 "}
 (25,1,1) = {"
 J
 J
-J
+h
 G
 G
-J
-J
+h
+f
 c
 c
 s
@@ -786,32 +849,32 @@ k
 k
 k
 Z
-J
+f
 x
 k
-J
-J
-J
+h
+h
+h
 J
 "}
 (26,1,1) = {"
 J
 J
-J
+h
 G
 v
 O
-J
-J
-J
+f
+f
+f
 Z
 k
-l
+Y
 k
+f
 J
-J
-J
-J
+h
+h
 J
 J
 J
@@ -820,17 +883,17 @@ J
 (27,1,1) = {"
 J
 J
-J
+h
 G
 n
 v
 O
+h
 J
-J
-J
+f
 k
 k
-J
+f
 J
 J
 J
@@ -843,18 +906,18 @@ J
 (28,1,1) = {"
 J
 J
-J
+h
 G
 v
 O
+h
 J
 J
-J
-J
+f
 o
 k
 o
-J
+h
 J
 J
 J
@@ -866,17 +929,17 @@ J
 (29,1,1) = {"
 J
 J
-J
+h
 v
 v
 O
-J
-J
-J
-J
-e
-g
 h
+J
+J
+J
+V
+g
+m
 J
 J
 J
@@ -890,20 +953,20 @@ J
 J
 J
 J
+h
+h
+h
 J
 J
 J
 J
-J
-J
-J
-e
+V
 g
+f
 J
 J
 J
-J
-J
+h
 J
 J
 J
@@ -917,17 +980,17 @@ J
 J
 J
 J
-J
-J
-J
 f
+f
+f
+t
 g
+f
+h
 J
-J
-J
-J
+h
 H
-J
+h
 J
 J
 J
@@ -939,7 +1002,7 @@ J
 J
 J
 J
-J
+f
 w
 R
 c
@@ -947,11 +1010,11 @@ k
 k
 M
 W
-J
-J
+h
+h
 H
 H
-J
+h
 J
 J
 "}
@@ -961,7 +1024,7 @@ J
 J
 J
 J
-J
+f
 w
 w
 w
@@ -969,13 +1032,13 @@ W
 E
 k
 T
+f
 J
-J
-J
+h
 H
 k
 c
-J
+h
 J
 "}
 (34,1,1) = {"
@@ -984,21 +1047,21 @@ J
 J
 J
 J
-J
+f
 w
 R
 R
 P
 E
 k
+f
 J
 J
-J
-J
+h
 k
 k
 c
-J
+h
 J
 "}
 (35,1,1) = {"
@@ -1007,21 +1070,21 @@ J
 J
 J
 J
-J
+f
 w
 w
 w
 P
 U
 u
+f
 J
 J
-J
-J
+h
 k
 c
 c
-J
+h
 J
 "}
 (36,1,1) = {"
@@ -1029,7 +1092,7 @@ J
 J
 J
 J
-J
+f
 w
 w
 w
@@ -1037,14 +1100,14 @@ R
 P
 U
 u
+f
 J
 J
 J
-J
-J
+h
 c
 c
-J
+h
 J
 "}
 (37,1,1) = {"
@@ -1052,7 +1115,7 @@ J
 J
 J
 J
-J
+f
 W
 W
 W
@@ -1061,12 +1124,12 @@ W
 j
 d
 T
+f
 J
 J
-J
-J
+h
 c
-J
+h
 J
 J
 "}
@@ -1076,7 +1139,7 @@ J
 J
 J
 J
-J
+h
 u
 u
 u
@@ -1084,11 +1147,11 @@ S
 d
 d
 T
+f
 J
 J
 J
-J
-J
+h
 J
 J
 J
@@ -1100,13 +1163,13 @@ J
 J
 J
 J
-J
+h
 W
 W
 W
 U
 u
-J
+f
 W
 J
 J
@@ -1124,12 +1187,12 @@ J
 J
 J
 J
-J
-J
+h
+h
 W
 E
 u
-J
+f
 W
 J
 J
@@ -1149,10 +1212,10 @@ J
 J
 J
 J
-J
-J
+f
+f
 u
-J
+f
 J
 J
 J
@@ -1173,9 +1236,9 @@ J
 J
 J
 W
-J
+f
 r
-J
+f
 J
 J
 J
@@ -1191,14 +1254,14 @@ J
 J
 J
 J
+h
+h
 J
 J
 J
-J
-J
-J
+f
 r
-J
+f
 W
 J
 J
@@ -1213,19 +1276,19 @@ J
 J
 J
 J
-J
+h
 r
 r
+h
 J
-J
-J
+f
 r
 r
-J
+f
 W
 J
 J
-J
+h
 J
 J
 J
@@ -1235,21 +1298,21 @@ J
 J
 J
 J
-J
+h
 r
 C
 r
-J
-J
+h
+f
 r
 r
 r
 r
+f
 J
-J
-J
+h
 r
-J
+h
 J
 J
 J
@@ -1259,20 +1322,20 @@ J
 J
 J
 J
-J
-J
+h
+h
 r
-J
-J
-r
-r
+h
+f
 r
 r
-J
-J
+r
+r
+f
+h
 q
 r
-J
+h
 J
 J
 J
@@ -1284,19 +1347,19 @@ J
 J
 J
 J
-J
-J
+h
+f
 a
 r
 r
 r
 a
 r
-J
+f
 r
 r
 r
-J
+h
 J
 J
 "}
@@ -1308,17 +1371,17 @@ J
 J
 J
 J
-J
+f
 r
 r
 r
-D
+I
 r
 a
-J
+f
 r
 r
-J
+h
 J
 J
 J
@@ -1331,16 +1394,16 @@ J
 J
 J
 J
-J
+f
 a
 a
 r
 r
 r
 a
-J
+f
 r
-J
+h
 J
 J
 J
@@ -1354,15 +1417,15 @@ J
 J
 J
 J
-J
+f
 a
 a
 r
 r
 a
 a
-J
-J
+f
+h
 J
 J
 J
@@ -1378,12 +1441,12 @@ J
 J
 J
 J
-J
+f
 a
 a
 a
 a
-J
+f
 J
 J
 J
@@ -1402,10 +1465,10 @@ J
 J
 J
 J
-J
-J
-J
-J
+f
+f
+f
+f
 J
 J
 J
