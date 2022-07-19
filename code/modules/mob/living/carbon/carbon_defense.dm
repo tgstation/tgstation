@@ -468,7 +468,7 @@
 			if (helper.mob_mood.sanity >= SANITY_GREAT)
 				new /obj/effect/temp_visual/heart(loc)
 				src.add_mood_event("friendly_hug", /datum/mood_event/besthug, helper)
-			else if (hugger_mood.sanity >= SANITY_DISTURBED)
+			else if (helper.mob_mood.sanity >= SANITY_DISTURBED)
 				src.add_mood_event("friendly_hug", /datum/mood_event/betterhug, helper)
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
