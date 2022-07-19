@@ -186,8 +186,8 @@
 	else
 		return ..()
 
-/obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H,upgrade_type)
-	if(!(upgrade_type in power_lottery[H])||(HAS_TRAIT(H, TRAIT_VIRUSIMMUNE))||(HAS_TRAIT(H, TRAIT_NOBREATH))||(HAS_TRAIT(H, TRAIT_RESISTHEAT))||(HAS_TRAIT(H, TRAIT_NOFIRE))||(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))||(H.next_move_modifier == 0.5)||(H.has_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup))||(H.dna.species.armor==30)||(H.dna.species.stunmod==0.5))
+/obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)
+	if(!(upgrade_type in power_lottery[H])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
 		return
 	var/datum/species/S = H.dna.species
 	switch(upgrade_type)
@@ -219,5 +219,6 @@
 		if(VAULT_QUICK)
 			to_chat(H, span_notice("Your arms move as fast as lightning."))
 			H.next_move_modifier = 0.5
+	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, "used_dna_vault")
 	power_lottery[H] = list()
 	use_power(active_power_usage)
