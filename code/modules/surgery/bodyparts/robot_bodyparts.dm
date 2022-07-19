@@ -13,7 +13,7 @@
 /obj/item/bodypart/l_arm/robot
 	name = "cyborg left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	attack_verb_simple = list("slapped", "punched")
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
@@ -43,7 +43,7 @@
 	inhand_icon_state = "buildpipe"
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_arm"
 	is_dimorphic = FALSE
@@ -69,7 +69,7 @@
 	inhand_icon_state = "buildpipe"
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_leg"
 	is_dimorphic = FALSE
@@ -95,7 +95,7 @@
 	inhand_icon_state = "buildpipe"
 	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_leg"
 	is_dimorphic = FALSE
@@ -120,7 +120,7 @@
 	inhand_icon_state = "buildpipe"
 	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_chest"
 	is_dimorphic = FALSE
@@ -228,7 +228,7 @@
 	inhand_icon_state = "buildpipe"
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
-	limb_id = "robotic"
+	limb_id = BODYPART_TYPE_ROBOTIC
 	flags_1 = CONDUCT_1
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
