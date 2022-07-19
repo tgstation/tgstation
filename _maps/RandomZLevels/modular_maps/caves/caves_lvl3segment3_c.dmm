@@ -49,6 +49,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
+"ft" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fluff{
+	desc = "You're not sure if walking into this is a great idea...";
+	icon = 'icons/effects/eldritch.dmi';
+	icon_state = "pierced_illusion";
+	name = "fluxating rift"
+	},
+/obj/effect/bump_teleporter{
+	id = null;
+	id_target = "lvl4spawn";
+	name = "lvl4 teleport"
+	},
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
 "fA" = (
 /obj/structure/stone_tile/block/burnt{
 	dir = 4
@@ -130,16 +145,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/iron,
 /turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
-"hE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/step_trigger/teleport_fancy{
-	locationx = 248;
-	locationy = 10;
-	name = "teleport to ratvar level";
-	uses = 0
-	},
-/turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
 "hH" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
@@ -4412,7 +4417,7 @@ aA
 mK
 mK
 EW
-hE
+ft
 EW
 xA
 mK
