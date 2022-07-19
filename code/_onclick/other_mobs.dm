@@ -7,7 +7,7 @@
 	if (secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 		return TRUE
 	else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
-		CRASH("resolve_right_click_attack did not return a SECONDARY_ATTACK_* define.")
+		CRASH("resolve_right_click_attack (probably attack_hand_secondary) did not return a SECONDARY_ATTACK_* define.")
 
 /*
 	Humans:
@@ -129,18 +129,34 @@
 		resolve_unarmed_attack(attack_target, modifiers)
 	return TRUE
 
+/**
+ * Called when the unarmed attack hasn't been stopped by the LIVING_UNARMED_ATTACK_BLOCKED macro or the right_click_attack_chain proc.
+ * This will call an attack proc that can vary from mob type to mob type on the target.
+ */
 /mob/living/proc/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	attack_target.attack_animal(src, modifiers)
 
+/**
+ * Called when an unarmed attack performed with right click hasn't been stopped by the LIVING_UNARMED_ATTACK_BLOCKED macro.
+ * This will call a secondary attack proc that can vary from mob type to mob type on the target.
+ * Sometimes, a target is interacted differently when right_clicked, in that case the secondary attack proc should return
+ * a SECONDARY_ATTACK_* value that's not SECONDARY_ATTACK_CALL_NORMAL.
+ * Otherwise, it should just return SECONDARY_ATTACK_CALL_NORMAL. Failure to do so will result in an exception (runtime error).
+ */
 /mob/living/proc/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_animal_secondary(src, modifiers)
 
 /atom/proc/attack_animal(mob/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
 
+/**
+ * Called when a simple animal or basic mob right clicks an atom.
+ * Returns a SECONDARY_ATTACK_* value.
+ */
 /atom/proc/attack_animal_secondary(mob/user, list/modifiers)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
+///Apparently this is only used by AI datums for basic mobs. A player controlling a basic mob will call attack_animal() when clicking another atom.
 /atom/proc/attack_basic_mob(mob/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BASIC_MOB, user)
 
@@ -164,6 +180,10 @@
 /atom/proc/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	attack_paw(user, modifiers)
 
+/**
+ * Called when an alien right clicks an atom.
+ * Returns a SECONDARY_ATTACK_* value.
+ */
 /atom/proc/attack_alien_secondary(mob/living/carbon/alien/user, list/modifiers)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
@@ -177,6 +197,10 @@
 /atom/proc/attack_larva(mob/user, list/modifiers)
 	return
 
+/**
+ * Called when an alien larva right clicks an atom.
+ * Returns a SECONDARY_ATTACK_* value.
+ */
 /atom/proc/attack_larva_secondary(mob/user, list/modifiers)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
@@ -198,6 +222,10 @@
 /atom/proc/attack_slime(mob/user, list/modifiers)
 	return
 
+/**
+ * Called when a slime mob right clicks an atom (that is not a turf).
+ * Returns a SECONDARY_ATTACK_* value.
+ */
 /atom/proc/attack_slime_secondary(mob/user, list/modifiers)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
@@ -215,7 +243,11 @@
 /atom/proc/attack_drone(mob/living/simple_animal/drone/user, list/modifiers)
 	attack_hand(user, modifiers)
 
-/// Defaults to attack_hand_secondary. Override it when you don't want drones to do same stuff as humans.
+/**
+ * Called when a maintenance drone right clicks an atom.
+ * Defaults to attack_hand_secondary.
+ * When overriding it, remember that it ought to return a SECONDARY_ATTACK_* value.
+ */
 /atom/proc/attack_drone_secondary(mob/living/simple_animal/drone/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 

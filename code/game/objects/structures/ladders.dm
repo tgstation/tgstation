@@ -89,10 +89,10 @@
 		return
 
 	if(!up && !down)
-		balloon_alert(user, span_warning("Doesn't lead anywhere!"))
+		balloon_alert(user, "doesn't lead anywhere!")
 		return
 	if(going_up ? !up : !down)
-		balloon_alert(user, span_warning("Can't go any further [going_up ? "up" : "down"]."))
+		balloon_alert(user, "can't go any further [going_up ? "up" : "down"]")
 		return
 	if(travel_time)
 		INVOKE_ASYNC(src, .proc/start_travelling, user, going_up)
@@ -108,12 +108,12 @@
 /// The message shown when the player starts climbing the ladder
 /obj/structure/ladder/proc/show_initial_fluff_message(mob/user, going_up)
 	var/up_down = going_up ? "up" : "down"
-	user.balloon_alert_to_viewers("climbing [up_down] [src]", "climbing [up_down] [src]")
+	user.balloon_alert_to_viewers("climbing [up_down]...")
 
-/obj/structure/ladder/proc/travel(mob/user, going_up, is_ghost = FALSE)
+/obj/structure/ladder/proc/travel(mob/user, going_up = TRUE, is_ghost = FALSE)
 	var/obj/structure/ladder/ladder = going_up ? up : down
 	if(!ladder)
-		to_chat(user, span_warning("[src] doesn't seem to lead anywhere that way!"))
+		balloon_alert(user, "there's nothing that way!")
 		return
 	var/response = SEND_SIGNAL(user, COMSIG_LADDER_TRAVEL, src, ladder, going_up)
 	if(response & LADDER_TRAVEL_BLOCK)
@@ -138,8 +138,7 @@
 	//POV of players around the source
 	visible_message(span_notice("[user] climbs [up_down] [src]."))
 	//POV of players around the destination
-	user.visible_message(span_notice("[user] climbs [up_down] [destination] from [going_up ? "below" : "above"]."), span_notice("You climb down [src]."))
-	user.balloon_alert_to_viewers("climbed [up_down]", "climbed [up_down]")
+	user.balloon_alert_to_viewers("climbed [up_down]")
 
 /// Shows a radial menu that players can use to climb up and down a stair.
 /obj/structure/ladder/proc/show_options(mob/user, is_ghost = FALSE)
@@ -264,12 +263,12 @@
 ///Ghosts use the byond default popup menu function on right click, so this is going to work a little differently for them.
 /obj/structure/ladder/proc/ghost_use(mob/user)
 	if (!up && !down)
-		balloon_alert(user, span_warning("It doesn't lead anywhere!"))
+		balloon_alert(user, "doesn't lead anywhere!")
 		return
 	if(!up) //only goes down
-		travel(user, FALSE, TRUE)
+		travel(user, going_up = FALSE, is_ghost = TRUE)
 	else if(!down) //only goes up
-		travel(user, TRUE, TRUE)
+		travel(user, going_up = TRUE, is_ghost = TRUE)
 	else //goes both ways
 		show_options(user, is_ghost = TRUE)
 
