@@ -34,6 +34,28 @@
 /obj/modular_map_connector,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"aL" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/item/disk/data{
+	genetic_makeup_buffer = list("label" = "Slot 1: Jacob Ullman", "UI" = "333333663300c491c1c1c27085876b", "UE" = "7d36a3c58b1cb46e57de8270a1769065", "UF" = "5f5f5ffbdf564a3a4b6c1f3393f2c94fd59691f4055ba5c6d4e", "name" = "Jacob Ullman", "blood_type" = "A+");
+	name = "DNA data disk - J.U"
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/obj/item/disk/data{
+	genetic_makeup_buffer = list("label" = "Slot 1: CORRUPTED", "UI" = "1c1c1c663300aa9006600888fd32b3", "UE" = "f1ac8a098f8717048ea09fa06c3018f5", "UF" = "ff7777ee82ee3e5ae56478853536e72ab65a1aa9c0473d94102", "name" = "Elizabe Q", "blood_type" = "A+");
+	name = "DNA data disk - E.Q"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "aN" = (
 /turf/closed/indestructible/rock,
 /area/template_noop)
@@ -449,6 +471,14 @@
 /obj/item/dnainjector/antiolfaction,
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/caves/misc/syndicate/vault)
+"hD" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/obj/machinery/airalarm/directional/south,
+/obj/structure/sign/calendar/directional/east,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/syndicate)
 "hI" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -583,13 +613,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
-"kh" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/obj/machinery/airalarm/directional/south,
-/obj/structure/sign/calendar/directional/east,
-/turf/open/floor/iron,
-/area/awaymission/caves/misc/syndicate)
 "kk" = (
 /obj/machinery/porta_turret/syndicate/pod,
 /obj/effect/turf_decal/stripes/box,
@@ -604,28 +627,6 @@
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
-"ku" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced/plasma/spawner/west,
-/obj/item/disk/data{
-	genetic_makeup_buffer = list("label" = "Slot 1: Jacob Ullman", "UI" = "333333663300c491c1c1c27085876b", "UE" = "7d36a3c58b1cb46e57de8270a1769065", "UF" = "5f5f5ffbdf564a3a4b6c1f3393f2c94fd59691f4055ba5c6d4e", "name" = "Jacob Ullman", "blood_type" = "A+");
-	name = "DNA data disk - J.U"
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/obj/item/disk/data{
-	genetic_makeup_buffer = list("label" = "Slot 1: CORRUPTED", "UI" = "1c1c1c663300aa9006600888fd32b3", "UE" = "f1ac8a098f8717048ea09fa06c3018f5", "UF" = "ff7777ee82ee3e5ae56478853536e72ab65a1aa9c0473d94102", "name" = "Elizabe Q", "blood_type" = "A+");
-	name = "DNA data disk - E.Q"
-	},
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
 "kK" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/iron/kitchen,
@@ -960,24 +961,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
-"rl" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/item/disk/data{
-	genetic_makeup_buffer = list("label" = "Slot 1: George Melons", "UI" = "00cc0088ddff8e06633003851e989d", "UE" = "6893e6a0b0076a41897776b10cc2b324", "UF" = "ff77ff00fa9a192c1b62ffd7edcc127924e14c20900e72f1ce3", "name" = "George Melons", "blood_type" = "AB+");
-	name = "DNA data disk - G.M"
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
 "rn" = (
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/misc/syndicate)
@@ -1001,6 +984,11 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/gateway)
+"sm" = (
+/obj/structure/table/reinforced,
+/obj/item/knife/combat,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
 "so" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -1155,6 +1143,28 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/misc/syndicate)
+"ux" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/item/disk/data{
+	genetic_makeup_buffer = list("label" = "Slot 1: CORRUPTED", "UI" = "663300663300a611c1c1c16d1d4a42", "UE" = "7d36a3c58b1cb46e57de8270a1769065", "UF" = "5f5f5ffbdf56776dff767f3e9ac2ad52e5c692b49e5ebb3eda3", "name" = "Van Skkkkkk", "blood_type" = "B+");
+	name = "DNA data disk - V.S"
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/obj/item/disk/data{
+	genetic_makeup_buffer = list("label" = "Slot 1: Ji#######", "UI" = "996633663300b930066001c1d03a4f", "UE" = "d9c57cd497b0c773185f6c794905bdd8", "UF" = "ff7777ee82ee197c2c3368db4e360a2cd5341cda294a3eb1073", "name" = "Jimmmmmm", "blood_type" = "B+");
+	name = "DNA data disk - J.J"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "uC" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -1419,6 +1429,24 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
+"yH" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/item/disk/data{
+	genetic_makeup_buffer = list("label" = "Slot 1: George Melons", "UI" = "00cc0088ddff8e06633003851e989d", "UE" = "6893e6a0b0076a41897776b10cc2b324", "UF" = "ff77ff00fa9a192c1b62ffd7edcc127924e14c20900e72f1ce3", "name" = "George Melons", "blood_type" = "AB+");
+	name = "DNA data disk - G.M"
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "yS" = (
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron,
@@ -1462,10 +1490,6 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/caves/misc/syndicate/vault)
-"zK" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/misc/syndicate)
 "zQ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron/dark,
@@ -1643,6 +1667,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/genetics)
+"CS" = (
+/obj/structure/table/reinforced,
+/obj/item/food/pizza/margherita,
+/turf/open/floor/iron/kitchen,
+/area/awaymission/caves/misc/syndicate)
 "De" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face.";
@@ -1996,24 +2025,6 @@
 /obj/item/storage/pill_bottle/mutadone,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/genetics)
-"IF" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced/plasma/spawner/west,
-/obj/item/disk/data{
-	genetic_makeup_buffer = list("label" = "Slot 1: CORRUPTED", "UI" = "ff66cc663300a6633ccff6aefd2f49", "UE" = "4922d7a2cb14cd0d041a9448782f141d", "UF" = "5f5f5ffbdf56637e4492ffd897f1784c945f94b4a55920d2d48", "name" = "Phoe Lotsu", "blood_type" = "O+");
-	name = "DNA data disk - P.L"
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
 "II" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -2120,28 +2131,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
-"Kh" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced/plasma/spawner/east,
-/obj/item/disk/data{
-	genetic_makeup_buffer = list("label" = "Slot 1: CORRUPTED", "UI" = "663300663300a611c1c1c16d1d4a42", "UE" = "7d36a3c58b1cb46e57de8270a1769065", "UF" = "5f5f5ffbdf56776dff767f3e9ac2ad52e5c692b49e5ebb3eda3", "name" = "Van Skkkkkk", "blood_type" = "B+");
-	name = "DNA data disk - V.S"
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/obj/item/disk/data{
-	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
-	},
-/obj/item/disk/data{
-	genetic_makeup_buffer = list("label" = "Slot 1: Ji#######", "UI" = "996633663300b930066001c1d03a4f", "UE" = "d9c57cd497b0c773185f6c794905bdd8", "UF" = "ff7777ee82ee197c2c3368db4e360a2cd5341cda294a3eb1073", "name" = "Jimmmmmm", "blood_type" = "B+");
-	name = "DNA data disk - J.J"
-	},
-/turf/open/floor/iron/smooth_large,
-/area/awaymission/caves/misc/syndicate/vault)
 "Kz" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2289,6 +2278,24 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/misc/syndicate)
+"Nd" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/item/disk/data{
+	genetic_makeup_buffer = list("label" = "Slot 1: CORRUPTED", "UI" = "ff66cc663300a6633ccff6aefd2f49", "UE" = "4922d7a2cb14cd0d041a9448782f141d", "UF" = "5f5f5ffbdf56637e4492ffd897f1784c945f94b4a55920d2d48", "name" = "Phoe Lotsu", "blood_type" = "O+");
+	name = "DNA data disk - P.L"
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/obj/item/disk/data{
+	desc = "This disk seems to require a unique identifier to access the internal data. Until then, it will scan as a blank disk on most genetic machines."
+	},
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "NN" = (
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
@@ -2599,6 +2606,16 @@
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
+"Tr" = (
+/obj/machinery/light/dim/directional/south,
+/obj/structure/closet/crate/secure{
+	name = "High Value Gene Extracts";
+	tamperproof = 1
+	},
+/obj/item/dnainjector/timed/hulk,
+/obj/item/dnainjector/timed/hulk,
+/turf/open/floor/iron/smooth_large,
+/area/awaymission/caves/misc/syndicate/vault)
 "Tu" = (
 /obj/structure/closet/crate{
 	name = "bed locker"
@@ -2642,16 +2659,6 @@
 "UF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/awaymission/caves/misc/syndicate/vault)
-"UM" = (
-/obj/machinery/light/dim/directional/south,
-/obj/structure/closet/crate/secure{
-	name = "High Value Gene Extracts";
-	tamperproof = 1
-	},
-/obj/item/dnainjector/timed/hulk,
-/obj/item/dnainjector/timed/hulk,
-/turf/open/floor/iron/smooth_large,
 /area/awaymission/caves/misc/syndicate/vault)
 "UQ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -4052,9 +4059,9 @@ dL
 dL
 dL
 Wh
-rl
+yH
 ug
-Kh
+ux
 Wh
 dL
 dL
@@ -4093,7 +4100,7 @@ Wh
 Wh
 Sr
 ug
-UM
+Tr
 Wh
 Wh
 Wh
@@ -4130,9 +4137,9 @@ DA
 Dt
 cM
 dy
-ku
+aL
 ug
-IF
+Nd
 dy
 fn
 wF
@@ -5537,7 +5544,7 @@ Zi
 BE
 BE
 li
-kh
+hD
 sO
 dL
 an
@@ -5612,8 +5619,8 @@ sO
 sO
 rn
 Ds
-zK
-zK
+CS
+sm
 sO
 sO
 dL
