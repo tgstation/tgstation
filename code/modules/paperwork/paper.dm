@@ -178,7 +178,10 @@
 /obj/item/paper/proc/add_field_input(field_id, text, font, color, bold, signature_name, overwrite = FALSE)
 	var/datum/paper_field/field_data_datum = null
 
-	var/field_text = (text == "%sign") ? signature_name : text
+	var/is_signature = ((text == "%sign") || (text == "%s"))
+
+	var/field_text = is_signature ? signature_name : text
+	var/field_font = is_signature ? SIGNATURE_FONT : font
 
 	for(var/datum/paper_field/field_input in raw_field_input_data)
 		if(field_input.field_index == field_id)
@@ -191,21 +194,23 @@
 		var/new_field_input_datum = new /datum/paper_field(
 			field_id,
 			field_text,
-			font,
+			field_font,
 			color,
-			bold
+			bold,
+			is_signature,
 		)
 		LAZYADD(raw_field_input_data, new_field_input_datum)
 		return TRUE
 
 	var/new_input_datum = new /datum/paper_input(
 		field_text,
-		font,
+		field_font,
 		color,
 		bold,
 	)
 
 	field_data_datum.field_data = new_input_datum;
+	field_data_datum.is_signature = is_signature;
 
 	return TRUE
 
@@ -655,22 +660,23 @@
 	var/field_index = -1
 	/// The data that tgui should substitute in-place of the input field when parsing.
 	var/datum/paper_input/field_data = null
+	/// If TRUE, requests tgui to render this field input in a more signature-y style.
+	var/is_signature = FALSE
 
-/datum/paper_field/New(_field_index, raw_text, font, colour, bold)
+/datum/paper_field/New(_field_index, raw_text, font, colour, bold, _is_signature)
 	field_index = _field_index
 	field_data = new /datum/paper_input(raw_text, font, colour, bold)
+	is_signature = _is_signature
 
 /datum/paper_field/proc/make_copy()
-	return new /datum/paper_field(field_index, field_data.raw_text, field_data.font, field_data.colour, field_data.bold)
+	return new /datum/paper_field(field_index, field_data.raw_text, field_data.font, field_data.colour, field_data.bold, is_signature)
 
 /datum/paper_field/proc/to_list()
 	return list(
 		field_index = field_index,
 		field_data = field_data.to_list(),
+		is_signature = is_signature,
 	)
-
-
-/datum/paper_field/signature
 
 /obj/item/paper/construction
 

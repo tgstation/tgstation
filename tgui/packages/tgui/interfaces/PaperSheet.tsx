@@ -10,6 +10,7 @@ import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'inferno';
 import { clamp } from 'common/math';
+import { logger } from '../logging';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
@@ -51,6 +52,7 @@ type StampInput = {
 type FieldInput = {
   field_index: string;
   field_data: PaperInput;
+  is_signature: boolean;
 };
 
 type WritingImplement = {
@@ -102,8 +104,8 @@ const createPreview = (
   textAreaText: string | null,
   defaultFont: string,
   defaultColor: string,
-  heldItemDetails: WritingImplement | undefined,
-  signature: string
+  paperColor: string,
+  heldItemDetails: WritingImplement | undefined
 ) => {
   let output = '';
 
@@ -130,7 +132,6 @@ const createPreview = (
       fontFace,
       fontColor,
       fontBold,
-      signature,
       fieldCounter,
       readOnly
     );
@@ -150,13 +151,12 @@ const createPreview = (
       fontFace,
       fontColor,
       fontBold,
-      signature,
       fieldCounter,
       true
     ).text;
   }
 
-  fillAllFields(fieldDataList || []);
+  fillAllFields(fieldDataList || [], paperColor);
 
   return output;
 };
@@ -178,33 +178,19 @@ const textWidth = (text, font, fontsize) => {
   return ctx.measureText(text).width;
 };
 
-const field_regex = /\[((?:_+)|(?:%s(?:ign)*))\]/g;
+const field_regex = /\[((?:_+))\]/gi;
 const field_tag_regex =
   /\[<input\s+(?!disabled)(.*?)\s+id="paperfield_(?<id>\d+)"(.*?)\/>\]/gm;
-const sign_regex = /^%s(?:ign)*$/i;
 
 const createFields = (
   txt,
   font,
   fontsize,
   color,
-  signature,
   forceReadonlyFields,
   counter = 0
 ) => {
   const ret_text = txt.replace(field_regex, (match, p1, offset, string) => {
-    const isSignature = p1 === '%sign' || p1 === '%s';
-
-    if (isSignature) {
-      return createSignatureField(
-        signature,
-        font,
-        fontsize,
-        color,
-        createIDHeader(counter++)
-      );
-    }
-
     const width = textWidth(match, font, fontsize) + 'px';
     return createInputField(
       p1.length,
@@ -234,13 +220,7 @@ const createInputField = (
 ) => {
   return `[<input ${
     readOnly ? 'disabled ' : ''
-  }type="text" style="font-size:${fontsize}px; font-family: ${font};color:${color};min-width:${width};max-width:${width};" id="${id}" maxlength=${length} size=${length} />]`;
-};
-
-const createSignatureField = (signature, font, fontsize, color, id) => {
-  const width = `${textWidth(`[${signature}]`, font, fontsize)}px`;
-  const length = signature.length;
-  return `[<input disabled value="${signature}" type="text" style="font-size:${fontsize}px; font-family:${font};color:${color};min-width:${width};max-width:${width};" id="${id}" maxlength=${length} size=${length} />]`;
+  }type="text" style="font-size:${fontsize}px; font-family: ${font};color:${color};min-width:${width};max-width:${width}" id="${id}" maxlength=${length} size=${length} />]`;
 };
 
 const formatAndProcessRawText = (
@@ -248,7 +228,6 @@ const formatAndProcessRawText = (
   font,
   color,
   bold,
-  signature,
   fieldCounter = 0,
   forceReadonlyFields = false
 ): { text: string; fieldCount: number } => {
@@ -264,7 +243,6 @@ const formatAndProcessRawText = (
     font,
     12,
     color,
-    signature,
     forceReadonlyFields,
     fieldCounter
   );
@@ -408,7 +386,10 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
     const widthMax = scrollable.clientWidth - stampWidth;
     const heightMax = scrollable.clientHeight - stampHeight;
 
-    const radians = Math.atan2(e.pageX - currentWidth, e.pageY - currentHeight);
+    const radians = Math.atan2(
+      currentWidth + stampWidth / 2 - e.pageX,
+      currentHeight + stampHeight / 2 - e.pageY
+    );
 
     const rotate = rotating
       ? radians * (180 / Math.PI) * -1
@@ -490,19 +471,16 @@ const hookAllFields = (raw_text, onInputHandler) => {
       }
 
       if (dom.disabled) {
-        // logger.log(`Skipped ${id}`);
-        // logger.log(`${dom.outerHTML}`);
         continue;
       }
-
-      // logger.log(`Hooked ${id}`);
+      logger.log(dom.outerHTML);
 
       dom.oninput = onInputHandler;
     }
   }
 };
 
-const fillAllFields = (fieldInputData: FieldInput[]) => {
+const fillAllFields = (fieldInputData: FieldInput[], paperColor: string) => {
   if (!fieldInputData?.length) {
     return;
   }
@@ -522,7 +500,9 @@ const fillAllFields = (fieldInputData: FieldInput[]) => {
     dom.value = fieldData.raw_text;
     dom.style.fontFamily = fieldData.font;
     dom.style.color = fieldData.color;
-    dom.style.fontSize = '12px';
+    dom.style.backgroundColor = paperColor;
+    dom.style.fontSize = field.is_signature ? '30px' : '12px';
+    dom.style.fontStyle = field.is_signature ? 'italic' : 'normal';
     dom.style.fontWeight = 'bold';
   });
 };
@@ -669,14 +649,20 @@ export const PreviewView = (props, context) => {
     {}
   );
 
+  const [sigFieldData, setSigFieldData] = useLocalState(
+    context,
+    'sigFieldData',
+    {}
+  );
+
   const parsedAndSanitisedHTML = createPreview(
     raw_text_input,
     raw_field_input,
     canEdit(held_item_details) ? textAreaText : null,
     default_pen_font,
     default_pen_color,
-    held_item_details,
-    user_name
+    paper_color,
+    held_item_details
   );
 
   const onInputHandler = (ev) => {
@@ -698,8 +684,6 @@ export const PreviewView = (props, context) => {
   const textHTML = {
     __html: '<span class="paper-text">' + parsedAndSanitisedHTML + '</span>',
   };
-
-  // logger.log(textHTML.__html);
 
   const { scrollableRef, handleOnScroll } = props;
 
