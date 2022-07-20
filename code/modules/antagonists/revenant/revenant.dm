@@ -153,10 +153,10 @@
 
 /mob/living/simple_animal/revenant/get_status_tab_items()
 	. = ..()
-	. += "Current essence: [essence]/[essence_regen_cap]E"
-	. += "Stolen essence: [essence_accumulated]E"
-	. += "Unused stolen essence: [essence_excess]E"
-	. += "Stolen perfect souls: [perfectsouls]"
+	. += "Current Essence: [essence >= essence_regen_cap ? essence : "[essence] / [essence_regen_cap]"]E"
+	. += "Total Essence Stolen: [essence_accumulated]SE"
+	. += "Unused Stolen Essence: [essence_excess]SE"
+	. += "Perfect Souls Stolen: [perfectsouls]"
 
 /mob/living/simple_animal/revenant/update_health_hud()
 	if(hud_used)
@@ -367,7 +367,7 @@
 	setDir(SOUTH) // reset dir so the right directional sprites show up
 	return ..()
 
-/mob/living/simple_animal/revenant/Moved(atom/OldLoc)
+/mob/living/simple_animal/revenant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	if(!orbiting) // only needed when orbiting
 		return ..()
 	if(incorporeal_move_check(src))
@@ -375,7 +375,7 @@
 
 	// back back back it up, the orbitee went somewhere revenant cannot
 	orbiting?.end_orbit(src)
-	abstract_move(OldLoc) // gross but maybe orbit component will be able to check pre move in the future
+	abstract_move(old_loc) // gross but maybe orbit component will be able to check pre move in the future
 
 /mob/living/simple_animal/revenant/stop_orbit(datum/component/orbiter/orbits)
 	// reset the simple_flying animation

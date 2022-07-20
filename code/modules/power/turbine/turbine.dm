@@ -141,7 +141,7 @@
 /obj/machinery/power/turbine/proc/disable_parts(mob/user)
 	can_connect = FALSE
 
-/obj/machinery/power/turbine/Moved(atom/OldLoc, Dir)
+/obj/machinery/power/turbine/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	disable_parts()
 	air_update_turf(TRUE)

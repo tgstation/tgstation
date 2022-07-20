@@ -118,7 +118,7 @@
 
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
-	stored_reagents = new()
+	stored_reagents = new(new_flags = NO_REACT)
 	stored_reagents.maximum_volume = length(default_reagent_types) * (max_volume_per_reagent + 1)
 	for(var/reagent in default_reagent_types)
 		add_new_reagent(reagent)
@@ -223,7 +223,7 @@
 
 /obj/item/reagent_containers/borghypo/examine(mob/user)
 	. = ..()
-	. += "Currently loaded: [selected_reagent]. [selected_reagent.description]"
+	. += "Currently loaded: [selected_reagent ? "[selected_reagent]. [selected_reagent.description]" : "nothing."]"
 	. += span_notice("<i>Alt+Click</i> to change transfer amount. Currently set to [amount_per_transfer_from_this]u.")
 
 /obj/item/reagent_containers/borghypo/AltClick(mob/living/user)

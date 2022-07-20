@@ -258,3 +258,24 @@
 	)
 	result = /obj/item/food/stuffed_cabbage
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/granola_bar
+	name = "Granola bar"
+	reqs = list(
+		/obj/item/food/grown/oat = 1,
+		/obj/item/food/grown/peanut = 1,
+		/obj/item/food/chocolatebar = 1,
+		/obj/item/food/no_raisin = 1,
+		/datum/reagent/consumable/sugar = 2
+	)
+	result = /obj/item/food/granola_bar
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/onigiri
+	name = "Onigiri"
+	reqs = list(
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/seaweedsheet = 1,
+	)
+	result = /obj/item/food/onigiri
+	subcategory = CAT_MISCFOOD

@@ -606,6 +606,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	G.summoner = user
 	G.key = candidate.key
 	G.mind.enslave_mind_to_creator(user)
+	G.copy_languages(user, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
+	G.update_atom_languages()
 	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
 	switch(theme)
 		if("tech")

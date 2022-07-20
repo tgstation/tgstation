@@ -1,0 +1,4 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - bugfix: "circuits can no longer send trams to brazil, since that is not on the station"

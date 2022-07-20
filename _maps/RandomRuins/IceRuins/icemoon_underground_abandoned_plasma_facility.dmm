@@ -767,10 +767,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "lc" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/blacklight/directional/south,
@@ -1884,9 +1881,7 @@
 /area/icemoon/underground/explored)
 "EZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink{
-	pixel_y = 20
-	},
+/obj/structure/sink/directional/south,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/mop/advanced,
 /turf/open/floor/plating/icemoon,
@@ -1947,9 +1942,7 @@
 /obj/item/soap/homemade{
 	pixel_y = 2
 	},
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
 /area/ruin/plasma_facility/commons)
@@ -2809,10 +2802,7 @@
 /area/ruin/plasma_facility/commons)
 "TD" = (
 /obj/structure/table/reinforced,
-/obj/structure/sink/kitchen{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/kitchen/directional/west,
 /obj/item/reagent_containers/food/condiment/rice{
 	pixel_x = -6;
 	pixel_y = 11
@@ -3021,10 +3011,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
 "XU" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
