@@ -4,13 +4,13 @@
 /datum/sm_delam_strat/singularity
 
 
-/datum/sm_delam_strat/singularity/can_apply(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam_strat/singularity/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return (sm.absorbed_gasmix.total_moles() >= MOLE_PENALTY_THRESHOLD)
 
 /datum/sm_delam_strat/singularity/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
 	if(!.)
-		return .
+		return FALSE
 	sm.radio.talk_into(sm, "Warning: Critical coolant mass reached.", sm.warning_channel)
 
 /datum/sm_delam_strat/singularity/delaminate(obj/machinery/power/supermatter_crystal/sm)
@@ -23,13 +23,13 @@
 /// When we have too much power.
 /datum/sm_delam_strat/tesla
 
-/datum/sm_delam_strat/tesla/can_apply(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam_strat/tesla/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return (sm.power > POWER_PENALTY_THRESHOLD)
 
 /datum/sm_delam_strat/tesla/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
 	if(!.)
-		return .
+		return FALSE
 	sm.radio.talk_into(sm, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.", sm.warning_channel)
 
 /datum/sm_delam_strat/tesla/delaminate(obj/machinery/power/supermatter_crystal/sm)
@@ -42,7 +42,7 @@
 /// Default delam.
 /datum/sm_delam_strat/explosive
 
-/datum/sm_delam_strat/explosive/can_apply(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam_strat/explosive/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return TRUE
 
 /datum/sm_delam_strat/explosive/delaminate(obj/machinery/power/supermatter_crystal/sm)

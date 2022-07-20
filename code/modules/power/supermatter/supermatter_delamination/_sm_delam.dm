@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 /datum/sm_delam_strat
 
 /// Whether we are eligible for this delamination or not. TRUE if valid, FALSE if not.
-/datum/sm_delam_strat/proc/can_apply(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam_strat/proc/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return FALSE
 
 /// Called when the count down has been finished. 
@@ -99,3 +99,11 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 
 	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
 	return TRUE
+
+/// Called when a supermatter switches it's strategy from another one to us.
+/datum/sm_delam_strat/proc/on_select(obj/machinery/power/supermatter_crystal/sm)
+	return
+
+/// Called when a supermatter switches it's strategy from us to something else.
+/datum/sm_delam_strat/proc/on_deselect(obj/machinery/power/supermatter_crystal/sm)
+	return

@@ -483,6 +483,9 @@
 		return
 	for (var/delam_path in GLOB.sm_delam_strat_list)
 		var/datum/sm_delam_strat/delam = GLOB.sm_delam_strat_list[delam_path]
-		if(delam.can_apply(src))
+		if(delam.can_select(src))
+			if(delam == delamination_strategy)
+				return
+			delamination_strategy.on_deselect(src)
 			delamination_strategy = delam
-			return
+			delamination_strategy.on_select(src)
