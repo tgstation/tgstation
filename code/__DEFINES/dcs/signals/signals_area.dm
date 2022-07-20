@@ -24,6 +24,9 @@
 /// Called when an alarm handler clears an alarm
 #define COMSIG_ALARM_CLEARED "alarm_cleared"
 
+/// Called when the air alarm mode is updated
+#define COMSIG_AIRALARM_UPDATE_MODE "airalarm_update_mode"
+
 // Area fire signals
 /// Sent when an area's fire var changes: (fire_value)
 #define COMSIG_AREA_FIRE_CHANGED "area_fire_set"
