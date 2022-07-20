@@ -20,13 +20,12 @@
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = local_turf.return_air()
 	environment_total_moles = env.total_moles()
-	var/datum/gas_mixture/removed
 	if(produces_gas)
 		//Remove gas from surrounding area
-		removed = env.remove(absorption_ratio * env.total_moles())
+		absorbed_gasmix = env.remove(absorption_ratio * env.total_moles())
 	else
 		// Pass all the gas related code an empty gas container
-		removed = new()
+		absorbed_gasmix = new()
 	overlays -= psyOverlay
 	if(psy_overlay)
 		overlays -= psyOverlay
@@ -36,38 +35,38 @@
 		else
 			psy_overlay = FALSE
 	damage_archived = damage
-	if(!removed || !removed.total_moles() || isspaceturf(local_turf)) //we're in space or there is no gas to process
+	if(!absorbed_gasmix || !absorbed_gasmix.total_moles() || isspaceturf(local_turf)) //we're in space or there is no gas to process
 		if(takes_damage)
 			damage += max((power / 1000) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
 		if(!istype(env, /datum/gas_mixture/immutable) && produces_gas && power) //There is no gas to process, but we are not in a space turf. Lets make them.
 			//Power * 0.55 * a value between 1 and 0.8
 			var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
 			//Can't do stuff if it's null, so lets make a new gasmix.
-			removed = new()
+			absorbed_gasmix = new()
 			//Since there is no gas to process, we will produce as if heat penalty is 1 and temperature at TCMB.
-			removed.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
-			removed.temperature = ((device_energy) / THERMAL_RELEASE_MODIFIER)
-			removed.temperature = max(TCMB, min(removed.temperature, 2500))
-			removed.gases[/datum/gas/plasma][MOLES] = max((device_energy) / PLASMA_RELEASE_MODIFIER, 0)
-			removed.gases[/datum/gas/oxygen][MOLES] = max(((device_energy + TCMB) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
-			removed.garbage_collect()
-			env.merge(removed)
+			absorbed_gasmix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+			absorbed_gasmix.temperature = ((device_energy) / THERMAL_RELEASE_MODIFIER)
+			absorbed_gasmix.temperature = max(TCMB, min(absorbed_gasmix.temperature, 2500))
+			absorbed_gasmix.gases[/datum/gas/plasma][MOLES] = max((device_energy) / PLASMA_RELEASE_MODIFIER, 0)
+			absorbed_gasmix.gases[/datum/gas/oxygen][MOLES] = max(((device_energy + TCMB) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+			absorbed_gasmix.garbage_collect()
+			env.merge(absorbed_gasmix)
 			air_update_turf(FALSE, FALSE)
 	else
 		if(takes_damage)
 			//causing damage
-			deal_damage(removed)
+			deal_damage(absorbed_gasmix)
 
 		//registers the current enviromental gases in the various lists and vars
-		setup_lists(removed)
+		setup_lists(absorbed_gasmix)
 		//some gases can have special interactions
-		special_gases_interactions(env, removed)
+		special_gases_interactions(env, absorbed_gasmix)
 		//main power calculations proc
-		power_calculations(env, removed)
+		power_calculations(env, absorbed_gasmix)
 		//irradiate at this point
 		emit_radiation()
 		//handles temperature increase and gases made by the crystal
-		temperature_gas_production(env, removed)
+		temperature_gas_production(env, absorbed_gasmix)
 
 	var/cascading = check_cascade_requirements()
 	if(cascading)
@@ -105,17 +104,22 @@
 	//After this point power is lowered
 	//This wraps around to the begining of the function
 	//Handle high power zaps/anomaly generation
-	handle_high_power(removed)
+	handle_high_power(absorbed_gasmix)
 
 	if(prob(15))
 		supermatter_pull(loc, min(power/850, 3))//850, 1700, 2550
 
 	//Tells the engi team to get their butt in gear
-	handle_emergency_alerts()
-	alarm()
+	//handle_emergency_alerts()
+	//alarm()
+	set_delam()
+	delamination_strategy.delam_progress(src)
 
 	if(damage == 0 && has_destabilizing_crystal)
 		has_destabilizing_crystal = FALSE
+
+	if(damage > explosion_point && !final_countdown)
+		delamination_strategy.count_down(src)
 
 	return TRUE
 
@@ -481,3 +485,4 @@
 		var/datum/sm_delam_strat/delam = GLOB.sm_delam_strat_list[delam_path]
 		if(delam.can_apply(src))
 			delamination_strategy = delam
+			return

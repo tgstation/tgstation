@@ -9,6 +9,8 @@
 
 /datum/sm_delam_strat/singularity/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
+	if(!.)
+		return .
 	sm.radio.talk_into(sm, "Warning: Critical coolant mass reached.", sm.warning_channel)
 
 /datum/sm_delam_strat/singularity/delaminate(obj/machinery/power/supermatter_crystal/sm)
@@ -26,6 +28,8 @@
 
 /datum/sm_delam_strat/tesla/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
+	if(!.)
+		return .
 	sm.radio.talk_into(sm, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.", sm.warning_channel)
 
 /datum/sm_delam_strat/tesla/delaminate(obj/machinery/power/supermatter_crystal/sm)
