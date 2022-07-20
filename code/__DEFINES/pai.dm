@@ -1,4 +1,3 @@
-
 /// Time between fold out
 #define HOLOCHASSIS_COOLDOWN 5 SECONDS
 /// Time it takes a new pAI to fold out
