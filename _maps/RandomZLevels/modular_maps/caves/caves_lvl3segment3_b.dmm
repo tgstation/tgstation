@@ -40,12 +40,6 @@
 "ai" = (
 /turf/closed/indestructible/necropolis,
 /area/template_noop)
-"ak" = (
-/obj/structure/necropolis_arch,
-/obj/structure/necropolis_gate/locked,
-/obj/structure/stone_tile/slab,
-/turf/open/indestructible/boss,
-/area/template_noop)
 "al" = (
 /turf/open/indestructible/necropolis,
 /area/template_noop)
@@ -303,16 +297,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
-"ze" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/step_trigger/teleport_fancy{
-	locationx = 248;
-	locationy = 10;
-	name = "teleport to ratvar level";
-	uses = 0
-	},
-/turf/open/floor/bronze/flat/lavaland,
-/area/template_noop)
 "zx" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/clockwork/cogscarab,
@@ -348,6 +332,21 @@
 /obj/structure/flora/rock,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"Gj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fluff{
+	desc = "You're not sure if walking into this is a great idea...";
+	icon = 'icons/effects/eldritch.dmi';
+	icon_state = "pierced_illusion";
+	name = "fluxating rift"
+	},
+/obj/effect/bump_teleporter{
+	id = null;
+	id_target = "lvl4spawn";
+	name = "lvl4 teleport"
+	},
+/turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
 "HN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
@@ -363,6 +362,14 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"QJ" = (
+/obj/structure/necropolis_arch,
+/obj/structure/stone_tile/slab,
+/obj/structure/necropolis_gate/legion_gate{
+	open = 1
+	},
+/turf/open/indestructible/boss,
 /area/template_noop)
 "RD" = (
 /obj/structure/stone_tile/block{
@@ -732,7 +739,7 @@ ai
 (11,1,1) = {"
 az
 aH
-ak
+QJ
 ay
 ay
 ay
@@ -4337,7 +4344,7 @@ aA
 HN
 zx
 nN
-ze
+Gj
 nN
 HN
 HN

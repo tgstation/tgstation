@@ -34,13 +34,6 @@
 	name = "clockwork wall"
 	},
 /area/template_noop)
-"aJ" = (
-/obj/structure/ladder/unbreakable{
-	height = 1;
-	id = "cavesfinale"
-	},
-/turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
 "aK" = (
 /obj/structure/lattice,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -107,6 +100,14 @@
 /obj/structure/lattice,
 /obj/item/stack/sheet/bronze,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"cl" = (
+/obj/effect/bump_teleporter{
+	id = "lvl4spawn";
+	id_target = null;
+	name = "lvl4 spawn"
+	},
+/turf/open/floor/bronze/flat/lavaland,
 /area/template_noop)
 "cn" = (
 /obj/structure/chair/bronze{
@@ -502,6 +503,10 @@
 /area/awaymission/caves/misc/ratvar/barracks)
 "rg" = (
 /obj/structure/fluff/clockwork/blind_eye,
+/turf/open/floor/bronze/filled/lavaland,
+/area/template_noop)
+"rk" = (
+/obj/effect/decal/cleanable/ash,
 /turf/open/floor/bronze/filled/lavaland,
 /area/template_noop)
 "rA" = (
@@ -1065,6 +1070,10 @@
 "JL" = (
 /obj/effect/spawner/structure/window/bronze,
 /turf/open/floor/bronze,
+/area/template_noop)
+"Kd" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "KB" = (
 /mob/living/simple_animal/hostile/clockminer,
@@ -16689,7 +16698,7 @@ Xy
 aU
 aU
 aU
-aU
+Kd
 aD
 aU
 ah
@@ -16940,7 +16949,7 @@ aU
 aU
 aD
 aD
-aJ
+cl
 aD
 aD
 aU
@@ -17064,7 +17073,7 @@ aU
 aU
 aU
 aU
-aD
+rk
 aD
 aD
 Xy
@@ -17192,7 +17201,7 @@ ah
 aU
 aD
 aU
-aU
+Kd
 aU
 aU
 Xy

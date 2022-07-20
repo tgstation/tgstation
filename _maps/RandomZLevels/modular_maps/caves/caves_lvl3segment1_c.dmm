@@ -24,15 +24,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"ar" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/catwalk_floor/iron,
-/area/awaymission/caves/misc/mining_post)
 "as" = (
 /obj/machinery/mineral/processing_unit{
 	input_dir = 8;
@@ -60,6 +51,18 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"ay" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "aA" = (
 /turf/closed/mineral/random/volcanic/lava_land_surface/hardened/labormineral,
 /area/template_noop)
@@ -139,14 +142,6 @@
 /obj/structure/spawner/lavaland/icewatcher,
 /turf/open/indestructible/necropolis,
 /area/template_noop)
-"bf" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron,
-/area/awaymission/caves/misc/mining_post)
 "bn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing/corner{
@@ -157,6 +152,20 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/misc/mining_post/diverter)
+"bI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/stack/ore/diamond{
+	amount = 10
+	},
+/obj/item/stack/ore/bluespace_crystal{
+	amount = 10
+	},
+/obj/item/stack/ore/titanium{
+	amount = 25
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
 "bJ" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -253,14 +262,23 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/mining_post)
-"gs" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock"
-	},
+"gB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
-/area/awaymission/caves/misc/mining_post)
+/obj/structure/closet/crate,
+/obj/item/stack/ore/titanium{
+	amount = 35
+	},
+/obj/item/stack/ore/iron{
+	amount = 50
+	},
+/obj/item/stack/ore/glass/basalt{
+	amount = 50
+	},
+/obj/item/stack/ore/bananium{
+	amount = 10
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter2)
 "gU" = (
 /obj/machinery/conveyor{
 	id = "caves_depo1"
@@ -307,6 +325,21 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/misc/mining_post/diverter)
+"hG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "caves_depo2"
+	},
+/obj/structure/closet/crate,
+/obj/item/stack/ore/plasma{
+	amount = 15
+	},
+/obj/item/stack/ore/uranium{
+	amount = 20
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
 "hL" = (
 /obj/structure/sign/warning{
 	desc = "A sign warning you about some explosive ordnance. Whether or not you care about this warning is up to you.";
@@ -331,19 +364,29 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"ig" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 8
-	},
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/iron,
-/area/awaymission/caves/misc/mining_post)
+"io" = (
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
+/area/awaymission/caves/misc/mining_post/smelter1)
 "iB" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/misc/mining_post/diverter)
+"iF" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/west,
+/obj/structure/table,
+/obj/item/folder/yellow{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/pen,
+/obj/structure/sign/calendar/directional/west,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "iX" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "caves_depo1";
@@ -443,6 +486,18 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter1)
+"ne" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "nq" = (
 /obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "caveslvldumbjump";
@@ -493,6 +548,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/diverter)
+"oN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "oX" = (
 /obj/structure/flora/rock/pile,
 /obj/structure/sign/warning{
@@ -521,6 +582,13 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
+"qv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "qA" = (
 /obj/structure/cable,
 /obj/structure/railing{
@@ -532,6 +600,11 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/misc/mining_post/diverter)
+"qS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "rt" = (
 /obj/structure/flora/rock/pile,
 /obj/effect/turf_decal/stripes/white/line{
@@ -546,11 +619,6 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter1)
-"sq" = (
-/obj/machinery/atmospherics/components/tank/oxygen,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/mining_post)
 "ss" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -596,6 +664,10 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post)
+"tr" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
 "tt" = (
 /obj/structure/cable,
 /obj/structure/railing{
@@ -621,10 +693,6 @@
 	},
 /turf/open/indestructible/necropolis,
 /area/template_noop)
-"tU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/mining_post)
 "tV" = (
 /obj/machinery/conveyor{
 	id = "caves_depo1"
@@ -645,6 +713,12 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/diverter)
+"uJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
 "uR" = (
 /turf/closed/wall,
 /area/awaymission/caves/misc/mining_post/smelter2)
@@ -668,10 +742,35 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/mining_post)
-"ws" = (
+"vE" = (
+/obj/machinery/conveyor{
+	id = "caves_depo2"
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet/crate,
+/obj/item/stack/ore/silver{
+	amount = 25
+	},
+/obj/item/stack/ore/iron{
+	amount = 25
+	},
+/obj/item/stack/ore/glass/basalt{
+	amount = 50
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
+"wa" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "wu" = (
@@ -725,11 +824,6 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter1)
-"xV" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/mining_post)
 "yl" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/machinery/computer/pod/old/mass_driver_controller{
@@ -774,6 +868,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter2)
+"yV" = (
+/obj/machinery/atmospherics/components/tank/oxygen,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "zf" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -796,11 +895,6 @@
 "zL" = (
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/mining_post)
-"zO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/mining_post)
 "zV" = (
 /obj/structure/marker_beacon/yellow,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -812,15 +906,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter1)
-"Am" = (
-/obj/machinery/atmospherics/pipe/layer_manifold,
-/obj/structure/cable,
-/obj/machinery/door/airlock/hatch{
-	name = "Life Support Access"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/away/engineering,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/mining_post)
 "Br" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -845,6 +930,12 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/misc/mining_post/smelter2)
+"BD" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "BI" = (
 /obj/structure/cable,
 /obj/structure/sign/warning/electric_shock/directional/west,
@@ -871,8 +962,19 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post)
+"Cj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "Cn" = (
 /turf/closed/wall,
+/area/awaymission/caves/misc/mining_post/smelter1)
+"Co" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/spear/bonespear,
+/turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter1)
 "Cp" = (
 /obj/effect/turf_decal/stripes/box,
@@ -881,6 +983,10 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
+"Cs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "CE" = (
 /obj/structure/lattice/lava{
 	base_icon_state = "lattice";
@@ -1002,10 +1108,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/misc/mining_post/smelter1)
-"EU" = (
-/obj/machinery/atmospherics/components/tank/oxygen,
-/turf/open/floor/plating,
-/area/awaymission/caves/misc/mining_post)
 "EY" = (
 /obj/structure/flora/rock/pile,
 /obj/effect/turf_decal/stripes/white/line{
@@ -1093,13 +1195,13 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/misc/mining_post/diverter)
-"IB" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 1
+"IX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/shipping_container/nthi{
+	desc = "A standard-measure shipping container for bulk transport of goods. This one is from NTHI: Nanotrasen's mining and refining subdivision. The door has some scratch marks on it."
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/iron,
-/area/awaymission/caves/misc/mining_post)
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/smelter1)
 "Js" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
@@ -1116,14 +1218,6 @@
 	pixel_y = -32
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/awaymission/caves/misc/mining_post/diverter)
-"JD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "caves_depo2"
-	},
-/turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/diverter)
 "JE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1216,8 +1310,8 @@
 /obj/machinery/power/rtg,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/mining_post)
-"Nw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+"Nu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "NM" = (
@@ -1323,16 +1417,35 @@
 "PN" = (
 /turf/closed/wall/rust,
 /area/template_noop)
+"Qa" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "Qd" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/mining_post)
-"QF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/plating,
+"Qu" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/structure/ore_box,
+/turf/open/floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "QI" = (
 /obj/machinery/conveyor{
@@ -1342,6 +1455,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/diverter)
+"Rc" = (
+/turf/closed/mineral/random/volcanic/lava_land_surface/hardened/labormineral,
+/area/awaymission/caves/misc/mining_post/smelter1)
 "Rd" = (
 /obj/structure/flora/ash/tall_shroom,
 /obj/effect/turf_decal/stripes/white/line{
@@ -1349,6 +1465,10 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"Rk" = (
+/obj/machinery/atmospherics/components/tank/oxygen,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "Ro" = (
 /obj/structure/flora/rock/pile,
 /obj/effect/turf_decal/stripes/white/line{
@@ -1395,16 +1515,23 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/diverter)
+"Sp" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "SQ" = (
 /obj/effect/turf_decal/stripes/white/corner,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"Ta" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron,
+"Tc" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "To" = (
 /obj/structure/marker_beacon/yellow,
@@ -1425,12 +1552,13 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/misc/mining_post/smelter1)
-"Tz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron,
-/area/awaymission/caves/misc/mining_post)
+"TA" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/misc/mining_post/diverter)
 "TH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/mineral/processing_unit_console{
@@ -1446,6 +1574,13 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter1)
+"TQ" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/ashwalker{
+	name = "Gets-Stranded-Easily"
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/misc/mining_post/diverter)
 "TS" = (
 /obj/machinery/conveyor/inverted{
 	dir = 6;
@@ -1502,16 +1637,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
-"VO" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron,
-/area/awaymission/caves/misc/mining_post)
 "VR" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -1520,10 +1645,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/diverter)
-"VV" = (
+"VW" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo5"
+	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/stack/ore/gold{
+	amount = 15
+	},
+/obj/item/stack/ore/silver{
+	amount = 35
+	},
 /turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/misc/mining_post/diverter)
+/area/awaymission/caves/misc/mining_post/smelter1)
 "VY" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "caves_depo3";
@@ -1532,6 +1668,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter2)
+"Wv" = (
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/structure/cable,
+/obj/machinery/door/airlock/hatch{
+	name = "Life Support Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/away/engineering,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "WB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area,
@@ -1539,16 +1684,6 @@
 /area/awaymission/caves/misc/mining_post/smelter2)
 "WL" = (
 /turf/closed/wall/r_wall,
-/area/awaymission/caves/misc/mining_post)
-"WO" = (
-/obj/effect/turf_decal/trimline/brown/filled/corner,
-/obj/effect/turf_decal/trimline/brown/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 1
-	},
-/turf/open/floor/iron,
 /area/awaymission/caves/misc/mining_post)
 "WP" = (
 /obj/machinery/conveyor{
@@ -1572,18 +1707,17 @@
 /obj/structure/marker_beacon/yellow,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"Xj" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/awaymission/caves/misc/mining_post)
 "XB" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/misc/mining_post/diverter)
+"XW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/catwalk_floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "YW" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -1635,6 +1769,14 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/misc/mining_post/smelter1)
+"ZN" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/sign/clock/directional/north,
+/turf/open/floor/iron,
+/area/awaymission/caves/misc/mining_post)
 "ZY" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/misc/mining_post/smelter1)
@@ -2446,7 +2588,7 @@ aB
 aN
 Go
 Go
-bf
+ay
 Go
 RT
 aN
@@ -2504,8 +2646,8 @@ aB
 aB
 aB
 Go
-zO
-Nw
+uJ
+Cs
 Go
 RT
 aN
@@ -2564,7 +2706,7 @@ WL
 WL
 WL
 GB
-ws
+oN
 Go
 RT
 RT
@@ -2623,7 +2765,7 @@ WL
 ut
 WL
 Go
-ar
+Qa
 Go
 fE
 fE
@@ -2683,9 +2825,9 @@ fy
 WL
 Qd
 hv
-ig
-Xj
-Xj
+iF
+Sp
+Tc
 GU
 Go
 Go
@@ -2740,12 +2882,12 @@ Lw
 BI
 OF
 Go
-IB
+ZN
 zz
 zL
+BD
 zL
-zL
-WO
+Qu
 xm
 Cg
 Go
@@ -2853,11 +2995,11 @@ aM
 aM
 aM
 Go
-sq
-xV
-xV
-QF
-Am
+yV
+XW
+XW
+qS
+Wv
 CR
 zz
 CS
@@ -2912,8 +3054,8 @@ aB
 aB
 aB
 Go
-EU
-tU
+Rk
+Nu
 Gn
 Gn
 Go
@@ -2976,7 +3118,7 @@ Go
 Go
 Go
 Go
-VO
+wa
 Go
 Go
 Bt
@@ -3035,7 +3177,7 @@ aJ
 aJ
 Go
 OL
-Ta
+qv
 Go
 CM
 tV
@@ -3094,7 +3236,7 @@ CE
 CE
 Go
 EA
-Tz
+Cj
 Go
 CT
 Go
@@ -3153,7 +3295,7 @@ aJ
 aJ
 Go
 Go
-gs
+ne
 Go
 JH
 CE
@@ -4037,7 +4179,7 @@ aJ
 nq
 tk
 XB
-VV
+TQ
 ON
 hr
 VR
@@ -4155,7 +4297,7 @@ CE
 ss
 op
 QI
-Gj
+vE
 Gj
 Gj
 WP
@@ -4272,7 +4414,7 @@ CE
 CE
 KW
 nH
-KW
+TA
 Zr
 Vs
 YZ
@@ -4310,9 +4452,9 @@ Gw
 ef
 bJ
 RG
+io
 aB
 aB
-aB
 aA
 aA
 aA
@@ -4331,13 +4473,13 @@ aJ
 aJ
 aJ
 aJ
-tk
+tr
 Es
 Vs
 JE
 Sd
 Sd
-JD
+hG
 iB
 aJ
 aJ
@@ -4368,8 +4510,8 @@ Gw
 nK
 ef
 dQ
+bI
 Gw
-aB
 aA
 aA
 aB
@@ -4428,10 +4570,10 @@ Gw
 ef
 dQ
 Gw
+Gw
 aA
 aA
 aA
-aN
 aN
 aN
 aB
@@ -4487,9 +4629,9 @@ Gw
 ef
 dQ
 Gw
+Co
 aA
 aA
-aN
 aN
 aF
 aN
@@ -4546,9 +4688,9 @@ dm
 xs
 dQ
 Gw
+IX
 aA
 aA
-aN
 aN
 aN
 aN
@@ -4605,7 +4747,7 @@ cw
 ef
 dQ
 Gw
-aA
+Gw
 aA
 aA
 aA
@@ -4664,7 +4806,7 @@ Na
 ef
 dQ
 Gw
-aA
+Gw
 aA
 aA
 aA
@@ -4723,7 +4865,7 @@ Gw
 ef
 ZM
 Cn
-aA
+Rc
 aA
 aA
 aA
@@ -5348,7 +5490,7 @@ aN
 eA
 zf
 ex
-yS
+gB
 LS
 yS
 aB
@@ -6148,7 +6290,7 @@ aM
 aM
 aB
 eA
-Br
+VW
 tc
 aB
 aB

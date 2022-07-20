@@ -58,6 +58,20 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
+"B" = (
+/obj/structure/fluff{
+	desc = "You're not sure if walking into this is a great idea...";
+	icon = 'icons/effects/eldritch.dmi';
+	icon_state = "pierced_illusion";
+	name = "fluxating rift"
+	},
+/obj/effect/bump_teleporter{
+	id = null;
+	id_target = "riftenter";
+	name = "rift entrance"
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
 "F" = (
 /obj/structure/stone_tile/block/burnt{
 	dir = 1
@@ -98,15 +112,6 @@
 /area/template_noop)
 "R" = (
 /obj/effect/decal/cleanable/ash,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"T" = (
-/obj/structure/fluff{
-	desc = "You're not sure if walking into this is a great idea...";
-	icon = 'icons/effects/eldritch.dmi';
-	icon_state = "pierced_illusion";
-	name = "fluxating rift"
-	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "W" = (
@@ -195,7 +200,7 @@ a
 a
 I
 M
-T
+B
 r
 r
 h
