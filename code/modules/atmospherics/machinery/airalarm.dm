@@ -914,8 +914,71 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
-/obj/item/circuit_component/air_alarm
+/obj/item/circuit_component/air_alarm_general
 	display_name = "Air Alarm"
+	desc = "Outputs basic information that the air alarm has recorded"
+
+	var/obj/machinery/airalarm/connected_alarm
+
+	/// Enables the fire alarm
+	var/datum/port/input/enable_fire_alarm
+	/// Disables the fire alarm
+	var/datum/port/input/disable_fire_alarm
+
+	/// The mode to set the air alarm to
+	var/datum/port/input/option/mode
+	/// The trigger to set the mode
+	var/datum/port/input/set_mode
+
+	var/options_map = list(
+		"Scrubbing" = AALARM_MODE_SCRUBBING,
+		"Venting" = AALARM_MODE_VENTING,
+		"Panic" = AALARM_MODE_PANIC,
+		"Replacement" = AALARM_MODE_REPLACEMENT,
+		"Off" = AALARM_MODE_OFF,
+		"Flood" = AALARM_MODE_FLOOD,
+		"Siphon" = AALARM_MODE_SIPHON,
+		"Contaminated" = AALARM_MODE_CONTAMINATED,
+		"Refill" = AALARM_MODE_REFILL
+	)
+
+/obj/item/circuit_component/air_alarm_general/populate_ports()
+	enable_fire_alarm = add_input_port("Enable Alarm", PORT_TYPE_SIGNAL, trigger = .proc/trigger_alarm)
+	disable_fire_alarm = add_input_port("Disable Alarm", PORT_TYPE_SIGNAL, trigger = .proc/trigger_alarm)
+	mode = add_option_port("Mode", options_map, order = 1)
+	set_mode = add_input_port("Set Mode", PORT_TYPE_SIGNAL, trigger = .proc/set_mode)
+
+/obj/item/circuit_component/air_alarm_general/proc/trigger_alarm(datum/port/input/port)
+	CIRCUIT_TRIGGER
+	if(!connected_alarm || connected_alarm.locked)
+		return
+
+	if(port == enable_fire_alarm)
+		if(alarm_manager.send_alarm(ALARM_ATMOS))
+			post_alert(2)
+	else
+		if(alarm_manager.clear_alarm(ALARM_ATMOS))
+			post_alert(0)
+
+/obj/item/circuit_component/air_alarm_general/proc/set_mode(datum/port/input/port)
+	CIRCUIT_TRIGGER
+	if(!connected_alarm || connected_alarm.locked)
+		return
+
+	connected_alarm.mode = options_map[mode.value]
+	connected_alarm.investigate_log("was turned to [connected_alarm.get_mode_name(connected_alarm.mode)] by [parent.get_creator()]")
+	connected_alarm.apply_mode(src)
+
+
+/obj/item/circuit_component/air_alarm_general/proc/trigger_siphon()
+	CIRCUIT_TRIGGER
+	if(!connected_alarm || connected_alarm.locked)
+		return
+
+	connected_alarm.
+
+/obj/item/circuit_component/air_alarm
+	display_name = "Air Alarm Control"
 	desc = "Controls levels of gases and their temperature as well as all vents and scrubbers in the room."
 
 	var/datum/port/input/option/air_alarm_options
