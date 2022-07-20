@@ -318,7 +318,7 @@ effective or pretty fucking useless.
 		. += span_notice("You can repair it by <b>left-clicking</b> with a combat wrench.")
 		. += span_notice("You can fold it by <b>right-clicking</b> with a combat wrench.")
 
-/obj/machinery/porta_turret/syndicate/toolbox/target(atom/movable/target)
+/obj/machinery/porta_turret/syndicate/toolbox/target(atom/movable/target, should_return_successful = FALSE)
 	if(!target)
 		return
 	if(shootAt(target))

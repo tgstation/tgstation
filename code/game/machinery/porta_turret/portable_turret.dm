@@ -575,13 +575,16 @@ DEFINE_BITFIELD(turret_flags, list(
 			return TRUE
 	return FALSE
 
-/obj/machinery/porta_turret/proc/target(atom/movable/target)
+/obj/machinery/porta_turret/proc/target(atom/movable/target, should_return_successful = FALSE)
 	if(target)
 		popUp() //pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
-		shootAt(target)
-		return 1
-	return
+		var/projectile = shootAt(target)
+		if(should_return_successful)
+			return projectile != null
+		else
+			return TRUE
+	return FALSE
 
 /obj/machinery/porta_turret/proc/shootAt(atom/movable/target)
 	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
@@ -772,7 +775,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
 	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 80, BIO = 0, FIRE = 90, ACID = 90)
 
-/obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
+/obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target, should_return_successful = FALSE)
 	if(target)
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
 		shootAt(target)
