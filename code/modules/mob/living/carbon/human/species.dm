@@ -441,6 +441,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
+	var/obj/item/bodypart/chest = C.get_bodypart(BODY_ZONE_CHEST)
+	var/obj/item/uniform = C.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	if(chest && (chest.bodytype & BODYTYPE_MONKEY) && uniform)
+		if(!(uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
+			C.dropItemToGround(uniform)
+
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
 
@@ -873,6 +879,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ICLOTHING)
+			var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
+			if(chest && (chest.bodytype & BODYTYPE_MONKEY))
+				if(!(I.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
+					to_chat(H, span_warning("[I] doesn't fit your \the [chest]!"))
+					return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
