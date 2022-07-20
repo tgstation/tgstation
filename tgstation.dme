@@ -3879,6 +3879,7 @@
 #include "code\modules\power\supermatter\supermatter_delamination\_sm_delam.dm"
 #include "code\modules\power\supermatter\supermatter_delamination\cascade_delam.dm"
 #include "code\modules\power\supermatter\supermatter_delamination\common_delams.dm"
+#include "code\modules\power\supermatter\supermatter_delamination\delamination_effects.dm"
 #include "code\modules\power\tesla\coil.dm"
 #include "code\modules\power\tesla\energy_ball.dm"
 #include "code\modules\power\turbine\turbine.dm"

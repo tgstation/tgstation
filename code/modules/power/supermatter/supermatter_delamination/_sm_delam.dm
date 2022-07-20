@@ -8,13 +8,14 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 
 /datum/sm_delam_strat
 
-/// Whether we are eligible for this delamination or not.
+/// Whether we are eligible for this delamination or not. TRUE if valid, FALSE if not.
 /datum/sm_delam_strat/proc/can_apply(obj/machinery/power/supermatter_crystal/sm)
 	return FALSE
 
 /// Called when the count down has been finished. 
 /// This bad boy is called internally unlike all the rest.
 /datum/sm_delam_strat/proc/delaminate(obj/machinery/power/supermatter_crystal/sm)
+	qdel(sm)
 
 /// Start counting down, means SM is about to blow. Can still be healed though.
 /datum/sm_delam_strat/proc/count_down(obj/machinery/power/supermatter_crystal/sm)
