@@ -316,6 +316,9 @@
 			parent.overlays += new_iter.appearance
 		else
 			add_overlay(new_iter)
+			// chant a protective overlays.Copy to prevent appearance theft and overlay sticking
+			// the compiler might call it useless but I swear it works
+			var/list/does_nothing = new_iter.overlays.Copy()
 			hand_back += new_iter
 
 		queue_index--
