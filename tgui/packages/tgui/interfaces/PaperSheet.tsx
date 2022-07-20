@@ -4,7 +4,7 @@
 
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Box, Flex, Section, TextArea } from '../components';
+import { Box, Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
