@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(radiation)
 
 /datum/controller/subsystem/radiation/proc/pulse(atom/source, datum/radiation_pulse_information/pulse_information)
 	var/list/cached_rad_insulations = list()
-	var/list/cached_turfs_to_process = pulse_information.turfs_to_process.Copy()
+	var/list/cached_turfs_to_process = pulse_information.turfs_to_process
 	var/turfs_iterated = 0
 	for (var/turf/turf in cached_turfs_to_process)
 		var/turf/turf_to_irradiate = turf
