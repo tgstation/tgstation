@@ -307,7 +307,7 @@
 	for(var/obj/structure/window/window in victim)
 		if(window.get_integrity() > REVENANT_DEFILE_MAX_DAMAGE)
 			window.take_damage(rand(REVENANT_DEFILE_MIN_DAMAGE, REVENANT_DEFILE_MAX_DAMAGE))
-		if(window?.fulltile)
+		if(window.fulltile)
 			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in victim)
 		light.flicker(20) //spooky
