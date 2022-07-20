@@ -87,8 +87,7 @@
 			H.set_species(/datum/species/human)
 	else if(ishuman(H) && !ishumanbasic(H))
 		var/datum/species/target_species = H.dna.species
-		var/organs = H.internal_organs
-		for(var/obj/item/organ/current_organ in organs)
+		for(var/obj/item/organ/current_organ as anything in H.external_organs)
 			if(istype(current_organ, /obj/item/organ/external/tail/cat))
 				current_organ.Remove(H, TRUE)
 				var/obj/item/organ/external/tail/new_tail = locate(/obj/item/organ/external/tail) in target_species.external_organs

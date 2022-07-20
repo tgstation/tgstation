@@ -816,7 +816,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	to_chat(src, span_warning("There is no perch nearby to sit on!"))
 	return
 
-/mob/living/simple_animal/parrot/Moved(oldLoc, dir)
+/mob/living/simple_animal/parrot/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(. && !stat && client && parrot_state == PARROT_PERCH)
 		parrot_state = PARROT_WANDER

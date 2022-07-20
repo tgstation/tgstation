@@ -1233,7 +1233,7 @@
 	if(istype(T, /turf/open/water))
 		return TRUE
 	var/obj/machinery/shower/S = locate() in T
-	if(S?.on)
+	if(S?.actually_on)
 		return TRUE
 
 //Same but with wheat
@@ -1765,6 +1765,35 @@
 				/obj/item/stack/tile/iron = 1,
 				/obj/item/stock_parts/water_recycler = 1)
 	category = CAT_STRUCTURE
+
+/datum/crafting_recipe/toiletbong
+	name = "Toiletbong"
+	category = CAT_STRUCTURE
+	tool_behaviors = list(TOOL_WRENCH)
+	reqs = list(
+		/obj/item/flamethrower = 1)
+	result = /obj/structure/toiletbong
+	time = 5 SECONDS
+	additional_req_text = " plasma tank (on flamethrower), toilet"
+
+/datum/crafting_recipe/toiletbong/check_requirements(mob/user, list/collected_requirements)
+	if((locate(/obj/structure/toilet) in range(1, user.loc)) == null)
+		return FALSE
+	var/obj/item/flamethrower/flamethrower = collected_requirements[/obj/item/flamethrower][1]
+	if(flamethrower.ptank == null)
+		return FALSE
+	return TRUE
+
+/datum/crafting_recipe/toiletbong/on_craft_completion(mob/user, atom/result)
+	var/obj/structure/toiletbong/toiletbong = result
+	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1, user.loc)
+	for (var/obj/item/cistern_item in toilet.contents)
+		cistern_item.forceMove(user.loc)
+		to_chat(user, span_warning("[cistern_item] falls out of the toilet!"))
+	toiletbong.dir = toilet.dir
+	toiletbong.loc = toilet.loc
+	qdel(toilet)
+	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE
