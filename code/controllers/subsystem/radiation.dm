@@ -10,14 +10,18 @@ SUBSYSTEM_DEF(radiation)
 
 /datum/controller/subsystem/radiation/fire(resumed)
 	while (processing.len)
-		var/datum/radiation_pulse_information/pulse_information = popleft(processing)
+		var/datum/radiation_pulse_information/pulse_information = processing[1]
 
 		var/datum/weakref/source_ref = pulse_information.source_ref
 		var/atom/source = source_ref.resolve()
 		if (isnull(source))
+			processing.Cut(1,2)
 			continue
 
 		pulse(source, pulse_information)
+
+		if (!pulse_information.turfs_to_process.len)
+			processing.Cut(1,2)
 
 		if (MC_TICK_CHECK)
 			return
@@ -28,8 +32,11 @@ SUBSYSTEM_DEF(radiation)
 
 /datum/controller/subsystem/radiation/proc/pulse(atom/source, datum/radiation_pulse_information/pulse_information)
 	var/list/cached_rad_insulations = list()
-	while(pulse_information.turfs_to_process.len)
-		var/turf/turf_to_irradiate = popleft(pulse_information.turfs_to_process)
+	var/list/cached_turfs_to_process = pulse_information.turfs_to_process.Copy()
+	var/turfs_iterated = 0
+	for (var/turf/turf in cached_turfs_to_process)
+		var/turf/turf_to_irradiate = turf
+		turfs_iterated += 1
 		for (var/atom/movable/target in turf_to_irradiate)
 			if (!can_irradiate_basic(target))
 				continue
@@ -88,9 +95,11 @@ SUBSYSTEM_DEF(radiation)
 
 			if (irradiate_after_basic_checks(target))
 				target.investigate_log("was irradiated by [source].", INVESTIGATE_RADIATION)
+
 		if(MC_TICK_CHECK)
-			processing += pulse_information
-			return
+			break
+
+	pulse_information.turfs_to_process.Cut(1, turfs_iterated + 1)
 
 /// Will attempt to irradiate the given target, limited through IC means, such as radiation protected clothing.
 /datum/controller/subsystem/radiation/proc/irradiate(atom/target)

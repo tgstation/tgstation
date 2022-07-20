@@ -35,7 +35,7 @@
 	pulse_information.threshold = threshold
 	pulse_information.chance = chance
 	pulse_information.minimum_exposure_time = minimum_exposure_time
-	pulse_information.turfs_to_process = get_rad_turfs(source, max_range)
+	pulse_information.turfs_to_process = RANGE_TURFS(max_range, source)
 
 	SSradiation.processing += pulse_information
 
@@ -73,12 +73,6 @@
 /atom/proc/propagate_radiation_pulse()
 	for(var/atom/atom in orange(1,src))
 		SEND_SIGNAL(atom, COMSIG_ATOM_PROPAGATE_RAD_PULSE, src)
-
-/proc/get_rad_turfs(atom/source, max_range)
-	var/list/turfs = list()
-	for(var/turf/turf in range(max_range, source))
-		turfs += turf
-	return turfs
 
 #undef MEDIUM_RADIATION_THRESHOLD_RANGE
 #undef EXTREME_RADIATION_CHANCE
