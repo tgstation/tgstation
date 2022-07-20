@@ -44,6 +44,8 @@
 	RegisterSignal(mob_to_make_moody, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(mob_to_make_moody, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	RegisterSignal(mob_to_make_moody, COMSIG_LIVING_REVIVE, .proc/on_revive)
+	RegisterSignal(mob_to_make_moody, COMSIG_PARENT_QDELETING, .proc/handle_mob_del)
+
 
 	mob_to_make_moody.become_area_sensitive(MOOD_DATUM_TRAIT)
 	if(mob_to_make_moody.hud_used)
@@ -56,10 +58,17 @@
 
 	unmodify_hud()
 	var/mob/living/mob_parent = parent?.resolve()
+	if (!mob_parent)
+		return
 	mob_parent.lose_area_sensitivity(MOOD_DATUM_TRAIT)
 
-	UnregisterSignal(mob_parent, list(COMSIG_MOB_HUD_CREATED, COMSIG_ENTER_AREA))
+	UnregisterSignal(mob_parent, list(COMSIG_MOB_HUD_CREATED, COMSIG_ENTER_AREA, COMSIG_PARENT_QDELETING))
 	return ..()
+
+/datum/mood/proc/handle_mob_del()
+	SIGNAL_HANDLER
+
+	qdel(src)
 
 /datum/mood/process(delta_time)
 	var/mob/living/mob_parent = parent?.resolve()
