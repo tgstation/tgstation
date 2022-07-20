@@ -61,12 +61,22 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 	delaminate(sm)
 
 /// Whatever we're supposed to do when a delam is currently in progress. 
-/// Mostly just to tell people how useless engi is.
+/// Mostly just to tell people how useless engi is, and play some alarm sounds.
 /// Returns TRUE if we just told people a delam is going on. FALSE if its healing or we didnt say anything.
 /datum/sm_delam_strat/proc/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	if(sm.damage <= sm.warning_point) // Damage is too low, lets not
 		return FALSE 
-	
+
+	switch(sm.get_status())
+		if(SUPERMATTER_DELAMINATING)
+			playsound(sm, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
+		if(SUPERMATTER_EMERGENCY)
+			playsound(sm, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+		if(SUPERMATTER_DANGER)
+			playsound(sm, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+		if(SUPERMATTER_WARNING)
+			playsound(sm, 'sound/machines/terminal_alert.ogg', 75)
+
 	if((REALTIMEOFDAY - sm.lastwarning) < SUPERMATTER_WARNING_DELAY)
 		return FALSE
 	sm.lastwarning = REALTIMEOFDAY
