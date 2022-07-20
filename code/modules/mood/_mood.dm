@@ -56,8 +56,6 @@
 
 	unmodify_hud()
 	var/mob/living/mob_parent = parent?.resolve()
-	if (QDELETED(mob_parent))
-		return
 	mob_parent.lose_area_sensitivity(MOOD_DATUM_TRAIT)
 
 	UnregisterSignal(mob_parent, list(COMSIG_MOB_HUD_CREATED, COMSIG_ENTER_AREA))
@@ -65,8 +63,6 @@
 
 /datum/mood/process(delta_time)
 	var/mob/living/mob_parent = parent?.resolve()
-	if (QDELETED(mob_parent))
-		return
 	if (mob_parent.stat == DEAD)
 		return
 
@@ -102,8 +98,6 @@
 /// Handles mood given by nutrition
 /datum/mood/proc/handle_nutrition()
 	var/mob/living/mob_parent = parent?.resolve()
-	if (QDELETED(mob_parent))
-		return
 	if (HAS_TRAIT(mob_parent, TRAIT_NOHUNGER))
 		return FALSE // no moods for nutrition
 	switch(mob_parent.nutrition)
@@ -148,8 +142,6 @@
 	var/list/params = args.Copy(3)
 
 	var/mob/living/mob_parent = parent?.resolve()
-	if (QDELETED(mob_parent))
-		return
 	params.Insert(1, mob_parent)
 	the_event = new type(arglist(params))
 
@@ -185,8 +177,6 @@
 	shown_mood = 0
 
 	var/mob/living/mob_parent = parent?.resolve()
-	if (QDELETED(mob_parent))
-		return
 	SEND_SIGNAL(mob_parent, COMSIG_CARBON_MOOD_UPDATE)
 
 	for(var/category in mood_events)
@@ -222,8 +212,6 @@
 /// Updates the mob's mood icon
 /datum/mood/proc/update_mood_icon()
 	var/mob/living/mob_parent = parent?.resolve()
-	if (QDELETED(mob_parent))
-		return
 	if (!(mob_parent.client || mob_parent.hud_used))
 		return
 
