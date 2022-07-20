@@ -116,8 +116,14 @@
 /**
  * This proc copies this sheet of paper to a new
  * sheet. Used by carbon papers and the photocopier machine.
+ *
+ * Arguments
+ * * paper_type - Type path of the new paper to create. Can copy anything to anything.
+ * * location - Where to spawn in the new copied paper.
+ * * colored - If true, the copied paper will be coloured and will inherit all colours.
+ * * greyscale_override - If set to a colour string and coloured is false, it will override the default of COLOR_WEBSAFE_DARK_GRAY when copying.
  */
-/obj/item/paper/proc/copy(paper_type = /obj/item/paper, atom/location = loc, colored = TRUE)
+/obj/item/paper/proc/copy(paper_type = /obj/item/paper, atom/location = loc, colored = TRUE, greyscale_override = null)
 	var/obj/item/paper/new_paper = new paper_type(location)
 
 	new_paper.raw_text_inputs = copy_raw_text()
@@ -126,11 +132,12 @@
 	if(colored)
 		new_paper.color = color
 	else
+		var/new_color = color_override || COLOR_WEBSAFE_DARK_GRAY
 		for(var/datum/paper_input/text as anything in new_paper.raw_text_inputs)
-			text.colour = COLOR_WEBSAFE_DARK_GRAY
+			text.colour = new_color
 
 		for(var/datum/paper_field/text as anything in new_paper.raw_field_input_data)
-			text.field_data.colour = COLOR_WEBSAFE_DARK_GRAY
+			text.field_data.colour = new_color
 
 
 	new_paper.raw_stamp_data = copy_raw_stamps()

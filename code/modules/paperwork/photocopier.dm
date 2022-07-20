@@ -251,14 +251,12 @@
 /obj/machinery/photocopier/proc/make_paper_copy()
 	if(!paper_copy)
 		return
-	var/obj/item/paper/copied_paper = paper_copy.copy(/obj/item/paper, loc, FALSE)
-	give_pixel_offset(copied_paper)
 
 	var/copy_colour = toner_cartridge.charges > 10 ? COLOR_FULL_TONER_BLACK : COLOR_GRAY;
 
-	//the font color dependant on the amount of toner left.
-	for(var/datum/paper_input/input as anything in copied_paper)
-		input.colour = copy_colour
+	var/obj/item/paper/copied_paper = paper_copy.copy(/obj/item/paper, loc, FALSE, copy_colour)
+
+	give_pixel_offset(copied_paper)
 
 	copied_paper.name = paper_copy.name
 
