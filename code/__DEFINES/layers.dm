@@ -50,9 +50,6 @@
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 12
 
-///visibility + hiding of things outside of light source range
-#define BYOND_LIGHTING_PLANE 13
-
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
 #define EMISSIVE_PLANE 14
 

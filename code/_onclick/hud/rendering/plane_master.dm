@@ -111,15 +111,59 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	their_client.screen -= src
 	their_client.screen -= relays
 
-///Things rendered on "openspace"; holes in multi-z
-///This applies that shadow that openspace tiles get
-/atom/movable/screen/plane_master/openspace_backdrop
-	name = "Open space backdrop"
-	documentation = "Contains the little patches of darkess, we slide this between the upper and lower turfs to give a distance effect."
-	plane = OPENSPACE_BACKDROP_PLANE
-	appearance_flags = PLANE_MASTER
+/atom/movable/screen/plane_master/parallax_white
+	name = "Parallax whitifier"
+	documentation = "Essentially a backdrop for the parallax plane. We're rendered just below it, so we'll be multiplied by its well, parallax.\
+		<br>If you want something to look as if it has parallax on it, draw it to this plane."
+	plane = PLANE_SPACE
+
+///Contains space parallax
+/atom/movable/screen/plane_master/parallax
+	name = "Parallax"
+	documentation = "Contains parallax, or to be more exact the screen objects that hold parallax.\
+		<br>Note the BLEND_MULTIPLY. The trick here is how low our plane value is. Because of that, we draw below almost everything in the game.\
+		<br>We abuse this to ensure we multiply against the Parallax whitifier plane, or space's plane. It's set to full white, so when you do the multiply you just get parallax out where it well, makes sense to be.\
+		<br>Also notice that the parent parallax plane is mirrored down to all children. We want to support viewing parallax across all z levels at once."
+	plane = PLANE_SPACE_PARALLAX
 	blend_mode = BLEND_MULTIPLY
-	alpha = 255
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/atom/movable/screen/plane_master/gravpulse
+	name = "Gravpulse"
+	documentation = "Ok so this one's fun. Basically, we want to be able to distort the game plane when a grav annom is around.\
+		<br>So we draw the pattern we want to use to this plane, and it's then used as a render target by a distortion filter on the game plane.\
+		<br>Note the blend mode and lack of relay targets. This plane exists only to distort, it's never rendered anywhere."
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = GRAVITY_PULSE_PLANE
+	blend_mode = BLEND_ADD
+	render_target = GRAVITY_PULSE_RENDER_TARGET
+	render_relay_planes = list()
+
+/atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
+	. = ..()
+	if(offset != 0)
+		// You aren't the source? don't change yourself
+		return
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_increase)
+	offset_increase(0, SSmapping.max_plane_offset)
+
+/atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
+	SIGNAL_HANDLER
+	offset_increase(old_offset, new_offset)
+
+/atom/movable/screen/plane_master/parallax/proc/offset_increase(old_offset, new_offset)
+	// Parallax will be mirrored down to any new planes that are added, so it will properly render across mirage borders
+	for(var/offset in old_offset to new_offset)
+		if(offset != 0)
+			// Overlay so we don't multiply twice, and thus fuck up our rendering
+			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
+
+///For any transparent multi-z tiles we want to render
+/atom/movable/screen/plane_master/transparent
+	name = "Transparent"
+	documentation = "The master rendering plate from the offset below ours will be mirrored onto this plane. That way we achive a \"stack\" effect."
+	plane = TRANSPARENT_FLOOR_PLANE
+	appearance_flags = PLANE_MASTER
 
 /atom/movable/screen/plane_master/openspace
 	name = "Open space"
@@ -133,12 +177,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	add_filter("second_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -15))
 	add_filter("third_stage_openspace", 3, drop_shadow_filter(color = "#04080FAA", size = -20))
 
-///For any transparent multi-z tiles we want to render
-/atom/movable/screen/plane_master/transparent
-	name = "Transparent"
-	documentation = "The master rendering plate from the offset below ours will be mirrored onto this plane. That way we achive a \"stack\" effect."
-	plane = TRANSPARENT_FLOOR_PLANE
+///Things rendered on "openspace"; holes in multi-z
+///This applies that shadow that openspace tiles get
+/atom/movable/screen/plane_master/openspace_backdrop
+	name = "Open space backdrop"
+	documentation = "Contains the little patches of darkess, we slide this between the upper and lower turfs to give a distance effect."
+	plane = OPENSPACE_BACKDROP_PLANE
 	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_MULTIPLY
+	alpha = 255
 
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
@@ -174,6 +221,17 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	. = ..()
 	add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
+/atom/movable/screen/plane_master/field_of_vision_blocker
+	name = "Field of vision blocker"
+	documentation = "This is one of those planes that's only used as a filter. It masks out things that want to be hidden by fov.\
+		<br>Literally just contains FOV images, or masks."
+	plane = FIELD_OF_VISION_BLOCKER_PLANE
+	render_target = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list()
+	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
+	allows_offsetting = FALSE
+	
 /atom/movable/screen/plane_master/game_world_upper
 	name = "Upper game world"
 	documentation = "Ok so fov is kinda fucky, because planes in byond serve both as effect groupings and as rendering orderers. Since that's true, we need a plane that we can stick stuff that draws above fov blocked stuff on."
@@ -195,28 +253,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "We need a place that's unmasked by fov that also draws above the upper game world fov hidden plane. I told you fov was hacky man."
 	plane = ABOVE_GAME_PLANE
 	render_relay_planes = list(GAME_PLANE)
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
-
-/atom/movable/screen/plane_master/massive_obj
-	name = "Massive object"
-	documentation = "Huge objects need to render above everything else on the game plane, otherwise they'd well, get clipped and look not that huge. This does that."
-	plane = MASSIVE_OBJ_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
-
-/atom/movable/screen/plane_master/ghost
-	name = "Ghost"
-	documentation = "Ghosts draw here, so they don't get mixed up in the visuals of the game world. Note, this is not not how we HIDE ghosts from people, that's done with invisible and see_invisible."
-	plane = GHOST_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
-	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-
-/atom/movable/screen/plane_master/point
-	name = "Point"
-	documentation = "I mean like, what do you want me to say? Points draw over pretty much everything else, so they get their own plane. Remember we layer render relays to draw planes in their proper order on render plates."
-	plane = POINT_PLANE
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
@@ -267,7 +303,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	else
 		enable_alpha()
 
-
 /atom/movable/screen/plane_master/blackness/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
 	offset_change(old_offset, new_offset)
@@ -281,6 +316,24 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(new_offset != 0)
 		add_relay_to(GET_NEW_PLANE(plane, new_offset))
 
+/atom/movable/screen/plane_master/area
+	name = "Area"
+	documentation = "Holds the areas themselves, which ends up meaning it holds any overlays/effects we apply to areas. NOT snow or rad storms, those go on above lighting"
+	plane = AREA_PLANE
+
+/atom/movable/screen/plane_master/massive_obj
+	name = "Massive object"
+	documentation = "Huge objects need to render above everything else on the game plane, otherwise they'd well, get clipped and look not that huge. This does that."
+	plane = MASSIVE_OBJ_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+
+/atom/movable/screen/plane_master/point
+	name = "Point"
+	documentation = "I mean like, what do you want me to say? Points draw over pretty much everything else, so they get their own plane. Remember we layer render relays to draw planes in their proper order on render plates."
+	plane = POINT_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
 
 ///Contains all lighting objects
 /atom/movable/screen/plane_master/lighting
@@ -348,6 +401,24 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
 
+/atom/movable/screen/plane_master/o_light_visual
+	name = "Overlight light visual"
+	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
+		<br>Exists because lighting updating is really slow, and movement needs to feel smooth.\
+		<br>We draw to the game plane, and mask out space for ourselves on the lighting plane so any color we have has the chance to display."
+	plane = O_LIGHTING_VISUAL_PLANE
+	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_MULTIPLY
+
+/atom/movable/screen/plane_master/above_lighting
+	name = "Above lighting"
+	plane = ABOVE_LIGHTING_PLANE
+	documentation = "Anything on the game plane that needs a space to draw on that will be above the lighting plane.\
+		<br>Mostly little alerts and effects, also sometimes contains things that are meant to look as if they glow."
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+
 /**
  * Handles emissive overlays and emissive blockers.
  */
@@ -368,50 +439,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master/emissive/Initialize(mapload)
 	. = ..()
 	add_filter("em_block_masking", 1, color_matrix_filter(GLOB.em_mask_matrix))
-
-/atom/movable/screen/plane_master/above_lighting
-	name = "Above lighting"
-	plane = ABOVE_LIGHTING_PLANE
-	documentation = "Anything on the game plane that needs a space to draw on that will be above the lighting plane.\
-		<br>Mostly little alerts and effects, also sometimes contains things that are meant to look as if they glow."
-	appearance_flags = PLANE_MASTER //should use client color
-	blend_mode = BLEND_OVERLAY
-
-///Contains space parallax
-/atom/movable/screen/plane_master/parallax
-	name = "Parallax"
-	documentation = "Contains parallax, or to be more exact the screen objects that hold parallax.\
-		<br>Note the BLEND_MULTIPLY. The trick here is how low our plane value is. Because of that, we draw below almost everything in the game.\
-		<br>We abuse this to ensure we multiply against the Parallax whitifier plane, or space's plane. It's set to full white, so when you do the multiply you just get parallax out where it well, makes sense to be.\
-		<br>Also notice that the parent parallax plane is mirrored down to all children. We want to support viewing parallax across all z levels at once."
-	plane = PLANE_SPACE_PARALLAX
-	blend_mode = BLEND_MULTIPLY
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
-	. = ..()
-	if(offset != 0)
-		// You aren't the source? don't change yourself
-		return
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_increase)
-	offset_increase(0, SSmapping.max_plane_offset)
-
-/atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
-	SIGNAL_HANDLER
-	offset_increase(old_offset, new_offset)
-
-/atom/movable/screen/plane_master/parallax/proc/offset_increase(old_offset, new_offset)
-	// Parallax will be mirrored down to any new planes that are added, so it will properly render across mirage borders
-	for(var/offset in old_offset to new_offset)
-		if(offset != 0)
-			// Overlay so we don't multiply twice, and thus fuck up our rendering
-			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
-
-/atom/movable/screen/plane_master/parallax_white
-	name = "Parallax whitifier"
-	documentation = "Essentially a backdrop for the parallax plane. We're rendered just below it, so we'll be multiplied by its well, parallax.\
-		<br>If you want something to look as if it has parallax on it, draw it to this plane."
-	plane = PLANE_SPACE
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"
@@ -448,15 +475,22 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	blend_mode = BLEND_OVERLAY
 	alpha = 0
 
-/atom/movable/screen/plane_master/o_light_visual
-	name = "Overlight light visual"
-	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
-		<br>Exists because lighting updating is really slow, and movement needs to feel smooth.\
-		<br>We draw to the game plane, and mask out space for ourselves on the lighting plane so any color we have has the chance to display."
-	plane = O_LIGHTING_VISUAL_PLANE
-	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
+/atom/movable/screen/plane_master/ghost
+	name = "Ghost"
+	documentation = "Ghosts draw here, so they don't get mixed up in the visuals of the game world. Note, this is not not how we HIDE ghosts from people, that's done with invisible and see_invisible."
+	plane = GHOST_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
+
+/atom/movable/screen/plane_master/fullscreen
+	name = "Fullscreen alert"
+	documentation = "Holds anything that applies to or above the full screen. \
+		<br>Note, it's still rendered underneath hud objects, but this lets us control the order that things like death/damage effects render in.\
+		<br>Also contains some effects that it maybe shouldn't, like the mineral scanner and fov blindness effects."
+	plane = FULLSCREEN_PLANE
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blend_mode = BLEND_MULTIPLY
 
 /atom/movable/screen/plane_master/runechat
 	name = "Runechat"
@@ -472,47 +506,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
-/atom/movable/screen/plane_master/gravpulse
-	name = "Gravpulse"
-	documentation = "Ok so this one's fun. Basically, we want to be able to distort the game plane when a grav annom is around.\
-		<br>So we draw the pattern we want to use to this plane, and it's then used as a render target by a distortion filter on the game plane.\
-		<br>Note the blend mode and lack of relay targets. This plane exists only to distort, it's never rendered anywhere."
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = GRAVITY_PULSE_PLANE
-	blend_mode = BLEND_ADD
-	render_target = GRAVITY_PULSE_RENDER_TARGET
-	render_relay_planes = list()
-
-/atom/movable/screen/plane_master/area
-	name = "Area"
-	documentation = "Holds the areas themselves, which ends up meaning it holds any overlays/effects we apply to areas. NOT snow or rad storms, those go on above lighting"
-	plane = AREA_PLANE
-
 /atom/movable/screen/plane_master/balloon_chat
 	name = "Balloon chat"
 	documentation = "Holds ballon chat images, those little text bars that pop up for a second when you do some things. NOT runechat."
 	plane = BALLOON_CHAT_PLANE
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-
-/atom/movable/screen/plane_master/fullscreen
-	name = "Fullscreen alert"
-	documentation = "Holds anything that applies to or above the full screen. \
-		<br>Note, it's still rendered underneath hud objects, but this lets us control the order that things like death/damage effects render in.\
-		<br>Also contains some effects that it maybe shouldn't, like the mineral scanner and fov blindness effects."
-	plane = FULLSCREEN_PLANE
-	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/atom/movable/screen/plane_master/field_of_vision_blocker
-	name = "Field of vision blocker"
-	documentation = "This is one of those planes that's only used as a filter. It masks out things that want to be hidden by fov.\
-		<br>Literally just contains FOV images, or masks."
-	plane = FIELD_OF_VISION_BLOCKER_PLANE
-	render_target = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list()
-	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
-	allows_offsetting = FALSE
 
 /atom/movable/screen/plane_master/hud
 	name = "HUD"

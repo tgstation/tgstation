@@ -17,6 +17,7 @@
 // Lemon todo:
 // Consider adding a low spec mode if possible, seen too many fps complaints, concerning
 // AIs can see through static via openspace, fix that too
+// See if you can do anything about player popups effecting the lighting plane yes?
 // Lemon todo: There's way too many get_turf(src) calls using SET_PLANE
 // You should make a macro just for that case, reduce code bloat
 // Global todos:
