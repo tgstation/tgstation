@@ -295,7 +295,7 @@
 /datum/outfit/clockminer
 	name = "Clock Cult Miner"
 	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
-	suit = /obj/item/clothing/suit/bronze
+	suit = /obj/item/clothing/suit/costume/bronze
 	shoes = /obj/item/clothing/shoes/bronze
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/bronze

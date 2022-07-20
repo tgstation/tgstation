@@ -72,6 +72,32 @@
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
 
+/turf/closed/indestructible/vault
+	name = "strange wall"
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "rockvault"
+	base_icon_state = "rockvault"
+	smoothing_flags = NONE
+	canSmoothWith = null
+
+/turf/closed/indestructible/vault/alien
+	name = "alien wall"
+	icon_state = "alienvault"
+	base_icon_state = "alienvault"
+
+/turf/closed/indestructible/vault/sandstone
+	name = "sandstone wall"
+	icon_state = "sandstonevault"
+	base_icon_state = "sandstonevault"
+
+/turf/closed/indestructible/bronze
+	name = "clockwork wall"
+	desc = "A huge chunk of bronze, decorated like gears and cogs. You swear you see the cogs moving.."
+	icon = 'icons/turf/walls/clockwork_wall.dmi'
+	icon_state = "clockwork_wall-0"
+	base_icon_state = "clockwork_wall"
+	smoothing_flags = SMOOTH_BITMASK
+
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	desc = null
