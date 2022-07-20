@@ -19,6 +19,39 @@
 /obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
+	register_context()
+
+/obj/machinery/biogenerator/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!isliving(user))
+		return .
+
+	if(!Adjacent(user))
+		return .
+
+	switch (held_item?.tool_behaviour)
+		if (TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_CROWBAR)
+			if (panel_open)
+				context[SCREENTIP_CONTEXT_LMB] = "Remove electronics"
+				return CONTEXTUAL_SCREENTIP_SET
+
+	switch (held_item?.type)
+		if (/obj/item/food/grown/ || /obj/item/storage/bag/plants)
+			context[SCREENTIP_CONTEXT_LMB] = "Insert produce"
+			return CONTEXTUAL_SCREENTIP_SET
+		if (/obj/item/reagent_containers/glass)
+			context[SCREENTIP_CONTEXT_LMB] = "Swap container"
+			return CONTEXTUAL_SCREENTIP_SET
+		if (/obj/item)
+			return .
+	context[SCREENTIP_CONTEXT_LMB] = "Open UI"
+	if(beaker)
+		context[SCREENTIP_CONTEXT_RMB] = "Remove beaker"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/biogenerator/Destroy()
 	QDEL_NULL(beaker)
