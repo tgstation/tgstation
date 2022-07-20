@@ -132,7 +132,7 @@
 	if(colored)
 		new_paper.color = color
 	else
-		var/new_color = color_override || COLOR_WEBSAFE_DARK_GRAY
+		var/new_color = greyscale_override || COLOR_WEBSAFE_DARK_GRAY
 		for(var/datum/paper_input/text as anything in new_paper.raw_text_inputs)
 			text.colour = new_color
 
