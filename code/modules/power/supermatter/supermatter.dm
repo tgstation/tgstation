@@ -505,6 +505,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
  * Returns: cause of the cascade, for logging
  */
 /obj/machinery/power/supermatter_crystal/proc/check_cascade_requirements()
+/*
 	if(admin_cascade)
 		return CASCADING_ADMIN
 
@@ -528,7 +529,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return CASCADING_CRITICAL_GAS
 
 	return FALSE
-
+*/
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
 	for(var/atom/movable/movable_atom in orange(pull_range,center))

@@ -102,11 +102,9 @@
 			log_game("[key_name(user)] attached [destabilizing_crystal] to the supermatter at [AREACOORD(src)]")
 			investigate_log("[key_name(user)] attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
 			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
-			has_destabilizing_crystal = TRUE
-			cascade_initiated = TRUE
+			set_delam(/datum/sm_delam_strat/cascade)
 			damage += 100
 			matter_power += 500
-			addtimer(CALLBACK(src, .proc/announce_incoming_cascade), 2 MINUTES)
 			qdel(destabilizing_crystal)
 		return
 

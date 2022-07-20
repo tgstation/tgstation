@@ -67,7 +67,7 @@
 		emit_radiation()
 		//handles temperature increase and gases made by the crystal
 		temperature_gas_production(env, absorbed_gasmix)
-
+	/*
 	var/cascading = check_cascade_requirements()
 	if(cascading)
 		if(!cascade_initiated)
@@ -90,6 +90,7 @@
 			message_admins("[src] has stopped its cascade. [ADMIN_JMP(src)]")
 			investigate_log("has stopped its cascade.", INVESTIGATE_ENGINE)
 			cascade_initiated = FALSE
+	*/
 
 	//handles hallucinations and the presence of a psychiatrist
 	psychological_examination()
@@ -462,12 +463,6 @@
 	if(damage > explosion_point)
 		countdown()
 	*/
-
-/obj/machinery/power/supermatter_crystal/proc/announce_incoming_cascade()
-	if(check_cascade_requirements())
-		priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
-			a subject within [station_name()], a resonance collapse may occur.",
-			"Nanotrasen Star Observation Association")
 
 /**
  * Sets the delam of our sm.
