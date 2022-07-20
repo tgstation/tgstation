@@ -276,14 +276,16 @@ effective or pretty fucking useless.
 	new /obj/item/wirecutters(src)
 
 /obj/item/storage/toolbox/emergency/turret/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(attacking_item.tool_behaviour == TOOL_WRENCH && user.combat_mode && attacking_item.use_tool(src, user, 2 SECONDS, volume = 50))
-		user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
-			span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
-		playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
-		var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
-		set_faction(turret, user)
-		turret.toolbox = src
-		forceMove(turret)
+	if(istype(attacking_item, /obj/item/wrench/combat))
+		if(user.combat_mode && attacking_item.toolspeed && attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
+			user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
+				span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
+			playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+			var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
+			set_faction(turret, user)
+			turret.toolbox = src
+			forceMove(turret)
+			return
 		return
 	return ..()
 
