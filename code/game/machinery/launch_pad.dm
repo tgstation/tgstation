@@ -47,9 +47,10 @@
 
 	update_indicator()
 
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/bluespace_launchpad,
-	))
+	if(stationary)
+		AddComponent(/datum/component/usb_port, list(
+			/obj/item/circuit_component/bluespace_launchpad,
+		))
 
 /obj/machinery/launchpad/Destroy()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
