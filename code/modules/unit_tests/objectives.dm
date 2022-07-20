@@ -13,7 +13,7 @@
 		if(initial(objective_typepath.abstract_type) == objective_typepath)
 			continue
 		if(!(objective_typepath in objectives_that_exist))
-			Fail("[objective_typepath] is not in a traitor category and isn't an abstract type! Place it into a [/datum/traitor_objective_category] or remove it from code.")
+			TEST_FAIL("[objective_typepath] is not in a traitor category and isn't an abstract type! Place it into a [/datum/traitor_objective_category] or remove it from code.")
 
 /datum/unit_test/objectives_category/proc/recursive_check_list(base_type, list/to_check, list/to_add_to)
 	for(var/value in to_check)

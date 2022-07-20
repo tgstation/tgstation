@@ -25,8 +25,6 @@
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	density = FALSE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
 	layer = ABOVE_WINDOW_LAYER
 
 	var/obj/effect/overlay/status_display_text/message1_overlay

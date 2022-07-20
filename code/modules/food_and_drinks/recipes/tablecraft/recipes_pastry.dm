@@ -340,7 +340,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/obj/item/food/grown/chili
+		/obj/item/food/grown/chili = 1
 	)
 	result = /obj/item/food/donkpocket/spicy
 	subcategory = CAT_PASTRY
@@ -585,4 +585,25 @@
 		/datum/reagent/consumable/sugar = 3
 	)
 	result = /obj/item/food/cannoli
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/peanut_butter_cookie
+	name = "Peanut butter cookie"
+	reqs = list(
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/food/pastrybase = 1
+	)
+	result = /obj/item/food/cookie/peanut_butter
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/raw_brownie_batter
+	name = "Raw brownie batter"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/food/egg = 2,
+		/datum/reagent/consumable/coco = 5,
+		/obj/item/food/butter = 1
+	)
+	result = /obj/item/food/raw_brownie_batter
 	subcategory = CAT_PASTRY

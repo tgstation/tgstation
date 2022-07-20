@@ -426,9 +426,8 @@
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
 		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		for(var/i in H.bodyparts)
-			var/obj/item/bodypart/BP = i
-			BP.generic_bleedstacks += 5
+		for(var/obj/item/bodypart/part as anything in H.bodyparts)
+			part.adjustBleedStacks(5)
 		H.gib_animation()
 		sleep(3)
 		H.adjustBruteLoss(1000) //to make the body super-bloody

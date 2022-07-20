@@ -3,69 +3,69 @@
     "french": {
 		"yes": "oui",
 		"no": "non",
-        "I'm": "j'", 
-        "am": "suis", 
+        "I'm": "j'",
+        "am": "suis",
 		"a": "un",
-        "and": "et", 
+        "and": "et",
 		"the": "l'",
 		"I": "j'",
 		"for": "pour",
 		"with": "avec",
 		"of": "de",
-		
-		
+
+
         "assistant": "ravageur",
         "assistants": "ravageurs",
         "baby": [
-            "enfant", 
+            "enfant",
             "petit baguette"
-        ], 
-        "bad": "mal", 
+        ],
+        "bad": "mal",
         "bye": [
-            "bon voyage", 
+            "bon voyage",
             "adieu",
 			"au revoir"
-        ], 
+        ],
 		"cake": "gateau",
-        "captain": "capitaine", 
+        "captain": "capitaine",
 		"changeling": "changeur",
         "cheese": [
-            "brie", 
+            "brie",
             "roquefort",
 			"camembert"
-        ], 
+        ],
 		"cigarette": "clope",
-        "cook": "cuisinier", 
-        "dad": "papa", 
-        "enemy": "silly english dog", 
-        "friend": "ami", 
-        "good": "bon", 
-        "greytide": "les gitans", 
+        "cook": "cuisinier",
+        "dad": "papa",
+        "enemy": "silly english dog",
+        "friend": "ami",
+        "good": "bon",
+        "greytide": "les gitans",
         "greytider": "les gitans",
         "greytiders": "les gitans",
-		"hardsuit": "burkini",
+		"modsuit": "burkini",
         "hello": [
-            "'allo", 
+            "'allo",
             "bonjour",
 			"salut"
-        ], 
+        ],
 		"maint": "les banlieues",
         "meat": [
-            "coq au vin", 
+            "coq au vin",
             "boeuf"
-        ], 
-        "mom": "maman", 
-        "my": "mon", 
+        ],
+        "mom": "maman",
+        "my": "mon",
         "nuke": [
-			"grand bombe", 
+			"grand bombe",
 			"la baguette ultime"
 		],
-        "op": "boche", 
-        "operative": "boche", 
-        "operatives": "boches", 
-        "ops": "boches", 
-        "urity": "urite", 
-        "security": "securite", 
+        "op": "boche",
+        "operative": "boche",
+        "operatives": "boches",
+        "ops": "boches",
+        "urity": "urite",
+        "security": "securite",
 		"shit": "merde",
         "shitcurity": [
 			"gendarmerie",
@@ -75,17 +75,17 @@
 			"gendarmerie",
 			"les keufs"
 		],
-        "spaghetti": "macaroni", 
-        "spicy": "epice", 
-        "thanks": "merci",  
+        "spaghetti": "macaroni",
+        "spicy": "epice",
+        "thanks": "merci",
 		"tomato": "tomate",
-        "traitor": "collaborateur", 
-        "want": "envie", 
-        "what's": "quel est", 
-        "who's": "qui est",  
-        "why": "porquois", 
+        "traitor": "collaborateur",
+        "want": "envie",
+        "what's": "quel est",
+        "who's": "qui est",
+        "why": "porquois",
         "wine": "vin",
 		"wizard": "sorcier"
 		}
-		
+
 }

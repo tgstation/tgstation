@@ -95,21 +95,21 @@
 
 /obj/item/turbine_parts/compressor
 	name = "compressor part"
-	desc = "Install in a turbine engine compressor to increase it's performances"
+	desc = "Install in a turbine engine compressor to increase its performance"
 	icon_state = "compressor_part"
 	part_efficiency = 0.25
 	part_efficiency_increase_amount = 0.2
 
 /obj/item/turbine_parts/rotor
 	name = "rotor part"
-	desc = "Install in a turbine engine rotor to increase it's performances"
+	desc = "Install in a turbine engine rotor to increase its performance"
 	icon_state = "rotor_part"
 	part_efficiency = 0.25
 	part_efficiency_increase_amount = 0.2
 
 /obj/item/turbine_parts/stator
 	name = "stator part"
-	desc = "Install in a turbine engine turbine to increase it's performances"
+	desc = "Install in a turbine engine turbine to increase its performance"
 	icon_state = "stator_part"
 	part_efficiency = 0.85
 	part_efficiency_increase_amount = 0.015

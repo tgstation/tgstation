@@ -38,15 +38,3 @@
 	. = ..()
 	if(.)
 		update_hair()
-
-/mob/living/carbon/human/set_drugginess(amount)
-	..()
-	if(!amount)
-		remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_HIGH)
-
-/mob/living/carbon/human/adjust_drugginess(amount)
-	..()
-	if(druggy)
-		grant_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_HIGH)
-	else
-		remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_HIGH)

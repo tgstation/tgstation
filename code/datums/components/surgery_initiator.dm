@@ -143,7 +143,7 @@
 		return
 
 	if(the_surgery.operated_bodypart)
-		the_surgery.operated_bodypart.generic_bleedstacks -= 5
+		the_surgery.operated_bodypart.adjustBleedStacks(-5)
 
 	patient.surgeries -= the_surgery
 	REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, ELEMENT_TRAIT(type))

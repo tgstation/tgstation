@@ -3,6 +3,7 @@
 	range = MECHA_RANGED
 	equipment_slot = MECHA_WEAPON
 	destroy_sound = 'sound/mecha/weapdestr.ogg'
+	mech_flags = EXOSUIT_MODULE_COMBAT
 	var/projectile
 	var/fire_sound
 	var/projectiles_per_shot = 1
@@ -11,14 +12,40 @@
 	var/projectile_delay = 0
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect //the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
-	mech_flags = EXOSUIT_MODULE_COMBAT
 
-/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE)
 	if(!..())
 		return FALSE
-	if(istype(M, /obj/vehicle/sealed/mecha/combat))
+	if(mech.mech_type & EXOSUIT_MODULE_COMBAT)
 		return TRUE
 	return FALSE
+
+/obj/item/mecha_parts/mecha_equipment/weapon/special_attaching_interaction(attach_right = FALSE, obj/vehicle/sealed/mecha/mech, mob/user, checkonly = FALSE)
+	var/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/bay
+	if(attach_right)
+		bay = mech.equip_by_category[MECHA_R_ARM]
+	else
+		bay = mech.equip_by_category[MECHA_L_ARM]
+	if(!istype(bay))
+		return FALSE //No bay, use normal attach procs
+	if(checkonly)
+		return TRUE
+	name = bay.name
+	icon = bay.icon
+	icon_state = bay.icon_state
+	bay.detach()
+	bay.forceMove(src) //for later detaching
+	attach(mech, attach_right)
+	user.visible_message(span_notice("[user] inserts something into [src]."), span_notice("You attach the [initial(name)] into the concealed weapon bay."))
+	return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/weapon/detach(atom/moveto)
+	for(var/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/bay in contents)
+		bay.forceMove(get_turf(chassis))
+	name = initial(name)
+	icon = initial(icon)
+	icon_state = initial(icon_state)
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
@@ -126,6 +153,7 @@
 	projectile = /obj/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/plasma_cutter.ogg'
 	harmful = TRUE
+	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(..()) //combat mech
@@ -144,6 +172,7 @@
 	projectile = /obj/projectile/kinetic/mech
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
 	harmful = TRUE
+	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
 
 //attachable to all mechas, like the plasma cutter
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
@@ -194,8 +223,8 @@
 			continue
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
-		M.stuttering += 20
-		var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+		M.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+		var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
 		if(ears)
 			ears.adjustEarDamage(0, 30)
 		M.Paralyze(60)
@@ -203,7 +232,7 @@
 			M.Stun(200)
 			M.Unconscious(80)
 		else
-			M.Jitter(500)
+			M.set_timed_status_effect(1000 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 
 	log_message("Honked from [src.name]. HONK!", LOG_MECHA)
 	var/turf/T = get_turf(src)

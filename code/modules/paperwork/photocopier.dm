@@ -21,9 +21,6 @@
 	icon = 'icons/obj/library.dmi'
 	icon_state = "photocopier"
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 30
-	active_power_usage = 200
 	power_channel = AREA_USAGE_EQUIP
 	max_integrity = 300
 	integrity_failure = 0.33
@@ -218,6 +215,7 @@
  */
 /obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user)
 	busy = TRUE
+	update_use_power(ACTIVE_POWER_USE)
 	var/i
 	for(i in 1 to num_copies)
 		if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
@@ -229,6 +227,7 @@
  * Sets busy to `FALSE`. Created as a proc so it can be used in callbacks.
  */
 /obj/machinery/photocopier/proc/reset_busy()
+	update_use_power(IDLE_POWER_USE)
 	busy = FALSE
 
 /**
@@ -314,7 +313,7 @@
 			temp_img = icon(spec.ass_image)
 		else
 			temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
-	else if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+	else if(isalienadult(ass)) //Xenos have their own asses, thanks to Pybro.
 		temp_img = icon('icons/ass/assalien.png')
 	else if(issilicon(ass))
 		temp_img = icon('icons/ass/assmachine.png')

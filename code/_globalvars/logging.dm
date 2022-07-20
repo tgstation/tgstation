@@ -33,6 +33,8 @@ GLOBAL_VAR(world_uplink_log)
 GLOBAL_PROTECT(world_uplink_log)
 GLOBAL_VAR(world_telecomms_log)
 GLOBAL_PROTECT(world_telecomms_log)
+GLOBAL_VAR(world_speech_indicators_log)
+GLOBAL_PROTECT(world_speech_indicators_log)
 GLOBAL_VAR(world_manifest_log)
 GLOBAL_PROTECT(world_manifest_log)
 GLOBAL_VAR(query_debug_log)
@@ -64,6 +66,9 @@ GLOBAL_PROTECT(perf_log)
 
 GLOBAL_VAR(demo_log)
 GLOBAL_PROTECT(demo_log)
+
+GLOBAL_VAR(lua_log)
+GLOBAL_PROTECT(lua_log)
 
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)

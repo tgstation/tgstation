@@ -30,7 +30,6 @@
 /obj/structure/filingcabinet/filingcabinet //not changing the path to avoid unnecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
 
-
 /obj/structure/filingcabinet/Initialize(mapload)
 	. = ..()
 	if(mapload)
@@ -59,7 +58,6 @@
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
 		icon_state = initial(icon_state)
-		updateUsrDialog()
 	else if(!user.combat_mode)
 		to_chat(user, span_warning("You can't put [P] in [src]!"))
 	else
@@ -87,7 +85,6 @@
 
 	return data
 
-
 /obj/structure/filingcabinet/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -99,16 +96,14 @@
 			var/obj/item/content = locate(params["ref"]) in src
 			if(istype(content) && in_range(src, usr))
 				usr.put_in_hands(content)
-				updateUsrDialog()
 				icon_state = "[initial(icon_state)]-open"
 				addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
-
+				return TRUE
 
 /obj/structure/filingcabinet/attack_tk(mob/user)
 	if(anchored)
 		return attack_self_tk(user)
 	return ..()
-
 
 /obj/structure/filingcabinet/attack_self_tk(mob/user)
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
@@ -121,21 +116,6 @@
 			to_chat(user, span_notice("You pull \a [I] out of [src] at random."))
 			return
 	to_chat(user, span_notice("You find nothing in [src]."))
-
-
-/obj/structure/filingcabinet/Topic(href, href_list)
-	if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(usr)))
-		return
-	if(href_list["retrieve"])
-		usr << browse("", "window=filingcabinet") // Close the menu
-
-		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
-		if(istype(P) && in_range(src, usr))
-			usr.put_in_hands(P)
-			updateUsrDialog()
-			icon_state = "[initial(icon_state)]-open"
-			addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
-
 
 /*
  * Security Record Cabinets

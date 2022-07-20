@@ -40,6 +40,8 @@
 	var/altar_icon_state
 	/// Currently Active (non-deleted) rites
 	var/list/active_rites
+	/// Whether the structure has CANDLE OVERLAYS!
+	var/candle_overlay = TRUE
 
 /datum/religion_sect/New()
 	. = ..()
@@ -156,7 +158,7 @@
 
 	//first we determine if we can charge them
 	var/did_we_charge = FALSE
-	var/obj/item/organ/stomach/ethereal/eth_stomach = blessed.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/ethereal/eth_stomach = blessed.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(eth_stomach))
 		eth_stomach.adjust_charge(60)
 		did_we_charge = TRUE
@@ -315,6 +317,7 @@
 	altar_icon_state = "convertaltar-burden"
 	alignment = ALIGNMENT_NEUT
 	invalidating_qualities = TRAIT_GENELESS
+	candle_overlay = FALSE
 
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
 	..()
@@ -395,8 +398,8 @@
 	var/obj/item/sparring_contract/existing_contract
 	///places you can spar in. rites can be used to expand this list with new arenas!
 	var/list/arenas = list(
-		"Recreation Area" = /area/commons/fitness/recreation,
-		"Chapel" = /area/service/chapel
+		"Recreation Area" = /area/station/commons/fitness/recreation,
+		"Chapel" = /area/station/service/chapel,
 	)
 	///how many matches you've lost with holy stakes. 3 = excommunication
 	var/matches_lost = 0
@@ -405,3 +408,22 @@
 
 /datum/religion_sect/spar/tool_examine(mob/living/holy_creature)
 	return "You have [round(favor)] sparring matches won in [GLOB.deity]'s name to redeem. You have lost [matches_lost] holy matches. You will be excommunicated after losing three matches."
+
+/datum/religion_sect/music
+	name = "Festival God"
+	quote = "Everything follows a rhythm- The heartbeat of the universe!"
+	desc = "Make wonderful music! Sooth or serrate your friends and foes with the beat."
+	tgui_icon = "music"
+	altar_icon_state = "convertaltar-festival"
+	alignment = ALIGNMENT_GOOD
+	candle_overlay = FALSE
+	rites_list = list(
+		/datum/religion_rites/song_tuner/evangelism,
+		/datum/religion_rites/song_tuner/nullwave,
+		/datum/religion_rites/song_tuner/pain,
+		/datum/religion_rites/song_tuner/lullaby,
+	)
+
+/datum/religion_sect/music/on_conversion(mob/living/chap)
+	. = ..()
+	new /obj/item/choice_beacon/music(get_turf(chap))

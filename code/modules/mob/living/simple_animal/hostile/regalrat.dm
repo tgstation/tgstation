@@ -1,3 +1,4 @@
+
 /mob/living/simple_animal/hostile/regalrat
 	name = "feral regal rat"
 	desc = "An evolved rat, created through some strange science. They lead nearby rats with deadly efficiency to protect their kingdom. Not technically a king."
@@ -8,7 +9,7 @@
 	turns_per_move = 5
 	maxHealth = 70
 	health = 70
-	see_in_dark = 5
+	see_in_dark = 15
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	obj_damage = 10
 	butcher_results = list(/obj/item/clothing/head/crown = 1,)
@@ -26,6 +27,8 @@
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
 	faction = list("rat")
+	///Whether or not the regal rat is already opening an airlock
+	var/opening_airlock = FALSE
 	///The spell that the rat uses to generate miasma
 	var/datum/action/cooldown/domain
 	///The Spell that the rat uses to recruit/convert more rats.
@@ -125,6 +128,9 @@
 		return
 	if (QDELETED(target))
 		return
+	if(istype(target, /obj/machinery/door/airlock) && !opening_airlock)
+		pry_door(target)
+		return
 
 	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
 		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
@@ -153,6 +159,36 @@
 		qdel(target)
 	else
 		to_chat(src, span_warning("You feel fine, no need to eat anything!"))
+
+/**
+ * Allows rat king to pry open an airlock if it isn't locked.
+ *
+ * A proc used for letting the rat king pry open airlocks instead of just attacking them.
+ * This allows the rat king to traverse the station when there is a lack of vents or
+ * accessible doors, something which is common in certain rat king spawn points.
+ */
+/mob/living/simple_animal/hostile/regalrat/proc/pry_door(target)
+	var/obj/machinery/door/airlock/prying_door = target
+	if(!prying_door.density || prying_door.locked || prying_door.welded || prying_door.seal)
+		return FALSE
+	opening_airlock = TRUE
+	visible_message(
+		span_warning("[src] begins prying open the airlock..."),
+		span_notice("You begin digging your claws into the airlock..."),
+		span_warning("You hear groaning metal..."),
+	)
+	var/time_to_open = 0.5 SECONDS
+	if(prying_door.hasPower())
+		time_to_open = 5 SECONDS
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
+	if(do_after(src, time_to_open, prying_door))
+		opening_airlock = FALSE
+		if(prying_door.density && !prying_door.open(2))
+			to_chat(src, span_warning("Despite your efforts, the airlock managed to resist your attempts to open it!"))
+			return FALSE
+		prying_door.open()
+		return FALSE
+	opening_airlock = FALSE
 
 /mob/living/simple_animal/hostile/regalrat/controlled/Initialize(mapload)
 	. = ..()

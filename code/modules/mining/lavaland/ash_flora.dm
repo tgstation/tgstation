@@ -2,27 +2,23 @@
 //This includes: The structures, their produce, their seeds and the crafting recipe for the mushroom bowl
 
 /obj/structure/flora/ash
-	gender = PLURAL
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER //sporangiums up don't shoot
-	icon = 'icons/obj/lavaland/ash_flora.dmi'
-	icon_state = "l_mushroom"
 	name = "large mushrooms"
 	desc = "A number of large mushrooms, covered in a faint layer of ash and what can only be spores."
-	herbage = TRUE //not really accurate but what sound do hit mushrooms make anyway
-	var/harvested_name = "shortened mushrooms"
-	var/harvested_desc = "Some quickly regrowing mushrooms, formerly known to be quite large."
-	var/needs_sharp_harvest = TRUE
-	var/harvest = /obj/item/food/grown/ash_flora/shavings
-	var/harvest_amount_low = 1
-	var/harvest_amount_high = 3
-	var/harvest_time = 60
-	var/harvest_message_low = "You pick a mushroom, but fail to collect many shavings from its cap."
-	var/harvest_message_med = "You pick a mushroom, carefully collecting the shavings from its cap."
-	var/harvest_message_high = "You harvest and collect shavings from several mushroom caps."
-	var/harvested = FALSE
+	icon = 'icons/obj/lavaland/ash_flora.dmi'
+	icon_state = "l_mushroom"
+	gender = PLURAL
+	layer = PROJECTILE_HIT_THRESHHOLD_LAYER //sporangiums up don't shoot
+	product_types = list(/obj/item/food/grown/ash_flora/shavings = 1)
+	harvest_with_hands = TRUE
+	harvested_name = "shortened mushrooms"
+	harvested_desc = "Some quickly regrowing mushrooms, formerly known to be quite large."
+	harvest_message_low = "You pick a mushroom, but fail to collect many shavings from its cap."
+	harvest_message_med = "You pick a mushroom, carefully collecting the shavings from its cap."
+	harvest_message_high = "You harvest and collect shavings from several mushroom caps."
+	harvest_message_true_thresholds = TRUE
+	harvest_verb = "pluck"
+	flora_flags = FLORA_HERBAL //not really accurate but what sound do hit mushrooms make anyway
 	var/base_icon
-	var/regrowth_time_low = 8 MINUTES
-	var/regrowth_time_high = 16 MINUTES
 	var/number_of_variants = 4
 
 /obj/structure/flora/ash/Initialize(mapload)
@@ -30,154 +26,116 @@
 	base_icon = "[icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon
 
-/obj/structure/flora/ash/proc/harvest(user)
-	if(harvested)
+/obj/structure/flora/ash/harvest(user)
+	if(!..())
 		return FALSE
-
-	var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
-	if(rand_harvested)
-		if(user)
-			var/msg = harvest_message_med
-			if(rand_harvested == harvest_amount_low)
-				msg = harvest_message_low
-			else if(rand_harvested == harvest_amount_high)
-				msg = harvest_message_high
-			to_chat(user, span_notice("[msg]"))
-		for(var/i in 1 to rand_harvested)
-			new harvest(get_turf(src))
-
 	icon_state = "[base_icon]p"
-	name = harvested_name
-	desc = harvested_desc
-	harvested = TRUE
-	addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
 	return TRUE
 
-/obj/structure/flora/ash/proc/regrow()
+/obj/structure/flora/ash/regrow()
+	..()
 	icon_state = base_icon
-	name = initial(name)
-	desc = initial(desc)
-	harvested = FALSE
-
-/obj/structure/flora/ash/attackby(obj/item/W, mob/user, params)
-	if(!harvested && needs_sharp_harvest && W.get_sharpness())
-		user.visible_message(span_notice("[user] starts to harvest from [src] with [W]."),span_notice("You begin to harvest from [src] with [W]."))
-		if(do_after(user, harvest_time, target = src))
-			harvest(user)
-	else
-		return ..()
-
-/obj/structure/flora/ash/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if(!harvested && !needs_sharp_harvest)
-		user.visible_message(span_notice("[user] starts to harvest from [src]."),span_notice("You begin to harvest from [src]."))
-		if(do_after(user, harvest_time, target = src))
-			harvest(user)
 
 /obj/structure/flora/ash/tall_shroom //exists only so that the spawning check doesn't allow these spawning near other things
 	regrowth_time_low = 4200
 
 /obj/structure/flora/ash/leaf_shroom
-	icon_state = "s_mushroom"
 	name = "leafy mushrooms"
 	desc = "A number of mushrooms, each of which surrounds a greenish sporangium with a number of leaf-like structures."
+	icon_state = "s_mushroom"
+	product_types = list(/obj/item/food/grown/ash_flora/mushroom_leaf = 1)
 	harvested_name = "leafless mushrooms"
 	harvested_desc = "A bunch of formerly-leafed mushrooms, with their sporangiums exposed. Scandalous?"
-	harvest = /obj/item/food/grown/ash_flora/mushroom_leaf
-	needs_sharp_harvest = FALSE
 	harvest_amount_high = 4
-	harvest_time = 20
 	harvest_message_low = "You pluck a single, suitable leaf."
 	harvest_message_med = "You pluck a number of leaves, leaving a few unsuitable ones."
 	harvest_message_high = "You pluck quite a lot of suitable leaves."
+	harvest_time = 20
 	regrowth_time_low = 2400
 	regrowth_time_high = 6000
 
 /obj/structure/flora/ash/cap_shroom
-	icon_state = "r_mushroom"
 	name = "tall mushrooms"
 	desc = "Several mushrooms, the larger of which have a ring of conks at the midpoint of their stems."
+	icon_state = "r_mushroom"
+	product_types = list(/obj/item/food/grown/ash_flora/mushroom_cap = 1)
 	harvested_name = "small mushrooms"
 	harvested_desc = "Several small mushrooms near the stumps of what likely were larger mushrooms."
-	harvest = /obj/item/food/grown/ash_flora/mushroom_cap
 	harvest_amount_high = 4
-	harvest_time = 50
 	harvest_message_low = "You slice the cap off a mushroom."
 	harvest_message_med = "You slice off a few conks from the larger mushrooms."
 	harvest_message_high = "You slice off a number of caps and conks from these mushrooms."
+	harvest_time = 50
 	regrowth_time_low = 3000
 	regrowth_time_high = 5400
 
 /obj/structure/flora/ash/stem_shroom
-	icon_state = "t_mushroom"
 	name = "numerous mushrooms"
 	desc = "A large number of mushrooms, some of which have long, fleshy stems. They're radiating light!"
+	icon_state = "t_mushroom"
 	light_range = 1.5
 	light_power = 2.1
+	product_types = list(/obj/item/food/grown/ash_flora/mushroom_stem = 1)
 	harvested_name = "tiny mushrooms"
 	harvested_desc = "A few tiny mushrooms around larger stumps. You can already see them growing back."
-	harvest = /obj/item/food/grown/ash_flora/mushroom_stem
 	harvest_amount_high = 4
-	harvest_time = 40
 	harvest_message_low = "You pick and slice the cap off a mushroom, leaving the stem."
 	harvest_message_med = "You pick and decapitate several mushrooms for their stems."
 	harvest_message_high = "You acquire a number of stems from these mushrooms."
+	harvest_time = 40
 	regrowth_time_low = 3000
 	regrowth_time_high = 6000
 
 /obj/structure/flora/ash/cacti
-	icon_state = "cactus"
 	name = "fruiting cacti"
 	desc = "Several prickly cacti, brimming with ripe fruit and covered in a thin layer of ash."
+	icon_state = "cactus"
+	product_types = list(/obj/item/food/grown/ash_flora/cactus_fruit = 20, /obj/item/seeds/lavaland/cactus = 1)
 	harvested_name = "cacti"
 	harvested_desc = "A bunch of prickly cacti. You can see fruits slowly growing beneath the covering of ash."
-	harvest = /obj/item/food/grown/ash_flora/cactus_fruit
-	needs_sharp_harvest = FALSE
 	harvest_amount_high = 2
-	harvest_time = 10
 	harvest_message_low = "You pick a cactus fruit."
 	harvest_message_med = "You pick several cactus fruit." //shouldn't show up, because you can't get more than two
 	harvest_message_high = "You pick a pair of cactus fruit."
+	harvest_time = 10
 	regrowth_time_low = 4800
 	regrowth_time_high = 7200
+	can_uproot = FALSE //Don't want 50 in one tile to decimate whoever dare step on the mass of cacti
 
 /obj/structure/flora/ash/cacti/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 3, max_damage = 6, probability = 70)
 
 /obj/structure/flora/ash/seraka
-	icon_state = "seraka_mushroom"
 	name = "seraka mushrooms"
 	desc = "A small cluster of seraka mushrooms. These must have come with the ashlizards."
-	needs_sharp_harvest = FALSE
+	icon_state = "seraka_mushroom"
+	product_types = list(/obj/item/food/grown/ash_flora/seraka = 1)
 	harvested_name = "harvested seraka mushrooms"
 	harvested_desc = "A couple of small seraka mushrooms, with the larger ones clearly having been recently removed. They'll grow back... eventually."
-	harvest = /obj/item/food/grown/ash_flora/seraka
 	harvest_amount_high = 6
-	harvest_time = 25
 	harvest_message_low = "You pluck a few choice tasty mushrooms."
 	harvest_message_med = "You grab a good haul of mushrooms."
 	harvest_message_high = "You hit the mushroom motherlode and make off with a bunch of tasty mushrooms."
+	harvest_time = 25
 	regrowth_time_low = 3000
 	regrowth_time_high = 5400
 	number_of_variants = 2
+	harvest_message_true_thresholds = FALSE
 
 ///Snow flora to exist on icebox.
 /obj/structure/flora/ash/chilly
-	icon_state = "chilly_pepper"
 	name = "springy grassy fruit"
 	desc = "A number of bright, springy blue fruiting plants. They seem to be unconcerned with the hardy, cold environment."
+	icon_state = "chilly_pepper"
+	product_types = list(/obj/item/food/grown/icepepper = 1)
 	harvested_name = "springy grass"
 	harvested_desc = "A bunch of springy, bouncy fruiting grass, all picked. Or maybe they were never fruiting at all?"
-	harvest = /obj/item/food/grown/icepepper
-	needs_sharp_harvest = FALSE
 	harvest_amount_high = 3
-	harvest_time = 15
 	harvest_message_low = "You pluck a single, curved fruit."
 	harvest_message_med = "You pluck a number of curved fruit."
 	harvest_message_high = "You pluck quite a lot of curved fruit."
+	harvest_time = 15
 	regrowth_time_low = 2400
 	regrowth_time_high = 5500
 	number_of_variants = 2

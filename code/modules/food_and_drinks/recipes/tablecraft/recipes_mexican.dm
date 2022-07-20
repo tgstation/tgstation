@@ -107,9 +107,20 @@
 	time = 40
 	reqs = list(
 		/obj/item/food/meat/steak/goliath = 1,
-		/obj/item/organ/regenerative_core/legion = 1,
+		/obj/item/organ/internal/regenerative_core/legion = 1,
 		/datum/reagent/consumable/ketchup = 2,
 		/datum/reagent/consumable/capsaicin = 2
 	)
 	result = /obj/item/food/stuffedlegion
+	subcategory = CAT_MEXICAN
+
+/datum/crafting_recipe/food/chipsandsalsa
+	name = "Chips and salsa"
+	reqs = list(
+		/obj/item/food/cornchips = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/tomato = 1
+	)
+	result = /obj/item/food/chipsandsalsa
 	subcategory = CAT_MEXICAN

@@ -15,6 +15,10 @@
 	var/desc = "Basic knowledge of forbidden arts."
 	/// What's shown to the heretic when the knowledge is aquired
 	var/gain_text
+	/// The abstract parent type of the knowledge, used in determine mutual exclusivity in some cases
+	var/datum/heretic_knowledge/abstract_parent_type = /datum/heretic_knowledge
+	/// If TRUE, populates the banned_knowledge list of every other subtype of this knowledge's abstract_parent_type
+	var/mutually_exclusive = FALSE
 	/// The knowledge this unlocks next after learning.
 	var/list/next_knowledge = list()
 	/// What knowledge is incompatible with this. Knowledge in this list cannot be researched with this current knowledge.
@@ -31,6 +35,15 @@
 	var/priority = 0
 	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
 	var/route
+
+/datum/heretic_knowledge/New()
+	if(!mutually_exclusive)
+		return
+
+	for(var/knowledge_type in subtypesof(abstract_parent_type))
+		if(knowledge_type == type)
+			continue
+		banned_knowledge += knowledge_type
 
 /**
  * Called when the knowledge is first researched.
@@ -55,6 +68,7 @@
  * * user - the heretic which we're applying things to
  */
 /datum/heretic_knowledge/proc/on_gain(mob/user)
+	return
 
 /**
  * Called when the knowledge is removed from a mob,
@@ -64,6 +78,7 @@
  * * user - the heretic which we're removing things from
  */
 /datum/heretic_knowledge/proc/on_lose(mob/user)
+	return
 
 /**
  * Determines if a heretic can actually attempt to invoke the knowledge as a ritual.
@@ -141,7 +156,7 @@
 			var/how_much_to_use = 0
 			for(var/requirement in required_atoms)
 				if(istype(sacrificed, requirement))
-					how_much_to_use = required_atoms[requirement]
+					how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 					break
 
 			sac_stack.use(how_much_to_use)
@@ -154,23 +169,27 @@
  * A knowledge subtype that grants the heretic a certain spell.
  */
 /datum/heretic_knowledge/spell
-	/// The proc holder spell we add to the heretic. Type-path, becomes an instance via on_research().
-	var/obj/effect/proc_holder/spell/spell_to_add
+	abstract_parent_type = /datum/heretic_knowledge/spell
+	/// Spell path we add to the heretic. Type-path.
+	var/datum/action/cooldown/spell/spell_to_add
+	/// The spell we actually created.
+	var/datum/weakref/created_spell_ref
 
-/datum/heretic_knowledge/spell/Destroy(force, ...)
-	if(istype(spell_to_add))
-		QDEL_NULL(spell_to_add)
-	return ..()
-
-/datum/heretic_knowledge/spell/on_research(mob/user)
-	spell_to_add = new spell_to_add()
+/datum/heretic_knowledge/spell/Destroy()
+	QDEL_NULL(created_spell_ref)
 	return ..()
 
 /datum/heretic_knowledge/spell/on_gain(mob/user)
-	user.mind.AddSpell(spell_to_add)
+	// Added spells are tracked on the body, and not the mind,
+	// because we handle heretic mind transfers
+	// via the antag datum (on_gain and on_lose).
+	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve() || new spell_to_add(user)
+	created_spell.Grant(user)
+	created_spell_ref = WEAKREF(created_spell)
 
 /datum/heretic_knowledge/spell/on_lose(mob/user)
-	user.mind.RemoveSpell(spell_to_add)
+	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve()
+	created_spell?.Remove(user)
 
 /*
  * A knowledge subtype for knowledge that can only
@@ -178,6 +197,7 @@
  * created at once.
  */
 /datum/heretic_knowledge/limited_amount
+	abstract_parent_type = /datum/heretic_knowledge/limited_amount
 	/// The limit to how many items we can create at once.
 	var/limit = 1
 	/// A list of weakrefs to all items we've created.
@@ -206,9 +226,150 @@
 	return TRUE
 
 /*
+ * A knowledge subtype for limited_amount knowledge
+ * used for base knowledge (the ones that make blades)
+ *
+ * A heretic can only learn one /starting type knowledge,
+ * and their ascension depends on whichever they chose.
+ */
+/datum/heretic_knowledge/limited_amount/starting
+	abstract_parent_type = /datum/heretic_knowledge/limited_amount/starting
+	mutually_exclusive = TRUE
+	limit = 2
+	cost = 1
+	priority = MAX_KNOWLEDGE_PRIORITY - 5
+
+/datum/heretic_knowledge/limited_amount/starting/New()
+	. = ..()
+	// Starting path also determines the final knowledge we're limited too
+	for(var/datum/heretic_knowledge/final_knowledge_type as anything in subtypesof(/datum/heretic_knowledge/final))
+		if(initial(final_knowledge_type.route) == route)
+			continue
+		banned_knowledge += final_knowledge_type
+
+/*
+ * A knowledge subtype for heretic knowledge
+ * that applies a mark on use.
+ *
+ * A heretic can only learn one /mark type knowledge.
+ */
+/datum/heretic_knowledge/mark
+	abstract_parent_type = /datum/heretic_knowledge/mark
+	mutually_exclusive = TRUE
+	cost = 2
+	/// The status effect typepath we apply on people on mansus grasp.
+	var/datum/status_effect/eldritch/mark_type
+
+/datum/heretic_knowledge/mark/on_gain(mob/user)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+
+/datum/heretic_knowledge/mark/on_lose(mob/user)
+	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
+
+/**
+ * Signal proc for [COMSIG_HERETIC_MANSUS_GRASP_ATTACK].
+ *
+ * Whenever we cast mansus grasp on someone, apply our mark.
+ */
+/datum/heretic_knowledge/mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
+	SIGNAL_HANDLER
+
+	create_mark(source, target)
+
+/**
+ * Signal proc for [COMSIG_HERETIC_BLADE_ATTACK].
+ *
+ * Whenever we attack someone with our blade, attempt to trigger any marks on them.
+ */
+/datum/heretic_knowledge/mark/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	SIGNAL_HANDLER
+
+	trigger_mark(source, target)
+
+/**
+ * Creates the mark status effect on our target.
+ * This proc handles the instatiate and the application of the station effect,
+ * and returns the /datum/status_effect instance that was made.
+ *
+ * Can be overriden to set or pass in additional vars of the status effect.
+ */
+/datum/heretic_knowledge/mark/proc/create_mark(mob/living/source, mob/living/target)
+	if(target.stat == DEAD)
+		return
+	return target.apply_status_effect(mark_type)
+
+/**
+ * Handles triggering the mark on the target.
+ *
+ * If there is no mark, returns FALSE. Returns TRUE if a mark was triggered.
+ */
+/datum/heretic_knowledge/mark/proc/trigger_mark(mob/living/source, mob/living/target)
+	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
+	if(!istype(mark))
+		return FALSE
+
+	mark.on_effect()
+	return TRUE
+
+/*
+ * A knowledge subtype for heretic knowledge that
+ * upgrades their sickly blade, either on melee or range.
+ *
+ * A heretic can only learn one /blade_upgrade type knowledge.
+ */
+/datum/heretic_knowledge/blade_upgrade
+	abstract_parent_type = /datum/heretic_knowledge/blade_upgrade
+	mutually_exclusive = TRUE
+	cost = 2
+
+/datum/heretic_knowledge/blade_upgrade/on_gain(mob/user)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	RegisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, .proc/on_ranged_eldritch_blade)
+
+/datum/heretic_knowledge/blade_upgrade/on_lose(mob/user)
+	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_HERETIC_RANGED_BLADE_ATTACK))
+
+
+/**
+ * Signal proc for [COMSIG_HERETIC_BLADE_ATTACK].
+ *
+ * Apply any melee effects from hitting someone with our blade.
+ */
+/datum/heretic_knowledge/blade_upgrade/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	SIGNAL_HANDLER
+
+	do_melee_effects(source, target, blade)
+
+/**
+ * Signal proc for [COMSIG_HERETIC_RANGED_BLADE_ATTACK].
+ *
+ * Apply any ranged effects from hitting someone with our blade.
+ */
+/datum/heretic_knowledge/blade_upgrade/proc/on_ranged_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	SIGNAL_HANDLER
+
+	do_ranged_effects(source, target, blade)
+
+/**
+ * Overridable proc that invokes special effects
+ * whenever the heretic attacks someone in melee with their heretic blade.
+ */
+/datum/heretic_knowledge/blade_upgrade/proc/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	return
+
+/**
+ * Overridable proc that invokes special effects
+ * whenever the heretic clicks on someone at range with their heretic blade.
+ */
+/datum/heretic_knowledge/blade_upgrade/proc/do_ranged_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	return
+
+/*
  * A knowledge subtype lets the heretic curse someone with a ritual.
  */
 /datum/heretic_knowledge/curse
+	abstract_parent_type = /datum/heretic_knowledge/curse
 	/// The duration of the curse
 	var/duration = 5 MINUTES
 	/// Cache list of fingerprints (actual fingerprint strings) we have from our current ritual
@@ -217,7 +378,7 @@
 /datum/heretic_knowledge/curse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
-		fingerprints[requirements.return_fingerprints()] = 1
+		fingerprints[GET_ATOM_FINGERPRINTS(requirements)] = 1
 	list_clear_nulls(fingerprints)
 
 	// No fingerprints? No ritual
@@ -272,6 +433,7 @@
  * A knowledge subtype lets the heretic summon a monster with the ritual.
  */
 /datum/heretic_knowledge/summon
+	abstract_parent_type = /datum/heretic_knowledge/summon
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
 
@@ -322,6 +484,8 @@
 	name = "Ritual of Knowledge"
 	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
 	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
+	abstract_parent_type = /datum/heretic_knowledge/knowledge_ritual
+	mutually_exclusive = TRUE
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
 	/// Whether we've done the ritual. Only doable once.
@@ -330,15 +494,15 @@
 /datum/heretic_knowledge/knowledge_ritual/New()
 	. = ..()
 	var/static/list/potential_organs = list(
-		/obj/item/organ/appendix,
-		/obj/item/organ/tail,
-		/obj/item/organ/eyes,
-		/obj/item/organ/tongue,
-		/obj/item/organ/ears,
-		/obj/item/organ/heart,
-		/obj/item/organ/liver,
-		/obj/item/organ/stomach,
-		/obj/item/organ/lungs,
+		/obj/item/organ/internal/appendix,
+		/obj/item/organ/external/tail,
+		/obj/item/organ/internal/eyes,
+		/obj/item/organ/internal/tongue,
+		/obj/item/organ/internal/ears,
+		/obj/item/organ/internal/heart,
+		/obj/item/organ/internal/liver,
+		/obj/item/organ/internal/stomach,
+		/obj/item/organ/internal/lungs,
 	)
 
 	var/static/list/potential_easy_items = list(
@@ -411,6 +575,8 @@
  * The special final tier of knowledges that unlocks ASCENSION.
  */
 /datum/heretic_knowledge/final
+	abstract_parent_type = /datum/heretic_knowledge/final
+	mutually_exclusive = TRUE // I guess, but it doesn't really matter by this point
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)

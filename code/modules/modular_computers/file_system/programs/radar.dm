@@ -22,7 +22,7 @@
 	///Used by the tgui interface, themed for NT or Syndicate colors.
 	var/pointercolor = "green"
 
-/datum/computer_file/program/radar/run_program(mob/living/user)
+/datum/computer_file/program/radar/on_start(mob/living/user)
 	. = ..()
 	if(.)
 		START_PROCESSING(SSfastprocess, src)
@@ -258,6 +258,7 @@
 	available_on_ntnet = TRUE
 	program_icon = "broom"
 	size = 2
+	detomatix_resistance = DETOMATIX_RESIST_MINOR
 
 /datum/computer_file/program/radar/custodial_locator/find_atom()
 	return locate(selected) in GLOB.janitor_devices
@@ -309,7 +310,7 @@
 	arrowstyle = "ntosradarpointerS.png"
 	pointercolor = "red"
 
-/datum/computer_file/program/radar/fission360/run_program(mob/living/user)
+/datum/computer_file/program/radar/fission360/on_start(mob/living/user)
 	. = ..()
 	if(!.)
 		return

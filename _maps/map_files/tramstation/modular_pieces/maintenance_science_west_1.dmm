@@ -9,13 +9,13 @@
 /obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "e" = (
 /obj/modular_map_root/tramstation{
 	key = "maintenance_science_west_attachment"
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "f" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23,17 +23,17 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/catwalk_floor,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "h" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
 /turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "i" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille,
 /turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "j" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -42,38 +42,38 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/medical/medkit,
 /turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "J" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "Q" = (
 /turf/closed/wall,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 
 (1,1,1) = {"
 a

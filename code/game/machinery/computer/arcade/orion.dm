@@ -368,7 +368,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			reason = "You ran out of fuel, and drift, slowly, into a star."
 			if(obj_flags & EMAGGED)
 				gamer.adjust_fire_stacks(5)
-				gamer.IgniteMob() //flew into a star, so you're on fire
+				gamer.ignite_mob() //flew into a star, so you're on fire
 				to_chat(gamer, span_userdanger("You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames."))
 
 	if(obj_flags & EMAGGED)
@@ -542,5 +542,18 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	visible_message(span_userdanger("[src] explodes!"))
 	explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 8, flame_range = 16)
 	qdel(src)
+
+/obj/singularity/orion
+	move_self = FALSE
+
+/obj/singularity/orion/Initialize(mapload)
+	. = ..()
+
+	var/datum/component/singularity/singularity = singularity_component.resolve()
+	singularity?.grav_pull = 1
+
+/obj/singularity/orion/process(delta_time)
+	if(DT_PROB(0.5, delta_time))
+		mezzer()
 
 #undef ORION_TRAIL_WINTURN

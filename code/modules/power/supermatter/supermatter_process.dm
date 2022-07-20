@@ -19,6 +19,7 @@
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = local_turf.return_air()
+	environment_total_moles = env.total_moles()
 	var/datum/gas_mixture/removed
 	if(produces_gas)
 		//Remove gas from surrounding area
@@ -68,13 +69,39 @@
 		//handles temperature increase and gases made by the crystal
 		temperature_gas_production(env, removed)
 
+	var/cascading = check_cascade_requirements()
+	if(cascading)
+		if(!cascade_initiated)
+			addtimer(CALLBACK(src, .proc/announce_incoming_cascade), 2 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
+			log_game("[src] has begun a cascade.")
+			message_admins("[src] has begun a cascade, reasons: [cascading]. [ADMIN_JMP(src)]")
+			investigate_log("has begun a cascade, reasons: [cascading].", INVESTIGATE_ENGINE)
+		cascade_initiated = TRUE
+		if(!warp)
+			warp = new(src)
+			vis_contents += warp
+		animate(warp, time = 1, transform = matrix().Scale(0.5,0.5))
+		animate(time = 9, transform = matrix())
+	else
+		if(warp)
+			vis_contents -= warp
+			QDEL_NULL(warp)
+		if(cascade_initiated)
+			log_game("[src] has stopped its cascade.")
+			message_admins("[src] has stopped its cascade. [ADMIN_JMP(src)]")
+			investigate_log("has stopped its cascade.", INVESTIGATE_ENGINE)
+			cascade_initiated = FALSE
+
 	//handles hallucinations and the presence of a psychiatrist
 	psychological_examination()
 
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
 	if(power_changes)
-		power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor) * (1 - (0.2 * psyCoeff)),0)
+		///The power that is getting lost this tick.
+		var/power_loss = power < powerloss_linear_threshold ? ((power / POWERLOSS_CUBIC_DIVISOR) ** 3) : (power * POWERLOSS_LINEAR_RATE + powerloss_linear_offset)
+		power_loss *= powerloss_inhibitor * (1 - (PSYCHOLOGIST_POWERLOSS_REDUCTION * psyCoeff))
+		power = max(power - power_loss, 0)
 	//After this point power is lowered
 	//This wraps around to the begining of the function
 	//Handle high power zaps/anomaly generation
@@ -85,6 +112,9 @@
 
 	//Tells the engi team to get their butt in gear
 	handle_emergency_alerts()
+
+	if(damage == 0 && has_destabilizing_crystal)
+		has_destabilizing_crystal = FALSE
 
 	return TRUE
 
@@ -109,37 +139,34 @@
 	last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 
 /obj/machinery/power/supermatter_crystal/proc/deal_damage(datum/gas_mixture/removed)
+	var/has_holes = FALSE
+	//Check for holes in the SM inner chamber
+	for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
+		if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
+			damage += clamp((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
+			power += 250
+			has_holes = TRUE
+			break
+
+	var/cascade_multiplier = cascade_initiated ? 0.25 : 1
+
 	//Due to DAMAGE_INCREASE_MULTIPLIER, we only deal one 4th of the damage the statements otherwise would cause
 	//((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 10)) * some number between 0.25 and knock your socks off / 150) * 0.25
 	//Heat and mols account for each other, a lot of hot mols are more damaging then a few
 	//Mols start to have a positive effect on damage after 350
 	damage = max(damage + (max(clamp(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
-	//Power only starts affecting damage when it is above 5000
-	damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
-	//Molar count only starts affecting damage when it is above 1800
-	damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
+	//Power only starts affecting damage when it is above 5000 (1250 when a cascade is occurring)
+	damage = max(damage + (max(power - (POWER_PENALTY_THRESHOLD * cascade_multiplier), 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
+	//Molar count only starts affecting damage when it is above 1800 (450 when a cascade is occurring)
+	damage = max(damage + (max(combined_gas - (MOLE_PENALTY_THRESHOLD * cascade_multiplier), 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
 	//There might be a way to integrate healing and hurting via heat
 	//healing damage
-	if(combined_gas < MOLE_PENALTY_THRESHOLD)
+	if(combined_gas < MOLE_PENALTY_THRESHOLD && !has_holes)
 		//Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psycologists increase this temp min by up to 45
 		damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
-	//Check for holes in the SM inner chamber
-	for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
-		if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
-			var/integrity = get_integrity_percent()
-			if(integrity < 10)
-				damage += clamp((power * 0.0005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
-			else if(integrity < 25)
-				damage += clamp((power * 0.0009) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
-			else if(integrity < 45)
-				damage += clamp((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
-			else if(integrity < 75)
-				damage += clamp((power * 0.002) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
-			break
 	//caps damage rate
-
 	//Takes the lower number between archived damage + (1.8) and damage
 	//This means we can only deal 1.8 damage per function call
 	damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
@@ -267,13 +294,16 @@
 		var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
 		var/pressure_multiplier = max((1 / ((env.return_pressure() ** pressure_bonus_curve_angle) + 1) * pressure_bonus_derived_steepness) + pressure_bonus_derived_constant, 1)
 		var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
+		hue_angle_shift = clamp(903 * log(10, (power + 8000)) - 3590, -50, 240)
+		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
 			zap_str = 2.5 * power * power_multiplier * pressure_multiplier * co2_power_increase,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
 			zap_cutoff = 300,
-			power_level = power
+			power_level = power,
+			color = zap_color,
 		)
 		last_power_zap = world.time
 
@@ -316,7 +346,7 @@
 			psy_overlay = TRUE
 
 		// If they are immune to supermatter hallucinations.
-		if (HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+		if (HAS_TRAIT(seen_by_sm, TRAIT_MADNESS_IMMUNE) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_MADNESS_IMMUNE)))
 			continue
 
 		// Blind people don't get supermatter hallucinations.
@@ -370,6 +400,8 @@
 
 	if(prob(5))
 		supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
+	if(prob(5))
+		supermatter_anomaly_gen(src, HALLUCINATION_ANOMALY, rand(5, 10))
 	if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
 		supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))
 	if((power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2)) || (prob(0.3) && power > POWER_PENALTY_THRESHOLD))
@@ -408,6 +440,26 @@
 
 		if(combined_gas > MOLE_PENALTY_THRESHOLD)
 			radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel)
+
+		if(check_cascade_requirements())
+			var/channel_to_talk_to = damage > emergency_point ? common_channel : engineering_channel
+			radio.talk_into(src, "DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.", channel_to_talk_to)
+			for(var/mob/victim as anything in GLOB.player_list)
+				var/list/messages = list(
+					"Space seems to be shifting around you...",
+					"You hear a high-pitched ringing sound.",
+					"You feel tingling going down your back.",
+					"Something feels very off.",
+					"A drowning sense of dread washes over you."
+				)
+				to_chat(victim, span_danger(pick(messages)))
+
 	//Boom (Mind blown)
 	if(damage > explosion_point)
 		countdown()
+
+/obj/machinery/power/supermatter_crystal/proc/announce_incoming_cascade()
+	if(check_cascade_requirements())
+		priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
+			a subject within [station_name()], a resonance collapse may occur.",
+			"Nanotrasen Star Observation Association")

@@ -44,6 +44,10 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	..()
 	update_appearance()
 
+/obj/structure/bodycontainer/Exited(atom/movable/gone, direction)
+	. = ..()
+	update_appearance()
+
 /obj/structure/bodycontainer/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))
 		return
@@ -81,8 +85,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/attackby(obj/P, mob/user, params)
 	add_fingerprint(user)
 	if(istype(P, /obj/item/pen))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
+		if(!user.can_write(P))
 			return
 		var/t = tgui_input_text(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_held_item() != P)
@@ -134,7 +137,13 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
-			if(ismob(AM) && !isliving(AM))
+			if(ismob(AM))
+				if(!isliving(AM))
+					continue
+				var/mob/living/living_mob = AM
+				if(living_mob.incorporeal_move)
+					continue
+			else if(istype(AM, /obj/effect/dummy/phased_mob))
 				continue
 			AM.forceMove(src)
 	recursive_organ_check(src)
@@ -261,6 +270,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		update_appearance()
 
 		for(var/mob/living/M in conts)
+			if(M.incorporeal_move) //can't cook revenants!
+				continue
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
@@ -274,6 +285,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				qdel(M)
 
 		for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
+			if(istype(O, /obj/effect/dummy/phased_mob)) //they're not physical, don't burn em.
+				continue
 			qdel(O)
 
 		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up

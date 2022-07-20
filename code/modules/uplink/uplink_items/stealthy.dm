@@ -15,6 +15,7 @@
 	item = /obj/item/gun/syringe/syndicate
 	cost = 4
 	surplus = 50
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -93,7 +94,7 @@
 	toxin that will damage and disorient targets, causing them to \
 	slur as if inebriated. It can produce an infinite number \
 	of bolts, but takes time to automatically recharge after each shot."
-	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
+	item = /obj/item/gun/energy/recharge/ebow
 	progression_minimum = 30 MINUTES
 	cost = 10
 	surplus = 50

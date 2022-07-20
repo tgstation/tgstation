@@ -112,6 +112,7 @@ GLOBAL_LIST_EMPTY(tdomeobserve)
 GLOBAL_LIST_EMPTY(tdomeadmin)
 GLOBAL_LIST_EMPTY(prisonwarped) //list of players already warped
 GLOBAL_LIST_EMPTY(blobstart) //stationloving objects, blobs, santa
+GLOBAL_LIST_EMPTY(navigate_destinations) //list of all destinations used by the navigate verb
 GLOBAL_LIST_EMPTY(secequipment) //sec equipment lockers that scale with the number of sec players
 GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)

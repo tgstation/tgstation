@@ -11,7 +11,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 200)
 	build_path = /obj/item/aicard
 	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
@@ -31,7 +31,7 @@
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/gold = 15000, /datum/material/silver = 15000, /datum/material/diamond = 20000, /datum/material/plasma = 10000)
 	build_path = /obj/item/surveillance_upgrade
 	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
@@ -44,7 +44,7 @@
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	build_path = /obj/item/disk/design_disk
 	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/design_disk_adv
 	name = "Advanced Design Storage Disk"
@@ -54,7 +54,7 @@
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 100, /datum/material/silver=50)
 	build_path = /obj/item/disk/design_disk/adv
 	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/tech_disk
 	name = "Technology Data Storage Disk"
@@ -64,4 +64,4 @@
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	build_path = /obj/item/disk/tech_disk
 	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

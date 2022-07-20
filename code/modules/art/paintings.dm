@@ -75,7 +75,7 @@
 	base_pixel_x = 11
 	base_pixel_y = 10
 
-	custom_premium_price = PAYCHECK_MEDIUM
+	custom_premium_price = PAYCHECK_CREW
 
 /obj/item/canvas/Initialize(mapload)
 	. = ..()
@@ -399,7 +399,7 @@
 	pixels_per_unit = 20
 	w_class = WEIGHT_CLASS_BULKY
 
-	custom_premium_price = PAYCHECK_HARD * 1.25
+	custom_premium_price = PAYCHECK_CREW * 1.25
 
 /obj/item/canvas/thirtysix_twentyfour/Initialize()
 	. = ..()
@@ -422,7 +422,7 @@
 	pixels_per_unit = 18
 	w_class = WEIGHT_CLASS_BULKY
 
-	custom_premium_price = PAYCHECK_HARD * 1.75
+	custom_premium_price = PAYCHECK_CREW * 1.75
 
 /obj/item/canvas/fortyfive_twentyseven/Initialize()
 	. = ..()

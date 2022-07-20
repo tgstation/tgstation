@@ -15,7 +15,7 @@
 	else if (human_user == src)
 		context[SCREENTIP_CONTEXT_LMB] = "Check injuries"
 
-		if (get_bodypart(human_user.zone_selected)?.get_part_bleed_rate())
+		if (get_bodypart(human_user.zone_selected)?.get_modified_bleed_rate())
 			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Grab limb"
 
 	if (human_user != src)
@@ -25,7 +25,7 @@
 			if (body_position == STANDING_UP)
 				if(check_zone(user.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD))
 					context[SCREENTIP_CONTEXT_LMB] = "Headpat"
-				else if(user.zone_selected == BODY_ZONE_PRECISE_GROIN && !isnull(getorgan(/obj/item/organ/tail)))
+				else if(user.zone_selected == BODY_ZONE_PRECISE_GROIN && !isnull(getorgan(/obj/item/organ/external/tail)))
 					context[SCREENTIP_CONTEXT_LMB] = "Pull tail"
 				else
 					context[SCREENTIP_CONTEXT_LMB] = "Hug"

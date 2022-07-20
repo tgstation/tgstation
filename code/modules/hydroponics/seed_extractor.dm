@@ -89,6 +89,7 @@
 	return NONE
 
 /obj/machinery/seed_extractor/RefreshParts()
+	. = ..()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_seeds = initial(max_seeds) * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -135,7 +136,6 @@
 	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
 			to_chat(user, span_notice("You add [O] to [src.name]."))
-			updateUsrDialog()
 		return
 	else if(!user.combat_mode)
 		to_chat(user, span_warning("You can't extract any seeds from \the [O.name]!"))
@@ -167,9 +167,8 @@
 		to_chat(usr, span_notice("\The [src] is full."))
 		return FALSE
 
-	var/datum/component/storage/STR = O.loc.GetComponent(/datum/component/storage)
-	if(STR)
-		if(!STR.remove_from_storage(O,src))
+	if(atom_storage)
+		if(!atom_storage.attempt_remove(O, src, silent = TRUE))
 			return FALSE
 	else if(ismob(O.loc))
 		var/mob/M = O.loc

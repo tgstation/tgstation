@@ -50,7 +50,6 @@
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/wheat), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
 
 /mob/living/basic/cow/proc/tamed(mob/living/tamer)
-	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
@@ -109,7 +108,7 @@
 	if(!stat && !user.combat_mode)
 		to_chat(user, span_nicegreen("[src] whispers you some intense wisdoms and then disappears!"))
 		user.mind?.adjust_experience(pick(GLOB.skill_types), 500)
-		do_smoke(1, get_turf(src))
+		do_smoke(1, holder = src, location = get_turf(src))
 		qdel(src)
 		return
 	return ..()

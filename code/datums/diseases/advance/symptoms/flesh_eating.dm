@@ -1,22 +1,14 @@
 /*
-//////////////////////////////////////
-
 Necrotizing Fasciitis (AKA Flesh-Eating Disease)
-
 	Very very noticable.
 	Lowers resistance tremendously.
 	No changes to stage speed.
-	Decreases transmittablity temrendously.
+	Decreases transmissibility tremendously.
 	Fatal Level.
-
 Bonus
 	Deals brute damage over time.
-
-//////////////////////////////////////
 */
-
 /datum/symptom/flesh_eating
-
 	name = "Necrotizing Fasciitis"
 	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."
 	stealth = -3
@@ -66,7 +58,7 @@ Bonus
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/obj/item/bodypart/random_part = pick(H.bodyparts)
-			random_part.generic_bleedstacks += 5 * power
+			random_part.adjustBleedStacks(5 * power)
 	return 1
 
 /*

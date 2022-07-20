@@ -6,7 +6,7 @@
 	name = "crate spawner"
 	icon_state = "crate_secure"
 	loot = list(
-		/obj/effect/spawner/random/structure/crate_loot = 745,
+		/obj/effect/spawner/random/structure/crate_loot = 744,
 		/obj/structure/closet/crate/trashcart/filled = 75,
 		/obj/effect/spawner/random/trash/moisture_trap = 50,
 		/obj/effect/spawner/random/trash/hobo_squat = 30,
@@ -14,6 +14,7 @@
 		/obj/effect/spawner/random/trash/mess = 30,
 		/obj/item/kirbyplants/fern = 20,
 		/obj/structure/closet/crate/decorations = 15,
+		/obj/structure/destructible/cult/pants_altar = 1,
 	)
 
 /obj/effect/spawner/random/structure/crate_abandoned
@@ -214,4 +215,19 @@
 		/obj/structure/billboard/roadsign/twothousand = 25,
 		/obj/structure/billboard/roadsign/twomillion = 25,
 		/obj/structure/billboard/roadsign/error = 25,
+	)
+
+/obj/effect/spawner/random/structure/steam_vent
+	name = "steam vent spawner"
+	loot = list(
+		/obj/structure/steam_vent = 50,
+		/obj/structure/steam_vent/fast = 50,
+	)
+
+/obj/effect/spawner/random/structure/musician/piano/random_piano
+	name = "random piano spawner"
+	icon_state = "piano"
+	loot = list(
+		/obj/structure/musician/piano,
+		/obj/structure/musician/piano/minimoog,
 	)

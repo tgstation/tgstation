@@ -13,6 +13,7 @@
 	base_icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	use_power = NO_POWER_USE
 	///Who are we sticking our needle in?
 	var/mob/living/carbon/attached
 	///Are we donating or injecting?
@@ -38,6 +39,7 @@
 	update_appearance()
 	if(use_internal_storage)
 		create_reagents(100, TRANSPARENT)
+	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null

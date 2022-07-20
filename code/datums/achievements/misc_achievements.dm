@@ -152,6 +152,12 @@
 	database_id = MEDAL_VOID_ASCENSION
 	icon = "voidascend"
 
+/datum/award/achievement/misc/blade_ascension
+	name = "Silver and Steel"
+	desc = "You've become the master of all duellists - the paragon of blades."
+	database_id = MEDAL_BLADE_ASCENSION
+	icon = "bladeascend"
+
 /datum/award/achievement/misc/toolbox_soul
 	name = "SOUL'd Out"
 	desc = "My eternal soul was destroyed to make a toolbox look funny and all I got was this achievement..."

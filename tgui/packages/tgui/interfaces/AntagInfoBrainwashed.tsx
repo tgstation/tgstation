@@ -10,7 +10,7 @@ type Objective = {
   complete: BooleanLike;
   was_uncompleted: BooleanLike;
   reward: number;
-}
+};
 
 type Info = {
   objectives: Objective[];
@@ -18,19 +18,16 @@ type Info = {
 
 export const AntagInfoBrainwashed = () => {
   return (
-    <Window
-      width={400}
-      height={400}
-      theme="abductor">
-      <Window.Content
-        backgroundColor="#722e7d">
+    <Window width={400} height={400} theme="abductor">
+      <Window.Content backgroundColor="#722e7d">
         <Icon
           size={16}
           name="flushed"
           color="#3f1945"
           position="absolute"
           top="42%"
-          left="26%" />
+          left="26%"
+        />
         <Section fill>
           <Stack vertical fill textAlign="center">
             <Stack.Item fontFamily="Wingdings">
@@ -58,28 +55,26 @@ export const AntagInfoBrainwashed = () => {
   );
 };
 
-const ObjectivePrintout = (_, context) => {
+const ObjectivePrintout = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const {
-    objectives,
-  } = data;
+  const { objectives } = data;
   return (
     <Stack fill vertical>
       <Stack.Item bold textColor="#61e4b9">
         Your current objectives:
       </Stack.Item>
       <Stack.Item textAlign="left">
-        {!objectives && "None!"
-        || objectives.map(objective => (
-          <>
-            <Stack.Item key={objective.count}>
-              {objective.count}. {objective.explanation}
-            </Stack.Item>
-            <Stack.Item bold textColor="red">
-              This Directive must be followed.
-            </Stack.Item>
-          </>
-        )) }
+        {(!objectives && 'None!') ||
+          objectives.map((objective) => (
+            <>
+              <Stack.Item key={objective.count}>
+                {objective.count}. {objective.explanation}
+              </Stack.Item>
+              <Stack.Item bold textColor="red">
+                This Directive must be followed.
+              </Stack.Item>
+            </>
+          ))}
       </Stack.Item>
     </Stack>
   );

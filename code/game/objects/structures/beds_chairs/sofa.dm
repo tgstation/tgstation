@@ -8,7 +8,7 @@
 
 /obj/structure/chair/sofa/Initialize(mapload)
 	. = ..()
-	armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER)
+	armrest = mutable_appearance(initial(icon), "[icon_state]_armrest", ABOVE_MOB_LAYER)
 	armrest.plane = GAME_PLANE_UPPER
 	AddElement(/datum/element/soft_landing)
 

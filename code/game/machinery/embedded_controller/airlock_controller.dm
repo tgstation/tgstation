@@ -216,8 +216,15 @@
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "AirlockController")
+		ui = new(user, src, "AirlockController", src)
 		ui.open()
+
+/obj/machinery/embedded_controller/radio/airlock_controller/process(delta_time)
+	if(program)
+		program.process(delta_time)
+
+	update_appearance()
+	SStgui.update_uis(src)
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_data(mob/user)
 	var/list/data = list()
@@ -226,7 +233,7 @@
 	data["exteriorStatus"] = program.memory["exterior_status"] ? program.memory["exterior_status"] : "----"
 	data["interiorStatus"] = program.memory["interior_status"] ? program.memory["interior_status"] : "----"
 	data["pumpStatus"] = program.memory["pump_status"] ? program.memory["pump_status"] : "----"
-	return data		
+	return data
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_act(action, params)
 	. = ..()

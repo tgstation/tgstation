@@ -167,7 +167,6 @@
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
-		updateUsrDialog()
 		return
 	if(default_deconstruction_crowbar(W))
 		return
@@ -251,13 +250,13 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
-			var/obj/item/card/id/I
+			var/obj/item/card/id/user_id_card
 			if(isliving(usr))
-				var/mob/living/L = usr
-				I = L.get_idcard(TRUE)
+				var/mob/living/user = usr
+				user_id_card = user.get_idcard(TRUE)
 			if(points)
-				if(I)
-					I.mining_points += points
+				if(user_id_card)
+					user_id_card.mining_points += points
 					points = 0
 				else
 					to_chat(usr, span_warning("No valid ID detected."))
@@ -325,11 +324,11 @@
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
-			var/obj/item/card/id/I
+			var/obj/item/card/id/user_id_card
 			if(isliving(usr))
-				var/mob/living/L = usr
-				I = L.get_idcard(TRUE)
-			if((check_access(I) || allowed(usr)) && alloy)
+				var/mob/living/user = usr
+				user_id_card = user.get_idcard(TRUE)
+			if((check_access(user_id_card) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
 				if (params["sheets"])
@@ -339,6 +338,8 @@
 					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
 				var/amount = round(min(desired,50,smelt_amount))
+				if(amount < 1) //no negative mats
+					return
 				mat_container.use_materials(alloy.materials, amount)
 				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)
 				var/output

@@ -9,8 +9,6 @@
 #define TICK_LIMIT_TO_RUN 70
 /// Tick limit for MC while running
 #define TICK_LIMIT_MC 70
-/// Tick limit while initializing
-#define TICK_LIMIT_MC_INIT_DEFAULT (100 - TICK_BYOND_RESERVE)
 
 /// for general usage of tick_usage
 #define TICK_USAGE world.tick_usage

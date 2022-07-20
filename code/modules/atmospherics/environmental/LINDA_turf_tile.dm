@@ -645,58 +645,22 @@ Then we space some of our heat, and think about if we should stop conducting.
 /turf/proc/radiate_to_spess() //Radiate excess tile heat to space
 	if(temperature <= T0C) //Considering 0 degC as te break even point for radiation in and out
 		return
-	var/delta_temperature = (temperature_archived - TCMB) //hardcoded space temperature
+	// Because we keep losing energy, makes more sense for us to be the T2 here.
+	var/delta_temperature = temperature_archived - TCMB //hardcoded space temperature
 	if(heat_capacity <= 0 || abs(delta_temperature) <= MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		return
-	var/heat = thermal_conductivity * delta_temperature * \
-		(heat_capacity * HEAT_CAPACITY_VACUUM / (heat_capacity + HEAT_CAPACITY_VACUUM))
-	temperature -= heat/heat_capacity
+	// Heat should be positive in most cases
+	// coefficient applied first because some turfs have very big heat caps.
+	var/heat = CALCULATE_CONDUCTION_ENERGY(thermal_conductivity * delta_temperature, HEAT_CAPACITY_VACUUM, heat_capacity)
+	temperature -= heat / heat_capacity
 
 /turf/open/proc/temperature_share_open_to_solid(turf/sharer)
 	sharer.temperature = air.temperature_share(null, sharer.thermal_conductivity, sharer.temperature, sharer.heat_capacity)
 
 /turf/proc/share_temperature_mutual_solid(turf/sharer, conduction_coefficient) //This is all just heat sharing, don't get freaked out
-	var/delta_temperature = (temperature_archived - sharer.temperature_archived)
-	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && heat_capacity && sharer.heat_capacity)
-		var/heat = conduction_coefficient * delta_temperature * \
-			(heat_capacity * sharer.heat_capacity / (heat_capacity + sharer.heat_capacity)) //The larger the combined capacity the less is shared
-		temperature -= heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
-		sharer.temperature += heat / sharer.heat_capacity
-
-/**
- * Adds a source of thermal conductivity to change our conductivity to the one indicated
- */
-/turf/proc/add_thermal_conductivity_source(conductivity, priority)
-	if(!thermal_conductivities || !LAZYLEN(thermal_conductivities))
-		LAZYSETLEN(thermal_conductivities, MAX_TEMPORARY_THERMAL_CONDUCTIVITY)
-	if(!isnull(conductivity))//0 conductivity is valid
+	var/delta_temperature = sharer.temperature_archived - temperature_archived
+	if(abs(delta_temperature) <= MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER || !heat_capacity || !sharer.heat_capacity)
 		return
-	if(priority > LAZYLEN(thermal_conductivities))
-		return
-	LAZYSET(thermal_conductivities, priority, conductivity)
-	update_thermal_conductivity()
-
-/**
- * Removes a source of thermal conductivity to change our conductivity to the next one in priority or restore it to the initial value
- */
-/turf/proc/remove_thermal_conductivity_source(conductivity, priority)
-	if(priority > LAZYLEN(thermal_conductivities))
-		return
-	if(conductivity && thermal_conductivities[priority] != conductivity)
-		return
-	LAZYSET(thermal_conductivities, priority, null)
-	update_thermal_conductivity()
-
-/**
- * Updates the thermal conductivity.
- * Restores it to the initial value, then updates it with the conductivities stored in the list
- */
-/turf/proc/update_thermal_conductivity()
-	thermal_conductivity = initial(thermal_conductivity)
-	if(!thermal_conductivities)
-		return
-	for(var/checked_conductivity in thermal_conductivities)
-		if(checked_conductivity)
-			thermal_conductivity = checked_conductivity
-			return
-	LAZYNULL(thermal_conductivities)
+	var/heat = conduction_coefficient * CALCULATE_CONDUCTION_ENERGY(delta_temperature, heat_capacity, sharer.heat_capacity)
+	temperature += heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
+	sharer.temperature -= heat / sharer.heat_capacity

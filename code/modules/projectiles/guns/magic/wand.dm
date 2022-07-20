@@ -38,7 +38,7 @@
 	if(target == user)
 		if(no_den_usage)
 			var/area/A = get_area(user)
-			if(istype(A, /area/wizard_station))
+			if(istype(A, /area/centcom/wizard_station))
 				to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
 				return
 			else
@@ -82,7 +82,7 @@
 			to_chat(user, span_notice("You feel great!"))
 			return
 	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
-	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
+	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]\
 	</span>")
 	user.death(FALSE)
 
@@ -118,7 +118,7 @@
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
 			to_chat(user, "<span class='warning'>You irradiate yourself with pure positive energy! \
-			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
+			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]\
 			</span>")
 			user.death(0)
 			return
@@ -169,8 +169,8 @@
 
 /obj/item/gun/magic/wand/teleport/zap_self(mob/living/user)
 	if(do_teleport(user, user, 10, channel = TELEPORT_CHANNEL_MAGIC))
-		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(3, user.loc)
+		var/datum/effect_system/fluid_spread/smoke/smoke = new
+		smoke.set_up(3, holder = src, location = user.loc)
 		smoke.start()
 		charges--
 	..()
@@ -192,8 +192,8 @@
 
 	if(do_teleport(user, destination, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin, destination))
-			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(0, t)
+			var/datum/effect_system/fluid_spread/smoke/smoke = new
+			smoke.set_up(0, holder = src, location = t)
 			smoke.start()
 	..()
 

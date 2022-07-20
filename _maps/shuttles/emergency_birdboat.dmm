@@ -90,7 +90,7 @@
 /area/shuttle/escape)
 "as" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "bridge door"
+	name = "Bridge Door"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
@@ -125,9 +125,9 @@
 /area/shuttle/escape/brig)
 "az" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "security airlock"
+	name = "Security Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aA" = (
@@ -281,7 +281,7 @@
 /area/shuttle/escape)
 "aZ" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "bridge door"
+	name = "Bridge Door"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,

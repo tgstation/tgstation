@@ -7,7 +7,7 @@
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
-
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	var/eat_dir = SOUTH
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
@@ -42,6 +42,7 @@
 		return
 	var/obj/item/I = AM
 	if(I.juice_results || I.grind_results)
+		use_power(active_power_usage)
 		if(I.juice_results)
 			I.on_juice()
 			reagents.add_reagent_list(I.juice_results)

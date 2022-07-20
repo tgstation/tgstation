@@ -7,8 +7,6 @@
 	icon_keyboard = "power_key"
 	light_color = LIGHT_COLOR_YELLOW
 	use_power = ACTIVE_POWER_USE
-	idle_power_usage = 20
-	active_power_usage = 100
 	circuit = /obj/item/circuitboard/computer/powermonitor
 	tgui_id = "PowerMonitor"
 
@@ -83,6 +81,7 @@
 			demand.Cut(1, 2)
 
 /obj/machinery/computer/monitor/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PowerMonitor", name)
