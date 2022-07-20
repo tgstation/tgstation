@@ -55,7 +55,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/danger_point = 550
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_EMERGENCY]
 	var/emergency_point = 675
-	var/emergency_channel = RADIO_CHANNEL_COMMON
+	var/emergency_channel = null // Need null to actually broadcast, lol.
 	///The point at which we delam [SUPERMATTER_STATUS_DELAMINATING]
 	var/explosion_point = 900
 
@@ -404,7 +404,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/datum/gas_mixture/air = local_turf.return_air()
 	if(!air)
 		return SUPERMATTER_ERROR
-	var/integrity = get_integrity_percent()
 	if(final_countdown)
 		return SUPERMATTER_DELAMINATING
 	if(damage >= emergency_point)
@@ -443,8 +442,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(final_countdown && !cascade_initiated)
 		. += "casuality_field"
 
-/* VIN'S PR REMOVE LATER
+
 /obj/machinery/power/supermatter_crystal/proc/countdown()
+/* VIN'S PR REMOVE LATER
 	set waitfor = FALSE
 
 	if(final_countdown) // We're already doing it go away

@@ -67,6 +67,14 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 	if(sm.damage <= sm.warning_point) // Damage is too low, lets not
 		return FALSE 
 
+	if (sm.damage >= sm.emergency_point && sm.damage_archived < sm.emergency_point)
+		sm.investigate_log("has entered the emergency point.", INVESTIGATE_ENGINE)
+		message_admins("[sm] has entered the emergency point [ADMIN_JMP(sm)].")
+
+	if((REALTIMEOFDAY - sm.lastwarning) < SUPERMATTER_WARNING_DELAY)
+		return FALSE
+	sm.lastwarning = REALTIMEOFDAY
+
 	switch(sm.get_status())
 		if(SUPERMATTER_DELAMINATING)
 			playsound(sm, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
@@ -77,20 +85,13 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 		if(SUPERMATTER_WARNING)
 			playsound(sm, 'sound/machines/terminal_alert.ogg', 75)
 
-	if((REALTIMEOFDAY - sm.lastwarning) < SUPERMATTER_WARNING_DELAY)
-		return FALSE
-	sm.lastwarning = REALTIMEOFDAY
-
-	if(sm.damage > sm.damage_archived) // Healing
+	if(sm.damage < sm.damage_archived) // Healing
 		sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [sm.get_integrity_percent()]%", sm.damage_archived >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel)
 		return FALSE
 
 	if(sm.damage >= sm.emergency_point) // Taking damage, in emergency
 		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT Integrity: [sm.get_integrity_percent()]%", sm.emergency_channel)
 		sm.lastwarning = REALTIMEOFDAY - (SUPERMATTER_WARNING_DELAY / 2) // Cut the time to next announcement in half.
-		if(sm.damage_archived < sm.emergency_point) // Means we just entered it
-			sm.investigate_log("has entered the emergency point.", INVESTIGATE_ENGINE)
-			message_admins("[sm] has entered the emergency point [ADMIN_JMP(sm)].")
 	else // Taking damage, in warning
 		sm.radio.talk_into(sm, "Danger! Crystal hyperstructure integrity faltering! Integrity: [sm.get_integrity_percent()]%", sm.warning_channel)
 		if(sm.damage_archived < sm.warning_point)
