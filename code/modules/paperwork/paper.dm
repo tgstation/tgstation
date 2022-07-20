@@ -129,7 +129,7 @@
 		for(var/datum/paper_input/text as anything in new_paper.raw_text_inputs)
 			text.colour = COLOR_WEBSAFE_DARK_GRAY
 
-		for(var/datum/paper_field/text as anything in new_paper.raw_text_inputs)
+		for(var/datum/paper_field/text as anything in new_paper.raw_field_input_data)
 			text.field_data.colour = COLOR_WEBSAFE_DARK_GRAY
 
 
