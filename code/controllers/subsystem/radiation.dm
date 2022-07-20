@@ -98,7 +98,7 @@ SUBSYSTEM_DEF(radiation)
 		if(MC_TICK_CHECK)
 			break
 
-	pulse_information.turfs_to_process.Cut(1, turfs_iterated + 1)
+	cached_turfs_to_process.Cut(1, turfs_iterated + 1)
 
 /// Will attempt to irradiate the given target, limited through IC means, such as radiation protected clothing.
 /datum/controller/subsystem/radiation/proc/irradiate(atom/target)
