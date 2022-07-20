@@ -40,14 +40,16 @@
 		if(CONFIG_ASIMOV)
 			return /datum/ai_laws/default/asimov
 		if(CONFIG_SPECIFIED)
-			var/list/specifiedlaws = list()
-			for(var/lawpath in subtypesof(/datum/ai_laws))
-				var/datum/ai_laws/laws = lawpath
-				if(initial(laws.id) in specified_law_ids)
-					specifiedlaws += lawpath
+			var/list/specified_laws = list()
+			for (var/law_id in specified_law_ids)
+				var/datum/ai_laws/laws = lawid_to_type(law_id)
+				if (isnull(laws))
+					log_config("ERROR: Specified law [law_id] does not exist!")
+					continue
+				specified_laws += laws
 			var/datum/ai_laws/lawtype
-			if(specifiedlaws.len)
-				lawtype = pick(specifiedlaws)
+			if(specified_laws.len)
+				lawtype = pick(specified_laws)
 			else
 				lawtype = pick(subtypesof(/datum/ai_laws/default))
 
