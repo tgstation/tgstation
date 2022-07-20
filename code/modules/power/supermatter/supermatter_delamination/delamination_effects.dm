@@ -81,6 +81,7 @@
 /datum/sm_delam_strat/proc/effect_singulo(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	if(!sm_turf)
+		stack_trace("Supermatter [sm] failed to spawn singularity, cant get current turf.")
 		return FALSE
 	var/obj/singularity/created_singularity = new(sm_turf)
 	created_singularity.energy = 800
@@ -91,6 +92,7 @@
 /datum/sm_delam_strat/proc/effect_tesla(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	if(!sm_turf)
+		stack_trace("Supermatter [sm] failed to spawn tesla, cant get current turf.")
 		return FALSE
 	var/obj/energy_ball/created_tesla = new(sm_turf)
 	created_tesla.energy = 200 //Gets us about 9 balls
