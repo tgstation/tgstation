@@ -124,6 +124,7 @@
 	if(action == "request")
 		find_pai(usr)
 		return TRUE
+	// pAI specific actions.
 	if(!pai)
 		return FALSE
 	switch(action)
@@ -132,7 +133,7 @@
 			return TRUE
 		if("reset_software")
 			pai.reset_software()
-			return FALSE
+			return TRUE
 		if("set_dna")
 			pai.set_dna(usr)
 			return TRUE
