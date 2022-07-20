@@ -22,7 +22,7 @@
 		return FALSE
 	var/holochassis = pick(possible_chassis - chassis)
 	set_holochassis(holochassis)
-	to_chat(src, span_boldnotice("Your holochassis form morphs into that of a [holochassis]."))
+	balloon_alert(src, "[holochassis] composite engaged")
 	return TRUE
 
 /**
@@ -38,7 +38,7 @@
 	if(get_turf(src) != get_turf(anchor))
 		return FALSE
 	if(!isturf(loc) && loc != card)
-		to_chat(src, span_boldwarning("You can not change your holochassis composite while not on the ground or in your card!"))
+		balloon_alert(src, "can't do that here")
 		return FALSE
 	return TRUE
 
@@ -59,13 +59,9 @@
 	if(!choice)
 		return FALSE
 	set_holochassis(choice)
-	to_chat(src, span_boldnotice("You switch your holochassis projection composite to [choice]."))
+	balloon_alert(src, "[choice] composite engaged")
 	update_resting()
 	return TRUE
-
-/** Allows the pAI to switch to holochassis again. */
-/mob/living/silicon/pai/proc/emitter_cool()
-	emitter_semi_cd = FALSE
 
 /**
  * Returns the pAI to card mode.
@@ -75,11 +71,11 @@
  * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/fold_in(force = FALSE)
-	emitter_semi_cd = TRUE
+	holochassis_ready = FALSE
 	if(!force)
-		addtimer(CALLBACK(src, .proc/emitter_cool), emitter_cd)
+		addtimer(VARSET_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_COOLDOWN)
 	else
-		addtimer(CALLBACK(src, .proc/emitter_cool), emitter_overload_cd)
+		addtimer(VARSET_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_OVERLOAD_COOLDOWN)
 	icon_state = "[chassis]"
 	if(!holoform)
 		. = fold_out(force)
@@ -111,20 +107,20 @@
  * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/fold_out(force = FALSE)
-	if(emitter_health < 0)
-		to_chat(src, span_warning("Your holochassis emitters are still too unstable! Please wait for automatic repair."))
+	if(holochassis_health < 0)
+		balloon_alert(src, "emitter repair incomplete")
 		return FALSE
 	if(!can_holo && !force)
-		to_chat(src, span_warning("Your master or another force has disabled your holochassis emitters!"))
+		balloon_alert(src, "emitters are disabled")
 		return FALSE
 	if(holoform)
 		. = fold_in(force)
 		return
-	if(emitter_semi_cd)
-		to_chat(src, span_warning("Error: Holochassis emitters 	recycling. Please try again later."))
+	if(!holochassis_ready)
+		balloon_alert(src, "emitters recycling...")
 		return FALSE
-	emitter_semi_cd = TRUE
-	addtimer(CALLBACK(src, .proc/emitter_cool), emitter_cd)
+	holochassis_ready = FALSE
+	addtimer(VARSET_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_COOLDOWN)
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	set_density(TRUE)
@@ -135,7 +131,7 @@
 	if(isliving(card.loc))
 		var/mob/living/living_holder = card.loc
 		if(!living_holder.temporarilyRemoveItemFromInventory(card))
-			to_chat(src, span_warning("Error: Unable to expand to mobile form. Chassis is restrained by some device or person."))
+			balloon_alert(src, "unable to expand")
 			return FALSE
 	forceMove(get_turf(card))
 	card.forceMove(src)
@@ -171,5 +167,4 @@
  */
 /mob/living/silicon/pai/proc/toggle_integrated_light()
 	set_light_on(!light_on)
-	to_chat(src, span_notice("You [light_on ? "enable" : "disable"] your integrated light."))
 	return TRUE

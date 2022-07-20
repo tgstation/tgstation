@@ -29,3 +29,17 @@
 	if(SSpai.candidates[key])
 		SSpai.candidates -= key
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/**
+ * Creates a new pAI.
+ *
+ * @param {boolean} delete_old - If TRUE, deletes the old pAI.
+ */
+/mob/proc/make_pai(delete_old)
+	var/obj/item/pai_card/card = new(src)
+	var/mob/living/silicon/pai/pai = new(card)
+	pai.key = key
+	pai.name = name
+	card.set_personality(pai)
+	if(delete_old)
+		qdel(src)

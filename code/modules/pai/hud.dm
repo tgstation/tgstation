@@ -88,16 +88,12 @@
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	var/list/modifiers = params2list(params)
-	var/mob/living/carbon/holder = get(pAI.card.loc, /mob/living/carbon)
-	if(holder)
-		if (LAZYACCESS(modifiers, RIGHT_CLICK))
-			pAI.host_scan.attack_secondary(holder, pAI)
-		else
-			pAI.host_scan.attack(holder, pAI)
-	else
-		to_chat(usr, span_warning("You are not being carried by anyone!"))
-		return FALSE
-
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
+		pAI.host_scan(PAI_SCAN_TARGET)
+		return TRUE
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		pAI.host_scan(PAI_SCAN_MASTER)
+		return TRUE
 /atom/movable/screen/pai/crew_manifest
 	name = "Crew Manifest"
 	icon_state = "manifest"

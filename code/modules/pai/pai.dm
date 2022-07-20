@@ -1,59 +1,52 @@
 /mob/living/silicon/pai
-	name = "pAI"
-	icon = 'icons/mob/pai.dmi'
+	can_be_held = TRUE
+	can_buckle_to = FALSE
+	density = FALSE
+	desc = "A generic pAI hard-light holographics emitter."
+	health = 500
 	held_lh = 'icons/mob/pai_item_lh.dmi'
 	held_rh = 'icons/mob/pai_item_rh.dmi'
 	head_icon = 'icons/mob/pai_item_head.dmi'
-	icon_state = "repairbot"
-	mouse_opacity = MOUSE_OPACITY_ICON
-	density = FALSE
 	hud_type = /datum/hud/pai
-	pass_flags = PASSTABLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
-	desc = "A generic pAI hard-light holographics emitter."
-	health = 500
-	maxHealth = 500
+	icon = 'icons/mob/pai.dmi'
+	icon_state = "repairbot"
+	job = JOB_PERSONAL_AI
 	layer = LOW_MOB_LAYER
-	can_be_held = TRUE
-	move_force = 0
-	pull_force = 0
-	move_resist = 0
-	worn_slot_flags = ITEM_SLOT_HEAD
-	radio = /obj/item/radio/headset/silicon/pai
-	can_buckle_to = FALSE
-	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
-	light_system = MOVABLE_LIGHT
-	light_range = 3
-	light_flags = LIGHT_ATTACHED
 	light_color = COLOR_PAI_GREEN
+	light_flags = LIGHT_ATTACHED
 	light_on = FALSE
+	light_range = 3
+	light_system = MOVABLE_LIGHT
+	maxHealth = 500
+	mob_size = MOB_SIZE_TINY
+	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
+	mouse_opacity = MOUSE_OPACITY_ICON
+	move_force = 0
+	move_resist = 0
+	name = "pAI"
+	pass_flags = PASSTABLE | PASSMOB
+	pull_force = 0
+	radio = /obj/item/radio/headset/silicon/pai
+	worn_slot_flags = ITEM_SLOT_HEAD
 
-	/// Whether the pAI can enter holoform or not
+	/// If someone has enabled/disabled the pAIs ability to holo
 	var/can_holo = TRUE
 	/// Whether this pAI can recieve radio messages
 	var/can_receive = TRUE
 	/// Whether this pAI can transmit radio messages
 	var/can_transmit = TRUE
-	/// The current chasis that will appear when in holoform
-	var/chassis = "repairbot"
 	/// The card we inhabit
 	var/obj/item/pai_card/card
-	/// Time between fold out
-	var/emitter_cd = 50
-	/// The health of the holochassis
-	var/emitter_health = 20
-	/// The max health of the holochassis
-	var/emitter_max_health = 20
-	/// Overloaded or emagged foldout cooldown
-	var/emitter_overload_cd = 100
-	/// Regeneration rate for the holochassis
-	var/emitter_regen_per_second = 1.25
-	/// Brief pause upon creation, etc
-	var/emitter_semi_cd = FALSE
+	/// The current chasis that will appear when in holoform
+	var/chassis = "repairbot"
 	/// Toggles whether the pAI can hold encryption keys or not
 	var/encrypt_mod = FALSE
 	/// The cable we produce when hacking a door
 	var/obj/item/pai_cable/hacking_cable
+	/// The current health of the holochassis
+	var/holochassis_health = 20
+	/// Holochassis available to use
+	var/holochassis_ready = FALSE
 	/// Whether we are currently holoformed
 	var/holoform = FALSE
 	/// Installed software on the pAI
@@ -179,12 +172,12 @@
 
 /mob/living/silicon/pai/examine(mob/user)
 	. = ..()
-	. += "Its master ID string seems to be [master_name || "empty"]."
+	. += "Its master ID string seems to be [(!master_name || emagged) ? "empty" : master_name]."
 
 /mob/living/silicon/pai/get_status_tab_items()
 	. += ..()
 	if(!stat)
-		. += text("Emitter Integrity: [emitter_health * (100 / emitter_max_health)].")
+		. += text("Emitter Integrity: [holochassis_health * (100 / HOLOCHASSIS_MAX_HEALTH)].")
 	else
 		. += text("Systems nonfunctional.")
 
@@ -210,22 +203,20 @@
 	return ..()
 
 /mob/living/silicon/pai/Initialize(mapload)
-	var/obj/item/pai_card/pai_card = loc
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
-	for (var/law in laws.inherent)
+	for(var/law in laws.inherent)
 		lawcheck += law
-	if(!istype(pai_card)) //when manually spawning a pai, we create a card to put it into.
+	var/obj/item/pai_card/pai_card = loc
+	if(!istype(pai_card)) // when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = pai_card
 		pai_card = new(newcardloc)
 		pai_card.set_personality(src)
 	forceMove(pai_card)
 	card = pai_card
-	job = JOB_PERSONAL_AI
-	. = ..()
-	emitter_semi_cd = TRUE
-	addtimer(CALLBACK(src, .proc/emitter_cool), 400)
+	addtimer(VARSET_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
@@ -236,7 +227,7 @@
 	return TRUE
 
 /mob/living/silicon/pai/process(delta_time)
-	emitter_health = clamp((emitter_health + (emitter_regen_per_second * delta_time)), -50, emitter_max_health)
+	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * delta_time)), -50, HOLOCHASSIS_MAX_HEALTH)
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	. = ..()
@@ -322,20 +313,6 @@
 	return TRUE
 
 /**
- * Creates a new pAI.
- *
- * @param {boolean} delete_old - If TRUE, deletes the old pAI.
- */
-/mob/proc/make_pai(delete_old)
-	var/obj/item/pai_card/card = new(src)
-	var/mob/living/silicon/pai/pai = new(card)
-	pai.key = key
-	pai.name = name
-	card.set_personality(pai)
-	if(delete_old)
-		qdel(src)
-
-/**
  * Resets the pAI and any emagged status.
  *
  * @returns {boolean} - TRUE if successful, FALSE if not.
@@ -362,12 +339,15 @@
 		balloon_alert(user, "incompatible DNA signature")
 		balloon_alert(src, "incompatible DNA signature")
 		return FALSE
+	if(emagged)
+		balloon_alert(user, "directive system malfunctional")
+		return FALSE
 	var/mob/living/carbon/master = user
 	master_ref = WEAKREF(master)
 	master_name = master.real_name
 	master_dna = master.dna.unique_enzymes
 	to_chat(src, span_boldannounce("You have been bound to a new master: [user.real_name]!"))
-	emitter_semi_cd = FALSE
+	holochassis_ready = TRUE
 	return TRUE
 
 /**

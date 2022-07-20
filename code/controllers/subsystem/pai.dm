@@ -1,15 +1,13 @@
-#define SPAM_TIME 30 SECONDS
-
 SUBSYSTEM_DEF(pai)
 	name = "pAI"
 	flags = SS_NO_INIT|SS_NO_FIRE
 
 	/// List of pAI candidates, including those not submitted.
 	var/list/candidates = list()
-	/// Prevents a pAI from submitting itself repeatedly and sounding an alert.
-	var/submit_spam = FALSE
 	/// All pAI cards on the map.
 	var/list/pai_card_list = list()
+	/// Prevents a pAI from submitting itself repeatedly and sounding an alert.
+	var/submit_spam = FALSE
 
 /datum/controller/subsystem/pai/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -82,9 +80,6 @@ SUBSYSTEM_DEF(pai)
 		candidates[user.ckey] = candidate
 	ui_interact(user)
 
-/** Allows the candidate to spam pai_cards again. */
-/datum/controller/subsystem/pai/proc/submit_again()
-	submit_spam = FALSE
 
 /**
  * Pings all pAI cards on the station that new candidates are available.
@@ -98,7 +93,5 @@ SUBSYSTEM_DEF(pai)
 		if(!pai_card.pai)
 			pai_card.alert_update()
 	to_chat(usr, span_notice("Your pAI candidacy has been submitted!"))
-	addtimer(CALLBACK(src, .proc/submit_again), SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+	addtimer(VARSET_CALLBACK(src, submit_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
 	return TRUE
-
-#undef SPAM_TIME

@@ -7,16 +7,18 @@
  * @returns {boolean} - TRUE if the door jack state was switched, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/door_jack(mode)
+	if(isnull(mode))
+		return FALSE
 	switch(mode)
-		if("cable")
+		if(PAI_DOOR_JACK_CABLE)
 			extend_cable()
 			return TRUE
-		if("cancel")
+		if(PAI_DOOR_JACK_HACK)
+			hack_door()
+			return TRUE
+		if(PAI_DOOR_JACK_CANCEL)
 			QDEL_NULL(hacking_cable)
 			visible_message(span_notice("The cable retracts into the pAI."))
-			return TRUE
-		if("jack")
-			hack_door()
 			return TRUE
 	return FALSE
 
@@ -33,7 +35,7 @@
 	QDEL_NULL(hacking_cable) //clear any old cables
 	hacking_cable = new
 	var/mob/living/carbon/hacker = get_holder()
-	if(hacker && hacker.put_in_hands(hacking_cable))
+	if(hacker?.put_in_hands(hacking_cable))
 		hacker.visible_message(span_notice("A port on [src] opens to reveal a cable, which you quickly grab."), span_hear("You hear the soft click of a plastic	component and manage to catch the falling cable."))
 		track_pai()
 		track_thing(hacking_cable)
@@ -104,7 +106,7 @@
 	if(!hacking_cable)
 		return FALSE
 	if(!hacking_cable?.machine)
-		to_chat(src, span_warning("You must be connected to a machine to do this."))
+		balloon_alert(src, "nothing connected")
 		return FALSE
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 	balloon_alert(src, "overriding...")
@@ -120,7 +122,7 @@
 			card.update_appearance()
 		return FALSE
 	var/obj/machinery/door/door = hacking_cable.machine
-	balloon_alert(src, "success!")
+	balloon_alert(src, "success")
 	door.open()
 	untrack_pai()
 	untrack_thing(hacking_cable)

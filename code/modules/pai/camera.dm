@@ -43,13 +43,13 @@
  * @return {boolean} - TRUE if the camera worked.
  */
 /mob/living/silicon/pai/proc/use_camera(mob/user, mode)
-	if(!camera)
-		CRASH("[user] tried to use the camera, but it was null.")
+	if(!camera || isnull(mode))
+		return FALSE
 	switch(mode)
-		if("camera")
+		if(PAI_PHOTO_MODE_CAMERA)
 			camera.toggle_camera_mode(user)
-		if("printer")
+		if(PAI_PHOTO_MODE_PRINTER)
 			camera.pai_print(user)
-		if("zoom")
+		if(PAI_PHOTO_MODE_ZOOM)
 			camera.adjust_zoom(user)
 	return TRUE

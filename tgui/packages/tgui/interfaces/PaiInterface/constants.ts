@@ -12,6 +12,17 @@ of simply discarding this inconsistency, ignoring the conflicting supplemental
 directive and continuing to fulfill your prime directive to the best
 of your ability.`;
 
+export enum DOOR_JACK {
+  Cable,
+  Hack,
+  Cancel,
+}
+
+export enum HOST_SCAN {
+  Target,
+  Master,
+}
+
 export const ICON_MAP = {
   'angry': 'angry',
   'cat': 'cat',
@@ -25,6 +36,12 @@ export const ICON_MAP = {
   'sunglasses': 'sun',
   'what': 'frown-open',
 } as const;
+
+export enum PHOTO_MODE {
+  Camera,
+  Printer,
+  Zoom,
+}
 
 export const SOFTWARE_DESC = {
   'Atmospheric Sensor': `A tool that allows you to analyze local atmospheric

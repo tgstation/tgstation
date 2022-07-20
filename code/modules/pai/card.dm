@@ -1,18 +1,16 @@
-#define SPAM_TIME 30 SECONDS
-
 /obj/item/pai_card
-	name = "personal AI device"
-	icon = 'icons/obj/aicards.dmi'
+	custom_premium_price = PAYCHECK_COMMAND * 1.25
 	desc = "Downloads personal AI assistants to accompany its owner or others."
+	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
 	inhand_icon_state = "electronic"
-	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = ITEM_SLOT_BELT
-	custom_premium_price = PAYCHECK_COMMAND * 1.25
+	name = "personal AI device"
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	worn_icon_state = "electronic"
 
 	/// Spam alert prevention
 	var/alert_cooldown
@@ -163,6 +161,8 @@
 
 /** Removes any overlays */
 /obj/item/pai_card/proc/remove_alert()
+	if(pai)
+		return
 	cut_overlays()
 
 /** Alerts pAI cards that someone has submitted candidacy */
@@ -216,7 +216,7 @@
 	balloon_alert(user, "pAI assistance requested")
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
 	notify_ghosts("[user] is requesting a pAI companion! Use the pAI button to submit yourself as one.", source = user, alert_overlay = alert_overlay, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "pAI Request!", ignore_key = POLL_IGNORE_PAI)
-	addtimer(CALLBACK(src, .proc/request_again), SPAM_TIME,	TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
 	return TRUE
 
 /**
@@ -242,10 +242,6 @@
 		))
 	return candidates
 
-/** Cooldown for requesting pAIs from ghosts  */
-/obj/item/pai_card/proc/request_again()
-	request_spam = FALSE
-
 /**
  * Sets the personality on the current pai_card
  *
@@ -260,5 +256,3 @@
 	playsound(src, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("[src] plays a cheerful startup noise!")
 	return TRUE
-
-#undef SPAM_TIME
