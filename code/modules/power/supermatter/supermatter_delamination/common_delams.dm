@@ -1,8 +1,7 @@
 // Singulo, tesla, and explosive delam
 
-/// WHen we have too much gas.
+/// When we have too much gas.
 /datum/sm_delam_strat/singularity
-
 
 /datum/sm_delam_strat/singularity/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return (sm.absorbed_gasmix.total_moles() >= MOLE_PENALTY_THRESHOLD)

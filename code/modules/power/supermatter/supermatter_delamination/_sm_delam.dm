@@ -7,6 +7,7 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 ))
 
 /datum/sm_delam_strat
+	var/
 
 /// Whether we are eligible for this delamination or not. TRUE if valid, FALSE if not.
 /datum/sm_delam_strat/proc/can_select(obj/machinery/power/supermatter_crystal/sm)
@@ -31,7 +32,7 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 
 	radio.talk_into(
 		sm,
-		"CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure.", 
+		"CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated.", 
 		sm.emergency_channel
 	)
 

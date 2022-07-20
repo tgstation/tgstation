@@ -44,7 +44,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///The amount of damage we have currently
 	var/damage = 0
-	///The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safe_alert
+	/// The damage we had before this cycle. 
+	/// Used to limit the damage we can take each cycle, and to check if we are currently taking damage or healing.
 	var/damage_archived = 0
 	
 	///The point at which we consider the supermatter to be [SUPERMATTER_STATUS_WARNING]
