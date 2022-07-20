@@ -785,17 +785,17 @@ export class PreviewView extends Component<PreviewViewProps> {
     const interactMode =
       held_item_details?.interaction_mode || InteractionType.reading;
 
-    if (interactMode !== InteractionType.writing) {
+    const dmTextPreviewData = this.createPreviewFromDM();
+    let previewText = dmTextPreviewData.text;
+
+    if (interactMode === InteractionType.writing) {
+      previewText += this.createPreviewFromTextArea(
+        dmTextPreviewData.newFieldCount
+      );
     }
 
-    const dmTextPreviewData = this.createPreviewFromDM();
-    const dmTextPreview = dmTextPreviewData.text;
-    const textAreaPreview = this.createPreviewFromTextArea(
-      dmTextPreviewData.newFieldCount
-    );
-
     const textHTML = {
-      __html: `<span class='paper-text'>${dmTextPreview}\n\n${textAreaPreview}</span>`,
+      __html: `<span class='paper-text'>${previewText}</span>`,
     };
 
     const { scrollableRef, handleOnScroll } = this.props;
