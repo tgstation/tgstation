@@ -930,6 +930,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	/// The trigger to set the mode
 	var/datum/port/input/set_mode
 
+	/// Whether the fire alarm is enabled or not
+	var/datum/port/output/fire_alarm_enabled
+
 	var/options_map = list(
 		"Scrubbing" = AALARM_MODE_SCRUBBING,
 		"Venting" = AALARM_MODE_VENTING,
@@ -948,17 +951,45 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	mode = add_option_port("Mode", options_map, order = 1)
 	set_mode = add_input_port("Set Mode", PORT_TYPE_SIGNAL, trigger = .proc/set_mode)
 
+	fire_alarm_enabled = add_output_port("Alarm Enabled", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/air_alarm_general/register_usb_parent(atom/movable/shell)
+	. = ..()
+	if(istype(shell, /obj/machinery/airalarm))
+		connected_alarm = shell
+		RegisterSignal(shell, COMSIG_ALARM_TRIGGERED, .proc/on_alarm_triggered)
+		RegisterSignal(shell, COMSIG_ALARM_CLEARED, .proc/on_alarm_cleared)
+
+/obj/item/circuit_component/air_alarm_general/unregister_usb_parent(atom/movable/shell)
+	connected_alarm = null
+	UnregisterSignal(shell, list(
+		COMSIG_ALARM_TRIGGERED,
+		COMSIG_ALARM_CLEARED
+	))
+	return ..()
+
+/obj/item/circuit_component/air_alarm_general/proc/on_alarm_triggered(datum/source, alarm_type, area/location)
+	SIGNAL_HANDLER
+	if(alarm_type == ALARM_ATMOS)
+		fire_alarm_enabled.set_output(TRUE)
+
+/obj/item/circuit_component/air_alarm_general/proc/on_alarm_cleared(datum/source, alarm_type, area/location)
+	SIGNAL_HANDLER
+	if(alarm_type == ALARM_ATMOS)
+		fire_alarm_enabled.set_output(FALSE)
+
+
 /obj/item/circuit_component/air_alarm_general/proc/trigger_alarm(datum/port/input/port)
 	CIRCUIT_TRIGGER
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
 	if(port == enable_fire_alarm)
-		if(alarm_manager.send_alarm(ALARM_ATMOS))
-			post_alert(2)
+		if(connected_alarm.alarm_manager.send_alarm(ALARM_ATMOS))
+			INVOKE_ASYNC(connected_alarm, /obj/machinery/airalarm.proc/post_alert, 2)
 	else
-		if(alarm_manager.clear_alarm(ALARM_ATMOS))
-			post_alert(0)
+		if(connected_alarm.alarm_manager.clear_alarm(ALARM_ATMOS))
+			INVOKE_ASYNC(connected_alarm, /obj/machinery/airalarm.proc/post_alert, 0)
 
 /obj/item/circuit_component/air_alarm_general/proc/set_mode(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -967,15 +998,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	connected_alarm.mode = options_map[mode.value]
 	connected_alarm.investigate_log("was turned to [connected_alarm.get_mode_name(connected_alarm.mode)] by [parent.get_creator()]")
-	connected_alarm.apply_mode(src)
-
-
-/obj/item/circuit_component/air_alarm_general/proc/trigger_siphon()
-	CIRCUIT_TRIGGER
-	if(!connected_alarm || connected_alarm.locked)
-		return
-
-	connected_alarm.
+	INVOKE_ASYNC(connected_alarm, /obj/machinery/airalarm.proc/apply_mode, src)
 
 /obj/item/circuit_component/air_alarm
 	display_name = "Air Alarm Control"
@@ -996,6 +1019,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	var/obj/machinery/airalarm/connected_alarm
 	var/list/options_map
+
+	ui_buttons = list(
+		"plus" = "add_new_component"
+	)
+
+	var/air_alarm_duplicates_left = 20
+
+/obj/item/circuit_component/air_alarm/ui_perform_action(mob/user, action)
+	if(action == "add_new_component")
+		var/obj/item/circuit_component/component = new /obj/item/circuit_component/air_alarm/duplicate(parent)
+		parent.add_component(component)
+		air_alarm_duplicates_left--
+		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/add_duplicate_back)
+
+/obj/item/circuit_component/air_alarm/proc/add_duplicate_back()
+	SIGNAL_HANDLER
+	air_alarm_duplicates_left++
 
 /obj/item/circuit_component/air_alarm/populate_ports()
 	min_2 = add_input_port("Min 2", PORT_TYPE_NUMBER)
@@ -1022,6 +1062,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	air_alarm_options = add_option_port("Air Alarm Options", component_options)
 	options_map = component_options
+
+/obj/item/circuit_component/air_alarm/duplicate
+	circuit_size = 0
+
+	ui_buttons = list()
+
+/obj/item/circuit_component/air_alarm/duplicate/register_shell(atom/movable/shell)
+	. = ..()
+	if(istype(shell, /obj/machinery/airalarm))
+		connected_alarm = shell
+
+/obj/item/circuit_component/air_alarm/duplicate/unregister_shell(atom/movable/shell)
+	connected_alarm = null
+	qdel(src)
+	return ..()
 
 /obj/item/circuit_component/air_alarm/register_usb_parent(atom/movable/shell)
 	. = ..()
