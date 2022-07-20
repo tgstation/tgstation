@@ -41,6 +41,18 @@
 		tool_behaviors = string_list(tool_behaviors)
 	if(tool_paths)
 		tool_paths = string_list(tool_paths)
+	for(var/item in blacklist)
+		var/actual_item = new item(null)
+		if(!isitem(actual_item) || item == result)
+			continue
+		if(!(item in GLOB.crafting_recipe_items_blacklist) && !(item in GLOB.crafting_recipe_items))
+			GLOB.crafting_recipe_items_blacklist += item
+	for(var/item in reqs)
+		var/actual_item = new item(null)
+		if(!isitem(actual_item))
+			continue
+		if(!(item in GLOB.crafting_recipe_items))
+			GLOB.crafting_recipe_items += item
 
 /**
  * Run custom pre-craft checks for this recipe, don't add feedback messages in this because it will spam the client

@@ -600,8 +600,17 @@ There are several things that need to be remembered:
 		drop_all_held_items()
 		return
 
+	if(held_items[1] == null && held_items[2] == null && hud_used)
+		for(var/atom/movable/screen/craft/crafting_button in hud_used.static_inventory)
+			crafting_button.icon = hud_used.ui_style
+			crafting_button.icon_state = initial(crafting_button.icon_state)
+
 	var/list/hands = list()
 	for(var/obj/item/worn_item in held_items)
+		if(((worn_item.type in GLOB.crafting_recipe_items) || ((worn_item.parent_type in GLOB.crafting_recipe_items) && !(worn_item.type in GLOB.crafting_recipe_items_blacklist))) && hud_used)
+			for(var/atom/movable/screen/craft/crafting_button in hud_used.static_inventory)
+				crafting_button.icon = 'icons/hud/screen_gen.dmi'
+				crafting_button.icon_state = "can_craft"
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			worn_item.screen_loc = ui_hand_position(get_held_index_of_item(worn_item))
 			client.screen += worn_item
