@@ -63,13 +63,6 @@
 			inserted_item = W
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
-	// TIMBERTODO - Make sure mod_computer scanning is safe to put back in.
-	/*if(istype(W, /obj/item/paper))
-		var/obj/item/paper/paper = W
-
-		to_chat(user, span_notice("You scan \the [W] into \the [src]."))
-		note = paper.info*/
-
 /obj/item/modular_computer/tablet/AltClick(mob/user)
 	. = ..()
 	if(.)
