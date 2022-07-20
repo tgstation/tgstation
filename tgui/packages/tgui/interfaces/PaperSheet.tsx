@@ -397,8 +397,9 @@ export class PrimaryView extends Component {
  * @classdesc Real-time text preview section. When not editing, this is simply
  * the component that builds and renders the final HTML output.
  * It parses and sanitises the DM-side raw input and field input data once on
- * creation and caches it.
- * As a result, this component should be used with a `key` prop that changes
+ * creation.
+ * It caches writable input fields as a form of state management.
+ * This component should be used with a `key` prop that changes
  * when DM-side raw input or field input data have changed.
  * We currently do this by keying the component based on the lengths of the
  * raw and field input arrays.
