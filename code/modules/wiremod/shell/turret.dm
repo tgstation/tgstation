@@ -1,5 +1,6 @@
 /obj/machinery/porta_turret/circuit_shell
 	name = "turret shell"
+	shot_delay = 2.5 SECONDS
 
 /obj/machinery/porta_turret/circuit_shell/Initialize(mapload)
 	. = ..()
@@ -8,6 +9,24 @@
 		capacity = SHELL_CAPACITY_LARGE, \
 		shell_flags = SHELL_FLAG_ALLOW_FAILURE_ACTION|SHELL_FLAG_REQUIRE_ANCHOR \
 	)
+	if(cover)
+		RegisterSignal(cover, COMSIG_PARENT_ATTACKBY, .proc/handle_attackby)
+
+/obj/machinery/porta_turret/circuit_shell/proc/handle_attackby(datum/source, obj/item/attacking_item, mob/living/user, params)
+	SIGNAL_HANDLER
+	if(!user.combat_mode)
+		if(istype(attacking_item, /obj/item/integrated_circuit))
+			INVOKE_ASYNC(src, /atom.proc/attackby, attacking_item, user, params)
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+		else if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
+			INVOKE_ASYNC(src, /atom.proc/multitool_act, user, attacking_item)
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+		else if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
+			INVOKE_ASYNC(src, /atom.proc/screwdriver_act, user, attacking_item)
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/porta_turret/circuit_shell/emag_act(mob/user)
+	return
 
 /obj/machinery/porta_turret/circuit_shell/ui_status(mob/user)
 	return UI_CLOSE
@@ -86,6 +105,10 @@
 	var/atom/target_atom = target.value
 
 	if(!target_atom || !attached_turret)
+		unsuccessful_fire.set_value(COMPONENT_SIGNAL)
+		return
+
+	if(get_dist(target_atom, attached_turret) > attached_turret.scan_range)
 		unsuccessful_fire.set_value(COMPONENT_SIGNAL)
 		return
 
