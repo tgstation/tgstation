@@ -171,7 +171,7 @@
 			update_appearance()
 
 ///Apply mood bonus depending on aquarium status
-/obj/structure/aquarium/proc/admire(mob/user)
+/obj/structure/aquarium/proc/admire(mob/living/user)
 	to_chat(user,span_notice("You take a moment to watch [src]."))
 	if(do_after(user, 5 SECONDS, target = src))
 		var/alive_fish = 0

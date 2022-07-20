@@ -420,19 +420,3 @@
 		if(ITEM_SLOT_SUITSTORE)
 			return /obj/item
 	return null
-
-/// Adds a mood event to the mob
-/mob/proc/add_mood_event(category, type, ...)
-	if (!isliving(src))
-		return
-	var/mob/living/living_mob = src
-	living_mob.mob_mood.add_mood_event(arglist(args))
-
-/// Clears a mood event from the mob
-/mob/proc/clear_mood_event(category)
-	// this isn't on /mob/living because it saves a lot of needless casts
-	// in procs that provide the mob as (mob/user
-	if (!isliving(src))
-		return
-	var/mob/living/living_mob = src
-	living_mob.mob_mood.clear_mood_event(category)

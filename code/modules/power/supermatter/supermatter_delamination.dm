@@ -71,7 +71,9 @@
 			continue
 
 		to_chat(victim, span_boldannounce("You feel reality distort for a moment..."))
-		victim.add_mood_event("delam", /datum/mood_event/delam)
+		if (isliving(victim))
+			var/mob/living/living_victim = victim
+			living_victim.add_mood_event("delam", /datum/mood_event/delam)
 
 /**
  * Setup for the types of possible delaminations and their effects (singulo, tesla or normal)
@@ -196,8 +198,9 @@
 
 	for(var/mob/player as anything in GLOB.player_list)
 		if(!isdead(player))
+			var/mob/living/living_player = player
 			to_chat(player, span_boldannounce("Everything around you is resonating with a powerful energy. This can't be good."))
-			player.add_mood_event("cascade", /datum/mood_event/cascade)
+			living_player.add_mood_event("cascade", /datum/mood_event/cascade)
 		SEND_SOUND(player, 'sound/magic/charge.ogg')
 
 	call_explosion()

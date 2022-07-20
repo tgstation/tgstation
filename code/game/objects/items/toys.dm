@@ -176,19 +176,19 @@
 	inhand_icon_state = "syndballoon"
 	random_color = FALSE
 
-/obj/item/toy/balloon/syndicate/pickup(mob/user)
+/obj/item/toy/balloon/syndicate/pickup(mob/living/user)
 	. = ..()
 	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
 		user.add_mood_event("badass_antag", /datum/mood_event/badass_antag)
 
-/obj/item/toy/balloon/syndicate/dropped(mob/user)
+/obj/item/toy/balloon/syndicate/dropped(mob/living/user)
 	if(user)
 		user.clear_mood_event("badass_antag")
 	. = ..()
 
 /obj/item/toy/balloon/syndicate/Destroy()
 	if(ismob(loc))
-		var/mob/M = loc
+		var/mob/living/M = loc
 		M.clear_mood_event("badass_antag")
 	. = ..()
 

@@ -14,7 +14,7 @@
 	UnregisterSignal(target, COMSIG_PARENT_EXAMINE)
 	return ..()
 
-/datum/element/art/proc/apply_moodlet(atom/source, mob/user, impress)
+/datum/element/art/proc/apply_moodlet(atom/source, mob/living/user, impress)
 	SIGNAL_HANDLER
 
 	var/msg
@@ -54,7 +54,7 @@
 
 /datum/element/art/rev
 
-/datum/element/art/rev/apply_moodlet(atom/source, mob/user, impress)
+/datum/element/art/rev/apply_moodlet(atom/source, mob/living/user, impress)
 	var/msg
 	if(user.mind?.has_antag_datum(/datum/antagonist/rev))
 		user.add_mood_event("artgreat", /datum/mood_event/artgreat)
@@ -68,7 +68,7 @@
 
 /datum/element/art/commoner
 
-/datum/element/art/commoner/apply_moodlet(atom/source, mob/user, impress)
+/datum/element/art/commoner/apply_moodlet(atom/source, mob/living/user, impress)
 	var/msg
 	var/list/haters = list()
 	for(var/hater_department_type as anything in list(/datum/job_department/security, /datum/job_department/command))

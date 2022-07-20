@@ -100,7 +100,7 @@
 	. = ..()
 	book_data = new(starting_title, starting_author, starting_content)
 
-/obj/item/book/proc/on_read(mob/user)
+/obj/item/book/proc/on_read(mob/living/user)
 	if(book_data?.content)
 		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 

@@ -73,7 +73,7 @@
 		QDEL_NULL(lure)
 	. = ..()
 
-/datum/fishing_challenge/proc/start(mob/user)
+/datum/fishing_challenge/proc/start(mob/living/user)
 	/// Create fishing line visuals
 	fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
 	// If fishing line breaks los / rod gets dropped / deleted

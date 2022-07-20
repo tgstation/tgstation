@@ -392,7 +392,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 //Many  hats added, Some will probably be removed, just want to see which ones are popular.
 // > some will probably be removed
 
-/mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
+/mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/living/user)
 	if(inventory_head)
 		if(user)
 			to_chat(user, span_warning("You can't put more than one hat on [src]!"))

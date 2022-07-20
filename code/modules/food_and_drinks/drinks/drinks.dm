@@ -372,8 +372,9 @@
 	if(!QDELETED(src) && cap_on && reagents.total_volume)
 		if(prob(flip_chance)) // landed upright
 			src.visible_message(span_notice("[src] lands upright!"))
-			if(throwingdatum.thrower)
-				throwingdatum.thrower.add_mood_event("bottle_flip", /datum/mood_event/bottle_flip)
+			if(throwingdatum.thrower && isliving(throwingdatum.thrower))
+				var/mob/living/living_thrower = throwingdatum.thrower
+				living_thrower.add_mood_event("bottle_flip", /datum/mood_event/bottle_flip)
 		else // landed on it's side
 			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
 
@@ -702,7 +703,7 @@
 		return
 
 	if(ismob(target))
-		var/mob/target_mob = target
+		var/mob/living/target_mob = target
 		target_mob.add_mood_event("soda_spill", /datum/mood_event/soda_spill, src)
 		for(var/mob/living/iter_mob in view(src, 7))
 			if(iter_mob != target)

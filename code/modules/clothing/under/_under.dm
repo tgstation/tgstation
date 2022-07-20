@@ -109,7 +109,7 @@
 		if(attached_accessory.above_suit)
 			H.update_inv_wear_suit()
 
-/obj/item/clothing/under/equipped(mob/user, slot)
+/obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
 	if(slot == ITEM_SLOT_ICLOTHING && freshly_laundered)
 		freshly_laundered = FALSE

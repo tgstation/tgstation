@@ -15,7 +15,7 @@
 	LoadComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
-/obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+/obj/item/clothing/shoes/clown_shoes/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_FEET)
 		if(enabled_waddle)
@@ -23,7 +23,7 @@
 		if(is_clown_job(user.mind?.assigned_role))
 			user.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
-/obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+/obj/item/clothing/shoes/clown_shoes/dropped(mob/living/user)
 	. = ..()
 	user.RemoveElement(/datum/element/waddling)
 	if(is_clown_job(user.mind?.assigned_role))
