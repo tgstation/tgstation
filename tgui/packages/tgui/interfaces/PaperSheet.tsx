@@ -8,8 +8,9 @@ import { Button, Box, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
-import { Component, createRef, MouseEventHandler, RefObject } from 'inferno';
+import { Component, createRef, RefObject } from 'inferno';
 import { clamp } from 'common/math';
+import { logger } from '../logging';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
@@ -75,7 +76,7 @@ type PaperSheetStamperProps = {
 };
 
 type FieldCreationReturn = {
-  counter: number;
+  nextCounter: number;
   text: string;
 };
 
@@ -92,6 +93,12 @@ enum InteractionType {
   stamping = 2,
 }
 
+type PreviewViewProps = {
+  scrollableRef: RefObject<HTMLDivElement>;
+  handleOnScroll: (this: GlobalEventHandlers, ev: Event) => any;
+  textArea: string;
+};
+
 const canEdit = (heldItemDetails?: WritingImplement): boolean => {
   if (!heldItemDetails) {
     return false;
@@ -100,295 +107,8 @@ const canEdit = (heldItemDetails?: WritingImplement): boolean => {
   return heldItemDetails.interaction_mode === InteractionType.writing;
 };
 
-// Creates the final inline HTML for previewing or reading the paper.
-const createPreview = (
-  inputList: PaperInput[] | undefined,
-  dmCache: string,
-  setDMCache: (nextState: string) => void,
-  fieldDataList: FieldInput[] | undefined,
-  textAreaText: string | null,
-  defaultFont: string,
-  defaultColor: string,
-  paperColor: string,
-  heldItemDetails: WritingImplement | undefined
-): string => {
-  let output = '';
-
-  const readOnly = !canEdit(heldItemDetails);
-
-  const heldColor = heldItemDetails?.color;
-  const heldFont = heldItemDetails?.font;
-  const heldBold = heldItemDetails?.use_bold;
-
-  let fieldCounter = 0;
-
-  if (dmCache?.length) {
-    // logger.log(dmCache);
-    // output = dmCache;
-  } else {
-    inputList?.forEach((value) => {
-      let rawText = value.raw_text.trim();
-      if (!rawText.length) {
-        return;
-      }
-
-      const fontColor = value.color || defaultColor;
-      const fontFace = value.font || defaultFont;
-      const fontBold = value.bold || false;
-
-      let processingOutput = formatAndProcessRawText(
-        rawText,
-        fontFace,
-        fontColor,
-        paperColor,
-        fontBold,
-        fieldCounter,
-        readOnly,
-        fieldDataList
-      );
-
-      output += processingOutput.text;
-
-      fieldCounter = processingOutput.counter;
-
-      // fillAllFields(fieldDataList || [], paperColor);
-    });
-    setDMCache(`${output}`);
-  }
-
-  if (textAreaText?.length) {
-    const fontColor = heldColor || defaultColor;
-    const fontFace = heldFont || defaultFont;
-    const fontBold = heldBold || false;
-
-    output += formatAndProcessRawText(
-      textAreaText,
-      fontFace,
-      fontColor,
-      paperColor,
-      fontBold,
-      fieldCounter,
-      true
-    ).text;
-  }
-
-  return output;
-};
-
-// Builds a paper field ID from a number or string.
-const createIDHeader = (index: number | string): string => {
-  return 'paperfield_' + index;
-};
-
-// Extracts the paper field "counter" from a full ID.
-const getHeaderID = (header: string): string => {
-  return header.replace('paperfield_', '');
-};
-
-// Returns the width the text with the provided attributes would take up in px.
-const textWidth = (text: string, font: string, fontsize: number): number => {
-  const c = document.createElement('canvas');
-  const ctx = c.getContext('2d');
-
-  if (!ctx) {
-    return -1;
-  }
-
-  ctx.font = `${fontsize}px ${font}`;
-  return ctx.measureText(text).width;
-};
-
 // Regex that finds [____] fields.
 const fieldRegex: RegExp = /\[((?:_+))\]/gi;
-// Regex that finds <input ... id="paperfield_x">.
-const fieldTagRegex: RegExp =
-  /\[<input\s+(?!disabled)(.*?)\s+id="paperfield_(?<id>\d+)"(.*?)\/>\]/gm;
-
-// Replaces all [______] fields in raw text with fully formed <input ...>
-// fields replacements.
-const createFields = (
-  rawText: string,
-  font: string,
-  fontSize: number,
-  color: string,
-  paperColor: string,
-  forceReadonlyFields: boolean,
-  counter: number = 0,
-  fieldDataList: FieldInput[]
-): FieldCreationReturn => {
-  const ret_text = rawText.replace(fieldRegex, (match, p1, offset, string) => {
-    const width = textWidth(match, font, fontSize);
-    const matchingData = fieldDataList.find(
-      (e) => e.field_index === `${counter}`
-    );
-    if (matchingData) {
-      return createFilledInputField(
-        matchingData,
-        p1.length,
-        width,
-        font,
-        fontSize,
-        color,
-        paperColor,
-        createIDHeader(counter++)
-      );
-    }
-    return createInputField(
-      p1.length,
-      width,
-      font,
-      fontSize,
-      color,
-      createIDHeader(counter++),
-      forceReadonlyFields
-    );
-  });
-
-  return {
-    counter: counter,
-    text: ret_text,
-  };
-};
-
-// Builds an <input> field from the supplied props.
-const createInputField = (
-  length: number,
-  width: number,
-  font: string,
-  fontSize: number,
-  color: string,
-  id: string,
-  readOnly: boolean
-): string => {
-  return `[<input ${
-    readOnly ? 'disabled ' : ''
-  }type="text" style="font-size:${fontSize}px; font-family: ${font};color:${color};min-width:${width}px;max-width:${width}px" id="${id}" maxlength=${length} size=${length} />]`;
-};
-
-// Builds an <input> field from the supplied props, pre-filled with a value and disabled.
-const createFilledInputField = (
-  field: FieldInput,
-  length: number,
-  width: number,
-  font: string,
-  fontSize: number,
-  color: string,
-  paperColor: string,
-  id: string
-): string => {
-  const fieldData = field.field_data;
-  const thing = document.createTextNode(fieldData.raw_text);
-
-  let div = document.createElement('input');
-  div.setAttribute('type', 'text');
-  div.style.fontSize = field.is_signature ? '30px' : `${fontSize}px`;
-  div.style.fontFamily = fieldData.font || font;
-  div.style.fontStyle = field.is_signature ? 'italic' : 'normal';
-  div.style.fontWeight = 'bold';
-  div.style.color = fieldData.color || color;
-  div.style.minWidth = `${width}px`;
-  div.style.maxWidth = `${width}px`;
-  div.style.backgroundColor = paperColor;
-  div.id = id;
-  div.maxLength = length;
-  div.size = length;
-  div.defaultValue = fieldData.raw_text;
-  div.disabled = true;
-
-  return div.outerHTML;
-};
-
-// Fully formats, sanitises and parses the provided raw text and wraps it
-// as necessary.
-const formatAndProcessRawText = (
-  rawText: string,
-  font: string,
-  color: string,
-  paperColor: string,
-  bold: boolean,
-  fieldCounter: number = 0,
-  forceReadonlyFields: boolean = false,
-  fieldDataList: FieldInput[] = []
-): FieldCreationReturn => {
-  // First lets make sure it ends in a new line
-  rawText += rawText[rawText.length] === '\n' ? '\n' : '\n\n';
-
-  // Second, we sanitize the text of html
-  const sanitizedText = sanitizeText(rawText);
-
-  // Third we replace the [__] with fields as markedjs fucks them up
-  const fieldedText = createFields(
-    sanitizedText,
-    font,
-    12,
-    color,
-    paperColor,
-    forceReadonlyFields,
-    fieldCounter,
-    fieldDataList
-  );
-
-  // Fourth, parse the text using markup
-  const parsedText = runMarkedDefault(fieldedText.text);
-
-  // Fifth, we wrap the created text in the writing implement properties.
-  const fontedText = setFontInText(parsedText, font, color, bold);
-
-  return { text: fontedText, counter: fieldedText.counter };
-};
-
-// Wraps the given raw text in a font span based on the supplied props.
-const setFontInText = (
-  text: string,
-  font: string,
-  color: string,
-  bold: boolean = false
-): string => {
-  return `<span style="color:${color};font-family:${font};${
-    bold ? 'font-weight: bold;' : ''
-  }">${text}</span>`;
-};
-
-// Parses the given raw text through marked for applying markdown.
-const runMarkedDefault = (rawText: string): string => {
-  // Override function, any links and images should
-  // kill any other marked tokens we don't want here
-  const walkTokens = (token) => {
-    switch (token.type) {
-      case 'url':
-      case 'autolink':
-      case 'reflink':
-      case 'link':
-      case 'image':
-        token.type = 'text';
-        // Once asset system is up change to some default image
-        // or rewrite for icon images
-        token.href = '';
-        break;
-    }
-  };
-  return marked(rawText, {
-    breaks: true,
-    smartypants: true,
-    smartLists: true,
-    walkTokens,
-    // Once assets are fixed might need to change this for them
-    baseUrl: 'thisshouldbreakhttp',
-  });
-};
-
-// Stops propagation of a given event.
-const pauseEvent = (e: Event): boolean => {
-  if (e.stopPropagation) {
-    e.stopPropagation();
-  }
-  if (e.preventDefault) {
-    e.preventDefault();
-  }
-  e.cancelBubble = true;
-  e.returnValue = false;
-  return false;
-};
 
 // Handles the ghost stamp when attempting to stamp paper sheets.
 class PaperSheetStamper extends Component<PaperSheetStamperProps> {
@@ -410,7 +130,7 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
         return;
       }
 
-      pauseEvent(e);
+      this.pauseEvent(e);
       this.setState({
         x: pos.x,
         y: pos.y,
@@ -432,6 +152,19 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
       });
     };
   }
+
+  // Stops propagation of a given event.
+  pauseEvent = (e: Event): boolean => {
+    if (e.stopPropagation) {
+      e.stopPropagation();
+    }
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
+    e.cancelBubble = true;
+    e.returnValue = false;
+    return false;
+  };
 
   findStampPosition(e: MouseEvent): StampPosition | void {
     let rotating;
@@ -532,66 +265,6 @@ export const Stamp = (props, context): InfernoElement<HTMLDivElement> => {
   );
 };
 
-// Hooks into all input fields, registering an oninput handler.
-const hookAllFields = (
-  rawText: string,
-  onInputHandler: (this: GlobalEventHandlers, ev: Event) => void
-): void => {
-  let match;
-
-  while ((match = fieldTagRegex.exec(rawText)) !== null) {
-    const id = parseInt(match.groups.id, 10);
-
-    if (!isNaN(id)) {
-      const dom = document.getElementById(
-        createIDHeader(id)
-      ) as HTMLInputElement;
-
-      if (!dom) {
-        continue;
-      }
-
-      if (dom.disabled) {
-        continue;
-      }
-
-      dom.oninput = onInputHandler;
-    }
-  }
-};
-
-// Goes through the list of field input data and modifies all fields to be
-// filled with the appropriate data and then disables them.
-const fillAllFields = (
-  fieldInputData: FieldInput[],
-  paperColor: string
-): void => {
-  if (!fieldInputData?.length) {
-    return;
-  }
-
-  fieldInputData.forEach((field, i) => {
-    const dom = document.getElementById(
-      createIDHeader(field.field_index)
-    ) as HTMLInputElement;
-
-    if (!dom) {
-      return;
-    }
-
-    const fieldData = field.field_data;
-
-    dom.disabled = true;
-    dom.value = fieldData.raw_text;
-    dom.style.fontFamily = fieldData.font || '';
-    dom.style.color = fieldData.color || '';
-    dom.style.backgroundColor = paperColor;
-    dom.style.fontSize = field.is_signature ? '30px' : '12px';
-    dom.style.fontStyle = field.is_signature ? 'italic' : 'normal';
-    dom.style.fontWeight = 'bold';
-  });
-};
-
 // Overarching component that holds the primary view for papercode.
 export class PrimaryView extends Component {
   // Reference that gets passed to the <Section> holding the main preview.
@@ -605,7 +278,7 @@ export class PrimaryView extends Component {
 
   // Event handler for the onscroll event. Also gets passed to the <Section>
   // holding the main preview. Updates lastDistanceFromBottom.
-  onScrollHandler: (this: MouseEventHandler, ev: Event) => any;
+  onScrollHandler: (this: GlobalEventHandlers, ev: Event) => any;
 
   constructor(props, context) {
     super(props, context);
@@ -624,6 +297,8 @@ export class PrimaryView extends Component {
   render() {
     const { act, data } = useBackend<PaperContext>(this.context);
     const {
+      raw_text_input,
+      raw_field_input,
       default_pen_font,
       default_pen_color,
       paper_color,
@@ -634,16 +309,16 @@ export class PrimaryView extends Component {
     const useColor = held_item_details?.color || default_pen_color;
     const useBold = held_item_details?.use_bold || false;
 
-    const [textAreaText, setTextAreaText] = useLocalState(
-      this.context,
-      'textAreaText',
-      ''
-    );
-
     const [inputFieldData, setInputFieldData] = useLocalState(
       this.context,
       'inputFieldData',
       {}
+    );
+
+    const [textAreaText, setTextAreaText] = useLocalState(
+      this.context,
+      'textAreaText',
+      ''
     );
 
     const interactMode =
@@ -658,8 +333,12 @@ export class PrimaryView extends Component {
         <Flex direction="column" fillPositionedParent>
           <Flex.Item grow={3} basis={1}>
             <PreviewView
+              key={`${raw_field_input?.length || 0}_${
+                raw_text_input?.length || 0
+              }`}
               scrollableRef={this.scrollableRef}
               handleOnScroll={this.onScrollHandler}
+              textArea={textAreaText}
             />
           </Flex.Item>
           {interactMode === InteractionType.writing && (
@@ -696,6 +375,7 @@ export class PrimaryView extends Component {
                   backgroundColor={paper_color}
                   onInput={(e, text) => {
                     setTextAreaText(text);
+
                     if (this.scrollableRef.current) {
                       let thisDistFromBottom =
                         this.scrollableRef.current.scrollHeight -
@@ -714,88 +394,418 @@ export class PrimaryView extends Component {
   }
 }
 
-// Real-time text preview section. When not editing, this is simply the
-// component that builds and renders the final HTML output.
-export const PreviewView = (props, context) => {
-  const { data } = useBackend<PaperContext>(context);
-  const {
-    raw_text_input,
-    raw_field_input,
-    default_pen_font,
-    default_pen_color,
-    paper_color,
-    held_item_details,
-  } = data;
+/**
+ * @classdesc Real-time text preview section. When not editing, this is simply
+ * the component that builds and renders the final HTML output.
+ * It parses and sanitises the DM-side raw input and field input data once on
+ * creation and caches it.
+ * As a result, this component should be used with a `key` prop that changes
+ * when DM-side raw input or field input data have changed.
+ * We currently do this by keying the component based on the lengths of the
+ * raw and field input arrays.
+ */
+export class PreviewView extends Component<PreviewViewProps> {
+  // Array containing cache of HTMLInputElements that are enabled.
+  enabledInputFieldIDs: string[] = [];
+  enabledInputFieldCache: { [key: string]: HTMLInputElement } = {};
 
-  const [textAreaText] = useLocalState(context, 'textAreaText', '');
-  const [inputFieldData, setInputFieldData] = useLocalState(
-    context,
-    'inputFieldData',
-    {}
-  );
+  constructor(props, context) {
+    super(props, context);
+  }
 
-  // When we parse everything from DM-side, we can definitely cache it.
-  const [dmParsedAndSanitisedCache, setDmParsedAndSanitisedCache] =
-    useLocalState(context, 'dmParsedAndSanitisedCache', '');
+  // Extracts the paper field "counter" from a full ID.
+  getHeaderID = (header: string): string => {
+    return header.replace('paperfield_', '');
+  };
 
-  const parsedAndSanitisedHTML = createPreview(
-    raw_text_input,
-    dmParsedAndSanitisedCache,
-    setDmParsedAndSanitisedCache,
-    raw_field_input,
-    canEdit(held_item_details) ? textAreaText : null,
-    default_pen_font,
-    default_pen_color,
-    paper_color,
-    held_item_details
-  );
+  // Since we're not using Components and are instead dangerously setting
+  // the inner HTML, none of the input fields persist on the document past
+  // their own render. This causes a few side effects, the main one being
+  // that our event handlers get lost every update. Another one being that
+  // the input boxes lose their state as well.
+  // We can use event bubbling to listen for events from input boxes and
+  // handle them from the document level, solving problem one.
+  // We can do a little state management thanks to that, allowing us to track
+  // what input fields have been changed allowing other parts to run their own
+  // logic.
+  // Finally, we can just keep a cache of input fields as they're modified,
+  // allowing us to re-use them in the input field creation process to persist
+  // their state across updates.
+  onInputHandler = (ev: Event): void => {
+    const input = ev.target as HTMLInputElement;
 
-  // When one of the <input> fields has text entered, this keeps track of it
-  // and holds the state of every modified input field.
-  const onInputHandler = (ev) => {
-    const input = ev.currentTarget as HTMLInputElement;
-    if (input.value.length) {
-      inputFieldData[getHeaderID(input.id)] = input.value;
-    } else {
-      delete inputFieldData[getHeaderID(input.id)];
+    // Skip text area input.
+    if (input.nodeName !== 'INPUT') {
+      return;
     }
+
+    const [inputFieldData, setInputFieldData] = useLocalState(
+      this.context,
+      'inputFieldData',
+      {}
+    );
+
+    const { data } = useBackend<PaperContext>(this.context);
+    const { default_pen_font, default_pen_color, held_item_details } = data;
+
+    if (input.value.length) {
+      inputFieldData[this.getHeaderID(input.id)] = input.value;
+    } else {
+      delete inputFieldData[this.getHeaderID(input.id)];
+    }
+    logger.log(inputFieldData);
     setInputFieldData(inputFieldData);
     input.style.fontFamily = held_item_details?.font || default_pen_font;
     input.style.color = held_item_details?.color || default_pen_color;
+    input.defaultValue = input.value;
+    this.enabledInputFieldCache[input.id] = input;
   };
 
-  // If we can edit the page, we can write to existing input fields.
-  if (canEdit(held_item_details)) {
-    hookAllFields(parsedAndSanitisedHTML, onInputHandler);
+  componentDidMount() {
+    document.addEventListener('input', this.onInputHandler);
   }
 
-  const textHTML = {
-    __html: '<span class="paper-text">' + parsedAndSanitisedHTML + '</span>',
+  componentWillUnmount() {
+    document.removeEventListener('input', this.onInputHandler);
+  }
+
+  // Creates the partial inline HTML for previewing or reading the paper from
+  // only static_ui_data from DM.
+  createPreviewFromDM = (): { text: string; newFieldCount: number } => {
+    const { data } = useBackend<PaperContext>(this.context);
+    const {
+      raw_text_input,
+      default_pen_font,
+      default_pen_color,
+      paper_color,
+      held_item_details,
+    } = data;
+    logger.log(`Creating preview from DM static data.`);
+
+    let output = '';
+    let fieldCount = 0;
+
+    const readOnly = !canEdit(held_item_details);
+
+    raw_text_input?.forEach((value) => {
+      let rawText = value.raw_text.trim();
+      if (!rawText.length) {
+        return;
+      }
+
+      const fontColor = value.color || default_pen_color;
+      const fontFace = value.font || default_pen_font;
+      const fontBold = value.bold || false;
+
+      let processingOutput = this.formatAndProcessRawText(
+        rawText,
+        fontFace,
+        fontColor,
+        paper_color,
+        fontBold,
+        fieldCount,
+        readOnly
+      );
+
+      output += processingOutput.text;
+
+      fieldCount = processingOutput.nextCounter;
+    });
+
+    return { text: output, newFieldCount: fieldCount };
   };
 
-  const { scrollableRef, handleOnScroll } = props;
+  // Creates the partial inline HTML for previewing or reading the paper from
+  // the text input area.
+  createPreviewFromTextArea = (fieldCount: number = 0): string => {
+    const { data } = useBackend<PaperContext>(this.context);
+    const {
+      default_pen_font,
+      default_pen_color,
+      paper_color,
+      held_item_details,
+    } = data;
+    const { textArea } = this.props;
 
-  return (
-    <Section
-      fill
-      fitted
-      scrollable
-      scrollableRef={scrollableRef}
-      onScroll={handleOnScroll}>
-      <Box
-        fillPositionedParent
-        position="relative"
-        bottom={'100%'}
-        minHeight="100%"
-        backgroundColor={paper_color}
-        className="Paper__Page"
-        dangerouslySetInnerHTML={textHTML}
-        p="10px"
-      />
-      <StampView />
-    </Section>
-  );
-};
+    const readOnly = true;
+
+    const fontColor = held_item_details?.color || default_pen_color;
+    const fontFace = held_item_details?.font || default_pen_font;
+    const fontBold = held_item_details?.use_bold || false;
+
+    let processingOutput = this.formatAndProcessRawText(
+      textArea,
+      fontFace,
+      fontColor,
+      paper_color,
+      fontBold,
+      fieldCount,
+      readOnly
+    );
+
+    return processingOutput.text;
+  };
+
+  // Wraps the given raw text in a font span based on the supplied props.
+  setFontInText = (
+    text: string,
+    font: string,
+    color: string,
+    bold: boolean = false
+  ): string => {
+    return `<span style="color:${color};font-family:${font};${
+      bold ? 'font-weight: bold;' : ''
+    }">${text}</span>`;
+  };
+
+  // Parses the given raw text through marked for applying markdown.
+  runMarkedDefault = (rawText: string): string => {
+    // Override function, any links and images should
+    // kill any other marked tokens we don't want here
+    const walkTokens = (token) => {
+      switch (token.type) {
+        case 'url':
+        case 'autolink':
+        case 'reflink':
+        case 'link':
+        case 'image':
+          token.type = 'text';
+          // Once asset system is up change to some default image
+          // or rewrite for icon images
+          token.href = '';
+          break;
+      }
+    };
+    return marked(rawText, {
+      breaks: true,
+      smartypants: true,
+      smartLists: true,
+      walkTokens,
+      // Once assets are fixed might need to change this for them
+      baseUrl: 'thisshouldbreakhttp',
+    });
+  };
+
+  // Fully formats, sanitises and parses the provided raw text and wraps it
+  // as necessary.
+  formatAndProcessRawText = (
+    rawText: string,
+    font: string,
+    color: string,
+    paperColor: string,
+    bold: boolean,
+    fieldCounter: number = 0,
+    forceReadonlyFields: boolean = false
+  ): FieldCreationReturn => {
+    // First lets make sure it ends in a new line
+    rawText += rawText[rawText.length] === '\n' ? '\n' : '\n\n';
+
+    // Second, we sanitize the text of html
+    const sanitizedText = sanitizeText(rawText);
+
+    // Third we replace the [__] with fields as markedjs fucks them up
+    const fieldedText = this.createFields(
+      sanitizedText,
+      font,
+      12,
+      color,
+      paperColor,
+      forceReadonlyFields,
+      fieldCounter
+    );
+
+    // Fourth, parse the text using markup
+    const parsedText = this.runMarkedDefault(fieldedText.text);
+
+    // Fifth, we wrap the created text in the writing implement properties.
+    const fontedText = this.setFontInText(parsedText, font, color, bold);
+
+    return { text: fontedText, nextCounter: fieldedText.nextCounter };
+  };
+
+  // Builds a paper field ID from a number or string.
+  createIDHeader = (index: number | string): string => {
+    return 'paperfield_' + index;
+  };
+
+  // Returns the width the text with the provided attributes would take up in px.
+  textWidth = (text: string, font: string, fontsize: number): number => {
+    const c = document.createElement('canvas');
+    const ctx = c.getContext('2d');
+
+    if (!ctx) {
+      return -1;
+    }
+
+    ctx.font = `${fontsize}px ${font}`;
+    return ctx.measureText(text).width;
+  };
+
+  // Replaces all [______] fields in raw text with fully formed <input ...>
+  // field replacements.
+  createFields = (
+    rawText: string,
+    font: string,
+    fontSize: number,
+    color: string,
+    paperColor: string,
+    forceReadonlyFields: boolean,
+    counter: number = 0
+  ): FieldCreationReturn => {
+    const { data } = useBackend<PaperContext>(this.context);
+    const { raw_field_input } = data;
+
+    const ret_text = rawText.replace(
+      fieldRegex,
+      (match, p1, offset, string) => {
+        const width = this.textWidth(match, font, fontSize);
+        const matchingData = raw_field_input?.find(
+          (e) => e.field_index === `${counter}`
+        );
+        if (matchingData) {
+          return this.createFilledInputField(
+            matchingData,
+            p1.length,
+            width,
+            font,
+            fontSize,
+            color,
+            paperColor,
+            this.createIDHeader(counter++)
+          );
+        }
+        return this.createInputField(
+          p1.length,
+          width,
+          font,
+          fontSize,
+          color,
+          this.createIDHeader(counter++),
+          forceReadonlyFields
+        );
+      }
+    );
+
+    return {
+      nextCounter: counter,
+      text: ret_text,
+    };
+  };
+
+  // Builds an <input> field from the supplied props.
+  createInputField = (
+    length: number,
+    width: number,
+    font: string,
+    fontSize: number,
+    color: string,
+    id: string,
+    readOnly: boolean
+  ): string => {
+    // Do we have this ID in our cache?
+    let input = this.enabledInputFieldCache[id];
+
+    if (input) {
+      // If we do, recycle it. It already has all the necessary stuff we need
+      // set.
+      return input.outerHTML;
+    }
+
+    // If we don't, make a new one.
+    input = document.createElement('input');
+    input.id = id;
+    input.setAttribute('type', 'text');
+    input.style.fontSize = `${fontSize}px`;
+    input.style.fontFamily = font;
+    input.style.color = color;
+    input.style.minWidth = `${width}px`;
+    input.style.maxWidth = `${width}px`;
+
+    input.maxLength = length;
+    input.size = length;
+    input.disabled = readOnly;
+
+    if (!readOnly) {
+      this.enabledInputFieldCache[id] = input;
+    }
+
+    return input.outerHTML;
+  };
+
+  // Builds an <input> field from the supplied props, pre-filled with a value
+  // and disabled.
+  // We never need to track these because they are always disabled, so we're
+  // just using it as a convenient way to build the HTML output.
+  createFilledInputField = (
+    field: FieldInput,
+    length: number,
+    width: number,
+    font: string,
+    fontSize: number,
+    color: string,
+    paperColor: string,
+    id: string
+  ): string => {
+    const fieldData = field.field_data;
+
+    let input = document.createElement('input');
+    input.setAttribute('type', 'text');
+
+    input.style.fontSize = field.is_signature ? '30px' : `${fontSize}px`;
+    input.style.fontFamily = fieldData.font || font;
+    input.style.fontStyle = field.is_signature ? 'italic' : 'normal';
+    input.style.fontWeight = 'bold';
+    input.style.color = fieldData.color || color;
+    input.style.minWidth = `${width}px`;
+    input.style.maxWidth = `${width}px`;
+    input.style.backgroundColor = paperColor;
+    input.id = id;
+    input.maxLength = length;
+    input.size = length;
+    input.defaultValue = fieldData.raw_text;
+    input.disabled = true;
+
+    return input.outerHTML;
+  };
+
+  render() {
+    const { data } = useBackend<PaperContext>(this.context);
+    const { paper_color } = data;
+
+    const dmTextPreviewData = this.createPreviewFromDM();
+    const dmTextPreview = dmTextPreviewData.text;
+    const textAreaPreview = this.createPreviewFromTextArea(
+      dmTextPreviewData.newFieldCount
+    );
+
+    const textHTML = {
+      __html: `<span class='paper-text'>${dmTextPreview}${textAreaPreview}</span>`,
+    };
+
+    const { scrollableRef, handleOnScroll } = this.props;
+
+    return (
+      <Section
+        fill
+        fitted
+        scrollable
+        scrollableRef={scrollableRef}
+        onScroll={handleOnScroll}>
+        <Box
+          fillPositionedParent
+          position="relative"
+          bottom={'100%'}
+          minHeight="100%"
+          backgroundColor={paper_color}
+          className="Paper__Page"
+          dangerouslySetInnerHTML={textHTML}
+          p="10px"
+        />
+        <StampView />
+      </Section>
+    );
+  }
+}
 
 // Renders all the stamp components for every valid stamp.
 export const StampView = (props, context) => {
