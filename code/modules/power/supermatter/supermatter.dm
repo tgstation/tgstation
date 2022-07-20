@@ -278,8 +278,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// How we are delaminating.
 	var/datum/sm_delam_strat/delamination_strategy
-	/// Whether the current delamination_strategy is forced or not.
-	var/forced_delam = FALSE
+	/// Whether the sm is forced in a specific delamination_strategy or not. All truthy values means it's forced. 
+	/// Only values greater or equal to the current one can change the strat.
+	var/delam_priority = SM_DELAM_PRIO_NONE
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()

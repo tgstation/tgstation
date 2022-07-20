@@ -102,7 +102,7 @@
 			log_game("[key_name(user)] attached [destabilizing_crystal] to the supermatter at [AREACOORD(src)]")
 			investigate_log("[key_name(user)] attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
 			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
-			set_delam(/datum/sm_delam_strat/cascade)
+			set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam_strat/cascade)
 			damage += 100
 			matter_power += 500
 			qdel(destabilizing_crystal)

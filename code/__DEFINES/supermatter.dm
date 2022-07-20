@@ -121,3 +121,13 @@
 #define POWERLOSS_LINEAR_RATE 0.83
 /// How much a psychologist can reduce power loss.
 #define PSYCHOLOGIST_POWERLOSS_REDUCTION 0.2
+
+/// Means it's not forced, sm decides itself by checking the [/datum/sm_delam_strat/proc/can_select]
+#define SM_DELAM_PRIO_NONE 0
+/// In-game factors like the destabilizing crystal [/obj/item/destabilizing_crystal]. 
+/// Purged when SM heals to 100
+#define SM_DELAM_PRIO_IN_GAME 1
+
+/// Purge the current forced delam and make it zero again (back to normal). 
+/// Needs to be higher priority than current forced_delam though.
+#define SM_DELAM_STRAT_PURGE null

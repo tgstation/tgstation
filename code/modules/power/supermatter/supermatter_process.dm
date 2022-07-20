@@ -113,11 +113,12 @@
 	//Tells the engi team to get their butt in gear
 	//handle_emergency_alerts()
 	//alarm()
-	set_delam()
-	delamination_strategy.delam_progress(src)
 
-	if(damage == 0 && has_destabilizing_crystal)
-		has_destabilizing_crystal = FALSE
+	if(damage == 0) // Clear any in game forced delams if on full health.
+		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRAT_PURGE)
+	else
+		set_delam() // This one cant clear any forced delams.
+	delamination_strategy.delam_progress(src)
 
 	if(damage > explosion_point && !final_countdown)
 		delamination_strategy.count_down(src)
@@ -466,21 +467,25 @@
 
 /**
  * Sets the delam of our sm.
- * 
+ *
  * Args:
- * * forced_delam_path: Optional typepath of a [/datum/sm_delam_strat]. Filling this will force the sm to execute that kind of delam.
+ * * priority: Truthy values means a forced delam. If current forced_delam is higher than priority we dont run.
+ * Set to a number higher than [SM_DELAM_PRIO_IN_GAME] to fully force an admin delam.
+ * * delam_path: Typepath of a [/datum/sm_delam_strat]. [SM_DELAM_STRAT_PURGE] means reset and put prio back to zero.
  */
-/obj/machinery/power/supermatter_crystal/proc/set_delam(datum/forced_delam_path)
-	if(forced_delam_path)
-		forced_delam = TRUE
-		delamination_strategy = GLOB.sm_delam_strat_list[forced_delam_path]
-	if(forced_delam)
+/obj/machinery/power/supermatter_crystal/proc/set_delam(priority = SM_DELAM_PRIO_NONE, delam_path = SM_DELAM_STRAT_PURGE)
+	if(priority < delam_priority)
 		return
+	if(delam_path != SM_DELAM_STRAT_PURGE)
+		delamination_strategy = GLOB.sm_delam_strat_list[delam_path]
+		return
+	priority = SM_DELAM_PRIO_NONE
 	for (var/delam_path in GLOB.sm_delam_strat_list)
 		var/datum/sm_delam_strat/delam = GLOB.sm_delam_strat_list[delam_path]
-		if(delam.can_select(src))
-			if(delam == delamination_strategy)
-				return
-			delamination_strategy.on_deselect(src)
-			delamination_strategy = delam
-			delamination_strategy.on_select(src)
+		if(!delam.can_select(src))
+			continue
+		if(delam == delamination_strategy)
+			return
+		delamination_strategy.on_deselect(src)
+		delamination_strategy = delam
+		delamination_strategy.on_select(src)
