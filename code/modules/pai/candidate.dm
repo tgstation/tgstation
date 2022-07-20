@@ -1,4 +1,9 @@
-/// Created when a user clicks the "pAI candidate" window
+/**
+ * #pAI Candidate
+ *
+ * Created when a user opens the pAI submit interface.
+ * Stores the candidate in an associative list of ckey: candidate objects.
+ */
 /datum/pai_candidate
 	/// User inputted OOC comments
 	var/comments

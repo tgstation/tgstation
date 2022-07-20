@@ -29,6 +29,7 @@
  * Checks if we are allowed to interact with a radial menu
  *
  * @param {atom} anchor - The atom that is anchoring the menu.
+ *
  * @returns {boolean} - TRUE if we are allowed to interact with the menu,
  * 	FALSE otherwise.
  */
@@ -67,6 +68,7 @@
  * Returns the pAI to card mode.
  *
  * @param {boolean} force - If TRUE, the pAI will be forced to card mode.
+ *
  * @returns {boolean} - TRUE if the pAI was forced to card mode.
  * 	FALSE otherwise.
  */
@@ -103,6 +105,7 @@
  * Engage holochassis form.
  *
  * @param {boolean} force - Force the form to engage.
+ *
  * @returns {boolean} - TRUE if the form was successfully engaged.
  * 	FALSE otherwise.
  */
@@ -149,6 +152,7 @@
  * Sets the holochassis skin and updates the icons
  *
  * @param {string} choice - The skin that will be used for the pAI holoform
+ *
  * @returns {boolean} - TRUE if the skin was successfully set. FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/set_holochassis(choice)

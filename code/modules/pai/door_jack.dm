@@ -4,6 +4,7 @@
  * Switch that handles door jack operations.
  *
  * @param {string} mode - The requested operation of the door jack.
+ *
  * @returns {boolean} - TRUE if the door jack state was switched, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/door_jack(mode)
@@ -23,7 +24,7 @@
 	return FALSE
 
 /**
- * Extend cable supporting proc
+ * #Extend cable supporting proc
  *
  * When doorjack is installed, allows the pAI to drop
  * a cable which is placed either on the floor or in
@@ -96,7 +97,8 @@
 	return TRUE
 
 /**
- * Door jacking supporting proc
+ * #Door jacking supporting proc
+ *
  * After a 15 second timer, the door will crack open,
  * provided they don't move out of the way.
  *

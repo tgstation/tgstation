@@ -98,7 +98,8 @@
  * available ram.
  *
  * @param {string} selection - The software to purchase.
- * @returns {boolean} - TRUE if the software was purchased, CRASH otherwise.
+ *
+ * @returns {boolean} - TRUE if the software was purchased, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/buy_software(selection)
 	if(!available_software[selection] || installed_software.Find(selection))
@@ -133,6 +134,7 @@
  * Changes the image displayed on the pAI.
  *
  * @param {mob} user - The user who is changing the image.
+ *
  * @returns {boolean} - TRUE if the image was changed, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/change_image()

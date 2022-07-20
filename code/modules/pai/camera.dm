@@ -22,7 +22,8 @@
  * Handles selecting and printing stored images.
  *
  * @param {mob} user - The pAI.
- * @return {boolean} - TRUE if the pAI prints an image,
+ *
+ * @returns {boolean} - TRUE if the pAI prints an image,
  * 	FALSE otherwise.
 */
 /obj/item/camera/siliconcam/pai_camera/proc/pai_print(mob/user)
@@ -39,8 +40,10 @@
  * All inclusive camera proc. Zooms, snaps, prints.
  *
  * @param {mob} user - The pAI requesting the camera.
+ *
  * @param {string} mode - The camera option to toggle.
- * @return {boolean} - TRUE if the camera worked.
+ *
+ * @returns {boolean} - TRUE if the camera worked.
  */
 /mob/living/silicon/pai/proc/use_camera(mob/user, mode)
 	if(!camera || isnull(mode))

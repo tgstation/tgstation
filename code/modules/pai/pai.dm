@@ -399,6 +399,7 @@
  * Wipes the current pAI on the card.
  *
  * @param {mob} user - The user performing the action.
+ *
  * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/wipe_pai(mob/user)

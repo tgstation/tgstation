@@ -100,17 +100,17 @@
 	var/list/data = list()
 	if(!pai)
 		data["candidates"] = pool_candidates() || list()
-	else
-		data["pai"] = list(
-			can_holo = pai.can_holo,
-			dna = pai.master_dna,
-			emagged = pai.emagged,
-			laws = pai.laws.supplied,
-			master = pai.master_name,
-			name = pai.name,
-			transmit = pai.can_transmit,
-			receive = pai.can_receive,
-		)
+		return data
+	data["pai"] = list(
+		can_holo = pai.can_holo,
+		dna = pai.master_dna,
+		emagged = pai.emagged,
+		laws = pai.laws.supplied,
+		master = pai.master_name,
+		name = pai.name,
+		transmit = pai.can_transmit,
+		receive = pai.can_receive,
+	)
 	return data
 
 /obj/item/pai_card/ui_act(action, list/params, datum/tgui/ui)
@@ -180,6 +180,7 @@
  * Downloads a candidate from the list and removes them from SSpai.candidates
  *
  * @param {string} ckey The ckey of the candidate to download
+ *
  * @returns {boolean} - TRUE if the candidate was downloaded, FALSE if not
  */
 /obj/item/pai_card/proc/download_candidate(mob/user, ckey)
@@ -201,6 +202,7 @@
  * Pings ghosts to announce that someone is requesting a pAI
  *
  * @param {mob} user - The user who is requesting a pAI
+ *
  * @returns {boolean} - TRUE if the pAI was requested, FALSE if not
  */
 /obj/item/pai_card/proc/find_pai(mob/user)
