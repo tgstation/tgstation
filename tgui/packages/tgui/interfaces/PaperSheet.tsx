@@ -10,7 +10,6 @@ import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
 import { Component, createRef, RefObject } from 'inferno';
 import { clamp } from 'common/math';
-import { logger } from '../logging';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;
@@ -199,7 +198,7 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
 
     const radians = Math.atan2(
       currentWidth + stampWidth / 2 - e.pageX,
-      currentHeight + stampHeight / 2 - e.pageY
+      currentHeight + stampHeight - e.pageY
     );
 
     const rotate = rotating
@@ -406,7 +405,6 @@ export class PrimaryView extends Component {
  */
 export class PreviewView extends Component<PreviewViewProps> {
   // Array containing cache of HTMLInputElements that are enabled.
-  enabledInputFieldIDs: string[] = [];
   enabledInputFieldCache: { [key: string]: HTMLInputElement } = {};
 
   constructor(props, context) {
@@ -453,7 +451,6 @@ export class PreviewView extends Component<PreviewViewProps> {
     } else {
       delete inputFieldData[this.getHeaderID(input.id)];
     }
-    logger.log(inputFieldData);
     setInputFieldData(inputFieldData);
     input.style.fontFamily = held_item_details?.font || default_pen_font;
     input.style.color = held_item_details?.color || default_pen_color;
@@ -480,7 +477,6 @@ export class PreviewView extends Component<PreviewViewProps> {
       paper_color,
       held_item_details,
     } = data;
-    logger.log(`Creating preview from DM static data.`);
 
     let output = '';
     let fieldCount = 0;
@@ -702,13 +698,28 @@ export class PreviewView extends Component<PreviewViewProps> {
     id: string,
     readOnly: boolean
   ): string => {
+    // This are fields that may potentially be fillable, so we'll use the
+    // currently held item's stats for them if possible.
+    const { data } = useBackend<PaperContext>(this.context);
+    const { held_item_details } = data;
+
+    const fontColor = held_item_details?.color || color;
+    const fontFace = held_item_details?.font || font;
+
     // Do we have this ID in our cache?
     let input = this.enabledInputFieldCache[id];
 
     if (input) {
-      // If we do, recycle it. It already has all the necessary stuff we need
-      // set.
-      return input.outerHTML;
+      // If we've gone to readOnly now, drop the cache because we're no longer
+      // in write mode. Will reset the input field the next time it's writable.
+      if (readOnly) {
+        delete this.enabledInputFieldCache[id];
+      }
+      // If we do, recycle it, updating font and color incase we've changed
+      // writing implements.
+      input.style.fontFamily = fontFace;
+      input.style.color = fontColor;
+      return `[${input.outerHTML}]`;
     }
 
     // If we don't, make a new one.
@@ -716,8 +727,8 @@ export class PreviewView extends Component<PreviewViewProps> {
     input.id = id;
     input.setAttribute('type', 'text');
     input.style.fontSize = `${fontSize}px`;
-    input.style.fontFamily = font;
-    input.style.color = color;
+    input.style.fontFamily = fontFace;
+    input.style.color = fontColor;
     input.style.minWidth = `${width}px`;
     input.style.maxWidth = `${width}px`;
 
@@ -729,7 +740,7 @@ export class PreviewView extends Component<PreviewViewProps> {
       this.enabledInputFieldCache[id] = input;
     }
 
-    return input.outerHTML;
+    return `[${input.outerHTML}]`;
   };
 
   // Builds an <input> field from the supplied props, pre-filled with a value
@@ -765,12 +776,17 @@ export class PreviewView extends Component<PreviewViewProps> {
     input.defaultValue = fieldData.raw_text;
     input.disabled = true;
 
-    return input.outerHTML;
+    return `[${input.outerHTML}]`;
   };
 
   render() {
     const { data } = useBackend<PaperContext>(this.context);
-    const { paper_color } = data;
+    const { paper_color, held_item_details } = data;
+    const interactMode =
+      held_item_details?.interaction_mode || InteractionType.reading;
+
+    if (interactMode !== InteractionType.writing) {
+    }
 
     const dmTextPreviewData = this.createPreviewFromDM();
     const dmTextPreview = dmTextPreviewData.text;
@@ -779,7 +795,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     );
 
     const textHTML = {
-      __html: `<span class='paper-text'>${dmTextPreview}${textAreaPreview}</span>`,
+      __html: `<span class='paper-text'>${dmTextPreview}\n\n${textAreaPreview}</span>`,
     };
 
     const { scrollableRef, handleOnScroll } = this.props;

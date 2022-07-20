@@ -57,6 +57,11 @@
 	/// The number of input fields
 	var/input_field_count = 0
 
+	/// Paper can be shown via cameras. When that is done, a deep copy of the paper is made and stored as a var on the camera.
+	/// The paper is located in nullspace, and holds a weak ref to the camera that once contained it so the paper can do some
+	/// state checking on if it should be shown to a viewer.
+	var/datum/weakref/camera_holder
+
 /obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
@@ -69,7 +74,7 @@
 
 /obj/item/paper/Destroy()
 	. = ..()
-
+	camera_holder = null
 	clear_paper()
 
 /// Returns a deep copy list of raw_text_inputs, or null if the list is empty or doesn't exist.
@@ -311,6 +316,8 @@
 	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
+	if(camera_holder && can_show_to_mob_through_camera(user))
+		return UI_UPDATE
 	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
 	if(user.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
@@ -365,7 +372,6 @@
 	var/writing_stats = attacking_item.get_writing_implement_details()
 
 	if(!writing_stats)
-		// TIMBERTODO - Do we still need to open the UI anyway? Doing this maintains parity with old behaviour, but seems counter-intuitive to then call parent.
 		ui_interact(user)
 		return ..()
 
@@ -382,7 +388,7 @@
 	// Handle stamping items.
 	if(writing_stats["interaction_mode"] == MODE_STAMPING)
 		if(!user.can_read(src) || user.is_blind())
-			//The paper window is assumed 400x500
+			//The paper's stampable window area is assumed approx 400x500
 			add_stamp(writing_stats["stamp_class"], rand(0, 400), rand(0, 500), rand(0, 360), writing_stats["stamp_icon_state"])
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
 			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
@@ -391,9 +397,37 @@
 			ui_interact(user)
 		return
 
-	// TIMBERTODO - Do we still need to open the UI anyway? Doing this maintains parity with old behaviour, but seems counter-intuitive to then call parent.
 	ui_interact(user)
 	return ..()
+
+/**
+ * Attempts to ui_interact the paper to the given user, with some sanity checking
+ * to make sure the camera still exists via the weakref and that this paper is still
+ * attached to it.
+ */
+/obj/item/paper/proc/show_through_camera(mob/living/user)
+	if(!can_show_to_mob_through_camera(user))
+		return
+
+	return ui_interact(user)
+
+/obj/item/paper/proc/can_show_to_mob_through_camera(mob/living/user)
+	var/obj/machinery/camera/held_to_camera = camera_holder.resolve()
+
+	if(!held_to_camera)
+		return FALSE
+
+	if(isAI(user))
+		var/mob/living/silicon/ai/ai_user = user
+		if(ai_user.control_disabled || (ai_user.stat == DEAD))
+			return FALSE
+
+		return TRUE
+
+	if(user.client?.eye != held_to_camera)
+		return FALSE
+
+	return TRUE
 
 /obj/item/paper/ui_assets(mob/user)
 	return list(
@@ -477,7 +511,7 @@
 			if(istype(loc, /obj/structure/noticeboard))
 				var/obj/structure/noticeboard/noticeboard = loc
 				if(!noticeboard.allowed(user))
-					log_paper("[key_name(user)] tried to stap to [name] when it was on an unwritable noticeboard: \"[stamp_class]\"")
+					log_paper("[key_name(user)] tried to add stamp to [name] when it was on an unwritable noticeboard: \"[stamp_class]\"")
 					return TRUE
 
 			var/stamp_x = text2num(params["x"])

@@ -787,10 +787,9 @@
 	busy = TRUE
 	playsound(src, 'sound/machines/printer.ogg', 50)
 	flick("binder1", src)
-	stack_trace("TIMBERTODO - Some dumbass ocelot called Timberpoes removed the book binding proc and forgot to re-add it. This was missed in code review. You're welcome.")
-	//addtimer(CALLBACK(src, .proc/bind_book, draw_from), 4.1 SECONDS)
+	addtimer(CALLBACK(src, .proc/bind_book, draw_from), 4.1 SECONDS)
 
-/*/obj/machinery/bookbinder/proc/bind_book(obj/item/paper/draw_from)
+/obj/machinery/bookbinder/proc/bind_book(obj/item/paper/draw_from)
 	busy = FALSE
 	if(!draw_from) //What the fuck did you do
 		return
@@ -799,9 +798,7 @@
 		return
 	visible_message(span_notice("[src] whirs as it prints and binds a new book."))
 	var/obj/item/book/bound_book = new(loc)
-	bound_book.book_data.set_content(draw_from.info)
+	bound_book.book_data.set_content_using_paper(draw_from)
 	bound_book.name = "Print Job #" + "[rand(100, 999)]"
 	bound_book.gen_random_icon_state()
-	qdel(draw_from)*/
-
-// TIMBERTODO - BOOK BINDING MAKE SURE UNSANITISED INPUT IS FINE WITH IT
+	qdel(draw_from)
