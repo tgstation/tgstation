@@ -1,0 +1,4 @@
+author: "private-tristan"
+delete-after: True
+changes: 
+  - qol: "Shutters, Blast doors, and Bluespace Vendors are now in the structures category, instead of misc, craft away!"
