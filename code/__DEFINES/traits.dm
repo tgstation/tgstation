@@ -371,7 +371,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPRAY_PAINTABLE "spray_paintable"
 /// This person is blushing
 #define TRAIT_BLUSHING "blushing"
-
+/// For simple mobs controlled by a player. Sends a death alert in deadchat (used by space dragons, morphs, revenants, elite lavaland mobs, brood spiders) 
+#define TRAIT_ALERT_GHOSTS_ON_DEATH "trait_alert_ghosts_on_death"
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
 #define TRAIT_AI_BAGATTACK "bagattack"
@@ -724,6 +725,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RUSTY "rust_trait"
 ///stops someone from splashing their reagent_container on an object with this trait
 #define DO_NOT_SPLASH "do_not_splash"
+/// Marks an atom when the cleaning of it is first started, so that the cleaning overlay doesn't get removed prematurely
+#define CURRENTLY_CLEANING "currently_cleaning"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"

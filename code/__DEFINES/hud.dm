@@ -201,9 +201,6 @@
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"
 
-//Families
-#define ui_wanted_lvl "NORTH,11"
-
 // Defines relating to action button positions
 
 /// Whatever the base action datum thinks is best

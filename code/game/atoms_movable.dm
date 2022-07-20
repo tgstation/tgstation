@@ -65,6 +65,8 @@
 
 	var/atom/movable/pulling
 	var/grab_state = 0
+	/// The strongest grab we can acomplish
+	var/max_grab = GRAB_KILL
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
 
@@ -445,7 +447,7 @@
 	var/atom/old_loc = loc
 	var/direction = get_dir(old_loc, new_loc)
 	loc = new_loc
-	Moved(old_loc, direction)
+	Moved(old_loc, direction, TRUE, momentum_change = FALSE)
 
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
@@ -587,6 +589,10 @@
 			if(moving_diagonally == SECOND_DIAG_STEP)
 				if(!. && set_dir_on_move)
 					setDir(first_step_dir)
+				else if(!inertia_moving)
+					newtonian_move(direct)
+				if(client_mobs_in_contents)
+					update_parallax_contents()
 			moving_diagonally = 0
 			return
 
@@ -617,7 +623,7 @@
 
 	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
 	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.
-	if(glide_size_override && glide_size != glide_size_override)
+	if(glide_size_override)
 		set_glide_size(glide_size_override)
 
 	last_move = direct
@@ -873,17 +879,17 @@
 		UNSETEMPTY(movable_loc.important_recursive_contents)
 
 ///called when this movable becomes the parent of a storage component that is currently being viewed by a player. uses important_recursive_contents
-/atom/movable/proc/become_active_storage(datum/component/storage/component_source)
+/atom/movable/proc/become_active_storage(datum/storage/source)
 	if(!HAS_TRAIT(src, TRAIT_ACTIVE_STORAGE))
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYADDASSOCLIST(location.important_recursive_contents, RECURSIVE_CONTENTS_ACTIVE_STORAGE, src)
-	ADD_TRAIT(src, TRAIT_ACTIVE_STORAGE, component_source)
+	ADD_TRAIT(src, TRAIT_ACTIVE_STORAGE, REF(source))
 
 ///called when this movable's storage component is no longer viewed by any players, unsets important_recursive_contents
-/atom/movable/proc/lose_active_storage(datum/component/storage/component_source)
+/atom/movable/proc/lose_active_storage(datum/storage/source)
 	if(!HAS_TRAIT(src, TRAIT_ACTIVE_STORAGE))
 		return
-	REMOVE_TRAIT(src, TRAIT_ACTIVE_STORAGE, component_source)
+	REMOVE_TRAIT(src, TRAIT_ACTIVE_STORAGE, REF(source))
 	if(HAS_TRAIT(src, TRAIT_ACTIVE_STORAGE))
 		return
 
@@ -1201,12 +1207,12 @@
 	return blocker_opinion
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
-/atom/movable/proc/on_exit_storage(datum/component/storage/concrete/master_storage)
-	SEND_SIGNAL(src, COMSIG_STORAGE_EXITED, master_storage)
+/atom/movable/proc/on_exit_storage(datum/storage/master_storage)
+	return
 
 /// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
-/atom/movable/proc/on_enter_storage(datum/component/storage/concrete/master_storage)
-	SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, master_storage)
+/atom/movable/proc/on_enter_storage(datum/storage/master_storage)
+	return
 
 /atom/movable/proc/get_spacemove_backup()
 	for(var/checked_range in orange(1, get_turf(src)))

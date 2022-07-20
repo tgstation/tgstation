@@ -108,6 +108,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/smite,
 	/client/proc/admin_away,
 	/client/proc/add_mob_ability,
+	/client/proc/remove_mob_ability,
 	/datum/admins/proc/station_traits_panel,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
@@ -200,6 +201,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_admin_toggle_fov,
 	/client/proc/cmd_admin_debug_traitor_objectives,
 	/client/proc/spawn_debug_full_crew,
+	/client/proc/open_lua_editor,
 	/client/proc/validate_puzzgrids,
 	/client/proc/debug_spell_requirements,
 	)

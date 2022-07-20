@@ -117,9 +117,17 @@
 	return ..()
 
 /obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "panel is closed!")
+		return
 	if(!installed_part)
+		balloon_alert(user, "no rotor installed!")
+		return
+	if(active)
+		balloon_alert(user, "[src] is on!")
 		return
 	user.put_in_hands(installed_part)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /**
  * Allow easy enabling of each machine for connection to the main controller
@@ -133,7 +141,7 @@
 /obj/machinery/power/turbine/proc/disable_parts(mob/user)
 	can_connect = FALSE
 
-/obj/machinery/power/turbine/Moved(atom/OldLoc, Dir)
+/obj/machinery/power/turbine/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	disable_parts()
 	air_update_turf(TRUE)

@@ -246,8 +246,8 @@
 	master = new_master
 
 /atom/movable/screen/close/Click()
-	var/datum/component/storage/S = master
-	S.hide_from(usr)
+	var/datum/storage/storage = master
+	storage.hide_contents(usr)
 	return TRUE
 
 /atom/movable/screen/drop
@@ -452,7 +452,7 @@
 		return TRUE
 	if(usr.incapacitated())
 		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
+	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()

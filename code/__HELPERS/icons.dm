@@ -1084,12 +1084,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /image/proc/setDir(newdir)
 	dir = newdir
 
-GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0,0,0)))
-
-//Assumes already frozed
-/obj/proc/make_unfrozen()
-	SEND_SIGNAL(src, COMSIG_OBJ_UNFREEZE)
-
 /// generates a filename for a given asset.
 /// like generate_asset_name(), except returns the rsc reference and the rsc file hash as well as the asset name (sans extension)
 /// used so that certain asset files dont have to be hashed twice

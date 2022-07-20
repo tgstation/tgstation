@@ -43,8 +43,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	integrity_failure = 0.4
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	req_access = list()
-	temp_limit = 10000
-	pressure_limit = 500000
 
 	var/icon/canister_overlay_file = 'icons/obj/atmospherics/canisters.dmi'
 
@@ -61,7 +59,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	///Player controlled var that set the release pressure of the canister
 	var/release_pressure = ONE_ATMOSPHERE
 	///Maximum pressure allowed for release_pressure var
-	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
+	var/can_max_release_pressure = (ONE_ATMOSPHERE * 25)
 	///Minimum pressure allower for release_pressure var
 	var/can_min_release_pressure = (ONE_ATMOSPHERE * 0.1)
 	///Maximum amount of external heat that the canister can handle before taking damage

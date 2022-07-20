@@ -4,6 +4,8 @@
 	assignment = JOB_CENTCOM
 	trim_state = "trim_centcom"
 	sechud_icon_state = SECHUD_CENTCOM
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_CENTCOM_BLUE
 
 /// Trim for Centcom VIPs
 /datum/id_trim/centcom/vip
@@ -14,6 +16,9 @@
 /datum/id_trim/centcom/custodian
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
 	assignment = JOB_CENTCOM_CUSTODIAN
+	trim_state = "trim_janitor"
+	department_color = COLOR_CENTCOM_BLUE
+	subdepartment_color = COLOR_SERVICE_LIME
 
 /// Trim for Centcom Thunderdome Overseers.
 /datum/id_trim/centcom/thunderdome_overseer
@@ -89,7 +94,7 @@
 /// Trim for Deathsquad officers. All Centcom and Station Access.
 /datum/id_trim/centcom/deathsquad
 	assignment = JOB_ERT_DEATHSQUAD
-	trim_state = "trim_ert_commander"
+	trim_state = "trim_deathcommando"
 	sechud_icon_state = SECHUD_DEATH_COMMANDO
 
 /datum/id_trim/centcom/deathsquad/New()
@@ -120,7 +125,8 @@
 /// Trim for generic ERT seccies. No universal ID card changing access.
 /datum/id_trim/centcom/ert/security
 	assignment = JOB_ERT_OFFICER
-	trim_state = "trim_ert_security"
+	trim_state = "trim_securityofficer"
+	subdepartment_color = COLOR_SECURITY_RED
 	sechud_icon_state = SECHUD_SECURITY_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/security/New()
@@ -131,7 +137,8 @@
 /// Trim for generic ERT engineers. No universal ID card changing access.
 /datum/id_trim/centcom/ert/engineer
 	assignment = JOB_ERT_ENGINEER
-	trim_state = "trim_ert_engineering"
+	trim_state = "trim_stationengineer"
+	subdepartment_color = COLOR_ENGINEERING_ORANGE
 	sechud_icon_state = SECHUD_ENGINEERING_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/engineer/New()
@@ -142,7 +149,8 @@
 /// Trim for generic ERT medics. No universal ID card changing access.
 /datum/id_trim/centcom/ert/medical
 	assignment = JOB_ERT_MEDICAL_DOCTOR
-	trim_state = "trim_ert_medical"
+	trim_state = "trim_medicaldoctor"
+	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_MEDICAL_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/medical/New()
@@ -153,7 +161,8 @@
 /// Trim for generic ERT chaplains. No universal ID card changing access.
 /datum/id_trim/centcom/ert/chaplain
 	assignment = JOB_ERT_CHAPLAIN
-	trim_state = "trim_ert_religious"
+	trim_state = "trim_chaplain"
+	subdepartment_color = "#58C800"
 	sechud_icon_state = SECHUD_RELIGIOUS_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/chaplain/New()
@@ -165,6 +174,7 @@
 /datum/id_trim/centcom/ert/janitor
 	assignment = JOB_ERT_JANITOR
 	trim_state = "trim_ert_janitor"
+	subdepartment_color = COLOR_SERVICE_LIME
 	sechud_icon_state = SECHUD_JANITORIAL_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/janitor/New()
@@ -175,7 +185,8 @@
 /// Trim for generic ERT clowns. No universal ID card changing access.
 /datum/id_trim/centcom/ert/clown
 	assignment = JOB_ERT_CLOWN
-	trim_state = "trim_ert_entertainment"
+	trim_state = "trim_clown"
+	subdepartment_color = COLOR_MAGENTA
 	sechud_icon_state = SECHUD_ENTERTAINMENT_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/clown/New()

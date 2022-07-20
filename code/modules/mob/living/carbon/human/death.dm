@@ -29,7 +29,6 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 
 	if(client && !suiciding && !(client in GLOB.dead_players_during_shift))
 		GLOB.dead_players_during_shift += client
-		GLOB.deaths_during_shift++
 
 	if(!QDELETED(dna)) //The gibbed param is bit redundant here since dna won't exist at this point if they got deleted.
 		dna.species.spec_death(gibbed, src)

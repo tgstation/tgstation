@@ -102,7 +102,7 @@
 	SpinAnimation(5, 1)
 	last_target = WEAKREF(attacked_target)
 
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs)
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/rotation_degree = (360 / 3)
 	if(movement_dir & WEST || movement_dir & SOUTH)
@@ -370,7 +370,7 @@
 		icon_state = "rust_walker_s"
 	update_appearance(UPDATE_ICON_STATE)
 
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Moved()
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 

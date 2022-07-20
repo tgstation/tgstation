@@ -468,10 +468,8 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "MEDICAL INFIRMARY"
 	},
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower";
-	pixel_y = -4
+/obj/machinery/shower/directional/west{
+	name = "emergency shower"
 	},
 /obj/machinery/vending/wallmed/directional/east{
 	name = "Hooper's First Medical Kit"

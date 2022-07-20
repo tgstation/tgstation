@@ -277,6 +277,8 @@
 	if(electronics.passed_cycle_id)
 		door.closeOtherId = electronics.passed_cycle_id
 		door.update_other_id()
+	if(door.unres_sides)
+		door.unres_sensor = TRUE
 	door.previous_airlock = previous_assembly
 	electronics.forceMove(door)
 	door.update_appearance()
