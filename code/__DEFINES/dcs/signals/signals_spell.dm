@@ -33,7 +33,7 @@
 // Spell type signals
 
 // Pointed projectiles
-/// Sent from /datum/action/cooldown/spell/pointed/projectile/on_cast_hit: (atom/hit, atom/firer, obj/projectile/source)
+/// Sent from /datum/action/cooldown/spell/pointed/projectile/on_cast_hit: (atom/firer, atom/target, atom/hit, angle, hit_limb)
 #define COMSIG_SPELL_PROJECTILE_HIT "spell_projectile_hit"
 
 // AOE spells

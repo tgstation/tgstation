@@ -2,6 +2,18 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Debug External Libraries",
+			"type": "cppvsdbg",
+			"request": "launch",
+			"program": "${command:dreammaker.returnDreamDaemonPath}",
+			"cwd": "${workspaceRoot}",
+			"args": [
+				"${command:dreammaker.getFilenameDmb}",
+				"-trusted"
+			],
+			"preLaunchTask": "Build All"
+		},
+		{
 			"type": "byond",
 			"request": "launch",
 			"name": "Launch DreamSeeker",

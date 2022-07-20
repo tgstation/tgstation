@@ -181,7 +181,7 @@
 	shape = null
 	return ..()
 
-/obj/shapeshift_holder/Moved()
+/obj/shapeshift_holder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!restoring && !QDELETED(src))
 		restore()
