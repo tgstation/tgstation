@@ -50,6 +50,10 @@
 	QDEL_NULL(physiology)
 	QDEL_LIST(bioware)
 	GLOB.human_list -= src
+
+	if (mob_mood)
+		QDEL_NULL(mob_mood)
+
 	return ..()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
