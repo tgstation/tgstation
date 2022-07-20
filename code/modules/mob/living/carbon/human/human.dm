@@ -7,6 +7,8 @@
 	//initialize limbs first
 	create_bodyparts()
 
+	setup_mood()
+
 	setup_human_dna()
 	prepare_huds() //Prevents a nasty runtime on human init
 
@@ -31,16 +33,18 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	GLOB.human_list += src
 
+/mob/living/carbon/human/proc/setup_mood()
+	if (CONFIG_GET(flag/disable_human_mood))
+		return
+	if (isdummy(src))
+		return
+	mob_mood = new /datum/mood(src)
+
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
 	randomize_human(src)
 	dna.initialize_dna()
-
-/mob/living/carbon/human/ComponentInitialize()
-	. = ..()
-	if(!CONFIG_GET(flag/disable_human_mood))
-		mob_mood = new /datum/mood(src)
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
