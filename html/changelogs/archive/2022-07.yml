@@ -702,3 +702,30 @@
       a few long hours in the lab, assistants have found a display hidden deep within
       the machinations of the airlock that allow you to either flip the direction
       of this Unrestricted Exit or disable it entirely.
+2022-07-20:
+  CoffeeDragon16:
+  - bugfix: xenomorph corrosive acid will once again not target mobs
+  - bugfix: xenomorph limbs will no longer be examined as human limbs
+  Justice12354:
+  - bugfix: Chemical reactions no longer give you double the product
+  PK_Sonikal:
+  - bugfix: The oxygen canister in the Cere emergency shuttle's cryogenics setup has
+      been replaced with the correct anesthetic mix.
+  Salex08:
+  - bugfix: roboticist in tramstation have access to tech storage again
+  Whoneedspacee:
+  - bugfix: Fixed megafauna not having melee cooldown times after ability usage.
+  - admin: Mob ability verbs expanded greatly, allowing for creation of custom ability
+      sequences and allowing easy removal of already added actions.
+  Y0SH1M4S73R:
+  - admin: Admins with the debug permission can run lua scripts using the "Open Lua
+      Editor" verb.
+  jlsnow301:
+  - code_imp: notify ghost alerts and healing robotic limbs' code was brought up to
+      coding standards.
+  jlsnow301 MooCow:
+  - bugfix: Adding items to dispenser shells no longer damages the dispenser
+  orthography:
+  - bugfix: fixed a scrubber that didn't have pipes.
+  zxaber:
+  - bugfix: Added Clown and Mime spawns to Tramstation

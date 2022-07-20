@@ -44,7 +44,6 @@
 		weakpoint_areas = list()
 		/// List of high-security areas that we pick required ones from
 		var/list/allowed_areas = typecacheof(list(/area/station/command,
-			/area/station/cargo/qm,
 			/area/station/comms,
 			/area/station/engineering,
 			/area/station/science,
