@@ -2010,8 +2010,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/drinker, delta_time, times_fired)
 	..()
 	var/is_between_the_sheets = FALSE
-	for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
-		if(bedsheet.loc != owner.loc) // bedsheets in your backpack/neck don't count
+	for(var/obj/item/bedsheet/bedsheet in range(drinker.loc, 0))
+		if(bedsheet.loc != drinker.loc) // bedsheets in your backpack/neck don't count
 			continue
 		is_between_the_sheets = TRUE
 		break
