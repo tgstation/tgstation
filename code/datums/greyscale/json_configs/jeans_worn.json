@@ -1,0 +1,22 @@
+{
+	"jeans": [
+		{
+			"type": "icon_state",
+			"icon_state": "jeans_buckle",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jeans_belt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jeans_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}
