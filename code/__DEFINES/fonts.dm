@@ -12,7 +12,7 @@
 /// Font used by charcoal pens
 #define CHARCOAL_FONT "Candara"
 /// Font used when signing on paper.
-#define SIGNATURE_FONT "Brush Script MT"
+#define SIGNATURE_FONT "Segoe Script"
 
 //pda fonts
 #define MONO "Monospaced"
