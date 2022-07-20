@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes: 
-  - admin: "Admins with the debug permission can run lua scripts using the \"Open Lua Editor\" verb."
