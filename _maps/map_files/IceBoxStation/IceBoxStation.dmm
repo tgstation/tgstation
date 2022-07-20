@@ -4429,7 +4429,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/item/clothing/head/beanie/stripedred,
+/obj/item/clothing/head/beanie/red,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "bse" = (
@@ -50844,7 +50844,7 @@
 /obj/structure/closet/secure_closet/personal{
 	anchored = 1
 	},
-/obj/item/clothing/under/pants/youngfolksjeans,
+/obj/item/clothing/under/pants/jeans,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "pDi" = (
