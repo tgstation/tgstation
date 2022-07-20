@@ -3,8 +3,21 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
+"b" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/medical)
 "c" = (
 /obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_b,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/emcloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "h" = (
@@ -13,18 +26,29 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "j" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Science Maintenance Hatch"
-	},
 /obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_a,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
-"l" = (
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/smooth,
-/area/template_noop)
+/area/station/maintenance/department/science)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/xeno_spawn,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "o" = (
@@ -70,6 +94,7 @@
 "E" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "G" = (
@@ -79,6 +104,11 @@
 "I" = (
 /turf/closed/wall,
 /area/template_noop)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -336,7 +366,7 @@ Z
 "}
 (9,1,1) = {"
 Y
-B
+b
 Z
 Z
 Z
@@ -348,10 +378,10 @@ Z
 Z
 Z
 Z
-l
-l
-l
-l
+Z
+Z
+Z
+Z
 Z
 Z
 Z
@@ -376,10 +406,10 @@ Z
 Z
 Z
 Z
-l
-l
-l
-l
+Z
+Z
+Z
+Z
 Z
 Z
 Z
@@ -404,10 +434,10 @@ Z
 Z
 Z
 Z
-l
-l
-l
-l
+Z
+Z
+Z
+Z
 Z
 Z
 Z
@@ -432,10 +462,10 @@ Z
 Z
 Z
 Z
-l
-l
-l
-l
+Z
+Z
+Z
+Z
 Z
 Z
 Z
@@ -460,15 +490,15 @@ Z
 Z
 Z
 Z
-l
-l
-l
-l
+Z
+Z
+Z
+Z
 I
-w
-w
-w
-w
+Z
+Z
+Z
+Z
 Z
 Z
 Z
@@ -493,14 +523,14 @@ Y
 j
 Y
 Y
-w
-w
-w
-w
-w
-w
-w
-w
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
 "}
 (15,1,1) = {"
 Z
@@ -511,7 +541,7 @@ B
 B
 B
 B
-B
+b
 B
 B
 B
@@ -522,13 +552,13 @@ B
 B
 Y
 Y
-w
-w
-w
-w
-w
-w
-w
+Z
+Z
+Z
+Z
+Z
+Z
+Z
 "}
 (16,1,1) = {"
 Z
@@ -550,13 +580,13 @@ Y
 B
 B
 Y
-w
-w
-w
-w
-w
-w
-w
+Z
+Z
+Z
+Z
+Z
+Z
+Z
 "}
 (17,1,1) = {"
 Z
@@ -581,10 +611,10 @@ Z
 Z
 Z
 Z
-w
-w
-w
-w
+Z
+Z
+Z
+Z
 "}
 (18,1,1) = {"
 Z
@@ -604,15 +634,15 @@ z
 w
 Y
 h
-B
+b
 Z
 Z
 Z
 Z
-w
-w
-w
-w
+Z
+Z
+Z
+Z
 "}
 (19,1,1) = {"
 Z
@@ -637,10 +667,10 @@ Z
 Z
 Z
 Z
-w
-w
-w
-w
+Z
+Z
+Z
+Z
 "}
 (20,1,1) = {"
 Z
@@ -665,10 +695,10 @@ Z
 Z
 Z
 Z
-w
-w
-w
-w
+Z
+Z
+Z
+Z
 "}
 (21,1,1) = {"
 Z
@@ -693,10 +723,10 @@ Z
 Z
 Z
 Z
-w
-w
-w
-w
+Z
+Z
+Z
+Z
 "}
 (22,1,1) = {"
 U
@@ -718,13 +748,13 @@ U
 V
 V
 U
-w
-w
-w
-w
-w
-w
-w
+Z
+Z
+Z
+Z
+Z
+Z
+Z
 "}
 (23,1,1) = {"
 U
@@ -744,15 +774,15 @@ Z
 V
 V
 V
-V
+J
 U
-w
-w
-w
-w
-w
-w
-w
+Z
+Z
+Z
+Z
+Z
+Z
+Z
 "}
 (24,1,1) = {"
 U
@@ -774,13 +804,13 @@ Z
 Z
 V
 U
-w
-w
-w
-w
-w
-w
-w
+Z
+Z
+Z
+Z
+Z
+Z
+Z
 "}
 (25,1,1) = {"
 U
@@ -802,13 +832,13 @@ Z
 Z
 V
 c
-w
-w
-w
-w
-w
-w
-w
+Z
+Z
+Z
+Z
+Z
+Z
+Z
 "}
 (26,1,1) = {"
 U
@@ -830,13 +860,13 @@ Z
 Z
 V
 U
-w
-w
-w
-w
-w
-w
-w
+Z
+Z
+Z
+Z
+Z
+Z
+Z
 "}
 (27,1,1) = {"
 U
@@ -862,9 +892,9 @@ U
 U
 U
 U
-w
-w
-w
+Z
+Z
+Z
 "}
 (28,1,1) = {"
 U
@@ -886,13 +916,13 @@ Z
 Z
 V
 V
-V
+k
 V
 V
 U
-w
-w
-w
+Z
+Z
+Z
 "}
 (29,1,1) = {"
 U
@@ -918,13 +948,13 @@ Z
 V
 V
 U
-w
-w
-w
+Z
+Z
+Z
 "}
 (30,1,1) = {"
 U
-V
+k
 Z
 Z
 Z
@@ -971,7 +1001,7 @@ Z
 Z
 Z
 Z
-V
+l
 V
 Z
 Z
@@ -999,7 +1029,7 @@ Z
 Z
 Z
 Z
-V
+f
 V
 Z
 Z

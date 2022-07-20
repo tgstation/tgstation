@@ -5,6 +5,8 @@
 "b" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/effect/spawner/random/entertainment/wallet_lighter,
+/obj/effect/spawner/random/entertainment/cigarette,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "c" = (

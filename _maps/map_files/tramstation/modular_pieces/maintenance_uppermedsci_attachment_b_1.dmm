@@ -23,6 +23,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
 "F" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/electrical,
@@ -69,6 +82,7 @@
 "X" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
+/obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "Z" = (
@@ -105,7 +119,7 @@ a
 (4,1,1) = {"
 W
 u
-u
+C
 N
 a
 "}

@@ -45,6 +45,44 @@
 /obj/modular_map_root/tramstation/maintenance_uppermedsci/attachment_b
 	key = "maintenance_uppermedsci_attachment_b"
 
+//right of medical upper floor, connects to science
+/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup
+	key = "maintenance_lowertunnel_leftup"
+
+/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_a
+	key = "maintenance_maintenance_lowertunnel_leftup_attachment_a"
+
+/obj/modular_map_root/tramstation/maintenance_lowertunnel_leftup/attachment_b
+	key = "maintenance_maintenance_lowertunnel_leftup_attachment_b"
+
+//right of security lower floor
+/obj/modular_map_root/tramstation/maintenance_lowersecurity
+	key = "maintenance_lowersecurity"
+
+/obj/modular_map_root/tramstation/maintenance_lowersecurity/attachment
+	key = "maintenance_lowersecurity_attachment"
+
+//right of service lower floor, connects to cargo
+/obj/modular_map_root/tramstation/maintenance_lowerservicecargo
+	key = "maintenance_lowerservicecargo"
+
+/obj/modular_map_root/tramstation/maintenance_lowerservicecargo/attachment_a
+	key = "maintenance_lowerservicecargo_attachment_a"
+
+/obj/modular_map_root/tramstation/maintenance_lowerservicecargo/attachment_b
+	key = "maintenance_lowerservicecargo_attachment_b"
+
+//between cargo/sci on the lower floor, connects both
+/obj/modular_map_root/tramstation/maintenance_lowercargosci
+	key = "maintenance_lowercargosci"
+
+/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_a
+	key = "maintenance_lowercargosci_attachment_a"
+
+/obj/modular_map_root/tramstation/maintenance_lowercargosci/attachment_b
+	key = "maintenance_lowercargosci_attachment_b"
+
+
 /obj/item/paper/fluff/genpop_instructions
 	name = "Genpop - Inmate Processing and You"
 	desc = "A nicely folded paper explaining how to use the Genpop locker and brigging system."
