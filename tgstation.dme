@@ -4631,6 +4631,7 @@
 #include "code\modules\wiremod\shell\scanner_gate.dm"
 #include "code\modules\wiremod\shell\server.dm"
 #include "code\modules\wiremod\shell\shell_items.dm"
+#include "code\modules\wiremod\shell\turret.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
 #include "interface\interface.dm"

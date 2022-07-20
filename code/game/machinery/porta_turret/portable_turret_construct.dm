@@ -19,6 +19,7 @@
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret" //the name applied to the product turret
 	var/obj/item/gun/installed_gun = null
+	var/is_shell_configured = FALSE
 
 /obj/machinery/porta_turret_construct/examine(mob/user)
 	. = ..()
@@ -106,7 +107,13 @@
 				to_chat(user, span_notice("You add [I] to the turret."))
 				build_step = PTURRET_GUN_EQUIPPED
 				return
-
+			else if(I.tool_behaviour == TOOL_MULTITOOL)
+				I.play_tool_sound(src, 100)
+				if(!is_shell_configured)
+					to_chat(user, span_notice("You configure the turret's targeting system to be handled by an integrated circuit."))
+				else
+					to_chat(user, span_notice("You configure the turret's targeting system to be handled by the default circuitry"))
+				is_shell_configured = !is_shell_configured
 			else if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, span_notice("You remove the turret's metal armor bolts."))
@@ -161,7 +168,9 @@
 
 					var/obj/machinery/porta_turret/turret
 					//fuck lasertag turrets
-					if(istype(installed_gun, /obj/item/gun/energy/laser/bluetag) || istype(installed_gun, /obj/item/gun/energy/laser/redtag))
+					if(is_shell_configured)
+						turret = new /obj/machinery/porta_turret/circuit_shell(loc)
+					else if(istype(installed_gun, /obj/item/gun/energy/laser/bluetag) || istype(installed_gun, /obj/item/gun/energy/laser/redtag))
 						turret = new/obj/machinery/porta_turret/lasertag(loc)
 					else
 						turret = new/obj/machinery/porta_turret(loc)
