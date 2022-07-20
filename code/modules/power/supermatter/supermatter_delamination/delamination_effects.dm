@@ -97,3 +97,86 @@
 	var/obj/energy_ball/created_tesla = new(sm_turf)
 	created_tesla.energy = 200 //Gets us about 9 balls
 	return TRUE
+
+/// Mail the shuttle off to buy milk.
+/datum/sm_delam_strat/proc/effect_strand_shuttle()
+	set waitfor = FALSE
+	// set timer to infinity, so shuttle never arrives
+	SSshuttle.emergency.setTimer(INFINITY)
+	// disallow shuttle recalls, so people cannot cheese the timer
+	SSshuttle.emergency_no_recall = TRUE
+	// set supermatter cascade to true, to prevent auto evacuation due to no way of calling the shuttle
+	SSshuttle.supermatter_cascade = TRUE
+	// set hijack completion timer to infinity, so that you cant prematurely end the round with a hijack
+	for(var/obj/machinery/computer/emergency_shuttle/console in GLOB.machines)
+		console.hijack_completion_flight_time_set = INFINITY
+
+	/* This logic is to keep uncalled shuttles uncalled
+	In SSshuttle, there is not much of a way to prevent shuttle calls, unless we mess with admin panel vars
+	SHUTTLE_STRANDED is different here, because it *can* block the shuttle from being called, however if we don't register a hostile
+	environment, it gets unset immediately. Internally, it checks if the count of HEs is zero
+	and that the shuttle is in stranded mode, then frees it with an announcement.
+	This is a botched solution to a problem that could be solved with a small change in shuttle code, however-
+	*/
+	if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
+		SSshuttle.emergency.mode = SHUTTLE_STRANDED
+		SSshuttle.registerHostileEnvironment(src)
+		return
+
+	sleep(2 SECONDS)
+
+	// say goodbye to that shuttle of yours
+	if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE)
+		priority_announce("Fatal error occurred in emergency shuttle uplink during transit. Unable to reestablish connection.",
+			"Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
+	else
+	// except if you are on it already, then you are safe c:
+		minor_announce("ERROR: Corruption detected in navigation protocols. Connection with Transponder #XCC-P5831-ES13 lost. \
+				Backup exit route protocol decrypted. Calibrating route...",
+			"Emergency Shuttle", TRUE) // wait out until the rift on the station gets destroyed and the final message plays
+		var/list/mobs = mobs_in_area_type(list(/area/shuttle/escape))
+		for(var/mob/living/mob as anything in mobs) // emulate mob/living/lateShuttleMove() behaviour
+			if(mob.buckled)
+				continue
+			if(mob.client)
+				shake_camera(mob, 3 SECONDS * 0.25, 1)
+			mob.Paralyze(3 SECONDS, TRUE)
+
+/datum/sm_delam_strat/proc/effect_cascade_demoralize()
+	for(var/mob/player as anything in GLOB.player_list)
+		if(!isdead(player))
+			to_chat(player, span_boldannounce("Everything around you is resonating with a powerful energy. This can't be good."))
+			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, "cascade", /datum/mood_event/cascade)
+		SEND_SOUND(player, 'sound/magic/charge.ogg')
+
+/datum/sm_delam_strat/proc/effect_emergency_state()
+	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
+		SSsecurity_level.set_level(SEC_LEVEL_DELTA) // skip the announcement and shuttle timer adjustment in set_security_level()
+	make_maint_all_access()
+	for(var/obj/machinery/light/light_to_break in GLOB.machines)
+		if(prob(35))
+			light_to_break.set_major_emergency_light()
+			continue
+		light_to_break.break_light_tube()
+
+/// Spawn an evacuation rift for people to go through.
+/datum/sm_delam_strat/proc/effect_evac_rift()
+	var/turf/rift_location = get_turf(pick(GLOB.generic_event_spawns))
+	var/area/rift_area = get_area_name(rift_location)
+	var/obj/cascade_portal/rift = new /obj/cascade_portal(rift_location)
+
+	message_admins("Exit rift created at [rift_area]. [ADMIN_JMP(rift_location)]")
+	log_game("Bluespace Exit Rift was created at [rift_area].")
+	rift.investigate_log("created at [rift_area].", INVESTIGATE_ENGINE)
+	return rift
+
+/// Scatters crystal mass over the event spawns as long as they are at least 30 tiles away from whatever we want to avoid.
+/datum/sm_delam_strat/proc/effect_crystal_mass(obj/machinery/power/supermatter_crystal/sm, avoid)
+	new /obj/crystal_mass(get_turf(sm))
+	var/list/possible_spawns = GLOB.generic_event_spawns.Copy()
+	for(var/i in 1 to rand(4,6))
+		var/spawn_location
+		do
+			spawn_location = pick_n_take(possible_spawns)
+		while(get_dist(spawn_location, avoid) < 30)
+		new /obj/crystal_mass(get_turf(spawn_location))

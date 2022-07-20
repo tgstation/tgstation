@@ -174,7 +174,7 @@
  */
 /datum/supermatter_delamination/proc/start_supermatter_cascade()
 	// buncha shuttle manipulation incoming
-
+/*
 	// set timer to infinity, so shuttle never arrives
 	SSshuttle.emergency.setTimer(INFINITY)
 	// disallow shuttle recalls, so people cannot cheese the timer
@@ -199,7 +199,7 @@
 			to_chat(player, span_boldannounce("Everything around you is resonating with a powerful energy. This can't be good."))
 			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, "cascade", /datum/mood_event/cascade)
 		SEND_SOUND(player, 'sound/magic/charge.ogg')
-
+*/
 	call_explosion()
 	create_cascade_ambience()
 	warn_crew()
@@ -274,10 +274,7 @@
  * Announces the halfway point to the end.
  */
 /datum/supermatter_delamination/proc/announce_gravitation_shift()
-	priority_announce("Reports indicate formation of crystalline seeds following resonance shift event. \
-		Rapid expansion of crystal mass proportional to rising gravitational force. \
-		Matter collapse due to gravitational pull foreseeable.",
-		"Nanotrasen Star Observation Association")
+
 
 /**
  * This proc manipulates the shuttle if it's enroute to centcom, to remain in hyperspace. Otherwise, it just plays an announcement if
