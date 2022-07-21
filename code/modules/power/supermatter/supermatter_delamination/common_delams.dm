@@ -21,6 +21,8 @@
 	effect_demoralize(sm)
 	if(!effect_singulo(sm))
 		effect_explosion(sm)
+	if(sm.is_main_engine)
+		effect_anomaly(sm)
 	qdel(sm)
 
 /// When we have too much power.
@@ -44,6 +46,8 @@
 	effect_demoralize(sm)
 	effect_tesla(sm)
 	effect_explosion(sm)
+	if(sm.is_main_engine)
+		effect_anomaly(sm)
 	qdel(sm)
 
 /// Default delam.
@@ -56,5 +60,6 @@
 	effect_irradiate(sm)
 	effect_demoralize(sm)
 	effect_explosion(sm)
-	effect_anomaly(sm)
-	qdel(sm)	
+	if(sm.is_main_engine)
+		effect_anomaly(sm)
+	qdel(sm)
