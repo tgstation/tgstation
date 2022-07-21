@@ -269,6 +269,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
+"ba" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/components/tank/oxygen,
+/turf/open/floor/plating,
+/area/awaymission/caves/second_outpost/tunnel)
 "bc" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 4
@@ -2346,11 +2352,6 @@
 /obj/structure/sign/departments/cargo,
 /turf/closed/wall,
 /area/awaymission/caves/main_outpost/seconadry/storage)
-"kq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/plating,
-/area/awaymission/caves/second_outpost/tunnel)
 "kt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1;
@@ -3667,12 +3668,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
-"qm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/tank/oxygen,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/caves/second_outpost/tunnel)
 "qs" = (
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/engineering)
@@ -5020,6 +5015,11 @@
 /obj/structure/stone_tile/surrounding_tile,
 /turf/open/indestructible/boss,
 /area/awaymission/caves/bmp_asteroid/level_two)
+"wp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/awaymission/caves/second_outpost/tunnel)
 "wq" = (
 /turf/open/chasm/lavaland,
 /area/awaymission/caves/bmp_asteroid)
@@ -7464,10 +7464,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/awaymission/caves/main_outpost/seconadry/between_access)
-"IB" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/awaymission/caves/second_outpost/tunnel)
 "IC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -25515,7 +25511,7 @@ vb
 vb
 IT
 IT
-IT
+vb
 aa
 aa
 aa
@@ -30656,7 +30652,7 @@ aa
 aa
 IT
 IT
-IT
+vb
 IT
 aa
 aa
@@ -31398,7 +31394,7 @@ aa
 aa
 aa
 IT
-IT
+vb
 aa
 aa
 aa
@@ -32451,7 +32447,7 @@ aa
 aa
 aa
 aa
-IT
+vb
 IT
 IT
 IT
@@ -32708,7 +32704,7 @@ aa
 aa
 aa
 aa
-IT
+vb
 IT
 IT
 IT
@@ -32965,7 +32961,7 @@ aa
 aa
 aa
 aa
-IT
+vb
 IT
 IT
 IT
@@ -36791,7 +36787,7 @@ aa
 aa
 vb
 IT
-IT
+vb
 aa
 aa
 aa
@@ -38076,10 +38072,10 @@ aa
 aa
 aa
 IT
-IT
+vb
 aa
 aa
-IT
+vb
 IT
 IT
 ZZ
@@ -38336,7 +38332,7 @@ IT
 IT
 aa
 aa
-IT
+vb
 IT
 IT
 ZZ
@@ -43675,8 +43671,8 @@ xV
 JI
 xV
 wd
-kq
-IB
+ba
+wp
 No
 YS
 Nj
@@ -43933,7 +43929,7 @@ QN
 QN
 PA
 NG
-IB
+wp
 Lr
 wd
 wd
@@ -44189,7 +44185,7 @@ gT
 wd
 hp
 wd
-qm
+No
 sv
 pm
 YS
