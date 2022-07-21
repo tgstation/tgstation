@@ -87,7 +87,7 @@
 		supermatter_pull(loc, min(power/850, 3))//850, 1700, 2550
 
 	if(damage == 0) // Clear any in game forced delams if on full health.
-		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRAT_PURGE)
+		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRATEGY_PURGE)
 	else
 		set_delam() // This one cant clear any forced delams.
 	delamination_strategy.delam_progress(src)
@@ -392,16 +392,16 @@
  * Arguments:
  * * priority: Truthy values means a forced delam. If current forced_delam is higher than priority we dont run.
  * Set to a number higher than [SM_DELAM_PRIO_IN_GAME] to fully force an admin delam.
- * * delam_path: Typepath of a [/datum/sm_delam]. [SM_DELAM_STRAT_PURGE] means reset and put prio back to zero.
+ * * delam_path: Typepath of a [/datum/sm_delam]. [SM_DELAM_STRATEGY_PURGE] means reset and put prio back to zero.
  * 
  * Returns: Not used for anything, just returns true on succesful set, manual and automatic. Helps admins check stuffs.
  */
-/obj/machinery/power/supermatter_crystal/proc/set_delam(priority = SM_DELAM_PRIO_NONE, manual_delam_path = SM_DELAM_STRAT_PURGE)
+/obj/machinery/power/supermatter_crystal/proc/set_delam(priority = SM_DELAM_PRIO_NONE, manual_delam_path = SM_DELAM_STRATEGY_PURGE)
 	if(priority < delam_priority)
 		return FALSE
 	var/datum/sm_delam/new_delam = null
 
-	if(manual_delam_path == SM_DELAM_STRAT_PURGE)
+	if(manual_delam_path == SM_DELAM_STRATEGY_PURGE)
 		for (var/delam_path in GLOB.sm_delam_list)
 			var/datum/sm_delam/delam = GLOB.sm_delam_list[delam_path]
 			if(!delam.can_select(src))

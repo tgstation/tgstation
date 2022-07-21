@@ -130,4 +130,4 @@
 
 /// Purge the current forced delam and make it zero again (back to normal). 
 /// Needs to be higher priority than current forced_delam though.
-#define SM_DELAM_STRAT_PURGE null
+#define SM_DELAM_STRATEGY_PURGE null
