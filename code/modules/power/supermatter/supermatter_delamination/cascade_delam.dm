@@ -102,7 +102,8 @@
 	sleep(2 SECONDS)
 	effect_strand_shuttle()
 	sleep(5 SECONDS)
-	var/obj/cascade_portal/rift = effect_evac_rift()
+	var/obj/cascade_portal/rift = effect_evac_rift_start()
+	RegisterSignal(rift, COMSIG_PARENT_QDELETING, .proc/end_round_holder)
 	effect_crystal_mass(sm, rift)
 	priority_announce("We have been hit by a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those \
 		required for shuttle navigation. We can only reasonably conclude that a supermatter cascade is occurring on or near your station.\n\n\
@@ -119,34 +120,8 @@
 	"Nanotrasen Star Observation Association")
 	return TRUE
 
-/*
-	message_admins("Exit rift at [rift_area] deleted. [ADMIN_JMP(rift_location)]")
-	log_game("Bluespace Exit Rift at [rift_area] was deleted.")
-	rift.investigate_log("was deleted.", INVESTIGATE_ENGINE)
-	priority_announce("[Gibberish("The rift has been destroyed, we can no longer help you.", FALSE, 5)]")
-	qdel(rift)
+/// Signal calls cant sleep, we gotta do this.
+/datum/sm_delam_strat/cascade/proc/end_round_holder()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/effect_evac_rift_end)
 
-	sleep(25 SECONDS)
-
-	priority_announce("Reports indicate formation of crystalline seeds following resonance shift event. \
-		Rapid expansion of crystal mass proportional to rising gravitational force. \
-		Matter collapse due to gravitational pull foreseeable.",
-		"Nanotrasen Star Observation Association")
-	
-	sleep(25 SECONDS)
-
-	priority_announce("[Gibberish("All attempts at evacuation have now ceased, and all assets have been retrieved from your sector.\n \
-		To the remaining survivors of [station_name()], farewell.", FALSE, 5)]")
-
-	if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
-		// special message for hijacks
-		var/shuttle_msg = "Navigation protocol set to [SSshuttle.emergency.is_hijacked() ? "\[ERROR\]" : "backup route"]. \
-			Reorienting bluespace vessel to exit vector. ETA 15 seconds."
-		// garble the special message
-		if(SSshuttle.emergency.is_hijacked())
-			shuttle_msg = Gibberish(shuttle_msg, TRUE, 15)
-		minor_announce(shuttle_msg, "Emergency Shuttle", TRUE)
-		SSshuttle.emergency.setTimer(15 SECONDS)
-	if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE) // if the shuttle is enroute to centcom, we let the shuttle end the round
-		addtimer(CALLBACK(src, .proc/the_end), 1 MINUTES)
-*/

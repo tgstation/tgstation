@@ -160,15 +160,43 @@
 		light_to_break.break_light_tube()
 
 /// Spawn an evacuation rift for people to go through.
-/datum/sm_delam_strat/proc/effect_evac_rift()
+/datum/sm_delam_strat/proc/effect_evac_rift_start()
 	var/turf/rift_location = get_turf(pick(GLOB.generic_event_spawns))
-	var/area/rift_area = get_area_name(rift_location)
+	var/rift_area = get_area_name(rift_location)
 	var/obj/cascade_portal/rift = new /obj/cascade_portal(rift_location)
-
-	message_admins("Exit rift created at [rift_area]. [ADMIN_JMP(rift_location)]")
-	log_game("Bluespace Exit Rift was created at [rift_area].")
-	rift.investigate_log("created at [rift_area].", INVESTIGATE_ENGINE)
 	return rift
+
+/// Announce the destruction of the rift and end the round.
+/datum/sm_delam_strat/proc/effect_evac_rift_end()
+	priority_announce("[Gibberish("The rift has been destroyed, we can no longer help you.", FALSE, 5)]")
+
+	sleep(25 SECONDS)
+
+	priority_announce("Reports indicate formation of crystalline seeds following resonance shift event. \
+		Rapid expansion of crystal mass proportional to rising gravitational force. \
+		Matter collapse due to gravitational pull foreseeable.",
+		"Nanotrasen Star Observation Association")
+	
+	sleep(25 SECONDS)
+
+	priority_announce("[Gibberish("All attempts at evacuation have now ceased, and all assets have been retrieved from your sector.\n \
+		To the remaining survivors of [station_name()], farewell.", FALSE, 5)]")
+
+	if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
+		// special message for hijacks
+		var/shuttle_msg = "Navigation protocol set to [SSshuttle.emergency.is_hijacked() ? "\[ERROR\]" : "backup route"]. \
+			Reorienting bluespace vessel to exit vector. ETA 15 seconds."
+		// garble the special message
+		if(SSshuttle.emergency.is_hijacked())
+			shuttle_msg = Gibberish(shuttle_msg, TRUE, 15)
+		minor_announce(shuttle_msg, "Emergency Shuttle", TRUE)
+		SSshuttle.emergency.setTimer(15 SECONDS)
+		return
+	
+	sleep(10 SECONDS)
+
+	SSticker.news_report = SUPERMATTER_CASCADE
+	SSticker.force_ending = TRUE
 
 /// Scatters crystal mass over the event spawns as long as they are at least 30 tiles away from whatever we want to avoid.
 /datum/sm_delam_strat/proc/effect_crystal_mass(obj/machinery/power/supermatter_crystal/sm, avoid)

@@ -110,6 +110,22 @@
 	pixel_y = -96
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
+/obj/cascade_portal/Initialize(mapload)
+	. = ..()
+	var/turf/location = get_turf(src)
+	var/area_name = get_area_name(src)
+	message_admins("Exit rift created at [area_name]. [ADMIN_JMP(location)]")
+	log_game("Bluespace Exit Rift was created at [area_name].")
+	investigate_log("created at [area_name].", INVESTIGATE_ENGINE)
+
+/obj/cascade_portal/Destroy(force)
+	var/turf/location = get_turf(src)
+	var/area_name = get_area_name(src)
+	message_admins("Exit rift at [area_name] deleted. [ADMIN_JMP(location)]")
+	log_game("Bluespace Exit Rift at [area_name] was deleted.")
+	investigate_log("was deleted.", INVESTIGATE_ENGINE)
+	return ..()
+
 /obj/cascade_portal/Bumped(atom/movable/hit_object)
 	consume(hit_object)
 	new /obj/effect/particle_effect/sparks(loc)
