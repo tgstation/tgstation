@@ -30,7 +30,7 @@
 	var/mutable_appearance/thought_bubble = mutable_appearance(
 		'icons/effects/effects.dmi',
 		"thought_bubble",
-		plane = ABOVE_LIGHTING_PLANE,
+		plane = POINT_PLANE,
 		appearance_flags = KEEP_APART,
 	)
 
