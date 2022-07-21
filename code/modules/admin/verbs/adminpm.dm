@@ -398,7 +398,7 @@
 			already_logged = TRUE
 			// This action mutates our existing cached ticket information, so we recache
 			ticket = current_ticket
-			recipient_ticket = recipient.current_ticket
+			recipient_ticket = recipient?.current_ticket
 			ticket_id = ticket?.id
 			recipient_ticket_id = recipient_ticket?.id
 			SSblackbox.LogAhelp(recipient_ticket_id, "Ticket Opened", send_message, recipient.ckey, src.ckey)
