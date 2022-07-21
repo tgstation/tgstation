@@ -200,6 +200,7 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
 		on_range()
 
@@ -672,7 +673,7 @@
 		time_offset += MODULUS(elapsed_time_deciseconds, speed)
 
 	for(var/i in 1 to required_moves)
-		pixel_move(1, FALSE)
+		pixel_move(pixel_speed_multiplier, FALSE)
 
 /obj/projectile/proc/fire(angle, atom/direct_target)
 	LAZYINITLIST(impacted)
@@ -716,7 +717,7 @@
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
-	pixel_move(1, FALSE) //move it now!
+	pixel_move(pixel_speed_multiplier, FALSE) //move it now!
 
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
 	Angle = new_angle
