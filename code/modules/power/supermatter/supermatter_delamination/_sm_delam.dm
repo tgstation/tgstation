@@ -6,6 +6,8 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	/datum/sm_delam/explosive = new /datum/sm_delam/explosive,
 ))
 
+/// Logic holder for supermatter delaminations, goes off the strategy design pattern.
+/// Selected by [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam
 
 /// Whether we are eligible for this delamination or not. TRUE if valid, FALSE if not.
