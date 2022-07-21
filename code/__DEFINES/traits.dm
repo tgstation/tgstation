@@ -731,7 +731,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CURRENTLY_CLEANING "currently_cleaning"
 
 // unique trait sources, still defines
-#define DNA_VAULT_TRAIT "dna_vault"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
@@ -767,7 +766,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
-#define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
 #define LIFECANDLE_TRAIT "lifecandle"
 #define VENTCRAWLING_TRAIT "ventcrawling"
@@ -776,6 +774,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define NO_GRAVITY_TRAIT "no-gravity"
 #define LEAPING_TRAIT "leaping"
 #define LEAPER_BUBBLE_TRAIT "leaper-bubble"
+#define DNA_VAULT_TRAIT "dna_vault"
 /// sticky nodrop sounds like a bad soundcloud rapper's name
 #define STICKY_NODROP "sticky-nodrop"
 #define SKILLCHIP_TRAIT "skillchip"
