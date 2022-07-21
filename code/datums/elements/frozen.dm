@@ -35,13 +35,13 @@
 	SIGNAL_HANDLER
 	Detach(source)
 
-/datum/element/frozen/proc/shatter_on_throw(datum/target)
+/datum/element/frozen/proc/shatter_on_throw(datum/target, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 	var/obj/obj_target = target
-	var/lastkey = obj_target.fingerprintslast
-	if(lastkey)
-		var/mob/toucher = get_mob_by_key(lastkey)
-		log_combat(toucher, target, "shattered")
+	if(ismob(throwingdatum.thrower))
+		log_combat(throwingdatum.thrower, target, "shattered")
+	else
+		throwingdatum.thrower.log_message("[throwingdatum.thrower] threw [target], shattering it.", LOG_ATTACK, TRUE)
 	obj_target.visible_message(span_danger("[obj_target] shatters into a million pieces!"))
 	qdel(obj_target)
 
