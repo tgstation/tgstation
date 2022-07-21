@@ -112,8 +112,6 @@ const fieldRegex: RegExp = /\[((?:_+))\]/gi;
 // Handles the ghost stamp when attempting to stamp paper sheets.
 class PaperSheetStamper extends Component<PaperSheetStamperProps> {
   style: null;
-  handleMouseMove: (this: Document, ev: MouseEvent) => any;
-  handleMouseClick: (this: Document, ev: MouseEvent) => any;
   state: PaperSheetStamperState = { x: 0, y: 0, rotation: 0, yOffset: 0 };
   scrollableRef: RefObject<HTMLDivElement>;
 
@@ -122,34 +120,6 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
 
     this.style = null;
     this.scrollableRef = props.scrollableRef;
-
-    this.handleMouseMove = (e) => {
-      const pos = this.findStampPosition(e);
-      if (!pos) {
-        return;
-      }
-
-      this.pauseEvent(e);
-      this.setState({
-        x: pos.x,
-        y: pos.y,
-        rotation: pos.rotation,
-        yOffset: pos.yOffset,
-      });
-    };
-
-    this.handleMouseClick = (e: MouseEvent): void => {
-      if (e.pageY <= 30) {
-        return;
-      }
-      const { act } = useBackend<PaperContext>(this.context);
-
-      act('add_stamp', {
-        x: this.state.x,
-        y: this.state.y + this.state.yOffset,
-        rotation: this.state.rotation,
-      });
-    };
   }
 
   // Stops propagation of a given event.
@@ -163,6 +133,34 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
     e.cancelBubble = true;
     e.returnValue = false;
     return false;
+  };
+
+  handleMouseMove = (e: MouseEvent): void => {
+    const pos = this.findStampPosition(e);
+    if (!pos) {
+      return;
+    }
+
+    this.pauseEvent(e);
+    this.setState({
+      x: pos.x,
+      y: pos.y,
+      rotation: pos.rotation,
+      yOffset: pos.yOffset,
+    });
+  };
+
+  handleMouseClick = (e: MouseEvent): void => {
+    if (e.pageY <= 30) {
+      return;
+    }
+    const { act } = useBackend<PaperContext>(this.context);
+
+    act('add_stamp', {
+      x: this.state.x,
+      y: this.state.y + this.state.yOffset,
+      rotation: this.state.rotation,
+    });
   };
 
   findStampPosition(e: MouseEvent): StampPosition | void {
