@@ -394,7 +394,7 @@ export class PrimaryView extends Component {
 }
 
 /**
- * @classdesc Real-time text preview section. When not editing, this is simply
+ * Real-time text preview section. When not editing, this is simply
  * the component that builds and renders the final HTML output.
  * It parses and sanitises the DM-side raw input and field input data once on
  * creation.
