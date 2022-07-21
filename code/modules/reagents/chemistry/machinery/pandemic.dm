@@ -66,7 +66,7 @@
 	if(beaker)
 		balloon_alert(user, "pandemic full")
 		return ..()
-	if(!user.transferItemToLoc(I, src))
+	if(!user.transferItemToLoc(held_item, src))
 		return ..()
 	beaker = held_item
 	balloon_alert(user, "beaker loaded")
