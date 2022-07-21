@@ -43,6 +43,19 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter)
+"aZ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor/closed,
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -3
+	},
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "bc" = (
 /obj/machinery/computer/security{
 	network = list("cavesscipost")
@@ -82,6 +95,14 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter)
+"bG" = (
+/obj/machinery/door/firedoor/closed,
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "bH" = (
 /obj/item/chair,
 /obj/effect/decal/cleanable/dirt,
@@ -128,13 +149,11 @@
 	},
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "cY" = (
-/obj/effect/mob_spawn/corpse/human/cook{
-	brute_damage = 200
+/obj/item/knife/butcher,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/obj/effect/decal/cleanable/blood/old,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/kitchen,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "cZ" = (
 /obj/structure/cable,
@@ -270,15 +289,6 @@
 "fO" = (
 /turf/closed/indestructible/riveted,
 /area/template_noop)
-"gg" = (
-/obj/machinery/door/airlock/public{
-	name = "Kitchen"
-	},
-/obj/machinery/door/firedoor/closed,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "gt" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -309,6 +319,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
+"gF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "gM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -368,6 +385,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
+"hp" = (
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "hs" = (
 /obj/structure/dresser,
 /obj/machinery/button/door/directional/north{
@@ -428,12 +450,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
-"iu" = (
-/obj/machinery/door/firedoor/closed,
-/obj/structure/table/reinforced,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "iB" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -471,13 +487,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
-"jm" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor/closed,
-/obj/item/kitchen/rollingpin,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "kn" = (
 /obj/structure/filingcabinet,
 /obj/item/paper/fluff/awaymissions/caves/researchfluff,
@@ -511,12 +520,6 @@
 /obj/item/pen,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
-"lt" = (
-/obj/machinery/chem_master/condimaster{
-	name = "CondiMaster Neo"
-	},
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "lN" = (
 /obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -558,12 +561,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter)
-"mk" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "mo" = (
 /obj/structure/toilet{
 	dir = 1
@@ -600,6 +597,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter)
+"mQ" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "mR" = (
 /obj/structure/table/wood,
 /obj/structure/sign/calendar/directional/north,
@@ -718,6 +721,18 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
+"oO" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face.";
+	name = "old sink";
+	pixel_y = 28
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "pt" = (
 /turf/template_noop,
 /area/template_noop)
@@ -822,11 +837,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
-"qV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "ro" = (
 /obj/structure/lattice,
 /turf/open/chasm/lavaland,
@@ -863,6 +873,17 @@
 /obj/structure/kitchenspike,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
+"rY" = (
+/obj/effect/mob_spawn/corpse/human/cook{
+	brute_damage = 200
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "si" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -897,9 +918,12 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
-"vf" = (
-/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-/turf/open/floor/iron/kitchen,
+"vc" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "vG" = (
 /obj/machinery/light/red/directional/west,
@@ -911,6 +935,14 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
+"vH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/corpse/goliath,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "vR" = (
 /obj/machinery/power/rtg/lavaland,
 /obj/structure/cable,
@@ -1022,12 +1054,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter/sitedirector)
-"zf" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "zk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/shower{
@@ -1043,12 +1069,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter/work)
-"zu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/corpse/goliath,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "zA" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "201"
@@ -1057,6 +1077,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/maint)
+"zF" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "zH" = (
 /mob/living/simple_animal/hostile/retaliate/goat{
 	name = "Kev"
@@ -1231,10 +1259,11 @@
 	},
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "CN" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/obj/machinery/airalarm/directional/east,
-/turf/open/floor/iron/kitchen,
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "CP" = (
 /obj/structure/chair/wood{
@@ -1341,10 +1370,6 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter)
-"EH" = (
-/obj/machinery/oven,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "EI" = (
 /obj/structure/sink{
 	dir = 8;
@@ -1397,6 +1422,14 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter/sitedirector)
+"Fu" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "Fw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1537,6 +1570,13 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
+"IG" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "IU" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -1663,6 +1703,14 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter)
+"Lz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "LQ" = (
 /obj/structure/table_frame,
 /obj/item/screwdriver,
@@ -1776,6 +1824,12 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter/sitedirector)
+"ND" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "NG" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
@@ -1817,7 +1871,11 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
-"Oz" = (
+"OM" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/second_outpost/researchcenter/dorm)
+"OO" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_x = 6;
@@ -1827,12 +1885,29 @@
 	layer = 5
 	},
 /obj/structure/sign/clock/directional/north,
-/turf/open/floor/iron/kitchen,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
-"OM" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/researchcenter/dorm)
+"Pj" = (
+/obj/machinery/chem_master/condimaster{
+	name = "CondiMaster Neo"
+	},
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
+"Pt" = (
+/obj/machinery/door/airlock/public{
+	name = "Kitchen"
+	},
+/obj/machinery/door/firedoor/closed,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "Pz" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	max_integrity = 120
@@ -1873,9 +1948,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
-"Qu" = (
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "Qx" = (
 /obj/machinery/door/airlock/public{
 	name = "Mess Hall"
@@ -1910,22 +1982,26 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter/work)
-"Rt" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor/closed,
-/obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
+"Ry" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3
-	},
-/turf/open/floor/iron/kitchen,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "RB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/researchcenter)
+"RG" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor/closed,
+/obj/item/kitchen/rollingpin,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "Sh" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners{
 	dir = 8
@@ -1950,16 +2026,6 @@
 "Sm" = (
 /obj/structure/girder,
 /turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
-"So" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face.";
-	name = "old sink";
-	pixel_y = 28
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/kitchen,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "Ss" = (
 /obj/machinery/door/window/left/directional/south{
@@ -2070,16 +2136,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter/sitedirector)
-"UH" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
-"UL" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor/closed,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "UR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/shower{
@@ -2118,15 +2174,6 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
-"Vq" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
-"Vx" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "VA" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners{
 	dir = 8
@@ -2247,9 +2294,15 @@
 /turf/open/floor/carpet/purple,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
 "YC" = (
-/obj/item/knife/butcher,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/iron/kitchen,
+/obj/machinery/deepfryer,
+/obj/machinery/light/red/directional/north,
+/obj/machinery/camera/directional/north{
+	c_tag = "Kitchen Prep Area";
+	network = list("cavesscipost")
+	},
+/turf/open/floor/iron/kitchen{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "YF" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -2272,15 +2325,6 @@
 /obj/machinery/light/red/directional/north,
 /turf/open/indestructible/necropolis,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
-"YR" = (
-/obj/machinery/deepfryer,
-/obj/machinery/light/red/directional/north,
-/obj/machinery/camera/directional/north{
-	c_tag = "Kitchen Prep Area";
-	network = list("cavesscipost")
-	},
-/turf/open/floor/iron/kitchen,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "YS" = (
 /turf/open/lava/smooth/weak,
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
@@ -2990,12 +3034,12 @@ VD
 eJ
 eJ
 AI
-gg
+Pt
 AI
-Rt
-jm
-iu
-UL
+aZ
+RG
+bG
+vc
 AI
 UA
 je
@@ -3028,12 +3072,12 @@ sk
 zA
 Uh
 AI
-So
-qV
-zf
-vf
-Qu
-Vq
+oO
+gF
+zF
+mQ
+hp
+Ry
 eH
 Uh
 zA
@@ -3066,12 +3110,12 @@ BF
 jb
 Uh
 AI
-YR
 YC
 cY
-Vx
-mk
-zu
+rY
+CN
+Lz
+vH
 Zj
 Uh
 UA
@@ -3104,12 +3148,12 @@ mL
 jb
 Uh
 AI
-Oz
-lt
-qV
-UH
-CN
-EH
+OO
+Pj
+gF
+IG
+Fu
+ND
 AI
 Uh
 UA

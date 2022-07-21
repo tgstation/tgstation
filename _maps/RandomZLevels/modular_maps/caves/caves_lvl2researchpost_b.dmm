@@ -16,12 +16,6 @@
 /obj/structure/sign/clock/directional/north,
 /turf/open/floor/carpet,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
-"aw" = (
-/obj/structure/chair/office/light,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/rods,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "ay" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -114,6 +108,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
+"cW" = (
+/obj/structure/chair/office/light,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/analyzer,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "cZ" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners{
 	dir = 8
@@ -130,6 +133,19 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter/sitedirector)
+"di" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/item/pen,
+/obj/item/folder/yellow,
+/obj/item/folder/white{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "dG" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -166,6 +182,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
+"eE" = (
+/obj/item/folder/blue,
+/obj/structure/table_frame,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shard,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter/work)
@@ -225,6 +251,14 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
+"fs" = (
+/obj/machinery/computer/terminal/caves/research4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "fE" = (
 /obj/structure/cable,
 /turf/open/indestructible/necropolis,
@@ -243,9 +277,28 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
+"fK" = (
+/obj/machinery/computer/terminal/caves/research3{
+	dir = 1
+	},
+/obj/structure/sign/poster/official/fruit_bowl{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "fO" = (
 /turf/closed/indestructible/riveted,
 /area/template_noop)
+"fR" = (
+/obj/structure/chair/office/light,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/rods,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "gf" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/effect/turf_decal/bot,
@@ -357,13 +410,6 @@
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
-"hP" = (
-/obj/machinery/door/window/right/directional/north{
-	name = "Carl Coffee's Desk"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "hX" = (
 /turf/closed/mineral/volcanic/lava_land_surface/hardened,
 /area/template_noop)
@@ -384,14 +430,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
-"io" = (
-/obj/item/folder/blue,
-/obj/structure/table_frame,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/shard,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "iC" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
@@ -458,6 +496,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
+"jm" = (
+/obj/structure/filingcabinet,
+/obj/item/paper/fluff/awaymissions/caves/floralguide,
+/obj/item/paper/fluff/awaymissions/caves/researchfluff,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "jy" = (
 /obj/machinery/computer/terminal/caves/research5,
 /obj/effect/turf_decal/tile/purple/opposingcorners{
@@ -564,12 +610,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter/sitedirector)
-"kZ" = (
-/obj/structure/table,
-/obj/item/assembly/signaler/anomaly/grav,
-/obj/item/screwdriver,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "lb" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -705,6 +745,23 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
+"nu" = (
+/obj/structure/table,
+/obj/item/pen,
+/obj/item/shard,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
+"nD" = (
+/obj/structure/table,
+/obj/structure/sign/poster/official/nanomichi_ad{
+	pixel_x = 32
+	},
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "nN" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -882,12 +939,12 @@
 /obj/item/pen/fourcolor,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
-"rW" = (
+"rT" = (
 /obj/structure/table,
-/obj/structure/sign/poster/official/nanomichi_ad{
-	pixel_x = 32
+/obj/item/reagent_containers/food/drinks/mug/coco,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "si" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1036,6 +1093,14 @@
 "vO" = (
 /turf/open/floor/carpet/purple,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
+"vT" = (
+/obj/structure/table,
+/obj/item/assembly/signaler/anomaly/grav,
+/obj/item/screwdriver,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "wb" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1068,6 +1133,15 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
+"wv" = (
+/obj/machinery/door/window/right/directional/north{
+	name = "Carl Coffee's Desk"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "wE" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
@@ -1094,6 +1168,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter)
+"xI" = (
+/obj/structure/filingcabinet,
+/obj/item/paper/fluff/awaymissions/caves/researchfluff,
+/obj/item/paper/fluff/awaymissions/caves/researchfluff,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "yE" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1108,6 +1190,15 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
+"yW" = (
+/obj/item/folder/red{
+	pixel_x = 5
+	},
+/obj/item/stack/sheet/iron,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "zf" = (
 /obj/item/stack/sheet/plasteel,
 /obj/structure/girder/reinforced,
@@ -1203,23 +1294,11 @@
 "Ae" = (
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
-"AA" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/mug/coco,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "AB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/spawner/lavaland/icewatcher,
 /turf/open/indestructible/necropolis,
-/area/awaymission/caves/second_outpost/researchcenter/work)
-"AH" = (
-/obj/structure/chair/office/light,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/analyzer,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "AI" = (
 /turf/closed/wall,
@@ -1371,14 +1450,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
-"DJ" = (
-/obj/item/paper_bin,
-/obj/structure/table_frame,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/rods,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "Em" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
@@ -1630,17 +1701,6 @@
 /obj/structure/mirror/directional/east,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
-"In" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/table,
-/obj/item/pen,
-/obj/item/folder/yellow,
-/obj/item/folder/white{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "Io" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
@@ -1650,15 +1710,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
-"IA" = (
-/obj/machinery/computer/terminal/caves/research3{
-	dir = 1
-	},
-/obj/structure/sign/poster/official/fruit_bowl{
-	pixel_y = -32
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "IU" = (
 /obj/machinery/door/airlock{
 	id_tag = "CavesPostCabinRD";
@@ -1767,13 +1818,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/work)
-"LL" = (
-/obj/item/folder/red{
-	pixel_x = 5
-	},
-/obj/item/stack/sheet/iron,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "LT" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -1878,12 +1922,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter)
-"OM" = (
-/obj/structure/filingcabinet,
-/obj/item/paper/fluff/awaymissions/caves/researchfluff,
-/obj/item/paper/fluff/awaymissions/caves/researchfluff,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "OU" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
@@ -1940,12 +1978,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
-"PY" = (
-/obj/structure/table,
-/obj/item/pen,
-/obj/item/shard,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "PZ" = (
 /obj/structure/bed{
 	dir = 4
@@ -2103,12 +2135,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
-"TP" = (
-/obj/machinery/computer/terminal/caves/research4{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "TU" = (
 /obj/structure/curtain,
 /obj/machinery/shower{
@@ -2186,12 +2212,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
-"VH" = (
-/obj/structure/filingcabinet,
-/obj/item/paper/fluff/awaymissions/caves/floralguide,
-/obj/item/paper/fluff/awaymissions/caves/researchfluff,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
 "VL" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
@@ -2405,6 +2425,16 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
+"ZP" = (
+/obj/item/paper_bin,
+/obj/structure/table_frame,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/rods,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "ZX" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
@@ -2974,7 +3004,7 @@ EY
 ks
 EY
 mm
-OM
+xI
 kn
 fO
 pt
@@ -3011,8 +3041,8 @@ sr
 ks
 ks
 pJ
-AH
-IA
+cW
+fK
 kn
 fO
 pt
@@ -3048,9 +3078,9 @@ AJ
 EY
 ks
 ks
-In
-kZ
-AA
+di
+vT
+rT
 kn
 fO
 pt
@@ -3124,9 +3154,9 @@ Em
 ks
 ks
 fE
-hP
-LL
-VH
+wv
+yW
+jm
 kn
 fO
 pt
@@ -3162,9 +3192,9 @@ Em
 EY
 aX
 Lt
-io
-aw
-TP
+eE
+fR
+fs
 kn
 fO
 pt
@@ -3200,9 +3230,9 @@ zf
 Lt
 AB
 fE
-DJ
-PY
-rW
+ZP
+nu
+nD
 kn
 fO
 pt
