@@ -4571,11 +4571,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
-"bMk" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
 "bMo" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -26353,7 +26348,6 @@
 /area/station/security/courtroom)
 "jmq" = (
 /obj/machinery/airalarm/directional/north,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/lesser)
 "jmA" = (
@@ -118274,7 +118268,7 @@ kdo
 wQP
 dhe
 wQP
-bMk
+ldJ
 jco
 sLO
 doZ
