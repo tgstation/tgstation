@@ -25,6 +25,8 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
+	var/obj/effect/thought_bubble_effect = new
+
 	var/mutable_appearance/thought_bubble = mutable_appearance(
 		'icons/effects/effects.dmi',
 		"thought_bubble",
@@ -46,6 +48,7 @@
 
 	thought_bubble.pixel_x = 16
 	thought_bubble.pixel_y = 32
+	thought_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/mutable_appearance/point_visual = mutable_appearance(
 		'icons/hud/screen_gen.dmi',
@@ -55,9 +58,11 @@
 
 	thought_bubble.overlays += point_visual
 
-	add_overlay(thought_bubble)
+	// vis_contents is used to preserve mouse opacity
+	thought_bubble_effect.appearance = thought_bubble
+	vis_contents += thought_bubble_effect
 
-	addtimer(CALLBACK(src, .proc/cut_overlay, thought_bubble), POINT_TIME)
+	QDEL_IN(thought_bubble_effect, POINT_TIME)
 
 /obj/effect/temp_visual/point
 	name = "pointer"
