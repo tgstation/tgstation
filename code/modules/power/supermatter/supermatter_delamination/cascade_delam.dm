@@ -2,10 +2,10 @@
 
 /datum/sm_delam_strat/cascade/can_select(obj/machinery/power/supermatter_crystal/sm)
 	var/total_moles = sm.absorbed_gasmix.total_moles()
-	if(total_moles < MOLE_PENALTY_THRESHOLD / sm.absorption_ratio)
+	if(total_moles < MOLE_PENALTY_THRESHOLD * sm.absorption_ratio)
 		return FALSE
 	for (var/gas_path in list(/datum/gas/antinoblium, /datum/gas/hypernoblium))
-		var/percent = sm.absorbed_gasmix.gases[gas_path] / total_moles
+		var/percent = sm.absorbed_gasmix.gases[gas_path][MOLES] / total_moles
 		if(!percent || percent < 0.4)
 			return FALSE
 	return TRUE
@@ -110,12 +110,12 @@
 /datum/sm_delam_strat/cascade/examine(obj/machinery/power/supermatter_crystal/sm)
 	return list(span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!"))
 
-/datum/sm_delam_strat/overlays(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam_strat/cascade/overlays(obj/machinery/power/supermatter_crystal/sm)
 	if(sm.final_countdown)
 		return list(mutable_appearance(sm.icon, "casuality_field"))
 	return ..()
 
-/datum/sm_delam_strat/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam_strat/cascade/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
 	return 0.25
 
 /datum/sm_delam_strat/cascade/proc/announce_cascade(obj/machinery/power/supermatter_crystal/sm)
