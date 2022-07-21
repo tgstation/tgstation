@@ -99,12 +99,12 @@
  * Minor announcements are large text, with the title in red and message in white.
  * Only mobs that can hear can see the announcements.
  *
- * message - the message contents of the announcement
- * title - the title of the announcement - Often, "who sent it"
- * aert - whether this announcement is an alert, or just a notice. Only changes the sound that is played.
- * html_encote - if TRUE, we will html encode our title and message
+ * message - the message contents of the announcement.
+ * title - the title of the announcement, which is often "who sent it".
+ * aert - whether this announcement is an alert, or just a notice. Only changes the sound that is played by default.
+ * html_encode - if TRUE, we will html encode our title and message before sending it, to prevent player input abuse.
  * players - optional, a list mobs to send the announcement to. If unset, sends to all palyers.
- * sound_override - optional, uses the passed sound file instead of the default notices.
+ * sound_override - optional, use the passed sound file instead of the default notice sounds.
  */
 /proc/minor_announce(message, title = "Attention:", alert, html_encode = TRUE, list/players, sound_override)
 	if(!message)
