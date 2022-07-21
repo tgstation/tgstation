@@ -12,10 +12,6 @@
 #define OBJECT (LOWEST + 1)
 #define LOWEST (1)
 
-#define CASCADING_ADMIN "Admin"
-#define CASCADING_CRITICAL_GAS "Critical gas point"
-#define CASCADING_DESTAB_CRYSTAL "Destabilizing crystal"
-
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal
@@ -259,12 +255,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/anomaly_event = TRUE
 	///Hue shift of the zaps color based on the power of the crystal
 	var/hue_angle_shift = 0
-	///If an admin wants a sure cascade with the delamination just set this to true (don't be a badmin)
-	var/admin_cascade = FALSE
-	///Do we have a destabilizing crystal attached?
-	var/has_destabilizing_crystal = FALSE
-	///Has the cascade been triggered?
-	var/cascade_initiated = FALSE
 	///Reference to the warp effect
 	var/atom/movable/supermatter_warp_effect/warp
 	///The power threshold required to transform the powerloss function into a linear function from a cubic function.
@@ -299,7 +289,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		GLOB.main_supermatter_engine = src
 
 	AddElement(/datum/element/bsa_blocker)
-	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_delamination_event)
+	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/force_delam)
 
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/tram_contents_consume,
@@ -346,8 +336,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/immune = HAS_TRAIT(user, TRAIT_MADNESS_IMMUNE) || (user.mind && HAS_TRAIT(user.mind, TRAIT_MADNESS_IMMUNE))
 	if(isliving(user) && !immune && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
 		. += span_danger("You get headaches just from looking at it.")
-	if(cascade_initiated)
-		. += span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!")
+	. += delamination_strategy.examine(src)
+	return .
 
 // SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
 /obj/machinery/power/supermatter_crystal/ui_interact(mob/user, datum/tgui/ui)
@@ -420,19 +410,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return SUPERMATTER_NORMAL
 	return SUPERMATTER_INACTIVE
 
-/obj/machinery/power/supermatter_crystal/proc/alarm()
-/*
-	switch(get_status())
-		if(SUPERMATTER_DELAMINATING)
-			playsound(src, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
-		if(SUPERMATTER_EMERGENCY)
-			playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
-		if(SUPERMATTER_DANGER)
-			playsound(src, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
-		if(SUPERMATTER_WARNING)
-			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
-*/
-
 /obj/machinery/power/supermatter_crystal/proc/get_integrity_percent()
 	var/integrity = damage / explosion_point
 	integrity = round(100 - integrity * 100, 0.01)
@@ -441,97 +418,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/update_overlays()
 	. = ..()
-	if(final_countdown && !cascade_initiated)
-		. += "casuality_field"
+	. += delamination_strategy.overlays(src)
+	return .
 
-
-/obj/machinery/power/supermatter_crystal/proc/countdown()
-/* VIN'S PR REMOVE LATER
-	set waitfor = FALSE
-
-	if(final_countdown) // We're already doing it go away
-		return
-	final_countdown = TRUE
-	update_appearance()
-
-	var/cascading = cascade_initiated
-
-	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure."
-
-	if(cascading)
-		speaking += " Harmonic frequency limits exceeded. Causality destabilization field could not be engaged."
-	else
-		speaking += " Emergency causality destabilization field has been activated."
-
-	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
-	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
-		if(damage < explosion_point) // Cutting it a bit close there engineers
-			if(cascading)
-				radio.talk_into(src, "[safe_alert] Harmonic frequency restored within emergency bounds. Anti-resonance filter initiated.", common_channel)
-			else
-				radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
-			final_countdown = FALSE
-			update_appearance()
-			return
-		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
-			sleep(10)
-			continue
-		else if(i > 50)
-			if(cascading)
-				speaking = "[DisplayTimeText(i, TRUE)] remain before resonance-induced stabilization."
-			else
-				speaking = "[DisplayTimeText(i, TRUE)] remain before causality stabilization."
-		else
-			speaking = "[i*0.1]..."
-		radio.talk_into(src, speaking, common_channel)
-		sleep(1 SECONDS)
-
-	delamination_event()
-*/
-/obj/machinery/power/supermatter_crystal/proc/delamination_event()
-	var/can_spawn_anomalies = is_station_level(loc.z) && is_main_engine && anomaly_event
-
-	var/is_cascading = cascade_initiated
-
-	new /datum/supermatter_delamination(power, combined_gas, get_turf(src), explosion_power, gasmix_power_ratio, can_spawn_anomalies, is_cascading)
-	qdel(src)
-
-//this is here to eat arguments
-/obj/machinery/power/supermatter_crystal/proc/call_delamination_event()
+/obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
-	delamination_event()
+	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam_strat/proc/delaminate)
 
-/**
- * Checks if and why the supermatter is in a state where it can cascade
- *
- * Returns: cause of the cascade, for logging
- */
-/obj/machinery/power/supermatter_crystal/proc/check_cascade_requirements()
-/*
-	if(admin_cascade)
-		return CASCADING_ADMIN
-
-	if(!anomaly_event)
-		return FALSE
-
-	if(has_destabilizing_crystal)
-		return CASCADING_DESTAB_CRYSTAL
-
-	var/critical_gas_exceeded = TRUE
-	var/list/required_gases = list(/datum/gas/hypernoblium, /datum/gas/antinoblium)
-	if(environment_total_moles < MOLE_PENALTY_THRESHOLD)
-		critical_gas_exceeded = FALSE
-	else
-		for(var/gas_path in required_gases)
-			if(gas_comp[gas_path] < 0.4)
-				critical_gas_exceeded = FALSE
-				break
-
-	if(critical_gas_exceeded)
-		return CASCADING_CRITICAL_GAS
-
-	return FALSE
-*/
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
 	for(var/atom/movable/movable_atom in orange(pull_range,center))
@@ -759,10 +652,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "light"
 	pixel_x = -176
 	pixel_y = -176
-
-#undef CASCADING_ADMIN
-#undef CASCADING_CRITICAL_GAS
-#undef CASCADING_DESTAB_CRYSTAL
 
 #undef BIKE
 #undef COIL

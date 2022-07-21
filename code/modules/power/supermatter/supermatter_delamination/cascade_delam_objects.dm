@@ -1,3 +1,4 @@
+
 /obj/crystal_mass
 	name = "crystal mass"
 	desc = "You see this massive crystal mass looming towards you, cracking and screeching at every seemingly random movement."
@@ -165,3 +166,4 @@
 			span_hear("You hear a loud crack as a small distortion passes through you."))
 
 		qdel(consumed_object)
+

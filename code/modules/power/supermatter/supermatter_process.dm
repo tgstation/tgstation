@@ -67,30 +67,6 @@
 		emit_radiation()
 		//handles temperature increase and gases made by the crystal
 		temperature_gas_production(env, absorbed_gasmix)
-	/*
-	var/cascading = check_cascade_requirements()
-	if(cascading)
-		if(!cascade_initiated)
-			addtimer(CALLBACK(src, .proc/announce_incoming_cascade), 2 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
-			log_game("[src] has begun a cascade.")
-			message_admins("[src] has begun a cascade, reasons: [cascading]. [ADMIN_JMP(src)]")
-			investigate_log("has begun a cascade, reasons: [cascading].", INVESTIGATE_ENGINE)
-		cascade_initiated = TRUE
-		if(!warp)
-			warp = new(src)
-			vis_contents += warp
-		animate(warp, time = 1, transform = matrix().Scale(0.5,0.5))
-		animate(time = 9, transform = matrix())
-	else
-		if(warp)
-			vis_contents -= warp
-			QDEL_NULL(warp)
-		if(cascade_initiated)
-			log_game("[src] has stopped its cascade.")
-			message_admins("[src] has stopped its cascade. [ADMIN_JMP(src)]")
-			investigate_log("has stopped its cascade.", INVESTIGATE_ENGINE)
-			cascade_initiated = FALSE
-	*/
 
 	//handles hallucinations and the presence of a psychiatrist
 	psychological_examination()
@@ -109,10 +85,6 @@
 
 	if(prob(15))
 		supermatter_pull(loc, min(power/850, 3))//850, 1700, 2550
-
-	//Tells the engi team to get their butt in gear
-	//handle_emergency_alerts()
-	//alarm()
 
 	if(damage == 0) // Clear any in game forced delams if on full health.
 		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRAT_PURGE)
@@ -155,7 +127,7 @@
 			has_holes = TRUE
 			break
 
-	var/cascade_multiplier = cascade_initiated ? 0.25 : 1
+	var/delam_damage_multipler = delamination_strategy.damage_multiplier(src)
 
 	//Due to DAMAGE_INCREASE_MULTIPLIER, we only deal one 4th of the damage the statements otherwise would cause
 	//((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 10)) * some number between 0.25 and knock your socks off / 150) * 0.25
@@ -163,9 +135,9 @@
 	//Mols start to have a positive effect on damage after 350
 	damage = max(damage + (max(clamp(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
 	//Power only starts affecting damage when it is above 5000 (1250 when a cascade is occurring)
-	damage = max(damage + (max(power - (POWER_PENALTY_THRESHOLD * cascade_multiplier), 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
+	damage = max(damage + (max(power - (POWER_PENALTY_THRESHOLD * delam_damage_multipler), 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
 	//Molar count only starts affecting damage when it is above 1800 (450 when a cascade is occurring)
-	damage = max(damage + (max(combined_gas - (MOLE_PENALTY_THRESHOLD * cascade_multiplier), 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
+	damage = max(damage + (max(combined_gas - (MOLE_PENALTY_THRESHOLD * delam_damage_multipler), 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
 	//There might be a way to integrate healing and hurting via heat
 	//healing damage
@@ -413,57 +385,6 @@
 		supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))
 	if((power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2)) || (prob(0.3) && power > POWER_PENALTY_THRESHOLD))
 		supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
-
-/obj/machinery/power/supermatter_crystal/proc/handle_emergency_alerts()
-	/*
-	if(damage <= warning_point) // while the core is still damaged and it's still worth noting its status
-		return
-	if(damage_archived < warning_point) //If damage_archive is under the warning point, this is the very first cycle that we've reached said point.
-		SEND_SIGNAL(src, COMSIG_SUPERMATTER_DELAM_START_ALARM)
-	if((REALTIMEOFDAY - lastwarning) / 10 >= WARNING_DELAY)
-		//Oh shit it's bad, time to freak out
-		if(damage > emergency_point)
-			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity_percent()]%", common_channel)
-			SEND_SIGNAL(src, COMSIG_SUPERMATTER_DELAM_ALARM)
-			lastwarning = REALTIMEOFDAY
-			if(!has_reached_emergency)
-				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_ENGINE)
-				message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
-				has_reached_emergency = TRUE
-		else if(damage >= damage_archived) // The damage is still going up
-			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
-			SEND_SIGNAL(src, COMSIG_SUPERMATTER_DELAM_ALARM)
-			lastwarning = REALTIMEOFDAY - (WARNING_DELAY * 5)
-
-		else                                                 // Phew, we're safe
-			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
-			lastwarning = REALTIMEOFDAY
-
-		if(power > POWER_PENALTY_THRESHOLD)
-			radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.", engineering_channel)
-			if(powerloss_inhibitor < 0.5)
-				radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.", engineering_channel)
-
-		if(combined_gas > MOLE_PENALTY_THRESHOLD)
-			radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel)
-
-		if(check_cascade_requirements())
-			var/channel_to_talk_to = damage > emergency_point ? common_channel : engineering_channel
-			radio.talk_into(src, "DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.", channel_to_talk_to)
-			for(var/mob/victim as anything in GLOB.player_list)
-				var/list/messages = list(
-					"Space seems to be shifting around you...",
-					"You hear a high-pitched ringing sound.",
-					"You feel tingling going down your back.",
-					"Something feels very off.",
-					"A drowning sense of dread washes over you."
-				)
-				to_chat(victim, span_danger(pick(messages)))
-
-	//Boom (Mind blown)
-	if(damage > explosion_point)
-		countdown()
-	*/
 
 /**
  * Sets the delam of our sm.

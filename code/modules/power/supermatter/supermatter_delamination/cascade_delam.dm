@@ -112,6 +112,17 @@
 		[Gibberish("Retrieval of survivors will be conducted upon recovery of necessary facilities.", FALSE, 5)] \
 		[Gibberish("Good luck--", FALSE, 25)]")
 
+/datum/sm_delam_strat/cascade/examine(obj/machinery/power/supermatter_crystal/sm)
+	return list(span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!"))
+
+/datum/sm_delam_strat/overlays(obj/machinery/power/supermatter_crystal/sm)
+	if(sm.final_countdown)
+		return list(mutable_appearance(sm.icon, "casuality_field"))
+	return ..()
+
+/datum/sm_delam_strat/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
+	return 0.25
+
 /datum/sm_delam_strat/cascade/proc/announce_cascade(obj/machinery/power/supermatter_crystal/sm)
 	if(!can_select(sm))
 		return FALSE
@@ -124,4 +135,3 @@
 /datum/sm_delam_strat/cascade/proc/end_round_holder()
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/effect_evac_rift_end)
-
