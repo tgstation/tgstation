@@ -197,6 +197,12 @@ MINIMAL_ACCESS_THRESHOLD 20
 ## Comment this out this to make security officers spawn in departmental security posts
 #SEC_START_BRIG
 
+## This variable is how you may configure "Scaling Access" for Departmental Security Officers.
+## Set to 0/commented out for "off", Departmental Security Officers will never get additional room-specific access (beyond general departmental doors).
+## Set to 1 if you want to enable "Scaling Access", where Departmental Security Officers will get access to most rooms within a department depending on how many security officers there are relative to the number of people on a station.
+## Set to 2 if you want Departmental Security Officers to always have access to all rooms in a department.
+DEPSEC_ACCESS_LEVEL 1
+
 
 ## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.

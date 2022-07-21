@@ -29,6 +29,11 @@
 
 /datum/config_entry/flag/everyone_has_maint_access
 
+/datum/config_entry/number/depsec_access_level
+	default = 1
+	min_val = 0
+	max_val = 2
+
 /datum/config_entry/flag/sec_start_brig //makes sec start in brig instead of dept sec posts
 
 /datum/config_entry/flag/force_random_names
