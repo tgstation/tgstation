@@ -955,10 +955,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 		)
 
 /obj/item/circuit_component/air_alarm_general/populate_ports()
-	enable_fire_alarm = add_input_port("Enable Alarm", PORT_TYPE_SIGNAL, trigger = .proc/trigger_alarm)
-	disable_fire_alarm = add_input_port("Disable Alarm", PORT_TYPE_SIGNAL, trigger = .proc/trigger_alarm)
 	mode = add_option_port("Mode", options_map, order = 1)
 	set_mode = add_input_port("Set Mode", PORT_TYPE_SIGNAL, trigger = .proc/set_mode)
+	enable_fire_alarm = add_input_port("Enable Alarm", PORT_TYPE_SIGNAL, trigger = .proc/trigger_alarm)
+	disable_fire_alarm = add_input_port("Disable Alarm", PORT_TYPE_SIGNAL, trigger = .proc/trigger_alarm)
 
 	fire_alarm_enabled = add_output_port("Alarm Enabled", PORT_TYPE_NUMBER)
 	current_mode = add_output_port("Current Mode", PORT_TYPE_STRING)
@@ -967,17 +967,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	. = ..()
 	if(istype(shell, /obj/machinery/airalarm))
 		connected_alarm = shell
-		RegisterSignal(shell, COMSIG_ALARM_TRIGGERED, .proc/on_alarm_triggered)
-		RegisterSignal(shell, COMSIG_ALARM_CLEARED, .proc/on_alarm_cleared)
+		RegisterSignal(connected_alarm.alarm_manager, COMSIG_ALARM_TRIGGERED, .proc/on_alarm_triggered)
+		RegisterSignal(connected_alarm.alarm_manager, COMSIG_ALARM_CLEARED, .proc/on_alarm_cleared)
 		RegisterSignal(shell, COMSIG_AIRALARM_UPDATE_MODE, .proc/on_mode_updated)
 		current_mode.set_value(connected_alarm.get_mode_name(connected_alarm.mode))
 
 /obj/item/circuit_component/air_alarm_general/unregister_usb_parent(atom/movable/shell)
+	if(connected_alarm)
+		UnregisterSignal(connected_alarm.alarm_manager, list(
+			COMSIG_ALARM_TRIGGERED,
+			COMSIG_ALARM_CLEARED,
+		))
 	connected_alarm = null
+
 	UnregisterSignal(shell, list(
-		COMSIG_ALARM_TRIGGERED,
-		COMSIG_ALARM_CLEARED,
-		COMSIG_AIRALARM_UPDATE_MODE
+		COMSIG_AIRALARM_UPDATE_MODE,
 	))
 	return ..()
 
@@ -1013,12 +1017,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
+	if(!mode.value)
+		return
+
 	connected_alarm.mode = options_map[mode.value]
 	connected_alarm.investigate_log("was turned to [connected_alarm.get_mode_name(connected_alarm.mode)] by [parent.get_creator()]")
 	INVOKE_ASYNC(connected_alarm, /obj/machinery/airalarm.proc/apply_mode, src)
 
 /obj/item/circuit_component/air_alarm
-	display_name = "Air Alarm Control"
+	display_name = "Air Alarm Core Control"
 	desc = "Controls levels of gases and their temperature as well as all vents and scrubbers in the room."
 
 	var/datum/port/input/option/air_alarm_options
@@ -1034,6 +1041,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/datum/port/output/pressure
 	var/datum/port/output/temperature
 	var/datum/port/output/gas_amount
+	var/datum/port/output/update_received
 
 	var/obj/machinery/airalarm/connected_alarm
 	var/list/options_map
@@ -1042,30 +1050,36 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 		"plus" = "add_new_component"
 	)
 
-	var/air_alarm_duplicates_left = 20
+	var/list/alarm_duplicates = list()
+	var/max_alarm_duplicates = 20
 
 /obj/item/circuit_component/air_alarm/ui_perform_action(mob/user, action)
-	if(action == "add_new_component")
-		var/obj/item/circuit_component/component = new /obj/item/circuit_component/air_alarm/duplicate(parent)
-		parent.add_component(component)
-		air_alarm_duplicates_left--
-		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/add_duplicate_back)
+	if(length(alarm_duplicates) >= max_alarm_duplicates)
+		return
 
-/obj/item/circuit_component/air_alarm/proc/add_duplicate_back()
+	if(action == "add_new_component")
+		var/obj/item/circuit_component/air_alarm/component = new /obj/item/circuit_component/air_alarm/duplicate(parent)
+		parent.add_component(component)
+		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/on_duplicate_removed)
+		component.connected_alarm = connected_alarm
+		alarm_duplicates += component
+
+/obj/item/circuit_component/air_alarm/proc/on_duplicate_removed(datum/source)
 	SIGNAL_HANDLER
-	air_alarm_duplicates_left++
+	alarm_duplicates -= source
 
 /obj/item/circuit_component/air_alarm/populate_ports()
-	min_2 = add_input_port("Min 2", PORT_TYPE_NUMBER, trigger = null)
-	min_1 = add_input_port("Min 1", PORT_TYPE_NUMBER, trigger = null)
-	max_1 = add_input_port("Max 1", PORT_TYPE_NUMBER, trigger = null)
-	max_2 = add_input_port("Max 2", PORT_TYPE_NUMBER, trigger = null)
+	min_2 = add_input_port("Hazard Minimum", PORT_TYPE_NUMBER, trigger = null)
+	min_1 = add_input_port("Warning Minimum", PORT_TYPE_NUMBER, trigger = null)
+	max_1 = add_input_port("Warning Maximum", PORT_TYPE_NUMBER, trigger = null)
+	max_2 = add_input_port("Hazard Maximum", PORT_TYPE_NUMBER, trigger = null)
 	set_data = add_input_port("Set Limits", PORT_TYPE_SIGNAL, trigger = .proc/set_limits)
-	request_data = add_input_port("Request Atmosphere Data", PORT_TYPE_SIGNAL)
+	request_data = add_input_port("Request Data", PORT_TYPE_SIGNAL)
 
 	pressure = add_output_port("Pressure", PORT_TYPE_NUMBER)
 	temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)
 	gas_amount = add_output_port("Chosen Gas Amount", PORT_TYPE_NUMBER)
+	update_received = add_output_port("Update Received", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/air_alarm/populate_options()
 	var/static/list/component_options
@@ -1083,18 +1097,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	options_map = component_options
 
 /obj/item/circuit_component/air_alarm/duplicate
-	circuit_size = 0
+	display_name = "Air Alarm Control"
 
+	circuit_size = 0
 	ui_buttons = list()
 
-/obj/item/circuit_component/air_alarm/duplicate/register_shell(atom/movable/shell)
-	. = ..()
-	// TODO: Fix this. If you see this, make a review so that this broken shit doesn't get merged
-	register_usb_parent(shell)
+/obj/item/circuit_component/air_alarm/duplicate/removed_from(obj/item/integrated_circuit/removed_from)
+	if(!QDELING(src))
+		qdel(src)
+	return ..()
 
-/obj/item/circuit_component/air_alarm/duplicate/unregister_shell(atom/movable/shell)
-	unregister_usb_parent(shell)
-	qdel(src)
+/obj/item/circuit_component/air_alarm/duplicate/Destroy()
+	connected_alarm = null
+	return ..()
+
+/obj/item/circuit_component/air_alarm/removed_from(obj/item/integrated_circuit/removed_from)
+	QDEL_LIST(alarm_duplicates)
 	return ..()
 
 /obj/item/circuit_component/air_alarm/register_usb_parent(atom/movable/shell)
@@ -1104,6 +1122,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm/unregister_usb_parent(atom/movable/shell)
 	connected_alarm = null
+	for(var/obj/item/circuit_component/air_alarm/alarm as anything in alarm_duplicates)
+		alarm.connected_alarm = null
 	return ..()
 
 /obj/item/circuit_component/air_alarm/proc/set_limits()
@@ -1112,6 +1132,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 		return
 
 	var/current_option = air_alarm_options.value
+
+	if(!current_option)
+		return
 
 	var/datum/tlv/settings = connected_alarm.TLV[options_map[current_option]]
 	if(min_2.value != null)
@@ -1135,10 +1158,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	temperature.set_output(round(environment.temperature))
 	if(ispath(options_map[current_option]))
 		gas_amount.set_output(round(environment.gases[options_map[current_option]][MOLES]))
-	return
+
+	update_received.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/air_alarm_scrubbers
-	display_name = "Air Alarm Scrubber Control"
+	display_name = "Air Alarm Scrubber Core Control"
 	desc = "Controls the scrubbers in the room."
 
 	var/datum/port/input/option/scrubbers
@@ -1152,6 +1176,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/datum/port/input/enable_siphon
 	/// Disables siphoning
 	var/datum/port/input/disable_siphon
+	/// Enables extended range
+	var/datum/port/input/enable_extended_range
+	/// Disables extended range
+	var/datum/port/input/disable_extended_range
 	/// Gas to filter using the scrubber
 	var/datum/port/input/gas_filter
 	/// Sets the filter
@@ -1177,18 +1205,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	var/static/list/filtering_map = list()
 
-	var/air_alarm_duplicates_left = 20
+	var/max_scrubber_duplicates = 20
+	var/list/scrubber_duplicates = list()
 
 /obj/item/circuit_component/air_alarm_scrubbers/ui_perform_action(mob/user, action)
-	if(action == "add_new_component")
-		var/obj/item/circuit_component/component = new /obj/item/circuit_component/air_alarm_scrubbers/duplicate(parent)
-		parent.add_component(component)
-		air_alarm_duplicates_left--
-		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/add_duplicate_back)
+	if(length(scrubber_duplicates) >= max_scrubber_duplicates)
+		return
 
-/obj/item/circuit_component/air_alarm_scrubbers/proc/add_duplicate_back()
+	if(action == "add_new_component")
+		var/obj/item/circuit_component/air_alarm_scrubbers/component = new /obj/item/circuit_component/air_alarm_scrubbers/duplicate(parent)
+		parent.add_component(component)
+		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/on_duplicate_removed)
+		component.connected_alarm = connected_alarm
+		component.scrubbers.possible_options = connected_alarm.my_area.air_scrub_info
+		scrubber_duplicates += component
+
+/obj/item/circuit_component/air_alarm_scrubbers/proc/on_duplicate_removed(datum/source)
 	SIGNAL_HANDLER
-	air_alarm_duplicates_left++
+	scrubber_duplicates -= source
 
 /obj/item/circuit_component/air_alarm_scrubbers/populate_options()
 	scrubbers = add_option_port("Scrubber", null)
@@ -1196,10 +1230,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 /obj/item/circuit_component/air_alarm_scrubbers/populate_ports()
 	gas_filter = add_input_port("Gas To Filter", PORT_TYPE_LIST(PORT_TYPE_STRING), trigger = null)
 	set_gas_filter = add_input_port("Set Filter", PORT_TYPE_SIGNAL, trigger = .proc/set_gas_to_filter)
-	enable = add_input_port("Enable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_scrubber)
-	disable = add_input_port("Disable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_scrubber)
+	enable_extended_range = add_input_port("Enable Extra Range", PORT_TYPE_SIGNAL, trigger = .proc/toggle_range)
+	disable_extended_range = add_input_port("Disable Extra Range", PORT_TYPE_SIGNAL, trigger = .proc/toggle_range)
 	enable_siphon = add_input_port("Enable Siphon", PORT_TYPE_SIGNAL, trigger = .proc/toggle_siphon)
 	disable_siphon = add_input_port("Disable Siphon", PORT_TYPE_SIGNAL, trigger = .proc/toggle_siphon)
+	enable = add_input_port("Enable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_scrubber)
+	disable = add_input_port("Disable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_scrubber)
 	request_update = add_input_port("Request Data", PORT_TYPE_SIGNAL, trigger = .proc/update_data)
 
 	enabled = add_output_port("Enabled", PORT_TYPE_NUMBER)
@@ -1208,16 +1244,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	update_received = add_output_port("Update Received", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/air_alarm_scrubbers/duplicate
+	display_name = "Air Alarm Scrubber Control"
 	circuit_size = 0
 	ui_buttons = list()
 
-/obj/item/circuit_component/air_alarm_scrubbers/duplicate/register_shell(atom/movable/shell)
-	. = ..()
-	register_usb_parent(shell)
+/obj/item/circuit_component/air_alarm_scrubbers/duplicate/Destroy()
+	connected_alarm = null
+	return ..()
 
-/obj/item/circuit_component/air_alarm_scrubbers/duplicate/unregister_shell(atom/movable/shell)
-	unregister_usb_parent(shell)
-	qdel(src)
+/obj/item/circuit_component/air_alarm_scrubbers/duplicate/removed_from(obj/item/integrated_circuit/removed_from)
+	if(!QDELING(src))
+		qdel(src)
+	return ..()
+
+/obj/item/circuit_component/air_alarm_scrubbers/removed_from(obj/item/integrated_circuit/removed_from)
+	QDEL_LIST(scrubber_duplicates)
 	return ..()
 
 /obj/item/circuit_component/air_alarm_scrubbers/register_usb_parent(atom/movable/shell)
@@ -1229,6 +1270,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 /obj/item/circuit_component/air_alarm_scrubbers/unregister_usb_parent(atom/movable/shell)
 	connected_alarm = null
 	scrubbers.possible_options = null
+	for(var/obj/item/circuit_component/air_alarm_scrubbers/scrubber as anything in scrubber_duplicates)
+		scrubber.connected_alarm = null
 	return ..()
 
 /obj/item/circuit_component/air_alarm_scrubbers/get_ui_notices()
@@ -1249,7 +1292,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	var/scrubber_id = scrubbers.value
 	var/list/valid_filters = list()
-	for(var/info in set_gas_filter.value)
+	for(var/info in gas_filter.value)
 		if(gas_id2path(info) == "")
 			continue
 		valid_filters += info
@@ -1277,6 +1320,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 			"power" = FALSE,
 		))
 
+/obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_range(datum/port/input/port)
+	CIRCUIT_TRIGGER
+	INVOKE_ASYNC(src, .proc/toggle_range_async, port)
+
+/obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_range_async(datum/port/input/port)
+	if(!connected_alarm || connected_alarm.locked)
+		return
+
+	var/scrubber_id = scrubbers.value
+
+	if(port == enable_extended_range)
+		connected_alarm.send_signal(scrubber_id, list(
+			"widenet" = TRUE,
+		))
+	else
+		connected_alarm.send_signal(scrubber_id, list(
+			"widenet" = FALSE,
+		))
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_siphon(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1322,7 +1383,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	update_received.set_value(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/air_alarm_vents
-	display_name = "Air Alarm Vent Control"
+	display_name = "Air Alarm Vent Core Control"
 	desc = "Controls the vents in the room."
 
 	var/datum/port/input/option/vents
@@ -1356,8 +1417,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/datum/port/output/enabled
 	/// Whether the scrubber is siphoning or not
 	var/datum/port/output/is_siphoning
-	/// Sent when an update is received
-	var/datum/port/output/update_received
 	/// Whether internal pressure is on or not
 	var/datum/port/output/internal_on
 	/// Whether external pressure is on or not
@@ -1366,6 +1425,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/datum/port/output/current_external_pressure
 	/// Reported internal pressure
 	var/datum/port/output/current_internal_pressure
+	/// Sent when an update is received
+	var/datum/port/output/update_received
 
 	var/obj/machinery/airalarm/connected_alarm
 
@@ -1375,55 +1436,68 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	var/static/list/filtering_map = list()
 
-	var/air_alarm_duplicates_left = 20
+	var/max_vent_duplicates = 20
+	var/list/vent_duplicates = list()
 
 /obj/item/circuit_component/air_alarm_vents/ui_perform_action(mob/user, action)
-	if(action == "add_new_component")
-		var/obj/item/circuit_component/component = new /obj/item/circuit_component/air_alarm_scrubbers/duplicate(parent)
-		parent.add_component(component)
-		air_alarm_duplicates_left--
-		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/add_duplicate_back)
+	if(length(vent_duplicates) >= max_vent_duplicates)
+		return
 
-/obj/item/circuit_component/air_alarm_vents/proc/add_duplicate_back()
+	if(action == "add_new_component")
+		var/obj/item/circuit_component/air_alarm_vents/component = new /obj/item/circuit_component/air_alarm_vents/duplicate(parent)
+		parent.add_component(component)
+		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/on_duplicate_removed)
+		vent_duplicates += component
+		component.connected_alarm = connected_alarm
+		component.vents.possible_options = connected_alarm.my_area.air_vent_info
+
+/obj/item/circuit_component/air_alarm_vents/proc/on_duplicate_removed(datum/source)
 	SIGNAL_HANDLER
-	air_alarm_duplicates_left++
+	vent_duplicates -= source
 
 /obj/item/circuit_component/air_alarm_vents/populate_options()
 	vents = add_option_port("Vent", null)
 
 /obj/item/circuit_component/air_alarm_vents/populate_ports()
-	enable_external = add_input_port("Enable External", PORT_TYPE_SIGNAL, trigger = .proc/toggle_external)
-	disable_external = add_input_port("Disable External", PORT_TYPE_SIGNAL, trigger = .proc/toggle_external)
 	external_pressure = add_input_port("External Pressure", PORT_TYPE_NUMBER, trigger = .proc/set_external_pressure)
-
-	enable_internal = add_input_port("Enable Internal", PORT_TYPE_SIGNAL, trigger = .proc/toggle_internal)
-	disable_internal = add_input_port("Disable Internal", PORT_TYPE_SIGNAL, trigger = .proc/toggle_internal)
 	internal_pressure = add_input_port("Internal Pressure", PORT_TYPE_NUMBER, trigger = .proc/set_internal_pressure)
 
-	enable = add_input_port("Enable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_vent)
-	disable = add_input_port("Disable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_vent)
+	enable_external = add_input_port("Enable External", PORT_TYPE_SIGNAL, trigger = .proc/toggle_external)
+	disable_external = add_input_port("Disable External", PORT_TYPE_SIGNAL, trigger = .proc/toggle_external)
+	enable_internal = add_input_port("Enable Internal", PORT_TYPE_SIGNAL, trigger = .proc/toggle_internal)
+	disable_internal = add_input_port("Disable Internal", PORT_TYPE_SIGNAL, trigger = .proc/toggle_internal)
+
 	enable_siphon = add_input_port("Enable Siphon", PORT_TYPE_SIGNAL, trigger = .proc/toggle_siphon)
 	disable_siphon = add_input_port("Disable Siphon", PORT_TYPE_SIGNAL, trigger = .proc/toggle_siphon)
+	enable = add_input_port("Enable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_vent)
+	disable = add_input_port("Disable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_vent)
 	request_update = add_input_port("Request Data", PORT_TYPE_SIGNAL, trigger = .proc/update_data)
 
 	enabled = add_output_port("Enabled", PORT_TYPE_NUMBER)
 	is_siphoning = add_output_port("Siphoning", PORT_TYPE_NUMBER)
-	external_on = add_output_port("Is External On", PORT_TYPE_NUMBER)
-	current_external_pressure = add_output_port("Current External Pressure", PORT_TYPE_NUMBER)
-	internal_on = add_output_port("Is Internal On", PORT_TYPE_NUMBER)
-	current_internal_pressure = add_output_port("Current Internal Pressure", PORT_TYPE_NUMBER)
+	external_on = add_output_port("External On", PORT_TYPE_NUMBER)
+	internal_on = add_output_port("Internal On", PORT_TYPE_NUMBER)
+	current_external_pressure = add_output_port("External Pressure", PORT_TYPE_NUMBER)
+	current_internal_pressure = add_output_port("Internal Pressure", PORT_TYPE_NUMBER)
+	update_received = add_output_port("Update Received", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/air_alarm_vents/duplicate
+	display_name = "Air Alarm Vent Control"
+
 	circuit_size = 0
 	ui_buttons = list()
 
-/obj/item/circuit_component/air_alarm_vents/duplicate/register_shell(atom/movable/shell)
-	. = ..()
-	register_usb_parent(shell)
+/obj/item/circuit_component/air_alarm_vents/duplicate/removed_from(obj/item/integrated_circuit/removed_from)
+	if(!QDELING(src))
+		qdel(src)
+	return ..()
 
-/obj/item/circuit_component/air_alarm_vents/duplicate/unregister_shell(atom/movable/shell)
-	unregister_usb_parent(shell)
-	qdel(src)
+/obj/item/circuit_component/air_alarm_vents/duplicate/Destroy()
+	connected_alarm = null
+	return ..()
+
+/obj/item/circuit_component/air_alarm_vents/removed_from(obj/item/integrated_circuit/removed_from)
+	QDEL_LIST(vent_duplicates)
 	return ..()
 
 /obj/item/circuit_component/air_alarm_vents/register_usb_parent(atom/movable/shell)
@@ -1435,6 +1509,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 /obj/item/circuit_component/air_alarm_vents/unregister_usb_parent(atom/movable/shell)
 	connected_alarm = null
 	vents.possible_options = null
+	for(var/obj/item/circuit_component/air_alarm_vents/vent as anything in vent_duplicates)
+		vent.connected_alarm = null
 	return ..()
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_vent(datum/port/input/port)
@@ -1565,9 +1641,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	enabled.set_value(info["power"])
 	is_siphoning.set_value(!info["direction"])
-	internal_on.set_value(info["checks"] & INT_BOUND)
+	internal_on.set_value(!!(info["checks"] & INT_BOUND))
 	current_internal_pressure.set_value(info["internal"])
-	external_on.set_value(info["checks"] & EXT_BOUND)
+	external_on.set_value(!!(info["checks"] & EXT_BOUND))
 	current_external_pressure.set_value(info["external"])
 	update_received.set_value(COMPONENT_SIGNAL)
 
