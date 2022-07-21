@@ -72,7 +72,17 @@
 	/// If objects are below this layer, we pass through them
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
 
-	var/speed = 0.8 //Amount of deciseconds it takes for projectile to travel
+	/// Amount of deciseconds it takes for projectile to travel
+	var/speed = 0.8
+
+	/// This var is multiplied by SSprojectiles.global_pixel_speed to get how many pixels
+	/// the projectile moves during each iteration of the movement loop
+	///
+	/// If you want to make a fast-moving projectile, you should keep this equal to 1 and
+	/// reduce the value of `speed`. If you want to make a slow-moving projectile, make
+	/// `speed` a modest value like 1 and set this to a low value like 0.2.
+	var/pixel_speed_multiplier = 1
+
 	var/Angle = 0
 	var/original_angle = 0 //Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
