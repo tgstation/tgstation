@@ -1,0 +1,7 @@
+author: "RandomGamer123, bug originally reported by Murmic#2120 on Discord"
+delete-after: True
+changes: 
+  - qol: "Makes it more clear that venus human traps can be possessed in the first place"
+  - bugfix: "Makes it so that venus human traps can be possessed even if they are underneath kudzu"
+  - refactor: "Moved venus human traps to the same spawning system that spiders used, now, a notification pops up when one is ready to be possessed, and you can possess it by using the ghost role menu, the link in chat, or by clicking on the notification"
+  - admin: "Venus human traps now respect role bans (for ROLE_LAVALAND as its the default for ghost roles)"
