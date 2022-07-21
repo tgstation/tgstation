@@ -78,10 +78,14 @@
 /code/controllers/subsystem/chat.dm @stylemistake
 /code/controllers/subsystem/ping.dm @stylemistake
 /code/controllers/subsystem/tgui.dm @stylemistake
-/code/modules/tgchat @stylemistake
-/code/modules/tgui @stylemistake
-/code/modules/tgui_panel @stylemistake
-/tgui @stylemistake
+/code/modules/tgchat/ @stylemistake
+/code/modules/tgui/ @stylemistake
+/code/modules/tgui_panel/ @stylemistake
+/tgui/ @stylemistake
+
+# stylemistake (explicitly disowned)
+
+/tgui/packages/tgui/interfaces/
 
 # Watermelon914
 
