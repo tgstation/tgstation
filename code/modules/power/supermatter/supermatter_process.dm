@@ -394,11 +394,11 @@
  * Set to a number higher than [SM_DELAM_PRIO_IN_GAME] to fully force an admin delam.
  * * delam_path: Typepath of a [/datum/sm_delam_strat]. [SM_DELAM_STRAT_PURGE] means reset and put prio back to zero.
  */
-/obj/machinery/power/supermatter_crystal/proc/set_delam(priority = SM_DELAM_PRIO_NONE, delam_path = SM_DELAM_STRAT_PURGE)
+/obj/machinery/power/supermatter_crystal/proc/set_delam(priority = SM_DELAM_PRIO_NONE, manual_delam_path = SM_DELAM_STRAT_PURGE)
 	if(priority < delam_priority)
 		return
-	if(delam_path != SM_DELAM_STRAT_PURGE)
-		delamination_strategy = GLOB.sm_delam_strat_list[delam_path]
+	if(manual_delam_path != SM_DELAM_STRAT_PURGE)
+		delamination_strategy = GLOB.sm_delam_strat_list[manual_delam_path]
 		return
 	priority = SM_DELAM_PRIO_NONE
 	for (var/delam_path in GLOB.sm_delam_strat_list)

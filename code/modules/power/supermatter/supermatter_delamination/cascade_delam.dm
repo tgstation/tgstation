@@ -93,7 +93,7 @@
 
 	delaminate(sm)
 
-/datum/sm_delam_strat/cascade/proc/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam_strat/cascade/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	effect_explosion(sm)
 	effect_emergency_state()
 	effect_cascade_demoralize()
@@ -105,12 +105,6 @@
 	var/obj/cascade_portal/rift = effect_evac_rift_start()
 	RegisterSignal(rift, COMSIG_PARENT_QDELETING, .proc/end_round_holder)
 	effect_crystal_mass(sm, rift)
-	priority_announce("We have been hit by a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those \
-		required for shuttle navigation. We can only reasonably conclude that a supermatter cascade is occurring on or near your station.\n\n\
-		Evacuation is no longer possible by conventional means; however, we managed to open a rift near the [get_area_name(rift)]. \
-		All personnel are hereby required to enter the rift by any means available.\n\n\
-		[Gibberish("Retrieval of survivors will be conducted upon recovery of necessary facilities.", FALSE, 5)] \
-		[Gibberish("Good luck--", FALSE, 25)]")
 
 /datum/sm_delam_strat/cascade/examine(obj/machinery/power/supermatter_crystal/sm)
 	return list(span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!"))
