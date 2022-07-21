@@ -41,7 +41,7 @@
 		"editor.formatOnSave": true
 	},
 	"workbench.editorAssociations": {
-		"*.dmi": "dmiEditor.dmiEditor",
+		"*.dmi": "dmiEditor.dmiEditor"
 	},
 	"Lua.diagnostics.enable": false
 }
