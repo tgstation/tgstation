@@ -101,7 +101,7 @@
  *
  * message - the message contents of the announcement.
  * title - the title of the announcement, which is often "who sent it".
- * aert - whether this announcement is an alert, or just a notice. Only changes the sound that is played by default.
+ * alert - whether this announcement is an alert, or just a notice. Only changes the sound that is played by default.
  * html_encode - if TRUE, we will html encode our title and message before sending it, to prevent player input abuse.
  * players - optional, a list mobs to send the announcement to. If unset, sends to all palyers.
  * sound_override - optional, use the passed sound file instead of the default notice sounds.
