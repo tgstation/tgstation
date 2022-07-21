@@ -49,6 +49,4 @@
 	effect_demoralize(sm)
 	effect_explosion(sm)
 	effect_anomaly(sm)
-	qdel(sm)
-	
-	
+	qdel(sm)	
