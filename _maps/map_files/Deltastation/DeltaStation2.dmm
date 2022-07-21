@@ -21687,6 +21687,18 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"fVj" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sign/departments/telecomms/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
 "fVQ" = (
 /obj/structure/chair/office/light{
 	dir = 1
@@ -23342,10 +23354,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/station/service/library)
-"gqQ" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/station/hallway/secondary/command)
 "gqR" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -45317,6 +45325,7 @@
 /obj/item/kirbyplants/random,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/departments/aiupload/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "mlt" = (
@@ -49521,6 +49530,7 @@
 /obj/item/folder/blue,
 /obj/item/pen,
 /obj/machinery/light/small/directional/south,
+/obj/structure/sign/departments/aisat/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "nuI" = (
@@ -63767,6 +63777,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
+"rnD" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/structure/sign/departments/rndserver/directional/west,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "rnM" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -68965,6 +68982,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
+"sIo" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/departments/vault/directional/east{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/command/nuke_storage)
 "sIp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -72351,7 +72378,6 @@
 /obj/machinery/door/airlock/vault{
 	name = "Vault Door"
 	},
-/obj/structure/sign/warning/electric_shock/directional/south,
 /obj/structure/sign/warning/secure_area/directional/north,
 /obj/effect/landmark/navigate_destination,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -84538,13 +84564,6 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
-"wFR" = (
-/obj/structure/lattice,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "wGa" = (
 /obj/structure/disposalpipe/junction{
 	dir = 8
@@ -108649,7 +108668,7 @@ sVm
 abj
 abj
 lbi
-wFR
+qYo
 aaa
 nUT
 aaa
@@ -125667,7 +125686,7 @@ qIh
 jzK
 vGR
 fcd
-vGR
+rnD
 ofH
 xFz
 peU
@@ -128963,8 +128982,8 @@ lkL
 lkL
 dnK
 gys
-gqQ
-oHJ
+vpK
+fVj
 cKm
 oEo
 bvJ
@@ -134592,7 +134611,7 @@ aaa
 aad
 aaa
 teY
-tcG
+sIo
 teY
 aaa
 aad

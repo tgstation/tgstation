@@ -729,3 +729,17 @@
   - bugfix: fixed a scrubber that didn't have pipes.
   zxaber:
   - bugfix: Added Clown and Mime spawns to Tramstation
+2022-07-21:
+  Fikou:
+  - bugfix: fixes cqc knockouts
+  Kylerace:
+  - bugfix: circuits can no longer send trams to brazil, since that is not on the
+      station
+  ReinaCoder:
+  - imageadd: Gives the Spider Charge a unique sprite
+  Twaticus:
+  - imageadd: Various clothing items have been converted using GAGs, making them recolorable.
+      Check it out at your local clothesmate!
+  private-tristan:
+  - qol: Shutters, Blast doors, and Bluespace Vendors are now in the structures category,
+      instead of misc, craft away!
