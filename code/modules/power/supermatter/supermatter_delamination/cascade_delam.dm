@@ -7,7 +7,7 @@
 	if(total_moles < MOLE_PENALTY_THRESHOLD * sm.absorption_ratio)
 		return FALSE
 	for (var/gas_path in list(/datum/gas/antinoblium, /datum/gas/hypernoblium))
-		var/percent = sm.absorbed_gasmix.gases[gas_path][MOLES] / total_moles
+		var/percent = sm.absorbed_gasmix.gases[gas_path]?[MOLES] / total_moles
 		if(!percent || percent < 0.4)
 			return FALSE
 	return TRUE
