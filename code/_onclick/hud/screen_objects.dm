@@ -90,6 +90,63 @@
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
+/atom/movable/screen/craft/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/atom/movable/screen/craft/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_RMB] = "Display Possible Recipes"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/atom/movable/screen/craft/Click(location, control, params)
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(hud.mymob.get_active_held_item())
+			display_possible_recipes(hud.mymob.get_active_held_item())
+		if(hud.mymob.get_inactive_held_item())
+			display_possible_recipes(hud.mymob.get_inactive_held_item())
+		if(!hud.mymob.get_active_held_item() && !hud.mymob.get_inactive_held_item())
+			to_chat(hud.mymob, span_warning("You aren't holding anything in your hands!"))
+	else
+		..()
+
+/atom/movable/screen/craft/proc/display_possible_recipes(obj/item/item)
+	if(!item)
+		return
+	var/list/possible_recipes = list()
+	var/recipe_line = ""
+	var/all_recipes = ""
+	for(var/datum/crafting_recipe/recipe in GLOB.crafting_recipes)
+		if((item.type in recipe.reqs) || ((item.parent_type in recipe.reqs) && !(item.type in recipe.blacklist)))
+			possible_recipes += recipe
+
+	if(!length(possible_recipes))
+		to_chat(hud.mymob, span_warning("No recipes found for [item.name]!"))
+		return
+
+	for(var/datum/crafting_recipe/recipe in possible_recipes)
+		var/list/reqs_text = list()
+		var/list/tools_other_text = list()
+		var/list/tools_text = list()
+		for(var/obj/item/recipe_item as anything in recipe.reqs)
+			var/recipe_reagent = FALSE
+			if(ispath(recipe_item, /datum/reagent))
+				recipe_reagent = TRUE
+			var/amount = recipe.reqs[recipe_item]
+			reqs_text += "[span_notice("[initial(recipe_item.name)]")] ([span_red("[amount][recipe_reagent ? "u" : null]")])"
+		if(length(recipe.tool_paths))
+			for(var/obj/item/tool_other as anything in recipe.tool_paths)
+				tools_other_text += tool_other.name
+		if(length(recipe.tool_behaviors))
+			for(var/tool in recipe.tool_behaviors)
+				tools_text += tool
+		recipe_line = "<b>[recipe.name]</b>: [jointext(reqs_text, ", ")][(length(reqs_text) && length(tools_other_text)) ? ", " : null][span_green("[jointext(tools_other_text, ", ")][((length(tools_other_text) || length(reqs_text)) && length(tools_text))  ? ", " : null][jointext(tools_text, ", ")]")]"
+		all_recipes += "[recipe_line]\n"
+
+	to_chat(hud.mymob, examine_block("[span_ooc("Recipes for [item.name] [icon2html(item, hud.mymob)]")]\n[all_recipes]"))
+
+
 /atom/movable/screen/area_creator
 	name = "create new area"
 	icon = 'icons/hud/screen_midnight.dmi'

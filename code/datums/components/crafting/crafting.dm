@@ -8,6 +8,7 @@
 	var/datum/hud/H = user.hud_used
 	var/atom/movable/screen/craft/C = new()
 	C.icon = H.ui_style
+	C.hud = H
 	H.static_inventory += C
 	CL.screen += C
 	RegisterSignal(C, COMSIG_CLICK, .proc/component_ui_interact)
