@@ -39,15 +39,18 @@
 				context[SCREENTIP_CONTEXT_LMB] = "Remove electronics"
 				return CONTEXTUAL_SCREENTIP_SET
 
-	switch (held_item?.type)
-		if (/obj/item/food/grown/ || /obj/item/storage/bag/plants)
-			context[SCREENTIP_CONTEXT_LMB] = "Insert produce"
-			return CONTEXTUAL_SCREENTIP_SET
-		if (/obj/item/reagent_containers/glass)
-			context[SCREENTIP_CONTEXT_LMB] = "Swap container"
-			return CONTEXTUAL_SCREENTIP_SET
-		if (/obj/item)
-			return .
+	if (istype(held_item, /obj/item/food/grown/ ))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert product"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if (istype(held_item, /obj/item/storage/bag/plants))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert products"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if (istype(held_item, /obj/item/reagent_containers/glass ))
+		context[SCREENTIP_CONTEXT_LMB] =  beaker ? "Swap container" : "Insert container"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if (istype(held_item, /obj/item/ ))
+		return .
+		
 	context[SCREENTIP_CONTEXT_LMB] = "Open UI"
 	if(beaker)
 		context[SCREENTIP_CONTEXT_RMB] = "Remove beaker"
