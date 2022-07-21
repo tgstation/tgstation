@@ -1614,18 +1614,11 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/bar/atrium)
 "aAv" = (
-/obj/machinery/requests_console/directional/south{
-	announcementConsole = 1;
-	anon_tips_receiver = 1;
-	assistance_requestable = 1;
-	department = "Bridge";
-	departmentType = 5;
-	name = "Bridge Requests Console"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/sign/departments/aiupload/directional/south,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "aAE" = (
@@ -13070,7 +13063,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/sign/warning/cold_temp/directional/south,
+/obj/structure/sign/departments/rndserver/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "dQZ" = (
@@ -14944,10 +14937,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
-"evo" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/station/engineering/transit_tube)
 "evp" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -46567,6 +46556,7 @@
 "okk" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
+/obj/structure/sign/departments/aisat/directional/east,
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/storage_shared)
 "oko" = (
@@ -50239,6 +50229,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/departments/vault/directional/north{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
 "ptp" = (
@@ -52533,7 +52526,6 @@
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/engineering)
 "qeA" = (
-/obj/structure/sign/warning/secure_area/directional/west,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -52542,6 +52534,7 @@
 	dir = 8
 	},
 /obj/machinery/vending/cigarette,
+/obj/structure/sign/departments/telecomms/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "qeJ" = (
@@ -66526,11 +66519,18 @@
 	},
 /area/mine/eva)
 "uyF" = (
-/obj/machinery/newscaster/directional/south,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/requests_console/directional/south{
+	announcementConsole = 1;
+	anon_tips_receiver = 1;
+	assistance_requestable = 1;
+	department = "Bridge";
+	departmentType = 5;
+	name = "Bridge Requests Console"
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "uyH" = (
@@ -231048,7 +231048,7 @@ oPI
 xWN
 xWN
 wtw
-uiM
+ybQ
 jOt
 jOt
 ozw
@@ -242689,7 +242689,7 @@ alD
 tjk
 ydc
 nyA
-evo
+duh
 iaY
 duh
 duh
