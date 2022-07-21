@@ -215,8 +215,8 @@
 /mob/living/simple_animal/hostile/boss/clockmaster/map_maker/tell_them_my_evil_plan()
 	have_i_explained_my_evil_plan = TRUE
 	for(var/turf/target_tile as anything in RANGE_TURFS(1, src))
-	if(!(locate(/obj/structure/emergency_shield/clockmaster_plot_armor) in target_tile))
-		new /obj/structure/emergency_shield/clockmaster_plot_armor(target_tile)
+		if(!(locate(/obj/structure/emergency_shield/clockmaster_plot_armor) in target_tile))
+			new /obj/structure/emergency_shield/clockmaster_plot_armor(target_tile)
 	say("Oh, you're here already? I thought I had at least another week..")
 	sleep(3 SECONDS)
 	say("Well, this part isn't exactly ready for public use yet. Wish you knew that before you fought through all that shit, huh?")
