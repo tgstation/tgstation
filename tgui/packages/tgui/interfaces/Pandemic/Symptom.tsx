@@ -21,11 +21,11 @@ export const SymptomDisplay = (props, context) => {
             <Stack fill>
               <Stack.Item grow={3}>
                 {desc}
-                <ThresholdDisplay thresholds={threshold_desc} />
+                <Thresholds thresholds={threshold_desc} />
               </Stack.Item>
               <Stack.Divider />
               <Stack.Item grow={1}>
-                <SymptomTraitInfo symptom={symptom} />
+                <Traits symptom={symptom} />
               </Stack.Item>
             </Stack>
           </Collapsible>
@@ -35,8 +35,32 @@ export const SymptomDisplay = (props, context) => {
   );
 };
 
+/** Displays threshold data */
+const Thresholds = (props, context) => {
+  const { thresholds = [] } = props;
+  let convertedThresholds = Object.entries<Threshold>(thresholds);
+
+  return (
+    <Section mt={1} title="Thresholds">
+      {!convertedThresholds.length ? (
+        <NoticeBox>None</NoticeBox>
+      ) : (
+        <LabeledList>
+          {convertedThresholds.map(([label, descr], index) => {
+            return (
+              <LabeledList.Item key={index} label={label}>
+                {descr}
+              </LabeledList.Item>
+            );
+          })}
+        </LabeledList>
+      )}
+    </Section>
+  );
+};
+
 /** Displays the numerical trait modifiers for a virus symptom */
-const SymptomTraitInfo = (props, context) => {
+const Traits = (props, context) => {
   const {
     symptom: { level, resistance, stage_speed, stealth, transmission },
   } = props;
@@ -70,30 +94,6 @@ const SymptomTraitInfo = (props, context) => {
           </LabeledList.Item>
         </Tooltip>
       </LabeledList>
-    </Section>
-  );
-};
-
-/** Displays threshold data */
-const ThresholdDisplay = (props, context) => {
-  const { thresholds = [] } = props;
-  let convertedThresholds = Object.entries<Threshold>(thresholds);
-
-  return (
-    <Section mt={1} title="Thresholds">
-      {!convertedThresholds.length ? (
-        <NoticeBox>None</NoticeBox>
-      ) : (
-        <LabeledList>
-          {convertedThresholds.map(([label, descr], index) => {
-            return (
-              <LabeledList.Item key={index} label={label}>
-                {descr}
-              </LabeledList.Item>
-            );
-          })}
-        </LabeledList>
-      )}
     </Section>
   );
 };

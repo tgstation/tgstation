@@ -19,10 +19,10 @@ export const BeakerDisplay = (props, context) => {
     content = (
       <Stack vertical>
         <Stack.Item>
-          <BeakerInfoDisplay />
+          <Info />
         </Stack.Item>
         <Stack.Item>
-          <AntibodyInfoDisplay />
+          <Antibodies />
         </Stack.Item>
       </Stack>
     );
@@ -60,7 +60,7 @@ export const BeakerDisplay = (props, context) => {
 };
 
 /** Displays info about the blood type, beaker capacity - volume */
-const BeakerInfoDisplay = (props, context) => {
+const Info = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { beaker, blood } = data;
   if (!beaker || !blood) {
@@ -101,7 +101,7 @@ const BeakerInfoDisplay = (props, context) => {
 };
 
 /** If antibodies are present, returns buttons to create vaccines */
-const AntibodyInfoDisplay = (props, context) => {
+const Antibodies = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { is_ready, resistances = [] } = data;
   if (!resistances) {

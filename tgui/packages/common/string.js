@@ -175,7 +175,7 @@ export const decodeHtmlEntities = (str) => {
     // Basic entities
     .replace(translate_re, (match, entity) => translate[entity])
     // Decimal entities
-    .replace(/&#?([0-9]+);?/gi, (match, numStr) => {
+    .replace(/&#?([0-9]+);/gi, (match, numStr) => {
       const num = parseInt(numStr, 10);
       return String.fromCharCode(num);
     })
