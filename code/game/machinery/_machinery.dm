@@ -276,7 +276,6 @@
 		return
 	. = machine_stat
 	machine_stat = new_value
-	SEND_SIGNAL(src, COMSIG_MACHINERY_STAT_CHANGE, .)
 	on_set_machine_stat(.)
 
 
