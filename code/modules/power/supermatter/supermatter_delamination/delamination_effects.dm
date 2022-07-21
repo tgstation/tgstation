@@ -123,8 +123,6 @@
 		SSshuttle.registerHostileEnvironment(src)
 		return
 
-	sleep(2 SECONDS)
-
 	// say goodbye to that shuttle of yours
 	if(SSshuttle.emergency.mode != SHUTTLE_ESCAPE)
 		priority_announce("Fatal error occurred in emergency shuttle uplink during transit. Unable to reestablish connection.",

@@ -51,7 +51,7 @@
 
 	addtimer(CALLBACK(src, .proc/announce_cascade, sm), 2 MINUTES)
 
-/datum/sm_delam_strat/count_down(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam_strat/cascade/count_down(obj/machinery/power/supermatter_crystal/sm)
 	set waitfor = FALSE
 
 	var/obj/item/radio/radio = sm.radio

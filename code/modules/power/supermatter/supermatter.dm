@@ -276,6 +276,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	uid = gl_uid++
+	delamination_strategy = GLOB.sm_delam_strat_list[/datum/sm_delam_strat/explosive]
 	SSair.start_processing_machine(src)
 	countdown = new(src)
 	countdown.start()
@@ -423,7 +424,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam_strat/proc/delaminate)
+	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam_strat/proc/delaminate, src)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
