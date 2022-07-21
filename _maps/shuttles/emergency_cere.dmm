@@ -620,13 +620,13 @@
 /area/shuttle/escape)
 "cj" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ck" = (
