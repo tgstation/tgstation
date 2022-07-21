@@ -3845,6 +3845,7 @@
 #include "code\modules\plumbing\plumbers\splitters.dm"
 #include "code\modules\plumbing\plumbers\synthesizer.dm"
 #include "code\modules\plumbing\plumbers\teleporter.dm"
+#include "code\modules\point\point.dm"
 #include "code\modules\power\cable.dm"
 #include "code\modules\power\cell.dm"
 #include "code\modules\power\energy_accumulator.dm"
