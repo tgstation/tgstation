@@ -67,6 +67,9 @@ GLOBAL_PROTECT(perf_log)
 GLOBAL_VAR(demo_log)
 GLOBAL_PROTECT(demo_log)
 
+GLOBAL_VAR(lua_log)
+GLOBAL_PROTECT(lua_log)
+
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)
 GLOBAL_LIST_EMPTY(admin_log)

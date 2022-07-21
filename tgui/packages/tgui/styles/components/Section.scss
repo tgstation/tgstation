@@ -100,6 +100,26 @@ $separator-color: colors.$primary !default;
   }
 }
 
+.Section--scrollableHorizontal {
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  & > .Section__rest > .Section__content {
+    overflow-y: hidden;
+    overflow-x: scroll;
+  }
+}
+
+.Section--scrollable.Section--scrollableHorizontal {
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  & > .Section__rest > .Section__content {
+    overflow-y: scroll;
+    overflow-x: scroll;
+  }
+}
+
 // Nested sections
 .Section .Section {
   background-color: transparent;
