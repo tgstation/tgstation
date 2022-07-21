@@ -218,7 +218,7 @@
 	},
 /obj/effect/spawner/random/trash/grime,
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "afg" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/corner,
@@ -733,7 +733,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "ant" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -4575,7 +4575,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "bMo" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -9400,7 +9400,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "dpd" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -9605,7 +9605,7 @@
 "drT" = (
 /obj/structure/table,
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "drY" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
@@ -9832,9 +9832,6 @@
 "duB" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/garden)
-"duT" = (
-/turf/open/space/basic,
-/area/mine/explored)
 "duU" = (
 /turf/closed/wall/r_wall,
 /area/mine/explored)
@@ -14588,7 +14585,7 @@
 /obj/machinery/light/directional/south,
 /obj/item/integrated_circuit,
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "few" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
@@ -17524,7 +17521,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "gif" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid,
@@ -20055,9 +20052,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
-"gZk" = (
-/turf/closed/wall,
-/area/station/science/auxlab)
 "gZE" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -22011,7 +22005,7 @@
 "hMR" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/plating,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "hMT" = (
 /obj/structure/chair/pew/right,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -25829,7 +25823,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "jcu" = (
 /obj/structure/chair{
 	dir = 1
@@ -26361,7 +26355,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "jmA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -29247,7 +29241,7 @@
 "kkA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "kkI" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -31828,7 +31822,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "lcG" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
@@ -31920,7 +31914,7 @@
 /area/station/science/lower)
 "ldJ" = (
 /turf/open/floor/plating,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "ldK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -32499,7 +32493,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "low" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -34491,7 +34485,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "lYK" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
@@ -53753,7 +53747,7 @@
 /obj/machinery/firealarm/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "sDv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -54208,7 +54202,7 @@
 "sLO" = (
 /obj/structure/chair/office/light,
 /turf/open/floor/plating,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "sLR" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -55393,7 +55387,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/mapping_helpers/airlock/access/all/science/general,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "tiL" = (
@@ -58260,7 +58254,7 @@
 /obj/item/storage/box/matches,
 /obj/item/storage/fancy/cigarettes,
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "ufK" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -65387,7 +65381,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "wHT" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/hop)
@@ -68215,7 +68209,7 @@
 /obj/machinery/light_switch/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/science/auxlab)
+/area/station/maintenance/starboard/lesser)
 "xGv" = (
 /obj/structure/rack,
 /obj/item/tank/jetpack/carbondioxide{
@@ -118279,13 +118273,13 @@ mkG
 kdo
 wQP
 dhe
-gZk
+wQP
 bMk
 jco
 sLO
 doZ
-gZk
-gZk
+wQP
+wQP
 dhe
 dhe
 dhe
@@ -118536,12 +118530,12 @@ vXG
 pju
 wQP
 dhe
-gZk
+wQP
 hMR
 ann
 ufH
 drT
-gZk
+wQP
 dhe
 dhe
 dhe
@@ -118793,12 +118787,12 @@ kvW
 rTI
 wQP
 dhe
-gZk
+wQP
 kkA
-gZk
-gZk
+wQP
+wQP
 kkA
-gZk
+wQP
 dhe
 dhe
 dhe
@@ -119051,7 +119045,7 @@ wQP
 wQP
 dhe
 dhe
-duT
+vXM
 dhe
 dhe
 dDG
