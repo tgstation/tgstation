@@ -71,7 +71,7 @@
 	beaker = held_item
 	balloon_alert(user, "beaker loaded")
 	update_appearance()
-
+	SStgui.update_uis(src)
 
 /obj/machinery/computer/pandemic/on_deconstruction()
 	eject_beaker()
@@ -136,7 +136,7 @@
 				eject_beaker()
 			return TRUE
 		if("rename_disease")
-			rename_disease(params["id"])
+			rename_disease(params["index"], params["name"])
 			return TRUE
 		if("create_culture_bottle")
 			if (wait)

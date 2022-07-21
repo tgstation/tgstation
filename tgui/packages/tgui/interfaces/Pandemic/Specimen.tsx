@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Button, Section, Stack, Tabs } from 'tgui/components';
+import { Button, NoticeBox, Section, Stack, Tabs } from 'tgui/components';
 import { Data } from './types';
 import { SymptomDisplay } from './Symptom';
 import { VirusDisplay } from './Virus';
@@ -12,14 +12,18 @@ export const SpecimenDisplay = (props, context) => {
 
   return (
     <Section fill scrollable title="Specimen" buttons={<Buttons />}>
-      <Stack fill vertical>
-        <Stack.Item>
-          <VirusDisplay virus={virus} />
-        </Stack.Item>
-        <Stack.Item>
-          {virus?.symptoms && <SymptomDisplay symptoms={virus.symptoms} />}
-        </Stack.Item>
-      </Stack>
+      {!virus ? (
+        <NoticeBox success>Nothing detected.</NoticeBox>
+      ) : (
+        <Stack fill vertical>
+          <Stack.Item>
+            <VirusDisplay virus={virus} />
+          </Stack.Item>
+          <Stack.Item>
+            {virus?.symptoms && <SymptomDisplay symptoms={virus.symptoms} />}
+          </Stack.Item>
+        </Stack>
+      )}
     </Section>
   );
 };

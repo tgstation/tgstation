@@ -34,6 +34,7 @@ const Info = (props, context) => {
   const {
     virus: { agent, can_rename, cure, description, index, name, spread },
   } = props;
+
   return (
     <LabeledList>
       <LabeledList.Item label="Name">
