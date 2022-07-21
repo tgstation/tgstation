@@ -88,7 +88,7 @@
 	if(istype(item, /obj/item/destabilizing_crystal))
 		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
 
-		if(!anomaly_event)
+		if(!is_main_engine)
 			to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on \a [name]."))
 			return
 

@@ -105,6 +105,7 @@
 	var/obj/cascade_portal/rift = effect_evac_rift_start()
 	RegisterSignal(rift, COMSIG_PARENT_QDELETING, .proc/end_round_holder)
 	effect_crystal_mass(sm, rift)
+	SSsupermatter_cascade.cascade_initiated = TRUE
 	qdel(sm)
 
 /datum/sm_delam_strat/cascade/examine(obj/machinery/power/supermatter_crystal/sm)
