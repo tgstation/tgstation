@@ -58,11 +58,10 @@
 
 	unmodify_hud()
 	var/mob/living/mob_parent = parent?.resolve()
-	if (!mob_parent)
-		return
-	mob_parent.lose_area_sensitivity(MOOD_DATUM_TRAIT)
+	if (mob_parent)
+		mob_parent.lose_area_sensitivity(MOOD_DATUM_TRAIT)
+		UnregisterSignal(mob_parent, list(COMSIG_MOB_HUD_CREATED, COMSIG_ENTER_AREA, COMSIG_LIVING_REVIVE))
 
-	UnregisterSignal(mob_parent, list(COMSIG_MOB_HUD_CREATED, COMSIG_ENTER_AREA, COMSIG_LIVING_REVIVE))
 	return ..()
 
 /datum/mood/process(delta_time)
