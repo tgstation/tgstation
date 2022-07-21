@@ -121,6 +121,8 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 /// Add whatever overlay to the sm.
 /// [/obj/machinery/power/supermatter_crystal/proc/overlays]
 /datum/sm_delam_strat/proc/overlays(obj/machinery/power/supermatter_crystal/sm)
+	if(sm.final_countdown)
+		return list(mutable_appearance(sm.icon, "causality_field"))
 	return list()
 
 /// Modifies the damage dealt to the sm.

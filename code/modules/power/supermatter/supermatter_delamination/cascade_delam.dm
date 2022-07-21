@@ -114,9 +114,7 @@
 	return list(span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!"))
 
 /datum/sm_delam_strat/cascade/overlays(obj/machinery/power/supermatter_crystal/sm)
-	if(sm.final_countdown)
-		return list(mutable_appearance(sm.icon, "casuality_field"))
-	return ..()
+	return list()
 
 /datum/sm_delam_strat/cascade/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
 	return 0.25
