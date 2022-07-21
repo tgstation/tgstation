@@ -26,7 +26,7 @@
 		ui.open()
 
 /datum/force_event/ui_state(mob/user)
-	return GLOB.admin_state
+	return GLOB.fun_state
 
 /datum/force_event/ui_static_data(mob/user)
 	var/list/data = list()
