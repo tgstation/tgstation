@@ -19,7 +19,6 @@
  *
  *When Clockmaster gets to half health on his first phase, he will trigger a mid-combat dialogue where he summons shields around himself and destroys any active clockwork mobs. 
  *All nearby players are stunned for the duration of the dialogue as he spawns in the phase two version of himself.
- *If you kill all of the smaller ones it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
  *
  *PHASE TWO:
  *Sevtug's Wrath - Summons a square around him and stops moving, if a player is caught in this square after 4 seconds they are thrown back and take toxin/brain damage, as well as
@@ -204,3 +203,30 @@
 		playsound(src, attack_sound, 100, TRUE)
 		hit_atom.apply_damage(22, wound_bonus = CANT_WOUND)
 		hit_atom.safe_throw_at(get_step(src, get_dir(src, hit_atom)), 2)
+
+
+//placeholder for public test
+/mob/living/simple_animal/hostile/boss/clockmaster/map_maker
+	name = "Map Maker"
+	desc = "A man in an engineering uniform, he looks tired."
+	icon_state = "map_maker"
+	loot = list(/obj/structure/closet/syndicate/resources/everything)
+
+/mob/living/simple_animal/hostile/boss/clockmaster/map_maker/tell_them_my_evil_plan()
+	have_i_explained_my_evil_plan = TRUE
+	for(var/turf/target_tile as anything in RANGE_TURFS(1, src))
+	if(!(locate(/obj/structure/emergency_shield/clockmaster_plot_armor) in target_tile))
+		new /obj/structure/emergency_shield/clockmaster_plot_armor(target_tile)
+	say("Oh, you're here already? I thought I had at least another week..")
+	sleep(3 SECONDS)
+	say("Well, this part isn't exactly ready for public use yet. Wish you knew that before you fought through all that shit, huh?")
+	sleep(4 SECONDS)
+	say("Don't worry, I'll throw you some pity loot as compensation for making it this far. It won't be as good as the actual rewards once I'm done though.")
+	sleep(5 SECONDS)
+	say("There should be a feedback thread up by this point along with the github PR itself to leave any notes/criticsm you may have so far. I'd really appreciate it.")
+	sleep(6 SECONDS)
+	say("Alright, gotta go. Take the rift behind me to get back to the main mining post. Try not to distract the workers, they're busy making the arena.")
+	sleep(5 SECONDS)
+	for(var/obj/structure/emergency_shield/clockmaster_plot_armor/plot_armor in urange(1, src))
+		plot_armor.Destroy()
+	gib()
