@@ -39,5 +39,6 @@
 		"editor.rulers": [80],
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true
-	}
+	},
+	"Lua.diagnostics.enable": false
 }

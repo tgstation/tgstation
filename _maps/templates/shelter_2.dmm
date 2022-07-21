@@ -9,7 +9,7 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/misc/survivalpod)
 "c" = (
-/obj/machinery/shower,
+/obj/machinery/shower/directional/south,
 /obj/item/soap/deluxe,
 /obj/structure/curtain{
 	alpha = 240;
@@ -163,10 +163,7 @@
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "y" = (
-/obj/structure/sink/kitchen{
-	dir = 4;
-	pixel_x = -13
-	},
+/obj/structure/sink/kitchen/directional/east,
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "z" = (

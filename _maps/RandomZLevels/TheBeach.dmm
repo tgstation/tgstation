@@ -125,7 +125,7 @@
 	},
 /obj/item/clothing/head/pirate,
 /obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/suit/pirate,
+/obj/item/clothing/suit/costume/pirate,
 /obj/item/claymore/cutlass{
 	desc = "A piratey, foam sword used by kids to train themselves in the business of \"negotiating\" the transfer of treasure.";
 	force = 0;
@@ -508,17 +508,13 @@
 "bM" = (
 /obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/sand,
-/obj/structure/sink{
-	pixel_y = 32
-	},
+/obj/structure/sink/directional/south,
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bN" = (
 /obj/structure/mirror/directional/west,
 /obj/effect/turf_decal/sand,
-/obj/structure/sink{
-	pixel_y = 32
-	},
+/obj/structure/sink/directional/south,
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bO" = (
