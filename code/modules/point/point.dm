@@ -48,6 +48,7 @@
 
 	thought_bubble.pixel_x = 16
 	thought_bubble.pixel_y = 32
+	thought_bubble.alpha = 200
 	thought_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/mutable_appearance/point_visual = mutable_appearance(
