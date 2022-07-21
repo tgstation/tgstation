@@ -276,7 +276,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	uid = gl_uid++
-	delamination_strategy = GLOB.sm_delam_strat_list[/datum/sm_delam_strat/explosive]
+	set_delam(SM_DELAM_PRIO_NONE, /datum/sm_delam_strat/explosive)
 	SSair.start_processing_machine(src)
 	countdown = new(src)
 	countdown.start()
