@@ -1,26 +1,26 @@
 /// Priority is top to bottom.
-GLOBAL_LIST_INIT(sm_delam_strat_list, list(
-	/datum/sm_delam_strat/cascade = new /datum/sm_delam_strat/cascade,
-	/datum/sm_delam_strat/singularity = new /datum/sm_delam_strat/singularity,
-	/datum/sm_delam_strat/tesla = new /datum/sm_delam_strat/tesla,
-	/datum/sm_delam_strat/explosive = new /datum/sm_delam_strat/explosive,
+GLOBAL_LIST_INIT(sm_delam_list, list(
+	/datum/sm_delam/cascade = new /datum/sm_delam/cascade,
+	/datum/sm_delam/singularity = new /datum/sm_delam/singularity,
+	/datum/sm_delam/tesla = new /datum/sm_delam/tesla,
+	/datum/sm_delam/explosive = new /datum/sm_delam/explosive,
 ))
 
-/datum/sm_delam_strat
+/datum/sm_delam
 
 /// Whether we are eligible for this delamination or not. TRUE if valid, FALSE if not.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
-/datum/sm_delam_strat/proc/can_select(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return FALSE
 
 /// Called when the count down has been finished. 
 /// This bad boy is called internally unlike all the rest.
-/datum/sm_delam_strat/proc/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	qdel(sm)
 
 /// Start counting down, means SM is about to blow. Can still be healed though.
 /// [/obj/machinery/power/supermatter_crystal/proc/process_atmos]
-/datum/sm_delam_strat/proc/count_down(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/count_down(obj/machinery/power/supermatter_crystal/sm)
 	set waitfor = FALSE
 
 	var/obj/item/radio/radio = sm.radio
@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 /// Mostly just to tell people how useless engi is, and play some alarm sounds.
 /// Returns TRUE if we just told people a delam is going on. FALSE if its healing or we didnt say anything.
 /// [/obj/machinery/power/supermatter_crystal/proc/process_atmos]
-/datum/sm_delam_strat/proc/delam_progress(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	if(sm.damage <= sm.warning_point) // Damage is too low, lets not
 		return FALSE 
 
@@ -105,27 +105,27 @@ GLOBAL_LIST_INIT(sm_delam_strat_list, list(
 
 /// Called when a supermatter switches it's strategy from another one to us.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
-/datum/sm_delam_strat/proc/on_select(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/on_select(obj/machinery/power/supermatter_crystal/sm)
 	return
 
 /// Called when a supermatter switches it's strategy from us to something else.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
-/datum/sm_delam_strat/proc/on_deselect(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	return
 
 /// Added to an examine return value.
 /// [/obj/machinery/power/supermatter_crystal/proc/examine]
-/datum/sm_delam_strat/proc/examine(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/examine(obj/machinery/power/supermatter_crystal/sm)
 	return list()
 
 /// Add whatever overlay to the sm.
 /// [/obj/machinery/power/supermatter_crystal/proc/overlays]
-/datum/sm_delam_strat/proc/overlays(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/overlays(obj/machinery/power/supermatter_crystal/sm)
 	if(sm.final_countdown)
 		return list(mutable_appearance(sm.icon, "causality_field"))
 	return list()
 
 /// Modifies the damage dealt to the sm.
 /// [/obj/machinery/power/supermatter_crystal/proc/deal_damage]
-/datum/sm_delam_strat/proc/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
 	return 1

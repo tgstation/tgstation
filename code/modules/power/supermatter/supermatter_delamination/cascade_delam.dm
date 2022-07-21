@@ -1,6 +1,6 @@
-/datum/sm_delam_strat/cascade
+/datum/sm_delam/cascade
 
-/datum/sm_delam_strat/cascade/can_select(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/can_select(obj/machinery/power/supermatter_crystal/sm)
 	if(!sm.is_main_engine)
 		return FALSE
 	var/total_moles = sm.absorbed_gasmix.total_moles()
@@ -12,7 +12,7 @@
 			return FALSE
 	return TRUE
 	
-/datum/sm_delam_strat/cascade/delam_progress(obj/machinery/power/supermatter_crystal/sm)	
+/datum/sm_delam/cascade/delam_progress(obj/machinery/power/supermatter_crystal/sm)	
 	. = ..()
 	if(!.)
 		return FALSE
@@ -31,7 +31,7 @@
 	for(var/mob/victim as anything in GLOB.player_list)
 		to_chat(victim, span_danger(pick(messages)))
 
-/datum/sm_delam_strat/cascade/on_select(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/on_select(obj/machinery/power/supermatter_crystal/sm)
 	log_game("[sm] has begun a cascade.")
 	message_admins("[sm] has begun a cascade. [ADMIN_JMP(sm)]")
 	sm.investigate_log("has begun a cascade.", INVESTIGATE_ENGINE)
@@ -43,7 +43,7 @@
 
 	addtimer(CALLBACK(src, .proc/announce_cascade, sm), 2 MINUTES)
 
-/datum/sm_delam_strat/cascade/on_deselect(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	log_game("[sm] has stopped its cascade.")
 	message_admins("[sm] has stopped its cascade. [ADMIN_JMP(sm)]")
 	sm.investigate_log("has stopped its cascade.", INVESTIGATE_ENGINE)
@@ -53,7 +53,7 @@
 
 	addtimer(CALLBACK(src, .proc/announce_cascade, sm), 2 MINUTES)
 
-/datum/sm_delam_strat/cascade/count_down(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/count_down(obj/machinery/power/supermatter_crystal/sm)
 	set waitfor = FALSE
 
 	var/obj/item/radio/radio = sm.radio
@@ -95,7 +95,7 @@
 
 	delaminate(sm)
 
-/datum/sm_delam_strat/cascade/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	effect_explosion(sm)
 	effect_emergency_state()
 	effect_cascade_demoralize()
@@ -110,16 +110,16 @@
 	SSsupermatter_cascade.cascade_initiated = TRUE
 	qdel(sm)
 
-/datum/sm_delam_strat/cascade/examine(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/examine(obj/machinery/power/supermatter_crystal/sm)
 	return list(span_bolddanger("The crystal is vibrating at immense speeds, warping space around it!"))
 
-/datum/sm_delam_strat/cascade/overlays(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/overlays(obj/machinery/power/supermatter_crystal/sm)
 	return list()
 
-/datum/sm_delam_strat/cascade/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
 	return 0.25
 
-/datum/sm_delam_strat/cascade/proc/announce_cascade(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/cascade/proc/announce_cascade(obj/machinery/power/supermatter_crystal/sm)
 	if(!can_select(sm))
 		return FALSE
 	priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
@@ -128,6 +128,6 @@
 	return TRUE
 
 /// Signal calls cant sleep, we gotta do this.
-/datum/sm_delam_strat/cascade/proc/end_round_holder()
+/datum/sm_delam/cascade/proc/end_round_holder()
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/effect_evac_rift_end)

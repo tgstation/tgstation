@@ -266,7 +266,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/datum/gas_mixture/absorbed_gasmix
 
 	/// How we are delaminating.
-	var/datum/sm_delam_strat/delamination_strategy
+	var/datum/sm_delam/delamination_strategy
 	/// Whether the sm is forced in a specific delamination_strategy or not. All truthy values means it's forced. 
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
@@ -274,7 +274,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	uid = gl_uid++
-	set_delam(SM_DELAM_PRIO_NONE, /datum/sm_delam_strat/explosive)
+	set_delam(SM_DELAM_PRIO_NONE, /datum/sm_delam/explosive)
 	SSair.start_processing_machine(src)
 	countdown = new(src)
 	countdown.start()
@@ -422,7 +422,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam_strat/proc/delaminate, src)
+	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam/proc/delaminate, src)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)

@@ -1,12 +1,12 @@
 // Singulo, tesla, and explosive delam
 
 /// When we have too much gas.
-/datum/sm_delam_strat/singularity
+/datum/sm_delam/singularity
 
-/datum/sm_delam_strat/singularity/can_select(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/singularity/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return (sm.absorbed_gasmix.total_moles() >= MOLE_PENALTY_THRESHOLD)
 
-/datum/sm_delam_strat/singularity/delam_progress(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/singularity/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -16,7 +16,7 @@
 		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 	)
 
-/datum/sm_delam_strat/singularity/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/singularity/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	effect_irradiate(sm)
 	effect_demoralize(sm)
 	if(!effect_singulo(sm))
@@ -26,12 +26,12 @@
 	qdel(sm)
 
 /// When we have too much power.
-/datum/sm_delam_strat/tesla
+/datum/sm_delam/tesla
 
-/datum/sm_delam_strat/tesla/can_select(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/tesla/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return (sm.power > POWER_PENALTY_THRESHOLD)
 
-/datum/sm_delam_strat/tesla/delam_progress(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/tesla/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -41,7 +41,7 @@
 		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 	)
 
-/datum/sm_delam_strat/tesla/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/tesla/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	effect_irradiate(sm)
 	effect_demoralize(sm)
 	effect_tesla(sm)
@@ -51,12 +51,12 @@
 	qdel(sm)
 
 /// Default delam.
-/datum/sm_delam_strat/explosive
+/datum/sm_delam/explosive
 
-/datum/sm_delam_strat/explosive/can_select(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/explosive/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return TRUE
 
-/datum/sm_delam_strat/explosive/delaminate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/explosive/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	effect_irradiate(sm)
 	effect_demoralize(sm)
 	effect_explosion(sm)

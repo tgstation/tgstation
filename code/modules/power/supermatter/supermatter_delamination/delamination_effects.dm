@@ -1,11 +1,11 @@
 // These are supposed to be discrete effects so we can tell at a glance what does each override
-// of [/datum/sm_delam_strat/proc/delaminate] does.
+// of [/datum/sm_delam/proc/delaminate] does.
 // Please keep them discrete and give them proper, descriptive function names.
 // Oh and all of them returns true if the effect succeeded.
 
 /// Irradiates mobs around 20 tiles of the sm.
 /// Just the mobs apparently.
-/datum/sm_delam_strat/proc/effect_irradiate(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_irradiate(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	for (var/mob/living/victim in range(20, sm))
 		if(victim.z != sm_turf.z)
@@ -14,7 +14,7 @@
 	return TRUE
 
 /// Hallucinates and makes mobs in Z level sad.
-/datum/sm_delam_strat/proc/effect_demoralize(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_demoralize(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
 		if(!istype(victim) || victim.z != sm_turf.z)
@@ -37,7 +37,7 @@
 	return TRUE
 
 /// Spawns anomalies all over the station. Half instantly, the other half over time.
-/datum/sm_delam_strat/proc/effect_anomaly(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_anomaly(obj/machinery/power/supermatter_crystal/sm)
 	var/anomalies = 10
 	var/list/anomaly_types = list(GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, DELIMBER_ANOMALY = 35, FLUX_ANOMALY = 25, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
 	var/list/anomaly_places = GLOB.generic_event_spawns
@@ -62,7 +62,7 @@
 	return TRUE
 
 /// Explodes
-/datum/sm_delam_strat/proc/effect_explosion(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_explosion(obj/machinery/power/supermatter_crystal/sm)
 	var/explosion_power = sm.explosion_power
 	var/power_scaling = sm.gasmix_power_ratio
 	var/turf/sm_turf = get_turf(sm)
@@ -78,7 +78,7 @@
 	return TRUE
 
 /// Explodes
-/datum/sm_delam_strat/proc/effect_singulo(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_singulo(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	if(!sm_turf)
 		stack_trace("Supermatter [sm] failed to spawn singularity, cant get current turf.")
@@ -89,7 +89,7 @@
 	return TRUE
 
 /// Teslas
-/datum/sm_delam_strat/proc/effect_tesla(obj/machinery/power/supermatter_crystal/sm)
+/datum/sm_delam/proc/effect_tesla(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
 	if(!sm_turf)
 		stack_trace("Supermatter [sm] failed to spawn tesla, cant get current turf.")
@@ -99,7 +99,7 @@
 	return TRUE
 
 /// Mail the shuttle off to buy milk.
-/datum/sm_delam_strat/proc/effect_strand_shuttle()
+/datum/sm_delam/proc/effect_strand_shuttle()
 	set waitfor = FALSE
 	// set timer to infinity, so shuttle never arrives
 	SSshuttle.emergency.setTimer(INFINITY)
@@ -140,14 +140,14 @@
 				shake_camera(mob, 3 SECONDS * 0.25, 1)
 			mob.Paralyze(3 SECONDS, TRUE)
 
-/datum/sm_delam_strat/proc/effect_cascade_demoralize()
+/datum/sm_delam/proc/effect_cascade_demoralize()
 	for(var/mob/player as anything in GLOB.player_list)
 		if(!isdead(player))
 			to_chat(player, span_boldannounce("Everything around you is resonating with a powerful energy. This can't be good."))
 			SEND_SIGNAL(player, COMSIG_ADD_MOOD_EVENT, "cascade", /datum/mood_event/cascade)
 		SEND_SOUND(player, 'sound/magic/charge.ogg')
 
-/datum/sm_delam_strat/proc/effect_emergency_state()
+/datum/sm_delam/proc/effect_emergency_state()
 	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA) // skip the announcement and shuttle timer adjustment in set_security_level()
 	make_maint_all_access()
@@ -158,7 +158,7 @@
 		light_to_break.break_light_tube()
 
 /// Spawn an evacuation rift for people to go through.
-/datum/sm_delam_strat/proc/effect_evac_rift_start()
+/datum/sm_delam/proc/effect_evac_rift_start()
 	var/obj/cascade_portal/rift = new /obj/cascade_portal(get_turf(pick(GLOB.generic_event_spawns)))
 	priority_announce("We have been hit by a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those \
 		required for shuttle navigation. We can only reasonably conclude that a supermatter cascade is occurring on or near your station.\n\n\
@@ -169,7 +169,7 @@
 	return rift
 
 /// Announce the destruction of the rift and end the round.
-/datum/sm_delam_strat/proc/effect_evac_rift_end()
+/datum/sm_delam/proc/effect_evac_rift_end()
 	priority_announce("[Gibberish("The rift has been destroyed, we can no longer help you.", FALSE, 5)]")
 
 	sleep(25 SECONDS)
@@ -201,7 +201,7 @@
 	SSticker.force_ending = TRUE
 
 /// Scatters crystal mass over the event spawns as long as they are at least 30 tiles away from whatever we want to avoid.
-/datum/sm_delam_strat/proc/effect_crystal_mass(obj/machinery/power/supermatter_crystal/sm, avoid)
+/datum/sm_delam/proc/effect_crystal_mass(obj/machinery/power/supermatter_crystal/sm, avoid)
 	new /obj/crystal_mass(get_turf(sm))
 	var/list/possible_spawns = GLOB.generic_event_spawns.Copy()
 	for(var/i in 1 to rand(4,6))
