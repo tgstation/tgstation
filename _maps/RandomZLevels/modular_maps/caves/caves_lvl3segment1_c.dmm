@@ -198,6 +198,13 @@
 	},
 /turf/closed/wall,
 /area/awaymission/caves/misc/mining_post/smelter1)
+"dP" = (
+/obj/machinery/conveyor{
+	id = "caves_depo1"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
 "dQ" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -262,6 +269,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/mining_post)
+"fR" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo1"
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
 "gB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -279,12 +293,6 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter2)
-"gU" = (
-/obj/machinery/conveyor{
-	id = "caves_depo1"
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/misc/mining_post)
 "hl" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
@@ -351,13 +359,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/misc/mining_post/smelter1)
-"hR" = (
-/obj/machinery/conveyor{
-	dir = 10;
-	id = "caves_depo1"
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/misc/mining_post)
 "hX" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -582,6 +583,15 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
+"qg" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "caves_depo1"
+	},
+/obj/structure/plasticflaps,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
 "qv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -619,6 +629,12 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter1)
+"rN" = (
+/obj/machinery/conveyor{
+	id = "caves_depo1"
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
 "ss" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -654,16 +670,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/misc/mining_post/diverter)
-"tm" = (
-/obj/machinery/conveyor{
-	id = "caves_depo1"
-	},
-/obj/machinery/mineral/stacking_machine{
-	input_dir = 1;
-	output_dir = 2
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/misc/mining_post)
 "tr" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -693,13 +699,6 @@
 	},
 /turf/open/indestructible/necropolis,
 /area/template_noop)
-"tV" = (
-/obj/machinery/conveyor{
-	id = "caves_depo1"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/misc/mining_post)
 "ut" = (
 /obj/machinery/power/rtg,
 /obj/structure/cable,
@@ -792,6 +791,13 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
+"wM" = (
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "caves_depo1"
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
 "wN" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
@@ -868,6 +874,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter2)
+"yU" = (
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "caves_depo1"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
 "yV" = (
 /obj/machinery/atmospherics/components/tank/oxygen,
 /obj/structure/cable,
@@ -955,13 +969,6 @@
 "BU" = (
 /turf/closed/wall/rust,
 /area/awaymission/caves/misc/mining_post/smelter2)
-"Cg" = (
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "caves_depo1"
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/misc/mining_post)
 "Cj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -995,14 +1002,6 @@
 	},
 /turf/open/chasm/lavaland,
 /area/template_noop)
-"CM" = (
-/obj/machinery/conveyor/inverted{
-	dir = 5;
-	id = "caves_depo1"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/misc/mining_post)
 "CP" = (
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -1023,15 +1022,6 @@
 "CS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/awaymission/caves/misc/mining_post)
-"CT" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "caves_depo1"
-	},
-/obj/structure/plasticflaps,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post)
 "Ds" = (
 /obj/structure/cable,
@@ -1293,6 +1283,13 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter2)
+"MM" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "caves_depo1"
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
 "MX" = (
 /obj/structure/flora/rock,
 /obj/effect/turf_decal/stripes/white/corner{
@@ -1613,13 +1610,6 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/misc/mining_post/smelter2)
-"UA" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "caves_depo1"
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/awaymission/caves/misc/mining_post)
 "Vs" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -1713,6 +1703,16 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/misc/mining_post/diverter)
+"XP" = (
+/obj/machinery/conveyor{
+	id = "caves_depo1"
+	},
+/obj/machinery/mineral/stacking_machine{
+	input_dir = 1;
+	output_dir = 2
+	},
+/turf/open/floor/plating,
+/area/awaymission/caves/misc/mining_post)
 "XW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -2889,7 +2889,7 @@ BD
 zL
 Qu
 xm
-Cg
+wM
 Go
 aJ
 aJ
@@ -2948,7 +2948,7 @@ zL
 zL
 wN
 Go
-UA
+fR
 Go
 aJ
 aJ
@@ -3007,7 +3007,7 @@ CS
 CS
 Lf
 fE
-UA
+fR
 Go
 aJ
 aJ
@@ -3066,7 +3066,7 @@ vt
 yG
 kh
 fE
-UA
+fR
 Go
 aJ
 aJ
@@ -3125,7 +3125,7 @@ Bt
 fE
 fE
 Go
-UA
+fR
 Go
 aJ
 aJ
@@ -3179,12 +3179,12 @@ Go
 OL
 qv
 Go
-CM
-tV
-tm
-gU
-gU
-hR
+yU
+dP
+XP
+rN
+rN
+MM
 Go
 aJ
 aJ
@@ -3238,7 +3238,7 @@ Go
 EA
 Cj
 Go
-CT
+qg
 Go
 Go
 Go
