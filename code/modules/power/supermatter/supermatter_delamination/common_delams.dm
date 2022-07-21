@@ -10,7 +10,11 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	sm.radio.talk_into(sm, "Warning: Critical coolant mass reached.", sm.warning_channel)
+	sm.radio.talk_into(
+		sm,
+		"Warning: Critical coolant mass reached.", 
+		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
+	)
 
 /datum/sm_delam_strat/singularity/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	effect_irradiate(sm)
@@ -29,7 +33,11 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	sm.radio.talk_into(sm, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.", sm.warning_channel)
+	sm.radio.talk_into(
+		sm,
+		"DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.",
+		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
+	)
 
 /datum/sm_delam_strat/tesla/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	effect_irradiate(sm)

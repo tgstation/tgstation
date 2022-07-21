@@ -17,7 +17,7 @@
 	sm.radio.talk_into(
 		sm,
 		"DANGER: HYPERSTRUCTURE OSCILLATION FREQUENCY OUT OF BOUNDS.", 
-		sm.damage > sm.emergency_point
+		sm.damage >= sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 	)
 	var/list/messages = list(
 		"Space seems to be shifting around you...",
