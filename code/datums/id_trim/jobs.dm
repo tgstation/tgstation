@@ -933,6 +933,8 @@
 	if(!.)
 		return
 
+	access |= department_access
+
 	// Config check for if sec has maint access.
 	if(CONFIG_GET(flag/security_has_maint_access))
 		access |= list(ACCESS_MAINT_TUNNELS)
@@ -941,20 +943,20 @@
 	// Thus, it makes it possible to judge if departmental security officers should have more access to their department on a lower population shift.
 	// Server operators can modify config to change it such that security officers can use this system, or alternatively either: A) always give the "elevated" access (ALWAYS_GETS_ACCESS) or B) never give this access (null value).
 
-	var/access_level = CONFIG_GET(number/depsec_access_level)
 	#define POPULATION_SCALED_ACCESS 1
 	#define ALWAYS_GETS_ACCESS 2
 
-	if(access_level == POPULATION_SCALED_ACCESS)
+	if(!CONFIG_GET(number/depsec_access_level))
+		return
+
+	if(CONFIG_GET(number/depsec_access_level) == POPULATION_SCALED_ACCESS)
 		var/minimal_security_officers = 3 // We do not spawn in any more lockers if there are 5 or less security officers, so let's keep it lower than that number.
 		var/datum/job/J = SSjob.GetJob(JOB_SECURITY_OFFICER)
 		if((J.spawn_positions - minimal_security_officers) <= 0)
 			access |= elevated_access
 
-	if(access_level == ALWAYS_GETS_ACCESS)
+	if(CONFIG_GET(number/depsec_access_level) == ALWAYS_GETS_ACCESS)
 		access |= elevated_access
-
-	access |= department_access
 
 /datum/id_trim/job/security_officer/supply
 	assignment = "Security Officer (Cargo)"
