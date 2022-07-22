@@ -49,50 +49,6 @@
 	sm.vis_contents -= sm.warp
 	QDEL_NULL(sm.warp)
 
-	addtimer(CALLBACK(src, .proc/announce_cascade, sm), 2 MINUTES)
-
-/datum/sm_delam/cascade/count_down(obj/machinery/power/supermatter_crystal/sm)
-	set waitfor = FALSE
-
-	var/obj/item/radio/radio = sm.radio
-
-	if(sm.final_countdown) // We're already doing it go away
-		stack_trace("SM [sm] told to delaminate again while it's already delaminating.")
-		return
-	sm.final_countdown = TRUE
-	sm.update_appearance()
-
-	radio.talk_into(
-		sm,
-		"CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure. Harmonic frequency limits exceeded. Causality destabilization field could not be engaged.", 
-		sm.emergency_channel
-	)
-
-	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
-		var/message
-		var/healed = FALSE
-		
-		if(sm.damage < sm.explosion_point) // Cutting it a bit close there engineers
-			message = "Crystalline hyperstructure returning to safe operating parameters. Harmonic frequency restored within emergency bounds. Anti-resonance filter initiated."
-			healed = TRUE
-		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
-			sleep(1 SECONDS)
-			continue
-		else if(i > 50)
-			message = "[DisplayTimeText(i, TRUE)] remain before resonance-induced stabilization."
-		else
-			message = "[i*0.1]..."
-
-		radio.talk_into(sm, message, sm.emergency_channel)
-		
-		if(healed)
-			sm.final_countdown = FALSE
-			sm.update_appearance()
-			return // delam averted
-		sleep(1 SECONDS)
-
-	delaminate(sm)
-
 /datum/sm_delam/cascade/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a cascade delam.")
 	sm.investigate_log("triggered a cascade delam.", INVESTIGATE_ENGINE)
@@ -119,6 +75,13 @@
 
 /datum/sm_delam/cascade/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
 	return 0.25
+
+/datum/sm_delam/cascade/count_down_messages(obj/machinery/power/supermatter_crystal/sm)
+	var/list/messages = list()
+	messages += "CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure. Harmonic frequency limits exceeded. Causality destabilization field could not be engaged."
+	messages += "Crystalline hyperstructure returning to safe operating parameters. Harmonic frequency restored within emergency bounds. Anti-resonance filter initiated."
+	messages += "remain before resonance-induced stabilization."
+	return messages
 
 /datum/sm_delam/cascade/proc/announce_cascade(obj/machinery/power/supermatter_crystal/sm)
 	if(!can_select(sm))

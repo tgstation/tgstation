@@ -15,54 +15,10 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /datum/sm_delam/proc/can_select(obj/machinery/power/supermatter_crystal/sm)
 	return FALSE
 
-/// Called when the count down has been finished. 
-/// This bad boy is called internally unlike all the rest.
+/// Called when the count down has been finished, do the nasty work.
+/// [/obj/machinery/power/supermatter_crystal/proc/count_down]
 /datum/sm_delam/proc/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	qdel(sm)
-
-/// Start counting down, means SM is about to blow. Can still be healed though.
-/// [/obj/machinery/power/supermatter_crystal/proc/process_atmos]
-/datum/sm_delam/proc/count_down(obj/machinery/power/supermatter_crystal/sm)
-	set waitfor = FALSE
-
-	var/obj/item/radio/radio = sm.radio
-
-	if(sm.final_countdown) // We're already doing it go away
-		stack_trace("SM [sm] told to delaminate again while it's already delaminating.")
-		return
-	sm.final_countdown = TRUE
-	sm.update_appearance()
-
-	radio.talk_into(
-		sm,
-		"CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated.", 
-		sm.emergency_channel
-	)
-
-	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
-		var/message
-		var/healed = FALSE
-		
-		if(sm.damage < sm.explosion_point) // Cutting it a bit close there engineers
-			message = "Crystalline hyperstructure returning to safe operating parameters. Failsafe has been disengaged."
-			healed = TRUE
-		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
-			sleep(1 SECONDS)
-			continue
-		else if(i > 50)
-			message = "[DisplayTimeText(i, TRUE)] remain before causality stabilization."
-		else
-			message = "[i*0.1]..."
-
-		radio.talk_into(sm, message, sm.emergency_channel)
-		
-		if(healed)
-			sm.final_countdown = FALSE
-			sm.update_appearance()
-			return // delam averted
-		sleep(1 SECONDS)
-
-	delaminate(sm)
 
 /// Whatever we're supposed to do when a delam is currently in progress. 
 /// Mostly just to tell people how useless engi is, and play some alarm sounds.
@@ -131,3 +87,12 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// [/obj/machinery/power/supermatter_crystal/proc/deal_damage]
 /datum/sm_delam/proc/damage_multiplier(obj/machinery/power/supermatter_crystal/sm)
 	return 1
+
+/// Returns a set of messages to be spouted during delams
+/// First message is start of count down, second message is quitting of count down (if sm healed), third is 5 second intervals
+/datum/sm_delam/proc/count_down_messages(obj/machinery/power/supermatter_crystal/sm)
+	var/list/messages = list()
+	messages += "CRYSTAL DELAMINATION IMMINENT. The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated."
+	messages += "Crystalline hyperstructure returning to safe operating parameters. Failsafe has been disengaged."
+	messages += "remain before causality stabilization."
+	return messages

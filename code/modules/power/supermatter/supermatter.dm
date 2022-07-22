@@ -439,6 +439,61 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				continue //You can't pull someone nailed to the deck
 		step_towards(movable_atom,center)
 
+/**
+ * Count down, spout some messages, and then execute the delam itself. 
+ * We guard for last second delam strat changes here, mostly because some have diff messages.
+ * 
+ * By last second changes, we mean that it's possible for say, a tesla delam to
+ * just explode normally if at the absolute last second it loses power and switches to default one.
+ * Even after countdown is already in progress.
+ */
+/obj/machinery/power/supermatter_crystal/proc/count_down()
+	set waitfor = FALSE
+
+	if(final_countdown) // We're already doing it go away
+		stack_trace("[src] told to delaminate again while it's already delaminating.")
+		return
+	
+	final_countdown = TRUE
+	update_appearance()
+
+	var/datum/sm_delam/last_delamination_strategy = delamination_strategy
+	var/list/count_down_messages = delamination_strategy.count_down_messages()
+
+	radio.talk_into(
+		src,
+		count_down_messages[1],
+		emergency_channel
+	)
+
+	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
+		if(last_delamination_strategy != delamination_strategy)
+			count_down_messages = delamination_strategy.count_down_messages()
+
+		var/message
+		var/healed = FALSE
+		
+		if(damage < explosion_point) // Cutting it a bit close there engineers
+			message = count_down_messages[2]
+			healed = TRUE
+		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
+			sleep(1 SECONDS)
+			continue
+		else if(i > 50)
+			message = "[DisplayTimeText(i, TRUE)] [count_down_messages[3]]"
+		else
+			message = "[i*0.1]..."
+
+		radio.talk_into(src, message, emergency_channel)
+		
+		if(healed)
+			final_countdown = FALSE
+			update_appearance()
+			return // delam averted
+		sleep(1 SECONDS)
+
+	delamination_strategy.delaminate(src)
+
 /proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5, has_changed_lifespan = TRUE)
 	var/turf/local_turf = pick(orange(anomalyrange, anomalycenter))
 	if(!local_turf)

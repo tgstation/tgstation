@@ -93,7 +93,7 @@
 	delamination_strategy.delam_progress(src)
 
 	if(damage > explosion_point && !final_countdown)
-		delamination_strategy.count_down(src)
+		count_down()
 
 	return TRUE
 
