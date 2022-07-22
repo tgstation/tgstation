@@ -27,9 +27,9 @@
 	clear_alert(ALERT_TOO_MUCH_CO2)
 	clear_alert(ALERT_NOT_ENOUGH_CO2)
 
-	src.clear_mood_event("chemical_euphoria")
-	src.clear_mood_event("smell")
-	src.clear_mood_event("suffocation")
+	clear_mood_event("chemical_euphoria")
+	clear_mood_event("smell")
+	clear_mood_event("suffocation")
 /**
  * On gain of TRAIT_NOMETABOLISM
  *

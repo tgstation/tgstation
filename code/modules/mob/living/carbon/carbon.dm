@@ -428,13 +428,13 @@
 		if(message)
 			visible_message(span_danger("[src] throws up all over [p_them()]self!"), \
 							span_userdanger("You throw up all over yourself!"))
-			src.add_mood_event("vomit", /datum/mood_event/vomitself)
+			add_mood_event("vomit", /datum/mood_event/vomitself)
 		distance = 0
 	else
 		if(message)
 			visible_message(span_danger("[src] throws up!"), span_userdanger("You throw up!"))
 			if(!isflyperson(src))
-				src.add_mood_event("vomit", /datum/mood_event/vomit)
+				add_mood_event("vomit", /datum/mood_event/vomit)
 
 	if(stun)
 		Paralyze(80)
@@ -831,10 +831,10 @@
 		drop_all_held_items()
 		stop_pulling()
 		throw_alert(ALERT_HANDCUFFED, /atom/movable/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
-		src.add_mood_event("handcuffed", /datum/mood_event/handcuffed)
+		add_mood_event("handcuffed", /datum/mood_event/handcuffed)
 	else
 		clear_alert(ALERT_HANDCUFFED)
-		src.clear_mood_event("handcuffed")
+		clear_mood_event("handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
