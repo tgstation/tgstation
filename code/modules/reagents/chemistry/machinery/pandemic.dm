@@ -268,27 +268,28 @@
 		if(!istype(disease) || disease.visibility_flags & HIDDEN_PANDEMIC)
 			continue
 		var/list/traits = list()
-		traits["name"] = disease.name
-		if(istype(disease, /datum/disease/advance))
-			var/datum/disease/advance/adv_disease = disease
-			var/disease_name = SSdisease.get_disease_name(adv_disease.GetDiseaseID())
-			traits["can_rename"] = ((disease_name == "Unknown") && adv_disease.mutable)
-			traits["name"] = disease_name
-			traits["is_adv"] = TRUE
-			traits["symptoms"] = list()
-			for(var/datum/symptom/symptom as anything in adv_disease.symptoms)
-				var/list/this_symptom = list()
-				this_symptom = symptom.get_symptom_data()
-				traits["symptoms"] += list(this_symptom)
-			traits["resistance"] = adv_disease.totalResistance()
-			traits["stealth"] = adv_disease.totalStealth()
-			traits["stage_speed"] = adv_disease.totalStageSpeed()
-			traits["transmission"] = adv_disease.totalTransmittable()
-		traits["index"] = index++
 		traits["agent"] = disease.agent
-		traits["description"] = disease.desc || "none"
-		traits["spread"] = disease.spread_text || "none"
 		traits["cure"] = disease.cure_text || "none"
+		traits["description"] = disease.desc || "none"
+		traits["index"] = index++
+		traits["name"] = disease.name
+		traits["spread"] = disease.spread_text || "none"
+		if(!istype(disease, /datum/disease/advance)) // Advanced diseases get more info
+			continue
+		var/datum/disease/advance/adv_disease = disease
+		var/disease_name = SSdisease.get_disease_name(adv_disease.GetDiseaseID())
+		traits["can_rename"] = ((disease_name == "Unknown") && adv_disease.mutable)
+		traits["is_adv"] = TRUE
+		traits["name"] = disease_name
+		traits["resistance"] = adv_disease.totalResistance()
+		traits["stage_speed"] = adv_disease.totalStageSpeed()
+		traits["stealth"] = adv_disease.totalStealth()
+		traits["symptoms"] = list()
+		for(var/datum/symptom/symptom as anything in adv_disease.symptoms)
+			var/list/this_symptom = list()
+			this_symptom = symptom.get_symptom_data()
+			traits["symptoms"] += list(this_symptom)
+		traits["transmission"] = adv_disease.totalTransmittable()
 		data += list(traits)
 	return data
 
