@@ -26,7 +26,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Clown Enjoyer","Mime Fan"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
-		list("Cry Baby", "Machochist"),
+		list("Cry Baby", "Masochist"),
+		list("Tough Skin", "Frail"),
 
 	)
 
