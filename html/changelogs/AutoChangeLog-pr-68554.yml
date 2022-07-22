@@ -1,7 +1,0 @@
-author: "orthography"
-delete-after: True
-changes: 
-  - rscdel: "removed one of the two circuit labs on tramstation"
-  - balance: "Nanotransen realizes they're losing money by having two of the same niche science on the same station. The Auxiliary Laboratory has been cleared out until there is a new use for it. Hope squatters don't set up in there..."
-  - bugfix: "gives tramstation science more glass"
-  - bugfix: "removes one of the tramstation cargo ordering consoles"
