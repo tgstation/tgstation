@@ -300,6 +300,7 @@ export class PrimaryView extends Component {
       default_pen_color,
       paper_color,
       held_item_details,
+      max_length,
     } = data;
 
     const useFont = held_item_details?.font || default_pen_font;
@@ -324,6 +325,15 @@ export class PrimaryView extends Component {
     const savableData =
       textAreaText.length || Object.keys(inputFieldData).length;
 
+    const dmCharacters =
+      raw_text_input?.reduce((lhs: number, rhs: PaperInput) => {
+        return lhs + rhs.raw_text.length;
+      }, 0) || 0;
+
+    const usedCharacters = dmCharacters + textAreaText.length;
+
+    const tooManyCharacters = usedCharacters > max_length;
+
     return (
       <>
         <PaperSheetStamper scrollableRef={this.scrollableRef} />
@@ -345,21 +355,31 @@ export class PrimaryView extends Component {
                 fitted
                 fill
                 buttons={
-                  <Button.Confirm
-                    disabled={!savableData}
-                    content="Save"
-                    color="good"
-                    onClick={() => {
-                      if (textAreaText.length) {
-                        act('add_text', { text: textAreaText });
-                        setTextAreaText('');
-                      }
-                      if (Object.keys(inputFieldData).length) {
-                        act('fill_input_field', { field_data: inputFieldData });
-                        setInputFieldData({});
-                      }
-                    }}
-                  />
+                  <>
+                    <Box
+                      inline
+                      pr={'5px'}
+                      color={tooManyCharacters ? 'bad' : 'default'}>
+                      {`${usedCharacters} / ${max_length}`}
+                    </Box>
+                    <Button.Confirm
+                      disabled={!savableData || tooManyCharacters}
+                      content="Save"
+                      color="good"
+                      onClick={() => {
+                        if (textAreaText.length) {
+                          act('add_text', { text: textAreaText });
+                          setTextAreaText('');
+                        }
+                        if (Object.keys(inputFieldData).length) {
+                          act('fill_input_field', {
+                            field_data: inputFieldData,
+                          });
+                          setInputFieldData({});
+                        }
+                      }}
+                    />
+                  </>
                 }>
                 <TextArea
                   scrollbar
