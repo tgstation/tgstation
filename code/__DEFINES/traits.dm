@@ -214,6 +214,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EASILY_WOUNDED "easy_limb_wound"
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
+#define TRAIT_THICK_SKIN "thick_skin"
 #define TRAIT_TOXINLOVER "toxinlover"
 /// Gets a mood boost from being in the hideout.
 #define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"

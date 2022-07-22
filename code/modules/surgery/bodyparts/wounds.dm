@@ -72,6 +72,9 @@
 	if(HAS_TRAIT(owner,TRAIT_HARDLY_WOUNDED))
 		damage *= 0.85
 
+	if((HAS_TRAIT(owner, TRAIT_THICK_SKIN) && (woundtype == WOUND_BLUNT || WOUND_SLASH)))
+		damage *= 0.85
+
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
 		damage *= 1.1
 

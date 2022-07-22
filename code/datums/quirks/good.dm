@@ -354,7 +354,7 @@
 	desc = "Your skin is tough as leather, leaving you resistant to blunt and slashing wounds."
 	icon = "shield-alt"
 	value = 6
-	mob_trait = TRAIT_SPIRITUAL
+	mob_trait = TRAIT_THICK_SKIN
 	medical_record_text = "Patient has abnormally thick skin."
 
 /datum/quirk/item_quirk/tough_feet
