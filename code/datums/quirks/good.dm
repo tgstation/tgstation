@@ -378,11 +378,23 @@
 
 /datum/quirk/item_quirk/robust_physique
 	name = "Built From Stronger Stuff"
-	desc = "You have robust physique, allowing you to take more punishment"
+	desc = "You have robust physique, allowing you to take more punishment."
 	icon = "user-astronaut"
 	value = 10
 	mob_trait = TRAIT_SPIRITUAL
-	medical_record_text = "Patient has a robust physique."
+	medical_record_text = "Patient has an unnaturally robust physique."
+
+/datum/quirk/robust_physique/add()
+	if(iscarbon (quirk_holder))
+		var/mob/living/tough_guy = quirk_holder
+		tough_guy.maxHealth *= 1.2
+		tough_guy.health *= 1.2
+
+/datum/quirk/robust_physique/remove()
+	if(iscarbon(quirk_holder))
+		var/mob/living/tough_guy = quirk_holder
+		tough_guy.maxHealth /= 1.2
+		tough_guy.health /= 1.2
 
 /datum/quirk/item_quirk/tagger
 	name = "Tagger"
