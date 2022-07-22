@@ -422,6 +422,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
+	investigate_log("was forcefully delaminated", INVESTIGATE_ENGINE)
 	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam/proc/delaminate, src)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
