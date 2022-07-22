@@ -88,18 +88,19 @@ export const LuaEditor = (props, context) => {
                   value={input}
                   fontFamily="Consolas"
                   onInput={(_, value) => setInput(value)}
-                  displayedValue={(
+                  displayedValue={
                     <Box
                       fontFamily="Consolas"
                       style={{
-                        "pointer-events": "none",
+                        'pointer-events': 'none',
                       }}
                       dangerouslySetInnerHTML={{
-                        __html: hljs.highlight(input, { language: 'lua' }).value,
+                        __html: hljs.highlight(input, { language: 'lua' })
+                          .value,
                       }}
                     />
-                  )}
-                 />
+                  }
+                />
                 <Button onClick={() => act('runCode', { code: input })}>
                   Run
                 </Button>
