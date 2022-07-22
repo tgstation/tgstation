@@ -107,7 +107,7 @@
 /mob/living/silicon/pai/proc/hack_door()
 	if(!hacking_cable)
 		return FALSE
-	if(!hacking_cable?.machine)
+	if(!hacking_cable.machine)
 		balloon_alert(src, "nothing connected")
 		return FALSE
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
