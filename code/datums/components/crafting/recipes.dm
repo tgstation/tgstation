@@ -1262,7 +1262,7 @@
 				/obj/item/stack/sheet/glass = 10,
 				/obj/item/stack/cable_coil = 10,
 				)
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/shutters
 	name = "Shutters"
@@ -1273,7 +1273,7 @@
 	result = /obj/machinery/door/poddoor/shutters/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 10 SECONDS
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 	one_per_turf = TRUE
 
 /datum/crafting_recipe/blast_doors
@@ -1285,7 +1285,7 @@
 	result = /obj/machinery/door/poddoor/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 30 SECONDS
-	category = CAT_MISC
+	category = CAT_STRUCTURE
 	one_per_turf = TRUE
 
 /datum/crafting_recipe/aquarium

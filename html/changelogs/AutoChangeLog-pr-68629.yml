@@ -1,0 +1,4 @@
+author: "Jackraxxus"
+delete-after: True
+changes: 
+  - bugfix: "Tramstation chemfactory's meson left pair of meson goggles no longer slow you down."

@@ -729,7 +729,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CURRENTLY_CLEANING "currently_cleaning"
 
 // unique trait sources, still defines
-#define CLONING_POD_TRAIT "cloning-pod"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
@@ -765,7 +764,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
-#define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
 #define LIFECANDLE_TRAIT "lifecandle"
 #define VENTCRAWLING_TRAIT "ventcrawling"

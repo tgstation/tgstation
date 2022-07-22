@@ -1,0 +1,4 @@
+author: "CoffeeDragon16"
+delete-after: True
+changes: 
+  - bugfix: "maintenance-adapted eyes will now display properly"
