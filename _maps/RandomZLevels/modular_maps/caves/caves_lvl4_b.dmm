@@ -210,6 +210,18 @@
 "pe" = (
 /turf/open/floor/plating,
 /area/template_noop)
+"pC" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/orange{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/template_noop)
 "ql" = (
 /obj/structure/table/bronze,
 /turf/open/floor/bronze/flat/lavaland,
@@ -269,6 +281,15 @@
 /obj/structure/girder/bronze,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"tj" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/orange{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/template_noop)
 "tu" = (
 /obj/effect/decal/fakelattice{
 	icon = 'icons/obj/structures.dmi';
@@ -281,6 +302,10 @@
 "tN" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
+"tY" = (
+/obj/structure/flora/rock/pile,
+/turf/closed/mineral/volcanic/lava_land_surface/hardened,
 /area/template_noop)
 "ua" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
@@ -449,6 +474,16 @@
 /obj/structure/flora/ash/seraka,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"Ic" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/orange,
+/turf/open/floor/bronze,
+/area/template_noop)
 "Ig" = (
 /obj/structure/fluff/clockwork/blind_eye,
 /turf/open/floor/bronze/filled/lavaland,
@@ -491,9 +526,24 @@
 /obj/structure/flora/ash/cacti,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"Pe" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/orange,
+/turf/open/floor/bronze,
+/area/template_noop)
 "Pt" = (
 /obj/structure/fluff/clockwork/fallen_armor,
 /turf/open/floor/bronze/flat/lavaland,
+/area/template_noop)
+"PW" = (
+/obj/structure/bed,
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/orange,
+/turf/open/floor/bronze,
 /area/template_noop)
 "Qn" = (
 /obj/structure/barricade/sandbags,
@@ -604,6 +654,15 @@
 	name = "Lays-The-Floor"
 	},
 /turf/open/floor/plating,
+/area/template_noop)
+"WV" = (
+/obj/effect/decal/fakelattice{
+	icon = 'icons/obj/structures.dmi';
+	icon_state = "ratvargrille";
+	name = "bronze lattice"
+	},
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/clockminer,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "XF" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
@@ -3307,7 +3366,7 @@ lz
 lz
 rL
 lz
-lz
+Fs
 Ud
 Sp
 Ud
@@ -6082,11 +6141,11 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
+bD
+bD
+bD
+bD
+bD
 Dy
 Dy
 bD
@@ -6206,14 +6265,14 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Mf
-Dy
-Dy
-Dy
-Dy
-Dy
+bD
+bD
+tj
+tj
+tj
+bD
+bD
+bD
 Dy
 Dy
 gK
@@ -6331,14 +6390,14 @@ Dy
 Dy
 Dy
 Dy
-Mf
-Mf
-Mf
-Mf
-Dy
-Mf
-Dy
-Mf
+bD
+tj
+lw
+lw
+lw
+tj
+lw
+bD
 Mf
 Mf
 Mf
@@ -6456,16 +6515,16 @@ Dy
 Dy
 Dy
 Dy
-Dy
+bD
+lw
+lw
+lw
+lw
+lw
+lw
+uS
 Mf
-Dy
 Mf
-Mf
-Mf
-Mf
-Mf
-Dy
-oa
 oa
 lz
 lz
@@ -6581,16 +6640,16 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Mf
-Dy
-Dy
-Dy
-Dy
-Dy
 bD
-oa
-Dy
+lw
+lw
+lw
+lw
+lw
+lw
+uS
+Mf
+Mf
 IX
 gK
 lz
@@ -6706,13 +6765,13 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
-Dy
-Dy
+bD
+Pe
+lw
+lw
+lw
+Pe
+lw
 bD
 oa
 Mf
@@ -6831,14 +6890,14 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
-Dy
 bD
-oa
+bD
+Pe
+Pe
+Pe
+bD
+bD
+bD
 lz
 lz
 Ud
@@ -6957,11 +7016,11 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
+bD
+bD
+bD
+bD
+bD
 bD
 oa
 oa
@@ -7211,8 +7270,8 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
+bD
+bD
 gK
 Ud
 uL
@@ -10959,13 +11018,13 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
 bD
-Mf
-gK
+bD
+bD
+bD
+bD
+Dy
+tY
 lz
 lz
 uL
@@ -11083,14 +11142,14 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
-oa
-oa
-lz
+bD
+bD
+pC
+pC
+pC
+bD
+bD
+bD
 lz
 nX
 oa
@@ -11208,14 +11267,14 @@ Dy
 Dy
 Mf
 Mf
-Dy
-Dy
-Dy
-Dy
-Dy
 bD
-oa
-oa
+pC
+lw
+lw
+lw
+pC
+lw
+bD
 Mf
 Mf
 oa
@@ -11333,14 +11392,14 @@ Dy
 Mf
 Mf
 Mf
-Dy
-Dy
-Mf
-Dy
-Dy
-Dy
 bD
-Dy
+lw
+lw
+lw
+lw
+lw
+lw
+uS
 Mf
 gK
 Mf
@@ -11458,14 +11517,14 @@ Dy
 Dy
 Dy
 Mf
-Mf
-Mf
-Mf
-Dy
-Dy
-Mf
-Mf
-Mf
+bD
+lw
+lw
+lw
+lw
+lw
+lw
+uS
 uL
 gK
 gK
@@ -11583,13 +11642,13 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Mf
-Mf
-Mf
-Mf
-Mf
-Mf
+bD
+Ic
+lw
+lw
+lw
+Ic
+lw
 bD
 uL
 gK
@@ -11708,13 +11767,13 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
-Mf
-Dy
+bD
+bD
+PW
+PW
+PW
+bD
+bD
 bD
 oa
 uL
@@ -11739,7 +11798,7 @@ Mf
 Ur
 Mf
 lz
-uL
+WV
 uL
 lz
 Mf
@@ -11834,13 +11893,13 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
 bD
 bD
+bD
+bD
+bD
+bD
+oa
 sY
 lz
 lz
